@@ -79,9 +79,6 @@ namespace Medical.GUI
             Button unhideAll = window.findWidget("UnhideAll") as Button;
             unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
 
-            Button openAll = (Button)window.findWidget("OpenAll");
-            openAll.MouseButtonClick += new MyGUIEvent(openAll_MouseButtonClick);
-
             pickingModeGroup = new ButtonGroup();
             groupButton = (Button)window.findWidget("GroupButton");
             pickingModeGroup.addButton(groupButton);
@@ -298,33 +295,6 @@ namespace Medical.GUI
                 {
                     transparencyChanger.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                 }
-            }
-        }
-
-        void openAll_MouseButtonClick(Widget source, EventArgs e)
-        {
-            int viewHeight = Gui.Instance.getViewHeight();
-            int itemCount = anatomyList.Count;
-            int left = window.AbsoluteLeft + window.Width;
-            int top = window.Top;
-            int widest = 0;
-            for (int i = 0; i < itemCount; ++i)
-            {
-                AnatomyContextWindow contextWindow = anatomyWindowManager.showWindow((Anatomy)anatomyList.getItem(i).UserObject, left, top);
-                if (contextWindow.Width > widest)
-                {
-                    widest = contextWindow.Width;
-                }
-                top += contextWindow.Height;
-                if (top > viewHeight)
-                {
-                    left += widest;
-                    widest = 0;
-                    top = window.Top;
-                    contextWindow.show(left, top);
-                    top += contextWindow.Height;
-                }
-                contextWindow.pinOpen();
             }
         }
 

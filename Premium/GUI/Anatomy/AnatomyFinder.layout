@@ -25,9 +25,6 @@
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="69 339 54 20" align="Left Bottom" name="OpenAll">
-            <Property key="Widget_Caption" value="Open All"/>
-        </Widget>
         <Widget type="Button" skin="Button" position="226 339 37 20" align="Left Bottom" name="NoneButton">
             <Property key="Widget_Caption" value="None"/>
         </Widget>
