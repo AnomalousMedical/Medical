@@ -65,6 +65,12 @@ namespace Medical.GUI
             removeAction.MouseButtonClick += new MyGUIEvent(removeAction_MouseButtonClick);
         }
 
+        public override void Dispose()
+        {
+            Gui.Instance.destroyWidget(editMenu);
+            base.Dispose();
+        }
+
         public void setPropData(ShowPropAction showProp)
         {
             if (propData != null)
