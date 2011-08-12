@@ -81,36 +81,17 @@ namespace Medical
 
         void actorElement_ContactEnded(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
         {
-            if (otherBody != null)
+            BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
+            if (otherTooth != null)
             {
-                BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
-                if (otherTooth != null)
-                {
-                    collidingTeeth.Remove(otherTooth);
-                }
-                else
-                {
-                    Splint splint = otherBody.Owner.getElement(Splint.SplintBehaviorName) as Splint;
-                    if (splint != null)
-                    {
-                        collidingSplints.Remove(splint);
-                    }
-                }
+                collidingTeeth.Remove(otherTooth);
             }
             else
             {
-                //The other body will be null if it was removed from the scene if we get null check the splints
-                for (int i = 0; i < collidingSplints.Count; )
+                Splint splint = otherBody.Owner.getElement(Splint.SplintBehaviorName) as Splint;
+                if (splint != null)
                 {
-                    Splint splint = collidingSplints[i];
-                    if (splint.IsNull)
-                    {
-                        collidingSplints.Remove(splint);
-                    }
-                    else
-                    {
-                        ++i;
-                    }
+                    collidingSplints.Remove(splint);
                 }
             }
         }
