@@ -53,6 +53,7 @@ namespace Medical.GUI
 
         private bool runningThumbnailCoroutine = false;
         private int currentThumbnailIndex = 0;
+        private bool allowAnatomySelectionChanges = true;
 
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
@@ -162,6 +163,7 @@ namespace Medical.GUI
 
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
         {
+            allowAnatomySelectionChanges = false;
             Vector3 absMouse = eventManager.Mouse.getAbsMouse();
             Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
             mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
@@ -219,15 +221,11 @@ namespace Medical.GUI
                     updateSearch();
                 }
                 AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy((int)eventManager.Mouse.getAbsMouse().x, (int)eventManager.Mouse.getAbsMouse().y);
-                if (activeAnatomyWindow != null)
-                {
-                    //activeAnatomyWindow.Position = new Vector2(eventManager.Mouse.getAbsMouse().x, eventManager.Mouse.getAbsMouse().y);
-                    //activeAnatomyWindow.ensureVisible();
-                }
 
                 anatomyList.SuppressLayout = false;
                 anatomyList.layout();
             }
+            allowAnatomySelectionChanges = true;
         }
 
         void changeSelectionMode_FirstFrameUpEvent(EventManager eventManager)
@@ -262,17 +260,20 @@ namespace Medical.GUI
 
         void anatomyList_SelectedValueChanged(object sender, EventArgs e)
         {
-            AnatomyContextWindow contextWindow = changeSelectedAnatomy(window.Right, anatomyList.SelectedItem.AbsoluteTop);
-            if (contextWindow != null)
+            if (allowAnatomySelectionChanges)
             {
-                //float x = window.Right;
-                //float y = anatomyList.SelectedItem.AbsoluteTop;
-                //if (x + contextWindow.Width > Gui.Instance.getViewWidth())
-                //{
-                //    x = window.Left - contextWindow.Width;
-                //}
-                //contextWindow.Position = new Vector2(x, y);
-                //contextWindow.ensureVisible();
+                AnatomyContextWindow contextWindow = changeSelectedAnatomy(window.Right, anatomyList.SelectedItem.AbsoluteTop);
+                if (contextWindow != null)
+                {
+                    //float x = window.Right;
+                    //float y = anatomyList.SelectedItem.AbsoluteTop;
+                    //if (x + contextWindow.Width > Gui.Instance.getViewWidth())
+                    //{
+                    //    x = window.Left - contextWindow.Width;
+                    //}
+                    //contextWindow.Position = new Vector2(x, y);
+                    //contextWindow.ensureVisible();
+                }
             }
         }
 
