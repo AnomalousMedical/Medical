@@ -441,12 +441,6 @@ namespace Medical.Controller
             }
         }
 
-        public abstract bool Focused
-        {
-            get;
-            set;
-        }
-
         public CameraMover CameraMover
         {
             get

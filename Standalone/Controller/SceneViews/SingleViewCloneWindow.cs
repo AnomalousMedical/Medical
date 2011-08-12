@@ -50,18 +50,6 @@ namespace Medical.Controller
             osWindow.close();
         }
 
-        public override bool Focused
-        {
-            get
-            {
-                return false;
-            }
-            set
-            {
-                
-            }
-        }
-
         public RendererWindow RendererWindow
         {
             get

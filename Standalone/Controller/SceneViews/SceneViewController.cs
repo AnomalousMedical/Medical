@@ -112,6 +112,23 @@ namespace Medical.Controller
                     mdiWindows[0].AllowClose = false;
                 }
             }
+
+            if (window == activeWindow)
+            {
+                if (mdiWindows.Count > 0)
+                {
+                    activeWindow = mdiWindows[0];
+                    if (ActiveWindowChanged != null)
+                    {
+                        ActiveWindowChanged.Invoke(activeWindow);
+                    }
+                }
+                else
+                {
+                    activeWindow = null;
+                }
+            }
+
             window.Dispose();
         }
 

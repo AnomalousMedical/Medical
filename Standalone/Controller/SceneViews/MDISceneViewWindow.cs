@@ -53,18 +53,6 @@ namespace Medical.Controller
             mdiWindow.close();
         }
 
-        public override bool Focused
-        {
-            get
-            {
-                return mdiWindow.Active;
-            }
-            set
-            {
-                mdiWindow.Active = value;
-            }
-        }
-
         public bool AllowClose
         {
             get
