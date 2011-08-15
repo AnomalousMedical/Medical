@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="Panel" position="187 65 81 205" layer="Overlapped">
+        <Widget type="Button" skin="Button" position="8 3 64 64" name="GroupButton">
+            <Property key="Widget_Caption" value="Group"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="8 70 64 64" name="IndividualButton">
+            <Property key="Widget_Caption" value="Individual"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="8 137 64 64" name="NoneButton">
+            <Property key="Widget_Caption" value="None"/>
+        </Widget>
+    </Widget>
+</MyGUI>

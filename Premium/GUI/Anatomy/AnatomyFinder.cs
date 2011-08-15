@@ -39,11 +39,6 @@ namespace Medical.GUI
 
         private SceneViewController sceneViewController;
 
-        private Button groupButton;
-        private Button individualButton;
-        private Button noneButton;
-        private ButtonGroup pickingModeGroup;
-
         private AnatomyController anatomyController;
         private int lastWidth = -1;
         private int lastHeight = -1;
@@ -79,15 +74,6 @@ namespace Medical.GUI
 
             Button unhideAll = window.findWidget("UnhideAll") as Button;
             unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
-
-            pickingModeGroup = new ButtonGroup();
-            groupButton = (Button)window.findWidget("GroupButton");
-            pickingModeGroup.addButton(groupButton);
-            individualButton = (Button)window.findWidget("IndividualButton");
-            pickingModeGroup.addButton(individualButton);
-            noneButton = (Button)window.findWidget("NoneButton");
-            pickingModeGroup.addButton(noneButton);
-            pickingModeGroup.SelectedButton = groupButton;
 
             this.Resized += new EventHandler(AnatomyFinder_Resized);
             fixListItemWidth();
@@ -168,7 +154,7 @@ namespace Medical.GUI
             Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
             mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
             mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);
-            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && pickingModeGroup.SelectedButton != noneButton && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
+            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && anatomyController.PickingMode != AnatomyPickingMode.None && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
             {
                 anatomyList.SuppressLayout = true;
                 anatomyList.clear();
@@ -205,7 +191,7 @@ namespace Medical.GUI
                 if (matches.Count > 0)
                 {
                     searchBox.Caption = "Clicked";
-                    if (pickingModeGroup.SelectedButton == groupButton && matches[0].AllowGroupSelection)
+                    if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection)
                     {
                         AnatomyTag mainTag = matches[0].Tags.First();
                         if (mainTag != null)
@@ -232,17 +218,17 @@ namespace Medical.GUI
         {
             if (!Gui.Instance.HandledKeyboardButtons)
             {
-                if (pickingModeGroup.SelectedButton == groupButton)
+                switch (anatomyController.PickingMode)
                 {
-                    pickingModeGroup.SelectedButton = individualButton;
-                }
-                else if (pickingModeGroup.SelectedButton == individualButton)
-                {
-                    pickingModeGroup.SelectedButton = noneButton;
-                }
-                else
-                {
-                    pickingModeGroup.SelectedButton = groupButton;
+                    case AnatomyPickingMode.Group:
+                        anatomyController.PickingMode = AnatomyPickingMode.Individual;
+                        break;
+                    case AnatomyPickingMode.Individual:
+                        anatomyController.PickingMode = AnatomyPickingMode.None;
+                        break;
+                    case AnatomyPickingMode.None:
+                        anatomyController.PickingMode = AnatomyPickingMode.Group;
+                        break;
                 }
             }
         }

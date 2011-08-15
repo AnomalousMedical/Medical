@@ -9,6 +9,13 @@ using System.Drawing;
 
 namespace Medical
 {
+    public enum AnatomyPickingMode
+    {
+        Group,
+        Individual,
+        None,
+    }
+
     public class AnatomyController : IDisposable
     {
         private const string TRANSPARENCY_STATE = "AnatomyFinder";
@@ -21,6 +28,9 @@ namespace Medical
 
         private ImageRenderer imageRenderer;
         private ImageAtlas imageAtlas = new ImageAtlas("AntomyThumbnails", new Size2(50, 50), new Size2(512, 512));
+
+        private AnatomyPickingMode pickingMode;
+        public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
 
         public AnatomyController(ImageRenderer imageRenderer)
         {
@@ -142,6 +152,25 @@ namespace Medical
             {
                 imageName = imageAtlas.getImageId(anatomy.AnatomicalName);
                 return false;
+            }
+        }
+
+        public AnatomyPickingMode PickingMode
+        {
+            get
+            {
+                return pickingMode;
+            }
+            set
+            {
+                if (value != pickingMode)
+                {
+                    pickingMode = value;
+                    if (PickingModeChanged != null)
+                    {
+                        PickingModeChanged.Invoke(this, value);
+                    }
+                }
             }
         }
     }

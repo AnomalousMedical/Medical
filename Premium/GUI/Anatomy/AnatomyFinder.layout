@@ -4,29 +4,20 @@
         <Property key="Widget_Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="Edit" skin="Edit" position="5 5 210 23" align="HStretch Top" name="SearchBox"/>
-        <Widget type="Button" skin="Button" position="217 7 44 20" align="Right Top" name="ClearButton">
+        <Widget type="Edit" skin="Edit" position="5 5 163 23" align="HStretch Top" name="SearchBox"/>
+        <Widget type="Button" skin="Button" position="170 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Widget_Caption" value="Clear"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="7 339 61 20" align="Left Bottom" name="UnhideAll">
-            <Property key="Widget_Caption" value="Unhide All"/>
+        <Widget type="Button" skin="Button" position="215 7 46 20" align="Left Bottom" name="UnhideAll">
+            <Property key="Widget_Caption" value="Unhide"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="124 339 42 20" align="Left Bottom" name="GroupButton">
-            <Property key="Widget_Caption" value="Group"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="167 339 59 20" align="Left Bottom" name="IndividualButton">
-            <Property key="Widget_Caption" value="Individual"/>
-        </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="7 32 256 303" align="Stretch" name="AnatomyList">
+        <Widget type="ScrollView" skin="ScrollView" position="6 32 256 326" align="Stretch" name="AnatomyList">
             <Property key="ScrollView_CanvasSize" value="238 10"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="AnatomyFinderIconButtonButton"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="226 339 37 20" align="Left Bottom" name="NoneButton">
-            <Property key="Widget_Caption" value="None"/>
         </Widget>
     </Widget>
 </MyGUI>

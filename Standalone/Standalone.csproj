@@ -204,6 +204,8 @@
     <Compile Include="GUI\ExamViewer\MyGUIAnalysisDisplayProvider.cs" />
     <Compile Include="GUI\ExamViewer\TextAnalysisViewer.cs" />
     <Compile Include="GUI\FullscreenGUIPopup.cs" />
+    <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
+    <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\DialogEntry.cs" />
@@ -394,6 +396,7 @@
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
+    <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
     <EmbeddedResource Include="GUI\Taskbar\Taskbar.layout" />
     <EmbeddedResource Include="GUI\TaskMenu\TaskMenu.layout">
       <SubType>Designer</SubType>

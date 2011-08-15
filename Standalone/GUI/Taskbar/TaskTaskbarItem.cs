@@ -50,6 +50,11 @@ namespace Medical.GUI
             }
         }
 
+        internal IntVector2 findGoodWindowPosition(int width, int height)
+        {
+            return findGoodPosition(width, height);
+        }
+
         protected virtual void customizeMenu()
         {
             addMenuItem("Pin", firePinTask);

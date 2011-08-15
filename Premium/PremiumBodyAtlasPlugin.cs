@@ -26,6 +26,9 @@ namespace Medical
         private SequencePlayer sequencePlayer;
         private AnatomyFinder anatomyFinder;
         private BookmarksGUI bookmarks;
+
+        //Tasks
+        private SelectionModeTask selectionModeTask;
         
         //Controllers
         private AnatomyController anatomyController;
@@ -48,6 +51,7 @@ namespace Medical
 
         public void Dispose()
         {
+            selectionModeTask.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             mandibleMovementDialog.Dispose();
@@ -91,11 +95,15 @@ namespace Medical
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
 
+            //Tasks
+            selectionModeTask = new SelectionModeTask(anatomyController);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
             taskController.addTask(new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
+            taskController.addTask(selectionModeTask);
             taskController.addTask(new ShowToothContactsTask());
             taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));

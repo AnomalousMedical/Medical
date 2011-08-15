@@ -113,13 +113,34 @@ namespace Medical.GUI
             }
         }
 
+        internal IntVector2 findGoodWindowPosition(Task task, int width, int height)
+        {
+            ButtonGridItem item = iconGrid.findItemByUserObject(task);
+            if (item != null)
+            {
+                int left = item.AbsoluteLeft;
+                int top = item.AbsoluteTop + item.Height;
+                if (left + width > Gui.Instance.getViewWidth())
+                {
+                    left -= left + width - Gui.Instance.getViewWidth();
+                }
+                if (top + height > Gui.Instance.getViewHeight())
+                {
+                    top -= top + height - Gui.Instance.getViewHeight();
+                }
+                return new IntVector2(left, top);
+            }
+            return new IntVector2();
+        }
+
         void taskController_TaskRemoved(Task task)
         {
-            
+            task._TaskMenu = null;
         }
 
         void taskController_TaskAdded(Task task)
         {
+            task._TaskMenu = this;
             ButtonGridItem item = iconGrid.addItem(task.Category, task.Name, task.IconName);
             item.UserObject = task;
             item.ItemClicked += new EventHandler(item_ItemClicked);
