@@ -64,6 +64,7 @@ namespace Medical.GUI
 
             searchBox = (Edit)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
+            searchBox.KeyButtonReleased += new MyGUIEvent(searchBox_KeyButtonReleased);
 
             pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
             pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
@@ -98,6 +99,20 @@ namespace Medical.GUI
         void anatomyController_AnatomyChanged(object sender, EventArgs e)
         {
             updateSearch();
+        }
+
+        void searchBox_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            if (ke.Key == KeyboardButtonCode.KC_RETURN)
+            {
+                ButtonGridItem selectedItem = anatomyList.SelectedItem;
+                if (selectedItem == null && anatomyList.Count > 0)
+                {
+                    anatomyList.SelectedItem = anatomyList.getItem(0);
+                }
+                toggleAnatomyTransparency();
+            }
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
@@ -264,6 +279,11 @@ namespace Medical.GUI
         }
 
         void anatomyList_ItemActivated(object sender, EventArgs e)
+        {
+            toggleAnatomyTransparency();
+        }
+
+        private void toggleAnatomyTransparency()
         {
             ButtonGridItem selectedItem = anatomyList.SelectedItem;
             if (selectedItem != null)

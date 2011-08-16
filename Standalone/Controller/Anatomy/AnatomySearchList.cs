@@ -32,7 +32,14 @@ namespace Medical
             {
                 if (anatomy.AnatomicalName.ToLowerInvariant().Contains(text))
                 {
-                    results.Add(anatomy);
+                    if (anatomy.AnatomicalName.Length == text.Length)
+                    {
+                        results.Insert(0, anatomy);
+                    }
+                    else
+                    {
+                        results.Add(anatomy);
+                    }
                     if (results.Count == searchLimit)
                     {
                         break;
