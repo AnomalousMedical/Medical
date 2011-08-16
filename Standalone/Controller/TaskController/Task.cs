@@ -16,6 +16,7 @@ namespace Medical
 
         public event TaskDelegate ItemClosed;
         public event TaskDelegate RequestShowInTaskbar;
+        public event TaskDelegate IconChanged;
 
         public Task(String uniqueName, String name, String iconName, String category)
         {
@@ -37,7 +38,7 @@ namespace Medical
             get;
         }
 
-        public String IconName { get; private set; }
+        public String IconName { get; protected set; }
 
         public String Name { get; private set; }
 
@@ -70,6 +71,14 @@ namespace Medical
             if (RequestShowInTaskbar != null)
             {
                 RequestShowInTaskbar.Invoke(this);
+            }
+        }
+
+        protected void fireIconChanged()
+        {
+            if (IconChanged != null)
+            {
+                IconChanged.Invoke(this);
             }
         }
 

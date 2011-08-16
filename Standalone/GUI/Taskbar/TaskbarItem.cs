@@ -123,6 +123,11 @@ namespace Medical.GUI
             }
         }
 
+        protected void setIcon(String iconName)
+        {
+            taskbarButton.StaticImage.setItemResource(iconName);
+        }
+
         void taskbarButton_MouseButtonReleased(Widget source, EventArgs e)
         {
             MouseEventArgs me = e as MouseEventArgs;

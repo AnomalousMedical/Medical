@@ -15,6 +15,8 @@ namespace Medical.GUI
         {
             this.ShowOnTaskbar = false;
             selectionModeChooser = new SelectionModeChooser(anatomyController);
+            anatomyController.PickingModeChanged += new EventDelegate<AnatomyController, AnatomyPickingMode>(anatomyController_PickingModeChanged);
+            anatomyController_PickingModeChanged(anatomyController, anatomyController.PickingMode);
         }
 
         public void Dispose()
@@ -34,6 +36,23 @@ namespace Medical.GUI
             {
                 return false;
             }
+        }
+
+        void anatomyController_PickingModeChanged(AnatomyController source, AnatomyPickingMode arg)
+        {
+            switch (arg)
+            {
+                case AnatomyPickingMode.Group:
+                    IconName = "SelectionIcons\\GroupSelection";
+                    break;
+                case AnatomyPickingMode.Individual:
+                    IconName = "SelectionIcons\\IndividualSelection";
+                    break;
+                case AnatomyPickingMode.None:
+                    IconName = "SelectionIcons\\NoSelection";
+                    break;
+            }
+            fireIconChanged();
         }
     }
 }

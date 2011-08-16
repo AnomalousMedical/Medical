@@ -18,6 +18,13 @@ namespace Medical.GUI
             :base(item.Name, item.IconName)
         {
             this.item = item;
+            item.IconChanged += item_IconChanged;
+        }
+
+        public override void Dispose()
+        {
+            item.IconChanged -= item_IconChanged;
+            base.Dispose();
         }
 
         public override void clicked(Widget source, EventArgs e)
@@ -83,6 +90,11 @@ namespace Medical.GUI
             {
                 PinToTaskbar.Invoke(this);
             }
+        }
+
+        void item_IconChanged(Task task)
+        {
+            setIcon(task.IconName);
         }
     }
 }

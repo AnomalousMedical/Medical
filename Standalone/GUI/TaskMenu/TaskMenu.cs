@@ -135,12 +135,14 @@ namespace Medical.GUI
 
         void taskController_TaskRemoved(Task task)
         {
+            task.IconChanged -= task_IconChanged;
             task._TaskMenu = null;
         }
 
         void taskController_TaskAdded(Task task)
         {
             task._TaskMenu = this;
+            task.IconChanged += task_IconChanged;
             ButtonGridItem item = iconGrid.addItem(task.Category, task.Name, task.IconName);
             item.UserObject = task;
             item.ItemClicked += new EventHandler(item_ItemClicked);
@@ -148,6 +150,15 @@ namespace Medical.GUI
             item.MouseButtonPressed += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonPressed);
             item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
             item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
+        }
+
+        void task_IconChanged(Task task)
+        {
+            ButtonGridItem item = iconGrid.findItemByUserObject(task);
+            if (item != null)
+            {
+                item.setImage(task.IconName);
+            }
         }
 
         void taskItem_RequestShowInTaskbar(Task item)

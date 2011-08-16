@@ -8,7 +8,7 @@
         <Widget type="Button" skin="Button" position="170 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Widget_Caption" value="Clear"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="215 7 46 20" align="Left Bottom" name="UnhideAll">
+        <Widget type="Button" skin="Button" position="215 7 46 20" align="Right Top" name="UnhideAll">
             <Property key="Widget_Caption" value="Unhide"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="6 32 256 326" align="Stretch" name="AnatomyList">

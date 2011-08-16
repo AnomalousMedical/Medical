@@ -42,6 +42,7 @@ namespace Medical.GUI
             if (allowSelectionModeChanges)
             {
                 anatomyController.PickingMode = (AnatomyPickingMode)pickingModeGroup.SelectedButton.UserObject;
+                hide();
             }
         }
 
