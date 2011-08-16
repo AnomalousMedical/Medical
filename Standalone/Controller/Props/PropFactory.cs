@@ -28,7 +28,7 @@ namespace Medical
         /// <param name="definitionName">The name of the prop definition.</param>
         /// <param name="meshName">The name of the mesh for the prop.</param>
         /// <returns>A SimObjectDefinition with the entity specified.</returns>
-        public static SimObjectDefinition createGenericProp(String definitionName, String meshName)
+        public static GenericSimObjectDefinition createGenericProp(String definitionName, String meshName)
         {
             GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(definitionName);
             simObject.Enabled = true;
