@@ -7,6 +7,20 @@ using Engine;
 
 namespace Medical
 {
+    public enum ImageAlignment
+    {
+        LeftTop = 0,
+        LeftBottom = 1,
+        RightTop = 2,
+        RightBottom = 3,
+        TopCenter = 4,
+        BottomCenter = 5,
+        LeftCenter = 6,
+        RightCenter = 7,
+        Center = 8,
+        Specify = 9,
+    }
+
     /// <summary>
     /// This interface abstracts how the timelines display images.
     /// </summary>
@@ -37,5 +51,20 @@ namespace Medical
         /// Specify whether to keep the original aspect ratio of the image or not.
         /// </summary>
         bool KeepAspectRatio { get; set; }
+
+        /// <summary>
+        /// Specify the alignment of the image
+        /// </summary>
+        ImageAlignment Alignment { get; set; }
+
+        /// <summary>
+        /// Suppress the layout. Use this when setting multiple properties at once.
+        /// </summary>
+        bool SuppressLayout { get; set; }
+
+        /// <summary>
+        /// If you used SuppressLayout and want to explicitly layout the control. SuppressLayout must be false or this will still do nothing.
+        /// </summary>
+        void layout();
     }
 }

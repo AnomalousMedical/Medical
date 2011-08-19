@@ -13,6 +13,7 @@ namespace Medical.GUI
         private TimelineData timelineData;
         private Edit imageFileEdit;
 
+        private EnumComboBox<ImageAlignment> alignment;
         private NumericEdit xPosition;
         private NumericEdit yPosition;
         private NumericEdit width;
@@ -29,6 +30,9 @@ namespace Medical.GUI
 
             Button browseButton = mainWidget.findWidget("BrowseButton") as Button;
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
+
+            alignment = new EnumComboBox<ImageAlignment>((ComboBox)mainWidget.findWidget("Alignment"));
+            alignment.EventComboChangePosition += new MyGUIEvent(alignment_EventComboChangePosition);
 
             xPosition = new NumericEdit(mainWidget.findWidget("XPositionEdit") as Edit);
             xPosition.ValueChanged += position_ValueChanged;
@@ -75,6 +79,7 @@ namespace Medical.GUI
             height.FloatValue = size.Height;
             keepAspectRatio.Checked = showImage.KeepAspectRatio;
             cameraText.Caption = showImage.CameraName;
+            alignment.Value = showImage.Alignment;
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
@@ -107,6 +112,11 @@ namespace Medical.GUI
         {
             showImage.capture();
             cameraText.Caption = showImage.CameraName;
+        }
+
+        void alignment_EventComboChangePosition(Widget source, EventArgs e)
+        {
+            showImage.Alignment = alignment.Value;
         }
     }
 }

@@ -18,11 +18,13 @@ namespace Medical
         private Size2 size;
         private Vector2 position;
         private bool keepAspectRatio = true;
+        private ImageAlignment alignment;
 
         public ShowImageAction()
         {
             size = new Size2(0.2f, 0.2f);
             position = new Vector2(0.0f, 0.0f);
+            alignment = ImageAlignment.Specify;
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -37,9 +39,7 @@ namespace Medical
                 }
                 else
                 {
-                    imageDisplay.KeepAspectRatio = keepAspectRatio;
-                    imageDisplay.Position = position;
-                    imageDisplay.Size = size;
+                    setupImageDisplay();
                 }
             }
             else
@@ -83,9 +83,7 @@ namespace Medical
                 imageDisplay = TimelineController.showImage(imageFile, CameraName);
                 if (imageDisplay != null)
                 {
-                    imageDisplay.KeepAspectRatio = keepAspectRatio;
-                    imageDisplay.Position = position;
-                    imageDisplay.Size = size;
+                    setupImageDisplay();
                 }
             }
         }
@@ -174,7 +172,34 @@ namespace Medical
             }
         }
 
+        public ImageAlignment Alignment
+        {
+            get
+            {
+                return alignment;
+            }
+            set
+            {
+                alignment = value;
+                if (imageDisplay != null)
+                {
+                    imageDisplay.Alignment = alignment;
+                }
+            }
+        }
+
         public String CameraName { get; set; }
+
+        private void setupImageDisplay()
+        {
+            imageDisplay.SuppressLayout = true;
+            imageDisplay.KeepAspectRatio = keepAspectRatio;
+            imageDisplay.Position = position;
+            imageDisplay.Size = size;
+            imageDisplay.Alignment = alignment;
+            imageDisplay.SuppressLayout = false;
+            imageDisplay.layout();
+        }
 
         #region Saving
 
@@ -183,6 +208,7 @@ namespace Medical
         private static String SIZE = "Size";
         private static String KEEP_ASPECT_RATIO = "KeepAspectRatio";
         private static String CAMERA_NAME = "CameraName";
+        private static String IMAGE_ALIGNMENT = "ImageAlignment";
 
         protected ShowImageAction(LoadInfo info)
             :base(info)
@@ -192,6 +218,7 @@ namespace Medical
             size = info.GetValue<Size2>(SIZE);
             keepAspectRatio = info.GetValue(KEEP_ASPECT_RATIO, keepAspectRatio);
             CameraName = info.GetValue(CAMERA_NAME, CameraName);
+            alignment = info.GetValue<ImageAlignment>(IMAGE_ALIGNMENT, ImageAlignment.Specify);
         }
 
         public override void getInfo(SaveInfo info)
@@ -202,6 +229,7 @@ namespace Medical
             info.AddValue(SIZE, size);
             info.AddValue(KEEP_ASPECT_RATIO, keepAspectRatio);
             info.AddValue(CAMERA_NAME, CameraName);
+            info.AddValue(IMAGE_ALIGNMENT, alignment);
         }
 
         #endregion
