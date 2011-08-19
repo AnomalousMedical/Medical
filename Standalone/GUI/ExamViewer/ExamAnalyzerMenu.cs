@@ -36,6 +36,17 @@ namespace Medical.GUI
             }
         }
 
+        public void addHistory(Exam mostRecent)
+        {
+            Exam next = mostRecent.PreviousExam;
+            while (next != null)
+            {
+                MenuItem item = popupMenu.addItem(String.Format("{0} {1}", next.PrettyName, next.Date.ToString()));
+                item.UserObject = RawDataAnalyzer.Instance;
+                next = next.PreviousExam;
+            }
+        }
+
         public void show(int left, int top)
         {
             popupMenu.setPosition(left, top);

@@ -60,6 +60,7 @@ namespace Medical.GUI
             {
                 Exam exam = (Exam)examList.getItemDataAt(selectedIndex);
                 ExamAnalyzerMenu menu = new ExamAnalyzerMenu(exam.Analyzers);
+                menu.addHistory(exam);
                 menu.Closed += new Engine.EventDelegate<ExamAnalyzerMenu>(menu_Closed);
                 menu.RunExamAnalyzer += new Engine.EventDelegate<ExamAnalyzerMenu, ExamAnalyzer>(menu_RunExamAnalyzer);
                 menu.show(source.AbsoluteLeft, source.AbsoluteTop);
