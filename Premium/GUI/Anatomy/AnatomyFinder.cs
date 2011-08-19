@@ -10,16 +10,18 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    enum AnatomyFinderEvents
-    {
-        PickAnatomy,
-        ChangeSelectionMode,
-    }
-
     public class AnatomyFinder : MDIDialog
     {
+        enum AnatomyFinderEvents
+        {
+            PickAnatomy,
+            ChangeSelectionMode,
+            OpenAnatomyFinder,
+        }
+
         private static MessageEvent pickAnatomy;
         private static MessageEvent changeSelectionMode;
+        private static MessageEvent openAnatomyFinder;
 
         static AnatomyFinder()
         {
@@ -30,6 +32,11 @@ namespace Medical.GUI
             changeSelectionMode = new MessageEvent(AnatomyFinderEvents.ChangeSelectionMode);
             changeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
             DefaultEvents.registerDefaultEvent(changeSelectionMode);
+
+            openAnatomyFinder = new MessageEvent(AnatomyFinderEvents.OpenAnatomyFinder);
+            openAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
+            openAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
+            DefaultEvents.registerDefaultEvent(openAnatomyFinder);
         }
 
         private ButtonGrid anatomyList;
@@ -69,6 +76,7 @@ namespace Medical.GUI
             pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
             pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
             changeSelectionMode.FirstFrameUpEvent += new MessageEventCallback(changeSelectionMode_FirstFrameUpEvent);
+            openAnatomyFinder.FirstFrameUpEvent += new MessageEventCallback(openAnatomyFinder_FirstFrameUpEvent);
 
             Button clearButton = window.findWidget("ClearButton") as Button;
             clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
@@ -78,6 +86,15 @@ namespace Medical.GUI
 
             this.Resized += new EventHandler(AnatomyFinder_Resized);
             fixListItemWidth();
+        }
+
+        void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)
+        {
+            if (!Gui.Instance.HandledKeyboardButtons || InputManager.Instance.getKeyFocusWidget().RootWidget == window)
+            {
+                this.Visible = !this.Visible;
+                InputManager.Instance.setKeyFocusWidget(searchBox);
+            }
         }
 
         void AnatomyFinder_Resized(object sender, EventArgs e)
