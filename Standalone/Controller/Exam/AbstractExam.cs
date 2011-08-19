@@ -22,7 +22,7 @@ namespace Medical
     /// </summary>
     /// <typeparam name="ExamType"></typeparam>
     public abstract class AbstractExam<ExamType> : Exam
-        where ExamType : Exam, new()
+        where ExamType : AbstractExam<ExamType>, new()
     {
 
         #region Static
@@ -53,7 +53,10 @@ namespace Medical
         public static void openForReview(ExamType exam)
         {
             previousExamVersion = exam;
+            exam.savePreviousExams = false;
             currentExam = copySaver.copy<ExamType>(exam);
+            exam.savePreviousExams = true;
+            currentExam.date = DateTime.Now;
         }
 
         /// <summary>
@@ -64,6 +67,7 @@ namespace Medical
             if (previousExamVersion != null)
             {
                 ExamController.Instance.replaceExam(previousExamVersion, Current);
+                Current.previousExam = previousExamVersion;
             }
             else
             {
@@ -88,6 +92,12 @@ namespace Medical
 
         [DoNotSave]
         private String prettyName;
+
+        [DoNotSave]
+        private AbstractExam<ExamType> previousExam;
+
+        [DoNotSave]
+        private bool savePreviousExams = true; //This can be turned off when the exam is being copied to save pointlessly copying the previous editions with the copy saver.
 
         [DoNotCopy]
         private EditInterface editInterface;
@@ -133,6 +143,14 @@ namespace Medical
             }
         }
 
+        public Exam PreviousExam
+        {
+            get
+            {
+                return previousExam;
+            }
+        }
+
         [Hidden]
         public abstract ExamAnalyzerCollection Analyzers { get; }
 
@@ -142,6 +160,7 @@ namespace Medical
         {
             date = new DateTime(info.GetInt64("ExamReserved_Date"));
             prettyName = info.GetString("ExamReserved_PrettyName");
+            previousExam = info.GetValue<AbstractExam<ExamType>>("ExamReserved_Previous", previousExam);
             ReflectedSaver.RestoreObject(this, info, ExamSaveMemberScanner.Scanner);
         }
 
@@ -149,6 +168,10 @@ namespace Medical
         {
             info.AddValue("ExamReserved_Date", date.Ticks);
             info.AddValue("ExamReserved_PrettyName", prettyName);
+            if (savePreviousExams)
+            {
+                info.AddValue("ExamReserved_Previous", previousExam);
+            }
             ReflectedSaver.SaveObject(this, info, ExamSaveMemberScanner.Scanner);
         }
 

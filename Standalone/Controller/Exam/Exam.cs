@@ -33,5 +33,10 @@ namespace Medical
         /// An EditInterface for the exam.
         /// </summary>
         EditInterface EditInterface { get; }
+
+        /// <summary>
+        /// This is the exam version before this one. 
+        /// </summary>
+        Exam PreviousExam { get; }
     }
 }
