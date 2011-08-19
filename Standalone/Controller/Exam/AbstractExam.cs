@@ -28,6 +28,8 @@ namespace Medical
         #region Static
 
         static ExamType currentExam;
+        static ExamType previousExamVersion;
+        static CopySaver copySaver = new CopySaver();
 
         /// <summary>
         /// The current working instance of this exam.
@@ -45,12 +47,13 @@ namespace Medical
         }
 
         /// <summary>
-        /// Open the given exam for review. Will set the given exam as Current.
+        /// Open the given exam for review. Will create a copy of the exam. Upon calling saveAndClear this copy will replace the original.
         /// </summary>
         /// <param name="exam">The exam to review.</param>
         public static void openForReview(ExamType exam)
         {
-            currentExam = exam;
+            previousExamVersion = exam;
+            currentExam = copySaver.copy<ExamType>(exam);
         }
 
         /// <summary>
@@ -58,7 +61,14 @@ namespace Medical
         /// </summary>
         public static void saveAndClear()
         {
-            ExamController.Instance.addExam(Current);
+            if (previousExamVersion != null)
+            {
+                ExamController.Instance.replaceExam(previousExamVersion, Current);
+            }
+            else
+            {
+                ExamController.Instance.addExam(Current);
+            }
             clear();
         }
 
@@ -68,6 +78,7 @@ namespace Medical
         public static void clear()
         {
             currentExam = default(ExamType);
+            previousExamVersion = default(ExamType);
         }
 
         #endregion Static

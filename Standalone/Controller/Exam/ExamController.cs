@@ -62,6 +62,12 @@ namespace Medical
             }
         }
 
+        public void replaceExam(Exam oldExam, Exam newExam)
+        {
+            removeExam(oldExam);
+            addExam(newExam);
+        }
+
         public void clear()
         {
             exams.Clear();
