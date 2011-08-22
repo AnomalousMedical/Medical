@@ -80,6 +80,11 @@ namespace Medical
             jointToMandible(splitDefinition);
             propFactory.addDefinition(splitDefinition.Name, splitDefinition);
 
+            //PartialPosteriorSplint
+            splitDefinition = createSplitDefinition("PartialPosteriorSplint", "PartialPosteriorSplint.mesh", "PivotApplianceCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.1558f, 7.77287f), new Quaternion(2.980228E-08f, -3.574548E-08f, 3.574548E-08f, 1f));
+            jointToMandible(splitDefinition);
+            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+
             //MandibularFullCoverageFlatPlane
             splitDefinition = createSplitDefinition("MandibularFullCoverageFlatPlane", "MandibularFullCoverageFlatPlane.mesh", "MandibularFullCoverageFlatPlaneCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.1154f, 8.15084f), new Quaternion(0f, 0f, 0f, 1f));
             jointToMandible(splitDefinition);
