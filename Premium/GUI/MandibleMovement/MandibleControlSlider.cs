@@ -16,11 +16,16 @@ namespace Medical.GUI
         private float sequentialChange = 0.0f;
 
         private VScroll scrollBar;
+        private NumericEdit numericEdit;
 
-        public MandibleControlSlider(VScroll scrollBar)
+        public MandibleControlSlider(VScroll scrollBar, Edit edit)
         {
             this.scrollBar = scrollBar;
             scrollBar.ScrollChangePosition += new MyGUIEvent(scrollBar_ScrollChangePosition);
+
+            numericEdit = new NumericEdit(edit);
+            numericEdit.AllowFloat = true;
+            numericEdit.ValueChanged += new MyGUIEvent(numericEdit_ValueChanged);
         }
 
         public float Minimum
@@ -33,8 +38,9 @@ namespace Medical.GUI
             {
                 float oldTime = this.CurrentTime + minimum;
                 minimum = value;
-                this.CurrentTime = oldTime - minimum;
+                synchronize(this, oldTime - minimum);
                 this.MaximumTime = maximum - minimum;
+                numericEdit.MinValue = value;
             }
         }
 
@@ -48,6 +54,7 @@ namespace Medical.GUI
             {
                 maximum = value;
                 this.MaximumTime = maximum - minimum;
+                numericEdit.MaxValue = value - 0.0001f;
             }
         }
 
@@ -60,6 +67,7 @@ namespace Medical.GUI
             set
             {
                 sequentialChange = value;
+                numericEdit.Increment = value;
             }
         }
 
@@ -71,7 +79,7 @@ namespace Medical.GUI
             }
             set
             {
-                this.CurrentTime = value - minimum;
+                synchronize(this, value - minimum);
             }
         }
 
@@ -87,7 +95,19 @@ namespace Medical.GUI
             }
         }
 
+        void numericEdit_ValueChanged(Widget source, EventArgs e)
+        {
+            synchronize(numericEdit, numericEdit.FloatValue - minimum);
+            fireValueChanged();
+        }
+
         void scrollBar_ScrollChangePosition(Widget source, EventArgs e)
+        {
+            synchronize(scrollBar, CurrentTime);
+            fireValueChanged();
+        }
+
+        private void fireValueChanged()
         {
             if (ValueChanged != null)
             {
@@ -102,7 +122,7 @@ namespace Medical.GUI
             {
                 time = 0.0f;
             }
-            this.CurrentTime = time;
+            synchronize(this, time);
         }
 
         void nextButton_Click(object sender, EventArgs e)
@@ -112,7 +132,19 @@ namespace Medical.GUI
             {
                 time = this.MaximumTime;
             }
-            this.CurrentTime = time;
+            synchronize(this, time);
+        }
+
+        private void synchronize(Object source, float currentTime)
+        {
+            if (source != numericEdit)
+            {
+                numericEdit.FloatValue = currentTime + minimum;
+            }
+            if (source != scrollBar)
+            {
+                scrollBar.ScrollPosition = (uint)(currentTime * 1000.0f);
+            }
         }
 
         private float CurrentTime
@@ -121,13 +153,9 @@ namespace Medical.GUI
             {
                 return scrollBar.ScrollPosition / 1000.0f;
             }
-            set
-            {
-                scrollBar.ScrollPosition = (uint)(value * 1000.0f);
-            }
         }
 
-        public float MaximumTime
+        private float MaximumTime
         {
             get
             {
