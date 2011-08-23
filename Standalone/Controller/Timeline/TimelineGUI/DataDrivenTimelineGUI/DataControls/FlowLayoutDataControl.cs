@@ -64,6 +64,8 @@ namespace Medical
 
         public override void layout()
         {
+            layoutContainer.Location = Location;
+            layoutContainer.WorkingSize = WorkingSize;
             layoutContainer.layout();
         }
 

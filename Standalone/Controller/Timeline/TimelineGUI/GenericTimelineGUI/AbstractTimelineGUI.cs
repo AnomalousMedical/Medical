@@ -74,6 +74,30 @@ namespace Medical
             AbstractTimelineGUIManager.Instance.clearNavigationBar();
         }
 
+        public String NextTimeline
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public String PreviousTimeline
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public String MenuTimeline
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         internal void _alertNavigationBarTimelineChange()
         {
             navigationBarChangedTimelines();

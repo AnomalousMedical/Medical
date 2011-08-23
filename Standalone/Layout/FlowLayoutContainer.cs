@@ -88,7 +88,7 @@ namespace Medical
 
         public override void layout()
         {
-            Vector2 currentLocation = startLocation;
+            Vector2 currentLocation = startLocation + Location;
             if (layoutType == LayoutType.Horizontal)
             {
                 foreach (LayoutContainer child in children)
