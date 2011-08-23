@@ -18,6 +18,11 @@ namespace Medical
         private static String[] SEPS = { "." };
         private static Type PrototypeType = typeof(TimelineGUIFactoryPrototype);
 
+        public TimelineGUIFactory()
+        {
+            addPrototype(new DataDrivenTimelineGUIPrototype());
+        }
+
         public void findPrototypes(Assembly assembly)
         {
             foreach (Type type in assembly.GetTypes())

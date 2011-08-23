@@ -110,6 +110,8 @@
     <Compile Include="Controller\Exam\AbstractExamSection.cs" />
     <Compile Include="Controller\Exam\Analysis\AnalysisDisplayProvider.cs" />
     <Compile Include="Controller\Exam\Analysis\RawDataAnalyzer.cs" />
+    <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExam.cs" />
+    <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExamSection.cs" />
     <Compile Include="Controller\Exam\Exam.cs" />
     <Compile Include="Controller\Exam\Analysis\ExamAnalyzer.cs" />
     <Compile Include="Controller\Exam\Analysis\ExamAnalyzerCollection.cs" />
@@ -166,6 +168,15 @@
     <Compile Include="Controller\Timeline\ShowTextAction\ITextDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowTextAction\ShowTextAction.cs" />
     <Compile Include="Controller\Timeline\TimelineEditInterface.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControl.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\FlowLayoutDataControl.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\NumericEditDataControl.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUI.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUIData.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUIPrototype.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataField.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFieldCollection.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\NumericDataField.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUIData.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\GenericTimelineGUI.cs" />
@@ -378,6 +389,7 @@
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
     <None Include="Resources\AnomalousMedical.png" />
+    <EmbeddedResource Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUI.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
