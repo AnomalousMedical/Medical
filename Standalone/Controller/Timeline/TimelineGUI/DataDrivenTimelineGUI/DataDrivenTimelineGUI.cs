@@ -11,6 +11,7 @@ namespace Medical
     class DataDrivenTimelineGUI : GenericTimelineGUI<DataDrivenTimelineGUIData>
     {
         private DataControl topLevelDataControl;
+        private DataDrivenExamSection guiSection;
 
         public DataDrivenTimelineGUI()
             :base("Medical.Controller.Timeline.TimelineGUI.DataDrivenTimelineGUI.DataDrivenTimelineGUI.layout")
@@ -37,6 +38,11 @@ namespace Medical
                 DataDrivenExam exam = new DataDrivenExam(TimelineFile);
                 DataDrivenExamController.Instance.CurrentExam = exam;
                 DataDrivenExamController.Instance.CurrentSection = exam;
+                guiSection = exam;
+            }
+            else
+            {
+                guiSection = DataDrivenExamController.Instance.CurrentSection.getSection(TimelineFile);
             }
             topLevelDataControl = GUIData.createControls(widget);
             topLevelDataControl.WorkingSize = new Size2(widget.Width, widget.Height);
@@ -46,7 +52,7 @@ namespace Medical
 
         protected override void closing()
         {
-            topLevelDataControl.captureData(DataDrivenExamController.Instance.CurrentSection);
+            topLevelDataControl.captureData(guiSection);
         }
 
         void previewCloseButton_MouseButtonClick(Widget source, EventArgs e)

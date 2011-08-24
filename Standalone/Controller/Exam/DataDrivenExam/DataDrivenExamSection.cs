@@ -67,6 +67,20 @@ namespace Medical
                 if (editInterface == null)
                 {
                     editInterface = new EditInterface(prettyName);
+                    EditablePropertyInfo propertyInfo = new EditablePropertyInfo();
+                    propertyInfo.addColumn(new EditablePropertyColumn("Name", true));
+                    propertyInfo.addColumn(new EditablePropertyColumn("Value", true));
+                    editInterface.setPropertyInfo(propertyInfo);
+
+                    foreach (DataDrivenExamSection section in sections.Values)
+                    {
+                        editInterface.addSubInterface(section.EditInterface);
+                    }
+
+                    foreach (String key in values.Keys)
+                    {
+                        editInterface.addEditableProperty(new DataDrivenExamValueProperty(key, values[key]));
+                    }
                 }
                 return editInterface;
             }

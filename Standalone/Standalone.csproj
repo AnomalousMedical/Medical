@@ -113,6 +113,7 @@
     <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExam.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExamController.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExamSection.cs" />
+    <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExamValueProperty.cs" />
     <Compile Include="Controller\Exam\Exam.cs" />
     <Compile Include="Controller\Exam\Analysis\ExamAnalyzer.cs" />
     <Compile Include="Controller\Exam\Analysis\ExamAnalyzerCollection.cs" />

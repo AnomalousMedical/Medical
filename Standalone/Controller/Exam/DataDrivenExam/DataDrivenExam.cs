@@ -10,7 +10,13 @@ namespace Medical
 {
     public class DataDrivenExam : DataDrivenExamSection, Exam
     {
-        private ExamAnalyzerCollection analyzers;
+        private static ExamAnalyzerCollection analyzers;
+
+        static DataDrivenExam()
+        {
+            analyzers = new ExamAnalyzerCollection();
+            analyzers.addAnalyzer(RawDataAnalyzer.Instance);
+        }
 
         [DoNotSave]
         private DataDrivenExam previousExam;
@@ -21,7 +27,7 @@ namespace Medical
         public DataDrivenExam(String prettyName)
             :base(prettyName)
         {
-            analyzers = new ExamAnalyzerCollection();
+            
         }
 
         public ExamAnalyzerCollection Analyzers
