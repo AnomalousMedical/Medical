@@ -80,6 +80,8 @@ namespace Medical
 
     public partial class MenuItemField
     {
+        [DoNotSave]
+        [DoNotCopy]
         private EditInterface timelinesEditInterface;
 
         protected override void customizeEditInterface(EditInterface editInterface)
