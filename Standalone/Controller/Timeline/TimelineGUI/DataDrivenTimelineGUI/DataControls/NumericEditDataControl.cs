@@ -12,6 +12,7 @@ namespace Medical
         private Edit edit;
         private NumericEdit numberEdit;
         private StaticText text;
+        private String valueName;
 
         public NumericEditDataControl(Widget parentWidget, NumericDataField numericField)
         {
@@ -25,6 +26,8 @@ namespace Medical
             numberEdit.MinValue = (float)numericField.MinValue;
             numberEdit.MaxValue = (float)numericField.MaxValue;
             numberEdit.DecimalValue = numericField.CurrentValue;
+
+            valueName = numericField.Name;
         }
 
         public override void Dispose()
@@ -35,12 +38,12 @@ namespace Medical
 
         public override void captureData(DataDrivenExamSection examSection)
         {
-            
+            examSection.setValue<decimal>(valueName, numberEdit.DecimalValue);
         }
 
         public override void displayData(DataDrivenExamSection examSection)
         {
-            
+            numberEdit.DecimalValue = examSection.getValue<decimal>(valueName, numberEdit.DecimalValue);
         }
 
         public override void bringToFront()

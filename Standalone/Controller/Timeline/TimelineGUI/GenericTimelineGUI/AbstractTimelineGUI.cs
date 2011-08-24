@@ -98,6 +98,11 @@ namespace Medical
             }
         }
 
+        protected virtual void closing()
+        {
+
+        }
+
         internal void _alertNavigationBarTimelineChange()
         {
             navigationBarChangedTimelines();
@@ -141,6 +146,7 @@ namespace Medical
         /// </summary>
         private void close()
         {
+            closing();
             widget.Enabled = false;
             AbstractTimelineGUIManager.Instance.requestClose(this);
         }

@@ -4,21 +4,24 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine.Editing;
+using Engine.Attributes;
 
 namespace Medical
 {
-    public class DataDrivenExam : Exam
+    public class DataDrivenExam : DataDrivenExamSection, Exam
     {
-        private String prettyName;
-        private EditInterface editInterface;
         private ExamAnalyzerCollection analyzers;
-        private Dictionary<String, Saveable> values;
+
+        [DoNotSave]
+        private DataDrivenExam previousExam;
+
+        [DoNotSave]
+        private bool savePreviousExams = true; //This can be turned off when the exam is being copied to save pointlessly copying the previous editions with the copy saver.
 
         public DataDrivenExam(String prettyName)
+            :base(prettyName)
         {
-            this.prettyName = prettyName;
             analyzers = new ExamAnalyzerCollection();
-            values = new Dictionary<String, Saveable>();
         }
 
         public ExamAnalyzerCollection Analyzers
@@ -31,38 +34,36 @@ namespace Medical
 
         public DateTime Date { get; set; }
 
-        public string PrettyName
-        {
-            get
-            {
-                return prettyName;
-            }
-        }
-
-        public EditInterface EditInterface
-        {
-            get
-            {
-                if (editInterface == null)
-                {
-                    editInterface = new EditInterface(prettyName);
-                }
-                return editInterface;
-            }
-        }
-
         public Exam PreviousExam { get; set; }
 
-        protected DataDrivenExam(LoadInfo info)
+        /// <summary>
+        /// DO NOT TOUCH unless you are the DataDrivenExamController.
+        /// </summary>
+        internal bool _SavePreviousExams
         {
-            prettyName = info.GetValue("PrettyName", prettyName);
-            info.RebuildDictionary<String, Saveable>("ExamValue", values);
+            get
+            {
+                return savePreviousExams;
+            }
+            set
+            {
+                savePreviousExams = value;
+            }
         }
 
-        public void getInfo(SaveInfo info)
+        protected DataDrivenExam(LoadInfo info)
+            :base(info)
         {
-            info.AddValue("PrettyName", prettyName);
-            info.ExtractDictionary<String, Saveable>("ExamValue", values);
+            previousExam = info.GetValue<DataDrivenExam>("ExamReserved_Previous", previousExam);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            if (savePreviousExams)
+            {
+                info.AddValue("ExamReserved_Previous", previousExam);
+            }
         }
     }
 }

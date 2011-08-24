@@ -33,6 +33,10 @@ namespace Medical
                 previewCloseButton.MouseButtonClick += new MyGUIEvent(previewCloseButton_MouseButtonClick);
                 previewCloseButton.Caption = "Close";
                 startPos.y = previewCloseButton.Bottom;
+
+                DataDrivenExam exam = new DataDrivenExam(TimelineFile);
+                DataDrivenExamController.Instance.CurrentExam = exam;
+                DataDrivenExamController.Instance.CurrentSection = exam;
             }
             topLevelDataControl = GUIData.createControls(widget);
             topLevelDataControl.WorkingSize = new Size2(widget.Width, widget.Height);
@@ -40,9 +44,15 @@ namespace Medical
             topLevelDataControl.layout();
         }
 
+        protected override void closing()
+        {
+            topLevelDataControl.captureData(DataDrivenExamController.Instance.CurrentSection);
+        }
+
         void previewCloseButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.closeAndReturnToMainGUI();
+            DataDrivenExamController.Instance.saveAndClear();
         }
     }
 }

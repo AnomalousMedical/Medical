@@ -11,12 +11,45 @@ namespace Medical
     {
         private String prettyName;
         private EditInterface editInterface;
-        private Dictionary<String, Saveable> values;
+        private Dictionary<String, Object> values = new Dictionary<String, Object>();
+        private Dictionary<String, DataDrivenExamSection> sections = new Dictionary<String, DataDrivenExamSection>();
 
         public DataDrivenExamSection(String prettyName)
         {
             this.prettyName = prettyName;
-            values = new Dictionary<String, Saveable>();
+        }
+
+        public T getValue<T>(String key, T defaultValue)
+        {
+            Object value;
+            if (values.TryGetValue(key, out value) && value is T)
+            {
+                return (T)value;
+            }
+            return defaultValue;
+        }
+
+        public void setValue<T>(String key, T value)
+        {
+            if (values.ContainsKey(key))
+            {
+                values[key] = values;
+            }
+            else
+            {
+                values.Add(key, value);
+            }
+        }
+
+        public DataDrivenExamSection getSection(String name)
+        {
+            DataDrivenExamSection section;
+            if (!sections.TryGetValue(name, out section))
+            {
+                section = new DataDrivenExamSection(name);
+                sections.Add(name, section);
+            }
+            return section;
         }
 
         public string PrettyName
@@ -42,13 +75,15 @@ namespace Medical
         protected DataDrivenExamSection(LoadInfo info)
         {
             prettyName = info.GetValue("PrettyName", prettyName);
-            info.RebuildDictionary<String, Saveable>("ExamValue", values);
+            info.RebuildDictionary<String, Object>("ExamValue", values);
+            info.RebuildDictionary<String, DataDrivenExamSection>("ExamSection", sections);
         }
 
-        public void getInfo(SaveInfo info)
+        public virtual void getInfo(SaveInfo info)
         {
             info.AddValue("PrettyName", prettyName);
-            info.ExtractDictionary<String, Saveable>("ExamValue", values);
+            info.ExtractDictionary<String, Object>("ExamValue", values);
+            info.ExtractDictionary<String, DataDrivenExamSection>("ExamSection", sections);
         }
     }
 }
