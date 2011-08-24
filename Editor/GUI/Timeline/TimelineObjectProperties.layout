@@ -4,9 +4,17 @@
         <Property key="Widget_Caption" value="Timeline Properties"/>
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="ScrollView" skin="ScrollView" position="7 3 196 320" align="Stretch" name="ScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position="7 3 198 292" align="Stretch" name="ScrollView">
             <Property key="ScrollView_CanvasSize" value="196 320"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="1 298 208 30" align="HStretch Bottom" name="AddRemovePanel">
+            <Widget type="Button" skin="Button" position="72 2 62 26" name="RemoveButton">
+                <Property key="Widget_Caption" value="Remove"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="7 2 62 26" name="AddButton">
+                <Property key="Widget_Caption" value="Add"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

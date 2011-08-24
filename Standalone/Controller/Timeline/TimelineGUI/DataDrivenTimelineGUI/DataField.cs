@@ -46,7 +46,7 @@ namespace Medical
             ReflectedSaver.RestoreObject(this, info, BehaviorSaveMemberScanner.Scanner);
         }
 
-        public void getInfo(SaveInfo info)
+        public virtual void getInfo(SaveInfo info)
         {
             ReflectedSaver.SaveObject(this, info, BehaviorSaveMemberScanner.Scanner);
         }

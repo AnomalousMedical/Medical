@@ -92,7 +92,7 @@ namespace Medical.GUI
             timelineObjectExplorer.Enabled = false;
             guiManager.addManagedDialog(timelineObjectExplorer);
 
-            timelineObjectProperties = new TimelineObjectProperties();
+            timelineObjectProperties = new TimelineObjectProperties(medicalUICallback);
             guiManager.addManagedDialog(timelineObjectProperties);
 
             timelineObjectEditor = new ObjectEditor(timelineObjectExplorer.EditInterfaceTree, timelineObjectProperties.PropertiesTable, medicalUICallback);

@@ -22,16 +22,35 @@ namespace Medical.GUI
         private Dictionary<TableRow, EditableProperty> rowProperties = new Dictionary<TableRow, EditableProperty>();
         private bool allowValidation = true;
         private List<ICustomCellProvider> customCells = new List<ICustomCellProvider>();
+        private AddRemoveButtons addRemoveButtons = null;
+        private EditUICallback uiCallback = null;
 
         public PropertiesTable(Table propertiesTable)
+            :this(propertiesTable, null, null)
+        {
+            
+        }
+
+        public PropertiesTable(Table propertiesTable, EditUICallback uiCallback, AddRemoveButtons buttons)
         {
             this.propertiesTable = propertiesTable;
             propertiesTable.CellValidating += new EventHandler<TableCellValidationEventArgs>(propertiesTable_CellValidating);
             propertiesTable.CellValueChanged += new EventHandler(propertiesTable_CellValueChanged);
+            addRemoveButtons = buttons;
+            if (addRemoveButtons != null)
+            {
+                addRemoveButtons.AddButtonClicked += addRemoveButtons_AddButtonClicked;
+                addRemoveButtons.RemoveButtonClicked += addRemoveButtons_RemoveButtonClicked;
+            }
         }
 
         public void Dispose()
         {
+            if (addRemoveButtons != null)
+            {
+                addRemoveButtons.AddButtonClicked -= addRemoveButtons_AddButtonClicked;
+                addRemoveButtons.RemoveButtonClicked -= addRemoveButtons_RemoveButtonClicked;
+            }
             clear();
         }
 
@@ -63,6 +82,10 @@ namespace Medical.GUI
                     currentEditInterface.OnPropertyAdded += new PropertyAdded(currentEditInterface_OnPropertyAdded);
                     currentEditInterface.OnPropertyRemoved += new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
 
+                    if (addRemoveButtons != null)
+                    {
+                        addRemoveButtons.Visible = currentEditInterface.canAddRemoveProperties();
+                    }
                     currentPropInfo = value.getPropertyInfo();
                     if (currentPropInfo != null)
                     {
@@ -104,11 +127,13 @@ namespace Medical.GUI
         void currentEditInterface_OnPropertyRemoved(EditableProperty property)
         {
             removeProperty(property);
+            propertiesTable.layout();
         }
 
         void currentEditInterface_OnPropertyAdded(EditableProperty property)
         {
             addProperty(property);
+            propertiesTable.layout();
         }
 
         void propertiesTable_CellValueChanged(object sender, EventArgs e)
@@ -180,6 +205,7 @@ namespace Medical.GUI
                 {
                     propertiesTable.Rows.remove(row);
                     rowProperties.Remove(row);
+                    row.Dispose();
                     break;
                 }
             }
@@ -250,6 +276,22 @@ namespace Medical.GUI
                 }
             }
             return valid;
+        }
+
+        void addRemoveButtons_AddButtonClicked(Widget source, EventArgs e)
+        {
+            currentEditInterface.getAddPropertyCallback().Invoke(uiCallback);
+        }
+
+        void addRemoveButtons_RemoveButtonClicked(Widget source, EventArgs e)
+        {
+            int lastEditedRow = propertiesTable.LastEditedRow;
+            if (lastEditedRow != -1)
+            {
+                TableRow row = propertiesTable.Rows[propertiesTable.LastEditedRow];
+                EditableProperty var = rowProperties[row];
+                currentEditInterface.getRemovePropertyCallback().Invoke(uiCallback, var);
+            }
         }
     }
 }
