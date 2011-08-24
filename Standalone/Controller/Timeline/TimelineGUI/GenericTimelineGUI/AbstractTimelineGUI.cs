@@ -74,44 +74,20 @@ namespace Medical
             AbstractTimelineGUIManager.Instance.clearNavigationBar();
         }
 
-        public String NextTimeline
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public String PreviousTimeline
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public String MenuTimeline
-        {
-            get
-            {
-                return null;
-            }
-        }
-
         protected virtual void closing()
         {
 
         }
 
-        internal void _alertNavigationBarTimelineChange()
+        internal void _alertNavigationBarTimelineChange(String timeline)
         {
-            navigationBarChangedTimelines();
+            navigationBarChangedTimelines(timeline);
         }
 
         /// <summary>
         /// This is called when the navigation bar is changing timelines.
         /// </summary>
-        protected virtual void navigationBarChangedTimelines()
+        protected virtual void navigationBarChangedTimelines(String timeline)
         {
 
         }

@@ -26,19 +26,13 @@ namespace Medical
         DataDrivenExam previousExamVersion;
         CopySaver copySaver = new CopySaver();
 
-        /// <summary>
-        /// The current working instance of this exam.
-        /// </summary>
-        public DataDrivenExam CurrentExam
+        public DataDrivenExam createOrRetrieveExam(String name)
         {
-            get
+            if (currentExam == null)
             {
-                return currentExam;
+                currentExam = new DataDrivenExam(name);
             }
-            set
-            {
-                currentExam = value;
-            }
+            return currentExam;
         }
 
         public DataDrivenExamSection CurrentSection { get; set; }

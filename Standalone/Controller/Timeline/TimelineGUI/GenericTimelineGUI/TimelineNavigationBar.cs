@@ -109,7 +109,7 @@ namespace Medical
         {
             if (currentGUI != null)
             {
-                currentGUI._alertNavigationBarTimelineChange();
+                currentGUI._alertNavigationBarTimelineChange(source.TimelineFile);
                 currentGUI.closeAndPlayTimeline(source.TimelineFile);
             }
             else

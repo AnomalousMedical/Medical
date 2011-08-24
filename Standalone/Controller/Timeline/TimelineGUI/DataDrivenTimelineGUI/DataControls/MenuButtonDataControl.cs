@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using MyGUIPlugin;
+using Logging;
 
 namespace Medical
 {
@@ -30,7 +31,18 @@ namespace Medical
 
         void button_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+            DataDrivenNavigationState dataNavState = menuItemField.createNavigationState(gui.TimelineFile);
+            DataDrivenNavigationManager.Instance.pushNavigationState(dataNavState);
+            dataNavState.configureGUI(gui);
+            if (dataNavState.CurrentTimeline != null)
+            {
+                gui.closeAndPlayTimeline(dataNavState.CurrentTimeline);
+            }
+            else
+            {
+                Log.Warning("Could not play menu timelines from button '{0}' in timeline '{1}' because none are defined. Returning to main GUI.", menuItemField.Name, gui.TimelineFile);
+                gui.closeAndReturnToMainGUI();
+            }
         }
 
         public override void captureData(DataDrivenExamSection examSection)

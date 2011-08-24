@@ -45,6 +45,16 @@ namespace Medical
             }
         }
 
+        public DataDrivenNavigationState createNavigationState(String menuTimeline)
+        {
+            DataDrivenNavigationState navState = new DataDrivenNavigationState(menuTimeline);
+            foreach (TimelineEntry entry in timelines)
+            {
+                navState.addTimeline(entry);
+            }
+            return navState;
+        }
+
         public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
         {
             return new MenuButtonDataControl(parentWidget, gui, this);

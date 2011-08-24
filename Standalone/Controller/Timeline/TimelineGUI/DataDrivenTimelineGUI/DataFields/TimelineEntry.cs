@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    partial class TimelineEntry : Saveable
+    public partial class TimelineEntry : Saveable
     {
         public TimelineEntry()
         {
