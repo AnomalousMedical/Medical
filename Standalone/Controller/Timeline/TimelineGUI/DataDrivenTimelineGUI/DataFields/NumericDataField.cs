@@ -20,7 +20,7 @@ namespace Medical
             CurrentValue = 0;
         }
 
-        public override DataControl createControl(Widget parentWidget)
+        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
         {
             return new NumericEditDataControl(parentWidget, this);
         }

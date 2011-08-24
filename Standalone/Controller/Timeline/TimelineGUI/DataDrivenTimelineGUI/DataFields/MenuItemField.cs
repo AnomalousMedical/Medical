@@ -45,9 +45,9 @@ namespace Medical
             }
         }
 
-        public override DataControl createControl(Widget parentWidget)
+        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
         {
-            return new MenuButtonDataControl(parentWidget, this);
+            return new MenuButtonDataControl(parentWidget, gui, this);
         }
 
         public override string Type

@@ -21,7 +21,7 @@ namespace Medical
         {
             if (Instance != null)
             {
-                throw new Exception("Only create one instance of the GenericTimelineGUIManager.");
+                throw new Exception("Only create one instance of the AbstractTimelineGUIManager.");
             }
             Instance = this;
             this.guiManager = guiManager;

@@ -26,13 +26,13 @@ namespace Medical
             }
         }
 
-        public DataControl createControls(Widget parent)
+        public DataControl createControls(Widget parent, DataDrivenTimelineGUI gui)
         {
             FlowLayoutDataControl layoutControl = new FlowLayoutDataControl();
             layoutControl.SuppressLayout = true;
             foreach (DataField dataField in dataFields)
             {
-                layoutControl.addControl(dataField.createControl(parent));
+                layoutControl.addControl(dataField.createControl(parent, gui));
             }
             layoutControl.SuppressLayout = false;
             return layoutControl;

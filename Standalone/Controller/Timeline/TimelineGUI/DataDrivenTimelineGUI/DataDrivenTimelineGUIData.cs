@@ -8,7 +8,7 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    class DataDrivenTimelineGUIData : AbstractTimelineGUIData
+    public class DataDrivenTimelineGUIData : AbstractTimelineGUIData
     {
         private DataFieldCollection dataFields;
 
@@ -17,9 +17,9 @@ namespace Medical
             dataFields = new DataFieldCollection();
         }
 
-        public DataControl createControls(Widget parent)
+        public DataControl createControls(Widget parent, DataDrivenTimelineGUI gui)
         {
-            return dataFields.createControls(parent);
+            return dataFields.createControls(parent, gui);
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)

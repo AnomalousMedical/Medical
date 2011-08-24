@@ -8,7 +8,7 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    class DataDrivenTimelineGUI : GenericTimelineGUI<DataDrivenTimelineGUIData>
+    public class DataDrivenTimelineGUI : GenericTimelineGUI<DataDrivenTimelineGUIData>
     {
         private DataControl topLevelDataControl;
         private DataDrivenExamSection guiSection;
@@ -30,6 +30,7 @@ namespace Medical
             Vector2 startPos = new Vector2(0, 0);
             if (NextTimeline == null && PreviousTimeline == null && MenuTimeline == null)
             {
+                //Make a close button and exam if this was launched directly.
                 Button previewCloseButton = (Button)widget.createWidgetT("Button", "Button", 0, 0, 100, 20, MyGUIPlugin.Align.Default, "");
                 previewCloseButton.MouseButtonClick += new MyGUIEvent(previewCloseButton_MouseButtonClick);
                 previewCloseButton.Caption = "Close";
@@ -44,7 +45,8 @@ namespace Medical
             {
                 guiSection = DataDrivenExamController.Instance.CurrentSection.getSection(TimelineFile);
             }
-            topLevelDataControl = GUIData.createControls(widget);
+
+            topLevelDataControl = GUIData.createControls(widget, this);
             topLevelDataControl.WorkingSize = new Size2(widget.Width, widget.Height);
             topLevelDataControl.Location = startPos;
             topLevelDataControl.layout();

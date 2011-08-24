@@ -10,21 +10,27 @@ namespace Medical
     class MenuButtonDataControl : DataControl
     {
         private Button button;
+        private MenuItemField menuItemField;
+        private DataDrivenTimelineGUI gui;
 
-        public MenuButtonDataControl(Widget parentWidget, MenuItemField numericField)
+        public MenuButtonDataControl(Widget parentWidget, DataDrivenTimelineGUI gui, MenuItemField menuItemField)
         {
             button = (Button)parentWidget.createWidgetT("Button", "Button", 0, 0, 100, 20, Align.Default, "");
             button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
+            button.Caption = menuItemField.Name;
+
+            this.menuItemField = menuItemField;
+            this.gui = gui;
         }
 
         public override void Dispose()
         {
-            
+            Gui.Instance.destroyWidget(button);
         }
 
         void button_MouseButtonClick(Widget source, EventArgs e)
         {
-
+            
         }
 
         public override void captureData(DataDrivenExamSection examSection)
