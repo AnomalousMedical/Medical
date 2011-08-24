@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine.Editing;
+using Logging;
 
 namespace Medical
 {
@@ -89,15 +90,48 @@ namespace Medical
         protected DataDrivenExamSection(LoadInfo info)
         {
             prettyName = info.GetValue("PrettyName", prettyName);
-            info.RebuildDictionary<String, Object>("ExamValue", values);
             info.RebuildDictionary<String, DataDrivenExamSection>("ExamSection", sections);
+
+            String keyBase = "ExamValueKey";
+            String valueBase = "ExamValueValue";
+            for (int i = 0; info.hasValue(keyBase + i); ++i)
+            {
+                values.Add(info.GetString(keyBase + i), info.GetValue<Object>(valueBase + i));
+            }
         }
 
         public virtual void getInfo(SaveInfo info)
         {
             info.AddValue("PrettyName", prettyName);
-            info.ExtractDictionary<String, Object>("ExamValue", values);
             info.ExtractDictionary<String, DataDrivenExamSection>("ExamSection", sections);
+
+            String keyBase = "ExamValueKey";
+            String valueBase = "ExamValueValue";
+            int i = 0;
+            Type keyT = typeof(String);
+            foreach (String key in values.Keys)
+            {
+                Object value = values[key];
+                Type valueT = value.GetType();
+                info.AddValue(keyBase + i, key);
+                if (valueT == typeof(decimal))
+                {
+                    info.AddValue(valueBase + i, (decimal)value);
+                }
+                else if (valueT == typeof(bool))
+                {
+                    info.AddValue(valueBase + i, (bool)value);
+                }
+                else if (valueT == typeof(String))
+                {
+                    info.AddValue(valueBase + i, (String)value);
+                }
+                else
+                {
+                    Log.Warning("Could not serialize DataDrivenExam value '{0}' of type '{1}' because it is not a supported serialization type. Value skipped.", key, valueT.FullName);
+                }
+                ++i;
+            }
         }
     }
 }
