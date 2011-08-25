@@ -88,6 +88,12 @@ namespace Medical.GUI
             fixListItemWidth();
         }
 
+        public override void Dispose()
+        {
+            anatomyWindowManager.Dispose();
+            base.Dispose();
+        }
+
         void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)
         {
             if (!Gui.Instance.HandledKeyboardButtons || InputManager.Instance.getKeyFocusWidget().RootWidget == window)

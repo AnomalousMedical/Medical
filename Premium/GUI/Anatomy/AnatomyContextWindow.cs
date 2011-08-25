@@ -61,6 +61,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            Gui.Instance.destroyWidget(navMenu);
             transparencySlider.Dispose();
             base.Dispose();
         }

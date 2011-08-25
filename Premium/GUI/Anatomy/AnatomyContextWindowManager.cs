@@ -7,7 +7,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    public class AnatomyContextWindowManager
+    public class AnatomyContextWindowManager : IDisposable
     {
         private AnatomyContextWindow currentAnatomyWindow;
         private SceneViewController sceneViewController;
@@ -20,6 +20,15 @@ namespace Medical.GUI
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;
+        }
+
+        public void Dispose()
+        {
+            if (currentAnatomyWindow != null)
+            {
+                currentAnatomyWindow.Dispose();
+                currentAnatomyWindow = null;
+            }
         }
 
         public AnatomyContextWindow showWindow(Anatomy anatomy, int left, int top)
