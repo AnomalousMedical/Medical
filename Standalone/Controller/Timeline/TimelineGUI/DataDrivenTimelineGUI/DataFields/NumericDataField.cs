@@ -17,7 +17,7 @@ namespace Medical
             AllowDecimalPlaces = true;
             MinValue = 0;
             MaxValue = 100;
-            CurrentValue = 0;
+            StartingValue = 0;
         }
 
         public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
@@ -35,7 +35,7 @@ namespace Medical
         public decimal MaxValue { get; set; }
 
         [Editable]
-        public decimal CurrentValue { get; set; }
+        public decimal StartingValue { get; set; }
 
         public override string Type
         {

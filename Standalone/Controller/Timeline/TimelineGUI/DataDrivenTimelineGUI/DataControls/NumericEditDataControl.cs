@@ -25,7 +25,7 @@ namespace Medical
             numberEdit.AllowFloat = numericField.AllowDecimalPlaces;
             numberEdit.MinValue = (float)numericField.MinValue;
             numberEdit.MaxValue = (float)numericField.MaxValue;
-            numberEdit.DecimalValue = numericField.CurrentValue;
+            numberEdit.DecimalValue = numericField.StartingValue;
 
             valueName = numericField.Name;
         }
