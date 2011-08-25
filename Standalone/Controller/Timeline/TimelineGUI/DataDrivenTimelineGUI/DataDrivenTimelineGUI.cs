@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI;
 using Engine;
 using MyGUIPlugin;
+using Logging;
 
 namespace Medical
 {
@@ -37,7 +38,7 @@ namespace Medical
                 startPos.y = previewCloseButton.Bottom;
 
                 DataDrivenExam exam = DataDrivenExamController.Instance.createOrRetrieveExam(SectionName);
-                DataDrivenExamController.Instance.CurrentSection = exam;
+                DataDrivenExamController.Instance.pushCurrentSection(exam);
                 guiSection = exam;
             }
             else
@@ -82,7 +83,28 @@ namespace Medical
         {
             get
             {
-                return TimelineFile != null ? TimelineFile : "Not Saved Yet";
+                if (DataDrivenNavigationManager.Instance.Count > 0)
+                {
+                    if (TimelineFile != null)
+                    {
+                        DataDrivenNavigationState navState = DataDrivenNavigationManager.Instance.Current;
+                        String timeline = navState.getNameForTimeline(TimelineFile);
+                        if (timeline != null)
+                        {
+                            return timeline;
+                        }
+                        Log.Warning("Could not find name for timeline {0}. Is it part of the menu that opened this timeline?", TimelineFile);
+                        return TimelineFile;
+                    }
+                    else
+                    {
+                        return "Not Saved Yet";
+                    }
+                }
+                else
+                {
+                    return TimelineFile != null ? TimelineFile : "Not Saved Yet";
+                }
             }
         }
 
@@ -120,6 +142,7 @@ namespace Medical
         {
             String timeline = DataDrivenNavigationManager.Instance.Current.MenuTimeline;
             DataDrivenNavigationManager.Instance.popNavigationState();
+            DataDrivenExamController.Instance.popCurrentSection();
             if (DataDrivenNavigationManager.Instance.Count > 0)
             {
                 DataDrivenNavigationState state = DataDrivenNavigationManager.Instance.Current;

@@ -25,6 +25,7 @@ namespace Medical
         DataDrivenExam currentExam;
         DataDrivenExam previousExamVersion;
         CopySaver copySaver = new CopySaver();
+        private Stack<DataDrivenExamSection> sectionStack = new Stack<DataDrivenExamSection>();
 
         public DataDrivenExam createOrRetrieveExam(String name)
         {
@@ -35,7 +36,31 @@ namespace Medical
             return currentExam;
         }
 
-        public DataDrivenExamSection CurrentSection { get; set; }
+        public void pushCurrentSection(DataDrivenExamSection section)
+        {
+            sectionStack.Push(section);
+        }
+
+        public DataDrivenExamSection popCurrentSection()
+        {
+            return sectionStack.Pop();
+        }
+
+        public DataDrivenExamSection CurrentSection
+        {
+            get
+            {
+                return sectionStack.Peek();
+            }
+        }
+
+        public bool HasCurrentSection
+        {
+            get
+            {
+                return sectionStack.Count > 0;
+            }
+        }
 
         /// <summary>
         /// Open the given exam for review. Will create a copy of the exam. Upon calling saveAndClear this copy will replace the original.
@@ -74,6 +99,7 @@ namespace Medical
         {
             currentExam = null;
             previousExamVersion = null;
+            sectionStack.Clear();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Medical
             gui.clearNavigationBar();
             foreach (TimelineEntry timeline in timelines)
             {
-                gui.addToNavigationBar(timeline.Timeline, timeline.Timeline, "");
+                gui.addToNavigationBar(timeline.Timeline, timeline.Name, timeline.ImageKey);
             }
             if (timelines.Count > 0)
             {
@@ -36,6 +36,18 @@ namespace Medical
             {
                 gui.hideNavigationBar();
             }
+        }
+
+        public String getNameForTimeline(String timeline)
+        {
+            foreach (TimelineEntry entry in timelines)
+            {
+                if (entry.Timeline == timeline)
+                {
+                    return entry.Name;
+                }
+            }
+            return null;
         }
 
         public String CurrentTimeline

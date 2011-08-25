@@ -5,6 +5,7 @@ using System.Text;
 using Engine;
 using MyGUIPlugin;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -34,6 +35,9 @@ namespace Medical
             DataDrivenNavigationState dataNavState = menuItemField.createNavigationState(gui.TimelineFile);
             DataDrivenNavigationManager.Instance.pushNavigationState(dataNavState);
             dataNavState.configureGUI(gui);
+
+            DataDrivenExamSection section = DataDrivenExamController.Instance.CurrentSection.getSection(menuItemField.Name);
+            DataDrivenExamController.Instance.pushCurrentSection(section);
             if (dataNavState.CurrentTimeline != null)
             {
                 gui.closeAndPlayTimeline(dataNavState.CurrentTimeline);

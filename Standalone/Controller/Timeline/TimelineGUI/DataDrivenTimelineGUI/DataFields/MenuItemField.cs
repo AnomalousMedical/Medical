@@ -17,12 +17,12 @@ namespace Medical
         public MenuItemField(String name)
             :base(name)
         {
-
+            
         }
 
-        public void addTimeline(String timeline)
+        public void addTimeline(String name, String timeline, String imageKey)
         {
-            TimelineEntry entry = new TimelineEntry(timeline);
+            TimelineEntry entry = new TimelineEntry(name, timeline, imageKey);
             timelines.Add(entry);
             onTimelineAdded(entry);
         }
@@ -89,6 +89,7 @@ namespace Medical
             timelinesEditInterface = new EditInterface("Timelines", addReferenceCallback, removeReferenceCallback, validate);
             
             EditablePropertyInfo propertyInfo = new EditablePropertyInfo();
+            propertyInfo.addColumn(new EditablePropertyColumn("Name", false));
             propertyInfo.addColumn(new EditablePropertyColumn("Timeline", false));
             timelinesEditInterface.setPropertyInfo(propertyInfo);
             editInterface.addSubInterface(timelinesEditInterface);
@@ -100,7 +101,7 @@ namespace Medical
 
         private void addReferenceCallback(EditUICallback callback)
         {
-            addTimeline("");
+            addTimeline("", "", "");
         }
 
         private void removeReferenceCallback(EditUICallback callback, EditableProperty property)

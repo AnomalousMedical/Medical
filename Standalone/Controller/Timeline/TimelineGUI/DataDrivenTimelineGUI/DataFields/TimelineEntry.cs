@@ -11,24 +11,32 @@ namespace Medical
     {
         public TimelineEntry()
         {
-
+            
         }
 
-        public TimelineEntry(String timeline)
+        public TimelineEntry(String name, String timeline, String imageKey)
         {
             this.Timeline = timeline;
         }
 
         public String Timeline { get; set; }
 
+        public String Name { get; set; }
+
+        public String ImageKey { get; set; }
+
         protected TimelineEntry(LoadInfo info)
         {
             Timeline = info.GetString("Timeline", Timeline);
+            Name = info.GetString("Name", "");
+            ImageKey = info.GetString("ImageKey", "");
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue("Timeline", Timeline);
+            info.AddValue("Name", Name);
+            info.AddValue("ImageKey", ImageKey);
         }
     }
 
@@ -47,12 +55,33 @@ namespace Medical
 
         public string getValue(int column)
         {
-            return Timeline;
+            switch (column)
+            {
+                case 0:
+                    return Name;
+                case 1:
+                    return Timeline;
+                case 2:
+                    return ImageKey;
+                default:
+                    return "";
+            }
         }
 
         public void setValueStr(int column, string value)
         {
-            Timeline = value;
+            switch (column)
+            {
+                case 0:
+                    Name = value;
+                    break;
+                case 1:
+                    Timeline = value;
+                    break;
+                case 2:
+                    ImageKey = value;
+                    break;
+            }
         }
     }
 }
