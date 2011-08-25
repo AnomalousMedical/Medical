@@ -37,9 +37,16 @@ namespace Medical
                 previewCloseButton.Caption = "Close";
                 startPos.y = previewCloseButton.Bottom;
 
-                DataDrivenExam exam = DataDrivenExamController.Instance.createOrRetrieveExam(SectionName);
-                DataDrivenExamController.Instance.pushCurrentSection(exam);
-                guiSection = exam;
+                if (!DataDrivenExamController.Instance.HasCurrentSection)
+                {
+                    DataDrivenExam exam = DataDrivenExamController.Instance.createOrRetrieveExam(SectionName);
+                    DataDrivenExamController.Instance.pushCurrentSection(exam);
+                    guiSection = exam;
+                }
+                else
+                {
+                    guiSection = DataDrivenExamController.Instance.CurrentSection;
+                }
             }
             else
             {
