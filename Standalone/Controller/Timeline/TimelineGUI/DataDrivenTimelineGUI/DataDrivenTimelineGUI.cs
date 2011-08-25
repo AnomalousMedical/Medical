@@ -11,6 +11,8 @@ namespace Medical
 {
     public class DataDrivenTimelineGUI : GenericTimelineGUI<DataDrivenTimelineGUIData>
     {
+        private const int BUTTON_TO_PANEL_PAD = 20;
+
         private DataControl topLevelDataControl;
         private DataDrivenExamSection guiSection;
 
@@ -34,8 +36,8 @@ namespace Medical
                 //Make a close button and exam if this was launched directly.
                 Button previewCloseButton = (Button)widget.createWidgetT("Button", "Button", 0, 0, 100, 20, MyGUIPlugin.Align.Default, "");
                 previewCloseButton.MouseButtonClick += new MyGUIEvent(previewCloseButton_MouseButtonClick);
-                previewCloseButton.Caption = "Close";
-                startPos.y = previewCloseButton.Bottom;
+                previewCloseButton.Caption = "Submit";
+                startPos.y = previewCloseButton.Bottom + BUTTON_TO_PANEL_PAD;
 
                 if (!DataDrivenExamController.Instance.HasCurrentSection)
                 {
@@ -58,7 +60,7 @@ namespace Medical
                     Button previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, widget.Width / 3, 20, MyGUIPlugin.Align.Default, "");
                     previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
                     previousButton.Caption = "Previous";
-                    startPos.y = previousButton.Bottom;
+                    startPos.y = previousButton.Bottom + BUTTON_TO_PANEL_PAD;
                     xLoc += previousButton.Width;
                 }
                 if (DataDrivenNavigationManager.Instance.Current.NextTimeline != null)
@@ -66,7 +68,7 @@ namespace Medical
                     Button nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, widget.Width / 3, 20, MyGUIPlugin.Align.Default, "");
                     nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
                     nextButton.Caption = "Next";
-                    startPos.y = nextButton.Bottom;
+                    startPos.y = nextButton.Bottom + BUTTON_TO_PANEL_PAD;
                     xLoc += nextButton.Width;
                 }
                 if (DataDrivenNavigationManager.Instance.Current.MenuTimeline != null)
@@ -74,7 +76,7 @@ namespace Medical
                     Button finishButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, widget.Width / 3, 20, MyGUIPlugin.Align.Default, "");
                     finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
                     finishButton.Caption = "Finish";
-                    startPos.y = finishButton.Bottom;
+                    startPos.y = finishButton.Bottom + BUTTON_TO_PANEL_PAD;
                     xLoc += finishButton.Width;
                 }
             }

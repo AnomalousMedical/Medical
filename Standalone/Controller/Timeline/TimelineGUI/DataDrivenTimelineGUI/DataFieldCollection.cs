@@ -26,6 +26,15 @@ namespace Medical
             }
         }
 
+        public void removeDataField(DataField field)
+        {
+            dataFields.Remove(field);
+            if(editInterface != null)
+            {
+                removeDataFieldDefinition(field);
+            }
+        }
+
         public DataControl createControls(Widget parent, DataDrivenTimelineGUI gui)
         {
             FlowLayoutDataControl layoutControl = new FlowLayoutDataControl();
@@ -110,12 +119,18 @@ namespace Medical
 
         private void removeField(EditUICallback callback, EditInterfaceCommand command)
         {
-
+            DataField field = dataFieldEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            removeDataField(field);
         }
 
         private void addDataFieldDefinition(DataField field)
         {
             dataFieldEdits.addSubInterface(field, field.getEditInterface());
+        }
+
+        private void removeDataFieldDefinition(DataField field)
+        {
+            dataFieldEdits.removeSubInterface(field);
         }
 
         private bool hasDataField(String name)
