@@ -12,6 +12,8 @@ namespace Medical
     public class DataDrivenTimelineGUI : GenericTimelineGUI<DataDrivenTimelineGUIData>
     {
         private const int BUTTON_TO_PANEL_PAD = 20;
+        public const int BUTTON_HEIGHT = 28;
+        private const int WIDTH_ADJUSTMENT = 10;
 
         private DataControl topLevelDataControl;
         private DataDrivenExamSection guiSection;
@@ -34,10 +36,10 @@ namespace Medical
             if (DataDrivenNavigationManager.Instance.Count == 0)
             {
                 //Make a close button and exam if this was launched directly.
-                Button previewCloseButton = (Button)widget.createWidgetT("Button", "Button", 0, 0, 100, 20, MyGUIPlugin.Align.Default, "");
-                previewCloseButton.MouseButtonClick += new MyGUIEvent(previewCloseButton_MouseButtonClick);
-                previewCloseButton.Caption = "Submit";
-                startPos.y = previewCloseButton.Bottom + BUTTON_TO_PANEL_PAD;
+                Button submitButton = (Button)widget.createWidgetT("Button", "Button", widget.Width - 100 - WIDTH_ADJUSTMENT, 0, 100, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                submitButton.MouseButtonClick += new MyGUIEvent(submitButton_MouseButtonClick);
+                submitButton.Caption = "Submit";
+                startPos.y = submitButton.Bottom + BUTTON_TO_PANEL_PAD;
 
                 if (!DataDrivenExamController.Instance.HasCurrentSection)
                 {
@@ -55,37 +57,38 @@ namespace Medical
                 guiSection = DataDrivenExamController.Instance.CurrentSection.getSection(SectionName);
 
                 int xLoc = 0;
-                if (DataDrivenNavigationManager.Instance.Current.PreviousTimeline != null)
-                {
-                    Button previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, widget.Width / 3, 20, MyGUIPlugin.Align.Default, "");
-                    previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
-                    previousButton.Caption = "Previous";
-                    startPos.y = previousButton.Bottom + BUTTON_TO_PANEL_PAD;
-                    xLoc += previousButton.Width;
-                }
-                if (DataDrivenNavigationManager.Instance.Current.NextTimeline != null)
-                {
-                    Button nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, widget.Width / 3, 20, MyGUIPlugin.Align.Default, "");
-                    nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
-                    nextButton.Caption = "Next";
-                    startPos.y = nextButton.Bottom + BUTTON_TO_PANEL_PAD;
-                    xLoc += nextButton.Width;
-                }
-                if (DataDrivenNavigationManager.Instance.Current.MenuTimeline != null)
-                {
-                    Button finishButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, widget.Width / 3, 20, MyGUIPlugin.Align.Default, "");
-                    finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
-                    finishButton.Caption = "Finish";
-                    startPos.y = finishButton.Bottom + BUTTON_TO_PANEL_PAD;
-                    xLoc += finishButton.Width;
-                }
+                int buttonSize = (widget.Width - WIDTH_ADJUSTMENT) / 3;
+
+                Button previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
+                previousButton.Caption = "Previous";
+                xLoc += previousButton.Width;
+                previousButton.Enabled = DataDrivenNavigationManager.Instance.Current.PreviousTimeline != null;
+                
+                Button nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
+                nextButton.Caption = "Next";
+                xLoc += nextButton.Width;
+                nextButton.Enabled = DataDrivenNavigationManager.Instance.Current.NextTimeline != null;
+                
+                Button finishButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
+                finishButton.Caption = "Finish";
+                xLoc += finishButton.Width;
+                finishButton.Enabled = DataDrivenNavigationManager.Instance.Current.MenuTimeline != null;
+
+                startPos.y = previousButton.Bottom + BUTTON_TO_PANEL_PAD;
             }
 
             topLevelDataControl = GUIData.createControls(widget, this);
             topLevelDataControl.displayData(guiSection);
-            topLevelDataControl.WorkingSize = new Size2(widget.Width, widget.Height);
+            topLevelDataControl.WorkingSize = new Size2(widget.Width - WIDTH_ADJUSTMENT, 10000);
             topLevelDataControl.Location = startPos;
             topLevelDataControl.layout();
+            Size2 desiredSize = topLevelDataControl.DesiredSize;
+            desiredSize.Height += startPos.y;
+            desiredSize.Width = widget.Width - WIDTH_ADJUSTMENT;
+            ((ScrollView)widget).CanvasSize = desiredSize;
         }
 
         public String SectionName
@@ -122,7 +125,7 @@ namespace Medical
             topLevelDataControl.captureData(guiSection);
         }
 
-        void previewCloseButton_MouseButtonClick(Widget source, EventArgs e)
+        void submitButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.closeAndReturnToMainGUI();
             DataDrivenExamController.Instance.saveAndClear();

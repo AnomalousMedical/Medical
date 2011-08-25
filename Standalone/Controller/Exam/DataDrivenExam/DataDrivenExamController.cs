@@ -32,6 +32,7 @@ namespace Medical
             if (currentExam == null)
             {
                 currentExam = new DataDrivenExam(name);
+                currentExam.Date = DateTime.Now;
             }
             return currentExam;
         }

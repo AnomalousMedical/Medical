@@ -17,7 +17,7 @@ namespace Medical
 
         public MenuButtonDataControl(Widget parentWidget, DataDrivenTimelineGUI gui, MenuItemField menuItemField)
         {
-            button = (Button)parentWidget.createWidgetT("Button", "Button", 0, 0, 100, 20, Align.Default, "");
+            button = (Button)parentWidget.createWidgetT("Button", "Button", 0, 0, 100, DataDrivenTimelineGUI.BUTTON_HEIGHT, Align.Default, "");
             button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
             button.Caption = menuItemField.Name;
 
