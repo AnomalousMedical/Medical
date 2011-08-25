@@ -72,6 +72,7 @@ namespace Medical
             }
 
             topLevelDataControl = GUIData.createControls(widget, this);
+            topLevelDataControl.displayData(guiSection);
             topLevelDataControl.WorkingSize = new Size2(widget.Width, widget.Height);
             topLevelDataControl.Location = startPos;
             topLevelDataControl.layout();

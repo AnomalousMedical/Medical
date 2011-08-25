@@ -34,7 +34,7 @@ namespace Medical
         {
             if (values.ContainsKey(key))
             {
-                values[key] = values;
+                values[key] = value;
             }
             else
             {

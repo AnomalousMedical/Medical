@@ -94,7 +94,7 @@ namespace Medical
             editInterface.addSubInterface(timelinesEditInterface);
             foreach (TimelineEntry entry in timelines)
             {
-                editInterface.addEditableProperty(entry);
+                timelinesEditInterface.addEditableProperty(entry);
             }
         }
 
