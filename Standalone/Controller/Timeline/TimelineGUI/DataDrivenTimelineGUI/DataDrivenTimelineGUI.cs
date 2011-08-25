@@ -36,13 +36,13 @@ namespace Medical
                 previewCloseButton.Caption = "Close";
                 startPos.y = previewCloseButton.Bottom;
 
-                DataDrivenExam exam = DataDrivenExamController.Instance.createOrRetrieveExam(TimelineFile);
+                DataDrivenExam exam = DataDrivenExamController.Instance.createOrRetrieveExam(SectionName);
                 DataDrivenExamController.Instance.CurrentSection = exam;
                 guiSection = exam;
             }
             else
             {
-                guiSection = DataDrivenExamController.Instance.CurrentSection.getSection(TimelineFile);
+                guiSection = DataDrivenExamController.Instance.CurrentSection.getSection(SectionName);
 
                 int xLoc = 0;
                 if (DataDrivenNavigationManager.Instance.Current.PreviousTimeline != null)
@@ -76,6 +76,14 @@ namespace Medical
             topLevelDataControl.WorkingSize = new Size2(widget.Width, widget.Height);
             topLevelDataControl.Location = startPos;
             topLevelDataControl.layout();
+        }
+
+        public String SectionName
+        {
+            get
+            {
+                return TimelineFile != null ? TimelineFile : "Not Saved Yet";
+            }
         }
 
         protected override void closing()
