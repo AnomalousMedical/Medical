@@ -58,7 +58,7 @@ namespace Medical
             {
                 percentage = 1.0f;
             }
-            propBehavior.changePosition(startTranslation.lerp(ref endTranslation, ref percentage), startRotation.slerp(ref endRotation, percentage));
+            propBehavior.changePosition(startTranslation.lerp(ref endTranslation, ref percentage), startRotation.slerp(ref endRotation, percentage, true));
             finished = timelineTime >= StartTime + Duration;
         }
 
