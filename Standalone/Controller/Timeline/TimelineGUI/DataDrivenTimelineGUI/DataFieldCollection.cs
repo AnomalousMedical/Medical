@@ -76,6 +76,7 @@ namespace Medical
                 editInterface.addCommand(new EditInterfaceCommand("Add Menu Item", addMenuItem));
                 editInterface.addCommand(new EditInterfaceCommand("Add Numeric Field", addNumericField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Boolean Field", addBooleanField));
+                editInterface.addCommand(new EditInterfaceCommand("Add Multiple Choice Field", addMultipleChoiceField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Notes Field", addNotesField));
 
                 dataFieldEdits = new EditInterfaceManager<DataField>(editInterface);
@@ -126,6 +127,21 @@ namespace Medical
                 if (!hasDataField(input))
                 {
                     BooleanDataField field = new BooleanDataField(input);
+                    addDataField(field);
+                    return true;
+                }
+                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
+                return false;
+            });
+        }
+
+        private void addMultipleChoiceField(EditUICallback callback, EditInterfaceCommand command)
+        {
+            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
+            {
+                if (!hasDataField(input))
+                {
+                    MultipleChoiceField field = new MultipleChoiceField(input);
                     addDataField(field);
                     return true;
                 }
