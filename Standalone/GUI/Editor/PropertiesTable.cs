@@ -280,7 +280,7 @@ namespace Medical.GUI
 
         void addRemoveButtons_AddButtonClicked(Widget source, EventArgs e)
         {
-            currentEditInterface.getAddPropertyCallback().Invoke(uiCallback);
+            currentEditInterface.fireAddPropertyCallback(uiCallback);
         }
 
         void addRemoveButtons_RemoveButtonClicked(Widget source, EventArgs e)
@@ -290,7 +290,7 @@ namespace Medical.GUI
             {
                 TableRow row = propertiesTable.Rows[propertiesTable.LastEditedRow];
                 EditableProperty var = rowProperties[row];
-                currentEditInterface.getRemovePropertyCallback().Invoke(uiCallback, var);
+                currentEditInterface.fireRemovePropertyCallback(uiCallback, var);
             }
         }
     }
