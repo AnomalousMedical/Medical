@@ -58,6 +58,8 @@ namespace Medical.GUI
             MenuItem reverseSides = fileMenu.addItem("Reverse Sides");
             reverseSides.MouseButtonClick += new MyGUIEvent(reverseSides_MouseButtonClick);
             fileMenu.addItem("Sep2", MenuItemType.Separator);
+            MenuItem selectAll = fileMenu.addItem("Select All");
+            selectAll.MouseButtonClick += new MyGUIEvent(selectAll_MouseButtonClick);
             MenuItem cut = fileMenu.addItem("Cut");
             cut.MouseButtonClick += new MyGUIEvent(cut_MouseButtonClick);
             MenuItem copy = fileMenu.addItem("Copy");
@@ -369,6 +371,12 @@ namespace Medical.GUI
         void paste_MouseButtonClick(Widget source, EventArgs e)
         {
             movementClipboard.paste(movementSequenceController.CurrentSequence, this, timelineView.MarkerTime, timelineView.Duration);
+            fileMenu.setVisibleSmooth(false);
+        }
+
+        void selectAll_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineView.selectAll();
             fileMenu.setVisibleSmooth(false);
         }
 

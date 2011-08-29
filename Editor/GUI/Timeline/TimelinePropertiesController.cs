@@ -238,6 +238,11 @@ namespace Medical.GUI
             timelineProperties.paste();
         }
 
+        internal void selectAll()
+        {
+            timelineProperties.selectAll();
+        }
+
         public Timeline CurrentTimeline
         {
             get

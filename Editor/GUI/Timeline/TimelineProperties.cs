@@ -144,6 +144,11 @@ namespace Medical.GUI
             deleteSelectedActions();
         }
 
+        public void selectAll()
+        {
+            timelineView.selectAll();
+        }
+
         public void stopEditing()
         {
             editingStoppedLastData = timelineView.CurrentData;

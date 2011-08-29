@@ -51,6 +51,8 @@ namespace Medical.GUI
             Button editButton = window.findWidget("EditButton") as Button;
             editMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             editMenu.Visible = false;
+            MenuItem selectAll = editMenu.addItem("Select All");
+            selectAll.MouseButtonClick += new MyGUIEvent(selectAll_MouseButtonClick);
             MenuItem cut = editMenu.addItem("Cut");
             cut.MouseButtonClick += new MyGUIEvent(cut_MouseButtonClick);
             MenuItem copy = editMenu.addItem("Copy");
@@ -257,6 +259,12 @@ namespace Medical.GUI
         void copy_MouseButtonClick(Widget source, EventArgs e)
         {
             propClipboard.copy(timelineView.SelectedData);
+            editMenu.setVisibleSmooth(false);
+        }
+
+        void selectAll_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineView.selectAll();
             editMenu.setVisibleSmooth(false);
         }
 
