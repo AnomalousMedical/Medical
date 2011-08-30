@@ -37,6 +37,7 @@ namespace Medical.Controller
 
         private Vector2 location = new Vector2(0.0f, 0.0f);
         private Size2 size = new Size2(1.0f, 1.0f);
+        private float inverseAspectRatio = 1.0f;
 
         private Color backColor = new Color(0.149f, 0.149f, 0.149f);
 
@@ -56,6 +57,7 @@ namespace Medical.Controller
             transparencyStateName = name;
             TransparencyController.createTransparencyState(transparencyStateName);
             UseDefaultTransparency = false;
+            AutoAspectRatio = true;
         }
 
         public virtual void Dispose()
@@ -149,6 +151,17 @@ namespace Medical.Controller
             }
             location = new Vector2(Location.x / totalSize.Width, Location.y / totalSize.Height);
             size = new Size2(WorkingSize.Width / totalSize.Width, WorkingSize.Height / totalSize.Height);
+            if (!AutoAspectRatio)
+            {
+                if (inverseAspectRatio > 1.0f)
+                {
+                    size.Width = size.Height * inverseAspectRatio;
+                }
+                else
+                {
+                    size.Height = size.Width * inverseAspectRatio;
+                }
+            }
             if (sceneView != null)
             {
                 sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
@@ -446,6 +459,40 @@ namespace Medical.Controller
             get
             {
                 return cameraMover;
+            }
+        }
+
+        /// <summary>
+        /// True to autocalculate the aspect ratio. If this is false the window will be letterboxed.
+        /// </summary>
+        public bool AutoAspectRatio { get; set; }
+
+        /// <summary>
+        /// The aspect ratio as width / height
+        /// </summary>
+        public float AspectRatio
+        {
+            get
+            {
+                if (inverseAspectRatio != 0.0f)
+                {
+                    return 1.0f / inverseAspectRatio;
+                }
+                else
+                {
+                    return 1.0f;
+                }
+            }
+            set
+            {
+                if (value != 0.0f)
+                {
+                    inverseAspectRatio = 1.0f / value;
+                }
+                else
+                {
+                    inverseAspectRatio = 1.0f;
+                }
             }
         }
 
