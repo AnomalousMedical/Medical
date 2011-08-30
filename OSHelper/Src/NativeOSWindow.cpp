@@ -25,8 +25,8 @@ wxCursor windowCursors[] =
     wxCursor(wxCURSOR_HAND)
 };
 
-NativeOSWindow::NativeOSWindow(NativeOSWindow* parent, String caption, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB)
-:wxFrame(parent, -1, wxString::FromAscii(caption), wxPoint(x, y), wxSize(width, height)),
+NativeOSWindow::NativeOSWindow(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB)
+:wxFrame(parent, -1, wxString::FromAscii(caption), wxPoint(x, y), wxSize(width, height), floatOnParent ? wxDEFAULT_FRAME_STYLE | wxFRAME_FLOAT_ON_PARENT : wxDEFAULT_FRAME_STYLE),
 deleteCB(deleteCB),
 sizedCB(sizedCB),
 closedCB(closedCB)
@@ -42,9 +42,9 @@ NativeOSWindow::~NativeOSWindow(void)
 	deleteCB();
 }
 
-extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB)
+extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB)
 {
-	return new NativeOSWindow(parent, caption, x, y, width, height, deleteCB, sizedCB, closedCB);
+	return new NativeOSWindow(parent, caption, x, y, width, height, floatOnParent, deleteCB, sizedCB, closedCB);
 }
 
 extern "C" _AnomalousExport void NativeOSWindow_destroy(NativeOSWindow* nativeWindow)

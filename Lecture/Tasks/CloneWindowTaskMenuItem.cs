@@ -35,7 +35,7 @@ namespace Medical.GUI
 
         void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
         {
-            standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
+            standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo(), cloneWindowDialog.FloatOnParent);
         }
 
         void cloneWindowDialog_Closed(object sender, EventArgs e)

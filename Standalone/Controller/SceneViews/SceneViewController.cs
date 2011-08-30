@@ -174,12 +174,12 @@ namespace Medical.Controller
             this.rendererWindow = rendererWindow;
         }
 
-        public void createCloneWindow(WindowInfo windowInfo)
+        public void createCloneWindow(WindowInfo windowInfo, bool floatOnParent)
         {
             if (cloneWindow == null)
             {
                 CloneCamera cloneCamera = new CloneCamera(this);
-                cloneWindow = new SingleViewCloneWindow(windowInfo, this, mainTimer, cloneCamera, "Clone");
+                cloneWindow = new SingleViewCloneWindow(windowInfo, this, mainTimer, cloneCamera, "Clone", floatOnParent);
                 cloneWindow.Closed += new EventHandler(cloneWindow_Closed);
                 if (WindowCreated != null)
                 {

@@ -16,6 +16,7 @@ namespace Medical.GUI
 
         private ComboBox monitorCombo;
         private ComboBox resolutionCombo;
+        private CheckButton stayOnTop;
 
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
@@ -55,6 +56,8 @@ namespace Medical.GUI
                 resolutionCombo.Enabled = false;
             }
 
+            stayOnTop = new CheckButton((Button)window.findWidget("StayOnTop"));
+
             Button acceptButton = window.findWidget("AcceptButton") as Button;
             acceptButton.MouseButtonClick += new MyGUIEvent(acceptButton_MouseButtonClick);
 
@@ -68,6 +71,18 @@ namespace Medical.GUI
             WindowInfo info = new WindowInfo("Clone", NumberParser.ParseInt(res[0]), NumberParser.ParseInt(res[1]));
             info.MonitorIndex = (int)monitorCombo.SelectedIndex;
             return info;
+        }
+
+        public bool FloatOnParent
+        {
+            get
+            {
+                return stayOnTop.Checked;
+            }
+            set
+            {
+                stayOnTop.Checked = value;
+            }
         }
 
         protected override void onShown(EventArgs args)

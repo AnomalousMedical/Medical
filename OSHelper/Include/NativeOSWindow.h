@@ -7,7 +7,7 @@ public:
 	typedef void (*SizedDelegate)();
 	typedef void (*ClosedDelegate)();
 
-	NativeOSWindow(NativeOSWindow* parent, String caption, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
+	NativeOSWindow(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
 
 	virtual ~NativeOSWindow(void);
 

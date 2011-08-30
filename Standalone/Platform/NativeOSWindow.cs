@@ -27,12 +27,18 @@ namespace Medical
         public event EventHandler Closed;
 
         public NativeOSWindow(String title, Point position, Size size)
-            :this(null, title, position, size)
+            :this(null, title, position, size, false)
         {
             
         }
 
         public NativeOSWindow(NativeOSWindow parent, String title, Point position, Size size)
+            :this(parent, title, position, size, false)
+        {
+
+        }
+
+        public NativeOSWindow(NativeOSWindow parent, String title, Point position, Size size, bool floatOnParent)
         {
             this.title = title;
 
@@ -46,7 +52,7 @@ namespace Medical
                 parentPtr = parent._NativePtr;
             }
 
-            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, deleteCB, sizedCB, closedCB);
+            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, floatOnParent, deleteCB, sizedCB, closedCB);
         }
 
         public void Dispose()
@@ -217,7 +223,7 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper")]
-        private static extern IntPtr NativeOSWindow_create(IntPtr parent, String caption, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
+        private static extern IntPtr NativeOSWindow_create(IntPtr parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
 
         [DllImport("OSHelper")]
         private static extern void NativeOSWindow_destroy(IntPtr nativeWindow);
