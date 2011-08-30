@@ -60,7 +60,7 @@ namespace Medical
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
 
             //Dialogs
-            propTimeline = new PropTimeline();
+            propTimeline = new PropTimeline(standaloneController.Clipboard);
             guiManager.addManagedDialog(propTimeline);
 
             openPropManager = new OpenPropManager();
@@ -72,7 +72,7 @@ namespace Medical
             timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelinePropertiesController);
             guiManager.addManagedDialog(timelineAnalyzer);
 
-            movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
+            movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard);
             guiManager.addManagedDialog(movementSequenceEditor);
 
             discControl = new DiscControl();

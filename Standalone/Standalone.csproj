@@ -92,6 +92,8 @@
     <Compile Include="Controller\Camera\OrbitCameraController.cs" />
     <Compile Include="Controller\Camera\SavedCameraController.cs" />
     <Compile Include="Controller\Camera\SavedCameraDefinition.cs" />
+    <Compile Include="Controller\Clipboard\SaveableClipboardContainer.cs" />
+    <Compile Include="Controller\Clipboard\SaveableClipboardContainerMemberFilter.cs" />
     <Compile Include="Controller\Config\EngineConfig.cs" />
     <Compile Include="Controller\Config\FolderFinder.cs" />
     <Compile Include="Controller\Config\MacPlatformConfig.cs" />
@@ -397,6 +399,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\DocumentBuilder.cs" />
+    <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

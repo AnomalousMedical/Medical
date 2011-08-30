@@ -42,6 +42,7 @@ namespace Medical
         private PropFactory propFactory;
         private ExamController examController;
         private TaskController taskController;
+        private SaveableClipboard clipboard;
 
         //GUI
         private GUIManager guiManager;
@@ -110,6 +111,8 @@ namespace Medical
 
         public void initializeControllers(ViewportBackground background)
         {
+            clipboard = new SaveableClipboard();
+
             //Help
             htmlHelpController = new HtmlHelpController(mainWindow);
             app.addHelpDocuments(htmlHelpController);
@@ -460,6 +463,14 @@ namespace Medical
             get
             {
                 return taskController;
+            }
+        }
+
+        public SaveableClipboard Clipboard
+        {
+            get
+            {
+                return clipboard;
             }
         }
 

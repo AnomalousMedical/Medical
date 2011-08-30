@@ -72,7 +72,7 @@ namespace Medical.GUI
             editorTimelineController.FileBrowser = fileBrowserDialog;
             guiManager.addManagedDialog(fileBrowserDialog);
 
-            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this, fileBrowserDialog);
+            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this, fileBrowserDialog, standaloneController.Clipboard);
             guiManager.addManagedDialog(timelineProperties);
 
             timelineFileExplorer = new TimelineFileExplorer(editorTimelineController, standaloneController.DocumentController, this);

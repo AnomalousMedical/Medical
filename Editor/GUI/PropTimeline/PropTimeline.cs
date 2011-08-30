@@ -22,11 +22,13 @@ namespace Medical.GUI
 
         private ShowMenuButton editMenuButton;
         private PopupMenu editMenu;
-        private PropTimelineClipboard propClipboard = new PropTimelineClipboard();
+        private SaveableClipboard clipboard;
 
-        public PropTimeline()
+        public PropTimeline(SaveableClipboard clipboard)
             :base("Medical.GUI.PropTimeline.PropTimeline.layout")
         {
+            this.clipboard = clipboard;
+
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
             //Timeline view
@@ -245,20 +247,28 @@ namespace Medical.GUI
 
         void cut_MouseButtonClick(Widget source, EventArgs e)
         {
-            propClipboard.copy(timelineView.SelectedData);
+            PropTimelineClipboardContainer clipContainer = new PropTimelineClipboardContainer();
+            clipContainer.addActions(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
             removeSelectedData();
             editMenu.setVisibleSmooth(false);
         }
 
         void paste_MouseButtonClick(Widget source, EventArgs e)
         {
-            propClipboard.paste(propData, this, timelineView.MarkerTime, timelineView.Duration);
+            PropTimelineClipboardContainer clipContainer = clipboard.createCopy<PropTimelineClipboardContainer>();
+            if (clipContainer != null)
+            {
+                clipContainer.addActionsToTimeline(propData, this, timelineView.MarkerTime, timelineView.Duration);
+            }
             editMenu.setVisibleSmooth(false);
         }
 
         void copy_MouseButtonClick(Widget source, EventArgs e)
         {
-            propClipboard.copy(timelineView.SelectedData);
+            PropTimelineClipboardContainer clipContainer = new PropTimelineClipboardContainer();
+            clipContainer.addActions(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
             editMenu.setVisibleSmooth(false);
         }
 

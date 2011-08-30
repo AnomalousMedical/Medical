@@ -21,9 +21,9 @@ namespace Medical.GUI
         private TimelineView timelineView;
         private NumberLine numberLine;
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
-        private TimelineActionClipboard actionClipboard = new TimelineActionClipboard();
         private TimelineActionFactory actionFactory;
         private TimelinePropertiesController timelinePropertiesController;
+        private SaveableClipboard clipboard;
 
         private Button playButton;
         private Button playFullButton;
@@ -34,9 +34,10 @@ namespace Medical.GUI
 
         private TimelineData editingStoppedLastData;
 
-        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController, TimelineFileBrowserDialog fileBrowserDialog)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController, TimelineFileBrowserDialog fileBrowserDialog, SaveableClipboard clipboard)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
+            this.clipboard = clipboard;
             this.timelinePropertiesController = timelinePropertiesController;
 
             this.timelineController = timelineController;
@@ -130,12 +131,18 @@ namespace Medical.GUI
 
         public void paste()
         {
-            actionClipboard.paste(timelinePropertiesController.CurrentTimeline, timelineView.MarkerTime);
+            TimelineActionClipboardContainer clipContainer = clipboard.createCopy<TimelineActionClipboardContainer>();
+            if (clipContainer != null)
+            {
+                clipContainer.addActionsToTimeline(timelinePropertiesController.CurrentTimeline, timelineView.MarkerTime);
+            }
         }
 
         public void copy()
         {
-            actionClipboard.copy(timelineView.SelectedData);
+            TimelineActionClipboardContainer clipContainer = new TimelineActionClipboardContainer();
+            clipContainer.addActions(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
         }
 
         public void cut()

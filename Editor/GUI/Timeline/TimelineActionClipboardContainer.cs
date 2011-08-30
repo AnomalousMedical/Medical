@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Engine.Saving;
 using MyGUIPlugin;
-using Medical.GUI;
+using Engine.Attributes;
+using Engine.Saving;
 
-namespace Medical
+namespace Medical.GUI
 {
-    class TimelineActionClipboard
+    class TimelineActionClipboardContainer : SaveableClipboardContainer
     {
-        private CopySaver copySaver = new CopySaver();
+        [DoNotSave]
         private List<TimelineAction> copiedActions = new List<TimelineAction>();
+
         private float startTimeZeroOffset;
 
-        public void copy(IEnumerable<TimelineData> timelineData)
+        public TimelineActionClipboardContainer()
+        {
+
+        }
+
+        public void addActions(IEnumerable<TimelineData> timelineData)
         {
             copiedActions.Clear();
             foreach (TimelineActionData actionData in timelineData)
             {
-                copiedActions.Add(copySaver.copy<TimelineAction>(actionData.Action));
+                copiedActions.Add(actionData.Action);
             }
             copiedActions.Sort(delegate(TimelineAction x, TimelineAction y)
             {
@@ -39,14 +45,25 @@ namespace Medical
             }
         }
 
-        public void paste(Timeline currentTimeline, float markerTime)
+        public void addActionsToTimeline(Timeline currentTimeline, float markerTime)
         {
-            foreach (TimelineAction action in copiedActions)
+            foreach (TimelineAction copiedAction in copiedActions)
             {
-                TimelineAction copiedAction = copySaver.copy<TimelineAction>(action);
                 copiedAction.StartTime = copiedAction.StartTime - startTimeZeroOffset + markerTime;
                 currentTimeline.addAction(copiedAction);
             }
+        }
+
+        protected TimelineActionClipboardContainer(LoadInfo info)
+            :base(info)
+        {
+            info.RebuildList("Action", copiedActions);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.ExtractList("Action", copiedActions);
         }
     }
 }

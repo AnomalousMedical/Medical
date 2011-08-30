@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Engine.Saving;
-using MyGUIPlugin;
 using Medical.Muscles;
+using MyGUIPlugin;
+using Engine.Attributes;
+using Engine.Saving;
 
 namespace Medical.GUI
 {
-    class MovementSequenceClipboard
+    class MovementSequenceClipboardContainer : SaveableClipboardContainer
     {
-        private CopySaver copySaver = new CopySaver();
+        [DoNotSave]
         private List<MovementSequenceState> copiedActions = new List<MovementSequenceState>();
+
         private float startTimeZeroOffset;
 
-        public void copy(IEnumerable<TimelineData> timelineData)
+        public MovementSequenceClipboardContainer()
+        {
+
+        }
+
+        public void addKeyFrames(IEnumerable<TimelineData> timelineData)
         {
             copiedActions.Clear();
             foreach (MovementKeyframeData actionData in timelineData)
             {
-                copiedActions.Add(copySaver.copy<MovementSequenceState>(actionData.KeyFrame));
+                copiedActions.Add(actionData.KeyFrame);
             }
             copiedActions.Sort(delegate(MovementSequenceState x, MovementSequenceState y)
             {
@@ -39,11 +46,10 @@ namespace Medical.GUI
             }
         }
 
-        public void paste(MovementSequence movementSequence, MovementSequenceEditor editor, float markerTime, float totalDuration)
+        public void addKeyFramesToSequence(MovementSequence movementSequence, MovementSequenceEditor editor, float markerTime, float totalDuration)
         {
-            foreach (MovementSequenceState action in copiedActions)
+            foreach (MovementSequenceState copiedAction in copiedActions)
             {
-                MovementSequenceState copiedAction = copySaver.copy<MovementSequenceState>(action);
                 copiedAction.StartTime = copiedAction.StartTime - startTimeZeroOffset + markerTime;
                 if (copiedAction.StartTime > totalDuration)
                 {
@@ -52,6 +58,18 @@ namespace Medical.GUI
                 movementSequence.addState(copiedAction);
                 editor.addStateToTimeline(copiedAction);
             }
+        }
+
+        protected MovementSequenceClipboardContainer(LoadInfo info)
+            :base(info)
+        {
+            info.RebuildList("KeyFrame", copiedActions);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.ExtractList("KeyFrame", copiedActions);
         }
     }
 }

@@ -26,13 +26,15 @@ namespace Medical.GUI
         private bool loadingSequenceFromFile = false;
         private XmlSaver xmlSaver = new XmlSaver();
         private ShowMenuButton showMenuButton;
-        private MovementSequenceClipboard movementClipboard = new MovementSequenceClipboard();
+        SaveableClipboard clipboard;
 
         private MovementSequenceController movementSequenceController;
 
-        public MovementSequenceEditor(MovementSequenceController movementSequenceController)
+        public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard)
             : base("Medical.GUI.MovementSequence.MovementSequenceEditor.layout")
         {
+            this.clipboard = clipboard;
+
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
             this.movementSequenceController = movementSequenceController;
@@ -357,20 +359,28 @@ namespace Medical.GUI
 
         void cut_MouseButtonClick(Widget source, EventArgs e)
         {
-            movementClipboard.copy(timelineView.SelectedData);
+            MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
+            clipContainer.addKeyFrames(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
             deleteSelectedActions();
             fileMenu.setVisibleSmooth(false);
         }
 
         void copy_MouseButtonClick(Widget source, EventArgs e)
         {
-            movementClipboard.copy(timelineView.SelectedData);
+            MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
+            clipContainer.addKeyFrames(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
             fileMenu.setVisibleSmooth(false);
         }
 
         void paste_MouseButtonClick(Widget source, EventArgs e)
         {
-            movementClipboard.paste(movementSequenceController.CurrentSequence, this, timelineView.MarkerTime, timelineView.Duration);
+            MovementSequenceClipboardContainer clipContainer = clipboard.createCopy<MovementSequenceClipboardContainer>();
+            if (clipContainer != null)
+            {
+                clipContainer.addKeyFramesToSequence(movementSequenceController.CurrentSequence, this, timelineView.MarkerTime, timelineView.Duration);
+            }
             fileMenu.setVisibleSmooth(false);
         }
 

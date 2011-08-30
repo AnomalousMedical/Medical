@@ -85,10 +85,10 @@
     <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
-    <Compile Include="GUI\MovementSequence\MovementSequenceClipboard.cs" />
+    <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
-    <Compile Include="GUI\PropTimeline\PropTimelineClipboard.cs" />
+    <Compile Include="GUI\PropTimeline\PropTimelineClipboardContainer.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ShowTextProperties.cs" />
     <Compile Include="GUI\Timeline\OpenPropManager.cs" />
-    <Compile Include="GUI\Timeline\TimelineActionClipboard.cs" />
+    <Compile Include="GUI\Timeline\TimelineActionClipboardContainer.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
     <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
