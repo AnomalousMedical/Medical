@@ -69,5 +69,15 @@ namespace Medical
                 memberWrapper.setValue(owner, value, null);
             }
         }
+
+        public bool hasBrowser(int column)
+        {
+            return false;
+        }
+
+        public Browser getBrowser(int column)
+        {
+            return null;
+        }
     }
 }

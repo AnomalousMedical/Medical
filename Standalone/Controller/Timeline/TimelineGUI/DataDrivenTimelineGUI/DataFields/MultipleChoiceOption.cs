@@ -58,5 +58,15 @@ namespace Medical
         {
             info.AddValue("OptionText", optionText);
         }
+
+        public bool hasBrowser(int column)
+        {
+            return false;
+        }
+
+        public Browser getBrowser(int column)
+        {
+            return null;
+        }
     }
 }

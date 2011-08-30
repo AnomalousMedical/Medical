@@ -33,6 +33,7 @@ namespace Medical.GUI
 
         public PropertiesTable(Table propertiesTable, EditUICallback uiCallback, AddRemoveButtons buttons)
         {
+            this.uiCallback = uiCallback;
             this.propertiesTable = propertiesTable;
             propertiesTable.CellValidating += new EventHandler<TableCellValidationEventArgs>(propertiesTable_CellValidating);
             propertiesTable.CellValueChanged += new EventHandler(propertiesTable_CellValueChanged);
@@ -188,7 +189,7 @@ namespace Medical.GUI
 
             for (int i = 0; i < currentPropInfo.getNumColumns(); i++)
             {
-                TableCell newCell = createCell(property.getPropertyType(i), property);
+                TableCell newCell = createCell(property.getPropertyType(i), property.hasBrowser(i), property);
                 newCell.Value = property.getValue(i);
                 newRow.Cells.add(newCell);
             }
@@ -211,11 +212,11 @@ namespace Medical.GUI
             }
         }
 
-        private TableCell createCell(Type propType, EditableProperty property)
+        private TableCell createCell(Type propType, bool hasBrowser, EditableProperty property)
         {
             foreach (ICustomCellProvider customCellProvider in customCells)
             {
-                TableCell cell = customCellProvider.createCell(propType, property);
+                TableCell cell = customCellProvider.createCell(propType, hasBrowser, property);
                 if (cell != null)
                 {
                     return cell;
@@ -244,6 +245,10 @@ namespace Medical.GUI
             if (propType == typeof(bool))
             {
                 return new CheckTableCell();
+            }
+            if (hasBrowser)
+            {
+                return new EditTableBrowserCell(uiCallback, property);
             }
             return new EditTableCell();
         }

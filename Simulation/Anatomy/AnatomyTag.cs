@@ -70,6 +70,16 @@ namespace Medical
             }
         }
 
+        public bool hasBrowser(int column)
+        {
+            return false;
+        }
+
+        public Browser getBrowser(int column)
+        {
+            return null;
+        }
+
         #endregion
 
         #region Saveable Members

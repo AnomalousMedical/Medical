@@ -16,6 +16,6 @@ namespace Medical
         /// </summary>
         /// <param name="propType">The type to create a cell for.</param>
         /// <returns>The TableCell for the type.</returns>
-        TableCell createCell(Type propType, EditableProperty property);
+        TableCell createCell(Type propType, bool hasBrowser, EditableProperty property);
     }
 }

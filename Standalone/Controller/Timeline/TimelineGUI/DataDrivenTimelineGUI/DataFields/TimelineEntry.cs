@@ -83,5 +83,35 @@ namespace Medical
                     break;
             }
         }
+
+        public bool hasBrowser(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return false;
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        public Browser getBrowser(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return null;
+                case 1:
+                    return TimelineBrowserController.createBrowser();
+                case 2:
+                    return null;
+                default:
+                    return null;
+            }
+        }
     }
 }

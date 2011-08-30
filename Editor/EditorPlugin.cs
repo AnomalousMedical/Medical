@@ -30,6 +30,7 @@ namespace Medical
 
         public void Dispose()
         {
+            TimelineBrowserController.setTimelineController(null);
             discControl.Dispose();
             timelinePropertiesController.Dispose();
             timelineAnalyzer.Dispose();
@@ -53,6 +54,7 @@ namespace Medical
             editorTimelineController.PlaybackStarted += new EventHandler(editorTimelineController_PlaybackStarted);
             editorTimelineController.PlaybackStopped += new EventHandler(editorTimelineController_PlaybackStopped);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
+            TimelineBrowserController.setTimelineController(editorTimelineController);
 
             standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);

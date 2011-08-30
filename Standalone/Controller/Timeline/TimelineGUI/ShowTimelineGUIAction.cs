@@ -209,7 +209,17 @@ namespace Medical
 
         public void setValueStr(int column, string value)
         {
-            
+
+        }
+
+        public bool hasBrowser(int column)
+        {
+            return false;
+        }
+
+        public Browser getBrowser(int column)
+        {
+            return null;
         }
     }
 }
