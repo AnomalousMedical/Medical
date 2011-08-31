@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="140 43 210 292" layer="Overlapped">
+        <Property key="Widget_Caption" value="Scratch Area"/>
+        <Widget type="ScrollView" skin="ScrollView" position="6 0 198 269" align="Stretch" name="TableScroll">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+        </Widget>
+    </Widget>
+</MyGUI>

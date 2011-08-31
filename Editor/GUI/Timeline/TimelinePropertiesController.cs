@@ -34,12 +34,11 @@ namespace Medical.GUI
         private TimelineObjectProperties timelineObjectProperties;
         private TimelineFileExplorer timelineFileExplorer;
         private TimelineObjectExplorer timelineObjectExplorer;
-        private MedicalUICallback medicalUICallback;
         private TimelineUICallbackExtensions uiCallbackExtensions;
         private ObjectEditor timelineObjectEditor;
-        private BrowserWindow browserWindow;
         private QuestionEditor questionEditor;
         private TimelineFileBrowserDialog fileBrowserDialog;
+        private MedicalUICallback medicalUICallback;
         public event SingleArgumentEvent<TimelinePropertiesController, Timeline> CurrentTimelineChanged;
 
         private TimelineController editorTimelineController;
@@ -79,14 +78,11 @@ namespace Medical.GUI
             timelineFileExplorer.Closed += new EventHandler(timelineFileExplorer_Closed);
             guiManager.addManagedDialog(timelineFileExplorer);
 
-            browserWindow = new BrowserWindow();
-            guiManager.addManagedDialog(browserWindow);
-
             questionEditor = new QuestionEditor(fileBrowserDialog, editorTimelineController);
             guiManager.addManagedDialog(questionEditor);
 
-            medicalUICallback = new MedicalUICallback(browserWindow);
-            uiCallbackExtensions = new TimelineUICallbackExtensions(standaloneController, medicalUICallback, editorTimelineController, browserWindow, questionEditor);
+            medicalUICallback = new MedicalUICallback(editorPlugin.BrowserWindow);
+            uiCallbackExtensions = new TimelineUICallbackExtensions(standaloneController, medicalUICallback, editorTimelineController, editorPlugin.BrowserWindow, questionEditor);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
             timelineObjectExplorer.Enabled = false;
@@ -110,7 +106,6 @@ namespace Medical.GUI
             timelineProperties.Dispose();
             timelineObjectExplorer.Dispose();
             questionEditor.Dispose();
-            browserWindow.Dispose();
             fileBrowserDialog.Dispose();
         }
 

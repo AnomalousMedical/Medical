@@ -78,6 +78,9 @@
   <ItemGroup>
     <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
+    <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
+    <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
+    <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
+    <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ShowTextProperties.cs" />
     <Compile Include="GUI\Timeline\OpenPropManager.cs" />
     <Compile Include="GUI\Timeline\TimelineActionClipboardContainer.cs" />
@@ -143,6 +147,7 @@
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.layout" />
+    <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ShowTextProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\LayerChangeProperties.layout" />

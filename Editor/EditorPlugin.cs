@@ -18,10 +18,14 @@ namespace Medical
         private TimelineAnalyzer timelineAnalyzer;
         private TimelinePropertiesController timelinePropertiesController;
         private OpenPropManager openPropManager;
+        private ScratchArea scratchArea;
+        private DiscControl discControl;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
-        private DiscControl discControl;
+        private ScratchAreaController scratchAreaController;
+
+        private BrowserWindow browserWindow;
 
         public EditorPlugin()
         {
@@ -37,6 +41,8 @@ namespace Medical
             movementSequenceEditor.Dispose();
             propTimeline.Dispose();
             openPropManager.Dispose();
+            scratchArea.Dispose();
+            browserWindow.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -59,6 +65,12 @@ namespace Medical
             standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
 
+            //UI Helpers
+            browserWindow = new BrowserWindow();
+            guiManager.addManagedDialog(browserWindow);
+
+            scratchAreaController = new ScratchAreaController();
+
             //Dialogs
             propTimeline = new PropTimeline(standaloneController.Clipboard);
             guiManager.addManagedDialog(propTimeline);
@@ -78,6 +90,9 @@ namespace Medical
             discControl = new DiscControl();
             guiManager.addManagedDialog(discControl);
 
+            scratchArea = new ScratchArea(scratchAreaController, browserWindow);
+            guiManager.addManagedDialog(scratchArea);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -87,6 +102,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "DiscEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
         }
 
         public void sceneLoaded(SimScene scene)
@@ -140,6 +156,14 @@ namespace Medical
             get
             {
                 return openPropManager;
+            }
+        }
+
+        public BrowserWindow BrowserWindow
+        {
+            get
+            {
+                return browserWindow;
             }
         }
 
