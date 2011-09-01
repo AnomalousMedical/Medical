@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Editing;
 using Logging;
 using System.IO;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -13,6 +14,7 @@ namespace Medical
         protected String folderName;
         private ScratchAreaFolder parentFolder;
         private List<ScratchAreaFolder> children = new List<ScratchAreaFolder>();
+        private List<ScratchAreaItem> items = new List<ScratchAreaItem>();
 
         protected ScratchAreaFolder(String folderName)
         {
@@ -91,6 +93,35 @@ namespace Medical
             return false;
         }
 
+        public void addItem(String name, Saveable data)
+        {
+            ScratchAreaItem item = new ScratchAreaItem(name, this);
+            item.serialize(data);
+            items.Add(item);
+            onItemAdded(item);
+        }
+
+        public void removeItem(ScratchAreaItem item)
+        {
+            if (item != null && items.Remove(item))
+            {
+                item.deleteFile();
+                onItemRemoved(item);
+            }
+        }
+
+        public bool hasItem(String name)
+        {
+            foreach (ScratchAreaItem item in items)
+            {
+                if (item.Name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void loadInfo()
         {
             String path = FilesystemPath;
@@ -102,6 +133,11 @@ namespace Medical
                     ScratchAreaFolder folder = addFolder(info.Name);
                     folder.loadInfo();
                 }
+            }
+
+            foreach (String file in Directory.GetFiles(path, "*.sav", SearchOption.TopDirectoryOnly))
+            {
+                addExistingItem(Path.GetFileNameWithoutExtension(file));
             }
         }
 
@@ -124,12 +160,20 @@ namespace Medical
             sb.Append("//");
             sb.Append(folderName);
         }
+
+        private void addExistingItem(String name)
+        {
+            ScratchAreaItem item = new ScratchAreaItem(name, this);
+            items.Add(item);
+            onItemAdded(item);
+        }
     }
 
     partial class ScratchAreaFolder
     {
         private EditInterface editInterface;
-        private EditInterfaceManager<ScratchAreaFolder> dataFieldEdits;
+        private EditInterfaceManager<ScratchAreaFolder> folderEdits;
+        private EditInterfaceManager<ScratchAreaItem> itemEdits;
 
         public EditInterface EditInterface
         {
@@ -139,13 +183,21 @@ namespace Medical
                 {
                     editInterface = new EditInterface(folderName);
                     editInterface.addCommand(new EditInterfaceCommand("Add Folder", addFolderCallback));
+                    editInterface.addCommand(new EditInterfaceCommand("Paste", pasteCallback));
 
-                    dataFieldEdits = new EditInterfaceManager<ScratchAreaFolder>(editInterface);
-                    dataFieldEdits.addCommand(new EditInterfaceCommand("Remove", removeFolderCallback));
+                    folderEdits = new EditInterfaceManager<ScratchAreaFolder>(editInterface);
+                    folderEdits.addCommand(new EditInterfaceCommand("Remove", removeFolderCallback));
+
+                    itemEdits = new EditInterfaceManager<ScratchAreaItem>(editInterface);
+                    itemEdits.addCommand(new EditInterfaceCommand("Remove", removeItemCallback));
 
                     foreach (ScratchAreaFolder folder in children)
                     {
                         onFolderAdded(folder);
+                    }
+                    foreach (ScratchAreaItem item in items)
+                    {
+                        onItemAdded(item);
                     }
                 }
                 return editInterface;
@@ -168,15 +220,44 @@ namespace Medical
 
         private void removeFolderCallback(EditUICallback callback, EditInterfaceCommand caller)
         {
-            ScratchAreaFolder folder = dataFieldEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            ScratchAreaFolder folder = folderEdits.resolveSourceObject(callback.getSelectedEditInterface());
             removeFolder(folder);
+        }
+
+        private void pasteCallback(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            SaveableClipboard clipboard = null;
+            callback.runCustomQuery(ScratchAreaCustomQueries.GetClipboard, delegate(Object result, ref String errorMessage)
+            {
+                clipboard = result as SaveableClipboard;
+                return true;
+            });
+            if (clipboard != null && clipboard.HasSourceObject)
+            {
+                callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
+                {
+                    if (!hasItem(input))
+                    {
+                        addItem(input, clipboard.createCopy<Saveable>());
+                        return true;
+                    }
+                    errorPrompt = String.Format("An item named {0} already exists. Please input another name.", input);
+                    return false;
+                });
+            }
+        }
+
+        private void removeItemCallback(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            ScratchAreaItem item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            removeItem(item);
         }
 
         private void onFolderAdded(ScratchAreaFolder folder)
         {
             if (editInterface != null)
             {
-                dataFieldEdits.addSubInterface(folder, folder.EditInterface);
+                folderEdits.addSubInterface(folder, folder.EditInterface);
             }
         }
 
@@ -184,7 +265,23 @@ namespace Medical
         {
             if (editInterface != null)
             {
-                dataFieldEdits.removeSubInterface(folder);
+                folderEdits.removeSubInterface(folder);
+            }
+        }
+
+        private void onItemAdded(ScratchAreaItem item)
+        {
+            if (editInterface != null)
+            {
+                itemEdits.addSubInterface(item, item.EditInterface);
+            }
+        }
+
+        private void onItemRemoved(ScratchAreaItem item)
+        {
+            if (editInterface != null)
+            {
+                itemEdits.removeSubInterface(item);
             }
         }
     }

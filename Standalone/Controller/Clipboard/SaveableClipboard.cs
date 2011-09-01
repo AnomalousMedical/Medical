@@ -48,5 +48,13 @@ namespace Medical
             }
             return copy;
         }
+
+        public bool HasSourceObject
+        {
+            get
+            {
+                return sourceObject != null;
+            }
+        }
     }
 }

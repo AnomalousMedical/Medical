@@ -69,7 +69,7 @@ namespace Medical
             browserWindow = new BrowserWindow();
             guiManager.addManagedDialog(browserWindow);
 
-            scratchAreaController = new ScratchAreaController();
+            scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
             //Dialogs
             propTimeline = new PropTimeline(standaloneController.Clipboard);

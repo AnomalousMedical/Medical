@@ -80,6 +80,7 @@
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
+    <Compile Include="Controller\ScratchArea\ScratchAreaItem.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />

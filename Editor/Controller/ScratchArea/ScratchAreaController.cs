@@ -6,14 +6,30 @@ using Engine.Editing;
 
 namespace Medical
 {
+    enum ScratchAreaCustomQueries
+    {
+        GetClipboard
+    }
+
     partial class ScratchAreaController
     {
         private ScratchAreaFolder rootFolder;
+        private SaveableClipboard clipboard;
 
-        public ScratchAreaController()
+        public ScratchAreaController(SaveableClipboard clipboard)
         {
+            this.clipboard = clipboard;
+
             rootFolder = new ScratchAreaRootFolder("Scratch Area", MedicalConfig.DocRoot);
             rootFolder.loadInfo();
+        }
+
+        public SaveableClipboard Clipboard
+        {
+            get
+            {
+                return clipboard;
+            }
         }
     }
 
