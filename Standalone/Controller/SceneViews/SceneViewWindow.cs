@@ -149,19 +149,28 @@ namespace Medical.Controller
             {
                 totalSize.Height = 1.0f;
             }
-            location = new Vector2(Location.x / totalSize.Width, Location.y / totalSize.Height);
-            size = new Size2(WorkingSize.Width / totalSize.Width, WorkingSize.Height / totalSize.Height);
+
+            location = Location;
+            size = WorkingSize;
+
             if (!AutoAspectRatio)
             {
-                if (inverseAspectRatio > 1.0f)
+                size.Height = size.Width * inverseAspectRatio;
+                if (size.Height > WorkingSize.Height)
                 {
-                    size.Width = size.Height * inverseAspectRatio;
+                    size.Height = WorkingSize.Height;
+                    size.Width = size.Height * (1 / inverseAspectRatio);
+                    location.x += (WorkingSize.Width - size.Width) / 2.0f;
                 }
                 else
                 {
-                    size.Height = size.Width * inverseAspectRatio;
+                    location.y += (WorkingSize.Height - size.Height) / 2.0f;
                 }
             }
+
+            location = new Vector2(location.x / totalSize.Width, location.y / totalSize.Height);
+            size = new Size2(size.Width / totalSize.Width, size.Height / totalSize.Height);
+
             if (sceneView != null)
             {
                 sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
