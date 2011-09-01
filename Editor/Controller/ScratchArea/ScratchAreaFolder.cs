@@ -189,6 +189,7 @@ namespace Medical
                     folderEdits.addCommand(new EditInterfaceCommand("Remove", removeFolderCallback));
 
                     itemEdits = new EditInterfaceManager<ScratchAreaItem>(editInterface);
+                    itemEdits.addCommand(new EditInterfaceCommand("Rename", renameItemCallback));
                     itemEdits.addCommand(new EditInterfaceCommand("Remove", removeItemCallback));
 
                     foreach (ScratchAreaFolder folder in children)
@@ -245,6 +246,23 @@ namespace Medical
                     return false;
                 });
             }
+        }
+
+        private void renameItemCallback(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
+            {
+                if (!hasItem(input))
+                {
+                    ScratchAreaItem item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+                    item.renameFile(input);
+                    removeItem(item);
+                    addExistingItem(input);
+                    return true;
+                }
+                errorPrompt = String.Format("An item named {0} already exists. Please input another name.", input);
+                return false;
+            });
         }
 
         private void removeItemCallback(EditUICallback callback, EditInterfaceCommand caller)

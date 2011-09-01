@@ -68,6 +68,21 @@ namespace Medical
             }
         }
 
+        public void renameFile(String newName)
+        {
+            try
+            {
+                String originalPath = FilesystemPath;
+                String newPath = Path.Combine(parent.FilesystemPath, newName + ".sav");
+                File.Copy(originalPath, newPath);
+                File.Delete(FilesystemPath);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not rename ScratchAreaItem {0} at {1} because {2}", name, FilesystemPath, e.Message);
+            }
+        }
+
         public String FilesystemPath
         {
             get
