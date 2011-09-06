@@ -159,6 +159,8 @@
     <Compile Include="Controller\TaskController\Task.cs" />
     <Compile Include="Controller\TaskController\TaskController.cs" />
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
+    <Compile Include="Controller\Timeline\MusclePosition.cs" />
+    <Compile Include="Controller\Timeline\MusclePositionAction.cs" />
     <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
     <Compile Include="Controller\Props\Arrow\ChangeArrowColorAction.cs" />
     <Compile Include="Controller\Props\Arrow\ChangeArrowShapeAction.cs" />
