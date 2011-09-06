@@ -117,6 +117,25 @@ namespace Medical.GUI
             }
         }
 
+        public float MarkerTime
+        {
+            get
+            {
+                return timelineView.MarkerTime;
+            }
+            set
+            {
+                if (propData != null)
+                {
+                    timelineView.MarkerTime = value - propData.StartTime;
+                }
+                else
+                {
+                    timelineView.MarkerTime = value;
+                }
+            }
+        }
+
         /// <summary>
         /// This will be true if the timeline is needing to use the move tool.
         /// </summary>

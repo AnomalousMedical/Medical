@@ -80,6 +80,7 @@ namespace Medical
 
             timelinePropertiesController = new TimelinePropertiesController(standaloneController, this);
             timelinePropertiesController.CurrentTimelineChanged += new SingleArgumentEvent<TimelinePropertiesController, Timeline>(timelinePropertiesController_CurrentTimelineChanged);
+            timelinePropertiesController.MarkerMoved += new Engine.EventDelegate<TimelinePropertiesController, float>(timelinePropertiesController_MarkerMoved);
 
             timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelinePropertiesController);
             guiManager.addManagedDialog(timelineAnalyzer);
@@ -205,6 +206,11 @@ namespace Medical
         void timelinePropertiesController_CurrentTimelineChanged(TimelinePropertiesController source, Timeline arg)
         {
             openPropManager.removeAllOpenProps();
+        }
+
+        void timelinePropertiesController_MarkerMoved(TimelinePropertiesController source, float arg)
+        {
+            propTimeline.MarkerTime = arg;
         }
     }
 }

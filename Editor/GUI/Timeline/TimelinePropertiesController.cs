@@ -40,6 +40,7 @@ namespace Medical.GUI
         private TimelineFileBrowserDialog fileBrowserDialog;
         private MedicalUICallback medicalUICallback;
         public event SingleArgumentEvent<TimelinePropertiesController, Timeline> CurrentTimelineChanged;
+        public event EventDelegate<TimelinePropertiesController, float> MarkerMoved;
 
         private TimelineController editorTimelineController;
         private TimelineController mainTimelineController;
@@ -72,6 +73,7 @@ namespace Medical.GUI
             guiManager.addManagedDialog(fileBrowserDialog);
 
             timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this, fileBrowserDialog, standaloneController.Clipboard);
+            timelineProperties.MarkerMoved += new EventDelegate<TimelineProperties, float>(timelineProperties_MarkerMoved);
             guiManager.addManagedDialog(timelineProperties);
 
             timelineFileExplorer = new TimelineFileExplorer(editorTimelineController, standaloneController.DocumentController, this);
@@ -417,6 +419,14 @@ namespace Medical.GUI
                 {
                     VisibilityChanged.Invoke(this);
                 }
+            }
+        }
+
+        void timelineProperties_MarkerMoved(TimelineProperties source, float arg)
+        {
+            if (MarkerMoved != null)
+            {
+                MarkerMoved.Invoke(this, arg);
             }
         }
     }

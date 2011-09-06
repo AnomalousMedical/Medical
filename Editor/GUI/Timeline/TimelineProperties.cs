@@ -24,6 +24,9 @@ namespace Medical.GUI
         private TimelineActionFactory actionFactory;
         private TimelinePropertiesController timelinePropertiesController;
         private SaveableClipboard clipboard;
+        private TimelineData editingStoppedLastData;
+
+        public event EventDelegate<TimelineProperties, float> MarkerMoved;
 
         private Button playButton;
         private Button playFullButton;
@@ -31,8 +34,6 @@ namespace Medical.GUI
         private Button fastForwardButton;
 
         private const int START_COLUMN_WIDTH = 100;
-
-        private TimelineData editingStoppedLastData;
 
         public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController, TimelineFileBrowserDialog fileBrowserDialog, SaveableClipboard clipboard)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
@@ -70,6 +71,7 @@ namespace Medical.GUI
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
             timelineView.ActiveDataChanging += new EventHandler<CancelEventArgs>(timelineView_ActiveDataChanging);
+            timelineView.MarkerMoved += new EventDelegate<TimelineView, float>(timelineView_MarkerMoved);
 
             //Properties
             ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -310,6 +312,14 @@ namespace Medical.GUI
         void timelineView_ActiveDataChanging(object sender, CancelEventArgs e)
         {
             e.Cancel = timelineController.Playing;
+        }
+
+        void timelineView_MarkerMoved(TimelineView source, float arg)
+        {
+            if (MarkerMoved != null)
+            {
+                MarkerMoved.Invoke(this, arg);
+            }
         }
     }
 }
