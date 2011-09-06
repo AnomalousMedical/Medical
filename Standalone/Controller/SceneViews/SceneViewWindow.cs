@@ -35,13 +35,17 @@ namespace Medical.Controller
         private Vector3 startPosition;
         private Vector3 startLookAt;
 
-        private Vector2 location = new Vector2(0.0f, 0.0f);
+        private Vector2 sceneViewLocation = new Vector2(0.0f, 0.0f);
         private Size2 size = new Size2(1.0f, 1.0f);
         private float inverseAspectRatio = 1.0f;
 
         private Color backColor = new Color(0.149f, 0.149f, 0.149f);
 
         protected String transparencyStateName;
+
+        private bool autoAspectRatio = true;
+        private Widget borderPanel0;
+        private Widget borderPanel1;
 
         public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
@@ -57,13 +61,13 @@ namespace Medical.Controller
             transparencyStateName = name;
             TransparencyController.createTransparencyState(transparencyStateName);
             UseDefaultTransparency = false;
-            AutoAspectRatio = true;
         }
 
         public virtual void Dispose()
         {
             mainTimer.removeFixedUpdateListener(cameraMover);
             TransparencyController.removeTransparencyState(transparencyStateName);
+            destroyBorderPanels();
         }
 
         public virtual void createSceneView(RendererWindow window, SimScene scene)
@@ -73,7 +77,7 @@ namespace Medical.Controller
             SimSubScene defaultScene = scene.getDefaultSubScene();
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
-            sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
+            sceneView.setDimensions(sceneViewLocation.x, sceneViewLocation.y, size.Width, size.Height);
             sceneView.BackgroundColor = backColor;
             sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
@@ -150,7 +154,7 @@ namespace Medical.Controller
                 totalSize.Height = 1.0f;
             }
 
-            location = Location;
+            sceneViewLocation = Location;
             size = WorkingSize;
 
             if (!AutoAspectRatio)
@@ -160,20 +164,26 @@ namespace Medical.Controller
                 {
                     size.Height = WorkingSize.Height;
                     size.Width = size.Height * (1 / inverseAspectRatio);
-                    location.x += (WorkingSize.Width - size.Width) / 2.0f;
+                    sceneViewLocation.x += (WorkingSize.Width - size.Width) / 2.0f;
+
+                    borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(sceneViewLocation.x - Location.x), (int)WorkingSize.Height);
+                    borderPanel1.setCoord((int)(sceneViewLocation.x + size.Width), (int)Location.y, (int)(sceneViewLocation.x - Location.x), (int)WorkingSize.Height);
                 }
                 else
                 {
-                    location.y += (WorkingSize.Height - size.Height) / 2.0f;
+                    sceneViewLocation.y += (WorkingSize.Height - size.Height) / 2.0f;
+
+                    borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y));
+                    borderPanel1.setCoord((int)Location.x, (int)(sceneViewLocation.y + size.Height), (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y));
                 }
             }
 
-            location = new Vector2(location.x / totalSize.Width, location.y / totalSize.Height);
+            sceneViewLocation = new Vector2(sceneViewLocation.x / totalSize.Width, sceneViewLocation.y / totalSize.Height);
             size = new Size2(size.Width / totalSize.Width, size.Height / totalSize.Height);
 
             if (sceneView != null)
             {
-                sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
+                sceneView.setDimensions(sceneViewLocation.x, sceneViewLocation.y, size.Width, size.Height);
             }
             if (Resized != null)
             {
@@ -474,7 +484,28 @@ namespace Medical.Controller
         /// <summary>
         /// True to autocalculate the aspect ratio. If this is false the window will be letterboxed.
         /// </summary>
-        public bool AutoAspectRatio { get; set; }
+        public bool AutoAspectRatio
+        {
+            get
+            {
+                return autoAspectRatio;
+            }
+            set
+            {
+                if (autoAspectRatio != value)
+                {
+                    autoAspectRatio = value;
+                    if (autoAspectRatio)
+                    {
+                        destroyBorderPanels();
+                    }
+                    else
+                    {
+                        createBorderPanels();
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// The aspect ratio as width / height
@@ -527,6 +558,26 @@ namespace Medical.Controller
             if (RenderingStarted != null)
             {
                 RenderingStarted.Invoke(this, sceneView.CurrentlyRendering);
+            }
+        }
+
+        void createBorderPanels()
+        {
+            if (borderPanel0 == null)
+            {
+                borderPanel0 = Gui.Instance.createWidgetT("Widget", "SceneViewBorder", 0, 0, 1, 1, Align.Default, "Back", "");
+                borderPanel1 = Gui.Instance.createWidgetT("Widget", "SceneViewBorder", 0, 0, 1, 1, Align.Default, "Back", "");
+            }
+        }
+
+        void destroyBorderPanels()
+        {
+            if (borderPanel0 != null)
+            {
+                Gui.Instance.destroyWidget(borderPanel0);
+                Gui.Instance.destroyWidget(borderPanel1);
+                borderPanel0 = null;
+                borderPanel1 = null;
             }
         }
 
