@@ -27,6 +27,8 @@ namespace Medical
 
         private BrowserWindow browserWindow;
 
+        private AspectRatioTask aspectRatioTask;
+
         public EditorPlugin()
         {
             Log.Info("Editor GUI Loaded");
@@ -43,6 +45,7 @@ namespace Medical
             openPropManager.Dispose();
             scratchArea.Dispose();
             browserWindow.Dispose();
+            aspectRatioTask.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -104,6 +107,9 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "DiscEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
+
+            aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
+            taskController.addTask(aspectRatioTask);
         }
 
         public void sceneLoaded(SimScene scene)

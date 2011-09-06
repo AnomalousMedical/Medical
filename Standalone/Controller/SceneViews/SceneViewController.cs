@@ -32,6 +32,8 @@ namespace Medical.Controller
         private SceneViewWindow activeWindow = null;
         private bool allowRotation = true;
         private bool allowZoom = true;
+        private bool autoAspectRatio = true;
+        private float aspectRatio = 4f / 3f;
 
         private SingleViewCloneWindow cloneWindow = null;
         private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
@@ -283,6 +285,40 @@ namespace Medical.Controller
             }
         }
 
+        public bool AutoAspectRatio
+        {
+            get
+            {
+                return autoAspectRatio;
+            }
+            set
+            {
+                autoAspectRatio = value;
+                foreach (SceneViewWindow window in mdiWindows)
+                {
+                    window.AutoAspectRatio = autoAspectRatio;
+                    window.layout();
+                }
+            }
+        }
+
+        public float AspectRatio
+        {
+            get
+            {
+                return aspectRatio;
+            }
+            set
+            {
+                aspectRatio = value;
+                foreach (SceneViewWindow window in mdiWindows)
+                {
+                    window.AspectRatio = aspectRatio;
+                    window.layout();
+                }
+            }
+        }
+
         private void mdiLayout_ActiveWindowChanged(object sender, EventArgs e)
         {
             //Check to see if the active window is one of the SceneViewWindow's MDIWindow
@@ -326,6 +362,8 @@ namespace Medical.Controller
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
             MDISceneViewWindow window = new MDISceneViewWindow(rm, this, mainTimer, orbitCamera, name);
+            window.AutoAspectRatio = autoAspectRatio;
+            window.AspectRatio = aspectRatio;
             if (WindowCreated != null)
             {
                 WindowCreated.Invoke(window);

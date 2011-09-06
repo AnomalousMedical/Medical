@@ -48,6 +48,14 @@
       </Index>
     </Group>
   </Resource>
+
+  <Resource type="ResourceImageSet" name="AspectRatioIcon">
+    <Group name="Icons" texture="Medical.Resources.EditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
   
 </MyGUI>
 
