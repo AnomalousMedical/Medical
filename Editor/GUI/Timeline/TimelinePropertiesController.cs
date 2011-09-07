@@ -220,6 +220,11 @@ namespace Medical.GUI
             }
         }
 
+        internal void deleteFile(string filename)
+        {
+            editorTimelineController.deleteFile(filename);
+        }
+
         internal void cut()
         {
             timelineProperties.cut();

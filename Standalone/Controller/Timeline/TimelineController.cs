@@ -407,6 +407,14 @@ namespace Medical
             return false;
         }
 
+        public void deleteFile(string filename)
+        {
+            if (resourceProvider != null)
+            {
+                resourceProvider.deleteFile(filename);
+            }
+        }
+
         #region UpdateListener Members
 
         public void exceededMaxDelta()

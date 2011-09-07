@@ -19,6 +19,7 @@ namespace Medical.GUI
         MenuItem newTimelineItem;
         MenuItem saveTimelineItem;
         MenuItem saveTimelineAsItem;
+        MenuItem deleteItem;
 
         //Edit Menu
         MenuItem selectAll;
@@ -60,6 +61,8 @@ namespace Medical.GUI
             newTimelineItem = fileMenu.addItem("New Timeline");
             saveTimelineItem = fileMenu.addItem("Save Timeline");
             saveTimelineAsItem = fileMenu.addItem("Save Timeline As");
+            fileMenu.addItem("", MenuItemType.Separator);
+            deleteItem = fileMenu.addItem("Delete Selected");
 
             //Edit menu
             editMenuItem = menuBar.addItem("Edit", MenuItemType.Popup);
@@ -138,6 +141,10 @@ namespace Medical.GUI
             {
                 saveTimelineAsClicked(source, e);
             }
+            else if (menuEventArgs.Item == deleteItem)
+            {
+                deleteClicked(source, e);
+            }
         }
 
         void createNewProjectClicked(Widget source, EventArgs e)
@@ -191,6 +198,22 @@ namespace Medical.GUI
             saveTimelineDialog.open(true);
             saveTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             saveTimelineDialog.ensureVisible();
+        }
+
+        void deleteClicked(Widget source, EventArgs e)
+        {
+            if (fileList.hasItemSelected())
+            {
+                String filename = (String)fileList.getItemDataAt(fileList.getIndexSelected());
+                MessageBox.show(String.Format("Are you sure you want to delete {0}?", filename), "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, delegate(MessageBoxStyle result)
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        timelinePropertiesController.deleteFile(filename);
+                        updateFileList();
+                    }
+                });
+            }
         }
 
         void saveTimelineDialog_SaveFile(object sender, EventArgs e)

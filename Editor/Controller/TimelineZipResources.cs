@@ -66,6 +66,17 @@ namespace Medical
             zipFile = new ZipFile(resourceLocation);
         }
 
+        public void deleteFile(String filename)
+        {
+            zipFile.Dispose();
+            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            {
+                ionicZip.RemoveEntry(filename);
+                ionicZip.Save();
+            }
+            zipFile = new ZipFile(resourceLocation);
+        }
+
         public String[] listFiles(String pattern)
         {
             try

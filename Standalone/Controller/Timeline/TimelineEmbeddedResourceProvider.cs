@@ -48,6 +48,11 @@ namespace Medical
             throw new NotImplementedException("addFile not supported by this resource provider.");
         }
 
+        public void deleteFile(String filename)
+        {
+            throw new NotImplementedException("deleteFile not supported by this resource provider.");
+        }
+
         public string[] listFiles(string pattern)
         {
             return fileList.ToArray();

@@ -39,6 +39,11 @@ namespace Medical
             File.Copy(path, Path.Combine(parentPath, filename), true);
         }
 
+        public void deleteFile(String filename)
+        {
+            File.Delete(Path.Combine(parentPath, filename));
+        }
+
         public string[] listFiles(string pattern)
         {
             String[] files = Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly);
