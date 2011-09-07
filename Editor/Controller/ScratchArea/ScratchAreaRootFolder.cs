@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Medical
 {
@@ -13,6 +14,11 @@ namespace Medical
             :base(folderName)
         {
             this.fileSystemPath = fileSystemPath;
+            String scratchPath = Path.Combine(fileSystemPath, folderName);
+            if (!Directory.Exists(scratchPath))
+            {
+                Directory.CreateDirectory(scratchPath);
+            }
         }
 
         protected override void findPath(StringBuilder sb)
