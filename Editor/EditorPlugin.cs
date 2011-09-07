@@ -20,6 +20,7 @@ namespace Medical
         private OpenPropManager openPropManager;
         private ScratchArea scratchArea;
         private DiscControl discControl;
+        private GridPropertiesDialog gridProperties;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -46,6 +47,7 @@ namespace Medical
             scratchArea.Dispose();
             browserWindow.Dispose();
             aspectRatioTask.Dispose();
+            gridProperties.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -75,6 +77,9 @@ namespace Medical
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
             //Dialogs
+            gridProperties = new GridPropertiesDialog(standaloneController.MeasurementGrid);
+            guiManager.addManagedDialog(gridProperties);
+
             propTimeline = new PropTimeline(standaloneController.Clipboard);
             guiManager.addManagedDialog(propTimeline);
 
@@ -107,6 +112,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "DiscEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "GridIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);

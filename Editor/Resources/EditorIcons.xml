@@ -56,6 +56,14 @@
       </Index>
     </Group>
   </Resource>
+
+  <Resource type="ResourceImageSet" name="GridIcon">
+    <Group name="Icons" texture="Medical.Resources.EditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="224 0"/>
+      </Index>
+    </Group>
+  </Resource>
   
 </MyGUI>
 

@@ -87,6 +87,7 @@
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\DiscEditor\DiscControl.cs" />
     <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
+    <Compile Include="GUI\GridPropertiesDialog\GridPropertiesDialog.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscPanel.layout" />
+    <EmbeddedResource Include="GUI\GridPropertiesDialog\GridPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
