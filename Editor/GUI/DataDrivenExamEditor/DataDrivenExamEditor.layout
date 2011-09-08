@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="19 33 348 313" layer="Back">
+        <Property key="Widget_Caption" value="Exam Editor"/>
+        <Widget type="MenuBar" skin="MenuBar" position_real="0 0 1 0.0813559" align="HStretch Top"/>
+        <Widget type="ScrollView" skin="ScrollView" position="8 29 111 258" align="HRelative VStretch" name="TreeScroller">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="124 29 216 258" align="HRelative VStretch" name="TableScroller">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+        </Widget>
+    </Widget>
+</MyGUI>

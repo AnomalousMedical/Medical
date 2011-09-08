@@ -133,6 +133,8 @@
     <Compile Include="Controller\MedicalStates\PatientData.cs" />
     <Compile Include="Controller\OSHelper\LicenseManager.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginEntryPointAttribute.cs" />
+    <Compile Include="Controller\Plugin\DataDrivenExamPlugin\DataDrivenExamPlugin.cs" />
+    <Compile Include="Controller\Plugin\DataDrivenExamPlugin\StartExamTimelineTask.cs" />
     <Compile Include="Controller\Props\BiteStick.cs" />
     <Compile Include="Controller\Props\Caliper\Caliper.cs" />
     <Compile Include="Controller\Props\Caliper\SetCaliperMeasurement.cs" />

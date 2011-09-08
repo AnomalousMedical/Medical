@@ -21,6 +21,7 @@ namespace Medical
         private ScratchArea scratchArea;
         private DiscControl discControl;
         private GridPropertiesDialog gridProperties;
+        private DataDrivenExamEditor examEditor;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -48,6 +49,7 @@ namespace Medical
             browserWindow.Dispose();
             aspectRatioTask.Dispose();
             gridProperties.Dispose();
+            examEditor.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -102,6 +104,9 @@ namespace Medical
             scratchArea = new ScratchArea(scratchAreaController, browserWindow);
             guiManager.addManagedDialog(scratchArea);
 
+            examEditor = new DataDrivenExamEditor(browserWindow);
+            guiManager.addManagedDialog(examEditor);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -113,6 +118,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "DiscEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "GridIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(examEditor, "Medical.ExamEditor", "ExamEditor", "ExamEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
