@@ -104,7 +104,7 @@ namespace Medical
             scratchArea = new ScratchArea(scratchAreaController, browserWindow);
             guiManager.addManagedDialog(scratchArea);
 
-            examEditor = new DataDrivenExamEditor(browserWindow);
+            examEditor = new DataDrivenExamEditor(browserWindow, standaloneController.TimelineController);
             guiManager.addManagedDialog(examEditor);
 
             //Tasks Menu

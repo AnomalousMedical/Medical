@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DataDrivenExamPlugin\DataDrivenExamPluginDefinition.cs" />
+    <Compile Include="Controller\DataDrivenExamPlugin\ExamTimelineTaskDefinition.cs" />
     <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
