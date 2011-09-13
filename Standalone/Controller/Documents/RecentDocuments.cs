@@ -21,16 +21,18 @@ namespace Medical
         private ConfigSection section;
         private List<String> recentDocumentList = new List<string>();
 
-        public RecentDocuments(String backingFile)
+        public RecentDocuments()
+        {
+            
+        }
+
+        public void load(String backingFile)
         {
             configFile = new ConfigFile(backingFile);
             section = configFile.createOrRetrieveConfigSection("RecentDocuments");
             section.SectionLoaded += new ConfigEvent(section_SectionLoaded);
             section.SectionSaving += new ConfigEvent(section_SectionSaving);
-        }
 
-        public void load()
-        {
             configFile.loadConfigFile();
             if (DocumentAdded != null)
             {

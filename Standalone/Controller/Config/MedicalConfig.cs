@@ -16,8 +16,6 @@ namespace Medical
         private static ConfigFile configFile;
         private static String docRoot;
         private static String windowsFile;
-        private static String camerasFile;
-        private static String credentialsFile;
         private static String bookmarksFolder;
         private static ConfigSection program;
         private static TaskbarAlignment taskbarAlignment = TaskbarAlignment.Top;
@@ -41,17 +39,12 @@ namespace Medical
         public MedicalConfig(String anomalousFolder)
         {
             MedicalConfig.anomalousFolder = anomalousFolder;
-            MedicalConfig.docRoot = anomalousFolder;
-            MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
-            windowsFile = docRoot + "/windows.ini";
-            camerasFile = docRoot + "/cameras.ini";
-            bookmarksFolder = docRoot + "/Bookmarks";
-            recentDocsFile = docRoot + "/docs.ini";
-            credentialsFile = docRoot + "/credentials.dat";
-            if (!Directory.Exists(docRoot))
+            if (!Directory.Exists(anomalousFolder))
             {
-                Directory.CreateDirectory(docRoot);
+                Directory.CreateDirectory(anomalousFolder);
             }
+            MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
+            
             configFile = new ConfigFile(anomalousFolder + "/config.ini");
             configFile.loadConfigFile();
             EngineConfig = new EngineConfig(configFile);
@@ -98,19 +91,39 @@ namespace Medical
 #endif
         }
 
-        public static String DocRoot
+        public static void setUser(String username)
+        {
+            MedicalConfig.docRoot = Path.Combine(Path.Combine(anomalousFolder, "Users"), username);
+            windowsFile = docRoot + "/windows.ini";
+            bookmarksFolder = docRoot + "/Bookmarks";
+            recentDocsFile = docRoot + "/docs.ini";
+            if (!Directory.Exists(docRoot))
+            {
+                Directory.CreateDirectory(docRoot);
+            }
+        }
+
+        public static String LogFile
+        {
+            get
+            {
+                return Path.Combine(anomalousFolder, "Log.log");
+            }
+        }
+
+        public static String CrashLogDirectory
+        {
+            get
+            {
+                return Path.Combine(anomalousFolder, "CrashLogs");
+            }
+        }
+
+        public static String UserDocRoot
         {
             get
             {
                 return docRoot;
-            }
-        }
-
-        public static String CredentialsFile
-        {
-            get
-            {
-                return credentialsFile;
             }
         }
 
@@ -127,14 +140,6 @@ namespace Medical
             get
             {
                 return windowsFile;
-            }
-        }
-
-        public static String CamerasFile
-        {
-            get
-            {
-                return camerasFile;
             }
         }
 
@@ -323,6 +328,14 @@ namespace Medical
             get
             {
                 return pluginConfig;
+            }
+        }
+
+        public static string LicenseFile
+        {
+            get
+            {
+                return Path.Combine(anomalousFolder, "License.lic");
             }
         }
     }

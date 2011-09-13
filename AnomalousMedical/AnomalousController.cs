@@ -55,7 +55,7 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
-            LicenseManager = new LicenseManager("Anomalous Medical", Path.Combine(MedicalConfig.DocRoot, "license.lic"), ProductID);
+            LicenseManager = new LicenseManager("Anomalous Medical", MedicalConfig.LicenseFile, ProductID);
             LicenseManager.KeyValid += new EventHandler(licenseManager_KeyValid);
             LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
             LicenseManager.KeyDialogShown += new EventHandler(LicenseManager_KeyDialogShown);
@@ -249,6 +249,8 @@ namespace Medical
             {
                 splashScreen.updateStatus(85, "Loading Plugins");
             }
+
+            MedicalConfig.setUser(LicenseManager.User);
 
             controller.GUIManager.setMainInterfaceEnabled(true);
             controller.setWatermarkText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));

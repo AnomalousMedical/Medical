@@ -221,6 +221,18 @@ namespace Medical
             }
         }
 
+        public string User
+        {
+            get
+            {
+#if CRACKED
+                return "AnomalousMedicalInternal";
+#else
+                return license != null ? license.User : "Invalid";
+#endif
+            }
+        }
+
         private void showKeyDialog()
         {
             licenseDialog = new LicenseDialog(programName, getMachineId(), productID, keyDialogMessage);

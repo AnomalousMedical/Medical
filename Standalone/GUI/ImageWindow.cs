@@ -18,11 +18,11 @@ namespace Medical.GUI
         //:base(parent, windowTitle, wxDefaultPosition, new System.Drawing.Size(640, 480))
         {
             //Bit of voodoo to get image into wxWidgets.
-            String imageFile = (MedicalConfig.DocRoot + "/TempImage.png");
+            String imageFile = (MedicalConfig.UserDocRoot + "/TempImage.png");
             image.Save(imageFile, ImageFormat.Png);
             image.Dispose();
 
-            nativeWindow = ImageWindow_new(parent._NativePtr, windowTitle, imageFile, MedicalConfig.DocRoot);
+            nativeWindow = ImageWindow_new(parent._NativePtr, windowTitle, imageFile, MedicalConfig.UserDocRoot);
 
             try
             {

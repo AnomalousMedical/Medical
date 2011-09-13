@@ -20,7 +20,7 @@ namespace Medical
         {
             this.clipboard = clipboard;
 
-            rootFolder = new ScratchAreaRootFolder("Scratch Area", MedicalConfig.DocRoot);
+            rootFolder = new ScratchAreaRootFolder("Scratch Area", MedicalConfig.UserDocRoot);
             rootFolder.loadInfo();
         }
 

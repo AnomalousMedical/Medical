@@ -15,9 +15,9 @@ namespace Medical
         private RecentDocuments recentDocuments;
         private List<DocumentHandler> documentHandlers = new List<DocumentHandler>();
 
-        public DocumentController(String recentDocsFile)
+        public DocumentController()
         {
-            recentDocuments = new RecentDocuments(recentDocsFile);
+            recentDocuments = new RecentDocuments();
         }
 
         public void addDocumentHandler(DocumentHandler handler)
@@ -30,9 +30,9 @@ namespace Medical
             documentHandlers.Remove(handler);
         }
 
-        public void loadRecentDocuments()
+        public void loadRecentDocuments(String recentDocsFile)
         {
-            recentDocuments.load();
+            recentDocuments.load(recentDocsFile);
         }
 
         public void saveRecentDocuments()

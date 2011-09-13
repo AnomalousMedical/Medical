@@ -118,7 +118,7 @@ namespace Medical
             app.addHelpDocuments(htmlHelpController);
 
             //Documents
-            DocumentController = new DocumentController(MedicalConfig.RecentDocsFile);
+            DocumentController = new DocumentController();
 
             //Setup MyGUI listeners
             MyGUIInterface myGUI = MyGUIInterface.Instance;
@@ -254,7 +254,7 @@ namespace Medical
             }
 
             //Load recent documents here, this way the document handlers are all loaded
-            DocumentController.loadRecentDocuments();
+            DocumentController.loadRecentDocuments(MedicalConfig.RecentDocsFile);
         }
 
         public void onIdle()

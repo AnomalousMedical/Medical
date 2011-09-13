@@ -82,12 +82,9 @@ namespace Medical
         {
             //Create the log.
             logListener = new LogFileListener();
-            logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
+            logListener.openLogFile(MedicalConfig.LogFile);
             Log.Default.addLogListener(logListener);
             Log.ImportantInfo("Running from directory {0}", MedicalConfig.ProgramDirectory);
-
-            //Config plugins
-            MyGUIInterface.LogFile = MedicalConfig.DocRoot + "/MyGUI.log";
 
             //Create pluginmanager
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
@@ -184,7 +181,7 @@ namespace Medical
             if (logListener != null)
             {
                 DateTime now = DateTime.Now;
-                String crashFile = String.Format(CultureInfo.InvariantCulture, "{0}/CrashLogs/log {1}-{2}-{3} {4}.{5}.{6}.log", MedicalConfig.DocRoot, now.Month, now.Day, now.Year, now.Hour, now.Minute, now.Second);
+                String crashFile = String.Format(CultureInfo.InvariantCulture, "{0}/log {1}-{2}-{3} {4}.{5}.{6}.log", MedicalConfig.CrashLogDirectory, now.Month, now.Day, now.Year, now.Hour, now.Minute, now.Second);
                 logListener.saveCrashLog(crashFile);
             }
         }

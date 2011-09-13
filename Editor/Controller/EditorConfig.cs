@@ -19,7 +19,7 @@ namespace Medical
         {
             get
             {
-                return editorSection.getValue("TimelineProjectDir", MedicalConfig.DocRoot + "/Timeline Projects");
+                return editorSection.getValue("TimelineProjectDir", MedicalConfig.UserDocRoot + "/Timeline Projects");
             }
             set
             {
