@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<MyGUI type="List">
-  <List file="Medical.Resources.AboutImage.xml"/>
-  <List file="Medical.Resources.FileToolstrip.xml"/>
-  <List file="Medical.Resources.AppButton.xml"/>
-  <List file="Medical.Resources.BodyAtlasIcons.xml"/>
-</MyGUI>

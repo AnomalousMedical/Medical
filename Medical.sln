@@ -15,12 +15,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinMTDriver", "WinMTDriver\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeLibraries", "NativeLibraries\NativeLibraries.csproj", "{BD276BF5-392D-4440-80AB-9EB3BE5D1DC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodyAtlas", "BodyAtlas\BodyAtlas.csproj", "{968E46AE-301D-4938-BC27-2DFC60F20ED7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E217C194-A14F-41DE-A838-C401E60ADF15} = {E217C194-A14F-41DE-A838-C401E60ADF15}
-		{B05D69F8-6463-4276-8077-D7F3F0C02A9E} = {B05D69F8-6463-4276-8077-D7F3F0C02A9E}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premium", "Premium\Premium.csproj", "{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lecture", "Lecture\Lecture.csproj", "{3C599E05-33A9-47D1-84A6-B1CB05CE7466}"
@@ -179,25 +173,6 @@ Global
 		{BD276BF5-392D-4440-80AB-9EB3BE5D1DC9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BD276BF5-392D-4440-80AB-9EB3BE5D1DC9}.Release|Win32.ActiveCfg = Release|Any CPU
 		{BD276BF5-392D-4440-80AB-9EB3BE5D1DC9}.Release|x86.ActiveCfg = Release|Any CPU
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Debug|Win32.ActiveCfg = Debug|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Debug|x86.ActiveCfg = Debug|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Debug|x86.Build.0 = Debug|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.PublicRelease|Any CPU.ActiveCfg = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.PublicRelease|Mixed Platforms.ActiveCfg = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.PublicRelease|Mixed Platforms.Build.0 = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.PublicRelease|Win32.ActiveCfg = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.PublicRelease|x86.ActiveCfg = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.PublicRelease|x86.Build.0 = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|Mixed Platforms.Build.0 = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|Win32.ActiveCfg = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|x86.ActiveCfg = Release|x86
-		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|x86.Build.0 = Release|x86
 		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
