@@ -15,7 +15,6 @@
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="231 403 116 13" name="AnomalousMedicalLink">
             <Property key="Widget_Caption" value="Anomalous Medical"/>
-            <Property key="Text_TextColour" value="008de6"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="DeveloperPanel">
             <Property key="Widget_Visible" value="true"/>
