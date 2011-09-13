@@ -55,7 +55,7 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
-            LicenseManager = new LicenseManager("Anomalous Body Atlas", Path.Combine(MedicalConfig.DocRoot, "license.lic"), ProductID);
+            LicenseManager = new LicenseManager("Anomalous Medical", Path.Combine(MedicalConfig.DocRoot, "license.lic"), ProductID);
             LicenseManager.KeyValid += new EventHandler(licenseManager_KeyValid);
             LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
             LicenseManager.KeyDialogShown += new EventHandler(LicenseManager_KeyDialogShown);

@@ -82,9 +82,6 @@
     <Compile Include="..\..\DRM\DRMClient\License\AnomalousLicenseServer.cs">
       <Link>Controller\OSHelper\AnomalousLicenseServer.cs</Link>
     </Compile>
-    <Compile Include="..\..\DRM\DRMClient\ProductKey\KeyChecker.cs">
-      <Link>Controller\OSHelper\KeyChecker.cs</Link>
-    </Compile>
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />

@@ -196,7 +196,7 @@ namespace Medical
 #if CRACKED
                 return true;
 #else
-                return license != null && !license.IsExpired && license.MachineID == getMachineId() && KeyChecker.checkValid(programName, license.ProductKey);
+                return license != null && !license.IsExpired && license.MachineID == getMachineId();
 #endif
             }
         }
