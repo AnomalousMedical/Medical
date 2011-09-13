@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace Medical
 {
-    class BodyAtlasController : StandaloneApp
+    class AnomalousController : StandaloneApp
     {
         StandaloneController controller;
         bool startupSuceeded = false;
@@ -232,7 +232,7 @@ namespace Medical
 
         private void addPlugins()
         {
-            controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
+            controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(LicenseManager, this));
             controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
             controller.AtlasPluginManager.addPlugin("Premium.dll");
             controller.AtlasPluginManager.addPlugin("Lecture.dll");

@@ -11,18 +11,18 @@ namespace Medical
         [STAThread]
         static void Main()
         {
-            BodyAtlasController bodyAtlas = null;
+            AnomalousController anomalous = null;
             try
             {
-                bodyAtlas = new BodyAtlasController();
-                bodyAtlas.run();
+                anomalous = new AnomalousController();
+                anomalous.run();
             }
             catch (Exception e)
             {
                 Logging.Log.Default.printException(e);
-                if (bodyAtlas != null)
+                if (anomalous != null)
                 {
-                    bodyAtlas.saveCrashLog();
+                    anomalous.saveCrashLog();
                 }
                 String errorMessage = e.Message + "\n" + e.StackTrace;
                 while (e.InnerException != null)

@@ -10,13 +10,13 @@ using System.Diagnostics;
 
 namespace Medical.GUI
 {
-    class BodyAtlasMainPlugin : AtlasPlugin
+    class AnomalousMainPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
         private GUIManager guiManager;
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
-        private BodyAtlasController bodyAtlasController;
+        private AnomalousController bodyAtlasController;
 
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
@@ -27,7 +27,7 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private ExamViewer examViewer;
 
-        public BodyAtlasMainPlugin(LicenseManager licenseManager, BodyAtlasController bodyAtlasController)
+        public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
         {
             this.licenseManager = licenseManager;
             this.bodyAtlasController = bodyAtlasController;

@@ -71,8 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BodyAtlasController.cs" />
-    <Compile Include="BodyAtlasMainPlugin.cs" />
+    <Compile Include="AnomalousController.cs" />
+    <Compile Include="AnomalousMainPlugin.cs" />
     <Compile Include="Controller\Documents\PatientDocumentHandler.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
