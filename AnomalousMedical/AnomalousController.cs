@@ -167,14 +167,6 @@ namespace Medical
             }
         }
 
-        public override string ProgramFolder
-        {
-            get
-            {
-                return "BodyAtlas";
-            }
-        }
-
         public override WindowIcons Icon
         {
             get

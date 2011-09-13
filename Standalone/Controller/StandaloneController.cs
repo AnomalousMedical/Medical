@@ -69,7 +69,7 @@ namespace Medical
         {
             this.app = app;
 
-            MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalRoot, app.ProgramFolder);
+            MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalRoot);
             atlasPluginManager = new AtlasPluginManager(this);
             guiManager = new GUIManager(this);
 

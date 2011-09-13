@@ -38,10 +38,10 @@ namespace Medical
 
         private static PluginConfig pluginConfig = new PluginConfig();
 
-        public MedicalConfig(String anomalousFolder, String programFolder)
+        public MedicalConfig(String anomalousFolder)
         {
             MedicalConfig.anomalousFolder = anomalousFolder;
-            MedicalConfig.docRoot = Path.Combine(anomalousFolder, programFolder);
+            MedicalConfig.docRoot = anomalousFolder;
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
             windowsFile = docRoot + "/windows.ini";
             camerasFile = docRoot + "/cameras.ini";

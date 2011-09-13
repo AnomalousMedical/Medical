@@ -30,14 +30,8 @@ namespace Medical.GUI
             Button closeButton = window.findWidget("CloseButton") as Button;
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
-            StaticText serialNumberText = window.findWidget("SerialNumberText") as StaticText;
-            serialNumberText.Caption = "Serial Number " + licenseManager.Key;
-
             StaticText versionText = window.findWidget("VersionText") as StaticText;
             versionText.Caption = "Version " + Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version;
-
-            StaticText featureLevelText = window.findWidget("FeatureLevelText") as StaticText;
-            featureLevelText.Caption = licenseManager.FeatureLevelString;
 
             StaticText anomalousMedicalText = window.findWidget("AnomalousMedicalLink") as StaticText;
             anomalousMedicalText.MouseButtonClick += new MyGUIEvent(anomalousMedicalText_MouseButtonClick);

@@ -18,8 +18,6 @@ namespace Medical.Controller
 
         public abstract String WindowTitle { get; }
 
-        public abstract String ProgramFolder { get; }
-
         public abstract WindowIcons Icon { get; }
 
         public abstract String PrimaryArchive { get; }

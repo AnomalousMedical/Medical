@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="84 144 350 436" layer="Modal">
+    <Widget type="Window" skin="WindowCX" position="79 59 350 436" layer="Modal">
         <Property key="Widget_Caption" value="About"/>
         <Property key="Window_MinSize" value="350 436"/>
         <Property key="Window_MaxSize" value="350 436"/>
         <Widget type="StaticImage" skin="StaticImage" position="0 0 350 165">
             <Property key="Image_Resource" value="AboutImage/Image"/>
-            <Widget type="StaticText" skin="StaticText" position="117 81 200 13" name="FeatureLevelText">
-                <Property key="Widget_Caption" value="Feature Level"/>
-            </Widget>
             <Widget type="StaticText" skin="StaticText" position="54 150 250 14">
                 <Property key="Widget_Caption" value="Copyright 2009-2011 Anomalous Medical"/>
             </Widget>
@@ -24,9 +21,6 @@
             <Property key="Widget_Visible" value="true"/>
             <Widget type="StaticText" skin="StaticText" position="0 4 145 90">
                 <Property key="Widget_Caption" value="Developers\n\nDr. Mark Piper DMD MD\nAndrew Piper\nChase Donald\nGreg Chance"/>
-            </Widget>
-            <Widget type="StaticText" skin="StaticText" position="0 143 336 13" name="SerialNumberText">
-                <Property key="Widget_Caption" value="Serial Number"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="4 158 336 13" name="VersionText">
                 <Property key="Widget_Caption" value="Version "/>
