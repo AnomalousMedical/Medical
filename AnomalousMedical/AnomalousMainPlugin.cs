@@ -26,6 +26,13 @@ namespace Medical.GUI
         private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
         private ExamViewer examViewer;
+        private AnatomyFinder anatomyFinder;
+
+        //Controllers
+        private AnatomyController anatomyController;
+
+        //Tasks
+        private SelectionModeTask selectionModeTask;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
         {
@@ -35,13 +42,16 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            selectionModeTask.Dispose();
             examViewer.Dispose();
             renderDialog.Dispose();
             options.Dispose();
+            anatomyFinder.Dispose();
             chooseSceneDialog.Dispose();
             savePatientDialog.Dispose();
             openPatientDialog.Dispose();
             aboutDialog.Dispose();
+            anatomyController.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -49,6 +59,8 @@ namespace Medical.GUI
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
             standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController, this));
+
+            anatomyController = new AnatomyController(standaloneController.ImageRenderer);
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
@@ -64,6 +76,9 @@ namespace Medical.GUI
             openPatientDialog = new OpenPatientDialog();
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
+            anatomyFinder = new AnatomyFinder(anatomyController, standaloneController.SceneViewController);
+            guiManager.addManagedDialog(anatomyFinder);
+
             options = new OptionsDialog();
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
@@ -76,6 +91,9 @@ namespace Medical.GUI
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.setAppIcon("AppButton/Image");
+
+            //Tasks
+            selectionModeTask = new SelectionModeTask(anatomyController);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
@@ -113,16 +131,20 @@ namespace Medical.GUI
 
             //Tools Section
             taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
+
+            //Navigation Section
+            taskController.addTask(new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
+            taskController.addTask(selectionModeTask);
         }
 
         public void sceneLoaded(SimScene scene)
         {
-            
+            anatomyController.sceneLoaded();
         }
 
         public void sceneUnloading(SimScene scene)
         {
-            
+            anatomyController.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

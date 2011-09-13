@@ -24,20 +24,14 @@ namespace Medical
         private StateListPopup stateList;
         private WindowLayout windowLayout;
         private SequencePlayer sequencePlayer;
-        private AnatomyFinder anatomyFinder;
         private BookmarksGUI bookmarks;
-
-        //Tasks
-        private SelectionModeTask selectionModeTask;
         
         //Controllers
-        private AnatomyController anatomyController;
         private BookmarksController bookmarksController;
 
         public PremiumBodyAtlasPlugin(StandaloneController standaloneController)
         {
             this.licenseManager = standaloneController.App.LicenseManager;
-            anatomyController = new AnatomyController(standaloneController.ImageRenderer);
             bookmarksController = new BookmarksController(standaloneController);
 
             //This is temporary cruft from the old system.
@@ -51,16 +45,13 @@ namespace Medical
 
         public void Dispose()
         {
-            selectionModeTask.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             mandibleMovementDialog.Dispose();
             notesDialog.Dispose();
             stateList.Dispose();
-            anatomyFinder.Dispose();
             bookmarks.Dispose();
             bookmarksController.Dispose();
-            anatomyController.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -90,20 +81,12 @@ namespace Medical
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(sequencePlayer);
 
-            anatomyFinder = new AnatomyFinder(anatomyController, standaloneController.SceneViewController);
-            guiManager.addManagedDialog(anatomyFinder);
-
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
-
-            //Tasks
-            selectionModeTask = new SelectionModeTask(anatomyController);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
-            taskController.addTask(new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
-            taskController.addTask(selectionModeTask);
             taskController.addTask(new ShowToothContactsTask());
             taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
@@ -115,7 +98,6 @@ namespace Medical
         public void sceneLoaded(SimScene scene)
         {
             mandibleMovementDialog.sceneLoaded(scene);
-            anatomyController.sceneLoaded();
 
             //Load sequences
             MedicalController medicalController = standaloneController.MedicalController;
@@ -130,7 +112,6 @@ namespace Medical
         public void sceneUnloading(SimScene scene)
         {
             mandibleMovementDialog.sceneUnloading(scene);
-            anatomyController.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

@@ -4,5 +4,4 @@
   <List file="Medical.Resources.PremiumToolbar.xml"/>
   <List file="Medical.Resources.MovementIcons.xml"/>
   <List file="Medical.Resources.BookmarksIcons.xml"/>
-  <List file="Medical.Resources.SelectionIcons.xml"/>
 </MyGUI>

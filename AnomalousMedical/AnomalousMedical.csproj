@@ -94,6 +94,14 @@
     <Compile Include="AnomalousMainPlugin.cs" />
     <Compile Include="Controller\Documents\PatientDocumentHandler.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
+    <Compile Include="GUI\Anatomy\ButtonGridItemNaturalSort.cs" />
+    <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
+    <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
+    <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
@@ -103,6 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />
@@ -125,6 +135,8 @@
     <EmbeddedResource Include="Resources\AppButton.png" />
     <EmbeddedResource Include="Resources\AboutImage.xml" />
     <EmbeddedResource Include="Resources\AboutImage.png" />
+    <EmbeddedResource Include="Resources\SelectionIcons.xml" />
+    <EmbeddedResource Include="Resources\SelectionIcons.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -57,14 +57,6 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="SearchIcon">
-    <Group name="Icons" texture="Medical.Resources.PremiumToolbar.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="160 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
   <Resource type="ResourceImageSet" name="FavoritesIcon">
     <Group name="Icons" texture="Medical.Resources.PremiumToolbar.png" size="32 32">
       <Index name="Icon">

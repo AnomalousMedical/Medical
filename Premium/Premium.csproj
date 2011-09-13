@@ -62,14 +62,6 @@
     <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayoutMenu.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
-    <Compile Include="GUI\Anatomy\ButtonGridItemNaturalSort.cs" />
-    <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
-    <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
-    <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
@@ -95,8 +87,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
     <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
     <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
@@ -115,10 +105,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\BookmarksIcons.xml" />
     <EmbeddedResource Include="Resources\Trash.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\SelectionIcons.png" />
-    <EmbeddedResource Include="Resources\SelectionIcons.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
