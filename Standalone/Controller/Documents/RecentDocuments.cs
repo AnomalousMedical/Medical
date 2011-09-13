@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using System.IO;
+using Logging;
 
 namespace Medical
 {
@@ -45,7 +46,14 @@ namespace Medical
 
         public void save()
         {
-            configFile.writeConfigFile();
+            if (configFile != null)
+            {
+                configFile.writeConfigFile();
+            }
+            else
+            {
+                Log.Warning("Could not save recent documents because no config file is loaded.");
+            }
         }
 
         void section_SectionSaving(ConfigSection source)

@@ -8,6 +8,7 @@ using OgreWrapper;
 using Engine.Platform;
 using Medical.Controller;
 using Engine;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -47,12 +48,19 @@ namespace Medical.GUI
         public void Dispose()
         {
             //Dialogs
-            ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
-            dialogManager.saveDialogLayout(configFile);
-            ConfigSection taskbarSection = configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION);
-            PinnedTaskSerializer taskSerializer = new PinnedTaskSerializer(taskbarSection);
-            taskbar.getPinnedTasks(taskSerializer);
-            configFile.writeConfigFile();
+            if (MedicalConfig.WindowsFile != null)
+            {
+                ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+                dialogManager.saveDialogLayout(configFile);
+                ConfigSection taskbarSection = configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION);
+                PinnedTaskSerializer taskSerializer = new PinnedTaskSerializer(taskbarSection);
+                taskbar.getPinnedTasks(taskSerializer);
+                configFile.writeConfigFile();
+            }
+            else
+            {
+                Log.Warning("Could not save window configuration because the WindowsFile is not defined.");
+            }
 
             //Other
             imageRendererProgress.Dispose();
