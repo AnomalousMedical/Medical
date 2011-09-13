@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D8A56807-3DAC-44EA-947C-3B232D049AC9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Medical</RootNamespace>
+    <AssemblyName>AnomalousMedical</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\AnomalousMedical.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>skull.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BulletPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BulletPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Engine, Version=1.0.0.1169, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="OgrePlugin, Version=1.0.0.1169, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="SoundPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BodyAtlasController.cs" />
+    <Compile Include="BodyAtlasMainPlugin.cs" />
+    <Compile Include="Controller\Documents\PatientDocumentHandler.cs" />
+    <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
+    <Compile Include="GUI\Menus\SystemMenu.cs" />
+    <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
+    <Compile Include="GUI\Render\ResolutionMenu.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\CheckForUpdatesTaskMenuItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
+    <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
+    <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />
+    <None Include="app.config" />
+    <None Include="Properties\AnomalousMedical.manifest" />
+    <EmbeddedResource Include="Resources\Background\Background.material" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\SplashScreen\SplashText.png" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.xml" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.png" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashIMG.png" />
+    <EmbeddedResource Include="Resources\FileToolstrip.xml" />
+    <EmbeddedResource Include="Resources\FileToolstrip.png" />
+    <EmbeddedResource Include="Resources\BodyAtlasImagesets.xml" />
+    <EmbeddedResource Include="Resources\BodyAtlasIcons.xml" />
+    <EmbeddedResource Include="Resources\BodyAtlasIcons.png" />
+    <EmbeddedResource Include="Resources\Background\BodyAtlasBackground.png" />
+    <EmbeddedResource Include="Resources\AppButton.xml" />
+    <EmbeddedResource Include="Resources\AppButton.png" />
+    <EmbeddedResource Include="Resources\AboutImage.xml" />
+    <EmbeddedResource Include="Resources\AboutImage.png" />
+    <Content Include="skull.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simulation\Simulation.csproj">
+      <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
+      <Name>Simulation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Standalone\Standalone.csproj">
+      <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
+      <Name>Standalone</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

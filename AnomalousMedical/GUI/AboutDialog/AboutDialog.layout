@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCX" position="84 144 350 436" layer="Modal">
+        <Property key="Widget_Caption" value="About"/>
+        <Property key="Window_MinSize" value="350 436"/>
+        <Property key="Window_MaxSize" value="350 436"/>
+        <Widget type="StaticImage" skin="StaticImage" position="0 0 350 165">
+            <Property key="Image_Resource" value="AboutImage/Image"/>
+            <Widget type="StaticText" skin="StaticText" position="117 81 200 13" name="FeatureLevelText">
+                <Property key="Widget_Caption" value="Feature Level"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="54 150 250 14">
+                <Property key="Widget_Caption" value="Copyright 2009-2011 Anomalous Medical"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="Button" position="4 387 91 28" name="CloseButton">
+            <Property key="Widget_Caption" value="Close"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="231 403 116 13" name="AnomalousMedicalLink">
+            <Property key="Widget_Caption" value="Anomalous Medical"/>
+            <Property key="Text_TextColour" value="008de6"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="DeveloperPanel">
+            <Property key="Widget_Visible" value="true"/>
+            <Widget type="StaticText" skin="StaticText" position="0 4 145 90">
+                <Property key="Widget_Caption" value="Developers\n\nDr. Mark Piper DMD MD\nAndrew Piper\nChase Donald\nGreg Chance"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="0 143 336 13" name="SerialNumberText">
+                <Property key="Widget_Caption" value="Serial Number"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="4 158 336 13" name="VersionText">
+                <Property key="Widget_Caption" value="Version "/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="255 183 88 28" name="DeveloperMoreButton">
+                <Property key="Widget_Caption" value="More"/>
+            </Widget>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="5 168 343 216" name="OpenSourcePanel">
+            <Property key="Widget_Visible" value="false"/>
+            <Widget type="StaticText" skin="StaticText" position="0 4 132 13">
+                <Property key="Widget_Caption" value="Open Source Projects"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="4 20 51 13" name="Ogre3DLink">
+                <Property key="Widget_Caption" value="Ogre 3D"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="255 183 88 28" name="OpenSourceMoreButton">
+                <Property key="Widget_Caption" value="More"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 36 41 13" name="MyGUILink">
+                <Property key="Widget_Caption" value="MyGUI"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 52 81 13" name="BulletPhysicsLink">
+                <Property key="Widget_Caption" value="Bullet Physics"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 68 41 13" name="ZZiplibLink">
+                <Property key="Widget_Caption" value="Zziplib"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 84 25 13" name="ZlibLink">
+                <Property key="Widget_Caption" value="Zlib"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 100 55 13" name="FreetypeLink">
+                <Property key="Widget_Caption" value="Freetype"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 116 63 13" name="FreeimageLink">
+                <Property key="Widget_Caption" value="Freeimage"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 132 48 13" name="OpenALLink">
+                <Property key="Widget_Caption" value="OpenAL"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 148 65 13" name="OggVorbisLink">
+                <Property key="Widget_Caption" value="Ogg Vorbis"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 164 67 13" name="wxWidgetsLink">
+                <Property key="Widget_Caption" value="wxWidgets"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 180 135 13" name="MonoLink">
+                <Property key="Widget_Caption" value="Mono (Some Versions)"/>
+            </Widget>
+        </Widget>
+        <Widget type="Widget" skin="Separator3" position="1 162 349 2"/>
+    </Widget>
+</MyGUI>

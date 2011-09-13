@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="SplashScreen/Logo">
+    <Group name="Icons" texture="Medical.Resources.SplashScreen.SplashScreen.png" size="1920 1200">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+  <Resource type="ResourceImageSet" name="SplashScreen/Text">
+    <Group name="Icons" texture="Medical.Resources.SplashScreen.SplashText.png" size="700 191">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+  <Resource type="ResourceImageSet" name="SplashScreen/Image">
+    <Group name="Icons" texture="Medical.Resources.SplashScreen.SplashIMG.png" size="750 880">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+  
+</MyGUI>
