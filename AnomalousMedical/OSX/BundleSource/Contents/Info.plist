@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>Anomalous Body Atlas</string>
+	<string>Anomalous Medical</string>
 	<key>CFBundleExecutable</key>
-	<string>BodyAtlas</string>
+	<string>AnomalousMedical</string>
 	<key>CFBundleIconFile</key>
 	<string>Skull.icns</string>
 </dict>
