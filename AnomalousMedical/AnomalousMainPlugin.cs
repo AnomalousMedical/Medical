@@ -25,7 +25,6 @@ namespace Medical.GUI
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
-        private ExamViewer examViewer;
         private AnatomyFinder anatomyFinder;
 
         //Controllers
@@ -43,7 +42,6 @@ namespace Medical.GUI
         public void Dispose()
         {
             selectionModeTask.Dispose();
-            examViewer.Dispose();
             renderDialog.Dispose();
             options.Dispose();
             anatomyFinder.Dispose();
@@ -85,9 +83,6 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             guiManager.addManagedDialog(renderDialog);
 
-            examViewer = new ExamViewer(standaloneController.ExamController);
-            guiManager.addManagedDialog(examViewer);
-
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.setAppIcon("AppButton/Image");
@@ -109,8 +104,6 @@ namespace Medical.GUI
             CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "FileToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
             saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
             taskController.addTask(saveAsTaskItem);
-
-            taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient, 4));
 
             //System Section
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);

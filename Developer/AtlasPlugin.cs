@@ -10,7 +10,8 @@ namespace Developer
 {
     class DeveloperAtlasPlugin : AtlasPlugin
     {
-        
+        private ExamViewer examViewer;
+
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
 
@@ -18,7 +19,7 @@ namespace Developer
 
         public void Dispose()
         {
-            
+            examViewer.Dispose();
         }
 
         public void createMenuBar(NativeMenuBar menu)
@@ -28,7 +29,15 @@ namespace Developer
 
         public void initialize(StandaloneController standaloneController)
         {
-            
+            GUIManager guiManager = standaloneController.GUIManager;
+
+            examViewer = new ExamViewer(standaloneController.ExamController);
+            guiManager.addManagedDialog(examViewer);
+
+            //Task Controller
+            TaskController taskController = standaloneController.TaskController;
+
+            taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient, 4));
         }
 
         public void sceneLoaded(SimScene scene)
