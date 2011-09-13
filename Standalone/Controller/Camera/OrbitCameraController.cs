@@ -38,7 +38,7 @@ namespace Medical
 
             panCamera = new MessageEvent(CameraEvents.PanCamera);
             panCamera.addButton(currentMouseButton);
-            panCamera.addButton(KeyboardButtonCode.KC_LCONTROL);
+            panCamera.addButton(PlatformConfig.PanKey);
             DefaultEvents.registerDefaultEvent(panCamera);
 
             zoomCamera = new MessageEvent(CameraEvents.ZoomCamera);

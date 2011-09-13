@@ -110,5 +110,13 @@ namespace Medical
                 return true;
             }
         }
+
+        protected override KeyboardButtonCode PanKeyImpl
+        {
+            get
+            {
+                return KeyboardButtonCode.KC_LCONTROL;
+            }
+        }
     }
 }

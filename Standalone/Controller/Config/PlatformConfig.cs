@@ -118,6 +118,14 @@ namespace Medical
             }
         }
 
+        public static KeyboardButtonCode PanKey
+        {
+            get
+            {
+                return currentConfig.PanKeyImpl;
+            }
+        }
+
 
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
@@ -145,6 +153,8 @@ namespace Medical
         protected abstract String DocumentsFolderImpl { get; }
 
         protected abstract bool CloseMainWindowOnShutdownImpl { get; }
+
+        protected abstract KeyboardButtonCode PanKeyImpl { get; }
 
         #region PInvoke
 
