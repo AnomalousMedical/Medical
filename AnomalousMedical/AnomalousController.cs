@@ -262,6 +262,11 @@ namespace Medical
                 splashScreen.updateStatus(100, "");
                 splashScreen.hide();
             }
+            else
+            {
+                //Let plugins know the scene has been revealed, if the license dialog had to be opened.
+                controller.sceneRevealed();
+            }
 
             controller.MedicalController.MainTimer.resetLastTime();
         }
