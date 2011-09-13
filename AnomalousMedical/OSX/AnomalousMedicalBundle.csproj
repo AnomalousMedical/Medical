@@ -32,15 +32,15 @@
   
   <!-- PiperJBO app specific info -->
   <PropertyGroup>
-    <AppBundleName>Anomalous Body Atlas.app</AppBundleName>
+    <AppBundleName>Anomalous Medical.app</AppBundleName>
 	<AppBundleOutDir>../../$(Configuration)</AppBundleOutDir>
   </PropertyGroup>
   
   <ItemGroup>
 	<!-- These items will go in the Contents/Resources folder -->
-	<ResourceFiles Include="BundleSource/Contents/Resources/BodyAtlas.exe.config" />
+	<ResourceFiles Include="BundleSource/Contents/Resources/AnomalousMedical.exe.config" />
 	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
-	<ResourceFiles Include="..\..\Release\BodyAtlas.exe" />
+	<ResourceFiles Include="..\..\Release\AnomalousMedical.exe" />
 	<ResourceFiles Include="..\..\Release\Editor.dll" />
 	<ResourceFiles Include="..\..\Release\Lecture.dll" />
 	<ResourceFiles Include="..\..\Release\PiperJBO.dll" />
@@ -50,8 +50,8 @@
 
 
     <!-- These items will go in the Contents/MacOS folder-->
-	<MacOSFiles Include="BundleSource/Contents/MacOS/BodyAtlas" />
-	<MakeExecutable Include="$(AppBundleOutDir)/$(AppBundleName)/Contents/MacOS/BodyAtlas" />
+	<MacOSFiles Include="BundleSource/Contents/MacOS/AnomalousMedical" />
+	<MakeExecutable Include="$(AppBundleOutDir)/$(AppBundleName)/Contents/MacOS/AnomalousMedical" />
 
 	<!-- These items will go in the Contents folder. -->
 	<ContentsFiles Include="BundleSource/Contents/Info.plist" />
