@@ -23,6 +23,7 @@ namespace Medical.GUI
         StaticImage warningImage;
         Button saveButton;
         Button cancelButton;
+        Widget dataPanel;
 
         public SavePatientDialog(GUIManager guiManager)
             : base("Medical.GUI.FileManagement.SavePatientDialog.layout", guiManager)
@@ -36,6 +37,7 @@ namespace Medical.GUI
             saveButton = widget.findWidget("Save/SaveButton") as Button;
             cancelButton = widget.findWidget("Save/CancelButton") as Button;
             Button browseButton = widget.findWidget("Save/BrowseButton") as Button;
+            dataPanel = widget.findWidget("DataPanel");
 
             lastText.EventEditTextChange +=new MyGUIEvent(lastText_EventEditTextChange);
             firstText.EventEditTextChange += new MyGUIEvent(firstText_EventEditTextChange);
@@ -48,6 +50,16 @@ namespace Medical.GUI
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
 
             this.Shown += new EventHandler(SavePatientDialog_Shown);
+        }
+
+        public override void setSize(int width, int height)
+        {
+            base.setSize(width, height);
+            if (width > 800)
+            {
+                width = 800;
+            }
+            dataPanel.setSize(width, dataPanel.Height);
         }
 
         public void save()
