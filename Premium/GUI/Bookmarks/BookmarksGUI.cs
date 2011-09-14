@@ -9,10 +9,9 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    public class BookmarksGUI : PopupContainer, FullscreenGUIPopup
+    public class BookmarksGUI : AbstractFullscreenGUIPopup
     {
         BookmarksController bookmarksController;
-        GUIManager guiManager;
 
         ButtonGrid bookmarksList;
         Edit bookmarkName;
@@ -24,13 +23,11 @@ namespace Medical.GUI
         private IntVector2 dragMouseStartPosition;
 
         public BookmarksGUI(BookmarksController bookmarksController, GUIManager guiManager)
-            : base("Medical.GUI.Bookmarks.BookmarksGUI.layout")
+            : base("Medical.GUI.Bookmarks.BookmarksGUI.layout", guiManager)
         {
             this.bookmarksController = bookmarksController;
             bookmarksController.BookmarkAdded += new BookmarkDelegate(bookmarksController_BookmarkAdded);
             bookmarksController.BookmarkRemoved += new BookmarkDelegate(bookmarksController_BookmarkRemoved);
-
-            this.guiManager = guiManager;
 
             ScrollView bookmarksListScroll = (ScrollView)widget.findWidget("BookmarksList");
             bookmarksList = new ButtonGrid(bookmarksListScroll);
@@ -43,9 +40,6 @@ namespace Medical.GUI
 
             widgetSmallSize = new IntSize2(widget.Width, widget.Height - bookmarksListScroll.Height);
             widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height);
-
-            this.Showing += new EventHandler(BookmarksGUI_Showing);
-            this.Hidden += new EventHandler(BookmarksGUI_Hidden);
 
             trash = (StaticImage)widget.findWidget("TrashPanel");
             trash.Visible = false;
@@ -63,15 +57,10 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void setSize(int width, int height)
+        public override void setSize(int width, int height)
         {
-            widget.setSize(width, height);
+            base.setSize(width, height);
             bookmarksList.resizeAndLayout(width);
-        }
-
-        public void setPosition(int x, int y)
-        {
-            widget.setPosition(x, y);
         }
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
@@ -141,16 +130,6 @@ namespace Medical.GUI
             Bookmark bookmark = (Bookmark)listItem.UserObject;
             bookmarksController.applyBookmark(bookmark);
             this.hide();
-        }
-
-        void BookmarksGUI_Hidden(object sender, EventArgs e)
-        {
-            guiManager.removeFullscreenPopup(this);
-        }
-
-        void BookmarksGUI_Showing(object sender, EventArgs e)
-        {
-            guiManager.addFullscreenPopup(this);
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
