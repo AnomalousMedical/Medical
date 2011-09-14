@@ -22,9 +22,11 @@ namespace Medical
         private MandibleMovementDialog mandibleMovementDialog;
         private NotesDialog notesDialog;
         private StateListPopup stateList;
-        private WindowLayout windowLayout;
         private SequencePlayer sequencePlayer;
         private BookmarksGUI bookmarks;
+
+        //Tasks
+        private ChangeWindowLayoutTask windowLayout;
         
         //Controllers
         private BookmarksController bookmarksController;
@@ -75,13 +77,13 @@ namespace Medical
             stateList = new StateListPopup(standaloneController.MedicalStateController);
             guiManager.addManagedDialog(stateList);
 
-            windowLayout = new WindowLayout(standaloneController);
-            guiManager.addManagedDialog(windowLayout);
-
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(sequencePlayer);
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
+
+            //Tasks
+            windowLayout = new ChangeWindowLayoutTask(standaloneController);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
@@ -92,7 +94,8 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
             taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));
-            taskController.addTask(new DialogOpenTask(windowLayout, "Medical.WindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.System));
+            taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
+            taskController.addTask(windowLayout);
         }
 
         public void sceneLoaded(SimScene scene)
