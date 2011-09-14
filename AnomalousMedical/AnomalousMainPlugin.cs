@@ -65,7 +65,7 @@ namespace Medical.GUI
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
 
-            chooseSceneDialog = new ChooseSceneDialog();
+            chooseSceneDialog = new ChooseSceneDialog(guiManager);
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
 
             savePatientDialog = new SavePatientDialog();
@@ -94,7 +94,7 @@ namespace Medical.GUI
             TaskController taskController = standaloneController.TaskController;
 
             //Patient Section
-            taskController.addTask(new DialogOpenTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0, false));
+            taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0));
             taskController.addTask(new DialogOpenTask(openPatientDialog, "Medical.OpenPatient", "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1, false));
 
             CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2, false);
@@ -170,7 +170,7 @@ namespace Medical.GUI
 
         public void showChooseSceneDialog()
         {
-            chooseSceneDialog.open(true);
+            chooseSceneDialog.show(0, 0);
         }
 
         public void open()

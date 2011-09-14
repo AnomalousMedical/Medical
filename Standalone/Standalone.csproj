@@ -220,6 +220,7 @@
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
+    <Compile Include="GUI\AbstractFullscreenGUIPopup.cs" />
     <Compile Include="GUI\Editor\AddRemoveButtons.cs" />
     <Compile Include="GUI\Editor\BrowserWindow.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTreeNode.cs" />

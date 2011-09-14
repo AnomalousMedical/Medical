@@ -17,6 +17,12 @@ namespace Medical
             this.popupContainer = popupContainer;
         }
 
+        public ShowPopupTask(PopupContainer popupContainer, String uniqueName, String name, String iconName, String category, int weight)
+            :this(popupContainer, uniqueName, name, iconName, category)
+        {
+            this.Weight = weight;
+        }
+
         public override void clicked()
         {
             if (!popupContainer.Visible)

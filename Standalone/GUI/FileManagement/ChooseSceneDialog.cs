@@ -9,24 +9,22 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    public class ChooseSceneDialog : Dialog
+    public class ChooseSceneDialog : AbstractFullscreenGUIPopup
     {
         public event EventHandler ChooseScene;
 
         private ButtonGrid sceneFileGrid;
         private ImageAtlas imageAtlas;
 
-        public ChooseSceneDialog()
-            : base("Medical.GUI.FileManagement.ChooseSceneDialog.layout")
+        public ChooseSceneDialog(GUIManager guiManager)
+            : base("Medical.GUI.FileManagement.ChooseSceneDialog.layout", guiManager)
         {
-            Button openButton = window.findWidget("ChooseScene/Open") as Button;
-            Button cancelButton = window.findWidget("ChooseScene/Cancel") as Button;
-            sceneFileGrid = new ButtonGrid(window.findWidget("ChooseScene/FileSelect") as ScrollView);
-            sceneFileGrid.ItemActivated += new EventHandler(sceneFileGrid_ItemActivated);
+            Button cancelButton = widget.findWidget("ChooseScene/Cancel") as Button;
+            sceneFileGrid = new ButtonGrid(widget.findWidget("ChooseScene/FileSelect") as ScrollView);
+            sceneFileGrid.HighlightSelectedButton = false;
 
             imageAtlas = new ImageAtlas("ChooseSceneDialog", new Size2(sceneFileGrid.ItemWidth, sceneFileGrid.ItemHeight), new Size2(512, 512));
 
-            openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
             findSceneFiles();
@@ -36,6 +34,12 @@ namespace Medical.GUI
         {
             base.Dispose();
             imageAtlas.Dispose();
+        }
+
+        public override void setSize(int width, int height)
+        {
+            base.setSize(width, height);
+            sceneFileGrid.resizeAndLayout(sceneFileGrid.Width);
         }
 
         public String SelectedFile
@@ -73,6 +77,7 @@ namespace Medical.GUI
                     }
                 }
                 ButtonGridItem item = sceneFileGrid.addItem("Main", baseName, imageKey);
+                item.ItemClicked += new EventHandler(item_ItemClicked);
                 item.UserObject = file;
             }
             if (sceneFileGrid.Count > 0)
@@ -81,19 +86,14 @@ namespace Medical.GUI
             }
         }
 
-        void sceneFileGrid_ItemActivated(object sender, EventArgs e)
-        {
-            changeScene();
-        }
-
-        void openButton_MouseButtonClick(Widget source, EventArgs e)
+        void item_ItemClicked(object sender, EventArgs e)
         {
             changeScene();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.close();
+            this.hide();
         }
 
         void changeScene()
@@ -105,7 +105,7 @@ namespace Medical.GUI
                     ChooseScene.Invoke(this, EventArgs.Empty);
                 }
             }
-            this.close();
+            this.hide();
         }
     }
 }

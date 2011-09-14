@@ -1,19 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="143 85 563 372" layer="Modal">
+    <Widget type="Widget" skin="TaskMenuBackground" position="226 51 565 358" layer="Overlapped">
         <Property key="Widget_Caption" value="Choose Scene"/>
         <Property key="Window_MinSize" value="563 372"/>
         <Property key="Window_MaxSize" value="563 372"/>
-        <Widget type="ScrollView" skin="ScrollView" position="4 4 555 313" name="ChooseScene/FileSelect">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 36 555 313" align="Stretch" name="ChooseScene/FileSelect">
             <Property key="ScrollView_CanvasSize" value="539 300"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="False"/>
+            <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 321 88 30" name="ChooseScene/Open">
-            <Property key="Widget_Caption" value="Open"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="96 321 88 30" name="ChooseScene/Cancel">
+        <Widget type="Button" skin="ButtonXBig" position="534 4 24 20" align="Right Top" name="ChooseScene/Cancel">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
+        <Widget type="StaticText" skin="StaticText" position="4 6 99 15">
+            <Property key="Widget_Caption" value="Choose Scene"/>
+            <Property key="Text_TextColour" value="#FFFFFF"/>
+        </Widget>
+        <Widget type="Widget" skin="Separator1" position="4 28 555 2" align="HStretch Top"/>
     </Widget>
 </MyGUI>
