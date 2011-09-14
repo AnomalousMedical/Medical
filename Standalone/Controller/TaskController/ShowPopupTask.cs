@@ -15,6 +15,7 @@ namespace Medical
             :base(uniqueName, name, iconName, category)
         {
             this.popupContainer = popupContainer;
+            popupContainer.Hidden += new EventHandler(popupContainer_Hidden);
         }
 
         public ShowPopupTask(PopupContainer popupContainer, String uniqueName, String name, String iconName, String category, int weight)
@@ -34,6 +35,11 @@ namespace Medical
         public override bool Active
         {
             get { return popupContainer.Visible; }
+        }
+
+        void popupContainer_Hidden(object sender, EventArgs e)
+        {
+            fireItemClosed();
         }
     }
 }
