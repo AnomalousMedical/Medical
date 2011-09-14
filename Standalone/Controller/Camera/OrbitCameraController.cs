@@ -23,7 +23,7 @@ namespace Medical
         #region Static
 
         private readonly Vector3 LOOK_AT_BOUND_MAX = new Vector3(15.0f, 15.0f, 15.0f);
-        private readonly Vector3 LOOK_AT_BOUND_MIN = new Vector3(-15.0f, -20.0f, -15.0f);
+        private readonly Vector3 LOOK_AT_BOUND_MIN = new Vector3(-15.0f, -40.0f, -15.0f);
 
         private static MouseButtonCode currentMouseButton = MedicalConfig.CameraMouseButton;
         private static MessageEvent rotateCamera;
