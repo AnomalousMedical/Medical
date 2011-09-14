@@ -1,37 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="55 42 716 502" layer="Modal">
+    <Widget type="Widget" skin="TaskMenuBackground" position="55 42 716 502" layer="Overlapped">
         <Property key="Widget_Caption" value="Open"/>
         <Property key="Window_MinSize" value="510 310"/>
-        <Widget type="MultiList" skin="MultiList" position="4 4 710 360" align="Stretch" name="Open/FileList"/>
-        <Widget type="StaticText" skin="StaticText" position="4 368 150 15" align="Left Bottom">
-            <Property key="Widget_Caption" value="Search Last Name"/>
+        <Widget type="MultiList" skin="MultiList" position="4 121 710 360" align="Stretch" name="Open/FileList"/>
+        <Widget type="Widget" skin="PanelEmpty" position="1 2 714 117" align="HStretch Top" layer="Back">
+            <Widget type="StaticText" skin="StaticText" position="4 2 150 15" align="Left Top">
+                <Property key="Widget_Caption" value="Search Last Name"/>
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="8 17 226 25" align="Left Top" name="Open/SearchText"/>
+            <Widget type="StaticText" skin="StaticText" position="4 46 155 15" align="Left Top">
+                <Property key="Widget_Caption" value="Load Location"/>
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="8 61 396 25" align="HStretch Top" name="Open/LoadLocation"/>
+            <Widget type="Button" skin="Button" position="405 61 72 25" align="Right Top" name="Open/BrowseButton">
+                <Property key="Widget_Caption" value="Browse"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="529 67 174 15" align="Right Top" name="Open/WarningText">
+                <Property key="Widget_Caption" value="This directory does not exist."/>
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="479 49 50 50" align="Right Top" name="Open/WarningImage">
+                <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
+                <Property key="Image_Group" value="Icons"/>
+                <Property key="Image_Name" value="Warning"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="4 90 88 25" align="Left Top" name="Open/OpenButton">
+                <Property key="Widget_Caption" value="Open"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="94 90 88 25" align="Left Top" name="Open/DeleteButton">
+                <Property key="Widget_Caption" value="Delete"/>
+            </Widget>
+            <Widget type="Button" skin="ButtonXBig" position="689 1 24 20" align="Right Top" name="Open/CancelButton">
+                <Property key="Widget_Caption" value="Cancel"/>
+            </Widget>
+            <Widget type="Progress" skin="ProgressFill" position="571 93 140 23" align="Right Top" name="Open/LoadingProgress"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="8 382 226 25" align="Left Bottom" name="Open/SearchText"/>
-        <Widget type="StaticText" skin="StaticText" position="4 412 155 15" align="Left Bottom">
-            <Property key="Widget_Caption" value="Load Location"/>
-        </Widget>
-        <Widget type="Edit" skin="Edit" position="8 426 398 25" align="HStretch Bottom" name="Open/LoadLocation"/>
-        <Widget type="Button" skin="Button" position="407 426 72 25" align="Right Bottom" name="Open/BrowseButton">
-            <Property key="Widget_Caption" value="Browse"/>
-        </Widget>
-        <Widget type="StaticText" skin="StaticText" position="531 432 174 15" align="Right Bottom" name="Open/WarningText">
-            <Property key="Widget_Caption" value="This directory does not exist."/>
-        </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="481 414 50 50" align="Right Bottom" name="Open/WarningImage">
-            <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
-            <Property key="Image_Group" value="Icons"/>
-            <Property key="Image_Name" value="Warning"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="4 455 88 25" align="Left Bottom" name="Open/OpenButton">
-            <Property key="Widget_Caption" value="Open"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="94 455 88 25" align="Left Bottom" name="Open/DeleteButton">
-            <Property key="Widget_Caption" value="Delete"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="184 455 88 25" align="Left Bottom" name="Open/CancelButton">
-            <Property key="Widget_Caption" value="Cancel"/>
-        </Widget>
-        <Widget type="Progress" skin="ProgressFill" position="573 458 140 23" align="Right Bottom" name="Open/LoadingProgress"/>
     </Widget>
 </MyGUI>

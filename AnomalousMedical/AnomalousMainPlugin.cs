@@ -71,7 +71,7 @@ namespace Medical.GUI
             savePatientDialog = new SavePatientDialog();
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
 
-            openPatientDialog = new OpenPatientDialog();
+            openPatientDialog = new OpenPatientDialog(guiManager);
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
             anatomyFinder = new AnatomyFinder(anatomyController, standaloneController.SceneViewController);
@@ -95,7 +95,7 @@ namespace Medical.GUI
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0));
-            taskController.addTask(new DialogOpenTask(openPatientDialog, "Medical.OpenPatient", "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1, false));
+            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1));
 
             CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2, false);
             saveTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveTaskItem_OnClicked);
@@ -175,7 +175,7 @@ namespace Medical.GUI
 
         public void open()
         {
-            openPatientDialog.open(true);
+            openPatientDialog.show(0, 0);
         }
 
         public void save()

@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace Medical.GUI
 {
-    public partial class OpenPatientDialog : Dialog
+    public partial class OpenPatientDialog : AbstractFullscreenGUIPopup
     {
         public event EventHandler OpenFile;
 
@@ -90,19 +90,19 @@ namespace Medical.GUI
         private bool bgThreadKnowsAboutCancel = false;
         private bool startNewDirectoryScanOnBackgroundThreadStop = false;
 
-        public OpenPatientDialog()
-            : base("Medical.GUI.FileManagement.OpenPatientDialog.layout")
+        public OpenPatientDialog(GUIManager guiManager)
+            : base("Medical.GUI.FileManagement.OpenPatientDialog.layout", guiManager)
         {
-            fileDataGrid = window.findWidget("Open/FileList") as MultiList;
-            locationTextBox = window.findWidget("Open/LoadLocation") as Edit;
-            warningImage = window.findWidget("Open/WarningImage") as StaticImage;
-            warningText = window.findWidget("Open/WarningText") as StaticText;
-            loadingProgress = window.findWidget("Open/LoadingProgress") as Progress;
-            openButton = window.findWidget("Open/OpenButton") as Button;
-            deleteButton = window.findWidget("Open/DeleteButton") as Button;
-            Button cancelButton = window.findWidget("Open/CancelButton") as Button;
-            searchBox = window.findWidget("Open/SearchText") as Edit;
-            Button browseButton = window.findWidget("Open/BrowseButton") as Button;
+            fileDataGrid = widget.findWidget("Open/FileList") as MultiList;
+            locationTextBox = widget.findWidget("Open/LoadLocation") as Edit;
+            warningImage = widget.findWidget("Open/WarningImage") as StaticImage;
+            warningText = widget.findWidget("Open/WarningText") as StaticText;
+            loadingProgress = widget.findWidget("Open/LoadingProgress") as Progress;
+            openButton = widget.findWidget("Open/OpenButton") as Button;
+            deleteButton = widget.findWidget("Open/DeleteButton") as Button;
+            Button cancelButton = widget.findWidget("Open/CancelButton") as Button;
+            searchBox = widget.findWidget("Open/SearchText") as Edit;
+            Button browseButton = widget.findWidget("Open/BrowseButton") as Button;
 
             int fileGridWidth = fileDataGrid.Width - 2;
             fileDataGrid.addColumn("First Name", fileGridWidth / 3);
@@ -148,11 +148,14 @@ namespace Medical.GUI
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            this.Shown += new EventHandler(OpenPatientDialog_Shown);
+            this.Hiding += new EventHandler(OpenPatientDialog_Hiding);
+            this.Hidden += new EventHandler(OpenPatientDialog_Hidden);
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
+        public override void setSize(int width, int height)
         {
+            base.setSize(width, height);
             int fileGridWidth = fileDataGrid.Width - 2;
             fileDataGrid.setColumnWidthAt(0, fileGridWidth / 3);
             fileDataGrid.setColumnWidthAt(1, fileGridWidth / 3);
@@ -175,35 +178,32 @@ namespace Medical.GUI
             listFiles();
         }
 
-        protected override void onShown(EventArgs e)
+        void OpenPatientDialog_Hidden(object sender, EventArgs e)
         {
-            base.onShown(e);
-            listFiles();
-            currentFile = null;
-            openButton.Enabled = fileDataGrid.hasItemSelected();
-            deleteButton.Enabled = fileDataGrid.hasItemSelected();
-            cancelPostAction = CancelPostAction.None;
-        }
-
-        protected override void onClosing(DialogCancelEventArgs e)
-        {
-            base.onClosing(e);
-            if (fileListWorker.IsBusy && !bgThreadKnowsAboutCancel)
-            {
-                e.Cancel = true;
-                cancelPostAction = CancelPostAction.Close;
-                fileListWorker.CancelAsync();
-            }
-        }
-
-        protected override void onClosed(EventArgs e)
-        {
-            base.onClosed(e);
             fileDataGrid.removeAllItems();
             if (FileChosen && OpenFile != null)
             {
                 OpenFile.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        void OpenPatientDialog_Hiding(object sender, EventArgs e)
+        {
+            if (fileListWorker.IsBusy && !bgThreadKnowsAboutCancel)
+            {
+                ((Engine.CancelEventArgs)e).Cancel = true;
+                cancelPostAction = CancelPostAction.Close;
+                fileListWorker.CancelAsync();
+            }
+        }
+
+        void OpenPatientDialog_Shown(object sender, EventArgs e)
+        {
+            listFiles();
+            currentFile = null;
+            openButton.Enabled = fileDataGrid.hasItemSelected();
+            deleteButton.Enabled = fileDataGrid.hasItemSelected();
+            cancelPostAction = CancelPostAction.None;
         }
 
         public bool FileChosen
@@ -235,7 +235,7 @@ namespace Medical.GUI
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
             currentFile = null;
-            this.close();
+            this.hide();
         }
 
         void deleteButton_MouseButtonClick(Widget source, EventArgs e)
@@ -262,7 +262,7 @@ namespace Medical.GUI
             if (fileDataGrid.hasItemSelected())
             {
                 currentFile = (PatientDataFile)fileDataGrid.getItemDataAt(fileDataGrid.getIndexSelected());
-                this.close();
+                this.hide();
             }
         }
 
@@ -365,7 +365,7 @@ namespace Medical.GUI
             switch (cancelPostAction)
             {
                 case CancelPostAction.Close:
-                    this.close();
+                    this.hide();
                     break;
                 case CancelPostAction.ProcessNewDirectory:
                     startNewDirectoryScanOnBackgroundThreadStop = true;
