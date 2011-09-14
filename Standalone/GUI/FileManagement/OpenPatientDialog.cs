@@ -10,6 +10,7 @@ using System.Threading;
 using MyGUIPlugin;
 using Medical.Controller;
 using System.Diagnostics;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -129,6 +130,7 @@ namespace Medical.GUI
             locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
 
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
+            searchBox.KeyButtonReleased += new MyGUIEvent(searchBox_KeyButtonReleased);
 
             warningImage.Visible = warningText.Visible = false;
             loadingProgress.Visible = false;
@@ -162,6 +164,26 @@ namespace Medical.GUI
             fileDataGrid.setColumnWidthAt(2, fileGridWidth / 3);
         }
 
+        void searchBox_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            switch (ke.Key)
+            {
+                case KeyboardButtonCode.KC_RETURN:
+                    if (fileDataGrid.hasItemSelected())
+                    {
+                        fireOpen();
+                    }
+                    break;
+                //case KeyboardButtonCode.KC_DOWN:
+                //    InputManager.Instance.resetKeyFocusWidget();
+                //    InputManager.Instance.resetMouseFocusWidget();
+                //    InputManager.Instance.resetMouseCaptureWidget();
+                //    InputManager.Instance.setKeyFocusWidget(fileDataGrid);
+                //    break;
+            }
+        }
+
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
         {
             uint index;
@@ -169,6 +191,7 @@ namespace Medical.GUI
             {
                 fileDataGrid.setIndexSelected(index);
             }
+            toggleButtonsEnabled();
         }
 
         void locationTextBox_EventEditTextChange(Widget source, EventArgs e)
@@ -185,6 +208,7 @@ namespace Medical.GUI
             {
                 OpenFile.Invoke(this, EventArgs.Empty);
             }
+            searchBox.Caption = "";
         }
 
         void OpenPatientDialog_Hiding(object sender, EventArgs e)
@@ -201,9 +225,9 @@ namespace Medical.GUI
         {
             listFiles();
             currentFile = null;
-            openButton.Enabled = fileDataGrid.hasItemSelected();
-            deleteButton.Enabled = fileDataGrid.hasItemSelected();
+            toggleButtonsEnabled();
             cancelPostAction = CancelPostAction.None;
+            InputManager.Instance.setKeyFocusWidget(searchBox);
         }
 
         public bool FileChosen
@@ -228,6 +252,11 @@ namespace Medical.GUI
         }
 
         void fileDataGrid_ListChangePosition(Widget source, EventArgs e)
+        {
+            toggleButtonsEnabled();
+        }
+
+        private void toggleButtonsEnabled()
         {
             deleteButton.Enabled = openButton.Enabled = fileDataGrid.hasItemSelected();
         }
@@ -258,6 +287,11 @@ namespace Medical.GUI
         }
 
         void openButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            fireOpen();
+        }
+
+        private void fireOpen()
         {
             if (fileDataGrid.hasItemSelected())
             {
