@@ -21,9 +21,9 @@ namespace Medical
         //Dialogs
         private MandibleMovementDialog mandibleMovementDialog;
         private NotesDialog notesDialog;
-        private StateListPopup stateList;
         private SequencePlayer sequencePlayer;
         private BookmarksGUI bookmarks;
+        private StateListGUI stateListGUI;
 
         //Tasks
         private ChangeWindowLayoutTask windowLayout;
@@ -47,11 +47,11 @@ namespace Medical
 
         public void Dispose()
         {
+            stateListGUI.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             mandibleMovementDialog.Dispose();
             notesDialog.Dispose();
-            stateList.Dispose();
             bookmarks.Dispose();
             bookmarksController.Dispose();
         }
@@ -74,13 +74,12 @@ namespace Medical
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             guiManager.addManagedDialog(notesDialog);
 
-            stateList = new StateListPopup(standaloneController.MedicalStateController);
-            guiManager.addManagedDialog(stateList);
-
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(sequencePlayer);
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
+
+            stateListGUI = new StateListGUI(standaloneController.MedicalStateController, standaloneController.GUIManager);
 
             //Tasks
             windowLayout = new ChangeWindowLayoutTask(standaloneController);
@@ -90,7 +89,7 @@ namespace Medical
 
             taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
             taskController.addTask(new ShowToothContactsTask());
-            taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
+            taskController.addTask(new ShowPopupTask(stateListGUI, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
             taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));

@@ -77,7 +77,7 @@ namespace Medical.GUI
             anatomyFinder = new AnatomyFinder(anatomyController, standaloneController.SceneViewController);
             guiManager.addManagedDialog(anatomyFinder);
 
-            options = new OptionsDialog();
+            options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
@@ -110,7 +110,7 @@ namespace Medical.GUI
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
             taskController.addTask(helpTaskItem);
 
-            taskController.addTask(new DialogOpenTask(options, "Medical.Options", "Options", "FileToolstrip/Options", TaskMenuCategories.System, int.MaxValue - 3));
+            taskController.addTask(new ShowPopupTask(options, "Medical.Options", "Options", "FileToolstrip/Options", TaskMenuCategories.System, int.MaxValue - 3));
             taskController.addTask(new DialogOpenTask(aboutDialog, "Medical.About", "About", "FileToolstrip/About", TaskMenuCategories.System, int.MaxValue - 2));
             taskController.addTask(new CheckForUpdatesTask(standaloneController, int.MaxValue - 2));
 
@@ -160,7 +160,7 @@ namespace Medical.GUI
 
         public void showOptions()
         {
-            options.Visible = true;
+            options.show(0, 0);
         }
 
         public void showAboutDialog()

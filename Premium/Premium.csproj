@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\StateList\StateListGUI.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Tasks\ShowToothContactsTaskMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\StateList\StateListGUI.layout" />
     <EmbeddedResource Include="Resources\PremiumImagesets.xml" />
   </ItemGroup>
   <ItemGroup>

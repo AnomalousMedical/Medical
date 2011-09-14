@@ -12,7 +12,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class OptionsDialog : Dialog
+    public class OptionsDialog : AbstractFullscreenGUIPopup
     {
         public event EventHandler VideoOptionsChanged;
 
@@ -28,18 +28,17 @@ namespace Medical.GUI
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
 
-        public OptionsDialog()
-            :base("Medical.GUI.Options.OptionsDialog.layout")
+        public OptionsDialog(GUIManager guiManager)
+            :base("Medical.GUI.Options.OptionsDialog.layout", guiManager)
         {
-            this.Modal = true;
             this.SmoothShow = true;
 
-            cameraSpeedCombo = window.findWidget("CameraSpeedCombo") as ComboBox;
-            enableMultitouchCheck = new CheckButton(window.findWidget("EnableMultitouch") as Button);
+            cameraSpeedCombo = widget.findWidget("CameraSpeedCombo") as ComboBox;
+            enableMultitouchCheck = new CheckButton(widget.findWidget("EnableMultitouch") as Button);
 
-            aaCombo = window.findWidget("AACombo") as ComboBox;
-            resolutionCombo = window.findWidget("ResolutionCombo") as ComboBox;
-            cameraButtonCombo = window.findWidget("CameraButtonCombo") as ComboBox;
+            aaCombo = widget.findWidget("AACombo") as ComboBox;
+            resolutionCombo = widget.findWidget("ResolutionCombo") as ComboBox;
+            cameraButtonCombo = widget.findWidget("CameraButtonCombo") as ComboBox;
 
             RenderSystem rs = Root.getSingleton().getRenderSystem();
             if (rs.hasConfigOption("FSAA"))
@@ -70,21 +69,21 @@ namespace Medical.GUI
                 }
             }
 
-            fullscreenCheck = new CheckButton(window.findWidget("FullscreenCheck") as Button);
-            vsyncCheck = new CheckButton(window.findWidget("VSyncCheck") as Button);
-            showStatsCheck = new CheckButton(window.findWidget("ShowStatsCheck") as Button);
+            fullscreenCheck = new CheckButton(widget.findWidget("FullscreenCheck") as Button);
+            vsyncCheck = new CheckButton(widget.findWidget("VSyncCheck") as Button);
+            showStatsCheck = new CheckButton(widget.findWidget("ShowStatsCheck") as Button);
 
-            Button applyButton = window.findWidget("ApplyButton") as Button;
+            Button applyButton = widget.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
 
-            Button cancelButton = window.findWidget("CancelButton") as Button;
+            Button cancelButton = widget.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            this.Showing += new EventHandler(OptionsDialog_Showing);
         }
 
-        protected override void onShown(EventArgs args)
+        void OptionsDialog_Showing(object sender, EventArgs e)
         {
-            base.onShown(args);
-
             //Program options
             float cameraTransitionTime = MedicalConfig.CameraTransitionTime;
             if (cameraTransitionTime >= 1.0f)
@@ -203,12 +202,12 @@ namespace Medical.GUI
             {
                 VideoOptionsChanged.Invoke(this, EventArgs.Empty);
             }
-            this.close();
+            this.hide();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.close();
+            this.hide();
         }
     }
 }
