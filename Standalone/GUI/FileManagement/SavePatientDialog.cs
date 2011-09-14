@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    public class SavePatientDialog : Dialog
+    public class SavePatientDialog : AbstractFullscreenGUIPopup
     {
         public event EventHandler SaveFile;
 
@@ -24,18 +24,18 @@ namespace Medical.GUI
         Button saveButton;
         Button cancelButton;
 
-        public SavePatientDialog()
-            : base("Medical.GUI.FileManagement.SavePatientDialog.layout")
+        public SavePatientDialog(GUIManager guiManager)
+            : base("Medical.GUI.FileManagement.SavePatientDialog.layout", guiManager)
         {
-            firstText = window.findWidget("Save/FirstName") as Edit;
-            lastText = window.findWidget("Save/LastName") as Edit;
-            fileNameTextBox = window.findWidget("Save/Filename") as Edit;
-            locationTextBox = window.findWidget("Save/Location") as Edit;
-            warningLabel = window.findWidget("Save/WarningLabel") as StaticText;
-            warningImage = window.findWidget("Save/WarningImage") as StaticImage;
-            saveButton = window.findWidget("Save/SaveButton") as Button;
-            cancelButton = window.findWidget("Save/CancelButton") as Button;
-            Button browseButton = window.findWidget("Save/BrowseButton") as Button;
+            firstText = widget.findWidget("Save/FirstName") as Edit;
+            lastText = widget.findWidget("Save/LastName") as Edit;
+            fileNameTextBox = widget.findWidget("Save/Filename") as Edit;
+            locationTextBox = widget.findWidget("Save/Location") as Edit;
+            warningLabel = widget.findWidget("Save/WarningLabel") as StaticText;
+            warningImage = widget.findWidget("Save/WarningImage") as StaticImage;
+            saveButton = widget.findWidget("Save/SaveButton") as Button;
+            cancelButton = widget.findWidget("Save/CancelButton") as Button;
+            Button browseButton = widget.findWidget("Save/BrowseButton") as Button;
 
             lastText.EventEditTextChange +=new MyGUIEvent(lastText_EventEditTextChange);
             firstText.EventEditTextChange += new MyGUIEvent(firstText_EventEditTextChange);
@@ -46,13 +46,15 @@ namespace Medical.GUI
             saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
+
+            this.Shown += new EventHandler(SavePatientDialog_Shown);
         }
 
         public void save()
         {
             if (patientData == null)
             {
-                this.open(true);
+                this.show(0, 0);
             }
             else
             {
@@ -62,7 +64,7 @@ namespace Medical.GUI
 
         public void saveAs()
         {
-            this.open(true);
+            this.show(0, 0);
         }
 
         void locationTextBox_EventEditTextChange(Widget source, EventArgs e)
@@ -105,7 +107,7 @@ namespace Medical.GUI
             warningImage.Visible = warningLabel.Visible = File.Exists(SavePath);
         }
 
-        protected override void onShown(EventArgs e)
+        void SavePatientDialog_Shown(object sender, EventArgs e)
         {
             if (patientData == null)
             {
@@ -123,12 +125,11 @@ namespace Medical.GUI
             }
             allowFileNameUpdate = true;
             InputManager.Instance.setKeyFocusWidget(firstText);
-            base.onShown(e);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.close();
+            this.hide();
         }
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
@@ -157,7 +158,7 @@ namespace Medical.GUI
             patientData = new PatientDataFile(SavePath);
             patientData.FirstName = firstText.Caption;
             patientData.LastName = lastText.Caption;
-            this.close();
+            this.hide();
             fireSaveFile();
         }
 

@@ -68,7 +68,7 @@ namespace Medical.GUI
             chooseSceneDialog = new ChooseSceneDialog(guiManager);
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
 
-            savePatientDialog = new SavePatientDialog();
+            savePatientDialog = new SavePatientDialog(guiManager);
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
 
             openPatientDialog = new OpenPatientDialog(guiManager);
