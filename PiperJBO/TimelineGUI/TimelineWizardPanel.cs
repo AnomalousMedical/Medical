@@ -53,12 +53,12 @@ namespace Medical.GUI
         public override void initialize(ShowTimelineGUIAction showGUIAction)
         {
             base.initialize(showGUIAction);
-            panelData = (TimelineWizardPanelData)showGUIAction.GUIData;
-            timelineWizard.show(this);
-            timelineWizard.CurrentTimeline = showGUIAction.Timeline.SourceFile;
 
-            if (panelData.HasTimelineLinks)
+            panelData = (TimelineWizardPanelData)showGUIAction.GUIData;
+
+            if (!timelineWizard.WizardInterfaceShown && panelData.HasTimelineLinks)
             {
+                timelineWizard.clearTimelines();
                 clearNavigationBar();
                 foreach (TimelineEntry timelineEntry in panelData.Timelines)
                 {
@@ -67,6 +67,9 @@ namespace Medical.GUI
                 }
                 showNavigationBar();
             }
+
+            timelineWizard.show(this);
+            timelineWizard.CurrentTimeline = showGUIAction.Timeline.SourceFile;
 
             Button nextButton = (Button)widget.findWidget("StateWizardButtons/Next");
             nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);

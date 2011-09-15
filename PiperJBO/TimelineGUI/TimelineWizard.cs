@@ -217,6 +217,14 @@ namespace Medical.GUI
             }
         }
 
+        public bool WizardInterfaceShown
+        {
+            get
+            {
+                return wizardInterfaceShown;
+            }
+        }
+
         public String DataSource { get; set; }
 
         public String Notes { get; set; }
