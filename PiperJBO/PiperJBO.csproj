@@ -206,6 +206,7 @@
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\WizardPanelButtons.layout" />
     <None Include="Properties\PiperJBO.manifest">
       <SubType>Designer</SubType>
     </None>

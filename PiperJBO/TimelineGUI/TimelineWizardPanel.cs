@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Logging;
+using MyGUIPlugin;
 
 namespace Medical.GUI
 {
@@ -18,14 +19,28 @@ namespace Medical.GUI
         protected TimelineWizard timelineWizard;
         private TimelineWizardPanelData panelData;
 
+        private Layout layout;
+
         public TimelineWizardPanel(String layoutFile, TimelineWizard timelineWizard)
-            :base(layoutFile)
+            : base("Medical.TimelineGUI.WizardPanelButtons.layout")
         {
             this.timelineWizard = timelineWizard;
+
+            layout = LayoutManager.Instance.loadLayout(layoutFile);
+            Widget subLayoutWidget = layout.getWidget(0);
+            subLayoutWidget.attachToWidget(widget);
+
+            int buttonAreaHeight = widget.Height;
+            subLayoutWidget.setPosition(0, buttonAreaHeight);
+            subLayoutWidget.Align = Align.Stretch;
         }
 
         public override void Dispose()
         {
+            if (layout != null)
+            {
+                LayoutManager.Instance.unloadLayout(layout);
+            }
             timelineWizard.hide();
             base.Dispose();
         }
