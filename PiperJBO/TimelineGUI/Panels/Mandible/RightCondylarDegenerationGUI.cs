@@ -49,11 +49,18 @@ namespace Medical.GUI
             //gridPropertiesControl.GridSpacing = 5;
         }
 
+        public override void opening(MedicalController medicalController, SimulationScene simScene)
+        {
+            base.opening(medicalController, simScene);
+            allowCameraChange = true;
+        }
+
         void wearSlider_ValueChanged(object sender, EventArgs e)
         {
             if (allowCameraChange && !showingWear)
             {
-                //this.setNavigationState("WizardRightTMJ");
+                CondylarDegenerationGUIData guiData = (CondylarDegenerationGUIData)PanelData;
+                applyCameraPosition(guiData.ShowOsteophyteCamera);
                 showingWear = true;
             }
         }
@@ -62,7 +69,8 @@ namespace Medical.GUI
         {
             if (allowCameraChange && showingWear)
             {
-                //this.setNavigationState(NavigationState);
+                CondylarDegenerationGUIData guiData = (CondylarDegenerationGUIData)PanelData;
+                applyCameraPosition(guiData.NormalCamera);
                 showingWear = false;
             }
         }

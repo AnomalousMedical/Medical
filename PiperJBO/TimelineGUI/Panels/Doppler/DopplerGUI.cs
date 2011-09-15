@@ -156,33 +156,21 @@ namespace Medical.GUI
         void bothJointsCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
             DopplerGUIData dopplerData = (DopplerGUIData)PanelData;
-            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
-            if (window != null)
-            {
-                window.setPosition(dopplerData.BothJointsCamera);
-            }
+            applyCameraPosition(dopplerData.BothJointsCamera);
             applyLayers(dopplerData.NormalLayers);
         }
 
         void superiorJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
             DopplerGUIData dopplerData = (DopplerGUIData)PanelData;
-            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
-            if (window != null)
-            {
-                window.setPosition(dopplerData.SuperiorJointCamera);
-            }
+            applyCameraPosition(dopplerData.SuperiorJointCamera);
             applyLayers(dopplerData.NormalLayers);
         }
 
         void lateralJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
             DopplerGUIData dopplerData = (DopplerGUIData)PanelData;
-            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
-            if (window != null)
-            {
-                window.setPosition(dopplerData.LateralJointCamera);
-            }
+            applyCameraPosition(dopplerData.LateralJointCamera);
             applyLayers(dopplerData.LateralJointLayers);
         }
     }

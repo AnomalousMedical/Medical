@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Logging;
 using MyGUIPlugin;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -130,6 +131,15 @@ namespace Medical.GUI
             if (layers != null)
             {
                 layers.apply();
+            }
+        }
+
+        protected void applyCameraPosition(CameraPosition cameraPosition)
+        {
+            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                window.setPosition(cameraPosition);
             }
         }
 

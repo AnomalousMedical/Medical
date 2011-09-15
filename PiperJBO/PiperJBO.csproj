@@ -132,6 +132,7 @@
     <Compile Include="TimelineGUI\Panels\Fossa\FossaGUIRightPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\BoneManipulatorGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\BoneManipulatorSlider.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\CondylarDegenerationGUIData.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUI.cs" />
