@@ -9,7 +9,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class ThumbnailPickerGUI
+    class ThumbnailPickerGUI : IDisposable
     {
         private ImageAtlas thumbnailImages;
         private List<ThumbnailPickerInfo> thumbnailProperties = new List<ThumbnailPickerInfo>();
@@ -24,7 +24,7 @@ namespace Medical.GUI
             thumbnailImages = new ImageAtlas("ThumbnailPicker", new Size2(imageGrid.ItemWidth, imageGrid.ItemHeight), new Size2(512, 512));
         }
 
-        protected void Dispose()
+        public void Dispose()
         {
             thumbnailImages.Dispose();
         }

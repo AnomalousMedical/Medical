@@ -46,6 +46,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            thumbnailPicker.Dispose();
             base.Dispose();
         }
 
