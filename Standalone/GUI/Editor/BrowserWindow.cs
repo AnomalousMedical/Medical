@@ -73,11 +73,14 @@ namespace Medical.GUI
 
         void browserTree_NodeMouseDoubleClick(object sender, TreeEventArgs e)
         {
-            if (ItemSelected != null)
+            if (SelectedValue != null)
             {
-                ItemSelected.Invoke(this, EventArgs.Empty);
+                if (ItemSelected != null)
+                {
+                    ItemSelected.Invoke(this, EventArgs.Empty);
+                }
+                close();
             }
-            close();
         }
 
         void selectButton_MouseButtonClick(Widget source, EventArgs e)
