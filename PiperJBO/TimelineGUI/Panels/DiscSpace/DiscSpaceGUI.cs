@@ -112,6 +112,7 @@ namespace Medical.GUI
 
         public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
+            showDiscCheckBox.Checked = false;
             String presetDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory;
             if (currentPresetDirectory != presetDirectory)
             {
@@ -135,12 +136,6 @@ namespace Medical.GUI
                     Log.Error("Cannot load disc space distortion file {0}.", filename);
                 }
             }
-        }
-
-        public override void show(GUIManager guiManager)
-        {
-            showDiscCheckBox.Checked = false;
-            base.show(guiManager);
         }
 
         void resetButton_MouseButtonClick(Widget source, EventArgs e)

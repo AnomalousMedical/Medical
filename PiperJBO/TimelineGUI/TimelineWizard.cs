@@ -24,19 +24,12 @@ namespace Medical.GUI
     /// </summary>
     public class TimelineWizard : IDisposable
     {
-        //UI
-        private BorderLayoutContainer screenLayout;
-        private CrossFadeLayoutContainer crossFadeContainer;
-        private TimelineGUIButtons timelineGUIButtons;
-
         //State
         private TimelineWizardPanel currentPanel;
         private TimelineWizardPanel lastPanel;
-        private GUIManager guiManager;
         private bool wizardInterfaceShown = false;
         private StandaloneController standaloneController;
         private XmlSaver xmlSaver = new XmlSaver();
-        private Stack<String> previousTimelines = new Stack<string>();
 
         //Startup options
         Vector3 cameraPosition;
@@ -46,25 +39,16 @@ namespace Medical.GUI
 
         public TimelineWizard(StandaloneController standaloneController)
         {
-            this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
             this.stateBlender = standaloneController.TemporaryStateBlender;
 
-            screenLayout = new BorderLayoutContainer();
-            timelineGUIButtons = new TimelineGUIButtons(this);
-            screenLayout.Top = timelineGUIButtons.LayoutContainer;
-            crossFadeContainer = new CrossFadeLayoutContainer(standaloneController.MedicalController.MainTimer);
-            screenLayout.Center = crossFadeContainer;
             Notes = new NotesGUI(this, standaloneController.ImageRenderer);
             Notes.Visible = false;
-
-            timelineGUIButtons.setPreviousButtonActive(false);
         }
 
         public void Dispose()
         {
             Notes.Dispose();
-            timelineGUIButtons.Dispose();
         }
 
         /// <summary>
@@ -79,11 +63,6 @@ namespace Medical.GUI
             lastPanel = currentPanel;
             currentPanel = panel;
 
-            if (lastPanel != null)
-            {
-                lastPanel.closing();
-            }
-
             //Set panel scene properties
             MedicalController medicalController = standaloneController.MedicalController;
             SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
@@ -93,7 +72,6 @@ namespace Medical.GUI
             //Show panel
             if (!wizardInterfaceShown) //If this is false no interfaces have been shown yet for this wizard.
             {
-                guiManager.changeLeftPanel(screenLayout);
                 wizardInterfaceShown = true;
                 //Store scene settings
                 SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
@@ -107,9 +85,6 @@ namespace Medical.GUI
                 stateBlender.recordUndoState();
                 Notes.setToDefault();
             }
-            crossFadeContainer.changePanel(panel.Container, 0.25f, animationCompleted);
-            timelineGUIButtons.setNextButtonActive(!String.IsNullOrEmpty(panel.NextTimeline));
-            timelineGUIButtons.setPreviousButtonActive(previousTimelines.Count > 0);
         }
 
         /// <summary>
@@ -122,15 +97,7 @@ namespace Medical.GUI
             lastPanel = currentPanel;
             currentPanel = null;
 
-            if (lastPanel != null)
-            {
-                lastPanel.closing();
-            }
-
-            crossFadeContainer.changePanel(null, 0.25f, animationCompleted);
-            guiManager.changeLeftPanel(null);
             wizardInterfaceShown = false;
-            previousTimelines.Clear();
         }
 
         /// <summary>
@@ -140,7 +107,6 @@ namespace Medical.GUI
         {
             if (currentPanel != null)
             {
-                currentPanel.ShowGUIAction.stopTimelines();
                 hide();
                 restoreCameraAndLayers();
 
@@ -153,41 +119,12 @@ namespace Medical.GUI
         }
 
         /// <summary>
-        /// Play the next timeline as specified.
-        /// </summary>
-        public void next()
-        {
-            if (currentPanel != null)
-            {
-                String sourceFile = currentPanel.ShowGUIAction.Timeline.SourceFile;
-                if (sourceFile != null && !previousTimelines.Contains(sourceFile))
-                {
-                    previousTimelines.Push(sourceFile);
-                }
-                currentPanel.ShowGUIAction.playTimeline(currentPanel.NextTimeline);
-            }
-        }
-
-        /// <summary>
-        /// Play the previous timeline.
-        /// </summary>
-        public void previous()
-        {
-            //Does nothing right now
-            if (previousTimelines.Count > 0)
-            {
-                currentPanel.ShowGUIAction.playTimeline(previousTimelines.Pop());
-            }
-        }
-
-        /// <summary>
         /// Cancel the wizard.
         /// </summary>
         public void cancel()
         {
             if (currentPanel != null)
             {
-                currentPanel.ShowGUIAction.stopTimelines();
                 hide();
                 restoreCameraAndLayers();
                 stateBlender.blendToUndo();
@@ -227,26 +164,6 @@ namespace Medical.GUI
         }
 
         public NotesGUI Notes { get; private set; }
-
-        /// <summary>
-        /// Callback that destroys old panels when they are not being animated anymore.
-        /// </summary>
-        /// <param name="oldChild"></param>
-        private void animationCompleted(LayoutContainer oldChild)
-        {
-            if (lastPanel != null)
-            {
-                if (lastPanel == Notes)
-                {
-                    Notes.Visible = false;
-                }
-                else
-                {
-                    lastPanel.Dispose();
-                }
-                lastPanel = null;
-            }
-        }
 
         private void restoreCameraAndLayers()
         {

@@ -155,7 +155,7 @@ namespace Medical.GUI
 
         void bothJointsCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            DopplerGUIData dopplerData = (DopplerGUIData)ShowGUIAction.GUIData;
+            DopplerGUIData dopplerData = (DopplerGUIData)PanelData;
             SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
             if (window != null)
             {
@@ -166,7 +166,7 @@ namespace Medical.GUI
 
         void superiorJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            DopplerGUIData dopplerData = (DopplerGUIData)ShowGUIAction.GUIData;
+            DopplerGUIData dopplerData = (DopplerGUIData)PanelData;
             SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
             if (window != null)
             {
@@ -177,7 +177,7 @@ namespace Medical.GUI
 
         void lateralJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            DopplerGUIData dopplerData = (DopplerGUIData)ShowGUIAction.GUIData;
+            DopplerGUIData dopplerData = (DopplerGUIData)PanelData;
             SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
             if (window != null)
             {

@@ -13,9 +13,10 @@ namespace Medical.GUI
     /// disposed properly. That class handles the memory management and has more
     /// info in its description.
     /// </summary>
-    public class TimelineWizardPanel : MyGUITimelineGUI
+    public class TimelineWizardPanel : AbstractTimelineGUI
     {
         protected TimelineWizard timelineWizard;
+        private TimelineWizardPanelData panelData;
 
         public TimelineWizardPanel(String layoutFile, TimelineWizard timelineWizard)
             :base(layoutFile)
@@ -23,28 +24,27 @@ namespace Medical.GUI
             this.timelineWizard = timelineWizard;
         }
 
-        public override void initialize(ShowTimelineGUIAction showGUIAction)
-        {
-            this.ShowGUIAction = showGUIAction;
-            TimelineWizardPanelData panelData = ShowGUIAction.GUIData as TimelineWizardPanelData;
-            if (panelData != null)
-            {
-                NextTimeline = panelData.NextTimeline;
-            }
-            else
-            {
-                Log.Warning("Could not find TimelineWizardPanelData or subclass in panel {0}.", showGUIAction.GUIName);
-            }
-        }
-
-        public override void show(GUIManager guiManager)
-        {
-            timelineWizard.show(this);
-        }
-
-        public override void hide(GUIManager guiManager)
+        public override void Dispose()
         {
             timelineWizard.hide();
+            base.Dispose();
+        }
+
+        public override void initialize(ShowTimelineGUIAction showGUIAction)
+        {
+            base.initialize(showGUIAction);
+            panelData = (TimelineWizardPanelData)showGUIAction.GUIData;
+            timelineWizard.show(this);
+
+            if (panelData.HasTimelineLinks)
+            {
+                clearNavigationBar();
+                foreach (TimelineEntry timelineEntry in panelData.Timelines)
+                {
+                    addToNavigationBar(timelineEntry.Timeline, timelineEntry.Name, timelineEntry.ImageKey);
+                }
+                showNavigationBar();
+            }
         }
 
         public virtual void opening(MedicalController medicalController, SimulationScene simScene)
@@ -52,12 +52,13 @@ namespace Medical.GUI
 
         }
 
-        public virtual void closing()
+        public IEnumerable<TimelineEntry> Timelines
         {
-
+            get
+            {
+                return panelData.Timelines;
+            }
         }
-
-        public ShowTimelineGUIAction ShowGUIAction { get; set; }
 
         public LayoutContainer Container
         {
@@ -67,6 +68,12 @@ namespace Medical.GUI
             }
         }
 
-        public String NextTimeline { get; private set; }
+        public TimelineWizardPanelData PanelData
+        {
+            get
+            {
+                return panelData;
+            }
+        }
     }
 }

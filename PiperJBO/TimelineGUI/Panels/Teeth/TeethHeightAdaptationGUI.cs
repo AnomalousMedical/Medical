@@ -35,6 +35,14 @@ namespace Medical.GUI
             //gridPropertiesControl.GridSpacing = 2;
         }
 
+        public override void Dispose()
+        {
+            TeethController.showTeethTools(false, false);
+            //controller.MeasurementGrid.Visible = false;
+            teethMovementPanel.disableAllButtons();
+            base.Dispose();
+        }
+
         public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             heightControl.sceneChanged();
@@ -53,13 +61,6 @@ namespace Medical.GUI
             //gridPropertiesControl.updateGrid();
             teethMovementPanel.setDefaultTools();
             heightControl.getPositionFromScene();
-        }
-
-        public override void closing()
-        {
-            TeethController.showTeethTools(false, false);
-            //controller.MeasurementGrid.Visible = false;
-            teethMovementPanel.disableAllButtons();
         }
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)
