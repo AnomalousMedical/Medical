@@ -29,6 +29,8 @@ namespace Medical.GUI
         private bool wizardInterfaceShown = false;
         private StandaloneController standaloneController;
         private XmlSaver xmlSaver = new XmlSaver();
+        private List<TimelineEntry> timelines = new List<TimelineEntry>();
+        private int currentTimeline = 0;
 
         //Startup options
         Vector3 cameraPosition;
@@ -49,6 +51,17 @@ namespace Medical.GUI
         public void Dispose()
         {
             
+        }
+
+        public void addTimeline(TimelineEntry timeline)
+        {
+            timelines.Add(timeline);
+        }
+
+        public void clearTimelines()
+        {
+            timelines.Clear();
+            currentTimeline = 0;
         }
 
         /// <summary>
@@ -122,6 +135,54 @@ namespace Medical.GUI
             createdState = stateBlender.createBaselineState();
             presetState.applyToState(createdState);
             stateBlender.startTemporaryBlend(createdState);
+        }
+
+        public String CurrentTimeline
+        {
+            get
+            {
+                if (currentTimeline < timelines.Count)
+                {
+                    return timelines[currentTimeline].Timeline;
+                }
+                return null;
+            }
+            set
+            {
+                currentTimeline = 0;
+                foreach (TimelineEntry timeline in timelines)
+                {
+                    if (timeline.Timeline == value)
+                    {
+                        break;
+                    }
+                    ++currentTimeline;
+                }
+            }
+        }
+
+        public String PreviousTimeline
+        {
+            get
+            {
+                if (currentTimeline > 0)
+                {
+                    return timelines[currentTimeline - 1].Timeline;
+                }
+                return null;
+            }
+        }
+
+        public String NextTimeline
+        {
+            get
+            {
+                if (currentTimeline + 1 < timelines.Count)
+                {
+                    return timelines[currentTimeline + 1].Timeline;
+                }
+                return null;
+            }
         }
 
         public XmlSaver Saver

@@ -85,6 +85,7 @@ namespace Medical.GUI
             EditablePropertyInfo propertyInfo = new EditablePropertyInfo();
             propertyInfo.addColumn(new EditablePropertyColumn("Name", false));
             propertyInfo.addColumn(new EditablePropertyColumn("Timeline", false));
+            propertyInfo.addColumn(new EditablePropertyColumn("Icon", false));
             timelinesEditInterface.setPropertyInfo(propertyInfo);
             editInterface.addSubInterface(timelinesEditInterface);
             foreach (TimelineEntry entry in timelines)

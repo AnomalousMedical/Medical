@@ -55,6 +55,7 @@ namespace Medical.GUI
             base.initialize(showGUIAction);
             panelData = (TimelineWizardPanelData)showGUIAction.GUIData;
             timelineWizard.show(this);
+            timelineWizard.CurrentTimeline = showGUIAction.Timeline.SourceFile;
 
             if (panelData.HasTimelineLinks)
             {
@@ -62,9 +63,18 @@ namespace Medical.GUI
                 foreach (TimelineEntry timelineEntry in panelData.Timelines)
                 {
                     addToNavigationBar(timelineEntry.Timeline, timelineEntry.Name, timelineEntry.ImageKey);
+                    timelineWizard.addTimeline(timelineEntry);
                 }
                 showNavigationBar();
             }
+
+            Button nextButton = (Button)widget.findWidget("StateWizardButtons/Next");
+            nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
+            nextButton.Enabled = !String.IsNullOrEmpty(timelineWizard.NextTimeline);
+
+            Button previousButton = (Button)widget.findWidget("StateWizardButtons/Previous");
+            previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
+            previousButton.Enabled = !String.IsNullOrEmpty(timelineWizard.PreviousTimeline);
         }
 
         public virtual void opening(MedicalController medicalController, SimulationScene simScene)
@@ -126,6 +136,18 @@ namespace Medical.GUI
             timelineWizard.cancel();
             hideNavigationBar();
             closeAndReturnToMainGUI();
+        }
+
+        void previousButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            commitOutstandingData();
+            closeAndPlayTimeline(timelineWizard.PreviousTimeline);
+        }
+
+        void nextButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            commitOutstandingData();
+            closeAndPlayTimeline(timelineWizard.NextTimeline);
         }
     }
 }
