@@ -29,7 +29,7 @@
     <String name="CameraName">Camera 1</String>
     <Vector3 name="IncludePoint">16.929, 9.831223, 0.478775</Vector3>
     <Float name="StartTime">0</Float>
-    <Float name="Duration">1</Float>
+    <Float name="Duration">0.5</Float>
   </Saveable>
   <Saveable type="Medical.LayerEntry, Standalone" id="10">
     <String name="TransparencyObject">Airway</String>
@@ -923,7 +923,7 @@
     <Saveable name="LayerState" id="9" />
     <String name="TransparencyState">Camera 1</String>
     <Float name="StartTime">0</Float>
-    <Float name="Duration">1</Float>
+    <Float name="Duration">0.5</Float>
   </Saveable>
   <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2376, Culture=neutral, PublicKeyToken=null]], Standalone" id="6">
     <Saveable name="Actions0" id="7" />
