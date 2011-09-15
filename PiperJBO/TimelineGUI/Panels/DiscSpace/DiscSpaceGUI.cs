@@ -8,6 +8,7 @@ using System.IO;
 using System.Xml;
 using Logging;
 using MyGUIPlugin;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -145,17 +146,15 @@ namespace Medical.GUI
 
         void showDiscCheckBox_CheckedChanged(Widget source, EventArgs e)
         {
-            //if (showing)
-            //{
-            //    if (showDiscCheckBox.Checked)
-            //    {
-            //        controller.setLayerState("DiscLayers");
-            //    }
-            //    else
-            //    {
-            //        controller.setLayerState(LayerState);
-            //    }
-            //}
+            DiscSpaceGUIData discSpaceData = (DiscSpaceGUIData)PanelData;
+            if (showDiscCheckBox.Checked)
+            {
+                applyLayers(discSpaceData.ShowDiscLayers);
+            }
+            else
+            {
+                applyLayers(discSpaceData.NormalLayers);
+            }
         }
     }
 }

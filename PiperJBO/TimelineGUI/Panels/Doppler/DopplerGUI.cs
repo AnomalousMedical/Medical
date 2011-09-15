@@ -185,13 +185,5 @@ namespace Medical.GUI
             }
             applyLayers(dopplerData.LateralJointLayers);
         }
-
-        void applyLayers(LayerState layers)
-        {
-            if (layers != null)
-            {
-                layers.apply();
-            }
-        }
     }
 }

@@ -19,18 +19,6 @@ namespace Medical.GUI
             LateralJointLayers = new EditableLayerState("DiscLayers");
         }
 
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addCommand(new EditInterfaceCommand("Test", delegate(EditUICallback callback, EditInterfaceCommand caller)
-            {
-                callback.getInputString("Type something here", delegate(String input, ref String errorMessage)
-                {
-                    callback.getSelectedEditInterface().addSubInterface(ReflectedEditInterface.createEditInterface(input, null));
-                    return true;
-                });
-            }));
-        }
-
         [Editable]
         public CameraPosition LateralJointCamera { get; set; }
 

@@ -125,6 +125,14 @@ namespace Medical.GUI
             base.navigationBarChangedTimelines(timeline);
         }
 
+        protected void applyLayers(LayerState layers)
+        {
+            if (layers != null)
+            {
+                layers.apply();
+            }
+        }
+
         void finishButton_MouseButtonClick(Widget source, EventArgs e)
         {
             commitOutstandingData();

@@ -119,6 +119,7 @@
     <Compile Include="TimelineGUI\Panels\Disclaimer\DisclaimerGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceControl.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUIData.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\LeftDiscSpaceGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\RightDiscSpaceGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Doppler\DopplerControl.cs" />
