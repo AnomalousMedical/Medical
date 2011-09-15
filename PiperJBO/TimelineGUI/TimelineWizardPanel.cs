@@ -33,6 +33,12 @@ namespace Medical.GUI
             int buttonAreaHeight = widget.Height;
             subLayoutWidget.setPosition(0, buttonAreaHeight);
             subLayoutWidget.Align = Align.Stretch;
+
+            Button cancelButton = (Button)widget.findWidget("StateWizardButtons/Cancel");
+            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            Button finishButton = (Button)widget.findWidget("StateWizardButtons/Finish");
+            finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
         }
 
         public override void Dispose()
@@ -41,7 +47,6 @@ namespace Medical.GUI
             {
                 LayoutManager.Instance.unloadLayout(layout);
             }
-            timelineWizard.hide();
             base.Dispose();
         }
 
@@ -89,6 +94,20 @@ namespace Medical.GUI
             {
                 return panelData;
             }
+        }
+
+        void finishButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineWizard.finish();
+            hideNavigationBar();
+            closeAndReturnToMainGUI();
+        }
+
+        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineWizard.cancel();
+            hideNavigationBar();
+            closeAndReturnToMainGUI();
         }
     }
 }

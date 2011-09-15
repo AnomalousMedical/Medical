@@ -25,8 +25,6 @@ namespace Medical.GUI
     public class TimelineWizard : IDisposable
     {
         //State
-        private TimelineWizardPanel currentPanel;
-        private TimelineWizardPanel lastPanel;
         private bool wizardInterfaceShown = false;
         private StandaloneController standaloneController;
         private XmlSaver xmlSaver = new XmlSaver();
@@ -59,15 +57,11 @@ namespace Medical.GUI
         /// <param name="panel">The panel to show.</param>
         public void show(TimelineWizardPanel panel)
         {
-            //Swap panels
-            lastPanel = currentPanel;
-            currentPanel = panel;
-
             //Set panel scene properties
             MedicalController medicalController = standaloneController.MedicalController;
             SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
             SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-            currentPanel.opening(medicalController, medicalScene);
+            panel.opening(medicalController, medicalScene);
 
             //Show panel
             if (!wizardInterfaceShown) //If this is false no interfaces have been shown yet for this wizard.
@@ -88,26 +82,13 @@ namespace Medical.GUI
         }
 
         /// <summary>
-        /// This will completely shut down the wizard interface. This can be
-        /// called by anyone, but it is here to provide the hide method
-        /// functionality for the TimelineWizardPanel hide method.
-        /// </summary>
-        public void hide()
-        {
-            lastPanel = currentPanel;
-            currentPanel = null;
-
-            wizardInterfaceShown = false;
-        }
-
-        /// <summary>
         /// Finish the wizard.
         /// </summary>
         public void finish()
         {
-            if (currentPanel != null)
+            if (wizardInterfaceShown)
             {
-                hide();
+                wizardInterfaceShown = false;
                 restoreCameraAndLayers();
 
                 //Create state
@@ -123,9 +104,9 @@ namespace Medical.GUI
         /// </summary>
         public void cancel()
         {
-            if (currentPanel != null)
+            if (wizardInterfaceShown)
             {
-                hide();
+                wizardInterfaceShown = false;
                 restoreCameraAndLayers();
                 stateBlender.blendToUndo();
             }
