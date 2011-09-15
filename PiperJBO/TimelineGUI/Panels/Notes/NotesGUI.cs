@@ -14,20 +14,23 @@ namespace Medical.GUI
         Edit notes;
 
         private ThumbnailPickerGUI thumbnailPicker;
+        private TimelineWizard wizard;
 
-        public NotesGUI(TimelineWizard wizard, ImageRenderer imageRenderer)
+        public NotesGUI(TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.Notes.NotesGUI.layout", wizard)
         {
             //this.LayerState = "MandibleSizeLayers";
             //this.NavigationState = "WizardMidlineAnterior";
             //this.TextLine1 = "Notes";
 
+            this.wizard = wizard;
+
             stateNameTextBox = widget.findWidget("Notes/DistortionName") as Edit;
             datePicker = widget.findWidget("Notes/DateCreated") as Edit;
             distortionWizard = widget.findWidget("Notes/DistortionWizard") as Edit;
             notes = widget.findWidget("Notes/NotesText") as Edit;
 
-            thumbnailPicker = new ThumbnailPickerGUI(imageRenderer, widget.findWidget("Notes/Thumbnails") as ScrollView);
+            thumbnailPicker = new ThumbnailPickerGUI(wizard.ImageRenderer, widget.findWidget("Notes/Thumbnails") as ScrollView);
             //thumbnailPicker.addThumbnail("ThumbnailMidlineAnterior", "MandibleSizeLayers");
             //thumbnailPicker.addThumbnail("ThumbnailRightLateral", "MandibleSizeLayers");
             //thumbnailPicker.addThumbnail("ThumbnailLeftLateral", "MandibleSizeLayers");
@@ -48,38 +51,18 @@ namespace Medical.GUI
 
         public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
-            setToDefault();
-
-            distortionWizard.Caption = "Piper's JBO";// controller.CurrentWizardName;
+            distortionWizard.OnlyText = wizard.DataSource;
+            stateNameTextBox.OnlyText = wizard.StateName;
+            notes.OnlyText = wizard.Notes;
+            datePicker.Caption = wizard.ProcedureDate.ToString();
             thumbnailPicker.updateThumbnails();
         }
 
-        public void setToDefault()
+        protected override void commitOutstandingData()
         {
-            stateNameTextBox.Caption = "Custom Distortion";
-            notes.Caption = "";
-            datePicker.Caption = DateTime.Now.ToString();
-        }
-
-        public void applyToState(MedicalState state)
-        {
-            state.Notes.DataSource = distortionWizard.Caption;
-            state.Notes.Notes = notes.Caption;
-            state.Notes.ProcedureDate = DateTime.Now;
-            state.Name = stateNameTextBox.Caption;
-            state.Thumbnail = thumbnailPicker.SelectedThumbnail;
-        }
-
-        public bool Visible
-        {
-            get
-            {
-                return widget.Visible;
-            }
-            set
-            {
-                widget.Visible = value;
-            }
+            wizard.StateName = stateNameTextBox.OnlyText;
+            wizard.Notes = notes.OnlyText;
+            wizard.Thumbnail = thumbnailPicker.SelectedThumbnail;
         }
     }
 }

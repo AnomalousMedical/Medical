@@ -72,6 +72,16 @@ namespace Medical.GUI
 
         }
 
+        /// <summary>
+        /// This method will be called when one of the navigation buttons
+        /// (cancel, next, previous, finish) is pressed or if the user navigates
+        /// away with the navigation bar.
+        /// </summary>
+        protected virtual void commitOutstandingData()
+        {
+
+        }
+
         public IEnumerable<TimelineEntry> Timelines
         {
             get
@@ -96,8 +106,15 @@ namespace Medical.GUI
             }
         }
 
+        protected override void navigationBarChangedTimelines(string timeline)
+        {
+            commitOutstandingData();
+            base.navigationBarChangedTimelines(timeline);
+        }
+
         void finishButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            commitOutstandingData();
             timelineWizard.finish();
             hideNavigationBar();
             closeAndReturnToMainGUI();
@@ -105,6 +122,7 @@ namespace Medical.GUI
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            commitOutstandingData();
             timelineWizard.cancel();
             hideNavigationBar();
             closeAndReturnToMainGUI();

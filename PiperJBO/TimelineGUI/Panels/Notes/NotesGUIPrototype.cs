@@ -18,8 +18,7 @@ namespace Medical.GUI
 
         public TimelineGUI getGUI()
         {
-            wizard.Notes.Visible = true;
-            return wizard.Notes;
+            return new NotesGUI(wizard);
         }
 
         public TimelineGUIData getGUIData()

@@ -7,6 +7,7 @@ using Engine;
 using Medical.Controller;
 using Engine.ObjectManagement;
 using Engine.Saving.XMLSaver;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -35,18 +36,19 @@ namespace Medical.GUI
         LayerState layers;
         TemporaryStateBlender stateBlender;
 
+        //Controllers
+        private ImageRenderer imageRenderer;
+
         public TimelineWizard(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             this.stateBlender = standaloneController.TemporaryStateBlender;
-
-            Notes = new NotesGUI(this, standaloneController.ImageRenderer);
-            Notes.Visible = false;
+            this.imageRenderer = standaloneController.ImageRenderer;
         }
 
         public void Dispose()
         {
-            Notes.Dispose();
+            
         }
 
         /// <summary>
@@ -68,6 +70,7 @@ namespace Medical.GUI
             {
                 wizardInterfaceShown = true;
                 //Store scene settings
+                resetNotes();
                 SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
                 if (window != null)
                 {
@@ -77,7 +80,6 @@ namespace Medical.GUI
                 layers = new LayerState("");
                 layers.captureState();
                 stateBlender.recordUndoState();
-                Notes.setToDefault();
             }
         }
 
@@ -94,7 +96,9 @@ namespace Medical.GUI
                 //Create state
                 stateBlender.forceFinishBlend();
                 MedicalState createdState = stateBlender.createBaselineState();
-                Notes.applyToState(createdState);
+
+                applyNotes(createdState);
+
                 standaloneController.MedicalStateController.addState(createdState);
             }
         }
@@ -144,7 +148,23 @@ namespace Medical.GUI
             }
         }
 
-        public NotesGUI Notes { get; private set; }
+        public ImageRenderer ImageRenderer
+        {
+            get
+            {
+                return imageRenderer;
+            }
+        }
+
+        public String DataSource { get; set; }
+
+        public String Notes { get; set; }
+
+        public String StateName { get; set; }
+
+        public DateTime ProcedureDate { get; set; }
+
+        public Bitmap Thumbnail { get; set; }
 
         private void restoreCameraAndLayers()
         {
@@ -154,6 +174,24 @@ namespace Medical.GUI
                 window.setPosition(cameraPosition, cameraLookAt);
                 layers.apply();
             }
+        }
+
+        private void resetNotes()
+        {
+            DataSource = "Piper's JBO";
+            StateName = "Custom Distortion";
+            Notes = "";
+            ProcedureDate = DateTime.Now;
+            Thumbnail = null;
+        }
+
+        private void applyNotes(MedicalState createdState)
+        {
+            createdState.Notes.DataSource = DataSource;
+            createdState.Notes.Notes = Notes;
+            createdState.Notes.ProcedureDate = ProcedureDate;
+            createdState.Name = StateName;
+            createdState.Thumbnail = Thumbnail;
         }
     }
 }
