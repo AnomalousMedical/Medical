@@ -219,6 +219,37 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Timelines\Disclaimer_Cephalometric.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_CephalometricAndDentition.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_ClinicalAndDoppler.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_ClinicalAndMRI.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_ClinicalAndRadiography.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_Dentition.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_DiscClockFace.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_DiscSpace.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_Doppler.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_Eminence.tl" />
+    <EmbeddedResource Include="Timelines\Disclaimer_Mandible.tl" />
+    <EmbeddedResource Include="Timelines\DISCLAIMER_SOURCE.tl" />
+    <EmbeddedResource Include="Timelines\index.tix" />
+    <EmbeddedResource Include="Timelines\LeftCondyleDegeneration.tl" />
+    <EmbeddedResource Include="Timelines\LeftCondyleGrowth.tl" />
+    <EmbeddedResource Include="Timelines\LeftDiscClockFace.tl" />
+    <EmbeddedResource Include="Timelines\LeftDiscSpace.tl" />
+    <EmbeddedResource Include="Timelines\LeftDoppler.tl" />
+    <EmbeddedResource Include="Timelines\LeftFossa.tl" />
+    <EmbeddedResource Include="Timelines\Notes.tl" />
+    <EmbeddedResource Include="Timelines\ProfileDistortion.tl" />
+    <EmbeddedResource Include="Timelines\RemoveBottomTeeth.tl" />
+    <EmbeddedResource Include="Timelines\RemoveTopTeeth.tl" />
+    <EmbeddedResource Include="Timelines\RightCondyleDegeneration.tl" />
+    <EmbeddedResource Include="Timelines\RightCondyleGrowth.tl" />
+    <EmbeddedResource Include="Timelines\RightDiscClockFace.tl" />
+    <EmbeddedResource Include="Timelines\RightDiscSpace.tl" />
+    <EmbeddedResource Include="Timelines\RightDoppler.tl" />
+    <EmbeddedResource Include="Timelines\RightFossa.tl" />
+    <EmbeddedResource Include="Timelines\TeethAdaptation.tl" />
+    <EmbeddedResource Include="Timelines\TeethHeightAdaptation.tl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -254,9 +285,7 @@
     <EmbeddedResource Include="Resources\PiperJBOIcons.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Timelines\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

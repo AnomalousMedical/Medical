@@ -11,7 +11,7 @@ namespace Medical.GUI
         private StateWizard wizard;
 
         public StartWizardTask(PiperJBOAtlasPlugin piperAtlasPlugin, StateWizard wizard)
-            : base("PiperJBO." + wizard.Name, wizard.Name, wizard.ImageKey, TaskMenuCategories.Exams)
+            : base("PiperJBO.OldWizard." + wizard.Name, wizard.Name, wizard.ImageKey, TaskMenuCategories.Exams)
         {
             this.piperAtlasPlugin = piperAtlasPlugin;
             this.wizard = wizard;
