@@ -1868,6 +1868,7 @@
   </Saveable>
   <Saveable type="Medical.PlaySequenceAction, Standalone" id="363">
     <Saveable name="MovementSequence" id="364" />
+    <Bool name="PauseOnStop">False</Bool>
     <Float name="StartTime">0</Float>
     <Float name="Duration">259200</Float>
   </Saveable>

@@ -18,7 +18,7 @@ namespace Medical
         public PlaySequenceAction()
             :this(null, 0.0f, 1.0f)
         {
-
+            PauseOnStop = true;
         }
 
         public PlaySequenceAction(MovementSequence movementSequence, float startTime, float duration)
@@ -44,7 +44,14 @@ namespace Medical
 
         public override void stopped(float timelineTime, Clock clock)
         {
-            TimelineController.MovementSequenceController.pausePlayback();
+            if (PauseOnStop)
+            {
+                TimelineController.MovementSequenceController.pausePlayback();
+            }
+            else
+            {
+                TimelineController.MovementSequenceController.stopPlayback();
+            }
         }
 
         public override void update(float timelineTime, Clock clock)
@@ -98,19 +105,27 @@ namespace Medical
 
         public MovementSequence MovementSequence { get; set; }
 
+        /// <summary>
+        /// If this is true the MovementSequenceController will get a pause command, if false it will get a stop command.
+        /// </summary>
+        public bool PauseOnStop { get; set; }
+
         #region Saveable
 
         private static readonly String MOVEMENT_SEQUENCE = "MovementSequence";
+        private static readonly String PAUSE_ON_STOP = "PauseOnStop";
 
         protected PlaySequenceAction(LoadInfo info)
             : base(info)
         {
             MovementSequence = info.GetValue<MovementSequence>(MOVEMENT_SEQUENCE);
+            PauseOnStop = info.GetBoolean(PAUSE_ON_STOP, true);
         }
 
         public override void getInfo(SaveInfo info)
         {
             info.AddValue(MOVEMENT_SEQUENCE, MovementSequence);
+            info.AddValue(PAUSE_ON_STOP, PauseOnStop);
             base.getInfo(info);
         }
 
