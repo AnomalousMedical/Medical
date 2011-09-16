@@ -13,15 +13,6 @@ namespace Medical.GUI
 {
     /// <summary>
     /// This class allows a collection of TimelineWizardPanels to act as a wizard.
-    /// 
-    /// The lifcycle for these wizards is as follows:
-    /// 1. The TimelineWizardPanel subclass is created by its TimelineGUIFactoryPrototype.
-    /// 2. It is shown by the timeline action.
-    /// 3. It is brought into this class with the show method.
-    /// 4. The timeline is advanced somehow with the TimelineGUIButtons or something else. This comes back to this class to change out the active interfaces.
-    /// 5. When the animations are complete for the panels being shown this class will dispose the old TimelineWizardPanel.
-    /// 
-    /// In short as long as a TimelineWizardPanel is shown by this class it will be disposed by this class.
     /// </summary>
     public class TimelineWizard : IDisposable
     {
