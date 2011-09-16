@@ -126,7 +126,7 @@ namespace Medical.GUI
             base.navigationBarChangedTimelines(timeline);
         }
 
-        protected void applyLayers(LayerState layers)
+        public void applyLayers(LayerState layers)
         {
             if (layers != null)
             {
@@ -134,7 +134,7 @@ namespace Medical.GUI
             }
         }
 
-        protected void applyCameraPosition(CameraPosition cameraPosition)
+        public void applyCameraPosition(CameraPosition cameraPosition)
         {
             SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
             if (window != null)

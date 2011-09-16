@@ -16,7 +16,7 @@
                 <Property key="Widget_Caption" value="Bottom"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptBottomTeeth"/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="150 22 53 53" name="TeethMovementPanel/RightLateralCameraButton">
+            <Widget type="Button" skin="ButtonImageBackground" position="150 22 53 53" name="TeethMovementPanel/LeftLateralCameraButton">
                 <Property key="Widget_Caption" value="Right"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptRightLateral"/>
             </Widget>
@@ -24,7 +24,7 @@
                 <Property key="Widget_Caption" value="Midline"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptMidlineAnterior"/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="282 22 53 53" name="TeethMovementPanel/LeftLateralCameraButton">
+            <Widget type="Button" skin="ButtonImageBackground" position="282 22 53 53" name="TeethMovementPanel/RightLateralCameraButton">
                 <Property key="Widget_Caption" value="Left"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptLeftLateral"/>
             </Widget>

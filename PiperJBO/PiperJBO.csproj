@@ -156,6 +156,7 @@
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTeethGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUIData.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUIPrototype.cs" />

@@ -20,10 +20,16 @@ namespace Medical.GUI
         public TeethHeightAdaptationGUI(TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.Teeth.TeethHeightAdaptationGUI.layout", wizard)
         {
+            //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
+            //gridPropertiesControl.GridSpacing = 2;
+        }
+
+        public override void initialize(ShowTimelineGUIAction showGUIAction)
+        {
             heightControl = new HeightControl(widget.findWidget("TeethAdaptPanel/LeftSideSlider") as VScroll,
                 widget.findWidget("TeethAdaptPanel/RightSideSlider") as VScroll,
                 widget.findWidget("TeethAdaptPanel/BothSidesSlider") as VScroll);
-            teethMovementPanel = new TeethMovementGUI(widget);
+            teethMovementPanel = new TeethMovementGUI(widget, (TeethAdaptationGUIData)showGUIAction.GUIData, this);
 
             undoButton = widget.findWidget("TeethAdaptPanel/UndoButton") as Button;
             makeNormalButton = widget.findWidget("TeethAdaptPanel/MakeNormalButton") as Button;
@@ -31,8 +37,7 @@ namespace Medical.GUI
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
 
-            //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
-            //gridPropertiesControl.GridSpacing = 2;
+            base.initialize(showGUIAction);
         }
 
         public override void Dispose()

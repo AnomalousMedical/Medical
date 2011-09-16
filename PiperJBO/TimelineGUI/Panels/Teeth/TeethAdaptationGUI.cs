@@ -19,7 +19,13 @@ namespace Medical.GUI
         public TeethAdaptationGUI(TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.Teeth.TeethAdaptationGUI.layout", wizard)
         {
-            teethMovementPanel = new TeethMovementGUI(widget);
+            //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
+            //gridPropertiesControl.GridSpacing = 2;
+        }
+
+        public override void initialize(Medical.ShowTimelineGUIAction showGUIAction)
+        {
+            teethMovementPanel = new TeethMovementGUI(widget, (TeethAdaptationGUIData)showGUIAction.GUIData, this);
 
             undoButton = widget.findWidget("TeethAdaptationPanel/UndoButton") as Button;
             resetButton = widget.findWidget("TeethAdaptationPanel/ResetButton") as Button;
@@ -27,8 +33,7 @@ namespace Medical.GUI
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             resetButton.MouseButtonClick += new MyGUIEvent(resetButton_MouseButtonClick);
 
-            //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
-            //gridPropertiesControl.GridSpacing = 2;
+            base.initialize(showGUIAction);
         }
 
         public override void Dispose()
