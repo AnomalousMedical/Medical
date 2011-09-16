@@ -29,8 +29,11 @@ namespace Medical
             {
                 foreach (TransparencyInterface trans in group.getTransparencyObjectIter())
                 {
-                    LayerEntry entry = new LayerEntry(trans);
-                    entries.AddLast(entry);
+                    if (trans.CurrentAlpha > Single.Epsilon)
+                    {
+                        LayerEntry entry = new LayerEntry(trans);
+                        entries.AddLast(entry);
+                    }
                 }
             }
         }
@@ -112,6 +115,24 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Remove all zero entries from this layer state. This is done on
+        /// creation, but this method is around to upgrade old serialized
+        /// LayerState instances if needed.
+        /// </summary>
+        private void trimLayers()
+        {
+            LinkedList<LayerEntry> originalList = entries;
+            entries = new LinkedList<LayerEntry>();
+            foreach (LayerEntry entry in originalList)
+            {
+                if (entry.AlphaValue > Single.Epsilon)
+                {
+                    entries.AddLast(entry);
+                }
+            }
+        }
+
         #region Saveable Members
 
         private const string NAME = "Name";
@@ -125,6 +146,7 @@ namespace Medical
 
         public void getInfo(SaveInfo info)
         {
+            //trimLayers();
             info.AddValue(NAME, name);
             info.ExtractLinkedList<LayerEntry>(ENTRIES, entries);
         }
