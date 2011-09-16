@@ -32,11 +32,9 @@ namespace Medical.GUI
         /// <summary>
         /// Add a thumbnail to the picker.
         /// </summary>
-        /// <param name="navigationState">The navigation state of the thumbnail.</param>
-        /// <param name="layerState">The layer state of the thumbnail.</param>
-        public void addThumbnail()
+        public void addThumbnail(NotesThumbnail thumbnail)
         {
-            thumbnailProperties.Add(new ThumbnailPickerInfo((int)thumbnailImages.ImageSize.Width, (int)thumbnailImages.ImageSize.Height));
+            thumbnailProperties.Add(new ThumbnailPickerInfo((int)thumbnailImages.ImageSize.Width, (int)thumbnailImages.ImageSize.Height, thumbnail));
         }
 
         /// <summary>

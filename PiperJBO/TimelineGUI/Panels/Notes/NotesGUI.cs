@@ -31,17 +31,6 @@ namespace Medical.GUI
             notes = widget.findWidget("Notes/NotesText") as Edit;
 
             thumbnailPicker = new ThumbnailPickerGUI(wizard.ImageRenderer, widget.findWidget("Notes/Thumbnails") as ScrollView);
-            //thumbnailPicker.addThumbnail("ThumbnailMidlineAnterior", "MandibleSizeLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailRightLateral", "MandibleSizeLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailLeftLateral", "MandibleSizeLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailRightTMJ", "DiscLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailLeftTMJ", "DiscLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailLeftTMJSuperior", "ThumbnailTMJSuperiorLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailRightTMJSuperior", "ThumbnailTMJSuperiorLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailTeethMidlineAnterior", "TeethLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailTeethRightLateral", "TeethLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailTeethLeftLateral", "TeethLayers");
-            thumbnailPicker.addThumbnail();
         }
 
         public override void Dispose()
@@ -56,6 +45,12 @@ namespace Medical.GUI
             stateNameTextBox.OnlyText = wizard.StateName;
             notes.OnlyText = wizard.Notes;
             datePicker.Caption = wizard.ProcedureDate.ToString();
+
+            NotesGUIData notesData = (NotesGUIData)PanelData;
+            foreach (NotesThumbnail thumb in notesData.Thumbnails)
+            {
+                thumbnailPicker.addThumbnail(thumb);
+            }
             thumbnailPicker.updateThumbnails();
         }
 

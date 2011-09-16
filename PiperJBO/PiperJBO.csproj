@@ -142,7 +142,9 @@
     <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Notes\NotesGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Notes\NotesGUIData.cs" />
     <Compile Include="TimelineGUI\Panels\Notes\NotesGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Notes\NotesThumbnail.cs" />
     <Compile Include="TimelineGUI\Panels\Notes\ThumbnailPickerInfo.cs" />
     <Compile Include="TimelineGUI\Panels\Notes\ThumbnailPickerGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Preset\LeftDiscClockFaceGUIPrototype.cs" />
