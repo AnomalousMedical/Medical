@@ -19,7 +19,7 @@ namespace Medical.GUI
         private Button undoButton;
         private Button makeNormalButton;
 
-        //GridPropertiesControl gridPropertiesControl;
+        GridPropertiesControl gridPropertiesControl;
 
         public RightCondylarDegenerationGUI(TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.Mandible.RightCondylarDegenerationGUI.layout", wizard)
@@ -45,14 +45,21 @@ namespace Medical.GUI
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
 
-            //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
-            //gridPropertiesControl.GridSpacing = 5;
+            gridPropertiesControl = new GridPropertiesControl(wizard.MeasurementGrid, widget);
+            gridPropertiesControl.GridSpacing = 5;
         }
 
         public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             base.opening(medicalController, simScene);
             allowCameraChange = true;
+            gridPropertiesControl.updateGrid();
+        }
+
+        protected override void closing()
+        {
+            base.closing();
+            timelineWizard.MeasurementGrid.Visible = false;
         }
 
         void wearSlider_ValueChanged(object sender, EventArgs e)
@@ -104,20 +111,5 @@ namespace Medical.GUI
                 allowCameraChange = true;
             }
         }
-
-        //protected override void onPanelOpening()
-        //{
-        //    base.onPanelOpening();
-        //    allowCameraChange = true;
-        //    gridPropertiesControl.updateGrid();
-        //    showingWear = false;
-        //}
-
-        //protected override void onPanelClosing()
-        //{
-        //    base.onPanelClosing();
-        //    allowCameraChange = false;
-        //    controller.MeasurementGrid.Visible = false;
-        //}
     }
 }

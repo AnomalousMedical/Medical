@@ -17,7 +17,7 @@ namespace Medical.GUI
         private Button undoButton;
         private Button makeNormalButton;
 
-        //GridPropertiesControl gridPropertiesControl;
+        GridPropertiesControl gridPropertiesControl;
 
         public RightCondylarGrowthGUI(TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.Mandible.RightCondylarGrowthGUI.layout", wizard)
@@ -41,8 +41,20 @@ namespace Medical.GUI
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
 
-            //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, widget);
-            //gridPropertiesControl.GridSpacing = 5;
+            gridPropertiesControl = new GridPropertiesControl(wizard.MeasurementGrid, widget);
+            gridPropertiesControl.GridSpacing = 5;
+        }
+
+        public override void opening(MedicalController medicalController, SimulationScene simScene)
+        {
+            base.opening(medicalController, simScene);
+            gridPropertiesControl.updateGrid();
+        }
+
+        protected override void closing()
+        {
+            base.closing();
+            timelineWizard.MeasurementGrid.Visible = false;
         }
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)
@@ -70,17 +82,5 @@ namespace Medical.GUI
                 resetToOpeningState();
             }
         }
-
-        //protected override void onPanelOpening()
-        //{
-        //    base.onPanelOpening();
-        //    gridPropertiesControl.updateGrid();
-        //}
-
-        //protected override void onPanelClosing()
-        //{
-        //    base.onPanelClosing();
-        //    controller.MeasurementGrid.Visible = false;
-        //}
     }
 }

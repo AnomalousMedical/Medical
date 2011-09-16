@@ -15,17 +15,15 @@ namespace Medical.GUI
         private Button resetButton;
 
         private AnatomyPickingMode startingPickingMode;
-        private TimelineWizard wizard;
 
-        //GridPropertiesControl gridPropertiesControl;
+        GridPropertiesControl gridPropertiesControl;
 
         public TeethAdaptationGUI(TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.Teeth.TeethAdaptationGUI.layout", wizard)
         {
-            //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
-            //gridPropertiesControl.GridSpacing = 2;
+            gridPropertiesControl = new GridPropertiesControl(wizard.MeasurementGrid, widget);
+            gridPropertiesControl.GridSpacing = 2;
 
-            this.wizard = wizard;
             startingPickingMode = wizard.AnatomyController.PickingMode;
             wizard.AnatomyController.PickingMode = AnatomyPickingMode.None;
         }
@@ -45,8 +43,6 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            TeethController.showTeethTools(false, false);
-            //controller.MeasurementGrid.Visible = false;
             teethMovementPanel.disableAllButtons();
             base.Dispose();
         }
@@ -63,15 +59,17 @@ namespace Medical.GUI
             movingMuscle.changeForce(TeethController.AdaptForce);
             movingMuscleTarget.Offset = Vector3.Zero;
 
-            //gridPropertiesControl.Origin = TeethController.getToothCenter();
-            //gridPropertiesControl.updateGrid();
+            gridPropertiesControl.Origin = TeethController.getToothCenter();
+            gridPropertiesControl.updateGrid();
             teethMovementPanel.setDefaultTools();
         }
 
         protected override void closing()
         {
             base.closing();
-            wizard.AnatomyController.PickingMode = startingPickingMode;
+            timelineWizard.AnatomyController.PickingMode = startingPickingMode;
+            TeethController.showTeethTools(false, false);
+            timelineWizard.MeasurementGrid.Visible = false;
         }
 
         void resetButton_MouseButtonClick(Widget source, EventArgs e)

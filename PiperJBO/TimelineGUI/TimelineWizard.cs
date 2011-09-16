@@ -225,6 +225,14 @@ namespace Medical.GUI
             }
         }
 
+        public MeasurementGrid MeasurementGrid
+        {
+            get
+            {
+                return standaloneController.MeasurementGrid;
+            }
+        }
+
         public bool WizardInterfaceShown
         {
             get
