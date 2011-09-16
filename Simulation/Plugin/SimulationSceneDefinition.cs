@@ -22,9 +22,7 @@ namespace Medical
         }
 
         private String name;
-        private String cameraFileDirectory;
         private String presetDirectory;
-        private String layersFileDirectory;
         private String sequenceDirectory;
 
         public SimulationSceneDefinition(String name)
@@ -45,9 +43,7 @@ namespace Medical
         public SimElementManager createSimElementManager()
         {
             SimulationScene scene = new SimulationScene(name);
-            scene.CameraFileDirectory = cameraFileDirectory;
             scene.PresetDirectory = presetDirectory;
-            scene.LayersFileDirectory = layersFileDirectory;
             scene.SequenceDirectory = sequenceDirectory;
             return scene;
         }
@@ -67,19 +63,6 @@ namespace Medical
         #region Properties
 
         [Editable]
-        public String CameraFileDirectory
-        {
-            get
-            {
-                return cameraFileDirectory;
-            }
-            set
-            {
-                cameraFileDirectory = value;
-            }
-        }
-
-        [Editable]
         public String PresetDirectory
         {
             get
@@ -89,19 +72,6 @@ namespace Medical
             set
             {
                 presetDirectory = value;
-            }
-        }
-
-        [Editable]
-        public String LayersFileDirectory
-        {
-            get
-            {
-                return layersFileDirectory;
-            }
-            set
-            {
-                layersFileDirectory = value;
             }
         }
 
@@ -146,18 +116,14 @@ namespace Medical
         protected SimulationSceneDefinition(LoadInfo info)
         {
             name = info.GetString(NAME);
-            cameraFileDirectory = info.GetString(CAMERA_FILE_DIRECTORY);
             presetDirectory = info.GetString(PRESET_DIRECTORY);
-            layersFileDirectory = info.GetString(LAYERS_FILE_DIRECTORY);
             sequenceDirectory = info.GetString(SEQUENCE_DIRECTORY);
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue(NAME, name);
-            info.AddValue(CAMERA_FILE_DIRECTORY, cameraFileDirectory);
             info.AddValue(PRESET_DIRECTORY, presetDirectory);
-            info.AddValue(LAYERS_FILE_DIRECTORY, layersFileDirectory);
             info.AddValue(SEQUENCE_DIRECTORY, sequenceDirectory);
         }
 

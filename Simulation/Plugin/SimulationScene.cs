@@ -12,12 +12,7 @@ namespace Medical
         private String name;
         private SimulationSceneFactory factory = new SimulationSceneFactory();
 
-        private String cameraFileDirectory = "";
-
         private String presetDirectory;
-
-        private String layersFileDirectory;
-
         private String sequenceDirectory;
 
         public SimulationScene(String name)
@@ -30,9 +25,7 @@ namespace Medical
         public SimElementManagerDefinition createDefinition()
         {
             SimulationSceneDefinition definition = new SimulationSceneDefinition(name);
-            definition.CameraFileDirectory = cameraFileDirectory;
             definition.PresetDirectory = presetDirectory;
-            definition.LayersFileDirectory = layersFileDirectory;
             definition.SequenceDirectory = sequenceDirectory;
             return definition;
         }
@@ -61,18 +54,6 @@ namespace Medical
 
         #region Properties
 
-        public String CameraFileDirectory
-        {
-            get
-            {
-                return cameraFileDirectory;
-            }
-            set
-            {
-                cameraFileDirectory = value;
-            }
-        }
-
         public String PresetDirectory
         {
             get
@@ -82,18 +63,6 @@ namespace Medical
             set
             {
                 presetDirectory = value;
-            }
-        }
-
-        public String LayersFileDirectory
-        {
-            get
-            {
-                return layersFileDirectory;
-            }
-            set
-            {
-                layersFileDirectory = value;
             }
         }
 
