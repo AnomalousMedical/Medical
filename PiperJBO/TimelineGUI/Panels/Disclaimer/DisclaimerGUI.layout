@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="81 114 352 600" layer="Overlapped">
+    <Widget type="Widget" skin="PanelEmpty" position="81 114 352 600" layer="Overlapped">
         <Widget type="Widget" skin="MultiListCustomPanel" position="4 40 344 556" align="HStretch VStretch">
             <Widget type="Edit" skin="WordWrap" position="0 1 344 555" align="HStretch VStretch">
                 <Property key="Edit_MultiLine" value="true"/>
