@@ -2590,6 +2590,7 @@
     <Saveable name="LayerState" id="496" />
   </Saveable>
   <Saveable type="Medical.GUI.NotesGUIData, PiperJBO" id="2">
+    <Bool name="attachToScrollView">False</Bool>
     <Saveable name="NotesThumbnail0" id="3" />
     <Saveable name="NotesThumbnail1" id="72" />
     <Saveable name="NotesThumbnail2" id="141" />

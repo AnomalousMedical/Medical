@@ -13,6 +13,8 @@ namespace Medical.GUI
         [DoNotSave]
         private List<TimelineEntry> timelines = new List<TimelineEntry>();
 
+        private bool attachToScrollView = true;
+
         public TimelineWizardPanelData()
         {
 
@@ -40,6 +42,19 @@ namespace Medical.GUI
             {
                 timelines.Remove(entry);
                 onTimelineRemoved(entry);
+            }
+        }
+
+        [Editable]
+        public bool AttachToScrollView
+        {
+            get
+            {
+                return attachToScrollView;
+            }
+            set
+            {
+                attachToScrollView = value;
             }
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using Logging;
 using MyGUIPlugin;
 using Medical.Controller;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -21,18 +22,23 @@ namespace Medical.GUI
         private TimelineWizardPanelData panelData;
 
         private Layout layout;
+        private Widget subLayoutWidget;
+        private ScrollView panelScroll;
 
         public TimelineWizardPanel(String layoutFile, TimelineWizard timelineWizard)
             : base("Medical.TimelineGUI.WizardPanelButtons.layout")
         {
             this.timelineWizard = timelineWizard;
 
+            panelScroll = (ScrollView)widget.findWidget("PanelScroll");
+
             layout = LayoutManager.Instance.loadLayout(layoutFile);
-            Widget subLayoutWidget = layout.getWidget(0);
-            subLayoutWidget.attachToWidget(widget);
+            subLayoutWidget = layout.getWidget(0);
+            subLayoutWidget.attachToWidget(panelScroll);
+            panelScroll.CanvasSize = new Size2(subLayoutWidget.Width, subLayoutWidget.Height);
 
             int buttonAreaHeight = widget.Height;
-            subLayoutWidget.setPosition(0, buttonAreaHeight);
+            subLayoutWidget.setPosition(0, 0);
             subLayoutWidget.Align = Align.Stretch;
 
             Button cancelButton = (Button)widget.findWidget("StateWizardButtons/Cancel");
@@ -56,6 +62,17 @@ namespace Medical.GUI
             base.initialize(showGUIAction);
 
             panelData = (TimelineWizardPanelData)showGUIAction.GUIData;
+
+            if (!panelData.AttachToScrollView)
+            {
+                //Detach the panel and set it up correctly to be on the widget
+                subLayoutWidget.detachFromWidget();
+                subLayoutWidget.attachToWidget(widget);
+                subLayoutWidget.setPosition(0, panelScroll.Top);
+                subLayoutWidget.setSize(panelScroll.Width, panelScroll.Height);
+                panelScroll.Visible = false;
+                subLayoutWidget.Align = Align.Stretch;
+            }
 
             if (!timelineWizard.WizardInterfaceShown && panelData.HasTimelineLinks)
             {
