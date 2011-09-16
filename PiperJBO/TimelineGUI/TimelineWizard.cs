@@ -217,6 +217,14 @@ namespace Medical.GUI
             }
         }
 
+        public AnatomyController AnatomyController
+        {
+            get
+            {
+                return standaloneController.AnatomyController;
+            }
+        }
+
         public bool WizardInterfaceShown
         {
             get

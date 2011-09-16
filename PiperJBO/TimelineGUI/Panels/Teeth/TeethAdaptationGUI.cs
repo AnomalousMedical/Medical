@@ -14,6 +14,9 @@ namespace Medical.GUI
         private Button undoButton;
         private Button resetButton;
 
+        private AnatomyPickingMode startingPickingMode;
+        private TimelineWizard wizard;
+
         //GridPropertiesControl gridPropertiesControl;
 
         public TeethAdaptationGUI(TimelineWizard wizard)
@@ -21,6 +24,10 @@ namespace Medical.GUI
         {
             //gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
             //gridPropertiesControl.GridSpacing = 2;
+
+            this.wizard = wizard;
+            startingPickingMode = wizard.AnatomyController.PickingMode;
+            wizard.AnatomyController.PickingMode = AnatomyPickingMode.None;
         }
 
         public override void initialize(Medical.ShowTimelineGUIAction showGUIAction)
@@ -59,6 +66,12 @@ namespace Medical.GUI
             //gridPropertiesControl.Origin = TeethController.getToothCenter();
             //gridPropertiesControl.updateGrid();
             teethMovementPanel.setDefaultTools();
+        }
+
+        protected override void closing()
+        {
+            base.closing();
+            wizard.AnatomyController.PickingMode = startingPickingMode;
         }
 
         void resetButton_MouseButtonClick(Widget source, EventArgs e)

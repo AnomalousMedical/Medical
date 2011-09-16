@@ -86,6 +86,8 @@ namespace Medical.GUI
 
             this.Resized += new EventHandler(AnatomyFinder_Resized);
             fixListItemWidth();
+
+            updateSearch();
         }
 
         public override void Dispose()

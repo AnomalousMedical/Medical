@@ -27,9 +27,6 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
 
-        //Controllers
-        private AnatomyController anatomyController;
-
         //Tasks
         private SelectionModeTask selectionModeTask;
 
@@ -49,7 +46,6 @@ namespace Medical.GUI
             savePatientDialog.Dispose();
             openPatientDialog.Dispose();
             aboutDialog.Dispose();
-            anatomyController.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -57,8 +53,6 @@ namespace Medical.GUI
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
             standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController, this));
-
-            anatomyController = new AnatomyController(standaloneController.ImageRenderer);
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
@@ -74,7 +68,7 @@ namespace Medical.GUI
             openPatientDialog = new OpenPatientDialog(guiManager);
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
-            anatomyFinder = new AnatomyFinder(anatomyController, standaloneController.SceneViewController);
+            anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController);
             guiManager.addManagedDialog(anatomyFinder);
 
             options = new OptionsDialog(guiManager);
@@ -88,7 +82,7 @@ namespace Medical.GUI
             taskbar.setAppIcon("AppButton/Image");
 
             //Tasks
-            selectionModeTask = new SelectionModeTask(anatomyController);
+            selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
@@ -132,12 +126,12 @@ namespace Medical.GUI
 
         public void sceneLoaded(SimScene scene)
         {
-            anatomyController.sceneLoaded();
+            
         }
 
         public void sceneUnloading(SimScene scene)
         {
-            anatomyController.sceneUnloading();
+            
         }
 
         public void setMainInterfaceEnabled(bool enabled)

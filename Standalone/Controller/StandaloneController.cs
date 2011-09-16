@@ -43,6 +43,7 @@ namespace Medical
         private ExamController examController;
         private TaskController taskController;
         private SaveableClipboard clipboard;
+        private AnatomyController anatomyController;
 
         //GUI
         private GUIManager guiManager;
@@ -99,6 +100,7 @@ namespace Medical
             watermark.Dispose();
             measurementGrid.Dispose();
             movementSequenceController.Dispose();
+            anatomyController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();
             mdiLayout.Dispose();
@@ -158,6 +160,9 @@ namespace Medical
             imageRenderer.Background = background;
             imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
+
+            //Anatomy Controller
+            anatomyController = new AnatomyController(imageRenderer);
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
@@ -474,6 +479,14 @@ namespace Medical
             }
         }
 
+        public AnatomyController AnatomyController
+        {
+            get
+            {
+                return anatomyController;
+            }
+        }
+
         public TimelineGUIFactory TimelineGUIFactory { get; private set; }
 
         public DocumentController DocumentController { get; private set; }
@@ -528,6 +541,7 @@ namespace Medical
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
             }
+            anatomyController.sceneUnloading();
             sceneViewController.destroyCameras();
             background.destroyBackground();
             backgroundController.sceneUnloading();
@@ -551,6 +565,8 @@ namespace Medical
                     {
                         SceneLoaded.Invoke(medicalController.CurrentScene);
                     }
+
+                    anatomyController.sceneLoaded();
                 }
                 success = true;
             }
