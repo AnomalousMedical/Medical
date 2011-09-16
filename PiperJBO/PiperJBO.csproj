@@ -151,6 +151,7 @@
     <Compile Include="TimelineGUI\Panels\Profile\HeightComboSlider.cs" />
     <Compile Include="TimelineGUI\Panels\Profile\HeightControl.cs" />
     <Compile Include="TimelineGUI\Panels\Profile\ProfileDistortionGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Profile\ProfileDistortionGUIData.cs" />
     <Compile Include="TimelineGUI\Panels\Profile\ProfileDistortionGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTeethGUI.cs" />

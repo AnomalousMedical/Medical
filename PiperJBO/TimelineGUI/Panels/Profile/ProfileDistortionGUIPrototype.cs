@@ -21,7 +21,7 @@ namespace Medical.GUI
 
         public TimelineGUIData getGUIData()
         {
-            return new TimelineWizardPanelData();
+            return new ProfileDistortionGUIData();
         }
 
         public string Name

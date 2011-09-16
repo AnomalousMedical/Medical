@@ -22,13 +22,11 @@ namespace Medical.GUI
         private Button undoButton;
         private Button makeNormalButton;
 
+        private ProfileDistortionGUIData profileGUIData;
+
         public ProfileDistortionGUI(TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.Profile.ProfileDistortionGUI.layout", wizard)
         {
-            
-
-            //gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
-
             rightSideCamera = widget.findWidget("ProfilePanel/RightCamera") as Button;
             rightMidCamera = widget.findWidget("ProfilePanel/RightMidCamera") as Button;
             midlineCamera = widget.findWidget("ProfilePanel/MidlineCamera") as Button;
@@ -55,6 +53,12 @@ namespace Medical.GUI
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
         }
 
+        public override void initialize(Medical.ShowTimelineGUIAction showGUIAction)
+        {
+            base.initialize(showGUIAction);
+            profileGUIData = (ProfileDistortionGUIData)showGUIAction.GUIData;
+        }
+
         public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             heightControl.sceneChanged();
@@ -63,27 +67,27 @@ namespace Medical.GUI
 
         void leftSideCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState("WizardLeftLateral");
+            applyCameraPosition(profileGUIData.LeftSideCamera);
         }
 
         void leftMidCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState("WizardLeftMidAnterior");
+            applyCameraPosition(profileGUIData.LeftMidCamera);
         }
 
         void midlineCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState("WizardMidlineAnterior");
+            applyCameraPosition(profileGUIData.MidlineCamera);
         }
 
         void rightMidCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState("WizardRightMidAnterior");
+            applyCameraPosition(profileGUIData.RightMidCamera);
         }
 
         void rightSideCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState("WizardRightLateral");
+            applyCameraPosition(profileGUIData.RightCamera);
         }
 
         void adaptButton_CheckedChanged(Widget sender, EventArgs e)
