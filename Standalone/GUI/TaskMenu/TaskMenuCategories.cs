@@ -14,7 +14,6 @@ namespace Medical.GUI
         public const String Tools = "Tools";
         public const String Exams = "Exams";
         public const String Editor = "Editor";
-        public const String Education = "Education";
         public const String Developer = "Developer";
 
         private TaskMenuCategories()

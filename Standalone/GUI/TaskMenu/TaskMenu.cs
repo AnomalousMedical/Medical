@@ -25,6 +25,8 @@ namespace Medical.GUI
             }
         }
 
+        private const int UNKNOWN_GROUP_WEIGHT = int.MaxValue / 2;
+
         private ButtonGrid iconGrid;
         private ScrollView iconScroller;
 
@@ -50,18 +52,17 @@ namespace Medical.GUI
             taskController.TaskRemoved += new TaskDelegate(taskController_TaskRemoved);
 
             iconScroller = (ScrollView)widget.findWidget("IconScroller");
-            iconGrid = new ButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout(), new TaskMenuItemComparer());
+            iconGrid = new ButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout(), new TaskMenuItemComparer(), GroupCompare);
             iconGrid.HighlightSelectedButton = false;
 
-            iconGrid.defineGroup(TaskMenuCategories.Patient);
-            iconGrid.defineGroup(TaskMenuCategories.Navigation);
-            iconGrid.defineGroup(TaskMenuCategories.Exams);
-            iconGrid.defineGroup(TaskMenuCategories.Education);
-            iconGrid.defineGroup(TaskMenuCategories.Simulation);
-            iconGrid.defineGroup(TaskMenuCategories.Tools);
-            iconGrid.defineGroup(TaskMenuCategories.Editor);
-            iconGrid.defineGroup(TaskMenuCategories.System);
-            iconGrid.defineGroup(TaskMenuCategories.Developer);
+            iconGrid.defineGroup(TaskMenuCategories.Patient, 0);
+            iconGrid.defineGroup(TaskMenuCategories.Navigation, 1);
+            iconGrid.defineGroup(TaskMenuCategories.Simulation, 2);
+            iconGrid.defineGroup(TaskMenuCategories.Exams, int.MaxValue - 4);
+            iconGrid.defineGroup(TaskMenuCategories.Tools, int.MaxValue - 3);
+            iconGrid.defineGroup(TaskMenuCategories.Editor, int.MaxValue - 2);
+            iconGrid.defineGroup(TaskMenuCategories.Developer, int.MaxValue - 1);
+            iconGrid.defineGroup(TaskMenuCategories.System, int.MaxValue);
 
             recentDocuments = new TaskMenuRecentDocuments(widget, documentController);
             recentDocuments.DocumentClicked += new EventDelegate(recentDocuments_DocumentClicked);
@@ -228,6 +229,21 @@ namespace Medical.GUI
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.hide();
+        }
+
+        public int GroupCompare(Object x, Object y)
+        {
+            int xWeight = UNKNOWN_GROUP_WEIGHT;
+            int yWeight = UNKNOWN_GROUP_WEIGHT;
+            if(x != null)
+            {
+                xWeight = (int)x;
+            }
+            if(y != null)
+            {
+                yWeight = (int)y;
+            }
+            return xWeight - yWeight;
         }
     }
 }
