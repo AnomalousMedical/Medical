@@ -9,7 +9,6 @@ namespace Medical.GUI
 {
     class SystemMenu
     {
-        private NativeMenu fileMenu;
         private NativeMenuItem exit;
 
         private AnomalousMainPlugin bodyAtlasGUI;
@@ -20,19 +19,14 @@ namespace Medical.GUI
             this.bodyAtlasGUI = piperGUI;
             this.standaloneController = standaloneController;
 
-            //File menu
-            fileMenu = menu.createMenu("&File");
-
-            NativeMenuItem preferences = fileMenu.append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
-            preferences.Select += new NativeMenuEvent(preferences_Select);
-
-            exit = fileMenu.append(CommonMenuItems.Exit, "&Exit", "Exit the program.");
-            exit.Select += new NativeMenuEvent(exit_Select);
-
-            menu.append(fileMenu);
-
             //Help Menu
             NativeMenu helpMenu = menu.createMenu("&Help");
+			
+			NativeMenuItem preferences = helpMenu.append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
+            preferences.Select += new NativeMenuEvent(preferences_Select);
+
+            exit = helpMenu.append(CommonMenuItems.Exit, "&Exit", "Exit the program.");
+            exit.Select += new NativeMenuEvent(exit_Select);
 
             NativeMenuItem help = helpMenu.append(CommonMenuItems.Help, "Piper's JBO Help", "Open Piper's JBO user manual.");
             help.Select += new NativeMenuEvent(help_Select);
