@@ -116,15 +116,12 @@ namespace Medical.GUI
 
         public void setMainInterfaceEnabled(bool enabled)
         {
-            if (systemMenu != null)
-            {
-                systemMenu.FileMenuEnabled = enabled;
-            }
+            
         }
 
         public void createMenuBar(NativeMenuBar menu)
         {
-            systemMenu = new SystemMenu(menu, this, standaloneController, licenseManager);
+            systemMenu = new SystemMenu(menu, this, standaloneController);
         }
 
         public void sceneRevealed()

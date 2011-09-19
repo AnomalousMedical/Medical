@@ -14,7 +14,7 @@ namespace Medical.GUI
         private AnomalousMainPlugin bodyAtlasGUI;
         private StandaloneController standaloneController;
 
-        public SystemMenu(NativeMenuBar menu, AnomalousMainPlugin piperGUI, StandaloneController standaloneController, LicenseManager licenseManager)
+        public SystemMenu(NativeMenuBar menu, AnomalousMainPlugin piperGUI, StandaloneController standaloneController)
         {
             this.bodyAtlasGUI = piperGUI;
             this.standaloneController = standaloneController;
@@ -50,18 +50,6 @@ namespace Medical.GUI
         void about_Select(NativeMenuItem sender)
         {
             bodyAtlasGUI.showAboutDialog();
-        }
-
-        public bool FileMenuEnabled
-        {
-            get
-            {
-                return exit.Enabled;
-            }
-            set
-            {
-                exit.Enabled = value;
-            }
         }
 
         void exit_Select(NativeMenuItem sender)
