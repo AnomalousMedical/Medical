@@ -49,6 +49,7 @@ namespace Medical.GUI
 
             userEdit = window.findWidget("UserText") as Edit;
             userEdit.KeyButtonReleased += new MyGUIEvent(userEdit_KeyButtonReleased);
+            
             passwordEdit = window.findWidget("PasswordText") as Edit;
             passwordEdit.KeyButtonReleased += new MyGUIEvent(passwordEdit_KeyButtonReleased);
 
@@ -66,6 +67,12 @@ namespace Medical.GUI
 
             Button forgotPassword = window.findWidget("ForgotPassword") as Button;
             forgotPassword.MouseButtonClick += new MyGUIEvent(forgotPassword_MouseButtonClick);
+        }
+
+        protected override void onShown(EventArgs args)
+        {
+            base.onShown(args);
+            InputManager.Instance.setKeyFocusWidget(userEdit);
         }
 
         void passwordEdit_KeyButtonReleased(Widget source, EventArgs e)
