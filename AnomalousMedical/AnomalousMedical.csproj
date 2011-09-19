@@ -92,7 +92,6 @@
   <ItemGroup>
     <Compile Include="AnomalousController.cs" />
     <Compile Include="AnomalousMainPlugin.cs" />
-    <Compile Include="Controller\Documents\PatientDocumentHandler.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
@@ -148,6 +147,9 @@
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

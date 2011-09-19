@@ -24,6 +24,8 @@ namespace Medical
         private SequencePlayer sequencePlayer;
         private BookmarksGUI bookmarks;
         private StateListGUI stateListGUI;
+        private SavePatientDialog savePatientDialog;
+        private OpenPatientDialog openPatientDialog;
 
         //Tasks
         private ChangeWindowLayoutTask windowLayout;
@@ -54,12 +56,13 @@ namespace Medical
             notesDialog.Dispose();
             bookmarks.Dispose();
             bookmarksController.Dispose();
+            savePatientDialog.Dispose();
+            openPatientDialog.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
         {
-            standaloneController.SceneViewController.AllowRotation = true;
-            standaloneController.SceneViewController.AllowZoom = true;
+            standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController, this));
 
             Gui.Instance.load("Medical.Resources.PremiumImagesets.xml");
 
@@ -81,11 +84,27 @@ namespace Medical
 
             stateListGUI = new StateListGUI(standaloneController.MedicalStateController, standaloneController.GUIManager);
 
+            savePatientDialog = new SavePatientDialog(guiManager);
+            savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
+
+            openPatientDialog = new OpenPatientDialog(guiManager);
+            openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
+
             //Tasks
             windowLayout = new ChangeWindowLayoutTask(standaloneController);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
+
+            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1));
+
+            CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2, false);
+            saveTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveTaskItem_OnClicked);
+            taskController.addTask(saveTaskItem);
+
+            CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "FileToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
+            saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
+            taskController.addTask(saveAsTaskItem);
 
             taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
             taskController.addTask(new ShowToothContactsTask());
@@ -129,6 +148,68 @@ namespace Medical
         public void sceneRevealed()
         {
             bookmarksController.loadSavedBookmarks();
+        }
+
+        public void open()
+        {
+            openPatientDialog.show(0, 0);
+        }
+
+        public void save()
+        {
+            if (standaloneController.MedicalStateController.getNumStates() == 0 && standaloneController.ExamController.Count == 0)
+            {
+                MessageBox.show("No information to save. Please create some states or perform an exam.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                savePatientDialog.save();
+            }
+        }
+
+        public void saveAs()
+        {
+            if (standaloneController.MedicalStateController.getNumStates() == 0 && standaloneController.ExamController.Count == 0)
+            {
+                MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                savePatientDialog.saveAs();
+            }
+        }
+
+        public void changeActiveFile(PatientDataFile patientData)
+        {
+            if (patientData != null)
+            {
+                MainWindow.Instance.updateWindowTitle(String.Format("{0} {1}", patientData.FirstName, patientData.LastName));
+                standaloneController.DocumentController.addToRecentDocuments(patientData.BackingFile);
+            }
+        }
+
+        private void savePatientDialog_SaveFile(object sender, EventArgs e)
+        {
+            PatientDataFile patientData = savePatientDialog.PatientData;
+            changeActiveFile(patientData);
+            standaloneController.saveMedicalState(patientData);
+        }
+
+        private void openPatientDialog_OpenFile(object sender, EventArgs e)
+        {
+            PatientDataFile patientData = openPatientDialog.CurrentFile;
+            changeActiveFile(patientData);
+            standaloneController.openPatientFile(patientData);
+        }
+
+        void saveAsTaskItem_OnClicked(Task item)
+        {
+            saveAs();
+        }
+
+        void saveTaskItem_OnClicked(Task item)
+        {
+            save();
         }
     }
 }

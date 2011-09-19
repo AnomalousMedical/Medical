@@ -10,9 +10,9 @@ namespace Medical
     class PatientDocumentHandler : DocumentHandler
     {
         private StandaloneController standaloneController;
-        private AnomalousMainPlugin bodyAtlasPlugin;
+        private PremiumBodyAtlasPlugin bodyAtlasPlugin;
 
-        public PatientDocumentHandler(StandaloneController standaloneController, AnomalousMainPlugin bodyAtlasPlugin)
+        public PatientDocumentHandler(StandaloneController standaloneController, PremiumBodyAtlasPlugin bodyAtlasPlugin)
         {
             this.standaloneController = standaloneController;
             this.bodyAtlasPlugin = bodyAtlasPlugin;

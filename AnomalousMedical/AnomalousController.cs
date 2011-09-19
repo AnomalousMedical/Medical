@@ -63,8 +63,6 @@ namespace Medical
 
             splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
-            controller.SceneViewController.AllowRotation = false;
-            controller.SceneViewController.AllowZoom = false;
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");

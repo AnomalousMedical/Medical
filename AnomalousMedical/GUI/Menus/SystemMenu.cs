@@ -126,17 +126,17 @@ namespace Medical.GUI
 
         void saveAs_Select(NativeMenuItem sender)
         {
-            bodyAtlasGUI.saveAs();
+            //bodyAtlasGUI.saveAs();
         }
 
         void save_Select(NativeMenuItem sender)
         {
-            bodyAtlasGUI.save();
+            //bodyAtlasGUI.save();
         }
 
         void open_Select(NativeMenuItem sender)
         {
-            bodyAtlasGUI.open();
+            //bodyAtlasGUI.open();
         }
 
         void changeScene_Select(NativeMenuItem sender)

@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Documents\PatientDocumentHandler.cs" />
     <Compile Include="GUI\StateList\StateListGUI.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
