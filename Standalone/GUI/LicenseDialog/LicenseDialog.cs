@@ -67,6 +67,9 @@ namespace Medical.GUI
 
             Button forgotPassword = window.findWidget("ForgotPassword") as Button;
             forgotPassword.MouseButtonClick += new MyGUIEvent(forgotPassword_MouseButtonClick);
+
+            Button register = window.findWidget("Register") as Button;
+            register.MouseButtonClick += new MyGUIEvent(register_MouseButtonClick);
         }
 
         protected override void onShown(EventArgs args)
@@ -121,7 +124,12 @@ namespace Medical.GUI
 
         void forgotPassword_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.anomalousmedical.com/RecoverPassword.aspx");
+            System.Diagnostics.Process.Start(MedicalConfig.ForgotPasswordURL);
+        }
+
+        void register_MouseButtonClick(Widget source, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(MedicalConfig.RegisterURL);
         }
 
         void getLicense(Object ignored)

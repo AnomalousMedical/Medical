@@ -46,6 +46,8 @@ namespace Medical
             }
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
             MedicalConfig.helpURL = "http://www.AnomalousMedical.com/HelpIndex.aspx?user={0}";
+            MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
+            MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
             
             configFile = new ConfigFile(anomalousFolder + "/config.ini");
             configFile.loadConfigFile();
@@ -88,6 +90,8 @@ namespace Medical
                 updateURL = updates.getValue("UpdateURL", updateURL);
                 LicenseServerURL = updates.getValue("LicenseServerURL", LicenseServerURL);
                 helpURL = updates.getValue("HelpURL", helpURL);
+                ForgotPasswordURL = updates.getValue("ForgotPasswordURL", ForgotPasswordURL);
+                RegisterURL = updates.getValue("RegisterURL", RegisterURL);
 
                 pluginConfig.readPlugins(internalSettings);
             }
@@ -346,5 +350,9 @@ namespace Medical
                 return Path.Combine(anomalousFolder, "License.lic");
             }
         }
+
+        public static String ForgotPasswordURL { get; private set; }
+
+        public static String RegisterURL { get; private set; }
     }
 }
