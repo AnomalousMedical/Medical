@@ -58,9 +58,6 @@
     <ClCompile Include="Src\FileSaveDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\HtmlHelpController.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Src\MessageDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
@@ -121,9 +118,6 @@
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\Enums.h">
-      <Filter>wxPlatform</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\HtmlHelpController.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\NativeOSWindow.h">

@@ -54,7 +54,6 @@ namespace Medical
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
-        private HtmlHelpController htmlHelpController;
         private AbstractTimelineGUIManager abstractTimelineGUIManager;
 
         //Platform
@@ -94,7 +93,6 @@ namespace Medical
             {
                 touchController.Dispose();
             }
-            htmlHelpController.Dispose();
             atlasPluginManager.Dispose();
             guiManager.Dispose();
             watermark.Dispose();
@@ -114,10 +112,6 @@ namespace Medical
         public void initializeControllers(ViewportBackground background)
         {
             clipboard = new SaveableClipboard();
-
-            //Help
-            htmlHelpController = new HtmlHelpController(mainWindow);
-            app.addHelpDocuments(htmlHelpController);
 
             //Documents
             DocumentController = new DocumentController();
@@ -267,9 +261,10 @@ namespace Medical
             medicalController.MainTimer.OnIdle();
         }
 
-        public void openHelpTopic(int index)
+        public void openHelpPage()
         {
-            htmlHelpController.Display(index);
+            //Open Website to the help page for this user.
+            Process.Start(MedicalConfig.getHelpURL(app.LicenseManager.User));
         }
 
         public void exit()

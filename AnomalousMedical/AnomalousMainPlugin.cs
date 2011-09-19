@@ -175,7 +175,7 @@ namespace Medical.GUI
 
         void helpTaskItem_OnClicked(Task item)
         {
-            standaloneController.openHelpTopic(0);
+            standaloneController.openHelpPage();
         }
     }
 }

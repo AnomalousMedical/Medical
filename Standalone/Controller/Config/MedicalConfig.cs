@@ -29,6 +29,7 @@ namespace Medical
         private static String sceneDirectory;
 
         private static String updateURL;
+        private static String helpURL;
         private static String anomalousFolder;
 
         private static float cameraTransitionTime;
@@ -44,6 +45,7 @@ namespace Medical
                 Directory.CreateDirectory(anomalousFolder);
             }
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
+            MedicalConfig.helpURL = "http://www.AnomalousMedical.com/HelpIndex.aspx?user={0}";
             
             configFile = new ConfigFile(anomalousFolder + "/config.ini");
             configFile.loadConfigFile();
@@ -85,6 +87,7 @@ namespace Medical
                 ConfigSection updates = internalSettings.createOrRetrieveConfigSection("Updates");
                 updateURL = updates.getValue("UpdateURL", updateURL);
                 LicenseServerURL = updates.getValue("LicenseServerURL", LicenseServerURL);
+                helpURL = updates.getValue("HelpURL", helpURL);
 
                 pluginConfig.readPlugins(internalSettings);
             }
@@ -188,6 +191,11 @@ namespace Medical
         }
 
         public static String LicenseServerURL { get; private set; }
+
+        public static String getHelpURL(String username)
+        {
+            return String.Format(helpURL, username);
+        }
 
 #if ALLOW_OVERRIDE
         public static String WorkingResourceDirectory

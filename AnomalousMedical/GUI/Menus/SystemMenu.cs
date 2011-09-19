@@ -44,7 +44,7 @@ namespace Medical.GUI
 
         void help_Select(NativeMenuItem sender)
         {
-            standaloneController.openHelpTopic(0);
+            standaloneController.openHelpPage();
         }
 
         void about_Select(NativeMenuItem sender)

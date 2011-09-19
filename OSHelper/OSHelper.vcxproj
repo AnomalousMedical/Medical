@@ -148,7 +148,6 @@
     <ClCompile Include="Src\Enums.cpp" />
     <ClCompile Include="Src\FileOpenDialog.cpp" />
     <ClCompile Include="Src\FileSaveDialog.cpp" />
-    <ClCompile Include="Src\HtmlHelpController.cpp" />
     <ClCompile Include="Src\MessageDialog.cpp" />
     <ClCompile Include="Src\NativeMenu.cpp" />
     <ClCompile Include="Src\NativeMenuBar.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="Include\MultiTouchImpl.h" />
     <ClInclude Include="Include\App.h" />
     <ClInclude Include="Include\Enums.h" />
-    <ClInclude Include="Include\HtmlHelpController.h" />
     <ClInclude Include="Include\NativeOSWindow.h" />
     <ClInclude Include="Include\NativeString.h" />
     <ClInclude Include="Include\NativeStringEnumerator.h" />

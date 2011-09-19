@@ -348,7 +348,6 @@
     <Compile Include="Controller\UpdateManager.cs" />
     <Compile Include="Platform\FileOpenDialog.cs" />
     <Compile Include="Platform\FileSaveDialog.cs" />
-    <Compile Include="Platform\HtmlHelpController.cs" />
     <Compile Include="Platform\MainWindow.cs" />
     <Compile Include="GUI\ImageWindow.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManager.cs" />

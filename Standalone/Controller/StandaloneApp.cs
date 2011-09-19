@@ -14,8 +14,6 @@ namespace Medical.Controller
 
         public abstract void createWindowPresets(SceneViewWindowPresetController windowPresetController);
 
-        public abstract void addHelpDocuments(HtmlHelpController helpController);
-
         public abstract String WindowTitle { get; }
 
         public abstract WindowIcons Icon { get; }

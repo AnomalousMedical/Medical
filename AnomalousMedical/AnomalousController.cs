@@ -152,11 +152,6 @@ namespace Medical
             windowPresetController.addPresetSet(fourWindows);
         }
 
-        public override void addHelpDocuments(HtmlHelpController helpController)
-        {
-            helpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOManual.htb");
-        }
-
         public override string WindowTitle
         {
             get 
