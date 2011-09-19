@@ -28,7 +28,7 @@ namespace Medical.GUI
             exit = helpMenu.append(CommonMenuItems.Exit, "&Exit", "Exit the program.");
             exit.Select += new NativeMenuEvent(exit_Select);
 
-            NativeMenuItem help = helpMenu.append(CommonMenuItems.Help, "Piper's JBO Help", "Open Piper's JBO user manual.");
+            NativeMenuItem help = helpMenu.append(CommonMenuItems.Help, "Anomalous Medical Help", "Open the Anomalous Medical help website.");
             help.Select += new NativeMenuEvent(help_Select);
 
             NativeMenuItem about = helpMenu.append(CommonMenuItems.About, "About", "About this program.");
