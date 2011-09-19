@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		01C7D2571357723E0027AC32 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22C1357723E0027AC32 /* App.h */; };
 		01C7D2581357723E0027AC32 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22D1357723E0027AC32 /* Enums.h */; };
-		01C7D2591357723E0027AC32 /* HtmlHelpController.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22E1357723E0027AC32 /* HtmlHelpController.h */; };
 		01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22F1357723E0027AC32 /* ImageViewer.h */; };
 		01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2301357723E0027AC32 /* ImageWindow.h */; };
 		01C7D25C1357723E0027AC32 /* MessageDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2311357723E0027AC32 /* MessageDialog.h */; };
@@ -28,7 +27,6 @@
 		01C7D2691357723E0027AC32 /* Enums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D23F1357723E0027AC32 /* Enums.cpp */; };
 		01C7D26A1357723E0027AC32 /* FileOpenDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */; };
 		01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */; };
-		01C7D26C1357723E0027AC32 /* HtmlHelpController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2421357723E0027AC32 /* HtmlHelpController.cpp */; };
 		01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2431357723E0027AC32 /* ImageViewer.cpp */; };
 		01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2441357723E0027AC32 /* ImageWindow.cpp */; };
 		01C7D26F1357723E0027AC32 /* LicenseManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2451357723E0027AC32 /* LicenseManager.cpp */; };
@@ -213,7 +211,6 @@
 			files = (
 				01C7D2571357723E0027AC32 /* App.h in Headers */,
 				01C7D2581357723E0027AC32 /* Enums.h in Headers */,
-				01C7D2591357723E0027AC32 /* HtmlHelpController.h in Headers */,
 				01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */,
 				01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */,
 				01C7D25C1357723E0027AC32 /* MessageDialog.h in Headers */,
@@ -286,7 +283,6 @@
 				01C7D2691357723E0027AC32 /* Enums.cpp in Sources */,
 				01C7D26A1357723E0027AC32 /* FileOpenDialog.cpp in Sources */,
 				01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */,
-				01C7D26C1357723E0027AC32 /* HtmlHelpController.cpp in Sources */,
 				01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */,
 				01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */,
 				01C7D26F1357723E0027AC32 /* LicenseManager.cpp in Sources */,
