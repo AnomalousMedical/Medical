@@ -215,14 +215,45 @@ namespace Medical.Controller
 
         public void createFromPresets(SceneViewWindowPresetSet presets)
         {
-            //StatusController.SetStatus("Recreating viewports...");
+            //Capture current window configuration info
+            List<Bookmark> currentWindowConfig = new List<Bookmark>();
+            SceneViewWindow activeWindow = ActiveWindow;
+            if (activeWindow != null)
+            {
+                TransparencyController.ActiveTransparencyState = activeWindow.CurrentTransparencyState;
+                LayerState layerState = new LayerState("");
+                layerState.captureState();
+                currentWindowConfig.Add(new Bookmark("", activeWindow.Translation, activeWindow.LookAt, layerState));
+            }
+            foreach (MDISceneViewWindow window in mdiWindows)
+            {
+                if (window != activeWindow)
+                {
+                    TransparencyController.ActiveTransparencyState = window.CurrentTransparencyState;
+                    LayerState layerState = new LayerState("");
+                    layerState.captureState();
+                    currentWindowConfig.Add(new Bookmark("", window.Translation, window.LookAt, layerState));
+                }
+            }
+
+            //Create windows
+            int windowIndex = 0;
             closeAllWindows();
             SceneViewWindow camera;
             foreach (SceneViewWindowPreset preset in presets.getPresetEnum())
             {
-                camera = createWindow(preset.Name, preset.Position, preset.LookAt, findWindow(preset.ParentWindow), preset.WindowPosition);
+                if (windowIndex < currentWindowConfig.Count)
+                {
+                    Bookmark bmk = currentWindowConfig[windowIndex++];
+                    camera = createWindow(preset.Name, bmk.CameraTranslation, bmk.CameraLookAt, findWindow(preset.ParentWindow), preset.WindowPosition);
+                    TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
+                    bmk.Layers.instantlyApply();
+                }
+                else
+                {
+                    camera = createWindow(preset.Name, preset.Position, preset.LookAt, findWindow(preset.ParentWindow), preset.WindowPosition);
+                }
             }
-            //StatusController.TaskCompleted();
         }
 
         public bool HasCloneWindow
@@ -239,7 +270,7 @@ namespace Medical.Controller
             {
                 if (activeWindow == null)
                 {
-                    return mdiWindows[0];
+                    return mdiWindows.Count > 0 ? mdiWindows[0] : null;
                 }
                 return activeWindow;
             }

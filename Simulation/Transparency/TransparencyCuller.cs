@@ -22,6 +22,7 @@ namespace Medical
         [Editable]
         private String cullTransparencyInterfaceName = "Alpha";
 
+#if ENABLE_TRANSPARENCY_CULLER
         TransparencyInterface cullInterface;
 
         protected override void constructed()
@@ -50,5 +51,11 @@ namespace Medical
                 cullInterface.clearOverrideAlpha();
             }
         }
+#else
+        internal override void setAlpha(float alpha)
+        {
+            
+        }
+#endif
     }
 }
