@@ -218,11 +218,6 @@ namespace Medical
         private void addPlugins()
         {
             controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(LicenseManager, this));
-            controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
-            controller.AtlasPluginManager.addPlugin("Premium.dll");
-            controller.AtlasPluginManager.addPlugin("Lecture.dll");
-            controller.AtlasPluginManager.addPlugin("Editor.dll");
-            controller.AtlasPluginManager.addPlugin("Developer.dll");
             foreach (String plugin in MedicalConfig.PluginConfig.AdditionalPlugins)
             {
                 controller.AtlasPluginManager.addPlugin(plugin);
