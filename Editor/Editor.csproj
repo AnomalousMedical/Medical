@@ -76,8 +76,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\DataDrivenExamPlugin\DataDrivenExamPluginDefinition.cs" />
-    <Compile Include="Controller\DataDrivenExamPlugin\ExamTimelineTaskDefinition.cs" />
     <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
@@ -87,7 +85,7 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\DataDrivenExamEditor\DataDrivenExamEditor.cs" />
+    <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\DiscEditor\DiscControl.cs" />
     <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
     <Compile Include="GUI\GridPropertiesDialog\GridPropertiesDialog.cs" />
@@ -145,7 +143,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\DataDrivenExamEditor\DataDrivenExamEditor.layout" />
+    <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscPanel.layout" />
     <EmbeddedResource Include="GUI\GridPropertiesDialog\GridPropertiesDialog.layout" />

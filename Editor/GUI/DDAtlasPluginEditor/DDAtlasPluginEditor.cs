@@ -7,7 +7,7 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class DataDrivenExamEditor : MDIDialog
+    class DDAtlasPluginEditor : MDIDialog
     {
         private MedicalUICallback uiCallback;
         private Tree tree;
@@ -18,16 +18,16 @@ namespace Medical.GUI
 
         private ObjectEditor objectEditor;
 
-        private DataDrivenExamPluginDefinition currentDefinition;
+        private DDAtlasPlugin currentDefinition;
         private TimelineController mainTimelineController;
 
-        public DataDrivenExamEditor(BrowserWindow browserWindow, TimelineController mainTimelineController)
-            :base("Medical.GUI.DataDrivenExamEditor.DataDrivenExamEditor.layout")
+        public DDAtlasPluginEditor(BrowserWindow browserWindow, TimelineController mainTimelineController)
+            : base("Medical.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
         {
             this.mainTimelineController = mainTimelineController;
 
             uiCallback = new MedicalUICallback(browserWindow);
-            uiCallback.addCustomQuery(DataDrivenExamCustomQueries.GetTimelineController, getTimelineController);
+            uiCallback.addCustomQuery(DDAtlasPluginCustomQueries.GetTimelineController, getTimelineController);
 
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
@@ -54,7 +54,7 @@ namespace Medical.GUI
 
         public void createNewExamDefinition()
         {
-            currentDefinition = new DataDrivenExamPluginDefinition();
+            currentDefinition = new DDAtlasPlugin();
             currentDefinitionChanged();
         }
 

@@ -21,7 +21,7 @@ namespace Medical
         private ScratchArea scratchArea;
         private DiscControl discControl;
         private GridPropertiesDialog gridProperties;
-        private DataDrivenExamEditor examEditor;
+        private DDAtlasPluginEditor examEditor;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -104,7 +104,7 @@ namespace Medical
             scratchArea = new ScratchArea(scratchAreaController, browserWindow);
             guiManager.addManagedDialog(scratchArea);
 
-            examEditor = new DataDrivenExamEditor(browserWindow, standaloneController.TimelineController);
+            examEditor = new DDAtlasPluginEditor(browserWindow, standaloneController.TimelineController);
             guiManager.addManagedDialog(examEditor);
 
             //Tasks Menu
@@ -118,7 +118,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "DiscEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "GridIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(examEditor, "Medical.ExamEditor", "ExamEditor", "ExamEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(examEditor, "Medical.DDPluginEditor", "Plugin Editor", "ExamEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
