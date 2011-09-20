@@ -6,6 +6,8 @@ using Engine.ObjectManagement;
 using Engine.Saving;
 using Engine.Editing;
 using Medical.GUI;
+using Engine;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -33,6 +35,8 @@ namespace Medical
         public void initialize(StandaloneController standaloneController)
         {
             TimelineController = standaloneController.TimelineController;
+
+            Gui.Instance.load(System.IO.Path.Combine(PluginRootFolder, IconResourceFile));
 
             TaskController taskController = standaloneController.TaskController;
             foreach (DDPluginTask task in tasks)

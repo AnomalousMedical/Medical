@@ -14,6 +14,7 @@ using System.IO;
 using Medical.GUI;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using System.Globalization;
 
 namespace Medical
 {
@@ -72,7 +73,19 @@ namespace Medical
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
         }
 
-        public void addPlugin(String dllName)
+        public void addPlugin(String pluginPath)
+        {
+            if (pluginPath.EndsWith(".dll", true, CultureInfo.InvariantCulture))
+            {
+                addDllPlugin(pluginPath);
+            }
+            else
+            {
+                addDataDrivenPlugin(pluginPath);
+            }
+        }
+
+        public void addDllPlugin(String dllName)
         {
             String fullPath = Path.GetFullPath(dllName);
             if (!File.Exists(fullPath))
@@ -125,7 +138,10 @@ namespace Medical
             }
             else if(Directory.Exists(fullPath))
             {
-                pluginDirectory = String.Format("Plugins/{0}/", Path.GetDirectoryName(path));
+                pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileName(path));
+                //temp, need a way to handle if this folder does not exist. It will cause the program to crash when it searches for mygui stuff otherwise
+                //OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
+                //end temp
             }
             else
             {
@@ -148,6 +164,7 @@ namespace Medical
                             DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
                             if (plugin != null)
                             {
+                                plugin.PluginRootFolder = pluginDirectory;
                                 addPlugin(plugin, false);
                             }
                             else
