@@ -28,6 +28,7 @@ namespace Medical
         private HashSet<String> loadedPluginDlls = new HashSet<string>();
         private HashSet<String> loadedDataDrivenPlugins = new HashSet<string>();
         private XmlSaver xmlSaver = new XmlSaver();
+        private bool addedPluginsToMyGUIResourceGroup = false;
 
         public AtlasPluginManager(StandaloneController standaloneController)
         {
@@ -139,9 +140,6 @@ namespace Medical
             else if(Directory.Exists(fullPath))
             {
                 pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileName(path));
-                //temp, need a way to handle if this folder does not exist. It will cause the program to crash when it searches for mygui stuff otherwise
-                //OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
-                //end temp
             }
             else
             {
@@ -155,6 +153,19 @@ namespace Medical
                     loadedDataDrivenPlugins.Add(fullPath);
 
                     VirtualFileSystem.Instance.addArchive(fullPath);
+
+                    //Add the Plugins folder to the MyGUI resource group when the first plugin is added. 
+                    //All plugins must define the Plugins folder or they are not valid.
+                    if (!addedPluginsToMyGUIResourceGroup)
+                    {
+                        //Double check that this folder exists in the virtual file system or else the program will crash.
+                        if (VirtualFileSystem.Instance.exists("Plugins"))
+                        {
+                            OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
+                            addedPluginsToMyGUIResourceGroup = true;
+                        }
+                    }
+
                     String pluginDefinitionFile = pluginDirectory + "Plugin.ddp";
 
                     if (VirtualFileSystem.Instance.exists(pluginDefinitionFile))
