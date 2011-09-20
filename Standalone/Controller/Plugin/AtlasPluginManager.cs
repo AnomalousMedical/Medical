@@ -152,7 +152,11 @@ namespace Medical
                 {
                     loadedDataDrivenPlugins.Add(fullPath);
 
-                    VirtualFileSystem.Instance.addArchive(fullPath);
+                    //Add the archive to the VirtualFileSystem if needed
+                    if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
+                    {
+                        VirtualFileSystem.Instance.addArchive(fullPath);
+                    }
 
                     //Add the Plugins folder to the MyGUI resource group when the first plugin is added. 
                     //All plugins must define the Plugins folder or they are not valid.

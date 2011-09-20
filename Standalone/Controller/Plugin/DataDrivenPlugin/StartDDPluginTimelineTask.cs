@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine.Editing;
+using System.IO;
 
 namespace Medical
 {
@@ -23,7 +24,7 @@ namespace Medical
         public override void clicked()
         {
             TimelineController timelineController = Plugin.TimelineController;
-            timelineController.ResourceProvider = new TimelineVirtualFSResourceProvider(TimelineDirectory);
+            timelineController.ResourceProvider = new TimelineVirtualFSResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
             Timeline start = timelineController.openTimeline(StartupTimeline);
             timelineController.startPlayback(start);
         }
