@@ -126,6 +126,10 @@ namespace Medical
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasPlugin", null);
                     editInterface.addCommand(new EditInterfaceCommand("Add Start Timeline Task", addStartTimelineTask));
                     taskManager = new EditInterfaceManager<DDPluginTask>(editInterface);
+                    foreach (DDPluginTask task in tasks)
+                    {
+                        onTaskAdded(task);
+                    }
                 }
                 return editInterface;
             }

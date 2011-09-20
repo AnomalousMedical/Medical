@@ -4,11 +4,15 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine.Editing;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace Medical.GUI
 {
     class DDAtlasPluginEditor : MDIDialog
     {
+        public const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
+
         private MedicalUICallback uiCallback;
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
@@ -20,6 +24,8 @@ namespace Medical.GUI
 
         private DDAtlasPlugin currentDefinition;
         private TimelineController mainTimelineController;
+
+        private XmlSaver xmlSaver = new XmlSaver();
 
         public DDAtlasPluginEditor(BrowserWindow browserWindow, TimelineController mainTimelineController)
             : base("Medical.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
@@ -36,6 +42,15 @@ namespace Medical.GUI
             propTable = new PropertiesTable(table);
 
             objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
+
+            MenuBar menu = window.findWidget("MenuBar") as MenuBar;
+            MenuItem fileMenu = menu.addItem("File", MenuItemType.Popup);
+            MenuCtrl fileMenuCtrl = menu.createItemPopupMenuChild(fileMenu);
+            fileMenuCtrl.ItemAccept += new MyGUIEvent(fileMenuCtrl_ItemAccept);
+            fileMenuCtrl.addItem("New", MenuItemType.Normal, "New");
+            fileMenuCtrl.addItem("Open", MenuItemType.Normal, "Open");
+            fileMenuCtrl.addItem("Save", MenuItemType.Normal, "Save");
+            fileMenuCtrl.addItem("Save As", MenuItemType.Normal, "Save As");
 
             createNewExamDefinition();
 
@@ -58,6 +73,63 @@ namespace Medical.GUI
             currentDefinitionChanged();
         }
 
+        public void loadExamDefinition()
+        {
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a plugin definition.", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD, false))
+            {
+                if (fileDialog.showModal() == NativeDialogResult.OK)
+                {
+                    try
+                    {
+                        using (XmlTextReader xmlReader = new XmlTextReader(fileDialog.Path))
+                        {
+                            DDAtlasPlugin loadedPlugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                            if (loadedPlugin != null)
+                            {
+                                currentDefinition = loadedPlugin;
+                                currentDefinitionChanged();
+                            }
+                            else
+                            {
+                                MessageBox.show("Load error", "There was an error loading this plugin.", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.show("Load error", "Exception loading plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    }
+                }
+            }
+        }
+
+        public void saveExamDefinition()
+        {
+            saveExamDefinitionAs();
+        }
+
+        public void saveExamDefinitionAs()
+        {
+            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a plugin definition", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD))
+            {
+                if (fileDialog.showModal() == NativeDialogResult.OK)
+                {
+                    try
+                    {
+                        using (XmlTextWriter xmlWriter = new XmlTextWriter(fileDialog.Path, Encoding.Default))
+                        {
+                            xmlWriter.Formatting = Formatting.Indented;
+                            xmlSaver.saveObject(currentDefinition, xmlWriter);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.show("Load error", "Exception saving plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    }
+                }
+            }
+        }
+
         void DataDrivenExamEditor_Resized(object sender, EventArgs e)
         {
             tree.layout();
@@ -73,6 +145,26 @@ namespace Medical.GUI
         {
             String errorPrompt = null;
             resultCallback.Invoke(mainTimelineController, ref errorPrompt);
+        }
+
+        void fileMenuCtrl_ItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+            switch (mcae.Item.ItemId)
+            {
+                case "New":
+                    createNewExamDefinition();
+                    break;
+                case "Open":
+                    loadExamDefinition();
+                    break;
+                case "Save":
+                    saveExamDefinition();
+                    break;
+                case "Save As":
+                    saveExamDefinitionAs();
+                    break;
+            }
         }
     }
 }
