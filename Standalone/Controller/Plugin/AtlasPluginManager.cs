@@ -135,19 +135,6 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
-            }
-            else if(Directory.Exists(fullPath))
-            {
-                pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileName(path));
-            }
-            else
-            {
-                Log.Error("Cannot load data file {0} from {0} or {1}.", path, fullPath, Path.GetFullPath(path));
-            }
-
-            if (pluginDirectory != null)
-            {
                 if (!loadedDataDrivenPlugins.Contains(fullPath))
                 {
                     loadedDataDrivenPlugins.Add(fullPath);
@@ -157,46 +144,75 @@ namespace Medical
                     {
                         VirtualFileSystem.Instance.addArchive(fullPath);
                     }
+                    pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
+                }
+            }
+            else if(Directory.Exists(fullPath))
+            {
+                if (!loadedDataDrivenPlugins.Contains(fullPath))
+                {
+                    loadedDataDrivenPlugins.Add(fullPath);
 
-                    //Add the Plugins folder to the MyGUI resource group when the first plugin is added. 
-                    //All plugins must define the Plugins folder or they are not valid.
-                    if (!addedPluginsToMyGUIResourceGroup)
+                    pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileName(Path.GetDirectoryName(fullPath)));
+                    String rootPluginPath = fullPath.Replace("\\", "/");
+                    if (!rootPluginPath.EndsWith("/"))
                     {
-                        //Double check that this folder exists in the virtual file system or else the program will crash.
-                        if (VirtualFileSystem.Instance.exists("Plugins"))
-                        {
-                            OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
-                            addedPluginsToMyGUIResourceGroup = true;
-                        }
+                        rootPluginPath += "/";
                     }
+                    rootPluginPath = rootPluginPath.Replace(pluginDirectory, "");
 
-                    String pluginDefinitionFile = pluginDirectory + "Plugin.ddp";
-
-                    if (VirtualFileSystem.Instance.exists(pluginDefinitionFile))
+                    //Add the archive to the VirtualFileSystem if needed
+                    if (!VirtualFileSystem.Instance.containsRealAbsolutePath(rootPluginPath))
                     {
-                        using (XmlTextReader xmlReader = new XmlTextReader(VirtualFileSystem.Instance.openStream(pluginDefinitionFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
-                        {
-                            DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
-                            if (plugin != null)
-                            {
-                                plugin.PluginRootFolder = pluginDirectory;
-                                addPlugin(plugin, false);
-                            }
-                            else
-                            {
-                                Log.Error("Error loading {0} in path {1} from {2} because it was null.", pluginDefinitionFile, path, fullPath);
-                            }
-                        }
+                        VirtualFileSystem.Instance.addArchive(rootPluginPath);
                     }
-                    else
+                }
+            }
+            else
+            {
+                Log.Error("Cannot load data file {0} from {0} or {1}.", path, fullPath, Path.GetFullPath(path));
+            }
+
+            if (pluginDirectory != null)
+            {
+                //Add the Plugins folder to the MyGUI resource group when the first plugin is added. 
+                //All plugins must define the Plugins folder or they are not valid.
+                if (!addedPluginsToMyGUIResourceGroup)
+                {
+                    //Double check that this folder exists in the virtual file system or else the program will crash.
+                    if (VirtualFileSystem.Instance.exists("Plugins"))
                     {
-                        Log.Error("Error loading {0} in path {1} from {2} because it does not exist.", pluginDefinitionFile, path, fullPath);
+                        OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
+                        addedPluginsToMyGUIResourceGroup = true;
+                    }
+                }
+
+                String pluginDefinitionFile = pluginDirectory + "Plugin.ddp";
+
+                if (VirtualFileSystem.Instance.exists(pluginDefinitionFile))
+                {
+                    using (XmlTextReader xmlReader = new XmlTextReader(VirtualFileSystem.Instance.openStream(pluginDefinitionFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                    {
+                        DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                        if (plugin != null)
+                        {
+                            plugin.PluginRootFolder = pluginDirectory;
+                            addPlugin(plugin, false);
+                        }
+                        else
+                        {
+                            Log.Error("Error loading {0} in path {1} from {2} because it was null.", pluginDefinitionFile, path, fullPath);
+                        }
                     }
                 }
                 else
                 {
-                    Log.Error("Cannot load data file {0} from {1} because it is already loaded.", path, fullPath);
+                    Log.Error("Error loading {0} in path {1} from {2} because it does not exist.", pluginDefinitionFile, path, fullPath);
                 }
+            }
+            else
+            {
+                Log.Error("Cannot load data file {0} from {1} because it is already loaded.", path, fullPath);
             }
         }
 
