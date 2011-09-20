@@ -14,7 +14,8 @@ namespace Medical
         public DDPluginTask(String uniqueName, String name, String iconName, String category)
             : base(uniqueName, name, iconName, category)
         {
-            
+            this.Name = "";
+            TaskUniqueName = uniqueName;
         }
 
         public DDAtlasPlugin Plugin
@@ -25,6 +26,48 @@ namespace Medical
             }
         }
 
+        [Editable]
+        public String TaskName
+        {
+            get
+            {
+                return Name;
+            }
+            set
+            {
+                Name = value;
+            }
+        }
+
+        [Editable]
+        public String TaskIcon
+        {
+            get
+            {
+                return IconName;
+            }
+            set
+            {
+                IconName = value;
+            }
+        }
+
+        [Editable]
+        public String TaskCategory
+        {
+            get
+            {
+                return Category;
+            }
+            set
+            {
+                Category = value;
+            }
+        }
+
+        [Editable]
+        public String TaskUniqueName { get; set; }
+
         /// <summary>
         /// Set the plugin for this task. DO NOT TOUCH if you are not DDAtlasPlugin.
         /// </summary>
@@ -32,6 +75,7 @@ namespace Medical
         internal void _setPlugin(DDAtlasPlugin plugin)
         {
             this.plugin = plugin;
+            UniqueName = String.Format("DDPlugin.{0}.{1}", plugin.PluginNamespace, TaskUniqueName);
         }
 
         protected DDPluginTask(LoadInfo info)
@@ -40,7 +84,7 @@ namespace Medical
             info.GetString("IconName"),
             info.GetString("Category"))
         {
-
+            TaskUniqueName = info.GetString("TaskUniqueName", UniqueName);
         }
 
         public virtual void getInfo(SaveInfo info)
@@ -49,6 +93,7 @@ namespace Medical
             info.AddValue("Name", Name);
             info.AddValue("IconName", IconName);
             info.AddValue("Category", Category);
+            info.AddValue("TaskUniqueName", TaskUniqueName);
         }
     }
 

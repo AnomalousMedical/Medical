@@ -40,11 +40,11 @@ namespace Medical
 
         public String IconName { get; protected set; }
 
-        public String Name { get; private set; }
+        public String Name { get; protected set; }
 
-        public String Category { get; private set; }
+        public String Category { get; protected set; }
 
-        public String UniqueName { get; set; }
+        public String UniqueName { get; protected set; }
 
         public int Weight { get; set; }
 

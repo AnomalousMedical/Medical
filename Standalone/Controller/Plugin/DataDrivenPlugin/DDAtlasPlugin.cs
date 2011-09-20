@@ -5,6 +5,7 @@ using System.Text;
 using Engine.ObjectManagement;
 using Engine.Saving;
 using Engine.Editing;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -20,7 +21,8 @@ namespace Medical
 
         public DDAtlasPlugin()
         {
-            
+            IconResourceFile = "Resources/Imagesets.xml";
+            PluginID = -1;
         }
 
         public void Dispose()
@@ -31,6 +33,13 @@ namespace Medical
         public void initialize(StandaloneController standaloneController)
         {
             TimelineController = standaloneController.TimelineController;
+
+            TaskController taskController = standaloneController.TaskController;
+            foreach (DDPluginTask task in tasks)
+            {
+                task._setPlugin(this);
+                taskController.addTask(task);
+            }
         }
 
         public void sceneLoaded(SimScene scene)
@@ -76,7 +85,15 @@ namespace Medical
             return false;
         }
 
+        [Editable]
+        public String IconResourceFile { get; set; }
+
+        [Editable]
+        public long PluginID { get; set; }
+
         public TimelineController TimelineController { get; private set; }
+
+        public String PluginRootFolder { get; set; }
 
         [Editable]
         public String PluginNamespace
@@ -97,16 +114,16 @@ namespace Medical
         {
             pluginNamespace = info.GetString("PluginNamespace");
             info.RebuildList<DDPluginTask>("Task", tasks);
-            foreach (DDPluginTask task in tasks)
-            {
-                task._setPlugin(this);
-            }
+            IconResourceFile = info.GetString("IconResourceFile");
+            PluginID = info.GetInt64("PluginID");
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue("PluginNamespace", pluginNamespace);
             info.ExtractList<DDPluginTask>("Task", tasks);
+            info.AddValue("IconResourceFile", IconResourceFile);
+            info.AddValue("PluginID", PluginID);
         }
 
         #endregion

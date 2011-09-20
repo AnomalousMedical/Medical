@@ -12,6 +12,8 @@ using Engine;
 using System.Reflection;
 using System.IO;
 using Medical.GUI;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace Medical
 {
@@ -23,6 +25,8 @@ namespace Medical
         private SimScene currentScene;
         private String additionalSearchPath;
         private HashSet<String> loadedPluginDlls = new HashSet<string>();
+        private HashSet<String> loadedDataDrivenPlugins = new HashSet<string>();
+        private XmlSaver xmlSaver = new XmlSaver();
 
         public AtlasPluginManager(StandaloneController standaloneController)
         {
@@ -106,10 +110,76 @@ namespace Medical
             }
         }
 
+        public void addDataDrivenPlugin(String path)
+        {
+            String pluginDirectory = null;
+            String fullPath = Path.GetFullPath(path);
+            if (!Directory.Exists(fullPath) && !File.Exists(fullPath))
+            {
+                fullPath = Path.Combine(additionalSearchPath, path);
+            }
+
+            if (File.Exists(fullPath))
+            {
+                pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
+            }
+            else if(Directory.Exists(fullPath))
+            {
+                pluginDirectory = String.Format("Plugins/{0}/", Path.GetDirectoryName(path));
+            }
+            else
+            {
+                Log.Error("Cannot load data file {0} from {0} or {1}.", path, fullPath, Path.GetFullPath(path));
+            }
+
+            if (pluginDirectory != null)
+            {
+                if (!loadedDataDrivenPlugins.Contains(fullPath))
+                {
+                    loadedDataDrivenPlugins.Add(fullPath);
+
+                    VirtualFileSystem.Instance.addArchive(fullPath);
+                    String pluginDefinitionFile = pluginDirectory + "Plugin.ddp";
+
+                    if (VirtualFileSystem.Instance.exists(pluginDefinitionFile))
+                    {
+                        using (XmlTextReader xmlReader = new XmlTextReader(VirtualFileSystem.Instance.openStream(pluginDefinitionFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                        {
+                            DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                            if (plugin != null)
+                            {
+                                addPlugin(plugin, false);
+                            }
+                            else
+                            {
+                                Log.Error("Error loading {0} in path {1} from {2} because it was null.", pluginDefinitionFile, path, fullPath);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Log.Error("Error loading {0} in path {1} from {2} because it does not exist.", pluginDefinitionFile, path, fullPath);
+                    }
+                }
+                else
+                {
+                    Log.Error("Cannot load data file {0} from {1} because it is already loaded.", path, fullPath);
+                }
+            }
+        }
+
         public void addPlugin(AtlasPlugin plugin)
         {
+            addPlugin(plugin, true);
+        }
+
+        public void addPlugin(AtlasPlugin plugin, bool addAssemblyResources)
+        {
             uninitializedPlugins.Add(plugin);
-            OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+            if (addAssemblyResources)
+            {
+                OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+            }
         }
 
         internal void initialzePlugins()
