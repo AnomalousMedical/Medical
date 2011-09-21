@@ -92,9 +92,7 @@ namespace Medical
 #if ALLOW_OVERRIDE
 			String overrideFile = programDirectory + PlatformConfig.OverrideFileLocation;
             if (File.Exists(overrideFile))
-            {
-				Logging.Log.Debug("Override file is {0}", overrideFile);
-				
+            {				
                 internalSettings = new ConfigFile(overrideFile);
                 internalSettings.loadConfigFile();
                 resources = internalSettings.createOrRetrieveConfigSection("Resources");
