@@ -110,6 +110,14 @@ namespace Medical
             }
         }
 
+        public static String AllUserDocumentsFolder
+        {
+            get
+            {
+                return currentConfig.AllUserDocumentsFolderImpl;
+            }
+        }
+
         public static bool CloseMainWindowOnShutdown
         {
             get
@@ -151,6 +159,8 @@ namespace Medical
         protected abstract bool AllowCloneWindowsImpl { get; }
 
         protected abstract String DocumentsFolderImpl { get; }
+
+        protected abstract String AllUserDocumentsFolderImpl { get; }
 
         protected abstract bool CloseMainWindowOnShutdownImpl { get; }
 

@@ -3,16 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using System.IO;
 
 namespace Medical
 {
     public class PluginConfig
     {
-        private List<String> additionalPlugins = new List<string>();
+        private List<String> plugins = new List<string>();
+        private String defaultPluginsFolder;
 
-        public PluginConfig()
+        public PluginConfig(String defaultPluginsFolder)
         {
+            this.defaultPluginsFolder = defaultPluginsFolder;
+            if (!Directory.Exists(defaultPluginsFolder))
+            {
+                Directory.CreateDirectory(defaultPluginsFolder);
+            }
+        }
 
+        public void findRegularPlugins()
+        {
+            String[] pluginFiles = Directory.GetFiles(defaultPluginsFolder, "*.dat", SearchOption.TopDirectoryOnly);
+            foreach (String plugin in pluginFiles)
+            {
+                plugins.Add(plugin);
+            }
+            pluginFiles = Directory.GetFiles(defaultPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
+            foreach (String plugin in pluginFiles)
+            {
+                plugins.Add(plugin);
+            }
         }
 
         public void readPlugins(ConfigFile configFile)
@@ -24,7 +44,7 @@ namespace Medical
                 {
                     if (++i < args.Length)
                     {
-                        additionalPlugins.Add(args[i]);
+                        plugins.Add(args[i]);
                     }
                 }
             }
@@ -32,15 +52,23 @@ namespace Medical
             ConfigIterator iter = new ConfigIterator(section, "Plugin");
             while (iter.hasNext())
             {
-                additionalPlugins.Add(iter.next());
+                plugins.Add(iter.next());
             }
         }
 
-        public IEnumerable<String> AdditionalPlugins
+        public IEnumerable<String> Plugins
         {
             get
             {
-                return additionalPlugins;
+                return plugins;
+            }
+        }
+
+        public String PluginsFolder
+        {
+            get
+            {
+                return defaultPluginsFolder;
             }
         }
     }

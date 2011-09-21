@@ -30,26 +30,36 @@ namespace Medical
 
         private static String updateURL;
         private static String helpURL;
-        private static String anomalousFolder;
+        private static String userAnomalousFolder;
+        private static String commonAnomalousFolder;
 
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
 
-        private static PluginConfig pluginConfig = new PluginConfig();
+        private static PluginConfig pluginConfig;
 
-        public MedicalConfig(String anomalousFolder)
+        public MedicalConfig(String userAnomalousFolder, String commonAnomalousFolder)
         {
-            MedicalConfig.anomalousFolder = anomalousFolder;
-            if (!Directory.Exists(anomalousFolder))
+            MedicalConfig.userAnomalousFolder = userAnomalousFolder;
+            if (!Directory.Exists(userAnomalousFolder))
             {
-                Directory.CreateDirectory(anomalousFolder);
+                Directory.CreateDirectory(userAnomalousFolder);
             }
+
+            MedicalConfig.commonAnomalousFolder = commonAnomalousFolder;
+            if (!Directory.Exists(commonAnomalousFolder))
+            {
+                Directory.CreateDirectory(commonAnomalousFolder);
+            }
+
+            pluginConfig = new PluginConfig(Path.Combine(commonAnomalousFolder, "Plugins"));
+
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
             MedicalConfig.helpURL = "http://www.AnomalousMedical.com/HelpIndex.aspx?user={0}";
             MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
             MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
             
-            configFile = new ConfigFile(anomalousFolder + "/config.ini");
+            configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
             configFile.loadConfigFile();
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
@@ -100,7 +110,7 @@ namespace Medical
 
         public static void setUser(String username)
         {
-            MedicalConfig.docRoot = Path.Combine(Path.Combine(anomalousFolder, "Users"), username);
+            MedicalConfig.docRoot = Path.Combine(Path.Combine(userAnomalousFolder, "Users"), username);
             windowsFile = docRoot + "/windows.ini";
             bookmarksFolder = docRoot + "/Bookmarks";
             recentDocsFile = docRoot + "/docs.ini";
@@ -114,7 +124,7 @@ namespace Medical
         {
             get
             {
-                return Path.Combine(anomalousFolder, "Log.log");
+                return Path.Combine(userAnomalousFolder, "Log.log");
             }
         }
 
@@ -122,7 +132,7 @@ namespace Medical
         {
             get
             {
-                return Path.Combine(anomalousFolder, "CrashLogs");
+                return Path.Combine(userAnomalousFolder, "CrashLogs");
             }
         }
 
@@ -162,7 +172,7 @@ namespace Medical
         {
             get
             {
-                return program.getValue("SaveDirectory", anomalousFolder + "/SavedFiles");
+                return program.getValue("SaveDirectory", userAnomalousFolder + "/SavedFiles");
             }
             set
             {
@@ -347,7 +357,7 @@ namespace Medical
         {
             get
             {
-                return Path.Combine(anomalousFolder, "License.lic");
+                return Path.Combine(userAnomalousFolder, "License.lic");
             }
         }
 

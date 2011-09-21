@@ -11,27 +11,27 @@ namespace Medical
     /// </summary>
     class FolderFinder
     {
-        private static String root = String.Format("{0}/Anomalous Medical", PlatformConfig.DocumentsFolder);
-        private static String download = Path.Combine(root, "Download");
+        private static String userRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.DocumentsFolder);
+        private static String allUserRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.AllUserDocumentsFolder);
 
         private FolderFinder()
         {
 
         }
 
-        public static String AnomalousMedicalRoot
+        public static String AnomalousMedicalUserRoot
         {
             get
             {
-                return root;
+                return userRoot;
             }
         }
 
-        public static String DownloadFolder
+        public static String AnomalousMedicalAllUserRoot
         {
             get
             {
-                return download;
+                return allUserRoot;
             }
         }
 

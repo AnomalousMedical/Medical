@@ -103,6 +103,14 @@ namespace Medical
             }
         }
 
+        protected override String AllUserDocumentsFolderImpl
+        {
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            }
+        }
+
         protected override bool CloseMainWindowOnShutdownImpl
         {
             get

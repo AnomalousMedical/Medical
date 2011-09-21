@@ -109,6 +109,14 @@ namespace Medical
             }
         }
 
+        protected override String AllUserDocumentsFolderImpl
+        {
+            get
+            {
+                return "Library/Application Support";
+            }
+        }
+
         private bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return true;
