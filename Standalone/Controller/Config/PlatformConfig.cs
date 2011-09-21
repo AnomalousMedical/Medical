@@ -134,6 +134,14 @@ namespace Medical
             }
         }
 
+        public static String OverrideFileLocation
+        {
+            get
+            {
+                return currentConfig.OverrideFileLocationImpl;
+            }
+        }
+
 
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
@@ -165,6 +173,8 @@ namespace Medical
         protected abstract bool CloseMainWindowOnShutdownImpl { get; }
 
         protected abstract KeyboardButtonCode PanKeyImpl { get; }
+
+        protected abstract String OverrideFileLocationImpl { get; }
 
         #region PInvoke
 

@@ -126,5 +126,13 @@ namespace Medical
                 return KeyboardButtonCode.KC_LCONTROL;
             }
         }
+
+        protected override String OverrideFileLocationImpl
+        {
+            get
+            {
+                return "/override.ini";
+            }
+        }
     }
 }

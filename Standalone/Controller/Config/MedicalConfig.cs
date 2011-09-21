@@ -90,7 +90,7 @@ namespace Medical
             LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
 
 #if ALLOW_OVERRIDE
-            if (File.Exists(programDirectory + "/override.ini"))
+            if (File.Exists(programDirectory + PlatformConfig.OverrideFileLocation))
             {
                 internalSettings = new ConfigFile(programDirectory + "/override.ini");
                 internalSettings.loadConfigFile();
