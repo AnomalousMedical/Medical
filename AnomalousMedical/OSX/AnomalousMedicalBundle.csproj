@@ -41,10 +41,6 @@
 	<ResourceFiles Include="BundleSource/Contents/Resources/AnomalousMedical.exe.config" />
 	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
 	<ResourceFiles Include="..\..\Release\AnomalousMedical.exe" />
-	<ResourceFiles Include="..\..\Release\Editor.dll" />
-	<ResourceFiles Include="..\..\Release\Lecture.dll" />
-	<ResourceFiles Include="..\..\Release\PiperJBO.dll" />
-	<ResourceFiles Include="..\..\Release\Premium.dll" />
 
 
 
