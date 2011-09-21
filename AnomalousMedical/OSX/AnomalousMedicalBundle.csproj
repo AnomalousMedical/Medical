@@ -82,11 +82,6 @@
 	<ResourceFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/Release/RenderSystem_GL.dylib" />
   </ItemGroup>
   
-  <!-- Override.ini -->
-  <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-	<ResourceFiles Include="..\..\Release\override.ini" />
-  </ItemGroup>
-  
   <!-- Common frameworks, items and target. -->
   <ItemGroup>
 	<!-- Mono -->
