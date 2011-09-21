@@ -139,7 +139,7 @@ namespace Medical
 #endif
         }
 
-        public bool allowFeature(int featureCode)
+        public bool allowFeature(long featureCode)
         {
 #if CRACKED
             return true;

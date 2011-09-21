@@ -34,15 +34,18 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
-            TimelineController = standaloneController.TimelineController;
-
-            Gui.Instance.load(System.IO.Path.Combine(PluginRootFolder, IconResourceFile));
-
-            TaskController taskController = standaloneController.TaskController;
-            foreach (DDPluginTask task in tasks)
+            if (PluginID == -1 || standaloneController.App.LicenseManager.allowFeature(PluginID))
             {
-                task._setPlugin(this);
-                taskController.addTask(task);
+                TimelineController = standaloneController.TimelineController;
+
+                Gui.Instance.load(System.IO.Path.Combine(PluginRootFolder, IconResourceFile));
+
+                TaskController taskController = standaloneController.TaskController;
+                foreach (DDPluginTask task in tasks)
+                {
+                    task._setPlugin(this);
+                    taskController.addTask(task);
+                }
             }
         }
 
