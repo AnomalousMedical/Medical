@@ -131,7 +131,7 @@ namespace Medical
         {
             get
             {
-                return "/override.ini";
+                return "override.ini";
             }
         }
     }
