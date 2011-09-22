@@ -113,7 +113,7 @@ namespace Medical
         {
             get
             {
-                return "/Library/Application Support";
+                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support/Anomalous Medical/Common");
             }
         }
 
