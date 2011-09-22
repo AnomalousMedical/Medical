@@ -112,32 +112,32 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeMenuItem_registerSelectCallback(IntPtr window, IntPtr item, SelectDelegate selectCB);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenuItem_unregisterSelectCallback(IntPtr managedFunctor);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenuItem_delete(IntPtr item);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenuItem_setEnabled(IntPtr item, bool value);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool NativeMenuItem_getEnabled(IntPtr item);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern int NativeMenuItem_getID(IntPtr item);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeMenuItem_getSubMenu(IntPtr item);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenuItem_setHelp(IntPtr item, String helpText);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeMenuItem_getHelp(IntPtr item);
 
         #endregion

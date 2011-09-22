@@ -128,10 +128,10 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr WxKeyboard_new(IntPtr osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void WxKeyboard_delete(IntPtr keyboard);
 
         #endregion

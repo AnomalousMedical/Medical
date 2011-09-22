@@ -101,19 +101,19 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeMenu_append(IntPtr menu, CommonMenuItems id, String text, String helpText, bool subMenu);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenu_appendSeparator(IntPtr menu);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeMenu_insert(IntPtr menu, int index, CommonMenuItems id, String text, String helpText, bool subMenu);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenu_insertItem(IntPtr menu, int index, IntPtr menuItem);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenu_remove(IntPtr menu, IntPtr menuItem);
 
         #endregion

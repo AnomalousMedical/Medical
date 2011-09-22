@@ -44,19 +44,19 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr ColorDialog_new();
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void ColorDialog_delete(IntPtr colorDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern NativeDialogResult ColorDialog_showModal(IntPtr colorDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern Color ColorDialog_getColor(IntPtr colorDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void ColorDialog_setColor(IntPtr colorDialog, Color color);
 
         #endregion

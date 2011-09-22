@@ -85,28 +85,28 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr FileOpenDialog_new(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void FileOpenDialog_delete(IntPtr fileDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern NativeDialogResult FileOpenDialog_showModal(IntPtr fileDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void FileOpenDialog_setWildcard(IntPtr fileDialog, String value);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr FileOpenDialog_getWildcard(IntPtr fileDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void FileOpenDialog_setPath(IntPtr fileDialog, String value);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr FileOpenDialog_getPath(IntPtr fileDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void FileOpenDialog_getPaths(IntPtr fileDialog, IntPtr nativeStringEnumerator);
 
         #endregion

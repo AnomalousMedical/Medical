@@ -296,7 +296,7 @@ namespace Medical
             machineID = Marshal.PtrToStringAnsi(value);
         }
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void LicenseManager_getMachineID(MachineIDCallback callback);
     }
 }

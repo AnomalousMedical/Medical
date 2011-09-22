@@ -28,10 +28,10 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern uint SystemInfo_getDisplayCount();
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void SystemInfo_getDisplayLocation(int displayIndex, out int x, out int y);
 
         #endregion

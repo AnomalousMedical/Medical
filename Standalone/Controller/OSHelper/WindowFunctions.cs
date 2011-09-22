@@ -44,13 +44,13 @@ namespace Medical.Controller
         }
 
 #region PInvoke
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern int WindowFunctions_changeWindowIcon(IntPtr hwnd, WindowIcons icon);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern int WindowFunctions_maximizeWindow(IntPtr hwnd);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void WindowFunctions_pumpMessages();
 
 #endregion

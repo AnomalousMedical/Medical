@@ -178,7 +178,7 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern OperatingSystem PlatformConfig_getPlatform();
 
         #endregion

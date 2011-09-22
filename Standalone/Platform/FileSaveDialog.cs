@@ -68,25 +68,25 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr FileSaveDialog_new(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void FileSaveDialog_delete(IntPtr fileDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern NativeDialogResult FileSaveDialog_showModal(IntPtr fileDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void FileSaveDialog_setWildcard(IntPtr fileDialog, String value);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr FileSaveDialog_getWildcard(IntPtr fileDialog);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void FileSaveDialog_setPath(IntPtr fileDialog, String value);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr FileSaveDialog_getPath(IntPtr fileDialog);
 
         #endregion

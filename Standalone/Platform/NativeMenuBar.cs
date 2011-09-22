@@ -39,10 +39,10 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeMenuBar_createMenu(IntPtr menuBar, String text);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeMenuBar_append(IntPtr menuBar, IntPtr nativeMenu, String text);
 
         #endregion

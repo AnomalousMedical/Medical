@@ -43,10 +43,10 @@ namespace Medical.GUI
             }
         }
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr ImageWindow_new(IntPtr parent, String windowTitle, String imageFile, String homeDir);
 
-        [DllImport("OSHelper")]
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void ImageWindow_delete(IntPtr window);
     }
 }
