@@ -11,7 +11,7 @@ namespace Medical.GUI
     class TimelineFileExplorer : MDIDialog
     {
         public const String PROJECT_EXTENSION = ".tlp";
-        public const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";
+        public const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tl)|*.tlp;*.tl|Timeline Projects (*.tlp)|*.tlp|Timelines (*.tl)|*.tl";
 
         //File Menu
         MenuItem newProject;

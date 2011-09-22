@@ -20,8 +20,6 @@ namespace Medical
 
     public class TimelineController : UpdateListener
     {
-        public const String INDEX_FILE_NAME = "index.tix";
-
         public event EventHandler ResourceLocationChanged;
         public event EventHandler PlaybackStarted;
         public event EventHandler PlaybackStopped;
@@ -38,7 +36,6 @@ namespace Medical
         private bool updating = false;
         private bool playPrePostActions = true;
         private TimelineResourceProvider resourceProvider = null;
-        private TimelineIndex currentIndex = null;
         private bool multiTimelinePlaybackInProgress = false;
 
         public TimelineController(StandaloneController standaloneController)
@@ -352,23 +349,6 @@ namespace Medical
             }
         }
 
-        public void saveIndex(TimelineIndex index)
-        {
-            using (MemoryStream memStream = new MemoryStream())
-            {
-                //Save index to memory stream.
-                XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
-                xmlWriter.Formatting = Formatting.Indented;
-                xmlSaver.saveObject(index, xmlWriter);
-                xmlWriter.Flush();
-                memStream.Seek(0, SeekOrigin.Begin);
-
-                //Import the stream.
-                resourceProvider.addStream(INDEX_FILE_NAME, memStream);
-            }
-            currentIndex = index;
-        }
-
         /// <summary>
         /// List the files in the current resource location that match pattern.
         /// </summary>
@@ -450,14 +430,6 @@ namespace Medical
             }
         }
 
-        public TimelineIndex CurrentTimelineIndex
-        {
-            get
-            {
-                return currentIndex;
-            }
-        }
-
         public ITimelineFileBrowser FileBrowser { get; set; }
 
         public IImageDisplayFactory ImageDisplayFactory { get; set; }
@@ -532,28 +504,6 @@ namespace Medical
                 }
 
                 resourceProvider = value;
-                currentIndex = null;
-                if (resourceProvider != null)
-                {
-
-                    if (resourceProvider.exists(INDEX_FILE_NAME))
-                    {
-                        using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(INDEX_FILE_NAME)))
-                        {
-                            currentIndex = xmlSaver.restoreObject(file) as TimelineIndex;
-                        }
-                    }
-                    else
-                    {
-                        //Legacy check for indexes. This can probably be removed since no real timelines have been created yet.
-                        Log.Warning("Loaded timeline project with no index file. Creating default index.");
-
-                        using (MemoryStream memStream = new MemoryStream())
-                        {
-                            saveIndex(new TimelineIndex());
-                        }
-                    }
-                }
 
                 if (ResourceLocationChanged != null)
                 {

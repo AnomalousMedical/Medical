@@ -17,7 +17,7 @@ namespace Medical
 
         public bool canReadFile(string filename)
         {
-            return filename.EndsWith(".tix") || filename.EndsWith(".tl") || filename.EndsWith(".tlp");
+            return filename.EndsWith(".tl") || filename.EndsWith(".tlp");
         }
 
         public bool processFile(string filename)

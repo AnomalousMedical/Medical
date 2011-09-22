@@ -138,11 +138,7 @@ namespace Medical.GUI
                 }
                 createProject(filename, asFolder);
                 updateWindowCaption();
-                if (asFolder)
-                {
-                    documentController.addToRecentDocuments(Path.Combine(filename, TimelineController.INDEX_FILE_NAME));
-                }
-                else
+                if (!asFolder)
                 {
                     documentController.addToRecentDocuments(filename);
                 }
@@ -157,11 +153,7 @@ namespace Medical.GUI
 
         public void openProject(String projectPath)
         {
-            if (projectPath.EndsWith(".tix"))
-            {
-                editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
-            }
-            else if (projectPath.EndsWith(".tl"))
+            if (projectPath.EndsWith(".tl"))
             {
                 editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
                 openTimelineFile(projectPath);
@@ -330,30 +322,13 @@ namespace Medical.GUI
                 {
                     Directory.CreateDirectory(projectName);
                 }
-                using (XmlTextWriter fileStream = new XmlTextWriter(new FileStream(Path.Combine(projectName, TimelineController.INDEX_FILE_NAME), FileMode.Create), Encoding.Default))
-                {
-                    TimelineIndex index = new TimelineIndex();
-                    XmlSaver xmlSaver = new XmlSaver();
-                    xmlSaver.saveObject(index, fileStream);
-                }
                 editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(projectName);
             }
             else
             {
                 using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
                 {
-                    using (MemoryStream memStream = new MemoryStream())
-                    {
-                        XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
-                        xmlWriter.Formatting = Formatting.Indented;
-                        TimelineIndex index = new TimelineIndex();
-                        XmlSaver xmlSaver = new XmlSaver();
-                        xmlSaver.saveObject(index, xmlWriter);
-                        xmlWriter.Flush();
-                        memStream.Seek(0, SeekOrigin.Begin);
-                        ionicZip.AddEntry(TimelineController.INDEX_FILE_NAME, memStream);
-                        ionicZip.Save();
-                    }
+                    ionicZip.Save();
                 }
                 editorTimelineController.ResourceProvider = new TimelineZipResources(projectName);
             }

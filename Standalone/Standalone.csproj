@@ -295,8 +295,6 @@
     <Compile Include="Controller\Timeline\ShowPropAction\ShowPropSubAction.cs" />
     <Compile Include="Controller\Timeline\TimelineActionProperties.cs" />
     <Compile Include="Controller\Timeline\TimelineException.cs" />
-    <Compile Include="Controller\Timeline\TimelineIndex.cs" />
-    <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="Controller\Plugin\AtlasPlugin.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerEntry.cs" />
