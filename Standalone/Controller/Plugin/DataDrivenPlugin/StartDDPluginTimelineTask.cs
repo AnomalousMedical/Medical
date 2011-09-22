@@ -13,7 +13,7 @@ namespace Medical
         public StartDDPluginTimelineTask(String uniqueName, String name, String iconName, String category)
             :base(uniqueName, name, iconName, category)
         {
-            
+            ShowOnTaskbar = false;
         }
 
         public void registerPlugin(DDAtlasPlugin dataDrivenPlugin)
@@ -50,6 +50,7 @@ namespace Medical
         {
             TimelineDirectory = info.GetString("TimelineDirectory");
             StartupTimeline = info.GetString("StartupTimeline");
+            ShowOnTaskbar = false;
         }
 
         public override void getInfo(SaveInfo info)
