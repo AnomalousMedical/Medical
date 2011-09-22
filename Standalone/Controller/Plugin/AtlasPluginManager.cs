@@ -25,8 +25,7 @@ namespace Medical
         private List<AtlasPlugin> uninitializedPlugins = new List<AtlasPlugin>();
         private SimScene currentScene;
         private String additionalSearchPath;
-        private HashSet<String> loadedPluginDlls = new HashSet<string>();
-        private HashSet<String> loadedDataDrivenPlugins = new HashSet<string>();
+        private HashSet<String> loadedPluginNames = new HashSet<string>();
         private XmlSaver xmlSaver = new XmlSaver();
         private bool addedPluginsToMyGUIResourceGroup = false;
 
@@ -96,9 +95,10 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                if (!loadedPluginDlls.Contains(fullPath))
+                String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
+                if (!loadedPluginNames.Contains(dllFileName))
                 {
-                    loadedPluginDlls.Add(fullPath);
+                    loadedPluginNames.Add(dllFileName);
                     Assembly assembly = Assembly.LoadFile(fullPath);
                     AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
                     if (attributes.Length > 0)
@@ -110,17 +110,17 @@ namespace Medical
                     }
                     else
                     {
-                        Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly {0}. Please add this property to the assembly.", assembly.FullName);
+                        Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
                     }
                 }
                 else
                 {
-                    Log.Error("Cannot load Assembly {0} from {1} because it is already loaded.", dllName, fullPath);
+                    Log.Error("Cannot load Assembly '{0}' from '{1}' because a plugin named '{2}' is already loaded.", dllName, fullPath, dllFileName);
                 }
             }
             else
             {
-                Log.Error("Cannot load Assembly {0} from {0} or {1}.", dllName, fullPath, Path.GetFullPath(dllName));
+                Log.Error("Cannot load Assembly '{0}' from '{0}' or '{1}' because it was not found.", dllName, fullPath, Path.GetFullPath(dllName));
             }
         }
 
@@ -135,9 +135,10 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                if (!loadedDataDrivenPlugins.Contains(fullPath))
+                String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
+                if (!loadedPluginNames.Contains(dataFileName))
                 {
-                    loadedDataDrivenPlugins.Add(fullPath);
+                    loadedPluginNames.Add(dataFileName);
 
                     //Add the archive to the VirtualFileSystem if needed
                     if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
@@ -146,14 +147,19 @@ namespace Medical
                     }
                     pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
                 }
+                else
+                {
+                    Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
+                }
             }
             else if(Directory.Exists(fullPath))
             {
-                if (!loadedDataDrivenPlugins.Contains(fullPath))
+                String directoryName = Path.GetFileName(Path.GetDirectoryName(fullPath));
+                if (!loadedPluginNames.Contains(directoryName))
                 {
-                    loadedDataDrivenPlugins.Add(fullPath);
+                    loadedPluginNames.Add(directoryName);
 
-                    pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileName(Path.GetDirectoryName(fullPath)));
+                    pluginDirectory = String.Format("Plugins/{0}/", directoryName);
                     String rootPluginPath = fullPath.Replace("\\", "/");
                     if (!rootPluginPath.EndsWith("/"))
                     {
@@ -167,10 +173,14 @@ namespace Medical
                         VirtualFileSystem.Instance.addArchive(rootPluginPath);
                     }
                 }
+                else
+                {
+                    Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, directoryName);
+                }
             }
             else
             {
-                Log.Error("Cannot load data file {0} from {0} or {1}.", path, fullPath, Path.GetFullPath(path));
+                Log.Error("Cannot load data file '{0}' from '{0}' or '{1}' because it was not found.", path, fullPath, Path.GetFullPath(path));
             }
 
             if (pluginDirectory != null)
@@ -201,18 +211,14 @@ namespace Medical
                         }
                         else
                         {
-                            Log.Error("Error loading {0} in path {1} from {2} because it was null.", pluginDefinitionFile, path, fullPath);
+                            Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it was null.", pluginDefinitionFile, path, fullPath);
                         }
                     }
                 }
                 else
                 {
-                    Log.Error("Error loading {0} in path {1} from {2} because it does not exist.", pluginDefinitionFile, path, fullPath);
+                    Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it does not exist.", pluginDefinitionFile, path, fullPath);
                 }
-            }
-            else
-            {
-                Log.Error("Cannot load data file {0} from {1} because it is already loaded.", path, fullPath);
             }
         }
 
