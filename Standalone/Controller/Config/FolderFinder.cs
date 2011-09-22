@@ -13,6 +13,7 @@ namespace Medical
     {
         private static String userRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.DocumentsFolder);
         private static String allUserRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.AllUserDocumentsFolder);
+        private static String programFolder = null;
 
         private FolderFinder()
         {
@@ -39,15 +40,19 @@ namespace Medical
         {
             get
             {
-                String[] args = Environment.GetCommandLineArgs();
-                if (args.Length > 0)
+                if (programFolder == null)
                 {
-                    return Path.GetDirectoryName(args[0]);
+                    String[] args = Environment.GetCommandLineArgs();
+                    if (args.Length > 0)
+                    {
+                        programFolder = Path.GetDirectoryName(args[0]);
+                    }
+                    else
+                    {
+                        programFolder = Path.GetFullPath(".");
+                    }
                 }
-                else
-                {
-                    return Path.GetFullPath(".");
-                }
+                return programFolder;
             }
         }
     }

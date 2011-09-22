@@ -35,7 +35,7 @@ namespace Medical
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
 
-            additionalSearchPath = MedicalConfig.ProgramDirectory;
+            additionalSearchPath = FolderFinder.ExecutableFolder;
 
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
         }

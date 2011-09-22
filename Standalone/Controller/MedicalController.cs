@@ -84,7 +84,7 @@ namespace Medical
             logListener = new LogFileListener();
             logListener.openLogFile(MedicalConfig.LogFile);
             Log.Default.addLogListener(logListener);
-            Log.ImportantInfo("Running from directory {0}", MedicalConfig.ProgramDirectory);
+            Log.ImportantInfo("Running from directory {0}", FolderFinder.ExecutableFolder);
 
             //Create pluginmanager
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);

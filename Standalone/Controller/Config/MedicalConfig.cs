@@ -14,17 +14,13 @@ namespace Medical
     public class MedicalConfig
     {
         private static ConfigFile configFile;
+        private static ConfigSection program;
+
         private static String docRoot;
         private static String windowsFile;
         private static String bookmarksFolder;
-        private static ConfigSection program;
         private static TaskbarAlignment taskbarAlignment = TaskbarAlignment.Top;
         private static String recentDocsFile;
-
-        private static ConfigFile internalSettings = null;
-        private static ConfigSection resources = null;
-
-        private static String programDirectory;
 
         private static String sceneDirectory;
 
@@ -38,8 +34,14 @@ namespace Medical
 
         private static PluginConfig pluginConfig;
 
+#if ALLOW_OVERRIDE
+        private static ConfigFile overrideSettings = null;
+        private static ConfigSection resources = null;
+#endif
+
         public MedicalConfig(String userAnomalousFolder, String commonAnomalousFolder)
         {
+            //Setup directories
             MedicalConfig.userAnomalousFolder = userAnomalousFolder;
             if (!Directory.Exists(userAnomalousFolder))
             {
@@ -52,28 +54,23 @@ namespace Medical
                 Directory.CreateDirectory(commonAnomalousFolder);
             }
 
+            //Configure plugins
             pluginConfig = new PluginConfig(Path.Combine(commonAnomalousFolder, "Plugins"));
 
+            //Configure website urls
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
             MedicalConfig.helpURL = "http://www.AnomalousMedical.com/HelpIndex.aspx?user={0}";
             MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
             MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
+            MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
             
+            //User configuration settings
             configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
             configFile.loadConfigFile();
-            EngineConfig = new EngineConfig(configFile);
+            
             program = configFile.createOrRetrieveConfigSection("Program");
             sceneDirectory = "Scenes";
 
-            String[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 0)
-            {
-                programDirectory = Path.GetDirectoryName(args[0]);
-            }
-            else
-            {
-                programDirectory = ".";
-            }
             cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
             transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
 
@@ -87,24 +84,25 @@ namespace Medical
                 Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
             }
 
-            LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
+            EngineConfig = new EngineConfig(configFile);
 
 #if ALLOW_OVERRIDE
-			String overrideFile = Path.Combine(programDirectory, PlatformConfig.OverrideFileLocation);
+            //Override settings
+			String overrideFile = Path.Combine(FolderFinder.ExecutableFolder, PlatformConfig.OverrideFileLocation);
             if (File.Exists(overrideFile))
             {				
-                internalSettings = new ConfigFile(overrideFile);
-                internalSettings.loadConfigFile();
-                resources = internalSettings.createOrRetrieveConfigSection("Resources");
+                overrideSettings = new ConfigFile(overrideFile);
+                overrideSettings.loadConfigFile();
+                resources = overrideSettings.createOrRetrieveConfigSection("Resources");
 
-                ConfigSection updates = internalSettings.createOrRetrieveConfigSection("Updates");
+                ConfigSection updates = overrideSettings.createOrRetrieveConfigSection("Updates");
                 updateURL = updates.getValue("UpdateURL", updateURL);
                 LicenseServerURL = updates.getValue("LicenseServerURL", LicenseServerURL);
                 helpURL = updates.getValue("HelpURL", helpURL);
                 ForgotPasswordURL = updates.getValue("ForgotPasswordURL", ForgotPasswordURL);
                 RegisterURL = updates.getValue("RegisterURL", RegisterURL);
 
-                pluginConfig.readPlugins(internalSettings);
+                pluginConfig.readPlugins(overrideSettings);
             }
 #endif
         }
@@ -217,7 +215,7 @@ namespace Medical
         {
             get
             {
-                if (internalSettings != null)
+                if (overrideSettings != null)
                 {
                     return resources.getValue("WorkingResourceDirectory", "");
                 }
@@ -231,7 +229,7 @@ namespace Medical
             get
             {
 #if ALLOW_OVERRIDE
-                if (internalSettings != null)
+                if (overrideSettings != null)
                 {
                     return resources.getValue("DefaultScene", SceneDirectory + "/Female.sim.xml");
                 }
@@ -257,14 +255,6 @@ namespace Medical
             get
             {
                 return sceneDirectory;
-            }
-        }
-
-        public static String ProgramDirectory
-        {
-            get
-            {
-                return programDirectory;
             }
         }
 
