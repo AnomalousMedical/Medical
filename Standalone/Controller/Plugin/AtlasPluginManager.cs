@@ -185,18 +185,6 @@ namespace Medical
 
             if (pluginDirectory != null)
             {
-                //Add the Plugins folder to the MyGUI resource group when the first plugin is added. 
-                //All plugins must define the Plugins folder or they are not valid.
-                if (!addedPluginsToMyGUIResourceGroup)
-                {
-                    //Double check that this folder exists in the virtual file system or else the program will crash.
-                    if (VirtualFileSystem.Instance.exists("Plugins"))
-                    {
-                        OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
-                        addedPluginsToMyGUIResourceGroup = true;
-                    }
-                }
-
                 String pluginDefinitionFile = pluginDirectory + "Plugin.ddp";
 
                 if (VirtualFileSystem.Instance.exists(pluginDefinitionFile))
@@ -238,6 +226,19 @@ namespace Medical
 
         internal void initialzePlugins()
         {
+            //If we already added the plugins folder to MyGUI, remove it.
+            if (addedPluginsToMyGUIResourceGroup)
+            {
+                OgreResourceGroupManager.getInstance().removeResourceLocation("Plugins", "MyGUI");
+            }
+
+            //If a plugins folder exists in the virtual file system add it to the MyGUI group.
+            if (VirtualFileSystem.Instance.exists("Plugins"))
+            {
+                OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
+                addedPluginsToMyGUIResourceGroup = true;
+            }
+
             foreach (AtlasPlugin plugin in uninitializedPlugins)
             {
                 plugin.initialize(standaloneController);
