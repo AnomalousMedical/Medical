@@ -80,6 +80,12 @@ namespace Medical
             onTaskAdded(task);
         }
 
+        public void removeTask(DDPluginTask task)
+        {
+            tasks.Remove(task);
+            onTaskRemoved(task);
+        }
+
         public bool hasTask(String uniqueName)
         {
             foreach (DDPluginTask task in tasks)
@@ -150,6 +156,7 @@ namespace Medical
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasPlugin", null);
                     editInterface.addCommand(new EditInterfaceCommand("Add Start Timeline Task", addStartTimelineTask));
                     taskManager = new EditInterfaceManager<DDPluginTask>(editInterface);
+                    taskManager.addCommand(new EditInterfaceCommand("Remove", removeDDPluginTask));
                     foreach (DDPluginTask task in tasks)
                     {
                         onTaskAdded(task);
@@ -178,6 +185,20 @@ namespace Medical
             if (taskManager != null)
             {
                 taskManager.addSubInterface(task, task.EditInterface);
+            }
+        }
+
+        private void removeDDPluginTask(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            DDPluginTask task = taskManager.resolveSourceObject(callback.getSelectedEditInterface());
+            removeTask(task);
+        }
+
+        private void onTaskRemoved(DDPluginTask task)
+        {
+            if (taskManager != null)
+            {
+                taskManager.removeSubInterface(task);
             }
         }
     }
