@@ -279,19 +279,6 @@ namespace Medical
             }
         }
 
-        public static float TransparencyChangeMultiplier
-        {
-            get
-            {
-                return transparencyChangeMultiplier;
-            }
-            set
-            {
-                transparencyChangeMultiplier = value;
-                program.setValue("TransparencyChangeMultiplier", value);
-            }
-        }
-
         public static MouseButtonCode CameraMouseButton
         {
             get

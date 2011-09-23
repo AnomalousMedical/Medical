@@ -90,8 +90,8 @@ namespace Medical.GUI
                     beforeFocusLayerState.captureState();
                 }
 
-                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
-                requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
+                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.CameraTransitionTime);
+                requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime);
                 lastHighlightRequestWindow = requestingWindow;
 
                 AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;

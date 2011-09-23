@@ -41,14 +41,14 @@ namespace Medical
             return true;
         }
 
-        public void smoothBlend(float alpha, float changeMultiplier)
+        public void smoothBlend(float alpha, float duration)
         {
             if (alpha != transparencyInterface.CurrentAlpha)
             {
-                transparencyInterface.smoothBlend(alpha, changeMultiplier);
+                transparencyInterface.timedBlend(alpha, duration);
                 if (SmoothBlendApplied != null)
                 {
-                    SmoothBlendApplied.Invoke(alpha, changeMultiplier);
+                    SmoothBlendApplied.Invoke(alpha, duration);
                 }
                 fireNumericValueChanged(alpha);
             }

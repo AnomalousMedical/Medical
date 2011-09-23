@@ -151,19 +151,15 @@ namespace Medical.GUI
             {
                 case 0:
                     MedicalConfig.CameraTransitionTime = 0.01f;
-                    MedicalConfig.TransparencyChangeMultiplier = 1000.0f;
                     break;
                 case 1:
                     MedicalConfig.CameraTransitionTime = 0.25f;
-                    MedicalConfig.TransparencyChangeMultiplier = 5.0f;
                     break;
                 case 2:
                     MedicalConfig.CameraTransitionTime = 0.5f;
-                    MedicalConfig.TransparencyChangeMultiplier = 2.0f;
                     break;
                 case 3:
                     MedicalConfig.CameraTransitionTime = 1.0f;
-                    MedicalConfig.TransparencyChangeMultiplier = 1.0f;
                     break;
             }
             MedicalConfig.EnableMultitouch = enableMultitouchCheck.Checked;

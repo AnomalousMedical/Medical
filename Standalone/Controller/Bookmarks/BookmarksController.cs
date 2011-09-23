@@ -103,7 +103,7 @@ namespace Medical.Controller
         {
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
             window.setPosition(bookmark.CameraTranslation, bookmark.CameraLookAt);
-            bookmark.Layers.apply(MedicalConfig.TransparencyChangeMultiplier);
+            bookmark.Layers.timedApply(MedicalConfig.CameraTransitionTime);
         }
 
         public String createThumbnail(Bookmark bookmark)

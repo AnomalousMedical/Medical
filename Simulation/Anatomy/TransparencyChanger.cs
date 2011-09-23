@@ -7,7 +7,7 @@ namespace Medical
 {
     public interface TransparencyChanger
     {
-        void smoothBlend(float alpha, float changeMultiplier);
+        void smoothBlend(float alpha, float duration);
 
         float CurrentAlpha { get; set; }
     }

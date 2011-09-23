@@ -76,7 +76,7 @@ namespace Medical
             RenderGroup = RenderGroup.None;
         }
 
-        public void smoothBlend(float targetOpacity, float changeMultiplier)
+        private void smoothBlend(float targetOpacity, float changeMultiplier)
         {
             transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
         }

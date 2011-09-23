@@ -138,15 +138,15 @@ namespace Medical
             }
         }
 
-        void transparencyAnatomyCommand_SmoothBlendApplied(float alpha, float transparencyChangeMultiplier)
+        void transparencyAnatomyCommand_SmoothBlendApplied(float alpha, float duration)
         {
             if (trackingTransparency)
             {
-                transparencyInterface.smoothBlend(alpha, transparencyChangeMultiplier);
+                transparencyInterface.timedBlend(alpha, duration);
             }
             else
             {
-                transparencyInterface.smoothBlend(0.0f, transparencyChangeMultiplier);
+                transparencyInterface.timedBlend(0.0f, duration);
             }
         }
 

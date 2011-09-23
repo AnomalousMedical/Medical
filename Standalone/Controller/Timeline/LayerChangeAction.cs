@@ -100,7 +100,7 @@ namespace Medical
         {
             String currentTransparencyState = TransparencyController.ActiveTransparencyState;
             TransparencyController.ActiveTransparencyState = TransparencyState;
-            LayerState.apply(3.0f);
+            LayerState.timedApply(MedicalConfig.CameraTransitionTime);
             TransparencyController.ActiveTransparencyState = currentTransparencyState;
         }
 

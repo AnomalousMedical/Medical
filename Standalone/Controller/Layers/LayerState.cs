@@ -40,20 +40,7 @@ namespace Medical
 
         public void apply()
         {
-            apply(MedicalConfig.TransparencyChangeMultiplier);
-        }
-
-        public void apply(float multiplier)
-        {
-            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
-            foreach (LayerEntry entry in entries)
-            {
-                entry.apply(multiplier, unvisitedInterfaces);
-            }
-            foreach (TransparencyInterface unvisited in unvisitedInterfaces)
-            {
-                unvisited.smoothBlend(0.0f, multiplier);
-            }
+            timedApply(MedicalConfig.CameraTransitionTime);
         }
 
         public void timedApply(float time)

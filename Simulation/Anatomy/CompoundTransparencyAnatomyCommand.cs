@@ -33,11 +33,11 @@ namespace Medical
             return false;
         }
 
-        public void smoothBlend(float alpha, float changeMultiplier)
+        public void smoothBlend(float alpha, float duration)
         {
             foreach (TransparencyAnatomyCommand command in subCommands)
             {
-                command.smoothBlend(alpha, changeMultiplier);
+                command.smoothBlend(alpha, duration);
             }
         }
 

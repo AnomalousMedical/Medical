@@ -17,16 +17,6 @@ namespace Medical
             alphaValue = trans.CurrentAlpha;
         }
 
-        public void apply(float multiplier, List<TransparencyInterface> unvisitedInterfaces)
-        {
-            TransparencyInterface obj = TransparencyController.getTransparencyObject(transparencyObject);
-            if (obj != null)
-            {
-                obj.smoothBlend(alphaValue, multiplier);
-                unvisitedInterfaces.Remove(obj);
-            }
-        }
-
         public void timedApply(float time, List<TransparencyInterface> unvisitedInterfaces)
         {
             TransparencyInterface obj = TransparencyController.getTransparencyObject(transparencyObject);
