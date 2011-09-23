@@ -11,8 +11,9 @@
     <Vector3 name="LookAt">-0.2032714, -9.843492, 5.526311</Vector3>
     <String name="CameraName">Camera 1</String>
     <Vector3 name="IncludePoint">0.07648468, -2.042974, 11.70553</Vector3>
+    <Bool name="UseSystemCameraTransitionTime">True</Bool>
     <Float name="StartTime">0</Float>
-    <Float name="Duration">0.5</Float>
+    <Float name="Duration">1</Float>
   </Saveable>
   <Saveable type="Medical.LayerEntry, Standalone" id="7">
     <String name="TransparencyObject">Mandible</String>
@@ -188,7 +189,7 @@
     <Float name="StartTime">0</Float>
     <Float name="Duration">0.5</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="3">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2429, Culture=neutral, PublicKeyToken=null]], Standalone" id="3">
     <Saveable name="Actions0" id="4" />
     <Saveable name="Actions1" id="5" />
   </Saveable>

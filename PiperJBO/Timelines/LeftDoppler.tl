@@ -797,10 +797,11 @@
     <Vector3 name="LookAt">0, -6.258051, 5.992916</Vector3>
     <String name="CameraName">Camera 1</String>
     <Vector3 name="IncludePoint">11.06084, -4.675308, -0.8204594</Vector3>
+    <Bool name="UseSystemCameraTransitionTime">True</Bool>
     <Float name="StartTime">0</Float>
-    <Float name="Duration">0.5</Float>
+    <Float name="Duration">1</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="109">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2429, Culture=neutral, PublicKeyToken=null]], Standalone" id="109">
     <Saveable name="Actions0" id="110" />
     <Saveable name="Actions1" id="120" />
     <Saveable name="Actions2" id="157" />

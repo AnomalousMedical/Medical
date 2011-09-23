@@ -14,6 +14,7 @@ namespace Medical.GUI
         private Edit lookAtEdit;
         private Color defaultColor;
         private StaticText cameraText;
+        private CheckButton useSystemDuration;
 
         public MoveCameraProperties(Widget parent)
             :base(parent, "Medical.GUI.Timeline.ActionProperties.MoveCameraProperties.layout")
@@ -28,6 +29,9 @@ namespace Medical.GUI
             useCurrentButton.MouseButtonClick += new MyGUIEvent(useCurrentButton_MouseButtonClick);
 
             cameraText = mainWidget.findWidget("CameraText") as StaticText;
+
+            useSystemDuration = new CheckButton(mainWidget.findWidget("UseSystemDuration") as Button);
+            useSystemDuration.CheckedChanged += new MyGUIEvent(useSystemDuration_CheckedChanged);
         }
 
         public override void setCurrentData(TimelineData data)
@@ -38,6 +42,7 @@ namespace Medical.GUI
                 translationEdit.Caption = moveAction.Translation.ToString();
                 lookAtEdit.Caption = moveAction.LookAt.ToString();
                 cameraText.Caption = moveAction.CameraName;
+                useSystemDuration.Checked = moveAction.UseSystemCameraTransitionTime;
             }
         }
 
@@ -75,6 +80,11 @@ namespace Medical.GUI
             {
                 lookAtEdit.TextColor = Color.Red;
             }
+        }
+
+        void useSystemDuration_CheckedChanged(Widget source, EventArgs e)
+        {
+            moveAction.UseSystemCameraTransitionTime = useSystemDuration.Checked;
         }
     }
 }

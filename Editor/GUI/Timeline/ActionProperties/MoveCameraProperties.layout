@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="1 68 211 89" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="1 68 211 112" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="1 21 74 15">
             <Property key="Widget_Caption" value="Translation"/>
         </Widget>
@@ -16,5 +16,8 @@
             <Property key="Widget_Caption" value="Camera"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="76 1 132 18" name="CameraText"/>
+        <Widget type="Button" skin="CheckBox" position="3 87 205 21" name="UseSystemDuration">
+            <Property key="Widget_Caption" value="Use System Camera Duration"/>
+        </Widget>
     </Widget>
 </MyGUI>

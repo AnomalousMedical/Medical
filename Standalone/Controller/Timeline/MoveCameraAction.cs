@@ -27,6 +27,7 @@ namespace Medical
             this.CameraName = cameraName;
             this.Duration = 1.0f;
             IncludePoint = Vector3.Invalid;
+            UseSystemCameraTransitionTime = false;
         }
 
         public MoveCameraAction(float startTime, String cameraName, Vector3 translation, Vector3 lookAt)
@@ -145,6 +146,20 @@ namespace Medical
 
         public Vector3 IncludePoint { get; set; }
 
+        public bool UseSystemCameraTransitionTime { get; set; }
+
+        public override float Duration
+        {
+            get
+            {
+                return UseSystemCameraTransitionTime ? MedicalConfig.CameraTransitionTime : base.Duration;
+            }
+            set
+            {
+                base.Duration = value;
+            }
+        }
+
         private Vector3 computeTranslationWithIncludePoint(SceneViewWindow sceneWindow)
         {
             if (IncludePoint.isNumber())
@@ -177,6 +192,7 @@ namespace Medical
         private static readonly String LOOKAT = "LookAt";
         private static readonly String CAMERA_NAME = "CameraName";
         private static readonly String INCLUDE_POINT = "IncludePoint";
+        private static readonly String USE_SYSTEM_CAMERA_TRANSITION_TIME = "UseSystemCameraTransitionTime";
 
         protected MoveCameraAction(LoadInfo info)
             : base(info)
@@ -185,6 +201,7 @@ namespace Medical
             LookAt = info.GetVector3(LOOKAT);
             CameraName = info.GetString(CAMERA_NAME);
             IncludePoint = info.GetVector3(INCLUDE_POINT, Vector3.Invalid);
+            UseSystemCameraTransitionTime = info.GetBoolean(USE_SYSTEM_CAMERA_TRANSITION_TIME, false);
         }
 
         public override void getInfo(SaveInfo info)
@@ -193,6 +210,7 @@ namespace Medical
             info.AddValue(LOOKAT, LookAt);
             info.AddValue(CAMERA_NAME, CameraName);
             info.AddValue(INCLUDE_POINT, IncludePoint);
+            info.AddValue(USE_SYSTEM_CAMERA_TRANSITION_TIME, UseSystemCameraTransitionTime);
             base.getInfo(info);
         }
 

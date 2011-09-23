@@ -11,8 +11,9 @@
     <Vector3 name="LookAt">-6.293758, -5.270892, 2.128694</Vector3>
     <String name="CameraName">Camera 1</String>
     <Vector3 name="IncludePoint">-5.229015, -0.5989733, 9.426962</Vector3>
+    <Bool name="UseSystemCameraTransitionTime">True</Bool>
     <Float name="StartTime">0</Float>
-    <Float name="Duration">0.5</Float>
+    <Float name="Duration">1</Float>
   </Saveable>
   <Saveable type="Medical.LayerEntry, Standalone" id="7">
     <String name="TransparencyObject">Hyoid</String>
@@ -343,7 +344,7 @@
     <Float name="StartTime">0</Float>
     <Float name="Duration">0.5</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="3">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2429, Culture=neutral, PublicKeyToken=null]], Standalone" id="3">
     <Saveable name="Actions0" id="4" />
     <Saveable name="Actions1" id="5" />
   </Saveable>
