@@ -76,19 +76,18 @@ namespace Medical
             RenderGroup = RenderGroup.None;
         }
 
-        private void smoothBlend(float targetOpacity, float changeMultiplier)
-        {
-            transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
-        }
-
         public void timedBlend(float targetOpacity, float time)
         {
             float currentAlpha = transparencyStates[activeTransparencyState].WorkingAlphaOnly;
             float delta = Math.Abs(targetOpacity - currentAlpha);
             if (delta != 0.0f)
             {
-                float changeMultiplier = delta / time;
-                smoothBlend(targetOpacity, changeMultiplier);
+                float changeMultiplier = 1000.0f;
+                if (time > 0.0f)
+                {
+                    changeMultiplier = delta / time;
+                }
+                transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
             }
         }
 
