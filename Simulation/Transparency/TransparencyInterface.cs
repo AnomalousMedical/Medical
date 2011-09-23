@@ -80,15 +80,13 @@ namespace Medical
         {
             float currentAlpha = transparencyStates[activeTransparencyState].WorkingAlphaOnly;
             float delta = Math.Abs(targetOpacity - currentAlpha);
-            if (delta != 0.0f)
+
+            float changeMultiplier = 1000.0f;
+            if (delta != 0.0f && time > 0.0f)
             {
-                float changeMultiplier = 1000.0f;
-                if (time > 0.0f)
-                {
-                    changeMultiplier = delta / time;
-                }
-                transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
+                changeMultiplier = delta / time;
             }
+            transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
         }
 
         internal void addSubInterface(TransparencySubInterface subInterface)
