@@ -29,8 +29,6 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_SKULL               ICON                    "S:\\Medical\\skull.ico"
-IDI_DOPPLER             ICON                    "S:\\Medical\\Doppler.ico"
-IDI_TMJOVERVIEW			ICON					"S:\\Medical\\TMJOverview.ico"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////

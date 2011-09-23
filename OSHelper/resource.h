@@ -4,8 +4,6 @@
 //
 #define IDI_ICON1                       101
 #define IDI_SKULL                       101
-#define IDI_DOPPLER						102
-#define IDI_TMJOVERVIEW					103
 
 // Next default values for new objects
 // 
