@@ -26,7 +26,7 @@ namespace Medical.GUI
         private ScrollView panelScroll;
 
         public TimelineWizardPanel(String layoutFile, TimelineWizard timelineWizard)
-            : base("Medical.TimelineGUI.WizardPanelButtons.layout")
+            : base("Medical.Controller.Timeline.TimelineGUI.TimelineWizard.WizardPanelButtons.layout")
         {
             this.timelineWizard = timelineWizard;
 

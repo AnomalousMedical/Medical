@@ -64,7 +64,7 @@
     <String name="Name">Notes</String>
     <String name="ImageKey">DistortionPanelIcons/Notes</String>
   </Saveable>
-  <Saveable type="Medical.GUI.TimelineWizardPanelData, PiperJBO" id="2">
+  <Saveable type="Medical.GUI.TimelineWizardPanelData, Standalone" id="2">
     <Bool name="attachToScrollView">False</Bool>
     <Saveable name="Timeline0" id="3" />
     <Saveable name="Timeline1" id="4" />
@@ -986,7 +986,7 @@
     <Float name="StartTime">0</Float>
     <Float name="Duration">0.5</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2386, Culture=neutral, PublicKeyToken=null]], Standalone" id="16">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="16">
     <Saveable name="Actions0" id="17" />
     <Saveable name="Actions1" id="18" />
   </Saveable>

@@ -7,9 +7,10 @@
     <Vector3 name="Translation">58.39742, -10.04516, 10.57946</Vector3>
     <Vector3 name="LookAt">6.293758, -5.270892, 2.128694</Vector3>
   </Saveable>
-  <Saveable type="Medical.GUI.CondylarDegenerationGUIData, PiperJBO" id="2">
+  <Saveable type="Medical.GUI.CondylarDegenerationGUIData, Standalone" id="2">
     <Saveable name="&lt;NormalCamera&gt;k__BackingField" id="3" />
     <Saveable name="&lt;ShowOsteophyteCamera&gt;k__BackingField" id="4" />
+    <Bool name="attachToScrollView">True</Bool>
   </Saveable>
   <Saveable type="Medical.ShowTimelineGUIAction, Standalone" id="1">
     <String name="GUIName">PiperJBO.LeftCondylarDegenerationGUI</String>
@@ -197,7 +198,7 @@
     <Float name="StartTime">0</Float>
     <Float name="Duration">0.5</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2381, Culture=neutral, PublicKeyToken=null]], Standalone" id="5">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="5">
     <Saveable name="Actions0" id="6" />
     <Saveable name="Actions1" id="7" />
   </Saveable>

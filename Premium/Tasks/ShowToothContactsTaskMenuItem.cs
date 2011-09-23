@@ -7,10 +7,10 @@ namespace Medical.GUI
 {
     class ShowToothContactsTask : Task
     {
-        public ShowToothContactsTask()
+        public ShowToothContactsTask(int weight)
             : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "ShowTeethContactsIcon", TaskMenuCategories.Simulation)
         {
-
+            this.Weight = weight;
         }
 
         public override void clicked()

@@ -348,7 +348,7 @@
     <Saveable name="Entry14" id="73" />
     <Saveable name="Entry15" id="74" />
   </Saveable>
-  <Saveable type="Medical.GUI.TeethAdaptationGUIData, PiperJBO" id="2">
+  <Saveable type="Medical.GUI.TeethAdaptationGUIData, Standalone" id="2">
     <Saveable name="&lt;TopCamera&gt;k__BackingField" id="3" />
     <Saveable name="&lt;BottomCamera&gt;k__BackingField" id="4" />
     <Saveable name="&lt;LeftLateralCamera&gt;k__BackingField" id="5" />
@@ -357,6 +357,7 @@
     <Saveable name="&lt;AllTeethLayers&gt;k__BackingField" id="8" />
     <Saveable name="&lt;TopCameraLayers&gt;k__BackingField" id="41" />
     <Saveable name="&lt;BottomCameraLayers&gt;k__BackingField" id="58" />
+    <Bool name="attachToScrollView">True</Bool>
   </Saveable>
   <Saveable type="Medical.ShowTimelineGUIAction, Standalone" id="1">
     <String name="GUIName">PiperJBO.TeethHeightAdaptationGUI</String>
@@ -539,7 +540,7 @@
     <Float name="StartTime">0</Float>
     <Float name="Duration">0.5</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2381, Culture=neutral, PublicKeyToken=null]], Standalone" id="75">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="75">
     <Saveable name="Actions0" id="76" />
     <Saveable name="Actions1" id="77" />
   </Saveable>

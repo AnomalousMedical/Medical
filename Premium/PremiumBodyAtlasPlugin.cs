@@ -107,11 +107,11 @@ namespace Medical
             taskController.addTask(saveAsTaskItem);
 
             taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
-            taskController.addTask(new ShowToothContactsTask());
+            taskController.addTask(new ShowToothContactsTask(0));
             taskController.addTask(new ShowPopupTask(stateListGUI, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
-            taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
-            taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));
+            taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation, 1));
+            taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation, 2));
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
             taskController.addTask(windowLayout);
         }

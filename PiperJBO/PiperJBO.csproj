@@ -83,58 +83,6 @@
     <Compile Include="PiperJBOAtlasPlugin.cs" />
     <Compile Include="PiperJBOAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimelineGUI\Panels\Disclaimer\DisclaimerGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceControl.cs" />
-    <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUIData.cs" />
-    <Compile Include="TimelineGUI\Panels\DiscSpace\LeftDiscSpaceGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\DiscSpace\RightDiscSpaceGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Doppler\DopplerControl.cs" />
-    <Compile Include="TimelineGUI\Panels\Doppler\DopplerGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Doppler\DopplerGUIData.cs" />
-    <Compile Include="TimelineGUI\Panels\Doppler\LeftDopplerGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Doppler\RightDopplerGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Fossa\FossaGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Fossa\FossaGUILeftPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Fossa\FossaGUIRightPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\BoneManipulatorGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\BoneManipulatorSlider.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\CondylarDegenerationGUIData.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Notes\NotesGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Notes\NotesGUIData.cs" />
-    <Compile Include="TimelineGUI\Panels\Notes\NotesGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Notes\NotesThumbnail.cs" />
-    <Compile Include="TimelineGUI\Panels\Notes\ThumbnailPickerInfo.cs" />
-    <Compile Include="TimelineGUI\Panels\Notes\ThumbnailPickerGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Preset\LeftDiscClockFaceGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Preset\PresetStateGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Preset\RightDiscClockFaceGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Profile\HeightComboSlider.cs" />
-    <Compile Include="TimelineGUI\Panels\Profile\HeightControl.cs" />
-    <Compile Include="TimelineGUI\Panels\Profile\ProfileDistortionGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Profile\ProfileDistortionGUIData.cs" />
-    <Compile Include="TimelineGUI\Panels\Profile\ProfileDistortionGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\RemoveTeethGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUIData.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUIPrototype.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\TeethMovementGUI.cs" />
-    <Compile Include="TimelineGUI\Panels\Teeth\ToothButton.cs" />
-    <Compile Include="TimelineGUI\TimelineWizard.cs" />
-    <Compile Include="TimelineGUI\TimelineWizardPanel.cs" />
-    <Compile Include="TimelineGUI\TimelineWizardPanelData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -145,23 +93,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TimelineGUI\Panels\Disclaimer\DisclaimerGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Doppler\DopplerGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Fossa\FossaGUILeft.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Fossa\FossaGUIRight.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Notes\NotesGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Preset\PresetStateGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Profile\ProfileDistortionGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\WizardPanelButtons.layout" />
     <None Include="Properties\PiperJBO.manifest">
       <SubType>Designer</SubType>
     </None>
@@ -217,27 +148,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\PiperJBOImagesets.xml" />
-    <EmbeddedResource Include="Resources\DistortionPanelIcons.png" />
-    <EmbeddedResource Include="Resources\DistortionPanelIcons.xml" />
-    <EmbeddedResource Include="Resources\DistortionsToolstrip.png" />
-    <EmbeddedResource Include="Resources\DistortionsToolstrip.xml" />
-    <EmbeddedResource Include="Resources\DegenerationImages.png" />
-    <EmbeddedResource Include="Resources\DegenerationImages.xml" />
-    <EmbeddedResource Include="Resources\DopplerPanelImages.png" />
-    <EmbeddedResource Include="Resources\DopplerPanelImages.xml" />
-    <EmbeddedResource Include="Resources\FossaImages.png" />
-    <EmbeddedResource Include="Resources\FossaImages.xml" />
-    <EmbeddedResource Include="Resources\GrowthImages.png" />
-    <EmbeddedResource Include="Resources\GrowthImages.xml" />
-    <EmbeddedResource Include="Resources\ProfileIcons.png" />
-    <EmbeddedResource Include="Resources\ProfileIcons.xml" />
-    <EmbeddedResource Include="Resources\TeethButtons.png" />
-    <EmbeddedResource Include="Resources\TeethButtons.xml" />
-    <EmbeddedResource Include="Resources\TeethMovementIcons.png" />
-    <EmbeddedResource Include="Resources\TeethMovementIcons.xml" />
-    <EmbeddedResource Include="Resources\PiperJBOIcons.xml" />
-    <EmbeddedResource Include="Resources\PiperJBOIcons.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup />

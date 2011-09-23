@@ -19,12 +19,13 @@
     <Vector3 name="Translation">169.915, -10.01079, 1.699202</Vector3>
     <Vector3 name="LookAt">0, -4.91162, 0</Vector3>
   </Saveable>
-  <Saveable type="Medical.GUI.ProfileDistortionGUIData, PiperJBO" id="2">
+  <Saveable type="Medical.GUI.ProfileDistortionGUIData, Standalone" id="2">
     <Saveable name="&lt;RightCamera&gt;k__BackingField" id="3" />
     <Saveable name="&lt;RightMidCamera&gt;k__BackingField" id="4" />
     <Saveable name="&lt;MidlineCamera&gt;k__BackingField" id="5" />
     <Saveable name="&lt;LeftMidCamera&gt;k__BackingField" id="6" />
     <Saveable name="&lt;LeftSideCamera&gt;k__BackingField" id="7" />
+    <Bool name="attachToScrollView">True</Bool>
   </Saveable>
   <Saveable type="Medical.ShowTimelineGUIAction, Standalone" id="1">
     <String name="GUIName">PiperJBO.ProfileDistortionGUI</String>
@@ -472,7 +473,7 @@
     <Float name="StartTime">0</Float>
     <Float name="Duration">0.5</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2386, Culture=neutral, PublicKeyToken=null]], Standalone" id="8">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="8">
     <Saveable name="Actions0" id="9" />
     <Saveable name="Actions1" id="10" />
   </Saveable>

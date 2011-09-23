@@ -336,7 +336,7 @@
     <Saveable name="Entry64" id="70" />
     <Saveable name="Entry65" id="71" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="3">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="3">
     <Saveable name="CameraPosition" id="4" />
     <Saveable name="LayerState" id="5" />
   </Saveable>
@@ -677,7 +677,7 @@
     <Saveable name="Entry64" id="139" />
     <Saveable name="Entry65" id="140" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="72">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="72">
     <Saveable name="CameraPosition" id="73" />
     <Saveable name="LayerState" id="74" />
   </Saveable>
@@ -1018,7 +1018,7 @@
     <Saveable name="Entry64" id="208" />
     <Saveable name="Entry65" id="209" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="141">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="141">
     <Saveable name="CameraPosition" id="142" />
     <Saveable name="LayerState" id="143" />
   </Saveable>
@@ -1359,7 +1359,7 @@
     <Saveable name="Entry64" id="277" />
     <Saveable name="Entry65" id="278" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="210">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="210">
     <Saveable name="CameraPosition" id="211" />
     <Saveable name="LayerState" id="212" />
   </Saveable>
@@ -1700,7 +1700,7 @@
     <Saveable name="Entry64" id="346" />
     <Saveable name="Entry65" id="347" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="279">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="279">
     <Saveable name="CameraPosition" id="280" />
     <Saveable name="LayerState" id="281" />
   </Saveable>
@@ -1886,7 +1886,7 @@
     <Saveable name="Entry33" id="384" />
     <Saveable name="Entry34" id="385" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="348">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="348">
     <Saveable name="CameraPosition" id="349" />
     <Saveable name="LayerState" id="350" />
   </Saveable>
@@ -2072,7 +2072,7 @@
     <Saveable name="Entry33" id="422" />
     <Saveable name="Entry34" id="423" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="386">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="386">
     <Saveable name="CameraPosition" id="387" />
     <Saveable name="LayerState" id="388" />
   </Saveable>
@@ -2243,7 +2243,7 @@
     <Saveable name="Entry30" id="457" />
     <Saveable name="Entry31" id="458" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="424">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="424">
     <Saveable name="CameraPosition" id="425" />
     <Saveable name="LayerState" id="426" />
   </Saveable>
@@ -2414,7 +2414,7 @@
     <Saveable name="Entry30" id="492" />
     <Saveable name="Entry31" id="493" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="459">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="459">
     <Saveable name="CameraPosition" id="460" />
     <Saveable name="LayerState" id="461" />
   </Saveable>
@@ -2585,11 +2585,11 @@
     <Saveable name="Entry30" id="527" />
     <Saveable name="Entry31" id="528" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesThumbnail, PiperJBO" id="494">
+  <Saveable type="Medical.GUI.NotesThumbnail, Standalone" id="494">
     <Saveable name="CameraPosition" id="495" />
     <Saveable name="LayerState" id="496" />
   </Saveable>
-  <Saveable type="Medical.GUI.NotesGUIData, PiperJBO" id="2">
+  <Saveable type="Medical.GUI.NotesGUIData, Standalone" id="2">
     <Bool name="attachToScrollView">False</Bool>
     <Saveable name="NotesThumbnail0" id="3" />
     <Saveable name="NotesThumbnail1" id="72" />
@@ -2953,7 +2953,7 @@
     <Float name="StartTime">0</Float>
     <Float name="Duration">0.5</Float>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2386, Culture=neutral, PublicKeyToken=null]], Standalone" id="529">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2428, Culture=neutral, PublicKeyToken=null]], Standalone" id="529">
     <Saveable name="Actions0" id="530" />
     <Saveable name="Actions1" id="531" />
   </Saveable>
