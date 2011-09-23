@@ -86,6 +86,8 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
+    <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleControlSlider.cs" />
+    <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\DiscEditor\DiscControl.cs" />
     <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
@@ -144,6 +146,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.layout" />
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscPanel.layout" />

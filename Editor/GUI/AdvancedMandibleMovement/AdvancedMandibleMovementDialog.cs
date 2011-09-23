@@ -10,7 +10,7 @@ using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
-    class MandibleMovementDialog : MDIDialog
+    class AdvancedMandibleMovementDialog : MDIDialog
     {
         private ControlPointBehavior leftCP;
         private ControlPointBehavior rightCP;
@@ -19,11 +19,11 @@ namespace Medical.GUI
         private bool allowSyncronization = true;
         private bool allowSceneManipulation = true;
 
-        private MandibleControlSlider openTrackBar;
-        private MandibleControlSlider rightForwardBack;
-        private MandibleControlSlider leftForwardBack;
-        private MandibleControlSlider bothForwardBack;
-        private MandibleControlSlider forceSlider;
+        private AdvancedMandibleControlSlider openTrackBar;
+        private AdvancedMandibleControlSlider rightForwardBack;
+        private AdvancedMandibleControlSlider leftForwardBack;
+        private AdvancedMandibleControlSlider bothForwardBack;
+        private AdvancedMandibleControlSlider forceSlider;
         private Button resetButton;
         private Button restoreButton;
 
@@ -32,22 +32,22 @@ namespace Medical.GUI
         private float rightCPPosition;
         private bool restoreEnabled = false;
 
-        public MandibleMovementDialog(MovementSequenceController movementSequenceController)
-            : base("Medical.GUI.MandibleMovement.MandibleMovementDialog.layout")
-        {            
-            openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as VScroll);
+        public AdvancedMandibleMovementDialog(MovementSequenceController movementSequenceController)
+            : base("Medical.GUI.AdvancedMandibleMovement.AdvancedMandibleMovementDialog.layout")
+        {
+            openTrackBar = new AdvancedMandibleControlSlider(window.findWidget("Movement/HingeSlider") as VScroll, (Edit)window.findWidget("HingeEdit"));
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
-            rightForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionRightSlider") as VScroll);
+            rightForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ExcursionRightSlider") as VScroll, (Edit)window.findWidget("ExcursionRightEdit"));
             rightForwardBack.Minimum = 0;
             rightForwardBack.Maximum = 1;
-            leftForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionLeftSlider") as VScroll);
+            leftForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ExcursionLeftSlider") as VScroll, (Edit)window.findWidget("ExcursionLeftEdit"));
             leftForwardBack.Minimum = 0;
             leftForwardBack.Maximum = 1;
-            bothForwardBack = new MandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as VScroll);
+            bothForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as VScroll, (Edit)window.findWidget("ProtrusionEdit"));
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
-            forceSlider = new MandibleControlSlider(window.findWidget("Movement/ForceSlider") as VScroll);
+            forceSlider = new AdvancedMandibleControlSlider(window.findWidget("Movement/ForceSlider") as VScroll, (Edit)window.findWidget("ForceEdit"));
             forceSlider.Minimum = 0;
             forceSlider.Maximum = 100;
             resetButton = window.findWidget("Movement/Reset") as Button;

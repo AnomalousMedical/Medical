@@ -22,6 +22,7 @@ namespace Medical
         private DiscControl discControl;
         private GridPropertiesDialog gridProperties;
         private DDAtlasPluginEditor pluginEditor;
+        private AdvancedMandibleMovementDialog advancedMandibleMovement;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -38,6 +39,7 @@ namespace Medical
 
         public void Dispose()
         {
+            advancedMandibleMovement.Dispose();
             TimelineBrowserController.setTimelineController(null);
             discControl.Dispose();
             timelinePropertiesController.Dispose();
@@ -107,6 +109,9 @@ namespace Medical
             pluginEditor = new DDAtlasPluginEditor(browserWindow, standaloneController.TimelineController);
             guiManager.addManagedDialog(pluginEditor);
 
+            advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
+            guiManager.addManagedDialog(advancedMandibleMovement);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -119,6 +124,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "GridIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "MovementIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
@@ -126,12 +132,14 @@ namespace Medical
 
         public void sceneLoaded(SimScene scene)
         {
+            advancedMandibleMovement.sceneLoaded(scene);
             propMover.sceneLoaded(scene);
             discControl.sceneLoaded(scene);
         }
 
         public void sceneUnloading(SimScene scene)
         {
+            advancedMandibleMovement.sceneUnloading(scene);
             propMover.sceneUnloading(scene);
             discControl.sceneUnloading();
         }
