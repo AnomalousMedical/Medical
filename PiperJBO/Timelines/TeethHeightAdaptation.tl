@@ -370,7 +370,7 @@
     <Vector3 name="IncludePoint">4.209716, -6.489634, 7.220814</Vector3>
     <Bool name="UseSystemCameraTransitionTime">True</Bool>
     <Float name="StartTime">0</Float>
-    <Float name="Duration">1</Float>
+    <Float name="Duration">0.25</Float>
   </Saveable>
   <Saveable type="Medical.LayerEntry, Standalone" id="79">
     <String name="TransparencyObject">Tooth 1</String>
@@ -536,12 +536,13 @@
     <Saveable name="Entry31" id="110" />
   </Saveable>
   <Saveable type="Medical.LayerChangeAction, Standalone" id="77">
+    <Float name="StartTime">0</Float>
+    <Float name="Duration">0.25</Float>
     <Saveable name="LayerState" id="78" />
     <String name="TransparencyState">Camera 1</String>
-    <Float name="StartTime">0</Float>
-    <Float name="Duration">0.5</Float>
+    <Bool name="UseSystemLayerTransitionTime">True</Bool>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2429, Culture=neutral, PublicKeyToken=null]], Standalone" id="75">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2431, Culture=neutral, PublicKeyToken=null]], Standalone" id="75">
     <Saveable name="Actions0" id="76" />
     <Saveable name="Actions1" id="77" />
   </Saveable>

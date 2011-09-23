@@ -24,6 +24,7 @@ namespace Medical
             this.TransparencyState = transparencyState;
             this.LayerState = layerState;
             this.Duration = 1.0f;
+            UseSystemLayerTransitionTime = false;
         }
 
         public LayerChangeAction(String transparencyState, LayerState layerState, float startTime)
@@ -118,23 +119,40 @@ namespace Medical
 
         public String TransparencyState { get; set; }
 
+        public bool UseSystemLayerTransitionTime { get; set; }
+
+        public override float Duration
+        {
+            get
+            {
+                return UseSystemLayerTransitionTime ? MedicalConfig.CameraTransitionTime : base.Duration;
+            }
+            set
+            {
+                base.Duration = value;
+            }
+        }
+
         #region Saveable
 
         private static readonly String LAYER_STATE = "LayerState";
         private static readonly String TRANSPARENCY_STATE = "TransparencyState";
+        private static readonly String USE_SYSTEM_LAYER_TRANSITION_TIME = "UseSystemLayerTransitionTime";
 
         protected LayerChangeAction(LoadInfo info)
             : base(info)
         {
             LayerState = info.GetValue<LayerState>(LAYER_STATE);
             TransparencyState = info.GetString(TRANSPARENCY_STATE);
+            UseSystemLayerTransitionTime = info.GetBoolean(USE_SYSTEM_LAYER_TRANSITION_TIME, false);
         }
 
         public override void getInfo(SaveInfo info)
         {
+            base.getInfo(info);
             info.AddValue(LAYER_STATE, LayerState);
             info.AddValue(TRANSPARENCY_STATE, TransparencyState);
-            base.getInfo(info);
+            info.AddValue(USE_SYSTEM_LAYER_TRANSITION_TIME, UseSystemLayerTransitionTime);
         }
 
         #endregion

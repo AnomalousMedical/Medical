@@ -38,7 +38,7 @@
     <Vector3 name="IncludePoint">-0.6286011, 9.91539, 15.43868</Vector3>
     <Bool name="UseSystemCameraTransitionTime">True</Bool>
     <Float name="StartTime">0</Float>
-    <Float name="Duration">1</Float>
+    <Float name="Duration">0.25</Float>
   </Saveable>
   <Saveable type="Medical.LayerEntry, Standalone" id="12">
     <String name="TransparencyObject">Hyoid</String>
@@ -469,12 +469,13 @@
     <Saveable name="Entry84" id="96" />
   </Saveable>
   <Saveable type="Medical.LayerChangeAction, Standalone" id="10">
+    <Float name="StartTime">0</Float>
+    <Float name="Duration">0.25</Float>
     <Saveable name="LayerState" id="11" />
     <String name="TransparencyState">Camera 1</String>
-    <Float name="StartTime">0</Float>
-    <Float name="Duration">0.5</Float>
+    <Bool name="UseSystemLayerTransitionTime">True</Bool>
   </Saveable>
-  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2429, Culture=neutral, PublicKeyToken=null]], Standalone" id="8">
+  <Saveable type="Medical.ActionSequencer`1[[Medical.TimelineAction, Standalone, Version=2.0.0.2431, Culture=neutral, PublicKeyToken=null]], Standalone" id="8">
     <Saveable name="Actions0" id="9" />
     <Saveable name="Actions1" id="10" />
   </Saveable>

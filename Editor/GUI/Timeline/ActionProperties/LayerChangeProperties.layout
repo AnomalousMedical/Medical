@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="1 68 211 47" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="1 70 211 72" layer="Back">
         <Widget type="Button" skin="Button" position="0 22 89 21" name="Capture">
             <Property key="Widget_Caption" value="Use Current"/>
         </Widget>
@@ -8,5 +8,8 @@
             <Property key="Widget_Caption" value="Window"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="55 5 152 14" name="WindowText"/>
+        <Widget type="Button" skin="CheckBox" position="0 45 207 21" name="UseSystemDuration">
+            <Property key="Widget_Caption" value="Use System Layer Duration"/>
+        </Widget>
     </Widget>
 </MyGUI>
