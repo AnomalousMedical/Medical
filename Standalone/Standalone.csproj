@@ -475,8 +475,6 @@
     <EmbeddedResource Include="Resources\DegenerationImages.xml" />
     <EmbeddedResource Include="Resources\DistortionPanelIcons.png" />
     <EmbeddedResource Include="Resources\DistortionPanelIcons.xml" />
-    <EmbeddedResource Include="Resources\DistortionsToolstrip.png" />
-    <EmbeddedResource Include="Resources\DistortionsToolstrip.xml" />
     <EmbeddedResource Include="Resources\DopplerPanelImages.png" />
     <EmbeddedResource Include="Resources\DopplerPanelImages.xml" />
     <EmbeddedResource Include="Resources\FossaImages.png" />
