@@ -40,6 +40,10 @@
     <StartWorkingDirectory />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="Engine">
       <HintPath>S:\Medical\Release\Engine.dll</HintPath>
     </Reference>
@@ -62,14 +66,10 @@
   <ItemGroup>
     <Compile Include="AtlasPlugin.cs" />
     <Compile Include="AtlasPluginEntryPoint.cs" />
-    <Compile Include="GUI\ButtonCreator\ButtonCreator.cs" />
-    <Compile Include="GUI\DummyTimeline\DummyTimeline.cs" />
-    <Compile Include="GUI\DummyTimeline\DummyTimelineData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\ButtonCreator\ButtonCreator.layout" />
-    <EmbeddedResource Include="GUI\DummyTimeline\DummyTimeline.layout" />
+    <Folder Include="GUI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
