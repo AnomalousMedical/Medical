@@ -64,12 +64,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtlasPlugin.cs" />
-    <Compile Include="AtlasPluginEntryPoint.cs" />
+    <Compile Include="DeveloperAtlasPlugin.cs" />
+    <Compile Include="DeveloperAtlasPluginEntryPoint.cs" />
+    <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="GUI\" />
+    <EmbeddedResource Include="GUI\PluginPublisher\PluginPublisher.layout" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
