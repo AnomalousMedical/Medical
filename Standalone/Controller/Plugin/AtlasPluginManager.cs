@@ -259,7 +259,7 @@ namespace Medical
                     realData = new byte[binaryReader.ReadInt32()];
                     binaryReader.Read(realData, 0, realData.Length);
 
-                    if (!rsaProvider.VerifyData(realData, sha1Provider, hashedData))
+                    if (rsaProvider.VerifyData(realData, sha1Provider, hashedData))
                     {
                         using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(realData)))
                         {

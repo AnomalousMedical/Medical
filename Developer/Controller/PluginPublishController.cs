@@ -6,6 +6,7 @@ using Medical;
 using System.IO;
 using Logging;
 using Ionic.Zip;
+using System.Security.Cryptography;
 
 namespace Developer
 {
@@ -43,11 +44,11 @@ namespace Developer
                 {
                     Directory.CreateDirectory(outDirectory);
                 }
-                copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, true, true);
+                copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, keyFile, true, true);
             }
         }
 
-        private void copyResources(DDAtlasPlugin plugin, String basePath, String targetDirectory, bool compress, bool obfuscate)
+        private void copyResources(DDAtlasPlugin plugin, String basePath, String targetDirectory, String pluginFile, String keyFile, bool compress, bool obfuscate)
         {
             String archiveName = plugin.PluginNamespace;
             basePath = Path.GetFullPath(basePath) + Path.DirectorySeparatorChar;
@@ -73,6 +74,10 @@ namespace Developer
                 Log.Info("Copying {0} to {1}.", sourceFile.FullName, destination);
                 File.Copy(sourceFile.FullName, destination, true);
             }
+            //Sign the key file
+            signPluginFile(Path.Combine(targetDirectory, Path.GetFileName(pluginFile)), keyFile);
+
+            //Compress
             if (compress)
             {
                 String zipFileName = originalDirectory + "\\" + archiveName + ".zip";
@@ -96,6 +101,39 @@ namespace Developer
                     String obfuscateFileName = originalDirectory + "\\" + archiveName + ".dat";
                     obfuscateZipFile(zipFileName, obfuscateFileName);
                     File.Delete(zipFileName);
+                }
+            }
+        }
+
+        private static void signPluginFile(String pluginFile, String keyFile)
+        {
+            byte[] pluginBytes = null;
+            using (Stream stream = File.Open(pluginFile, FileMode.Open))
+            {
+                pluginBytes = new byte[stream.Length];
+                stream.Read(pluginBytes, 0, pluginBytes.Length);
+            }
+
+            String privateKey = null;
+            using (StreamReader sr = new StreamReader(File.Open(keyFile, FileMode.Open)))
+            {
+                privateKey = sr.ReadToEnd();
+            }
+
+            if (pluginBytes != null && privateKey != null)
+            {
+                RSACryptoServiceProvider.UseMachineKeyStore = true;
+                RSACryptoServiceProvider rsaAlgo = new RSACryptoServiceProvider();
+                rsaAlgo.FromXmlString(privateKey);
+                byte[] signedPlugin = rsaAlgo.SignData(pluginBytes, new SHA1CryptoServiceProvider());
+
+                using (Stream outStream = File.OpenWrite(pluginFile))
+                {
+                    BinaryWriter binaryWriter = new BinaryWriter(outStream);
+                    binaryWriter.Write(signedPlugin.Length);
+                    binaryWriter.Write(signedPlugin, 0, signedPlugin.Length);
+                    binaryWriter.Write(pluginBytes.Length);
+                    binaryWriter.Write(pluginBytes, 0, pluginBytes.Length);
                 }
             }
         }
