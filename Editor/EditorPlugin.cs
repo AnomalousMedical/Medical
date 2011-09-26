@@ -106,7 +106,7 @@ namespace Medical
             scratchArea = new ScratchArea(scratchAreaController, browserWindow);
             guiManager.addManagedDialog(scratchArea);
 
-            pluginEditor = new DDAtlasPluginEditor(browserWindow, standaloneController.TimelineController);
+            pluginEditor = new DDAtlasPluginEditor(browserWindow, standaloneController.TimelineController, standaloneController.AtlasPluginManager);
             guiManager.addManagedDialog(pluginEditor);
 
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);

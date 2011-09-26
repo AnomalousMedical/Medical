@@ -189,9 +189,9 @@ namespace Medical
 
                 if (VirtualFileSystem.Instance.exists(pluginDefinitionFile))
                 {
-                    using (XmlTextReader xmlReader = new XmlTextReader(VirtualFileSystem.Instance.openStream(pluginDefinitionFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                    using (Stream pluginStream = VirtualFileSystem.Instance.openStream(pluginDefinitionFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                     {
-                        DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                        DDAtlasPlugin plugin = loadPlugin(pluginStream);
                         if (plugin != null)
                         {
                             plugin.PluginRootFolder = pluginDirectory;
@@ -207,6 +207,20 @@ namespace Medical
                 {
                     Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it does not exist.", pluginDefinitionFile, path, fullPath);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Load a plugin from a stream. The stream will be closed by this method.
+        /// </summary>
+        /// <param name="stream">The stream to read the plugin from.</param>
+        /// <returns>A DDAtlasPlugin object or null if an error occured.</returns>
+        public DDAtlasPlugin loadPlugin(Stream stream)
+        {
+            using (XmlTextReader xmlReader = new XmlTextReader(stream))
+            {
+                DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                return plugin;
             }
         }
 

@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Engine.Editing;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -26,11 +27,15 @@ namespace Medical.GUI
         private TimelineController mainTimelineController;
 
         private XmlSaver xmlSaver = new XmlSaver();
+        private String currentFile = null;
 
-        public DDAtlasPluginEditor(BrowserWindow browserWindow, TimelineController mainTimelineController)
+        private AtlasPluginManager pluginManager;
+
+        public DDAtlasPluginEditor(BrowserWindow browserWindow, TimelineController mainTimelineController, AtlasPluginManager pluginManager)
             : base("Medical.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
         {
             this.mainTimelineController = mainTimelineController;
+            this.pluginManager = pluginManager;
 
             uiCallback = new MedicalUICallback(browserWindow);
             uiCallback.addCustomQuery(DDAtlasPluginCustomQueries.GetTimelineController, getTimelineController);
@@ -70,7 +75,7 @@ namespace Medical.GUI
         public void createNewExamDefinition()
         {
             currentDefinition = new DDAtlasPlugin();
-            currentDefinitionChanged();
+            currentDefinitionChanged(null);
         }
 
         public void loadExamDefinition()
@@ -81,13 +86,13 @@ namespace Medical.GUI
                 {
                     try
                     {
-                        using (XmlTextReader xmlReader = new XmlTextReader(fileDialog.Path))
+                        using (Stream pluginStream = File.Open(fileDialog.Path, FileMode.Open, FileAccess.Read))
                         {
-                            DDAtlasPlugin loadedPlugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                            DDAtlasPlugin loadedPlugin = pluginManager.loadPlugin(pluginStream);
                             if (loadedPlugin != null)
                             {
                                 currentDefinition = loadedPlugin;
-                                currentDefinitionChanged();
+                                currentDefinitionChanged(fileDialog.Path);
                             }
                             else
                             {
@@ -105,7 +110,18 @@ namespace Medical.GUI
 
         public void saveExamDefinition()
         {
-            saveExamDefinitionAs();
+            if (currentFile != null)
+            {
+                using (XmlTextWriter xmlWriter = new XmlTextWriter(currentFile, Encoding.Default))
+                {
+                    xmlWriter.Formatting = Formatting.Indented;
+                    xmlSaver.saveObject(currentDefinition, xmlWriter);
+                }
+            }
+            else
+            {
+                saveExamDefinitionAs();
+            }
         }
 
         public void saveExamDefinitionAs()
@@ -120,6 +136,7 @@ namespace Medical.GUI
                         {
                             xmlWriter.Formatting = Formatting.Indented;
                             xmlSaver.saveObject(currentDefinition, xmlWriter);
+                            fileChanged(fileDialog.Path);
                         }
                     }
                     catch (Exception e)
@@ -136,9 +153,23 @@ namespace Medical.GUI
             table.layout();
         }
 
-        private void currentDefinitionChanged()
+        private void currentDefinitionChanged(String file)
         {
             editTreeView.EditInterface = currentDefinition.EditInterface;
+            fileChanged(file);
+        }
+
+        private void fileChanged(String file)
+        {
+            currentFile = file;
+            if (currentFile != null)
+            {
+                window.Caption = String.Format("Exam Editor - {0}", currentFile);
+            }
+            else
+            {
+                window.Caption = String.Format("Exam Editor");
+            }
         }
 
         private void getTimelineController(SendResult<Object> resultCallback, params Object[] args)
