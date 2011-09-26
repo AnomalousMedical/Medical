@@ -64,6 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PluginPublishController.cs" />
+    <Compile Include="Controller\ZipStatusTextWriter.cs" />
     <Compile Include="DeveloperAtlasPlugin.cs" />
     <Compile Include="DeveloperAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />

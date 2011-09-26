@@ -18,9 +18,13 @@ namespace Developer.GUI
         private Edit signatureFileEdit;
         private Edit outDirEdit;
 
-        public PluginPublisher()
+        private PluginPublishController pluginPublishController;
+
+        public PluginPublisher(PluginPublishController pluginPublishController)
             :base("Developer.GUI.PluginPublisher.PluginPublisher.layout")
         {
+            this.pluginPublishController = pluginPublishController;
+
             pluginFileEdit = (Edit)window.findWidget("PluginFileEdit");
             signatureFileEdit = (Edit)window.findWidget("SignatureFileEdit");
             outDirEdit = (Edit)window.findWidget("OutDirEdit");
@@ -33,6 +37,14 @@ namespace Developer.GUI
 
             Button outDirBrowser = (Button)window.findWidget("OutDirBrowser");
             outDirBrowser.MouseButtonClick += new MyGUIEvent(outDirBrowser_MouseButtonClick);
+
+            Button publishButton = (Button)window.findWidget("PublishButton");
+            publishButton.MouseButtonClick += new MyGUIEvent(publishButton_MouseButtonClick);
+        }
+
+        void publishButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            pluginPublishController.publishPlugin(pluginFileEdit.OnlyText, signatureFileEdit.OnlyText, outDirEdit.OnlyText);
         }
 
         void outDirBrowser_MouseButtonClick(Widget source, EventArgs e)

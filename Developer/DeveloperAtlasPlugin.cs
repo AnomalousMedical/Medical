@@ -13,6 +13,7 @@ namespace Developer
     {
         private ExamViewer examViewer;
         private PluginPublisher pluginPublisher;
+        private PluginPublishController pluginPublishController;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -32,12 +33,14 @@ namespace Developer
 
         public void initialize(StandaloneController standaloneController)
         {
+            pluginPublishController = new PluginPublishController(standaloneController.AtlasPluginManager);
+
             GUIManager guiManager = standaloneController.GUIManager;
 
             examViewer = new ExamViewer(standaloneController.ExamController);
             guiManager.addManagedDialog(examViewer);
 
-            pluginPublisher = new PluginPublisher();
+            pluginPublisher = new PluginPublisher(pluginPublishController);
             guiManager.addManagedDialog(pluginPublisher);
 
             //Task Controller

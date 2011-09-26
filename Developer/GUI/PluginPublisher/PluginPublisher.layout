@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="45 61 370 173" layer="Back">
         <Property key="Widget_Caption" value="Plugin Publisher"/>
-        <Widget type="Button" skin="Button" position="5 129 68 22" align="Left Bottom">
+        <Widget type="Button" skin="Button" position="5 129 68 22" align="Left Bottom" name="PublishButton">
             <Property key="Widget_Caption" value="Publish"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="3 4 157 15">
