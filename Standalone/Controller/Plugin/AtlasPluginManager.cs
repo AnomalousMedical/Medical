@@ -15,6 +15,7 @@ using Medical.GUI;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using System.Globalization;
+using System.Security.Cryptography;
 
 namespace Medical
 {
@@ -28,6 +29,16 @@ namespace Medical
         private HashSet<String> loadedPluginNames = new HashSet<string>();
         private XmlSaver xmlSaver = new XmlSaver();
         private bool addedPluginsToMyGUIResourceGroup = false;
+
+        private static RSACryptoServiceProvider rsaProvider;
+        private static SHA1CryptoServiceProvider sha1Provider;
+
+        static AtlasPluginManager()
+        {
+            rsaProvider = new RSACryptoServiceProvider();
+            rsaProvider.FromXmlString("<RSAKeyValue><Modulus>sFBRdwESLKFtqMjfjMLrZiueRyeaNd+bbK4CFnC3tvZEnqDDs3OLajebXYSDD+MABD1DRJ+XJgKZO1XmBUW2BpK415CwHj+6cFf0/Vz4eBknoruJRJEhMyQJ4k/RTmpiSl+WCrtpPV9EuBTBnlmAFGWEX53c/v/ihqooV/DpVWE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>");
+            sha1Provider = new SHA1CryptoServiceProvider();
+        }
 
         public AtlasPluginManager(StandaloneController standaloneController)
         {
@@ -211,17 +222,59 @@ namespace Medical
         }
 
         /// <summary>
-        /// Load a plugin from a stream. The stream will be closed by this method.
+        /// Load a plugin from a stream. The stream will NOT be closed by this method.
         /// </summary>
         /// <param name="stream">The stream to read the plugin from.</param>
         /// <returns>A DDAtlasPlugin object or null if an error occured.</returns>
         public DDAtlasPlugin loadPlugin(Stream stream)
         {
-            using (XmlTextReader xmlReader = new XmlTextReader(stream))
+            //Read the file
+            byte[] fileContents = new byte[stream.Length];
+            stream.Read(fileContents, 0, fileContents.Length);
+
+#if ALLOW_OVERRIDE
+            //If we allow overrides first try to read the plugin as unsigned
+            try
             {
-                DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
-                return plugin;
+                using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(fileContents)))
+                {
+                    DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                    return plugin;
+                }
             }
+            catch (Exception)
+            {
+
+            }
+#endif
+            //Read the plugin as a signed plugin
+            try
+            {
+                byte[] hashedData;
+                byte[] realData;
+                using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(fileContents)))
+                {
+                    hashedData = new byte[binaryReader.ReadInt32()];
+                    binaryReader.Read(hashedData, 0, hashedData.Length);
+                    realData = new byte[binaryReader.ReadInt32()];
+                    binaryReader.Read(realData, 0, realData.Length);
+
+                    if (!rsaProvider.VerifyData(realData, sha1Provider, hashedData))
+                    {
+                        using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(realData)))
+                        {
+                            DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                            return plugin;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+
+            return null;
         }
 
         public void addPlugin(AtlasPlugin plugin)
