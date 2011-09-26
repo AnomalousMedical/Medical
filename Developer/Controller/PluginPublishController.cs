@@ -22,29 +22,36 @@ namespace Developer
 
         public void publishPlugin(String pluginFile, String keyFile, String outDirectory)
         {
-            DDAtlasPlugin plugin = null;
-            using(Stream stream = File.Open(pluginFile, FileMode.Open))
+            try
             {
-                plugin = pluginManager.loadPlugin(stream);
+                DDAtlasPlugin plugin = null;
+                using (Stream stream = File.Open(pluginFile, FileMode.Open))
+                {
+                    plugin = pluginManager.loadPlugin(stream);
+                }
+
+                if (plugin != null)
+                {
+                    String pluginPath = Path.GetDirectoryName(pluginFile);
+
+                    //Scan files
+                    String[] pluginFiles = Directory.GetFiles(pluginPath, "*", SearchOption.AllDirectories);
+                    foreach (String file in pluginFiles)
+                    {
+                        addFile(new FileInfo(file));
+                    }
+
+                    //Copy Files, build plugin
+                    if (!Directory.Exists(outDirectory))
+                    {
+                        Directory.CreateDirectory(outDirectory);
+                    }
+                    copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, keyFile, true, true);
+                }
             }
-
-            if(plugin != null)
+            finally
             {
-                String pluginPath = Path.GetDirectoryName(pluginFile);
-
-                //Scan files
-                String[] pluginFiles = Directory.GetFiles(pluginPath, "*", SearchOption.AllDirectories);
-                foreach (String file in pluginFiles)
-                {
-                    addFile(new FileInfo(file));
-                }
-
-                //Copy Files
-                if (!Directory.Exists(outDirectory))
-                {
-                    Directory.CreateDirectory(outDirectory);
-                }
-                copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, keyFile, true, true);
+                files.Clear();
             }
         }
 
