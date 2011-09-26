@@ -130,6 +130,10 @@ namespace Developer
                 using (Stream outStream = File.OpenWrite(pluginFile))
                 {
                     BinaryWriter binaryWriter = new BinaryWriter(outStream);
+                    binaryWriter.Write('S');
+                    binaryWriter.Write('D');
+                    binaryWriter.Write('D');
+                    binaryWriter.Write('P');
                     binaryWriter.Write(signedPlugin.Length);
                     binaryWriter.Write(signedPlugin, 0, signedPlugin.Length);
                     binaryWriter.Write(pluginBytes.Length);

@@ -232,8 +232,42 @@ namespace Medical
             byte[] fileContents = new byte[stream.Length];
             stream.Read(fileContents, 0, fileContents.Length);
 
+            //Read the plugin as a signed plugin
+            try
+            {
+                byte[] hashedData;
+                byte[] realData;
+                using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(fileContents)))
+                {
+                    char[] magicLetters = binaryReader.ReadChars(4);
+                    if (magicLetters[0] == 'S' &&
+                        magicLetters[1] == 'D' &&
+                        magicLetters[2] == 'D' &&
+                        magicLetters[3] == 'P')
+                    {
+                        hashedData = new byte[binaryReader.ReadInt32()];
+                        binaryReader.Read(hashedData, 0, hashedData.Length);
+                        realData = new byte[binaryReader.ReadInt32()];
+                        binaryReader.Read(realData, 0, realData.Length);
+
+                        if (rsaProvider.VerifyData(realData, sha1Provider, hashedData))
+                        {
+                            using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(realData)))
+                            {
+                                DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
+                                return plugin;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
 #if ALLOW_OVERRIDE
-            //If we allow overrides first try to read the plugin as unsigned
+            //If we allow overrides try to read the plugin as unsigned
             try
             {
                 using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(fileContents)))
@@ -247,32 +281,6 @@ namespace Medical
 
             }
 #endif
-            //Read the plugin as a signed plugin
-            try
-            {
-                byte[] hashedData;
-                byte[] realData;
-                using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(fileContents)))
-                {
-                    hashedData = new byte[binaryReader.ReadInt32()];
-                    binaryReader.Read(hashedData, 0, hashedData.Length);
-                    realData = new byte[binaryReader.ReadInt32()];
-                    binaryReader.Read(realData, 0, realData.Length);
-
-                    if (rsaProvider.VerifyData(realData, sha1Provider, hashedData))
-                    {
-                        using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(realData)))
-                        {
-                            DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
-                            return plugin;
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                
-            }
 
             return null;
         }
