@@ -40,12 +40,15 @@ namespace Medical.GUI
 
             Button installButton = (Button)window.findWidget("InstallButton");
             installButton.MouseButtonClick += new MyGUIEvent(installButton_MouseButtonClick);
+
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
         }
 
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
             pluginGrid.clear();
+            pluginGrid.SuppressLayout = true;
             List<int> serverPlugins = readServerPlugins();
             foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
             {
@@ -58,6 +61,8 @@ namespace Medical.GUI
                 ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginId.ToString());
                 item.UserObject = InstallStatus.NotInstalled;
             }
+            pluginGrid.SuppressLayout = false;
+            pluginGrid.layout();
         }
 
         void pluginGrid_SelectedValueChanged(object sender, EventArgs e)
@@ -121,6 +126,11 @@ namespace Medical.GUI
             }
 
             return pluginIdList;
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            pluginGrid.layout();
         }
     }
 }
