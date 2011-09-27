@@ -7,16 +7,16 @@ using System.Text;
 
 namespace Medical
 {
-    enum FeatureCodes
-    {
-        LecturePlugin = 2
-    }
+    //enum FeatureCodes
+    //{
+    //    LecturePlugin = 2
+    //}
 
     class LecturePluginEntryPoint : AtlasPluginEntryPointAttribute
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            if (standaloneController.App.LicenseManager.allowFeature((int)FeatureCodes.LecturePlugin))
+            //if (standaloneController.App.LicenseManager.allowFeature((int)FeatureCodes.LecturePlugin))
             {
                 standaloneController.AtlasPluginManager.addPlugin(new LecturePlugin());
             }
