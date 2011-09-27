@@ -198,6 +198,14 @@ namespace Medical
             }
         }
 
+        public String MachinePassword
+        {
+            get
+            {
+                return license != null ? license.Pass : "";
+            }
+        }
+
         private void showKeyDialog()
         {
             licenseDialog = new LicenseDialog(programName, getMachineId(), productID, keyDialogMessage);

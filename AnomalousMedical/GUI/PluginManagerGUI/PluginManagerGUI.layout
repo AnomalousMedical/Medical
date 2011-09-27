@@ -2,8 +2,12 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="18 34 395 253" layer="Overlapped">
         <Property key="Widget_Caption" value="Plugin Manager"/>
-        <Widget type="ScrollView" skin="ScrollView" position="5 5 218 226" align="Stretch" name="PluginScrollList"/>
-        <Widget type="Widget" skin="PanelEmpty" position="228 6 162 225" name="InstallPanel">
+        <Widget type="ScrollView" skin="ScrollView" position="5 5 218 226" align="Stretch" name="PluginScrollList">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <UserString key="ButtonSkin" value="ButtonListIconButton"/>
+            <UserString key="ItemHeight" value="102"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="228 6 162 225" align="Right Top" name="InstallPanel">
             <Widget type="Button" skin="Button" position="37 25 91 26" name="InstallButton">
                 <Property key="Widget_Caption" value="Install"/>
             </Widget>
