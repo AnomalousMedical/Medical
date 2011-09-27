@@ -70,5 +70,13 @@ namespace Developer
         {
 
         }
+
+        public long PluginId
+        {
+            get
+            {
+                return -1;
+            }
+        }
     }
 }

@@ -60,5 +60,13 @@ namespace Medical
         {
             
         }
+
+        public long PluginId
+        {
+            get
+            {
+                return -1;
+            }
+        }
     }
 }

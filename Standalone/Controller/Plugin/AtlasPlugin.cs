@@ -23,5 +23,7 @@ namespace Medical
         /// Called when the scene has finished loading and has been fully revealed. (i.e. any fading effects etc. have been completed).
         /// </summary>
         void sceneRevealed();
+
+        long PluginId { get; }
     }
 }

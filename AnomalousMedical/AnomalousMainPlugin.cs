@@ -129,6 +129,14 @@ namespace Medical.GUI
 
         }
 
+        public long PluginId
+        {
+            get
+            {
+                return -1;
+            }
+        }
+
         public void showOptions()
         {
             options.show(0, 0);

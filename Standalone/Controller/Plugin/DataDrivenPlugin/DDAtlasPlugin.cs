@@ -24,7 +24,7 @@ namespace Medical
         public DDAtlasPlugin()
         {
             IconResourceFile = "Resources/Imagesets.xml";
-            PluginID = -1;
+            PluginId = -1;
         }
 
         public void Dispose()
@@ -34,7 +34,7 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
-            if (PluginID == -1 || standaloneController.App.LicenseManager.allowFeature(PluginID))
+            if (PluginId == -1 || standaloneController.App.LicenseManager.allowFeature(PluginId))
             {
                 TimelineController = standaloneController.TimelineController;
 
@@ -102,7 +102,7 @@ namespace Medical
         public String IconResourceFile { get; set; }
 
         [Editable]
-        public long PluginID { get; set; }
+        public long PluginId { get; set; }
 
         public TimelineController TimelineController { get; private set; }
 
@@ -128,7 +128,7 @@ namespace Medical
             pluginNamespace = info.GetString("PluginNamespace");
             info.RebuildList<DDPluginTask>("Task", tasks);
             IconResourceFile = info.GetString("IconResourceFile");
-            PluginID = info.GetInt64("PluginID");
+            PluginId = info.GetInt64("PluginID");
         }
 
         public void getInfo(SaveInfo info)
@@ -136,7 +136,7 @@ namespace Medical
             info.AddValue("PluginNamespace", pluginNamespace);
             info.ExtractList<DDPluginTask>("Task", tasks);
             info.AddValue("IconResourceFile", IconResourceFile);
-            info.AddValue("PluginID", PluginID);
+            info.AddValue("PluginID", PluginId);
         }
 
         #endregion

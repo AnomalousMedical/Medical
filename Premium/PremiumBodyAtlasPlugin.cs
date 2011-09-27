@@ -150,6 +150,14 @@ namespace Medical
             bookmarksController.loadSavedBookmarks();
         }
 
+        public long PluginId
+        {
+            get
+            {
+                return (long)Features.Premium;
+            }
+        }
+
         public void open()
         {
             openPatientDialog.show(0, 0);
