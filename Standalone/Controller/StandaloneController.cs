@@ -89,7 +89,10 @@ namespace Medical
 
         public void Dispose()
         {
-            timelineWizardManager.Dispose();
+            if (timelineWizardManager != null)
+            {
+                timelineWizardManager.Dispose();
+            }
             DocumentController.saveRecentDocuments();
             if (touchController != null)
             {

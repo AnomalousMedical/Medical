@@ -162,33 +162,6 @@ namespace Medical
 #endif
         }
 
-        public String Key
-        {
-            get
-            {
-#if CRACKED
-                return "Anomalous Medical Internal";
-#else
-                return license != null ? license.ProductKey : "None";
-#endif
-            }
-        }
-
-        /// <summary>
-        /// If a license is invalid because it is expired this will be true.
-        /// </summary>
-        public bool IsExpired
-        {
-            get
-            {
-#if CRACKED
-                return false;
-#else
-                return license != null ? license.IsExpired : false;
-#endif
-            }
-        }
-
         public bool Valid
         {
             get
@@ -196,16 +169,8 @@ namespace Medical
 #if CRACKED
                 return true;
 #else
-                return license != null && !license.IsExpired && license.MachineID == getMachineId();
+                return license != null && license.MachineID == getMachineId();
 #endif
-            }
-        }
-
-        public String FeatureLevelString
-        {
-            get
-            {
-                return license != null ? license.FeatureLevel : "";
             }
         }
 
