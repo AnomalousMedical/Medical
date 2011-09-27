@@ -64,6 +64,7 @@ namespace Medical
             MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
             MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
             MedicalConfig.UserPluginListURL = "https://www.anomalousmedical.com/DRM/UserPluginList.aspx";
+            MedicalConfig.PluginInfoURL = "https://www.anomalousmedical.com/DRM/PluginInfo.aspx";
             
             //User configuration settings
             configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
@@ -103,6 +104,7 @@ namespace Medical
                 ForgotPasswordURL = updates.getValue("ForgotPasswordURL", ForgotPasswordURL);
                 RegisterURL = updates.getValue("RegisterURL", RegisterURL);
                 UserPluginListURL = updates.getValue("UserPluginListURL", UserPluginListURL);
+                PluginInfoURL = updates.getValue("PluginInfoURL", PluginInfoURL);
 
                 pluginConfig.readPlugins(overrideSettings);
             }
@@ -346,5 +348,7 @@ namespace Medical
         public static String RegisterURL { get; private set; }
 
         public static String UserPluginListURL { get; set; }
+
+        public static String PluginInfoURL { get; set; }
     }
 }

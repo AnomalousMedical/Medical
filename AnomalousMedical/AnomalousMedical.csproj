@@ -102,6 +102,7 @@
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
     <Compile Include="GUI\PluginManagerGUI\PluginManagerGUI.cs" />
+    <Compile Include="GUI\PluginManagerGUI\ServerPluginInfo.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="Program.cs" />

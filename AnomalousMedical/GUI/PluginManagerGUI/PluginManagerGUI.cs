@@ -7,17 +7,12 @@ using System.Net;
 using System.IO;
 using System.Globalization;
 using Logging;
+using Engine;
 
 namespace Medical.GUI
 {
     class PluginManagerGUI : MDIDialog
     {
-        enum InstallStatus
-        {
-            Installed,
-            NotInstalled
-        }
-
         private Widget installPanel;
         private ButtonGrid pluginGrid;
 
@@ -55,14 +50,23 @@ namespace Medical.GUI
             foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
             {
                 ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
-                item.UserObject = InstallStatus.Installed;
                 serverPlugins.Remove((int)plugin.PluginId);
             }
+            StringBuilder sb = new StringBuilder();
             foreach (int pluginId in serverPlugins)
             {
-                ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginId.ToString());
-                item.UserObject = InstallStatus.NotInstalled;
+                sb.Append(pluginId.ToString());
+                sb.Append(",");
             }
+            String uninstalledPluginsList = sb.ToString(0, sb.Length - 1);
+
+            List<ServerPluginInfo> pluginInfo = readServerPluginInfo(uninstalledPluginsList);
+            foreach (ServerPluginInfo plugin in pluginInfo)
+            {
+                ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name);
+                item.UserObject = plugin;
+            }
+
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
         }
@@ -70,7 +74,7 @@ namespace Medical.GUI
         void pluginGrid_SelectedValueChanged(object sender, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
-            installPanel.Visible = selectedItem != null && (InstallStatus)selectedItem.UserObject == InstallStatus.NotInstalled;
+            installPanel.Visible = selectedItem != null && selectedItem.UserObject != null;
         }
 
         void installButton_MouseButtonClick(Widget source, EventArgs e)
@@ -128,6 +132,58 @@ namespace Medical.GUI
             }
 
             return pluginIdList;
+        }
+
+        List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)
+        {
+            List<ServerPluginInfo> pluginInfoList = new List<ServerPluginInfo>();
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginInfoURL));
+                request.Timeout = 10000;
+                request.Method = "POST";
+                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&list={2}", licenseManager.User, licenseManager.MachinePassword, commaSeparatedPluginList);
+                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/x-www-form-urlencoded";
+
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                }
+
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                {
+                    using (Stream serverDataStream = response.GetResponseStream())
+                    {
+                        using (Stream localDataStream = new MemoryStream())
+                        {
+                            byte[] buffer = new byte[8 * 1024];
+                            int len;
+                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                localDataStream.Write(buffer, 0, len);
+                            }
+                            localDataStream.Seek(0, SeekOrigin.Begin);
+                            using (StreamReader streamReader = new StreamReader(localDataStream))
+                            {
+                                while (!streamReader.EndOfStream)
+                                {
+                                    pluginInfoList.Add(new ServerPluginInfo(NumberParser.ParseInt(streamReader.ReadLine()), streamReader.ReadLine()));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error reading plugin data from the server: {0}", e.Message);
+            }
+
+            return pluginInfoList;
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
