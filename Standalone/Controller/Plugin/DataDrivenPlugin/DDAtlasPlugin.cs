@@ -104,6 +104,9 @@ namespace Medical
         [Editable]
         public long PluginId { get; set; }
 
+        [Editable]
+        public String PluginName { get; set; }
+
         public TimelineController TimelineController { get; private set; }
 
         public String PluginRootFolder { get; set; }
@@ -129,6 +132,7 @@ namespace Medical
             info.RebuildList<DDPluginTask>("Task", tasks);
             IconResourceFile = info.GetString("IconResourceFile");
             PluginId = info.GetInt64("PluginID");
+            PluginName = info.GetString("PluginName");
         }
 
         public void getInfo(SaveInfo info)
@@ -137,6 +141,7 @@ namespace Medical
             info.ExtractList<DDPluginTask>("Task", tasks);
             info.AddValue("IconResourceFile", IconResourceFile);
             info.AddValue("PluginID", PluginId);
+            info.AddValue("PluginName", PluginName);
         }
 
         #endregion

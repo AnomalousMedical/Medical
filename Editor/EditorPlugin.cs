@@ -157,6 +157,14 @@ namespace Medical
             }
         }
 
+        public String PluginName
+        {
+            get
+            {
+                return "Editor Plugin";
+            }
+        }
+
         public void createMenuBar(NativeMenuBar menu)
         {
 

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="18 34 395 253" layer="Overlapped">
+        <Property key="Widget_Caption" value="Plugin Manager"/>
+        <Widget type="ScrollView" skin="ScrollView" position="5 5 218 226" align="Stretch" name="PluginScrollList"/>
+        <Widget type="Widget" skin="PanelEmpty" position="228 6 162 225" name="InstallPanel">
+            <Widget type="Button" skin="Button" position="37 25 91 26" name="InstallButton">
+                <Property key="Widget_Caption" value="Install"/>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>

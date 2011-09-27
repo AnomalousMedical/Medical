@@ -24,6 +24,7 @@ namespace Medical.GUI
         private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
+        private PluginManagerGUI pluginManagerGUI;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -66,6 +67,9 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             guiManager.addManagedDialog(renderDialog);
 
+            pluginManagerGUI = new PluginManagerGUI(standaloneController.AtlasPluginManager);
+            guiManager.addManagedDialog(pluginManagerGUI);
+
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.setAppIcon("AppButton/Image");
@@ -80,6 +84,8 @@ namespace Medical.GUI
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0));
 
             //System Section
+            taskController.addTask(new MDIDialogOpenTask(pluginManagerGUI, "Medical.PluginManagerGUI", "Plugin Manager", "", TaskMenuCategories.System, int.MaxValue - 5, true));
+
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
             taskController.addTask(helpTaskItem);
@@ -134,6 +140,14 @@ namespace Medical.GUI
             get
             {
                 return -1;
+            }
+        }
+
+        public String PluginName
+        {
+            get
+            {
+                return "Main Plugin";
             }
         }
 

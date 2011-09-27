@@ -349,7 +349,15 @@ namespace Medical
                 plugin.sceneRevealed();
             }
         }
-        
+
+        public IEnumerable<AtlasPlugin> LoadedPlugins
+        {
+            get
+            {
+                return plugins;
+            }
+        }
+
         private void standaloneController_SceneUnloading(SimScene scene)
         {
             foreach (AtlasPlugin plugin in plugins)

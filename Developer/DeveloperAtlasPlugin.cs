@@ -78,5 +78,13 @@ namespace Developer
                 return -1;
             }
         }
+
+        public String PluginName
+        {
+            get
+            {
+                return "Developer Plugin";
+            }
+        }
     }
 }

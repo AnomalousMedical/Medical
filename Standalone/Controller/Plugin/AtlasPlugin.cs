@@ -25,5 +25,7 @@ namespace Medical
         void sceneRevealed();
 
         long PluginId { get; }
+
+        String PluginName { get; }
     }
 }

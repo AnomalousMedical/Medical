@@ -158,6 +158,14 @@ namespace Medical
             }
         }
 
+        public String PluginName
+        {
+            get
+            {
+                return "Premium Features";
+            }
+        }
+
         public void open()
         {
             openPatientDialog.show(0, 0);

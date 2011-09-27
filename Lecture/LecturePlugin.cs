@@ -68,5 +68,13 @@ namespace Medical
                 return -1;
             }
         }
+
+        public String PluginName
+        {
+            get
+            {
+                return "Lecture Plugin";
+            }
+        }
     }
 }
