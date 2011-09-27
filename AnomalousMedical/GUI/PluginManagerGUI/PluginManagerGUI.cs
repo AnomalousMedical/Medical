@@ -32,8 +32,6 @@ namespace Medical.GUI
 
             pluginGrid = new ButtonGrid((ScrollView)window.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
-            pluginGrid.defineGroup("Not Installed");
-            pluginGrid.defineGroup("Installed");
 
             installPanel = window.findWidget("InstallPanel");
             installPanel.Visible = false;
@@ -47,7 +45,11 @@ namespace Medical.GUI
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
+
             pluginGrid.clear();
+            pluginGrid.defineGroup("Not Installed");
+            pluginGrid.defineGroup("Installed");
+
             pluginGrid.SuppressLayout = true;
             List<int> serverPlugins = readServerPlugins();
             foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
