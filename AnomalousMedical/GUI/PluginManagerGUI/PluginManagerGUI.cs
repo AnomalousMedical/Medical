@@ -86,7 +86,14 @@ namespace Medical.GUI
             ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
             if (pluginInfo != null)
             {
-                downloadPlugin(pluginInfo.PluginId);
+                if (downloadPlugin(pluginInfo.PluginId))
+                {
+                    pluginGrid.SuppressLayout = true;
+                    pluginGrid.removeItem(selectedItem);
+                    pluginGrid.addItem("Installed", pluginInfo.Name);
+                    pluginGrid.SuppressLayout = false;
+                    pluginGrid.layout();
+                }
             }
         }
 
@@ -194,7 +201,7 @@ namespace Medical.GUI
             return pluginInfoList;
         }
 
-        void downloadPlugin(int pluginId)
+        bool downloadPlugin(int pluginId)
         {
             try
             {
@@ -239,13 +246,18 @@ namespace Medical.GUI
                             pluginManager.addPlugin(pluginFileLocation);
                             pluginManager.initialzePlugins();
                         }
+
+                        //If we got here the plugin installed correctly
+                        return true;
                     }
                 }
             }
             catch (Exception e)
             {
+                MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
                 Log.Error("Error reading plugin data from the server: {0}", e.Message);
             }
+            return false;
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
