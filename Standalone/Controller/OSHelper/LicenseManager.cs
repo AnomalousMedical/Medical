@@ -38,18 +38,16 @@ namespace Medical
         private LicenseDialog licenseDialog;
         private String keyFile;
         private String programName;
-        private int productID;
         private CallbackDelegate keyValidCallback;
         private CallbackDelegate showKeyDialogCallback;
 
         private AnomalousLicense license;
         private String keyDialogMessage = null;
 
-        public LicenseManager(String programName, String keyFile, int productID)
+        public LicenseManager(String programName, String keyFile)
         {
             this.keyFile = keyFile;
             this.programName = programName;
-            this.productID = productID;
             idCallback = new MachineIDCallback(getMachineIdCallback);
             keyValidCallback = new CallbackDelegate(fireKeyValid);
             showKeyDialogCallback = new CallbackDelegate(showKeyDialog);
@@ -89,7 +87,7 @@ namespace Medical
                             try
                             {
                                 AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-                                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID, productID);
+                                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID);
                                 if (licenseBytes != null)
                                 {
                                     storeLicenseFile(licenseBytes);
@@ -159,7 +157,7 @@ namespace Medical
             try
             {
                 AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID, productID);
+                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID);
                 if (licenseBytes != null)
                 {
                     storeLicenseFile(licenseBytes);
@@ -237,7 +235,7 @@ namespace Medical
 
         private void showKeyDialog()
         {
-            licenseDialog = new LicenseDialog(programName, getMachineId(), productID, keyDialogMessage);
+            licenseDialog = new LicenseDialog(programName, getMachineId(), keyDialogMessage);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
             licenseDialog.center();

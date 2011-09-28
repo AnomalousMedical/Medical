@@ -16,22 +16,22 @@ namespace Medical
 
         private static string downloadURL = "";
 
-        public static void checkForUpdates(Version currentVersion, int productId)
+        public static void checkForUpdates(Version currentVersion)
         {
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.UpdateURL));
                 request.Timeout = 15000;
-                request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "productID={0}", productId);
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
+                //request.Method = "POST";
+                //String postData = String.Format(CultureInfo.InvariantCulture, "productID={0}", productId);
+                //byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                //request.ContentType = "application/x-www-form-urlencoded";
 
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
+                //request.ContentLength = byteArray.Length;
+                //using (Stream dataStream = request.GetRequestStream())
+                //{
+                //    dataStream.Write(byteArray, 0, byteArray.Length);
+                //}
 
                 // Get the response.
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();

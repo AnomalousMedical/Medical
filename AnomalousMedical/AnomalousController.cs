@@ -55,7 +55,7 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
-            LicenseManager = new LicenseManager("Anomalous Medical", MedicalConfig.LicenseFile, ProductID);
+            LicenseManager = new LicenseManager("Anomalous Medical", MedicalConfig.LicenseFile);
             LicenseManager.KeyValid += new EventHandler(licenseManager_KeyValid);
             LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
             LicenseManager.KeyDialogShown += new EventHandler(LicenseManager_KeyDialogShown);
@@ -186,14 +186,6 @@ namespace Medical
             get
             {
                 return MedicalConfig.DefaultScene;
-            }
-        }
-
-        public override int ProductID
-        {
-            get
-            {
-                return 1;
             }
         }
 

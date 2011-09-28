@@ -20,7 +20,7 @@ namespace Medical.GUI
 
         public override void clicked()
         {
-            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version, standaloneController.App.ProductID);
+            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
         }
 
         public override bool Active

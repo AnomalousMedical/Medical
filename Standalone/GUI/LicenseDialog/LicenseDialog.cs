@@ -25,17 +25,15 @@ namespace Medical.GUI
         private Edit passwordEdit;
         private string programName;
         private String machineID;
-        private int productID;
         private Button activateButton;
         private Button cancelButton;
         private CheckButton rememberPasswordButton;
 
-        public LicenseDialog(String programName, String machineID, int productID, String message)
+        public LicenseDialog(String programName, String machineID, String message)
             :base("Medical.GUI.LicenseDialog.LicenseDialog.layout")
         {
             this.programName = programName;
             this.machineID = machineID;
-            this.productID = productID;
 
             Widget prompt = window.findWidget("Prompt");
             if (message != null)
@@ -137,7 +135,7 @@ namespace Medical.GUI
             try
             {
                 AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-                License = licenseServer.createLicenseFile(userEdit.OnlyText, passwordEdit.OnlyText, machineID, productID);
+                License = licenseServer.createLicenseFile(userEdit.OnlyText, passwordEdit.OnlyText, machineID);
                 if (License != null)
                 {
                     ThreadManager.invoke(new Callback(licenseCaptured), null);
