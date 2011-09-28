@@ -229,8 +229,16 @@ namespace Medical.GUI
                                 localDataStream.Write(buffer, 0, len);
                             }
                         }
-                        pluginManager.addPlugin(pluginFileLocation);
-                        pluginManager.initialzePlugins();
+
+                        if (!licenseManager.allowFeature(pluginId) && !licenseManager.getNewLicense())
+                        {
+                            MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                        }
+                        else
+                        {
+                            pluginManager.addPlugin(pluginFileLocation);
+                            pluginManager.initialzePlugins();
+                        }
                     }
                 }
             }

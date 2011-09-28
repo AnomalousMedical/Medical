@@ -148,6 +148,35 @@ namespace Medical
 #endif
         }
 
+        /// <summary>
+        /// This method can be used to get a new license from the server if the
+        /// original is missing a feature or something that was added after the
+        /// program started running.
+        /// </summary>
+        /// <returns></returns>
+        public bool getNewLicense()
+        {
+            try
+            {
+                AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
+                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID, productID);
+                if (licenseBytes != null)
+                {
+                    storeLicenseFile(licenseBytes);
+                    license = new AnomalousLicense(licenseBytes);
+                }
+            }
+            catch (AnomalousLicenseServerException alse)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void deleteLicense()
         {
 #if !CRACKED
