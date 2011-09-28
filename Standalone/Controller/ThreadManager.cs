@@ -39,7 +39,7 @@ namespace Medical.Controller
         public bool Finished { get; set; }
     }
 
-    class ThreadManager
+    public class ThreadManager
     {
         private static List<TargetEntry> targets = new List<TargetEntry>();
 

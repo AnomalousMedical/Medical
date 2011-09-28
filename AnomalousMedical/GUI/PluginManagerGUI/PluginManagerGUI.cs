@@ -8,6 +8,8 @@ using System.IO;
 using System.Globalization;
 using Logging;
 using Engine;
+using System.Threading;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -18,6 +20,12 @@ namespace Medical.GUI
 
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
+
+        private delegate void SetInstalledPluginsCallback(List<int> serverPlugins);
+        private SetInstalledPluginsCallback setInstalledPluginsCallback;
+
+        private delegate void SetNotInstalledPluginDataCallback(List<ServerPluginInfo> pluginInfo);
+        private SetNotInstalledPluginDataCallback setNotInstalledPluginsCallback;
         
         public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, GUIManager guiManager)
             :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
@@ -38,6 +46,9 @@ namespace Medical.GUI
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             this.Showing += new EventHandler(PluginManagerGUI_Showing);
+
+            setInstalledPluginsCallback = setInstalledPluginDataOnGUI;
+            setNotInstalledPluginsCallback = setNotInstalledPluginDataOnGUI;
         }
 
         void PluginManagerGUI_Showing(object sender, EventArgs e)
@@ -47,33 +58,58 @@ namespace Medical.GUI
             pluginGrid.defineGroup("Not Installed");
             pluginGrid.defineGroup("Installed");
 
+            readPluginInfoFromServer();
+        }
+
+        void readPluginInfoFromServer()
+        {
+            Thread serverReadThread = new Thread(delegate()
+            {
+                List<int> serverPlugins = readServerPlugins();
+                ThreadManager.invokeAndWait(setInstalledPluginsCallback, serverPlugins);
+                
+                StringBuilder sb = new StringBuilder();
+                foreach (int pluginId in serverPlugins)
+                {
+                    sb.Append(pluginId.ToString());
+                    sb.Append(",");
+                }
+                if (sb.Length > 0)
+                {
+                    String uninstalledPluginsList = sb.ToString(0, sb.Length - 1);
+                    List<ServerPluginInfo> pluginInfo = readServerPluginInfo(uninstalledPluginsList);
+                    ThreadManager.invoke(setNotInstalledPluginsCallback, pluginInfo);
+                }
+            });
+            serverReadThread.Start();
+        }
+
+        void setInstalledPluginDataOnGUI(List<int> serverPlugins)
+        {
             pluginGrid.SuppressLayout = true;
-            List<int> serverPlugins = readServerPlugins();
+
             foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
             {
                 ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
                 serverPlugins.Remove((int)plugin.PluginId);
             }
-            StringBuilder sb = new StringBuilder();
-            foreach (int pluginId in serverPlugins)
-            {
-                sb.Append(pluginId.ToString());
-                sb.Append(",");
-            }
-            if (sb.Length > 0)
-            {
-                String uninstalledPluginsList = sb.ToString(0, sb.Length - 1);
 
-                List<ServerPluginInfo> pluginInfo = readServerPluginInfo(uninstalledPluginsList);
-                foreach (ServerPluginInfo plugin in pluginInfo)
-                {
-                    ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name);
-                    item.UserObject = plugin;
-                }
+            pluginGrid.SuppressLayout = false;
+            pluginGrid.layout();
+        }
+
+        void setNotInstalledPluginDataOnGUI(List<ServerPluginInfo> pluginInfo)
+        {
+            pluginGrid.SuppressLayout = true;
+
+            foreach (ServerPluginInfo plugin in pluginInfo)
+            {
+                ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name);
+                item.UserObject = plugin;
             }
 
             pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();   
+            pluginGrid.layout();
         }
 
         void pluginGrid_SelectedValueChanged(object sender, EventArgs e)
