@@ -299,7 +299,7 @@ namespace Medical
             }
         }
 
-        internal void initialzePlugins()
+        public void initialzePlugins()
         {
             //If we already added the plugins folder to MyGUI, remove it.
             if (addedPluginsToMyGUIResourceGroup)
