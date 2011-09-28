@@ -118,7 +118,7 @@ namespace Medical.GUI
             {
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(selectedItem);
-                ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", pluginInfo.Name);
+                ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", pluginInfo.Name, "Starting Download"));
                 downloadingItem.UserObject = pluginInfo;
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
@@ -146,6 +146,12 @@ namespace Medical.GUI
             pluginGrid.addItem("Not Installed", pluginInfo.Name);
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
+        }
+
+        void updateDownloadStatus(ButtonGridItem downloadingItem, int progress)
+        {
+            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+            downloadingItem.Caption = String.Format("{0} - {1}%", pluginInfo.Name, progress);
         }
 
         void licenseServerReadFail()
@@ -284,14 +290,18 @@ namespace Medical.GUI
                             {
                                 String filename = response.Headers["content-disposition"].Substring(21);
                                 String sizeStr = response.Headers["Content-Length"];
+                                float fileSize = NumberParser.ParseFloat(sizeStr);
                                 String pluginFileLocation = Path.Combine(MedicalConfig.PluginConfig.PluginsFolder, filename);
                                 using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
                                 {
                                     byte[] buffer = new byte[8 * 1024];
                                     int len;
+                                    int totalRead = 0;
                                     while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
                                     {
+                                        totalRead += len;
                                         localDataStream.Write(buffer, 0, len);
+                                        ThreadManager.invoke(new Action<ButtonGridItem, int>(updateDownloadStatus), downloadingItem, (int)(totalRead / fileSize * 100.0f));
                                     }
                                 }
 
