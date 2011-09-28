@@ -41,6 +41,7 @@ namespace Medical.GUI
         {
             base.onShown(args);
 
+            installPanel.Visible = false;
             pluginGrid.clear();
             pluginGrid.defineGroup("Not Installed");
             pluginGrid.defineGroup("Installed");
