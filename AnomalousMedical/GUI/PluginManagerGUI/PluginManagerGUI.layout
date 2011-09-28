@@ -1,16 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="18 34 395 253" layer="Overlapped">
+    <Widget type="Widget" skin="TaskMenuBackground" position="70 96 800 600" layer="Overlapped">
         <Property key="Widget_Caption" value="Plugin Manager"/>
-        <Widget type="ScrollView" skin="ScrollView" position="5 5 218 226" align="Stretch" name="PluginScrollList">
+        <Widget type="ScrollView" skin="ScrollView" position="5 48 403 544" align="Left VStretch" name="PluginScrollList">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="ButtonListIconButton"/>
             <UserString key="ItemHeight" value="102"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="228 6 162 225" align="Right Top" name="InstallPanel">
+        <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Stretch" name="InstallPanel">
             <Widget type="Button" skin="Button" position="37 25 91 26" name="InstallButton">
                 <Property key="Widget_Caption" value="Install"/>
             </Widget>
+        </Widget>
+        <Widget type="Button" skin="ButtonXBig" position="770 3 24 20" align="Right Top" name="CloseButton"/>
+        <Widget type="StaticText" skin="StaticText" position="7 5 112 15">
+            <Property key="Widget_Caption" value="My Plugins"/>
+            <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
     </Widget>
 </MyGUI>

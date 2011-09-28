@@ -11,36 +11,37 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PluginManagerGUI : MDIDialog
+    class PluginManagerGUI : AbstractFullscreenGUIPopup
     {
         private Widget installPanel;
         private ButtonGrid pluginGrid;
 
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
-
-        public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager)
-            :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout")
+        
+        public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, GUIManager guiManager)
+            :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
         {
             this.pluginManager = pluginManager;
             this.licenseManager = licenseManager;
 
-            pluginGrid = new ButtonGrid((ScrollView)window.findWidget("PluginScrollList"), new ButtonGridListLayout());
+            pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
 
-            installPanel = window.findWidget("InstallPanel");
+            installPanel = widget.findWidget("InstallPanel");
             installPanel.Visible = false;
 
-            Button installButton = (Button)window.findWidget("InstallButton");
+            Button installButton = (Button)widget.findWidget("InstallButton");
             installButton.MouseButtonClick += new MyGUIEvent(installButton_MouseButtonClick);
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            Button closeButton = (Button)widget.findWidget("CloseButton");
+            closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+
+            this.Showing += new EventHandler(PluginManagerGUI_Showing);
         }
 
-        protected override void onShown(EventArgs args)
+        void PluginManagerGUI_Showing(object sender, EventArgs e)
         {
-            base.onShown(args);
-
             installPanel.Visible = false;
             pluginGrid.clear();
             pluginGrid.defineGroup("Not Installed");
@@ -72,7 +73,7 @@ namespace Medical.GUI
             }
 
             pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();
+            pluginGrid.layout();   
         }
 
         void pluginGrid_SelectedValueChanged(object sender, EventArgs e)
@@ -261,9 +262,15 @@ namespace Medical.GUI
             return false;
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
+        public override void setSize(int width, int height)
         {
+            base.setSize(width, height);
             pluginGrid.layout();
+        }
+
+        void closeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            this.hide();
         }
     }
 }

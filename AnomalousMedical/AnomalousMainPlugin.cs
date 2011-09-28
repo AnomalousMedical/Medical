@@ -67,8 +67,7 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             guiManager.addManagedDialog(renderDialog);
 
-            pluginManagerGUI = new PluginManagerGUI(standaloneController.AtlasPluginManager, licenseManager);
-            guiManager.addManagedDialog(pluginManagerGUI);
+            pluginManagerGUI = new PluginManagerGUI(standaloneController.AtlasPluginManager, licenseManager, guiManager);
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
@@ -84,7 +83,11 @@ namespace Medical.GUI
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0));
 
             //System Section
-            taskController.addTask(new MDIDialogOpenTask(pluginManagerGUI, "Medical.PluginManagerGUI", "Plugin Manager", "", TaskMenuCategories.System, int.MaxValue - 5, true));
+            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Anomalous Medical Store", "", TaskMenuCategories.System, int.MaxValue - 6, false);
+            shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
+            taskController.addTask(shopTaskItem);
+
+            taskController.addTask(new ShowPopupTask(pluginManagerGUI, "Medical.PluginManagerGUI", "My Plugins", "", TaskMenuCategories.System, int.MaxValue - 5));
 
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
@@ -108,6 +111,11 @@ namespace Medical.GUI
             //Navigation Section
             taskController.addTask(new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
             taskController.addTask(selectionModeTask);
+        }
+
+        void shopTaskItem_OnClicked(CallbackTask item)
+        {
+            Process.Start(MedicalConfig.AnomalousMedicalStoreURL);
         }
 
         public void sceneLoaded(SimScene scene)
