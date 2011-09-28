@@ -20,12 +20,6 @@ namespace Medical.GUI
 
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
-
-        private delegate void SetInstalledPluginsCallback(List<int> serverPlugins);
-        private SetInstalledPluginsCallback setInstalledPluginsCallback;
-
-        private delegate void SetNotInstalledPluginDataCallback(List<ServerPluginInfo> pluginInfo);
-        private SetNotInstalledPluginDataCallback setNotInstalledPluginsCallback;
         
         public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, GUIManager guiManager)
             :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
@@ -46,15 +40,13 @@ namespace Medical.GUI
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             this.Showing += new EventHandler(PluginManagerGUI_Showing);
-
-            setInstalledPluginsCallback = setInstalledPluginDataOnGUI;
-            setNotInstalledPluginsCallback = setNotInstalledPluginDataOnGUI;
         }
 
         void PluginManagerGUI_Showing(object sender, EventArgs e)
         {
             installPanel.Visible = false;
             pluginGrid.clear();
+            pluginGrid.defineGroup("Downloading");
             pluginGrid.defineGroup("Not Installed");
             pluginGrid.defineGroup("Installed");
 
@@ -66,7 +58,7 @@ namespace Medical.GUI
             Thread serverReadThread = new Thread(delegate()
             {
                 List<int> serverPlugins = readServerPlugins();
-                ThreadManager.invokeAndWait(setInstalledPluginsCallback, serverPlugins);
+                ThreadManager.invokeAndWait(new Action<List<int>>(setInstalledPluginDataOnGUI), serverPlugins);
                 
                 StringBuilder sb = new StringBuilder();
                 foreach (int pluginId in serverPlugins)
@@ -78,7 +70,7 @@ namespace Medical.GUI
                 {
                     String uninstalledPluginsList = sb.ToString(0, sb.Length - 1);
                     List<ServerPluginInfo> pluginInfo = readServerPluginInfo(uninstalledPluginsList);
-                    ThreadManager.invoke(setNotInstalledPluginsCallback, pluginInfo);
+                    ThreadManager.invoke(new Action<List<ServerPluginInfo>>(setNotInstalledPluginDataOnGUI), pluginInfo);
                 }
             });
             serverReadThread.Start();
@@ -124,15 +116,41 @@ namespace Medical.GUI
             ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
             if (pluginInfo != null)
             {
-                if (downloadPlugin(pluginInfo.PluginId))
-                {
-                    pluginGrid.SuppressLayout = true;
-                    pluginGrid.removeItem(selectedItem);
-                    pluginGrid.addItem("Installed", pluginInfo.Name);
-                    pluginGrid.SuppressLayout = false;
-                    pluginGrid.layout();
-                }
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(selectedItem);
+                ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", pluginInfo.Name);
+                downloadingItem.UserObject = pluginInfo;
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
+
+                downloadPlugin(pluginInfo.PluginId, downloadingItem);
             }
+        }
+
+        void downloadSuccess(ButtonGridItem downloadingItem)
+        {
+            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+            pluginGrid.SuppressLayout = true;
+            pluginGrid.removeItem(downloadingItem);
+            pluginGrid.addItem("Installed", pluginInfo.Name);
+            pluginGrid.SuppressLayout = false;
+            pluginGrid.layout();
+        }
+
+        void downloadFailure(ButtonGridItem downloadingItem)
+        {
+            MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+            pluginGrid.SuppressLayout = true;
+            pluginGrid.removeItem(downloadingItem);
+            pluginGrid.addItem("Not Installed", pluginInfo.Name);
+            pluginGrid.SuppressLayout = false;
+            pluginGrid.layout();
+        }
+
+        void licenseServerReadFail()
+        {
+            MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
         }
 
         List<int> readServerPlugins()
@@ -239,63 +257,67 @@ namespace Medical.GUI
             return pluginInfoList;
         }
 
-        bool downloadPlugin(int pluginId)
+        void downloadPlugin(int pluginId, ButtonGridItem downloadingItem)
         {
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
-                request.Timeout = 10000;
-                request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type=Plugin&pluginId={2}", licenseManager.User, licenseManager.MachinePassword, pluginId);
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
+            Thread downloadThread = new Thread(delegate()
                 {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                // Get the response.
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
-                {
-                    using (Stream serverDataStream = response.GetResponseStream())
+                    try
                     {
-                        String filename = response.Headers["content-disposition"].Substring(21);
-                        String sizeStr = response.Headers["Content-Length"];
-                        String pluginFileLocation = Path.Combine(MedicalConfig.PluginConfig.PluginsFolder, filename);
-                        using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
+                        request.Timeout = 10000;
+                        request.Method = "POST";
+                        String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type=Plugin&pluginId={2}", licenseManager.User, licenseManager.MachinePassword, pluginId);
+                        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                        request.ContentType = "application/x-www-form-urlencoded";
+
+                        request.ContentLength = byteArray.Length;
+                        using (Stream dataStream = request.GetRequestStream())
                         {
-                            byte[] buffer = new byte[8 * 1024];
-                            int len;
-                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
+                            dataStream.Write(byteArray, 0, byteArray.Length);
+                        }
+
+                        // Get the response.
+                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                        if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                        {
+                            using (Stream serverDataStream = response.GetResponseStream())
                             {
-                                localDataStream.Write(buffer, 0, len);
+                                String filename = response.Headers["content-disposition"].Substring(21);
+                                String sizeStr = response.Headers["Content-Length"];
+                                String pluginFileLocation = Path.Combine(MedicalConfig.PluginConfig.PluginsFolder, filename);
+                                using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
+                                {
+                                    byte[] buffer = new byte[8 * 1024];
+                                    int len;
+                                    while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
+                                    {
+                                        localDataStream.Write(buffer, 0, len);
+                                    }
+                                }
+
+                                if (!licenseManager.allowFeature(pluginId) && !licenseManager.getNewLicense())
+                                {
+                                    ThreadManager.invoke(new Action(licenseServerReadFail));
+                                }
+                                else
+                                {
+                                    pluginManager.addPlugin(pluginFileLocation);
+                                    pluginManager.initialzePlugins();
+                                }
+
+                                //If we got here the plugin installed correctly
+                                ThreadManager.invoke(new Action<ButtonGridItem>(downloadSuccess), downloadingItem);
+                                return;
                             }
                         }
-
-                        if (!licenseManager.allowFeature(pluginId) && !licenseManager.getNewLicense())
-                        {
-                            MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                        }
-                        else
-                        {
-                            pluginManager.addPlugin(pluginFileLocation);
-                            pluginManager.initialzePlugins();
-                        }
-
-                        //If we got here the plugin installed correctly
-                        return true;
                     }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                Log.Error("Error reading plugin data from the server: {0}", e.Message);
-            }
-            return false;
+                    catch (Exception e)
+                    {
+                        //Log.Error("Error reading plugin data from the server: {0}", e.Message);
+                    }
+                    ThreadManager.invoke(new Action<ButtonGridItem>(downloadFailure), downloadingItem);
+                });
+            downloadThread.Start();
         }
 
         public override void setSize(int width, int height)
