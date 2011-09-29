@@ -44,6 +44,7 @@ namespace Medical
         private TaskController taskController;
         private SaveableClipboard clipboard;
         private AnatomyController anatomyController;
+        private DownloadController downloadController;
 
         //GUI
         private GUIManager guiManager;
@@ -89,6 +90,7 @@ namespace Medical
 
         public void Dispose()
         {
+            downloadController.Dispose();
             if (timelineWizardManager != null)
             {
                 timelineWizardManager.Dispose();
@@ -178,6 +180,9 @@ namespace Medical
             medicalController.FixedLoopUpdate += teethMover.update;
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
+
+            //Download
+            downloadController = new DownloadController(app.LicenseManager, AtlasPluginManager);
 
             //Props
             propFactory = new PropFactory(this);
@@ -493,6 +498,14 @@ namespace Medical
         public TimelineGUIFactory TimelineGUIFactory { get; private set; }
 
         public DocumentController DocumentController { get; private set; }
+
+        public DownloadController DownloadController
+        {
+            get
+            {
+                return downloadController;
+            }
+        }
 
         public void recreateMainWindow()
         {

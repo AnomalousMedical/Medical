@@ -67,7 +67,7 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             guiManager.addManagedDialog(renderDialog);
 
-            pluginManagerGUI = new PluginManagerGUI(standaloneController.AtlasPluginManager, licenseManager, guiManager);
+            pluginManagerGUI = new PluginManagerGUI(standaloneController.AtlasPluginManager, licenseManager, standaloneController.DownloadController, guiManager);
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;

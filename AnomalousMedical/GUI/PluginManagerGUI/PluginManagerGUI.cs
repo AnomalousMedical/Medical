@@ -20,12 +20,14 @@ namespace Medical.GUI
 
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
+        private DownloadController downloadController;
         
-        public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, GUIManager guiManager)
+        public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, DownloadController downloadController, GUIManager guiManager)
             :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
         {
             this.pluginManager = pluginManager;
             this.licenseManager = licenseManager;
+            this.downloadController = downloadController;
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
@@ -119,41 +121,40 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
 
-                downloadPlugin(pluginInfo.PluginId, downloadingItem);
+                downloadController.downloadPlugin(pluginInfo.PluginId, updateDownloadStatus, downloadCompleted, downloadingItem);
             }
         }
 
-        void downloadSuccess(ButtonGridItem downloadingItem)
+        void downloadCompleted(Object downloadCallbackItem, bool success)
         {
-            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-            pluginGrid.SuppressLayout = true;
-            pluginGrid.removeItem(downloadingItem);
-            pluginGrid.addItem("Installed", pluginInfo.Name);
-            pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();
+            ButtonGridItem downloadingItem = (ButtonGridItem)downloadCallbackItem;
+            if (success)
+            {
+                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(downloadingItem);
+                pluginGrid.addItem("Installed", pluginInfo.Name);
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
+            }
+            else
+            {
+                MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(downloadingItem);
+                ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
+                item.UserObject = pluginInfo;
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
+            }
         }
 
-        void downloadFailure(ButtonGridItem downloadingItem)
+        void updateDownloadStatus(Object downloadCallbackItem, int progress)
         {
-            MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-            pluginGrid.SuppressLayout = true;
-            pluginGrid.removeItem(downloadingItem);
-            ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
-			item.UserObject = pluginInfo;
-            pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();
-        }
-
-        void updateDownloadStatus(ButtonGridItem downloadingItem, int progress)
-        {
+            ButtonGridItem downloadingItem = (ButtonGridItem)downloadCallbackItem;
             ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
             downloadingItem.Caption = String.Format("{0} - {1}%", pluginInfo.Name, progress);
-        }
-
-        void licenseServerReadFail()
-        {
-            MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
         }
 
         List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)
@@ -206,77 +207,6 @@ namespace Medical.GUI
             }
 
             return pluginInfoList;
-        }
-
-        void downloadPlugin(int pluginId, ButtonGridItem downloadingItem)
-        {
-            Thread downloadThread = new Thread(delegate()
-                {
-                    try
-                    {
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
-                        request.Timeout = 10000;
-                        request.Method = "POST";
-                        String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type=Plugin&pluginId={2}", licenseManager.User, licenseManager.MachinePassword, pluginId);
-                        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                        request.ContentType = "application/x-www-form-urlencoded";
-
-                        request.ContentLength = byteArray.Length;
-                        using (Stream dataStream = request.GetRequestStream())
-                        {
-                            dataStream.Write(byteArray, 0, byteArray.Length);
-                        }
-
-                        // Get the response.
-                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                        if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
-                        {
-                            using (Stream serverDataStream = response.GetResponseStream())
-                            {
-                                String filename = response.Headers["content-disposition"].Substring(21);
-                                String sizeStr = response.Headers["Content-Length"];
-                                float fileSize = NumberParser.ParseFloat(sizeStr);
-                                String pluginFileLocation = Path.Combine(MedicalConfig.PluginConfig.PluginsFolder, filename);
-                                using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
-                                {
-                                    byte[] buffer = new byte[8 * 1024];
-                                    int len;
-                                    int totalRead = 0;
-                                    while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
-                                    {
-                                        totalRead += len;
-                                        localDataStream.Write(buffer, 0, len);
-                                        ThreadManager.invoke(new Action<ButtonGridItem, int>(updateDownloadStatus), downloadingItem, (int)(totalRead / fileSize * 100.0f));
-                                    }
-                                }
-
-                                if (!licenseManager.allowFeature(pluginId) && !licenseManager.getNewLicense())
-                                {
-                                    ThreadManager.invoke(new Action(licenseServerReadFail));
-                                }
-                                else
-                                {
-									//Load plugin back on main thread
-									ThreadManager.invoke(new Action<String>(delegate(String pluginFile)
-								    {
-										pluginManager.addPlugin(pluginFile);
-                                    	pluginManager.initialzePlugins();									
-									}), pluginFileLocation);
-                                }
-
-                                //If we got here the plugin installed correctly
-                                ThreadManager.invoke(new Action<ButtonGridItem>(downloadSuccess), downloadingItem);
-                                return;
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        //Log.Error("Error reading plugin data from the server: {0}", e.Message);
-                    }
-                    ThreadManager.invoke(new Action<ButtonGridItem>(downloadFailure), downloadingItem);
-                });
-            downloadThread.Start();
         }
 
         public override void setSize(int width, int height)
