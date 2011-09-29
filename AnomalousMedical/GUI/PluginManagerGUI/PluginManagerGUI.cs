@@ -139,7 +139,8 @@ namespace Medical.GUI
             ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
             pluginGrid.SuppressLayout = true;
             pluginGrid.removeItem(downloadingItem);
-            pluginGrid.addItem("Not Installed", pluginInfo.Name);
+            ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
+			item.UserObject = pluginInfo;
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
         }
@@ -255,8 +256,12 @@ namespace Medical.GUI
                                 }
                                 else
                                 {
-                                    pluginManager.addPlugin(pluginFileLocation);
-                                    pluginManager.initialzePlugins();
+									//Load plugin back on main thread
+									ThreadManager.invoke(new Action<String>(delegate(String pluginFile)
+								    {
+										pluginManager.addPlugin(pluginFile);
+                                    	pluginManager.initialzePlugins();									
+									}), pluginFileLocation);
                                 }
 
                                 //If we got here the plugin installed correctly
