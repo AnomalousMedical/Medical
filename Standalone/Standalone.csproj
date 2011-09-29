@@ -104,7 +104,9 @@
     <Compile Include="Controller\Config\WindowsPlatformConfig.cs" />
     <Compile Include="Controller\Bookmarks\Bookmark.cs" />
     <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
+    <Compile Include="Controller\Download\Download.cs" />
     <Compile Include="Controller\Download\DownloadController.cs" />
+    <Compile Include="Controller\Download\PluginDownload.cs" />
     <Compile Include="Controller\Exam\AbstractExam.cs" />
     <Compile Include="Controller\Exam\Analysis\AbstractExamAnalyzer.cs" />
     <Compile Include="Controller\Exam\AbstractExamMemberScanner.cs" />

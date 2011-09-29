@@ -125,10 +125,10 @@ namespace Medical.GUI
             }
         }
 
-        void downloadCompleted(Object downloadCallbackItem, bool success)
+        void downloadCompleted(Download download)
         {
-            ButtonGridItem downloadingItem = (ButtonGridItem)downloadCallbackItem;
-            if (success)
+            ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
+            if (download.Successful)
             {
                 ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
                 pluginGrid.SuppressLayout = true;
@@ -150,11 +150,11 @@ namespace Medical.GUI
             }
         }
 
-        void updateDownloadStatus(Object downloadCallbackItem, int progress)
+        void updateDownloadStatus(Download download)
         {
-            ButtonGridItem downloadingItem = (ButtonGridItem)downloadCallbackItem;
+            ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
             ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-            downloadingItem.Caption = String.Format("{0} - {1}%", pluginInfo.Name, progress);
+            downloadingItem.Caption = String.Format("{0} - {1}%", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f));
         }
 
         List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)

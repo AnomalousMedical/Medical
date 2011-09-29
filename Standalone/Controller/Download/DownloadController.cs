@@ -13,12 +13,10 @@ using Logging;
 
 namespace Medical
 {
+    public delegate void DownloadCallback(Download download);
+
     public class DownloadController : IDisposable
     {
-        public delegate void UpdateDownloadStatus(Object downloadCallbackObject, int progress);
-
-        public delegate void DownloadCompleteCallback(Object downloadCallbackObject, bool success);
-
         private LicenseManager licenseManager;
         private AtlasPluginManager pluginManager;
 
@@ -33,83 +31,69 @@ namespace Medical
 
         }
 
-        public void downloadPlugin(int pluginId, UpdateDownloadStatus statusUpdate, DownloadCompleteCallback downloadCompleted, Object downloadCallbackObject)
+        public void downloadPlugin(int pluginId, DownloadCallback statusUpdate, DownloadCallback downloadCompleted, Object downloadCallbackObject)
         {
-            Thread downloadThread = new Thread(delegate()
-            {
-                try
-                {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
-                    request.Timeout = 10000;
-                    request.Method = "POST";
-                    String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type=Plugin&pluginId={2}", licenseManager.User, licenseManager.MachinePassword, pluginId);
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                    request.ContentType = "application/x-www-form-urlencoded";
-
-                    request.ContentLength = byteArray.Length;
-                    using (Stream dataStream = request.GetRequestStream())
-                    {
-                        dataStream.Write(byteArray, 0, byteArray.Length);
-                    }
-
-                    // Get the response.
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
-                    {
-                        using (Stream serverDataStream = response.GetResponseStream())
-                        {
-                            String filename = response.Headers["content-disposition"].Substring(21);
-                            String sizeStr = response.Headers["Content-Length"];
-                            float fileSize = NumberParser.ParseFloat(sizeStr);
-                            String pluginFileLocation = Path.Combine(MedicalConfig.PluginConfig.PluginsFolder, filename);
-                            using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
-                            {
-                                byte[] buffer = new byte[8 * 1024];
-                                int len;
-                                int totalRead = 0;
-                                while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
-                                {
-                                    totalRead += len;
-                                    localDataStream.Write(buffer, 0, len);
-                                    ThreadManager.invoke(statusUpdate, downloadCallbackObject, (int)(totalRead / fileSize * 100.0f));
-                                }
-                            }
-
-                            if (!licenseManager.allowFeature(pluginId) && !licenseManager.getNewLicense())
-                            {
-                                ThreadManager.invoke(new Action(licenseServerReadFail));
-                            }
-                            else
-                            {
-                                //Load plugin back on main thread
-                                ThreadManager.invoke(new Action<String>(delegate(String pluginFile)
-                                {
-                                    pluginManager.addPlugin(pluginFile);
-                                    pluginManager.initialzePlugins();
-                                }), pluginFileLocation);
-                            }
-
-                            //If we got here the plugin installed correctly
-                            ThreadManager.invoke(downloadCompleted, downloadCallbackObject, true);
-                            return;
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    ThreadManager.invoke(new Action(delegate()
-                    {
-                        Log.Error("Error reading plugin data from the server: {0}", e.Message);
-                    }));
-                }
-                ThreadManager.invoke(downloadCompleted, downloadCallbackObject, false);
-            });
-            downloadThread.Start();
+            PluginDownload pluginDownload = new PluginDownload(pluginId, statusUpdate, downloadCompleted, licenseManager, pluginManager);
+            pluginDownload.UserObject = downloadCallbackObject;
+            Thread t = new Thread(genericBackgroundDownload);
+            t.Start(pluginDownload);
         }
 
-        void licenseServerReadFail()
+        void genericBackgroundDownload(Object downloadObject)
         {
-            MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+            Download download = (Download)downloadObject;
+            bool success = false;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
+                request.Timeout = 10000;
+                request.Method = "POST";
+                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type={2}&{3}", licenseManager.User, licenseManager.MachinePassword, download.Type, download.AdditionalArgs);
+                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/x-www-form-urlencoded";
+
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                }
+
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                {
+                    using (Stream serverDataStream = response.GetResponseStream())
+                    {
+                        download.FileName = response.Headers["content-disposition"].Substring(21);
+                        String sizeStr = response.Headers["Content-Length"];
+                        download.TotalSize = NumberParser.ParseLong(sizeStr);
+                        String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);
+                        using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            byte[] buffer = new byte[8 * 1024];
+                            int len;
+                            download.TotalRead = 0;
+                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                download.TotalRead += len;
+                                localDataStream.Write(buffer, 0, len);
+                                download.updateStatus();
+                            }
+                        }
+
+                        //If we got here the file downloaded successfully
+                        success = true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ThreadManager.invoke(new Action(delegate()
+                {
+                    Log.Error("Error reading plugin data from the server: {0}", e.Message);
+                }));
+            }
+            download.completed(success);
         }
     }
 }
