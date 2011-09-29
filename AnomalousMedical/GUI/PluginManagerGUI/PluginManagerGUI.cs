@@ -45,49 +45,45 @@ namespace Medical.GUI
         void PluginManagerGUI_Showing(object sender, EventArgs e)
         {
             installPanel.Visible = false;
+
+            pluginGrid.SuppressLayout = true;
             pluginGrid.clear();
             pluginGrid.defineGroup("Downloading");
             pluginGrid.defineGroup("Not Installed");
             pluginGrid.defineGroup("Installed");
 
-            readPluginInfoFromServer();
+            List<int> installedPluginIds = new List<int>();
+
+            foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
+            {
+                ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
+                installedPluginIds.Add((int)plugin.PluginId);
+            }
+
+            pluginGrid.SuppressLayout = false;
+            pluginGrid.layout();
+
+            readPluginInfoFromServer(installedPluginIds);
         }
 
-        void readPluginInfoFromServer()
+        void readPluginInfoFromServer(List<int> installedPluginIds)
         {
             Thread serverReadThread = new Thread(delegate()
-            {
-                List<int> serverPlugins = readServerPlugins();
-                ThreadManager.invokeAndWait(new Action<List<int>>(setInstalledPluginDataOnGUI), serverPlugins);
-                
+            {                
                 StringBuilder sb = new StringBuilder();
-                foreach (int pluginId in serverPlugins)
+                foreach (int pluginId in installedPluginIds)
                 {
                     sb.Append(pluginId.ToString());
                     sb.Append(",");
                 }
                 if (sb.Length > 0)
                 {
-                    String uninstalledPluginsList = sb.ToString(0, sb.Length - 1);
-                    List<ServerPluginInfo> pluginInfo = readServerPluginInfo(uninstalledPluginsList);
+                    String installedPluginsList = sb.ToString(0, sb.Length - 1);
+                    List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
                     ThreadManager.invoke(new Action<List<ServerPluginInfo>>(setNotInstalledPluginDataOnGUI), pluginInfo);
                 }
             });
             serverReadThread.Start();
-        }
-
-        void setInstalledPluginDataOnGUI(List<int> serverPlugins)
-        {
-            pluginGrid.SuppressLayout = true;
-
-            foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
-            {
-                ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
-                serverPlugins.Remove((int)plugin.PluginId);
-            }
-
-            pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();
         }
 
         void setNotInstalledPluginDataOnGUI(List<ServerPluginInfo> pluginInfo)
@@ -157,58 +153,6 @@ namespace Medical.GUI
         void licenseServerReadFail()
         {
             MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-        }
-
-        List<int> readServerPlugins()
-        {
-            List<int> pluginIdList = new List<int>();
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.UserPluginListURL));
-                request.Timeout = 10000;
-                request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}", licenseManager.User, licenseManager.MachinePassword);
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                // Get the response.
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
-                {
-                    using (Stream serverDataStream = response.GetResponseStream())
-                    {
-                        using (Stream localDataStream = new MemoryStream())
-                        {
-                            byte[] buffer = new byte[8 * 1024];
-                            int len;
-                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                localDataStream.Write(buffer, 0, len);
-                            }
-                            localDataStream.Seek(0, SeekOrigin.Begin);
-                            using (BinaryReader binReader = new BinaryReader(localDataStream))
-                            {
-                                while (binReader.BaseStream.Position < binReader.BaseStream.Length)
-                                {
-                                    pluginIdList.Add(binReader.ReadInt32());
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error("Error reading plugin data from the server: {0}", e.Message);
-            }
-
-            return pluginIdList;
         }
 
         List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)

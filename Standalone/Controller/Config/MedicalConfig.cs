@@ -63,7 +63,6 @@ namespace Medical
             MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
             MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
             MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
-            MedicalConfig.UserPluginListURL = "https://www.anomalousmedical.com/DRM/UserPluginList.aspx";
             MedicalConfig.PluginInfoURL = "https://www.anomalousmedical.com/DRM/PluginInfo.aspx";
             MedicalConfig.PluginDownloadURL = "https://www.anomalousmedical.com/DRM/FileDownloader.aspx";
             MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store.aspx";
@@ -105,7 +104,6 @@ namespace Medical
                 helpURL = updates.getValue("HelpURL", helpURL);
                 ForgotPasswordURL = updates.getValue("ForgotPasswordURL", ForgotPasswordURL);
                 RegisterURL = updates.getValue("RegisterURL", RegisterURL);
-                UserPluginListURL = updates.getValue("UserPluginListURL", UserPluginListURL);
                 PluginInfoURL = updates.getValue("PluginInfoURL", PluginInfoURL);
                 PluginDownloadURL = updates.getValue("PluginDownloadURL", PluginDownloadURL);
                 AnomalousMedicalStoreURL = updates.getValue("AnomalousMedicalStoreURL", AnomalousMedicalStoreURL);
@@ -350,8 +348,6 @@ namespace Medical
         public static String ForgotPasswordURL { get; private set; }
 
         public static String RegisterURL { get; private set; }
-
-        public static String UserPluginListURL { get; private set; }
 
         public static String PluginInfoURL { get; private set; }
 
