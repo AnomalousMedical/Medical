@@ -15,6 +15,8 @@ namespace Medical.GUI
 {
     class PluginManagerGUI : AbstractFullscreenGUIPopup
     {
+        private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
+
         private Widget installPanel;
         private ButtonGrid pluginGrid;
 
@@ -154,7 +156,7 @@ namespace Medical.GUI
         {
             ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
             ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-            downloadingItem.Caption = String.Format("{0} - {1}%", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f));
+            downloadingItem.Caption = String.Format("{0} - {1}%\n{2} of {3} (MB)", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"));
         }
 
         List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)
