@@ -20,6 +20,7 @@ namespace Medical.GUI
         private Widget installPanel;
         private ButtonGrid pluginGrid;
         private Widget downloadPanel;
+        private Widget readingInfo;
 
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
@@ -57,6 +58,9 @@ namespace Medical.GUI
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+
+            readingInfo = widget.findWidget("ReadingInfo");
+            readingInfo.Visible = false;
 
             this.Showing += new EventHandler(PluginManagerGUI_Showing);
         }
@@ -112,6 +116,7 @@ namespace Medical.GUI
         void readPluginInfoFromServer(List<int> installedPluginIds)
         {
             readingServerPluginInfo = true;
+            readingInfo.Visible = true;
             Thread serverReadThread = new Thread(delegate()
             {
                 StringBuilder sb = new StringBuilder();
@@ -124,26 +129,26 @@ namespace Medical.GUI
                 {
                     String installedPluginsList = sb.ToString(0, sb.Length - 1);
                     List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
-                    ThreadManager.invoke(new Action<List<ServerPluginInfo>>(setNotInstalledPluginDataOnGUI), pluginInfo);
+                    ThreadManager.invoke(new Action(delegate()
+                    {
+                        pluginGrid.SuppressLayout = true;
+
+                        foreach (ServerPluginInfo plugin in pluginInfo)
+                        {
+                            ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name);
+                            item.UserObject = plugin;
+                            detectedServerPlugins.Add(plugin);
+                        }
+
+                        pluginGrid.SuppressLayout = false;
+                        pluginGrid.layout();
+
+                        readingServerPluginInfo = false;
+                        readingInfo.Visible = false;
+                    }));
                 }
-                readingServerPluginInfo = false;
             });
             serverReadThread.Start();
-        }
-
-        void setNotInstalledPluginDataOnGUI(List<ServerPluginInfo> pluginInfo)
-        {
-            pluginGrid.SuppressLayout = true;
-
-            foreach (ServerPluginInfo plugin in pluginInfo)
-            {
-                ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name);
-                item.UserObject = plugin;
-                detectedServerPlugins.Add(plugin);
-            }
-
-            pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();
         }
 
         private void togglePanelVisibility()

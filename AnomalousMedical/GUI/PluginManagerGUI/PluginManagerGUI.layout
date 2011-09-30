@@ -23,5 +23,9 @@
                 <Property key="Widget_Caption" value="Cancel"/>
             </Widget>
         </Widget>
+        <Widget type="StaticText" skin="StaticText" position="7 25 250 19" name="ReadingInfo">
+            <Property key="Widget_Caption" value="Reading plugin information from server..."/>
+            <Property key="Text_TextColour" value="#FFFFFF"/>
+        </Widget>
     </Widget>
 </MyGUI>
