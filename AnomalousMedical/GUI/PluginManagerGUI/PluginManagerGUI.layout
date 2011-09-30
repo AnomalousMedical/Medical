@@ -8,6 +8,7 @@
             <UserString key="ItemHeight" value="102"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Stretch" name="InstallPanel">
+            <Property key="Widget_Visible" value="false"/>
             <Widget type="Button" skin="Button" position="37 25 91 26" name="InstallButton">
                 <Property key="Widget_Caption" value="Install"/>
             </Widget>
@@ -16,6 +17,11 @@
         <Widget type="StaticText" skin="StaticText" position="7 5 112 15">
             <Property key="Widget_Caption" value="My Plugins"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" name="DownloadingPanel">
+            <Widget type="Button" skin="Button" position="37 25 91 26" name="CancelButton">
+                <Property key="Widget_Caption" value="Cancel"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

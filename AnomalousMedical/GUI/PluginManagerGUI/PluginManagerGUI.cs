@@ -19,6 +19,7 @@ namespace Medical.GUI
 
         private Widget installPanel;
         private ButtonGrid pluginGrid;
+        private Widget downloadPanel;
 
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
@@ -41,6 +42,12 @@ namespace Medical.GUI
             Button installButton = (Button)widget.findWidget("InstallButton");
             installButton.MouseButtonClick += new MyGUIEvent(installButton_MouseButtonClick);
 
+            downloadPanel = widget.findWidget("DownloadingPanel");
+            downloadPanel.Visible = false;
+
+            Button cancelButton = (Button)widget.findWidget("CancelButton");
+            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
@@ -56,6 +63,7 @@ namespace Medical.GUI
         void PluginManagerGUI_Showing(object sender, EventArgs e)
         {
             installPanel.Visible = false;
+            downloadPanel.Visible = false;
 
             pluginGrid.SuppressLayout = true;
             pluginGrid.clear();
@@ -111,10 +119,24 @@ namespace Medical.GUI
             pluginGrid.layout();
         }
 
-        void pluginGrid_SelectedValueChanged(object sender, EventArgs e)
+        private void togglePanelVisibility()
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
-            installPanel.Visible = selectedItem != null && selectedItem.GroupName == "Not Installed";
+            if (selectedItem != null)
+            {
+                installPanel.Visible = selectedItem.GroupName == "Not Installed";
+                downloadPanel.Visible = selectedItem.GroupName == "Downloading";
+            }
+            else
+            {
+                installPanel.Visible = false;
+                downloadPanel.Visible = false;
+            }
+        }
+
+        void pluginGrid_SelectedValueChanged(object sender, EventArgs e)
+        {
+            togglePanelVisibility();
         }
 
         void installButton_MouseButtonClick(Widget source, EventArgs e)
@@ -130,7 +152,17 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
 
-                downloadController.downloadPlugin(pluginInfo.PluginId, this, downloadingItem);
+                pluginInfo.Download = downloadController.downloadPlugin(pluginInfo.PluginId, this, downloadingItem);
+            }
+        }
+
+        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            ButtonGridItem selectedItem = pluginGrid.SelectedItem;
+            ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
+            if (pluginInfo != null && pluginInfo.Download != null)
+            {
+                pluginInfo.Download.cancelDownload(DownloadPostAction.DeleteFile);
             }
         }
 
@@ -148,10 +180,14 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                    if (!download.Cancel)
+                    {
+                        MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                    }
                     ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
                     item.UserObject = pluginInfo;
                 }
+                pluginInfo.Download = null;
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
