@@ -282,7 +282,10 @@ namespace Medical.GUI
             }
             catch (Exception e)
             {
-                Log.Error("Error reading plugin data from the server: {0}", e.Message);
+                ThreadManager.invoke(new Action(delegate()
+                {
+                    MessageBox.show(String.Format("Error reading plugin data from the server. Please try again later.\nReason: {0}", e.Message), "Server Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }));
             }
 
             return pluginInfoList;
