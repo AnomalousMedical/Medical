@@ -26,6 +26,7 @@ namespace Medical.GUI
         private DownloadController downloadController;
         private bool allowUpdates = true;
         private bool addedInstalledPlugins = false;
+        private bool readingServerPluginInfo = false;
 
         List<ServerPluginInfo> detectedServerPlugins = new List<ServerPluginInfo>();
         
@@ -68,50 +69,51 @@ namespace Medical.GUI
 
         void PluginManagerGUI_Showing(object sender, EventArgs e)
         {
-            installPanel.Visible = false;
-            downloadPanel.Visible = false;
-
-            pluginGrid.SuppressLayout = true;
-
-            List<int> detectedPluginIds = new List<int>();
-
-            if (addedInstalledPlugins)
+            if (!readingServerPluginInfo)
             {
-                foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
+                List<int> detectedPluginIds = new List<int>();
+
+                if (addedInstalledPlugins)
                 {
-                    if (plugin.PluginId != -1)
+                    foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
                     {
-                        detectedPluginIds.Add((int)plugin.PluginId);
+                        if (plugin.PluginId != -1)
+                        {
+                            detectedPluginIds.Add((int)plugin.PluginId);
+                        }
+                    }
+                    foreach (ServerPluginInfo plugin in detectedServerPlugins)
+                    {
+                        detectedPluginIds.Add(plugin.PluginId);
                     }
                 }
-                foreach (ServerPluginInfo plugin in detectedServerPlugins)
+                else
                 {
-                    detectedPluginIds.Add(plugin.PluginId);
-                }
-            }
-            else
-            {
-                foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
-                {
-                    ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
-                    if (plugin.PluginId != -1)
+                    pluginGrid.SuppressLayout = true;
+
+                    foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
                     {
-                        detectedPluginIds.Add((int)plugin.PluginId);
+                        ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
+                        if (plugin.PluginId != -1)
+                        {
+                            detectedPluginIds.Add((int)plugin.PluginId);
+                        }
                     }
+                    addedInstalledPlugins = true;
+
+                    pluginGrid.SuppressLayout = false;
+                    pluginGrid.layout();
                 }
-                addedInstalledPlugins = true;
+
+                readPluginInfoFromServer(detectedPluginIds);
             }
-
-            pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();
-
-            readPluginInfoFromServer(detectedPluginIds);
         }
 
         void readPluginInfoFromServer(List<int> installedPluginIds)
         {
+            readingServerPluginInfo = true;
             Thread serverReadThread = new Thread(delegate()
-            {                
+            {
                 StringBuilder sb = new StringBuilder();
                 foreach (int pluginId in installedPluginIds)
                 {
@@ -124,6 +126,7 @@ namespace Medical.GUI
                     List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
                     ThreadManager.invoke(new Action<List<ServerPluginInfo>>(setNotInstalledPluginDataOnGUI), pluginInfo);
                 }
+                readingServerPluginInfo = false;
             });
             serverReadThread.Start();
         }
