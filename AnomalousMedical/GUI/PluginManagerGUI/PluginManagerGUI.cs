@@ -13,7 +13,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class PluginManagerGUI : AbstractFullscreenGUIPopup
+    class PluginManagerGUI : AbstractFullscreenGUIPopup, DownloadListener
     {
         private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
 
@@ -123,11 +123,11 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
 
-                downloadController.downloadPlugin(pluginInfo.PluginId, updateDownloadStatus, downloadCompleted, downloadingItem);
+                downloadController.downloadPlugin(pluginInfo.PluginId, this, downloadingItem);
             }
         }
 
-        void downloadCompleted(Download download)
+        public void downloadCompleted(Download download)
         {
             ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
             ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
@@ -147,7 +147,7 @@ namespace Medical.GUI
             pluginGrid.layout();
         }
 
-        void updateDownloadStatus(Download download)
+        public void updateStatus(Download download)
         {
             ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
             ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;

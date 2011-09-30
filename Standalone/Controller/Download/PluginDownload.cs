@@ -12,16 +12,14 @@ namespace Medical
     {
         LicenseManager licenseManager;
         AtlasPluginManager atlasPluginManager;
-        DownloadCallback statusUpdate;
-        DownloadCallback completedCallback;
+        DownloadListener downloadListener;
 
-        public PluginDownload(int pluginId, DownloadCallback statusUpdate, DownloadCallback completedCallback, LicenseManager licenseManager, AtlasPluginManager atlasPluginManager)
+        public PluginDownload(int pluginId, DownloadListener downloadListener, LicenseManager licenseManager, AtlasPluginManager atlasPluginManager)
         {
             this.PluginId = pluginId;
             this.licenseManager = licenseManager;
             this.atlasPluginManager = atlasPluginManager;
-            this.statusUpdate = statusUpdate;
-            this.completedCallback = completedCallback;
+            this.downloadListener = downloadListener;
         }
 
         public override void completed(bool success)
@@ -43,12 +41,18 @@ namespace Medical
                     }));
                 }
             }
-            ThreadManager.invoke(completedCallback, this);
+            ThreadManager.invoke(new Action(delegate()
+            {
+                downloadListener.downloadCompleted(this);
+            }));
         }
 
         public override void updateStatus()
         {
-            ThreadManager.invoke(statusUpdate, this);
+            ThreadManager.invoke(new Action(delegate()
+            {
+                downloadListener.updateStatus(this);
+            }));
         }
 
         public long PluginId { get; set; }

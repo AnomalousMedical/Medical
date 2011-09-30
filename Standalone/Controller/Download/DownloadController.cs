@@ -13,8 +13,6 @@ using Logging;
 
 namespace Medical
 {
-    public delegate void DownloadCallback(Download download);
-
     public class DownloadController : IDisposable
     {
         private LicenseManager licenseManager;
@@ -31,9 +29,9 @@ namespace Medical
 
         }
 
-        public void downloadPlugin(int pluginId, DownloadCallback statusUpdate, DownloadCallback downloadCompleted, Object downloadCallbackObject)
+        public void downloadPlugin(int pluginId, DownloadListener downloadListener, Object downloadCallbackObject)
         {
-            PluginDownload pluginDownload = new PluginDownload(pluginId, statusUpdate, downloadCompleted, licenseManager, pluginManager);
+            PluginDownload pluginDownload = new PluginDownload(pluginId, downloadListener, licenseManager, pluginManager);
             pluginDownload.UserObject = downloadCallbackObject;
             Thread t = new Thread(genericBackgroundDownload);
             t.Start(pluginDownload);

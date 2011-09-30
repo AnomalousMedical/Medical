@@ -106,6 +106,7 @@
     <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
     <Compile Include="Controller\Download\Download.cs" />
     <Compile Include="Controller\Download\DownloadController.cs" />
+    <Compile Include="Controller\Download\DownloadListener.cs" />
     <Compile Include="Controller\Download\PluginDownload.cs" />
     <Compile Include="Controller\Exam\AbstractExam.cs" />
     <Compile Include="Controller\Exam\Analysis\AbstractExamAnalyzer.cs" />
