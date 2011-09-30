@@ -107,7 +107,7 @@ namespace Medical.GUI
         void pluginGrid_SelectedValueChanged(object sender, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
-            installPanel.Visible = selectedItem != null && selectedItem.UserObject != null;
+            installPanel.Visible = selectedItem != null && selectedItem.GroupName == "Not Installed";
         }
 
         void installButton_MouseButtonClick(Widget source, EventArgs e)
@@ -130,26 +130,21 @@ namespace Medical.GUI
         void downloadCompleted(Download download)
         {
             ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
+            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+            pluginGrid.SuppressLayout = true;
+            pluginGrid.removeItem(downloadingItem);
             if (download.Successful)
             {
-                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-                pluginGrid.SuppressLayout = true;
-                pluginGrid.removeItem(downloadingItem);
                 pluginGrid.addItem("Installed", pluginInfo.Name);
-                pluginGrid.SuppressLayout = false;
-                pluginGrid.layout();
             }
             else
             {
                 MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-                pluginGrid.SuppressLayout = true;
-                pluginGrid.removeItem(downloadingItem);
                 ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
                 item.UserObject = pluginInfo;
-                pluginGrid.SuppressLayout = false;
-                pluginGrid.layout();
             }
+            pluginGrid.SuppressLayout = false;
+            pluginGrid.layout();
         }
 
         void updateDownloadStatus(Download download)
