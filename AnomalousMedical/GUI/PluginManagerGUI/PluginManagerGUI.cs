@@ -25,6 +25,9 @@ namespace Medical.GUI
         private LicenseManager licenseManager;
         private DownloadController downloadController;
         private bool allowUpdates = true;
+        private bool addedInstalledPlugins = false;
+
+        List<ServerPluginInfo> detectedServerPlugins = new List<ServerPluginInfo>();
         
         public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, DownloadController downloadController, GUIManager guiManager)
             :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
@@ -35,6 +38,9 @@ namespace Medical.GUI
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
+            pluginGrid.defineGroup("Downloading");
+            pluginGrid.defineGroup("Not Installed");
+            pluginGrid.defineGroup("Installed");
 
             installPanel = widget.findWidget("InstallPanel");
             installPanel.Visible = false;
@@ -66,23 +72,40 @@ namespace Medical.GUI
             downloadPanel.Visible = false;
 
             pluginGrid.SuppressLayout = true;
-            pluginGrid.clear();
-            pluginGrid.defineGroup("Downloading");
-            pluginGrid.defineGroup("Not Installed");
-            pluginGrid.defineGroup("Installed");
 
-            List<int> installedPluginIds = new List<int>();
+            List<int> detectedPluginIds = new List<int>();
 
-            foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
+            if (addedInstalledPlugins)
             {
-                ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
-                installedPluginIds.Add((int)plugin.PluginId);
+                foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
+                {
+                    if (plugin.PluginId != -1)
+                    {
+                        detectedPluginIds.Add((int)plugin.PluginId);
+                    }
+                }
+                foreach (ServerPluginInfo plugin in detectedServerPlugins)
+                {
+                    detectedPluginIds.Add(plugin.PluginId);
+                }
+            }
+            else
+            {
+                foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
+                {
+                    ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
+                    if (plugin.PluginId != -1)
+                    {
+                        detectedPluginIds.Add((int)plugin.PluginId);
+                    }
+                }
+                addedInstalledPlugins = true;
             }
 
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
 
-            readPluginInfoFromServer(installedPluginIds);
+            readPluginInfoFromServer(detectedPluginIds);
         }
 
         void readPluginInfoFromServer(List<int> installedPluginIds)
@@ -113,6 +136,7 @@ namespace Medical.GUI
             {
                 ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name);
                 item.UserObject = plugin;
+                detectedServerPlugins.Add(plugin);
             }
 
             pluginGrid.SuppressLayout = false;
@@ -177,6 +201,7 @@ namespace Medical.GUI
                 if (download.Successful)
                 {
                     pluginGrid.addItem("Installed", pluginInfo.Name);
+                    detectedServerPlugins.Remove(pluginInfo);
                 }
                 else
                 {
