@@ -23,6 +23,7 @@ namespace Medical.GUI
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
         private DownloadController downloadController;
+        private bool allowUpdates = true;
         
         public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, DownloadController downloadController, GUIManager guiManager)
             :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
@@ -44,6 +45,12 @@ namespace Medical.GUI
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             this.Showing += new EventHandler(PluginManagerGUI_Showing);
+        }
+
+        public override void Dispose()
+        {
+            allowUpdates = false;
+            base.Dispose();
         }
 
         void PluginManagerGUI_Showing(object sender, EventArgs e)
@@ -129,29 +136,35 @@ namespace Medical.GUI
 
         public void downloadCompleted(Download download)
         {
-            ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
-            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-            pluginGrid.SuppressLayout = true;
-            pluginGrid.removeItem(downloadingItem);
-            if (download.Successful)
+            if (allowUpdates)
             {
-                pluginGrid.addItem("Installed", pluginInfo.Name);
+                ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
+                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(downloadingItem);
+                if (download.Successful)
+                {
+                    pluginGrid.addItem("Installed", pluginInfo.Name);
+                }
+                else
+                {
+                    MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                    ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
+                    item.UserObject = pluginInfo;
+                }
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
             }
-            else
-            {
-                MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
-                item.UserObject = pluginInfo;
-            }
-            pluginGrid.SuppressLayout = false;
-            pluginGrid.layout();
         }
 
         public void updateStatus(Download download)
         {
-            ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
-            ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
-            downloadingItem.Caption = String.Format("{0} - {1}%\n{2} of {3} (MB)", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"));
+            if (allowUpdates)
+            {
+                ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
+                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+                downloadingItem.Caption = String.Format("{0} - {1}%\n{2} of {3} (MB)", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"));
+            }
         }
 
         List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)

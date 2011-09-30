@@ -17,6 +17,7 @@ namespace Medical
     {
         private LicenseManager licenseManager;
         private AtlasPluginManager pluginManager;
+        private List<Download> activeDownloads = new List<Download>();
 
         public DownloadController(LicenseManager licenseManager, AtlasPluginManager pluginManager)
         {
@@ -26,18 +27,60 @@ namespace Medical
 
         public void Dispose()
         {
-
+            foreach (Download download in activeDownloads)
+            {
+                download.cancelDownload(DownloadPostAction.DeleteFile);
+            }
         }
 
         public void downloadPlugin(int pluginId, DownloadListener downloadListener, Object downloadCallbackObject)
         {
-            PluginDownload pluginDownload = new PluginDownload(pluginId, downloadListener, licenseManager, pluginManager);
+            PluginDownload pluginDownload = new PluginDownload(pluginId, this, downloadListener);
             pluginDownload.UserObject = downloadCallbackObject;
-            Thread t = new Thread(genericBackgroundDownload);
-            t.Start(pluginDownload);
+            startDownload(pluginDownload);
         }
 
-        void genericBackgroundDownload(Object downloadObject)
+        public LicenseManager LicenseManager
+        {
+            get
+            {
+                return licenseManager;
+            }
+        }
+
+        public AtlasPluginManager PluginManager
+        {
+            get
+            {
+                return pluginManager;
+            }
+        }
+
+        /// <summary>
+        /// Callback method for when a download is completed. DO NOT CALL THIS
+        /// unless you are the Download class. To stop downloads call the cancel
+        /// method on a download.
+        /// </summary>
+        /// <param name="download"></param>
+        internal void _alertDownloadCompleted(Download download)
+        {
+            lock (activeDownloads)
+            {
+                activeDownloads.Remove(download);
+            }
+        }
+
+        private void startDownload(Download download)
+        {
+            lock (activeDownloads)
+            {
+                activeDownloads.Add(download);
+            }
+            Thread t = new Thread(genericBackgroundDownload);
+            t.Start(download);
+        }
+
+        private void genericBackgroundDownload(Object downloadObject)
         {
             Download download = (Download)downloadObject;
             bool success = false;
@@ -71,7 +114,7 @@ namespace Medical
                             byte[] buffer = new byte[8 * 1024];
                             int len;
                             download.TotalRead = 0;
-                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
+                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0 && !download.Cancel)
                             {
                                 download.TotalRead += len;
                                 localDataStream.Write(buffer, 0, len);
@@ -79,8 +122,20 @@ namespace Medical
                             }
                         }
 
-                        //If we got here the file downloaded successfully
-                        success = true;
+                        if (download.Cancel)
+                        {
+                            switch (download.CancelPostAction)
+                            {
+                                case DownloadPostAction.DeleteFile:
+                                    File.Delete(pluginFileLocation);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            //If we got here the file downloaded successfully
+                            success = true;
+                        }
                     }
                 }
             }

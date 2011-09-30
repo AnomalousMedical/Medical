@@ -10,23 +10,19 @@ namespace Medical
 {
     class PluginDownload : Download
     {
-        LicenseManager licenseManager;
-        AtlasPluginManager atlasPluginManager;
-        DownloadListener downloadListener;
-
-        public PluginDownload(int pluginId, DownloadListener downloadListener, LicenseManager licenseManager, AtlasPluginManager atlasPluginManager)
+        public PluginDownload(int pluginId, DownloadController controller, DownloadListener downloadListener)
+            :base(controller, downloadListener)
         {
             this.PluginId = pluginId;
-            this.licenseManager = licenseManager;
-            this.atlasPluginManager = atlasPluginManager;
-            this.downloadListener = downloadListener;
         }
 
-        public override void completed(bool success)
+        protected override void onCompleted(bool success)
         {
-            this.Successful = success;
             if (success)
             {
+                LicenseManager licenseManager = controller.LicenseManager;
+                AtlasPluginManager atlasPluginManager = controller.PluginManager;
+
                 if (!licenseManager.allowFeature(PluginId) && !licenseManager.getNewLicense())
                 {
                     ThreadManager.invoke(new Action(licenseServerReadFail));
@@ -41,18 +37,6 @@ namespace Medical
                     }));
                 }
             }
-            ThreadManager.invoke(new Action(delegate()
-            {
-                downloadListener.downloadCompleted(this);
-            }));
-        }
-
-        public override void updateStatus()
-        {
-            ThreadManager.invoke(new Action(delegate()
-            {
-                downloadListener.updateStatus(this);
-            }));
         }
 
         public long PluginId { get; set; }
