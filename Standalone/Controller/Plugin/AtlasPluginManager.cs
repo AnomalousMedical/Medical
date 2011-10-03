@@ -146,21 +146,36 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
-                if (!loadedPluginNames.Contains(dataFileName))
+                try
                 {
-                    loadedPluginNames.Add(dataFileName);
-
-                    //Add the archive to the VirtualFileSystem if needed
-                    if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
+                    String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
+                    if (!loadedPluginNames.Contains(dataFileName))
                     {
-                        VirtualFileSystem.Instance.addArchive(fullPath);
+                        //Add the archive to the VirtualFileSystem if needed
+                        if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
+                        {
+                            VirtualFileSystem.Instance.addArchive(fullPath);
+                        }
+                        pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
+
+                        loadedPluginNames.Add(dataFileName);
                     }
-                    pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
+                    else
+                    {
+                        Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
+                    }
                 }
-                else
+                catch (ZipAccess.ZipIOException e)
                 {
-                    Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
+                    Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
+                    try
+                    {
+                        File.Delete(fullPath);
+                    }
+                    catch (Exception deleteEx)
+                    {
+                        Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                    }
                 }
             }
             else if(Directory.Exists(fullPath))
