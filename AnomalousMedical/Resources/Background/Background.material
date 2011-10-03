@@ -13,7 +13,7 @@ material BodyAtlasBackground
 
 			texture_unit Watermark
 			{
-				texture Medical.Resources.Background.BodyAtlasBackground.png
+				texture Medical.Resources.Background.AnomalousMedicalWatermark.png
 			}
 		}
 	}

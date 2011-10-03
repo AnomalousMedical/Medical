@@ -131,13 +131,13 @@
     <EmbeddedResource Include="Resources\BodyAtlasImagesets.xml" />
     <EmbeddedResource Include="Resources\BodyAtlasIcons.xml" />
     <EmbeddedResource Include="Resources\BodyAtlasIcons.png" />
-    <EmbeddedResource Include="Resources\Background\BodyAtlasBackground.png" />
     <EmbeddedResource Include="Resources\AppButton.xml" />
     <EmbeddedResource Include="Resources\AppButton.png" />
     <EmbeddedResource Include="Resources\AboutImage.xml" />
     <EmbeddedResource Include="Resources\AboutImage.png" />
     <EmbeddedResource Include="Resources\SelectionIcons.xml" />
     <EmbeddedResource Include="Resources\SelectionIcons.png" />
+    <EmbeddedResource Include="Resources\Background\AnomalousMedicalWatermark.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
