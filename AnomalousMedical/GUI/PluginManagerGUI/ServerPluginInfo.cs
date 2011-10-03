@@ -18,5 +18,7 @@ namespace Medical.GUI
         public int PluginId { get; set; }
 
         public Download Download { get; set; }
+
+        public String ImageKey { get; set; }
     }
 }

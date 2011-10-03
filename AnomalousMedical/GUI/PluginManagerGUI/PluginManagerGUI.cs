@@ -10,6 +10,7 @@ using Logging;
 using Engine;
 using System.Threading;
 using Medical.Controller;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -25,9 +26,10 @@ namespace Medical.GUI
         private AtlasPluginManager pluginManager;
         private LicenseManager licenseManager;
         private DownloadController downloadController;
-        private bool allowUpdates = true;
+        private bool activeNotDisposed = true;
         private bool addedInstalledPlugins = false;
         private bool readingServerPluginInfo = false;
+        private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
 
         List<ServerPluginInfo> detectedServerPlugins = new List<ServerPluginInfo>();
         
@@ -67,7 +69,8 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            allowUpdates = false;
+            serverImages.Dispose();
+            activeNotDisposed = false;
             base.Dispose();
         }
 
@@ -131,20 +134,23 @@ namespace Medical.GUI
                     List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
                     ThreadManager.invoke(new Action(delegate()
                     {
-                        pluginGrid.SuppressLayout = true;
-
-                        foreach (ServerPluginInfo plugin in pluginInfo)
+                        if (activeNotDisposed)
                         {
-                            ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name);
-                            item.UserObject = plugin;
-                            detectedServerPlugins.Add(plugin);
+                            pluginGrid.SuppressLayout = true;
+
+                            foreach (ServerPluginInfo plugin in pluginInfo)
+                            {
+                                ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name, plugin.ImageKey);
+                                item.UserObject = plugin;
+                                detectedServerPlugins.Add(plugin);
+                            }
+
+                            pluginGrid.SuppressLayout = false;
+                            pluginGrid.layout();
+
+                            readingServerPluginInfo = false;
+                            readingInfo.Visible = false;
                         }
-
-                        pluginGrid.SuppressLayout = false;
-                        pluginGrid.layout();
-
-                        readingServerPluginInfo = false;
-                        readingInfo.Visible = false;
                     }));
                 }
             });
@@ -179,7 +185,7 @@ namespace Medical.GUI
             {
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(selectedItem);
-                ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", pluginInfo.Name, "Starting Download"));
+                ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", pluginInfo.Name, "Starting Download"), pluginInfo.ImageKey);
                 downloadingItem.UserObject = pluginInfo;
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
@@ -200,7 +206,7 @@ namespace Medical.GUI
 
         public void downloadCompleted(Download download)
         {
-            if (allowUpdates)
+            if (activeNotDisposed)
             {
                 ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
                 ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
@@ -208,7 +214,7 @@ namespace Medical.GUI
                 pluginGrid.removeItem(downloadingItem);
                 if (download.Successful)
                 {
-                    pluginGrid.addItem("Installed", pluginInfo.Name);
+                    pluginGrid.addItem("Installed", pluginInfo.Name, pluginInfo.ImageKey);
                     detectedServerPlugins.Remove(pluginInfo);
                 }
                 else
@@ -217,7 +223,7 @@ namespace Medical.GUI
                     {
                         MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
                     }
-                    ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name);
+                    ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name, pluginInfo.ImageKey);
                     item.UserObject = pluginInfo;
                 }
                 pluginInfo.Download = null;
@@ -228,7 +234,7 @@ namespace Medical.GUI
 
         public void updateStatus(Download download)
         {
-            if (allowUpdates)
+            if (activeNotDisposed)
             {
                 ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
                 ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
@@ -255,25 +261,52 @@ namespace Medical.GUI
                 }
 
                 // Get the response.
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (Stream serverDataStream = response.GetResponseStream())
+                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
                     {
-                        using (Stream localDataStream = new MemoryStream())
+                        using (Stream serverDataStream = response.GetResponseStream())
                         {
-                            byte[] buffer = new byte[8 * 1024];
-                            int len;
-                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
+                            //----------------------
+                            ///Modify this to read directly
+                            ///-----------------------
+                            using (MemoryStream localDataStream = new MemoryStream())
                             {
-                                localDataStream.Write(buffer, 0, len);
-                            }
-                            localDataStream.Seek(0, SeekOrigin.Begin);
-                            using (StreamReader streamReader = new StreamReader(localDataStream))
-                            {
-                                while (!streamReader.EndOfStream)
+                                byte[] buffer = new byte[8 * 1024];
+                                int len;
+                                while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
                                 {
-                                    pluginInfoList.Add(new ServerPluginInfo(NumberParser.ParseInt(streamReader.ReadLine()), streamReader.ReadLine()));
+                                    localDataStream.Write(buffer, 0, len);
+                                }
+                                localDataStream.Seek(0, SeekOrigin.Begin);
+                                try
+                                {
+                                    using (BinaryReader streamReader = new BinaryReader(localDataStream))
+                                    {
+                                        while (streamReader.PeekChar() != -1)
+                                        {
+                                            ServerPluginInfo pluginInfo = new ServerPluginInfo(streamReader.ReadInt32(), streamReader.ReadString());
+                                            pluginInfoList.Add(pluginInfo);
+                                            String imageURL = streamReader.ReadString();
+                                            if (!String.IsNullOrEmpty(imageURL))
+                                            {
+                                                using (Bitmap image = loadImageFromURL(imageURL))
+                                                {
+                                                    if (image != null)
+                                                    {
+                                                        ThreadManager.invokeAndWait(new Action(delegate()
+                                                        {
+                                                            pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
+                                                        }));
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                catch (EndOfStreamException)
+                                {
+                                    //At end of stream
                                 }
                             }
                         }
@@ -289,6 +322,33 @@ namespace Medical.GUI
             }
 
             return pluginInfoList;
+        }
+
+        //Runs on background thread
+        private Bitmap loadImageFromURL(String url)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.WebsiteImagesBaseURL + url));
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                    {
+                        using (Stream responseStream = response.GetResponseStream())
+                        {
+                            return new Bitmap(responseStream);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ThreadManager.invoke(new Action(delegate()
+                {
+                    Log.Error("Could not load image from {0} because {1}.", url, e.Message);
+                }));
+            }
+            return null;
         }
 
         public override void setSize(int width, int height)

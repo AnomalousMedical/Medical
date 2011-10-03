@@ -42,6 +42,7 @@ namespace Medical.Controller
     public class ThreadManager
     {
         private static List<TargetEntry> targets = new List<TargetEntry>();
+        private static bool active = true;
 
         private ThreadManager()
         {
@@ -57,7 +58,14 @@ namespace Medical.Controller
             TargetEntry entry = new TargetEntry(target, args);
             lock (targets)
             {
-                targets.Add(entry);
+                if (active)
+                {
+                    targets.Add(entry);
+                }
+                else
+                {
+                    entry.cancel();
+                }
             }
             if (!entry.Finished)
             {
@@ -70,7 +78,14 @@ namespace Medical.Controller
             TargetEntry entry = new TargetEntry(target, args);
             lock (targets)
             {
-                targets.Add(entry);
+                if (active)
+                {
+                    targets.Add(entry);
+                }
+                else
+                {
+                    entry.cancel();
+                }
             }
         }
 
@@ -88,7 +103,8 @@ namespace Medical.Controller
 
         /// <summary>
         /// This will cancel all targets and return control back to any waiting
-        /// threads. Should be called only on shutdown.
+        /// threads. Should be called only on shutdown. After this method any
+        /// invoke calls will automatically cancel.
         /// </summary>
         public static void cancelAll()
         {
@@ -99,6 +115,7 @@ namespace Medical.Controller
                     target.cancel();
                 }
                 targets.Clear();
+                active = false;
             }
         }
     }
