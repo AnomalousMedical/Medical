@@ -128,31 +128,32 @@ namespace Medical.GUI
                     sb.Append(pluginId.ToString());
                     sb.Append(",");
                 }
+                String installedPluginsList = String.Empty;
                 if (sb.Length > 0)
                 {
-                    String installedPluginsList = sb.ToString(0, sb.Length - 1);
-                    List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
-                    ThreadManager.invoke(new Action(delegate()
-                    {
-                        if (activeNotDisposed)
-                        {
-                            pluginGrid.SuppressLayout = true;
-
-                            foreach (ServerPluginInfo plugin in pluginInfo)
-                            {
-                                ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name, plugin.ImageKey);
-                                item.UserObject = plugin;
-                                detectedServerPlugins.Add(plugin);
-                            }
-
-                            pluginGrid.SuppressLayout = false;
-                            pluginGrid.layout();
-
-                            readingServerPluginInfo = false;
-                            readingInfo.Visible = false;
-                        }
-                    }));
+                    installedPluginsList = sb.ToString(0, sb.Length - 1);
                 }
+                List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
+                ThreadManager.invoke(new Action(delegate()
+                {
+                    if (activeNotDisposed)
+                    {
+                        pluginGrid.SuppressLayout = true;
+
+                        foreach (ServerPluginInfo plugin in pluginInfo)
+                        {
+                            ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name, plugin.ImageKey);
+                            item.UserObject = plugin;
+                            detectedServerPlugins.Add(plugin);
+                        }
+
+                        pluginGrid.SuppressLayout = false;
+                        pluginGrid.layout();
+
+                        readingServerPluginInfo = false;
+                        readingInfo.Visible = false;
+                    }
+                }));
             });
             serverReadThread.Start();
         }

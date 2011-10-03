@@ -109,19 +109,35 @@ namespace Medical
                 String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
                 if (!loadedPluginNames.Contains(dllFileName))
                 {
-                    loadedPluginNames.Add(dllFileName);
-                    Assembly assembly = Assembly.LoadFile(fullPath);
-                    AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                    if (attributes.Length > 0)
+                    try
                     {
-                        foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                        Assembly assembly = Assembly.LoadFile(fullPath);
+                        AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                        if (attributes.Length > 0)
                         {
-                            entryPointAttribute.createPlugin(standaloneController);
+                            foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                            {
+                                entryPointAttribute.createPlugin(standaloneController);
+                            }
                         }
+                        else
+                        {
+                            Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                        }
+
+                        loadedPluginNames.Add(dllFileName);
                     }
-                    else
+                    catch (Exception e)
                     {
-                        Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                        Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
+                        try
+                        {
+                            File.Delete(fullPath);
+                        }
+                        catch (Exception deleteEx)
+                        {
+                            Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
+                        }
                     }
                 }
                 else
