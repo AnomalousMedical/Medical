@@ -101,41 +101,43 @@ namespace Medical
                 }
 
                 // Get the response.
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (Stream serverDataStream = response.GetResponseStream())
+                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
                     {
-                        download.FileName = response.Headers["content-disposition"].Substring(21);
-                        String sizeStr = response.Headers["Content-Length"];
-                        download.TotalSize = NumberParser.ParseLong(sizeStr);
-                        String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);
-                        using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
+                        using (Stream serverDataStream = response.GetResponseStream())
                         {
-                            byte[] buffer = new byte[8 * 1024];
-                            int len;
-                            download.TotalRead = 0;
-                            while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0 && !download.Cancel)
+                            download.FileName = response.Headers["content-disposition"].Substring(21);
+                            String sizeStr = response.Headers["Content-Length"];
+                            download.TotalSize = NumberParser.ParseLong(sizeStr);
+                            String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);
+                            using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
                             {
-                                download.TotalRead += len;
-                                localDataStream.Write(buffer, 0, len);
-                                download.updateStatus();
+                                byte[] buffer = new byte[8 * 1024];
+                                int len;
+                                download.TotalRead = 0;
+                                while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0 && !download.Cancel)
+                                {
+                                    download.TotalRead += len;
+                                    localDataStream.Write(buffer, 0, len);
+                                    download.updateStatus();
+                                }
                             }
-                        }
 
-                        if (download.Cancel)
-                        {
-                            switch (download.CancelPostAction)
+                            if (download.Cancel)
                             {
-                                case DownloadPostAction.DeleteFile:
-                                    File.Delete(pluginFileLocation);
-                                    break;
+                                switch (download.CancelPostAction)
+                                {
+                                    case DownloadPostAction.DeleteFile:
+                                        File.Delete(pluginFileLocation);
+                                        break;
+                                }
                             }
-                        }
-                        else
-                        {
-                            //If we got here the file downloaded successfully
-                            success = true;
+                            else
+                            {
+                                //If we got here the file downloaded successfully
+                                success = true;
+                            }
                         }
                     }
                 }

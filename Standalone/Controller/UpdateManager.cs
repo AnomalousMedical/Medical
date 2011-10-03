@@ -34,12 +34,14 @@ namespace Medical
                 //}
 
                 // Get the response.
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    using (XmlTextReader reader = new XmlTextReader(response.GetResponseStream()))
+                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
                     {
-                        updateLogic(currentVersion, reader);
+                        using (XmlTextReader reader = new XmlTextReader(response.GetResponseStream()))
+                        {
+                            updateLogic(currentVersion, reader);
+                        }
                     }
                 }
             }
