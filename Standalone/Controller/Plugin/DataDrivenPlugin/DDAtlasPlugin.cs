@@ -107,6 +107,9 @@ namespace Medical
         [Editable]
         public String PluginName { get; set; }
 
+        [Editable]
+        public String BrandingImageKey { get; set; }
+
         public TimelineController TimelineController { get; private set; }
 
         public String PluginRootFolder { get; set; }
@@ -133,6 +136,7 @@ namespace Medical
             IconResourceFile = info.GetString("IconResourceFile");
             PluginId = info.GetInt64("PluginID");
             PluginName = info.GetString("PluginName");
+            BrandingImageKey = info.GetString("BrandingImageKey");
         }
 
         public void getInfo(SaveInfo info)
@@ -142,6 +146,7 @@ namespace Medical
             info.AddValue("IconResourceFile", IconResourceFile);
             info.AddValue("PluginID", PluginId);
             info.AddValue("PluginName", PluginName);
+            info.AddValue("BrandingImageKey", BrandingImageKey);
         }
 
         #endregion

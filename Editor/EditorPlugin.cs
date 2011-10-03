@@ -165,6 +165,14 @@ namespace Medical
             }
         }
 
+        public String BrandingImageKey
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         public void createMenuBar(NativeMenuBar menu)
         {
 

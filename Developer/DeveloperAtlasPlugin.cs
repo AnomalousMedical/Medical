@@ -86,5 +86,13 @@ namespace Developer
                 return "Developer Plugin";
             }
         }
+
+        public String BrandingImageKey
+        {
+            get
+            {
+                return "";
+            }
+        }
     }
 }

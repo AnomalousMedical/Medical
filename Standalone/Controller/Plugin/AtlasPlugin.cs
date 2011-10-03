@@ -27,5 +27,7 @@ namespace Medical
         long PluginId { get; }
 
         String PluginName { get; }
+
+        String BrandingImageKey { get; }
     }
 }

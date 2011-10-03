@@ -159,6 +159,14 @@ namespace Medical.GUI
             }
         }
 
+        public String BrandingImageKey
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         public void showOptions()
         {
             options.show(0, 0);

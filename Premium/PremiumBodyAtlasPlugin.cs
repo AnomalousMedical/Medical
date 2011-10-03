@@ -166,6 +166,14 @@ namespace Medical
             }
         }
 
+        public String BrandingImageKey
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         public void open()
         {
             openPatientDialog.show(0, 0);

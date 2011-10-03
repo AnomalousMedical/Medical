@@ -76,5 +76,13 @@ namespace Medical
                 return "Lecture Plugin";
             }
         }
+
+        public String BrandingImageKey
+        {
+            get
+            {
+                return "";
+            }
+        }
     }
 }

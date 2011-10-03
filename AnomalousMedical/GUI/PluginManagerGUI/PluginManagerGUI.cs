@@ -100,7 +100,7 @@ namespace Medical.GUI
 
                     foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
                     {
-                        ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName);
+                        ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName, plugin.BrandingImageKey);
                         if (plugin.PluginId != -1)
                         {
                             detectedPluginIds.Add((int)plugin.PluginId);
