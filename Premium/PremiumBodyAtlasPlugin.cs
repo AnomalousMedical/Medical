@@ -23,7 +23,7 @@ namespace Medical
         private NotesDialog notesDialog;
         private SequencePlayer sequencePlayer;
         private BookmarksGUI bookmarks;
-        private StateListGUI stateListGUI;
+        private StateListDialog stateList;
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
 
@@ -49,7 +49,7 @@ namespace Medical
 
         public void Dispose()
         {
-            stateListGUI.Dispose();
+            stateList.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             mandibleMovementDialog.Dispose();
@@ -82,7 +82,8 @@ namespace Medical
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
 
-            stateListGUI = new StateListGUI(standaloneController.MedicalStateController, standaloneController.GUIManager);
+            stateList = new StateListDialog(standaloneController.MedicalStateController);
+            guiManager.addManagedDialog(stateList);
 
             savePatientDialog = new SavePatientDialog(guiManager);
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
@@ -108,7 +109,7 @@ namespace Medical
 
             taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
             taskController.addTask(new ShowToothContactsTask(0));
-            taskController.addTask(new ShowPopupTask(stateListGUI, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
+            taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation, 1));
             taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation, 2));

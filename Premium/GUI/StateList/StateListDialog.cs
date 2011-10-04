@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class StateListPopup : MDIDialog
+    public class StateListDialog : MDIDialog
     {
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f), new Size2(512.0f, 512.0f));
         private ButtonGrid stateListBox;
@@ -18,7 +18,7 @@ namespace Medical.GUI
 
         private MedicalStateController stateController;
 
-        public StateListPopup(MedicalStateController stateController)
+        public StateListDialog(MedicalStateController stateController)
             :base("Medical.GUI.StateList.StateListDialog.layout")
         {
             stateListBox = new ButtonGrid(window.findWidget("StateList/ScrollView") as ScrollView, new ButtonGridListLayout());
