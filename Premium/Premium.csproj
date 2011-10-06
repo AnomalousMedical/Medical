@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Documents\PatientDocumentHandler.cs" />
+    <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
     <Compile Include="GUI\StateList\StateListGUI.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
@@ -73,9 +74,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\ChangeBackgroundColorTask.cs" />
     <Compile Include="Tasks\ChangeWindowLayoutTask.cs" />
+    <Compile Include="Tasks\CloneWindowTaskMenuItem.cs" />
     <Compile Include="Tasks\ShowToothContactsTaskMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\CloneWindow\CloneWindowDialog.layout" />
     <EmbeddedResource Include="GUI\StateList\StateListGUI.layout" />
     <EmbeddedResource Include="Resources\PremiumImagesets.xml" />
   </ItemGroup>
@@ -111,6 +114,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PremiumBrandingImage.xml" />
     <EmbeddedResource Include="Resources\PremiumFeaturesIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LectureIcons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LectureIcons.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

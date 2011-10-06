@@ -26,6 +26,7 @@ namespace Medical
         private StateListDialog stateList;
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
+        private CloneWindowDialog cloneWindowDialog;
 
         //Tasks
         private ChangeWindowLayoutTask windowLayout;
@@ -49,6 +50,7 @@ namespace Medical
 
         public void Dispose()
         {
+            cloneWindowDialog.Dispose();
             stateList.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
@@ -91,6 +93,8 @@ namespace Medical
             openPatientDialog = new OpenPatientDialog(guiManager);
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
+            cloneWindowDialog = new CloneWindowDialog();
+
             //Tasks
             windowLayout = new ChangeWindowLayoutTask(standaloneController);
 
@@ -114,6 +118,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation, 1));
             taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation, 2));
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
+            standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
             taskController.addTask(windowLayout);
         }
 
