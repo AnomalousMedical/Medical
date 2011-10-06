@@ -71,7 +71,11 @@
     <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DeveloperBrandingIcon.png" />
+    <EmbeddedResource Include="Resources\DeveloperBrandingIcon.xml" />
+    <EmbeddedResource Include="Resources\DeveloperImagesets.xml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\PluginPublisher\PluginPublisher.layout" />
   </ItemGroup>

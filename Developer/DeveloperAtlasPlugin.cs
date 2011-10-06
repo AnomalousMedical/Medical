@@ -6,6 +6,7 @@ using Medical;
 using Engine.ObjectManagement;
 using Medical.GUI;
 using Developer.GUI;
+using MyGUIPlugin;
 
 namespace Developer
 {
@@ -33,6 +34,8 @@ namespace Developer
 
         public void initialize(StandaloneController standaloneController)
         {
+            Gui.Instance.load("Developer.Resources.DeveloperImagesets.xml");
+
             pluginPublishController = new PluginPublishController(standaloneController.AtlasPluginManager);
 
             GUIManager guiManager = standaloneController.GUIManager;
@@ -91,7 +94,7 @@ namespace Developer
         {
             get
             {
-                return "";
+                return "Developer/BrandingImage";
             }
         }
     }
