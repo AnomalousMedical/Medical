@@ -171,7 +171,7 @@ namespace Medical
         {
             get
             {
-                return "";
+                return "PremiumFeatures/BrandingImage";
             }
         }
 

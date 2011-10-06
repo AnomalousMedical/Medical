@@ -169,7 +169,7 @@ namespace Medical
         {
             get
             {
-                return "";
+                return "Editor/BrandingImage";
             }
         }
 

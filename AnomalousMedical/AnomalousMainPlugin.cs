@@ -155,7 +155,7 @@ namespace Medical.GUI
         {
             get
             {
-                return "Main Plugin";
+                return "Core";
             }
         }
 
@@ -163,7 +163,7 @@ namespace Medical.GUI
         {
             get
             {
-                return "";
+                return "AnomalousMedicalCore/BrandingImage";
             }
         }
 
