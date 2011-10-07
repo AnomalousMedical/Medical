@@ -64,12 +64,13 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
-            standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController, this));
+            standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController));
 
             Gui.Instance.load("Medical.Resources.PremiumImagesets.xml");
 
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
+            standaloneController.PatientDataController.PatientDataChanged += new Action<PatientDataFile>(PatientDataController_PatientDataChanged);
 
             //Dialogs
             //BodyAtlas
@@ -209,27 +210,30 @@ namespace Medical
             }
         }
 
-        public void changeActiveFile(PatientDataFile patientData)
+        public void PatientDataController_PatientDataChanged(PatientDataFile patientData)
         {
             if (patientData != null)
             {
                 MainWindow.Instance.updateWindowTitle(String.Format("{0} {1}", patientData.FirstName, patientData.LastName));
                 standaloneController.DocumentController.addToRecentDocuments(patientData.BackingFile);
             }
+            else
+            {
+                MainWindow.Instance.clearWindowTitle();
+            }
+            savePatientDialog.PatientData = patientData;
         }
 
         private void savePatientDialog_SaveFile(object sender, EventArgs e)
         {
             PatientDataFile patientData = savePatientDialog.PatientData;
-            changeActiveFile(patientData);
-            standaloneController.saveMedicalState(patientData);
+            standaloneController.PatientDataController.saveMedicalState(patientData);
         }
 
         private void openPatientDialog_OpenFile(object sender, EventArgs e)
         {
             PatientDataFile patientData = openPatientDialog.CurrentFile;
-            changeActiveFile(patientData);
-            standaloneController.openPatientFile(patientData);
+            standaloneController.PatientDataController.openPatientFile(patientData);
         }
 
         void saveAsTaskItem_OnClicked(Task item)

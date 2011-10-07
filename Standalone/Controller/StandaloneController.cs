@@ -45,6 +45,7 @@ namespace Medical
         private SaveableClipboard clipboard;
         private AnatomyController anatomyController;
         private DownloadController downloadController;
+        private PatientDataController patientDataController;
 
         //GUI
         private GUIManager guiManager;
@@ -213,6 +214,9 @@ namespace Medical
             //Exams
             examController = new ExamController();
 
+            //Patient data
+            patientDataController = new PatientDataController(this);
+
             //Tasks
             taskController = new TaskController();
 
@@ -303,42 +307,8 @@ namespace Medical
             bool success = changeScene(filename);
             medicalStateController.createNormalStateFromScene();
             examController.clear();
+            patientDataController.clearData();
             return success;
-        }
-
-        public void saveMedicalState(PatientDataFile dataFile)
-        {
-            if (medicalStateController.getNumStates() == 0)
-            {
-                medicalStateController.createNormalStateFromScene();
-            }
-            dataFile.PatientData.MedicalStates = medicalStateController.getSavedState(medicalController.CurrentSceneFile);
-            examController.addExamsToData(dataFile.PatientData);
-            dataFile.save();
-        }
-
-        public void openPatientFile(PatientDataFile dataFile)
-        {
-            if (dataFile.loadData())
-            {
-                SavedMedicalStates states = dataFile.PatientData.MedicalStates;
-                if (states != null)
-                {
-                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
-                    medicalStateController.setStates(states);
-                    medicalStateController.blend(0.0f);
-                    guiManager.changeLeftPanel(null);
-                }
-                else
-                {
-                    MessageBox.show(String.Format("Error loading file {0}.\nCould not read state information.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                }
-                examController.setExamsFromData(dataFile.PatientData);
-            }
-            else
-            {
-                MessageBox.show(String.Format("Error loading file {0}.\nCould not load patient data.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            }
         }
 
         public void sceneRevealed()
@@ -507,6 +477,14 @@ namespace Medical
             }
         }
 
+        public PatientDataController PatientDataController
+        {
+            get
+            {
+                return patientDataController;
+            }
+        }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();
@@ -545,7 +523,7 @@ namespace Medical
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private bool changeScene(String file)
+        internal bool changeScene(String file)
         {
             bool success = false;
             sceneViewController.resetAllCameraPositions();

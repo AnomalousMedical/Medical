@@ -10,12 +10,10 @@ namespace Medical
     class PatientDocumentHandler : DocumentHandler
     {
         private StandaloneController standaloneController;
-        private PremiumBodyAtlasPlugin bodyAtlasPlugin;
 
-        public PatientDocumentHandler(StandaloneController standaloneController, PremiumBodyAtlasPlugin bodyAtlasPlugin)
+        public PatientDocumentHandler(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
-            this.bodyAtlasPlugin = bodyAtlasPlugin;
         }
 
         public bool canReadFile(string filename)
@@ -28,14 +26,13 @@ namespace Medical
             PatientDataFile patientData = new PatientDataFile(filename);
             if (patientData.loadHeader())
             {
-                bodyAtlasPlugin.changeActiveFile(patientData);
-                standaloneController.openPatientFile(patientData);
+                standaloneController.PatientDataController.openPatientFile(patientData);
             }
             else
             {
                 MessageBox.show(String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
-            return false; //bodyAtlasPlugin.changeActiveFile will have already added this to the recent docs list for us.
+            return false;
         }
 
         public string getPrettyName(string filename)

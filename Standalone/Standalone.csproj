@@ -134,6 +134,7 @@
     <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />
     <Compile Include="Controller\MedicalStates\PatientData.cs" />
     <Compile Include="Controller\OSHelper\LicenseManager.cs" />
+    <Compile Include="Controller\PatientDataController.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginEntryPointAttribute.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\DDAtlasPlugin.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\DDPluginTask.cs" />

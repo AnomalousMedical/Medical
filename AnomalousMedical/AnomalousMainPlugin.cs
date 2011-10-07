@@ -189,7 +189,6 @@ namespace Medical.GUI
 
         private void chooseSceneDialog_ChooseScene(object sender, EventArgs e)
         {
-            MainWindow.Instance.clearWindowTitle();
             standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
         }
 
