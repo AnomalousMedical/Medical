@@ -22,9 +22,11 @@ namespace Medical
         private ConfigSection section;
         private List<String> recentDocumentList = new List<string>();
 
-        public RecentDocuments()
+        private DocumentController documentController;
+
+        public RecentDocuments(DocumentController documentController)
         {
-            
+            this.documentController = documentController;
         }
 
         public void load(String backingFile)
@@ -71,7 +73,7 @@ namespace Medical
             for (int i = 0; section.hasValue("Document" + i); ++i)
             {
                 String doc = section.getValue("Document" + i, "");
-                if (File.Exists(doc))
+                if (File.Exists(doc) && documentController.canReadFile(doc))
                 {
                     recentDocumentList.Add(doc);
                 }

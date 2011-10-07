@@ -17,7 +17,7 @@ namespace Medical
 
         public DocumentController()
         {
-            recentDocuments = new RecentDocuments();
+            recentDocuments = new RecentDocuments(this);
         }
 
         public void addDocumentHandler(DocumentHandler handler)
@@ -94,6 +94,18 @@ namespace Medical
         public void addToRecentDocuments(String filename)
         {
             recentDocuments.addDocument(filename);
+        }
+
+        public bool canReadFile(String filename)
+        {
+            foreach (DocumentHandler handler in documentHandlers)
+            {
+                if (handler.canReadFile(filename))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public IEnumerable<String> RecentDocuments
