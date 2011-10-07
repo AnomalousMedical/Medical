@@ -362,9 +362,6 @@ namespace Medical.GUI
                 captionMouseOffset.x = (int)(normalizedMouseWidthOffset * window.CaptionWidget.Width);
                 IgnorePositionChanges = false;
 
-                LayerManager.Instance.detachFromLayer(window);
-                LayerManager.Instance.attachToLayerNode(originalLayer, window);
-
                 window.setActionWidgetsEnabled(true);
             }
             else
@@ -373,9 +370,6 @@ namespace Medical.GUI
                 window.MinSize = DOCKED_MIN_SIZE;
                 window.MaxSize = DOCKED_MAX_SIZE;
                 Size = (IntSize2)dockedSize;
-
-                LayerManager.Instance.detachFromLayer(window);
-                LayerManager.Instance.attachToLayerNode("Back", window);
 
                 window.setActionWidgetsEnabled(false);
             }
