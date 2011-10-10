@@ -42,6 +42,7 @@ namespace Medical.GUI
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
+            pluginGrid.ItemActivated += new EventHandler(pluginGrid_ItemActivated);
             pluginGrid.defineGroup("Downloading");
             pluginGrid.defineGroup("Not Installed");
             pluginGrid.defineGroup("Installed");
@@ -184,15 +185,30 @@ namespace Medical.GUI
             ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
             if (pluginInfo != null)
             {
-                pluginGrid.SuppressLayout = true;
-                pluginGrid.removeItem(selectedItem);
-                ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", pluginInfo.Name, "Starting Download"), pluginInfo.ImageKey);
-                downloadingItem.UserObject = pluginInfo;
-                pluginGrid.SuppressLayout = false;
-                pluginGrid.layout();
-
-                pluginInfo.Download = downloadController.downloadPlugin(pluginInfo.PluginId, this, downloadingItem);
+                downloadItem(selectedItem, pluginInfo);
             }
+        }
+
+        void pluginGrid_ItemActivated(object sender, EventArgs e)
+        {
+            ButtonGridItem selectedItem = pluginGrid.SelectedItem;
+            ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
+            if (pluginInfo != null && pluginInfo.Download == null)
+            {
+                downloadItem(selectedItem, pluginInfo);
+            }
+        }
+
+        private void downloadItem(ButtonGridItem selectedItem, ServerPluginInfo pluginInfo)
+        {
+            pluginGrid.SuppressLayout = true;
+            pluginGrid.removeItem(selectedItem);
+            ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", pluginInfo.Name, "Starting Download"), pluginInfo.ImageKey);
+            downloadingItem.UserObject = pluginInfo;
+            pluginGrid.SuppressLayout = false;
+            pluginGrid.layout();
+
+            pluginInfo.Download = downloadController.downloadPlugin(pluginInfo.PluginId, this, downloadingItem);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
