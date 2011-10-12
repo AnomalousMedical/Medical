@@ -59,7 +59,7 @@ namespace Medical
         {
             get
             {
-                return "core_theme.xml";
+                return "MyGUIPlugin.Resources.core_theme.xml";
             }
         }
 
