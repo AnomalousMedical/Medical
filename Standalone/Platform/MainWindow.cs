@@ -50,7 +50,7 @@ namespace Medical.GUI
         public static MainWindow Instance { get; private set; }
 
         public MainWindow(String windowTitle)
-            :base(windowTitle, new Point(-1, -1), new Size(800, 600))
+            :base(windowTitle, new Point(-1, -1), new Size(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes))
         {
             Instance = this;
             this.windowTitle = windowTitle;
