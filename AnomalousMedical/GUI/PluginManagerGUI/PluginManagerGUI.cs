@@ -29,6 +29,8 @@ namespace Medical.GUI
         private bool activeNotDisposed = true;
         private bool addedInstalledPlugins = false;
         private bool readingServerPluginInfo = false;
+        private bool displayRestartMessage = false;
+        private bool allowRestartMessageDisplay = true;
         private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
 
         List<ServerPluginInfo> detectedServerPlugins = new List<ServerPluginInfo>();
@@ -233,6 +235,23 @@ namespace Medical.GUI
                 {
                     pluginGrid.addItem("Installed", pluginInfo.Name, pluginInfo.ImageKey);
                     detectedServerPlugins.Remove(pluginInfo);
+                    PluginDownload pluginDownload = (PluginDownload)download;
+                    if (!displayRestartMessage)
+                    {
+                        displayRestartMessage = !pluginDownload.LoadedSucessfully;
+                    }
+                    if (!downloadController.Downloading && displayRestartMessage)
+                    {
+                        displayRestartMessage = false;
+                        if (allowRestartMessageDisplay)
+                        {
+                            allowRestartMessageDisplay = false;
+                            MessageBox.show("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.", "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
+                            {
+                                allowRestartMessageDisplay = true;
+                            }));
+                        }
+                    }
                 }
                 else
                 {

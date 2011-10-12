@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Medical
 {
-    class PluginDownload : Download
+    public class PluginDownload : Download
     {
         public PluginDownload(int pluginId, DownloadController controller, DownloadListener downloadListener)
             :base(controller, downloadListener)
@@ -34,7 +34,7 @@ namespace Medical
                     ThreadManager.invoke(new Action(delegate()
                     {
                         String pluginFile = Path.Combine(DestinationFolder, FileName);
-                        atlasPluginManager.addPlugin(pluginFile);
+                        LoadedSucessfully = atlasPluginManager.addPlugin(pluginFile);
                         atlasPluginManager.initialzePlugins();
                         if (DownloadedToSafeLocation)
                         {
@@ -46,6 +46,8 @@ namespace Medical
         }
 
         public long PluginId { get; set; }
+
+        public bool LoadedSucessfully { get; set; }
 
         void licenseServerReadFail()
         {

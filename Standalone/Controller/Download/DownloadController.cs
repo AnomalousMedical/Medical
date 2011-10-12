@@ -57,6 +57,17 @@ namespace Medical
             }
         }
 
+        public bool Downloading
+        {
+            get
+            {
+                lock (activeDownloads)
+                {
+                    return activeDownloads.Count > 0;
+                }
+            }
+        }
+
         /// <summary>
         /// Callback method for when a download is completed. DO NOT CALL THIS
         /// unless you are the Download class. To stop downloads call the cancel
