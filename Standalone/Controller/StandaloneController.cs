@@ -119,6 +119,8 @@ namespace Medical
 
         public void initializeControllers(ViewportBackground background)
         {
+            atlasPluginManager.manageInstalledPlugins();
+
             clipboard = new SaveableClipboard();
 
             //Documents

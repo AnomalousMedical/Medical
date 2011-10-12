@@ -19,6 +19,7 @@ namespace Medical
             {
                 Directory.CreateDirectory(defaultPluginsFolder);
             }
+            ManagePluginsFile = Path.Combine(defaultPluginsFolder, "ManagePlugins.ini");
         }
 
         public void findRegularPlugins()
@@ -71,5 +72,7 @@ namespace Medical
                 return defaultPluginsFolder;
             }
         }
+
+        public String ManagePluginsFile { get; private set; }
     }
 }

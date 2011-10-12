@@ -29,6 +29,7 @@ namespace Medical
         private HashSet<String> loadedPluginNames = new HashSet<string>();
         private XmlSaver xmlSaver = new XmlSaver();
         private bool addedPluginsToMyGUIResourceGroup = false;
+        private List<String> deleteNextRunPlugins = new List<string>();
 
         private static RSACryptoServiceProvider rsaProvider;
         private static SHA1CryptoServiceProvider sha1Provider;
@@ -51,30 +52,25 @@ namespace Medical
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
         }
 
-        Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            String assemblyName = args.Name;
-            foreach (AtlasPlugin plugin in plugins)
-            {
-                Assembly assembly = plugin.GetType().Assembly;
-                if (assembly.FullName == assemblyName)
-                {
-                    return assembly;
-                }
-            }
-            foreach (AtlasPlugin plugin in uninitializedPlugins)
-            {
-                Assembly assembly = plugin.GetType().Assembly;
-                if (assembly.FullName == assemblyName)
-                {
-                    return assembly;
-                }
-            }
-            return null;
-        }
-
         public void Dispose()
         {
+            bool writeConfig = false;
+            ConfigFile managePluginsFile = new ConfigFile(MedicalConfig.PluginConfig.ManagePluginsFile);
+            if (deleteNextRunPlugins.Count > 0)
+            {
+                writeConfig = true;
+                ConfigSection deleteSection = managePluginsFile.createOrRetrieveConfigSection("Delete");
+                int counter = 0;
+                foreach (String file in deleteNextRunPlugins)
+                {
+                    deleteSection.setValue("File" + counter, file);
+                }
+            }
+            if (writeConfig)
+            {
+                managePluginsFile.writeConfigFile();
+            }
+
             foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.Dispose();
@@ -82,6 +78,50 @@ namespace Medical
 
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
+        }
+
+        public void manageInstalledPlugins()
+        {
+            String manageFile = MedicalConfig.PluginConfig.ManagePluginsFile;
+            if (File.Exists(manageFile))
+            {
+                //Manage existing plugins based on the config file.
+                ConfigFile managePluginsConfig = new ConfigFile(MedicalConfig.PluginConfig.ManagePluginsFile);
+                managePluginsConfig.loadConfigFile();
+                ConfigSection deleteSection = managePluginsConfig.createOrRetrieveConfigSection("Delete");
+                ConfigIterator deleteIterator = new ConfigIterator(deleteSection, "File");
+                String managePluginsDirectory = Path.GetFullPath(MedicalConfig.PluginConfig.PluginsFolder);
+                while (deleteIterator.hasNext())
+                {
+                    String file = deleteIterator.next();
+                    if (file.StartsWith(managePluginsDirectory))
+                    {
+                        try
+                        {
+                            File.Delete(file);
+                            Log.ImportantInfo("Deleted plugin {0}.", file);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Error("Could not delete plugin {0} because {1}.", file, e.Message);
+                        }
+                    }
+                    else
+                    {
+                        Log.Error("Could not delete plugin {0} because it is not in the correct directory {1}.", file, managePluginsDirectory);
+                    }
+                }
+
+                //Prevent a crash from reprocessing all plugins
+                try
+                {
+                    File.Delete(manageFile);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Could not delete plugin management file {0} because {1}.", manageFile, e.Message);
+                }
+            }
         }
 
         public void addPlugin(String pluginPath)
@@ -137,6 +177,7 @@ namespace Medical
                         catch (Exception deleteEx)
                         {
                             Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
+                            deleteNextRunPlugins.Add(fullPath);
                         }
                     }
                 }
@@ -405,6 +446,28 @@ namespace Medical
             {
                 plugin.sceneLoaded(scene);
             }
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            String assemblyName = args.Name;
+            foreach (AtlasPlugin plugin in plugins)
+            {
+                Assembly assembly = plugin.GetType().Assembly;
+                if (assembly.FullName == assemblyName)
+                {
+                    return assembly;
+                }
+            }
+            foreach (AtlasPlugin plugin in uninitializedPlugins)
+            {
+                Assembly assembly = plugin.GetType().Assembly;
+                if (assembly.FullName == assemblyName)
+                {
+                    return assembly;
+                }
+            }
+            return null;
         }
     }
 }
