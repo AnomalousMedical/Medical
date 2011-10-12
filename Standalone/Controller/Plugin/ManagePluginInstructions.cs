@@ -31,10 +31,10 @@ namespace Medical
         public void process()
         {
             //Manage existing plugins based on the config file.
-            String managePluginsDirectory = Path.GetFullPath(MedicalConfig.PluginConfig.PluginsFolder);
+            String pluginDirectory = Path.GetFullPath(MedicalConfig.PluginConfig.PluginsFolder);
             foreach(String file in deleteFiles)
             {
-                if (file.StartsWith(managePluginsDirectory))
+                if (file.StartsWith(pluginDirectory))
                 {
                     try
                     {
@@ -48,7 +48,20 @@ namespace Medical
                 }
                 else
                 {
-                    Log.Error("Could not delete plugin {0} because it is not in the correct directory {1}.", file, managePluginsDirectory);
+                    Log.Error("Could not delete plugin {0} because it is not in the correct directory {1}.", file, pluginDirectory);
+                }
+            }
+
+            foreach (String file in moveFiles)
+            {
+                String fileName = Path.GetFileName(file);
+                try
+                {
+                    File.Move(file, Path.Combine(pluginDirectory, fileName));
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Could not move plugin {0} because {1}.", file, e.Message);
                 }
             }
         }

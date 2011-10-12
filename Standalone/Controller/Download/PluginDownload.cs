@@ -33,8 +33,13 @@ namespace Medical
                     //Load plugin back on main thread
                     ThreadManager.invoke(new Action(delegate()
                     {
-                        atlasPluginManager.addPlugin(Path.Combine(DestinationFolder, FileName));
+                        String pluginFile = Path.Combine(DestinationFolder, FileName);
+                        atlasPluginManager.addPlugin(pluginFile);
                         atlasPluginManager.initialzePlugins();
+                        if (DownloadedToSafeLocation)
+                        {
+                            atlasPluginManager.addPluginToMove(pluginFile);
+                        }
                     }));
                 }
             }

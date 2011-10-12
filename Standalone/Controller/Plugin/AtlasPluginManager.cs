@@ -92,6 +92,12 @@ namespace Medical
             managePluginInstructions = new ManagePluginInstructions();
         }
 
+        public void addPluginToMove(String path)
+        {
+            managePluginInstructions.addFileToMove(path);
+            saveManagementInstructions();
+        }
+
         public void addPlugin(String pluginPath)
         {
             if (pluginPath.EndsWith(".dll", true, CultureInfo.InvariantCulture))
@@ -146,18 +152,7 @@ namespace Medical
                         {
                             Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
                             managePluginInstructions.addFileToDelete(fullPath);
-                            try
-                            {
-                                using (XmlTextWriter xmlWriter = new XmlTextWriter(MedicalConfig.PluginConfig.ManagePluginsFile, Encoding.Unicode))
-                                {
-                                    xmlWriter.Formatting = Formatting.Indented;
-                                    xmlSaver.saveObject(managePluginInstructions, xmlWriter);
-                                }
-                            }
-                            catch (Exception writeInstructionsEx)
-                            {
-                                Log.Error("Could not write plugin management instructions to '{0}' because {1}.", MedicalConfig.PluginConfig.ManagePluginsFile, writeInstructionsEx.Message);
-                            }
+                            saveManagementInstructions();
                         }
                     }
                 }
@@ -448,6 +443,22 @@ namespace Medical
                 }
             }
             return null;
+        }
+
+        private void saveManagementInstructions()
+        {
+            try
+            {
+                using (XmlTextWriter xmlWriter = new XmlTextWriter(MedicalConfig.PluginConfig.ManagePluginsFile, Encoding.Unicode))
+                {
+                    xmlWriter.Formatting = Formatting.Indented;
+                    xmlSaver.saveObject(managePluginInstructions, xmlWriter);
+                }
+            }
+            catch (Exception writeInstructionsEx)
+            {
+                Log.Error("Could not write plugin management instructions to '{0}' because {1}.", MedicalConfig.PluginConfig.ManagePluginsFile, writeInstructionsEx.Message);
+            }
         }
     }
 }
