@@ -98,20 +98,21 @@ namespace Medical
             saveManagementInstructions();
         }
 
-        public void addPlugin(String pluginPath)
+        public bool addPlugin(String pluginPath)
         {
             if (pluginPath.EndsWith(".dll", true, CultureInfo.InvariantCulture))
             {
-                addDllPlugin(pluginPath);
+                return addDllPlugin(pluginPath);
             }
             else
             {
-                addDataDrivenPlugin(pluginPath);
+                return addDataDrivenPlugin(pluginPath);
             }
         }
 
-        public void addDllPlugin(String dllName)
+        public bool addDllPlugin(String dllName)
         {
+            bool loadedPlugin = false;
             String fullPath = Path.GetFullPath(dllName);
             if (!File.Exists(fullPath))
             {
@@ -137,6 +138,7 @@ namespace Medical
                             {
                                 entryPointAttribute.createPlugin(standaloneController);
                             }
+                            loadedPlugin = true;
                         }
                         else
                         {
@@ -167,10 +169,12 @@ namespace Medical
             {
                 Log.Error("Cannot load Assembly '{0}' from '{0}' or '{1}' because it was not found.", dllName, fullPath, Path.GetFullPath(dllName));
             }
+            return loadedPlugin;
         }
 
-        public void addDataDrivenPlugin(String path)
+        public bool addDataDrivenPlugin(String path)
         {
+            bool loadedPlugin = false;
             String pluginDirectory = null;
             String fullPath = Path.GetFullPath(path);
             if (!Directory.Exists(fullPath) && !File.Exists(fullPath))
@@ -256,6 +260,7 @@ namespace Medical
                         {
                             plugin.PluginRootFolder = pluginDirectory;
                             addPlugin(plugin, false);
+                            loadedPlugin = true;
                         }
                         else
                         {
@@ -268,6 +273,8 @@ namespace Medical
                     Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it does not exist.", pluginDefinitionFile, path, fullPath);
                 }
             }
+
+            return loadedPlugin;
         }
 
         /// <summary>
