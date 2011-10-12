@@ -234,11 +234,14 @@ namespace Medical.GUI
                 if (download.Successful)
                 {
                     pluginGrid.addItem("Installed", pluginInfo.Name, pluginInfo.ImageKey);
-                    detectedServerPlugins.Remove(pluginInfo);
                     PluginDownload pluginDownload = (PluginDownload)download;
-                    if (!displayRestartMessage)
+                    if (pluginDownload.LoadedSucessfully)
                     {
-                        displayRestartMessage = !pluginDownload.LoadedSucessfully;
+                        detectedServerPlugins.Remove(pluginInfo);
+                    }
+                    else
+                    {
+                        displayRestartMessage = true;
                     }
                     if (!downloadController.Downloading && displayRestartMessage)
                     {
