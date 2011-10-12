@@ -126,6 +126,10 @@ namespace Medical
                     try
                     {
                         Assembly assembly = Assembly.LoadFile(fullPath);
+
+                        //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
+                        loadedPluginNames.Add(dllFileName);
+
                         AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
                         if (attributes.Length > 0)
                         {
@@ -138,8 +142,6 @@ namespace Medical
                         {
                             Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
                         }
-
-                        loadedPluginNames.Add(dllFileName);
                     }
                     catch (Exception e)
                     {
