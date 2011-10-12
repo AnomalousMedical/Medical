@@ -90,6 +90,12 @@ namespace Medical
 
             EngineConfig = new EngineConfig(configFile);
 
+            SafeDownloadFolder = Path.Combine(userAnomalousFolder, "Downloads");
+            if (!Directory.Exists(SafeDownloadFolder))
+            {
+                Directory.CreateDirectory(SafeDownloadFolder);
+            }
+
 #if ALLOW_OVERRIDE
             //Override settings
 			String overrideFile = Path.Combine(FolderFinder.ExecutableFolder, PlatformConfig.OverrideFileLocation);
@@ -142,6 +148,8 @@ namespace Medical
                 return Path.Combine(userAnomalousFolder, "CrashLogs");
             }
         }
+
+        public static String SafeDownloadFolder { get; private set; }
 
         public static String UserDocRoot
         {

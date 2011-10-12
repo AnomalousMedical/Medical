@@ -139,6 +139,7 @@
     <Compile Include="Controller\Plugin\DataDrivenPlugin\DDAtlasPlugin.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\DDPluginTask.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartDDPluginTimelineTask.cs" />
+    <Compile Include="Controller\Plugin\ManagePluginInstructions.cs" />
     <Compile Include="Controller\Props\BiteStick.cs" />
     <Compile Include="Controller\Props\Caliper\Caliper.cs" />
     <Compile Include="Controller\Props\Caliper\SetCaliperMeasurement.cs" />

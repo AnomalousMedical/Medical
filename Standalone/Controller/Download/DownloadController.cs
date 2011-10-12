@@ -111,17 +111,16 @@ namespace Medical
                             String sizeStr = response.Headers["Content-Length"];
                             download.TotalSize = NumberParser.ParseLong(sizeStr);
                             String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);
-                            using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
+                            try
                             {
-                                byte[] buffer = new byte[8 * 1024];
-                                int len;
-                                download.TotalRead = 0;
-                                while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0 && !download.Cancel)
-                                {
-                                    download.TotalRead += len;
-                                    localDataStream.Write(buffer, 0, len);
-                                    download.updateStatus();
-                                }
+                                downloadData(download, serverDataStream, pluginFileLocation);
+                            }
+                            catch (IOException)
+                            {
+                                download.DownloadedToSafeLocation = true;
+                                download.DestinationFolder = MedicalConfig.SafeDownloadFolder;
+                                pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);
+                                downloadData(download, serverDataStream, pluginFileLocation);
                             }
 
                             if (download.Cancel)
@@ -150,6 +149,22 @@ namespace Medical
                 }));
             }
             download.completed(success);
+        }
+
+        private static void downloadData(Download download, Stream serverDataStream, String pluginFileLocation)
+        {
+            using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                byte[] buffer = new byte[8 * 1024];
+                int len;
+                download.TotalRead = 0;
+                while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0 && !download.Cancel)
+                {
+                    download.TotalRead += len;
+                    localDataStream.Write(buffer, 0, len);
+                    download.updateStatus();
+                }
+            }
         }
     }
 }

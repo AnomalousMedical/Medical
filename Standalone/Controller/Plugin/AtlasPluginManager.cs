@@ -29,7 +29,7 @@ namespace Medical
         private HashSet<String> loadedPluginNames = new HashSet<string>();
         private XmlSaver xmlSaver = new XmlSaver();
         private bool addedPluginsToMyGUIResourceGroup = false;
-        private List<String> deleteNextRunPlugins = new List<string>();
+        private ManagePluginInstructions managePluginInstructions;
 
         private static RSACryptoServiceProvider rsaProvider;
         private static SHA1CryptoServiceProvider sha1Provider;
@@ -54,23 +54,6 @@ namespace Medical
 
         public void Dispose()
         {
-            bool writeConfig = false;
-            ConfigFile managePluginsFile = new ConfigFile(MedicalConfig.PluginConfig.ManagePluginsFile);
-            if (deleteNextRunPlugins.Count > 0)
-            {
-                writeConfig = true;
-                ConfigSection deleteSection = managePluginsFile.createOrRetrieveConfigSection("Delete");
-                int counter = 0;
-                foreach (String file in deleteNextRunPlugins)
-                {
-                    deleteSection.setValue("File" + counter, file);
-                }
-            }
-            if (writeConfig)
-            {
-                managePluginsFile.writeConfigFile();
-            }
-
             foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.Dispose();
@@ -85,30 +68,12 @@ namespace Medical
             String manageFile = MedicalConfig.PluginConfig.ManagePluginsFile;
             if (File.Exists(manageFile))
             {
-                //Manage existing plugins based on the config file.
-                ConfigFile managePluginsConfig = new ConfigFile(MedicalConfig.PluginConfig.ManagePluginsFile);
-                managePluginsConfig.loadConfigFile();
-                ConfigSection deleteSection = managePluginsConfig.createOrRetrieveConfigSection("Delete");
-                ConfigIterator deleteIterator = new ConfigIterator(deleteSection, "File");
-                String managePluginsDirectory = Path.GetFullPath(MedicalConfig.PluginConfig.PluginsFolder);
-                while (deleteIterator.hasNext())
+                using (XmlTextReader xmlReader = new XmlTextReader(manageFile))
                 {
-                    String file = deleteIterator.next();
-                    if (file.StartsWith(managePluginsDirectory))
+                    managePluginInstructions = xmlSaver.restoreObject(xmlReader) as ManagePluginInstructions;
+                    if (managePluginInstructions != null)
                     {
-                        try
-                        {
-                            File.Delete(file);
-                            Log.ImportantInfo("Deleted plugin {0}.", file);
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Error("Could not delete plugin {0} because {1}.", file, e.Message);
-                        }
-                    }
-                    else
-                    {
-                        Log.Error("Could not delete plugin {0} because it is not in the correct directory {1}.", file, managePluginsDirectory);
+                        managePluginInstructions.process();
                     }
                 }
 
@@ -122,6 +87,9 @@ namespace Medical
                     Log.Error("Could not delete plugin management file {0} because {1}.", manageFile, e.Message);
                 }
             }
+
+            //Create a new instance for anything that happens this run
+            managePluginInstructions = new ManagePluginInstructions();
         }
 
         public void addPlugin(String pluginPath)
@@ -177,7 +145,19 @@ namespace Medical
                         catch (Exception deleteEx)
                         {
                             Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
-                            deleteNextRunPlugins.Add(fullPath);
+                            managePluginInstructions.addFileToDelete(fullPath);
+                            try
+                            {
+                                using (XmlTextWriter xmlWriter = new XmlTextWriter(MedicalConfig.PluginConfig.ManagePluginsFile, Encoding.Unicode))
+                                {
+                                    xmlWriter.Formatting = Formatting.Indented;
+                                    xmlSaver.saveObject(managePluginInstructions, xmlWriter);
+                                }
+                            }
+                            catch (Exception writeInstructionsEx)
+                            {
+                                Log.Error("Could not write plugin management instructions to '{0}' because {1}.", MedicalConfig.PluginConfig.ManagePluginsFile, writeInstructionsEx.Message);
+                            }
                         }
                     }
                 }

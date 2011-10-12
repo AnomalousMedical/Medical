@@ -20,6 +20,7 @@ namespace Medical
         {
             this.controller = controller;
             this.listener = listener;
+            this.DownloadedToSafeLocation = false;
         }
 
         public void completed(bool success)
@@ -60,11 +61,11 @@ namespace Medical
             Cancel = true;
         }
 
-        public abstract String DestinationFolder { get; }
-
         public abstract String Type { get; }
 
         public abstract String AdditionalArgs { get; }
+
+        public String DestinationFolder { get; set; }
 
         public long TotalSize { get; set; }
 
@@ -77,6 +78,8 @@ namespace Medical
         public bool Successful { get; private set; }
 
         public bool Cancel { get; private set; }
+
+        public bool DownloadedToSafeLocation { get; internal set; }
 
         public DownloadPostAction CancelPostAction { get; set; }
     }

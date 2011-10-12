@@ -14,6 +14,7 @@ namespace Medical
             :base(controller, downloadListener)
         {
             this.PluginId = pluginId;
+            this.DestinationFolder = MedicalConfig.PluginConfig.PluginsFolder;
         }
 
         protected override void onCompleted(bool success)
@@ -44,14 +45,6 @@ namespace Medical
         void licenseServerReadFail()
         {
             MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-        }
-
-        public override string DestinationFolder
-        {
-            get
-            {
-                return MedicalConfig.PluginConfig.PluginsFolder;
-            }
         }
 
         public override string Type
