@@ -15,7 +15,7 @@
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="770 3 24 20" align="Right Top" name="CloseButton"/>
         <Widget type="StaticText" skin="StaticText" position="7 5 112 15">
-            <Property key="Widget_Caption" value="My Plugins"/>
+            <Property key="Widget_Caption" value="My Downloads"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="DownloadingPanel">

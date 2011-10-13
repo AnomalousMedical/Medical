@@ -289,7 +289,7 @@ namespace Medical.GUI
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginInfoURL));
                 request.Timeout = 10000;
                 request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&list={2}", licenseManager.User, licenseManager.MachinePassword, commaSeparatedPluginList);
+                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, AnomalousMainPlugin.Version, (int)PlatformConfig.OsId, commaSeparatedPluginList);
                 byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
                 request.ContentType = "application/x-www-form-urlencoded";
 
@@ -306,9 +306,7 @@ namespace Medical.GUI
                     {
                         using (Stream serverDataStream = response.GetResponseStream())
                         {
-                            //----------------------
-                            ///Modify this to read directly
-                            ///-----------------------
+                            //Download all the data from the server
                             using (MemoryStream localDataStream = new MemoryStream())
                             {
                                 byte[] buffer = new byte[8 * 1024];
@@ -318,34 +316,29 @@ namespace Medical.GUI
                                     localDataStream.Write(buffer, 0, len);
                                 }
                                 localDataStream.Seek(0, SeekOrigin.Begin);
-                                try
+                                using (BinaryReader streamReader = new BinaryReader(localDataStream))
                                 {
-                                    using (BinaryReader streamReader = new BinaryReader(localDataStream))
+                                    String versionString = streamReader.ReadString();
+                                    Log.Debug(versionString);
+                                    while (streamReader.PeekChar() != -1)
                                     {
-                                        while (streamReader.PeekChar() != -1)
+                                        ServerPluginInfo pluginInfo = new ServerPluginInfo(streamReader.ReadInt32(), streamReader.ReadString());
+                                        pluginInfoList.Add(pluginInfo);
+                                        String imageURL = streamReader.ReadString();
+                                        if (!String.IsNullOrEmpty(imageURL))
                                         {
-                                            ServerPluginInfo pluginInfo = new ServerPluginInfo(streamReader.ReadInt32(), streamReader.ReadString());
-                                            pluginInfoList.Add(pluginInfo);
-                                            String imageURL = streamReader.ReadString();
-                                            if (!String.IsNullOrEmpty(imageURL))
+                                            using (Bitmap image = loadImageFromURL(imageURL))
                                             {
-                                                using (Bitmap image = loadImageFromURL(imageURL))
+                                                if (image != null)
                                                 {
-                                                    if (image != null)
+                                                    ThreadManager.invokeAndWait(new Action(delegate()
                                                     {
-                                                        ThreadManager.invokeAndWait(new Action(delegate()
-                                                        {
-                                                            pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
-                                                        }));
-                                                    }
+                                                        pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
+                                                    }));
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                catch (EndOfStreamException)
-                                {
-                                    //At end of stream
                                 }
                             }
                         }

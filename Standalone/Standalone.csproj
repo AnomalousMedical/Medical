@@ -404,7 +404,6 @@
     <Compile Include="Controller\Timeline\TimelineAction.cs" />
     <Compile Include="Controller\Timeline\TimelineController.cs" />
     <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
-    <Compile Include="Controller\UpdateManager.cs" />
     <Compile Include="Platform\FileOpenDialog.cs" />
     <Compile Include="Platform\FileSaveDialog.cs" />
     <Compile Include="Platform\MainWindow.cs" />

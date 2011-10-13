@@ -7,6 +7,7 @@ using MyGUIPlugin;
 using Medical.Controller;
 using OgreWrapper;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Medical.GUI
 {
@@ -87,7 +88,7 @@ namespace Medical.GUI
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
-            taskController.addTask(new ShowPopupTask(pluginManagerGUI, "Medical.PluginManagerGUI", "My Plugins", "", TaskMenuCategories.System, int.MaxValue - 5));
+            taskController.addTask(new ShowPopupTask(pluginManagerGUI, "Medical.PluginManagerGUI", "My Downloads", "", TaskMenuCategories.System, int.MaxValue - 5));
 
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
@@ -95,7 +96,6 @@ namespace Medical.GUI
 
             taskController.addTask(new ShowPopupTask(options, "Medical.Options", "Options", "FileToolstrip/Options", TaskMenuCategories.System, int.MaxValue - 3));
             taskController.addTask(new DialogOpenTask(aboutDialog, "Medical.About", "About", "FileToolstrip/About", TaskMenuCategories.System, int.MaxValue - 2));
-            taskController.addTask(new CheckForUpdatesTask(standaloneController, int.MaxValue - 2));
 
             CallbackTask logoutTaskItem = new CallbackTask("Medical.LogOut", "Log Out", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue - 1, false);
             logoutTaskItem.OnClicked += new CallbackTask.ClickedCallback(logoutTaskItem_OnClicked);
@@ -164,6 +164,14 @@ namespace Medical.GUI
             get
             {
                 return "AnomalousMedicalCore/BrandingImage";
+            }
+        }
+
+        public static String Version
+        {
+            get
+            {
+                return Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version.ToString();
             }
         }
 

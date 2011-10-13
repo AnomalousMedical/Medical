@@ -19,7 +19,8 @@ namespace Medical
 
         static PlatformConfig()
         {
-            switch (PlatformConfig_getPlatform())
+            OsId = PlatformConfig_getPlatform();
+            switch (OsId)
             {
                 case OperatingSystem.Windows:
                     currentConfig = new WindowsPlatformConfig();
@@ -142,6 +143,7 @@ namespace Medical
             }
         }
 
+        public static OperatingSystem OsId { get; private set; }
 
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
