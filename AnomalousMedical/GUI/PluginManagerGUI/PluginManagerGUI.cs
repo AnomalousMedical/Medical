@@ -31,7 +31,7 @@ namespace Medical.GUI
         private bool readingServerPluginInfo = false;
         private bool displayRestartMessage = false;
         private bool allowRestartMessageDisplay = true;
-        private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
+        private PluginDownloadServer downloadServer;
 
         List<ServerPluginInfo> detectedServerPlugins = new List<ServerPluginInfo>();
         
@@ -41,6 +41,8 @@ namespace Medical.GUI
             this.pluginManager = pluginManager;
             this.licenseManager = licenseManager;
             this.downloadController = downloadController;
+
+            downloadServer = new PluginDownloadServer(licenseManager);
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
@@ -72,7 +74,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            serverImages.Dispose();
+            downloadServer.Dispose();
             activeNotDisposed = false;
             base.Dispose();
         }
@@ -115,50 +117,31 @@ namespace Medical.GUI
                     pluginGrid.layout();
                 }
 
-                readPluginInfoFromServer(detectedPluginIds);
+                readingServerPluginInfo = true;
+                readingInfo.Visible = true;
+                downloadServer.readPluginInfoFromServer(detectedPluginIds, addNotInstalledPlugins);
             }
         }
 
-        void readPluginInfoFromServer(List<int> installedPluginIds)
+        private void addNotInstalledPlugins(List<ServerPluginInfo> pluginInfo)
         {
-            readingServerPluginInfo = true;
-            readingInfo.Visible = true;
-            Thread serverReadThread = new Thread(delegate()
+            if (activeNotDisposed)
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (int pluginId in installedPluginIds)
+                pluginGrid.SuppressLayout = true;
+
+                foreach (ServerPluginInfo plugin in pluginInfo)
                 {
-                    sb.Append(pluginId.ToString());
-                    sb.Append(",");
+                    ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name, plugin.ImageKey);
+                    item.UserObject = plugin;
+                    detectedServerPlugins.Add(plugin);
                 }
-                String installedPluginsList = String.Empty;
-                if (sb.Length > 0)
-                {
-                    installedPluginsList = sb.ToString(0, sb.Length - 1);
-                }
-                List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
-                ThreadManager.invoke(new Action(delegate()
-                {
-                    if (activeNotDisposed)
-                    {
-                        pluginGrid.SuppressLayout = true;
 
-                        foreach (ServerPluginInfo plugin in pluginInfo)
-                        {
-                            ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name, plugin.ImageKey);
-                            item.UserObject = plugin;
-                            detectedServerPlugins.Add(plugin);
-                        }
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
 
-                        pluginGrid.SuppressLayout = false;
-                        pluginGrid.layout();
-
-                        readingServerPluginInfo = false;
-                        readingInfo.Visible = false;
-                    }
-                }));
-            });
-            serverReadThread.Start();
+                readingServerPluginInfo = false;
+                readingInfo.Visible = false;
+            }
         }
 
         private void togglePanelVisibility()
@@ -279,108 +262,6 @@ namespace Medical.GUI
                 ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
                 downloadingItem.Caption = String.Format("{0} - {1}%\n{2} of {3} (MB)", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"));
             }
-        }
-
-        List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)
-        {
-            List<ServerPluginInfo> pluginInfoList = new List<ServerPluginInfo>();
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginInfoURL));
-                request.Timeout = 10000;
-                request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, AnomalousMainPlugin.Version, (int)PlatformConfig.OsId, commaSeparatedPluginList);
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                // Get the response.
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
-                    {
-                        using (Stream serverDataStream = response.GetResponseStream())
-                        {
-                            //Download all the data from the server
-                            using (MemoryStream localDataStream = new MemoryStream())
-                            {
-                                byte[] buffer = new byte[8 * 1024];
-                                int len;
-                                while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
-                                {
-                                    localDataStream.Write(buffer, 0, len);
-                                }
-                                localDataStream.Seek(0, SeekOrigin.Begin);
-                                using (BinaryReader streamReader = new BinaryReader(localDataStream))
-                                {
-                                    String versionString = streamReader.ReadString();
-                                    Log.Debug(versionString);
-                                    while (streamReader.PeekChar() != -1)
-                                    {
-                                        ServerPluginInfo pluginInfo = new ServerPluginInfo(streamReader.ReadInt32(), streamReader.ReadString());
-                                        pluginInfoList.Add(pluginInfo);
-                                        String imageURL = streamReader.ReadString();
-                                        if (!String.IsNullOrEmpty(imageURL))
-                                        {
-                                            using (Bitmap image = loadImageFromURL(imageURL))
-                                            {
-                                                if (image != null)
-                                                {
-                                                    ThreadManager.invokeAndWait(new Action(delegate()
-                                                    {
-                                                        pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
-                                                    }));
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                ThreadManager.invoke(new Action(delegate()
-                {
-                    MessageBox.show(String.Format("Error reading plugin data from the server. Please try again later.\nReason: {0}", e.Message), "Server Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                }));
-            }
-
-            return pluginInfoList;
-        }
-
-        //Runs on background thread
-        private Bitmap loadImageFromURL(String url)
-        {
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.WebsiteImagesBaseURL + url));
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
-                    {
-                        using (Stream responseStream = response.GetResponseStream())
-                        {
-                            return new Bitmap(responseStream);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                ThreadManager.invoke(new Action(delegate()
-                {
-                    Log.Error("Could not load image from {0} because {1}.", url, e.Message);
-                }));
-            }
-            return null;
         }
 
         public override void setSize(int width, int height)
