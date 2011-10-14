@@ -77,12 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\DRM\DRMClient\License\AnomalousLicense.cs">
-      <Link>Controller\OSHelper\AnomalousLicense.cs</Link>
-    </Compile>
-    <Compile Include="..\..\DRM\DRMClient\License\AnomalousLicenseServer.cs">
-      <Link>Controller\OSHelper\AnomalousLicenseServer.cs</Link>
-    </Compile>
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
@@ -133,6 +127,8 @@
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />
     <Compile Include="Controller\MedicalStates\PatientData.cs" />
+    <Compile Include="Controller\OSHelper\AnomalousLicense.cs" />
+    <Compile Include="Controller\OSHelper\AnomalousLicenseServer.cs" />
     <Compile Include="Controller\OSHelper\LicenseManager.cs" />
     <Compile Include="Controller\PatientDataController.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginEntryPointAttribute.cs" />
