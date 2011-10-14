@@ -3,7 +3,6 @@
 <MyGUI type="List">
   <List file="Medical.Resources.DegenerationImages.xml"/>
   <List file="Medical.Resources.DistortionPanelIcons.xml"/>
-  <List file="Medical.Resources.DistortionsToolstrip.xml"/>
   <List file="Medical.Resources.DopplerPanelImages.xml"/>
   <List file="Medical.Resources.FossaImages.xml"/>
   <List file="Medical.Resources.GrowthImages.xml"/>
