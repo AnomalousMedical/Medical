@@ -72,67 +72,67 @@ namespace Medical.GUI
 
         void monoText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.mono-project.com");
+            OtherProcessManager.openUrlInBrowser("http://www.mono-project.com");
         }
 
         void wxWidgetsText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.wxwidgets.org/");
+            OtherProcessManager.openUrlInBrowser("http://www.wxwidgets.org/");
         }
 
         void oggVorbisText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.vorbis.com/");
+            OtherProcessManager.openUrlInBrowser("http://www.vorbis.com/");
         }
 
         void openALText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://en.wikipedia.org/wiki/OpenAL");
+            OtherProcessManager.openUrlInBrowser("http://en.wikipedia.org/wiki/OpenAL");
         }
 
         void freeimageText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://freeimage.sourceforge.net/");
+            OtherProcessManager.openUrlInBrowser("http://freeimage.sourceforge.net/");
         }
 
         void freetypeText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.freetype.org/");
+            OtherProcessManager.openUrlInBrowser("http://www.freetype.org/");
         }
 
         void zlibText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.zlib.net/");
+            OtherProcessManager.openUrlInBrowser("http://www.zlib.net/");
         }
 
         void ZZiplibText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://zziplib.sourceforge.net/");
+            OtherProcessManager.openUrlInBrowser("http://zziplib.sourceforge.net/");
         }
 
         void oisText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.wreckedgames.com/");
+            OtherProcessManager.openUrlInBrowser("http://www.wreckedgames.com/");
         }
 
         void bulletText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.bulletphysics.org/");
+            OtherProcessManager.openUrlInBrowser("http://www.bulletphysics.org/");
         }
 
         void myGUIText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://mygui.info/");
+            OtherProcessManager.openUrlInBrowser("http://mygui.info/");
         }
 
         void ogreText_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.ogre3d.org/");
+            OtherProcessManager.openUrlInBrowser("http://www.ogre3d.org/");
         }
 
         void anomalousMedicalText_MouseButtonClick(Widget source, EventArgs e)
         {
-            Process.Start("http://www.anomalousmedical.com");
+            OtherProcessManager.openUrlInBrowser("http://www.anomalousmedical.com");
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)

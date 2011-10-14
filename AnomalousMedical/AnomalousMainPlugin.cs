@@ -115,7 +115,7 @@ namespace Medical.GUI
 
         void shopTaskItem_OnClicked(CallbackTask item)
         {
-            Process.Start(MedicalConfig.AnomalousMedicalStoreURL);
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalStoreURL);
         }
 
         public void sceneLoaded(SimScene scene)

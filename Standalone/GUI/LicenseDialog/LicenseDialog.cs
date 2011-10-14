@@ -122,12 +122,12 @@ namespace Medical.GUI
 
         void forgotPassword_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start(MedicalConfig.ForgotPasswordURL);
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.ForgotPasswordURL);
         }
 
         void register_MouseButtonClick(Widget source, EventArgs e)
         {
-            System.Diagnostics.Process.Start(MedicalConfig.RegisterURL);
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.RegisterURL);
         }
 
         void getLicense(Object ignored)
