@@ -84,11 +84,11 @@ namespace Medical.GUI
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0));
 
             //System Section
-            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Anomalous Medical Store", "", TaskMenuCategories.System, int.MaxValue - 6, false);
+            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Anomalous Medical Store", "AnomalousMedical/Store", TaskMenuCategories.System, int.MaxValue - 6, false);
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
-            taskController.addTask(new ShowPopupTask(pluginManagerGUI, "Medical.PluginManagerGUI", "My Downloads", "", TaskMenuCategories.System, int.MaxValue - 5));
+            taskController.addTask(new ShowPopupTask(pluginManagerGUI, "Medical.PluginManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5));
 
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
@@ -97,7 +97,7 @@ namespace Medical.GUI
             taskController.addTask(new ShowPopupTask(options, "Medical.Options", "Options", "FileToolstrip/Options", TaskMenuCategories.System, int.MaxValue - 3));
             taskController.addTask(new DialogOpenTask(aboutDialog, "Medical.About", "About", "FileToolstrip/About", TaskMenuCategories.System, int.MaxValue - 2));
 
-            CallbackTask logoutTaskItem = new CallbackTask("Medical.LogOut", "Log Out", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue - 1, false);
+            CallbackTask logoutTaskItem = new CallbackTask("Medical.LogOut", "Log Out", "AnomalousMedical/LogOut", TaskMenuCategories.System, int.MaxValue - 1, false);
             logoutTaskItem.OnClicked += new CallbackTask.ClickedCallback(logoutTaskItem_OnClicked);
             taskController.addTask(logoutTaskItem);
 

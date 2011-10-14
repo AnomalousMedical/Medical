@@ -8,6 +8,14 @@
       </Index>
     </Group>
   </Resource>
+
+  <Resource type="ResourceImageSet" name="Premium/PatientDataIcon">
+    <Group name="Icons" texture="Medical.Resources.LectureIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 0"/>
+      </Index>
+    </Group>
+  </Resource>
   
 </MyGUI>
 

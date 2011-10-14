@@ -42,7 +42,7 @@ namespace Medical
 
         public string getIcon(string filename)
         {
-            return "ExamIcon";
+            return "Premium/PatientDataIcon";
         }
     }
 }

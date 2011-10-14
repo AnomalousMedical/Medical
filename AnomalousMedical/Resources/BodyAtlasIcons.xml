@@ -33,5 +33,29 @@
     </Group>
   </Resource>
 
+  <Resource type="ResourceImageSet" name="AnomalousMedical/LogOut">
+    <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="AnomalousMedical/Download">
+    <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="224 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="AnomalousMedical/Store">
+    <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="256 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
 </MyGUI>
 
