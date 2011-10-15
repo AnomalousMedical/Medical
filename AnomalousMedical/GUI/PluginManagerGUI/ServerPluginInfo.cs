@@ -13,9 +13,9 @@ namespace Medical.GUI
             this.Name = name;
         }
 
-        public override void startDownload(DownloadController downloadController, DownloadListener downloadListener, Object callbackObject)
+        protected override void doStartDownload(DownloadController downloadController)
         {
-            Download = downloadController.downloadPlugin(PluginId, downloadListener, callbackObject);
+            Download = downloadController.downloadPlugin(PluginId, this, null);
         }
 
         public int PluginId { get; set; }

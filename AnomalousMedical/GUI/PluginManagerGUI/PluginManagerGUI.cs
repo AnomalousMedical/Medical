@@ -14,10 +14,8 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    class PluginManagerGUI : AbstractFullscreenGUIPopup, DownloadListener
+    class PluginManagerGUI : AbstractFullscreenGUIPopup, DownloadUIDisplay
     {
-        private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
-
         private Widget installPanel;
         private ButtonGrid pluginGrid;
         private Widget downloadPanel;
@@ -177,16 +175,17 @@ namespace Medical.GUI
             }
         }
 
-        private void downloadItem(ButtonGridItem selectedItem, ServerDownloadInfo pluginInfo)
+        private void downloadItem(ButtonGridItem selectedItem, ServerDownloadInfo downloadInfo)
         {
             pluginGrid.SuppressLayout = true;
             pluginGrid.removeItem(selectedItem);
-            ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", pluginInfo.Name, "Starting Download"), pluginInfo.ImageKey);
-            downloadingItem.UserObject = pluginInfo;
+            ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", downloadInfo.Name, "Starting Download"), downloadInfo.ImageKey);
+            downloadingItem.UserObject = downloadInfo;
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
 
-            pluginInfo.startDownload(downloadController, this, downloadingItem);
+            downloadInfo.UserObject = downloadingItem;
+            downloadInfo.startDownload(downloadController, this);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
@@ -210,29 +209,29 @@ namespace Medical.GUI
                 if (download.Successful)
                 {
                     pluginGrid.addItem("Installed", pluginInfo.Name, pluginInfo.ImageKey);
-                    PluginDownload pluginDownload = (PluginDownload)download;
-                    if (pluginDownload.LoadedSucessfully)
-                    {
-                        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        //Need to remove the plugin from the download list.
-                        //detectedServerPlugins.Remove(pluginInfo);
-                    }
-                    else
-                    {
-                        displayRestartMessage = true;
-                    }
-                    if (!downloadController.Downloading && displayRestartMessage)
-                    {
-                        displayRestartMessage = false;
-                        if (allowRestartMessageDisplay)
-                        {
-                            allowRestartMessageDisplay = false;
-                            MessageBox.show("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.", "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
-                            {
-                                allowRestartMessageDisplay = true;
-                            }));
-                        }
-                    }
+                    //PluginDownload pluginDownload = (PluginDownload)download;
+                    //if (pluginDownload.LoadedSucessfully)
+                    //{
+                    //    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //    //Need to remove the plugin from the download list.
+                    //    //detectedServerPlugins.Remove(pluginInfo);
+                    //}
+                    //else
+                    //{
+                    //    displayRestartMessage = true;
+                    //}
+                    //if (!downloadController.Downloading && displayRestartMessage)
+                    //{
+                    //    displayRestartMessage = false;
+                    //    if (allowRestartMessageDisplay)
+                    //    {
+                    //        allowRestartMessageDisplay = false;
+                    //        MessageBox.show("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.", "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
+                    //        {
+                    //            allowRestartMessageDisplay = true;
+                    //        }));
+                    //    }
+                    //}
                 }
                 else
                 {
@@ -248,16 +247,6 @@ namespace Medical.GUI
             }
         }
 
-        public void updateStatus(Download download)
-        {
-            if (activeNotDisposed)
-            {
-                ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
-                ServerDownloadInfo pluginInfo = downloadingItem.UserObject as ServerDownloadInfo;
-                downloadingItem.Caption = String.Format("{0} - {1}%\n{2} of {3} (MB)", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"));
-            }
-        }
-
         public override void setSize(int width, int height)
         {
             base.setSize(width, height);
@@ -268,5 +257,83 @@ namespace Medical.GUI
         {
             this.hide();
         }
+
+        #region DownloadUIDisplay Members
+
+        public void updateStatus(ServerDownloadInfo downloadInfo, string status)
+        {
+            if (activeNotDisposed)
+            {
+                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                downloadingItem.Caption = status;
+            }
+        }
+
+        public void downloadSuccessful(ServerDownloadInfo downloadInfo)
+        {
+            if (activeNotDisposed)
+            {
+                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(downloadingItem);
+                pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                //PluginDownload pluginDownload = (PluginDownload)download;
+                //if (pluginDownload.LoadedSucessfully)
+                //{
+                //    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //    //Need to remove the plugin from the download list.
+                //    //detectedServerPlugins.Remove(pluginInfo);
+                //}
+                //else
+                //{
+                //    displayRestartMessage = true;
+                //}
+                //if (!downloadController.Downloading && displayRestartMessage)
+                //{
+                //    displayRestartMessage = false;
+                //    if (allowRestartMessageDisplay)
+                //    {
+                //        allowRestartMessageDisplay = false;
+                //        MessageBox.show("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.", "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
+                //        {
+                //            allowRestartMessageDisplay = true;
+                //        }));
+                //    }
+                //}
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
+            }
+        }
+
+        public void downloadFailed(ServerDownloadInfo downloadInfo)
+        {
+            if (activeNotDisposed)
+            {
+                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(downloadingItem);
+                MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                ButtonGridItem item = pluginGrid.addItem("Not Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                item.UserObject = downloadInfo;
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
+            }
+        }
+
+        public void downloadCanceled(ServerDownloadInfo downloadInfo)
+        {
+            if (activeNotDisposed)
+            {
+                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(downloadingItem);
+                ButtonGridItem item = pluginGrid.addItem("Not Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                item.UserObject = downloadInfo;
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
+            }
+        }
+
+        #endregion
     }
 }
