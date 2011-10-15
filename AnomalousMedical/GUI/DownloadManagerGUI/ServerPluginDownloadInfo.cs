@@ -19,7 +19,7 @@ namespace Medical.GUI
 
         protected override void doStartDownload(DownloadController downloadController)
         {
-            Download = downloadController.downloadPlugin(PluginId, this, null);
+            Download = downloadController.downloadPlugin(PluginId, this);
         }
 
         public override void downloadCompleted(Download download)

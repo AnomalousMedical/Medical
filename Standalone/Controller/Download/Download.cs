@@ -73,8 +73,6 @@ namespace Medical
 
         public String FileName { get; set; }
 
-        public Object UserObject { get; set; }
-
         public bool Successful { get; private set; }
 
         public bool Cancel { get; private set; }

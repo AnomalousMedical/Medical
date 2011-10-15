@@ -33,10 +33,9 @@ namespace Medical
             }
         }
 
-        public Download downloadPlugin(int pluginId, DownloadListener downloadListener, Object downloadCallbackObject)
+        public Download downloadPlugin(int pluginId, DownloadListener downloadListener)
         {
             PluginDownload pluginDownload = new PluginDownload(pluginId, this, downloadListener);
-            pluginDownload.UserObject = downloadCallbackObject;
             startDownload(pluginDownload);
             return pluginDownload;
         }
