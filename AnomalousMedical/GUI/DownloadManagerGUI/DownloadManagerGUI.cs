@@ -22,7 +22,6 @@ namespace Medical.GUI
         private Widget readingInfo;
 
         private AtlasPluginManager pluginManager;
-        private LicenseManager licenseManager;
         private DownloadController downloadController;
         private bool activeNotDisposed = true;
         private bool addedInstalledPlugins = false;
@@ -30,15 +29,13 @@ namespace Medical.GUI
         private bool displayRestartMessage = false;
         private bool allowRestartMessageDisplay = true;
         private DownloadManagerServer downloadServer;
-        
-        public DownloadManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, DownloadController downloadController, GUIManager guiManager)
+
+        public DownloadManagerGUI(AtlasPluginManager pluginManager, DownloadManagerServer downloadServer, DownloadController downloadController, GUIManager guiManager)
             : base("Medical.GUI.DownloadManagerGUI.DownloadManagerGUI.layout", guiManager)
         {
             this.pluginManager = pluginManager;
-            this.licenseManager = licenseManager;
             this.downloadController = downloadController;
-
-            downloadServer = new DownloadManagerServer(licenseManager);
+            this.downloadServer = downloadServer;
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);

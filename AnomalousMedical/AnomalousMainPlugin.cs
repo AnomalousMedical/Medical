@@ -18,6 +18,7 @@ namespace Medical.GUI
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
         private AnomalousController bodyAtlasController;
+        private DownloadManagerServer downloadServer;
 
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
@@ -38,6 +39,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            downloadServer.Dispose();
             selectionModeTask.Dispose();
             renderDialog.Dispose();
             options.Dispose();
@@ -52,6 +54,9 @@ namespace Medical.GUI
             this.standaloneController = standaloneController;
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
+
+            //Controllers
+            downloadServer = new DownloadManagerServer(licenseManager);
 
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
@@ -68,7 +73,7 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             guiManager.addManagedDialog(renderDialog);
 
-            downloadManagerGUI = new DownloadManagerGUI(standaloneController.AtlasPluginManager, licenseManager, standaloneController.DownloadController, guiManager);
+            downloadManagerGUI = new DownloadManagerGUI(standaloneController.AtlasPluginManager, downloadServer, standaloneController.DownloadController, guiManager);
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
