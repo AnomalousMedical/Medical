@@ -22,6 +22,7 @@ namespace Medical.GUI
         public PluginDownloadServer(LicenseManager licenseManager)
         {
             this.licenseManager = licenseManager;
+            IsSystemUpdate = false;
         }
 
         public void Dispose()
@@ -36,6 +37,10 @@ namespace Medical.GUI
                 return serverImages;
             }
         }
+
+        public bool IsSystemUpdate { get; private set; }
+
+        public Version RemoteVersion { get; private set; }
 
         public void readPluginInfoFromServer(List<int> installedPluginIds, Action<List<ServerPluginInfo>> finishedCallback)
         {
@@ -63,10 +68,11 @@ namespace Medical.GUI
             List<ServerPluginInfo> pluginInfoList = new List<ServerPluginInfo>();
             try
             {
+                Version localVersion = AnomalousMainPlugin.Version;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginInfoURL));
                 request.Timeout = 10000;
                 request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, AnomalousMainPlugin.Version, (int)PlatformConfig.OsId, commaSeparatedPluginList);
+                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, localVersion, (int)PlatformConfig.OsId, commaSeparatedPluginList);
                 byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
                 request.ContentType = "application/x-www-form-urlencoded";
 
@@ -96,7 +102,8 @@ namespace Medical.GUI
                                 using (BinaryReader streamReader = new BinaryReader(localDataStream))
                                 {
                                     String versionString = streamReader.ReadString();
-                                    Log.Debug(versionString);
+                                    RemoteVersion = new Version(versionString);
+                                    this.IsSystemUpdate = RemoteVersion > localVersion;
                                     while (streamReader.PeekChar() != -1)
                                     {
                                         ServerPluginInfo pluginInfo = new ServerPluginInfo(streamReader.ReadInt32(), streamReader.ReadString());

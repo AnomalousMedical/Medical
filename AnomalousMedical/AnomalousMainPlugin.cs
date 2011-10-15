@@ -167,11 +167,11 @@ namespace Medical.GUI
             }
         }
 
-        public static String Version
+        public static Version Version
         {
             get
             {
-                return Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version.ToString();
+                return Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
             }
         }
 
