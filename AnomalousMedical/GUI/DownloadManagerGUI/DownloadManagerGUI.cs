@@ -154,7 +154,7 @@ namespace Medical.GUI
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             if (selectedItem != null)
             {
-                installPanel.Visible = selectedItem.GroupName == "Not Installed";
+                installPanel.Visible = selectedItem.GroupName == "Not Installed" || selectedItem.GroupName == "Updates";
                 downloadPanel.Visible = selectedItem.GroupName == "Downloading";
             }
             else
