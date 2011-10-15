@@ -53,8 +53,8 @@ namespace Medical.GUI
             if (drawingWindow != null)
             {
                 ImageRendererProperties imageProperties = new ImageRendererProperties();
-                imageProperties.Width = Width;
-                imageProperties.Height = Height;
+                imageProperties.Width = RenderWidth;
+                imageProperties.Height = RenderHeight;
                 imageProperties.UseWindowBackgroundColor = true;
                 imageProperties.AntiAliasingMode = AAValue;
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
@@ -78,11 +78,11 @@ namespace Medical.GUI
         void resolutionMenu_ResolutionChanged(object sender, EventArgs e)
         {
             width.Edit.Enabled = height.Edit.Enabled = resolutionMenu.IsCustom;
-            Width = resolutionMenu.ImageWidth;
-            Height = resolutionMenu.ImageHeight;
+            RenderWidth = resolutionMenu.ImageWidth;
+            RenderHeight = resolutionMenu.ImageHeight;
         }
 
-        public int Width
+        public int RenderWidth
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Medical.GUI
             }
         }
 
-        public int Height
+        public int RenderHeight
         {
             get
             {
