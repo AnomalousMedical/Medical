@@ -79,6 +79,14 @@ namespace Medical.GUI
             }
         }
 
+        protected void requestRestart(String restartMessage)
+        {
+            if (uiDisplay != null)
+            {
+                uiDisplay.requestRestart(this, restartMessage);
+            }
+        }
+
         #endregion
     }
 }

@@ -28,6 +28,7 @@ namespace Medical.GUI
         private bool readingServerPluginInfo = false;
         private bool displayRestartMessage = false;
         private bool allowRestartMessageDisplay = true;
+        private String restartMessage = "";
         private DownloadManagerServer downloadServer;
 
         public DownloadManagerGUI(AtlasPluginManager pluginManager, DownloadManagerServer downloadServer, DownloadController downloadController, GUIManager guiManager)
@@ -240,29 +241,19 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
                 pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
-                //PluginDownload pluginDownload = (PluginDownload)download;
-                //if (pluginDownload.LoadedSucessfully)
-                //{
-                //    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //    //Need to remove the plugin from the download list.
-                //    //detectedServerPlugins.Remove(pluginInfo);
-                //}
-                //else
-                //{
-                //    displayRestartMessage = true;
-                //}
-                //if (!downloadController.Downloading && displayRestartMessage)
-                //{
-                //    displayRestartMessage = false;
-                //    if (allowRestartMessageDisplay)
-                //    {
-                //        allowRestartMessageDisplay = false;
-                //        MessageBox.show("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.", "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
-                //        {
-                //            allowRestartMessageDisplay = true;
-                //        }));
-                //    }
-                //}
+
+                if (!downloadController.Downloading && displayRestartMessage)
+                {
+                    displayRestartMessage = false;
+                    if (allowRestartMessageDisplay)
+                    {
+                        allowRestartMessageDisplay = false;
+                        MessageBox.show(restartMessage, "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
+                        {
+                            allowRestartMessageDisplay = true;
+                        }));
+                    }
+                }
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
@@ -293,6 +284,12 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
+        }
+
+        public void requestRestart(ServerDownloadInfo downloadInfo, String message)
+        {
+            displayRestartMessage = true;
+            restartMessage = message;
         }
 
         #endregion
