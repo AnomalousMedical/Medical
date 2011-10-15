@@ -19,6 +19,7 @@ namespace Medical.GUI
         private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
         private LicenseManager licenseManager;
         List<ServerPluginDownloadInfo> detectedServerPlugins = new List<ServerPluginDownloadInfo>();
+        private bool foundPlatformUpdate = false;
 
         public DownloadManagerServer(LicenseManager licenseManager)
         {
@@ -107,10 +108,14 @@ namespace Medical.GUI
                                 using (BinaryReader streamReader = new BinaryReader(localDataStream))
                                 {
                                     String versionString = streamReader.ReadString();
-                                    Version remoteVersion = new Version(versionString);
-                                    if (remoteVersion > localVersion)
+                                    if (!foundPlatformUpdate)
                                     {
-                                        downloadInfoList.Add(new PlatformUpdateDownloadInfo(remoteVersion));
+                                        Version remoteVersion = new Version(versionString);
+                                        if (remoteVersion > localVersion)
+                                        {
+                                            downloadInfoList.Add(new PlatformUpdateDownloadInfo(remoteVersion));
+                                            foundPlatformUpdate = true;
+                                        }
                                     }
                                     while (streamReader.PeekChar() != -1)
                                     {

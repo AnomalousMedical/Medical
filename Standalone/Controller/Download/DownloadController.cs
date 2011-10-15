@@ -40,6 +40,13 @@ namespace Medical
             return pluginDownload;
         }
 
+        public Download downloadPlatformUpdate(DownloadListener downloadListener)
+        {
+            PlatformUpdateDownload platformDownload = new PlatformUpdateDownload(this, downloadListener);
+            startDownload(platformDownload);
+            return platformDownload;
+        }
+
         public LicenseManager LicenseManager
         {
             get
@@ -98,7 +105,7 @@ namespace Medical
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
-                request.Timeout = 10000;
+                request.Timeout = 60000;
                 request.Method = "POST";
                 String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type={2}&{3}", licenseManager.User, licenseManager.MachinePassword, download.Type, download.AdditionalArgs);
                 byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);

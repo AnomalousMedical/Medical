@@ -15,7 +15,7 @@ namespace Medical.GUI
 
         protected override void doStartDownload(DownloadController downloadController)
         {
-            
+            downloadController.downloadPlatformUpdate(this);
         }
     }
 }
