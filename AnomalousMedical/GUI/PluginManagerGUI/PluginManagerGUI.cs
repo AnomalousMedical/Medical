@@ -32,8 +32,6 @@ namespace Medical.GUI
         private bool displayRestartMessage = false;
         private bool allowRestartMessageDisplay = true;
         private PluginDownloadServer downloadServer;
-
-        List<ServerPluginInfo> detectedServerPlugins = new List<ServerPluginInfo>();
         
         public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, DownloadController downloadController, GUIManager guiManager)
             :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
@@ -94,10 +92,6 @@ namespace Medical.GUI
                             detectedPluginIds.Add((int)plugin.PluginId);
                         }
                     }
-                    foreach (ServerPluginInfo plugin in detectedServerPlugins)
-                    {
-                        detectedPluginIds.Add(plugin.PluginId);
-                    }
                 }
                 else
                 {
@@ -123,17 +117,16 @@ namespace Medical.GUI
             }
         }
 
-        private void addNotInstalledPlugins(List<ServerPluginInfo> pluginInfo)
+        private void addNotInstalledPlugins(List<ServerDownloadInfo> pluginInfo)
         {
             if (activeNotDisposed)
             {
                 pluginGrid.SuppressLayout = true;
 
-                foreach (ServerPluginInfo plugin in pluginInfo)
+                foreach (ServerDownloadInfo plugin in pluginInfo)
                 {
                     ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name, plugin.ImageKey);
                     item.UserObject = plugin;
-                    detectedServerPlugins.Add(plugin);
                 }
 
                 pluginGrid.SuppressLayout = false;
@@ -167,7 +160,7 @@ namespace Medical.GUI
         void installButton_MouseButtonClick(Widget source, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
-            ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
+            ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
             if (pluginInfo != null)
             {
                 downloadItem(selectedItem, pluginInfo);
@@ -177,14 +170,14 @@ namespace Medical.GUI
         void pluginGrid_ItemActivated(object sender, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
-            ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
+            ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
             if (pluginInfo != null && pluginInfo.Download == null)
             {
                 downloadItem(selectedItem, pluginInfo);
             }
         }
 
-        private void downloadItem(ButtonGridItem selectedItem, ServerPluginInfo pluginInfo)
+        private void downloadItem(ButtonGridItem selectedItem, ServerDownloadInfo pluginInfo)
         {
             pluginGrid.SuppressLayout = true;
             pluginGrid.removeItem(selectedItem);
@@ -193,13 +186,13 @@ namespace Medical.GUI
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
 
-            pluginInfo.Download = downloadController.downloadPlugin(pluginInfo.PluginId, this, downloadingItem);
+            pluginInfo.startDownload(downloadController, this, downloadingItem);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
-            ServerPluginInfo pluginInfo = selectedItem.UserObject as ServerPluginInfo;
+            ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
             if (pluginInfo != null && pluginInfo.Download != null)
             {
                 pluginInfo.Download.cancelDownload(DownloadPostAction.DeleteFile);
@@ -211,7 +204,7 @@ namespace Medical.GUI
             if (activeNotDisposed)
             {
                 ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
-                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+                ServerDownloadInfo pluginInfo = downloadingItem.UserObject as ServerDownloadInfo;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
                 if (download.Successful)
@@ -220,7 +213,9 @@ namespace Medical.GUI
                     PluginDownload pluginDownload = (PluginDownload)download;
                     if (pluginDownload.LoadedSucessfully)
                     {
-                        detectedServerPlugins.Remove(pluginInfo);
+                        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        //Need to remove the plugin from the download list.
+                        //detectedServerPlugins.Remove(pluginInfo);
                     }
                     else
                     {
@@ -248,7 +243,6 @@ namespace Medical.GUI
                     ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name, pluginInfo.ImageKey);
                     item.UserObject = pluginInfo;
                 }
-                pluginInfo.Download = null;
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
@@ -259,7 +253,7 @@ namespace Medical.GUI
             if (activeNotDisposed)
             {
                 ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
-                ServerPluginInfo pluginInfo = downloadingItem.UserObject as ServerPluginInfo;
+                ServerDownloadInfo pluginInfo = downloadingItem.UserObject as ServerDownloadInfo;
                 downloadingItem.Caption = String.Format("{0} - {1}%\n{2} of {3} (MB)", pluginInfo.Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"));
             }
         }

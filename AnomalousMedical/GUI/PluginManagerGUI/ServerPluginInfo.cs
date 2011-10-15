@@ -5,20 +5,19 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class ServerPluginInfo
+    class ServerPluginDownloadInfo : ServerDownloadInfo
     {
-        public ServerPluginInfo(int pluginId, String name)
+        public ServerPluginDownloadInfo(int pluginId, String name)
         {
             this.PluginId = pluginId;
             this.Name = name;
         }
 
-        public String Name { get; set; }
+        public override void startDownload(DownloadController downloadController, DownloadListener downloadListener, Object callbackObject)
+        {
+            Download = downloadController.downloadPlugin(PluginId, downloadListener, callbackObject);
+        }
 
         public int PluginId { get; set; }
-
-        public Download Download { get; set; }
-
-        public String ImageKey { get; set; }
     }
 }

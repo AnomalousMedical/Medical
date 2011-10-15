@@ -18,6 +18,7 @@ namespace Medical.GUI
     {
         private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
         private LicenseManager licenseManager;
+        List<ServerPluginDownloadInfo> detectedServerPlugins = new List<ServerPluginDownloadInfo>();
 
         public PluginDownloadServer(LicenseManager licenseManager)
         {
@@ -42,8 +43,12 @@ namespace Medical.GUI
 
         public Version RemoteVersion { get; private set; }
 
-        public void readPluginInfoFromServer(List<int> installedPluginIds, Action<List<ServerPluginInfo>> finishedCallback)
+        public void readPluginInfoFromServer(List<int> installedPluginIds, Action<List<ServerDownloadInfo>> finishedCallback)
         {
+            foreach (ServerPluginDownloadInfo plugin in detectedServerPlugins)
+            {
+                installedPluginIds.Add(plugin.PluginId);
+            }
             Thread serverReadThread = new Thread(delegate()
             {
                 StringBuilder sb = new StringBuilder();
@@ -57,15 +62,15 @@ namespace Medical.GUI
                 {
                     installedPluginsList = sb.ToString(0, sb.Length - 1);
                 }
-                List<ServerPluginInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
+                List<ServerDownloadInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
                 ThreadManager.invoke(finishedCallback, pluginInfo);
             });
             serverReadThread.Start();
         }
 
-        private List<ServerPluginInfo> readServerPluginInfo(String commaSeparatedPluginList)
+        private List<ServerDownloadInfo> readServerPluginInfo(String commaSeparatedPluginList)
         {
-            List<ServerPluginInfo> pluginInfoList = new List<ServerPluginInfo>();
+            List<ServerDownloadInfo> pluginInfoList = new List<ServerDownloadInfo>();
             try
             {
                 Version localVersion = AnomalousMainPlugin.Version;
@@ -106,7 +111,7 @@ namespace Medical.GUI
                                     this.IsSystemUpdate = RemoteVersion > localVersion;
                                     while (streamReader.PeekChar() != -1)
                                     {
-                                        ServerPluginInfo pluginInfo = new ServerPluginInfo(streamReader.ReadInt32(), streamReader.ReadString());
+                                        ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(streamReader.ReadInt32(), streamReader.ReadString());
                                         pluginInfoList.Add(pluginInfo);
                                         String imageURL = streamReader.ReadString();
                                         if (!String.IsNullOrEmpty(imageURL))
@@ -122,6 +127,7 @@ namespace Medical.GUI
                                                 }
                                             }
                                         }
+                                        detectedServerPlugins.Add(pluginInfo);
                                     }
                                 }
                             }
