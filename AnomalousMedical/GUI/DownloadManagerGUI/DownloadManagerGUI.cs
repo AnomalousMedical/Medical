@@ -42,6 +42,7 @@ namespace Medical.GUI
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
             pluginGrid.ItemActivated += new EventHandler(pluginGrid_ItemActivated);
             pluginGrid.defineGroup("Downloading");
+            pluginGrid.defineGroup("Updates");
             pluginGrid.defineGroup("Not Installed");
             pluginGrid.defineGroup("Installed");
 
@@ -141,7 +142,7 @@ namespace Medical.GUI
                     group = "Not Installed";
                     break;
                 case ServerDownloadStatus.Update:
-                    group = "Update";
+                    group = "Updates";
                     break;
             }
             ButtonGridItem item = pluginGrid.addItem(group, download.Name, download.ImageKey);

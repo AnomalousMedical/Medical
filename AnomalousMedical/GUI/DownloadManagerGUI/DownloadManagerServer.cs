@@ -23,7 +23,6 @@ namespace Medical.GUI
         public DownloadManagerServer(LicenseManager licenseManager)
         {
             this.licenseManager = licenseManager;
-            IsSystemUpdate = false;
         }
 
         public void Dispose()
@@ -38,10 +37,6 @@ namespace Medical.GUI
                 return serverImages;
             }
         }
-
-        public bool IsSystemUpdate { get; private set; }
-
-        public Version RemoteVersion { get; private set; }
 
         public void readPluginInfoFromServer(List<int> installedPluginIds, Action<List<ServerDownloadInfo>> finishedCallback)
         {
@@ -75,7 +70,7 @@ namespace Medical.GUI
 
         private List<ServerDownloadInfo> readServerPluginInfo(String commaSeparatedPluginList)
         {
-            List<ServerDownloadInfo> pluginInfoList = new List<ServerDownloadInfo>();
+            List<ServerDownloadInfo> downloadInfoList = new List<ServerDownloadInfo>();
             try
             {
                 Version localVersion = AnomalousMainPlugin.Version;
@@ -112,12 +107,15 @@ namespace Medical.GUI
                                 using (BinaryReader streamReader = new BinaryReader(localDataStream))
                                 {
                                     String versionString = streamReader.ReadString();
-                                    RemoteVersion = new Version(versionString);
-                                    this.IsSystemUpdate = RemoteVersion > localVersion;
+                                    Version remoteVersion = new Version(versionString);
+                                    if (remoteVersion > localVersion)
+                                    {
+                                        downloadInfoList.Add(new PlatformUpdateDownloadInfo(remoteVersion));
+                                    }
                                     while (streamReader.PeekChar() != -1)
                                     {
                                         ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(this, streamReader.ReadInt32(), streamReader.ReadString(), ServerDownloadStatus.NotInstalled);
-                                        pluginInfoList.Add(pluginInfo);
+                                        downloadInfoList.Add(pluginInfo);
                                         String imageURL = streamReader.ReadString();
                                         if (!String.IsNullOrEmpty(imageURL))
                                         {
@@ -148,7 +146,7 @@ namespace Medical.GUI
                 }));
             }
 
-            return pluginInfoList;
+            return downloadInfoList;
         }
 
         //Runs on background thread
