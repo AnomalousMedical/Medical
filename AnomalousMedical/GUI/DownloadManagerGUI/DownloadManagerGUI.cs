@@ -210,55 +210,6 @@ namespace Medical.GUI
             }
         }
 
-        public void downloadCompleted(Download download)
-        {
-            if (activeNotDisposed)
-            {
-                ButtonGridItem downloadingItem = (ButtonGridItem)download.UserObject;
-                ServerDownloadInfo pluginInfo = downloadingItem.UserObject as ServerDownloadInfo;
-                pluginGrid.SuppressLayout = true;
-                pluginGrid.removeItem(downloadingItem);
-                if (download.Successful)
-                {
-                    pluginGrid.addItem("Installed", pluginInfo.Name, pluginInfo.ImageKey);
-                    //PluginDownload pluginDownload = (PluginDownload)download;
-                    //if (pluginDownload.LoadedSucessfully)
-                    //{
-                    //    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    //    //Need to remove the plugin from the download list.
-                    //    //detectedServerPlugins.Remove(pluginInfo);
-                    //}
-                    //else
-                    //{
-                    //    displayRestartMessage = true;
-                    //}
-                    //if (!downloadController.Downloading && displayRestartMessage)
-                    //{
-                    //    displayRestartMessage = false;
-                    //    if (allowRestartMessageDisplay)
-                    //    {
-                    //        allowRestartMessageDisplay = false;
-                    //        MessageBox.show("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.", "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
-                    //        {
-                    //            allowRestartMessageDisplay = true;
-                    //        }));
-                    //    }
-                    //}
-                }
-                else
-                {
-                    if (!download.Cancel)
-                    {
-                        MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                    }
-                    ButtonGridItem item = pluginGrid.addItem("Not Installed", pluginInfo.Name, pluginInfo.ImageKey);
-                    item.UserObject = pluginInfo;
-                }
-                pluginGrid.SuppressLayout = false;
-                pluginGrid.layout();
-            }
-        }
-
         public override void setSize(int width, int height)
         {
             base.setSize(width, height);
