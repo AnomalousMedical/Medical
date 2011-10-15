@@ -51,7 +51,7 @@ namespace Medical.GUI
             }
         }
 
-        public void downloadCompleted(Download download)
+        public virtual void downloadCompleted(Download download)
         {
             if (download.Successful)
             {

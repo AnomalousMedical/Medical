@@ -7,9 +7,12 @@ namespace Medical.GUI
 {
     class ServerPluginDownloadInfo : ServerDownloadInfo
     {
-        public ServerPluginDownloadInfo(int pluginId, String name, ServerDownloadStatus status)
+        private DownloadManagerServer server;
+
+        public ServerPluginDownloadInfo(DownloadManagerServer server, int pluginId, String name, ServerDownloadStatus status)
             :base(status)
         {
+            this.server = server;
             this.PluginId = pluginId;
             this.Name = name;
         }
@@ -17,6 +20,17 @@ namespace Medical.GUI
         protected override void doStartDownload(DownloadController downloadController)
         {
             Download = downloadController.downloadPlugin(PluginId, this, null);
+        }
+
+        public override void downloadCompleted(Download download)
+        {
+            PluginDownload pluginDownload = (PluginDownload)download;
+            //The plugin has been installed, so we need to remove it from the download list.
+            if (pluginDownload.LoadedSucessfully)
+            {
+                server.removeDetectedPlugin(this);
+            }
+            base.downloadCompleted(download);
         }
 
         public int PluginId { get; set; }
