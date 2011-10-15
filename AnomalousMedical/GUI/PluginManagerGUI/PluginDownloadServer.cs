@@ -111,7 +111,7 @@ namespace Medical.GUI
                                     this.IsSystemUpdate = RemoteVersion > localVersion;
                                     while (streamReader.PeekChar() != -1)
                                     {
-                                        ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(streamReader.ReadInt32(), streamReader.ReadString());
+                                        ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(streamReader.ReadInt32(), streamReader.ReadString(), ServerDownloadStatus.NotInstalled);
                                         pluginInfoList.Add(pluginInfo);
                                         String imageURL = streamReader.ReadString();
                                         if (!String.IsNullOrEmpty(imageURL))

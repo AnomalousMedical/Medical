@@ -7,7 +7,8 @@ namespace Medical.GUI
 {
     class ServerPluginDownloadInfo : ServerDownloadInfo
     {
-        public ServerPluginDownloadInfo(int pluginId, String name)
+        public ServerPluginDownloadInfo(int pluginId, String name, ServerDownloadStatus status)
+            :base(status)
         {
             this.PluginId = pluginId;
             this.Name = name;

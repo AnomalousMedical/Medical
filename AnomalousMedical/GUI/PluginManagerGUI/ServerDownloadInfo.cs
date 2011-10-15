@@ -5,11 +5,22 @@ using System.Text;
 
 namespace Medical.GUI
 {
+    public enum ServerDownloadStatus
+    {
+        NotInstalled,
+        Update
+    }
+
     abstract class ServerDownloadInfo : DownloadListener
     {
         private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
 
         private DownloadUIDisplay uiDisplay;
+
+        public ServerDownloadInfo(ServerDownloadStatus status)
+        {
+            Status = status;
+        }
 
         public void startDownload(DownloadController downloadController, DownloadUIDisplay uiDisplay)
         {
@@ -26,6 +37,8 @@ namespace Medical.GUI
         public Download Download { get; protected set; }
 
         public Object UserObject { get; set; }
+
+        public ServerDownloadStatus Status { get; set; }
 
         #region DownloadListener Members
 

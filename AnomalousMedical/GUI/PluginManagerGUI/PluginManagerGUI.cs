@@ -115,16 +115,15 @@ namespace Medical.GUI
             }
         }
 
-        private void addNotInstalledPlugins(List<ServerDownloadInfo> pluginInfo)
+        private void addNotInstalledPlugins(List<ServerDownloadInfo> downloadInfo)
         {
             if (activeNotDisposed)
             {
                 pluginGrid.SuppressLayout = true;
 
-                foreach (ServerDownloadInfo plugin in pluginInfo)
+                foreach (ServerDownloadInfo download in downloadInfo)
                 {
-                    ButtonGridItem item = pluginGrid.addItem("Not Installed", plugin.Name, plugin.ImageKey);
-                    item.UserObject = plugin;
+                    addDownloadToButtonGrid(download);
                 }
 
                 pluginGrid.SuppressLayout = false;
@@ -133,6 +132,22 @@ namespace Medical.GUI
                 readingServerPluginInfo = false;
                 readingInfo.Visible = false;
             }
+        }
+
+        private void addDownloadToButtonGrid(ServerDownloadInfo download)
+        {
+            String group = "";
+            switch (download.Status)
+            {
+                case ServerDownloadStatus.NotInstalled:
+                    group = "Not Installed";
+                    break;
+                case ServerDownloadStatus.Update:
+                    group = "Update";
+                    break;
+            }
+            ButtonGridItem item = pluginGrid.addItem(group, download.Name, download.ImageKey);
+            item.UserObject = download;
         }
 
         private void togglePanelVisibility()
@@ -312,9 +327,8 @@ namespace Medical.GUI
                 ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                MessageBox.show("There was an error downloading this plugin. Please try again later.", "Plugin Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                ButtonGridItem item = pluginGrid.addItem("Not Installed", downloadInfo.Name, downloadInfo.ImageKey);
-                item.UserObject = downloadInfo;
+                MessageBox.show(String.Format("There was an error downloading {0}.\nPlease try again later.", downloadInfo.Name), "Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                addDownloadToButtonGrid(downloadInfo);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
@@ -327,8 +341,7 @@ namespace Medical.GUI
                 ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                ButtonGridItem item = pluginGrid.addItem("Not Installed", downloadInfo.Name, downloadInfo.ImageKey);
-                item.UserObject = downloadInfo;
+                addDownloadToButtonGrid(downloadInfo);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
