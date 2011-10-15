@@ -14,13 +14,13 @@ using System.Threading;
 
 namespace Medical.GUI
 {
-    class PluginDownloadServer : IDisposable
+    class DownloadManagerServer : IDisposable
     {
         private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
         private LicenseManager licenseManager;
         List<ServerPluginDownloadInfo> detectedServerPlugins = new List<ServerPluginDownloadInfo>();
 
-        public PluginDownloadServer(LicenseManager licenseManager)
+        public DownloadManagerServer(LicenseManager licenseManager)
         {
             this.licenseManager = licenseManager;
             IsSystemUpdate = false;

@@ -14,7 +14,7 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    class PluginManagerGUI : AbstractFullscreenGUIPopup, DownloadUIDisplay
+    class DownloadManagerGUI : AbstractFullscreenGUIPopup, DownloadUIDisplay
     {
         private Widget installPanel;
         private ButtonGrid pluginGrid;
@@ -29,16 +29,16 @@ namespace Medical.GUI
         private bool readingServerPluginInfo = false;
         private bool displayRestartMessage = false;
         private bool allowRestartMessageDisplay = true;
-        private PluginDownloadServer downloadServer;
+        private DownloadManagerServer downloadServer;
         
-        public PluginManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, DownloadController downloadController, GUIManager guiManager)
-            :base("Medical.GUI.PluginManagerGUI.PluginManagerGUI.layout", guiManager)
+        public DownloadManagerGUI(AtlasPluginManager pluginManager, LicenseManager licenseManager, DownloadController downloadController, GUIManager guiManager)
+            : base("Medical.GUI.DownloadManagerGUI.DownloadManagerGUI.layout", guiManager)
         {
             this.pluginManager = pluginManager;
             this.licenseManager = licenseManager;
             this.downloadController = downloadController;
 
-            downloadServer = new PluginDownloadServer(licenseManager);
+            downloadServer = new DownloadManagerServer(licenseManager);
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);

@@ -101,11 +101,11 @@
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
-    <Compile Include="GUI\PluginManagerGUI\DownloadUIDisplay.cs" />
-    <Compile Include="GUI\PluginManagerGUI\PluginDownloadServer.cs" />
-    <Compile Include="GUI\PluginManagerGUI\PluginManagerGUI.cs" />
-    <Compile Include="GUI\PluginManagerGUI\ServerDownloadInfo.cs" />
-    <Compile Include="GUI\PluginManagerGUI\ServerPluginInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\DownloadUIDisplay.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\DownloadManagerServer.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\DownloadManagerGUI.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\ServerPluginInfo.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="Program.cs" />
@@ -115,7 +115,7 @@
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
     <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
-    <EmbeddedResource Include="GUI\PluginManagerGUI\PluginManagerGUI.layout" />
+    <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />

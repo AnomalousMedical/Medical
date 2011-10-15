@@ -25,7 +25,7 @@ namespace Medical.GUI
         private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
-        private PluginManagerGUI pluginManagerGUI;
+        private DownloadManagerGUI downloadManagerGUI;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -68,7 +68,7 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             guiManager.addManagedDialog(renderDialog);
 
-            pluginManagerGUI = new PluginManagerGUI(standaloneController.AtlasPluginManager, licenseManager, standaloneController.DownloadController, guiManager);
+            downloadManagerGUI = new DownloadManagerGUI(standaloneController.AtlasPluginManager, licenseManager, standaloneController.DownloadController, guiManager);
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
@@ -88,7 +88,7 @@ namespace Medical.GUI
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
-            taskController.addTask(new ShowPopupTask(pluginManagerGUI, "Medical.PluginManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5));
+            taskController.addTask(new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5));
 
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
