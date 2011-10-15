@@ -105,7 +105,7 @@
     <Compile Include="GUI\DownloadManagerGUI\DownloadManagerServer.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadManagerGUI.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\ServerPluginInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="Program.cs" />
