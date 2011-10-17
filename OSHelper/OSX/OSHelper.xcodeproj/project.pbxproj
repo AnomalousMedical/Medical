@@ -11,7 +11,6 @@
 		01C7D2581357723E0027AC32 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22D1357723E0027AC32 /* Enums.h */; };
 		01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22F1357723E0027AC32 /* ImageViewer.h */; };
 		01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2301357723E0027AC32 /* ImageWindow.h */; };
-		01C7D25C1357723E0027AC32 /* MessageDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2311357723E0027AC32 /* MessageDialog.h */; };
 		01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2321357723E0027AC32 /* MultiTouch.h */; };
 		01C7D25E1357723E0027AC32 /* MultiTouchImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2331357723E0027AC32 /* MultiTouchImpl.h */; };
 		01C7D25F1357723E0027AC32 /* NativeOSWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2341357723E0027AC32 /* NativeOSWindow.h */; };
@@ -52,10 +51,8 @@
 /* Begin PBXFileReference section */
 		01C7D22C1357723E0027AC32 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
 		01C7D22D1357723E0027AC32 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
-		01C7D22E1357723E0027AC32 /* HtmlHelpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HtmlHelpController.h; sourceTree = "<group>"; };
 		01C7D22F1357723E0027AC32 /* ImageViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewer.h; sourceTree = "<group>"; };
 		01C7D2301357723E0027AC32 /* ImageWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWindow.h; sourceTree = "<group>"; };
-		01C7D2311357723E0027AC32 /* MessageDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDialog.h; sourceTree = "<group>"; };
 		01C7D2321357723E0027AC32 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouch.h; sourceTree = "<group>"; };
 		01C7D2331357723E0027AC32 /* MultiTouchImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouchImpl.h; sourceTree = "<group>"; };
 		01C7D2341357723E0027AC32 /* NativeOSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeOSWindow.h; sourceTree = "<group>"; };
@@ -71,7 +68,6 @@
 		01C7D23F1357723E0027AC32 /* Enums.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enums.cpp; sourceTree = "<group>"; };
 		01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileOpenDialog.cpp; sourceTree = "<group>"; };
 		01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSaveDialog.cpp; sourceTree = "<group>"; };
-		01C7D2421357723E0027AC32 /* HtmlHelpController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HtmlHelpController.cpp; sourceTree = "<group>"; };
 		01C7D2431357723E0027AC32 /* ImageViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewer.cpp; sourceTree = "<group>"; };
 		01C7D2441357723E0027AC32 /* ImageWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageWindow.cpp; sourceTree = "<group>"; };
 		01C7D2451357723E0027AC32 /* LicenseManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LicenseManager.cpp; sourceTree = "<group>"; };
@@ -113,10 +109,8 @@
 			children = (
 				01C7D22C1357723E0027AC32 /* App.h */,
 				01C7D22D1357723E0027AC32 /* Enums.h */,
-				01C7D22E1357723E0027AC32 /* HtmlHelpController.h */,
 				01C7D22F1357723E0027AC32 /* ImageViewer.h */,
 				01C7D2301357723E0027AC32 /* ImageWindow.h */,
-				01C7D2311357723E0027AC32 /* MessageDialog.h */,
 				01C7D2321357723E0027AC32 /* MultiTouch.h */,
 				01C7D2331357723E0027AC32 /* MultiTouchImpl.h */,
 				01C7D2341357723E0027AC32 /* NativeOSWindow.h */,
@@ -140,7 +134,6 @@
 				01C7D23F1357723E0027AC32 /* Enums.cpp */,
 				01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */,
 				01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */,
-				01C7D2421357723E0027AC32 /* HtmlHelpController.cpp */,
 				01C7D2431357723E0027AC32 /* ImageViewer.cpp */,
 				01C7D2441357723E0027AC32 /* ImageWindow.cpp */,
 				01C7D2451357723E0027AC32 /* LicenseManager.cpp */,
@@ -213,7 +206,6 @@
 				01C7D2581357723E0027AC32 /* Enums.h in Headers */,
 				01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */,
 				01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */,
-				01C7D25C1357723E0027AC32 /* MessageDialog.h in Headers */,
 				01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */,
 				01C7D25E1357723E0027AC32 /* MultiTouchImpl.h in Headers */,
 				01C7D25F1357723E0027AC32 /* NativeOSWindow.h in Headers */,
