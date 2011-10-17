@@ -6,4 +6,4 @@
 # Created by Andrew Piper on 1/18/11.
 # Copyright 2011 Anomalous Software. All rights reserved.
 
-sh ../MakeDMG.sh "Piper's Joint Based Occlusion" "../../../../Medical/OSXBuild/Piper JBO" "Piper's JBO" "Layout" "Licenses"
+sh MakeDMG.sh "Anomalous Medical" "../../../../Medical/Release/Anomalous Medical" "Anomalous Medical" "Layout" "../License"
