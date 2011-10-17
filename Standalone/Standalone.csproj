@@ -228,6 +228,7 @@
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
+    <Compile Include="Controller\UpdateController.cs" />
     <Compile Include="GUI\AbstractFullscreenGUIPopup.cs" />
     <Compile Include="GUI\DistortionWizards\Disclaimer\DisclaimerGUIPrototype.cs" />
     <Compile Include="GUI\DistortionWizards\DiscSpace\DiscSpaceControl.cs" />

@@ -172,14 +172,6 @@ namespace Medical.GUI
             }
         }
 
-        public static Version Version
-        {
-            get
-            {
-                return Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
-            }
-        }
-
         public void showOptions()
         {
             options.show(0, 0);

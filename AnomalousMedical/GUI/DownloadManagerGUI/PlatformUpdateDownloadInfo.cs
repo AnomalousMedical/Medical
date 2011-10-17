@@ -11,11 +11,14 @@ namespace Medical.GUI
             : base(ServerDownloadStatus.Update)
         {
             Name = "Anomalous Platform version " + version;
+            this.Version = version;
         }
 
         protected override void doStartDownload(DownloadController downloadController)
         {
-            downloadController.downloadPlatformUpdate(this);
+            downloadController.downloadPlatformUpdate(Version, this);
         }
+
+        public Version Version { get; private set; }
     }
 }

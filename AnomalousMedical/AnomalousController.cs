@@ -11,6 +11,7 @@ using OgrePlugin;
 using OgreWrapper;
 using MyGUIPlugin;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace Medical
 {
@@ -29,6 +30,7 @@ namespace Medical
 
         public override int OnExit()
         {
+            UpdateController.promptForUpdate();
             controller.Dispose();
             return 0;
         }
@@ -54,6 +56,8 @@ namespace Medical
             OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
+
+            UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
 
             LicenseManager = new LicenseManager("Anomalous Medical", MedicalConfig.LicenseFile);
             LicenseManager.KeyValid += new EventHandler(licenseManager_KeyValid);

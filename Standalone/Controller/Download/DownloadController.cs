@@ -40,9 +40,9 @@ namespace Medical
             return pluginDownload;
         }
 
-        public Download downloadPlatformUpdate(DownloadListener downloadListener)
+        public Download downloadPlatformUpdate(Version version, DownloadListener downloadListener)
         {
-            PlatformUpdateDownload platformDownload = new PlatformUpdateDownload(this, downloadListener);
+            PlatformUpdateDownload platformDownload = new PlatformUpdateDownload(version, this, downloadListener);
             startDownload(platformDownload);
             return platformDownload;
         }

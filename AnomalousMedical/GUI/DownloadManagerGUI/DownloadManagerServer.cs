@@ -74,7 +74,7 @@ namespace Medical.GUI
             List<ServerDownloadInfo> downloadInfoList = new List<ServerDownloadInfo>();
             try
             {
-                Version localVersion = AnomalousMainPlugin.Version;
+                Version localVersion = UpdateController.CurrentVersion;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginInfoURL));
                 request.Timeout = 10000;
                 request.Method = "POST";
@@ -111,7 +111,7 @@ namespace Medical.GUI
                                     if (!foundPlatformUpdate)
                                     {
                                         Version remoteVersion = new Version(versionString);
-                                        if (remoteVersion > localVersion)
+                                        if (remoteVersion > localVersion && remoteVersion > UpdateController.DownloadedVersion)
                                         {
                                             downloadInfoList.Add(new PlatformUpdateDownloadInfo(remoteVersion));
                                             foundPlatformUpdate = true;

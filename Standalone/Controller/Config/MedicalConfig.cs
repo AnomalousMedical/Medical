@@ -90,7 +90,7 @@ namespace Medical
 
             EngineConfig = new EngineConfig(configFile);
 
-            SafeDownloadFolder = Path.Combine(userAnomalousFolder, "Downloads");
+            SafeDownloadFolder = Path.Combine(commonAnomalousFolder, "Downloads");
             if (!Directory.Exists(SafeDownloadFolder))
             {
                 Directory.CreateDirectory(SafeDownloadFolder);
