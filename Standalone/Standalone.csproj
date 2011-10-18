@@ -182,6 +182,7 @@
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\CheckBoxDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\ColumnLayoutDataControl.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\PlayExampleButton.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\RadioButtonDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\WordWrapDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControls\MenuButtonDataControl.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\MultipleChoiceOptions.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\NotesDataField.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\NumericDataField.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\PlayExampleDataField.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\TimelineEntry.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUIData.cs" />

@@ -74,6 +74,7 @@ namespace Medical
                 propertyInfo.addColumn(new EditablePropertyColumn("Value", false));
                 editInterface.setPropertyInfo(propertyInfo);
                 editInterface.addCommand(new EditInterfaceCommand("Add Menu Item", addMenuItem));
+                editInterface.addCommand(new EditInterfaceCommand("Add Example Item", addExampleItem));
                 editInterface.addCommand(new EditInterfaceCommand("Add Numeric Field", addNumericField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Boolean Field", addBooleanField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Multiple Choice Field", addMultipleChoiceField));
@@ -97,6 +98,21 @@ namespace Medical
                 if (!hasDataField(input))
                 {
                     MenuItemField dataField = new MenuItemField(input);
+                    addDataField(dataField);
+                    return true;
+                }
+                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
+                return false;
+            });
+        }
+
+        private void addExampleItem(EditUICallback callback, EditInterfaceCommand command)
+        {
+            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
+            {
+                if (!hasDataField(input))
+                {
+                    PlayExampleDataField dataField = new PlayExampleDataField(input);
                     addDataField(dataField);
                     return true;
                 }
