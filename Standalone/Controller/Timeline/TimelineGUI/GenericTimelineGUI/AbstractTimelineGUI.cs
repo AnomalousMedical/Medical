@@ -32,7 +32,7 @@ namespace Medical
 
         }
 
-        public override sealed void hide(GUIManager guiManager)
+        public override sealed void forceClose(GUIManager guiManager)
         {
             close();
         }

@@ -36,6 +36,6 @@ namespace Medical
         /// that they can shut themselves down through this function.
         /// </summary>
         /// <param name="guiManager">The GUIManager the GUI is a part of.</param>
-        void hide(GUIManager guiManager);
+        void forceClose(GUIManager guiManager);
     }
 }

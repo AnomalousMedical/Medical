@@ -438,6 +438,14 @@ namespace Medical
 
         public TimelineGUIFactory GUIFactory { get; private set; }
 
+        public bool MultiTimelinePlaybackInProgress
+        {
+            get
+            {
+                return multiTimelinePlaybackInProgress;
+            }
+        }
+
         public GUIManager GUIManager
         {
             get

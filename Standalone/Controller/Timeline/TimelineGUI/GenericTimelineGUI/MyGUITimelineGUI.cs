@@ -35,7 +35,7 @@ namespace Medical
 
         public abstract void show(GUIManager guiManager);
 
-        public abstract void hide(GUIManager guiManager);
+        public abstract void forceClose(GUIManager guiManager);
 
         internal LayoutContainer Container
         {
