@@ -12,6 +12,7 @@ namespace Medical.GUI
         {
             Name = "Anomalous Platform version " + version;
             this.Version = version;
+            this.ImageKey = "AnomalousMedicalCore/UpdateImage";
         }
 
         protected override void doStartDownload(DownloadController downloadController)
