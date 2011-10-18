@@ -158,14 +158,17 @@ namespace Medical
             {
                 if (!String.IsNullOrEmpty(GUIData.SubmitTimeline))
                 {
-                    this.playExampleTimeline(GUIData.SubmitTimeline);
+                    this.closeAndPlayTimeline(GUIData.SubmitTimeline);
                 }
                 else
                 {
                     Log.Warning("Could not play timeline for submit button in Timeline '{0}' because it was not defined.", this.TimelineFile);
                 }
             }
-            this.closeAndReturnToMainGUI(!GUIData.PlayTimelineOnSubmit);
+            else
+            {
+                this.closeAndReturnToMainGUI();
+            }
             DataDrivenExamController.Instance.saveAndClear();
         }
 
@@ -175,14 +178,17 @@ namespace Medical
             {
                 if (!String.IsNullOrEmpty(GUIData.CancelTimeline))
                 {
-                    this.playExampleTimeline(GUIData.CancelTimeline);
+                    this.closeAndPlayTimeline(GUIData.CancelTimeline);
                 }
                 else
                 {
                     Log.Warning("Could not play timeline for cancel button in Timeline '{0}' because it was not defined.", this.TimelineFile);
                 }
             }
-            this.closeAndReturnToMainGUI(!GUIData.PlayTimelineOnCancel);
+            else
+            {
+                this.closeAndReturnToMainGUI();
+            }
             DataDrivenExamController.Instance.clear();
         }
 
