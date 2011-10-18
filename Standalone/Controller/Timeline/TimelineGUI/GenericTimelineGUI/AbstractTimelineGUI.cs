@@ -50,8 +50,16 @@ namespace Medical
 
         public void closeAndReturnToMainGUI()
         {
+            this.closeAndReturnToMainGUI(true);
+        }
+
+        public void closeAndReturnToMainGUI(bool stopTimelines)
+        {
             close();
-            showTimelineAction.stopTimelines();
+            if (stopTimelines)
+            {
+                showTimelineAction.stopTimelines();
+            }
         }
 
         public void showNavigationBar()

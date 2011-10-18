@@ -127,7 +127,18 @@ namespace Medical
 
         void submitButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.closeAndReturnToMainGUI();
+            if (GUIData.PlayTimelineOnSubmit)
+            {
+                if (!String.IsNullOrEmpty(GUIData.SubmitTimeline))
+                {
+                    this.playExampleTimeline(GUIData.SubmitTimeline);
+                }
+                else
+                {
+                    Log.Warning("Could not play timeline for submit button in Timeline '{0}' because it was not defined.", this.TimelineFile);
+                }
+            }
+            this.closeAndReturnToMainGUI(!GUIData.PlayTimelineOnSubmit);
             DataDrivenExamController.Instance.saveAndClear();
         }
 
