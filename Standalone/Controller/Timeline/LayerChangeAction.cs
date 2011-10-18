@@ -45,8 +45,9 @@ namespace Medical
             }
             else
             {
-                Log.Warning("TransparencyState \"{0}\" not found. No chnages made.", TransparencyState);
-                finished = true;
+                //Could not find the specified window, so just apply to the active window.
+                LayerState.timedApply(Duration);
+                finished = false;
             }
         }
 
@@ -76,8 +77,24 @@ namespace Medical
             }
             else
             {
-                Log.Warning("TransparencyState \"{0}\" not found. No chnages made.", TransparencyState);
-                finished = true;
+                //Could not find the specified window, so just apply to the active window.
+                if (timelineTime <= EndTime)
+                {
+                    float currentPosition = timelineTime - StartTime;
+                    TransparencyController.ActiveTransparencyState = TransparencyState;
+                    float percent = 1.0f;
+                    if (Duration != 0.0f)
+                    {
+                        percent = currentPosition / Duration;
+                    }
+                    LayerState.instantlyApplyBlendPercent(percent);
+                    LayerState.timedApply(Duration - currentPosition);
+                }
+                else
+                {
+                    LayerState.instantlyApply();
+                    finished = true;
+                }
             }
         }
 

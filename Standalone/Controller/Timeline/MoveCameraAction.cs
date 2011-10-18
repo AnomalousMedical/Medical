@@ -46,7 +46,11 @@ namespace Medical
             }
             else
             {
-                Log.Warning("Window {0} not found. Could not do MoveCameraAction.", CameraName);
+                SceneViewWindow sceneViewWindow = TimelineController.SceneViewController.ActiveWindow;
+                if (sceneViewWindow != null)
+                {
+                    sceneViewWindow.setPosition(computeTranslationWithIncludePoint(window), LookAt, Duration);
+                }
             }
         }
 
