@@ -218,6 +218,22 @@ namespace Medical
             }
         }
 
+        public String Location
+        {
+            get
+            {
+                return GetType().Assembly.Location;
+            }
+        }
+
+        public Version Version
+        {
+            get
+            {
+                return GetType().Assembly.GetName().Version;
+            }
+        }
+
         public void sceneRevealed()
         {
 

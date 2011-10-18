@@ -98,6 +98,15 @@ namespace Medical
             saveManagementInstructions();
         }
 
+        public void addPluginToUninstall(AtlasPlugin plugin)
+        {
+            if (plugin.PluginId != -1)
+            {
+                managePluginInstructions.addFileToDelete(plugin.Location);
+                saveManagementInstructions();
+            }
+        }
+
         public bool addPlugin(String pluginPath)
         {
             if (pluginPath.EndsWith(".dll", true, CultureInfo.InvariantCulture))
@@ -258,6 +267,7 @@ namespace Medical
                         DDAtlasPlugin plugin = loadPlugin(pluginStream);
                         if (plugin != null)
                         {
+                            plugin.Location = fullPath;
                             plugin.PluginRootFolder = pluginDirectory;
                             addPlugin(plugin, false);
                             loadedPlugin = true;

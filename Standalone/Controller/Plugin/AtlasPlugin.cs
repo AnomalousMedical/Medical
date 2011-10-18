@@ -29,5 +29,15 @@ namespace Medical
         String PluginName { get; }
 
         String BrandingImageKey { get; }
+
+        /// <summary>
+        /// The file system location of the plugin.
+        /// </summary>
+        String Location { get; }
+
+        /// <summary>
+        /// The verison of the plugin.
+        /// </summary>
+        Version Version { get; }
     }
 }

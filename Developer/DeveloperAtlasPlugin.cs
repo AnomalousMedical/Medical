@@ -97,5 +97,21 @@ namespace Developer
                 return "Developer/BrandingImage";
             }
         }
+
+        public String Location
+        {
+            get
+            {
+                return GetType().Assembly.Location;
+            }
+        }
+
+        public Version Version
+        {
+            get
+            {
+                return GetType().Assembly.GetName().Version;
+            }
+        }
     }
 }

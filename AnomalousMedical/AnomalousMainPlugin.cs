@@ -172,6 +172,22 @@ namespace Medical.GUI
             }
         }
 
+        public String Location
+        {
+            get
+            {
+                return GetType().Assembly.Location;
+            }
+        }
+
+        public Version Version
+        {
+            get
+            {
+                return GetType().Assembly.GetName().Version;
+            }
+        }
+
         public void showOptions()
         {
             options.show(0, 0);

@@ -25,6 +25,7 @@ namespace Medical
         {
             IconResourceFile = "Resources/Imagesets.xml";
             PluginId = -1;
+            VersionString = "1.0.0.0";
         }
 
         public void Dispose()
@@ -114,6 +115,33 @@ namespace Medical
 
         public String PluginRootFolder { get; set; }
 
+        /// <summary>
+        /// This will be set by the AtlasPluginManager. It will be the location the plugin was loaded from.
+        /// </summary>
+        public String Location { get; internal set; }
+
+        /// <summary>
+        /// The verison of the plugin.
+        /// </summary>
+        public Version Version { get; private set; }
+
+        [Editable]
+        public String VersionString
+        {
+            get
+            {
+                return Version.ToString();
+            }
+            set
+            {
+                try
+                {
+                    Version = new Version(value);
+                }
+                catch (Exception) { }
+            }
+        }
+
         [Editable]
         public String PluginNamespace
         {
@@ -137,6 +165,7 @@ namespace Medical
             PluginId = info.GetInt64("PluginID");
             PluginName = info.GetString("PluginName");
             BrandingImageKey = info.GetString("BrandingImageKey");
+            VersionString = info.GetString("Version", "1.0.0.0");
         }
 
         public void getInfo(SaveInfo info)
@@ -147,6 +176,7 @@ namespace Medical
             info.AddValue("PluginID", PluginId);
             info.AddValue("PluginName", PluginName);
             info.AddValue("BrandingImageKey", BrandingImageKey);
+            info.AddValue("Version", VersionString);
         }
 
         #endregion
