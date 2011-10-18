@@ -153,7 +153,7 @@ namespace Medical
         {
             get
             {
-                return -1;
+                return 6;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Medical
         {
             get
             {
-                return "Editor Plugin";
+                return "Editor Tools";
             }
         }
 
