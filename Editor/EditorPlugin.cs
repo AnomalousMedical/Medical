@@ -66,12 +66,12 @@ namespace Medical
 
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);
-            editorTimelineController.PlaybackStarted += new EventHandler(editorTimelineController_PlaybackStarted);
+            editorTimelineController.PlaybackStarted += editorTimelineController_PlaybackStarted;
             editorTimelineController.PlaybackStopped += new EventHandler(editorTimelineController_PlaybackStopped);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
             TimelineBrowserController.setTimelineController(editorTimelineController);
 
-            standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
+            standaloneController.TimelineController.PlaybackStarted += TimelineController_PlaybackStarted;
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
 
             //UI Helpers
@@ -238,7 +238,7 @@ namespace Medical
             playbackStopped();
         }
 
-        void TimelineController_PlaybackStarted(object sender, EventArgs e)
+        void TimelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
         {
             playbackStarted();
         }
@@ -248,7 +248,7 @@ namespace Medical
             playbackStopped();
         }
 
-        void editorTimelineController_PlaybackStarted(object sender, EventArgs e)
+        void editorTimelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
         {
             playbackStarted();
         }

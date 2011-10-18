@@ -208,7 +208,7 @@ namespace Medical
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();
             timelineController = new TimelineController(this);
-            timelineController.PlaybackStarted += new EventHandler(timelineController_PlaybackStarted);
+            timelineController.PlaybackStarted += timelineController_PlaybackStarted;
             timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
 
             abstractTimelineGUIManager = new AbstractTimelineGUIManager(medicalController.MainTimer, guiManager);
@@ -625,9 +625,12 @@ namespace Medical
             timelineController.ResourceProvider = null;
         }
 
-        void timelineController_PlaybackStarted(object sender, EventArgs e)
+        void timelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
         {
-            guiManager.setMainInterfaceEnabled(false);
+            if (timeline.Fullscreen)
+            {
+                guiManager.setMainInterfaceEnabled(false);
+            }
         }
     }
 }

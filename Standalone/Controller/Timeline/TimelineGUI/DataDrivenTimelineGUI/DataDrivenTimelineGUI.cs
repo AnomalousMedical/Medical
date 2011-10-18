@@ -38,7 +38,7 @@ namespace Medical
                 //Make a close button and exam if this was launched directly.
                 Button submitButton = (Button)widget.createWidgetT("Button", "Button", widget.Width - 100 - WIDTH_ADJUSTMENT, 0, 100, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                 submitButton.MouseButtonClick += new MyGUIEvent(submitButton_MouseButtonClick);
-                submitButton.Caption = "Submit";
+                submitButton.Caption = GUIData.SubmitButtonText;
                 startPos.y = submitButton.Bottom + BUTTON_TO_PANEL_PAD;
 
                 if (!DataDrivenExamController.Instance.HasCurrentSection)

@@ -27,6 +27,8 @@ namespace Medical.GUI
         private TaskMenu taskMenu;
         private BorderLayoutContainer innerBorderLayout;
 
+        private bool mainGuiShowing = true;
+
         //Dialogs
         private DialogManager dialogManager;
 
@@ -201,16 +203,20 @@ namespace Medical.GUI
 
         public void setMainInterfaceEnabled(bool enabled)
         {
-            standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
-            if (enabled)
+            if (mainGuiShowing != enabled)
             {
-                taskbar.Visible = true;
-                dialogManager.reopenDialogs();
-            }
-            else
-            {
-                taskbar.Visible = false;
-                dialogManager.temporarilyCloseDialogs();
+                standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
+                if (enabled)
+                {
+                    taskbar.Visible = true;
+                    dialogManager.reopenDialogs();
+                }
+                else
+                {
+                    taskbar.Visible = false;
+                    dialogManager.temporarilyCloseDialogs();
+                }
+                mainGuiShowing = enabled;
             }
         }
 

@@ -21,7 +21,7 @@ namespace Medical
     public class TimelineController : UpdateListener
     {
         public event EventHandler ResourceLocationChanged;
-        public event EventHandler PlaybackStarted;
+        public event Action<TimelineController, Timeline> PlaybackStarted;
         public event EventHandler PlaybackStopped;
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
@@ -116,7 +116,7 @@ namespace Medical
                     multiTimelinePlaybackInProgress = true;
                     if (PlaybackStarted != null) //Alert that the multi timeline playback has started.
                     {
-                        PlaybackStarted.Invoke(this, EventArgs.Empty);
+                        PlaybackStarted.Invoke(this, timeline);
                     }
                 }
             }

@@ -26,6 +26,7 @@ namespace Medical
         public Timeline()
         {
             sequencer = new ActionSequencer<TimelineAction>();
+            Fullscreen = true;
         }
 
         public EditInterface getEditInterface()
@@ -290,6 +291,8 @@ namespace Medical
             }
         }
 
+        public bool Fullscreen { get; set; }
+
         internal void _actionStartChanged(TimelineAction action)
         {
             sequencer.sort();
@@ -301,9 +304,11 @@ namespace Medical
         private static readonly String POST_ACTIONS = "PostActions";
         private static readonly String ACTIONS = "Actions";
         private static readonly String SEQUENCER = "Sequencer";
+        private static readonly String FULLSCREEN = "Fullscreen";
 
         protected Timeline(LoadInfo info)
         {
+            Fullscreen = info.GetValue(FULLSCREEN, true);
             info.RebuildList<TimelineInstantAction>(PRE_ACTIONS, preActions);
             info.RebuildList<TimelineInstantAction>(POST_ACTIONS, postActions);
 
@@ -338,6 +343,7 @@ namespace Medical
 
         public void getInfo(SaveInfo info)
         {
+            info.AddValue(FULLSCREEN, Fullscreen);
             info.ExtractList<TimelineInstantAction>(PRE_ACTIONS, preActions);
             info.ExtractList<TimelineInstantAction>(POST_ACTIONS, postActions);
             info.AddValue(SEQUENCER, sequencer);

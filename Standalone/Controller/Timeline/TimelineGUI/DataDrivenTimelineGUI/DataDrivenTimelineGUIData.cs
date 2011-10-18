@@ -15,6 +15,7 @@ namespace Medical
         public DataDrivenTimelineGUIData()
         {
             dataFields = new DataFieldCollection();
+            SubmitButtonText = "Submit";
         }
 
         public DataControl createControls(Widget parent, DataDrivenTimelineGUI gui)
@@ -26,6 +27,9 @@ namespace Medical
         {
             editInterface.addSubInterface(dataFields.getEditInterface());
         }
+
+        [Editable]
+        public String SubmitButtonText { get; set; }
 
         protected DataDrivenTimelineGUIData(LoadInfo info)
             :base(info)

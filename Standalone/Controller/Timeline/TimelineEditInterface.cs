@@ -25,7 +25,7 @@ namespace Medical
                 preActionEdit = new TimelinePreActionEditInterface(timeline);
                 postActionEdit = new TimelinePostActionEditInterface(timeline);
 
-                editInterface = ReflectedEditInterface.createEditInterface("Timeline", null);
+                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "Timeline", null);
                 editInterface.addSubInterface(preActionEdit.getEditInterface());
                 editInterface.addSubInterface(postActionEdit.getEditInterface());
 
@@ -47,6 +47,19 @@ namespace Medical
             get
             {
                 return postActionEdit;
+            }
+        }
+
+        [Editable]
+        public bool Fullscreen
+        {
+            get
+            {
+                return timeline.Fullscreen;
+            }
+            set
+            {
+                timeline.Fullscreen = value;
             }
         }
 
