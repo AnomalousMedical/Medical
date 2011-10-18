@@ -18,6 +18,12 @@ namespace Medical
         private DataControl topLevelDataControl;
         private DataDrivenExamSection guiSection;
 
+        private Button submitButton;
+        private Button cancelButton;
+        private Button previousButton;
+        private Button nextButton;
+        private Button finishButton;
+
         public DataDrivenTimelineGUI()
             :base("Medical.Controller.Timeline.TimelineGUI.DataDrivenTimelineGUI.DataDrivenTimelineGUI.layout")
         {
@@ -26,6 +32,20 @@ namespace Medical
 
         public override void Dispose()
         {
+            if (submitButton != null)
+            {
+                Gui.Instance.destroyWidget(submitButton);
+            }
+            if (cancelButton != null)
+            {
+                Gui.Instance.destroyWidget(cancelButton);
+            }
+            if (previousButton != null)
+            {
+                Gui.Instance.destroyWidget(previousButton);
+                Gui.Instance.destroyWidget(nextButton);
+                Gui.Instance.destroyWidget(finishButton);
+            }
             topLevelDataControl.Dispose();
             base.Dispose();
         }
@@ -35,11 +55,18 @@ namespace Medical
             Vector2 startPos = new Vector2(0, 0);
             if (DataDrivenNavigationManager.Instance.Count == 0)
             {
-                //Make a close button and exam if this was launched directly.
-                Button submitButton = (Button)widget.createWidgetT("Button", "Button", widget.Width - 100 - WIDTH_ADJUSTMENT, 0, 100, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
-                submitButton.MouseButtonClick += new MyGUIEvent(submitButton_MouseButtonClick);
-                submitButton.Caption = GUIData.SubmitButtonText;
-                startPos.y = submitButton.Bottom + BUTTON_TO_PANEL_PAD;
+                //Make a cancel and submit button and exam if this was launched directly.
+                if (GUIData.AllowSubmit)
+                {
+                    submitButton = (Button)widget.createWidgetT("Button", "Button", widget.Width - 100 - WIDTH_ADJUSTMENT, 0, 100, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                    submitButton.MouseButtonClick += new MyGUIEvent(submitButton_MouseButtonClick);
+                    submitButton.Caption = GUIData.SubmitButtonText;
+                }
+
+                cancelButton = (Button)widget.createWidgetT("Button", "Button", WIDTH_ADJUSTMENT, 0, 100, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+                cancelButton.Caption = GUIData.CancelButtonText;
+                startPos.y = cancelButton.Bottom + BUTTON_TO_PANEL_PAD;
 
                 if (!DataDrivenExamController.Instance.HasCurrentSection)
                 {
@@ -59,19 +86,19 @@ namespace Medical
                 int xLoc = 0;
                 int buttonSize = (widget.Width - WIDTH_ADJUSTMENT) / 3;
 
-                Button previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                 previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
                 previousButton.Caption = "Previous";
                 xLoc += previousButton.Width;
                 previousButton.Enabled = DataDrivenNavigationManager.Instance.Current.PreviousTimeline != null;
                 
-                Button nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                 nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
                 nextButton.Caption = "Next";
                 xLoc += nextButton.Width;
                 nextButton.Enabled = DataDrivenNavigationManager.Instance.Current.NextTimeline != null;
                 
-                Button finishButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                finishButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                 finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
                 finishButton.Caption = "Finish";
                 xLoc += finishButton.Width;
@@ -140,6 +167,23 @@ namespace Medical
             }
             this.closeAndReturnToMainGUI(!GUIData.PlayTimelineOnSubmit);
             DataDrivenExamController.Instance.saveAndClear();
+        }
+
+        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (GUIData.PlayTimelineOnCancel)
+            {
+                if (!String.IsNullOrEmpty(GUIData.CancelTimeline))
+                {
+                    this.playExampleTimeline(GUIData.CancelTimeline);
+                }
+                else
+                {
+                    Log.Warning("Could not play timeline for cancel button in Timeline '{0}' because it was not defined.", this.TimelineFile);
+                }
+            }
+            this.closeAndReturnToMainGUI(!GUIData.PlayTimelineOnCancel);
+            DataDrivenExamController.Instance.clear();
         }
 
         protected override void navigationBarChangedTimelines(String timeline)

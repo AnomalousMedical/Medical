@@ -17,6 +17,9 @@ namespace Medical
             dataFields = new DataFieldCollection();
             SubmitButtonText = "Submit";
             PlayTimelineOnSubmit = false;
+            CancelButtonText = "Cancel";
+            PlayTimelineOnCancel = false;
+            AllowSubmit = true;
         }
 
         public DataControl createControls(Widget parent, DataDrivenTimelineGUI gui)
@@ -30,6 +33,9 @@ namespace Medical
         }
 
         [Editable]
+        public bool AllowSubmit { get; set; }
+
+        [Editable]
         public String SubmitButtonText { get; set; }
 
         [Editable]
@@ -37,6 +43,15 @@ namespace Medical
 
         [Editable]
         public String SubmitTimeline { get; set; }
+
+        [Editable]
+        public String CancelButtonText { get; set; }
+
+        [Editable]
+        public bool PlayTimelineOnCancel { get; set; }
+
+        [Editable]
+        public String CancelTimeline { get; set; }
 
         protected DataDrivenTimelineGUIData(LoadInfo info)
             :base(info)
