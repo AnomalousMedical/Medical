@@ -53,19 +53,19 @@ namespace Medical.GUI
             }
         }
 
-        public void temporarilyCloseDialogs()
+        public void closeMainGUIDialogs()
         {
             foreach (DialogEntry dialog in dialogs)
             {
-                dialog.tempClose();
+                dialog.closeMainGUIDialog();
             }
         }
 
-        public void reopenDialogs()
+        public void reopenMainGUIDialogs()
         {
             foreach (DialogEntry dialog in dialogs)
             {
-                dialog.restoreState();
+                dialog.openMainGUIDialog();
             }
         }
     }

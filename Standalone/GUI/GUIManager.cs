@@ -28,6 +28,7 @@ namespace Medical.GUI
         private BorderLayoutContainer innerBorderLayout;
 
         private bool mainGuiShowing = true;
+        private bool timelineCommonGuiShowing = false;
 
         //Dialogs
         private DialogManager dialogManager;
@@ -209,14 +210,22 @@ namespace Medical.GUI
                 if (enabled)
                 {
                     taskbar.Visible = true;
-                    dialogManager.reopenDialogs();
+                    dialogManager.reopenMainGUIDialogs();
                 }
                 else
                 {
                     taskbar.Visible = false;
-                    dialogManager.temporarilyCloseDialogs();
+                    dialogManager.closeMainGUIDialogs();
                 }
                 mainGuiShowing = enabled;
+            }
+        }
+
+        public void setTimelineSharedInterfaceEnabled(bool enabled)
+        {
+            if (timelineCommonGuiShowing != enabled)
+            {
+                timelineCommonGuiShowing = enabled;
             }
         }
 

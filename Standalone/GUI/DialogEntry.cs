@@ -3,11 +3,10 @@ namespace Medical.GUI
 {
     interface DialogEntry
     {
-        bool CurrentlyVisible { get; set; }
         void deserialize(Engine.ConfigFile file);
         void ensureVisible();
-        void restoreState();
+        void openMainGUIDialog();
         void serialize(Engine.ConfigFile file);
-        void tempClose();
+        void closeMainGUIDialog();
     }
 }

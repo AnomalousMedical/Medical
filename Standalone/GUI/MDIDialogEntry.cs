@@ -10,23 +10,24 @@ namespace Medical.GUI
 {
     class MDIDialogEntry : DialogEntry
     {
+        private bool currentlyMainGUIVisible;
         private MDIDialog dialog;
 
         public MDIDialogEntry(MDIDialog dialog)
         {
             this.dialog = dialog;
-            CurrentlyVisible = dialog.Visible;
+            currentlyMainGUIVisible = dialog.Visible;
         }
 
-        public void tempClose()
+        public void closeMainGUIDialog()
         {
-            CurrentlyVisible = dialog.Visible;
+            currentlyMainGUIVisible = dialog.Visible;
             dialog.Visible = false;
         }
 
-        public void restoreState()
+        public void openMainGUIDialog()
         {
-            dialog.Visible = CurrentlyVisible;
+            dialog.Visible = currentlyMainGUIVisible;
         }
 
         public void serialize(ConfigFile file)
@@ -43,7 +44,5 @@ namespace Medical.GUI
         {
             dialog.ensureVisible();
         }
-
-        public bool CurrentlyVisible { get; set; }
     }
 }
