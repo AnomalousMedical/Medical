@@ -11,6 +11,7 @@ namespace Medical.GUI
             : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "ShowTeethContactsIcon", TaskMenuCategories.Simulation)
         {
             this.Weight = weight;
+            this.ShowOnTimelineTaskbar = true;
         }
 
         public override void clicked()

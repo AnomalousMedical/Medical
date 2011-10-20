@@ -318,6 +318,22 @@ namespace Medical.GUI
             }
         }
 
+        public bool AppButtonVisible
+        {
+            get
+            {
+                return appButton.Visible;
+            }
+            set
+            {
+                if (value != appButton.Visible)
+                {
+                    appButton.Visible = value;
+                    layout();
+                }
+            }
+        }
+
         public void clearGapIndex()
         {
             GapIndex = -1;
@@ -343,7 +359,12 @@ namespace Medical.GUI
         {
             Vector2 startLocation = new Vector2(appButton.Left, 0);
             Vector2 currentLocation = startLocation;
-            int positionOffset = (int)(appButton.Bottom + padding);
+
+            int positionOffset = (int)padding;
+            if (appButton.Visible)
+            {
+                positionOffset = (int)(appButton.Bottom + padding);
+            }
             int iconAreaHeight = (int)(WorkingSize.Height - positionOffset);
 
             int counter = 0;
@@ -402,7 +423,12 @@ namespace Medical.GUI
         {
             Vector2 startLocation = new Vector2(0, appButton.Top);
             Vector2 currentLocation = startLocation;
-            int positionOffset = (int)(appButton.Right + padding);
+
+            int positionOffset = (int)padding;
+            if (appButton.Visible)
+            {
+                positionOffset = (int)(appButton.Right + padding);
+            }
             int iconAreaWidth = (int)(WorkingSize.Width - positionOffset);
 
             int counter = 0;

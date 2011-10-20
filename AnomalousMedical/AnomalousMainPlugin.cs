@@ -81,6 +81,7 @@ namespace Medical.GUI
 
             //Tasks
             selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
+            selectionModeTask.ShowOnTimelineTaskbar = true;
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
@@ -114,7 +115,9 @@ namespace Medical.GUI
             taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
 
             //Navigation Section
-            taskController.addTask(new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
+            MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation);
+            anatomyFinderTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(anatomyFinderTask);
             taskController.addTask(selectionModeTask);
         }
 

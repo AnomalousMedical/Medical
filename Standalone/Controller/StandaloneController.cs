@@ -621,16 +621,13 @@ namespace Medical
 
         void timelineController_PlaybackStopped(object sender, EventArgs e)
         {
-            guiManager.setMainInterfaceEnabled(true);
+            guiManager.setMainInterfaceEnabled(true, false);
             timelineController.ResourceProvider = null;
         }
 
         void timelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
         {
-            if (timeline.Fullscreen)
-            {
-                guiManager.setMainInterfaceEnabled(false);
-            }
+            guiManager.setMainInterfaceEnabled(false, !timeline.Fullscreen);
         }
     }
 }

@@ -310,6 +310,7 @@
     <Compile Include="GUI\Taskbar\PinnedTaskSerializer.cs" />
     <Compile Include="GUI\Taskbar\PinnedTaskTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\TaskTaskbarItem.cs" />
+    <Compile Include="GUI\Taskbar\TimelineTaskbarItem.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuRecentDocuments.cs" />

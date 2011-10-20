@@ -26,6 +26,7 @@ namespace Medical
             this.Category = category;
             Weight = DEFAULT_WEIGHT;
             ShowOnTaskbar = true;
+            ShowOnTimelineTaskbar = false;
         }
 
         /// <summary>
@@ -49,6 +50,8 @@ namespace Medical
         public int Weight { get; set; }
 
         public bool ShowOnTaskbar { get; set; }
+
+        public bool ShowOnTimelineTaskbar { get; set; }
 
         public bool OnTaskbar
         {

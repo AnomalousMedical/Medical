@@ -112,12 +112,20 @@ namespace Medical
             saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
             taskController.addTask(saveAsTaskItem);
 
-            taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
+            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation);
+            bookmarkTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(bookmarkTask);
             taskController.addTask(new ShowToothContactsTask(0));
             taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
-            taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation, 1));
-            taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation, 2));
+
+            MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation, 1);
+            sequencePlayerTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(sequencePlayerTask);
+
+            MDIDialogOpenTask mandibleMovementTask = new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation, 2);
+            mandibleMovementTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(mandibleMovementTask);
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
             standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
             taskController.addTask(windowLayout);

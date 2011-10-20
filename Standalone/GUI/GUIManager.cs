@@ -27,8 +27,9 @@ namespace Medical.GUI
         private TaskMenu taskMenu;
         private BorderLayoutContainer innerBorderLayout;
 
+        private Taskbar timelineGUITaskbar;
+
         private bool mainGuiShowing = true;
-        private bool timelineCommonGuiShowing = false;
 
         //Dialogs
         private DialogManager dialogManager;
@@ -97,7 +98,15 @@ namespace Medical.GUI
             taskbar.SuppressLayout = true;
             taskbar.OpenTaskMenu += new GUI.Taskbar.OpenTaskMenuEvent(taskbar_OpenTaskMenu);
 
-            taskbar.Child = innerBorderLayout;
+            //Timeline taskbar
+            timelineGUITaskbar = new Taskbar(standaloneController);
+            timelineGUITaskbar.Alignment = TaskbarAlignment.Right;
+            timelineGUITaskbar.SuppressLayout = true;
+            timelineGUITaskbar.AppButtonVisible = false;
+            timelineGUITaskbar.Visible = false;
+
+            taskbar.Child = timelineGUITaskbar;
+            timelineGUITaskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
 
             //Task Menu
@@ -105,6 +114,9 @@ namespace Medical.GUI
             taskMenu.TaskItemOpened += new TaskDelegate(taskMenu_TaskItemOpened);
             taskMenu.TaskItemDropped += new TaskDragDropEventDelegate(taskMenu_TaskItemDropped);
             taskMenu.TaskItemDragged += new TaskDragDropEventDelegate(taskMenu_TaskItemDragged);
+
+            standaloneController.TaskController.TaskAdded += new TaskDelegate(TaskController_TaskAdded);
+            standaloneController.TaskController.TaskRemoved += new TaskDelegate(TaskController_TaskRemoved);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -123,6 +135,7 @@ namespace Medical.GUI
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
 
+            timelineGUITaskbar.SuppressLayout = false;
             taskbar.SuppressLayout = false;
             taskbar.layout();
 
@@ -202,30 +215,32 @@ namespace Medical.GUI
             bottomAnimatedContainer.changePanel(bottomContainer, 0.25f, animationCompleted);
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
+        public void setMainInterfaceEnabled(bool enabled, bool enableSharedInterface)
         {
             if (mainGuiShowing != enabled)
             {
+                taskbar.SuppressLayout = true;
+                timelineGUITaskbar.SuppressLayout = true;
                 standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
                 if (enabled)
                 {
                     taskbar.Visible = true;
+                    timelineGUITaskbar.Visible = false;
                     dialogManager.reopenMainGUIDialogs();
                 }
                 else
                 {
+                    if (enableSharedInterface)
+                    {
+                        timelineGUITaskbar.Visible = true;
+                    }
                     taskbar.Visible = false;
                     dialogManager.closeMainGUIDialogs();
                 }
                 mainGuiShowing = enabled;
-            }
-        }
-
-        public void setTimelineSharedInterfaceEnabled(bool enabled)
-        {
-            if (timelineCommonGuiShowing != enabled)
-            {
-                timelineCommonGuiShowing = enabled;
+                taskbar.SuppressLayout = false;
+                timelineGUITaskbar.SuppressLayout = false;
+                taskbar.layout();
             }
         }
 
@@ -425,6 +440,21 @@ namespace Medical.GUI
             pinnedTaskItem.RemoveFromTaskbar += new EventDelegate<TaskTaskbarItem>(pinnedTaskItem_RemoveFromTaskbar);
             item._TaskbarItem = pinnedTaskItem;
             taskbar.addItem(pinnedTaskItem, index);
+        }
+
+        void TaskController_TaskRemoved(Task task)
+        {
+            //Check to see that the task should show up on the timeline taskbar (TBD)
+        }
+
+        void TaskController_TaskAdded(Task task)
+        {
+            //Check to see that the task should show up on the timeline taskbar
+            if (task.ShowOnTimelineTaskbar)
+            {
+                TimelineTaskbarItem timelineTaskbarItem = new TimelineTaskbarItem(task);
+                timelineGUITaskbar.addItem(timelineTaskbarItem);
+            }
         }
     }
 }
