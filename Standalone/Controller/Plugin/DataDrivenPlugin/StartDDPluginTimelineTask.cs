@@ -24,11 +24,7 @@ namespace Medical
         public override void clicked()
         {
             TimelineController timelineController = Plugin.TimelineController;
-            if (timelineController.MultiTimelinePlaybackInProgress)
-            {
-                MyGUIPlugin.MessageBox.show("Cannot start this task right now. Please close other timeline task.", "Cannot start task.", MyGUIPlugin.MessageBoxStyle.Ok | MyGUIPlugin.MessageBoxStyle.IconWarning);
-            }
-            else
+            if (!timelineController.MultiTimelinePlaybackInProgress)
             {
                 timelineController.ResourceProvider = new TimelineVirtualFSResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
                 Timeline start = timelineController.openTimeline(StartupTimeline);
