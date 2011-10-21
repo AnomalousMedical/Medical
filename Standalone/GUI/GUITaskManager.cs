@@ -14,12 +14,13 @@ namespace Medical.GUI
         private TaskMenu taskMenu;
         private TaskController taskController;
 
+        private Dictionary<Task, TaskTaskbarItem> taskbarItems = new Dictionary<Task, TaskTaskbarItem>();
+
         public GUITaskManager(Taskbar taskbar, TaskMenu taskMenu, TaskController taskController)
         {
             this.taskController = taskController;
 
             this.taskbar = taskbar;
-
 
             this.taskMenu = taskMenu;
             taskMenu.TaskItemOpened += new TaskDelegate(taskMenu_TaskItemOpened);
@@ -68,11 +69,14 @@ namespace Medical.GUI
         {
             if (taskbar.containsPosition(position))
             {
-                if (item._TaskbarItem is PinnedTaskTaskbarItem)
+                TaskTaskbarItem taskbarItem;
+                taskbarItems.TryGetValue(item, out taskbarItem);
+
+                if (taskbarItem is PinnedTaskTaskbarItem)
                 {
-                    taskbar.removeItem(item._TaskbarItem);
+                    taskbar.removeItem(taskbarItem);
                     int index = taskbar.getIndexForPosition(position);
-                    taskbar.addItem(item._TaskbarItem, index);
+                    taskbar.addItem(taskbarItem, index);
                 }
                 else
                 {
@@ -86,7 +90,7 @@ namespace Medical.GUI
         void pinnedTaskItem_RemoveFromTaskbar(TaskTaskbarItem source)
         {
             Task task = source.Task;
-            task._TaskbarItem = null;
+            taskbarItems.Remove(task);
             taskbar.removeItem(source);
             taskbar.layout();
             if (task.Active)
@@ -103,36 +107,47 @@ namespace Medical.GUI
 
         void item_ItemClosed(Task item)
         {
+            TaskTaskbarItem taskbarItem;
+            taskbarItems.TryGetValue(item, out taskbarItem);
+
             item.ItemClosed -= item_ItemClosed;
-            item._TaskbarItem.PinToTaskbar -= taskbarItem_PinToTaskbar;
-            taskbar.removeItem(item._TaskbarItem);
-            item._TaskbarItem = null;
+            taskbarItem.PinToTaskbar -= taskbarItem_PinToTaskbar;
+            taskbar.removeItem(taskbarItem);
+            taskbarItems.Remove(item);
             taskbar.layout();
         }
 
         private void addTaskbarItem(Task item)
         {
-            if (item.ShowOnTaskbar && item._TaskbarItem == null)
+            TaskTaskbarItem taskbarItem;
+            taskbarItems.TryGetValue(item, out taskbarItem);
+
+            if (item.ShowOnTaskbar && taskbarItem == null)
             {
-                item._TaskbarItem = new TaskTaskbarItem(item);
-                taskbar.addItem(item._TaskbarItem);
+                taskbarItem = new TaskTaskbarItem(item);
+                taskbar.addItem(taskbarItem);
                 taskbar.layout();
                 item.ItemClosed += item_ItemClosed;
-                item._TaskbarItem.PinToTaskbar += taskbarItem_PinToTaskbar;
+                taskbarItem.PinToTaskbar += taskbarItem_PinToTaskbar;
+                taskbarItems.Add(item, taskbarItem);
             }
         }
 
         private void addPinnedTaskbarItem(Task item, int index)
         {
-            if (item._TaskbarItem != null)
+            TaskTaskbarItem taskbarItem;
+            taskbarItems.TryGetValue(item, out taskbarItem);
+
+            if (taskbarItem != null)
             {
                 item.ItemClosed -= item_ItemClosed;
-                item._TaskbarItem.PinToTaskbar -= taskbarItem_PinToTaskbar;
-                taskbar.removeItem(item._TaskbarItem);
+                taskbarItem.PinToTaskbar -= taskbarItem_PinToTaskbar;
+                taskbar.removeItem(taskbarItem);
+                taskbarItems.Remove(item);
             }
             PinnedTaskTaskbarItem pinnedTaskItem = new PinnedTaskTaskbarItem(item);
             pinnedTaskItem.RemoveFromTaskbar += new EventDelegate<TaskTaskbarItem>(pinnedTaskItem_RemoveFromTaskbar);
-            item._TaskbarItem = pinnedTaskItem;
+            taskbarItems.Add(item, pinnedTaskItem);
             taskbar.addItem(pinnedTaskItem, index);
         }
     }

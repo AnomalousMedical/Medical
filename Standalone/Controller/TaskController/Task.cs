@@ -53,14 +53,6 @@ namespace Medical
 
         public bool ShowOnTimelineTaskbar { get; set; }
 
-        public bool OnTaskbar
-        {
-            get
-            {
-                return _TaskbarItem != null;
-            }
-        }
-
         protected void fireItemClosed()
         {
             if (ItemClosed != null)
@@ -84,10 +76,5 @@ namespace Medical
                 IconChanged.Invoke(this);
             }
         }
-
-        /// <summary>
-        /// Used only by GUIManager
-        /// </summary>
-        internal TaskTaskbarItem _TaskbarItem { get; set; }
     }
 }

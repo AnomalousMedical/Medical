@@ -33,7 +33,7 @@ namespace Medical.GUI
 
         void timelinePropertiesController_VisibilityChanged(TimelinePropertiesController source)
         {
-            if (source.Visible && !OnTaskbar)
+            if (source.Visible)
             {
                 fireRequestShowInTaskbar();
             }
