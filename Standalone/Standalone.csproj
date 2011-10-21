@@ -299,6 +299,7 @@
     <Compile Include="GUI\ExamViewer\MyGUIAnalysisDisplayProvider.cs" />
     <Compile Include="GUI\ExamViewer\TextAnalysisViewer.cs" />
     <Compile Include="GUI\FullscreenGUIPopup.cs" />
+    <Compile Include="GUI\GUITaskManager.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
