@@ -30,7 +30,7 @@ namespace Medical.GUI
             {
                 server.removeDetectedPlugin(this);
             }
-            else
+            else if(!download.Cancel)
             {
                 requestRestart("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.");
             }
