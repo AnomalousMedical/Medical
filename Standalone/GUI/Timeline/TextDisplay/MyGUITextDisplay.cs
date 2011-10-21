@@ -201,10 +201,12 @@ namespace Medical.GUI
                 if (value)
                 {
                     textBox.EventEditTextChange += textBox_EventEditTextChange;
+                    textBox.NeedMouseFocus = true;
                 }
                 else
                 {
                     textBox.EventEditTextChange -= textBox_EventEditTextChange;
+                    textBox.NeedMouseFocus = false;
                 }
             }
         }

@@ -5,5 +5,6 @@
         <Property key="Edit_WordWrap" value="true"/>
         <Property key="Text_TextColour" value="#FFFFFF"/>
         <Property key="Edit_MultiLine" value="true"/>
+        <Property key="Widget_NeedMouse" value="false"/>
     </Widget>
 </MyGUI>
