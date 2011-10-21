@@ -382,12 +382,29 @@ namespace Medical
 
             foreach (AtlasPlugin plugin in uninitializedPlugins)
             {
-                plugin.initialize(standaloneController);
-                if (currentScene != null)
+                try
                 {
-                    plugin.sceneLoaded(currentScene);
+                    plugin.initialize(standaloneController);
+                    if (currentScene != null)
+                    {
+                        plugin.sceneLoaded(currentScene);
+                    }
+                    plugins.Add(plugin);
                 }
-                plugins.Add(plugin);
+                catch (Exception e)
+                {
+                    Log.Error("Cannot load plugin '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", plugin.PluginName, plugin.Location, e.Message);
+                    try
+                    {
+                        File.Delete(plugin.Location);
+                    }
+                    catch (Exception deleteEx)
+                    {
+                        Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", plugin.PluginName, plugin.Location, deleteEx.Message);
+                        managePluginInstructions.addFileToDelete(plugin.Location);
+                        saveManagementInstructions();
+                    }
+                }
             }
             uninitializedPlugins.Clear();
         }
