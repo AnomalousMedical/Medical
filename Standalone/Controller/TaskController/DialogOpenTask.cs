@@ -37,7 +37,7 @@ namespace Medical
             dialog.Closed += new EventHandler(dialog_Closed);
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             if (!dialog.Visible)
             {

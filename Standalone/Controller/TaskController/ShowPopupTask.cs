@@ -24,7 +24,7 @@ namespace Medical
             this.Weight = weight;
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             if (!popupContainer.Visible)
             {

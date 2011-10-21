@@ -21,7 +21,7 @@ namespace Medical
 
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             TimelineController timelineController = Plugin.TimelineController;
             if (!timelineController.MultiTimelinePlaybackInProgress)

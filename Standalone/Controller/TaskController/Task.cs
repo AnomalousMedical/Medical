@@ -32,7 +32,7 @@ namespace Medical
         /// <summary>
         /// Called when this item is clicked.
         /// </summary>
-        public abstract void clicked();
+        public abstract void clicked(TaskPositioner taskPositioner);
 
         public abstract bool Active
         {
@@ -85,27 +85,9 @@ namespace Medical
             }
         }
 
-        protected IntVector2 findGoodWindowPosition(int width, int height)
-        {
-            if (_TaskbarItem != null)
-            {
-                return _TaskbarItem.findGoodWindowPosition(width, height);
-            }
-            if (_TaskMenu != null)
-            {
-                return _TaskMenu.findGoodWindowPosition(this, width, height);
-            }
-            return new IntVector2();
-        }
-
         /// <summary>
         /// Used only by GUIManager
         /// </summary>
         internal TaskTaskbarItem _TaskbarItem { get; set; }
-
-        /// <summary>
-        /// Used only by TaskMenu
-        /// </summary>
-        internal TaskMenu _TaskMenu { get; set; }
     }
 }

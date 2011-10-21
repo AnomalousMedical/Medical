@@ -30,7 +30,7 @@ namespace Medical
             this.resourceRoot = resourceRoot;
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             timelineController.ResourceProvider = new TimelineEmbeddedResourceProvider(assembly, resourceRoot); ;
             Timeline start = timelineController.openTimeline(startTimeline);

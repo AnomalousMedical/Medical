@@ -39,9 +39,9 @@ namespace Medical
             Gui.Instance.destroyWidget(menu);
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
-            IntVector2 position = findGoodWindowPosition(menu.Width, menu.Height);
+            IntVector2 position = positioner.findGoodWindowPosition(menu.Width, menu.Height);
             menu.setPosition(position.x, position.y);
             menu.setVisibleSmooth(true);
         }

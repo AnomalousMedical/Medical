@@ -17,7 +17,7 @@ namespace Medical.GUI
             timelinePropertiesController.VisibilityChanged += new Engine.EventDelegate<TimelinePropertiesController>(timelinePropertiesController_VisibilityChanged);
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             if (timelinePropertiesController.Visible)
             {

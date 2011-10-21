@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class TaskTaskbarItem : TaskbarItem
+    class TaskTaskbarItem : TaskbarItem, TaskPositioner
     {
         private Task item;
         private PopupMenu popupMenu;
@@ -29,7 +29,7 @@ namespace Medical.GUI
 
         public override void clicked(Widget source, EventArgs e)
         {
-            item.clicked();
+            item.clicked(this);
         }
 
         public override void rightClicked(Widget source, EventArgs e)
@@ -57,7 +57,7 @@ namespace Medical.GUI
             }
         }
 
-        internal IntVector2 findGoodWindowPosition(int width, int height)
+        public IntVector2 findGoodWindowPosition(int width, int height)
         {
             return findGoodPosition(width, height);
         }

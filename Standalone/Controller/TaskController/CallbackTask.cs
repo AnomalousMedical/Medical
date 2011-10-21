@@ -40,7 +40,7 @@ namespace Medical
             this.ShowOnTaskbar = showOnTaskbar;
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             if (OnClicked != null)
             {

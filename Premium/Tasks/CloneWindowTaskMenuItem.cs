@@ -20,7 +20,7 @@ namespace Medical.GUI
             cloneWindowDialog.Closed += new EventHandler(cloneWindowDialog_Closed);
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             if (standaloneController.SceneViewController.HasCloneWindow)
             {

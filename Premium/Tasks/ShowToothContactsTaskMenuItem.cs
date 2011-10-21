@@ -14,7 +14,7 @@ namespace Medical.GUI
             this.ShowOnTimelineTaskbar = true;
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
             ShowOnTaskbar = TeethController.HighlightContacts = !TeethController.HighlightContacts;
             if (!TeethController.HighlightContacts)

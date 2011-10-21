@@ -24,9 +24,9 @@ namespace Medical.GUI
             selectionModeChooser.Dispose();
         }
 
-        public override void clicked()
+        public override void clicked(TaskPositioner positioner)
         {
-            IntVector2 pos = findGoodWindowPosition(selectionModeChooser.Width, selectionModeChooser.Height);
+            IntVector2 pos = positioner.findGoodWindowPosition(selectionModeChooser.Width, selectionModeChooser.Height);
             selectionModeChooser.show(pos.x, pos.y);
         }
 

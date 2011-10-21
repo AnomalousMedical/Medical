@@ -162,6 +162,7 @@
     <Compile Include="Controller\TaskController\StartEmbeddedTimelineTask.cs" />
     <Compile Include="Controller\TaskController\Task.cs" />
     <Compile Include="Controller\TaskController\TaskController.cs" />
+    <Compile Include="Controller\TaskController\TaskPositioner.cs" />
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\MusclePosition.cs" />
     <Compile Include="Controller\Timeline\MusclePositionAction.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuRecentDocuments.cs" />
+    <Compile Include="GUI\TaskMenu\TaskMenuPositioner.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUIDynamicFontManager.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplayFactory.cs" />
