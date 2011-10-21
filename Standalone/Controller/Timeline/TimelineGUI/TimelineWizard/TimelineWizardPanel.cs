@@ -121,14 +121,6 @@ namespace Medical.GUI
             }
         }
 
-        public LayoutContainer Container
-        {
-            get
-            {
-                return layoutContainer;
-            }
-        }
-
         public TimelineWizardPanelData PanelData
         {
             get

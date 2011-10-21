@@ -164,7 +164,7 @@ namespace Medical
                     license = new AnomalousLicense(licenseBytes);
                 }
             }
-            catch (AnomalousLicenseServerException alse)
+            catch (AnomalousLicenseServerException)
             {
                 return false;
             }

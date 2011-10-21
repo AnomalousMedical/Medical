@@ -11,7 +11,6 @@ namespace Medical.GUI
         private static Engine.Color BACK_COLOR = new Engine.Color(.94f, .94f, .94f);
 
         private ImageRendererProperties imageProp;
-        private NotesThumbnail thumb;
 
         public ThumbnailPickerInfo(int width, int height, NotesThumbnail thumb)
         {
