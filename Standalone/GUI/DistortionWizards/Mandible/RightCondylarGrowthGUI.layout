@@ -6,7 +6,7 @@
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="4 4 343 15">
                 <Property key="Widget_Caption" value="Adjust the sliders to match the patient&apos;s right condyle."/>
-                <Property key="Text_TextAlign" value="Center"/>
+                <Property key="Text_TextAlign" value="Left Top"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="70 24 79 15">
                 <Property key="Widget_Caption" value="Ramus Height"/>

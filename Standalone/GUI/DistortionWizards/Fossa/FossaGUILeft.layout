@@ -6,7 +6,7 @@
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="4 4 344 15">
                 <Property key="Widget_Caption" value="Adjust the slider to change the left fossa flatness."/>
-                <Property key="Text_TextAlign" value="Center"/>
+                <Property key="Text_TextAlign" value="Left Top"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="69 22 60 15">
                 <Property key="Widget_Caption" value="Flatness"/>
