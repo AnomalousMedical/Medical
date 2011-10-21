@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -31,13 +32,26 @@ namespace Medical.GUI
         public void savePinnedTasks(ConfigFile configFile)
         {
             ConfigSection taskbarSection = configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION);
+            taskbarSection.setValue("MainTaskbarAlignment", taskbar.Alignment.ToString());
             PinnedTaskSerializer taskSerializer = new PinnedTaskSerializer(taskbarSection);
             taskbar.getPinnedTasks(taskSerializer);
         }
 
         public void loadPinnedTasks(ConfigFile configFile)
         {
-            PinnedTaskSerializer pinnedTaskSerializer = new PinnedTaskSerializer(configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION));
+            ConfigSection taskbarSection = configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION);
+            PinnedTaskSerializer pinnedTaskSerializer = new PinnedTaskSerializer(taskbarSection);
+
+            String taskbarAlignmentString = taskbarSection.getValue("MainTaskbarAlignment", taskbar.Alignment.ToString());
+            try
+            {
+                taskbar.Alignment = (TaskbarAlignment)Enum.Parse(typeof(TaskbarAlignment), taskbarAlignmentString);
+            }
+            catch (Exception)
+            {
+                Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
+            }
+
             ConfigIterator configIterator = pinnedTaskSerializer.Tasks;
             while (configIterator.hasNext())
             {

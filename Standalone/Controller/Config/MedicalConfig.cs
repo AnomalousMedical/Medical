@@ -19,7 +19,6 @@ namespace Medical
         private static String docRoot;
         private static String windowsFile;
         private static String bookmarksFolder;
-        private static TaskbarAlignment taskbarAlignment = TaskbarAlignment.Top;
         private static String recentDocsFile;
 
         private static String sceneDirectory;
@@ -77,16 +76,6 @@ namespace Medical
 
             cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
             transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
-
-            String taskbarAlignmentString = program.getValue("TaskbarAlignment", taskbarAlignment.ToString());
-            try
-            {
-                taskbarAlignment = (TaskbarAlignment)Enum.Parse(typeof(TaskbarAlignment), taskbarAlignmentString);
-            }
-            catch (Exception)
-            {
-                Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
-            }
 
             EngineConfig = new EngineConfig(configFile);
 
@@ -315,19 +304,6 @@ namespace Medical
             set
             {
                 program.setValue("CameraMouseButton", value.ToString());
-            }
-        }
-
-        public static TaskbarAlignment TaskbarAlignment
-        {
-            get
-            {
-                return taskbarAlignment;
-            }
-            set
-            {
-                taskbarAlignment = value;
-                program.setValue("TaskbarAlignment", taskbarAlignment.ToString());
             }
         }
 

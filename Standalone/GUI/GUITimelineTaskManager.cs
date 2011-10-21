@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
+using Logging;
 
 namespace Medical.GUI
 {
     class GUITimelineTaskManager
     {
+        private const String TIMELINE_CONFIG_SECTION = "__TimelineTaskbarSection__";
+
         private Taskbar timelineGUITaskbar;
         private TaskController taskController;
 
@@ -23,8 +27,26 @@ namespace Medical.GUI
             taskController.TaskRemoved += new TaskDelegate(TaskController_TaskRemoved);
         }
 
-        public void loadActiveTaskElements()
+        public void saveUI(ConfigFile windowConfig)
         {
+            ConfigSection taskbarSection = windowConfig.createOrRetrieveConfigSection(TIMELINE_CONFIG_SECTION);
+            taskbarSection.setValue("MainTaskbarAlignment", timelineGUITaskbar.Alignment.ToString());
+        }
+
+        public void loadSavedUI(ConfigFile windowConfig)
+        {
+            ConfigSection taskbarSection = windowConfig.createOrRetrieveConfigSection(TIMELINE_CONFIG_SECTION);
+
+            String taskbarAlignmentString = taskbarSection.getValue("MainTaskbarAlignment", timelineGUITaskbar.Alignment.ToString());
+            try
+            {
+                timelineGUITaskbar.Alignment = (TaskbarAlignment)Enum.Parse(typeof(TaskbarAlignment), taskbarAlignmentString);
+            }
+            catch (Exception)
+            {
+                Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
+            }
+
             foreach (Task task in taskController.Tasks)
             {
                 if (task.ShowOnTimelineTaskbar)

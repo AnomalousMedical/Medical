@@ -59,6 +59,7 @@ namespace Medical.GUI
                 ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
                 dialogManager.saveDialogLayout(configFile);
                 guiTaskManager.savePinnedTasks(configFile);
+                guiTimelineTaskManager.saveUI(configFile);
                 configFile.writeConfigFile();
             }
             else
@@ -73,7 +74,6 @@ namespace Medical.GUI
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             taskMenu.Dispose();
-            MedicalConfig.TaskbarAlignment = taskbar.Alignment;
             taskbar.Dispose();
         }
 
@@ -94,7 +94,6 @@ namespace Medical.GUI
 
             //Taskbar
             taskbar = new Taskbar(standaloneController);
-            taskbar.Alignment = MedicalConfig.TaskbarAlignment;
             taskbar.SuppressLayout = true;
             taskbar.OpenTaskMenu += new GUI.Taskbar.OpenTaskMenuEvent(taskbar_OpenTaskMenu);
 
@@ -292,7 +291,7 @@ namespace Medical.GUI
             configFile.loadConfigFile();
             dialogManager.loadDialogLayout(configFile);
             guiTaskManager.loadPinnedTasks(configFile);
-            guiTimelineTaskManager.loadActiveTaskElements();
+            guiTimelineTaskManager.loadSavedUI(configFile);
             taskbar.SuppressLayout = false;
             timelineGUITaskbar.SuppressLayout = false;
             taskbar.layout();
