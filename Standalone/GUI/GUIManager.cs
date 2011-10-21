@@ -28,7 +28,6 @@ namespace Medical.GUI
         private Taskbar timelineGUITaskbar;
 
         private bool mainGuiShowing = true;
-        private bool loadedSavedUI = false;
 
         //Dialogs
         private DialogManager dialogManager;
@@ -43,6 +42,7 @@ namespace Medical.GUI
 
         //Helper classes
         GUITaskManager guiTaskManager;
+        GUITimelineTaskManager guiTimelineTaskManager;
 
         public GUIManager(StandaloneController standaloneController)
         {
@@ -113,9 +113,7 @@ namespace Medical.GUI
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController);
 
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
-
-            standaloneController.TaskController.TaskAdded += new TaskDelegate(TaskController_TaskAdded);
-            standaloneController.TaskController.TaskRemoved += new TaskDelegate(TaskController_TaskRemoved);
+            guiTimelineTaskManager = new GUITimelineTaskManager(timelineGUITaskbar, standaloneController.TaskController);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -294,19 +292,10 @@ namespace Medical.GUI
             configFile.loadConfigFile();
             dialogManager.loadDialogLayout(configFile);
             guiTaskManager.loadPinnedTasks(configFile);
-            TaskController taskController = standaloneController.TaskController;
-            foreach (Task task in taskController.Tasks)
-            {
-                if (task.ShowOnTimelineTaskbar)
-                {
-                    TimelineTaskbarItem timelineTaskbarItem = new TimelineTaskbarItem(task);
-                    timelineGUITaskbar.addItem(timelineTaskbarItem);
-                }
-            }
+            guiTimelineTaskManager.loadActiveTaskElements();
             taskbar.SuppressLayout = false;
             timelineGUITaskbar.SuppressLayout = false;
             taskbar.layout();
-            loadedSavedUI = true;
         }
 
         private void standaloneController_SceneUnloading(SimScene scene)
@@ -355,21 +344,6 @@ namespace Medical.GUI
         {
             taskMenu.setSize(width, height);
             taskMenu.show(left, top);
-        }
-
-        void TaskController_TaskRemoved(Task task)
-        {
-            //Check to see that the task should show up on the timeline taskbar (TBD)
-        }
-
-        void TaskController_TaskAdded(Task task)
-        {
-            //Check to see that the task should show up on the timeline taskbar
-            if (loadedSavedUI && task.ShowOnTimelineTaskbar)
-            {
-                TimelineTaskbarItem timelineTaskbarItem = new TimelineTaskbarItem(task);
-                timelineGUITaskbar.addItem(timelineTaskbarItem);
-            }
         }
     }
 }
