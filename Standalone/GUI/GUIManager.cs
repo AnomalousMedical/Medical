@@ -30,6 +30,7 @@ namespace Medical.GUI
         private Taskbar timelineGUITaskbar;
 
         private bool mainGuiShowing = true;
+        private bool loadedSavedUI = false;
 
         //Dialogs
         private DialogManager dialogManager;
@@ -289,6 +290,8 @@ namespace Medical.GUI
 
         internal void loadSavedUI()
         {
+            taskbar.SuppressLayout = true;
+            timelineGUITaskbar.SuppressLayout = true;
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
             dialogManager.loadDialogLayout(configFile);
@@ -303,8 +306,19 @@ namespace Medical.GUI
                 {
                     addPinnedTaskbarItem(item, -1);
                 }
-                taskbar.layout();
             }
+            foreach (Task task in taskController.Tasks)
+            {
+                if (task.ShowOnTimelineTaskbar)
+                {
+                    TimelineTaskbarItem timelineTaskbarItem = new TimelineTaskbarItem(task);
+                    timelineGUITaskbar.addItem(timelineTaskbarItem);
+                }
+            }
+            taskbar.SuppressLayout = false;
+            timelineGUITaskbar.SuppressLayout = false;
+            taskbar.layout();
+            loadedSavedUI = true;
         }
 
         private void standaloneController_SceneUnloading(SimScene scene)
@@ -450,7 +464,7 @@ namespace Medical.GUI
         void TaskController_TaskAdded(Task task)
         {
             //Check to see that the task should show up on the timeline taskbar
-            if (task.ShowOnTimelineTaskbar)
+            if (loadedSavedUI && task.ShowOnTimelineTaskbar)
             {
                 TimelineTaskbarItem timelineTaskbarItem = new TimelineTaskbarItem(task);
                 timelineGUITaskbar.addItem(timelineTaskbarItem);
