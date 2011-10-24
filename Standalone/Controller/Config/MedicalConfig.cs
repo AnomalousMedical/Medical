@@ -62,7 +62,7 @@ namespace Medical
             MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
             MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
             MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
-            MedicalConfig.PluginInfoURL = "https://www.anomalousmedical.com/DRM/PluginInfo.aspx";
+            MedicalConfig.PluginInfoURL = "https://www.anomalousmedical.com/DRM/DownloadInfo.aspx";
             MedicalConfig.PluginDownloadURL = "https://www.anomalousmedical.com/DRM/FileDownloader.aspx";
             MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store.aspx";
             MedicalConfig.WebsiteImagesBaseURL = "http://www.anomalousmedical.com";
