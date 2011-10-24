@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{27EE2890-0BD9-413E-A504-EF77312B7C38}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DentalSim</RootNamespace>
+    <AssemblyName>DentalSim</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU'">
+    <OutputPath>..\PublicRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BulletPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BulletPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Engine, Version=1.0.0.1179, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="OgrePlugin, Version=1.0.0.1179, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Simulation, Version=1.0.0.2537, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Release\Simulation.dll</HintPath>
+    </Reference>
+    <Reference Include="SoundPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Standalone, Version=2.0.0.2573, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Release\Standalone.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DentalSimAtlasPluginEntryPoint.cs" />
+    <Compile Include="DentalSimPlugin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DistortionIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionIcons.xml" />
+    <EmbeddedResource Include="Resources\DentalSimIcon.png" />
+    <EmbeddedResource Include="Resources\DentalSimIcon.xml" />
+    <EmbeddedResource Include="Resources\Imagesets.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Timeline\Disclaimer_Dentition.tl" />
+    <EmbeddedResource Include="Timeline\Disclaimer_DiscClockFace.tl" />
+    <EmbeddedResource Include="Timeline\Disclaimer_Eminence.tl" />
+    <EmbeddedResource Include="Timeline\Disclaimer_Mandible.tl" />
+    <EmbeddedResource Include="Timeline\LeftCondyleDegeneration.tl" />
+    <EmbeddedResource Include="Timeline\LeftCondyleGrowth.tl" />
+    <EmbeddedResource Include="Timeline\LeftDiscClockFace.tl" />
+    <EmbeddedResource Include="Timeline\LeftFossa.tl" />
+    <EmbeddedResource Include="Timeline\Notes.tl" />
+    <EmbeddedResource Include="Timeline\RemoveBottomTeeth.tl" />
+    <EmbeddedResource Include="Timeline\RemoveTopTeeth.tl" />
+    <EmbeddedResource Include="Timeline\RightCondyleDegeneration.tl" />
+    <EmbeddedResource Include="Timeline\RightCondyleGrowth.tl" />
+    <EmbeddedResource Include="Timeline\RightDiscClockFace.tl" />
+    <EmbeddedResource Include="Timeline\RightFossa.tl" />
+    <EmbeddedResource Include="Timeline\TeethHeightAdaptation.tl" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <UsingTask TaskName="WriteSubversionVersion" AssemblyFile="$(MSBUILD_EXT_HOME)\Anomalous\bin\Release\AnomalousMSBuild.dll" />
+  <Target Name="BeforeBuild">
+    <WriteSubversionVersion Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
+  </Target>
+</Project>
