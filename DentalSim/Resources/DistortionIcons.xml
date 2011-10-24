@@ -2,7 +2,7 @@
 
 <MyGUI type="Resource" version="1.1">
 
-  <Resource type="ResourceImageSet" name="AnatomyDistortionsIcons/Mandible">
+  <Resource type="ResourceImageSet" name="DentalSimIcons/Mandible">
     <Group name="Icons" texture="AnatomyDistortions/Resources/DistortionIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 0"/>
@@ -10,7 +10,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="AnatomyDistortionsIcons/Dentition">
+  <Resource type="ResourceImageSet" name="DentalSimIcons/Dentition">
     <Group name="Icons" texture="AnatomyDistortions/Resources/DistortionIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="32 0"/>
@@ -18,7 +18,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="AnatomyDistortionsIcons/DiscClockFace">
+  <Resource type="ResourceImageSet" name="DentalSimIcons/DiscClockFace">
     <Group name="Icons" texture="AnatomyDistortions/Resources/DistortionIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 0"/>

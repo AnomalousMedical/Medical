@@ -19,7 +19,6 @@ namespace Medical
         private List<String> movementSequenceDirectories = new List<string>();
 
         //Dialogs
-        private MandibleMovementDialog mandibleMovementDialog;
         private NotesDialog notesDialog;
         private SequencePlayer sequencePlayer;
         private BookmarksGUI bookmarks;
@@ -54,7 +53,6 @@ namespace Medical
             stateList.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
-            mandibleMovementDialog.Dispose();
             notesDialog.Dispose();
             bookmarks.Dispose();
             bookmarksController.Dispose();
@@ -73,10 +71,6 @@ namespace Medical
             standaloneController.PatientDataController.PatientDataChanged += new Action<PatientDataFile>(PatientDataController_PatientDataChanged);
 
             //Dialogs
-            //BodyAtlas
-            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
-            guiManager.addManagedDialog(mandibleMovementDialog);
-
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             guiManager.addManagedDialog(notesDialog);
 
@@ -115,7 +109,6 @@ namespace Medical
             ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation);
             bookmarkTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(bookmarkTask);
-            taskController.addTask(new ShowToothContactsTask(0));
             taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
 
@@ -123,9 +116,6 @@ namespace Medical
             sequencePlayerTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(sequencePlayerTask);
 
-            MDIDialogOpenTask mandibleMovementTask = new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation, 2);
-            mandibleMovementTask.ShowOnTimelineTaskbar = true;
-            taskController.addTask(mandibleMovementTask);
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
             standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
             taskController.addTask(windowLayout);
@@ -133,8 +123,6 @@ namespace Medical
 
         public void sceneLoaded(SimScene scene)
         {
-            mandibleMovementDialog.sceneLoaded(scene);
-
             //Load sequences
             MedicalController medicalController = standaloneController.MedicalController;
             SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
@@ -147,7 +135,7 @@ namespace Medical
 
         public void sceneUnloading(SimScene scene)
         {
-            mandibleMovementDialog.sceneUnloading(scene);
+            
         }
 
         public void setMainInterfaceEnabled(bool enabled)

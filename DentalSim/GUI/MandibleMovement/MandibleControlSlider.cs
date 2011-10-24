@@ -5,7 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Logging;
 
-namespace Medical.GUI
+namespace DentalSim.GUI
 {
     class MandibleControlSlider
     {

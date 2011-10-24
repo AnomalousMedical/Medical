@@ -6,11 +6,15 @@ using Medical;
 using Engine.ObjectManagement;
 using Medical.GUI;
 using MyGUIPlugin;
+using DentalSim.GUI;
 
 namespace DentalSim
 {
     class DentalSimPlugin : AtlasPlugin
     {
+        //Dialogs
+        private MandibleMovementDialog mandibleMovementDialog;
+
         public DentalSimPlugin()
         {
 
@@ -18,7 +22,7 @@ namespace DentalSim
 
         public void Dispose()
         {
-
+            mandibleMovementDialog.Dispose();
         }
 
         public void createMenuBar(NativeMenuBar menu)
@@ -29,12 +33,30 @@ namespace DentalSim
         public void initialize(StandaloneController standaloneController)
         {
             GUIManager guiManager = standaloneController.GUIManager;
-            Gui.Instance.load("Medical.Resources.EditorImagesets.xml");
+            Gui.Instance.load("DentalSim.Resources.Imagesets.xml");
+
+            //Dialogs
+            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
+            guiManager.addManagedDialog(mandibleMovementDialog);
+
+            //Tasks Menu
+            TaskController taskController = standaloneController.TaskController;
+
+            taskController.addTask(new ShowToothContactsTask(0));
+
+            MDIDialogOpenTask mandibleMovementTask = new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", "Dental Simulation", 2);
+            mandibleMovementTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(mandibleMovementTask);
+
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Eminence", "Eminence", "DistortionPanelIcons/LeftFossa", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Eminence.tl", standaloneController.TimelineController));
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Dentition.tl", standaloneController.TimelineController));
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_DiscClockFace.tl", standaloneController.TimelineController));
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Mandible.tl", standaloneController.TimelineController));
         }
 
         public void sceneLoaded(SimScene scene)
         {
-
+            mandibleMovementDialog.sceneLoaded(scene);
         }
 
         public void sceneRevealed()
@@ -42,9 +64,9 @@ namespace DentalSim
 
         }
 
-        public void sceneUnloading(Engine.ObjectManagement.SimScene scene)
+        public void sceneUnloading(SimScene scene)
         {
-
+            mandibleMovementDialog.sceneUnloading(scene);
         }
 
         public void setMainInterfaceEnabled(bool enabled)

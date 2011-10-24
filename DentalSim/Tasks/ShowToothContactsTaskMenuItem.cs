@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Medical;
 
-namespace Medical.GUI
+namespace DentalSim
 {
     class ShowToothContactsTask : Task
     {
         public ShowToothContactsTask(int weight)
-            : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "ShowTeethContactsIcon", TaskMenuCategories.Simulation)
+            : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "ShowTeethContactsIcon", "Dental Simulation")
         {
             this.Weight = weight;
             this.ShowOnTimelineTaskbar = true;

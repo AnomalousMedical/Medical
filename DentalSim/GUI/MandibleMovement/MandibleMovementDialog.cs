@@ -7,8 +7,10 @@ using Medical.Controller;
 using MyGUIPlugin;
 using Engine.Platform;
 using Engine.ObjectManagement;
+using Medical.GUI;
+using Medical;
 
-namespace Medical.GUI
+namespace DentalSim.GUI
 {
     class MandibleMovementDialog : MDIDialog
     {
@@ -33,7 +35,7 @@ namespace Medical.GUI
         private bool restoreEnabled = false;
 
         public MandibleMovementDialog(MovementSequenceController movementSequenceController)
-            : base("Medical.GUI.MandibleMovement.MandibleMovementDialog.layout")
+            : base("DentalSim.GUI.MandibleMovement.MandibleMovementDialog.layout")
         {            
             openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as VScroll);
             openTrackBar.Minimum = -3;
