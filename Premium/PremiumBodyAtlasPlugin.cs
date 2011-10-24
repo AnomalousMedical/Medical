@@ -16,11 +16,9 @@ namespace Medical
         private StandaloneController standaloneController;
         private GUIManager guiManager;
         private LicenseManager licenseManager;
-        private List<String> movementSequenceDirectories = new List<string>();
-
+        
         //Dialogs
         private NotesDialog notesDialog;
-        private SequencePlayer sequencePlayer;
         private BookmarksGUI bookmarks;
         private StateListDialog stateList;
         private SavePatientDialog savePatientDialog;
@@ -37,21 +35,12 @@ namespace Medical
         {
             this.licenseManager = standaloneController.App.LicenseManager;
             bookmarksController = new BookmarksController(standaloneController);
-
-            //This is temporary cruft from the old system.
-            movementSequenceDirectories.Add("/Graphics");
-            movementSequenceDirectories.Add("/MRI");
-            movementSequenceDirectories.Add("/RadiographyCT");
-            movementSequenceDirectories.Add("/Clinical");
-            movementSequenceDirectories.Add("/DentitionProfile");
-            movementSequenceDirectories.Add("/Doppler");
         }
 
         public void Dispose()
         {
             cloneWindowDialog.Dispose();
             stateList.Dispose();
-            sequencePlayer.Dispose();
             windowLayout.Dispose();
             notesDialog.Dispose();
             bookmarks.Dispose();
@@ -73,9 +62,6 @@ namespace Medical
             //Dialogs
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             guiManager.addManagedDialog(notesDialog);
-
-            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
-            guiManager.addManagedDialog(sequencePlayer);
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
 
@@ -112,10 +98,6 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
             taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
 
-            MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation, 1);
-            sequencePlayerTask.ShowOnTimelineTaskbar = true;
-            taskController.addTask(sequencePlayerTask);
-
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
             standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
             taskController.addTask(windowLayout);
@@ -123,14 +105,7 @@ namespace Medical
 
         public void sceneLoaded(SimScene scene)
         {
-            //Load sequences
-            MedicalController medicalController = standaloneController.MedicalController;
-            SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
-            SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-            StandaloneApp app = standaloneController.App;
-
-            String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
-            standaloneController.MovementSequenceController.loadSequenceDirectories(sequenceDirectory, movementSequenceDirectories);
+            
         }
 
         public void sceneUnloading(SimScene scene)

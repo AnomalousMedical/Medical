@@ -5,4 +5,5 @@
   <List file="Medical.Resources.TimelineImages.xml"/>
   <List file="Medical.Resources.HandImages.xml"/>
   <List file="Medical.Resources.EditorBrandingIcon.xml"/>
+  <List file="Medical.Resources.SequenceIcons.xml"/>
 </MyGUI>
