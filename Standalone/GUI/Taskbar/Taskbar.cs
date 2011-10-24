@@ -30,6 +30,12 @@ namespace Medical.GUI
         private IntCoord gapCoord = new IntCoord();
         private int gapIndex = -1;
 
+        private String wideIcon;
+        private String narrowIcon;
+
+        private int appButtonWideWidth;
+        private int appButtonNarrowWidth = 48;
+
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
         internal Taskbar(StandaloneController controller)
@@ -41,6 +47,8 @@ namespace Medical.GUI
 
             appButton = taskbarWidget.findWidget("AppButton") as Button;
             appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
+
+            appButtonWideWidth = appButton.Width;
 
             clearGapIndex();
         }
@@ -108,9 +116,11 @@ namespace Medical.GUI
             }
         }
 
-        public void setAppIcon(String appIcon)
+        public void setAppIcon(String wideIcon, String narrowIcon)
         {
-            appButton.StaticImage.setItemResource(appIcon);
+            this.wideIcon = wideIcon;
+            this.narrowIcon = narrowIcon;
+            appButton.StaticImage.setItemResource(wideIcon);
         }
 
         public void addItem(TaskbarItem item)
@@ -357,6 +367,9 @@ namespace Medical.GUI
 
         private void layoutTaskbarVertical()
         {
+            appButton.StaticImage.setItemResource(narrowIcon);
+            appButton.StaticImage.setSize(32, 32);
+            appButton.setSize(appButtonNarrowWidth, appButton.Height);
             Vector2 startLocation = new Vector2(appButton.Left, 0);
             Vector2 currentLocation = startLocation;
 
@@ -421,6 +434,9 @@ namespace Medical.GUI
 
         private void layoutTaskbarHorizontal()
         {
+            appButton.StaticImage.setItemResource(wideIcon);
+            appButton.StaticImage.setSize(130, 32);
+            appButton.setSize(appButtonWideWidth, appButton.Height);
             Vector2 startLocation = new Vector2(0, appButton.Top);
             Vector2 currentLocation = startLocation;
 

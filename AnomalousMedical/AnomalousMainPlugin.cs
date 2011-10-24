@@ -77,7 +77,7 @@ namespace Medical.GUI
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
-            taskbar.setAppIcon("AppButton/Image");
+            taskbar.setAppIcon("AppButton/WideImage", "AppButton/NarrowImage");
 
             //Tasks
             selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
