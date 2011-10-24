@@ -39,14 +39,14 @@ namespace Medical.GUI
             }
         }
 
-        public void readPluginInfoFromServer(List<int> installedPluginIds, Action<List<ServerDownloadInfo>> finishedCallback)
+        public void readPluginInfoFromServer(List<AtlasPlugin> installedPlugins, Action<List<ServerDownloadInfo>> finishedCallback)
         {
             Thread serverReadThread = new Thread(delegate()
             {
                 StringBuilder sb = new StringBuilder();
-                foreach (int pluginId in installedPluginIds)
+                foreach (AtlasPlugin plugin in installedPlugins)
                 {
-                    sb.Append(pluginId.ToString());
+                    sb.AppendFormat("{0}|{1}", plugin.PluginId.ToString(), plugin.Version.ToString());
                     sb.Append(",");
                 }
                 String installedPluginsList = String.Empty;

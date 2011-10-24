@@ -78,7 +78,7 @@ namespace Medical.GUI
         {
             if (!readingServerPluginInfo)
             {
-                List<int> detectedPluginIds = new List<int>();
+                List<AtlasPlugin> installedPluginsList = new List<AtlasPlugin>();
 
                 if (addedInstalledPlugins)
                 {
@@ -86,7 +86,7 @@ namespace Medical.GUI
                     {
                         if (plugin.PluginId != -1)
                         {
-                            detectedPluginIds.Add((int)plugin.PluginId);
+                            installedPluginsList.Add(plugin);
                         }
                     }
                 }
@@ -99,7 +99,7 @@ namespace Medical.GUI
                         ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName, plugin.BrandingImageKey);
                         if (plugin.PluginId != -1)
                         {
-                            detectedPluginIds.Add((int)plugin.PluginId);
+                            installedPluginsList.Add(plugin);
                         }
                     }
                     addedInstalledPlugins = true;
@@ -110,7 +110,7 @@ namespace Medical.GUI
 
                 readingServerPluginInfo = true;
                 readingInfo.Visible = true;
-                downloadServer.readPluginInfoFromServer(detectedPluginIds, addNotInstalledPlugins);
+                downloadServer.readPluginInfoFromServer(installedPluginsList, addNotInstalledPlugins);
             }
         }
 
