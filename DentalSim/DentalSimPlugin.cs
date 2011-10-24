@@ -44,7 +44,7 @@ namespace DentalSim
 
             taskController.addTask(new ShowToothContactsTask(0));
 
-            MDIDialogOpenTask mandibleMovementTask = new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", "Dental Simulation", 2);
+            MDIDialogOpenTask mandibleMovementTask = new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "DentalSimIcons/ManualMovement", "Dental Simulation", 2);
             mandibleMovementTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(mandibleMovementTask);
 

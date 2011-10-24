@@ -3,4 +3,5 @@
 <MyGUI type="List">
   <List file="DentalSim.Resources.DistortionIcons.xml"/>
   <List file="DentalSim.Resources.DentalSimIcon.xml"/>
+  <List file="DentalSim.Resources.MovementIcons.xml"/>
 </MyGUI>

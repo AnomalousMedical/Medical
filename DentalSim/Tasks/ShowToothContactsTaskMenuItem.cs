@@ -9,7 +9,7 @@ namespace DentalSim
     class ShowToothContactsTask : Task
     {
         public ShowToothContactsTask(int weight)
-            : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "ShowTeethContactsIcon", "Dental Simulation")
+            : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "DentalSimIcons/ShowToothContacts", "Dental Simulation")
         {
             this.Weight = weight;
             this.ShowOnTimelineTaskbar = true;

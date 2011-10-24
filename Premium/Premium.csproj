@@ -110,10 +110,6 @@
     <EmbeddedResource Include="Resources\PremiumToolbar.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MovementIcons.png" />
-    <EmbeddedResource Include="Resources\MovementIcons.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\BookmarksIcons.xml" />
     <EmbeddedResource Include="Resources\Trash.png" />
   </ItemGroup>

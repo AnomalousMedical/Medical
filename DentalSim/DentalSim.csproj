@@ -87,16 +87,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\ShowToothContactsTaskMenuItem.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
-    <EmbeddedResource Include="Resources\DistortionIcons.png" />
-    <EmbeddedResource Include="Resources\DistortionIcons.xml" />
-    <EmbeddedResource Include="Resources\DentalSimIcon.png" />
-    <EmbeddedResource Include="Resources\DentalSimIcon.xml" />
-    <EmbeddedResource Include="Resources\Imagesets.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\DentalSimIcon.png" />
+    <EmbeddedResource Include="Resources\DentalSimIcon.xml" />
+    <EmbeddedResource Include="Resources\DistortionIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionIcons.xml" />
+    <EmbeddedResource Include="Resources\Imagesets.xml" />
+    <EmbeddedResource Include="Resources\MovementIcons.png" />
+    <EmbeddedResource Include="Resources\MovementIcons.xml" />
     <EmbeddedResource Include="Timeline\Disclaimer_Dentition.tl" />
     <EmbeddedResource Include="Timeline\Disclaimer_DiscClockFace.tl" />
     <EmbeddedResource Include="Timeline\Disclaimer_Eminence.tl" />

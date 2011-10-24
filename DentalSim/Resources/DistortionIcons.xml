@@ -3,7 +3,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="DentalSimIcons/Mandible">
-    <Group name="Icons" texture="AnatomyDistortions/Resources/DistortionIcons.png" size="32 32">
+    <Group name="Icons" texture="DentalSim.Resources.DistortionIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -11,7 +11,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DentalSimIcons/Dentition">
-    <Group name="Icons" texture="AnatomyDistortions/Resources/DistortionIcons.png" size="32 32">
+    <Group name="Icons" texture="DentalSim.Resources.DistortionIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="32 0"/>
       </Index>
@@ -19,9 +19,33 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DentalSimIcons/DiscClockFace">
-    <Group name="Icons" texture="AnatomyDistortions/Resources/DistortionIcons.png" size="32 32">
+    <Group name="Icons" texture="DentalSim.Resources.DistortionIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DentalSimIcons/ManualMovement">
+    <Group name="Icons" texture="DentalSim.Resources.DistortionIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DentalSimIcons/MovementSequences">
+    <Group name="Icons" texture="DentalSim.Resources.DistortionIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DentalSimIcons/ShowToothContacts">
+    <Group name="Icons" texture="DentalSim.Resources.DistortionIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="160 0"/>
       </Index>
     </Group>
   </Resource>
