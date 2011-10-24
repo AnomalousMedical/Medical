@@ -15,7 +15,7 @@ namespace Medical
         private StandaloneController standaloneController;
 
         public ChangeWindowLayoutTask(StandaloneController standaloneController)
-            : base("Medical.ChangeWindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.System)
+            : base("Medical.ChangeWindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.Tools)
         {
             this.standaloneController = standaloneController;
 

@@ -7,7 +7,6 @@ namespace Medical.GUI
 {
     public sealed class TaskMenuCategories
     {
-        public const String Simulation = "Simulation";
         public const String Navigation = "Navigation";
         public const String Patient = "Patient";
         public const String System = "System";
@@ -15,6 +14,7 @@ namespace Medical.GUI
         public const String Exams = "Exams";
         public const String Editor = "Editor";
         public const String Developer = "Developer";
+        public const String AnomalousMedical = "Anomalous Medical";
 
         private TaskMenuCategories()
         {

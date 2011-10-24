@@ -13,7 +13,7 @@ namespace Medical
         private SceneViewController sceneViewController;
 
         public ChangeBackgroundColorTask(SceneViewController sceneViewController)
-            : base("Medical.ChangeBackgroundColor", "Background Color", "BackgroundColorIcon", TaskMenuCategories.System)
+            : base("Medical.ChangeBackgroundColor", "Background Color", "BackgroundColorIcon", TaskMenuCategories.Tools)
         {
             this.sceneViewController = sceneViewController;
         }

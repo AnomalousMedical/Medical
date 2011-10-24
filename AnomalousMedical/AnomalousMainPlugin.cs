@@ -90,13 +90,13 @@ namespace Medical.GUI
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0));
 
             //System Section
-            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Anomalous Medical Store", "AnomalousMedical/Store", TaskMenuCategories.System, int.MaxValue - 6, false);
+            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Store", "AnomalousMedical/Store", TaskMenuCategories.AnomalousMedical, int.MaxValue - 6, false);
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
-            taskController.addTask(new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5));
+            taskController.addTask(new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.AnomalousMedical, int.MaxValue - 5));
 
-            CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
+            CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.AnomalousMedical, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
             taskController.addTask(helpTaskItem);
 

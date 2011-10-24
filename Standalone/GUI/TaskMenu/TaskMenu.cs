@@ -59,11 +59,11 @@ namespace Medical.GUI
 
             iconGrid.defineGroup(TaskMenuCategories.Patient, 0);
             iconGrid.defineGroup(TaskMenuCategories.Navigation, 1);
-            iconGrid.defineGroup(TaskMenuCategories.Simulation, 2);
-            iconGrid.defineGroup(TaskMenuCategories.Exams, int.MaxValue - 4);
-            iconGrid.defineGroup(TaskMenuCategories.Tools, int.MaxValue - 3);
-            iconGrid.defineGroup(TaskMenuCategories.Editor, int.MaxValue - 2);
-            iconGrid.defineGroup(TaskMenuCategories.Developer, int.MaxValue - 1);
+            iconGrid.defineGroup(TaskMenuCategories.Exams, int.MaxValue - 5);
+            iconGrid.defineGroup(TaskMenuCategories.Tools, int.MaxValue - 4);
+            iconGrid.defineGroup(TaskMenuCategories.Editor, int.MaxValue - 3);
+            iconGrid.defineGroup(TaskMenuCategories.Developer, int.MaxValue - 2);
+            iconGrid.defineGroup(TaskMenuCategories.AnomalousMedical, int.MaxValue - 1);
             iconGrid.defineGroup(TaskMenuCategories.System, int.MaxValue);
 
             recentDocuments = new TaskMenuRecentDocuments(widget, documentController);

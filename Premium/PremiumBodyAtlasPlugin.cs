@@ -95,8 +95,14 @@ namespace Medical
             ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation);
             bookmarkTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(bookmarkTask);
-            taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
-            taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
+
+            MDIDialogOpenTask statesTask = new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient);
+            statesTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(statesTask);
+
+            MDIDialogOpenTask notesTask = new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient);
+            notesTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(notesTask);
 
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
             standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
