@@ -57,7 +57,12 @@ namespace Medical
                 String fileName = Path.GetFileName(file);
                 try
                 {
-                    File.Move(file, Path.Combine(pluginDirectory, fileName));
+                    String destinationFile = Path.Combine(pluginDirectory, fileName);
+                    if (File.Exists(destinationFile))
+                    {
+                        File.Delete(destinationFile);
+                    }
+                    File.Move(file, destinationFile);
                 }
                 catch (Exception e)
                 {

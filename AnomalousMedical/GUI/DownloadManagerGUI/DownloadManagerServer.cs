@@ -41,10 +41,6 @@ namespace Medical.GUI
 
         public void readPluginInfoFromServer(List<int> installedPluginIds, Action<List<ServerDownloadInfo>> finishedCallback)
         {
-            foreach (ServerPluginDownloadInfo plugin in detectedServerPlugins)
-            {
-                installedPluginIds.Add(plugin.PluginId);
-            }
             Thread serverReadThread = new Thread(delegate()
             {
                 StringBuilder sb = new StringBuilder();
@@ -119,23 +115,26 @@ namespace Medical.GUI
                                     }
                                     while (streamReader.PeekChar() != -1)
                                     {
-                                        ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(this, streamReader.ReadInt32(), streamReader.ReadString(), ServerDownloadStatus.NotInstalled);
-                                        downloadInfoList.Add(pluginInfo);
+                                        ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(this, streamReader.ReadInt32(), streamReader.ReadString(), (ServerDownloadStatus)streamReader.ReadInt16());
                                         String imageURL = streamReader.ReadString();
-                                        if (!String.IsNullOrEmpty(imageURL))
+                                        if (!alreadyFoundPlugin(pluginInfo.PluginId))
                                         {
-                                            using (Bitmap image = loadImageFromURL(imageURL))
+                                            downloadInfoList.Add(pluginInfo);
+                                            if (!String.IsNullOrEmpty(imageURL))
                                             {
-                                                if (image != null)
+                                                using (Bitmap image = loadImageFromURL(imageURL))
                                                 {
-                                                    ThreadManager.invokeAndWait(new Action(delegate()
+                                                    if (image != null)
                                                     {
-                                                        pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
-                                                    }));
+                                                        ThreadManager.invokeAndWait(new Action(delegate()
+                                                        {
+                                                            pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
+                                                        }));
+                                                    }
                                                 }
                                             }
+                                            detectedServerPlugins.Add(pluginInfo);
                                         }
-                                        detectedServerPlugins.Add(pluginInfo);
                                     }
                                 }
                             }
@@ -179,6 +178,18 @@ namespace Medical.GUI
                 }));
             }
             return null;
+        }
+
+        private bool alreadyFoundPlugin(int pluginId)
+        {
+            foreach (ServerPluginDownloadInfo downloadInfo in detectedServerPlugins)
+            {
+                if (downloadInfo.PluginId == pluginId)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
