@@ -74,6 +74,7 @@
 	<ResourceFiles Include="..\..\$(Configuration)\Simulation.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\SoundPlugin.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\Standalone.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
 	
 	<ResourceFiles Include="..\..\Release\libOSHelper.dylib" />
 	
