@@ -18,6 +18,15 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\PublicRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -40,7 +49,7 @@
 	<!-- These items will go in the Contents/Resources folder -->
 	<ResourceFiles Include="BundleSource/Contents/Resources/AnomalousMedical.exe.config" />
 	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
-	<ResourceFiles Include="..\..\Release\AnomalousMedical.exe" />
+	<ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.exe" />
 
 
 
@@ -57,14 +66,14 @@
   
   <!-- Common items for Resources folder. -->
   <ItemGroup>
-    <ResourceFiles Include="..\..\Release\BulletPlugin.dll" />
-	<ResourceFiles Include="..\..\Release\Engine.dll" />
-	<ResourceFiles Include="..\..\Release\MyGUIPlugin.dll" />
-	<ResourceFiles Include="..\..\Release\OgrePlugin.dll" />
-	<ResourceFiles Include="..\..\Release\ShapeLoader.dll" />
-	<ResourceFiles Include="..\..\Release\Simulation.dll" />
-	<ResourceFiles Include="..\..\Release\SoundPlugin.dll" />
-	<ResourceFiles Include="..\..\Release\Standalone.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\BulletPlugin.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\Engine.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\MyGUIPlugin.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\OgrePlugin.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\ShapeLoader.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\Simulation.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\SoundPlugin.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\Standalone.dll" />
 	
 	<ResourceFiles Include="..\..\Release\libOSHelper.dylib" />
 	
