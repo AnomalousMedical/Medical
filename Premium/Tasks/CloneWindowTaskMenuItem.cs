@@ -15,6 +15,7 @@ namespace Medical.GUI
         {
             this.standaloneController = standaloneController;
             this.cloneWindowDialog = cloneWindowDialog;
+            this.ShowOnTimelineTaskbar = true;
 
             cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
             cloneWindowDialog.Closed += new EventHandler(cloneWindowDialog_Closed);

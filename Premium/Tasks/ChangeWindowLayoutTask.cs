@@ -18,6 +18,7 @@ namespace Medical
             : base("Medical.ChangeWindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.Tools)
         {
             this.standaloneController = standaloneController;
+            this.ShowOnTimelineTaskbar = true;
 
             windowMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
             windowMenu.Visible = false;
@@ -42,6 +43,7 @@ namespace Medical
         {
             IntVector2 location = positioner.findGoodWindowPosition(0, 0);
             windowMenu.setPosition(location.x, location.y);
+            Gui.Instance.keepWidgetOnscreen(windowMenu);
             LayerManager.Instance.upLayerItem(windowMenu);
             windowMenu.setVisibleSmooth(true);
         }
