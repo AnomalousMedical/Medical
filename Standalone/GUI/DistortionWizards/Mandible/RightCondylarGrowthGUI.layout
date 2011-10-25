@@ -36,7 +36,7 @@
             <Widget type="StaticImage" skin="StaticImage" position="6 90 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthRightCondyleHeight"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="70 154 92 15">
+            <Widget type="StaticText" skin="StaticText" position="70 154 137 15">
                 <Property key="Widget_Caption" value="Condyle Rotation"/>
             </Widget>
             <Widget type="HScroll" skin="HSlider" position="67 176 219 17" name="RightCondyleGrowth/CondyleRotationSlider">
@@ -50,7 +50,7 @@
             <Widget type="StaticImage" skin="StaticImage" position="6 155 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthRightCondyleRotation"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="70 219 92 15">
+            <Widget type="StaticText" skin="StaticText" position="70 219 134 15">
                 <Property key="Widget_Caption" value="Mandibular Notch"/>
             </Widget>
             <Widget type="HScroll" skin="HSlider" position="67 241 219 17" name="RightCondyleGrowth/MandibularNotchSlider">
