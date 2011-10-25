@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MyGUIPlugin;
+using Medical.Controller;
+using System.Drawing;
+using Medical.GUI;
+using Medical;
+
+namespace Developer.GUI
+{
+    public class DeveloperRenderPropertiesDialog : MDIDialog
+    {
+        private ComboBox aaCombo;
+        private NumericEdit width;
+        private NumericEdit height;
+        private CheckButton renderBackgroundCheck;
+        private CheckButton renderWatermarkCheck;
+
+        private DeveloperResolutionMenu resolutionMenu;
+        private SceneViewController sceneViewController;
+        private ImageRenderer imageRenderer;
+
+        public DeveloperRenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer)
+            :base("Developer.GUI.DeveloperRenderer.DeveloperRenderPropertiesDialog.layout")
+        {
+            this.sceneViewController = sceneViewController;
+            this.imageRenderer = imageRenderer;
+
+            aaCombo = window.findWidget("RenderingTab/AACombo") as ComboBox;
+            aaCombo.SelectedIndex = aaCombo.ItemCount - 1;
+
+            width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as Edit);
+            height = new NumericEdit(window.findWidget("RenderingTab/HeightEdit") as Edit);
+
+            Button renderButton = window.findWidget("RenderingTab/Render") as Button;
+            renderButton.MouseButtonClick += new MyGUIEvent(renderButton_MouseButtonClick);
+
+            Button sizeButton = window.findWidget("RenderingTab/SizeButton") as Button;
+            sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
+
+            renderBackgroundCheck = new CheckButton((Button)window.findWidget("RenderBackground"));
+            renderBackgroundCheck.Checked = true;
+
+            renderWatermarkCheck = new CheckButton((Button)window.findWidget("RenderWatermark"));
+            renderWatermarkCheck.Checked = true;
+
+            //ResolutionMenu
+            resolutionMenu = new DeveloperResolutionMenu();
+            resolutionMenu.ResolutionChanged += new EventHandler(resolutionMenu_ResolutionChanged);
+        }
+
+        public override void Dispose()
+        {
+            resolutionMenu.Dispose();
+            base.Dispose();
+        }
+
+        public void render()
+        {
+            SceneViewWindow drawingWindow = sceneViewController.ActiveWindow;
+            if (drawingWindow != null)
+            {
+                ImageRendererProperties imageProperties = new ImageRendererProperties();
+                imageProperties.Width = RenderWidth;
+                imageProperties.Height = RenderHeight;
+                imageProperties.UseWindowBackgroundColor = true;
+                imageProperties.AntiAliasingMode = AAValue;
+                imageProperties.ShowBackground = renderBackgroundCheck.Checked;
+                imageProperties.ShowWatermark = renderWatermarkCheck.Checked;
+                Bitmap bitmap = imageRenderer.renderImage(imageProperties);
+                if (bitmap != null)
+                {
+                    ImageWindow window = new ImageWindow(MainWindow.Instance, sceneViewController.ActiveWindow.Name, bitmap);
+                }
+            }
+        }
+
+        void renderButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            render();
+        }
+
+        void sizeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            resolutionMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+        }
+
+        void resolutionMenu_ResolutionChanged(object sender, EventArgs e)
+        {
+            width.Edit.Enabled = height.Edit.Enabled = resolutionMenu.IsCustom;
+            RenderWidth = resolutionMenu.ImageWidth;
+            RenderHeight = resolutionMenu.ImageHeight;
+        }
+
+        public int RenderWidth
+        {
+            get
+            {
+                return width.IntValue;
+            }
+            set
+            {
+                width.IntValue = value;
+            }
+        }
+
+        public int RenderHeight
+        {
+            get
+            {
+                return height.IntValue;
+            }
+            set
+            {
+                height.IntValue = value;
+            }
+        }
+
+        public int AAValue
+        {
+            get
+            {
+                return (int)Math.Pow(2, aaCombo.SelectedIndex);
+            }
+        }
+    }
+}

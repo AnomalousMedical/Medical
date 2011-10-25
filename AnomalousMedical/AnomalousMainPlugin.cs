@@ -112,7 +112,7 @@ namespace Medical.GUI
             taskController.addTask(exitTaskItem);
 
             //Tools Section
-            taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
+            //taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
 
             //Navigation Section
             MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation);

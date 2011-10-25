@@ -15,6 +15,7 @@ namespace Developer
         private ExamViewer examViewer;
         private PluginPublisher pluginPublisher;
         private PluginPublishController pluginPublishController;
+        private DeveloperRenderPropertiesDialog developerRenderer;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -25,6 +26,7 @@ namespace Developer
         {
             examViewer.Dispose();
             pluginPublisher.Dispose();
+            developerRenderer.Dispose();
         }
 
         public void createMenuBar(NativeMenuBar menu)
@@ -46,12 +48,17 @@ namespace Developer
             pluginPublisher = new PluginPublisher(pluginPublishController);
             guiManager.addManagedDialog(pluginPublisher);
 
+            developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            guiManager.addManagedDialog(developerRenderer);
+
             //Task Controller
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient, 4));
 
             taskController.addTask(new MDIDialogOpenTask(pluginPublisher, "Developer.PluginPublisher", "Plugin Publisher", "ExamIcon", TaskMenuCategories.Editor));
+
+            taskController.addTask(new MDIDialogOpenTask(developerRenderer, "Developer.DeveloperRender", "Developer Renderer", "RenderIcon", TaskMenuCategories.Tools));
         }
 
         public void sceneLoaded(SimScene scene)
@@ -78,7 +85,7 @@ namespace Developer
         {
             get
             {
-                return -1;
+                return 8;
             }
         }
 

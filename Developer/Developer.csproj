@@ -67,6 +67,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -77,10 +78,14 @@
     <Compile Include="Controller\ZipStatusTextWriter.cs" />
     <Compile Include="DeveloperAtlasPlugin.cs" />
     <Compile Include="DeveloperAtlasPluginEntryPoint.cs" />
+    <Compile Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.cs" />
+    <Compile Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.cs" />
     <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.layout" />
+    <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.layout" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.png" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.xml" />
     <EmbeddedResource Include="Resources\DeveloperImagesets.xml" />
