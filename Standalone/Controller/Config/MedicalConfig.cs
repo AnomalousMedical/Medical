@@ -106,6 +106,10 @@ namespace Medical
                 WebsiteImagesBaseURL = updates.getValue("WebsiteImagesBaseURL", WebsiteImagesBaseURL);
 
                 pluginConfig.readPlugins(overrideSettings);
+
+                Cracked = false;
+                ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
+                Cracked = systemOverride.getValue("Cracked", Cracked);
             }
 #endif
         }
@@ -227,6 +231,8 @@ namespace Medical
                 return "";
             }
         }
+
+        public static bool Cracked { get; private set; }
 #endif
 
         public static String DefaultScene

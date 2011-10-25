@@ -56,10 +56,14 @@ namespace Medical
 
         public void getKey()
         {
-#if CRACKED
-            Logging.Log.ImportantInfo("Running with no copy protection");
-            ThreadManager.invoke(keyValidCallback);
-#else
+#if ALLOW_OVERRIDE
+            if (MedicalConfig.Cracked)
+            {
+                Logging.Log.ImportantInfo("Running with no copy protection");
+                ThreadManager.invoke(keyValidCallback);
+                return;
+            }
+#endif
             Thread t = new Thread(delegate()
             {
                 if (File.Exists(keyFile))
@@ -134,16 +138,17 @@ namespace Medical
                 }
             });
             t.Start();
-#endif
         }
 
         public bool allowFeature(long featureCode)
         {
-#if CRACKED
-            return true;
-#else
-            return license != null ? license.supportsFeature(featureCode) : false;
+#if ALLOW_OVERRIDE
+            if (MedicalConfig.Cracked)
+            {
+                return true;
+            }
 #endif
+            return license != null ? license.supportsFeature(featureCode) : false;
         }
 
         /// <summary>
@@ -177,7 +182,12 @@ namespace Medical
 
         public void deleteLicense()
         {
-#if !CRACKED
+#if ALLOW_OVERRIDE
+            if (MedicalConfig.Cracked)
+            {
+                return;
+            }
+#endif
             try
             {
                 File.Delete(keyFile);
@@ -186,18 +196,19 @@ namespace Medical
             {
 
             }
-#endif
         }
 
         public bool Valid
         {
             get
             {
-#if CRACKED
-                return true;
-#else
-                return license != null && license.MachineID == getMachineId();
+#if ALLOW_OVERRIDE
+                if (MedicalConfig.Cracked)
+                {
+                    return true;
+                }
 #endif
+                return license != null && license.MachineID == getMachineId();
             }
         }
 
@@ -205,11 +216,13 @@ namespace Medical
         {
             get
             {
-#if CRACKED
-                return "Anomalous Medical Internal";
-#else
-                return license != null ? license.LicenseeName : "Invalid";
+#if ALLOW_OVERRIDE
+                if (MedicalConfig.Cracked)
+                {
+                    return "Anomalous Medical Internal";
+                }
 #endif
+                return license != null ? license.LicenseeName : "Invalid";
             }
         }
 
@@ -217,11 +230,13 @@ namespace Medical
         {
             get
             {
-#if CRACKED
-                return "AnomalousMedicalInternal";
-#else
-                return license != null ? license.User : "Invalid";
+#if ALLOW_OVERRIDE
+                if (MedicalConfig.Cracked)
+                {
+                    return "AnomalousMedicalInternal";
+                }
 #endif
+                return license != null ? license.User : "Invalid";
             }
         }
 
