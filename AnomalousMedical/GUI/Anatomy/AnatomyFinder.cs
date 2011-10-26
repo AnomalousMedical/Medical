@@ -57,9 +57,12 @@ namespace Medical.GUI
         private int currentThumbnailIndex = 0;
         private bool allowAnatomySelectionChanges = true;
 
-        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
+        private bool allowIndividualSelection;
+
+        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, bool allowIndividualSelection)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
+            this.allowIndividualSelection = allowIndividualSelection;
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             this.sceneViewController = sceneViewController;
@@ -159,7 +162,7 @@ namespace Medical.GUI
             }
             else
             {
-                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35))
+                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35, allowIndividualSelection))
                 {
                     addAnatomyToList(anatomy);
                 }
@@ -211,10 +214,13 @@ namespace Medical.GUI
                 ButtonGridItem itemToSelect = null;
                 foreach (AnatomyIdentifier anatomy in matches)
                 {
-                    ButtonGridItem newItem = addAnatomyToList(anatomy);
-                    if (itemToSelect == null)
+                    if (allowIndividualSelection || anatomy.IsGroup)
                     {
-                        itemToSelect = newItem;
+                        ButtonGridItem newItem = addAnatomyToList(anatomy);
+                        if (itemToSelect == null)
+                        {
+                            itemToSelect = newItem;
+                        }
                     }
                     foreach (AnatomyTag tag in anatomy.Tags)
                     {

@@ -24,13 +24,13 @@ namespace Medical
             anatomySearchList.Clear();
         }
 
-        public List<Anatomy> findMatchingAnatomy(String text, int searchLimit)
+        public List<Anatomy> findMatchingAnatomy(String text, int searchLimit, bool selectIndividuals)
         {
             text = text.ToLowerInvariant();
             List<Anatomy> results = new List<Anatomy>(searchLimit);
             foreach (Anatomy anatomy in anatomySearchList)
             {
-                if (anatomy.AnatomicalName.ToLowerInvariant().Contains(text))
+                if ((selectIndividuals || anatomy.IsGroup) && anatomy.AnatomicalName.ToLowerInvariant().Contains(text))
                 {
                     if (anatomy.AnatomicalName.Length == text.Length)
                     {

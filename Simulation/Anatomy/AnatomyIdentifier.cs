@@ -147,6 +147,14 @@ namespace Medical
             }
         }
 
+        public bool IsGroup
+        {
+            get
+            {
+                return !allowGroupSelection;
+            }
+        }
+
         /// <summary>
         /// This is the TransparencyChanger for this anatomy. It can be null if
         /// no TransparencyChanger is assigned.

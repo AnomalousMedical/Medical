@@ -92,5 +92,13 @@ namespace Medical
                 return Vector3.Backward;
             }
         }
+
+        public bool IsGroup
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

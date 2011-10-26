@@ -35,5 +35,10 @@ namespace Medical
         /// The direction to move the camera when generating a preview for this anatomy.
         /// </summary>
         Vector3 PreviewCameraDirection { get; }
+
+        /// <summary>
+        /// True if the anatomy is a group, false if it is an individual item.
+        /// </summary>
+        bool IsGroup { get; }
     }
 }
