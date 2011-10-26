@@ -194,66 +194,73 @@ namespace Medical.GUI
             Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
             mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
             mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);
-            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && anatomyController.PickingMode != AnatomyPickingMode.None && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
+            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
             {
-                anatomyList.SuppressLayout = true;
-                anatomyList.clear();
+                if (anatomyController.PickingMode != AnatomyPickingMode.None)
+                {
+                    anatomyList.SuppressLayout = true;
+                    anatomyList.clear();
 
-                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                Vector2 windowLoc = activeWindow.Location;
-                Size2 windowSize = activeWindow.WorkingSize;
-                absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
-                absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
-                Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
-                List<AnatomyIdentifier> matches = AnatomyManager.findAnatomy(cameraRay);
-                
-                HashSet<String> anatomyTags = new HashSet<String>();
-                ButtonGridItem itemToSelect = null;
-                bool allowIndividualSelection = anatomyController.AllowIndividualSelection;
-                foreach (AnatomyIdentifier anatomy in matches)
-                {
-                    if (allowIndividualSelection || anatomy.IsGroup)
+                    SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                    Vector2 windowLoc = activeWindow.Location;
+                    Size2 windowSize = activeWindow.WorkingSize;
+                    absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
+                    absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
+                    Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
+                    List<AnatomyIdentifier> matches = AnatomyManager.findAnatomy(cameraRay);
+
+                    HashSet<String> anatomyTags = new HashSet<String>();
+                    ButtonGridItem itemToSelect = null;
+                    bool allowIndividualSelection = anatomyController.AllowIndividualSelection;
+                    foreach (AnatomyIdentifier anatomy in matches)
                     {
-                        ButtonGridItem newItem = addAnatomyToList(anatomy);
-                        if (itemToSelect == null)
+                        if (allowIndividualSelection || anatomy.IsGroup)
                         {
-                            itemToSelect = newItem;
+                            ButtonGridItem newItem = addAnatomyToList(anatomy);
+                            if (itemToSelect == null)
+                            {
+                                itemToSelect = newItem;
+                            }
+                        }
+                        foreach (AnatomyTag tag in anatomy.Tags)
+                        {
+                            anatomyTags.Add(tag.Tag);
                         }
                     }
-                    foreach (AnatomyTag tag in anatomy.Tags)
+                    foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
                     {
-                        anatomyTags.Add(tag.Tag);
-                    }
-                }
-                foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
-                {
-                    if (anatomyTags.Contains(tagGroup.AnatomicalName))
-                    {
-                        addAnatomyToList(tagGroup);
-                    }
-                }
-                if (matches.Count > 0)
-                {
-                    searchBox.Caption = "Clicked";
-                    if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection)
-                    {
-                        AnatomyTag mainTag = matches[0].Tags.First();
-                        if (mainTag != null)
+                        if (anatomyTags.Contains(tagGroup.AnatomicalName))
                         {
-                            itemToSelect = anatomyList.findItemByCaption(mainTag.Tag);
+                            addAnatomyToList(tagGroup);
                         }
                     }
-                    anatomyList.SelectedItem = itemToSelect;
+                    if (matches.Count > 0)
+                    {
+                        searchBox.Caption = "Clicked";
+                        if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection)
+                        {
+                            AnatomyTag mainTag = matches[0].Tags.First();
+                            if (mainTag != null)
+                            {
+                                itemToSelect = anatomyList.findItemByCaption(mainTag.Tag);
+                            }
+                        }
+                        anatomyList.SelectedItem = itemToSelect;
+                    }
+                    else
+                    {
+                        searchBox.Caption = "";
+                        updateSearch();
+                    }
+                    AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy((int)eventManager.Mouse.getAbsMouse().x, (int)eventManager.Mouse.getAbsMouse().y);
+
+                    anatomyList.SuppressLayout = false;
+                    anatomyList.layout();
                 }
                 else
                 {
-                    searchBox.Caption = "";
-                    updateSearch();
+                    anatomyWindowManager.closeUnpinnedWindow();
                 }
-                AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy((int)eventManager.Mouse.getAbsMouse().x, (int)eventManager.Mouse.getAbsMouse().y);
-
-                anatomyList.SuppressLayout = false;
-                anatomyList.layout();
             }
             allowAnatomySelectionChanges = true;
         }
