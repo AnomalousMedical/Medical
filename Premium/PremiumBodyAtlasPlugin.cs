@@ -59,6 +59,8 @@ namespace Medical
             this.standaloneController = standaloneController;
             standaloneController.PatientDataController.PatientDataChanged += new Action<PatientDataFile>(PatientDataController_PatientDataChanged);
 
+            standaloneController.AnatomyController.AllowIndividualSelection = true;
+
             //Dialogs
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             guiManager.addManagedDialog(notesDialog);

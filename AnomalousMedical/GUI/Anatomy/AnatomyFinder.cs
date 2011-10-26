@@ -57,12 +57,9 @@ namespace Medical.GUI
         private int currentThumbnailIndex = 0;
         private bool allowAnatomySelectionChanges = true;
 
-        private bool allowIndividualSelection;
-
-        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, bool allowIndividualSelection)
+        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
-            this.allowIndividualSelection = allowIndividualSelection;
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             this.sceneViewController = sceneViewController;
@@ -162,7 +159,7 @@ namespace Medical.GUI
             }
             else
             {
-                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35, allowIndividualSelection))
+                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35, anatomyController.AllowIndividualSelection))
                 {
                     addAnatomyToList(anatomy);
                 }
@@ -212,6 +209,7 @@ namespace Medical.GUI
                 
                 HashSet<String> anatomyTags = new HashSet<String>();
                 ButtonGridItem itemToSelect = null;
+                bool allowIndividualSelection = anatomyController.AllowIndividualSelection;
                 foreach (AnatomyIdentifier anatomy in matches)
                 {
                     if (allowIndividualSelection || anatomy.IsGroup)
@@ -267,7 +265,14 @@ namespace Medical.GUI
                 switch (anatomyController.PickingMode)
                 {
                     case AnatomyPickingMode.Group:
-                        anatomyController.PickingMode = AnatomyPickingMode.Individual;
+                        if (anatomyController.AllowIndividualSelection)
+                        {
+                            anatomyController.PickingMode = AnatomyPickingMode.Individual;
+                        }
+                        else
+                        {
+                            anatomyController.PickingMode = AnatomyPickingMode.None;
+                        }
                         break;
                     case AnatomyPickingMode.Individual:
                         anatomyController.PickingMode = AnatomyPickingMode.None;

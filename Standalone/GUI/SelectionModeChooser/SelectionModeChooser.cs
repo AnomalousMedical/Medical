@@ -11,25 +11,30 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private bool allowSelectionModeChanges = true;
         private ButtonGroup pickingModeGroup;
+        private Button individualButton;
+        private Button noneButton;
 
         public SelectionModeChooser(AnatomyController anatomyController)
             :base("Medical.GUI.SelectionModeChooser.SelectionModeChooser.layout")
         {
             this.anatomyController = anatomyController;
             anatomyController.PickingModeChanged += new Engine.EventDelegate<AnatomyController, AnatomyPickingMode>(anatomyController_PickingModeChanged);
+            anatomyController.AllowIndividualSelectionChanged += new Engine.EventDelegate<AnatomyController, bool>(anatomyController_AllowIndividualSelectionChanged);
 
             pickingModeGroup = new ButtonGroup();
             Button groupButton = (Button)widget.findWidget("GroupButton");
             groupButton.UserObject = AnatomyPickingMode.Group;
             pickingModeGroup.addButton(groupButton);
-            Button individualButton = (Button)widget.findWidget("IndividualButton");
+            individualButton = (Button)widget.findWidget("IndividualButton");
             individualButton.UserObject = AnatomyPickingMode.Individual;
             pickingModeGroup.addButton(individualButton);
-            Button noneButton = (Button)widget.findWidget("NoneButton");
+            noneButton = (Button)widget.findWidget("NoneButton");
             noneButton.UserObject = AnatomyPickingMode.None;
             pickingModeGroup.addButton(noneButton);
             pickingModeGroup.SelectedButton = pickingModeGroup.findButtonWithUserData(anatomyController.PickingMode);
             pickingModeGroup.SelectedButtonChanged += new EventHandler(pickingModeGroup_SelectedButtonChanged);
+
+            toggleIndividualSelectionVisible();
         }
 
         public override void Dispose()
@@ -51,6 +56,27 @@ namespace Medical.GUI
             allowSelectionModeChanges = false;
             pickingModeGroup.SelectedButton = pickingModeGroup.findButtonWithUserData(anatomyController.PickingMode);
             allowSelectionModeChanges = true;
+        }
+
+        void anatomyController_AllowIndividualSelectionChanged(AnatomyController source, bool arg)
+        {
+            toggleIndividualSelectionVisible();
+        }
+
+        private void toggleIndividualSelectionVisible()
+        {
+            if (anatomyController.AllowIndividualSelection)
+            {
+                individualButton.Visible = true;
+                noneButton.setPosition(8, 137);
+                widget.setSize(widget.Width, 205);
+            }
+            else
+            {
+                individualButton.Visible = false;
+                noneButton.setPosition(individualButton.Left, individualButton.Top);
+                widget.setSize(widget.Width, 137);
+            }
         }
     }
 }

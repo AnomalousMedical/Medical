@@ -64,8 +64,8 @@ namespace Medical.GUI
             chooseSceneDialog = new ChooseSceneDialog(guiManager);
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
 
-            bool allowIndividualSelection = standaloneController.App.LicenseManager.allowFeature(1);
-            anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController, allowIndividualSelection);
+            //standaloneController.AnatomyController.AllowIndividualSelection = standaloneController.App.LicenseManager.allowFeature(1);
+            anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController);
             guiManager.addManagedDialog(anatomyFinder);
 
             options = new OptionsDialog(guiManager);
