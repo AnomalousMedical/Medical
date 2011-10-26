@@ -43,6 +43,10 @@ namespace Medical.GUI
 
         private StaticImage dragIconPreview;
         private IntVector2 dragMouseStartPosition;
+        private StaticImage adImage = null;
+
+        private bool firstTimeShown = true;
+        private bool showAdImage = true;
 
         private TaskMenuPositioner taskMenuPositioner = new TaskMenuPositioner();
 
@@ -83,6 +87,8 @@ namespace Medical.GUI
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+
+            this.Showing += new EventHandler(TaskMenu_Showing);
         }
 
         public override void Dispose()
@@ -114,6 +120,51 @@ namespace Medical.GUI
             {
                 iconGrid.SuppressLayout = value;
             }
+        }
+
+        public String AdImageKey { get; set; }
+
+        public bool ShowAdImage
+        {
+            get
+            {
+                return showAdImage;
+            }
+            set
+            {
+                showAdImage = value;
+                if (!showAdImage && adImage != null)
+                {
+                    adImage.MouseButtonClick -= adImage_MouseButtonClick;
+                    Gui.Instance.destroyWidget(adImage);
+                    adImage = null;
+                    iconScroller.setPosition(0, iconScroller.Top);
+                    iconScroller.setSize(widget.Width, iconScroller.Height);
+                    iconGrid.resizeAndLayout(iconScroller.ClientCoord.width);
+                }
+            }
+        }
+
+        void TaskMenu_Showing(object sender, EventArgs e)
+        {
+            if (firstTimeShown)
+            {
+                if (ShowAdImage && AdImageKey != null)
+                {
+                    firstTimeShown = false;
+                    iconScroller.setPosition(302, iconScroller.Top);
+                    iconScroller.setSize(widget.Width - 300, iconScroller.Height);
+                    iconGrid.resizeAndLayout(iconScroller.ClientCoord.width);
+                    adImage = (StaticImage)widget.createWidgetT("StaticImage", "StaticImage", 2, iconScroller.Top, 300, 500, Align.Left | Align.Top, "");
+                    adImage.setItemResource(AdImageKey);
+                    adImage.MouseButtonClick += adImage_MouseButtonClick;
+                }
+            }
+        }
+
+        void adImage_MouseButtonClick(Widget source, EventArgs e)
+        {
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.PremiumFeaturesURL);
         }
 
         void taskController_TaskRemoved(Task task)

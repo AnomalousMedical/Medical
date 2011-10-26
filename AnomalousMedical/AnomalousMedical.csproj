@@ -165,6 +165,8 @@
     <EmbeddedResource Include="Resources\Background\AnomalousMedicalWatermark.png" />
     <EmbeddedResource Include="Resources\CoreBrandingImage.xml" />
     <EmbeddedResource Include="Resources\CorePluginIcon.png" />
+    <EmbeddedResource Include="Resources\PremiumAd.png" />
+    <EmbeddedResource Include="Resources\PremiumAd.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

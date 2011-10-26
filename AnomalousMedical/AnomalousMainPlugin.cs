@@ -55,6 +55,8 @@ namespace Medical.GUI
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
+            guiManager.TaskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
+
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
 

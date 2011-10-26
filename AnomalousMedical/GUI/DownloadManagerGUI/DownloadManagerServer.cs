@@ -72,7 +72,7 @@ namespace Medical.GUI
             {
                 Version localVersion = UpdateController.CurrentVersion;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginInfoURL));
-                request.Timeout = 10000;
+                request.Timeout = 60000;
                 request.Method = "POST";
                 String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, localVersion, (int)PlatformConfig.OsId, commaSeparatedPluginList);
                 byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);

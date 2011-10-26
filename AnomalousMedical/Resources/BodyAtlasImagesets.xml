@@ -7,4 +7,5 @@
   <List file="Medical.Resources.BodyAtlasIcons.xml"/>
   <List file="Medical.Resources.SelectionIcons.xml"/>
   <List file="Medical.Resources.CoreBrandingImage.xml"/>
+  <List file="Medical.Resources.PremiumAd.xml"/>
 </MyGUI>
