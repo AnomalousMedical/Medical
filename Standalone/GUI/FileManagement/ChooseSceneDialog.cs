@@ -15,6 +15,7 @@ namespace Medical.GUI
 
         private ButtonGrid sceneFileGrid;
         private ImageAtlas imageAtlas;
+        private bool allowSceneChanges = false;
 
         public ChooseSceneDialog(GUIManager guiManager)
             : base("Medical.GUI.FileManagement.ChooseSceneDialog.layout", guiManager)
@@ -28,6 +29,9 @@ namespace Medical.GUI
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
             findSceneFiles();
+
+            this.Hiding += new EventHandler(ChooseSceneDialog_Hiding);
+            this.Showing += new EventHandler(ChooseSceneDialog_Showing);
         }
 
         public override void Dispose()
@@ -98,14 +102,27 @@ namespace Medical.GUI
 
         void changeScene()
         {
-            if (sceneFileGrid.SelectedItem != null)
+            if (allowSceneChanges)
             {
-                if (ChooseScene != null)
+                if (sceneFileGrid.SelectedItem != null)
                 {
-                    ChooseScene.Invoke(this, EventArgs.Empty);
+                    if (ChooseScene != null)
+                    {
+                        ChooseScene.Invoke(this, EventArgs.Empty);
+                    }
                 }
+                this.hide();
             }
-            this.hide();
+        }
+
+        void ChooseSceneDialog_Showing(object sender, EventArgs e)
+        {
+            allowSceneChanges = true;
+        }
+
+        void ChooseSceneDialog_Hiding(object sender, EventArgs e)
+        {
+            allowSceneChanges = false;
         }
     }
 }
