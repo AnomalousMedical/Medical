@@ -152,8 +152,8 @@ namespace Medical.GUI
                 if (ShowAdImage && AdImageKey != null)
                 {
                     firstTimeShown = false;
-                    iconScroller.setPosition(202, iconScroller.Top);
-                    iconScroller.setSize(widget.Width - 200, iconScroller.Height);
+                    iconScroller.setPosition(232, iconScroller.Top);
+                    iconScroller.setSize(widget.Width - 230, iconScroller.Height);
                     iconGrid.resizeAndLayout(iconScroller.ClientCoord.width);
                     adImage = (StaticImage)widget.createWidgetT("StaticImage", "StaticImage", 2, iconScroller.Top, 200, 400, Align.Left | Align.Top, "");
                     adImage.setItemResource(AdImageKey);
