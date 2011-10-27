@@ -15,6 +15,7 @@ namespace Medical.GUI
         private LayerState beforeFocusLayerState = null;
         private AnatomyContextWindow lastHighlightRequestWindow = null;
         private AnatomyController anatomyController;
+        private List<AnatomyContextWindow> pinnedWindows = new List<AnatomyContextWindow>();
 
         public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController)
         {
@@ -24,6 +25,20 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            if (currentAnatomyWindow != null)
+            {
+                currentAnatomyWindow.Dispose();
+                currentAnatomyWindow = null;
+            }
+        }
+
+        public void sceneUnloading()
+        {
+            foreach (AnatomyContextWindow window in pinnedWindows)
+            {
+                window.Dispose();
+            }
+            pinnedWindows.Clear();
             if (currentAnatomyWindow != null)
             {
                 currentAnatomyWindow.Dispose();
@@ -52,9 +67,15 @@ namespace Medical.GUI
             }
         }
 
-        internal void alertWindowPinned()
+        internal void alertWindowPinned(AnatomyContextWindow window)
         {
             currentAnatomyWindow = null;
+            pinnedWindows.Add(window);
+        }
+
+        internal void alertPinnedWindowClosed(AnatomyContextWindow window)
+        {
+            pinnedWindows.Remove(window);
         }
 
         internal String getThumbnail(Anatomy anatomy)

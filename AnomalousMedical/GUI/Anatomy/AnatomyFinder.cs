@@ -96,6 +96,11 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        public void sceneUnloading()
+        {
+            anatomyWindowManager.sceneUnloading();
+        }
+
         void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)
         {
             if (!Gui.Instance.HandledKeyboardButtons || InputManager.Instance.getKeyFocusWidget().RootWidget == window)
@@ -295,6 +300,7 @@ namespace Medical.GUI
         {
             searchBox.Caption = "";
             updateSearch();
+            InputManager.Instance.setKeyFocusWidget(searchBox);
         }
 
         void unhideAll_MouseButtonClick(Widget source, EventArgs e)

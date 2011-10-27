@@ -136,7 +136,7 @@ namespace Medical.GUI
 
         public void sceneUnloading(SimScene scene)
         {
-            
+            anatomyFinder.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

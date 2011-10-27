@@ -132,7 +132,7 @@ namespace Medical.GUI
 
         public void pinOpen()
         {
-            windowManager.alertWindowPinned();
+            windowManager.alertWindowPinned(this);
             pinButton.StateCheck = true;
             this.Hidden += new EventHandler(AnatomyContextWindow_Hidden);
         }
@@ -175,6 +175,7 @@ namespace Medical.GUI
 
         void AnatomyContextWindow_Hidden(object sender, EventArgs e)
         {
+            windowManager.alertPinnedWindowClosed(this);
             this.Dispose();
         }
 
