@@ -23,7 +23,7 @@ namespace Medical.GUI
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
         private OptionsDialog options;
-        private RenderPropertiesDialog renderDialog;
+        //private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
@@ -41,7 +41,7 @@ namespace Medical.GUI
         {
             downloadServer.Dispose();
             selectionModeTask.Dispose();
-            renderDialog.Dispose();
+            //renderDialog.Dispose();
             options.Dispose();
             anatomyFinder.Dispose();
             chooseSceneDialog.Dispose();
@@ -73,8 +73,8 @@ namespace Medical.GUI
             options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
-            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
-            guiManager.addManagedDialog(renderDialog);
+            //renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            //guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController.AtlasPluginManager, downloadServer, standaloneController.DownloadController, guiManager);
 

@@ -32,6 +32,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentalSim", "DentalSim\Dent
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsUser", "GraphicsUser\GraphicsUser.csproj", "{0A590657-8C4C-4B77-9138-881519A7138D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E217C194-A14F-41DE-A838-C401E60ADF15} = {E217C194-A14F-41DE-A838-C401E60ADF15}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
