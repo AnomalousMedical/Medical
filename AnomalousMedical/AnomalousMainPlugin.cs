@@ -27,9 +27,11 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
+        private UpdateGUI updateGUI = null;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
+        private Task downloadsTask;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
         {
@@ -39,6 +41,10 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            if (updateGUI != null)
+            {
+                updateGUI.Dispose();
+            }
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             //renderDialog.Dispose();
@@ -97,7 +103,8 @@ namespace Medical.GUI
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
-            taskController.addTask(new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.AnomalousMedical, int.MaxValue - 5));
+            downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.AnomalousMedical, int.MaxValue - 5);
+            taskController.addTask(downloadsTask);
 
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.AnomalousMedical, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
@@ -151,7 +158,7 @@ namespace Medical.GUI
 
         public void sceneRevealed()
         {
-
+            UpdateController.checkForUpdate(updateCheckCompleted);
         }
 
         public long PluginId
@@ -240,6 +247,27 @@ namespace Medical.GUI
         void helpTaskItem_OnClicked(Task item)
         {
             standaloneController.openHelpPage();
+        }
+
+        void updateCheckCompleted(bool hasUpdate)
+        {
+            if (hasUpdate)
+            {
+                updateGUI = new UpdateGUI(downloadsTask);
+                Taskbar taskbar = standaloneController.GUIManager.Taskbar;
+                switch (taskbar.Alignment)
+                {
+                    case TaskbarAlignment.Top:
+                        updateGUI.show(Gui.Instance.getViewWidth() - updateGUI.Width, taskbar.Height);
+                        break;
+                    case TaskbarAlignment.Right:
+                        updateGUI.show(Gui.Instance.getViewWidth() - updateGUI.Width - taskbar.Width, 0);
+                        break;
+                    default:
+                        updateGUI.show(Gui.Instance.getViewWidth() - updateGUI.Width, 0);
+                        break;
+                }
+            }
         }
     }
 }

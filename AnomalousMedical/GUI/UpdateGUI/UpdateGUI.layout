@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="Panel" position="172 143 217 38" align="Default" layer="Overlapped">
+        <Widget type="Button" skin="ButtonXBig" position="188 9 24 20" align="Right Top" name="CloseButton"/>
+        <Widget type="StaticImage" skin="StaticImage" position="3 2 32 32">
+            <Property key="Widget_NeedMouse" value="false"/>
+            <Property key="Image_Resource" value="AnomalousMedical/Download"/>
+            <Property key="Image_Group" value="Icons"/>
+            <Property key="Image_Name" value="Icon"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="39 5 144 29" align="Stretch">
+            <Property key="Widget_Caption" value="Update(s) Found\nClick Here to Download"/>
+            <Property key="Widget_NeedMouse" value="false"/>
+        </Widget>
+    </Widget>
+</MyGUI>

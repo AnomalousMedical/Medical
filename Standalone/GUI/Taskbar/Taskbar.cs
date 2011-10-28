@@ -344,6 +344,22 @@ namespace Medical.GUI
             }
         }
 
+        public int Width
+        {
+            get
+            {
+                return taskbarWidget.Width;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return taskbarWidget.Height;
+            }
+        }
+
         public void clearGapIndex()
         {
             GapIndex = -1;

@@ -5,6 +5,8 @@ using System.Text;
 using Engine;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -40,6 +42,15 @@ namespace Medical
         public static Version DownloadedVersion { get; private set; }
 
         public static String InstallFile { get; private set; }
+
+        public static void checkForUpdate(Action<bool> checkCompletedCallback)
+        {
+            Thread updateThread = new Thread(delegate()
+            {
+                ThreadManager.invoke(checkCompletedCallback, false);
+            });
+            updateThread.Start();
+        }
 
         public static void writeUpdateIndex(String updateInstallerFile, Version version)
         {
