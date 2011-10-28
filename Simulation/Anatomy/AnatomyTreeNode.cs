@@ -10,16 +10,19 @@ namespace Medical
 {
     public partial class AnatomyTreeNode : Saveable
     {
-        bool searchOnly;
         bool premiumOnly;
-        bool actAsLeaf;
+        bool showInTextSearch;
+        bool showInClickSearch;
+        bool showInTree;
         String name;
 
         private List<AnatomyTreeNode> children = new List<AnatomyTreeNode>();
 
         public AnatomyTreeNode(String name)
         {
-            searchOnly = false;
+            showInTextSearch = true;
+            showInClickSearch = true;
+            showInTree = true;
             premiumOnly = false;
             this.name = name;
         }
@@ -66,15 +69,43 @@ namespace Medical
 
         [DoNotCopy]
         [Editable]
-        public bool SearchOnly
+        public bool ShowInTextSearch
         {
             get
             {
-                return searchOnly;
+                return showInTextSearch;
             }
             set
             {
-                searchOnly = value;
+                showInTextSearch = value;
+            }
+        }
+
+        [DoNotCopy]
+        [Editable]
+        public bool ShowInClickSearch
+        {
+            get
+            {
+                return showInClickSearch;
+            }
+            set
+            {
+                showInClickSearch = value;
+            }
+        }
+
+        [DoNotCopy]
+        [Editable]
+        public bool ShowInTree
+        {
+            get
+            {
+                return showInTree;
+            }
+            set
+            {
+                showInTree = value;
             }
         }
 
@@ -89,20 +120,6 @@ namespace Medical
             set
             {
                 premiumOnly = value;
-            }
-        }
-
-        [DoNotCopy]
-        [Editable]
-        public bool ActAsLeaf
-        {
-            get
-            {
-                return actAsLeaf;
-            }
-            set
-            {
-                actAsLeaf = value;
             }
         }
 
@@ -122,18 +139,20 @@ namespace Medical
 
         protected AnatomyTreeNode(LoadInfo info)
         {
-            searchOnly = info.GetBoolean("SearchOnly");
+            showInTextSearch = info.GetBoolean("ShowInTextSearch");
+            showInClickSearch = info.GetBoolean("ShowInClickSearch");
+            showInTree = info.GetBoolean("ShowInTree");
             premiumOnly = info.GetBoolean("PremiumOnly");
-            actAsLeaf = info.GetBoolean("ActAsLeaf");
             name = info.GetString("Name");
             info.RebuildList<AnatomyTreeNode>("Child", children);
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.AddValue("SearchOnly", searchOnly);
+            info.AddValue("ShowInTextSearch", showInTextSearch);
+            info.AddValue("ShowInClickSearch", showInClickSearch);
+            info.AddValue("ShowInTree", showInTree);
             info.AddValue("PremiumOnly", premiumOnly);
-            info.AddValue("ActAsLeaf", actAsLeaf);
             info.AddValue("Name", name);
             info.ExtractList<AnatomyTreeNode>("Child", children);
         }
