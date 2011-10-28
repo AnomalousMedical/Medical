@@ -7,6 +7,9 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using Medical.Controller;
+using System.Net;
+using System.Globalization;
+using Logging;
 
 namespace Medical
 {
@@ -43,11 +46,61 @@ namespace Medical
 
         public static String InstallFile { get; private set; }
 
-        public static void checkForUpdate(Action<bool> checkCompletedCallback)
+        public static void checkForUpdate(Action<bool> checkCompletedCallback, AtlasPluginManager pluginManager, LicenseManager licenseManager)
         {
+            //Get a copy of the installed plugins
+            List<AtlasPlugin> installedPlugins = new List<AtlasPlugin>(pluginManager.LoadedPlugins);
+
+            //Check for updates on a background thread
             Thread updateThread = new Thread(delegate()
             {
-                ThreadManager.invoke(checkCompletedCallback, false);
+                StringBuilder sb = new StringBuilder();
+                foreach (AtlasPlugin plugin in installedPlugins)
+                {
+                    sb.AppendFormat("{0}|{1}", plugin.PluginId.ToString(), plugin.Version.ToString());
+                    sb.Append(",");
+                }
+                String installedPluginsList = String.Empty;
+                if (sb.Length > 0)
+                {
+                    installedPluginsList = sb.ToString(0, sb.Length - 1);
+                }
+
+                bool foundUpdate = false;
+                try
+                {
+                    Version localVersion = UpdateController.CurrentVersion;
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.UpdateCheckURL));
+                    request.Timeout = 60000;
+                    request.Method = "POST";
+                    String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, localVersion, (int)PlatformConfig.OsId, installedPluginsList);
+                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                    request.ContentType = "application/x-www-form-urlencoded";
+
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    // Get the response.
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                        {
+                            using (BinaryReader serverDataStream = new BinaryReader(response.GetResponseStream()))
+                            {
+                                foundUpdate = serverDataStream.ReadBoolean();
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Could not read update status from the server. Reason:\n{0}", e.Message);
+                }
+
+                ThreadManager.invoke(checkCompletedCallback, foundUpdate);
             });
             updateThread.Start();
         }

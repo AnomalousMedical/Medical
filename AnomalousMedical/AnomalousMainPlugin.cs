@@ -158,7 +158,7 @@ namespace Medical.GUI
 
         public void sceneRevealed()
         {
-            UpdateController.checkForUpdate(updateCheckCompleted);
+            UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.App.LicenseManager);
         }
 
         public long PluginId
