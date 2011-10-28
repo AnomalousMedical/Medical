@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Engine;
 using System.IO;
 using System.Drawing;
+using OgrePlugin;
 
 namespace Medical.GUI
 {
@@ -16,6 +17,7 @@ namespace Medical.GUI
         private ButtonGrid sceneFileGrid;
         private ImageAtlas imageAtlas;
         private bool allowSceneChanges = false;
+        private Widget loadingWidget;
 
         public ChooseSceneDialog(GUIManager guiManager)
             : base("Medical.GUI.FileManagement.ChooseSceneDialog.layout", guiManager)
@@ -29,6 +31,9 @@ namespace Medical.GUI
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
             findSceneFiles();
+
+            loadingWidget = widget.findWidget("Loading");
+            loadingWidget.Visible = false;
 
             this.Hiding += new EventHandler(ChooseSceneDialog_Hiding);
             this.Showing += new EventHandler(ChooseSceneDialog_Showing);
@@ -104,6 +109,8 @@ namespace Medical.GUI
         {
             if (allowSceneChanges)
             {
+                loadingWidget.Visible = true;
+                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.update();
                 if (sceneFileGrid.SelectedItem != null)
                 {
                     if (ChooseScene != null)
@@ -118,6 +125,7 @@ namespace Medical.GUI
         void ChooseSceneDialog_Showing(object sender, EventArgs e)
         {
             allowSceneChanges = true;
+            loadingWidget.Visible = false;
         }
 
         void ChooseSceneDialog_Hiding(object sender, EventArgs e)

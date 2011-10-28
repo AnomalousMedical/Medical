@@ -11,10 +11,11 @@ using MyGUIPlugin;
 using Medical.Controller;
 using System.Diagnostics;
 using Engine.Platform;
+using OgrePlugin;
 
 namespace Medical.GUI
 {
-    public partial class OpenPatientDialog : AbstractFullscreenGUIPopup
+    public class OpenPatientDialog : AbstractFullscreenGUIPopup
     {
         public event EventHandler OpenFile;
 
@@ -27,6 +28,8 @@ namespace Medical.GUI
         private Button openButton;
         private Button deleteButton;
         private Edit searchBox;
+        private Widget loadingWidget;
+        private bool allowOpen = false;
 
         private PatientDataFile currentFile = null;
         private bool validSearchDirectory = true;
@@ -150,6 +153,10 @@ namespace Medical.GUI
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
 
+            loadingWidget = widget.findWidget("Loading");
+            loadingWidget.Visible = false;
+
+            this.Showing += new EventHandler(OpenPatientDialog_Showing);
             this.Shown += new EventHandler(OpenPatientDialog_Shown);
             this.Hiding += new EventHandler(OpenPatientDialog_Hiding);
             this.Hidden += new EventHandler(OpenPatientDialog_Hidden);
@@ -204,10 +211,6 @@ namespace Medical.GUI
         void OpenPatientDialog_Hidden(object sender, EventArgs e)
         {
             fileDataGrid.removeAllItems();
-            if (FileChosen && OpenFile != null)
-            {
-                OpenFile.Invoke(this, EventArgs.Empty);
-            }
             searchBox.Caption = "";
         }
 
@@ -221,6 +224,12 @@ namespace Medical.GUI
             }
         }
 
+        void OpenPatientDialog_Showing(object sender, EventArgs e)
+        {
+            loadingWidget.Visible = false;
+            allowOpen = true;
+        }
+
         void OpenPatientDialog_Shown(object sender, EventArgs e)
         {
             listFiles();
@@ -228,14 +237,6 @@ namespace Medical.GUI
             toggleButtonsEnabled();
             cancelPostAction = CancelPostAction.None;
             InputManager.Instance.setKeyFocusWidget(searchBox);
-        }
-
-        public bool FileChosen
-        {
-            get
-            {
-                return currentFile != null;
-            }
         }
 
         public PatientDataFile CurrentFile
@@ -293,9 +294,16 @@ namespace Medical.GUI
 
         private void fireOpen()
         {
-            if (fileDataGrid.hasItemSelected())
+            if (allowOpen && fileDataGrid.hasItemSelected())
             {
+                allowOpen = false;
+                loadingWidget.Visible = true;
+                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.update();
                 currentFile = (PatientDataFile)fileDataGrid.getItemDataAt(fileDataGrid.getIndexSelected());
+                if (OpenFile != null)
+                {
+                    OpenFile.Invoke(this, EventArgs.Empty);
+                }
                 this.hide();
             }
         }

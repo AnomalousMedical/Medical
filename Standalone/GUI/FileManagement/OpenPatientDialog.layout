@@ -38,5 +38,11 @@
             </Widget>
             <Widget type="Progress" skin="ProgressFill" position="571 93 140 23" align="Right Top" name="Open/LoadingProgress"/>
         </Widget>
+        <Widget type="StaticText" skin="StaticText" position="220 207 275 87" align="Center" name="Loading">
+            <Property key="Widget_Caption" value="Loading"/>
+            <Property key="Text_TextColour" value="#FFFFFF"/>
+            <Property key="Text_FontHeight" value="100"/>
+            <Property key="Text_FontName" value="TimelineText.100"/>
+        </Widget>
     </Widget>
 </MyGUI>

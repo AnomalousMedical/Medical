@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="TaskMenuBackground" position="226 51 565 358" layer="Overlapped">
+    <Widget type="Widget" skin="TaskMenuBackground" position="226 51 565 360" layer="Overlapped">
         <Property key="Widget_Caption" value="Choose Scene"/>
         <Property key="Window_MinSize" value="563 372"/>
         <Property key="Window_MaxSize" value="563 372"/>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 36 555 313" align="Stretch" name="ChooseScene/FileSelect">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 36 555 315" align="Stretch" name="ChooseScene/FileSelect">
             <Property key="ScrollView_CanvasSize" value="539 300"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="False"/>
@@ -18,5 +18,11 @@
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Widget" skin="Separator1" position="4 28 555 2" align="HStretch Top"/>
+        <Widget type="StaticText" skin="StaticText" position="145 136 275 87" align="Center" name="Loading">
+            <Property key="Widget_Caption" value="Loading"/>
+            <Property key="Text_TextColour" value="#FFFFFF"/>
+            <Property key="Text_FontHeight" value="100"/>
+            <Property key="Text_FontName" value="TimelineText.100"/>
+        </Widget>
     </Widget>
 </MyGUI>
