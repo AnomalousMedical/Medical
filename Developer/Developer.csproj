@@ -53,23 +53,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="Engine">
-      <HintPath>S:\Medical\Release\Engine.dll</HintPath>
+    <Reference Include="Engine, Version=1.0.0.1179, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
-    <Reference Include="MyGUIPlugin">
-      <HintPath>S:\Medical\Release\MyGUIPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="Simulation">
-      <HintPath>S:\Medical\Release\Simulation.dll</HintPath>
-    </Reference>
-    <Reference Include="Standalone">
-      <HintPath>S:\Medical\Release\Standalone.dll</HintPath>
+    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -92,6 +86,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\PluginPublisher\PluginPublisher.layout" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simulation\Simulation.csproj">
+      <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
+      <Name>Simulation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Standalone\Standalone.csproj">
+      <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
+      <Name>Standalone</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
