@@ -54,14 +54,17 @@ namespace Medical.GUI
 
         void slider_ScrollChangePosition(Widget source, EventArgs e)
         {
-            HScroll scroll = (HScroll)source;
-            float normalizedValue = scroll.ScrollPosition / SCROLL_MAX;
-            if (scroll.ScrollPosition > SCROLL_MAX_RANGE_MIN)
+            if (command != null)
             {
-                normalizedValue = 1.0f;
+                HScroll scroll = (HScroll)source;
+                float normalizedValue = scroll.ScrollPosition / SCROLL_MAX;
+                if (scroll.ScrollPosition > SCROLL_MAX_RANGE_MIN)
+                {
+                    normalizedValue = 1.0f;
+                }
+                float range = command.NumericValueMax - command.NumericValueMin;
+                command.NumericValue = range * normalizedValue + command.NumericValueMin;
             }
-            float range = command.NumericValueMax - command.NumericValueMin;
-            command.NumericValue = range * normalizedValue + command.NumericValueMin;
         }
 
         private static uint getSliderValueFromCommand(AnatomyCommand command)

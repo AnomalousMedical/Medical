@@ -94,7 +94,7 @@ namespace Medical
                         return (TransparencyChanger)command;
                     }
                 }
-                return null;
+                return NullTransparencyChanger.Instance;
             }
         }
 
