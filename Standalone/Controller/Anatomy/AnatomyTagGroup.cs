@@ -10,10 +10,23 @@ namespace Medical
     {
         private List<AnatomyCommand> groupCommands = new List<AnatomyCommand>();
         private List<Anatomy> groupAnatomy = new List<Anatomy>();
+        bool showInBasicVersion = true;
+        bool showInTextSearch = true;
+        bool showInClickSearch = true;
+        bool showInTree = true;
 
         public AnatomyTagGroup(String anatomicalName)
         {
             this.AnatomicalName = anatomicalName;
+        }
+
+        public AnatomyTagGroup(String anatomicalName, bool showInBasicVersion, bool showInTextSearch, bool showInClickSearch, bool showInTree)
+        {
+            this.AnatomicalName = anatomicalName;
+            this.showInBasicVersion = showInBasicVersion;
+            this.showInTextSearch = showInTextSearch;
+            this.showInClickSearch = showInClickSearch;
+            this.showInTree = showInTree;
         }
 
         public void Dispose()
@@ -93,11 +106,35 @@ namespace Medical
             }
         }
 
-        public bool IsGroup
+        public bool ShowInTextSearch
         {
             get
             {
-                return true;
+                return showInTextSearch;
+            }
+        }
+
+        public bool ShowInClickSearch
+        {
+            get
+            {
+                return showInClickSearch;
+            }
+        }
+
+        public bool ShowInTree
+        {
+            get
+            {
+                return showInTree;
+            }
+        }
+
+        public bool ShowInBasicVersion
+        {
+            get
+            {
+                return showInBasicVersion;
             }
         }
     }

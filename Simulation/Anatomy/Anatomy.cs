@@ -37,8 +37,23 @@ namespace Medical
         Vector3 PreviewCameraDirection { get; }
 
         /// <summary>
+        /// Show up in text searches.
+        /// </summary>
+        bool ShowInTextSearch { get; }
+
+        /// <summary>
+        /// Show up in click searches.
+        /// </summary>
+        bool ShowInClickSearch { get; }
+
+        /// <summary>
+        /// Show up in the normal list/tree.
+        /// </summary>
+        bool ShowInTree { get; }
+
+        /// <summary>
         /// True if the anatomy is a group, false if it is an individual item.
         /// </summary>
-        bool IsGroup { get; }
+        bool ShowInBasicVersion { get; }
     }
 }

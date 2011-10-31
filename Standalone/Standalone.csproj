@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
+    <Compile Include="Controller\Anatomy\AnatomyTree.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="Controller\Camera\CameraMover.cs" />

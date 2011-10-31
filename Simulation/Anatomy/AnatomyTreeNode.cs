@@ -10,20 +10,12 @@ namespace Medical
 {
     public partial class AnatomyTreeNode : Saveable
     {
-        bool premiumOnly;
-        bool showInTextSearch;
-        bool showInClickSearch;
-        bool showInTree;
         String name;
 
         private List<AnatomyTreeNode> children = new List<AnatomyTreeNode>();
 
         public AnatomyTreeNode(String name)
         {
-            showInTextSearch = true;
-            showInClickSearch = true;
-            showInTree = true;
-            premiumOnly = false;
             this.name = name;
         }
 
@@ -67,62 +59,6 @@ namespace Medical
             }
         }
 
-        [DoNotCopy]
-        [Editable]
-        public bool ShowInTextSearch
-        {
-            get
-            {
-                return showInTextSearch;
-            }
-            set
-            {
-                showInTextSearch = value;
-            }
-        }
-
-        [DoNotCopy]
-        [Editable]
-        public bool ShowInClickSearch
-        {
-            get
-            {
-                return showInClickSearch;
-            }
-            set
-            {
-                showInClickSearch = value;
-            }
-        }
-
-        [DoNotCopy]
-        [Editable]
-        public bool ShowInTree
-        {
-            get
-            {
-                return showInTree;
-            }
-            set
-            {
-                showInTree = value;
-            }
-        }
-
-        [DoNotCopy]
-        [Editable]
-        public bool PremiumOnly
-        {
-            get
-            {
-                return premiumOnly;
-            }
-            set
-            {
-                premiumOnly = value;
-            }
-        }
-
         public String Name
         {
             get
@@ -139,20 +75,12 @@ namespace Medical
 
         protected AnatomyTreeNode(LoadInfo info)
         {
-            showInTextSearch = info.GetBoolean("ShowInTextSearch");
-            showInClickSearch = info.GetBoolean("ShowInClickSearch");
-            showInTree = info.GetBoolean("ShowInTree");
-            premiumOnly = info.GetBoolean("PremiumOnly");
             name = info.GetString("Name");
             info.RebuildList<AnatomyTreeNode>("Child", children);
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.AddValue("ShowInTextSearch", showInTextSearch);
-            info.AddValue("ShowInClickSearch", showInClickSearch);
-            info.AddValue("ShowInTree", showInTree);
-            info.AddValue("PremiumOnly", premiumOnly);
             info.AddValue("Name", name);
             info.ExtractList<AnatomyTreeNode>("Child", children);
         }

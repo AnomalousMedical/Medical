@@ -147,7 +147,31 @@ namespace Medical
             }
         }
 
-        public bool IsGroup
+        public bool ShowInTextSearch
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool ShowInClickSearch
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public bool ShowInTree
+        {
+            get
+            {
+                return !allowGroupSelection;
+            }
+        }
+
+        public bool ShowInBasicVersion
         {
             get
             {

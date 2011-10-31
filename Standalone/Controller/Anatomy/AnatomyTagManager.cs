@@ -14,6 +14,15 @@ namespace Medical
 
         }
 
+        public void setupPropertyGroups(IEnumerable<AnatomyTagProperties> properties)
+        {
+            foreach (AnatomyTagProperties prop in properties)
+            {
+                AnatomyTagGroup group = new AnatomyTagGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                anatomyTagGroups.Add(prop.Name, group);
+            }
+        }
+
         public void addAnatomyIdentifier(AnatomyIdentifier anatomyIdentifier)
         {
             foreach (AnatomyTag tag in anatomyIdentifier.Tags)

@@ -157,9 +157,9 @@ namespace Medical.GUI
             anatomyList.clear();
             if (searchTerm.Length == 0)
             {
-                foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
+                foreach (Anatomy anatomy in anatomyController.AnatomyTree.TopLevelAnatomy)
                 {
-                    addAnatomyToList(tagGroup);
+                    addAnatomyToList(anatomy);
                 }
             }
             else
@@ -219,7 +219,7 @@ namespace Medical.GUI
                     bool allowIndividualSelection = anatomyController.AllowIndividualSelection;
                     foreach (AnatomyIdentifier anatomy in matches)
                     {
-                        if (allowIndividualSelection || anatomy.IsGroup)
+                        if (allowIndividualSelection || anatomy.ShowInBasicVersion)
                         {
                             ButtonGridItem newItem = addAnatomyToList(anatomy);
                             if (itemToSelect == null)
@@ -234,7 +234,7 @@ namespace Medical.GUI
                     }
                     foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
                     {
-                        if (anatomyTags.Contains(tagGroup.AnatomicalName))
+                        if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
                         {
                             addAnatomyToList(tagGroup);
                         }

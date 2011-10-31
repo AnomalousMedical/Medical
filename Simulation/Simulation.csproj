@@ -87,7 +87,8 @@
     <Compile Include="Anatomy\AnatomyIdentifier.cs" />
     <Compile Include="Anatomy\AnatomyManager.cs" />
     <Compile Include="Anatomy\AnatomyTag.cs" />
-    <Compile Include="Anatomy\AnatomyTree.cs" />
+    <Compile Include="Anatomy\AnatomyTagProperties.cs" />
+    <Compile Include="Anatomy\AnatomyOrganizer.cs" />
     <Compile Include="Anatomy\AnatomyTreeNode.cs" />
     <Compile Include="Anatomy\CompoundAnatomyCommand.cs" />
     <Compile Include="Anatomy\CompoundTransparencyAnatomyCommand.cs" />

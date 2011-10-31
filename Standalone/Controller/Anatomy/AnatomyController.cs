@@ -25,6 +25,7 @@ namespace Medical
 
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
         private AnatomySearchList anatomySearchList = new AnatomySearchList();
+        private AnatomyTree anatomyTree = new AnatomyTree();
 
         private ImageRenderer imageRenderer;
         private ImageAtlas imageAtlas = new ImageAtlas("AntomyThumbnails", new Size2(50, 50), new Size2(512, 512));
@@ -59,14 +60,21 @@ namespace Medical
 
         public void sceneLoaded()
         {
+            AnatomyOrganizer organizer = AnatomyManager.AnatomyOrganizer;
+            if (organizer != null)
+            {
+                anatomyTagManager.setupPropertyGroups(organizer.TagProperties);
+            }
             foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
             {
                 anatomySearchList.addAnatomy(anatomy);
                 anatomyTagManager.addAnatomyIdentifier(anatomy);
+                anatomyTree.addAnatomy(anatomy);
             }
             foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
             {
                 anatomySearchList.addAnatomy(tagGroup);
+                anatomyTree.addAnatomy(tagGroup);
             }
             if (AnatomyChanged != null)
             {
@@ -78,6 +86,7 @@ namespace Medical
         {
             anatomyTagManager.clear();
             anatomySearchList.clear();
+            anatomyTree.clear();
             imageAtlas.clear();
         }
 
@@ -94,6 +103,14 @@ namespace Medical
             get
             {
                 return anatomySearchList;
+            }
+        }
+
+        public AnatomyTree AnatomyTree
+        {
+            get
+            {
+                return anatomyTree;
             }
         }
 

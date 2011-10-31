@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Logging;
 
 namespace Medical
 {
@@ -11,6 +12,7 @@ namespace Medical
         private AnatomyManager() { }
 
         private static List<AnatomyIdentifier> anatomyList = new List<AnatomyIdentifier>();
+        private static AnatomyOrganizer anatomyOrganizer;
 
         public static void addAnatomy(AnatomyIdentifier anatomy)
         {
@@ -27,6 +29,22 @@ namespace Medical
             get
             {
                 return anatomyList;
+            }
+        }
+
+        public static AnatomyOrganizer AnatomyOrganizer
+        {
+            get
+            {
+                return anatomyOrganizer;
+            }
+            internal set
+            {
+                if (anatomyOrganizer != null)
+                {
+                    Log.Warning("A second Anatomy Organizer has been set. Only one is supported per scene.");
+                }
+                anatomyOrganizer = value;
             }
         }
 
@@ -76,7 +94,7 @@ namespace Medical
             SortedAnatomyClickResults results = new SortedAnatomyClickResults();
             foreach (AnatomyIdentifier anatomy in anatomyList)
             {
-                if (anatomy.TransparencyChanger.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distance))
+                if (anatomy.ShowInClickSearch && anatomy.TransparencyChanger.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distance))
                 {
                     results.add(anatomy, distance);
                 }
