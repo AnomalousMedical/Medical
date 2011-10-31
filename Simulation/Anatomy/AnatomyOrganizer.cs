@@ -21,6 +21,12 @@ namespace Medical
             rootNode = new AnatomyTreeNode("Anatomy Tree");
         }
 
+        protected override void destroy()
+        {
+            base.destroy();
+            AnatomyManager.AnatomyOrganizer = null;
+        }
+
         public void addProperty(AnatomyTagProperties prop)
         {
             tagPropertiesList.Add(prop);
