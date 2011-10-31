@@ -20,6 +20,18 @@ namespace Medical
         private bool allowGroupSelection = true;
 
         [Editable]
+        bool showInBasicVersion = false;
+
+        [Editable]
+        bool showInTextSearch = true;
+
+        [Editable]
+        bool showInClickSearch = true;
+
+        [Editable]
+        bool showInTree = false;
+
+        [Editable]
         private String nodeName = "Node";
 
         [Editable]
@@ -151,7 +163,7 @@ namespace Medical
         {
             get
             {
-                return true;
+                return showInTextSearch;
             }
         }
 
@@ -159,7 +171,7 @@ namespace Medical
         {
             get
             {
-                return true;
+                return showInClickSearch;
             }
         }
 
@@ -167,7 +179,7 @@ namespace Medical
         {
             get
             {
-                return !allowGroupSelection;
+                return showInTree;
             }
         }
 
@@ -175,7 +187,7 @@ namespace Medical
         {
             get
             {
-                return !allowGroupSelection;
+                return showInBasicVersion;
             }
         }
 
