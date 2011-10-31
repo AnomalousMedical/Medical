@@ -25,16 +25,18 @@ wxCursor windowCursors[] =
     wxCursor(wxCURSOR_HAND)
 };
 
-NativeOSWindow::NativeOSWindow(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB)
+NativeOSWindow::NativeOSWindow(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 :wxFrame(parent, -1, wxString::FromAscii(caption), wxPoint(x, y), wxSize(width, height), floatOnParent ? wxDEFAULT_FRAME_STYLE | wxFRAME_FLOAT_ON_PARENT : wxDEFAULT_FRAME_STYLE),
 deleteCB(deleteCB),
 sizedCB(sizedCB),
-closedCB(closedCB)
+closedCB(closedCB),
+activateCB(activateCB)
 {
 	SetBackgroundColour(wxColour(0, 0, 0));
 
 	Bind(wxEVT_SIZE, &NativeOSWindow::OnSize, this);
 	Bind(wxEVT_CLOSE_WINDOW, &NativeOSWindow::OnClose, this);
+	Bind(wxEVT_ACTIVATE, &NativeOSWindow::OnActivate, this);
 }
 
 NativeOSWindow::~NativeOSWindow(void)
@@ -42,9 +44,9 @@ NativeOSWindow::~NativeOSWindow(void)
 	deleteCB();
 }
 
-extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB)
+extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB, NativeOSWindow::ActivateDelegate activateCB)
 {
-	return new NativeOSWindow(parent, caption, x, y, width, height, floatOnParent, deleteCB, sizedCB, closedCB);
+	return new NativeOSWindow(parent, caption, x, y, width, height, floatOnParent, deleteCB, sizedCB, closedCB, activateCB);
 }
 
 extern "C" _AnomalousExport void NativeOSWindow_destroy(NativeOSWindow* nativeWindow)

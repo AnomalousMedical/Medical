@@ -11,13 +11,19 @@ namespace Medical
 {
     public class NativeOSWindow : OSWindow, IDisposable
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void DeleteDelegate();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	    delegate void SizedDelegate();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	    delegate void ClosedDelegate();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        delegate void ActivateDelegate(bool active);
 
         DeleteDelegate deleteCB;
         SizedDelegate sizedCB;
         ClosedDelegate closedCB;
+        ActivateDelegate activateCB;
         String title;
         NativeMenuBar menuBar = null;
 
@@ -45,6 +51,7 @@ namespace Medical
             deleteCB = new DeleteDelegate(delete);
             sizedCB = new SizedDelegate(resize);
             closedCB = new ClosedDelegate(closed);
+            activateCB = new ActivateDelegate(activate);
 
             IntPtr parentPtr = IntPtr.Zero;
             if (parent != null)
@@ -52,7 +59,7 @@ namespace Medical
                 parentPtr = parent._NativePtr;
             }
 
-            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, floatOnParent, deleteCB, sizedCB, closedCB);
+            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, floatOnParent, deleteCB, sizedCB, closedCB, activateCB);
         }
 
         public void Dispose()
@@ -220,10 +227,15 @@ namespace Medical
             }
         }
 
+        private void activate(bool active)
+        {
+            Logging.Log.Debug("Active {0}", active);
+        }
+
         #region PInvoke
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr NativeOSWindow_create(IntPtr parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
+        private static extern IntPtr NativeOSWindow_create(IntPtr parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activeCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_destroy(IntPtr nativeWindow);
