@@ -32,8 +32,8 @@ namespace Medical
 
         private AnatomyPickingMode pickingMode;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
-        public event EventDelegate<AnatomyController, bool> AllowIndividualSelectionChanged;
-        private bool allowIndividualSelection = false;
+        public event EventDelegate<AnatomyController, bool> ShowPremiumAnatomyChanged;
+        private bool showPremiumAnatomy = false;
 
         public AnatomyController(ImageRenderer imageRenderer)
         {
@@ -193,20 +193,20 @@ namespace Medical
             }
         }
 
-        public bool AllowIndividualSelection
+        public bool ShowPremiumAnatomy
         {
             get
             {
-                return allowIndividualSelection;
+                return showPremiumAnatomy;
             }
             set
             {
-                if (allowIndividualSelection != value)
+                if (showPremiumAnatomy != value)
                 {
-                    allowIndividualSelection = value;
-                    if (AllowIndividualSelectionChanged != null)
+                    showPremiumAnatomy = value;
+                    if (ShowPremiumAnatomyChanged != null)
                     {
-                        AllowIndividualSelectionChanged.Invoke(this, allowIndividualSelection);
+                        ShowPremiumAnatomyChanged.Invoke(this, showPremiumAnatomy);
                     }
                 }
             }

@@ -19,7 +19,7 @@ namespace Medical.GUI
         {
             this.anatomyController = anatomyController;
             anatomyController.PickingModeChanged += new Engine.EventDelegate<AnatomyController, AnatomyPickingMode>(anatomyController_PickingModeChanged);
-            anatomyController.AllowIndividualSelectionChanged += new Engine.EventDelegate<AnatomyController, bool>(anatomyController_AllowIndividualSelectionChanged);
+            anatomyController.ShowPremiumAnatomyChanged += new Engine.EventDelegate<AnatomyController, bool>(anatomyController_ShowPremiumAnatomyChanged);
 
             pickingModeGroup = new ButtonGroup();
             Button groupButton = (Button)widget.findWidget("GroupButton");
@@ -58,14 +58,14 @@ namespace Medical.GUI
             allowSelectionModeChanges = true;
         }
 
-        void anatomyController_AllowIndividualSelectionChanged(AnatomyController source, bool arg)
+        void anatomyController_ShowPremiumAnatomyChanged(AnatomyController source, bool arg)
         {
             toggleIndividualSelectionVisible();
         }
 
         private void toggleIndividualSelectionVisible()
         {
-            if (anatomyController.AllowIndividualSelection)
+            if (anatomyController.ShowPremiumAnatomy)
             {
                 individualButton.Visible = true;
                 noneButton.setPosition(8, 137);

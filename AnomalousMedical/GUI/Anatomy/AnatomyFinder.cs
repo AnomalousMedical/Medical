@@ -164,7 +164,7 @@ namespace Medical.GUI
             }
             else
             {
-                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35, anatomyController.AllowIndividualSelection))
+                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35, anatomyController.ShowPremiumAnatomy))
                 {
                     addAnatomyToList(anatomy);
                 }
@@ -216,10 +216,10 @@ namespace Medical.GUI
 
                     HashSet<String> anatomyTags = new HashSet<String>();
                     ButtonGridItem itemToSelect = null;
-                    bool allowIndividualSelection = anatomyController.AllowIndividualSelection;
+                    bool showPremium = anatomyController.ShowPremiumAnatomy;
                     foreach (AnatomyIdentifier anatomy in matches)
                     {
-                        if (allowIndividualSelection || anatomy.ShowInBasicVersion)
+                        if (showPremium || anatomy.ShowInBasicVersion)
                         {
                             ButtonGridItem newItem = addAnatomyToList(anatomy);
                             if (itemToSelect == null)
@@ -277,7 +277,7 @@ namespace Medical.GUI
                 switch (anatomyController.PickingMode)
                 {
                     case AnatomyPickingMode.Group:
-                        if (anatomyController.AllowIndividualSelection)
+                        if (anatomyController.ShowPremiumAnatomy)
                         {
                             anatomyController.PickingMode = AnatomyPickingMode.Individual;
                         }

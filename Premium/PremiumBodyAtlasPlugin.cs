@@ -59,7 +59,7 @@ namespace Medical
             this.standaloneController = standaloneController;
             standaloneController.PatientDataController.PatientDataChanged += new Action<PatientDataFile>(PatientDataController_PatientDataChanged);
 
-            standaloneController.AnatomyController.AllowIndividualSelection = true;
+            standaloneController.AnatomyController.ShowPremiumAnatomy = true;
             guiManager.TaskMenu.ShowAdImage = false;
 
             //Dialogs
