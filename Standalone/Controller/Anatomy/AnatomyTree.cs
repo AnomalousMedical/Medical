@@ -9,9 +9,9 @@ namespace Medical
     {
         public List<Anatomy> topLevelAnatomy = new List<Anatomy>();
 
-        public void addAnatomy(Anatomy anatomy)
+        public void addAnatomy(Anatomy anatomy, bool allowPremium)
         {
-            if (anatomy.ShowInTree)
+            if (anatomy.ShowInTree && (allowPremium || anatomy.ShowInBasicVersion))
             {
                 topLevelAnatomy.Add(anatomy);
             }

@@ -69,12 +69,12 @@ namespace Medical
             {
                 anatomySearchList.addAnatomy(anatomy);
                 anatomyTagManager.addAnatomyIdentifier(anatomy);
-                anatomyTree.addAnatomy(anatomy);
+                anatomyTree.addAnatomy(anatomy, showPremiumAnatomy);
             }
             foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
             {
                 anatomySearchList.addAnatomy(tagGroup);
-                anatomyTree.addAnatomy(tagGroup);
+                anatomyTree.addAnatomy(tagGroup, showPremiumAnatomy);
             }
             if (AnatomyChanged != null)
             {
@@ -207,6 +207,16 @@ namespace Medical
                     if (ShowPremiumAnatomyChanged != null)
                     {
                         ShowPremiumAnatomyChanged.Invoke(this, showPremiumAnatomy);
+                    }
+                    //Remake the trees
+                    anatomyTree.clear();
+                    foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
+                    {
+                        anatomyTree.addAnatomy(anatomy, showPremiumAnatomy);
+                    }
+                    foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
+                    {
+                        anatomyTree.addAnatomy(tagGroup, showPremiumAnatomy);
                     }
                 }
             }
