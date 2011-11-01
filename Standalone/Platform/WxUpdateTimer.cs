@@ -12,7 +12,7 @@ namespace Medical
         Int64 totalTime = 0;
         Int64 frameStartTime;
         Int64 lastTime;
-        //Int64 totalFrameTime;
+        Int64 totalFrameTime;
 
         public WxUpdateTimer(SystemTimer systemTimer)
             :base(systemTimer)
@@ -33,7 +33,7 @@ namespace Medical
             totalTime = 0;
             frameStartTime = 0;
             lastTime = systemTimer.getCurrentTime();
-            //totalFrameTime = 0;
+            totalFrameTime = 0;
 
             started = true;
 
@@ -70,12 +70,13 @@ namespace Medical
                 lastTime = frameStartTime;
 
                 //cap the framerate if required
-                //totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
-                //while (totalFrameTime < framerateCap)
-                //{
-                //    Thread.Sleep((int)((framerateCap - totalFrameTime) / 1000));
-                //    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
-                //}
+                totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
+                while (totalFrameTime < framerateCap)
+                {
+                    long sleepTime = framerateCap - totalFrameTime;
+                    System.Threading.Thread.Sleep((int)(sleepTime / 1000));
+                    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
+                }
             }
             else
             {

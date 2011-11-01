@@ -20,6 +20,15 @@ namespace Medical.GUI
             this.Download = downloadController.downloadPlatformUpdate(Version, this);
         }
 
+        public override void downloadCompleted(Medical.Download download)
+        {
+            if (!download.Cancel)
+            {
+                requestRestart("You will be prompted to install the update when you close Anomalous Medical.");
+            }
+            base.downloadCompleted(download);
+        }
+
         public Version Version { get; private set; }
     }
 }
