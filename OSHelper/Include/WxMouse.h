@@ -30,12 +30,14 @@ public:
 private:
 	void OnMouseLeftDown(wxEvent& evt)
     {
+		window->CaptureMouse();
         mouseButtonDownCB(MB_BUTTON0);
     }
 
     void OnMouseLeftUp(wxEvent& evt)
     {
         mouseButtonUpCB(MB_BUTTON0);
+		window->ReleaseMouse();
     }
 
     void OnMouseLeftDouble(wxEvent& evt)
@@ -46,12 +48,14 @@ private:
 
     void OnMouseRightDown(wxEvent& evt)
     {
+		window->CaptureMouse();
         mouseButtonDownCB(MB_BUTTON1);
     }
 
     void OnMouseRightUp(wxEvent& evt)
     {
         mouseButtonUpCB(MB_BUTTON1);
+		window->ReleaseMouse();
     }
 
     void OnMouseRightDouble(wxEvent& evt)
@@ -62,12 +66,14 @@ private:
 
     void OnMouseMiddleDown(wxEvent& evt)
     {
+		window->CaptureMouse();
         mouseButtonDownCB(MB_BUTTON2);
     }
 
     void OnMouseMiddleUp(wxEvent& evt)
     {
         mouseButtonUpCB(MB_BUTTON2);
+		window->ReleaseMouse();
     }
 
     void OnMouseMotion(wxMouseEvent& evt)
@@ -86,4 +92,5 @@ private:
 	MouseMoveDelegate mouseMoveCB;
 	MouseWheelDelegate mouseWheelCB;
 	NativeOSWindow* osWindow;
+	wxWindow* window;
 };

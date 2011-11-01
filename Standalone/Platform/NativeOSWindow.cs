@@ -232,6 +232,7 @@ namespace Medical
 
         private void activate(bool active)
         {
+            Logging.Log.Debug("Window activated {0}", active);
             if (active != this.activated)
             {
                 this.activated = active;

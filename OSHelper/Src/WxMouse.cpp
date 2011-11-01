@@ -7,10 +7,9 @@ WxMouse::WxMouse(NativeOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDo
 mouseButtonDownCB(mouseButtonDownCB),
 mouseButtonUpCB(mouseButtonUpCB),
 mouseMoveCB(mouseMoveCB),
-mouseWheelCB(mouseWheelCB)
+mouseWheelCB(mouseWheelCB),
+window(osWindow)
 {
-	wxWindow* window = osWindow;
-
 	window->Bind(wxEVT_LEFT_DOWN, &WxMouse::OnMouseLeftDown, this);
 	window->Bind(wxEVT_LEFT_UP, &WxMouse::OnMouseLeftUp, this);
 	window->Bind(wxEVT_LEFT_DCLICK, &WxMouse::OnMouseLeftDouble, this); //WxWidgets will block the double click, but we want to fire off the events anyway
@@ -25,6 +24,8 @@ mouseWheelCB(mouseWheelCB)
 	window->Bind(wxEVT_MOTION, &WxMouse::OnMouseMotion, this);
 
 	window->Bind(wxEVT_MOUSEWHEEL, &WxMouse::OnMouseWheel, this);
+
+	//window->Bind(wxEVT_MOUSE_CAPTURE_LOST
 }
 
 WxMouse::~WxMouse(void)
