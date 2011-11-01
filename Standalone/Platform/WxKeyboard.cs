@@ -31,6 +31,7 @@ namespace Medical
         public WxKeyboard(NativeOSWindow window)
         {
             this.window = window;
+            window.Deactivated += new EventHandler(window_Deactivated);
 
             keyDownCB = new KeyDownDelegate(OnKeyDown);
             keyUpCB = new KeyUpDelegate(OnKeyUp);
@@ -126,9 +127,17 @@ namespace Medical
             }
         }
 
+        void window_Deactivated(object sender, EventArgs e)
+        {
+            for (int i = 0; i < keysDown.Length; ++i)
+            {
+                OnKeyUp((KeyboardButtonCode)i);
+            }
+        }
+
         #region PInvoke
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr WxKeyboard_new(IntPtr osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]

@@ -31,6 +31,9 @@ namespace Medical
         IntPtr nativeWindow;
 
         public event EventHandler Closed;
+        public event EventHandler Activated;
+        public event EventHandler Deactivated;
+        private bool activated = true;
 
         public NativeOSWindow(String title, Point position, Size size)
             :this(null, title, position, size, false)
@@ -229,7 +232,24 @@ namespace Medical
 
         private void activate(bool active)
         {
-            Logging.Log.Debug("Active {0}", active);
+            if (active != this.activated)
+            {
+                this.activated = active;
+                if (activated)
+                {
+                    if (Activated != null)
+                    {
+                        Activated.Invoke(this, EventArgs.Empty);
+                    }
+                }
+                else
+                {
+                    if (Deactivated != null)
+                    {
+                        Deactivated.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
         }
 
         #region PInvoke
