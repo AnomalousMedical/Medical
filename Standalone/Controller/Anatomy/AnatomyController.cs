@@ -33,7 +33,7 @@ namespace Medical
         private AnatomyPickingMode pickingMode;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
         public event EventDelegate<AnatomyController, bool> ShowPremiumAnatomyChanged;
-        private bool showPremiumAnatomy = false;
+        private bool showPremiumAnatomy = true;
 
         public AnatomyController(ImageRenderer imageRenderer)
         {

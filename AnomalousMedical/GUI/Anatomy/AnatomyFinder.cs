@@ -234,7 +234,7 @@ namespace Medical.GUI
                     }
                     foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
                     {
-                        if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
+                        if (tagGroup.ShowInClickSearch && (showPremium || tagGroup.ShowInBasicVersion) && anatomyTags.Contains(tagGroup.AnatomicalName))
                         {
                             addAnatomyToList(tagGroup);
                         }

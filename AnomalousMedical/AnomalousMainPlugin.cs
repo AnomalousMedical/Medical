@@ -61,7 +61,13 @@ namespace Medical.GUI
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
-            guiManager.TaskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
+            bool hasPremium = licenseManager.allowFeature(1);
+            if(!hasPremium)
+            {
+                guiManager.TaskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
+            }
+            standaloneController.AnatomyController.ShowPremiumAnatomy = hasPremium;
+            guiManager.TaskMenu.ShowAdImage = !hasPremium;
 
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
