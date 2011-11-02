@@ -27,7 +27,6 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
-        private UpdateGUI updateGUI = null;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -41,10 +40,6 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            if (updateGUI != null)
-            {
-                updateGUI.Dispose();
-            }
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             //renderDialog.Dispose();
@@ -259,20 +254,7 @@ namespace Medical.GUI
         {
             if (hasUpdate)
             {
-                updateGUI = new UpdateGUI(downloadsTask);
-                Taskbar taskbar = standaloneController.GUIManager.Taskbar;
-                switch (taskbar.Alignment)
-                {
-                    case TaskbarAlignment.Top:
-                        updateGUI.show(Gui.Instance.getViewWidth() - updateGUI.Width, taskbar.Height);
-                        break;
-                    case TaskbarAlignment.Right:
-                        updateGUI.show(Gui.Instance.getViewWidth() - updateGUI.Width - taskbar.Width, 0);
-                        break;
-                    default:
-                        updateGUI.show(Gui.Instance.getViewWidth() - updateGUI.Width, 0);
-                        break;
-                }
+                standaloneController.GUIManager.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }
         }
     }

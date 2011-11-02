@@ -303,6 +303,9 @@
     <Compile Include="GUI\FullscreenGUIPopup.cs" />
     <Compile Include="GUI\GUITaskManager.cs" />
     <Compile Include="GUI\GUITimelineTaskManager.cs" />
+    <Compile Include="GUI\Notification\NotificationGUI.cs" />
+    <Compile Include="GUI\Notification\NotificationGUIManager.cs" />
+    <Compile Include="GUI\Notification\StartTaskNotification.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
@@ -483,6 +486,7 @@
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
+    <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="Resources\DegenerationImages.png" />
     <EmbeddedResource Include="Resources\TeethMovementIcons.xml" />
     <EmbeddedResource Include="Resources\DegenerationImages.xml" />

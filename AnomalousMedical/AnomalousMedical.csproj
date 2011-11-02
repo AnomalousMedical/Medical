@@ -131,7 +131,6 @@
     <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
-    <Compile Include="GUI\UpdateGUI\UpdateGUI.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -142,7 +141,6 @@
     <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
-    <EmbeddedResource Include="GUI\UpdateGUI\UpdateGUI.layout" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />
     <None Include="app.config" />
     <None Include="Properties\AnomalousMedical.manifest" />

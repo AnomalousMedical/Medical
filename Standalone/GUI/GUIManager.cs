@@ -39,6 +39,7 @@ namespace Medical.GUI
         private MyGUITextDisplayFactory textDisplayFactory;
         private List<FullscreenGUIPopup> fullscreenPopups = new List<FullscreenGUIPopup>();
         private MyGUIImageRendererProgress imageRendererProgress;
+        private NotificationGUIManager notificationManager;
 
         //Helper classes
         GUITaskManager guiTaskManager;
@@ -75,6 +76,7 @@ namespace Medical.GUI
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             taskMenu.Dispose();
             taskbar.Dispose();
+            notificationManager.Dispose();
         }
 
         public void createGUI(MDILayoutManager mdiManager)
@@ -107,6 +109,8 @@ namespace Medical.GUI
             taskbar.Child = timelineGUITaskbar;
             timelineGUITaskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
+
+            notificationManager = new NotificationGUIManager(taskbar);
 
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController);
@@ -280,6 +284,14 @@ namespace Medical.GUI
             get
             {
                 return taskMenu;
+            }
+        }
+
+        public NotificationGUIManager NotificationManager
+        {
+            get
+            {
+                return notificationManager;
             }
         }
 
