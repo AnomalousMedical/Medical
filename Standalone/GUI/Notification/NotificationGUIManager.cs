@@ -42,6 +42,22 @@ namespace Medical.GUI
             relayoutNotifications();
         }
 
+        internal void hideAllNotifications()
+        {
+            foreach (NotificationGUI openNotification in openNotifications)
+            {
+                openNotification.hide();
+            }
+        }
+
+        internal void reshowAllNotifications()
+        {
+            foreach (NotificationGUI openNotification in openNotifications)
+            {
+                openNotification.show(openNotification.Left, openNotification.Top);
+            }
+        }
+
         private void positionNotification(NotificationGUI notification)
         {
             int additionalHeightOffset = 0;

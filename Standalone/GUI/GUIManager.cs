@@ -227,6 +227,7 @@ namespace Medical.GUI
                     taskbar.Visible = true;
                     timelineGUITaskbar.Visible = false;
                     dialogManager.reopenMainGUIDialogs();
+                    notificationManager.reshowAllNotifications();
                 }
                 else
                 {
@@ -236,6 +237,7 @@ namespace Medical.GUI
                     }
                     taskbar.Visible = false;
                     dialogManager.closeMainGUIDialogs();
+                    notificationManager.hideAllNotifications();
                 }
                 mainGuiShowing = enabled;
                 taskbar.SuppressLayout = false;

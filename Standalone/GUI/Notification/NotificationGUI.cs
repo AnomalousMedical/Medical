@@ -25,9 +25,6 @@ namespace Medical.GUI
 
             StaticImage image = (StaticImage)widget.findWidget("Image");
             image.setItemResource(imageKey);
-
-            this.Hiding += new EventHandler(NotificationGUI_Hiding);
-            this.Hidden += new EventHandler(NotificationGUI_Hidden);
         }
 
         protected virtual void clicked()
@@ -37,11 +34,15 @@ namespace Medical.GUI
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            this.Hiding += new EventHandler(NotificationGUI_Hiding);
+            this.Hidden += new EventHandler(NotificationGUI_Hidden);
             this.hide();
         }
 
         void widget_MouseButtonClick(Widget source, EventArgs e)
         {
+            this.Hiding += new EventHandler(NotificationGUI_Hiding);
+            this.Hidden += new EventHandler(NotificationGUI_Hidden);
             clicked();
             this.hide();
         }
