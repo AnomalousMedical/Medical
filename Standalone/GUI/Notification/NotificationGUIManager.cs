@@ -39,22 +39,42 @@ namespace Medical.GUI
         internal void notificationClosed(NotificationGUI notification)
         {
             openNotifications.Remove(notification);
+            relayoutNotifications();
         }
 
         private void positionNotification(NotificationGUI notification)
         {
+            int additionalHeightOffset = 0;
+            foreach(NotificationGUI openNotification in openNotifications)
+            {
+                additionalHeightOffset += openNotification.Height;
+            }
             openNotifications.Add(notification);
             switch (taskbar.Alignment)
             {
                 case TaskbarAlignment.Top:
-                    notification.show(Gui.Instance.getViewWidth() - notification.Width, taskbar.Height);
+                    notification.show(Gui.Instance.getViewWidth() - notification.Width, taskbar.Height + additionalHeightOffset);
                     break;
                 case TaskbarAlignment.Right:
-                    notification.show(Gui.Instance.getViewWidth() - notification.Width - taskbar.Width, 0);
+                    notification.show(Gui.Instance.getViewWidth() - notification.Width - taskbar.Width, additionalHeightOffset);
                     break;
                 default:
-                    notification.show(Gui.Instance.getViewWidth() - notification.Width, 0);
+                    notification.show(Gui.Instance.getViewWidth() - notification.Width, additionalHeightOffset);
                     break;
+            }
+        }
+
+        private void relayoutNotifications()
+        {
+            int currentHeight = 0;
+            if (taskbar.Alignment == TaskbarAlignment.Top)
+            {
+                currentHeight = taskbar.Height;
+            }
+            foreach (NotificationGUI openNotification in openNotifications)
+            {
+                openNotification.setPosition(openNotification.Left, currentHeight);
+                currentHeight += openNotification.Height;
             }
         }
     }
