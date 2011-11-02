@@ -77,7 +77,7 @@ namespace Medical
                 bool foundUpdate = false;
                 try
                 {
-                    Version localVersion = UpdateController.CurrentVersion;
+                    Version localVersion = CurrentVersion > DownloadedVersion ? CurrentVersion : DownloadedVersion;
                     HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.UpdateCheckURL));
                     request.Timeout = 60000;
                     request.Method = "POST";
