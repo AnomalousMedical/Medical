@@ -34,7 +34,7 @@ namespace Medical
         {
             try
             {
-                Process.Start(PlatformConfig.RestartExecutable);
+                Process.Start(PlatformConfig.RestartProcInfo);
             }
             catch (Exception e)
             {

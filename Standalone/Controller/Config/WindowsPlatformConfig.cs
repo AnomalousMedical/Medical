@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Logging;
+using System.Diagnostics;
 
 namespace Medical
 {
@@ -135,12 +136,12 @@ namespace Medical
             }
         }
 
-        protected override String RestartExecutableImpl
+        protected override ProcessStartInfo RestartProcInfoImpl
         {
             get
             {
                 String[] args = Environment.GetCommandLineArgs();
-                return args[0];
+                return new ProcessStartInfo(args[0]);
             }
         }
     }

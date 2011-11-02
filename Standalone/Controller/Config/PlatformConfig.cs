@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace Medical
 {
@@ -143,11 +144,11 @@ namespace Medical
             }
         }
 
-        public static String RestartExecutable
+        public static ProcessStartInfo RestartProcInfo
         {
             get
             {
-                return currentConfig.RestartExecutableImpl;
+                return currentConfig.RestartProcInfoImpl;
             }
         }
 
@@ -186,7 +187,7 @@ namespace Medical
 
         protected abstract String OverrideFileLocationImpl { get; }
 
-        protected abstract String RestartExecutableImpl { get; }
+        protected abstract ProcessStartInfo RestartProcInfoImpl { get; }
 
         #region PInvoke
 

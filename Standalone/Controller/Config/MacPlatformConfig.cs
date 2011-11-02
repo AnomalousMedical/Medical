@@ -8,6 +8,7 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.IO;
+using System.Diagnostics;
 
 namespace Medical
 {
@@ -146,11 +147,18 @@ namespace Medical
             }
         }
 
-        protected override String RestartExecutableImpl
+        protected override ProcessStartInfo RestartProcInfoImpl
         {
             get
             {
-                return Path.GetFullPath("../../MacOS/AnomalousMedical");
+                String appBundle = Path.GetFullPath("../../");
+                if (appBundle.Length > 1)
+                {
+                    appBundle = appBundle.Substring(0, appBundle.Length - 1);
+                }
+                ProcessStartInfo startInfo = new ProcessStartInfo("open", String.Format("-a '{0}' -n", appBundle));
+                startInfo.UseShellExecute = false;
+                return startInfo;
             }
         }
     }
