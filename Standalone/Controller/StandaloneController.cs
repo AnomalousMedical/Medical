@@ -299,6 +299,19 @@ namespace Medical
 			}
         }
 
+        public void restart()
+        {
+            if (!shuttingDown)
+            {
+                shuttingDown = true;
+                if (PlatformConfig.CloseMainWindowOnShutdown)
+                {
+                    mainWindow.close();
+                }
+                app.restart();
+            }
+        }
+
         /// <summary>
         /// Opens a scene as a "new" scene by opening the given file and clearing the states.
         /// </summary>
@@ -502,7 +515,7 @@ namespace Medical
             //window.Handle.addListener(windowListener);
             //basicGUI.windowChanged(window.Handle);
 
-            MessageBox.show("You will need to restart the program to apply your settings.\nWould you like to shut down now?", "Apply Changes?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, displayParameterChangeCallback);
+            MessageBox.show("You will need to restart the program to apply your settings.\nWould you like to restart now?", "Apply Changes?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, displayParameterChangeCallback);
         }
 
         public void saveCrashLog()
@@ -517,7 +530,7 @@ namespace Medical
         {
             if (result == MessageBoxStyle.Yes)
             {
-                this.exit();
+                this.restart();
             }
         }
 

@@ -23,6 +23,8 @@ namespace Medical
 
         IntPtr appPtr;
 
+        protected bool restartOnShutdown = false;
+
         public App()
         {
             appPtr = App_create();
@@ -48,6 +50,12 @@ namespace Medical
         public void exit()
         {
             App_exit(appPtr);
+        }
+
+        public void restart()
+        {
+            exit();
+            restartOnShutdown = true;
         }
 
         public abstract bool OnInit();

@@ -145,5 +145,13 @@ namespace Medical
                 return "../../../override.ini";
             }
         }
+
+        protected override String RestartExecutableImpl
+        {
+            get
+            {
+                return Path.GetFullPath("../../MacOS/AnomalousMedical");
+            }
+        }
     }
 }

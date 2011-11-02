@@ -30,8 +30,12 @@ namespace Medical
 
         public override int OnExit()
         {
-            UpdateController.promptForUpdate();
+            bool applyingUpdate = UpdateController.promptForUpdate();
             controller.Dispose();
+            if (restartOnShutdown && !applyingUpdate)
+            {
+                OtherProcessManager.restart();
+            }
             return 0;
         }
 

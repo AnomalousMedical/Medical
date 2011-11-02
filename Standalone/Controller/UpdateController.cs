@@ -114,7 +114,11 @@ namespace Medical
             updateInfo.writeConfigFile();
         }
 
-        public static void promptForUpdate()
+        /// <summary>
+        /// Prompt the user for an update. Return true if the update was started.
+        /// </summary>
+        /// <returns></returns>
+        public static bool promptForUpdate()
         {
             if (CurrentVersion < DownloadedVersion && !String.IsNullOrEmpty(InstallFile) && File.Exists(InstallFile))
             {
@@ -123,6 +127,7 @@ namespace Medical
                     try
                     {
                         Process.Start(InstallFile);
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -130,6 +135,7 @@ namespace Medical
                     }
                 }
             }
+            return false;
         }
     }
 }

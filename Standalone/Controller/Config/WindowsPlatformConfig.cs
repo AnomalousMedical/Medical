@@ -134,5 +134,14 @@ namespace Medical
                 return "override.ini";
             }
         }
+
+        protected override String RestartExecutableImpl
+        {
+            get
+            {
+                String[] args = Environment.GetCommandLineArgs();
+                return args[0];
+            }
+        }
     }
 }

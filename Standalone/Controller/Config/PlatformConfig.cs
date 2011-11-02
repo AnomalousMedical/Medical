@@ -143,6 +143,14 @@ namespace Medical
             }
         }
 
+        public static String RestartExecutable
+        {
+            get
+            {
+                return currentConfig.RestartExecutableImpl;
+            }
+        }
+
         public static OperatingSystem OsId { get; private set; }
 
         //Subclass
@@ -177,6 +185,8 @@ namespace Medical
         protected abstract KeyboardButtonCode PanKeyImpl { get; }
 
         protected abstract String OverrideFileLocationImpl { get; }
+
+        protected abstract String RestartExecutableImpl { get; }
 
         #region PInvoke
 
