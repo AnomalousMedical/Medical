@@ -178,7 +178,7 @@ namespace Medical.GUI
             ButtonGridItem selectedItem = anatomyList.SelectedItem;
             if (selectedItem != null)
             {
-                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject, left, top);
+                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject, left, top, window.Left, window.Right, window.Top, window.Bottom);
             }
             else
             {

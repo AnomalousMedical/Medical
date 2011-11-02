@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Medical.Controller;
+using MyGUIPlugin;
 
 namespace Medical.GUI
 {
@@ -46,7 +47,7 @@ namespace Medical.GUI
             }
         }
 
-        public AnatomyContextWindow showWindow(Anatomy anatomy, int left, int top)
+        public AnatomyContextWindow showWindow(Anatomy anatomy, int left, int top, int deadzoneLeft, int deadzoneRight, int deadzoneTop, int deadzoneBottom)
         {
             if (currentAnatomyWindow == null)
             {
@@ -55,6 +56,26 @@ namespace Medical.GUI
             }
             currentAnatomyWindow.show(left, top);
             currentAnatomyWindow.Anatomy = anatomy;
+            int windowTop = currentAnatomyWindow.Top;
+            int windowBottom = windowTop + currentAnatomyWindow.Height;
+            int windowLeft = currentAnatomyWindow.Left;
+            int windowWidth = currentAnatomyWindow.Width;
+            int windowRight = windowLeft + windowWidth;
+            //Check to see if the window is in the dead zone.
+            if (((windowTop > deadzoneTop && windowTop < deadzoneBottom) ||
+                (windowBottom > deadzoneTop && windowBottom < deadzoneBottom)) &&
+                ((windowLeft > deadzoneLeft && windowLeft < deadzoneRight) ||
+                (windowRight > deadzoneLeft && windowRight < deadzoneRight)))
+            {
+                if (windowWidth < Gui.Instance.getViewWidth() - deadzoneRight)
+                {
+                    currentAnatomyWindow.setPosition(deadzoneRight, currentAnatomyWindow.Top);
+                }
+                else
+                {
+                    currentAnatomyWindow.setPosition(deadzoneLeft - windowWidth, currentAnatomyWindow.Top);
+                }
+            }
             beforeFocusLayerState = null;
             return currentAnatomyWindow;
         }
