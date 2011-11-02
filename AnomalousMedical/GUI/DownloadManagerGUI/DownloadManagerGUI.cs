@@ -251,6 +251,10 @@ namespace Medical.GUI
                     displayRestartMessage = false;
                     autoStartUpdate = false;
                 }
+                else if (!Visible)
+                {
+                    notificationManager.showNotification(String.Format("{0} has finished downloading.", downloadInfo.Name), "AnomalousMedical/Download");
+                }
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
