@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -25,6 +26,21 @@ namespace Medical.GUI
 
             StaticImage image = (StaticImage)widget.findWidget("Image");
             image.setItemResource(imageKey);
+
+            //Setup size
+            Size2 textSize = staticText.getTextSize();
+            if (textSize.Width < staticText.Width)
+            {
+                textSize.Width = staticText.Width;
+            }
+            if (textSize.Height < staticText.Height)
+            {
+                textSize.Height = staticText.Height;
+            }
+            int widthDelta = widget.Width - staticText.Width;
+            int heightDelta = widget.Height - staticText.Height;
+
+            widget.setSize((int)textSize.Width + widthDelta, (int)textSize.Height + heightDelta);
         }
 
         protected virtual void clicked()

@@ -7,6 +7,7 @@
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="39 5 144 29" align="Stretch" name="Text">
             <Property key="Widget_NeedMouse" value="false"/>
+            <Property key="Text_TextAlign" value="Left VCenter"/>
         </Widget>
     </Widget>
 </MyGUI>
