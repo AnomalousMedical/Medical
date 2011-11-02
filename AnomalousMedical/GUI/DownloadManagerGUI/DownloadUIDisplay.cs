@@ -11,6 +11,6 @@ namespace Medical.GUI
         void downloadSuccessful(ServerDownloadInfo downloadInfo);
         void downloadFailed(ServerDownloadInfo downloadInfo);
         void downloadCanceled(ServerDownloadInfo downloadInfo);
-        void requestRestart(ServerDownloadInfo downloadInfo, String restartMessage);
+        void requestRestart(ServerDownloadInfo downloadInfo, String restartMessage, bool startPlatformUpdate);
     }
 }

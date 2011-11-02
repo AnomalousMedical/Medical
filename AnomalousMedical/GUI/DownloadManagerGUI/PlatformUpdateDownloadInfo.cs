@@ -24,7 +24,7 @@ namespace Medical.GUI
         {
             if (!download.Cancel)
             {
-                requestRestart("You will be prompted to install the update when you close Anomalous Medical.");
+                requestRestart("Please restart to install the Anomalous Medical update.", true);
             }
             base.downloadCompleted(download);
         }

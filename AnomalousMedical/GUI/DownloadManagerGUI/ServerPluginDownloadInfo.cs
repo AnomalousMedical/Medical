@@ -32,7 +32,7 @@ namespace Medical.GUI
             }
             else if(!download.Cancel)
             {
-                requestRestart("You must restart Anomalous Medical in order to use some of the plugins you have downloaded.");
+                requestRestart("A plugin you have downloaded requires Anomalous Medical to restart.", false);
             }
             base.downloadCompleted(download);
         }

@@ -79,11 +79,11 @@ namespace Medical.GUI
             }
         }
 
-        protected void requestRestart(String restartMessage)
+        protected void requestRestart(String restartMessage, bool startPlatformUpdate)
         {
             if (uiDisplay != null)
             {
-                uiDisplay.requestRestart(this, restartMessage);
+                uiDisplay.requestRestart(this, restartMessage, startPlatformUpdate);
             }
         }
 

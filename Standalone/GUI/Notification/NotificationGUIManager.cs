@@ -10,10 +10,12 @@ namespace Medical.GUI
     {
         private Taskbar taskbar;
         private List<NotificationGUI> openNotifications = new List<NotificationGUI>();
+        private StandaloneController standaloneController;
 
-        public NotificationGUIManager(Taskbar taskbar)
+        public NotificationGUIManager(Taskbar taskbar, StandaloneController standaloneController)
         {
             this.taskbar = taskbar;
+            this.standaloneController = standaloneController;
         }
 
         public void Dispose()
@@ -33,6 +35,12 @@ namespace Medical.GUI
         public void showTaskNotification(String text, String imageKey, Task task)
         {
             NotificationGUI notification = new StartTaskNotification(text, imageKey, this, task);
+            positionNotification(notification);
+        }
+
+        public void showRestartNotification(String text, String imageKey, bool autoStartPlatformUpdate)
+        {
+            NotificationGUI notification = new RestartNotification(text, imageKey, this, standaloneController, autoStartPlatformUpdate);
             positionNotification(notification);
         }
 

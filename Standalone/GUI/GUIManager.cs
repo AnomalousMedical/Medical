@@ -110,7 +110,7 @@ namespace Medical.GUI
             timelineGUITaskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
 
-            notificationManager = new NotificationGUIManager(taskbar);
+            notificationManager = new NotificationGUIManager(taskbar, standaloneController);
 
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController);

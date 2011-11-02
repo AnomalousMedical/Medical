@@ -27,9 +27,10 @@ namespace Medical.GUI
         private bool addedInstalledPlugins = false;
         private bool readingServerPluginInfo = false;
         private bool displayRestartMessage = false;
-        private bool allowRestartMessageDisplay = true;
+        private bool autoStartUpdate = false;
         private String restartMessage = "";
         private DownloadManagerServer downloadServer;
+        private NotificationGUIManager notificationManager;
 
         public DownloadManagerGUI(AtlasPluginManager pluginManager, DownloadManagerServer downloadServer, DownloadController downloadController, GUIManager guiManager)
             : base("Medical.GUI.DownloadManagerGUI.DownloadManagerGUI.layout", guiManager)
@@ -37,6 +38,7 @@ namespace Medical.GUI
             this.pluginManager = pluginManager;
             this.downloadController = downloadController;
             this.downloadServer = downloadServer;
+            this.notificationManager = guiManager.NotificationManager;
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
@@ -245,15 +247,9 @@ namespace Medical.GUI
 
                 if (!downloadController.Downloading && displayRestartMessage)
                 {
+                    notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate);
                     displayRestartMessage = false;
-                    if (allowRestartMessageDisplay)
-                    {
-                        allowRestartMessageDisplay = false;
-                        MessageBox.show(restartMessage, "Restart Required", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok, new MessageBox.MessageClosedDelegate(delegate(MessageBoxStyle result)
-                        {
-                            allowRestartMessageDisplay = true;
-                        }));
-                    }
+                    autoStartUpdate = false;
                 }
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
@@ -287,10 +283,14 @@ namespace Medical.GUI
             }
         }
 
-        public void requestRestart(ServerDownloadInfo downloadInfo, String message)
+        public void requestRestart(ServerDownloadInfo downloadInfo, String message, bool startPlatformUpdate)
         {
-            displayRestartMessage = true;
-            restartMessage = message;
+            if (!autoStartUpdate)
+            {
+                autoStartUpdate = startPlatformUpdate;
+                displayRestartMessage = true;
+                restartMessage = message;
+            }
         }
 
         #endregion

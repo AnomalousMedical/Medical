@@ -33,6 +33,7 @@ namespace Medical
                 DownloadedVersion = new Version(0, 0, 0, 0);
             }
             InstallFile = updateSection.getValue("File", "");
+            AutoStartUpdate = false;
         }
 
         private UpdateController()
@@ -41,6 +42,13 @@ namespace Medical
         }
 
         public static Version CurrentVersion { get; set; }
+
+        /// <summary>
+        /// If this is false the user will be prompted to start the update. If
+        /// this is true it will start automatically when promptForUpdate is
+        /// called.
+        /// </summary>
+        public static bool AutoStartUpdate { get; set; }
 
         public static Version DownloadedVersion { get; private set; }
 
@@ -122,7 +130,7 @@ namespace Medical
         {
             if (CurrentVersion < DownloadedVersion && !String.IsNullOrEmpty(InstallFile) && File.Exists(InstallFile))
             {
-                if (MessageDialog.showQuestionDialog(String.Format("A new version of the Anomalous Medical Platform {0} has been downloaded. Would you like to install it?", DownloadedVersion), "Update?") == NativeDialogResult.YES)
+                if (AutoStartUpdate || MessageDialog.showQuestionDialog(String.Format("A new version of the Anomalous Medical Platform {0} has been downloaded. Would you like to install it?", DownloadedVersion), "Update?") == NativeDialogResult.YES)
                 {
                     try
                     {
