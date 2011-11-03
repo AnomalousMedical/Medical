@@ -74,6 +74,7 @@ namespace Medical
 
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalUserRoot, FolderFinder.AnomalousMedicalAllUserRoot);
             atlasPluginManager = new AtlasPluginManager(this);
+            atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             guiManager = new GUIManager(this);
 
             MyGUIInterface.Theme = PlatformConfig.ThemeFile;
@@ -641,6 +642,11 @@ namespace Medical
         void timelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
         {
             guiManager.setMainInterfaceEnabled(false, !timeline.Fullscreen);
+        }
+
+        void atlasPluginManager_PluginLoadError(string message)
+        {
+            guiManager.NotificationManager.showNotification(message, "pic_CoreMessageIcon");
         }
     }
 }

@@ -34,6 +34,9 @@ namespace Medical
         private static RSACryptoServiceProvider rsaProvider;
         private static SHA1CryptoServiceProvider sha1Provider;
 
+        public delegate void PluginMessageDelegate(String message);
+        public event PluginMessageDelegate PluginLoadError;
+
         static AtlasPluginManager()
         {
             rsaProvider = new RSACryptoServiceProvider();
@@ -151,11 +154,14 @@ namespace Medical
                         }
                         else
                         {
-                            Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                            String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                            firePluginLoadError(errorMessage);
+                            Log.Error(errorMessage);
                         }
                     }
                     catch (Exception e)
                     {
+                        firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.\nPlease download it again from My Downloads.", dllFileName));
                         Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
                         try
                         {
@@ -193,9 +199,9 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
+                String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
                 try
                 {
-                    String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
                     if (!loadedPluginNames.Contains(dataFileName))
                     {
                         //Add the archive to the VirtualFileSystem if needed
@@ -214,6 +220,7 @@ namespace Medical
                 }
                 catch (ZipAccess.ZipIOException e)
                 {
+                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.\nPlease download it again from My Downloads.", dataFileName));
                     Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
                     try
                     {
@@ -393,6 +400,7 @@ namespace Medical
                 }
                 catch (Exception e)
                 {
+                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.\nPlease download it again from My Downloads.", plugin.PluginName));
                     Log.Error("Cannot load plugin '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", plugin.PluginName, plugin.Location, e.Message);
                     try
                     {
@@ -494,6 +502,14 @@ namespace Medical
             catch (Exception writeInstructionsEx)
             {
                 Log.Error("Could not write plugin management instructions to '{0}' because {1}.", MedicalConfig.PluginConfig.ManagePluginsFile, writeInstructionsEx.Message);
+            }
+        }
+
+        private void firePluginLoadError(String message)
+        {
+            if (PluginLoadError != null)
+            {
+                PluginLoadError.Invoke(message);
             }
         }
     }
