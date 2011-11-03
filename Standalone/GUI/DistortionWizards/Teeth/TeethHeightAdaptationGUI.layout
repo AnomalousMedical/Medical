@@ -56,13 +56,13 @@
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="4 206 344 48">
-                <Property key="Widget_Caption" value="Click the button to automatically adapt the teeth to fit the profile you have created. Click it again to stop the adaptation if it is suitable."/>
+            <Widget type="Edit" skin="WordWrapSimple" position="4 287 344 48">
+                <Property key="Widget_Caption" value="Click the Tooth Intrusion button to automatically intrude the teeth to fit the profile you have created. Click it again to stop the adaptation if it is suitable."/>
                 <Property key="Edit_Static" value="true"/>
                 <Property key="Edit_ReadOnly" value="true"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 253 98 30" name="TeethMovmentPanel/AdaptButton">
-                <Property key="Widget_Caption" value="Adapt Teeth"/>
+            <Widget type="Button" skin="Button" position="4 337 106 30" name="TeethMovmentPanel/AdaptButton">
+                <Property key="Widget_Caption" value="Tooth Intrusion"/>
                 <Property key="Text_TextAlign" value="Center"/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 410 88 30" name="TeethAdaptPanel/UndoButton">
@@ -71,15 +71,15 @@
             <Widget type="Button" skin="Button" position="96 410 98 30" name="TeethAdaptPanel/MakeNormalButton">
                 <Property key="Widget_Caption" value="Make Normal"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="4 287 344 46">
+            <Widget type="Edit" skin="WordWrapSimple" position="4 205 344 46">
                 <Property key="Edit_ReadOnly" value="true"/>
                 <Property key="Edit_Static" value="true"/>
                 <Property key="Widget_Caption" value="Manually move the teeth to fine tune their positions.\nOr manually move and rotate the teeth to match your patient exactly."/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 335 141 30" name="TeethMovmentPanel/MoveButton">
+            <Widget type="Button" skin="Button" position="4 255 141 30" name="TeethMovmentPanel/MoveButton">
                 <Property key="Widget_Caption" value="Linear Movements"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="146 335 141 30" name="TeethMovmentPanel/RotateButton">
+            <Widget type="Button" skin="Button" position="148 255 141 30" name="TeethMovmentPanel/RotateButton">
                 <Property key="Widget_Caption" value="Rotational Movements"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="4 369 344 39" layer="Back" name="GridControl">
