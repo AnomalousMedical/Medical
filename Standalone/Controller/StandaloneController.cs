@@ -646,7 +646,16 @@ namespace Medical
 
         void atlasPluginManager_PluginLoadError(string message)
         {
-            guiManager.NotificationManager.showNotification(message, "pic_CoreMessageIcon");
+            //At this point the plugins have not actually been loaded, so we must use a callback and have the downloadController fire its gui open task.
+            //At the point where these can be clicked that task will be defined.
+            guiManager.NotificationManager.showCallbackNotification(String.Format("{0}\nClick here to download a working version.", message), "pic_CoreMessageIcon", delegate()
+            {
+                Task downloadGUITask = downloadController.OpenDownloadGUITask;
+                if (downloadGUITask != null)
+                {
+                    downloadGUITask.clicked(null);
+                }
+            });
         }
     }
 }

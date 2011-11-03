@@ -161,7 +161,7 @@ namespace Medical
                     }
                     catch (Exception e)
                     {
-                        firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.\nPlease download it again from My Downloads.", dllFileName));
+                        firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
                         Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
                         try
                         {
@@ -220,7 +220,7 @@ namespace Medical
                 }
                 catch (ZipAccess.ZipIOException e)
                 {
-                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.\nPlease download it again from My Downloads.", dataFileName));
+                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
                     Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
                     try
                     {
@@ -400,7 +400,7 @@ namespace Medical
                 }
                 catch (Exception e)
                 {
-                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.\nPlease download it again from My Downloads.", plugin.PluginName));
+                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", plugin.PluginName));
                     Log.Error("Cannot load plugin '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", plugin.PluginName, plugin.Location, e.Message);
                     try
                     {

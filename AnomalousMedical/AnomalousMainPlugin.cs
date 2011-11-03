@@ -105,6 +105,7 @@ namespace Medical.GUI
             taskController.addTask(shopTaskItem);
 
             downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.AnomalousMedical, int.MaxValue - 5);
+            standaloneController.DownloadController.OpenDownloadGUITask = downloadsTask;
             taskController.addTask(downloadsTask);
 
             CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.AnomalousMedical, int.MaxValue - 4, false);

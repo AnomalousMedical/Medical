@@ -44,6 +44,12 @@ namespace Medical.GUI
             positionNotification(notification);
         }
 
+        public void showCallbackNotification(String text, String imageKey, Action clickedCallback)
+        {
+            NotificationGUI notification = new CallbackNotificationGUI(text, imageKey, this, clickedCallback);
+            positionNotification(notification);
+        }
+
         internal void notificationClosed(NotificationGUI notification)
         {
             openNotifications.Remove(notification);
