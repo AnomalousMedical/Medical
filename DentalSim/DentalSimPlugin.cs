@@ -7,6 +7,7 @@ using Engine.ObjectManagement;
 using Medical.GUI;
 using MyGUIPlugin;
 using DentalSim.GUI;
+using Medical.Controller;
 
 namespace DentalSim
 {
@@ -15,9 +16,18 @@ namespace DentalSim
         //Dialogs
         private MandibleMovementDialog mandibleMovementDialog;
 
+        private List<String> movementSequenceDirectories = new List<string>();
+        private StandaloneController standaloneController;
+
         public DentalSimPlugin()
         {
-
+            //This is temporary cruft from the old system.
+            movementSequenceDirectories.Add("/Graphics");
+            movementSequenceDirectories.Add("/MRI");
+            movementSequenceDirectories.Add("/RadiographyCT");
+            movementSequenceDirectories.Add("/Clinical");
+            movementSequenceDirectories.Add("/DentitionProfile");
+            movementSequenceDirectories.Add("/Doppler");
         }
 
         public void Dispose()
@@ -32,6 +42,8 @@ namespace DentalSim
 
         public void initialize(StandaloneController standaloneController)
         {
+            this.standaloneController = standaloneController;
+
             GUIManager guiManager = standaloneController.GUIManager;
             Gui.Instance.load("DentalSim.Resources.Imagesets.xml");
 
@@ -57,6 +69,15 @@ namespace DentalSim
         public void sceneLoaded(SimScene scene)
         {
             mandibleMovementDialog.sceneLoaded(scene);
+
+            //Load sequences
+            MedicalController medicalController = standaloneController.MedicalController;
+            SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+            SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+            StandaloneApp app = standaloneController.App;
+
+            String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
+            standaloneController.MovementSequenceController.loadSequenceDirectories(sequenceDirectory, movementSequenceDirectories);
         }
 
         public void sceneRevealed()

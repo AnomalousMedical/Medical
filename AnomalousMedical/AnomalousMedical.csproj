@@ -131,6 +131,8 @@
     <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
+    <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
+    <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -141,6 +143,7 @@
     <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
+    <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />
     <None Include="app.config" />
     <None Include="Properties\AnomalousMedical.manifest" />
@@ -167,6 +170,8 @@
     <EmbeddedResource Include="Resources\CorePluginIcon.png" />
     <EmbeddedResource Include="Resources\PremiumAd.png" />
     <EmbeddedResource Include="Resources\PremiumAd.xml" />
+    <EmbeddedResource Include="Resources\SequenceIcons.png" />
+    <EmbeddedResource Include="Resources\SequenceIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

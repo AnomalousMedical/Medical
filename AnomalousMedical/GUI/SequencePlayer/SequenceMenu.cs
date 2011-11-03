@@ -30,9 +30,12 @@ namespace Medical
 
         public void show(int left, int top)
         {
-            sequenceMenu.setVisibleSmooth(true);
-            LayerManager.Instance.upLayerItem(sequenceMenu);
-            sequenceMenu.setPosition(left, top);
+            if (sequenceMenu != null)
+            {
+                sequenceMenu.setVisibleSmooth(true);
+                LayerManager.Instance.upLayerItem(sequenceMenu);
+                sequenceMenu.setPosition(left, top);
+            }
         }
 
         public void hide()

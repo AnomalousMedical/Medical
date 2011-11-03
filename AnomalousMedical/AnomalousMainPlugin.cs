@@ -27,6 +27,7 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
+        private SequencePlayer sequencePlayer;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -47,6 +48,7 @@ namespace Medical.GUI
             anatomyFinder.Dispose();
             chooseSceneDialog.Dispose();
             aboutDialog.Dispose();
+            sequencePlayer.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -84,6 +86,9 @@ namespace Medical.GUI
             //guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController.AtlasPluginManager, downloadServer, standaloneController.DownloadController, guiManager);
+
+            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
+            guiManager.addManagedDialog(sequencePlayer);
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
@@ -125,6 +130,9 @@ namespace Medical.GUI
 
             //Tools Section
             //taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
+
+            MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Tools);
+            taskController.addTask(sequencePlayerTask);
 
             //Navigation Section
             MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation);

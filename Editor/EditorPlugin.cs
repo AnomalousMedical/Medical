@@ -24,9 +24,6 @@ namespace Medical
         private GridPropertiesDialog gridProperties;
         private DDAtlasPluginEditor pluginEditor;
         private AdvancedMandibleMovementDialog advancedMandibleMovement; 
-        private List<String> movementSequenceDirectories = new List<string>();
-
-        private SequencePlayer sequencePlayer;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -39,14 +36,6 @@ namespace Medical
         public EditorPlugin()
         {
             Log.Info("Editor GUI Loaded");
-
-            //This is temporary cruft from the old system.
-            movementSequenceDirectories.Add("/Graphics");
-            movementSequenceDirectories.Add("/MRI");
-            movementSequenceDirectories.Add("/RadiographyCT");
-            movementSequenceDirectories.Add("/Clinical");
-            movementSequenceDirectories.Add("/DentitionProfile");
-            movementSequenceDirectories.Add("/Doppler");
         }
 
         public void Dispose()
@@ -64,7 +53,6 @@ namespace Medical
             aspectRatioTask.Dispose();
             gridProperties.Dispose();
             pluginEditor.Dispose();
-            sequencePlayer.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -125,9 +113,6 @@ namespace Medical
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(advancedMandibleMovement);
 
-            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
-            guiManager.addManagedDialog(sequencePlayer);
-
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -144,9 +129,6 @@ namespace Medical
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
-
-            MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Editor);
-            taskController.addTask(sequencePlayerTask);
         }
 
         public void sceneLoaded(SimScene scene)
@@ -154,15 +136,6 @@ namespace Medical
             advancedMandibleMovement.sceneLoaded(scene);
             propMover.sceneLoaded(scene);
             discControl.sceneLoaded(scene);
-
-            //Load sequences
-            MedicalController medicalController = standaloneController.MedicalController;
-            SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
-            SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-            StandaloneApp app = standaloneController.App;
-
-            String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
-            standaloneController.MovementSequenceController.loadSequenceDirectories(sequenceDirectory, movementSequenceDirectories);
         }
 
         public void sceneUnloading(SimScene scene)
