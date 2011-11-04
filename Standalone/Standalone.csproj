@@ -130,6 +130,7 @@
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />
     <Compile Include="Controller\MedicalStates\PatientData.cs" />
+    <Compile Include="Controller\MovementSequence\EmbeddedMovementSequenceInfo.cs" />
     <Compile Include="Controller\MovementSequence\VirtualFSMovementSequenceInfo.cs" />
     <Compile Include="Controller\OSHelper\AnomalousLicense.cs" />
     <Compile Include="Controller\OSHelper\AnomalousLicenseServer.cs" />

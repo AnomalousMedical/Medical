@@ -8,6 +8,7 @@ using Medical.GUI;
 using MyGUIPlugin;
 using DentalSim.GUI;
 using Medical.Controller;
+using System.Reflection;
 
 namespace DentalSim
 {
@@ -15,19 +16,11 @@ namespace DentalSim
     {
         //Dialogs
         private MandibleMovementDialog mandibleMovementDialog;
-
-        private List<String> movementSequenceDirectories = new List<string>();
         private StandaloneController standaloneController;
 
         public DentalSimPlugin()
         {
-            //This is temporary cruft from the old system.
-            movementSequenceDirectories.Add("/Graphics");
-            movementSequenceDirectories.Add("/MRI");
-            movementSequenceDirectories.Add("/RadiographyCT");
-            movementSequenceDirectories.Add("/Clinical");
-            movementSequenceDirectories.Add("/DentitionProfile");
-            movementSequenceDirectories.Add("/Doppler");
+
         }
 
         public void Dispose()
@@ -64,20 +57,34 @@ namespace DentalSim
             taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Dentition.tl", standaloneController.TimelineController));
             taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_DiscClockFace.tl", standaloneController.TimelineController));
             taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Mandible.tl", standaloneController.TimelineController));
+
+            //Movement Sequences
+            MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
+            Assembly assembly = GetType().Assembly;
+
+            //Excursion
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Left Tooth Contact Bruxism", "DentalSim.Sequences.Excursion.Left Tooth Contact Bruxism.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Left Tooth Contact Maximal", "DentalSim.Sequences.Excursion.Left Tooth Contact Maximal.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Left Tooth Contact", "DentalSim.Sequences.Excursion.Left Tooth Contact.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Open Bilateral", "DentalSim.Sequences.Excursion.Open Bilateral.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Open Left", "DentalSim.Sequences.Excursion.Open Left.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Open Right", "DentalSim.Sequences.Excursion.Open Right.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Right Tooth Contact Bruxism", "DentalSim.Sequences.Excursion.Right Tooth Contact Bruxism.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Right Tooth Contact Maximal", "DentalSim.Sequences.Excursion.Right Tooth Contact Maximal.seq"));
+            movementSequenceController.addMovementSequence("Excursion", new EmbeddedMovementSequenceInfo(assembly, "Right Tooth Contact", "DentalSim.Sequences.Excursion.Right Tooth Contact.seq"));
+
+            movementSequenceController.addMovementSequence("Protrusion", new EmbeddedMovementSequenceInfo(assembly, "Open Protrusion", "DentalSim.Sequences.Protrusion.Open Protrusion.seq"));
+            movementSequenceController.addMovementSequence("Protrusion", new EmbeddedMovementSequenceInfo(assembly, "Protrusion Maximal", "DentalSim.Sequences.Protrusion.Protrusion Maximal.seq"));
+            movementSequenceController.addMovementSequence("Protrusion", new EmbeddedMovementSequenceInfo(assembly, "Protrusion Tooth Contact Edge to Edge", "DentalSim.Sequences.Protrusion.Protrusion Tooth Contact Edge to Edge.seq"));
+
+            movementSequenceController.addMovementSequence("Vertical Opening", new EmbeddedMovementSequenceInfo(assembly, "Hinge Opening", "DentalSim.Sequences.VerticalOpening.Hinge Opening.seq"));
+            movementSequenceController.addMovementSequence("Vertical Opening", new EmbeddedMovementSequenceInfo(assembly, "Maximal Opening", "DentalSim.Sequences.VerticalOpening.Maximal Opening.seq"));
+            movementSequenceController.addMovementSequence("Vertical Opening", new EmbeddedMovementSequenceInfo(assembly, "Tapping Teeth", "DentalSim.Sequences.VerticalOpening.Tapping Teeth.seq"));
         }
 
         public void sceneLoaded(SimScene scene)
         {
             mandibleMovementDialog.sceneLoaded(scene);
-
-            //Load sequences
-            MedicalController medicalController = standaloneController.MedicalController;
-            SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
-            SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-            StandaloneApp app = standaloneController.App;
-
-            String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
-            standaloneController.MovementSequenceController.loadSequenceDirectories(sequenceDirectory, movementSequenceDirectories);
         }
 
         public void sceneRevealed()

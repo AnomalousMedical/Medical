@@ -115,6 +115,23 @@
       <Name>Standalone</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sequences\Excursion\Left Tooth Contact Bruxism.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Left Tooth Contact Maximal.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Left Tooth Contact.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Open Bilateral.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Open Left.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Open Right.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Right Tooth Contact Bruxism.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Right Tooth Contact Maximal.seq" />
+    <EmbeddedResource Include="Sequences\Excursion\Right Tooth Contact.seq" />
+    <EmbeddedResource Include="Sequences\Protrusion\Open Protrusion.seq" />
+    <EmbeddedResource Include="Sequences\Protrusion\Protrusion Maximal.seq" />
+    <EmbeddedResource Include="Sequences\Protrusion\Protrusion Tooth Contact Edge to Edge.seq" />
+    <EmbeddedResource Include="Sequences\VerticalOpening\Hinge Opening.seq" />
+    <EmbeddedResource Include="Sequences\VerticalOpening\Maximal Opening.seq" />
+    <EmbeddedResource Include="Sequences\VerticalOpening\Tapping Teeth.seq" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

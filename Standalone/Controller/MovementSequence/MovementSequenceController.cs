@@ -54,40 +54,6 @@ namespace Medical.Controller
             return sequenceInfo.loadSequence(xmlSaver);
         }
 
-        /// <summary>
-        /// Load the sequences in the specified directory. Will not make any
-        /// changes if the directory is the currently loaded directory.
-        /// </summary>
-        public void loadSequenceDirectories(String baseDir, List<String> sequenceDirs)
-        {
-            CurrentSequence = null;
-            currentSequenceSet = new MovementSequenceSet();
-            VirtualFileSystem archive = VirtualFileSystem.Instance;
-            foreach (String sequenceDirBase in sequenceDirs)
-            {
-                String sequenceDir = baseDir + sequenceDirBase;
-                if (archive.exists(sequenceDir))
-                {
-                    foreach (String directory in archive.listDirectories(sequenceDir, false, false))
-                    {
-                        String groupName = archive.getFileInfo(directory).Name;
-                        foreach (String file in archive.listFiles(directory, false))
-                        {
-                            VirtualFileInfo fileInfo = archive.getFileInfo(file);
-                            String fileName = fileInfo.Name;
-                            if (fileName.EndsWith(".seq"))
-                            {
-                                VirtualFSMovementSequenceInfo info = new VirtualFSMovementSequenceInfo();
-                                info.Name = fileName.Substring(0, fileName.Length - 4);
-                                info.FileName = fileInfo.FullName;
-                                addMovementSequence(groupName, info);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         public void addMovementSequence(String groupName, MovementSequenceInfo info)
         {
             MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
