@@ -18,7 +18,7 @@ namespace Medical.Controller
     /// <param name="controller">The controller that fired the event.</param>
     public delegate void MovementSequenceEvent(MovementSequenceController controller);
     public delegate void MovementSequenceGroupEvent(MovementSequenceController controller, MovementSequenceGroup group);
-    public delegate void MovementSequenceInfoEvent(MovementSequenceController controller, MovementSequenceInfo sequenceInfo);
+    public delegate void MovementSequenceInfoEvent(MovementSequenceController controller, MovementSequenceGroup group, MovementSequenceInfo sequenceInfo);
 
     /// <summary>
     /// This class manages loading and playback of movement sequences.
@@ -28,7 +28,6 @@ namespace Medical.Controller
         public event MovementSequenceGroupEvent GroupAdded;
         public event MovementSequenceInfoEvent SequenceAdded;
         public event MovementSequenceEvent CurrentSequenceChanged;
-        public event MovementSequenceEvent CurrentSequenceSetChanged;
         public event MovementSequenceEvent PlaybackStarted;
         public event MovementSequenceEvent PlaybackStopped;
         public event MovementSequenceEvent PlaybackUpdate;
@@ -72,12 +71,6 @@ namespace Medical.Controller
                     foreach (String directory in archive.listDirectories(sequenceDir, false, false))
                     {
                         String groupName = archive.getFileInfo(directory).Name;
-                        MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
-                        if (group == null)
-                        {
-                            group = new MovementSequenceGroup(groupName);
-                            currentSequenceSet.addGroup(group);
-                        }
                         foreach (String file in archive.listFiles(directory, false))
                         {
                             VirtualFileInfo fileInfo = archive.getFileInfo(file);
@@ -87,15 +80,11 @@ namespace Medical.Controller
                                 VirtualFSMovementSequenceInfo info = new VirtualFSMovementSequenceInfo();
                                 info.Name = fileName.Substring(0, fileName.Length - 4);
                                 info.FileName = fileInfo.FullName;
-                                group.addSequence(info);
+                                addMovementSequence(groupName, info);
                             }
                         }
                     }
                 }
-            }
-            if (CurrentSequenceSetChanged != null)
-            {
-                CurrentSequenceSetChanged.Invoke(this);
             }
         }
 
@@ -114,7 +103,7 @@ namespace Medical.Controller
             group.addSequence(info);
             if (SequenceAdded != null)
             {
-                SequenceAdded.Invoke(this, info);
+                SequenceAdded.Invoke(this, group, info);
             }
         }
 

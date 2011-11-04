@@ -12,12 +12,17 @@ namespace Medical
     {
         private MovementSequenceController sequenceController;
         private PopupMenu sequenceMenu;
+        private Dictionary<MovementSequenceGroup, MenuCtrl> groupMenuCtrls = new Dictionary<MovementSequenceGroup, MenuCtrl>();
 
         public SequenceMenu(MovementSequenceController sequenceController)
         {
             this.sequenceController = sequenceController;
 
-            sequenceController.CurrentSequenceSetChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceSetChanged);
+            sequenceController.GroupAdded += new MovementSequenceGroupEvent(sequenceController_GroupAdded);
+            sequenceController.SequenceAdded += new MovementSequenceInfoEvent(sequenceController_SequenceAdded);
+
+            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "LargeIconPopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
+            sequenceMenu.Visible = false;
         }
 
         public void Dispose()
@@ -43,45 +48,6 @@ namespace Medical
             sequenceMenu.setVisibleSmooth(false);
         }
 
-        void sequenceController_CurrentSequenceSetChanged(MovementSequenceController controller)
-        {
-            if (sequenceMenu != null)
-            {
-                Gui.Instance.destroyWidget(sequenceMenu);
-            }
-            MovementSequenceSet currentSet = controller.SequenceSet;
-
-            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "LargeIconPopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
-            sequenceMenu.Visible = false;
-
-            foreach (MovementSequenceGroup sequenceGroup in currentSet.Groups)
-            {
-                MenuItem groupItem = sequenceMenu.addItem(sequenceGroup.Name, MenuItemType.Popup);
-                groupItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
-                groupItem.StaticImage.setItemGroup("Icons");
-                groupItem.StaticImage.setItemName("Icon");
-                //groupItem.Image = Resources.SequenceIconLarge;
-                MenuCtrl groupItemChild = groupItem.createItemChild();
-                foreach (MovementSequenceInfo sequenceInfo in sequenceGroup.Sequences)
-                {
-                    MenuItem sequenceItem = groupItemChild.addItem(sequenceInfo.Name, MenuItemType.Normal);
-                    sequenceItem.MouseButtonClick += sequenceItem_Click;
-                    sequenceItem.UserObject = sequenceInfo;
-                    sequenceItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
-                    sequenceItem.StaticImage.setItemGroup("Icons");
-                    sequenceItem.StaticImage.setItemName("Icon");
-                    //if (sequenceInfo.Thumbnail == null)
-                    //{
-                    //    sequenceItem.Image = Resources.SequenceIconLarge;
-                    //}
-                    //else
-                    //{
-                    //    sequenceItem.Image = sequenceInfo.Thumbnail;
-                    //}
-                }
-            }
-        }
-
         void sequenceItem_Click(Widget sender, EventArgs e)
         {
             MenuItem item = sender as MenuItem;
@@ -93,6 +59,28 @@ namespace Medical
                 sequenceController.playCurrentSequence();
             }
             sequenceMenu.setVisibleSmooth(false);
+        }
+
+        void sequenceController_SequenceAdded(MovementSequenceController controller, MovementSequenceGroup group, MovementSequenceInfo sequenceInfo)
+        {
+            MenuCtrl groupItemChild = groupMenuCtrls[group];
+
+            MenuItem sequenceItem = groupItemChild.addItem(sequenceInfo.Name, MenuItemType.Normal);
+            sequenceItem.MouseButtonClick += sequenceItem_Click;
+            sequenceItem.UserObject = sequenceInfo;
+            sequenceItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
+            sequenceItem.StaticImage.setItemGroup("Icons");
+            sequenceItem.StaticImage.setItemName("Icon");
+        }
+
+        void sequenceController_GroupAdded(MovementSequenceController controller, MovementSequenceGroup group)
+        {
+            MenuItem groupItem = sequenceMenu.addItem(group.Name, MenuItemType.Popup);
+            groupItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
+            groupItem.StaticImage.setItemGroup("Icons");
+            groupItem.StaticImage.setItemName("Icon");
+            MenuCtrl groupItemChild = groupItem.createItemChild();
+            groupMenuCtrls.Add(group, groupItemChild);
         }
     }
 }
