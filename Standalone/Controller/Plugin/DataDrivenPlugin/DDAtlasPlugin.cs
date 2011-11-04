@@ -8,6 +8,8 @@ using Engine.Editing;
 using Medical.GUI;
 using Engine;
 using MyGUIPlugin;
+using Medical.Controller;
+using System.IO;
 
 namespace Medical
 {
@@ -46,6 +48,33 @@ namespace Medical
                 {
                     task._setPlugin(this);
                     taskController.addTask(task);
+                }
+
+                //Load sequences
+                if (!String.IsNullOrEmpty(SequencesDirectory))
+                {
+                    String fullSequencesDirectory = Path.Combine(PluginRootFolder, SequencesDirectory);
+                    VirtualFileSystem archive = VirtualFileSystem.Instance;
+                    if (archive.exists(fullSequencesDirectory))
+                    {
+                        MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
+                        foreach (String directory in archive.listDirectories(fullSequencesDirectory, false, false))
+                        {
+                            String groupName = archive.getFileInfo(directory).Name;
+                            foreach (String file in archive.listFiles(directory, false))
+                            {
+                                VirtualFileInfo fileInfo = archive.getFileInfo(file);
+                                String fileName = fileInfo.Name;
+                                if (fileName.EndsWith(".seq"))
+                                {
+                                    VirtualFSMovementSequenceInfo info = new VirtualFSMovementSequenceInfo();
+                                    info.Name = fileName.Substring(0, fileName.Length - 4);
+                                    info.FileName = fileInfo.FullName;
+                                    movementSequenceController.addMovementSequence(groupName, info);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -111,6 +140,9 @@ namespace Medical
         [Editable]
         public String BrandingImageKey { get; set; }
 
+        [Editable]
+        public String SequencesDirectory { get; set; }
+
         public TimelineController TimelineController { get; private set; }
 
         public String PluginRootFolder { get; set; }
@@ -166,6 +198,7 @@ namespace Medical
             PluginName = info.GetString("PluginName");
             BrandingImageKey = info.GetString("BrandingImageKey");
             VersionString = info.GetString("Version", "1.0.0.0");
+            SequencesDirectory = info.GetString("SequencesDirectory", null);
         }
 
         public void getInfo(SaveInfo info)
@@ -177,6 +210,7 @@ namespace Medical
             info.AddValue("PluginName", PluginName);
             info.AddValue("BrandingImageKey", BrandingImageKey);
             info.AddValue("Version", VersionString);
+            info.AddValue("SequencesDirectory", SequencesDirectory);
         }
 
         #endregion
