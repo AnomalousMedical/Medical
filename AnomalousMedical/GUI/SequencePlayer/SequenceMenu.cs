@@ -63,7 +63,14 @@ namespace Medical
 
         void sequenceController_SequenceAdded(MovementSequenceController controller, MovementSequenceGroup group, MovementSequenceInfo sequenceInfo)
         {
-            MenuCtrl groupItemChild = groupMenuCtrls[group];
+            MenuCtrl groupItemChild;
+            groupMenuCtrls.TryGetValue(group, out groupItemChild);
+            //Double check that we have the group.
+            if (groupItemChild == null)
+            {
+                sequenceController_GroupAdded(controller, group);
+                groupItemChild = groupMenuCtrls[group];
+            }
 
             MenuItem sequenceItem = groupItemChild.addItem(sequenceInfo.Name, MenuItemType.Normal);
             sequenceItem.MouseButtonClick += sequenceItem_Click;

@@ -27,7 +27,7 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
-        private SequencePlayer sequencePlayer;
+        private SequencePlayer sequencePlayer = null;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -48,13 +48,17 @@ namespace Medical.GUI
             anatomyFinder.Dispose();
             chooseSceneDialog.Dispose();
             aboutDialog.Dispose();
-            sequencePlayer.Dispose();
+            if (sequencePlayer != null)
+            {
+                sequencePlayer.Dispose();
+            }
         }
 
         public void initialize(StandaloneController standaloneController)
         {
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
+            standaloneController.MovementSequenceController.GroupAdded += MovementSequenceController_GroupAdded;
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
@@ -86,9 +90,6 @@ namespace Medical.GUI
             //guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController.AtlasPluginManager, downloadServer, standaloneController.DownloadController, guiManager);
-
-            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
-            guiManager.addManagedDialog(sequencePlayer);
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
@@ -130,9 +131,6 @@ namespace Medical.GUI
 
             //Tools Section
             //taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
-
-            MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Tools);
-            taskController.addTask(sequencePlayerTask);
 
             //Navigation Section
             MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation);
@@ -265,6 +263,18 @@ namespace Medical.GUI
             {
                 standaloneController.GUIManager.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }
+        }
+
+        void MovementSequenceController_GroupAdded(MovementSequenceController controller, MovementSequenceGroup group)
+        {
+            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
+            guiManager.addManagedDialog(sequencePlayer);
+
+            MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Tools);
+            standaloneController.TaskController.addTask(sequencePlayerTask);
+
+            //We only care about the first one of these events that fires.
+            standaloneController.MovementSequenceController.GroupAdded -= MovementSequenceController_GroupAdded;
         }
     }
 }
