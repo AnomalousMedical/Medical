@@ -106,7 +106,6 @@ namespace Medical
             guiManager.Dispose();
             watermark.Dispose();
             measurementGrid.Dispose();
-            movementSequenceController.Dispose();
             anatomyController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();

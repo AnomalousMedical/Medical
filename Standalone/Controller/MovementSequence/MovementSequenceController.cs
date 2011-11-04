@@ -17,12 +17,16 @@ namespace Medical.Controller
     /// </summary>
     /// <param name="controller">The controller that fired the event.</param>
     public delegate void MovementSequenceEvent(MovementSequenceController controller);
+    public delegate void MovementSequenceGroupEvent(MovementSequenceController controller, MovementSequenceGroup group);
+    public delegate void MovementSequenceInfoEvent(MovementSequenceController controller, MovementSequenceInfo sequenceInfo);
 
     /// <summary>
     /// This class manages loading and playback of movement sequences.
     /// </summary>
-    public class MovementSequenceController : IDisposable
+    public class MovementSequenceController
     {
+        public event MovementSequenceGroupEvent GroupAdded;
+        public event MovementSequenceInfoEvent SequenceAdded;
         public event MovementSequenceEvent CurrentSequenceChanged;
         public event MovementSequenceEvent CurrentSequenceSetChanged;
         public event MovementSequenceEvent PlaybackStarted;
@@ -34,44 +38,21 @@ namespace Medical.Controller
         private MedicalController medicalController;
         private float currentTime = 0.0f;
         private bool playing = false;
-        private MovementSequenceSet currentSequenceSet;
+        private MovementSequenceSet currentSequenceSet = new MovementSequenceSet();
 
         public MovementSequenceController(MedicalController medicalController)
         {
             this.medicalController = medicalController;
         }
 
-        public void Dispose()
-        {
-            if (currentSequenceSet != null)
-            {
-                currentSequenceSet.Dispose();
-            }
-        }
-
         /// <summary>
         /// Load the specified sequence and return it.
         /// </summary>
-        /// <param name="filename">The filename of the sequence to load.</param>
+        /// <param name="sequenceInfo">The filename of the sequence to load.</param>
         /// <returns>The loaded sequence.</returns>
-        public MovementSequence loadSequence(String filename)
+        public MovementSequence loadSequence(MovementSequenceInfo sequenceInfo)
         {
-            MovementSequence loadingSequence = null;
-            try
-            {
-                VirtualFileSystem archive = VirtualFileSystem.Instance;
-                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
-                {
-                    loadingSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
-                    VirtualFileInfo fileInfo = archive.getFileInfo(filename);
-                    loadingSequence.Name = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4);
-                }
-            }
-            catch (Exception e)
-            {
-                Log.Error("Could not read muscle sequence {0}.\nReason: {1}.", filename, e.Message);
-            }
-            return loadingSequence;
+            return sequenceInfo.loadSequence(xmlSaver);
         }
 
         /// <summary>
@@ -81,16 +62,12 @@ namespace Medical.Controller
         public void loadSequenceDirectories(String baseDir, List<String> sequenceDirs)
         {
             CurrentSequence = null;
-            if (currentSequenceSet != null)
-            {
-                currentSequenceSet.Dispose();
-            }
             currentSequenceSet = new MovementSequenceSet();
             VirtualFileSystem archive = VirtualFileSystem.Instance;
-            foreach(String sequenceDirBase in sequenceDirs)
+            foreach (String sequenceDirBase in sequenceDirs)
             {
                 String sequenceDir = baseDir + sequenceDirBase;
-                if(archive.exists(sequenceDir))
+                if (archive.exists(sequenceDir))
                 {
                     foreach (String directory in archive.listDirectories(sequenceDir, false, false))
                     {
@@ -107,7 +84,7 @@ namespace Medical.Controller
                             String fileName = fileInfo.Name;
                             if (fileName.EndsWith(".seq"))
                             {
-                                MovementSequenceInfo info = new MovementSequenceInfo();
+                                VirtualFSMovementSequenceInfo info = new VirtualFSMovementSequenceInfo();
                                 info.Name = fileName.Substring(0, fileName.Length - 4);
                                 info.FileName = fileInfo.FullName;
                                 group.addSequence(info);
@@ -119,6 +96,25 @@ namespace Medical.Controller
             if (CurrentSequenceSetChanged != null)
             {
                 CurrentSequenceSetChanged.Invoke(this);
+            }
+        }
+
+        public void addMovementSequence(String groupName, MovementSequenceInfo info)
+        {
+            MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
+            if (group == null)
+            {
+                group = new MovementSequenceGroup(groupName);
+                currentSequenceSet.addGroup(group);
+                if (GroupAdded != null)
+                {
+                    GroupAdded.Invoke(this, group);
+                }
+            }
+            group.addSequence(info);
+            if (SequenceAdded != null)
+            {
+                SequenceAdded.Invoke(this, info);
             }
         }
 

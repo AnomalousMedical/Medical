@@ -66,7 +66,7 @@ namespace Medical
                 {
                     MenuItem sequenceItem = groupItemChild.addItem(sequenceInfo.Name, MenuItemType.Normal);
                     sequenceItem.MouseButtonClick += sequenceItem_Click;
-                    sequenceItem.UserObject = sequenceInfo.FileName;
+                    sequenceItem.UserObject = sequenceInfo;
                     sequenceItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
                     sequenceItem.StaticImage.setItemGroup("Icons");
                     sequenceItem.StaticImage.setItemName("Icon");
@@ -87,7 +87,7 @@ namespace Medical
             MenuItem item = sender as MenuItem;
             if (item != null)
             {
-                MovementSequence sequence = sequenceController.loadSequence(item.UserObject.ToString());
+                MovementSequence sequence = sequenceController.loadSequence((MovementSequenceInfo)item.UserObject);
                 sequenceController.stopPlayback();
                 sequenceController.CurrentSequence = sequence;
                 sequenceController.playCurrentSequence();

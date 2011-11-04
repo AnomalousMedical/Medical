@@ -5,21 +5,13 @@ using System.Text;
 
 namespace Medical.Controller
 {
-    public class MovementSequenceGroup : IDisposable
+    public class MovementSequenceGroup
     {
         private LinkedList<MovementSequenceInfo> sequences = new LinkedList<MovementSequenceInfo>();
 
         public MovementSequenceGroup(String name)
         {
             this.Name = name;
-        }
-
-        public void Dispose()
-        {
-            foreach (MovementSequenceInfo info in sequences)
-            {
-                info.Dispose();
-            }
         }
 
         public void addSequence(MovementSequenceInfo info)
