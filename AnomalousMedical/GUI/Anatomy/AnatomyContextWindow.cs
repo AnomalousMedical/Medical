@@ -25,6 +25,7 @@ namespace Medical.GUI
         private PopupMenu navMenu;
         private ShowMenuButton menuButton;
         private Button pinButton;
+        private MenuItem showRelated;
 
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
@@ -44,11 +45,6 @@ namespace Medical.GUI
             centerMenuItem.MouseButtonClick += new MyGUIEvent(centerMenuItem_MouseButtonClick);
             MenuItem highlightMenuItem = navMenu.addItem("Highlight");
             highlightMenuItem.MouseButtonClick += new MyGUIEvent(highlightMenuItem_MouseButtonClick);
-            if (windowManager.ShowPremiumAnatomy)
-            {
-                MenuItem showRelated = navMenu.addItem("Search for Related Anatomy");
-                showRelated.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
-            }
 
             menuButton = new ShowMenuButton((Button)widget.findWidget("MenuButton"), navMenu);
 
@@ -132,6 +128,15 @@ namespace Medical.GUI
 
                 Size2 desiredSize = layoutContainer.DesiredSize;
                 widget.setSize(width, (int)(desiredSize.Height));
+
+                if (windowManager.ShowPremiumAnatomy)
+                {
+                    if (showRelated == null)
+                    {
+                        showRelated = navMenu.addItem("Search for Related Anatomy");
+                        showRelated.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
+                    }
+                }
             }
         }
 
