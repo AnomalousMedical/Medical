@@ -12,7 +12,7 @@ namespace Medical.GUI
         private AnatomyContextWindowManager windowManager;
         private Anatomy anatomy;
         private List<CommandUIElement> dynamicWidgets = new List<CommandUIElement>();
-        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5.0f, new Vector2(CommandUIElement.SIDE_PADDING / 2, 52.0f));
+        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5.0f, new Vector2(CommandUIElement.SIDE_PADDING / 2, 84.0f));
 
         private IntSize2 windowStartSize;
 
@@ -22,10 +22,7 @@ namespace Medical.GUI
         int captionToBorderDelta = 0;
         private IntVector2 mouseOffset;
 
-        private PopupMenu navMenu;
-        private ShowMenuButton menuButton;
         private Button pinButton;
-        private MenuItem showRelated;
 
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
@@ -39,15 +36,6 @@ namespace Medical.GUI
             pinButton = (Button)widget.findWidget("PinButton");
             pinButton.MouseButtonClick += new MyGUIEvent(pinButton_MouseButtonClick);
 
-            navMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
-            navMenu.Visible = false;
-            MenuItem centerMenuItem = navMenu.addItem("Center");
-            centerMenuItem.MouseButtonClick += new MyGUIEvent(centerMenuItem_MouseButtonClick);
-            MenuItem highlightMenuItem = navMenu.addItem("Highlight");
-            highlightMenuItem.MouseButtonClick += new MyGUIEvent(highlightMenuItem_MouseButtonClick);
-
-            menuButton = new ShowMenuButton((Button)widget.findWidget("MenuButton"), navMenu);
-
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
@@ -58,11 +46,24 @@ namespace Medical.GUI
             transparencySlider = new AnatomyTransparencySlider((HScroll)widget.findWidget("TransparencySlider"));
 
             windowStartSize = new IntSize2(widget.Width, widget.Height);
+
+            Button centerButton = (Button)widget.findWidget("CenterButton");
+            centerButton.MouseButtonClick += new MyGUIEvent(centerMenuItem_MouseButtonClick);
+
+            Button highlightButton = (Button)widget.findWidget("HighlightButton");
+            highlightButton.MouseButtonClick += new MyGUIEvent(highlightMenuItem_MouseButtonClick);
+
+            Button relatedAnatomyButton = (Button)widget.findWidget("RelatedAnatomyButton");
+            relatedAnatomyButton.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
+        }
+
+        void centerButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Dispose()
         {
-            Gui.Instance.destroyWidget(navMenu);
             transparencySlider.Dispose();
             base.Dispose();
         }
@@ -94,7 +95,6 @@ namespace Medical.GUI
                 }
                 widget.setSize(width, windowStartSize.Height);
                 anatomyName.setSize(captionWidth, anatomyName.Height);
-                menuButton.Button.setPosition(anatomyName.Right + 1, menuButton.Button.Top);
                 transparencySlider.Command = null;
                 foreach (AnatomyCommand command in anatomy.Commands)
                 {
@@ -123,20 +123,16 @@ namespace Medical.GUI
                         }
                     }
                 }
+
+                if (windowManager.ShowPremiumAnatomy)
+                {
+                    layoutContainer.StartLocation = new Vector2(layoutContainer.StartLocation.x, 114);
+                }
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.layout();
 
                 Size2 desiredSize = layoutContainer.DesiredSize;
                 widget.setSize(width, (int)(desiredSize.Height));
-
-                if (windowManager.ShowPremiumAnatomy)
-                {
-                    if (showRelated == null)
-                    {
-                        showRelated = navMenu.addItem("Search for Related Anatomy");
-                        showRelated.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
-                    }
-                }
             }
         }
 
@@ -162,19 +158,16 @@ namespace Medical.GUI
         void highlightMenuItem_MouseButtonClick(Widget source, EventArgs e)
         {
             windowManager.highlightAnatomy(this);
-            navMenu.setVisibleSmooth(false);
         }
 
         void centerMenuItem_MouseButtonClick(Widget source, EventArgs e)
         {
             windowManager.centerAnatomy(this);
-            navMenu.setVisibleSmooth(false);
         }
 
         void showRelated_MouseButtonClick(Widget source, EventArgs e)
         {
             windowManager.showRelatedAnatomy(anatomy);
-            navMenu.setVisibleSmooth(false);
         }
 
         void widget_MouseButtonPressed(Widget source, EventArgs e)

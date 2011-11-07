@@ -1,11 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="SolidBackground" position="95 162 202 52" layer="Overlapped">
+    <Widget type="Widget" skin="SolidBackground" position="95 162 202 114" layer="Overlapped">
         <Widget type="Button" skin="ButtonV" position="174 2 12 12" align="Right Top" name="PinButton">
             <Property key="Widget_Caption" value="Pin"/>
-        </Widget>
-        <Widget type="Button" skin="ButtonDown" position="157 2 16 16" name="MenuButton">
-            <Property key="Widget_Caption" value="Center"/>
         </Widget>
         <Widget type="StaticImage" skin="StaticImage" position="2 1 50 50" name="ThumbnailImage">
             <Property key="Widget_NeedMouse" value="false"/>
@@ -19,6 +16,15 @@
         <Widget type="Button" skin="ButtonX" position="188 2 12 12" align="Right Top" name="CloseButton"/>
         <Widget type="StaticText" skin="StaticText" position="57 17 106 14">
             <Property key="Widget_Caption" value="Transparency"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 54 59 26" name="CenterButton">
+            <Property key="Widget_Caption" value="Center"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="71 54 64 26" name="HighlightButton">
+            <Property key="Widget_Caption" value="Highlight"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 85 183 26" name="RelatedAnatomyButton">
+            <Property key="Widget_Caption" value="Search for Related Anatomy"/>
         </Widget>
     </Widget>
 </MyGUI>
