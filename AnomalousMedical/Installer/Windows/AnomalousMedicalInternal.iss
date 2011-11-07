@@ -54,7 +54,7 @@ Source: S:\Medical\Release\SoundWrapper.dll; DestDir: {app}; Flags: ignoreversio
 Source: S:\Medical\Release\Standalone.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\WinMTDriver.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Zip.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\override.ini; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\ReleaseInternalFiles\override.ini; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 
 Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
