@@ -22,6 +22,11 @@ namespace Medical
         IEnumerable<AnatomyCommand> Commands { get; }
 
         /// <summary>
+        /// Get an enumeration over all linked related anatomy.
+        /// </summary>
+        IEnumerable<Anatomy> RelatedAnatomy { get; }
+
+        /// <summary>
         /// Get an AxisAlignedBox bounding volume.
         /// </summary>
         AxisAlignedBox WorldBoundingBox { get; }

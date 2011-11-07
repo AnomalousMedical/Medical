@@ -63,7 +63,7 @@ namespace Medical.GUI
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             this.sceneViewController = sceneViewController;
-            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController);
+            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
 
             anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
@@ -99,6 +99,32 @@ namespace Medical.GUI
         public void sceneUnloading()
         {
             anatomyWindowManager.sceneUnloading();
+        }
+
+        public void showRelatedAnatomy(Anatomy anatomy)
+        {
+            if (!Visible)
+            {
+                Visible = true;
+            }
+            anatomyList.SuppressLayout = true;
+            anatomyList.clear();
+            searchBox.Caption = String.Format("Related to {0}", anatomy.AnatomicalName);
+            ButtonGridItem itemToSelect = null;
+            bool showPremium = anatomyController.ShowPremiumAnatomy;
+            foreach (Anatomy relatedAnatomy in anatomy.RelatedAnatomy)
+            {
+                if (showPremium || relatedAnatomy.ShowInBasicVersion)
+                {
+                    ButtonGridItem newItem = addAnatomyToList(relatedAnatomy);
+                    if (itemToSelect == null)
+                    {
+                        itemToSelect = newItem;
+                    }
+                }
+            }
+            anatomyList.SuppressLayout = false;
+            anatomyList.layout();
         }
 
         void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)

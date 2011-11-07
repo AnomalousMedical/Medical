@@ -37,8 +37,12 @@ namespace Medical
             }
         }
 
-        public void addAnatomy(Anatomy anatomy)
+        public void addAnatomy(AnatomyIdentifier anatomy)
         {
+            if (showInTree)
+            {
+                anatomy.addRelatedAnatomy(this);
+            }
             groupAnatomy.Add(anatomy);
             foreach (AnatomyCommand command in anatomy.Commands)
             {
@@ -67,6 +71,14 @@ namespace Medical
             get
             {
                 return groupCommands;
+            }
+        }
+
+        public IEnumerable<Anatomy> RelatedAnatomy
+        {
+            get
+            {
+                return groupAnatomy;
             }
         }
 

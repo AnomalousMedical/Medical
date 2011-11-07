@@ -58,6 +58,10 @@ namespace Medical
         [DoNotSave]
         private Entity entity;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private LinkedList<Anatomy> relatedAnatomy = new LinkedList<Anatomy>();
+
         protected override void constructed()
         {
             
@@ -93,6 +97,11 @@ namespace Medical
             {
                 command.Dispose();
             }
+        }
+
+        public void addRelatedAnatomy(Anatomy anatomy)
+        {
+            relatedAnatomy.AddLast(anatomy);
         }
 
         public String AnatomicalName
@@ -136,6 +145,15 @@ namespace Medical
             get
             {
                 return commands;
+            }
+        }
+
+        [DoNotCopy]
+        public IEnumerable<Anatomy> RelatedAnatomy
+        {
+            get
+            {
+                return relatedAnatomy;
             }
         }
 

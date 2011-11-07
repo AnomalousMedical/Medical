@@ -12,16 +12,18 @@ namespace Medical.GUI
     {
         private AnatomyContextWindow currentAnatomyWindow;
         private SceneViewController sceneViewController;
+        private AnatomyFinder anatomyFinder;
 
         private LayerState beforeFocusLayerState = null;
         private AnatomyContextWindow lastHighlightRequestWindow = null;
         private AnatomyController anatomyController;
         private List<AnatomyContextWindow> pinnedWindows = new List<AnatomyContextWindow>();
 
-        public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController)
+        public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController, AnatomyFinder anatomyFinder)
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;
+            this.anatomyFinder = anatomyFinder;
         }
 
         public void Dispose()
@@ -86,6 +88,19 @@ namespace Medical.GUI
             {
                 currentAnatomyWindow.hide();
             }
+        }
+
+        public bool ShowPremiumAnatomy
+        {
+            get
+            {
+                return anatomyController.ShowPremiumAnatomy;
+            }
+        }
+
+        internal void showRelatedAnatomy(Anatomy anatomy)
+        {
+            anatomyFinder.showRelatedAnatomy(anatomy);
         }
 
         internal void alertWindowPinned(AnatomyContextWindow window)

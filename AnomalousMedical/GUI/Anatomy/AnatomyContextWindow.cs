@@ -44,6 +44,11 @@ namespace Medical.GUI
             centerMenuItem.MouseButtonClick += new MyGUIEvent(centerMenuItem_MouseButtonClick);
             MenuItem highlightMenuItem = navMenu.addItem("Highlight");
             highlightMenuItem.MouseButtonClick += new MyGUIEvent(highlightMenuItem_MouseButtonClick);
+            if (windowManager.ShowPremiumAnatomy)
+            {
+                MenuItem showRelated = navMenu.addItem("Search for Related Anatomy");
+                showRelated.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
+            }
 
             menuButton = new ShowMenuButton((Button)widget.findWidget("MenuButton"), navMenu);
 
@@ -158,6 +163,12 @@ namespace Medical.GUI
         void centerMenuItem_MouseButtonClick(Widget source, EventArgs e)
         {
             windowManager.centerAnatomy(this);
+            navMenu.setVisibleSmooth(false);
+        }
+
+        void showRelated_MouseButtonClick(Widget source, EventArgs e)
+        {
+            windowManager.showRelatedAnatomy(anatomy);
             navMenu.setVisibleSmooth(false);
         }
 
