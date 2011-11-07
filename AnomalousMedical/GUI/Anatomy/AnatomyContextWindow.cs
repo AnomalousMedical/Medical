@@ -23,6 +23,7 @@ namespace Medical.GUI
         private IntVector2 mouseOffset;
 
         private Button pinButton;
+        private Button relatedAnatomyButton;
 
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
@@ -53,7 +54,7 @@ namespace Medical.GUI
             Button highlightButton = (Button)widget.findWidget("HighlightButton");
             highlightButton.MouseButtonClick += new MyGUIEvent(highlightMenuItem_MouseButtonClick);
 
-            Button relatedAnatomyButton = (Button)widget.findWidget("RelatedAnatomyButton");
+            relatedAnatomyButton = (Button)widget.findWidget("RelatedAnatomyButton");
             relatedAnatomyButton.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
 
             Button hideButton = (Button)widget.findWidget("HideButton");
@@ -125,7 +126,7 @@ namespace Medical.GUI
                     }
                 }
 
-                if (windowManager.ShowPremiumAnatomy)
+                if (relatedAnatomyButton.Visible = windowManager.ShowPremiumAnatomy)
                 {
                     layoutContainer.StartLocation = new Vector2(layoutContainer.StartLocation.x, 114);
                 }
