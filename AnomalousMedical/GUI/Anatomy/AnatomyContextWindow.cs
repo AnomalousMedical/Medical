@@ -55,11 +55,12 @@ namespace Medical.GUI
 
             Button relatedAnatomyButton = (Button)widget.findWidget("RelatedAnatomyButton");
             relatedAnatomyButton.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
-        }
 
-        void centerButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            throw new NotImplementedException();
+            Button hideButton = (Button)widget.findWidget("HideButton");
+            hideButton.MouseButtonClick += new MyGUIEvent(hideButton_MouseButtonClick);
+
+            Button showButton = (Button)widget.findWidget("ShowButton");
+            showButton.MouseButtonClick += new MyGUIEvent(showButton_MouseButtonClick);
         }
 
         public override void Dispose()
@@ -168,6 +169,16 @@ namespace Medical.GUI
         void showRelated_MouseButtonClick(Widget source, EventArgs e)
         {
             windowManager.showRelatedAnatomy(anatomy);
+        }
+
+        void showButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime);
+        }
+
+        void hideButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            anatomy.TransparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime);
         }
 
         void widget_MouseButtonPressed(Widget source, EventArgs e)
