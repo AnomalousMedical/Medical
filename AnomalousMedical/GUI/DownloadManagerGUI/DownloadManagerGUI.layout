@@ -2,24 +2,24 @@
 <MyGUI type="Layout">
     <Widget type="Widget" skin="TaskMenuBackground" position="70 96 800 600" layer="Overlapped">
         <Property key="Widget_Caption" value="Plugin Manager"/>
-        <Widget type="ScrollView" skin="ScrollView" position="5 48 403 544" align="Stretch" name="PluginScrollList">
+        <Widget type="ScrollView" skin="ScrollView" position="5 48 446 544" align="Left VStretch" name="PluginScrollList">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="ButtonListIconButton"/>
             <UserString key="ItemHeight" value="102"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="InstallPanel">
+        <Widget type="Widget" skin="PanelEmpty" position="457 47 335 545" align="Stretch" name="InstallPanel">
             <Property key="Widget_Visible" value="false"/>
             <Widget type="Button" skin="Button" position="2 109 91 26" name="InstallButton">
                 <Property key="Widget_Caption" value="Install"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="InstallIcon"/>
-            <Widget type="Edit" skin="WordWrap" position="0 139 377 404" align="Stretch" name="InstallDescription">
+            <Widget type="Edit" skin="WordWrap" position="0 139 333 404" align="Stretch" name="InstallDescription">
                 <Property key="Text_TextColour" value="#FFFFFF"/>
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Text_TextAlign" value="Left Top"/>
                 <Property key="Edit_ReadOnly" value="true"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="105 4 269 131" name="InstallName">
+            <Widget type="Edit" skin="WordWrapSimple" position="105 4 225 131" align="HStretch Top" name="InstallName">
                 <Property key="Text_FontHeight" value="35"/>
                 <Property key="Edit_ReadOnly" value="true"/>
                 <Property key="Edit_MultiLine" value="true"/>
@@ -33,10 +33,10 @@
             <Property key="Widget_Caption" value="My Downloads"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="DownloadingPanel">
+        <Widget type="Widget" skin="PanelEmpty" position="457 47 335 545" align="Stretch" name="DownloadingPanel">
             <Property key="Widget_Visible" value="true"/>
             <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="DownloadingIcon"/>
-            <Widget type="Edit" skin="WordWrapSimple" position="105 4 269 131" name="DownloadingName">
+            <Widget type="Edit" skin="WordWrapSimple" position="105 4 225 131" align="HStretch Top" name="DownloadingName">
                 <Property key="Text_FontHeight" value="35"/>
                 <Property key="Edit_ReadOnly" value="true"/>
                 <Property key="Edit_MultiLine" value="true"/>
@@ -47,28 +47,28 @@
             <Widget type="Button" skin="Button" position="2 109 91 26" name="CancelButton">
                 <Property key="Widget_Caption" value="Cancel"/>
             </Widget>
-            <Widget type="Progress" skin="ProgressFill" position="12 172 350 27" name="DownloadProgressBar">
+            <Widget type="Progress" skin="ProgressFill" position="12 172 306 27" align="HStretch Top" name="DownloadProgressBar">
                 <Property key="Progress_Range" value="100"/>
                 <Property key="Progress_Position" value="0"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="2 138 372 29" name="DownloadingStatusText">
+            <Widget type="StaticText" skin="StaticText" position="2 138 328 29" align="HStretch Top" name="DownloadingStatusText">
                 <Property key="Widget_Caption" value="Downloading"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="UninstallPanel">
+        <Widget type="Widget" skin="PanelEmpty" position="457 47 335 545" align="Stretch" name="UninstallPanel">
             <Property key="Widget_Visible" value="false"/>
             <Widget type="Button" skin="Button" position="2 109 91 26" name="UninstallButton">
                 <Property key="Widget_Caption" value="Uninstall"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="UninstallIcon"/>
-            <Widget type="Edit" skin="WordWrap" position="0 139 377 404" align="Stretch" name="UninstallDescription">
+            <Widget type="Edit" skin="WordWrap" position="0 139 333 404" align="Stretch" name="UninstallDescription">
                 <Property key="Text_TextColour" value="#FFFFFF"/>
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Text_TextAlign" value="Left Top"/>
                 <Property key="Edit_ReadOnly" value="true"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="105 4 269 131" name="UninstallName">
+            <Widget type="Edit" skin="WordWrapSimple" position="105 4 225 131" align="HStretch Top" name="UninstallName">
                 <Property key="Text_FontHeight" value="35"/>
                 <Property key="Edit_ReadOnly" value="true"/>
                 <Property key="Edit_MultiLine" value="true"/>
