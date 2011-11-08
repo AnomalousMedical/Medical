@@ -44,7 +44,7 @@
                 <Property key="Edit_Static" value="true"/>
                 <Property key="Text_FontName" value="TimelineText.50"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="5 108 91 26" name="CancelButton">
+            <Widget type="Button" skin="Button" position="2 109 91 26" name="CancelButton">
                 <Property key="Widget_Caption" value="Cancel"/>
             </Widget>
             <Widget type="Progress" skin="ProgressFill" position="12 172 350 27" name="DownloadProgressBar">
@@ -58,7 +58,7 @@
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="UninstallPanel">
             <Property key="Widget_Visible" value="false"/>
-            <Widget type="Button" skin="Button" position="5 109 91 26" name="UninstallButton">
+            <Widget type="Button" skin="Button" position="2 109 91 26" name="UninstallButton">
                 <Property key="Widget_Caption" value="Uninstall"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="UninstallIcon"/>

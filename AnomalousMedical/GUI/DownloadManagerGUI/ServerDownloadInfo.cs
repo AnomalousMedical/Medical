@@ -33,7 +33,7 @@ namespace Medical.GUI
 
         public void startDownload(DownloadController downloadController)
         {
-            StatusString = String.Format("{0} - {1}", Name, "Starting Download");
+            StatusString = String.Format("{0}\n{1}", Name, "Starting Download");
             doStartDownload(downloadController);
         }
 

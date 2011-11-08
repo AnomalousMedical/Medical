@@ -228,7 +228,7 @@ namespace Medical.GUI
         {
             pluginGrid.SuppressLayout = true;
             pluginGrid.removeItem(selectedItem);
-            ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0} - {1}", downloadInfo.Name, "Starting Download"), downloadInfo.ImageKey);
+            ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0}\n{1}", downloadInfo.Name, "Starting Download"), downloadInfo.ImageKey);
             downloadingItem.UserObject = downloadInfo;
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
