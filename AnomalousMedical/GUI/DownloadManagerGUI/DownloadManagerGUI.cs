@@ -202,6 +202,7 @@ namespace Medical.GUI
                 pluginGrid.removeItem(selectedItem);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.addItem("Pending Uninstall", pluginInfo.Name, pluginInfo.ImageKey);
+                notificationManager.showRestartNotification(String.Format("You must restart Anomalous Medical to finish uninstalling '{0}'.\nClick here to do this now.", pluginInfo.Name), pluginInfo.ImageKey, false);
             }
         }
 
