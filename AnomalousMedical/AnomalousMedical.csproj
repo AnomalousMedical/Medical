@@ -122,8 +122,10 @@
     <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\InstallPanel.cs" />
     <Compile Include="GUI\DownloadManagerGUI\UninstallInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\PlatformUpdateDownloadInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\UninstallPanel.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadUIDisplay.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadManagerServer.cs" />

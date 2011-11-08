@@ -16,11 +16,11 @@ namespace Medical.GUI
 {
     class DownloadManagerGUI : AbstractFullscreenGUIPopup, DownloadUIDisplay
     {
-        private Widget installPanel;
+        private InstallPanel installPanel;
         private ButtonGrid pluginGrid;
         private Widget downloadPanel;
         private Widget readingInfo;
-        private Widget uninstallPanel;
+        private UninstallPanel uninstallPanel;
 
         private AtlasPluginManager pluginManager;
         private DownloadController downloadController;
@@ -51,11 +51,9 @@ namespace Medical.GUI
             pluginGrid.defineGroup("Pending Install");
             pluginGrid.defineGroup("Installed");
 
-            installPanel = widget.findWidget("InstallPanel");
+            installPanel = new InstallPanel(widget.findWidget("InstallPanel"));
+            installPanel.InstallItem += new EventHandler(installPanel_InstallItem);
             installPanel.Visible = false;
-
-            Button installButton = (Button)widget.findWidget("InstallButton");
-            installButton.MouseButtonClick += new MyGUIEvent(installButton_MouseButtonClick);
 
             downloadPanel = widget.findWidget("DownloadingPanel");
             downloadPanel.Visible = false;
@@ -63,11 +61,9 @@ namespace Medical.GUI
             Button cancelButton = (Button)widget.findWidget("CancelButton");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
-            uninstallPanel = widget.findWidget("UninstallPanel");
+            uninstallPanel = new UninstallPanel(widget.findWidget("UninstallPanel"));
+            uninstallPanel.UninstallItem += new EventHandler(uninstallPanel_UninstallItem);
             uninstallPanel.Visible = false;
-
-            Button uninstallButton = (Button)widget.findWidget("UninstallButton");
-            uninstallButton.MouseButtonClick += new MyGUIEvent(uninstallButton_MouseButtonClick);
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
@@ -167,13 +163,22 @@ namespace Medical.GUI
             if (selectedItem != null)
             {
                 installPanel.Visible = selectedItem.GroupName == "Not Installed" || selectedItem.GroupName == "Updates";
+                if (installPanel.Visible)
+                {
+                    installPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
+                }
                 downloadPanel.Visible = selectedItem.GroupName == "Downloading";
                 uninstallPanel.Visible = selectedItem.GroupName == "Installed" && selectedItem.UserObject is UninstallInfo;
+                if (uninstallPanel.Visible)
+                {
+                    uninstallPanel.setInfo(selectedItem.UserObject as UninstallInfo);
+                }
             }
             else
             {
                 installPanel.Visible = false;
                 downloadPanel.Visible = false;
+                uninstallPanel.Visible = false;
             }
         }
 
@@ -182,7 +187,7 @@ namespace Medical.GUI
             togglePanelVisibility();
         }
 
-        void installButton_MouseButtonClick(Widget source, EventArgs e)
+        void installPanel_InstallItem(object sender, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
@@ -192,7 +197,7 @@ namespace Medical.GUI
             }
         }
 
-        void uninstallButton_MouseButtonClick(Widget source, EventArgs e)
+        void uninstallPanel_UninstallItem(object sender, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             UninstallInfo pluginInfo = selectedItem.UserObject as UninstallInfo;

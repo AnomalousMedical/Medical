@@ -9,8 +9,23 @@
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="InstallPanel">
             <Property key="Widget_Visible" value="false"/>
-            <Widget type="Button" skin="Button" position="37 25 91 26" name="InstallButton">
+            <Widget type="Button" skin="Button" position="2 109 91 26" name="InstallButton">
                 <Property key="Widget_Caption" value="Install"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="InstallIcon"/>
+            <Widget type="Edit" skin="WordWrap" position="0 139 377 404" align="Stretch" name="InstallDescription">
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Edit_MultiLine" value="true"/>
+                <Property key="Text_TextAlign" value="Left Top"/>
+                <Property key="Edit_ReadOnly" value="true"/>
+            </Widget>
+            <Widget type="Edit" skin="WordWrapSimple" position="105 4 269 131" name="InstallName">
+                <Property key="Text_FontHeight" value="35"/>
+                <Property key="Edit_ReadOnly" value="true"/>
+                <Property key="Edit_MultiLine" value="true"/>
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Edit_Static" value="true"/>
+                <Property key="Text_FontName" value="TimelineText.50"/>
             </Widget>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="770 3 24 20" align="Right Top" name="CloseButton"/>
@@ -19,15 +34,36 @@
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="DownloadingPanel">
-            <Widget type="Button" skin="Button" position="37 25 91 26" name="CancelButton">
+            <Property key="Widget_Visible" value="false"/>
+            <Widget type="Button" skin="Button" position="13 66 91 26" name="CancelButton">
                 <Property key="Widget_Caption" value="Cancel"/>
             </Widget>
+            <Widget type="Progress" skin="Progress" position="12 34 350 27"/>
+            <Widget type="StaticText" skin="StaticText" position="2 3 181 14">
+                <Property key="Widget_Caption" value="Downloading"/>
+            </Widget>
         </Widget>
-      <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="UninstallPanel">
-        <Widget type="Button" skin="Button" position="37 25 91 26" name="UninstallButton">
-          <Property key="Widget_Caption" value="Uninstall"/>
+        <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="UninstallPanel">
+            <Property key="Widget_Visible" value="true"/>
+            <Widget type="Button" skin="Button" position="5 109 91 26" name="UninstallButton">
+                <Property key="Widget_Caption" value="Uninstall"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="UninstallIcon"/>
+            <Widget type="Edit" skin="WordWrap" position="0 139 377 404" align="Stretch" name="UninstallDescription">
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Edit_MultiLine" value="true"/>
+                <Property key="Text_TextAlign" value="Left Top"/>
+                <Property key="Edit_ReadOnly" value="true"/>
+            </Widget>
+            <Widget type="Edit" skin="WordWrapSimple" position="105 4 269 131" name="UninstallName">
+                <Property key="Text_FontHeight" value="35"/>
+                <Property key="Edit_ReadOnly" value="true"/>
+                <Property key="Edit_MultiLine" value="true"/>
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Edit_Static" value="true"/>
+                <Property key="Text_FontName" value="TimelineText.50"/>
+            </Widget>
         </Widget>
-      </Widget>
         <Widget type="StaticText" skin="StaticText" position="7 25 250 19" name="ReadingInfo">
             <Property key="Widget_Caption" value="Reading plugin information from server..."/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
