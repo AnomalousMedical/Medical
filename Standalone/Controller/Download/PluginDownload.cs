@@ -40,12 +40,18 @@ namespace Medical
                         {
                             atlasPluginManager.addPluginToMove(pluginFile);
                         }
+                        else
+                        {
+                            Plugin = atlasPluginManager.findPlugin(PluginId);
+                        }
                     }));
                 }
             }
         }
 
         public long PluginId { get; set; }
+
+        public AtlasPlugin Plugin { get; private set; }
 
         public bool LoadedSucessfully { get; set; }
 

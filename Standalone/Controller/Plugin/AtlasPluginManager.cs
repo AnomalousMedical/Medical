@@ -417,6 +417,18 @@ namespace Medical
             uninitializedPlugins.Clear();
         }
 
+        public AtlasPlugin findPlugin(long pluginId)
+        {
+            foreach (AtlasPlugin plugin in plugins)
+            {
+                if (plugin.PluginId == pluginId)
+                {
+                    return plugin;
+                }
+            }
+            return null;
+        }
+
         internal void setMainInterfaceEnabled(bool enabled)
         {
             foreach (AtlasPlugin plugin in plugins)

@@ -30,6 +30,15 @@ namespace Medical.GUI
 
         protected abstract void doStartDownload(DownloadController downloadController);
 
+        /// <summary>
+        /// Override this to create uninstall info for this download. Can be null.
+        /// </summary>
+        /// <returns>UninstallInfo for this download or null if there is none.</returns>
+        public virtual UninstallInfo createUninstallInfo()
+        {
+            return null;
+        }
+
         public String Name { get; set; }
 
         public String ImageKey { get; set; }

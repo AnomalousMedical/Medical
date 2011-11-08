@@ -37,6 +37,16 @@ namespace Medical.GUI
             base.downloadCompleted(download);
         }
 
+        public override UninstallInfo createUninstallInfo()
+        {
+            AtlasPlugin plugin = ((PluginDownload)Download).Plugin;
+            if (plugin != null)
+            {
+                return new UninstallInfo(plugin);
+            }
+            return null;
+        }
+
         public int PluginId { get; set; }
     }
 }

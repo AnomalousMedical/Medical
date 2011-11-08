@@ -268,7 +268,8 @@ namespace Medical.GUI
                 ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                ButtonGridItem installedItem = pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                installedItem.UserObject = downloadInfo.createUninstallInfo();
 
                 if (!downloadController.Downloading && displayRestartMessage)
                 {
