@@ -20,6 +20,7 @@ namespace Medical.GUI
         private ButtonGrid pluginGrid;
         private Widget downloadPanel;
         private Widget readingInfo;
+        private Widget uninstallPanel;
 
         private AtlasPluginManager pluginManager;
         private DownloadController downloadController;
@@ -46,6 +47,7 @@ namespace Medical.GUI
             pluginGrid.defineGroup("Downloading");
             pluginGrid.defineGroup("Updates");
             pluginGrid.defineGroup("Not Installed");
+            pluginGrid.defineGroup("Pending Uninstall");
             pluginGrid.defineGroup("Installed");
 
             installPanel = widget.findWidget("InstallPanel");
@@ -59,6 +61,12 @@ namespace Medical.GUI
 
             Button cancelButton = (Button)widget.findWidget("CancelButton");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            uninstallPanel = widget.findWidget("UninstallPanel");
+            uninstallPanel.Visible = false;
+
+            Button uninstallButton = (Button)widget.findWidget("UninstallButton");
+            uninstallButton.MouseButtonClick += new MyGUIEvent(uninstallButton_MouseButtonClick);
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
@@ -101,6 +109,7 @@ namespace Medical.GUI
                         ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName, plugin.BrandingImageKey);
                         if (plugin.PluginId != -1)
                         {
+                            item.UserObject = new UninstallInfo(plugin);
                             installedPluginsList.Add(plugin);
                         }
                     }
@@ -158,6 +167,7 @@ namespace Medical.GUI
             {
                 installPanel.Visible = selectedItem.GroupName == "Not Installed" || selectedItem.GroupName == "Updates";
                 downloadPanel.Visible = selectedItem.GroupName == "Downloading";
+                uninstallPanel.Visible = selectedItem.GroupName == "Installed" && selectedItem.UserObject is UninstallInfo;
             }
             else
             {
@@ -178,6 +188,20 @@ namespace Medical.GUI
             if (pluginInfo != null)
             {
                 downloadItem(selectedItem, pluginInfo);
+            }
+        }
+
+        void uninstallButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            ButtonGridItem selectedItem = pluginGrid.SelectedItem;
+            UninstallInfo pluginInfo = selectedItem.UserObject as UninstallInfo;
+            if (pluginInfo != null)
+            {
+                pluginInfo.uninstall(pluginManager);
+                pluginGrid.SuppressLayout = true;
+                pluginGrid.removeItem(selectedItem);
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.addItem("Pending Uninstall", pluginInfo.Name, pluginInfo.ImageKey);
             }
         }
 
