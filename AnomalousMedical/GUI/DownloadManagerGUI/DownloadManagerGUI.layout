@@ -47,8 +47,11 @@
             <Widget type="Button" skin="Button" position="5 108 91 26" name="CancelButton">
                 <Property key="Widget_Caption" value="Cancel"/>
             </Widget>
-            <Widget type="Progress" skin="Progress" position="12 155 350 27"/>
-            <Widget type="StaticText" skin="StaticText" position="2 138 181 14">
+            <Widget type="Progress" skin="ProgressFill" position="12 172 350 27" name="DownloadProgressBar">
+                <Property key="Progress_Range" value="100"/>
+                <Property key="Progress_Position" value="0"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="2 138 372 29" name="DownloadingStatusText">
                 <Property key="Widget_Caption" value="Downloading"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>

@@ -14,7 +14,7 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    class DownloadManagerGUI : AbstractFullscreenGUIPopup, DownloadUIDisplay
+    class DownloadManagerGUI : AbstractFullscreenGUIPopup
     {
         private InstallPanel installPanel;
         private ButtonGrid pluginGrid;
@@ -234,7 +234,8 @@ namespace Medical.GUI
             pluginGrid.layout();
 
             downloadInfo.UserObject = downloadingItem;
-            downloadInfo.startDownload(downloadController, this);
+            downloadInfo.startDownload(downloadController);
+            subscribeToDownload(downloadInfo);
             pluginGrid.SelectedItem = downloadingItem;
         }
 
@@ -261,7 +262,7 @@ namespace Medical.GUI
 
         #region DownloadUIDisplay Members
 
-        public void updateStatus(ServerDownloadInfo downloadInfo, string status)
+        void downloadInfo_UpdateStatus(ServerDownloadInfo downloadInfo, string status)
         {
             if (activeNotDisposed)
             {
@@ -270,7 +271,7 @@ namespace Medical.GUI
             }
         }
 
-        public void downloadSuccessful(ServerDownloadInfo downloadInfo)
+        void downloadInfo_DownloadSuccessful(ServerDownloadInfo downloadInfo)
         {
             if (activeNotDisposed)
             {
@@ -301,9 +302,10 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
+            unsubscribeFromDownload(downloadInfo);
         }
 
-        public void downloadFailed(ServerDownloadInfo downloadInfo)
+        void downloadInfo_DownloadFailed(ServerDownloadInfo downloadInfo)
         {
             if (activeNotDisposed)
             {
@@ -315,9 +317,10 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
+            unsubscribeFromDownload(downloadInfo);
         }
 
-        public void downloadCanceled(ServerDownloadInfo downloadInfo)
+        void downloadInfo_DownloadCanceled(ServerDownloadInfo downloadInfo)
         {
             if (activeNotDisposed)
             {
@@ -328,16 +331,35 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
             }
+            unsubscribeFromDownload(downloadInfo);
         }
 
-        public void requestRestart(ServerDownloadInfo downloadInfo, String message, bool startPlatformUpdate)
+        void downloadInfo_RequestRestart(ServerDownloadInfo downloadInfo, string restartMessage, bool startPlatformUpdate)
         {
             if (!autoStartUpdate)
             {
                 autoStartUpdate = startPlatformUpdate;
                 displayRestartMessage = true;
-                restartMessage = message;
+                this.restartMessage = restartMessage;
             }
+        }
+
+        private void subscribeToDownload(ServerDownloadInfo downloadInfo)
+        {
+            downloadInfo.DownloadCanceled += downloadInfo_DownloadCanceled;
+            downloadInfo.DownloadFailed += downloadInfo_DownloadFailed;
+            downloadInfo.DownloadSuccessful += downloadInfo_DownloadSuccessful;
+            downloadInfo.RequestRestart += downloadInfo_RequestRestart;
+            downloadInfo.UpdateStatus += downloadInfo_UpdateStatus;
+        }
+
+        private void unsubscribeFromDownload(ServerDownloadInfo downloadInfo)
+        {
+            downloadInfo.DownloadCanceled -= downloadInfo_DownloadCanceled;
+            downloadInfo.DownloadFailed -= downloadInfo_DownloadFailed;
+            downloadInfo.DownloadSuccessful -= downloadInfo_DownloadSuccessful;
+            downloadInfo.RequestRestart -= downloadInfo_RequestRestart;
+            downloadInfo.UpdateStatus -= downloadInfo_UpdateStatus;
         }
 
         #endregion
