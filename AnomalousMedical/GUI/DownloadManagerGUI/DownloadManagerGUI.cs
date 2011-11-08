@@ -48,6 +48,7 @@ namespace Medical.GUI
             pluginGrid.defineGroup("Updates");
             pluginGrid.defineGroup("Not Installed");
             pluginGrid.defineGroup("Pending Uninstall");
+            pluginGrid.defineGroup("Pending Install");
             pluginGrid.defineGroup("Installed");
 
             installPanel = widget.findWidget("InstallPanel");
@@ -268,7 +269,15 @@ namespace Medical.GUI
                 ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                ButtonGridItem installedItem = pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                ButtonGridItem installedItem;
+                if (downloadInfo.Download.DownloadedToSafeLocation)
+                {
+                    installedItem = pluginGrid.addItem("Pending Install", downloadInfo.Name, downloadInfo.ImageKey);
+                }
+                else
+                {
+                    installedItem = pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                }
                 installedItem.UserObject = downloadInfo.createUninstallInfo();
 
                 if (!downloadController.Downloading && displayRestartMessage)
