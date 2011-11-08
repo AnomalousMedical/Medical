@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="SolidBackground" position="97 162 224 114" layer="Overlapped">
-        <Widget type="Button" skin="ButtonV" position="196 2 12 12" align="Right Top" name="PinButton">
+        <Widget type="Button" skin="ButtonV" position="176 2 22 22" align="Right Top" name="PinButton">
             <Property key="Widget_Caption" value="Pin"/>
         </Widget>
         <Widget type="StaticImage" skin="StaticImage" position="2 1 50 50" name="ThumbnailImage">
             <Property key="Widget_NeedMouse" value="false"/>
             <Property key="Widget_NeedKey" value="false"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="57 2 101 14" align="Left Top" name="AnatomyName">
+        <Widget type="StaticText" skin="StaticText" position="57 5 101 14" align="Left Top" name="AnatomyName">
             <Property key="Widget_NeedKey" value="false"/>
             <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
         <Widget type="HScroll" skin="HSlider" position="48 67 129 16" align="HStretch Top" name="TransparencySlider"/>
-        <Widget type="Button" skin="ButtonX" position="210 2 12 12" align="Right Top" name="CloseButton"/>
+        <Widget type="Button" skin="ButtonXBig" position="199 2 22 22" align="Right Top" name="CloseButton"/>
         <Widget type="StaticText" skin="StaticText" position="69 56 78 13" align="HCenter Top">
             <Property key="Widget_Caption" value="Transparency"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="58 22 74 26" align="HRelative Top" name="CenterButton">
+        <Widget type="Button" skin="Button" position="58 24 62 26" align="HRelative Top" name="CenterButton">
             <Property key="Widget_Caption" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="140 22 74 26" align="HRelative Top" name="HighlightButton">
+        <Widget type="Button" skin="Button" position="126 24 61 26" align="HRelative Top" name="HighlightButton">
             <Property key="Widget_Caption" value="Highlight"/>
         </Widget>
         <Widget type="Button" skin="Button" position="3 85 219 26" align="HStretch Top" name="RelatedAnatomyButton">
