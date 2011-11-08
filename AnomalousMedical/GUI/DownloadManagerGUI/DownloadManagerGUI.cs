@@ -139,7 +139,7 @@ namespace Medical.GUI
             }
         }
 
-        private void addDownloadToButtonGrid(ServerDownloadInfo download)
+        private ButtonGridItem addDownloadToButtonGrid(ServerDownloadInfo download)
         {
             String group = "";
             switch (download.Status)
@@ -153,6 +153,7 @@ namespace Medical.GUI
             }
             ButtonGridItem item = pluginGrid.addItem(group, download.Name, download.ImageKey);
             item.UserObject = download;
+            return item;
         }
 
         private void togglePanelVisibility()
@@ -276,6 +277,7 @@ namespace Medical.GUI
             if (activeNotDisposed)
             {
                 ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                bool reselectItem = downloadingItem == pluginGrid.SelectedItem;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
                 ButtonGridItem installedItem;
@@ -301,6 +303,10 @@ namespace Medical.GUI
                 }
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
+                if (reselectItem)
+                {
+                    pluginGrid.SelectedItem = installedItem;
+                }
             }
             unsubscribeFromDownload(downloadInfo);
         }
@@ -310,12 +316,17 @@ namespace Medical.GUI
             if (activeNotDisposed)
             {
                 ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                bool reselectItem = downloadingItem == pluginGrid.SelectedItem;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
                 MessageBox.show(String.Format("There was an error downloading {0}.\nPlease try again later.", downloadInfo.Name), "Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                addDownloadToButtonGrid(downloadInfo);
+                ButtonGridItem newItem = addDownloadToButtonGrid(downloadInfo);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
+                if (reselectItem)
+                {
+                    pluginGrid.SelectedItem = newItem;
+                }
             }
             unsubscribeFromDownload(downloadInfo);
         }
@@ -325,11 +336,16 @@ namespace Medical.GUI
             if (activeNotDisposed)
             {
                 ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                bool reselectItem = downloadingItem == pluginGrid.SelectedItem;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                addDownloadToButtonGrid(downloadInfo);
+                ButtonGridItem newItem = addDownloadToButtonGrid(downloadInfo);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
+                if (reselectItem)
+                {
+                    pluginGrid.SelectedItem = newItem;
+                }
             }
             unsubscribeFromDownload(downloadInfo);
         }
