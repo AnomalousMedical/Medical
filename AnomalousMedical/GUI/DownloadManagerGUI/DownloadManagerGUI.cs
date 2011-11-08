@@ -21,6 +21,7 @@ namespace Medical.GUI
         private DownloadingPanel downloadPanel;
         private Widget readingInfo;
         private UninstallPanel uninstallPanel;
+        private RestartPanel restartPanel;
 
         private AtlasPluginManager pluginManager;
         private DownloadController downloadController;
@@ -32,16 +33,18 @@ namespace Medical.GUI
         private String restartMessage = "";
         private DownloadManagerServer downloadServer;
         private NotificationGUIManager notificationManager;
+        private StandaloneController standaloneController;
 
-        public DownloadManagerGUI(AtlasPluginManager pluginManager, DownloadManagerServer downloadServer, DownloadController downloadController, GUIManager guiManager)
-            : base("Medical.GUI.DownloadManagerGUI.DownloadManagerGUI.layout", guiManager)
+        public DownloadManagerGUI(StandaloneController standaloneController, DownloadManagerServer downloadServer)
+            : base("Medical.GUI.DownloadManagerGUI.DownloadManagerGUI.layout", standaloneController.GUIManager)
         {
-            this.pluginManager = pluginManager;
-            this.downloadController = downloadController;
+            this.standaloneController = standaloneController;
+            this.pluginManager = standaloneController.AtlasPluginManager;
+            this.downloadController = standaloneController.DownloadController;
             this.downloadServer = downloadServer;
             downloadServer.DownloadFound += new Action<ServerDownloadInfo>(downloadServer_DownloadFound);
             downloadServer.FinishedReadingDownloads += new Action(downloadServer_FinishedReadingDownloads);
-            this.notificationManager = guiManager.NotificationManager;
+            this.notificationManager = standaloneController.GUIManager.NotificationManager;
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
@@ -64,6 +67,10 @@ namespace Medical.GUI
             uninstallPanel = new UninstallPanel(widget.findWidget("UninstallPanel"));
             uninstallPanel.UninstallItem += new EventHandler(uninstallPanel_UninstallItem);
             uninstallPanel.Visible = false;
+
+            restartPanel = new RestartPanel(widget.findWidget("RestartPanel"));
+            restartPanel.Restart += new EventHandler(restartPanel_Restart);
+            restartPanel.Visible = false;
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
@@ -176,12 +183,26 @@ namespace Medical.GUI
                 {
                     uninstallPanel.setInfo(selectedItem.UserObject as UninstallInfo);
                 }
+                restartPanel.Visible = selectedItem.GroupName == "Pending Uninstall";
+                if (restartPanel.Visible)
+                {
+                    restartPanel.setInfo(selectedItem.UserObject as UninstallInfo);
+                }
+                else
+                {
+                    restartPanel.Visible = selectedItem.GroupName == "Pending Install";
+                    if (restartPanel.Visible)
+                    {
+                        restartPanel.setInfo(selectedItem.UserObject as ServerDownloadInfo);
+                    }
+                }
             }
             else
             {
                 installPanel.Visible = false;
                 downloadPanel.Visible = false;
                 uninstallPanel.Visible = false;
+                restartPanel.Visible = false;
             }
         }
 
@@ -210,8 +231,9 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(selectedItem);
                 pluginGrid.SuppressLayout = false;
-                pluginGrid.addItem("Pending Uninstall", pluginInfo.Name, pluginInfo.ImageKey);
-                notificationManager.showRestartNotification(String.Format("You must restart Anomalous Medical to finish uninstalling '{0}'.\nClick here to do this now.", pluginInfo.Name), pluginInfo.ImageKey, false);
+                ButtonGridItem pendingItem = pluginGrid.addItem("Pending Uninstall", pluginInfo.Name, pluginInfo.ImageKey);
+                pendingItem.UserObject = pluginInfo;
+                pluginGrid.SelectedItem = pendingItem;
             }
         }
 
@@ -250,6 +272,17 @@ namespace Medical.GUI
             }
         }
 
+        void restartPanel_Restart(object sender, EventArgs e)
+        {
+            MessageBox.show("Restarting Anomalous Medical will loose all unsaved data. Are you sure you wish to continue?", "Restart", MessageBoxStyle.IconInfo | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+            {
+                if (result == MessageBoxStyle.Yes)
+                {
+                    standaloneController.restart();
+                }
+            });
+        }
+
         public override void setSize(int width, int height)
         {
             base.setSize(width, height);
@@ -284,12 +317,13 @@ namespace Medical.GUI
                 if (downloadInfo.Download.DownloadedToSafeLocation)
                 {
                     installedItem = pluginGrid.addItem("Pending Install", downloadInfo.Name, downloadInfo.ImageKey);
+                    installedItem.UserObject = downloadInfo;
                 }
                 else
                 {
                     installedItem = pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
+                    installedItem.UserObject = downloadInfo.createUninstallInfo();
                 }
-                installedItem.UserObject = downloadInfo.createUninstallInfo();
 
                 if (!downloadController.Downloading && displayRestartMessage)
                 {

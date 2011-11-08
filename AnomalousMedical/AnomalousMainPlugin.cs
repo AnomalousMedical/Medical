@@ -89,7 +89,7 @@ namespace Medical.GUI
             //renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             //guiManager.addManagedDialog(renderDialog);
 
-            downloadManagerGUI = new DownloadManagerGUI(standaloneController.AtlasPluginManager, downloadServer, standaloneController.DownloadController, guiManager);
+            downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;

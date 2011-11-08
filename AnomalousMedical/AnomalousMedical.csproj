@@ -124,6 +124,7 @@
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadingPanel.cs" />
     <Compile Include="GUI\DownloadManagerGUI\InstallPanel.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\RestartPanel.cs" />
     <Compile Include="GUI\DownloadManagerGUI\UninstallInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\PlatformUpdateDownloadInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\UninstallPanel.cs" />
