@@ -39,6 +39,8 @@ namespace Medical.GUI
             this.pluginManager = pluginManager;
             this.downloadController = downloadController;
             this.downloadServer = downloadServer;
+            downloadServer.DownloadFound += new Action<ServerPluginDownloadInfo>(downloadServer_DownloadFound);
+            downloadServer.FinishedReadingDownloads += new Action(downloadServer_FinishedReadingDownloads);
             this.notificationManager = guiManager.NotificationManager;
 
             pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
@@ -120,23 +122,40 @@ namespace Medical.GUI
             }
         }
 
-        private void addNotInstalledPlugins(List<ServerDownloadInfo> downloadInfo)
+        void downloadServer_DownloadFound(ServerPluginDownloadInfo download)
         {
             if (activeNotDisposed)
             {
-                pluginGrid.SuppressLayout = true;
+                addDownloadToButtonGrid(download);
+            }
+        }
 
-                foreach (ServerDownloadInfo download in downloadInfo)
-                {
-                    addDownloadToButtonGrid(download);
-                }
-
-                pluginGrid.SuppressLayout = false;
-                pluginGrid.layout();
-
+        void downloadServer_FinishedReadingDownloads()
+        {
+            if (activeNotDisposed)
+            {
                 readingServerPluginInfo = false;
                 readingInfo.Visible = false;
             }
+        }
+
+        private void addNotInstalledPlugins(List<ServerDownloadInfo> downloadInfo)
+        {
+            //if (activeNotDisposed)
+            //{
+            //    pluginGrid.SuppressLayout = true;
+
+            //    foreach (ServerDownloadInfo download in downloadInfo)
+            //    {
+            //        addDownloadToButtonGrid(download);
+            //    }
+
+            //    pluginGrid.SuppressLayout = false;
+            //    pluginGrid.layout();
+
+            //    readingServerPluginInfo = false;
+            //    readingInfo.Visible = false;
+            //}
         }
 
         private ButtonGridItem addDownloadToButtonGrid(ServerDownloadInfo download)

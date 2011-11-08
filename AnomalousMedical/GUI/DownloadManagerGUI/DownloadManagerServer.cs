@@ -16,6 +16,9 @@ namespace Medical.GUI
 {
     class DownloadManagerServer : IDisposable
     {
+        public event Action<ServerPluginDownloadInfo> DownloadFound;
+        public event Action FinishedReadingDownloads;
+
         private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
         private LicenseManager licenseManager;
         List<ServerPluginDownloadInfo> detectedServerPlugins = new List<ServerPluginDownloadInfo>();
@@ -56,6 +59,13 @@ namespace Medical.GUI
                 }
                 List<ServerDownloadInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
                 ThreadManager.invoke(finishedCallback, pluginInfo);
+                ThreadManager.invoke(new Action(delegate()
+                {
+                    if (FinishedReadingDownloads != null)
+                    {
+                        FinishedReadingDownloads.Invoke();
+                    }
+                }));
             });
             serverReadThread.Start();
         }
@@ -133,6 +143,13 @@ namespace Medical.GUI
                                                     }
                                                 }
                                             }
+                                            ThreadManager.invoke(new Action<ServerPluginDownloadInfo>(delegate(ServerPluginDownloadInfo downloadInfo)
+                                            {
+                                                if(DownloadFound != null)
+                                                {
+                                                    DownloadFound.Invoke(downloadInfo);
+                                                }
+                                            }), pluginInfo);
                                             detectedServerPlugins.Add(pluginInfo);
                                         }
                                     }
