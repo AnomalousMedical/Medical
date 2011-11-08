@@ -34,17 +34,27 @@
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="DownloadingPanel">
-            <Property key="Widget_Visible" value="false"/>
-            <Widget type="Button" skin="Button" position="13 66 91 26" name="CancelButton">
+            <Property key="Widget_Visible" value="true"/>
+            <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="DownloadingIcon"/>
+            <Widget type="Edit" skin="WordWrapSimple" position="105 4 269 131" name="DownloadingName">
+                <Property key="Text_FontHeight" value="35"/>
+                <Property key="Edit_ReadOnly" value="true"/>
+                <Property key="Edit_MultiLine" value="true"/>
+                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Edit_Static" value="true"/>
+                <Property key="Text_FontName" value="TimelineText.50"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="5 108 91 26" name="CancelButton">
                 <Property key="Widget_Caption" value="Cancel"/>
             </Widget>
-            <Widget type="Progress" skin="Progress" position="12 34 350 27"/>
-            <Widget type="StaticText" skin="StaticText" position="2 3 181 14">
+            <Widget type="Progress" skin="Progress" position="12 155 350 27"/>
+            <Widget type="StaticText" skin="StaticText" position="2 138 181 14">
                 <Property key="Widget_Caption" value="Downloading"/>
+                <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="413 47 379 545" align="Right VStretch" name="UninstallPanel">
-            <Property key="Widget_Visible" value="true"/>
+            <Property key="Widget_Visible" value="false"/>
             <Widget type="Button" skin="Button" position="5 109 91 26" name="UninstallButton">
                 <Property key="Widget_Caption" value="Uninstall"/>
             </Widget>

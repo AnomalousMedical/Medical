@@ -18,7 +18,7 @@ namespace Medical.GUI
     {
         private InstallPanel installPanel;
         private ButtonGrid pluginGrid;
-        private Widget downloadPanel;
+        private DownloadingPanel downloadPanel;
         private Widget readingInfo;
         private UninstallPanel uninstallPanel;
 
@@ -55,11 +55,9 @@ namespace Medical.GUI
             installPanel.InstallItem += new EventHandler(installPanel_InstallItem);
             installPanel.Visible = false;
 
-            downloadPanel = widget.findWidget("DownloadingPanel");
+            downloadPanel = new DownloadingPanel(widget.findWidget("DownloadingPanel"));
+            downloadPanel.CancelDownload += new EventHandler(downloadPanel_CancelDownload);
             downloadPanel.Visible = false;
-
-            Button cancelButton = (Button)widget.findWidget("CancelButton");
-            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
             uninstallPanel = new UninstallPanel(widget.findWidget("UninstallPanel"));
             uninstallPanel.UninstallItem += new EventHandler(uninstallPanel_UninstallItem);
@@ -168,6 +166,10 @@ namespace Medical.GUI
                     installPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
                 }
                 downloadPanel.Visible = selectedItem.GroupName == "Downloading";
+                if (downloadPanel.Visible)
+                {
+                    downloadPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
+                }
                 uninstallPanel.Visible = selectedItem.GroupName == "Installed" && selectedItem.UserObject is UninstallInfo;
                 if (uninstallPanel.Visible)
                 {
@@ -233,9 +235,10 @@ namespace Medical.GUI
 
             downloadInfo.UserObject = downloadingItem;
             downloadInfo.startDownload(downloadController, this);
+            pluginGrid.SelectedItem = downloadingItem;
         }
 
-        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
+        void downloadPanel_CancelDownload(object sender, EventArgs e)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
