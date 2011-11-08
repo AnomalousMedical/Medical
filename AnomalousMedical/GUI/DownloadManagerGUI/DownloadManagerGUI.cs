@@ -39,7 +39,7 @@ namespace Medical.GUI
             this.pluginManager = pluginManager;
             this.downloadController = downloadController;
             this.downloadServer = downloadServer;
-            downloadServer.DownloadFound += new Action<ServerPluginDownloadInfo>(downloadServer_DownloadFound);
+            downloadServer.DownloadFound += new Action<ServerDownloadInfo>(downloadServer_DownloadFound);
             downloadServer.FinishedReadingDownloads += new Action(downloadServer_FinishedReadingDownloads);
             this.notificationManager = guiManager.NotificationManager;
 
@@ -118,11 +118,11 @@ namespace Medical.GUI
 
                 readingServerPluginInfo = true;
                 readingInfo.Visible = true;
-                downloadServer.readPluginInfoFromServer(installedPluginsList, addNotInstalledPlugins);
+                downloadServer.readPluginInfoFromServer(installedPluginsList);
             }
         }
 
-        void downloadServer_DownloadFound(ServerPluginDownloadInfo download)
+        void downloadServer_DownloadFound(ServerDownloadInfo download)
         {
             if (activeNotDisposed)
             {
@@ -137,25 +137,6 @@ namespace Medical.GUI
                 readingServerPluginInfo = false;
                 readingInfo.Visible = false;
             }
-        }
-
-        private void addNotInstalledPlugins(List<ServerDownloadInfo> downloadInfo)
-        {
-            //if (activeNotDisposed)
-            //{
-            //    pluginGrid.SuppressLayout = true;
-
-            //    foreach (ServerDownloadInfo download in downloadInfo)
-            //    {
-            //        addDownloadToButtonGrid(download);
-            //    }
-
-            //    pluginGrid.SuppressLayout = false;
-            //    pluginGrid.layout();
-
-            //    readingServerPluginInfo = false;
-            //    readingInfo.Visible = false;
-            //}
         }
 
         private ButtonGridItem addDownloadToButtonGrid(ServerDownloadInfo download)

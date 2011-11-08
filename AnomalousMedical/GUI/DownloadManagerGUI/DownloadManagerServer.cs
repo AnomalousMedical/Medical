@@ -16,7 +16,7 @@ namespace Medical.GUI
 {
     class DownloadManagerServer : IDisposable
     {
-        public event Action<ServerPluginDownloadInfo> DownloadFound;
+        public event Action<ServerDownloadInfo> DownloadFound;
         public event Action FinishedReadingDownloads;
 
         private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
@@ -42,7 +42,7 @@ namespace Medical.GUI
             }
         }
 
-        public void readPluginInfoFromServer(List<AtlasPlugin> installedPlugins, Action<List<ServerDownloadInfo>> finishedCallback)
+        public void readPluginInfoFromServer(List<AtlasPlugin> installedPlugins)
         {
             Thread serverReadThread = new Thread(delegate()
             {
@@ -57,8 +57,7 @@ namespace Medical.GUI
                 {
                     installedPluginsList = sb.ToString(0, sb.Length - 1);
                 }
-                List<ServerDownloadInfo> pluginInfo = readServerPluginInfo(installedPluginsList);
-                ThreadManager.invoke(finishedCallback, pluginInfo);
+                readServerPluginInfo(installedPluginsList);
                 ThreadManager.invoke(new Action(delegate()
                 {
                     if (FinishedReadingDownloads != null)
@@ -75,9 +74,8 @@ namespace Medical.GUI
             detectedServerPlugins.Remove(serverPluginDownloadInfo);
         }
 
-        private List<ServerDownloadInfo> readServerPluginInfo(String commaSeparatedPluginList)
+        private void readServerPluginInfo(String commaSeparatedPluginList)
         {
-            List<ServerDownloadInfo> downloadInfoList = new List<ServerDownloadInfo>();
             try
             {
                 Version localVersion = UpdateController.CurrentVersion;
@@ -119,7 +117,13 @@ namespace Medical.GUI
                                         Version remoteVersion = new Version(versionString);
                                         if (remoteVersion > localVersion && remoteVersion > UpdateController.DownloadedVersion)
                                         {
-                                            downloadInfoList.Add(new PlatformUpdateDownloadInfo(remoteVersion));
+                                            ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
+                                            {
+                                                if (DownloadFound != null)
+                                                {
+                                                    DownloadFound.Invoke(downloadInfo);
+                                                }
+                                            }), new PlatformUpdateDownloadInfo(remoteVersion));
                                             foundPlatformUpdate = true;
                                         }
                                     }
@@ -129,7 +133,6 @@ namespace Medical.GUI
                                         String imageURL = streamReader.ReadString();
                                         if (!alreadyFoundPlugin(pluginInfo.PluginId))
                                         {
-                                            downloadInfoList.Add(pluginInfo);
                                             if (!String.IsNullOrEmpty(imageURL))
                                             {
                                                 using (Bitmap image = loadImageFromURL(imageURL))
@@ -143,7 +146,7 @@ namespace Medical.GUI
                                                     }
                                                 }
                                             }
-                                            ThreadManager.invoke(new Action<ServerPluginDownloadInfo>(delegate(ServerPluginDownloadInfo downloadInfo)
+                                            ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
                                             {
                                                 if(DownloadFound != null)
                                                 {
@@ -166,8 +169,6 @@ namespace Medical.GUI
                     MessageBox.show(String.Format("Error reading plugin data from the server. Please try again later.\nReason: {0}", e.Message), "Server Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                 }));
             }
-
-            return downloadInfoList;
         }
 
         //Runs on background thread
