@@ -29,10 +29,13 @@ namespace GraphicsUser
             
         }
 
-        public void initialize(StandaloneController standaloneController)
+        public void loadGUIResources()
         {
             Gui.Instance.load("GraphicsUser.Resources.Imagesets.xml");
+        }
 
+        public void initialize(StandaloneController standaloneController)
+        {
             //Dialogs
             GUIManager guiManager = standaloneController.GUIManager;
 

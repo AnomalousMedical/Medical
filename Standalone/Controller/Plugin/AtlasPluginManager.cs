@@ -369,14 +369,14 @@ namespace Medical
             if (plugin.PluginId == -1 || standaloneController.App.LicenseManager.allowFeature(plugin.PluginId))
             {
                 uninitializedPlugins.Add(plugin);
-                if (addAssemblyResources)
-                {
-                    OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
-                }
             }
             else
             {
                 unlicensedPlugins.Add(plugin);
+            }
+            if (addAssemblyResources)
+            {
+                OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
             }
         }
 
@@ -399,6 +399,7 @@ namespace Medical
             {
                 try
                 {
+                    plugin.loadGUIResources();
                     plugin.initialize(standaloneController);
                     if (currentScene != null)
                     {

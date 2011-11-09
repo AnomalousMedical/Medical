@@ -33,12 +33,16 @@ namespace DentalSim
 
         }
 
+        public void loadGUIResources()
+        {
+            Gui.Instance.load("DentalSim.Resources.Imagesets.xml");
+        }
+
         public void initialize(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
 
             GUIManager guiManager = standaloneController.GUIManager;
-            Gui.Instance.load("DentalSim.Resources.Imagesets.xml");
 
             //Dialogs
             mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);

@@ -49,11 +49,14 @@ namespace Medical
             openPatientDialog.Dispose();
         }
 
+        public void loadGUIResources()
+        {
+            Gui.Instance.load("Medical.Resources.PremiumImagesets.xml");
+        }
+
         public void initialize(StandaloneController standaloneController)
         {
             standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController));
-
-            Gui.Instance.load("Medical.Resources.PremiumImagesets.xml");
 
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;

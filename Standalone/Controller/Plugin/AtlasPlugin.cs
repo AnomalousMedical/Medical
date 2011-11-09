@@ -9,6 +9,8 @@ namespace Medical
 {
     public interface AtlasPlugin : IDisposable
     {
+        void loadGUIResources();
+
         void initialize(StandaloneController standaloneController);
 
         void sceneLoaded(SimScene scene);

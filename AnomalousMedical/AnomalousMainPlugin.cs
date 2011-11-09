@@ -54,13 +54,16 @@ namespace Medical.GUI
             }
         }
 
+        public void loadGUIResources()
+        {
+            Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
+        }
+
         public void initialize(StandaloneController standaloneController)
         {
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
             standaloneController.MovementSequenceController.GroupAdded += MovementSequenceController_GroupAdded;
-
-            Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
             bool hasPremium = licenseManager.allowFeature(1);
             if(!hasPremium)

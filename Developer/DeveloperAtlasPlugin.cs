@@ -34,10 +34,13 @@ namespace Developer
 
         }
 
-        public void initialize(StandaloneController standaloneController)
+        public void loadGUIResources()
         {
             Gui.Instance.load("Developer.Resources.DeveloperImagesets.xml");
+        }
 
+        public void initialize(StandaloneController standaloneController)
+        {
             pluginPublishController = new PluginPublishController(standaloneController.AtlasPluginManager);
 
             GUIManager guiManager = standaloneController.GUIManager;

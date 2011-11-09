@@ -35,13 +35,16 @@ namespace Medical
             
         }
 
+        public void loadGUIResources()
+        {
+            Gui.Instance.load(System.IO.Path.Combine(PluginRootFolder, IconResourceFile));
+        }
+
         public void initialize(StandaloneController standaloneController)
         {
             if (PluginId == -1 || standaloneController.App.LicenseManager.allowFeature(PluginId))
             {
                 TimelineController = standaloneController.TimelineController;
-
-                Gui.Instance.load(System.IO.Path.Combine(PluginRootFolder, IconResourceFile));
 
                 TaskController taskController = standaloneController.TaskController;
                 foreach (DDPluginTask task in tasks)

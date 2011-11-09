@@ -114,6 +114,7 @@ namespace Medical.GUI
                     }
                     foreach (AtlasPlugin plugin in pluginManager.UnlicensedPlugins)
                     {
+                        plugin.loadGUIResources();
                         addInfoToButtonGrid(new UninstallInfo(plugin, ServerDownloadStatus.Unlicensed), false);
                     }
                     addedInstalledPlugins = true;

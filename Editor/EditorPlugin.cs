@@ -55,10 +55,14 @@ namespace Medical
             pluginEditor.Dispose();
         }
 
+        public void loadGUIResources()
+        {
+            Gui.Instance.load("Medical.Resources.EditorImagesets.xml");
+        }
+
         public void initialize(StandaloneController standaloneController)
         {
             GUIManager guiManager = standaloneController.GUIManager;
-            Gui.Instance.load("Medical.Resources.EditorImagesets.xml");
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
