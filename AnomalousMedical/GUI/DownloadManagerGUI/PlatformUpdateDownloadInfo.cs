@@ -31,7 +31,7 @@ namespace Medical.GUI
 
         public override DownloadGUIInfo createClientDownloadInfo()
         {
-            return new UpdateInfo(ImageKey, Name, "Please restart to install the Anomalous Medical update.", ServerDownloadStatus.PendingInstall);
+            return new UpdateInfo(ImageKey, Name, "Please restart to install the Anomalous Medical update.", ServerDownloadStatus.PendingInstall, true);
         }
 
         public Version Version { get; private set; }

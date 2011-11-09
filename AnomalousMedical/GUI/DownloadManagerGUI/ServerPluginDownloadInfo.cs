@@ -42,7 +42,7 @@ namespace Medical.GUI
         {
             if (Download.DownloadedToSafeLocation)
             {
-                return new UpdateInfo(ImageKey, Name, String.Format("You must restart Anomalous Medical to finish installing {0}. You may install more things by selecting them and clicking install before restarting.", Name), ServerDownloadStatus.PendingInstall);
+                return new UpdateInfo(ImageKey, Name, String.Format("You must restart Anomalous Medical to finish installing {0}. You may install more things by selecting them and clicking install before restarting.", Name), ServerDownloadStatus.PendingInstall, false);
             }
             AtlasPlugin plugin = ((PluginDownload)Download).Plugin;
             if (plugin != null)

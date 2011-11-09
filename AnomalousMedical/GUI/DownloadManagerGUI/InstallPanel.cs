@@ -8,9 +8,9 @@ namespace Medical.GUI
 {
     class InstallPanel
     {
-        public event EventHandler InstallItem;
-        public event EventHandler UninstallItem;
-        public event EventHandler Restart;
+        public event Action<DownloadGUIInfo> InstallItem;
+        public event Action<DownloadGUIInfo> UninstallItem;
+        public event Action<DownloadGUIInfo> Restart;
 
         private Widget widget;
         private StaticImage icon;
@@ -91,35 +91,35 @@ namespace Medical.GUI
                 case ServerDownloadStatus.NotInstalled:
                     if (InstallItem != null)
                     {
-                        InstallItem.Invoke(this, e);
+                        InstallItem.Invoke(currentInfo);
                     }
                     break;
 
                 case ServerDownloadStatus.Update:
                     if (InstallItem != null)
                     {
-                        InstallItem.Invoke(this, e);
+                        InstallItem.Invoke(currentInfo);
                     }
                     break;
 
                 case ServerDownloadStatus.Installed:
                     if (UninstallItem != null)
                     {
-                        UninstallItem.Invoke(this, e);
+                        UninstallItem.Invoke(currentInfo);
                     }
                     break;
 
                 case ServerDownloadStatus.PendingUninstall:
                     if (Restart != null)
                     {
-                        Restart.Invoke(this, e);
+                        Restart.Invoke(currentInfo);
                     }
                     break;
 
                 case ServerDownloadStatus.PendingInstall:
                     if (Restart != null)
                     {
-                        Restart.Invoke(this, e);
+                        Restart.Invoke(currentInfo);
                     }
                     break;
             }

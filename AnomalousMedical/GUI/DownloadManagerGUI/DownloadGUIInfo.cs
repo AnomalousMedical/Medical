@@ -13,6 +13,7 @@ namespace Medical.GUI
         public DownloadGUIInfo(ServerDownloadStatus status)
         {
             this.Status = status;
+            AutoStartUpdate = false;
         }
 
         public String Name { get; set; }
@@ -22,6 +23,8 @@ namespace Medical.GUI
         public ServerDownloadStatus Status { get; set; }
 
         public ButtonGridItem GUIItem { get; set; }
+
+        public bool AutoStartUpdate { get; protected set; }
 
         public abstract void getDescription(DescriptionFoundCallback descriptionFoundCallback);
     }

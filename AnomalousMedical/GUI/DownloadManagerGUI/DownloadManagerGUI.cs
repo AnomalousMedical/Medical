@@ -55,9 +55,9 @@ namespace Medical.GUI
             pluginGrid.defineGroup("Installed");
 
             installPanel = new InstallPanel(widget.findWidget("InstallPanel"));
-            installPanel.InstallItem += new EventHandler(installPanel_InstallItem);
-            installPanel.UninstallItem += new EventHandler(uninstallPanel_UninstallItem);
-            installPanel.Restart += new EventHandler(restartPanel_Restart);
+            installPanel.InstallItem += installPanel_InstallItem;
+            installPanel.UninstallItem += installPanel_UninstallItem;
+            installPanel.Restart += installPanel_Restart;
             installPanel.Visible = false;
 
             downloadPanel = new DownloadingPanel(widget.findWidget("DownloadingPanel"));
@@ -203,7 +203,7 @@ namespace Medical.GUI
             togglePanelVisibility();
         }
 
-        void installPanel_InstallItem(object sender, EventArgs e)
+        void installPanel_InstallItem(DownloadGUIInfo info)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
@@ -213,7 +213,7 @@ namespace Medical.GUI
             }
         }
 
-        void uninstallPanel_UninstallItem(object sender, EventArgs e)
+        void installPanel_UninstallItem(DownloadGUIInfo info)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             UninstallInfo pluginInfo = selectedItem.UserObject as UninstallInfo;
@@ -260,12 +260,13 @@ namespace Medical.GUI
             }
         }
 
-        void restartPanel_Restart(object sender, EventArgs e)
+        void installPanel_Restart(DownloadGUIInfo info)
         {
             MessageBox.show("Restarting Anomalous Medical will loose all unsaved data. Are you sure you wish to continue?", "Restart", MessageBoxStyle.IconInfo | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
             {
                 if (result == MessageBoxStyle.Yes)
                 {
+                    UpdateController.AutoStartUpdate = info.AutoStartUpdate;
                     standaloneController.restart();
                 }
             });
