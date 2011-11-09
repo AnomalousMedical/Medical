@@ -110,12 +110,14 @@ namespace Medical.GUI
 
                     foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
                     {
-                        ButtonGridItem item = pluginGrid.addItem("Installed", plugin.PluginName, plugin.BrandingImageKey);
                         if (plugin.PluginId != -1)
                         {
-                            item.UserObject = new UninstallInfo(plugin);
+                            addInfoToButtonGrid(new UninstallInfo(plugin), false);
                             installedPluginsList.Add(plugin);
                         }
+                        //
+                        //ADD STUFF THAT ALSO HAS PLUGIN ID -1, BUT NOT AS AN UNINSTALL INFO
+                        //
                     }
                     addedInstalledPlugins = true;
 
@@ -133,7 +135,7 @@ namespace Medical.GUI
         {
             if (activeNotDisposed)
             {
-                addDownloadToButtonGrid(download);
+                addInfoToButtonGrid(download, false);
             }
         }
 
@@ -146,7 +148,7 @@ namespace Medical.GUI
             }
         }
 
-        private ButtonGridItem addDownloadToButtonGrid(ServerDownloadInfo download)
+        private void addInfoToButtonGrid(DownloadGUIInfo download, bool selectNewItem)
         {
             String group = "";
             switch (download.Status)
@@ -157,52 +159,60 @@ namespace Medical.GUI
                 case ServerDownloadStatus.Update:
                     group = "Updates";
                     break;
+                case ServerDownloadStatus.Downloading:
+                    group = "Downloading";
+                    break;
+                case ServerDownloadStatus.PendingUninstall:
+                    group = "Pending Uninstall";
+                    break;
+                case ServerDownloadStatus.PendingInstall:
+                    group = "Pending Install";
+                    break;
+                case ServerDownloadStatus.Installed:
+                    group = "Installed";
+                    break;
             }
             ButtonGridItem item = pluginGrid.addItem(group, download.Name, download.ImageKey);
             item.UserObject = download;
-            return item;
+            download.GUIItem = item;
+            if (selectNewItem)
+            {
+                pluginGrid.SelectedItem = item;
+            }
         }
 
         private void togglePanelVisibility()
         {
+            installPanel.Visible = false;
+            downloadPanel.Visible = false;
+            uninstallPanel.Visible = false;
+            restartPanel.Visible = false;
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             if (selectedItem != null)
             {
-                installPanel.Visible = selectedItem.GroupName == "Not Installed" || selectedItem.GroupName == "Updates";
-                if (installPanel.Visible)
+                DownloadGUIInfo downloadInfo = (DownloadGUIInfo)selectedItem.UserObject;
+                if (downloadInfo != null)
                 {
-                    installPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
-                }
-                downloadPanel.Visible = selectedItem.GroupName == "Downloading";
-                if (downloadPanel.Visible)
-                {
-                    downloadPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
-                }
-                uninstallPanel.Visible = selectedItem.GroupName == "Installed" && selectedItem.UserObject is UninstallInfo;
-                if (uninstallPanel.Visible)
-                {
-                    uninstallPanel.setInfo(selectedItem.UserObject as UninstallInfo);
-                }
-                restartPanel.Visible = selectedItem.GroupName == "Pending Uninstall";
-                if (restartPanel.Visible)
-                {
-                    restartPanel.setInfo(selectedItem.UserObject as UninstallInfo);
-                }
-                else
-                {
-                    restartPanel.Visible = selectedItem.GroupName == "Pending Install";
-                    if (restartPanel.Visible)
+                    switch (downloadInfo.Panel)
                     {
-                        restartPanel.setInfo(selectedItem.UserObject as ServerDownloadInfo);
+                        case DownloadGUIPanel.InstallPanel:
+                            installPanel.Visible = true;
+                            installPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
+                            break;
+                        case DownloadGUIPanel.DownloadingPanel:
+                            downloadPanel.Visible = true;
+                            downloadPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
+                            break;
+                        case DownloadGUIPanel.UninstallPanel:
+                            uninstallPanel.Visible = true;
+                            uninstallPanel.setInfo(selectedItem.UserObject as UninstallInfo);
+                            break;
+                        case DownloadGUIPanel.RestartPanel:
+                            restartPanel.Visible = true;
+                            restartPanel.setInfo((DownloadGUIInfo)selectedItem.UserObject);
+                            break;
                     }
                 }
-            }
-            else
-            {
-                installPanel.Visible = false;
-                downloadPanel.Visible = false;
-                uninstallPanel.Visible = false;
-                restartPanel.Visible = false;
             }
         }
 
@@ -231,9 +241,7 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(selectedItem);
                 pluginGrid.SuppressLayout = false;
-                ButtonGridItem pendingItem = pluginGrid.addItem("Pending Uninstall", pluginInfo.Name, pluginInfo.ImageKey);
-                pendingItem.UserObject = pluginInfo;
-                pluginGrid.SelectedItem = pendingItem;
+                addInfoToButtonGrid(pluginInfo, true);
             }
         }
 
@@ -249,17 +257,15 @@ namespace Medical.GUI
 
         private void downloadItem(ButtonGridItem selectedItem, ServerDownloadInfo downloadInfo)
         {
+            downloadInfo.startDownload(downloadController);
+
             pluginGrid.SuppressLayout = true;
             pluginGrid.removeItem(selectedItem);
-            ButtonGridItem downloadingItem = pluginGrid.addItem("Downloading", String.Format("{0}\n{1}", downloadInfo.Name, "Starting Download"), downloadInfo.ImageKey);
-            downloadingItem.UserObject = downloadInfo;
+            addInfoToButtonGrid(downloadInfo, true);
             pluginGrid.SuppressLayout = false;
             pluginGrid.layout();
 
-            downloadInfo.UserObject = downloadingItem;
-            downloadInfo.startDownload(downloadController);
             subscribeToDownload(downloadInfo);
-            pluginGrid.SelectedItem = downloadingItem;
         }
 
         void downloadPanel_CancelDownload(object sender, EventArgs e)
@@ -300,8 +306,7 @@ namespace Medical.GUI
         {
             if (activeNotDisposed)
             {
-                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
-                downloadingItem.Caption = status;
+                downloadInfo.GUIItem.Caption = status;
             }
         }
 
@@ -309,21 +314,11 @@ namespace Medical.GUI
         {
             if (activeNotDisposed)
             {
-                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                ButtonGridItem downloadingItem = downloadInfo.GUIItem;
                 bool reselectItem = downloadingItem == pluginGrid.SelectedItem;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                ButtonGridItem installedItem;
-                if (downloadInfo.Download.DownloadedToSafeLocation)
-                {
-                    installedItem = pluginGrid.addItem("Pending Install", downloadInfo.Name, downloadInfo.ImageKey);
-                    installedItem.UserObject = downloadInfo;
-                }
-                else
-                {
-                    installedItem = pluginGrid.addItem("Installed", downloadInfo.Name, downloadInfo.ImageKey);
-                    installedItem.UserObject = downloadInfo.createUninstallInfo();
-                }
+                addInfoToButtonGrid(downloadInfo.createClientDownloadInfo(), reselectItem);
 
                 if (!downloadController.Downloading && displayRestartMessage)
                 {
@@ -337,10 +332,6 @@ namespace Medical.GUI
                 }
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
-                if (reselectItem)
-                {
-                    pluginGrid.SelectedItem = installedItem;
-                }
             }
             unsubscribeFromDownload(downloadInfo);
         }
@@ -349,18 +340,14 @@ namespace Medical.GUI
         {
             if (activeNotDisposed)
             {
-                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                ButtonGridItem downloadingItem = downloadInfo.GUIItem;
                 bool reselectItem = downloadingItem == pluginGrid.SelectedItem;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
                 MessageBox.show(String.Format("There was an error downloading {0}.\nPlease try again later.", downloadInfo.Name), "Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-                ButtonGridItem newItem = addDownloadToButtonGrid(downloadInfo);
+                addInfoToButtonGrid(downloadInfo, reselectItem);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
-                if (reselectItem)
-                {
-                    pluginGrid.SelectedItem = newItem;
-                }
             }
             unsubscribeFromDownload(downloadInfo);
         }
@@ -369,17 +356,13 @@ namespace Medical.GUI
         {
             if (activeNotDisposed)
             {
-                ButtonGridItem downloadingItem = (ButtonGridItem)downloadInfo.UserObject;
+                ButtonGridItem downloadingItem = downloadInfo.GUIItem;
                 bool reselectItem = downloadingItem == pluginGrid.SelectedItem;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                ButtonGridItem newItem = addDownloadToButtonGrid(downloadInfo);
+                addInfoToButtonGrid(downloadInfo, reselectItem);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
-                if (reselectItem)
-                {
-                    pluginGrid.SelectedItem = newItem;
-                }
             }
             unsubscribeFromDownload(downloadInfo);
         }

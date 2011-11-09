@@ -29,6 +29,11 @@ namespace Medical.GUI
             base.downloadCompleted(download);
         }
 
+        public override DownloadGUIInfo createClientDownloadInfo()
+        {
+            return new UpdateInfo(ImageKey, Name, "Please restart to install the Anomalous Medical update.", ServerDownloadStatus.PendingInstall);
+        }
+
         public Version Version { get; private set; }
     }
 }

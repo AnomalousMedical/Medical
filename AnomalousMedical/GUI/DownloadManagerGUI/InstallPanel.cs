@@ -31,8 +31,15 @@ namespace Medical.GUI
             installIcon.setItemResource(info.ImageKey);
             installName.Caption = info.Name;
             installName.TextCursor = 0;
-            installDescription.Caption = info.Description;
-            installDescription.TextCursor = 0;
+            installDescription.Caption = "Loading information from server...";
+            info.getDescription(delegate(String caption, DownloadGUIInfo downloadGUIInfo)
+            {
+                if (info == downloadGUIInfo)
+                {
+                    installDescription.Caption = caption;
+                    installDescription.TextCursor = 0;
+                }
+            });
         }
 
         public bool Visible

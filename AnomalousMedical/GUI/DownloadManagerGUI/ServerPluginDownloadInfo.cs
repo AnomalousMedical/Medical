@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Medical.GUI
 {
@@ -37,8 +38,12 @@ namespace Medical.GUI
             base.downloadCompleted(download);
         }
 
-        public override UninstallInfo createUninstallInfo()
+        public override DownloadGUIInfo createClientDownloadInfo()
         {
+            if (Download.DownloadedToSafeLocation)
+            {
+                return new UpdateInfo(ImageKey, Name, String.Format("You must restart Anomalous Medical to finish installing {0}. You may install more things by selecting them and clicking install before restarting.", Name), ServerDownloadStatus.PendingInstall);
+            }
             AtlasPlugin plugin = ((PluginDownload)Download).Plugin;
             if (plugin != null)
             {

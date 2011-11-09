@@ -26,22 +26,19 @@ namespace Medical.GUI
             restartButton.MouseButtonClick += new MyGUIEvent(restartButton_MouseButtonClick);
         }
 
-        public void setInfo(UninstallInfo info)
+        public void setInfo(DownloadGUIInfo info)
         {
             restartIcon.setItemResource(info.ImageKey);
             restartName.Caption = info.Name;
             restartName.TextCursor = 0;
-            restartDescription.Caption = String.Format("You must restart Anomalous Medical to finish uninstalling {0}. You may uninstall more things by selecting them and clicking uninstall before restarting.", info.Name);
-            restartDescription.TextCursor = 0;
-        }
-
-        internal void setInfo(ServerDownloadInfo info)
-        {
-            restartIcon.setItemResource(info.ImageKey);
-            restartName.Caption = info.Name;
-            restartName.TextCursor = 0;
-            restartDescription.Caption = String.Format("You must restart Anomalous Medical to finish installing {0}. You may install more things by selecting them and clicking install before restarting.", info.Name);
-            restartDescription.TextCursor = 0;
+            info.getDescription(delegate(String caption, DownloadGUIInfo downloadGUIInfo)
+            {
+                if (downloadGUIInfo == info)
+                {
+                    restartDescription.Caption = caption;
+                    restartDescription.TextCursor = 0;
+                }
+            });
         }
 
         public bool Visible

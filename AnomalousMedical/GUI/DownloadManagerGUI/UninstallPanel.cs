@@ -31,8 +31,15 @@ namespace Medical.GUI
             uninstallIcon.setItemResource(info.ImageKey);
             uninstallName.Caption = info.Name;
             uninstallName.TextCursor = 0;
-            uninstallDescription.Caption = info.Description;
-            uninstallDescription.TextCursor = 0;
+
+            info.getDescription(delegate(String caption, DownloadGUIInfo downloadGUIInfo)
+            {
+                if (downloadGUIInfo == info)
+                {
+                    uninstallDescription.Caption = caption;
+                    uninstallDescription.TextCursor = 0;
+                }
+            });
         }
 
         public bool Visible
