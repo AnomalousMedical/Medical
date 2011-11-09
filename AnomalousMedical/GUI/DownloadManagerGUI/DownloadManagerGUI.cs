@@ -103,14 +103,11 @@ namespace Medical.GUI
 
                     foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
                     {
-                        if (plugin.PluginId != -1)
+                        if (plugin.PluginName != "Core")
                         {
                             addInfoToButtonGrid(new UninstallInfo(plugin), false);
                             installedPluginsList.Add(plugin);
                         }
-                        //
-                        //ADD STUFF THAT ALSO HAS PLUGIN ID -1, BUT NOT AS AN UNINSTALL INFO
-                        //
                     }
                     foreach (AtlasPlugin plugin in pluginManager.UnlicensedPlugins)
                     {
