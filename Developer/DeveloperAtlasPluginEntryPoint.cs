@@ -12,10 +12,7 @@ namespace Developer
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            if (standaloneController.App.LicenseManager.allowFeature(8))
-            {
-                standaloneController.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(standaloneController));
-            }
+            standaloneController.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(standaloneController));
         }
     }
 }

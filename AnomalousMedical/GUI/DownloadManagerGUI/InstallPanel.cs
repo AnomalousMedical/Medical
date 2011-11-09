@@ -60,6 +60,10 @@ namespace Medical.GUI
                 case ServerDownloadStatus.PendingInstall:
                     actionButton.Caption = "Restart";
                     break;
+
+                case ServerDownloadStatus.Unlicensed:
+                    actionButton.Caption = "Uninstall";
+                    break;
                     
             }
             info.getDescription(delegate(String caption, DownloadGUIInfo downloadGUIInfo)
@@ -124,6 +128,13 @@ namespace Medical.GUI
                     if (Restart != null)
                     {
                         Restart.Invoke(currentInfo);
+                    }
+                    break;
+
+                case ServerDownloadStatus.Unlicensed:
+                    if (UninstallItem != null)
+                    {
+                        UninstallItem.Invoke(currentInfo);
                     }
                     break;
             }

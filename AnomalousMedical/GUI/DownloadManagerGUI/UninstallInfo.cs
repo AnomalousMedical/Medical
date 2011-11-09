@@ -10,7 +10,13 @@ namespace Medical.GUI
         private AtlasPlugin plugin;
 
         public UninstallInfo(AtlasPlugin plugin)
-            :base(ServerDownloadStatus.Installed)
+            :this(plugin, ServerDownloadStatus.Installed)
+        {
+            
+        }
+
+        public UninstallInfo(AtlasPlugin plugin, ServerDownloadStatus status)
+            : base(status)
         {
             this.plugin = plugin;
             this.ImageKey = plugin.BrandingImageKey;
@@ -32,6 +38,9 @@ namespace Medical.GUI
                     break;
                 case ServerDownloadStatus.PendingUninstall:
                     descriptionFoundCallback.Invoke(String.Format("You must restart Anomalous Medical to finish uninstalling {0}. You may uninstall more things by selecting them and clicking uninstall before restarting.", plugin.PluginName), this);
+                    break;
+                case ServerDownloadStatus.Unlicensed:
+                    descriptionFoundCallback.Invoke(String.Format("You do not own {0}. You may purchase it in the Anomalous Medical Store.", plugin.PluginName), this);
                     break;
             }
         }

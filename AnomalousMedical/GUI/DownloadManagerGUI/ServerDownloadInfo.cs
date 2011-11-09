@@ -15,6 +15,7 @@ namespace Medical.GUI
         PendingUninstall,
         PendingInstall,
         Installed,
+        Unlicensed,
     }
 
     abstract class ServerDownloadInfo : DownloadGUIInfo, DownloadListener

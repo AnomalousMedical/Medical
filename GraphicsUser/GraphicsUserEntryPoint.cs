@@ -12,10 +12,7 @@ namespace GraphicsUser
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            if (standaloneController.App.LicenseManager.allowFeature(10))
-            {
-                standaloneController.AtlasPluginManager.addPlugin(new GraphicsUserPlugin());
-            }
+            standaloneController.AtlasPluginManager.addPlugin(new GraphicsUserPlugin());
         }
     }
 }

@@ -13,10 +13,7 @@ namespace DentalSim
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            if (standaloneController.App.LicenseManager.allowFeature(2))
-            {
-                standaloneController.AtlasPluginManager.addPlugin(new DentalSimPlugin());
-            }
+            standaloneController.AtlasPluginManager.addPlugin(new DentalSimPlugin());
         }
     }
 }

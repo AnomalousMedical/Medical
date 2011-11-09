@@ -53,6 +53,7 @@ namespace Medical.GUI
             pluginGrid.defineGroup("Pending Uninstall");
             pluginGrid.defineGroup("Pending Install");
             pluginGrid.defineGroup("Installed");
+            pluginGrid.defineGroup("Unlicensed");
 
             installPanel = new InstallPanel(widget.findWidget("InstallPanel"));
             installPanel.InstallItem += installPanel_InstallItem;
@@ -111,6 +112,10 @@ namespace Medical.GUI
                         //ADD STUFF THAT ALSO HAS PLUGIN ID -1, BUT NOT AS AN UNINSTALL INFO
                         //
                     }
+                    foreach (AtlasPlugin plugin in pluginManager.UnlicensedPlugins)
+                    {
+                        addInfoToButtonGrid(new UninstallInfo(plugin, ServerDownloadStatus.Unlicensed), false);
+                    }
                     addedInstalledPlugins = true;
 
                     if (UpdateController.HasUpdate)
@@ -167,6 +172,9 @@ namespace Medical.GUI
                     break;
                 case ServerDownloadStatus.Installed:
                     group = "Installed";
+                    break;
+                case ServerDownloadStatus.Unlicensed:
+                    group = "Unlicensed";
                     break;
             }
             ButtonGridItem item = pluginGrid.addItem(group, download.Name, download.ImageKey);

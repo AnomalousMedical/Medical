@@ -141,7 +141,7 @@ namespace Medical
         {
             get
             {
-                return (long)Features.Premium;
+                return 1;
             }
         }
 

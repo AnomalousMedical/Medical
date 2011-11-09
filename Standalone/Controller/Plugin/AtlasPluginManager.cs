@@ -24,6 +24,7 @@ namespace Medical
         private StandaloneController standaloneController;
         private List<AtlasPlugin> plugins = new List<AtlasPlugin>();
         private List<AtlasPlugin> uninitializedPlugins = new List<AtlasPlugin>();
+        private List<AtlasPlugin> unlicensedPlugins = new List<AtlasPlugin>();
         private SimScene currentScene;
         private String additionalSearchPath;
         private HashSet<String> loadedPluginNames = new HashSet<string>();
@@ -365,10 +366,17 @@ namespace Medical
 
         public void addPlugin(AtlasPlugin plugin, bool addAssemblyResources)
         {
-            uninitializedPlugins.Add(plugin);
-            if (addAssemblyResources)
+            if (plugin.PluginId == -1 || standaloneController.App.LicenseManager.allowFeature(plugin.PluginId))
             {
-                OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+                uninitializedPlugins.Add(plugin);
+                if (addAssemblyResources)
+                {
+                    OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+                }
+            }
+            else
+            {
+                unlicensedPlugins.Add(plugin);
             }
         }
 
@@ -458,6 +466,14 @@ namespace Medical
             get
             {
                 return plugins;
+            }
+        }
+
+        public IEnumerable<AtlasPlugin> UnlicensedPlugins
+        {
+            get
+            {
+                return unlicensedPlugins;
             }
         }
 

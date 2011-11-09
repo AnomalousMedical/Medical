@@ -11,10 +11,7 @@ namespace Medical
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            if (standaloneController.App.LicenseManager.allowFeature(6))
-            {
-                standaloneController.AtlasPluginManager.addPlugin(new EditorPlugin());
-            }
+            standaloneController.AtlasPluginManager.addPlugin(new EditorPlugin());
         }
     }
 }

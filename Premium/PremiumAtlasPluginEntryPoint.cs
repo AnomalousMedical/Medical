@@ -7,19 +7,11 @@ using System.Text;
 
 namespace Medical
 {
-    enum Features
-    {
-        Premium = 1
-    }
-
     class PremiumAtlasPluginEntryPoint : AtlasPluginEntryPointAttribute
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            if (standaloneController.App.LicenseManager.allowFeature((int)Features.Premium))
-            {
-                standaloneController.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(standaloneController));
-            }
+            standaloneController.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(standaloneController));
         }
     }
 }
