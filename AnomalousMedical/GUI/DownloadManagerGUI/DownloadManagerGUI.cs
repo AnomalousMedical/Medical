@@ -236,7 +236,7 @@ namespace Medical.GUI
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
-            if (pluginInfo != null && (pluginInfo.Download == null || pluginInfo.Download.Cancel))
+            if (pluginInfo != null && (pluginInfo.Status == ServerDownloadStatus.NotInstalled || pluginInfo.Status == ServerDownloadStatus.Update))
             {
                 downloadItem(selectedItem, pluginInfo);
             }
