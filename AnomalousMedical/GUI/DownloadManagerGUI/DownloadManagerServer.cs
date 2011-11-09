@@ -23,6 +23,7 @@ namespace Medical.GUI
         private LicenseManager licenseManager;
         List<ServerPluginDownloadInfo> detectedServerPlugins = new List<ServerPluginDownloadInfo>();
         private bool foundPlatformUpdate = false;
+        private bool active = true;
 
         public DownloadManagerServer(LicenseManager licenseManager)
         {
@@ -32,6 +33,7 @@ namespace Medical.GUI
         public void Dispose()
         {
             serverImages.Dispose();
+            active = false;
         }
 
         public ImageAtlas ServerImages
@@ -127,7 +129,7 @@ namespace Medical.GUI
                                             foundPlatformUpdate = true;
                                         }
                                     }
-                                    while (streamReader.PeekChar() != -1)
+                                    while (active && streamReader.PeekChar() != -1)
                                     {
                                         ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(this, streamReader.ReadInt32(), streamReader.ReadString(), (ServerDownloadStatus)streamReader.ReadInt16());
                                         String imageURL = streamReader.ReadString();
