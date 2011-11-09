@@ -17,6 +17,7 @@ namespace Medical.GUI
         private Edit nameText;
         private Edit descriptionText;
         private Button actionButton;
+        private Button moreInfoButton;
 
         private DownloadGUIInfo currentInfo;
 
@@ -26,6 +27,9 @@ namespace Medical.GUI
 
             actionButton = (Button)widget.findWidget("InstallButton");
             actionButton.MouseButtonClick += new MyGUIEvent(actionButton_MouseButtonClick);
+
+            moreInfoButton = (Button)widget.findWidget("MoreInfoButton");
+            moreInfoButton.MouseButtonClick += new MyGUIEvent(moreInfoButton_MouseButtonClick);
 
             icon = (StaticImage)widget.findWidget("InstallIcon");
             nameText = (Edit)widget.findWidget("InstallName");
@@ -39,6 +43,7 @@ namespace Medical.GUI
             nameText.Caption = info.Name;
             nameText.TextCursor = 0;
             descriptionText.Caption = "Loading information from server...";
+            moreInfoButton.Visible = info.MoreInfoURL != null;
             switch (info.Status)
             {
                 case ServerDownloadStatus.NotInstalled:
@@ -138,6 +143,11 @@ namespace Medical.GUI
                     }
                     break;
             }
+        }
+
+        void moreInfoButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            OtherProcessManager.openUrlInBrowser(currentInfo.MoreInfoURL);
         }
     }
 }

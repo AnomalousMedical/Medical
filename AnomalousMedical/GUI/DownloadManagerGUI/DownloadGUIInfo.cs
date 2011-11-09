@@ -24,6 +24,14 @@ namespace Medical.GUI
 
         public ButtonGridItem GUIItem { get; set; }
 
+        public virtual String MoreInfoURL
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public bool AutoStartUpdate { get; protected set; }
 
         public abstract void getDescription(DescriptionFoundCallback descriptionFoundCallback);

@@ -164,7 +164,7 @@ namespace Medical.GUI
 
         void adImage_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser(MedicalConfig.PremiumFeaturesURL);
+            OtherProcessManager.openUrlInBrowser(String.Format(MedicalConfig.ProductPageBaseURL, "1"));
         }
 
         void taskController_TaskRemoved(Task task)

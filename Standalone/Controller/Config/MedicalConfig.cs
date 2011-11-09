@@ -66,7 +66,7 @@ namespace Medical
             MedicalConfig.PluginDownloadURL = "https://www.anomalousmedical.com/DRM/FileDownloader.aspx";
             MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store.aspx";
             MedicalConfig.WebsiteImagesBaseURL = "http://www.anomalousmedical.com";
-            MedicalConfig.PremiumFeaturesURL = "http://www.anomalousmedical.com/ProductInfo.aspx?ProductId=1";
+            MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/ProductInfo.aspx?ProductId={0}";
             MedicalConfig.UpdateCheckURL = "https://www.anomalousmedical.com/DRM/UpdateCheck.aspx";
             
             //User configuration settings
@@ -106,7 +106,7 @@ namespace Medical
                 PluginDownloadURL = updates.getValue("PluginDownloadURL", PluginDownloadURL);
                 AnomalousMedicalStoreURL = updates.getValue("AnomalousMedicalStoreURL", AnomalousMedicalStoreURL);
                 WebsiteImagesBaseURL = updates.getValue("WebsiteImagesBaseURL", WebsiteImagesBaseURL);
-                PremiumFeaturesURL = updates.getValue("PremiumFeaturesURL", PremiumFeaturesURL);
+                ProductPageBaseURL = updates.getValue("ProductPageBaseURL", ProductPageBaseURL);
                 UpdateCheckURL = updates.getValue("UpdateCheckURL", UpdateCheckURL);
 
                 pluginConfig.readPlugins(overrideSettings);
@@ -351,7 +351,7 @@ namespace Medical
 
         public static String AnomalousMedicalStoreURL { get; private set; }
 
-        public static String PremiumFeaturesURL { get; private set; }
+        public static String ProductPageBaseURL { get; private set; }
 
         public static String WebsiteImagesBaseURL { get; private set; }
 

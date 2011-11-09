@@ -44,5 +44,13 @@ namespace Medical.GUI
                     break;
             }
         }
+
+        public override string MoreInfoURL
+        {
+            get
+            {
+                return String.Format(MedicalConfig.ProductPageBaseURL, plugin.PluginId);
+            }
+        }
     }
 }

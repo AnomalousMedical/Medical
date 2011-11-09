@@ -53,5 +53,13 @@ namespace Medical.GUI
         }
 
         public int PluginId { get; set; }
+
+        public override string MoreInfoURL
+        {
+            get
+            {
+                return String.Format(MedicalConfig.ProductPageBaseURL, PluginId);
+            }
+        }
     }
 }
