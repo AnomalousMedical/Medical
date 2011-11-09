@@ -19,6 +19,8 @@ namespace Medical.GUI
 
     abstract class ServerDownloadInfo : DownloadGUIInfo, DownloadListener
     {
+        private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
+
         public delegate void UpdateStatusDelegate(ServerDownloadInfo downloadInfo, String status);
         public delegate void ServerDownloadInfoDelegate(ServerDownloadInfo downloadInfo);
         public delegate void RequestRestartDelegate(ServerDownloadInfo downloadInfo, String restartMessage, bool startPlatformUpdate);
@@ -29,12 +31,12 @@ namespace Medical.GUI
         public event ServerDownloadInfoDelegate DownloadCanceled;
         public event RequestRestartDelegate RequestRestart;
 
-        private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
+        private ServerDownloadStatus constructedStatus;
 
         public ServerDownloadInfo(ServerDownloadStatus status)
             :base(status)
         {
-
+            constructedStatus = status;
         }
 
         public void startDownload(DownloadController downloadController)
@@ -81,7 +83,7 @@ namespace Medical.GUI
             }
             else
             {
-                Status = ServerDownloadStatus.NotInstalled;
+                Status = constructedStatus;
                 if (download.Cancel)
                 {
                     if (DownloadCanceled != null)
