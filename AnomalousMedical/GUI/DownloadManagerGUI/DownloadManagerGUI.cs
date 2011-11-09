@@ -113,6 +113,11 @@ namespace Medical.GUI
                     }
                     addedInstalledPlugins = true;
 
+                    if (UpdateController.HasUpdate)
+                    {
+                        addInfoToButtonGrid(new UpdateInfo("AnomalousMedicalCore/UpdateImage", String.Format("Anomalous Platform version {0}", UpdateController.DownloadedVersion), "Please restart to install the Anomalous Medical update.", ServerDownloadStatus.PendingInstall, true), false);
+                    }
+
                     pluginGrid.SuppressLayout = false;
                     pluginGrid.layout();
                 }

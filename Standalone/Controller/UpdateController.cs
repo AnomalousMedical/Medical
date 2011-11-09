@@ -54,6 +54,14 @@ namespace Medical
 
         public static String InstallFile { get; private set; }
 
+        public static bool HasUpdate
+        {
+            get
+            {
+                return CurrentVersion < DownloadedVersion && !String.IsNullOrEmpty(InstallFile) && File.Exists(InstallFile);
+            }
+        }
+
         public static void checkForUpdate(Action<bool> checkCompletedCallback, AtlasPluginManager pluginManager, LicenseManager licenseManager)
         {
             //Get a copy of the installed plugins
@@ -128,7 +136,7 @@ namespace Medical
         /// <returns></returns>
         public static bool promptForUpdate()
         {
-            if (CurrentVersion < DownloadedVersion && !String.IsNullOrEmpty(InstallFile) && File.Exists(InstallFile))
+            if (HasUpdate)
             {
                 if (AutoStartUpdate || MessageDialog.showQuestionDialog(String.Format("A new version of the Anomalous Medical Platform {0} has been downloaded. Would you like to install it?", DownloadedVersion), "Update?") == NativeDialogResult.YES)
                 {

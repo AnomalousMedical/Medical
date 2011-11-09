@@ -66,6 +66,10 @@ namespace Medical.GUI
             {
                 if (currentInfo == downloadGUIInfo)
                 {
+                    if (caption.Length > descriptionText.MaxTextLength)
+                    {
+                        descriptionText.MaxTextLength = (uint)caption.Length;
+                    }
                     descriptionText.Caption = caption;
                     descriptionText.TextCursor = 0;
                 }
