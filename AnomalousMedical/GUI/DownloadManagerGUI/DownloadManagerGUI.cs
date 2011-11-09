@@ -44,7 +44,7 @@ namespace Medical.GUI
             downloadServer.FinishedReadingDownloads += new Action(downloadServer_FinishedReadingDownloads);
             this.notificationManager = standaloneController.GUIManager.NotificationManager;
 
-            pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout());
+            pluginGrid = new ButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
             pluginGrid.ItemActivated += new EventHandler(pluginGrid_ItemActivated);
             pluginGrid.defineGroup("Downloading");
