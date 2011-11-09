@@ -305,7 +305,10 @@ namespace Medical.GUI
 
                 if (!downloadController.Downloading && displayRestartMessage)
                 {
-                    notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate);
+                    if (!widget.Visible || !reselectItem)
+                    {
+                        notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate);
+                    }
                     displayRestartMessage = false;
                     autoStartUpdate = false;
                 }
