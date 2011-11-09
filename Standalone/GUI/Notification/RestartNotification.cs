@@ -20,14 +20,7 @@ namespace Medical.GUI
 
         protected override void clicked()
         {
-            MessageBox.show("Restarting Anomalous Medical will loose all unsaved data. Are you sure you wish to continue?", "Restart", MessageBoxStyle.IconInfo | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
-            {
-                if (result == MessageBoxStyle.Yes)
-                {
-                    UpdateController.AutoStartUpdate = autoStartPlatformUpdate;
-                    standaloneController.restart();
-                }
-            });
+            standaloneController.restartWithWarning("Restarting Anomalous Medical will loose all unsaved data. Are you sure you wish to continue?", autoStartPlatformUpdate);
         }
     }
 }

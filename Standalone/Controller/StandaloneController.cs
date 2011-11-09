@@ -299,6 +299,23 @@ namespace Medical
 			}
         }
 
+        public void restartWithWarning(String noDownloadsMessage, bool autoStartUpdate)
+        {
+            String message = noDownloadsMessage;
+            if (downloadController.Downloading)
+            {
+                message = "You are currently downloading some files. If you restart now you will loose your download progress.\nIt is reccomended to click no and let the downloads finish.\nAre you sure you want to restart Anomalous Medical?";
+            }
+            MessageBox.show(message, "Restart", MessageBoxStyle.IconInfo | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+            {
+                if (result == MessageBoxStyle.Yes)
+                {
+                    UpdateController.AutoStartUpdate = autoStartUpdate;
+                    restart();
+                }
+            });
+        }
+
         public void restart()
         {
             if (!shuttingDown)
