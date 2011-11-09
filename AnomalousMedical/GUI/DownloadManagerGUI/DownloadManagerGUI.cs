@@ -20,8 +20,6 @@ namespace Medical.GUI
         private ButtonGrid pluginGrid;
         private DownloadingPanel downloadPanel;
         private Widget readingInfo;
-        private UninstallPanel uninstallPanel;
-        private RestartPanel restartPanel;
 
         private AtlasPluginManager pluginManager;
         private DownloadController downloadController;
@@ -58,19 +56,13 @@ namespace Medical.GUI
 
             installPanel = new InstallPanel(widget.findWidget("InstallPanel"));
             installPanel.InstallItem += new EventHandler(installPanel_InstallItem);
+            installPanel.UninstallItem += new EventHandler(uninstallPanel_UninstallItem);
+            installPanel.Restart += new EventHandler(restartPanel_Restart);
             installPanel.Visible = false;
 
             downloadPanel = new DownloadingPanel(widget.findWidget("DownloadingPanel"));
             downloadPanel.CancelDownload += new EventHandler(downloadPanel_CancelDownload);
             downloadPanel.Visible = false;
-
-            uninstallPanel = new UninstallPanel(widget.findWidget("UninstallPanel"));
-            uninstallPanel.UninstallItem += new EventHandler(uninstallPanel_UninstallItem);
-            uninstallPanel.Visible = false;
-
-            restartPanel = new RestartPanel(widget.findWidget("RestartPanel"));
-            restartPanel.Restart += new EventHandler(restartPanel_Restart);
-            restartPanel.Visible = false;
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
@@ -185,31 +177,21 @@ namespace Medical.GUI
         {
             installPanel.Visible = false;
             downloadPanel.Visible = false;
-            uninstallPanel.Visible = false;
-            restartPanel.Visible = false;
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             if (selectedItem != null)
             {
                 DownloadGUIInfo downloadInfo = (DownloadGUIInfo)selectedItem.UserObject;
                 if (downloadInfo != null)
                 {
-                    switch (downloadInfo.Panel)
+                    switch (downloadInfo.Status)
                     {
-                        case DownloadGUIPanel.InstallPanel:
-                            installPanel.Visible = true;
-                            installPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
-                            break;
-                        case DownloadGUIPanel.DownloadingPanel:
+                        case ServerDownloadStatus.Downloading:
                             downloadPanel.Visible = true;
-                            downloadPanel.setDownloadInfo(selectedItem.UserObject as ServerDownloadInfo);
+                            downloadPanel.setDownloadInfo((ServerDownloadInfo)selectedItem.UserObject);
                             break;
-                        case DownloadGUIPanel.UninstallPanel:
-                            uninstallPanel.Visible = true;
-                            uninstallPanel.setInfo(selectedItem.UserObject as UninstallInfo);
-                            break;
-                        case DownloadGUIPanel.RestartPanel:
-                            restartPanel.Visible = true;
-                            restartPanel.setInfo((DownloadGUIInfo)selectedItem.UserObject);
+                        default:
+                            installPanel.Visible = true;
+                            installPanel.setDownloadInfo((DownloadGUIInfo)selectedItem.UserObject);
                             break;
                     }
                 }

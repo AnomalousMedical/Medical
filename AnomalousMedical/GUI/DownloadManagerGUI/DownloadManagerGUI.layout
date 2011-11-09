@@ -18,6 +18,7 @@
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Text_TextAlign" value="Left Top"/>
                 <Property key="Edit_ReadOnly" value="true"/>
+                <Property key="Edit_MaxTextLength" value="10000"/>
             </Widget>
             <Widget type="Edit" skin="WordWrapSimple" position="105 4 225 131" align="HStretch Top" name="InstallName">
                 <Property key="Text_FontHeight" value="35"/>
@@ -54,48 +55,6 @@
             <Widget type="StaticText" skin="StaticText" position="2 138 328 29" align="HStretch Top" name="DownloadingStatusText">
                 <Property key="Widget_Caption" value="Downloading"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
-            </Widget>
-        </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="457 47 335 545" align="Stretch" name="UninstallPanel">
-            <Property key="Widget_Visible" value="false"/>
-            <Widget type="Button" skin="Button" position="2 109 91 26" name="UninstallButton">
-                <Property key="Widget_Caption" value="Uninstall"/>
-            </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="UninstallIcon"/>
-            <Widget type="Edit" skin="WordWrap" position="0 139 333 404" align="Stretch" name="UninstallDescription">
-                <Property key="Text_TextColour" value="#FFFFFF"/>
-                <Property key="Edit_MultiLine" value="true"/>
-                <Property key="Text_TextAlign" value="Left Top"/>
-                <Property key="Edit_ReadOnly" value="true"/>
-            </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="105 4 225 131" align="HStretch Top" name="UninstallName">
-                <Property key="Text_FontHeight" value="35"/>
-                <Property key="Edit_ReadOnly" value="true"/>
-                <Property key="Edit_MultiLine" value="true"/>
-                <Property key="Text_TextColour" value="#FFFFFF"/>
-                <Property key="Edit_Static" value="true"/>
-                <Property key="Text_FontName" value="TimelineText.50"/>
-            </Widget>
-        </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="457 47 335 545" align="Stretch" name="RestartPanel">
-            <Property key="Widget_Visible" value="false"/>
-            <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="RestartIcon"/>
-            <Widget type="Edit" skin="WordWrap" position="0 139 333 404" align="Stretch" name="RestartDescription">
-                <Property key="Text_TextColour" value="#FFFFFF"/>
-                <Property key="Edit_MultiLine" value="true"/>
-                <Property key="Text_TextAlign" value="Left Top"/>
-                <Property key="Edit_ReadOnly" value="true"/>
-            </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="105 4 225 131" align="HStretch Top" name="RestartName">
-                <Property key="Text_FontHeight" value="35"/>
-                <Property key="Edit_ReadOnly" value="true"/>
-                <Property key="Edit_MultiLine" value="true"/>
-                <Property key="Text_TextColour" value="#FFFFFF"/>
-                <Property key="Edit_Static" value="true"/>
-                <Property key="Text_FontName" value="TimelineText.50"/>
-            </Widget>
-            <Widget type="Button" skin="Button" position="2 109 91 26" name="RestartButton">
-                <Property key="Widget_Caption" value="Restart"/>
             </Widget>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="7 25 250 19" name="ReadingInfo">

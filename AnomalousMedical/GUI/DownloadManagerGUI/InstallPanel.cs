@@ -8,36 +8,66 @@ namespace Medical.GUI
 {
     class InstallPanel
     {
-        private Widget installPanelWidget;
         public event EventHandler InstallItem;
-        private StaticImage installIcon;
-        private Edit installName;
-        private Edit installDescription;
+        public event EventHandler UninstallItem;
+        public event EventHandler Restart;
+
+        private Widget widget;
+        private StaticImage icon;
+        private Edit nameText;
+        private Edit descriptionText;
+        private Button actionButton;
+
+        private DownloadGUIInfo currentInfo;
 
         public InstallPanel(Widget widget)
         {
-            this.installPanelWidget = widget;
+            this.widget = widget;
 
-            Button installButton = (Button)widget.findWidget("InstallButton");
-            installButton.MouseButtonClick += new MyGUIEvent(installButton_MouseButtonClick);
+            actionButton = (Button)widget.findWidget("InstallButton");
+            actionButton.MouseButtonClick += new MyGUIEvent(actionButton_MouseButtonClick);
 
-            installIcon = (StaticImage)widget.findWidget("InstallIcon");
-            installName = (Edit)widget.findWidget("InstallName");
-            installDescription = (Edit)widget.findWidget("InstallDescription");
+            icon = (StaticImage)widget.findWidget("InstallIcon");
+            nameText = (Edit)widget.findWidget("InstallName");
+            descriptionText = (Edit)widget.findWidget("InstallDescription");
         }
 
-        public void setDownloadInfo(ServerDownloadInfo info)
+        public void setDownloadInfo(DownloadGUIInfo info)
         {
-            installIcon.setItemResource(info.ImageKey);
-            installName.Caption = info.Name;
-            installName.TextCursor = 0;
-            installDescription.Caption = "Loading information from server...";
+            currentInfo = info;
+            icon.setItemResource(info.ImageKey);
+            nameText.Caption = info.Name;
+            nameText.TextCursor = 0;
+            descriptionText.Caption = "Loading information from server...";
+            switch (info.Status)
+            {
+                case ServerDownloadStatus.NotInstalled:
+                    actionButton.Caption = "Install";
+                    break;
+
+                case ServerDownloadStatus.Installed:
+                    actionButton.Caption = "Uninstall";
+                    break;
+
+                case ServerDownloadStatus.Update:
+                    actionButton.Caption = "Update";
+                    break;
+
+                case ServerDownloadStatus.PendingUninstall:
+                    actionButton.Caption = "Restart";
+                    break;
+
+                case ServerDownloadStatus.PendingInstall:
+                    actionButton.Caption = "Restart";
+                    break;
+                    
+            }
             info.getDescription(delegate(String caption, DownloadGUIInfo downloadGUIInfo)
             {
-                if (info == downloadGUIInfo)
+                if (currentInfo == downloadGUIInfo)
                 {
-                    installDescription.Caption = caption;
-                    installDescription.TextCursor = 0;
+                    descriptionText.Caption = caption;
+                    descriptionText.TextCursor = 0;
                 }
             });
         }
@@ -46,19 +76,52 @@ namespace Medical.GUI
         {
             get
             {
-                return installPanelWidget.Visible;
+                return widget.Visible;
             }
             set
             {
-                installPanelWidget.Visible = value;
+                widget.Visible = value;
             }
         }
 
-        void installButton_MouseButtonClick(Widget source, EventArgs e)
+        void actionButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (InstallItem != null)
+            switch (currentInfo.Status)
             {
-                InstallItem.Invoke(this, e);
+                case ServerDownloadStatus.NotInstalled:
+                    if (InstallItem != null)
+                    {
+                        InstallItem.Invoke(this, e);
+                    }
+                    break;
+
+                case ServerDownloadStatus.Update:
+                    if (InstallItem != null)
+                    {
+                        InstallItem.Invoke(this, e);
+                    }
+                    break;
+
+                case ServerDownloadStatus.Installed:
+                    if (UninstallItem != null)
+                    {
+                        UninstallItem.Invoke(this, e);
+                    }
+                    break;
+
+                case ServerDownloadStatus.PendingUninstall:
+                    if (Restart != null)
+                    {
+                        Restart.Invoke(this, e);
+                    }
+                    break;
+
+                case ServerDownloadStatus.PendingInstall:
+                    if (Restart != null)
+                    {
+                        Restart.Invoke(this, e);
+                    }
+                    break;
             }
         }
     }
