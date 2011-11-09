@@ -6,29 +6,18 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    enum DownloadGUIPanel
-    {
-        InstallPanel,
-        UninstallPanel,
-        RestartPanel,
-        DownloadingPanel
-    }
-
     abstract class DownloadGUIInfo
     {
         public delegate void DescriptionFoundCallback(String caption, DownloadGUIInfo source);
 
-        public DownloadGUIInfo(DownloadGUIPanel panel, ServerDownloadStatus status)
+        public DownloadGUIInfo(ServerDownloadStatus status)
         {
-            this.Panel = panel;
             this.Status = status;
         }
 
         public String Name { get; set; }
 
         public String ImageKey { get; set; }
-
-        public DownloadGUIPanel Panel { get; protected set; }
 
         public ServerDownloadStatus Status { get; set; }
 

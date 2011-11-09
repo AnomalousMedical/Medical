@@ -10,7 +10,7 @@ namespace Medical.GUI
         private String description;
 
         public UpdateInfo(String imageKey, String name, String description, ServerDownloadStatus status)
-            :base(DownloadGUIPanel.RestartPanel, status)
+            :base(status)
         {
             this.ImageKey = imageKey;
             this.Name = name;

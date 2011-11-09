@@ -10,7 +10,7 @@ namespace Medical.GUI
         private AtlasPlugin plugin;
 
         public UninstallInfo(AtlasPlugin plugin)
-            :base(DownloadGUIPanel.UninstallPanel, ServerDownloadStatus.Installed)
+            :base(ServerDownloadStatus.Installed)
         {
             this.plugin = plugin;
             this.ImageKey = plugin.BrandingImageKey;
@@ -21,7 +21,6 @@ namespace Medical.GUI
         {
             pluginManager.addPluginToUninstall(plugin);
             Status = ServerDownloadStatus.PendingUninstall;
-            Panel = DownloadGUIPanel.RestartPanel;
         }
 
         public override void getDescription(DescriptionFoundCallback descriptionFoundCallback)

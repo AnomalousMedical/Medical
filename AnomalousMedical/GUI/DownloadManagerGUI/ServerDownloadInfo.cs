@@ -32,14 +32,13 @@ namespace Medical.GUI
         private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
 
         public ServerDownloadInfo(ServerDownloadStatus status)
-            :base(DownloadGUIPanel.InstallPanel, status)
+            :base(status)
         {
 
         }
 
         public void startDownload(DownloadController downloadController)
         {
-            Panel = DownloadGUIPanel.DownloadingPanel;
             Status = ServerDownloadStatus.Downloading;
             StatusString = String.Format("{0}\n{1}", Name, "Starting Download");
             doStartDownload(downloadController);
@@ -82,7 +81,6 @@ namespace Medical.GUI
             }
             else
             {
-                Panel = DownloadGUIPanel.InstallPanel;
                 Status = ServerDownloadStatus.NotInstalled;
                 if (download.Cancel)
                 {
