@@ -13,7 +13,7 @@
                 <Property key="Widget_Caption" value="Install"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="1 5 100 100" name="InstallIcon"/>
-            <Widget type="Edit" skin="WordWrap" position="0 169 333 374" align="Stretch" name="InstallDescription">
+            <Widget type="Edit" skin="WordWrap" position="0 187 333 356" align="Stretch" name="InstallDescription">
                 <Property key="Text_TextColour" value="#FFFFFF"/>
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Text_TextAlign" value="Left Top"/>
@@ -30,6 +30,9 @@
             </Widget>
             <Widget type="Button" skin="Button" position="2 139 91 26" name="MoreInfoButton">
                 <Property key="Widget_Caption" value="More Info"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="2 169 328 15" name="InstructionText">
+                <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="770 3 24 20" align="Right Top" name="CloseButton"/>

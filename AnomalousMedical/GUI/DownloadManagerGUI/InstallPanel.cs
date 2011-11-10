@@ -18,6 +18,7 @@ namespace Medical.GUI
         private Edit descriptionText;
         private Button actionButton;
         private Button moreInfoButton;
+        private StaticText instructionText;
 
         private DownloadGUIInfo currentInfo;
 
@@ -34,6 +35,7 @@ namespace Medical.GUI
             icon = (StaticImage)widget.findWidget("InstallIcon");
             nameText = (Edit)widget.findWidget("InstallName");
             descriptionText = (Edit)widget.findWidget("InstallDescription");
+            instructionText = (StaticText)widget.findWidget("InstructionText");
         }
 
         public void setDownloadInfo(DownloadGUIInfo info)
@@ -48,25 +50,31 @@ namespace Medical.GUI
             {
                 case ServerDownloadStatus.NotInstalled:
                     actionButton.Caption = "Install";
+                    instructionText.Caption = "By clicking Install you agree to the following:";
                     break;
 
                 case ServerDownloadStatus.Installed:
+                    instructionText.Caption = "Clicking Uninstall will erase this plugin.";
                     actionButton.Caption = "Uninstall";
                     break;
 
                 case ServerDownloadStatus.Update:
                     actionButton.Caption = "Update";
+                    instructionText.Caption = "By clicking Update you agree to the following:";
                     break;
 
                 case ServerDownloadStatus.PendingUninstall:
+                    instructionText.Caption = "";
                     actionButton.Caption = "Restart";
                     break;
 
                 case ServerDownloadStatus.PendingInstall:
+                    instructionText.Caption = "";
                     actionButton.Caption = "Restart";
                     break;
 
                 case ServerDownloadStatus.Unlicensed:
+                    instructionText.Caption = "Clicking Uninstall will erase this plugin.";
                     actionButton.Caption = "Uninstall";
                     break;
                     
