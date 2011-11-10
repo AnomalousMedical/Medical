@@ -35,6 +35,7 @@ namespace Medical
             this.Weight = weight;
             this.ShowOnTaskbar = showOnTaskbar;
             dialog.Closed += new EventHandler(dialog_Closed);
+            dialog.Shown += new EventHandler(dialog_Shown);
         }
 
         public override void clicked(TaskPositioner positioner)
@@ -52,6 +53,11 @@ namespace Medical
         void dialog_Closed(object sender, EventArgs e)
         {
             fireItemClosed();
+        }
+
+        void dialog_Shown(object sender, EventArgs e)
+        {
+            fireRequestShowInTaskbar();
         }
 
         public override bool Active
