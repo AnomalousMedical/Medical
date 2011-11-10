@@ -43,8 +43,9 @@ namespace Medical.GUI
 
         public override DownloadGUIInfo createClientDownloadInfo()
         {
-            AtlasPlugin plugin = ((PluginDownload)Download).Plugin;
-            if (plugin != null)
+			PluginDownload pluginDownload = (PluginDownload)Download;
+            AtlasPlugin plugin = pluginDownload.Plugin;
+            if (pluginDownload.LoadedSucessfully && plugin != null)
             {
                 return new UninstallInfo(plugin);
             }
