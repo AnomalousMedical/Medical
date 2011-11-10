@@ -40,9 +40,9 @@ namespace Medical.GUI
         {
             currentInfo = info;
             icon.setItemResource(info.ImageKey);
-            nameText.Caption = info.Name;
+            nameText.OnlyText = info.Name;
             nameText.TextCursor = 0;
-            descriptionText.Caption = "Loading information from server...";
+            descriptionText.OnlyText = "Loading information from server...";
             moreInfoButton.Visible = info.MoreInfoURL != null;
             switch (info.Status)
             {
@@ -79,7 +79,7 @@ namespace Medical.GUI
                     {
                         descriptionText.MaxTextLength = (uint)caption.Length;
                     }
-                    descriptionText.Caption = caption;
+                    descriptionText.OnlyText = caption;
                     descriptionText.TextCursor = 0;
                 }
             });
