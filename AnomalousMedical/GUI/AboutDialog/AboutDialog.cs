@@ -110,11 +110,6 @@ namespace Medical.GUI
             OtherProcessManager.openUrlInBrowser("http://zziplib.sourceforge.net/");
         }
 
-        void oisText_MouseButtonClick(Widget source, EventArgs e)
-        {
-            OtherProcessManager.openUrlInBrowser("http://www.wreckedgames.com/");
-        }
-
         void bulletText_MouseButtonClick(Widget source, EventArgs e)
         {
             OtherProcessManager.openUrlInBrowser("http://www.bulletphysics.org/");
