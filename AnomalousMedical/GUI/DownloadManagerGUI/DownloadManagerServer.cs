@@ -71,9 +71,56 @@ namespace Medical.GUI
             serverReadThread.Start();
         }
 
+        public String readLicenseFromServer(int pluginId)
+        {
+            String postData = String.Format(CultureInfo.InvariantCulture, "pluginId={0}", pluginId);
+            return readServerLicenseInfo(postData);
+        }
+
+        public String readPlatformLicenseFromServer()
+        {
+            String postData = "";
+            return readServerLicenseInfo(postData);
+        }
+
         internal void removeDetectedPlugin(ServerPluginDownloadInfo serverPluginDownloadInfo)
         {
             detectedServerPlugins.Remove(serverPluginDownloadInfo);
+        }
+
+        private String readServerLicenseInfo(String postData)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.LicenseReaderURL));
+                request.Timeout = 60000;
+                request.Method = "POST";
+                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/x-www-form-urlencoded";
+
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                }
+
+                // Get the response.
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                    {
+                        using (StreamReader serverDataStream = new StreamReader(response.GetResponseStream()))
+                        {
+                            return serverDataStream.ReadToEnd();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not read license from server because {0}.", e.Message);
+            }
+            return null;
         }
 
         private void readServerPluginInfo(String commaSeparatedPluginList)
@@ -125,7 +172,7 @@ namespace Medical.GUI
                                                 {
                                                     DownloadFound.Invoke(downloadInfo);
                                                 }
-                                            }), new PlatformUpdateDownloadInfo(remoteVersion));
+                                            }), new PlatformUpdateDownloadInfo(remoteVersion, this));
                                             foundPlatformUpdate = true;
                                         }
                                     }

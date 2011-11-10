@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
     class ServerPluginDownloadInfo : ServerDownloadInfo
     {
         private DownloadManagerServer server;
+        private String description = null;
+        private bool readingDescriptionFromServer = false;
 
         public ServerPluginDownloadInfo(DownloadManagerServer server, int pluginId, String name, ServerDownloadStatus status)
             :base(status)
@@ -59,6 +62,38 @@ namespace Medical.GUI
             get
             {
                 return String.Format(MedicalConfig.ProductPageBaseURL, PluginId);
+            }
+        }
+
+        public override void getDescription(DescriptionFoundCallback descriptionFoundCallback)
+        {
+            if (description != null)
+            {
+                descriptionFoundCallback.Invoke(description, this);
+            }
+            else if (!readingDescriptionFromServer)
+            {
+                readingDescriptionFromServer = true;
+                Thread descriptionReadThread = new Thread(delegate()
+                {
+                    description = server.readLicenseFromServer(PluginId);
+                    if (description != null)
+                    {
+                        ThreadManager.invoke(new Action(delegate()
+                        {
+                            descriptionFoundCallback.Invoke(description, this);
+                        }));
+                    }
+                    else
+                    {
+                        readingDescriptionFromServer = false;
+                        ThreadManager.invoke(new Action(delegate()
+                        {
+                            descriptionFoundCallback.Invoke("There was an error reading this license from the download server. You are still bound to the license. Please visit www.anomalousmedical.com for more information.\n\nYou can click this item again to attempt to read the license off the server again.", this);
+                        }));
+                    }
+                });
+                descriptionReadThread.Start();
             }
         }
     }
