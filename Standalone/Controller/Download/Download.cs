@@ -15,6 +15,7 @@ namespace Medical
     {
         private DownloadListener listener;
         protected DownloadController controller;
+        private bool alertMainThreadAboutUpdate = true;
 
         public Download(DownloadController controller, DownloadListener listener)
         {
@@ -49,10 +50,15 @@ namespace Medical
         /// </summary>
         public void updateStatus()
         {
-            ThreadManager.invoke(new Action(delegate()
+            if (alertMainThreadAboutUpdate)
             {
-                listener.updateStatus(this);
-            }));
+                alertMainThreadAboutUpdate = false;
+                ThreadManager.invoke(new Action(delegate()
+                {
+                    listener.updateStatus(this);
+                    alertMainThreadAboutUpdate = true;
+                }));
+            }
         }
 
         public void cancelDownload(DownloadPostAction postAction)
