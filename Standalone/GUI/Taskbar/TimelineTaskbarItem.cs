@@ -14,7 +14,13 @@ namespace Medical.GUI
             :base(task.Name, task.IconName)
         {
             this.task = task;
-            task.IconChanged += new TaskDelegate(task_IconChanged);
+            task.IconChanged += task_IconChanged;
+        }
+
+        public override void Dispose()
+        {
+            task.IconChanged -= task_IconChanged;
+            base.Dispose();
         }
 
         public override void clicked(MyGUIPlugin.Widget source, EventArgs e)
