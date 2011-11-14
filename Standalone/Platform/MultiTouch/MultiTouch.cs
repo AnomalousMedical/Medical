@@ -89,10 +89,13 @@ namespace Medical
             }
         }
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void TouchEventDelegate(TouchInfo touchInfo);
         TouchEventDelegate touchStartedCB;
         TouchEventDelegate touchEndedCB;
         TouchEventDelegate touchMovedCB;
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void TouchEventCanceledDelegate();
         TouchEventCanceledDelegate touchCanceledCB;
 
