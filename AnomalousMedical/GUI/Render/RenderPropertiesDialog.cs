@@ -60,6 +60,7 @@ namespace Medical.GUI
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
+                    imageRenderer.makeSampleImage(bitmap);
                     ImageWindow window = new ImageWindow(MainWindow.Instance, sceneViewController.ActiveWindow.Name, bitmap);
                 }
             }

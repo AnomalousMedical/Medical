@@ -23,7 +23,7 @@ namespace Medical.GUI
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
         private OptionsDialog options;
-        //private RenderPropertiesDialog renderDialog;
+        private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
@@ -43,7 +43,7 @@ namespace Medical.GUI
         {
             downloadServer.Dispose();
             selectionModeTask.Dispose();
-            //renderDialog.Dispose();
+            renderDialog.Dispose();
             options.Dispose();
             anatomyFinder.Dispose();
             chooseSceneDialog.Dispose();
@@ -89,8 +89,8 @@ namespace Medical.GUI
             options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
-            //renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
-            //guiManager.addManagedDialog(renderDialog);
+            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);
 
@@ -133,7 +133,7 @@ namespace Medical.GUI
             taskController.addTask(exitTaskItem);
 
             //Tools Section
-            //taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
+            taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
 
             //Navigation Section
             MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation);

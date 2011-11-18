@@ -143,6 +143,36 @@ namespace Medical
             return bitmap;
         }
 
+        public void makeSampleImage(Bitmap bitmap)
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                using (Font font = new Font("Tahoma", 40))
+                {
+                    g.DrawString("Sample Image", font, Brushes.White, new PointF(0, 0));
+                }
+                Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
+                ColorMatrix colorMatrix = new ColorMatrix();
+                colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;
+                colorMatrix.Matrix33 = 0.30f;
+                using (ImageAttributes ia = new ImageAttributes())
+                {
+                    ia.SetColorMatrix(colorMatrix);
+
+                    float sizeRatio = (float)bitmap.Width / logo.Width;
+                    int finalLogoWidth = (int)(logo.Width * sizeRatio);
+                    int finalLogoHeight = (int)(logo.Height * sizeRatio);
+                    int currentHeight = 0;
+                    int imageHeight = bitmap.Height;
+                    while (currentHeight < imageHeight)
+                    {
+                        g.DrawImage(Medical.Properties.Resources.AnomalousMedical, new Rectangle(0, currentHeight, finalLogoWidth, finalLogoHeight), 0, 0, logo.Width, logo.Height, GraphicsUnit.Pixel, ia);
+                        currentHeight += finalLogoHeight;
+                    }
+                }
+            }
+        }
+
         public ImageRendererProgress ImageRendererProgress
         {
             get
