@@ -126,6 +126,7 @@ namespace Medical
             windowsFile = docRoot + "/windows.ini";
             bookmarksFolder = docRoot + "/Bookmarks";
             recentDocsFile = docRoot + "/docs.ini";
+            ImageOutputFolder = docRoot + "/Images";
             if (!Directory.Exists(docRoot))
             {
                 Directory.CreateDirectory(docRoot);
@@ -360,5 +361,7 @@ namespace Medical
         public static String UpdateCheckURL { get; private set; }
 
         public static String LicenseReaderURL { get; private set; }
+
+        public static String ImageOutputFolder { get; private set; }
     }
 }

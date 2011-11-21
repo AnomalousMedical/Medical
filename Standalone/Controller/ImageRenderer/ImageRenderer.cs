@@ -147,10 +147,10 @@ namespace Medical
         {
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-                using (Font font = new Font("Tahoma", 40))
-                {
-                    g.DrawString("Sample Image", font, Brushes.White, new PointF(0, 0));
-                }
+                //using (Font font = new Font("Tahoma", 40))
+                //{
+                //    g.DrawString("Sample Image", font, Brushes.White, new PointF(0, 0));
+                //}
                 Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
                 ColorMatrix colorMatrix = new ColorMatrix();
                 colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;

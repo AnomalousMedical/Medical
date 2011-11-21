@@ -15,14 +15,19 @@ namespace Medical.GUI
         private IntPtr nativeWindow = IntPtr.Zero;
 
         public ImageWindow(NativeOSWindow parent, String windowTitle, System.Drawing.Bitmap image)
-        //:base(parent, windowTitle, wxDefaultPosition, new System.Drawing.Size(640, 480))
+            :this(parent, windowTitle, image, true)
+        {
+            
+        }
+
+        public ImageWindow(NativeOSWindow parent, String windowTitle, System.Drawing.Bitmap image, bool allowSaving)
         {
             //Bit of voodoo to get image into wxWidgets.
             String imageFile = (MedicalConfig.UserDocRoot + "/TempImage.png");
             image.Save(imageFile, ImageFormat.Png);
             image.Dispose();
 
-            nativeWindow = ImageWindow_new(parent._NativePtr, windowTitle, imageFile, MedicalConfig.UserDocRoot);
+            nativeWindow = ImageWindow_new(parent._NativePtr, windowTitle, imageFile, MedicalConfig.UserDocRoot, allowSaving);
 
             try
             {
@@ -44,7 +49,7 @@ namespace Medical.GUI
         }
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr ImageWindow_new(IntPtr parent, String windowTitle, String imageFile, String homeDir);
+        private static extern IntPtr ImageWindow_new(IntPtr parent, String windowTitle, String imageFile, String homeDir, bool allowSaving);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void ImageWindow_delete(IntPtr window);

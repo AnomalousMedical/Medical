@@ -4,7 +4,7 @@
 #include "ImageViewer.h"
 #include "Enums.h"
 
-ImageWindow::ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir)
+ImageWindow::ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving)
 :wxFrame(parent, -1, wxString::FromAscii(windowTitle), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxFRAME_FLOAT_ON_PARENT),
 homeDir(wxString::FromAscii(homeDir)),
 saveLocation("")
@@ -13,9 +13,12 @@ saveLocation("")
     wxMenuBar* menuBar = new wxMenuBar();
 
     wxMenu* fileMenu = new wxMenu();
-    fileMenu->Append(SAVE_ID, "&Save...\tCtrl+S", "Save this image to disk.");
-    exploreItem = fileMenu->Append(EXPLORE_ID, "&Explore...\tCtrl+E", "Open this image's location.");
-    exploreItem->Enable(false);
+	if(allowSaving)
+	{
+		fileMenu->Append(SAVE_ID, "&Save...\tCtrl+S", "Save this image to disk.");
+		exploreItem = fileMenu->Append(EXPLORE_ID, "&Explore...\tCtrl+E", "Open this image's location.");
+		exploreItem->Enable(false);
+	}
     fileMenu->Append(CLOSE_ID, "&Close...\tCtrl+C", "Close this window.");
 
     wxMenu* imageMenu = new wxMenu();
@@ -27,8 +30,11 @@ saveLocation("")
 
     wxBoxSizer* formSizer = new wxBoxSizer(wxVERTICAL);
 
-	this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::save, this, SAVE_ID, SAVE_ID);
-	this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::explore, this, EXPLORE_ID, EXPLORE_ID);
+	if(allowSaving)
+	{
+		this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::save, this, SAVE_ID, SAVE_ID);
+		this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::explore, this, EXPLORE_ID, EXPLORE_ID);
+	}
 	this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::menuClose, this, CLOSE_ID, CLOSE_ID);
 	this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::resizeImage, this, RESIZE_ID, RESIZE_ID);
 
@@ -118,9 +124,9 @@ void ImageWindow::menuClose(wxEvent& e)
     Close();
 }
 
-extern "C" _AnomalousExport ImageWindow* ImageWindow_new(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir)
+extern "C" _AnomalousExport ImageWindow* ImageWindow_new(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving)
 {
-	return new ImageWindow(parent, windowTitle, imageFile, homeDir);
+	return new ImageWindow(parent, windowTitle, imageFile, homeDir, allowSaving);
 }
 
 extern "C" _AnomalousExport void ImageWindow_delete(ImageWindow* window)
