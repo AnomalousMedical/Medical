@@ -264,8 +264,9 @@ namespace Medical.GUI
             {
                 throw new Exception("Must specify a name for the image.");
             }
-            String extension = ".jpg";
-            ImageFormat imageOutputFormat = ImageFormat.Jpeg;
+
+            String extension = ".png";
+            ImageFormat imageOutputFormat = ImageFormat.Png;
 
             switch (imageFormat.SelectedIndex)
             {
@@ -273,9 +274,9 @@ namespace Medical.GUI
                     extension = ".bmp";
                     imageOutputFormat = ImageFormat.Bmp;
                     break;
-                case 2: //png
-                    extension = ".png";
-                    imageOutputFormat = ImageFormat.Png;
+                case 2: //JPEG
+                    extension = ".jpg";
+                    imageOutputFormat = ImageFormat.Jpeg;
                     break;
                 case 3: //GIF
                     extension = ".gif";

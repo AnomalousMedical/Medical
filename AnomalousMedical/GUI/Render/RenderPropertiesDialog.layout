@@ -78,9 +78,9 @@
             <Property key="Widget_Caption" value="Image Format"/>
         </Widget>
         <Widget type="ComboBox" skin="ComboBox" position="5 393 178 22" name="ImageFormat">
-            <Property key="ComboBox_AddItem" value="JPEG (.jpg)"/>
-            <Property key="ComboBox_AddItem" value="Bitmap (.bmp)"/>
             <Property key="ComboBox_AddItem" value="PNG (.png)"/>
+            <Property key="ComboBox_AddItem" value="Bitmap (.bmp)"/>
+            <Property key="ComboBox_AddItem" value="JPEG (.jpg)"/>
             <Property key="ComboBox_AddItem" value="GIF (.gif)"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
