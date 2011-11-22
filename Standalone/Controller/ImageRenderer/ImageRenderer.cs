@@ -143,6 +143,19 @@ namespace Medical
             return bitmap;
         }
 
+        public void addLicenseText(Bitmap bitmap, String text, int textPixelHeight)
+        {
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                using (Font font = new Font("Tahoma", textPixelHeight, GraphicsUnit.Pixel))
+                {
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                    SizeF textSize = g.MeasureString(text, font, bitmap.Width);
+                    g.DrawString(text, font, Brushes.White, new RectangleF(0, 0, textSize.Width, textSize.Height));
+                }
+            }
+        }
+
         public void makeSampleImage(Bitmap bitmap)
         {
             using (Graphics g = Graphics.FromImage(bitmap))

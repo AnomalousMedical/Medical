@@ -89,7 +89,7 @@ namespace Medical.GUI
             options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
-            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, standaloneController.App.LicenseManager);
             guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);

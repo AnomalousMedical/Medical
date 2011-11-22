@@ -31,11 +31,14 @@ namespace Medical.GUI
         private Bitmap currentImage = null;
         private ImageAtlas imageAtlas = null;
 
-        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer)
+        private LicenseManager licenseManager;
+
+        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, LicenseManager licenseManager)
             :base("Medical.GUI.Render.RenderPropertiesDialog.layout")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
+            this.licenseManager = licenseManager;
 
             width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as Edit);
             height = new NumericEdit(window.findWidget("RenderingTab/HeightEdit") as Edit);
@@ -108,6 +111,12 @@ namespace Medical.GUI
                 currentImage = imageRenderer.renderImage(imageProperties);
                 if (currentImage != null)
                 {
+                    int fontPixels = (int)(currentImage.Height * 0.0097f);
+                    if (fontPixels < 10)
+                    {
+                        fontPixels = 10;
+                    }
+                    imageRenderer.addLicenseText(currentImage, String.Format("Licensed to {0} for personal use.", licenseManager.LicenseeName), fontPixels);
                     int previewWidth = previewMaxWidth;
                     int previewHeight = previewMaxHeight;
                     if (currentImage.Width > currentImage.Height)
