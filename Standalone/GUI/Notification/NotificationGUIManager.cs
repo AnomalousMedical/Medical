@@ -74,6 +74,36 @@ namespace Medical.GUI
             }
         }
 
+        internal void screenSizeChanged()
+        {
+            int currentHeight = 0;
+            switch (taskbar.Alignment)
+            {
+                case TaskbarAlignment.Top:
+                    currentHeight = taskbar.Height;
+                    foreach (NotificationGUI openNotification in openNotifications)
+                    {
+                        openNotification.setPosition(Gui.Instance.getViewWidth() - openNotification.Width, currentHeight);
+                        currentHeight += openNotification.Height;
+                    }
+                    break;
+                case TaskbarAlignment.Right:
+                    foreach (NotificationGUI openNotification in openNotifications)
+                    {
+                        openNotification.setPosition(Gui.Instance.getViewWidth() - openNotification.Width - taskbar.Width, currentHeight);
+                        currentHeight += openNotification.Height;
+                    }
+                    break;
+                default:
+                    foreach (NotificationGUI openNotification in openNotifications)
+                    {
+                        openNotification.setPosition(Gui.Instance.getViewWidth() - openNotification.Width, currentHeight);
+                        currentHeight += openNotification.Height;
+                    }
+                    break;
+            }
+        }
+
         private void positionNotification(NotificationGUI notification)
         {
             int additionalHeightOffset = 0;

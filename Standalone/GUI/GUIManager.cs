@@ -339,6 +339,7 @@ namespace Medical.GUI
                 fullscreenPopup.setPosition(xPos, yPos);
                 fullscreenPopup.setSize(innerWidth, innerHeight);
             }
+            notificationManager.screenSizeChanged();
         }
 
         public event ScreenSizeChanged ScreenSizeChanged
