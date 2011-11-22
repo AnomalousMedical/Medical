@@ -1,42 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="205 69 218 593" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="116 51 218 593" layer="Overlapped">
         <Property key="Widget_Caption" value="Rendering"/>
-        <Property key="Window_MinSize" value="0 0"/>
-        <Property key="Window_MaxSize" value="10000 10000"/>
+        <Property key="Window_MinSize" value="218 593"/>
+        <Property key="Window_MaxSize" value="218 593"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
-        <Widget type="Button" skin="Button" position="5 3 66 26" name="RenderingTab/SizeButton">
+        <Widget type="Button" skin="ButtonDown" position="74 249 16 16" name="RenderingTab/SizeButton">
             <Property key="Widget_Caption" value="Size"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="75 3 33 13">
+        <Widget type="StaticText" skin="StaticText" position="5 264 33 13">
             <Property key="Widget_Caption" value="Width"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="139 3 42 12">
+        <Widget type="StaticText" skin="StaticText" position="84 264 42 12">
             <Property key="Widget_Caption" value="Height"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="76 16 59 20" name="RenderingTab/WidthEdit">
+        <Widget type="Edit" skin="Edit" position="5 277 59 20" name="RenderingTab/WidthEdit">
             <Property key="Widget_Caption" value="1280"/>
             <UserString key="AllowFloat" value="False"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="MaxValue" value="4096"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="139 16 59 20" name="RenderingTab/HeightEdit">
+        <Widget type="Edit" skin="Edit" position="84 277 59 20" name="RenderingTab/HeightEdit">
             <Property key="Widget_Caption" value="1024"/>
             <UserString key="MaxValue" value="4096"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="AllowFloat" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="9 252 66 26" name="RenderingTab/Render">
+        <Widget type="Button" skin="Button" position="9 220 66 26" name="RenderingTab/Render">
             <Property key="Widget_Caption" value="Render"/>
             <Property key="Button_ImageResource" value="RenderIcon"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="5 34 59 13">
+        <Widget type="StaticText" skin="StaticText" position="5 3 59 13">
             <Property key="Widget_Caption" value="Preview"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="8 48 202 202" name="PreviewImage"/>
-        <Widget type="StaticText" skin="StaticText" position="5 285 201 14">
-            <Property key="Widget_Caption" value="License"/>
+        <Widget type="StaticImage" skin="StaticImage" position="8 16 202 202" name="PreviewImage"/>
+        <Widget type="StaticText" skin="StaticText" position="5 249 67 14">
+            <Property key="Widget_Caption" value="Properties"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="5 338 99 14">
             <Property key="Widget_Caption" value="Output Folder"/>
@@ -45,7 +45,7 @@
         <Widget type="Button" skin="Button" position="185 353 31 22" name="OutputBrowse">
             <Property key="Widget_Caption" value="..."/>
         </Widget>
-        <Widget type="Button" skin="Button" position="85 252 66 26" name="FullSize">
+        <Widget type="Button" skin="Button" position="85 220 66 26" name="FullSize">
             <Property key="Widget_Caption" value="Full Size"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="5 300 49 14">
@@ -58,13 +58,13 @@
         <Widget type="StaticText" skin="StaticText" position="5 419 199 14">
             <Property key="Widget_Caption" value="License Type"/>
         </Widget>
-        <Widget type="Button" skin="RadioBox" position="5 436 80 19">
+        <Widget type="Button" skin="RadioBox" position="5 436 80 19" name="Personal">
             <Property key="Widget_Caption" value="Personal"/>
         </Widget>
-        <Widget type="Button" skin="RadioBox" position="87 436 100 19">
+        <Widget type="Button" skin="RadioBox" position="87 436 100 19" name="Commercial">
             <Property key="Widget_Caption" value="Commercial"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="5 517 83 21">
+        <Widget type="Button" skin="CheckBox" position="5 517 83 21" name="Agree">
             <Property key="Widget_Caption" value="I Agree"/>
         </Widget>
         <Widget type="Edit" skin="WordWrapSimple" position="5 454 208 62">

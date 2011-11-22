@@ -56,9 +56,10 @@ namespace Medical
 
         public Bitmap renderImage(ImageRendererProperties properties)
         {
-            if (imageRendererProgress != null && properties.ShowUIUpdates)
+            if (imageRendererProgress != null)
             {
-                imageRendererProgress.Visible = true;
+                imageRendererProgress.Visible = properties.ShowUIUpdates;
+                imageRendererProgress.Cancel = false;
                 imageRendererProgress.update(0, "Rendering Image");
             }
 
@@ -389,6 +390,10 @@ namespace Medical
                         if (imageRendererProgress != null)
                         {
                             imageRendererProgress.update((uint)(((float)(i + 1) / totalSS) * 100.0f), String.Format(updateString, i + 1));
+                            if (imageRendererProgress.Cancel)
+                            {
+                                break;
+                            }
                         }
                     }
                     if (scaledPiecewiseBitmap != null)

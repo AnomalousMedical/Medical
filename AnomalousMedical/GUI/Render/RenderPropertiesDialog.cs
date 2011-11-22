@@ -21,6 +21,12 @@ namespace Medical.GUI
         private StaticImage previewImage;
         private Button fullSizeButton;
 
+        private ButtonGroup licenseTypeGroup = new ButtonGroup();
+        private Button personalButton;
+        private Button commercialButton;
+        private CheckButton agreeButton;
+        private Button saveButton;
+
         private ResolutionMenu resolutionMenu;
         private SceneViewController sceneViewController;
         private ImageRenderer imageRenderer;
@@ -72,6 +78,19 @@ namespace Medical.GUI
             imageFormat = (ComboBox)window.findWidget("ImageFormat");
             imageFormat.SelectedIndex = 0;
 
+            //License controls
+            personalButton = (Button)window.findWidget("Personal");
+            licenseTypeGroup.addButton(personalButton);
+            commercialButton = (Button)window.findWidget("Commercial");
+            licenseTypeGroup.addButton(commercialButton);
+            
+            agreeButton = new CheckButton((Button)window.findWidget("Agree"));
+            Button viewLicense = (Button)window.findWidget("ViewLicense");
+            viewLicense.MouseButtonClick += new MyGUIEvent(viewLicense_MouseButtonClick);
+
+            saveButton = (Button)window.findWidget("Save");
+            saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
+
             toggleRequireImagesWidgets();
         }
 
@@ -92,6 +111,7 @@ namespace Medical.GUI
             if (currentImage != null)
             {
                 Bitmap bitmap = (Bitmap)currentImage.Clone();
+                writeLicenseToImage(bitmap);
                 imageRenderer.makeSampleImage(bitmap);
                 ImageWindow window = new ImageWindow(MainWindow.Instance, sceneViewController.ActiveWindow.Name, bitmap, false);
             }
@@ -111,12 +131,6 @@ namespace Medical.GUI
                 currentImage = imageRenderer.renderImage(imageProperties);
                 if (currentImage != null)
                 {
-                    int fontPixels = (int)(currentImage.Height * 0.0097f);
-                    if (fontPixels < 6)
-                    {
-                        fontPixels = 6;
-                    }
-                    imageRenderer.addLicenseText(currentImage, String.Format("Licensed to {0} for personal use.", licenseManager.LicenseeName), fontPixels);
                     int previewWidth = previewMaxWidth;
                     int previewHeight = previewMaxHeight;
                     if (currentImage.Width > currentImage.Height)
@@ -161,9 +175,19 @@ namespace Medical.GUI
 
         }
 
+        void viewLicense_MouseButtonClick(Widget source, EventArgs e)
+        {
+
+        }
+
+        void saveButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            writeImageToDisk();
+        }
+
         void toggleRequireImagesWidgets()
         {
-            fullSizeButton.Enabled = currentImage != null;
+            saveButton.Enabled = fullSizeButton.Enabled = currentImage != null;
         }
 
         void closeCurrentImage()
@@ -180,6 +204,26 @@ namespace Medical.GUI
                 imageAtlas.Dispose();
                 imageAtlas = null;
             }
+        }
+
+        private void writeLicenseToImage(Bitmap bitmap)
+        {
+            int fontPixels = (int)(currentImage.Height * 0.0097f);
+            if (fontPixels < 6)
+            {
+                fontPixels = 6;
+            }
+            String licenseUse = "personal";
+            if (licenseTypeGroup.SelectedButton == commercialButton)
+            {
+                licenseUse = "commercial";
+            }
+            imageRenderer.addLicenseText(bitmap, String.Format("Licensed to {0} for {1} use.", licenseManager.LicenseeName, licenseUse), fontPixels);
+        }
+
+        private void writeImageToDisk()
+        {
+
         }
 
         public int RenderWidth

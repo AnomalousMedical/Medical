@@ -24,6 +24,9 @@ namespace Medical.GUI
             rendererProgress = mainWidget.findWidget("RenderingProgress") as Progress;
             statusText = mainWidget.findWidget("StatusText") as StaticText;
 
+            Button cancelButton = (Button)mainWidget.findWidget("CancelButton");
+            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
             Visible = false;
         }
 
@@ -56,6 +59,13 @@ namespace Medical.GUI
                 mainWidget.setPosition(x, y);
                 mainWidget.Visible = value;
             }
+        }
+
+        public bool Cancel { get; set; }
+
+        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Cancel = true;
         }
     }
 }
