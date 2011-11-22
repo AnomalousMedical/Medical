@@ -188,7 +188,19 @@ namespace Medical.GUI
 
         void outputBrowse_MouseButtonClick(Widget source, EventArgs e)
         {
-
+            String startingFolder = outputFolder.OnlyText;
+            if (!Directory.Exists(startingFolder))
+            {
+                startingFolder = MedicalConfig.ImageOutputFolder;
+                ensureOutputFolderExists(startingFolder);
+            }
+            using (DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Select a render output folder", startingFolder))
+            {
+                if (dirDialog.showModal() == NativeDialogResult.OK)
+                {
+                    outputFolder.OnlyText = dirDialog.Path;
+                }
+            }
         }
 
         void viewLicense_MouseButtonClick(Widget source, EventArgs e)
