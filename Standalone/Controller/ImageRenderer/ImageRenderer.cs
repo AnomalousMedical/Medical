@@ -325,6 +325,7 @@ namespace Medical
             int imageStepVertSmall = finalHeight / gridSize;
 
             float left, right, top, bottom;
+            gridSize += 1; //Account for any extra space not covered by the grid size.
             int totalSS = gridSize * gridSize;
 
             String updateString = "Rendering piece {0} of " + totalSS;
