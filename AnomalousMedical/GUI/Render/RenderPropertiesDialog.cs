@@ -300,8 +300,10 @@ namespace Medical.GUI
                         outputFile = Path.Combine(outputDirectory, fileName);
                     }
                 }
+                writeLicenseToImage(currentImage);
                 currentImage.Save(outputFile, imageOutputFormat);
                 notificationManager.showNotification(new OpenImageNotification(outputFile));
+                closeCurrentImage();
             }
         }
 
