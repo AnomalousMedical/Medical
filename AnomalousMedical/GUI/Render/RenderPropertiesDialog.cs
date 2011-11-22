@@ -120,7 +120,12 @@ namespace Medical.GUI
                 Bitmap bitmap = (Bitmap)currentImage.Clone();
                 writeLicenseToImage(bitmap);
                 imageRenderer.makeSampleImage(bitmap);
-                ImageWindow window = new ImageWindow(MainWindow.Instance, sceneViewController.ActiveWindow.Name, bitmap, false);
+                String windowName = imageName.OnlyText;
+                if (windowName == null)
+                {
+                    windowName = "";
+                }
+                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, bitmap, false);
             }
         }
 
@@ -179,7 +184,7 @@ namespace Medical.GUI
 
         void outputBrowse_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+
         }
 
         void viewLicense_MouseButtonClick(Widget source, EventArgs e)
@@ -189,13 +194,20 @@ namespace Medical.GUI
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (agreeButton.Checked)
+            try
             {
-                writeImageToDisk();
+                if (agreeButton.Checked)
+                {
+                    writeImageToDisk();
+                }
+                else
+                {
+                    MessageBox.show("You must agree to the license in order to save your image.", "License", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.show("You must agree to the license in order to save your image.", "License", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+                MessageBox.show(String.Format("Could not save image.\nReason: {0}", ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 
@@ -247,6 +259,11 @@ namespace Medical.GUI
         private void writeImageToDisk()
         {
             String outputDirectory = outputFolder.OnlyText;
+            String imageBaseName = imageName.OnlyText;
+            if (String.IsNullOrWhiteSpace(imageBaseName))
+            {
+                throw new Exception("Must specify a name for the image.");
+            }
             String extension = ".jpg";
             ImageFormat imageOutputFormat = ImageFormat.Jpeg;
 
@@ -266,32 +283,25 @@ namespace Medical.GUI
                     break;
             }
 
-            String fileName = imageName.OnlyText + extension;
+            String fileName = imageBaseName + extension;
             if (ensureOutputFolderExists(outputDirectory))
             {
                 String outputFile = Path.Combine(outputDirectory, fileName);
-                try
+                if (File.Exists(outputFile))
                 {
-                    if (File.Exists(outputFile))
+                    String[] sameNameFiles = Directory.GetFiles(outputDirectory, String.Format("{0}*{1}", imageBaseName, extension), SearchOption.TopDirectoryOnly);
+                    int fileIndex = sameNameFiles.Length;
+                    fileName = String.Format("{0}{1}{2}", imageBaseName, fileIndex, extension);
+                    outputFile = Path.Combine(outputDirectory, fileName);
+                    //Not as likely to hit this part so just loop for the filename, this will only happen if they skipped one name
+                    while (File.Exists(outputFile))
                     {
-                        String[] sameNameFiles = Directory.GetFiles(outputDirectory, String.Format("{0}*{1}", imageName.OnlyText, extension), SearchOption.TopDirectoryOnly);
-                        int fileIndex = sameNameFiles.Length;
-                        fileName = String.Format("{0}{1}{2}", imageName.OnlyText, fileIndex, extension);
+                        fileName = String.Format("{0}{1}{2}", imageBaseName, ++fileIndex, extension);
                         outputFile = Path.Combine(outputDirectory, fileName);
-                        //Not as likely to hit this part so just loop for the filename, this will only happen if they skipped one name
-                        while (File.Exists(outputFile))
-                        {
-                            fileName = String.Format("{0}{1}{2}", imageName.OnlyText, ++fileIndex, extension);
-                            outputFile = Path.Combine(outputDirectory, fileName);
-                        }
                     }
-                    currentImage.Save(outputFile, imageOutputFormat);
-                    notificationManager.showNotification(new OpenImageNotification(outputFile));
                 }
-                catch (Exception e)
-                {
-                    MessageBox.show(String.Format("Could not save image {0}.\nReason: {1}", outputFile, e.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                }
+                currentImage.Save(outputFile, imageOutputFormat);
+                notificationManager.showNotification(new OpenImageNotification(outputFile));
             }
         }
 
