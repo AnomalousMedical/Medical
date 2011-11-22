@@ -81,7 +81,6 @@
             <Property key="ComboBox_AddItem" value="PNG (.png)"/>
             <Property key="ComboBox_AddItem" value="Bitmap (.bmp)"/>
             <Property key="ComboBox_AddItem" value="JPEG (.jpg)"/>
-            <Property key="ComboBox_AddItem" value="GIF (.gif)"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
         <Widget type="Button" skin="Button" position="92 545 123 26" name="OpenOutputFolder">

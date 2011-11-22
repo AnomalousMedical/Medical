@@ -125,7 +125,11 @@ namespace Medical.GUI
                 {
                     windowName = "";
                 }
-                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, bitmap, false);
+
+                String extension;
+                ImageFormat imageOutputFormat;
+                getImageFormat(out extension, out imageOutputFormat);
+                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, bitmap, false, extension, imageOutputFormat);
             }
         }
 
@@ -265,24 +269,9 @@ namespace Medical.GUI
                 throw new Exception("Must specify a name for the image.");
             }
 
-            String extension = ".png";
-            ImageFormat imageOutputFormat = ImageFormat.Png;
-
-            switch (imageFormat.SelectedIndex)
-            {
-                case 1: //Bitmap
-                    extension = ".bmp";
-                    imageOutputFormat = ImageFormat.Bmp;
-                    break;
-                case 2: //JPEG
-                    extension = ".jpg";
-                    imageOutputFormat = ImageFormat.Jpeg;
-                    break;
-                case 3: //GIF
-                    extension = ".gif";
-                    imageOutputFormat = ImageFormat.Gif;
-                    break;
-            }
+            String extension;
+            ImageFormat imageOutputFormat;
+            getImageFormat(out extension, out imageOutputFormat);
 
             String fileName = imageBaseName + extension;
             if (ensureOutputFolderExists(outputDirectory))
@@ -305,6 +294,24 @@ namespace Medical.GUI
                 currentImage.Save(outputFile, imageOutputFormat);
                 notificationManager.showNotification(new OpenImageNotification(outputFile));
                 closeCurrentImage();
+            }
+        }
+
+        private void getImageFormat(out String extension, out ImageFormat imageOutputFormat)
+        {
+            extension = ".png";
+            imageOutputFormat = ImageFormat.Png;
+
+            switch (imageFormat.SelectedIndex)
+            {
+                case 1: //Bitmap
+                    extension = ".bmp";
+                    imageOutputFormat = ImageFormat.Bmp;
+                    break;
+                case 2: //JPEG
+                    extension = ".jpg";
+                    imageOutputFormat = ImageFormat.Jpeg;
+                    break;
             }
         }
 

@@ -15,16 +15,16 @@ namespace Medical.GUI
         private IntPtr nativeWindow = IntPtr.Zero;
 
         public ImageWindow(NativeOSWindow parent, String windowTitle, System.Drawing.Bitmap image)
-            :this(parent, windowTitle, image, true)
+            :this(parent, windowTitle, image, true, ".png", ImageFormat.Png)
         {
             
         }
 
-        public ImageWindow(NativeOSWindow parent, String windowTitle, System.Drawing.Bitmap image, bool allowSaving)
+        public ImageWindow(NativeOSWindow parent, String windowTitle, System.Drawing.Bitmap image, bool allowSaving, String extension, ImageFormat imageFormat)
         {
             //Bit of voodoo to get image into wxWidgets.
-            String imageFile = (MedicalConfig.UserDocRoot + "/TempImage.png");
-            image.Save(imageFile, ImageFormat.Png);
+            String imageFile = String.Format("{0}/TempImage{1}", MedicalConfig.UserDocRoot, extension);
+            image.Save(imageFile, imageFormat);
             image.Dispose();
 
             nativeWindow = ImageWindow_new(parent._NativePtr, windowTitle, imageFile, MedicalConfig.UserDocRoot, allowSaving);
