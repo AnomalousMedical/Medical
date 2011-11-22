@@ -6,6 +6,8 @@ using MyGUIPlugin;
 using Medical.Controller;
 using System.Drawing;
 using Engine;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace Medical.GUI
 {
@@ -38,13 +40,15 @@ namespace Medical.GUI
         private ImageAtlas imageAtlas = null;
 
         private LicenseManager licenseManager;
+        private NotificationGUIManager notificationManager;
 
-        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, LicenseManager licenseManager)
-            :base("Medical.GUI.Render.RenderPropertiesDialog.layout")
+        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, LicenseManager licenseManager, NotificationGUIManager notificationManager)
+            : base("Medical.GUI.Render.RenderPropertiesDialog.layout")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
             this.licenseManager = licenseManager;
+            this.notificationManager = notificationManager;
 
             width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as Edit);
             height = new NumericEdit(window.findWidget("RenderingTab/HeightEdit") as Edit);
@@ -83,13 +87,16 @@ namespace Medical.GUI
             licenseTypeGroup.addButton(personalButton);
             commercialButton = (Button)window.findWidget("Commercial");
             licenseTypeGroup.addButton(commercialButton);
-            
+
             agreeButton = new CheckButton((Button)window.findWidget("Agree"));
             Button viewLicense = (Button)window.findWidget("ViewLicense");
             viewLicense.MouseButtonClick += new MyGUIEvent(viewLicense_MouseButtonClick);
 
             saveButton = (Button)window.findWidget("Save");
             saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
+
+            Button openOutputFolder = (Button)window.findWidget("OpenOutputFolder");
+            openOutputFolder.MouseButtonClick += new MyGUIEvent(openOutputFolder_MouseButtonClick);
 
             toggleRequireImagesWidgets();
         }
@@ -172,7 +179,7 @@ namespace Medical.GUI
 
         void outputBrowse_MouseButtonClick(Widget source, EventArgs e)
         {
-
+            
         }
 
         void viewLicense_MouseButtonClick(Widget source, EventArgs e)
@@ -182,7 +189,23 @@ namespace Medical.GUI
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            writeImageToDisk();
+            if (agreeButton.Checked)
+            {
+                writeImageToDisk();
+            }
+            else
+            {
+                MessageBox.show("You must agree to the license in order to save your image.", "License", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+            }
+        }
+
+        void openOutputFolder_MouseButtonClick(Widget source, EventArgs e)
+        {
+            String folder = outputFolder.OnlyText;
+            if (ensureOutputFolderExists(folder))
+            {
+                OtherProcessManager.openLocalURL(outputFolder.OnlyText);
+            }
         }
 
         void toggleRequireImagesWidgets()
@@ -223,7 +246,70 @@ namespace Medical.GUI
 
         private void writeImageToDisk()
         {
+            String outputDirectory = outputFolder.OnlyText;
+            String extension = ".jpg";
+            ImageFormat imageOutputFormat = ImageFormat.Jpeg;
 
+            switch (imageFormat.SelectedIndex)
+            {
+                case 1: //Bitmap
+                    extension = ".bmp";
+                    imageOutputFormat = ImageFormat.Bmp;
+                    break;
+                case 2: //png
+                    extension = ".png";
+                    imageOutputFormat = ImageFormat.Png;
+                    break;
+                case 3: //GIF
+                    extension = ".gif";
+                    imageOutputFormat = ImageFormat.Gif;
+                    break;
+            }
+
+            String fileName = imageName.OnlyText + extension;
+            if (ensureOutputFolderExists(outputDirectory))
+            {
+                String outputFile = Path.Combine(outputDirectory, fileName);
+                try
+                {
+                    if (File.Exists(outputFile))
+                    {
+                        String[] sameNameFiles = Directory.GetFiles(outputDirectory, String.Format("{0}*{1}", imageName.OnlyText, extension), SearchOption.TopDirectoryOnly);
+                        int fileIndex = sameNameFiles.Length;
+                        fileName = String.Format("{0}{1}{2}", imageName.OnlyText, fileIndex, extension);
+                        outputFile = Path.Combine(outputDirectory, fileName);
+                        //Not as likely to hit this part so just loop for the filename, this will only happen if they skipped one name
+                        while (File.Exists(outputFile))
+                        {
+                            fileName = String.Format("{0}{1}{2}", imageName.OnlyText, ++fileIndex, extension);
+                            outputFile = Path.Combine(outputDirectory, fileName);
+                        }
+                    }
+                    currentImage.Save(outputFile, imageOutputFormat);
+                    notificationManager.showNotification(new OpenImageNotification(outputFile));
+                }
+                catch (Exception e)
+                {
+                    MessageBox.show(String.Format("Could not save image {0}.\nReason: {1}", outputFile, e.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                }
+            }
+        }
+
+        private bool ensureOutputFolderExists(String outputFolder)
+        {
+            if (!Directory.Exists(outputFolder))
+            {
+                try
+                {
+                    Directory.CreateDirectory(outputFolder);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.show(String.Format("Could not create output folder {0}.\nReason: {1}", outputFolder, e.Message), "Directory Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    return false;
+                }
+            }
+            return true;
         }
 
         public int RenderWidth

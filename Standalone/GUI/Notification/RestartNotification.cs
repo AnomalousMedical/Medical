@@ -6,19 +6,19 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class RestartNotification : NotificationGUI
+    class RestartNotification : AbstractNotification
     {
         private StandaloneController standaloneController;
         private bool autoStartPlatformUpdate;
 
-        public RestartNotification(String text, String imageKey, NotificationGUIManager notificationManager, StandaloneController standaloneController, bool autoStartPlatformUpdate)
-            :base(text, imageKey, notificationManager)
+        public RestartNotification(String text, String imageKey, StandaloneController standaloneController, bool autoStartPlatformUpdate)
+            :base(text, imageKey)
         {
             this.standaloneController = standaloneController;
             this.autoStartPlatformUpdate = autoStartPlatformUpdate;
         }
 
-        protected override void clicked()
+        public override void clicked()
         {
             standaloneController.restartWithWarning("Restarting Anomalous Medical will loose all unsaved data. Are you sure you wish to continue?", autoStartPlatformUpdate);
         }

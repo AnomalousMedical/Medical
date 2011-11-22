@@ -5,17 +5,17 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class CallbackNotificationGUI : NotificationGUI
+    class CallbackNotificationGUI : AbstractNotification
     {
         private Action clickedCallback;
 
-        public CallbackNotificationGUI(String text, String imageKey, NotificationGUIManager notificationManager, Action clickedCallback)
-            :base(text, imageKey, notificationManager)
+        public CallbackNotificationGUI(String text, String imageKey, Action clickedCallback)
+            :base(text, imageKey)
         {
             this.clickedCallback = clickedCallback;
         }
 
-        protected override void clicked()
+        public override void clicked()
         {
             if (clickedCallback != null)
             {

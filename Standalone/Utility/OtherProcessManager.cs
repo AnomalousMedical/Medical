@@ -30,6 +30,21 @@ namespace Medical
             }
         }
 
+        public static bool openLocalURL(String url)
+        {
+            try
+            {
+                Process.Start(url);
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.show(String.Format("There was a problem opening '{0}'.\nReason: {1}", url, e.Message), "Open Error", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
+                Log.Error("Could not open url {0} because: {1}", url, e.Message);
+                return false;
+            }
+        }
+
         public static void restart()
         {
             try

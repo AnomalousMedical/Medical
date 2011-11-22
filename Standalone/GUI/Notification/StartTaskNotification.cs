@@ -5,17 +5,17 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class StartTaskNotification : NotificationGUI
+    class StartTaskNotification : AbstractNotification
     {
         private Task task;
 
-        public StartTaskNotification(String text, String imageKey, NotificationGUIManager notificationManager, Task task)
-            :base(text, imageKey, notificationManager)
+        public StartTaskNotification(String text, String imageKey, Task task)
+            :base(text, imageKey)
         {
             this.task = task;
         }
 
-        protected override void clicked()
+        public override void clicked()
         {
             task.clicked(null);
         }

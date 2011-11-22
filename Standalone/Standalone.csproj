@@ -305,7 +305,9 @@
     <Compile Include="GUI\FullscreenGUIPopup.cs" />
     <Compile Include="GUI\GUITaskManager.cs" />
     <Compile Include="GUI\GUITimelineTaskManager.cs" />
+    <Compile Include="GUI\Notification\AbstractNotification.cs" />
     <Compile Include="GUI\Notification\CallbackNotificationGUI.cs" />
+    <Compile Include="GUI\Notification\Notification.cs" />
     <Compile Include="GUI\Notification\NotificationGUI.cs" />
     <Compile Include="GUI\Notification\NotificationGUIManager.cs" />
     <Compile Include="GUI\Notification\RestartNotification.cs" />

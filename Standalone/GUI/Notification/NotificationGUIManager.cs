@@ -26,28 +26,30 @@ namespace Medical.GUI
             }
         }
 
+        public void showNotification(Notification notification)
+        {
+            NotificationGUI notificationGUI = new NotificationGUI(notification, this);
+            positionNotification(notificationGUI);
+        }
+
         public void showNotification(String text, String imageKey)
         {
-            NotificationGUI notification = new NotificationGUI(text, imageKey, this);
-            positionNotification(notification);
+            showNotification(new AbstractNotification(text, imageKey));
         }
 
         public void showTaskNotification(String text, String imageKey, Task task)
         {
-            NotificationGUI notification = new StartTaskNotification(text, imageKey, this, task);
-            positionNotification(notification);
+            showNotification(new StartTaskNotification(text, imageKey, task));
         }
 
         public void showRestartNotification(String text, String imageKey, bool autoStartPlatformUpdate)
         {
-            NotificationGUI notification = new RestartNotification(text, imageKey, this, standaloneController, autoStartPlatformUpdate);
-            positionNotification(notification);
+            showNotification(new RestartNotification(text, imageKey, standaloneController, autoStartPlatformUpdate));
         }
 
         public void showCallbackNotification(String text, String imageKey, Action clickedCallback)
         {
-            NotificationGUI notification = new CallbackNotificationGUI(text, imageKey, this, clickedCallback);
-            positionNotification(notification);
+            showNotification(new CallbackNotificationGUI(text, imageKey, clickedCallback));
         }
 
         internal void notificationClosed(NotificationGUI notification)

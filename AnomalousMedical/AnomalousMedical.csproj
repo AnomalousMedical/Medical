@@ -133,6 +133,7 @@
     <Compile Include="GUI\DownloadManagerGUI\DownloadManagerGUI.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
+    <Compile Include="GUI\Render\OpenImageNotification.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />

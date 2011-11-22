@@ -7,25 +7,27 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class NotificationGUI : PopupContainer
+    sealed class NotificationGUI : PopupContainer
     {
         private NotificationGUIManager notificationManager;
+        private Notification notification;
 
-        public NotificationGUI(String text, String imageKey, NotificationGUIManager notificationManager)
+        public NotificationGUI(Notification notification, NotificationGUIManager notificationManager)
             : base("Medical.GUI.Notification.NotificationGUI.layout")
         {
             this.KeepOpen = true;
             this.notificationManager = notificationManager;
+            this.notification = notification;
 
             widget.MouseButtonClick += new MyGUIEvent(widget_MouseButtonClick);
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             StaticText staticText = (StaticText)widget.findWidget("Text");
-            staticText.Caption = text;
+            staticText.Caption = notification.Text;
 
             StaticImage image = (StaticImage)widget.findWidget("Image");
-            image.setItemResource(imageKey);
+            image.setItemResource(notification.ImageKey);
 
             //Setup size
             Size2 textSize = staticText.getTextSize();
@@ -43,9 +45,9 @@ namespace Medical.GUI
             widget.setSize((int)textSize.Width + widthDelta, (int)textSize.Height + heightDelta);
         }
 
-        protected virtual void clicked()
+        private void clicked()
         {
-
+            notification.clicked();
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
