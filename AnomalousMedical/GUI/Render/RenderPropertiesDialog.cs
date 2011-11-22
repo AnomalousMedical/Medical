@@ -112,9 +112,9 @@ namespace Medical.GUI
                 if (currentImage != null)
                 {
                     int fontPixels = (int)(currentImage.Height * 0.0097f);
-                    if (fontPixels < 10)
+                    if (fontPixels < 6)
                     {
-                        fontPixels = 10;
+                        fontPixels = 6;
                     }
                     imageRenderer.addLicenseText(currentImage, String.Format("Licensed to {0} for personal use.", licenseManager.LicenseeName), fontPixels);
                     int previewWidth = previewMaxWidth;
@@ -128,6 +128,11 @@ namespace Medical.GUI
                     {
                         float ratio = (float)currentImage.Width / currentImage.Height;
                         previewWidth = (int)(previewHeight * ratio);
+                    }
+                    if (previewWidth > currentImage.Width || previewHeight > currentImage.Height)
+                    {
+                        previewWidth = currentImage.Width;
+                        previewHeight = currentImage.Height;
                     }
                     imageAtlas = new ImageAtlas("RendererPreview", new Size2(previewWidth, previewHeight), new Size2(previewWidth, previewHeight));
                     String imageKey = imageAtlas.addImage("PreviewImage", currentImage);

@@ -160,10 +160,6 @@ namespace Medical
         {
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-                //using (Font font = new Font("Tahoma", 40))
-                //{
-                //    g.DrawString("Sample Image", font, Brushes.White, new PointF(0, 0));
-                //}
                 Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
                 ColorMatrix colorMatrix = new ColorMatrix();
                 colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;
@@ -406,6 +402,12 @@ namespace Medical
                     Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
                     float scale = imageFinalHeight / logo.Height;
                     float imageFinalWidth = logo.Width * scale;
+                    if (imageFinalWidth > fullBitmap.Width)
+                    {
+                        imageFinalWidth = fullBitmap.Width;
+                        scale = imageFinalWidth / logo.Width;
+                        imageFinalHeight = logo.Height * scale;
+                    }
                     g.DrawImage(Medical.Properties.Resources.AnomalousMedical, new Rectangle(0, fullBitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, (int)imageFinalHeight));
                 }
             }
