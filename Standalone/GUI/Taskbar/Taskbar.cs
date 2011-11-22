@@ -19,6 +19,7 @@ namespace Medical.GUI
     {
         public delegate void OpenTaskMenuEvent(int left, int top, int width, int height);
         public event OpenTaskMenuEvent OpenTaskMenu;
+        public event Action<Taskbar> AlignmentChanged;
 
         private Layout myGUIlayout;
         private Widget taskbarWidget;
@@ -308,6 +309,10 @@ namespace Medical.GUI
                 {
                     alignment = value;
                     layout();
+                    if (AlignmentChanged != null)
+                    {
+                        AlignmentChanged.Invoke(this);
+                    }
                 }
             }
         }

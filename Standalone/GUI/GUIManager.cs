@@ -98,6 +98,7 @@ namespace Medical.GUI
             taskbar = new Taskbar(standaloneController);
             taskbar.SuppressLayout = true;
             taskbar.OpenTaskMenu += new GUI.Taskbar.OpenTaskMenuEvent(taskbar_OpenTaskMenu);
+            taskbar.AlignmentChanged += new Action<GUI.Taskbar>(taskbar_AlignmentChanged);
 
             //Timeline taskbar
             timelineGUITaskbar = new Taskbar(standaloneController);
@@ -358,6 +359,11 @@ namespace Medical.GUI
         {
             taskMenu.setSize(width, height);
             taskMenu.show(left, top);
+        }
+
+        void taskbar_AlignmentChanged(Taskbar obj)
+        {
+            notificationManager.screenSizeChanged();
         }
     }
 }
