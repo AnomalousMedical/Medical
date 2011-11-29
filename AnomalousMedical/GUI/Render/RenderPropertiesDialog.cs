@@ -53,6 +53,9 @@ namespace Medical.GUI
             width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as Edit);
             height = new NumericEdit(window.findWidget("RenderingTab/HeightEdit") as Edit);
 
+            width.ValueChanged += new MyGUIEvent(renderSizeChanged);
+            height.ValueChanged += new MyGUIEvent(renderSizeChanged);
+
             Button renderButton = window.findWidget("RenderingTab/Render") as Button;
             renderButton.MouseButtonClick += new MyGUIEvent(renderButton_MouseButtonClick);
 
@@ -107,10 +110,23 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        protected override void onShown(EventArgs args)
+        {
+            base.onShown(args);
+            sceneViewController.AutoAspectRatio = false;
+            sceneViewController.AspectRatio = width.FloatValue / height.FloatValue;
+        }
+
         protected override void onClosed(EventArgs args)
         {
             base.onClosed(args);
+            sceneViewController.AutoAspectRatio = true;
             closeCurrentImage();
+        }
+
+        void renderSizeChanged(Widget source, EventArgs e)
+        {
+            sceneViewController.AspectRatio = width.FloatValue / height.FloatValue;
         }
 
         void fullSizeButton_MouseButtonClick(Widget source, EventArgs e)

@@ -233,8 +233,8 @@ namespace Medical.GUI
                     anatomyList.clear();
 
                     SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                    Vector2 windowLoc = activeWindow.Location;
-                    Size2 windowSize = activeWindow.WorkingSize;
+                    Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
+                    Size2 windowSize = new Size2(activeWindow.RenderWidth, activeWindow.RenderHeight);
                     absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
                     absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
                     Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);

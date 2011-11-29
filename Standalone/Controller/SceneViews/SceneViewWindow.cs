@@ -160,23 +160,26 @@ namespace Medical.Controller
             if (!AutoAspectRatio)
             {
                 size.Height = size.Width * inverseAspectRatio;
-                if (size.Height > WorkingSize.Height)
+                if (size.Height > WorkingSize.Height) //Letterbox width
                 {
                     size.Height = WorkingSize.Height;
                     size.Width = size.Height * (1 / inverseAspectRatio);
                     sceneViewLocation.x += (WorkingSize.Width - size.Width) / 2.0f;
 
                     borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(sceneViewLocation.x - Location.x), (int)WorkingSize.Height);
-                    borderPanel1.setCoord((int)(sceneViewLocation.x + size.Width), (int)Location.y, (int)(sceneViewLocation.x - Location.x), (int)WorkingSize.Height);
+                    borderPanel1.setCoord((int)(sceneViewLocation.x + size.Width), (int)Location.y, (int)(sceneViewLocation.x - Location.x + 1), (int)WorkingSize.Height);
                 }
                 else
                 {
                     sceneViewLocation.y += (WorkingSize.Height - size.Height) / 2.0f;
 
                     borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y));
-                    borderPanel1.setCoord((int)Location.x, (int)(sceneViewLocation.y + size.Height), (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y));
+                    borderPanel1.setCoord((int)Location.x, (int)(sceneViewLocation.y + size.Height), (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y + 1));
                 }
             }
+
+            RenderXLoc = (int)sceneViewLocation.x;
+            RenderYLoc = (int)sceneViewLocation.y;
 
             sceneViewLocation = new Vector2(sceneViewLocation.x / totalSize.Width, sceneViewLocation.y / totalSize.Height);
             size = new Size2(size.Width / totalSize.Width, size.Height / totalSize.Height);
@@ -185,6 +188,7 @@ namespace Medical.Controller
             {
                 sceneView.setDimensions(sceneViewLocation.x, sceneViewLocation.y, size.Width, size.Height);
             }
+
             if (Resized != null)
             {
                 Resized.Invoke(this);
@@ -442,6 +446,10 @@ namespace Medical.Controller
         }
 
         public bool AllowNavigation { get; set; }
+
+        public int RenderXLoc { get; private set; }
+
+        public int RenderYLoc { get; private set; }
 
         public int RenderWidth
         {
