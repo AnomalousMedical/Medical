@@ -6,7 +6,7 @@ class ImageViewer;
 class ImageWindow : public wxFrame
 {
 public:
-	ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving);
+	ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving, bool startMaximized);
 
 	~ImageWindow(void);
 

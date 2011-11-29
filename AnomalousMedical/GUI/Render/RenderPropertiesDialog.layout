@@ -2,8 +2,6 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCX" position="116 51 218 593" layer="Overlapped">
         <Property key="Widget_Caption" value="Rendering"/>
-        <Property key="Window_MinSize" value="218 593"/>
-        <Property key="Window_MaxSize" value="218 593"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
         <Widget type="Button" skin="ButtonDown" position="74 249 16 16" name="RenderingTab/SizeButton">

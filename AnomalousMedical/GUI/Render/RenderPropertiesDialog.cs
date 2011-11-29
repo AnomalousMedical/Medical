@@ -129,7 +129,7 @@ namespace Medical.GUI
                 String extension;
                 ImageFormat imageOutputFormat;
                 getImageFormat(out extension, out imageOutputFormat);
-                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, bitmap, false, extension, imageOutputFormat);
+                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, bitmap, false, extension, imageOutputFormat, true);
             }
         }
 

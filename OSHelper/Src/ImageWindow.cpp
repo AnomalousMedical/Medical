@@ -4,7 +4,7 @@
 #include "ImageViewer.h"
 #include "Enums.h"
 
-ImageWindow::ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving)
+ImageWindow::ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving, bool startMaximized)
 :wxFrame(parent, -1, wxString::FromAscii(windowTitle), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxFRAME_FLOAT_ON_PARENT),
 homeDir(wxString::FromAscii(homeDir)),
 saveLocation("")
@@ -42,6 +42,12 @@ saveLocation("")
 	imageViewer = new ImageViewer(this);
     imageViewer->setBitmap(imageFile);
     formSizer->Add(imageViewer, 1, wxEXPAND);
+
+	if(startMaximized)
+	{
+		imageViewer->setScaleImage(false);
+		this->Maximize(true);
+	}
 
     SetSizer(formSizer);
 
@@ -124,9 +130,9 @@ void ImageWindow::menuClose(wxEvent& e)
     Close();
 }
 
-extern "C" _AnomalousExport ImageWindow* ImageWindow_new(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving)
+extern "C" _AnomalousExport ImageWindow* ImageWindow_new(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir, bool allowSaving, bool startMaximized)
 {
-	return new ImageWindow(parent, windowTitle, imageFile, homeDir, allowSaving);
+	return new ImageWindow(parent, windowTitle, imageFile, homeDir, allowSaving, startMaximized);
 }
 
 extern "C" _AnomalousExport void ImageWindow_delete(ImageWindow* window)
