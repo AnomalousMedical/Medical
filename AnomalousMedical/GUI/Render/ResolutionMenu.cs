@@ -42,14 +42,6 @@ namespace Medical.GUI
             resolutionMenuGroup.SelectedButton = custom;
         }
 
-        public bool IsCustom
-        {
-            get
-            {
-                return resolutionMenuGroup.SelectedButton == custom;
-            }
-        }
-
         public int ImageWidth { get; set; }
 
         public int ImageHeight { get; set; }

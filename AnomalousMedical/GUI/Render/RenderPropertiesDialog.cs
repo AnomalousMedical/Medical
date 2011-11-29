@@ -113,6 +113,11 @@ namespace Medical.GUI
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
+            changeAspectRatio();
+        }
+
+        private void changeAspectRatio()
+        {
             sceneViewController.AutoAspectRatio = false;
             sceneViewController.AspectRatio = width.FloatValue / height.FloatValue;
         }
@@ -197,9 +202,9 @@ namespace Medical.GUI
 
         void resolutionMenu_ResolutionChanged(object sender, EventArgs e)
         {
-            width.Edit.Enabled = height.Edit.Enabled = resolutionMenu.IsCustom;
             RenderWidth = resolutionMenu.ImageWidth;
             RenderHeight = resolutionMenu.ImageHeight;
+            changeAspectRatio();
         }
 
         void outputBrowse_MouseButtonClick(Widget source, EventArgs e)
