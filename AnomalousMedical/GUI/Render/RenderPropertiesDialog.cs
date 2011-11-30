@@ -209,18 +209,25 @@ namespace Medical.GUI
 
         void outputBrowse_MouseButtonClick(Widget source, EventArgs e)
         {
-            String startingFolder = outputFolder.OnlyText;
-            if (!Directory.Exists(startingFolder))
+            try
             {
-                startingFolder = MedicalConfig.ImageOutputFolder;
-                ensureOutputFolderExists(startingFolder);
-            }
-            using (DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Select a render output folder", startingFolder))
-            {
-                if (dirDialog.showModal() == NativeDialogResult.OK)
+                String startingFolder = outputFolder.OnlyText;
+                if (!Directory.Exists(startingFolder))
                 {
-                    outputFolder.OnlyText = dirDialog.Path;
+                    startingFolder = MedicalConfig.ImageOutputFolder;
+                    ensureOutputFolderExists(startingFolder);
                 }
+                using (DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Select a render output folder", startingFolder))
+                {
+                    if (dirDialog.showModal() == NativeDialogResult.OK)
+                    {
+                        outputFolder.OnlyText = dirDialog.Path;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show("Could not open folder browser.\nReason: " + ex.Message, "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 
@@ -246,7 +253,7 @@ namespace Medical.GUI
                         {
                             if (success)
                             {
-                                writeImageToDisk();
+                                saveImage();
                             }
                             else
                             {
@@ -273,9 +280,14 @@ namespace Medical.GUI
         void openOutputFolder_MouseButtonClick(Widget source, EventArgs e)
         {
             String folder = outputFolder.OnlyText;
-            if (ensureOutputFolderExists(folder))
+            try
             {
+                ensureOutputFolderExists(folder);
                 OtherProcessManager.openLocalURL(outputFolder.OnlyText);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Could not open output directory {0}.\nReason: {1}", folder, ex.Message), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 
@@ -315,36 +327,54 @@ namespace Medical.GUI
             imageRenderer.addLicenseText(bitmap, String.Format("Licensed to {0} for {1} use.", imageLicenseServer.LicenseeName, licenseUse), fontPixels);
         }
 
-        private void writeImageToDisk()
+        private void saveImage()
         {
             String outputDirectory = outputFolder.OnlyText;
             String imageBaseName = imageName.OnlyText;
             String extension;
             ImageFormat imageOutputFormat;
             getImageFormat(out extension, out imageOutputFormat);
-
-            String fileName = imageBaseName + extension;
-            if (ensureOutputFolderExists(outputDirectory))
+            try
             {
-                String outputFile = Path.Combine(outputDirectory, fileName);
-                if (File.Exists(outputFile))
-                {
-                    String[] sameNameFiles = Directory.GetFiles(outputDirectory, String.Format("{0}*{1}", imageBaseName, extension), SearchOption.TopDirectoryOnly);
-                    int fileIndex = sameNameFiles.Length;
-                    fileName = String.Format("{0}{1}{2}", imageBaseName, fileIndex, extension);
-                    outputFile = Path.Combine(outputDirectory, fileName);
-                    //Not as likely to hit this part so just loop for the filename, this will only happen if they skipped one name
-                    while (File.Exists(outputFile))
-                    {
-                        fileName = String.Format("{0}{1}{2}", imageBaseName, ++fileIndex, extension);
-                        outputFile = Path.Combine(outputDirectory, fileName);
-                    }
-                }
-                writeLicenseToImage(currentImage);
-                currentImage.Save(outputFile, imageOutputFormat);
-                notificationManager.showNotification(new OpenImageNotification(outputFile));
-                closeCurrentImage();
+                writeImageToDisk(outputDirectory, imageBaseName, extension, imageOutputFormat);
             }
+            catch (Exception e)
+            {
+                try
+                {
+                    //Try to do our best to save the image somewhere.
+                    writeImageToDisk(MedicalConfig.ImageOutputFolder, imageBaseName, extension, imageOutputFormat);
+                    MessageBox.show(String.Format("Error writing the file to the directory {0}.\nYour file has been written to {1} instead.\nReason: {2}", outputDirectory, MedicalConfig.ImageOutputFolder, e.Message), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.show(String.Format("Error writing the file to the directory {0}\nReason: {1}.\n\nAlso failed to write to the backup save folder {2}.\nReason: {3}\n\nOur servers will still count this as one of your image credits. Please contact us at info@anomalousmedical.com get your credit back.\nWe reccomend taking a screen shot of this error message and sending it to us.", outputDirectory, e.Message, MedicalConfig.ImageOutputFolder, e1.Message), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
+            }
+        }
+
+        private void writeImageToDisk(String outputDirectory, String imageBaseName, String extension, ImageFormat imageOutputFormat)
+        {
+            String fileName = imageBaseName + extension;
+            ensureOutputFolderExists(outputDirectory);
+            String outputFile = Path.Combine(outputDirectory, fileName);
+            if (File.Exists(outputFile))
+            {
+                String[] sameNameFiles = Directory.GetFiles(outputDirectory, String.Format("{0}*{1}", imageBaseName, extension), SearchOption.TopDirectoryOnly);
+                int fileIndex = sameNameFiles.Length;
+                fileName = String.Format("{0}{1}{2}", imageBaseName, fileIndex, extension);
+                outputFile = Path.Combine(outputDirectory, fileName);
+                //Not as likely to hit this part so just loop for the filename, this will only happen if they skipped one name
+                while (File.Exists(outputFile))
+                {
+                    fileName = String.Format("{0}{1}{2}", imageBaseName, ++fileIndex, extension);
+                    outputFile = Path.Combine(outputDirectory, fileName);
+                }
+            }
+            writeLicenseToImage(currentImage);
+            currentImage.Save(outputFile, imageOutputFormat);
+            notificationManager.showNotification(new OpenImageNotification(outputFile));
+            closeCurrentImage();
         }
 
         private void getImageFormat(out String extension, out ImageFormat imageOutputFormat)
@@ -365,21 +395,12 @@ namespace Medical.GUI
             }
         }
 
-        private bool ensureOutputFolderExists(String outputFolder)
+        private void ensureOutputFolderExists(String outputFolder)
         {
             if (!Directory.Exists(outputFolder))
             {
-                try
-                {
-                    Directory.CreateDirectory(outputFolder);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.show(String.Format("Could not create output folder {0}.\nReason: {1}", outputFolder, e.Message), "Directory Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                    return false;
-                }
+                Directory.CreateDirectory(outputFolder);
             }
-            return true;
         }
 
         public int RenderWidth
