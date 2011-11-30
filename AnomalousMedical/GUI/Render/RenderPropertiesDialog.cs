@@ -39,15 +39,15 @@ namespace Medical.GUI
         private Bitmap currentImage = null;
         private ImageAtlas imageAtlas = null;
 
-        private LicenseManager licenseManager;
+        private ImageLicenseServer imageLicenseServer;
         private NotificationGUIManager notificationManager;
 
-        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, LicenseManager licenseManager, NotificationGUIManager notificationManager)
+        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, ImageLicenseServer imageLicenseServer, NotificationGUIManager notificationManager)
             : base("Medical.GUI.Render.RenderPropertiesDialog.layout")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
-            this.licenseManager = licenseManager;
+            this.imageLicenseServer = imageLicenseServer;
             this.notificationManager = notificationManager;
 
             width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as Edit);
@@ -231,20 +231,42 @@ namespace Medical.GUI
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            try
+            if (agreeButton.Checked)
             {
-                if (agreeButton.Checked)
+                if (!String.IsNullOrWhiteSpace(imageName.OnlyText))
                 {
-                    writeImageToDisk();
+                    ImageLicenseType type = ImageLicenseType.Personal;
+                    if (licenseTypeGroup.SelectedButton == commercialButton)
+                    {
+                        type = ImageLicenseType.Commercial;
+                    }
+                    imageLicenseServer.licenseImage(type, delegate(bool success, String message)
+                    {
+                        try
+                        {
+                            if (success)
+                            {
+                                writeImageToDisk();
+                            }
+                            else
+                            {
+                                MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.show(String.Format("Could not save image.\nReason: {0}", ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                        }
+                    });
                 }
                 else
                 {
-                    MessageBox.show("You must agree to the license in order to save your image.", "License", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+                    MessageBox.show("You must enter a name for your image.", "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.show(String.Format("Could not save image.\nReason: {0}", ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                MessageBox.show("You must agree to the license in order to save your image.", "License", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
             }
         }
 
@@ -290,18 +312,13 @@ namespace Medical.GUI
             {
                 licenseUse = "commercial";
             }
-            imageRenderer.addLicenseText(bitmap, String.Format("Licensed to {0} for {1} use.", licenseManager.LicenseeName, licenseUse), fontPixels);
+            imageRenderer.addLicenseText(bitmap, String.Format("Licensed to {0} for {1} use.", imageLicenseServer.LicenseeName, licenseUse), fontPixels);
         }
 
         private void writeImageToDisk()
         {
             String outputDirectory = outputFolder.OnlyText;
             String imageBaseName = imageName.OnlyText;
-            if (String.IsNullOrWhiteSpace(imageBaseName))
-            {
-                throw new Exception("Must specify a name for the image.");
-            }
-
             String extension;
             ImageFormat imageOutputFormat;
             getImageFormat(out extension, out imageOutputFormat);

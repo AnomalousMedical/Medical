@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -10,79 +12,43 @@ namespace Medical.GUI
     {
         public event EventHandler ResolutionChanged;
 
-        private ButtonGroup resolutionMenuGroup;
-        private Button onePointThreeMegapixel;
-        private Button fourMegapixel;
-        private Button sixMegapixel;
-        private Button eightMegapixel;
-        private Button tenMegapixel;
-        private Button twelveMegapixel;
-        private Button custom;
+        private MultiList presets;
 
         public ResolutionMenu()
             : base("Medical.GUI.Render.ResolutionMenu.layout")
         {
-            onePointThreeMegapixel = widget.findWidget("1Point3Megapixel") as Button;
-            fourMegapixel = widget.findWidget("4Megapixel") as Button;
-            sixMegapixel = widget.findWidget("6Megapixel") as Button;
-            eightMegapixel = widget.findWidget("8Megapixel") as Button;
-            tenMegapixel = widget.findWidget("10Megapixel") as Button;
-            twelveMegapixel = widget.findWidget("12Megapixel") as Button;
-            custom = widget.findWidget("Custom") as Button;
+            presets = (MultiList)widget.findWidget("PresetList");
+            String renderPresetsFile = Path.Combine(MedicalConfig.UserDocRoot, "RenderPresets.ini");
+            if (!File.Exists(renderPresetsFile))
+            {
+                presets.addColumn("Preset", presets.Width);
+                presets.addItem("Web", new IntSize2(640, 480));
+                presets.addItem("Presentation", new IntSize2(1024, 768));
+            }
+            else
+            {
 
-            resolutionMenuGroup = new ButtonGroup();
-            resolutionMenuGroup.SelectedButtonChanged += new EventHandler(resolutionMenuGroup_SelectedButtonChanged);
-            resolutionMenuGroup.addButton(onePointThreeMegapixel);
-            resolutionMenuGroup.addButton(fourMegapixel);
-            resolutionMenuGroup.addButton(sixMegapixel);
-            resolutionMenuGroup.addButton(eightMegapixel);
-            resolutionMenuGroup.addButton(tenMegapixel);
-            resolutionMenuGroup.addButton(twelveMegapixel);
-            resolutionMenuGroup.addButton(custom);
-            resolutionMenuGroup.SelectedButton = custom;
+            }
+            presets.ListChangePosition += new MyGUIEvent(presets_ListChangePosition);
+        }
+
+        void presets_ListChangePosition(Widget source, EventArgs e)
+        {
+            uint selectedIndex = presets.getIndexSelected();
+            if (selectedIndex != uint.MaxValue)
+            {
+                IntSize2 size = (IntSize2)presets.getItemDataAt(selectedIndex);
+                ImageWidth = size.Width;
+                ImageHeight = size.Height;
+                if (ResolutionChanged != null)
+                {
+                    ResolutionChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
         }
 
         public int ImageWidth { get; set; }
 
         public int ImageHeight { get; set; }
-
-        void resolutionMenuGroup_SelectedButtonChanged(object sender, EventArgs e)
-        {
-            Button selectedButton = resolutionMenuGroup.SelectedButton;
-            if (selectedButton == onePointThreeMegapixel)
-            {
-                ImageWidth = 1280;
-                ImageHeight = 1024;
-            }
-            else if (selectedButton == fourMegapixel)
-            {
-                ImageWidth = 2448;
-                ImageHeight = 1632;
-            }
-            else if (selectedButton == sixMegapixel)
-            {
-                ImageWidth = 3000;
-                ImageHeight = 2000;
-            }
-            else if (selectedButton == eightMegapixel)
-            {
-                ImageWidth = 3456;
-                ImageHeight = 2304;
-            }
-            else if (selectedButton == tenMegapixel)
-            {
-                ImageWidth = 3648;
-                ImageHeight = 2736;
-            }
-            else if (selectedButton == twelveMegapixel)
-            {
-                ImageWidth = 4000;
-                ImageHeight = 3000;
-            }
-            if (ResolutionChanged != null)
-            {
-                ResolutionChanged.Invoke(this, EventArgs.Empty);
-            }
-        }
     }
 }

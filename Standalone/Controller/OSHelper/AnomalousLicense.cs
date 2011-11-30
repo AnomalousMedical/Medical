@@ -22,7 +22,6 @@ namespace Engine
     /// </summary>
     class AnomalousLicense
     {
-        private const String key = "<RSAKeyValue><Modulus>rwW3rMupoggrRkZHE8h3YVnovrLaP7+t2DJYN9ZK0e7Ytn2XGf9SwKcGfjAGWfYwBi/F+oSrD0Tgb0rFDYj1uyG6yOLtga8DZxPCgcKz8WsbDkMMF+W2NpeNQW/51HYeBnHM7cL+DQDRdhscwUKqBcN87HIwaTeok0CDtknFJ2k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
         private List<long> features = new List<long>();
 
         public AnomalousLicense(byte[] licenseData)
@@ -46,7 +45,7 @@ namespace Engine
                 }
 
                 RSACryptoServiceProvider decrypt = new RSACryptoServiceProvider();
-                decrypt.FromXmlString(key);
+                decrypt.FromXmlString(Medical.MedicalConfig.ServerPublicKey);
                 match = decrypt.VerifyData(realData, new SHA1CryptoServiceProvider(), hashedData);
                 if (match)
                 {

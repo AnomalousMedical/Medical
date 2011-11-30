@@ -69,6 +69,7 @@ namespace Medical
             MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/ProductInfo.aspx?ProductId={0}";
             MedicalConfig.UpdateCheckURL = "https://www.anomalousmedical.com/DRM/UpdateCheck.aspx";
             MedicalConfig.LicenseReaderURL = "https://www.anomalousmedical.com/DRM/LicenseReader.aspx";
+            MedicalConfig.LicenseImageURL = "https://www.anomalousmedical.com/DRM/LicenseImage.aspx";
             
             //User configuration settings
             configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
@@ -110,6 +111,7 @@ namespace Medical
                 ProductPageBaseURL = updates.getValue("ProductPageBaseURL", ProductPageBaseURL);
                 UpdateCheckURL = updates.getValue("UpdateCheckURL", UpdateCheckURL);
                 LicenseReaderURL = updates.getValue("LicenseReaderURL", LicenseReaderURL);
+                LicenseImageURL = updates.getValue("LicenseImageURL", LicenseImageURL);
 
                 pluginConfig.readPlugins(overrideSettings);
 
@@ -344,6 +346,14 @@ namespace Medical
             }
         }
 
+        public static string ServerPublicKey
+        {
+            get
+            {
+                return "<RSAKeyValue><Modulus>rwW3rMupoggrRkZHE8h3YVnovrLaP7+t2DJYN9ZK0e7Ytn2XGf9SwKcGfjAGWfYwBi/F+oSrD0Tgb0rFDYj1uyG6yOLtga8DZxPCgcKz8WsbDkMMF+W2NpeNQW/51HYeBnHM7cL+DQDRdhscwUKqBcN87HIwaTeok0CDtknFJ2k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>";
+            }
+        }
+
         public static String ForgotPasswordURL { get; private set; }
 
         public static String RegisterURL { get; private set; }
@@ -363,5 +373,7 @@ namespace Medical
         public static String LicenseReaderURL { get; private set; }
 
         public static String ImageOutputFolder { get; private set; }
+
+        public static String LicenseImageURL { get; private set; }
     }
 }

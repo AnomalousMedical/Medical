@@ -19,6 +19,7 @@ namespace Medical.GUI
         private LicenseManager licenseManager;
         private AnomalousController bodyAtlasController;
         private DownloadManagerServer downloadServer;
+        private ImageLicenseServer imageLicenseServer;
 
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
@@ -75,6 +76,7 @@ namespace Medical.GUI
 
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
+            imageLicenseServer = new ImageLicenseServer(licenseManager);
 
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
@@ -89,7 +91,7 @@ namespace Medical.GUI
             options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
-            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, standaloneController.App.LicenseManager, standaloneController.GUIManager.NotificationManager);
+            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager.NotificationManager);
             guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);
