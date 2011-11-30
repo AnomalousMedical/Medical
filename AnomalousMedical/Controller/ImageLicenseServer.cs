@@ -31,6 +31,7 @@ namespace Medical
 
         public void licenseImage(ImageLicenseType type, LicenseCallback callback)
         {
+            LicensingImage = true;
             Thread readLicenseThread = new Thread(delegate()
             {
                 bool success = false;
@@ -87,6 +88,7 @@ namespace Medical
                 }
                 ThreadManager.invoke(new Action(delegate()
                 {
+                    LicensingImage = false;
                     callback.Invoke(success, message);
                 }));
             });
@@ -100,5 +102,7 @@ namespace Medical
                 return licenseManager.LicenseeName;
             }
         }
+
+        public bool LicensingImage { get; private set; }
     }
 }

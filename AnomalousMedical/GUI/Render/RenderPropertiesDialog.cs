@@ -298,17 +298,20 @@ namespace Medical.GUI
 
         void closeCurrentImage()
         {
-            if (currentImage != null)
+            if (!imageLicenseServer.LicensingImage)
             {
-                currentImage.Dispose();
-                currentImage = null;
-                toggleRequireImagesWidgets();
-            }
-            if (imageAtlas != null)
-            {
-                previewImage.setItemResource("");
-                imageAtlas.Dispose();
-                imageAtlas = null;
+                if (currentImage != null)
+                {
+                    currentImage.Dispose();
+                    currentImage = null;
+                    toggleRequireImagesWidgets();
+                }
+                if (imageAtlas != null)
+                {
+                    previewImage.setItemResource("");
+                    imageAtlas.Dispose();
+                    imageAtlas = null;
+                }
             }
         }
 
