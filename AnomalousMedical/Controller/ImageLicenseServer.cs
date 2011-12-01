@@ -83,7 +83,7 @@ namespace Medical
                 }
                 catch (Exception e)
                 {
-                    message = String.Format("Could not license image from server because {0}.", e.Message);
+                    message = String.Format("Could not license image from server.\nReason: {0}.", e.Message);
                     Log.Error(message);
                 }
                 ThreadManager.invoke(new Action(delegate()

@@ -15,7 +15,9 @@ namespace Medical.GUI
     {
         private NumericEdit width;
         private NumericEdit height;
+        private Button sizeButton;
 
+        private Button outputBrowse;
         private Edit imageName;
         private Edit outputFolder;
         private ComboBox imageFormat;
@@ -28,6 +30,7 @@ namespace Medical.GUI
         private Button commercialButton;
         private CheckButton agreeButton;
         private Button saveButton;
+        private Button renderButton;
 
         private ResolutionMenu resolutionMenu;
         private SceneViewController sceneViewController;
@@ -56,7 +59,7 @@ namespace Medical.GUI
             width.ValueChanged += new MyGUIEvent(renderSizeChanged);
             height.ValueChanged += new MyGUIEvent(renderSizeChanged);
 
-            Button renderButton = window.findWidget("RenderingTab/Render") as Button;
+            renderButton = window.findWidget("RenderingTab/Render") as Button;
             renderButton.MouseButtonClick += new MyGUIEvent(renderButton_MouseButtonClick);
 
             previewImage = (StaticImage)window.findWidget("PreviewImage");
@@ -66,7 +69,7 @@ namespace Medical.GUI
             fullSizeButton = (Button)window.findWidget("FullSize");
             fullSizeButton.MouseButtonClick += new MyGUIEvent(fullSizeButton_MouseButtonClick);
 
-            Button sizeButton = window.findWidget("RenderingTab/SizeButton") as Button;
+            sizeButton = window.findWidget("RenderingTab/SizeButton") as Button;
             sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
 
             //ResolutionMenu
@@ -79,7 +82,7 @@ namespace Medical.GUI
 
             outputFolder = (Edit)window.findWidget("OutputFolder");
             outputFolder.Caption = MedicalConfig.ImageOutputFolder;
-            Button outputBrowse = (Button)window.findWidget("OutputBrowse");
+            outputBrowse = (Button)window.findWidget("OutputBrowse");
             outputBrowse.MouseButtonClick += new MyGUIEvent(outputBrowse_MouseButtonClick);
 
             imageFormat = (ComboBox)window.findWidget("ImageFormat");
@@ -247,8 +250,10 @@ namespace Medical.GUI
                     {
                         type = ImageLicenseType.Commercial;
                     }
+                    setInterfaceEnabled(false);
                     imageLicenseServer.licenseImage(type, delegate(bool success, String message)
                     {
+                        setInterfaceEnabled(true);
                         try
                         {
                             if (success)
@@ -257,7 +262,7 @@ namespace Medical.GUI
                             }
                             else
                             {
-                                MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+                                MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                             }
                         }
                         catch (Exception ex)
@@ -294,6 +299,23 @@ namespace Medical.GUI
         void toggleRequireImagesWidgets()
         {
             saveButton.Enabled = fullSizeButton.Enabled = currentImage != null;
+        }
+
+        void setInterfaceEnabled(bool enabled)
+        {
+            width.Edit.Enabled = enabled;
+            height.Edit.Enabled = enabled;
+            sizeButton.Enabled = enabled;
+            outputBrowse.Enabled = enabled;
+            imageName.Enabled = enabled;
+            outputFolder.Enabled = enabled;
+            imageFormat.Enabled = enabled;
+            fullSizeButton.Enabled = enabled;
+            personalButton.Enabled = enabled;
+            commercialButton.Enabled = enabled;
+            agreeButton.Enabled = enabled;
+            saveButton.Enabled = enabled;
+            renderButton.Enabled = enabled;
         }
 
         void closeCurrentImage()
