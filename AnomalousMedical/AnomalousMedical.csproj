@@ -134,6 +134,7 @@
     <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
     <Compile Include="Controller\ImageLicenseServer.cs" />
+    <Compile Include="GUI\Render\LicensePopup.cs" />
     <Compile Include="GUI\Render\OpenImageNotification.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
@@ -147,6 +148,9 @@
     <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
+    <EmbeddedResource Include="GUI\Render\LicensePopup.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />

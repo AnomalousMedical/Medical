@@ -84,14 +84,13 @@ namespace Medical.GUI
             chooseSceneDialog = new ChooseSceneDialog(guiManager);
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
 
-            //standaloneController.AnatomyController.AllowIndividualSelection = standaloneController.App.LicenseManager.allowFeature(1);
             anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController);
             guiManager.addManagedDialog(anatomyFinder);
 
             options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
-            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager.NotificationManager);
+            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager);
             guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);

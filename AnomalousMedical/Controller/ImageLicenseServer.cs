@@ -79,6 +79,10 @@ namespace Medical
                                 }
                             }
                         }
+                        else
+                        {
+                            message = "Error reading data from server.";
+                        }
                     }
                 }
                 catch (Exception e)
@@ -95,6 +99,59 @@ namespace Medical
             readLicenseThread.Start();
         }
 
+        public void getLicenseFromServer(ImageLicenseType licenseType, LicenseCallback callback)
+        {
+            ReadingLicenseText = true;
+            Thread readLicenseThread = new Thread(delegate()
+            {
+                bool success = false;
+                String message = "";
+                try
+                {
+                    String postData = String.Format(CultureInfo.InvariantCulture, "ImageLicenseId={0}", (int)licenseType);
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.LicenseReaderURL));
+                    request.Timeout = 60000;
+                    request.Method = "POST";
+                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                    request.ContentType = "application/x-www-form-urlencoded";
+
+                    request.ContentLength = byteArray.Length;
+                    using (Stream dataStream = request.GetRequestStream())
+                    {
+                        dataStream.Write(byteArray, 0, byteArray.Length);
+                    }
+
+                    // Get the response.
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                        {
+                            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+                            {
+                                success = true;
+                                message = streamReader.ReadToEnd();
+                            }
+                        }
+                        else
+                        {
+                            message = "Error reading license from server";
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    message = String.Format("Could not read license data from server.\nReason: {0}.", e.Message);
+                    Log.Error(message);
+                }
+                ThreadManager.invoke(new Action(delegate()
+                {
+                    ReadingLicenseText = false;
+                    callback.Invoke(success, message);
+                }));
+            });
+            readLicenseThread.Start();
+        }
+
         public String LicenseeName
         {
             get
@@ -104,5 +161,7 @@ namespace Medical
         }
 
         public bool LicensingImage { get; private set; }
+
+        public bool ReadingLicenseText { get; private set; }
     }
 }
