@@ -7,7 +7,7 @@
         <Widget type="Button" skin="Button" position="10 172 76 26" name="AddButton">
             <Property key="Widget_Caption" value="Add"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="93 172 76 26">
+        <Widget type="Button" skin="Button" position="93 172 76 26" name="RemoveButton">
             <Property key="Widget_Caption" value="Remove"/>
         </Widget>
         <Widget type="MultiList" skin="MultiList" position="5 18 170 150" name="PresetList"/>

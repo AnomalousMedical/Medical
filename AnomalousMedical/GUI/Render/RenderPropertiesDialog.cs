@@ -76,7 +76,7 @@ namespace Medical.GUI
             sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
 
             //ResolutionMenu
-            resolutionMenu = new ResolutionMenu();
+            resolutionMenu = new ResolutionMenu(this);
             resolutionMenu.ResolutionChanged += new EventHandler(resolutionMenu_ResolutionChanged);
 
             //Image save properties

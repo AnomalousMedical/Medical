@@ -4,7 +4,7 @@
         <Property key="Widget_Caption" value="Rendering"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
-        <Widget type="Button" skin="ButtonDown" position="74 249 16 16" name="RenderingTab/SizeButton">
+        <Widget type="Button" skin="Button" position="147 276 66 22" name="RenderingTab/SizeButton">
             <Property key="Widget_Caption" value="Size"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="5 264 33 13">

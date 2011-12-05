@@ -136,6 +136,7 @@
     <Compile Include="Controller\ImageLicenseServer.cs" />
     <Compile Include="GUI\Render\LicensePopup.cs" />
     <Compile Include="GUI\Render\OpenImageNotification.cs" />
+    <Compile Include="GUI\Render\RenderPreset.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
