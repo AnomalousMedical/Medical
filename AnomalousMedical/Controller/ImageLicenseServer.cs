@@ -20,7 +20,8 @@ namespace Medical
 
     public class ImageLicenseServer
     {
-        public delegate void LicenseCallback(bool success, String message);
+        public delegate void LicenseCallback(bool success, bool promptStoreVisit, String message);
+        public delegate void LicenseTextCallback(bool success, String message);
 
         private LicenseManager licenseManager;
 
@@ -35,6 +36,7 @@ namespace Medical
             Thread readLicenseThread = new Thread(delegate()
             {
                 bool success = false;
+                bool promptStoreVisit = false;
                 String message = "";
                 try
                 {
@@ -71,6 +73,7 @@ namespace Medical
                                     {
                                         success = binaryReader.ReadBoolean();
                                         message = binaryReader.ReadString();
+                                        promptStoreVisit = true;
                                     }
                                 }
                                 else
@@ -93,13 +96,13 @@ namespace Medical
                 ThreadManager.invoke(new Action(delegate()
                 {
                     LicensingImage = false;
-                    callback.Invoke(success, message);
+                    callback.Invoke(success, promptStoreVisit, message);
                 }));
             });
             readLicenseThread.Start();
         }
 
-        public void getLicenseFromServer(ImageLicenseType licenseType, LicenseCallback callback)
+        public void getLicenseFromServer(ImageLicenseType licenseType, LicenseTextCallback callback)
         {
             ReadingLicenseText = true;
             Thread readLicenseThread = new Thread(delegate()

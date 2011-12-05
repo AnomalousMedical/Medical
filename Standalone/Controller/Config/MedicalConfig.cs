@@ -70,6 +70,7 @@ namespace Medical
             MedicalConfig.UpdateCheckURL = "https://www.anomalousmedical.com/DRM/UpdateCheck.aspx";
             MedicalConfig.LicenseReaderURL = "https://www.anomalousmedical.com/DRM/LicenseReader.aspx";
             MedicalConfig.LicenseImageURL = "https://www.anomalousmedical.com/DRM/LicenseImage.aspx";
+            MedicalConfig.ImageStoreURL = "http://www.anomalousmedical.com/Images.aspx";
             
             //User configuration settings
             configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
@@ -112,6 +113,7 @@ namespace Medical
                 UpdateCheckURL = updates.getValue("UpdateCheckURL", UpdateCheckURL);
                 LicenseReaderURL = updates.getValue("LicenseReaderURL", LicenseReaderURL);
                 LicenseImageURL = updates.getValue("LicenseImageURL", LicenseImageURL);
+                ImageStoreURL = updates.getValue("ImageStoreURL", ImageStoreURL);
 
                 pluginConfig.readPlugins(overrideSettings);
 
@@ -375,5 +377,7 @@ namespace Medical
         public static String ImageOutputFolder { get; private set; }
 
         public static String LicenseImageURL { get; private set; }
+
+        public static String ImageStoreURL { get; private set; }
     }
 }

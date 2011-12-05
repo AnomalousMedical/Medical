@@ -280,7 +280,7 @@ namespace Medical.GUI
                         type = ImageLicenseType.Commercial;
                     }
                     setInterfaceEnabled(false);
-                    imageLicenseServer.licenseImage(type, delegate(bool success, String message)
+                    imageLicenseServer.licenseImage(type, delegate(bool success, bool promptStoreVisit, String message)
                     {
                         setInterfaceEnabled(true);
                         try
@@ -291,7 +291,20 @@ namespace Medical.GUI
                             }
                             else
                             {
-                                MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                                if (promptStoreVisit)
+                                {
+                                    MessageBox.show(String.Format("{0}\nWould you like to purchase some now?", message), "License Error", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconInfo, delegate(MessageBoxStyle result)
+                                    {
+                                        if (result == MessageBoxStyle.Yes)
+                                        {
+                                            OtherProcessManager.openUrlInBrowser(MedicalConfig.ImageStoreURL);
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                                }
                             }
                         }
                         catch (Exception ex)
