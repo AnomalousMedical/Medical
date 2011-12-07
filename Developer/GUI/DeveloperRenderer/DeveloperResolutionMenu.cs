@@ -13,7 +13,7 @@ namespace Developer.GUI
 {
     class DeveloperResolutionMenu : PopupContainer
     {
-        static String RenderPresetsFile = Path.Combine(MedicalConfig.UserDocRoot, "RenderPresets.ini");
+        static String RenderPresetsFile = Path.Combine(MedicalConfig.UserDocRoot, "DeveloperRenderPresets.ini");
         static XmlSaver xmlSaver = new XmlSaver();
 
         public event EventHandler ResolutionChanged;
@@ -34,22 +34,22 @@ namespace Developer.GUI
 
             presets = (MultiList)widget.findWidget("PresetList");
             presets.addColumn("Preset", presets.Width);
-            //if (!File.Exists(RenderPresetsFile))
-            //{
-            //    presets.addItem("Web", new RenderPreset("Web", 640, 480));
-            //    presets.addItem("Presentation", new RenderPreset("Presentation", 1024, 768));
-            //}
-            //else
-            //{
-            //    using (XmlTextReader xmlReader = new XmlTextReader(RenderPresetsFile))
-            //    {
-            //        SaveableLinkedList<RenderPreset> container = (SaveableLinkedList<RenderPreset>)xmlSaver.restoreObject(xmlReader);
-            //        foreach (RenderPreset preset in container)
-            //        {
-            //            presets.addItem(preset.Name, preset);
-            //        }
-            //    }
-            //}
+            if (!File.Exists(RenderPresetsFile))
+            {
+                presets.addItem("Web", new RenderPreset("Web", 640, 480));
+                presets.addItem("Presentation", new RenderPreset("Presentation", 1024, 768));
+            }
+            else
+            {
+                using (XmlTextReader xmlReader = new XmlTextReader(RenderPresetsFile))
+                {
+                    SaveableLinkedList<RenderPreset> container = (SaveableLinkedList<RenderPreset>)xmlSaver.restoreObject(xmlReader);
+                    foreach (RenderPreset preset in container)
+                    {
+                        presets.addItem(preset.Name, preset);
+                    }
+                }
+            }
             presets.ListChangePosition += new MyGUIEvent(presets_ListChangePosition);
         }
 
@@ -61,32 +61,32 @@ namespace Developer.GUI
 
         void presets_ListChangePosition(Widget source, EventArgs e)
         {
-            //uint selectedIndex = presets.getIndexSelected();
-            //if (selectedIndex != uint.MaxValue)
-            //{
-            //    RenderPreset preset = (RenderPreset)presets.getItemDataAt(selectedIndex);
-            //    ImageWidth = preset.Width;
-            //    ImageHeight = preset.Height;
-            //    if (ResolutionChanged != null)
-            //    {
-            //        ResolutionChanged.Invoke(this, EventArgs.Empty);
-            //    }
-            //}
+            uint selectedIndex = presets.getIndexSelected();
+            if (selectedIndex != uint.MaxValue)
+            {
+                RenderPreset preset = (RenderPreset)presets.getItemDataAt(selectedIndex);
+                ImageWidth = preset.Width;
+                ImageHeight = preset.Height;
+                if (ResolutionChanged != null)
+                {
+                    ResolutionChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
         }
 
         private void savePresets()
         {
-            //SaveableLinkedList<RenderPreset> container = new SaveableLinkedList<RenderPreset>();
-            //uint count = presets.getItemCount();
-            //for (uint i = 0; i < count; ++i)
-            //{
-            //    container.AddLast((RenderPreset)presets.getItemDataAt(i));
-            //}
-            //using (XmlTextWriter xmlWriter = new XmlTextWriter(RenderPresetsFile, Encoding.Default))
-            //{
-            //    xmlWriter.Formatting = Formatting.Indented;
-            //    xmlSaver.saveObject(container, xmlWriter);
-            //}
+            SaveableLinkedList<RenderPreset> container = new SaveableLinkedList<RenderPreset>();
+            uint count = presets.getItemCount();
+            for (uint i = 0; i < count; ++i)
+            {
+                container.AddLast((RenderPreset)presets.getItemDataAt(i));
+            }
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(RenderPresetsFile, Encoding.Default))
+            {
+                xmlWriter.Formatting = Formatting.Indented;
+                xmlSaver.saveObject(container, xmlWriter);
+            }
         }
 
         void removeButton_MouseButtonClick(Widget source, EventArgs e)
@@ -100,11 +100,11 @@ namespace Developer.GUI
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //InputBox.GetInput("Add Preset", "Enter a name for this preset.", true, delegate(String result, ref string errorPrompt)
-            //{
-            //    presets.addItem(result, new RenderPreset(result, renderDialog.RenderWidth, renderDialog.RenderHeight));
-            //    return true;
-            //});
+            InputBox.GetInput("Add Preset", "Enter a name for this preset.", true, delegate(String result, ref string errorPrompt)
+            {
+                presets.addItem(result, new RenderPreset(result, renderDialog.RenderWidth, renderDialog.RenderHeight));
+                return true;
+            });
         }
 
         public int ImageWidth { get; set; }
