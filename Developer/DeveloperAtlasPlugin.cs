@@ -51,7 +51,7 @@ namespace Developer
             pluginPublisher = new PluginPublisher(pluginPublishController);
             guiManager.addManagedDialog(pluginPublisher);
 
-            developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, guiManager);
             guiManager.addManagedDialog(developerRenderer);
 
             //Task Controller

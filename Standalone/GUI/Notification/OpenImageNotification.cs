@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    class OpenImageNotification : AbstractNotification
+    public class OpenImageNotification : AbstractNotification
     {
         private String filename;
 

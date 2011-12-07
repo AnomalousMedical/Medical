@@ -310,6 +310,7 @@
     <Compile Include="GUI\Notification\Notification.cs" />
     <Compile Include="GUI\Notification\NotificationGUI.cs" />
     <Compile Include="GUI\Notification\NotificationGUIManager.cs" />
+    <Compile Include="GUI\Notification\OpenImageNotification.cs" />
     <Compile Include="GUI\Notification\RestartNotification.cs" />
     <Compile Include="GUI\Notification\StartTaskNotification.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
