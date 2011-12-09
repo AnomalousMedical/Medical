@@ -282,8 +282,7 @@ namespace Medical
 
         public void openHelpPage()
         {
-            //Open Website to the help page for this user.
-            OtherProcessManager.openUrlInBrowser(MedicalConfig.getHelpURL(app.LicenseManager.User));
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.HelpURL);
         }
 
         public void exit()

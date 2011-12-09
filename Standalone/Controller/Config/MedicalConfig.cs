@@ -24,7 +24,6 @@ namespace Medical
         private static String sceneDirectory;
 
         private static String updateURL;
-        private static String helpURL;
         private static String userAnomalousFolder;
         private static String commonAnomalousFolder;
 
@@ -58,7 +57,7 @@ namespace Medical
 
             //Configure website urls
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
-            MedicalConfig.helpURL = "http://www.AnomalousMedical.com/HelpIndex.aspx?user={0}";
+            MedicalConfig.HelpURL = "http://www.anomalousmedical.com/LearningCenter.aspx";
             MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
             MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
             MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
@@ -102,7 +101,7 @@ namespace Medical
                 ConfigSection updates = overrideSettings.createOrRetrieveConfigSection("Updates");
                 updateURL = updates.getValue("UpdateURL", updateURL);
                 LicenseServerURL = updates.getValue("LicenseServerURL", LicenseServerURL);
-                helpURL = updates.getValue("HelpURL", helpURL);
+                HelpURL = updates.getValue("HelpURL", HelpURL);
                 ForgotPasswordURL = updates.getValue("ForgotPasswordURL", ForgotPasswordURL);
                 RegisterURL = updates.getValue("RegisterURL", RegisterURL);
                 PluginInfoURL = updates.getValue("PluginInfoURL", PluginInfoURL);
@@ -225,10 +224,7 @@ namespace Medical
 
         public static String LicenseServerURL { get; private set; }
 
-        public static String getHelpURL(String username)
-        {
-            return String.Format(helpURL, username);
-        }
+        public static String HelpURL { get; private set; }
 
 #if ALLOW_OVERRIDE
         public static String WorkingResourceDirectory
