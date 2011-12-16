@@ -402,13 +402,13 @@ namespace Medical
             float gridStepHoriz = (originalRight * 2) / imageCountWidth;
             float gridStepVert = (originalTop * 2) / imageCountHeight;
 
-            int imageStepHoriz = backBufferWidth;// width / imageCountWidth;
-            int imageStepVert = backBufferHeight;//height / imageCountHeight;
+            int imageStepHoriz = backBufferWidth;
+            int imageStepVert = backBufferHeight;
 
             int finalWidth = width / aaMode;
             int finalHeight = height / aaMode;
-            int imageStepHorizSmall = backBufferWidth / aaMode;// finalWidth / imageCountWidth;
-            int imageStepVertSmall = backBufferHeight / aaMode;// finalHeight / imageCountHeight;
+            int imageStepHorizSmall = finalWidth / imageCountWidth;
+            int imageStepVertSmall = finalHeight / imageCountHeight;
 
             float left, right, top, bottom;
             //gridSize += 1; //Account for any extra space not covered by the grid size.
