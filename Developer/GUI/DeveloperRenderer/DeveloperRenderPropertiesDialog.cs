@@ -156,7 +156,7 @@ namespace Developer.GUI
                 String extension;
                 ImageFormat imageOutputFormat;
                 getImageFormat(out extension, out imageOutputFormat);
-                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, currentImage, false, extension, imageOutputFormat, true);
+                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, new Bitmap(currentImage), false, extension, imageOutputFormat, true);
             }
         }
 
