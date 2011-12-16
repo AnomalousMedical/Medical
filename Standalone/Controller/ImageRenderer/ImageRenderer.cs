@@ -287,16 +287,18 @@ namespace Medical
 	                {
 	                    RenderTexture renderTexture = pixelBuffer.Value.getRenderTarget();
 	                    Camera camera = sceneManager.SceneManager.createCamera("__PictureCamera");
-	                    camera.setAutoAspectRatio(cloneCamera.getAutoAspectRatio());
 	                    camera.setLodBias(cloneCamera.getLodBias());
 	                    camera.setUseRenderingDistance(cloneCamera.getUseRenderingDistance());
 	                    camera.setNearClipDistance(cloneCamera.getNearClipDistance());
 	                    camera.setFarClipDistance(cloneCamera.getFarClipDistance());
 	                    camera.setPolygonMode(cloneCamera.getPolygonMode());
 	                    camera.setRenderingDistance(cloneCamera.getRenderingDistance());
-	                    camera.setAspectRatio(cloneCamera.getAspectRatio());
 	                    camera.setProjectionType(cloneCamera.getProjectionType());
 	                    camera.setFOVy(cloneCamera.getFOVy());
+
+                        camera.setAutoAspectRatio(false);
+                        camera.setAspectRatio((float)finalWidth / finalHeight);
+
 	                    SceneNode node = sceneManager.SceneManager.createSceneNode("__PictureCameraNode");
 	                    node.attachObject(camera);
 	                    node.setPosition(position);
@@ -316,7 +318,7 @@ namespace Medical
 	                    Bitmap bitmap = null;
                         if (doGridRender)
 	                    {
-                            bitmap = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, cloneCamera, transparentBG, backColor);
+                            bitmap = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor);
 	                    }
 	                    else
 	                    {
@@ -388,12 +390,12 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, Camera originalCamera, bool transparentBG, Engine.Color bgColor)
+        private Bitmap gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor)
         {
             renderTexture.getViewport(0).setOverlaysEnabled(false);
 
             float originalLeft, originalRight, originalTop, originalBottom;
-            originalCamera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
+            camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
 
             int imageCountWidth = width % backBufferWidth == 0 ? width / backBufferWidth : width / backBufferWidth + 1;
             int imageCountHeight = height % backBufferHeight == 0 ? height / backBufferHeight : height / backBufferHeight + 1;
@@ -411,7 +413,6 @@ namespace Medical
             int imageStepVertSmall = finalHeight / imageCountHeight;
 
             float left, right, top, bottom;
-            //gridSize += 1; //Account for any extra space not covered by the grid size.
             int totalSS = imageCountWidth * imageCountHeight;
 
             String updateString = "Rendering piece {0} of " + totalSS;
