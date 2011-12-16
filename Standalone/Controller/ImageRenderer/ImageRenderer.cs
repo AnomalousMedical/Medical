@@ -197,64 +197,80 @@ namespace Medical
 
         private Bitmap createRender(int width, int height, int gridSize, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
         {
-            OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
-            if (sceneManager != null)
-            {
-                using (TexturePtr texture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)(width / gridSize), (uint)(height / gridSize), 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0))
-                {
-                    using (HardwarePixelBufferSharedPtr pixelBuffer = texture.Value.getBuffer())
-                    {
-                        RenderTexture renderTexture = pixelBuffer.Value.getRenderTarget();
-                        Camera camera = sceneManager.SceneManager.createCamera("__PictureCamera");
-                        camera.setAutoAspectRatio(cloneCamera.getAutoAspectRatio());
-                        camera.setLodBias(cloneCamera.getLodBias());
-                        camera.setUseRenderingDistance(cloneCamera.getUseRenderingDistance());
-                        camera.setNearClipDistance(cloneCamera.getNearClipDistance());
-                        camera.setFarClipDistance(cloneCamera.getFarClipDistance());
-                        camera.setPolygonMode(cloneCamera.getPolygonMode());
-                        camera.setRenderingDistance(cloneCamera.getRenderingDistance());
-                        camera.setAspectRatio(cloneCamera.getAspectRatio());
-                        camera.setProjectionType(cloneCamera.getProjectionType());
-                        camera.setFOVy(cloneCamera.getFOVy());
-                        SceneNode node = sceneManager.SceneManager.createSceneNode("__PictureCameraNode");
-                        node.attachObject(camera);
-                        node.setPosition(position);
-                        sceneManager.SceneManager.getRootSceneNode().addChild(node);
-                        camera.lookAt(lookAt);
-                        Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
-                        node.attachObject(light);
-                        Viewport viewport = renderTexture.addViewport(camera);
-                        viewport.setBackgroundColor(backColor);
-
-                        //Update background position (if applicable)
-                        if (background != null)
-                        {
-                            background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
-                        }
-
-                        Bitmap bitmap = null;
-                        if (gridSize <= 1)
-                        {
-                            bitmap = simpleRender(width, height, aaMode, showWatermark, transparentBG, backColor, renderTexture);
-                        }
-                        else
-                        {
-                            bitmap = gridRender(width, height, gridSize, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor);
-                        }
-
-                        renderTexture.destroyViewport(viewport);
-                        sceneManager.SceneManager.getRootSceneNode().removeChild(node);
-                        sceneManager.SceneManager.destroyLight(light);
-                        sceneManager.SceneManager.destroySceneNode(node);
-                        sceneManager.SceneManager.destroyCamera(camera);
-
-                        TextureManager.getInstance().remove(texture);
-
-                        return bitmap;
-                    }
-                }
-            }
-            return null;
+			try
+			{
+	            OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
+	            if (sceneManager != null)
+	            {
+	                using (TexturePtr texture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)(width / gridSize), (uint)(height / gridSize), 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0))
+	                {
+	                    using (HardwarePixelBufferSharedPtr pixelBuffer = texture.Value.getBuffer())
+	                    {
+	                        RenderTexture renderTexture = pixelBuffer.Value.getRenderTarget();
+	                        Camera camera = sceneManager.SceneManager.createCamera("__PictureCamera");
+	                        camera.setAutoAspectRatio(cloneCamera.getAutoAspectRatio());
+	                        camera.setLodBias(cloneCamera.getLodBias());
+	                        camera.setUseRenderingDistance(cloneCamera.getUseRenderingDistance());
+	                        camera.setNearClipDistance(cloneCamera.getNearClipDistance());
+	                        camera.setFarClipDistance(cloneCamera.getFarClipDistance());
+	                        camera.setPolygonMode(cloneCamera.getPolygonMode());
+	                        camera.setRenderingDistance(cloneCamera.getRenderingDistance());
+	                        camera.setAspectRatio(cloneCamera.getAspectRatio());
+	                        camera.setProjectionType(cloneCamera.getProjectionType());
+	                        camera.setFOVy(cloneCamera.getFOVy());
+	                        SceneNode node = sceneManager.SceneManager.createSceneNode("__PictureCameraNode");
+	                        node.attachObject(camera);
+	                        node.setPosition(position);
+	                        sceneManager.SceneManager.getRootSceneNode().addChild(node);
+	                        camera.lookAt(lookAt);
+	                        Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
+	                        node.attachObject(light);
+	                        Viewport viewport = renderTexture.addViewport(camera);
+	                        viewport.setBackgroundColor(backColor);
+	
+	                        //Update background position (if applicable)
+	                        if (background != null)
+	                        {
+	                            background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
+	                        }
+	
+	                        Bitmap bitmap = null;
+	                        if (gridSize <= 1)
+	                        {
+	                            bitmap = simpleRender(width, height, aaMode, showWatermark, transparentBG, backColor, renderTexture);
+	                        }
+	                        else
+	                        {
+	                            bitmap = gridRender(width, height, gridSize, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor);
+	                        }
+	
+	                        renderTexture.destroyViewport(viewport);
+	                        sceneManager.SceneManager.getRootSceneNode().removeChild(node);
+	                        sceneManager.SceneManager.destroyLight(light);
+	                        sceneManager.SceneManager.destroySceneNode(node);
+	                        sceneManager.SceneManager.destroyCamera(camera);
+	
+	                        TextureManager.getInstance().remove(texture);
+	
+	                        return bitmap;
+	                    }
+	                }
+	            }
+	            return null;
+			}
+			catch(OgreException ex)
+			{
+				Log.Error("Error rendering image {0}", ex.Message);
+				Bitmap errorBitmap = new Bitmap(width, height);
+				using(Graphics g = Graphics.FromImage(errorBitmap))
+				{
+					using(Brush brush = new SolidBrush(System.Drawing.Color.White))
+					{
+						g.FillRectangle(brush, 0, 0, width, height);
+					}
+				}
+				return errorBitmap;
+			}
         }
 
         private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
