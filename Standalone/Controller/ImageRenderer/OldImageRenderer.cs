@@ -11,7 +11,7 @@ using Engine;
 using Logging;
 using Medical.Controller;
 
-namespace Medical
+namespace Medical.Old
 {
     class ImageException : Exception
     {
@@ -80,8 +80,8 @@ namespace Medical
                 }
 
                 //Size (with AA)
-                //int width = properties.Width * properties.AntiAliasingMode;
-                //int height = properties.Height * properties.AntiAliasingMode;
+                int width = properties.Width * properties.AntiAliasingMode;
+                int height = properties.Height * properties.AntiAliasingMode;
 
                 //Camera position
                 Vector3 cameraPosition = sceneWindow.Translation;
@@ -116,7 +116,7 @@ namespace Medical
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
-                bitmap = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt);
+                bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt);
 
                 //Turn off layer override
                 if (properties.OverrideLayers)
@@ -195,124 +195,66 @@ namespace Medical
             }
         }
 
-        //Acutal rendering
-        int maxBackBufferSize = 2048;
-
-        private TexturePtr createOgreTexture(int finalWidth, int finalHeight, int aaMode, out bool gridRender, out int backBufferWidth, out int backBufferHeight)
+        private Bitmap createRender(int width, int height, int gridSize, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
         {
-            int largeWidth = finalWidth * aaMode;
-            int largeHeight = finalHeight * aaMode;
-            TexturePtr backBufferTexture;
-
-            if (largeWidth <= maxBackBufferSize && largeHeight <= maxBackBufferSize)
+            OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
+            if (sceneManager != null)
             {
-                //Try to create a texture at the large size specified
-                try
+                using (TexturePtr texture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)(width / gridSize), (uint)(height / gridSize), 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0))
                 {
-                    backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)largeWidth, (uint)largeHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
-                    backBufferWidth = largeWidth;
-                    backBufferHeight = largeHeight;
-                    gridRender = false;
+                    using (HardwarePixelBufferSharedPtr pixelBuffer = texture.Value.getBuffer())
+                    {
+                        RenderTexture renderTexture = pixelBuffer.Value.getRenderTarget();
+                        Camera camera = sceneManager.SceneManager.createCamera("__PictureCamera");
+                        camera.setAutoAspectRatio(cloneCamera.getAutoAspectRatio());
+                        camera.setLodBias(cloneCamera.getLodBias());
+                        camera.setUseRenderingDistance(cloneCamera.getUseRenderingDistance());
+                        camera.setNearClipDistance(cloneCamera.getNearClipDistance());
+                        camera.setFarClipDistance(cloneCamera.getFarClipDistance());
+                        camera.setPolygonMode(cloneCamera.getPolygonMode());
+                        camera.setRenderingDistance(cloneCamera.getRenderingDistance());
+                        camera.setAspectRatio(cloneCamera.getAspectRatio());
+                        camera.setProjectionType(cloneCamera.getProjectionType());
+                        camera.setFOVy(cloneCamera.getFOVy());
+                        SceneNode node = sceneManager.SceneManager.createSceneNode("__PictureCameraNode");
+                        node.attachObject(camera);
+                        node.setPosition(position);
+                        sceneManager.SceneManager.getRootSceneNode().addChild(node);
+                        camera.lookAt(lookAt);
+                        Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
+                        node.attachObject(light);
+                        Viewport viewport = renderTexture.addViewport(camera);
+                        viewport.setBackgroundColor(backColor);
+
+                        //Update background position (if applicable)
+                        if (background != null)
+                        {
+                            background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
+                        }
+
+                        Bitmap bitmap = null;
+                        if (gridSize <= 1)
+                        {
+                            bitmap = simpleRender(width, height, aaMode, showWatermark, transparentBG, backColor, renderTexture);
+                        }
+                        else
+                        {
+                            bitmap = gridRender(width, height, gridSize, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor);
+                        }
+
+                        renderTexture.destroyViewport(viewport);
+                        sceneManager.SceneManager.getRootSceneNode().removeChild(node);
+                        sceneManager.SceneManager.destroyLight(light);
+                        sceneManager.SceneManager.destroySceneNode(node);
+                        sceneManager.SceneManager.destroyCamera(camera);
+
+                        TextureManager.getInstance().remove(texture);
+
+                        return bitmap;
+                    }
                 }
-                catch (OgreException)
-                {
-                    gridRender = true;
-                    createPow2BackBuffer(largeWidth, largeHeight, out backBufferWidth, out backBufferHeight, out backBufferTexture);
-                }
             }
-            else
-            {
-                gridRender = true;
-                createPow2BackBuffer(largeWidth, largeHeight, out backBufferWidth, out backBufferHeight, out backBufferTexture);
-            }
-            return backBufferTexture;
-        }
-
-        private void createPow2BackBuffer(int largeWidth, int largeHeight, out int backBufferWidth, out int backBufferHeight, out TexturePtr backBufferTexture)
-        {
-            //The texture creation failed. We will have to use grid rendering with power of two textures.
-            int backBufferPow2Size = 2;
-            while (backBufferPow2Size <= maxBackBufferSize && backBufferPow2Size <= largeWidth && backBufferPow2Size <= largeHeight)
-            {
-                backBufferPow2Size *= 2;
-            }
-            backBufferPow2Size /= 2; //We go one extra step to divide back down
-            try
-            {
-                backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)backBufferPow2Size, (uint)backBufferPow2Size, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
-                backBufferWidth = backBufferPow2Size;
-                backBufferHeight = backBufferPow2Size;
-            }
-            catch (OgreException)
-            {
-                throw new ImageRenderException(String.Format("Could not create back buffer in ogre for this image. Render size is {0}, {1}.", largeWidth, largeHeight));
-            }
-        }
-
-        private Bitmap createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
-        {
-	        OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
-	        if (sceneManager != null)
-	        {
-                bool doGridRender;
-                int backBufferWidth;
-                int backBufferHeight;
-
-                using (TexturePtr texture = createOgreTexture(finalWidth, finalHeight, aaMode, out doGridRender, out backBufferWidth, out backBufferHeight))
-	            {
-	                using (HardwarePixelBufferSharedPtr pixelBuffer = texture.Value.getBuffer())
-	                {
-	                    RenderTexture renderTexture = pixelBuffer.Value.getRenderTarget();
-	                    Camera camera = sceneManager.SceneManager.createCamera("__PictureCamera");
-	                    camera.setAutoAspectRatio(cloneCamera.getAutoAspectRatio());
-	                    camera.setLodBias(cloneCamera.getLodBias());
-	                    camera.setUseRenderingDistance(cloneCamera.getUseRenderingDistance());
-	                    camera.setNearClipDistance(cloneCamera.getNearClipDistance());
-	                    camera.setFarClipDistance(cloneCamera.getFarClipDistance());
-	                    camera.setPolygonMode(cloneCamera.getPolygonMode());
-	                    camera.setRenderingDistance(cloneCamera.getRenderingDistance());
-	                    camera.setAspectRatio(cloneCamera.getAspectRatio());
-	                    camera.setProjectionType(cloneCamera.getProjectionType());
-	                    camera.setFOVy(cloneCamera.getFOVy());
-	                    SceneNode node = sceneManager.SceneManager.createSceneNode("__PictureCameraNode");
-	                    node.attachObject(camera);
-	                    node.setPosition(position);
-	                    sceneManager.SceneManager.getRootSceneNode().addChild(node);
-	                    camera.lookAt(lookAt);
-	                    Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
-	                    node.attachObject(light);
-	                    Viewport viewport = renderTexture.addViewport(camera);
-	                    viewport.setBackgroundColor(backColor);
-	
-	                    //Update background position (if applicable)
-	                    if (background != null)
-	                    {
-	                        background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
-	                    }
-	
-	                    Bitmap bitmap = null;
-                        if (doGridRender)
-	                    {
-                            bitmap = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, cloneCamera, transparentBG, backColor);
-	                    }
-	                    else
-	                    {
-                            bitmap = simpleRender(backBufferWidth, backBufferHeight, aaMode, showWatermark, transparentBG, backColor, renderTexture);
-	                    }
-	
-	                    renderTexture.destroyViewport(viewport);
-	                    sceneManager.SceneManager.getRootSceneNode().removeChild(node);
-	                    sceneManager.SceneManager.destroyLight(light);
-	                    sceneManager.SceneManager.destroySceneNode(node);
-	                    sceneManager.SceneManager.destroyCamera(camera);
-	
-	                    TextureManager.getInstance().remove(texture);
-	
-	                    return bitmap;
-	                }
-	            }
-	        }
-	        return null;
+            return null;
         }
 
         private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
@@ -365,31 +307,27 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, Camera originalCamera, bool transparentBG, Engine.Color bgColor)
+        private Bitmap gridRender(int width, int height, int gridSize, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor)
         {
             renderTexture.getViewport(0).setOverlaysEnabled(false);
 
             float originalLeft, originalRight, originalTop, originalBottom;
-            originalCamera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
+            camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
 
-            int imageCountWidth = width % backBufferWidth == 0 ? width / backBufferWidth : width / backBufferWidth + 1;
-            int imageCountHeight = height % backBufferHeight == 0 ? height / backBufferHeight : height / backBufferHeight + 1;
+            float gridStepHoriz = (originalRight * 2) / gridSize;
+            float gridStepVert = (originalTop * 2) / gridSize;
 
-            //these two lines are likely what is distorting the image
-            float gridStepHoriz = (originalRight * 2) / imageCountWidth;
-            float gridStepVert = (originalTop * 2) / imageCountHeight;
-
-            int imageStepHoriz = backBufferWidth;// width / imageCountWidth;
-            int imageStepVert = backBufferHeight;//height / imageCountHeight;
+            int imageStepHoriz = width / gridSize;
+            int imageStepVert = height / gridSize;
 
             int finalWidth = width / aaMode;
             int finalHeight = height / aaMode;
-            int imageStepHorizSmall = backBufferWidth / aaMode;// finalWidth / imageCountWidth;
-            int imageStepVertSmall = backBufferHeight / aaMode;// finalHeight / imageCountHeight;
+            int imageStepHorizSmall = finalWidth / gridSize;
+            int imageStepVertSmall = finalHeight / gridSize;
 
             float left, right, top, bottom;
-            //gridSize += 1; //Account for any extra space not covered by the grid size.
-            int totalSS = imageCountWidth * imageCountHeight;
+            gridSize += 1; //Account for any extra space not covered by the grid size.
+            int totalSS = gridSize * gridSize;
 
             String updateString = "Rendering piece {0} of " + totalSS;
 
@@ -414,8 +352,8 @@ namespace Medical
                     }
                     for (int i = 0; i < totalSS; ++i)
                     {
-                        int y = i / imageCountWidth;
-                        int x = i - y * imageCountWidth;
+                        int y = i / gridSize;
+                        int x = i - y * gridSize;
 
                         left = originalLeft + gridStepHoriz * x;
                         right = left + gridStepHoriz;
