@@ -434,6 +434,7 @@ namespace Medical
                         scaledPiecewiseBitmap = new Bitmap(imageStepHorizSmall, imageStepVertSmall, bitmapFormat);
                         scalarRectangle = new Rectangle(0, 0, scaledPiecewiseBitmap.Width, scaledPiecewiseBitmap.Height);
                         scalerGraphics = Graphics.FromImage(scaledPiecewiseBitmap);
+                        scalerGraphics.CompositingMode = CompositingMode.SourceCopy;
                     }
                     for (int i = 0; i < totalSS; ++i)
                     {
