@@ -30,6 +30,7 @@ namespace Developer.GUI
         private ComboBox aaCombo;
         private CheckButton showBackground;
         private CheckButton showWatermark;
+        private CheckButton transparent;
 
         private Button saveButton;
         private Button renderButton;
@@ -99,6 +100,9 @@ namespace Developer.GUI
 
             showWatermark = new CheckButton((Button)window.findWidget("ShowWatermark"));
             showWatermark.Checked = true;
+
+            transparent = new CheckButton((Button)window.findWidget("Transparent"));
+            transparent.Checked = false;
 
             saveButton = (Button)window.findWidget("Save");
             saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
@@ -173,6 +177,7 @@ namespace Developer.GUI
                 }
                 imageProperties.ShowBackground = showBackground.Checked;
                 imageProperties.ShowWatermark = showWatermark.Checked;
+                imageProperties.TransparentBackground = transparent.Checked;
                 currentImage = imageRenderer.renderImage(imageProperties);
                 if (currentImage != null)
                 {

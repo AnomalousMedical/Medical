@@ -418,7 +418,11 @@ namespace Medical
             String updateString = "Rendering piece {0} of " + totalSS;
 
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
-            System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+            System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+            if (transparentBG)
+            {
+                bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+            }
 
             Rectangle destRect = new Rectangle();
             Rectangle srcRect = new Rectangle(0, 0, imageStepHoriz, imageStepVert);
