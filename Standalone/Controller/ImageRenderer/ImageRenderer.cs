@@ -116,7 +116,30 @@ namespace Medical
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
-                bitmap = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt);
+                try
+                {
+                    bitmap = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt);
+                }
+                catch (ImageRenderException e)
+                {
+                    Log.Error("Could not render image. Returning placeholder image. Reason: {0}.", e.Message);
+                    bitmap = new Bitmap(properties.Width, properties.Height);
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        using (Brush brush = new SolidBrush(System.Drawing.Color.Black))
+                        {
+                            g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
+                        }
+                        int fontSize = bitmap.Width / 5;
+                        using (Font font = new Font("Tahoma", fontSize, GraphicsUnit.Pixel))
+                        {
+                            String text = "Error";
+                            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                            SizeF textSize = g.MeasureString(text, font, bitmap.Width);
+                            g.DrawString(text, font, Brushes.Red, new RectangleF(0, 0, textSize.Width, textSize.Height));
+                        }
+                    }
+                }
 
                 //Turn off layer override
                 if (properties.OverrideLayers)
