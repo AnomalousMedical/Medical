@@ -57,7 +57,7 @@ namespace Medical
 
             //Configure website urls
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
-            MedicalConfig.HelpURL = "http://www.anomalousmedical.com/LearningCenter.aspx";
+            MedicalConfig.HelpURL = "http://www.anomalousmedical.com/Help.aspx";
             MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
             MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
             MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
