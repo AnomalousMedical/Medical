@@ -271,8 +271,10 @@
     <Compile Include="GUI\DistortionWizards\Notes\ThumbnailPickerGUI.cs" />
     <Compile Include="GUI\DistortionWizards\Notes\ThumbnailPickerInfo.cs" />
     <Compile Include="GUI\DistortionWizards\Preset\LeftDiscClockFaceGUIPrototype.cs" />
+    <Compile Include="GUI\DistortionWizards\Preset\LeftDiscClockFaceMriGUIPrototype.cs" />
     <Compile Include="GUI\DistortionWizards\Preset\PresetStateGUI.cs" />
     <Compile Include="GUI\DistortionWizards\Preset\RightDiscClockFaceGUIPrototype.cs" />
+    <Compile Include="GUI\DistortionWizards\Preset\RightDiscClockFaceMriGUIPrototype.cs" />
     <Compile Include="GUI\DistortionWizards\Profile\HeightComboSlider.cs" />
     <Compile Include="GUI\DistortionWizards\Profile\HeightControl.cs" />
     <Compile Include="GUI\DistortionWizards\Profile\ProfileDistortionGUI.cs" />

@@ -31,6 +31,8 @@ namespace Medical.GUI
             standaloneController.TimelineGUIFactory.addPrototype(new RightCondylarGrowthGUIPrototype(timelineWizard));
             standaloneController.TimelineGUIFactory.addPrototype(new LeftDiscClockFaceGUIPrototype(timelineWizard));
             standaloneController.TimelineGUIFactory.addPrototype(new RightDiscClockFaceGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new LeftDiscClockFaceMriGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RightDiscClockFaceMriGUIPrototype(timelineWizard));
             standaloneController.TimelineGUIFactory.addPrototype(new ProfileDistortionGUIPrototype(timelineWizard));
             standaloneController.TimelineGUIFactory.addPrototype(new TeethAdaptationGUIPrototype(timelineWizard));
             standaloneController.TimelineGUIFactory.addPrototype(new TeethHeightAdaptationGUIPrototype(timelineWizard));
