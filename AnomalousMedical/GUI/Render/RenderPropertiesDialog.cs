@@ -391,7 +391,7 @@ namespace Medical.GUI
             {
                 licenseUse = "commercial";
             }
-            imageRenderer.addLicenseText(bitmap, String.Format("Licensed to {0} for {1} use.", imageLicenseServer.LicenseeName, licenseUse), fontPixels);
+            imageRenderer.addLicenseText(bitmap, String.Format("© Anomalous Medical {2}\nLicensed to {0} for {1} use.", imageLicenseServer.LicenseeName, licenseUse, DateTime.Now.Year.ToString()), fontPixels);
         }
 
         private void saveImage()
