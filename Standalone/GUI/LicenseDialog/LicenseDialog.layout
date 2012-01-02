@@ -5,8 +5,8 @@
             <Property key="Edit_Static" value="true"/>
             <Property key="Widget_Caption" value="You need to sign in to use $(PROGRAM_NAME)."/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 57 32 15">
-            <Property key="Widget_Caption" value="User"/>
+        <Widget type="StaticText" skin="StaticText" position="4 57 123 15">
+            <Property key="Widget_Caption" value="User Name or Email"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="6 72 467 22" name="UserText"/>
         <Widget type="Button" skin="Button" position="6 199 82 25" align="Left Bottom" name="ActivateButton">
