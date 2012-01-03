@@ -8,7 +8,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class BooleanDataField : DataField
+    public class BooleanDataField : DataField
     {
         public BooleanDataField(String name)
             :base(name)
@@ -16,9 +16,9 @@ namespace Medical
             StartingValue = false;
         }
 
-        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
+        public override void createControl(DataControlFactory factory)
         {
-            return new CheckBoxDataControl(parentWidget, this);
+            factory.addField(this);
         }
 
         [Editable]

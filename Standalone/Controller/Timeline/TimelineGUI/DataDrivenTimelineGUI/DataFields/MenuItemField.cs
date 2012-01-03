@@ -55,9 +55,9 @@ namespace Medical
             return navState;
         }
 
-        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
+        public override void createControl(DataControlFactory factory)
         {
-            return new MenuButtonDataControl(parentWidget, gui, this);
+            factory.addField(this);
         }
 
         public override string Type

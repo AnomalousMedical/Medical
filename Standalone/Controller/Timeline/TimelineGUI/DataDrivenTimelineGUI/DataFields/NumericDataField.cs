@@ -9,7 +9,7 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    class NumericDataField : DataField
+    public class NumericDataField : DataField
     {
         public NumericDataField(String name)
             :base(name)
@@ -20,9 +20,9 @@ namespace Medical
             StartingValue = 0;
         }
 
-        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
+        public override void createControl(DataControlFactory factory)
         {
-            return new NumericEditDataControl(parentWidget, this);
+            factory.addField(this);
         }
 
         [Editable]

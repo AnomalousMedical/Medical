@@ -8,7 +8,7 @@ using Engine.Editing;
 
 namespace Medical
 {
-    class PlayExampleDataField : DataField
+    public class PlayExampleDataField : DataField
     {
         private String timeline;
 
@@ -18,9 +18,9 @@ namespace Medical
 
         }
 
-        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
+        public override void createControl(DataControlFactory factory)
         {
-            return new PlayExampleButton(parentWidget, gui, this);
+            factory.addField(this);
         }
 
         [Editable]

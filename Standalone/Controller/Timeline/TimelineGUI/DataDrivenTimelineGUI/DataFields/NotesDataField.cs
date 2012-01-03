@@ -8,7 +8,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class NotesDataField : DataField
+    public class NotesDataField : DataField
     {
         public NotesDataField(String name)
             :base(name)
@@ -17,9 +17,9 @@ namespace Medical
             NumberOfLines = 10;
         }
 
-        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
+        public override void createControl(DataControlFactory factory)
         {
-            return new WordWrapDataControl(parentWidget, this);
+            factory.addField(this);
         }
 
         [Editable]

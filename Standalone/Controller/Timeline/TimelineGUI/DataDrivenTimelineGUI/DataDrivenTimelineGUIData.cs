@@ -22,9 +22,9 @@ namespace Medical
             AllowSubmit = true;
         }
 
-        public DataControl createControls(Widget parent, DataDrivenTimelineGUI gui)
+        public void createControls(DataControlFactory factory)
         {
-            return dataFields.createControls(parent, gui);
+            dataFields.createControls(factory);
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)

@@ -35,16 +35,14 @@ namespace Medical
             }
         }
 
-        public DataControl createControls(Widget parent, DataDrivenTimelineGUI gui)
+        public void createControls(DataControlFactory factory)
         {
-            ColumnLayoutDataControl layoutControl = new ColumnLayoutDataControl(5);
-            layoutControl.SuppressLayout = true;
+            factory.pushColumnLayout();
             foreach (DataField dataField in dataFields)
             {
-                layoutControl.addControl(dataField.createControl(parent, gui));
+                dataField.createControl(factory);
             }
-            layoutControl.SuppressLayout = false;
-            return layoutControl;
+            factory.popColumnLayout();
         }
 
         protected DataFieldCollection(LoadInfo info)

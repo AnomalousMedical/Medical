@@ -20,7 +20,7 @@ namespace Medical
             this.Name = name;
         }
 
-        public abstract DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui);
+        public abstract void createControl(DataControlFactory factory);
 
         public abstract String Type { get; }
 

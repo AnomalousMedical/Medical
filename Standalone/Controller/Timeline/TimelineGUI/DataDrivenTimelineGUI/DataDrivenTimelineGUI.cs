@@ -107,7 +107,9 @@ namespace Medical
                 startPos.y = previousButton.Bottom + BUTTON_TO_PANEL_PAD;
             }
 
-            topLevelDataControl = GUIData.createControls(widget, this);
+            MyGUIDataControlFactory myGuiFactory = new MyGUIDataControlFactory(widget, this);
+            GUIData.createControls(myGuiFactory);
+            topLevelDataControl = myGuiFactory.TopLevelControl;
             topLevelDataControl.displayData(guiSection);
             topLevelDataControl.WorkingSize = new Size2(widget.Width - WIDTH_ADJUSTMENT, 10000);
             topLevelDataControl.Location = startPos;

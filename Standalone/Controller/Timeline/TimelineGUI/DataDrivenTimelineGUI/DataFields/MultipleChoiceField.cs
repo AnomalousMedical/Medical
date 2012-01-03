@@ -20,9 +20,9 @@ namespace Medical
             StartingOptionIndex = 0;
         }
 
-        public override DataControl createControl(Widget parentWidget, DataDrivenTimelineGUI gui)
+        public override void createControl(DataControlFactory factory)
         {
-            return new RadioButtonDataControl(parentWidget, this);
+            factory.addField(this);
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
