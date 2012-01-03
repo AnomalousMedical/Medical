@@ -381,10 +381,10 @@ namespace Medical.GUI
 
         private void writeLicenseToImage(Bitmap bitmap)
         {
-            int fontPixels = (int)(currentImage.Height * 0.0097f);
-            if (fontPixels < 6)
+            int fontPixels = (int)(currentImage.Height * 0.012f);
+            if (fontPixels < 8)
             {
-                fontPixels = 6;
+                fontPixels = 8;
             }
             String licenseUse = "personal";
             if (licenseTypeGroup.SelectedButton == commercialButton)
