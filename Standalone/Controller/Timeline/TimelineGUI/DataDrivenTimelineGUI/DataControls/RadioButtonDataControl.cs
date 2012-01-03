@@ -49,7 +49,10 @@ namespace Medical
 
         public override void captureData(DataDrivenExamSection examSection)
         {
-            examSection.setValue(valueName, optionGrid.SelectedItem.Caption);
+            if (optionGrid.Count > 0)
+            {
+                examSection.setValue(valueName, optionGrid.SelectedItem.Caption);
+            }
         }
 
         public override void displayData(DataDrivenExamSection examSection)
