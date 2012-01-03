@@ -73,6 +73,7 @@ namespace Medical
         {
             button.setPosition((int)Location.x, (int)Location.y);
             button.setSize((int)WorkingSize.Width, (int)WorkingSize.Height);
+            Height = button.Height;
         }
 
         public override Size2 DesiredSize

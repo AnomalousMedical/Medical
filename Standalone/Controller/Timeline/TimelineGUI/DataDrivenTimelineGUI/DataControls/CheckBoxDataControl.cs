@@ -53,6 +53,7 @@ namespace Medical
         {
             checkButton.Button.setPosition((int)Location.x, (int)Location.y);
             checkButton.Button.setSize((int)WorkingSize.Width, checkButton.Button.Height);
+            Height = checkButton.Button.Height;
         }
 
         public override Size2 DesiredSize

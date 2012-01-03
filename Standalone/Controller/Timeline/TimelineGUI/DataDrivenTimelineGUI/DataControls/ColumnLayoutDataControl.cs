@@ -79,8 +79,9 @@ namespace Medical
                 child.WorkingSize = childSize;
                 child.Location = currentLocation;
                 child.layout();
-                currentLocation.y += childSize.Height + padding;
+                currentLocation.y += child.Height + padding;
             }
+            Height = (int)(currentLocation.y - Location.y);
         }
 
         public override Size2 DesiredSize

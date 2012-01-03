@@ -23,6 +23,8 @@ namespace Medical
 
             optionScrollView = (ScrollView)parentWidget.createWidgetT("ScrollView", "ScrollViewEmpty", 0, 0, 10, 15, Align.Default, "");
             optionScrollView.CanvasAlign = Align.Left | Align.Top;
+            optionScrollView.VisibleHScroll = false;
+            optionScrollView.VisibleVScroll = false;
             optionGrid = new ButtonGrid(optionScrollView, new ButtonGridTextAdjustedGridLayout(25));
             optionGrid.ButtonSkin = "RadioBox";
             optionGrid.ShowGroupCaptions = false;
@@ -84,8 +86,9 @@ namespace Medical
             text.setSize((int)WorkingSize.Width, text.Height);
 
             optionScrollView.setPosition((int)Location.x, (int)(Location.y + text.Height));
-            optionScrollView.setSize((int)WorkingSize.Width, (int)WorkingSize.Height - text.Height);
             optionGrid.resizeAndLayout((int)WorkingSize.Width);
+            optionScrollView.setSize((int)WorkingSize.Width, (int)optionScrollView.CanvasSize.Height);
+            Height = optionScrollView.Height + text.Height;
         }
 
         public override Size2 DesiredSize

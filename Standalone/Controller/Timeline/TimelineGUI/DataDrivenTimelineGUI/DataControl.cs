@@ -12,5 +12,7 @@ namespace Medical
         public abstract void captureData(DataDrivenExamSection examSection);
 
         public abstract void displayData(DataDrivenExamSection examSection);
+
+        public int Height { get; protected set; }
     }
 }

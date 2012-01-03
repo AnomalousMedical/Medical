@@ -62,6 +62,7 @@ namespace Medical
             text.setSize((int)WorkingSize.Width, text.Height);
             edit.setPosition((int)Location.x, (int)text.Bottom);
             edit.setSize((int)WorkingSize.Width, (int)WorkingSize.Height - text.Height);
+            Height = (int)WorkingSize.Height;
         }
 
         public override Size2 DesiredSize

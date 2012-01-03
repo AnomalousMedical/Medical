@@ -112,9 +112,8 @@ namespace Medical
             topLevelDataControl.WorkingSize = new Size2(widget.Width - WIDTH_ADJUSTMENT, 10000);
             topLevelDataControl.Location = startPos;
             topLevelDataControl.layout();
-            Size2 desiredSize = topLevelDataControl.DesiredSize;
+            Size2 desiredSize = new Size2(widget.Width - WIDTH_ADJUSTMENT, topLevelDataControl.Height);
             desiredSize.Height += startPos.y;
-            desiredSize.Width = widget.Width - WIDTH_ADJUSTMENT;
             ((ScrollView)widget).CanvasSize = desiredSize;
         }
 
