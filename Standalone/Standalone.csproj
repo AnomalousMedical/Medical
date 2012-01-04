@@ -112,6 +112,7 @@
     <Compile Include="Controller\Exam\Analysis\AnalysisDisplayProvider.cs" />
     <Compile Include="Controller\Exam\Analysis\RawDataAnalyzer.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExam.cs" />
+    <Compile Include="Controller\Exam\DataDrivenExam\Analysis\DataDrivenExamTextAnalyzer.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExamController.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExamSection.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\DataDrivenExamValueProperty.cs" />

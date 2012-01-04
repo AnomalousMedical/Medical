@@ -10,13 +10,8 @@ namespace Medical
 {
     public class DataDrivenExam : DataDrivenExamSection, Exam
     {
-        private static ExamAnalyzerCollection analyzers;
-
-        static DataDrivenExam()
-        {
-            analyzers = new ExamAnalyzerCollection();
-            analyzers.addAnalyzer(RawDataAnalyzer.Instance);
-        }
+        [DoNotSave]
+        private ExamAnalyzerCollection analyzers;
 
         [DoNotSave]
         private DataDrivenExam previousExam;
@@ -27,7 +22,7 @@ namespace Medical
         public DataDrivenExam(String prettyName)
             :base(prettyName)
         {
-            
+            configureExamAnalyzers();
         }
 
         public ExamAnalyzerCollection Analyzers
@@ -57,10 +52,19 @@ namespace Medical
             }
         }
 
+        private void configureExamAnalyzers()
+        {
+            analyzers = new ExamAnalyzerCollection();
+            analyzers.addAnalyzer(RawDataAnalyzer.Instance);
+            analyzers.addAnalyzer(new DataDrivenExamTextAnalyzer("Test dd analyzer"));
+        }
+
         protected DataDrivenExam(LoadInfo info)
             :base(info)
         {
             previousExam = info.GetValue<DataDrivenExam>("ExamReserved_Previous", previousExam);
+            Date = DateTime.FromBinary(info.GetInt64("ExamReserved_Date", 0));
+            configureExamAnalyzers();
         }
 
         public override void getInfo(SaveInfo info)
@@ -70,6 +74,7 @@ namespace Medical
             {
                 info.AddValue("ExamReserved_Previous", previousExam);
             }
+            info.AddValue("ExamReserved_Date", Date.ToBinary());
         }
     }
 }
