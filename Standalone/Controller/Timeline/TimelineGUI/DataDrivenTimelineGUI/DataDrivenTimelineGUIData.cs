@@ -53,6 +53,9 @@ namespace Medical
         [Editable]
         public String CancelTimeline { get; set; }
 
+        [Editable]
+        public String PrettyName { get; set; }
+
         protected DataDrivenTimelineGUIData(LoadInfo info)
             :base(info)
         {

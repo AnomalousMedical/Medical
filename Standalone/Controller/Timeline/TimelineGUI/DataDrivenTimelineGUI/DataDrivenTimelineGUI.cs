@@ -143,7 +143,14 @@ namespace Medical
                 }
                 else
                 {
-                    return TimelineFile != null ? TimelineFile : "Not Saved Yet";
+                    if (!String.IsNullOrEmpty(GUIData.PrettyName))
+                    {
+                        return GUIData.PrettyName;
+                    }
+                    else
+                    {
+                        return TimelineFile != null ? TimelineFile : "Not Saved Yet";
+                    }
                 }
             }
         }
