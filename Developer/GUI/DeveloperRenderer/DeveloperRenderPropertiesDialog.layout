@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="116 49 218 567" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="117 49 218 588" layer="Overlapped">
         <Property key="Widget_Caption" value="Developer Renderer"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
@@ -50,7 +50,7 @@
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="5 315 178 22" name="ImageName"/>
-        <Widget type="Button" skin="Button" position="5 521 84 26" name="Save">
+        <Widget type="Button" skin="Button" position="5 541 84 26" align="Left Bottom" name="Save">
             <Property key="Widget_Caption" value="Save"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="5 378 111 14">
@@ -62,7 +62,7 @@
             <Property key="ComboBox_AddItem" value="JPEG (.jpg)"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="92 521 123 26" name="OpenOutputFolder">
+        <Widget type="Button" skin="Button" position="92 541 123 26" align="Left Bottom" name="OpenOutputFolder">
             <Property key="Widget_Caption" value="Open Output Folder"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="5 417 158 14">
@@ -83,6 +83,9 @@
         </Widget>
         <Widget type="Button" skin="CheckBox" position="5 499 131 21" name="Transparent">
             <Property key="Widget_Caption" value="Transparent"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="5 520 100 21" name="Copyright">
+            <Property key="Widget_Caption" value="Copyright"/>
         </Widget>
     </Widget>
 </MyGUI>

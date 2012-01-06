@@ -31,6 +31,7 @@ namespace Developer.GUI
         private CheckButton showBackground;
         private CheckButton showWatermark;
         private CheckButton transparent;
+        private CheckButton copyright;
 
         private Button saveButton;
         private Button renderButton;
@@ -103,6 +104,9 @@ namespace Developer.GUI
 
             transparent = new CheckButton((Button)window.findWidget("Transparent"));
             transparent.Checked = false;
+
+            copyright = new CheckButton((Button)window.findWidget("Copyright"));
+            copyright.Checked = false;
 
             saveButton = (Button)window.findWidget("Save");
             saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
@@ -181,6 +185,11 @@ namespace Developer.GUI
                 currentImage = imageRenderer.renderImage(imageProperties);
                 if (currentImage != null)
                 {
+                    if (copyright.Checked)
+                    {
+                        writeCopyrightText(currentImage);
+                    }
+
                     int previewWidth = previewMaxWidth;
                     int previewHeight = previewMaxHeight;
                     if (currentImage.Width > currentImage.Height)
@@ -303,6 +312,16 @@ namespace Developer.GUI
                 imageAtlas.Dispose();
                 imageAtlas = null;
             }
+        }
+
+        private void writeCopyrightText(Bitmap bitmap)
+        {
+            int fontPixels = (int)(currentImage.Height * 0.012f);
+            if (fontPixels < 8)
+            {
+                fontPixels = 8;
+            }
+            imageRenderer.addLicenseText(bitmap, String.Format("© Anomalous Medical {0}", DateTime.Now.Year.ToString()), fontPixels);
         }
 
         private void saveImage()
