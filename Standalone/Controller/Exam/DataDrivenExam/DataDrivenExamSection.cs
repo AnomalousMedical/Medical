@@ -53,6 +53,19 @@ namespace Medical
             return section;
         }
 
+        public DataDrivenExamSection getSectionNoCreate(String name)
+        {
+            DataDrivenExamSection section = null;
+            if (sections.TryGetValue(name, out section))
+            {
+                return section;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public string PrettyName
         {
             get
