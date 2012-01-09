@@ -112,6 +112,8 @@
     <Compile Include="GUI\TextAnalysisEditor\EndParagraphEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\StartParagraphEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\TextAnalysisEditor.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\TextVariableEditor.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\TextVariableTextBody.cs" />
     <Compile Include="GUI\TextAnalysisEditor\WriteEditor.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ShowTextProperties.cs" />
@@ -170,6 +172,7 @@
     <EmbeddedResource Include="GUI\TextAnalysisEditor\EndParagraphEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\StartParagraphEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\TextAnalysisEditor.layout" />
+    <EmbeddedResource Include="GUI\TextAnalysisEditor\TextVariableEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\WriteEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\MusclePositionActionProperties.layout" />

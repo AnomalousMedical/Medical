@@ -7,8 +7,8 @@
         <Widget type="Button" skin="Button" position="170 2 61 26" align="Right Top" name="Remove">
             <Property key="Widget_Caption" value="Remove"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="3 104 74 26" align="Left Bottom">
-            <Property key="Widget_Caption" value="Add Value"/>
+        <Widget type="Button" skin="Button" position="29 104 89 26" align="Left Bottom" name="AddVariable">
+            <Property key="Widget_Caption" value="Add Variable"/>
         </Widget>
         <Widget type="Edit" skin="WordWrapWhite" position="2 30 226 70" align="HStretch Top" name="Text">
             <Property key="Edit_MaxTextLength" value="250000"/>

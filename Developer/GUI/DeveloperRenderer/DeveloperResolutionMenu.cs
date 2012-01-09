@@ -41,13 +41,26 @@ namespace Developer.GUI
             }
             else
             {
-                using (XmlTextReader xmlReader = new XmlTextReader(RenderPresetsFile))
+                try
                 {
-                    SaveableLinkedList<RenderPreset> container = (SaveableLinkedList<RenderPreset>)xmlSaver.restoreObject(xmlReader);
-                    foreach (RenderPreset preset in container)
+                    using (XmlTextReader xmlReader = new XmlTextReader(RenderPresetsFile))
                     {
-                        presets.addItem(preset.Name, preset);
+                        RenderPresetCollection container = (RenderPresetCollection)xmlSaver.restoreObject(xmlReader);
+                        foreach (RenderPreset preset in container)
+                        {
+                            presets.addItem(preset.Name, preset);
+                        }
                     }
+                }
+                catch (Exception)
+                {
+                    try
+                    {
+                        File.Delete(RenderPresetsFile);
+                    }
+                    catch (Exception) { }
+                    presets.addItem("Web", new RenderPreset("Web", 640, 480));
+                    presets.addItem("Presentation", new RenderPreset("Presentation", 1024, 768));
                 }
             }
             presets.ListChangePosition += new MyGUIEvent(presets_ListChangePosition);
@@ -76,7 +89,7 @@ namespace Developer.GUI
 
         private void savePresets()
         {
-            SaveableLinkedList<RenderPreset> container = new SaveableLinkedList<RenderPreset>();
+            RenderPresetCollection container = new RenderPresetCollection();
             uint count = presets.getItemCount();
             for (uint i = 0; i < count; ++i)
             {

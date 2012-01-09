@@ -7,11 +7,14 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class WriteEditor : AnalysisEditorComponent
+    class WriteEditor : AnalysisEditorComponent, TextVariableTextBody
     {
         private Edit text;
         private int extraHeight;
         private int lastTextHeight;
+        private int variableLeft;
+
+        private List<TextVariableEditor> variables = new List<TextVariableEditor>();
 
         public WriteEditor(AnalysisEditorComponentParent parent)
             : base("Medical.GUI.TextAnalysisEditor.WriteEditor.layout", parent)
@@ -19,7 +22,11 @@ namespace Medical.GUI
             text = (Edit)widget.findWidget("Text");
             text.EventEditTextChange += new MyGUIEvent(text_EventEditTextChange);
 
-            extraHeight = widget.Height - text.Height;
+            Button addVariable = (Button)widget.findWidget("AddVariable");
+            addVariable.MouseButtonClick += new MyGUIEvent(addVariable_MouseButtonClick);
+            variableLeft = addVariable.Left;
+
+            extraHeight = widget.Height - text.Bottom;
         }
 
         public override void layout(int left, int top, int width)
@@ -28,15 +35,27 @@ namespace Medical.GUI
             int newTextHeight = TextHeight;
             text.setSize(text.Width, newTextHeight);
             lastTextHeight = newTextHeight;
-            widget.setSize(width, text.Height + extraHeight);
+
+            int currentTop = text.Bottom;
+            int variableWidth = width - variableLeft;
+            foreach (TextVariableEditor variable in variables)
+            {
+                variable.layout(variableLeft, currentTop, variableWidth);
+                currentTop += variable.Height;
+            }
+
+            widget.setSize(width, currentTop + extraHeight);
         }
 
-        void text_EventEditTextChange(Widget source, EventArgs e)
+        public void addVariable(TextVariableEditor variable)
         {
-            if (TextHeight != lastTextHeight)
-            {
-                requestLayout();
-            }
+            variables.Add(variable);
+            requestLayout();
+        }
+
+        public void insertVariableString(string variableText)
+        {
+            text.addText(variableText);
         }
 
         public int TextHeight
@@ -50,6 +69,19 @@ namespace Medical.GUI
                 }
                 return height;
             }
+        }
+
+        void text_EventEditTextChange(Widget source, EventArgs e)
+        {
+            if (TextHeight != lastTextHeight)
+            {
+                requestLayout();
+            }
+        }
+
+        void addVariable_MouseButtonClick(Widget source, EventArgs e)
+        {
+            addVariable(new TextVariableEditor(this, Widget));
         }
     }
 }

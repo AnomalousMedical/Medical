@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 
-namespace Developer.GUI
+namespace Medical
 {
-    class RenderPreset : Saveable
+    public class RenderPreset : Saveable
     {
         public RenderPreset()
         {

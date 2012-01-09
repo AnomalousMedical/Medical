@@ -147,6 +147,8 @@
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderException.cs" />
     <Compile Include="Controller\ImageRenderer\OldImageRenderer.cs" />
+    <Compile Include="Controller\ImageRenderer\RenderPreset.cs" />
+    <Compile Include="Controller\ImageRenderer\RenderPresetCollection.cs" />
     <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />
     <Compile Include="Controller\MedicalStates\PatientData.cs" />
     <Compile Include="Controller\MovementSequence\EmbeddedMovementSequenceInfo.cs" />
@@ -500,7 +502,6 @@
     <Compile Include="Utility\DocumentBuilder.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
-    <Compile Include="Utility\SaveableLinkedList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
