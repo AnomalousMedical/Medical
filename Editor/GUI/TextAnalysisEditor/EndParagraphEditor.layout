@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomPanel2" position="188 133 243 29" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="0 0 92 16">
+            <Property key="Widget_Caption" value="End Paragraph"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="176 2 66 26" align="Right Top" name="Remove">
+            <Property key="Widget_Caption" value="Remove"/>
+        </Widget>
+    </Widget>
+</MyGUI>

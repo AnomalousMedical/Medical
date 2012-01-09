@@ -36,6 +36,15 @@ namespace Medical
             analysis.addAction(new StartParagraph());
             analysis.addAction(new Write("This data field here '{0}' should be blank because we are making it fail on purpose.", new DataRetriever("Fail", "Fail")));
             analysis.addAction(new EndParagraph());
+
+            ActionBlock ifStatementBlock = new ActionBlock();
+            ifStatementBlock.addAction(new StartParagraph());
+            ifStatementBlock.addAction(new Write("Number1 Had a value greater than 4"));
+            ifStatementBlock.addAction(new EndParagraph());
+            GreaterThanTest gtTest = new GreaterThanTest(ifStatementBlock, null);
+            gtTest.Data = new DataRetriever("Number1", "Menu Item", "Numbers");
+            gtTest.TestValue = 4;
+            analysis.addAction(gtTest);
         }
 
         public void analyzeExam(Exam exam, AnalysisDisplayProvider display)

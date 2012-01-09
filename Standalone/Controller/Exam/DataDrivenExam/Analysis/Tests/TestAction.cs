@@ -7,27 +7,31 @@ namespace Medical.Controller.Exam
 {
     public abstract class TestAction : AnalysisAction
     {
-        private AnalysisAction successAction;
-        private AnalysisAction failureAction;
-
         public TestAction(AnalysisAction successAction, AnalysisAction failureAction)
         {
-            this.successAction = successAction;
-            this.failureAction = failureAction;
+            this.SuccessAction = successAction;
+            this.FailureAction = failureAction;
         }
 
         public void execute(DataDrivenExam exam, DocumentBuilder docBuilder)
         {
             if (performTest(exam))
             {
-                successAction.execute(exam, docBuilder);
+                if (SuccessAction != null)
+                {
+                    SuccessAction.execute(exam, docBuilder);
+                }
             }
-            else
+            else if(FailureAction != null)
             {
-                failureAction.execute(exam, docBuilder);
+                FailureAction.execute(exam, docBuilder);
             }
         }
 
         protected abstract bool performTest(DataDrivenExam exam);
+
+        public AnalysisAction SuccessAction { get; set; }
+
+        public AnalysisAction FailureAction { get; set; }
     }
 }

@@ -106,6 +106,13 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\ActionBlockEditor.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponent.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponentParent.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\EndParagraphEditor.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\StartParagraphEditor.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\TextAnalysisEditor.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\WriteEditor.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ShowTextProperties.cs" />
     <Compile Include="GUI\Timeline\OpenPropManager.cs" />
@@ -159,6 +166,11 @@
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
+    <EmbeddedResource Include="GUI\TextAnalysisEditor\ActionBlockEditor.layout" />
+    <EmbeddedResource Include="GUI\TextAnalysisEditor\EndParagraphEditor.layout" />
+    <EmbeddedResource Include="GUI\TextAnalysisEditor\StartParagraphEditor.layout" />
+    <EmbeddedResource Include="GUI\TextAnalysisEditor\TextAnalysisEditor.layout" />
+    <EmbeddedResource Include="GUI\TextAnalysisEditor\WriteEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\MusclePositionActionProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ShowTextProperties.layout" />

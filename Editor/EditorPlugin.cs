@@ -23,7 +23,8 @@ namespace Medical
         private DiscControl discControl;
         private GridPropertiesDialog gridProperties;
         private DDAtlasPluginEditor pluginEditor;
-        private AdvancedMandibleMovementDialog advancedMandibleMovement; 
+        private AdvancedMandibleMovementDialog advancedMandibleMovement;
+        private TextAnalysisEditor textAnalysisEditor;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -53,6 +54,7 @@ namespace Medical
             aspectRatioTask.Dispose();
             gridProperties.Dispose();
             pluginEditor.Dispose();
+            textAnalysisEditor.Dispose();
         }
 
         public void loadGUIResources()
@@ -117,6 +119,9 @@ namespace Medical
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(advancedMandibleMovement);
 
+            textAnalysisEditor = new TextAnalysisEditor();
+            guiManager.addManagedDialog(textAnalysisEditor);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -130,6 +135,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "GridIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "MovementIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);

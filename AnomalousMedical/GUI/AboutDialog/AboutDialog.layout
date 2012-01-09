@@ -7,7 +7,7 @@
         <Widget type="StaticImage" skin="StaticImage" position="0 0 350 165">
             <Property key="Image_Resource" value="AboutImage/Image"/>
             <Widget type="StaticText" skin="StaticText" position="54 150 250 14">
-                <Property key="Widget_Caption" value="Copyright 2009-2011 Anomalous Medical"/>
+                <Property key="Widget_Caption" value="Copyright 2009-2012 Anomalous Medical"/>
             </Widget>
         </Widget>
         <Widget type="Button" skin="Button" position="4 387 91 28" name="CloseButton">
