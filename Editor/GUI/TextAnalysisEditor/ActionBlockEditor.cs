@@ -59,6 +59,16 @@ namespace Medical.GUI
             widget.setCoord(left, top, width, currentTop + extraHeight);
         }
 
+        public override AnalysisAction createAction()
+        {
+            ActionBlock actionBlock = new ActionBlock();
+            foreach (AnalysisEditorComponent child in childEditors)
+            {
+                actionBlock.addAction(child.createAction());
+            }
+            return actionBlock;
+        }
+
         public void addChildEditor(AnalysisEditorComponent child)
         {
             childEditors.Add(child);

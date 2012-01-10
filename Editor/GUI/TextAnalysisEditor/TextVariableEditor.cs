@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Medical.Controller.Exam;
 
 namespace Medical.GUI
 {
@@ -36,6 +37,15 @@ namespace Medical.GUI
         public void layout(int left, int top, int width)
         {
             widget.setCoord(left, top, width, widget.Height);
+        }
+
+        public DataRetriever createDataRetriever()
+        {
+            if (dataFieldInfo != null)
+            {
+                return dataFieldInfo.createDataRetriever();
+            }
+            return null;
         }
 
         public int Height

@@ -6,15 +6,15 @@ using Medical.Controller.Exam;
 
 namespace Medical
 {
-    class DataDrivenExamTextAnalyzer : ExamAnalyzer
+    public class DataDrivenExamTextAnalyzer : ExamAnalyzer
     {
-        private ActionBlock analysis;
+        private AnalysisAction analysis;
 
         public DataDrivenExamTextAnalyzer(String name)
         {
             this.Name = name;
 
-            analysis = new ActionBlock();
+            ActionBlock analysis = new ActionBlock();
             analysis.addAction(new StartParagraph());
             Write sentence1 = new Write();
             sentence1.Text = "This is a test text block. It has some data in it here {0} and here {1}. In fact, quite a long string is written out as one paragraph here. That is useful I guess and you can keep writing till you need logic this way.";
@@ -45,6 +45,14 @@ namespace Medical
             gtTest.Data = new DataRetriever("Number1", "Menu Item", "Numbers");
             gtTest.TestValue = 4;
             analysis.addAction(gtTest);
+
+            this.analysis = analysis;
+        }
+
+        public DataDrivenExamTextAnalyzer(String name, AnalysisAction analysis)
+        {
+            this.Name = name;
+            this.analysis = analysis;
         }
 
         public void analyzeExam(Exam exam, AnalysisDisplayProvider display)

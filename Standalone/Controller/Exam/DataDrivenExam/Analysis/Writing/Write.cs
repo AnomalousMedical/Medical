@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Medical.Controller.Exam
 {
-    class Write : WritingAction
+    public class Write : WritingAction
     {
         private List<DataRetriever> printData = new List<DataRetriever>();
 

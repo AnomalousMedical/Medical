@@ -14,5 +14,10 @@ namespace Medical.GUI
         {
             
         }
+
+        public override AnalysisAction createAction()
+        {
+            return new EndParagraph();
+        }
     }
 }

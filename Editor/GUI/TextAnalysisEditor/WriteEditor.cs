@@ -47,6 +47,21 @@ namespace Medical.GUI
             widget.setSize(width, currentTop + extraHeight);
         }
 
+        public override AnalysisAction createAction()
+        {
+            String formatWriteText = text.OnlyText;
+            DataRetriever[] dataRetrievers = new DataRetriever[variables.Count];
+
+            for (int i = 0; i < variables.Count; ++i)
+            {
+                TextVariableEditor variable = variables[i];
+                formatWriteText = formatWriteText.Replace(variable.VariableName, String.Format("{{{0}}}", i));
+                dataRetrievers[i] = variable.createDataRetriever();
+            }
+
+            return new Write(formatWriteText, dataRetrievers);
+        }
+
         public void addVariable(TextVariableEditor variable)
         {
             variables.Add(variable);

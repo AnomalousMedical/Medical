@@ -102,5 +102,7 @@ namespace Medical
             previousExamVersion = null;
             sectionStack.Clear();
         }
+
+        public DataDrivenExamTextAnalyzer TEMP_InjectedExamAnalyzer { get; set; }
     }
 }

@@ -57,6 +57,10 @@ namespace Medical
             analyzers = new ExamAnalyzerCollection();
             analyzers.addAnalyzer(RawDataAnalyzer.Instance);
             analyzers.addAnalyzer(new DataDrivenExamTextAnalyzer("Test dd analyzer"));
+            if (DataDrivenExamController.Instance.TEMP_InjectedExamAnalyzer != null)
+            {
+                analyzers.addAnalyzer(DataDrivenExamController.Instance.TEMP_InjectedExamAnalyzer);
+            }
         }
 
         protected DataDrivenExam(LoadInfo info)

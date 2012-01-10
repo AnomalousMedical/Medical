@@ -23,6 +23,8 @@ namespace Medical.GUI
             widget.setCoord(left, top, width, widget.Height);
         }
 
+        public abstract AnalysisAction createAction();
+
         public int Height
         {
             get

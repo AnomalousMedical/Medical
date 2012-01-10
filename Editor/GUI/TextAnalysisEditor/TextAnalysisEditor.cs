@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Engine;
 using Engine.Editing;
+using Medical.Controller.Exam;
 
 namespace Medical.GUI
 {
@@ -18,6 +19,7 @@ namespace Medical.GUI
         private ScrollView scrollView;
         private int windowWidth;
         private MenuItem refreshVariables;
+        private MenuItem inject;
 
         private VariableChosenCallback variableChosenCallback;
 
@@ -41,6 +43,7 @@ namespace Medical.GUI
             MenuCtrl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
             fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
             refreshVariables = fileMenu.addItem("Refresh Variables");
+            inject = fileMenu.addItem("Inject");
         }
 
         public override void Dispose()
@@ -123,6 +126,10 @@ namespace Medical.GUI
             if (mcae.Item == refreshVariables)
             {
                 refreshVariableBrowser();
+            }
+            else if (mcae.Item == inject)
+            {
+                DataDrivenExamController.Instance.TEMP_InjectedExamAnalyzer = new DataDrivenExamTextAnalyzer("Injected Analysis", actionBlockEditor.createAction());
             }
         }
 
