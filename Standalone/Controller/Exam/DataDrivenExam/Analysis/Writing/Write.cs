@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical.Controller.Exam
 {
@@ -46,5 +47,18 @@ namespace Medical.Controller.Exam
         }
 
         public String Text { get; set; }
+
+        protected Write(LoadInfo info)
+            :base(info)
+        {
+            Text = info.GetString("Text");
+            info.RebuildList<DataRetriever>("Data", printData);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            info.AddValue("Text", Text);
+            info.ExtractList<DataRetriever>("Data", printData);
+        }
     }
 }

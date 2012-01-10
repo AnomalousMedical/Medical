@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical.Controller.Exam
 {
@@ -33,5 +34,17 @@ namespace Medical.Controller.Exam
         public AnalysisAction SuccessAction { get; set; }
 
         public AnalysisAction FailureAction { get; set; }
+
+        protected TestAction(LoadInfo info)
+        {
+            SuccessAction = info.GetValue<AnalysisAction>("SuccessAction");
+            FailureAction = info.GetValue<AnalysisAction>("FailureAction");
+        }
+
+        public virtual void getInfo(SaveInfo info)
+        {
+            info.AddValue("SuccessAction", SuccessAction);
+            info.AddValue("FailureAction", FailureAction);
+        }
     }
 }

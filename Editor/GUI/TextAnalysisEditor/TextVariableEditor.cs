@@ -10,7 +10,6 @@ namespace Medical.GUI
     class TextVariableEditor : Component
     {
         private TextVariableTextBody textBody;
-        private String variableText;
         private StaticText name;
         private DataFieldInfo dataFieldInfo = null;
 

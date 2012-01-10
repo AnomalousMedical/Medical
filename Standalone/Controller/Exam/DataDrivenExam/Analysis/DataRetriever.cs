@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical.Controller.Exam
 {
-    public class DataRetriever
+    public class DataRetriever : Saveable
     {
         private List<String> examSections = new List<string>();
 
@@ -45,5 +46,17 @@ namespace Medical.Controller.Exam
         }
 
         public String DataPoint { get; set; }
+
+        protected DataRetriever(LoadInfo info)
+        {
+            DataPoint = info.GetString("DataPoint");
+            info.RebuildList<String>("Section", examSections);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.AddValue("DataPoint", DataPoint);
+            info.ExtractList<String>("Section", examSections);
+        }
     }
 }

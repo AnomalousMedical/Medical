@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical.Controller.Exam
 {
@@ -21,5 +22,19 @@ namespace Medical.Controller.Exam
         public DataRetriever Data { get; set; }
 
         public bool DefaultDataValue { get; set; }
+
+        protected TrueTest(LoadInfo info)
+            :base(info)
+        {
+            Data = info.GetValue<DataRetriever>("Data");
+            DefaultDataValue = info.GetBoolean("DefaultDataValue");
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.AddValue("Data", Data);
+            info.AddValue("DefaultDataValue", DefaultDataValue);
+        }
     }
 }
