@@ -65,6 +65,14 @@ namespace Medical
             get { return "Menu Item"; }
         }
 
+        public IEnumerable<TimelineEntry> Timelines
+        {
+            get
+            {
+                return timelines;
+            }
+        }
+
         protected MenuItemField(LoadInfo info)
             :base(info)
         {

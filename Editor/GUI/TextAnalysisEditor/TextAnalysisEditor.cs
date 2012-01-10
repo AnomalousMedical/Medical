@@ -135,6 +135,8 @@ namespace Medical.GUI
                 if (dataDrivenGUI != null)
                 {
                     browser = new Browser("Variables");
+                    BrowserBuilderFactory browserFactory = new BrowserBuilderFactory(browser, timelinePropertiesController.EditorTimelineController);
+                    dataDrivenGUI.createControls(browserFactory);
                 }
             }
         }
