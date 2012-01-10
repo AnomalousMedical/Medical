@@ -9,8 +9,8 @@ namespace Medical.GUI
     {
         void insertVariableString(String variableText);
 
-        //void removeVariable(TextVariableEditor variable);
+        void removeVariable(TextVariableEditor variable);
 
-        //void findNextInstance(String variableText);
+        void findNextInstance(String variableText);
     }
 }

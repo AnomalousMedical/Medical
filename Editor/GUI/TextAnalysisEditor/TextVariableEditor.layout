@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanelOnPanel2" position="77 214 385 31" layer="Back">
-        <Widget type="StaticText" skin="StaticText" position="2 7 48 16" name="Index"/>
+        <Widget type="StaticText" skin="StaticText" position="2 7 48 16" name="Name"/>
         <Widget type="Edit" skin="Edit" position="51 3 169 26" align="Stretch" name="Data"/>
         <Widget type="Button" skin="Button" position="223 3 53 26" align="Right Top" name="Insert">
             <Property key="Widget_Caption" value="Insert"/>

@@ -9,11 +9,26 @@ namespace Medical.GUI
     class TextVariableEditor : Component
     {
         private TextVariableTextBody textBody;
+        private String variableText;
+        private StaticText name;
 
-        public TextVariableEditor(TextVariableTextBody textBody, Widget parent)
+        public TextVariableEditor(String variableText, TextVariableTextBody textBody, Widget parent)
             : base("Medical.GUI.TextAnalysisEditor.TextVariableEditor.layout", parent)
         {
             this.textBody = textBody;
+            this.variableText = variableText;
+
+            name = (StaticText)widget.findWidget("Name");
+            name.Caption = VariableText;
+
+            Button insert = (Button)widget.findWidget("Insert");
+            insert.MouseButtonClick += new MyGUIEvent(insert_MouseButtonClick);
+
+            Button remove = (Button)widget.findWidget("Remove");
+            remove.MouseButtonClick += new MyGUIEvent(remove_MouseButtonClick);
+
+            Button find = (Button)widget.findWidget("Find");
+            find.MouseButtonClick += new MyGUIEvent(find_MouseButtonClick);
         }
 
         public void layout(int left, int top, int width)
@@ -27,6 +42,35 @@ namespace Medical.GUI
             {
                 return widget.Height;
             }
+        }
+
+        public String VariableText
+        {
+            get
+            {
+                return variableText;
+            }
+            set
+            {
+                variableText = value;
+                name.Caption = variableText;
+            }
+        }
+
+        void insert_MouseButtonClick(Widget source, EventArgs e)
+        {
+            textBody.insertVariableString(VariableText);
+        }
+
+        void remove_MouseButtonClick(Widget source, EventArgs e)
+        {
+            textBody.removeVariable(this);
+            Dispose();
+        }
+
+        void find_MouseButtonClick(Widget source, EventArgs e)
+        {
+            textBody.findNextInstance(VariableText);
         }
     }
 }
