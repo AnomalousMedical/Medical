@@ -115,6 +115,7 @@
     <Compile Include="GUI\TextAnalysisEditor\TextAnalysisEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\TextVariableEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\TextVariableTextBody.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\VariableBrowser\DataFieldInfo.cs" />
     <Compile Include="GUI\TextAnalysisEditor\WriteEditor.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ShowTextProperties.cs" />

@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Medical.GUI
 {
+    delegate void VariableChosenCallback(DataFieldInfo dataField);
+
     interface TextVariableTextBody
     {
         void insertVariableString(String variableText);
@@ -13,6 +15,6 @@ namespace Medical.GUI
 
         void findNextInstance(String variableText);
 
-        void openVariableBrowser(Action<String> variableChosenCallback);
+        void openVariableBrowser(VariableChosenCallback variableChosenCallback);
     }
 }

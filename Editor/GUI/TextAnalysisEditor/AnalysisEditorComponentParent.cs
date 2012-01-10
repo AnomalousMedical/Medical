@@ -12,7 +12,7 @@ namespace Medical.GUI
 
         void removeChildComponent(AnalysisEditorComponent child);
 
-        void openVariableBrowser(Action<String> variableChosenCallback);
+        void openVariableBrowser(VariableChosenCallback variableChosenCallback);
 
         AnalysisEditorComponentParent Parent { get; }
 

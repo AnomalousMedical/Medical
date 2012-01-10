@@ -19,7 +19,7 @@ namespace Medical.GUI
         private int windowWidth;
         private MenuItem refreshVariables;
 
-        private Action<string> variableChosenCallback;
+        private VariableChosenCallback variableChosenCallback;
 
         public TextAnalysisEditor(BrowserWindow browser, TimelinePropertiesController timelinePropertiesController)
             : base("Medical.GUI.TextAnalysisEditor.TextAnalysisEditor.layout")
@@ -90,7 +90,7 @@ namespace Medical.GUI
             throw new NotImplementedException();
         }
 
-        public void openVariableBrowser(Action<string> variableChosenCallback)
+        public void openVariableBrowser(VariableChosenCallback variableChosenCallback)
         {
             browserWindow.setBrowser(browser);
             this.variableChosenCallback = variableChosenCallback;
@@ -106,7 +106,7 @@ namespace Medical.GUI
 
         void browserWindow_ItemSelected(object sender, EventArgs e)
         {
-            variableChosenCallback.Invoke(browserWindow.SelectedValue.ToString());
+            variableChosenCallback.Invoke(browserWindow.SelectedValue as DataFieldInfo);
             unsubBrowserWindow();
         }
 

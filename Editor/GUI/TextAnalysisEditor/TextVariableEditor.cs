@@ -81,9 +81,9 @@ namespace Medical.GUI
 
         void choose_MouseButtonClick(Widget source, EventArgs e)
         {
-            textBody.openVariableBrowser(delegate(String variable)
+            textBody.openVariableBrowser(delegate(DataFieldInfo variable)
             {
-                data.Caption = variable;
+                data.Caption = variable.ToString();
             });
         }
     }

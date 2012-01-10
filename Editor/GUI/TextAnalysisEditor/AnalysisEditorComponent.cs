@@ -31,7 +31,7 @@ namespace Medical.GUI
             }
         }
 
-        public void openVariableBrowser(Action<String> variableChosenCallback)
+        public void openVariableBrowser(VariableChosenCallback variableChosenCallback)
         {
             Parent.openVariableBrowser(variableChosenCallback);
         }
