@@ -11,18 +11,14 @@ namespace Medical.GUI
         private TextVariableTextBody textBody;
         private String variableText;
         private StaticText name;
-        private StaticText data;
+        private DataFieldInfo dataFieldInfo = null;
 
-        public TextVariableEditor(String variableText, TextVariableTextBody textBody, Widget parent)
+        public TextVariableEditor(TextVariableTextBody textBody, Widget parent)
             : base("Medical.GUI.TextAnalysisEditor.TextVariableEditor.layout", parent)
         {
             this.textBody = textBody;
-            this.variableText = variableText;
 
             name = (StaticText)widget.findWidget("Name");
-            name.Caption = VariableText;
-
-            data = (StaticText)widget.findWidget("Data");
 
             Button insert = (Button)widget.findWidget("Insert");
             insert.MouseButtonClick += new MyGUIEvent(insert_MouseButtonClick);
@@ -50,22 +46,21 @@ namespace Medical.GUI
             }
         }
 
-        public String VariableText
+        public String VariableName
         {
             get
             {
-                return variableText;
-            }
-            set
-            {
-                variableText = value;
-                name.Caption = variableText;
+                if (dataFieldInfo != null)
+                {
+                    return String.Format("$({0})", dataFieldInfo.FullName);
+                }
+                return "";
             }
         }
 
         void insert_MouseButtonClick(Widget source, EventArgs e)
         {
-            textBody.insertVariableString(VariableText);
+            textBody.insertVariableString(VariableName);
         }
 
         void remove_MouseButtonClick(Widget source, EventArgs e)
@@ -76,14 +71,15 @@ namespace Medical.GUI
 
         void find_MouseButtonClick(Widget source, EventArgs e)
         {
-            textBody.findNextInstance(VariableText);
+            textBody.findNextInstance(VariableName);
         }
 
         void choose_MouseButtonClick(Widget source, EventArgs e)
         {
             textBody.openVariableBrowser(delegate(DataFieldInfo variable)
             {
-                data.Caption = variable.ToString();
+                dataFieldInfo = variable;
+                name.Caption = variable.ToString();
             });
         }
     }

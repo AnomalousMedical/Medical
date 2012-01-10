@@ -62,6 +62,7 @@ namespace Medical.GUI
         {
             String currentText = text.OnlyText;
             uint cursorPos = text.TextCursor;
+            int selectionLength = variableText.Length;
             int nextPosition = currentText.IndexOf(variableText, (int)cursorPos);
             if (nextPosition < 0)
             {
@@ -76,39 +77,21 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    text.setTextSelection((uint)nextPosition, (uint)nextPosition + 3);
+                    text.setTextSelection((uint)nextPosition, (uint)(nextPosition + selectionLength));
                     InputManager.Instance.setKeyFocusWidget(text);
                 }
             }
             else
             {
-                text.setTextSelection((uint)nextPosition, (uint)nextPosition + 3);
+                text.setTextSelection((uint)nextPosition, (uint)(nextPosition + selectionLength));
                 InputManager.Instance.setKeyFocusWidget(text);
             }
         }
 
         public void removeVariable(TextVariableEditor variable)
         {
-            int index = variables.IndexOf(variable);
-            if (index != -1)
-            {
-                object[] remapVars = new object[variables.Count];
-                for (int i = 0; i < index; ++i)
-                {
-                    remapVars[i] = String.Format("{{{0}}}", i);
-                }
-                //Need to update all other existing variables and text with certain variables in it.
-                variables.RemoveAt(index);
-                remapVars[index] = "|Removed|";
-                for (int i = index; i < variables.Count; ++i)
-                {
-                    String newVar = String.Format("{{{0}}}", i);
-                    remapVars[i + 1] = newVar;
-                    variables[i].VariableText = newVar;
-                }
-                text.OnlyText = String.Format(text.OnlyText, remapVars);
-                requestLayout();
-            }
+            variables.Remove(variable);
+            requestLayout();
         }
 
         public int TextHeight
@@ -134,7 +117,7 @@ namespace Medical.GUI
 
         void addVariable_MouseButtonClick(Widget source, EventArgs e)
         {
-            addVariable(new TextVariableEditor(String.Format("{{{0}}}", variables.Count), this, Widget));
+            addVariable(new TextVariableEditor(this, Widget));
         }
     }
 }

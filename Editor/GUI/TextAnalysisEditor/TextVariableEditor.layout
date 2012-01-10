@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanelOnPanel2" position="77 214 385 31" layer="Back">
-        <Widget type="StaticText" skin="StaticText" position="2 7 48 16" name="Name"/>
+        <Widget type="StaticText" skin="StaticText" position="2 7 160 16" align="Stretch" name="Name"/>
         <Widget type="Button" skin="Button" position="223 3 53 26" align="Right Top" name="Insert">
             <Property key="Widget_Caption" value="Insert"/>
         </Widget>
@@ -14,6 +14,5 @@
         <Widget type="Button" skin="Button" position="164 3 57 26" align="Right Top" name="Choose">
             <Property key="Widget_Caption" value="Choose"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="52 7 110 15" align="Stretch" name="Data"/>
     </Widget>
 </MyGUI>
