@@ -11,6 +11,7 @@ namespace Medical.GUI
         private TextVariableTextBody textBody;
         private String variableText;
         private StaticText name;
+        private StaticText data;
 
         public TextVariableEditor(String variableText, TextVariableTextBody textBody, Widget parent)
             : base("Medical.GUI.TextAnalysisEditor.TextVariableEditor.layout", parent)
@@ -21,6 +22,8 @@ namespace Medical.GUI
             name = (StaticText)widget.findWidget("Name");
             name.Caption = VariableText;
 
+            data = (StaticText)widget.findWidget("Data");
+
             Button insert = (Button)widget.findWidget("Insert");
             insert.MouseButtonClick += new MyGUIEvent(insert_MouseButtonClick);
 
@@ -29,6 +32,9 @@ namespace Medical.GUI
 
             Button find = (Button)widget.findWidget("Find");
             find.MouseButtonClick += new MyGUIEvent(find_MouseButtonClick);
+
+            Button choose = (Button)widget.findWidget("Choose");
+            choose.MouseButtonClick += new MyGUIEvent(choose_MouseButtonClick);
         }
 
         public void layout(int left, int top, int width)
@@ -71,6 +77,14 @@ namespace Medical.GUI
         void find_MouseButtonClick(Widget source, EventArgs e)
         {
             textBody.findNextInstance(VariableText);
+        }
+
+        void choose_MouseButtonClick(Widget source, EventArgs e)
+        {
+            textBody.openVariableBrowser(delegate(String variable)
+            {
+                data.Caption = variable;
+            });
         }
     }
 }

@@ -10,6 +10,33 @@ namespace Medical
 {
     public class DataDrivenTimelineGUIData : AbstractTimelineGUIData
     {
+        public static DataDrivenTimelineGUIData FindDataInTimeline(Timeline timeline)
+        {
+            foreach (TimelineInstantAction action in timeline.PreActions)
+            {
+                if (action is ShowTimelineGUIAction)
+                {
+                    ShowTimelineGUIAction actionShowGUI = (ShowTimelineGUIAction)action;
+                    if (actionShowGUI.GUIData is DataDrivenTimelineGUIData)
+                    {
+                        return (DataDrivenTimelineGUIData)actionShowGUI.GUIData;
+                    }
+                }
+            }
+            foreach (TimelineInstantAction action in timeline.PostActions)
+            {
+                if (action is ShowTimelineGUIAction)
+                {
+                    ShowTimelineGUIAction actionShowGUI = (ShowTimelineGUIAction)action;
+                    if (actionShowGUI.GUIData is DataDrivenTimelineGUIData)
+                    {
+                        return (DataDrivenTimelineGUIData)actionShowGUI.GUIData;
+                    }
+                }
+            }
+            return null;
+        }
+
         private DataFieldCollection dataFields;
 
         public DataDrivenTimelineGUIData()

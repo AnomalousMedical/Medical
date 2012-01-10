@@ -5,6 +5,6 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="1 25 365 271" align="Stretch" name="ScrollView">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 365 26" align="HStretch Top"/>
+        <Widget type="MenuBar" skin="MenuBar" position="0 0 365 26" align="HStretch Top" name="Menu"/>
     </Widget>
 </MyGUI>

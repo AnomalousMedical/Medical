@@ -277,6 +277,14 @@ namespace Medical.GUI
             }
         }
 
+        public TimelineController EditorTimelineController
+        {
+            get
+            {
+                return editorTimelineController;
+            }
+        }
+
         public bool Visible
         {
             get

@@ -2,7 +2,6 @@
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanelOnPanel2" position="77 214 385 31" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="2 7 48 16" name="Name"/>
-        <Widget type="Edit" skin="Edit" position="51 3 169 26" align="Stretch" name="Data"/>
         <Widget type="Button" skin="Button" position="223 3 53 26" align="Right Top" name="Insert">
             <Property key="Widget_Caption" value="Insert"/>
         </Widget>
@@ -12,5 +11,9 @@
         <Widget type="Button" skin="Button" position="277 3 42 26" align="Right Top" name="Find">
             <Property key="Widget_Caption" value="Find"/>
         </Widget>
+        <Widget type="Button" skin="Button" position="164 3 57 26" align="Right Top" name="Choose">
+            <Property key="Widget_Caption" value="Choose"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="52 7 110 15" align="Stretch" name="Data"/>
     </Widget>
 </MyGUI>

@@ -31,6 +31,11 @@ namespace Medical.GUI
             }
         }
 
+        public void openVariableBrowser(Action<String> variableChosenCallback)
+        {
+            Parent.openVariableBrowser(variableChosenCallback);
+        }
+
         public virtual void removeChildComponent(AnalysisEditorComponent child)
         {
             throw new NotSupportedException();

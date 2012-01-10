@@ -12,5 +12,7 @@ namespace Medical.GUI
         void removeVariable(TextVariableEditor variable);
 
         void findNextInstance(String variableText);
+
+        void openVariableBrowser(Action<String> variableChosenCallback);
     }
 }
