@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.Controller.Exam;
+using Engine.Saving;
 
 namespace Medical
 {
-    public class DataDrivenExamTextAnalyzer : ExamAnalyzer
+    public class DataDrivenExamTextAnalyzer : ExamAnalyzer, Saveable
     {
         private AnalysisAction analysis;
 
@@ -64,5 +65,17 @@ namespace Medical
         }
 
         public string Name { get; private set; }
+
+        protected DataDrivenExamTextAnalyzer(LoadInfo info)
+        {
+            Name = info.GetString("Name");
+            analysis = info.GetValue<AnalysisAction>("Analysis");
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.AddValue("Name", Name);
+            info.AddValue("Analysis", analysis);
+        }
     }
 }

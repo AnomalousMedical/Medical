@@ -6,6 +6,8 @@ using MyGUIPlugin;
 using Engine;
 using Engine.Editing;
 using Medical.Controller.Exam;
+using System.Xml;
+using Engine.Saving.XMLSaver;
 
 namespace Medical.GUI
 {
@@ -20,6 +22,8 @@ namespace Medical.GUI
         private int windowWidth;
         private MenuItem refreshVariables;
         private MenuItem inject;
+        private MenuItem saveItem;
+        private MenuItem openItem;
 
         private VariableChosenCallback variableChosenCallback;
 
@@ -42,6 +46,8 @@ namespace Medical.GUI
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
             MenuCtrl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
             fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
+            saveItem = fileMenu.addItem("Save");
+            openItem = fileMenu.addItem("Open");
             refreshVariables = fileMenu.addItem("Refresh Variables");
             inject = fileMenu.addItem("Inject");
         }
@@ -129,8 +135,68 @@ namespace Medical.GUI
             }
             else if (mcae.Item == inject)
             {
-                DataDrivenExamController.Instance.TEMP_InjectedExamAnalyzer = new DataDrivenExamTextAnalyzer("Injected Analysis", actionBlockEditor.createAction());
+                DataDrivenExamController.Instance.TEMP_InjectedExamAnalyzer = createAnalyzer();
             }
+            else if (mcae.Item == saveItem)
+            {
+                save();
+            }
+            else if (mcae.Item == openItem)
+            {
+                open();
+            }
+        }
+
+        private void open()
+        {
+            try
+            {
+                using (FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose an analysis file to open.", MedicalConfig.UserDocRoot, "", "Analysis File (*.anl)|*.anl", false))
+                {
+                    if (openDialog.showModal() == NativeDialogResult.OK)
+                    {
+                        using (XmlTextReader xmlReader = new XmlTextReader(openDialog.Path))
+                        {
+                            XmlSaver xmlSaver = new XmlSaver();
+                            DataDrivenExamTextAnalyzer analyzer = (DataDrivenExamTextAnalyzer)xmlSaver.restoreObject(xmlReader);
+                            Console.WriteLine(analyzer);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.show("Could not open analysis.\n" + e.Message, "Load Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
+        }
+
+        private void save()
+        {
+            try
+            {
+                using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Choose location to save your analysis.", MedicalConfig.UserDocRoot, "", "Analysis File (*.anl)|*.anl"))
+                {
+                    if (saveDialog.showModal() == NativeDialogResult.OK)
+                    {
+                        DataDrivenExamTextAnalyzer analyzer = createAnalyzer();
+                        using (XmlTextWriter xmlWriter = new XmlTextWriter(saveDialog.Path, Encoding.Default))
+                        {
+                            xmlWriter.Formatting = Formatting.Indented;
+                            XmlSaver xmlSaver = new XmlSaver();
+                            xmlSaver.saveObject(analyzer, xmlWriter);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.show("Could not save analysis.\n" + e.Message, "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
+        }
+
+        private DataDrivenExamTextAnalyzer createAnalyzer()
+        {
+            return new DataDrivenExamTextAnalyzer("Injected Analysis", actionBlockEditor.createAction());
         }
 
         private void refreshVariableBrowser()
