@@ -29,6 +29,20 @@ namespace Medical.GUI
             extraHeight = widget.Height - text.Bottom;
         }
 
+        public WriteEditor(AnalysisEditorComponent parent, Write writeAction)
+            :this(parent)
+        {
+            Object[] variableNames = new Object[writeAction.NumData];
+            int i = 0;
+            foreach (DataRetriever dataRetriever in writeAction.Data)
+            {
+                TextVariableEditor variable = new TextVariableEditor(this, widget, dataRetriever);
+                variables.Add(variable);
+                variableNames[i++] = variable.VariableName;
+            }
+            text.OnlyText = String.Format(writeAction.Text, variableNames);
+        }
+
         public override void layout(int left, int top, int width)
         {
             widget.setCoord(left, top, width, 100);

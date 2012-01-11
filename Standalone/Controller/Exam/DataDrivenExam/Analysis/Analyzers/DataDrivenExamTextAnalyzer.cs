@@ -9,7 +9,7 @@ namespace Medical
 {
     public class DataDrivenExamTextAnalyzer : ExamAnalyzer, Saveable
     {
-        private AnalysisAction analysis;
+        private ActionBlock analysis;
 
         public DataDrivenExamTextAnalyzer(String name)
         {
@@ -50,7 +50,7 @@ namespace Medical
             this.analysis = analysis;
         }
 
-        public DataDrivenExamTextAnalyzer(String name, AnalysisAction analysis)
+        public DataDrivenExamTextAnalyzer(String name, ActionBlock analysis)
         {
             this.Name = name;
             this.analysis = analysis;
@@ -66,10 +66,18 @@ namespace Medical
 
         public string Name { get; private set; }
 
+        public ActionBlock Analysis
+        {
+            get
+            {
+                return analysis;
+            }
+        }
+
         protected DataDrivenExamTextAnalyzer(LoadInfo info)
         {
             Name = info.GetString("Name");
-            analysis = info.GetValue<AnalysisAction>("Analysis");
+            analysis = info.GetValue<ActionBlock>("Analysis");
         }
 
         public void getInfo(SaveInfo info)

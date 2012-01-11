@@ -159,7 +159,7 @@ namespace Medical.GUI
                         {
                             XmlSaver xmlSaver = new XmlSaver();
                             DataDrivenExamTextAnalyzer analyzer = (DataDrivenExamTextAnalyzer)xmlSaver.restoreObject(xmlReader);
-                            Console.WriteLine(analyzer);
+                            actionBlockEditor.createFromAnalyzer(analyzer.Analysis);
                         }
                     }
                 }
@@ -196,7 +196,7 @@ namespace Medical.GUI
 
         private DataDrivenExamTextAnalyzer createAnalyzer()
         {
-            return new DataDrivenExamTextAnalyzer("Injected Analysis", actionBlockEditor.createAction());
+            return new DataDrivenExamTextAnalyzer("Injected Analysis", (ActionBlock)actionBlockEditor.createAction());
         }
 
         private void refreshVariableBrowser()

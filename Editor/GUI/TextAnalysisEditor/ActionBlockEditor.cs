@@ -48,6 +48,32 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        public void empty()
+        {
+            disposeChildEditors();
+            childEditors.Clear();
+        }
+
+        public void createFromAnalyzer(ActionBlock actionBlock)
+        {
+            empty();
+            foreach (AnalysisAction action in actionBlock.Actions)
+            {
+                if (action is StartParagraph)
+                {
+                    addChildEditor(new StartParagraphEditor(this));
+                }
+                else if (action is EndParagraph)
+                {
+                    addChildEditor(new EndParagraphEditor(this));
+                }
+                else if (action is Write)
+                {
+                    addChildEditor(new WriteEditor(this, (Write)action));
+                }
+            }
+        }
+
         public override void layout(int left, int top, int width)
         {
             int currentTop = childStartHeight;

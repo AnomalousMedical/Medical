@@ -48,6 +48,22 @@ namespace Medical.Controller.Exam
 
         public String Text { get; set; }
 
+        public IEnumerable<DataRetriever> Data
+        {
+            get
+            {
+                return printData;
+            }
+        }
+
+        public int NumData
+        {
+            get
+            {
+                return printData.Count;
+            }
+        }
+
         protected Write(LoadInfo info)
             :base(info)
         {

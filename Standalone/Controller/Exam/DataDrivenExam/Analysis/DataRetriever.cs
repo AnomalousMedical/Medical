@@ -47,6 +47,14 @@ namespace Medical.Controller.Exam
 
         public String DataPoint { get; set; }
 
+        public IEnumerable<String> ExamSections
+        {
+            get
+            {
+                return examSections;
+            }
+        }
+
         protected DataRetriever(LoadInfo info)
         {
             DataPoint = info.GetString("DataPoint");

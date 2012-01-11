@@ -38,6 +38,14 @@ namespace Medical.Controller.Exam
             actions.Insert(index, action);
         }
 
+        public IEnumerable<AnalysisAction> Actions
+        {
+            get
+            {
+                return actions;
+            }
+        }
+
         protected ActionBlock(LoadInfo info)
         {
             info.RebuildList<AnalysisAction>("Action", actions);

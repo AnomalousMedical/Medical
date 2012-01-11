@@ -33,6 +33,20 @@ namespace Medical.GUI
             choose.MouseButtonClick += new MyGUIEvent(choose_MouseButtonClick);
         }
 
+        public TextVariableEditor(TextVariableTextBody textBody, Widget widget, DataRetriever dataRetriever)
+            : this(textBody, widget)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(String section in dataRetriever.ExamSections)
+            {
+                sb.Append(".");
+                sb.Append(section);
+            }
+            sb.Remove(0, 1);
+            dataFieldInfo = new DataFieldInfo(sb.ToString(), dataRetriever.DataPoint);
+            name.Caption = dataFieldInfo.ToString();
+        }
+
         public void layout(int left, int top, int width)
         {
             widget.setCoord(left, top, width, widget.Height);
