@@ -43,6 +43,15 @@ namespace Medical.GUI
             text.OnlyText = String.Format(writeAction.Text, variableNames);
         }
 
+        public override void Dispose()
+        {
+            foreach (TextVariableEditor variable in variables)
+            {
+                variable.Dispose();
+            }
+            base.Dispose();
+        }
+
         public override void layout(int left, int top, int width)
         {
             widget.setCoord(left, top, width, 100);

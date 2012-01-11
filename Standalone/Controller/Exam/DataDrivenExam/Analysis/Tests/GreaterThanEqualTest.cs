@@ -6,12 +6,20 @@ using Engine.Saving;
 
 namespace Medical.Controller.Exam
 {
-    class GreaterThanEqualTest : TestAction
+    public class GreaterThanEqualTest : TestAction
     {
         public GreaterThanEqualTest(AnalysisAction successAction, AnalysisAction failureAction)
             : base(successAction, failureAction)
         {
 
+        }
+
+        public GreaterThanEqualTest(AnalysisAction successAction, AnalysisAction failureAction, decimal testValue, DataRetriever data, decimal defaultValue)
+            : this(successAction, failureAction)
+        {
+            this.TestValue = testValue;
+            this.Data = data;
+            this.DefaultDataValue = defaultValue;
         }
 
         protected override bool performTest(DataDrivenExam exam)

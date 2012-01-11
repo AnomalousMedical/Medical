@@ -34,6 +34,14 @@ namespace Medical.GUI
             }
         }
 
+        public int Bottom
+        {
+            get
+            {
+                return widget.Bottom;
+            }
+        }
+
         public void openVariableBrowser(VariableChosenCallback variableChosenCallback)
         {
             Parent.openVariableBrowser(variableChosenCallback);

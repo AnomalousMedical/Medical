@@ -6,12 +6,20 @@ using Engine.Saving;
 
 namespace Medical.Controller.Exam
 {
-    class StringEqualTest : TestAction
+    public class StringEqualTest : TestAction
     {
         public StringEqualTest(AnalysisAction successAction, AnalysisAction failureAction)
             :base(successAction, failureAction)
         {
 
+        }
+
+        public StringEqualTest(AnalysisAction successAction, AnalysisAction failureAction, String testValue, DataRetriever data, String defaultValue)
+            : this(successAction, failureAction)
+        {
+            this.TestValue = testValue;
+            this.Data = data;
+            this.DefaultDataValue = defaultValue;
         }
 
         protected override bool performTest(DataDrivenExam exam)

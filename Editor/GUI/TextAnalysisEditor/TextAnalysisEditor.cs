@@ -35,10 +35,10 @@ namespace Medical.GUI
             this.browserWindow = browser;
             this.timelinePropertiesController = timelinePropertiesController;
 
-            windowWidth = window.Width;
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             scrollView = (ScrollView)window.findWidget("ScrollView");
+            windowWidth = scrollView.ClientCoord.width;
 
             name = (Edit)window.findWidget("Name");
 
@@ -65,9 +65,9 @@ namespace Medical.GUI
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
-            if (window.Width != windowWidth)
+            if (scrollView.ClientCoord.width != windowWidth)
             {
-                windowWidth = window.Width;
+                windowWidth = scrollView.ClientCoord.width;
                 layout((int)scrollView.ClientCoord.width);
             }
         }
@@ -189,7 +189,7 @@ namespace Medical.GUI
         {
             try
             {
-                using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Choose location to save your analysis.", MedicalConfig.UserDocRoot, "", "Analysis File (*.anl)|*.anl"))
+                using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Choose location to save your analysis.", MedicalConfig.UserDocRoot, name.Caption + ".anl", "Analysis File (*.anl)|*.anl"))
                 {
                     if (saveDialog.showModal() == NativeDialogResult.OK)
                     {

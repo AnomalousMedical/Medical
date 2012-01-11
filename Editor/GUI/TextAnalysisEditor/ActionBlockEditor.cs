@@ -37,7 +37,8 @@ namespace Medical.GUI
             MenuItem addStartParagraph = addActionMenu.addItem("Start Paragraph", MenuItemType.Normal, "StartParagraph");
             MenuItem addEndParagraph = addActionMenu.addItem("End Paragraph", MenuItemType.Normal, "EndParagraph");
             MenuItem addWrite = addActionMenu.addItem("Write", MenuItemType.Normal, "Write");
-            MenuItem addActionBlock = addActionMenu.addItem("Action Block", MenuItemType.Normal, "ActionBlock");
+            //MenuItem addActionBlock = addActionMenu.addItem("Action Block", MenuItemType.Normal, "ActionBlock");
+            addActionMenu.addItem("Test", MenuItemType.Normal, "Test");
             addActionMenu.Visible = false;
         }
 
@@ -83,7 +84,7 @@ namespace Medical.GUI
             int currentTop = childStartHeight;
             foreach (AnalysisEditorComponent child in childEditors)
             {
-                child.layout(left, currentTop, width);
+                child.layout(0, currentTop, width);
                 currentTop += child.Height;
             }
             widget.setCoord(left, top, width, currentTop + extraHeight);
@@ -91,12 +92,16 @@ namespace Medical.GUI
 
         public override AnalysisAction createAction()
         {
-            ActionBlock actionBlock = new ActionBlock();
-            foreach (AnalysisEditorComponent child in childEditors)
+            if (childEditors.Count > 0)
             {
-                actionBlock.addAction(child.createAction());
+                ActionBlock actionBlock = new ActionBlock();
+                foreach (AnalysisEditorComponent child in childEditors)
+                {
+                    actionBlock.addAction(child.createAction());
+                }
+                return actionBlock;
             }
-            return actionBlock;
+            return null;
         }
 
         public void addChildEditor(AnalysisEditorComponent child)
@@ -146,6 +151,9 @@ namespace Medical.GUI
                     break;
                 case "ActionBlock":
                     addChildEditor(new ActionBlockEditor(this));
+                    break;
+                case "Test":
+                    addChildEditor(new TestAnalysisEditor(this));
                     break;
             }
         }

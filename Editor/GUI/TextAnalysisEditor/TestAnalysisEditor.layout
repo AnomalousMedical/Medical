@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomPanel2" position="96 99 283 133" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="2 6 10 16">
+            <Property key="Widget_Caption" value="If"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="2 30 66 26" align="Left Top" name="ConditionCombo"/>
+        <Widget type="StaticText" skin="StaticText" position="3 89 55 16" name="SuccessText">
+            <Property key="Widget_Caption" value="Success"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="4 108 29 16" name="FailText">
+            <Property key="Widget_Caption" value="Fail"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="217 2 64 26" align="Right Top" name="Remove">
+            <Property key="Widget_Caption" value="Remove"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="164 2 51 26" align="Right Top" name="Choose">
+            <Property key="Widget_Caption" value="Choose"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="14 6 146 16" align="HStretch Top" name="VariableName"/>
+        <Widget type="Edit" skin="Edit" position="2 59 123 26" align="Left Top" name="TestValueEdit"/>
+    </Widget>
+</MyGUI>

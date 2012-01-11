@@ -109,6 +109,7 @@
     <Compile Include="GUI\TextAnalysisEditor\ActionBlockEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponent.cs" />
     <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponentParent.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\TestAnalysisEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\VariableBrowser\BrowserBuilderFactory.cs" />
     <Compile Include="GUI\TextAnalysisEditor\EndParagraphEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\StartParagraphEditor.cs" />
@@ -173,6 +174,7 @@
     <EmbeddedResource Include="GUI\TextAnalysisEditor\ActionBlockEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\EndParagraphEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\StartParagraphEditor.layout" />
+    <EmbeddedResource Include="GUI\TextAnalysisEditor\TestAnalysisEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\TextAnalysisEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\TextVariableEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\WriteEditor.layout" />

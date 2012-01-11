@@ -6,12 +6,19 @@ using Engine.Saving;
 
 namespace Medical.Controller.Exam
 {
-    class TrueTest : TestAction
+    public class TrueTest : TestAction
     {
         public TrueTest(AnalysisAction successAction, AnalysisAction failureAction)
             : base(successAction, failureAction)
         {
 
+        }
+
+        public TrueTest(AnalysisAction successAction, AnalysisAction failureAction, DataRetriever data, bool defaultValue)
+            : this(successAction, failureAction)
+        {
+            this.Data = data;
+            this.DefaultDataValue = defaultValue;
         }
 
         protected override bool performTest(DataDrivenExam exam)
