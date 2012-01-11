@@ -24,6 +24,7 @@ namespace Medical.GUI
         private MenuItem inject;
         private MenuItem saveItem;
         private MenuItem openItem;
+        private MenuItem newItem;
 
         private VariableChosenCallback variableChosenCallback;
 
@@ -46,6 +47,7 @@ namespace Medical.GUI
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
             MenuCtrl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
             fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
+            newItem = fileMenu.addItem("New");
             saveItem = fileMenu.addItem("Save");
             openItem = fileMenu.addItem("Open");
             refreshVariables = fileMenu.addItem("Refresh Variables");
@@ -145,6 +147,15 @@ namespace Medical.GUI
             {
                 open();
             }
+            else if (mcae.Item == newItem)
+            {
+                newAnalysis();
+            }
+        }
+
+        private void newAnalysis()
+        {
+            actionBlockEditor.empty();
         }
 
         private void open()

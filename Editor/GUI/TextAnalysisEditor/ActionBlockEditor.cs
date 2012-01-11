@@ -52,10 +52,12 @@ namespace Medical.GUI
         {
             disposeChildEditors();
             childEditors.Clear();
+            requestLayout();
         }
 
         public void createFromAnalyzer(ActionBlock actionBlock)
         {
+            AllowLayout = false;
             empty();
             foreach (AnalysisAction action in actionBlock.Actions)
             {
@@ -72,6 +74,8 @@ namespace Medical.GUI
                     addChildEditor(new WriteEditor(this, (Write)action));
                 }
             }
+            AllowLayout = true;
+            requestLayout();
         }
 
         public override void layout(int left, int top, int width)

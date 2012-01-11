@@ -13,6 +13,7 @@ namespace Medical.GUI
             :base(layoutFile, parent.Widget)
         {
             this.Parent = parent;
+            AllowLayout = true;
 
             Button remove = (Button)widget.findWidget("Remove");
             remove.MouseButtonClick += new MyGUIEvent(remove_MouseButtonClick);
@@ -45,7 +46,10 @@ namespace Medical.GUI
 
         public void requestLayout()
         {
-            Parent.requestLayout();
+            if (AllowLayout)
+            {
+                Parent.requestLayout();
+            }
         }
 
         public AnalysisEditorComponentParent Parent { get; set; }
@@ -57,6 +61,8 @@ namespace Medical.GUI
                 return widget;
             }
         }
+
+        public bool AllowLayout { get; set; }
 
         void remove_MouseButtonClick(Widget source, EventArgs e)
         {
