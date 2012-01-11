@@ -107,6 +107,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
     <Compile Include="GUI\TextAnalysisEditor\ActionBlockEditor.cs" />
+    <Compile Include="GUI\TextAnalysisEditor\AnalysisCompilationError.cs" />
     <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponent.cs" />
     <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponentParent.cs" />
     <Compile Include="GUI\TextAnalysisEditor\TestAnalysisEditor.cs" />

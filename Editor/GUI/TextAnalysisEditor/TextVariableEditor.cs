@@ -77,13 +77,17 @@ namespace Medical.GUI
                 {
                     return String.Format("$({0})", dataFieldInfo.FullName);
                 }
-                return "";
+                return null;
             }
         }
 
         void insert_MouseButtonClick(Widget source, EventArgs e)
         {
-            textBody.insertVariableString(VariableName);
+            String variableName = VariableName;
+            if (variableName != null)
+            {
+                textBody.insertVariableString(variableName);
+            }
         }
 
         void remove_MouseButtonClick(Widget source, EventArgs e)
@@ -94,7 +98,11 @@ namespace Medical.GUI
 
         void find_MouseButtonClick(Widget source, EventArgs e)
         {
-            textBody.findNextInstance(VariableName);
+            String variableName = VariableName;
+            if (variableName != null)
+            {
+                textBody.findNextInstance(variableName);
+            }
         }
 
         void choose_MouseButtonClick(Widget source, EventArgs e)

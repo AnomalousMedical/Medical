@@ -140,7 +140,14 @@ namespace Medical.GUI
             }
             else if (mcae.Item == inject)
             {
-                DataDrivenExamController.Instance.TEMP_InjectedExamAnalyzer = createAnalyzer();
+                try
+                {
+                    DataDrivenExamController.Instance.TEMP_InjectedExamAnalyzer = createAnalyzer();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.show("Could not inject exam.\n" + ex.Message, "Injection Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
             }
             else if (mcae.Item == saveItem)
             {
@@ -211,7 +218,12 @@ namespace Medical.GUI
 
         private DataDrivenExamTextAnalyzer createAnalyzer()
         {
-            return new DataDrivenExamTextAnalyzer(name.Caption, (ActionBlock)actionBlockEditor.createAction());
+            ActionBlock actionBlock = (ActionBlock)actionBlockEditor.createAction();
+            if (actionBlock != null)
+            {
+                return new DataDrivenExamTextAnalyzer(name.Caption, actionBlock);
+            }
+            throw new AnalysisCompilationError("Analysis cannot be blank.");
         }
 
         private void refreshVariableBrowser()
