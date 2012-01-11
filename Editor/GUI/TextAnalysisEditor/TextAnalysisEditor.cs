@@ -25,6 +25,7 @@ namespace Medical.GUI
         private MenuItem saveItem;
         private MenuItem openItem;
         private MenuItem newItem;
+        private Edit name;
 
         private VariableChosenCallback variableChosenCallback;
 
@@ -38,6 +39,8 @@ namespace Medical.GUI
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             scrollView = (ScrollView)window.findWidget("ScrollView");
+
+            name = (Edit)window.findWidget("Name");
 
             actionBlockEditor = new ActionBlockEditor(this);
             actionBlockEditor.Removeable = false;
@@ -171,6 +174,7 @@ namespace Medical.GUI
                             XmlSaver xmlSaver = new XmlSaver();
                             DataDrivenExamTextAnalyzer analyzer = (DataDrivenExamTextAnalyzer)xmlSaver.restoreObject(xmlReader);
                             actionBlockEditor.createFromAnalyzer(analyzer.Analysis);
+                            name.Caption = analyzer.Name;
                         }
                     }
                 }
@@ -207,7 +211,7 @@ namespace Medical.GUI
 
         private DataDrivenExamTextAnalyzer createAnalyzer()
         {
-            return new DataDrivenExamTextAnalyzer("Injected Analysis", (ActionBlock)actionBlockEditor.createAction());
+            return new DataDrivenExamTextAnalyzer(name.Caption, (ActionBlock)actionBlockEditor.createAction());
         }
 
         private void refreshVariableBrowser()
