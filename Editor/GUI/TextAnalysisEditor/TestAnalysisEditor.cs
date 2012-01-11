@@ -55,6 +55,63 @@ namespace Medical.GUI
             failEditor.Removeable = false;
         }
 
+        public TestAnalysisEditor(AnalysisEditorComponentParent parent, TestAction action)
+            :this(parent)
+        {
+            if (action is GreaterThanTest)
+            {
+                GreaterThanTest test = (GreaterThanTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, GREATER_THAN, test.TestValue.ToString());
+            }
+            else if (action is GreaterThanEqualTest)
+            {
+                GreaterThanEqualTest test = (GreaterThanEqualTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, GREATER_THAN_EQUAL, test.TestValue.ToString());
+            }
+            else if (action is LessThanTest)
+            {
+                LessThanTest test = (LessThanTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, LESS_THAN, test.TestValue.ToString());
+            }
+            else if (action is LessThanEqualTest)
+            {
+                LessThanEqualTest test = (LessThanEqualTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, LESS_THAN_EQUAL, test.TestValue.ToString());
+            }
+            else if (action is DecimalEqualTest)
+            {
+                DecimalEqualTest test = (DecimalEqualTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, EQUAL, test.TestValue.ToString());
+            }
+            else if (action is StringEqualTest)
+            {
+                StringEqualTest test = (StringEqualTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, EQUAL, test.TestValue);
+            }
+            else if (action is TrueTest)
+            {
+                TrueTest test = (TrueTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, IS_TRUE, "");
+            }
+            ActionBlock successAction = action.SuccessAction as ActionBlock;
+            if (successAction != null)
+            {
+                successEditor.createFromAnalyzer(successAction);
+            }
+            ActionBlock failureAction = action.FailureAction as ActionBlock;
+            if (failureAction != null)
+            {
+                failEditor.createFromAnalyzer(failureAction);
+            }
+        }
+
         public override void Dispose()
         {
             successEditor.Dispose();
@@ -107,6 +164,21 @@ namespace Medical.GUI
                 this.fieldInfo = fieldInfo;
                 variableName.Caption = fieldInfo.FullName;
             });
+        }
+
+        private void setInfo(DataRetriever dataRetriever, String fieldSelection, String testValue)
+        {
+            conditionCombo.SelectedIndex = conditionCombo.findItemIndexWith(fieldSelection);
+            StringBuilder sb = new StringBuilder();
+            foreach (String section in dataRetriever.ExamSections)
+            {
+                sb.Append(".");
+                sb.Append(section);
+            }
+            sb.Remove(0, 1);
+            fieldInfo = new DataFieldInfo(sb.ToString(), dataRetriever.DataPoint);
+            variableName.Caption = fieldInfo.FullName;
+            testValueEdit.Caption = testValue;
         }
     }
 }

@@ -74,6 +74,10 @@ namespace Medical.GUI
                 {
                     addChildEditor(new WriteEditor(this, (Write)action));
                 }
+                else if (action is TestAction)
+                {
+                    addChildEditor(new TestAnalysisEditor(this, (TestAction)action));
+                }
             }
             AllowLayout = true;
             requestLayout();
