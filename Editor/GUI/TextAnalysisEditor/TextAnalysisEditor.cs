@@ -165,6 +165,7 @@ namespace Medical.GUI
 
         private void newAnalysis()
         {
+            name.Caption = "";
             actionBlockEditor.empty();
         }
 

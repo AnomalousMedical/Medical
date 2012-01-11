@@ -115,11 +115,13 @@
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\AnalysisAction.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\DataRetriever.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\DecimalEqualTest.cs" />
+    <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\DecimalNotEqualTest.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\StringEqualTest.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\GreaterThanEqualTest.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\GreaterThanTest.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\LessThanEqualTest.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\LessThanTest.cs" />
+    <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\StringNotEqualTest.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\TestAction.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Tests\TrueTest.cs" />
     <Compile Include="Controller\Exam\DataDrivenExam\Analysis\Writing\BreakLine.cs" />

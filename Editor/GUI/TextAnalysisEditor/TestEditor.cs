@@ -7,13 +7,14 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class TestAnalysisEditor : AnalysisEditorComponent
+    class TestEditor : AnalysisEditorComponent
     {
         private const String GREATER_THAN = ">";
         private const String GREATER_THAN_EQUAL = ">=";
         private const String LESS_THAN = "<";
         private const String LESS_THAN_EQUAL = "<=";
         private const String EQUAL = "=";
+        private const String NOT_EQUAL = "!=";
         private const String IS_TRUE = "Is True";
 
         private StaticText variableName;
@@ -28,8 +29,8 @@ namespace Medical.GUI
 
         private int baseHeight;
 
-        public TestAnalysisEditor(AnalysisEditorComponentParent parent)
-            :base("Medical.GUI.TextAnalysisEditor.TestAnalysisEditor.layout", parent)
+        public TestEditor(AnalysisEditorComponentParent parent)
+            :base("Medical.GUI.TextAnalysisEditor.TestEditor.layout", parent)
         {
             baseHeight = widget.Height;
 
@@ -47,6 +48,7 @@ namespace Medical.GUI
             conditionCombo.addItem(LESS_THAN);
             conditionCombo.addItem(LESS_THAN_EQUAL);
             conditionCombo.addItem(EQUAL);
+            conditionCombo.addItem(NOT_EQUAL);
             conditionCombo.addItem(IS_TRUE);
 
             successEditor = new ActionBlockEditor(this);
@@ -55,7 +57,7 @@ namespace Medical.GUI
             failEditor.Removeable = false;
         }
 
-        public TestAnalysisEditor(AnalysisEditorComponentParent parent, TestAction action)
+        public TestEditor(AnalysisEditorComponentParent parent, TestAction action)
             :this(parent)
         {
             if (action is GreaterThanTest)
@@ -93,6 +95,18 @@ namespace Medical.GUI
                 StringEqualTest test = (StringEqualTest)action;
                 DataRetriever dataRetriever = test.Data;
                 setInfo(dataRetriever, EQUAL, test.TestValue);
+            }
+            else if (action is DecimalNotEqualTest)
+            {
+                DecimalNotEqualTest test = (DecimalNotEqualTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, NOT_EQUAL, test.TestValue.ToString());
+            }
+            else if (action is StringNotEqualTest)
+            {
+                StringNotEqualTest test = (StringNotEqualTest)action;
+                DataRetriever dataRetriever = test.Data;
+                setInfo(dataRetriever, NOT_EQUAL, test.TestValue);
             }
             else if (action is TrueTest)
             {
@@ -150,6 +164,15 @@ namespace Medical.GUI
                     catch (Exception)
                     {
                         return new StringEqualTest(successEditor.createAction(), failEditor.createAction(), testValueEdit.OnlyText, dataRetriever, "");
+                    }
+                case NOT_EQUAL:
+                    try
+                    {
+                        return new DecimalNotEqualTest(successEditor.createAction(), failEditor.createAction(), decimal.Parse(testValueEdit.OnlyText), dataRetriever, 0);
+                    }
+                    catch (Exception)
+                    {
+                        return new StringNotEqualTest(successEditor.createAction(), failEditor.createAction(), testValueEdit.OnlyText, dataRetriever, "");
                     }
                 case IS_TRUE:
                     return new TrueTest(successEditor.createAction(), failEditor.createAction(), dataRetriever, false);

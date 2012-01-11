@@ -76,7 +76,7 @@ namespace Medical.GUI
                 }
                 else if (action is TestAction)
                 {
-                    addChildEditor(new TestAnalysisEditor(this, (TestAction)action));
+                    addChildEditor(new TestEditor(this, (TestAction)action));
                 }
             }
             AllowLayout = true;
@@ -157,7 +157,7 @@ namespace Medical.GUI
                     addChildEditor(new ActionBlockEditor(this));
                     break;
                 case "Test":
-                    addChildEditor(new TestAnalysisEditor(this));
+                    addChildEditor(new TestEditor(this));
                     break;
             }
         }
