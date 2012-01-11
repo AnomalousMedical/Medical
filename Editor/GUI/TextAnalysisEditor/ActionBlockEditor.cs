@@ -86,9 +86,10 @@ namespace Medical.GUI
         public override void layout(int left, int top, int width)
         {
             int currentTop = childStartHeight;
+            int innerWidth = width - 5;
             foreach (AnalysisEditorComponent child in childEditors)
             {
-                child.layout(0, currentTop, width);
+                child.layout(5, currentTop, innerWidth);
                 currentTop += child.Height;
             }
             widget.setCoord(left, top, width, currentTop + extraHeight);

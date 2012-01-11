@@ -35,7 +35,7 @@ namespace Medical.GUI
             this.browserWindow = browser;
             this.timelinePropertiesController = timelinePropertiesController;
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            this.Resized += new EventHandler(TextAnalysisEditor_Resized);
 
             scrollView = (ScrollView)window.findWidget("ScrollView");
             windowWidth = scrollView.ClientCoord.width;
@@ -44,7 +44,7 @@ namespace Medical.GUI
 
             actionBlockEditor = new ActionBlockEditor(this);
             actionBlockEditor.Removeable = false;
-            layout((int)scrollView.ClientCoord.width);
+            layoutEditor();
 
             MenuBar menuBar = (MenuBar)window.findWidget("Menu");
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
@@ -63,24 +63,25 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
+        void TextAnalysisEditor_Resized(object sender, EventArgs e)
         {
             if (scrollView.ClientCoord.width != windowWidth)
             {
                 windowWidth = scrollView.ClientCoord.width;
-                layout((int)scrollView.ClientCoord.width);
+                layoutEditor();
             }
         }
 
-        private void layout(int newWidth)
+        private void layoutEditor()
         {
+            int newWidth = scrollView.ClientCoord.width;
             actionBlockEditor.layout(0, 0, newWidth);
             scrollView.CanvasSize = new Engine.Size2(newWidth, actionBlockEditor.Height);
         }
 
         public void requestLayout()
         {
-            layout((int)scrollView.ClientCoord.width);
+            layoutEditor();
         }
 
         public AnalysisEditorComponentParent Parent

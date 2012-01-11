@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="81 33 365 315" layer="Overlapped">
         <Property key="Widget_Caption" value="Text Analysis Editor"/>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="1 69 365 227" align="Stretch" name="ScrollView">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 69 360 227" align="Stretch" name="ScrollView">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 365 26" align="HStretch Top" name="Menu"/>
