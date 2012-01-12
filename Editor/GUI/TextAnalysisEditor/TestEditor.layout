@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanel2" position="96 99 291 105" layer="Back">
+    <Widget type="Widget" skin="CustomPanel2" position="96 99 291 66" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="2 7 10 16">
             <Property key="Widget_Caption" value="If"/>
+            <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="53 30 66 26" align="Left Top" name="ConditionCombo"/>
-        <Widget type="StaticText" skin="StaticText" position="3 66 55 16" name="SuccessText">
+        <Widget type="ComboBox" skin="ComboBox" position="63 2 66 26" align="Left Top" name="ConditionCombo"/>
+        <Widget type="StaticText" skin="StaticText" position="3 29 55 16" name="SuccessText">
             <Property key="Widget_Caption" value="Success"/>
+            <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 84 29 16" name="FailText">
+        <Widget type="StaticText" skin="StaticText" position="3 46 29 16" name="FailText">
             <Property key="Widget_Caption" value="Fail"/>
+            <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="225 2 64 26" align="Right Top" name="Remove">
-            <Property key="Widget_Caption" value="Remove"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="3 30 49 26" align="Left Top" name="VariableButton">
+        <Widget type="Button" skin="Button" position="14 2 49 26" align="Left Top" name="VariableButton">
             <Property key="Widget_Caption" value="Choose"/>
             <Property key="Text_TextAlign" value="Left VCenter"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="121 30 70 26" align="Left Top" name="TestValueEdit"/>
+        <Widget type="Edit" skin="Edit" position="130 2 70 26" align="Left Top" name="TestValueEdit"/>
     </Widget>
 </MyGUI>

@@ -26,6 +26,7 @@ namespace Medical.GUI
         private MenuItem saveItem;
         private MenuItem openItem;
         private MenuItem newItem;
+        private MenuItem removeItem;
         private Edit name;
 
         private VariableChosenCallback variableChosenCallback;
@@ -44,9 +45,7 @@ namespace Medical.GUI
             name = (Edit)window.findWidget("Name");
 
             actionBlockEditor = new ActionBlockEditor(this);
-            actionBlockEditor.Removeable = false;
             layoutEditor();
-            SelectedComponent = actionBlockEditor;
 
             MenuBar menuBar = (MenuBar)window.findWidget("Menu");
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
@@ -57,6 +56,11 @@ namespace Medical.GUI
             openItem = fileMenu.addItem("Open");
             refreshVariables = fileMenu.addItem("Refresh Variables");
             inject = fileMenu.addItem("Inject");
+
+            removeItem = menuBar.addItem("Remove", MenuItemType.Normal);
+            removeItem.MouseButtonClick += new MyGUIEvent(removeItem_MouseButtonClick);
+
+            SelectedComponent = actionBlockEditor;
         }
 
         public override void Dispose()
@@ -94,6 +98,14 @@ namespace Medical.GUI
             }
         }
 
+        public ActionBlockEditor OwnerActionBlockEditor
+        {
+            get
+            {
+                return actionBlockEditor;
+            }
+        }
+
         public void requestSelected(AnalysisEditorComponent component)
         {
             SelectedComponent = component;
@@ -115,6 +127,11 @@ namespace Medical.GUI
                 if (selectedComponent != null)
                 {
                     selectedComponent.Selected = true;
+                    removeItem.Enabled = selectedComponent.Removeable;
+                }
+                else
+                {
+                    removeItem.Enabled = false;
                 }
             }
         }
@@ -125,11 +142,6 @@ namespace Medical.GUI
             {
                 return scrollView;
             }
-        }
-
-        public void removeChildComponent(AnalysisEditorComponent child)
-        {
-            throw new NotImplementedException();
         }
 
         public void openVariableBrowser(VariableChosenCallback variableChosenCallback)
@@ -188,6 +200,17 @@ namespace Medical.GUI
             else if (mcae.Item == newItem)
             {
                 newAnalysis();
+            }
+        }
+
+        void removeItem_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (SelectedComponent != null && SelectedComponent.Removeable)
+            {
+                AnalysisEditorComponent component = SelectedComponent;
+                SelectedComponent = null;
+                component.OwnerActionBlockEditor.removeChildEditor(component);
+                component.Dispose();
             }
         }
 

@@ -29,7 +29,7 @@ namespace Medical.GUI
             Button addButton = (Button)widget.findWidget("AddAction");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);
 
-            childStartHeight = removeButton.Bottom;
+            childStartHeight = addButton.Top - 2;
             extraHeight = widget.Height - childStartHeight;
 
             addActionMenu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1, 1, Align.Default, "Overlapped", "");
@@ -115,21 +115,25 @@ namespace Medical.GUI
             requestLayout();
         }
 
-        public override void removeChildComponent(AnalysisEditorComponent child)
+        public void removeChildEditor(AnalysisEditorComponent child)
         {
             childEditors.Remove(child);
             requestLayout();
         }
 
-        public bool Removeable
+        public override bool Removeable
         {
             get
             {
-                return removeButton.Visible;
+                return false;
             }
-            set
+        }
+
+        public override ActionBlockEditor OwnerActionBlockEditor
+        {
+            get
             {
-                removeButton.Visible = value;
+                return this;
             }
         }
 

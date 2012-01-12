@@ -10,11 +10,11 @@ namespace Medical.GUI
     {
         void requestLayout();
 
-        void removeChildComponent(AnalysisEditorComponent child);
-
         void openVariableBrowser(VariableChosenCallback variableChosenCallback);
 
         AnalysisEditorComponentParent Parent { get; }
+
+        ActionBlockEditor OwnerActionBlockEditor { get; }
 
         Widget Widget { get; }
 

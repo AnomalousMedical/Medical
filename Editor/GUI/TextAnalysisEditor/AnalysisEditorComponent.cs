@@ -18,8 +18,6 @@ namespace Medical.GUI
             this.Parent = parent;
             AllowLayout = true;
 
-            Button remove = (Button)widget.findWidget("Remove");
-            remove.MouseButtonClick += new MyGUIEvent(remove_MouseButtonClick);
             widget.MouseButtonClick += new MyGUIEvent(widget_MouseButtonClick);
         }
 
@@ -71,11 +69,6 @@ namespace Medical.GUI
             Parent.openVariableBrowser(variableChosenCallback);
         }
 
-        public virtual void removeChildComponent(AnalysisEditorComponent child)
-        {
-            throw new NotSupportedException();
-        }
-
         public void requestLayout()
         {
             if (AllowLayout)
@@ -96,6 +89,14 @@ namespace Medical.GUI
 
         public AnalysisEditorComponentParent Parent { get; set; }
 
+        public virtual ActionBlockEditor OwnerActionBlockEditor
+        {
+            get
+            {
+                return Parent.OwnerActionBlockEditor;
+            }
+        }
+
         public Widget Widget
         {
             get
@@ -104,13 +105,15 @@ namespace Medical.GUI
             }
         }
 
-        public bool AllowLayout { get; set; }
-
-        void remove_MouseButtonClick(Widget source, EventArgs e)
+        public virtual bool Removeable
         {
-            Parent.removeChildComponent(this);
-            this.Dispose();
+            get
+            {
+                return true;
+            }
         }
+
+        public bool AllowLayout { get; set; }
 
         void widget_MouseButtonClick(Widget source, EventArgs e)
         {

@@ -53,9 +53,7 @@ namespace Medical.GUI
             conditionCombo.addItem(IS_TRUE);
 
             successEditor = new ActionBlockEditor(this);
-            successEditor.Removeable = false;
             failEditor = new ActionBlockEditor(this);
-            failEditor.Removeable = false;
         }
 
         public TestEditor(AnalysisEditorComponentParent parent, TestAction action)
@@ -196,6 +194,7 @@ namespace Medical.GUI
             {
                 this.fieldInfo = fieldInfo;
                 variableButton.Caption = fieldInfo.FullName;
+                requestLayout();
             });
         }
 
