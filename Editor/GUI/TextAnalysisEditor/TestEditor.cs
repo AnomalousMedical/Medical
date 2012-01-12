@@ -17,7 +17,7 @@ namespace Medical.GUI
         private const String NOT_EQUAL = "!=";
         private const String IS_TRUE = "Is True";
 
-        private StaticText variableName;
+        private Button variableButton;
         private StaticText successText;
         private StaticText failText;
         private DataFieldInfo fieldInfo;
@@ -28,19 +28,20 @@ namespace Medical.GUI
         private ActionBlockEditor failEditor;
 
         private int baseHeight;
+        private int minTestValueFieldWidth;
 
         public TestEditor(AnalysisEditorComponentParent parent)
             :base("Medical.GUI.TextAnalysisEditor.TestEditor.layout", parent)
         {
             baseHeight = widget.Height;
 
-            Button choose = (Button)widget.findWidget("Choose");
-            choose.MouseButtonClick += new MyGUIEvent(choose_MouseButtonClick);
+            variableButton = (Button)widget.findWidget("VariableButton");
+            variableButton.MouseButtonClick += new MyGUIEvent(variableButton_MouseButtonClick);
 
-            variableName = (StaticText)widget.findWidget("VariableName");
             successText = (StaticText)widget.findWidget("SuccessText");
             failText = (StaticText)widget.findWidget("FailText");
             testValueEdit = (Edit)widget.findWidget("TestValueEdit");
+            minTestValueFieldWidth = testValueEdit.Width;
 
             conditionCombo = (ComboBox)widget.findWidget("ConditionCombo");
             conditionCombo.addItem(GREATER_THAN);
@@ -135,6 +136,15 @@ namespace Medical.GUI
 
         public override void layout(int left, int top, int width)
         {
+            int variableButtonWidth = (int)variableButton.getTextSize().Width;
+            if (variableButtonWidth + conditionCombo.Width + minTestValueFieldWidth > width)
+            {
+                variableButtonWidth = width - (conditionCombo.Width + minTestValueFieldWidth);
+            }
+            variableButton.setSize(variableButtonWidth, variableButton.Height);
+            conditionCombo.setPosition(variableButton.Right, conditionCombo.Top);
+            testValueEdit.setCoord(conditionCombo.Right, testValueEdit.Top, width - conditionCombo.Right, testValueEdit.Height);
+
             int indent = left + 15;
             int indentWidth = width - indent;
             successEditor.layout(indent, successText.Bottom, indentWidth);
@@ -180,12 +190,12 @@ namespace Medical.GUI
             throw new NotImplementedException();
         }
 
-        void choose_MouseButtonClick(Widget source, EventArgs e)
+        void variableButton_MouseButtonClick(Widget source, EventArgs e)
         {
             Parent.openVariableBrowser(delegate(DataFieldInfo fieldInfo)
             {
                 this.fieldInfo = fieldInfo;
-                variableName.Caption = fieldInfo.FullName;
+                variableButton.Caption = fieldInfo.FullName;
             });
         }
 
@@ -200,7 +210,7 @@ namespace Medical.GUI
             }
             sb.Remove(0, 1);
             fieldInfo = new DataFieldInfo(sb.ToString(), dataRetriever.DataPoint);
-            variableName.Caption = fieldInfo.FullName;
+            variableButton.Caption = fieldInfo.FullName;
             testValueEdit.Caption = testValue;
         }
     }

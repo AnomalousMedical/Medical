@@ -16,6 +16,7 @@ namespace Medical.GUI
         private BrowserWindow browserWindow;
         private Browser browser = new Browser("Variables");
         private TimelinePropertiesController timelinePropertiesController;
+        private AnalysisEditorComponent selectedComponent;
 
         private ActionBlockEditor actionBlockEditor;
         private ScrollView scrollView;
@@ -45,6 +46,7 @@ namespace Medical.GUI
             actionBlockEditor = new ActionBlockEditor(this);
             actionBlockEditor.Removeable = false;
             layoutEditor();
+            SelectedComponent = actionBlockEditor;
 
             MenuBar menuBar = (MenuBar)window.findWidget("Menu");
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
@@ -89,6 +91,31 @@ namespace Medical.GUI
             get
             {
                 return null;
+            }
+        }
+
+        public void requestSelected(AnalysisEditorComponent component)
+        {
+            SelectedComponent = component;
+        }
+
+        public AnalysisEditorComponent SelectedComponent
+        {
+            get
+            {
+                return selectedComponent;
+            }
+            set
+            {
+                if (selectedComponent != null)
+                {
+                    selectedComponent.Selected = false;
+                }
+                selectedComponent = value;
+                if (selectedComponent != null)
+                {
+                    selectedComponent.Selected = true;
+                }
             }
         }
 
@@ -166,6 +193,7 @@ namespace Medical.GUI
 
         private void newAnalysis()
         {
+            SelectedComponent = actionBlockEditor;
             name.Caption = "";
             actionBlockEditor.empty();
         }
@@ -180,6 +208,7 @@ namespace Medical.GUI
                     {
                         using (XmlTextReader xmlReader = new XmlTextReader(openDialog.Path))
                         {
+                            SelectedComponent = actionBlockEditor;
                             XmlSaver xmlSaver = new XmlSaver();
                             DataDrivenExamTextAnalyzer analyzer = (DataDrivenExamTextAnalyzer)xmlSaver.restoreObject(xmlReader);
                             actionBlockEditor.createFromAnalyzer(analyzer.Analysis);

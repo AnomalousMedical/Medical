@@ -17,5 +17,7 @@ namespace Medical.GUI
         AnalysisEditorComponentParent Parent { get; }
 
         Widget Widget { get; }
+
+        void requestSelected(AnalysisEditorComponent component);
     }
 }
