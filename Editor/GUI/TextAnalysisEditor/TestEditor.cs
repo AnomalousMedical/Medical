@@ -153,6 +153,10 @@ namespace Medical.GUI
 
         public override AnalysisAction createAction()
         {
+            if (fieldInfo == null)
+            {
+                throw new AnalysisCompilationError("Field not specified for test.");
+            }
             DataRetriever dataRetriever = fieldInfo.createDataRetriever();
             switch (conditionCombo.SelectedItemName)
             {

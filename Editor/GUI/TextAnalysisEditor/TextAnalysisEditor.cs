@@ -27,6 +27,7 @@ namespace Medical.GUI
         private MenuItem openItem;
         private MenuItem newItem;
         private MenuItem removeItem;
+        private MenuItem addItem;
         private Edit name;
 
         private VariableChosenCallback variableChosenCallback;
@@ -56,6 +57,15 @@ namespace Medical.GUI
             openItem = fileMenu.addItem("Open");
             refreshVariables = fileMenu.addItem("Refresh Variables");
             inject = fileMenu.addItem("Inject");
+
+            addItem = menuBar.addItem("Add", MenuItemType.Popup);
+
+            MenuCtrl addMenuItem = menuBar.createItemPopupMenuChild(addItem);
+            addMenuItem.ItemAccept += new MyGUIEvent(addMenuItem_ItemAccept);
+            addMenuItem.addItem("Start Paragraph", MenuItemType.Normal, "StartParagraph");
+            addMenuItem.addItem("End Paragraph", MenuItemType.Normal, "EndParagraph");
+            addMenuItem.addItem("Write", MenuItemType.Normal, "Write");
+            addMenuItem.addItem("Test", MenuItemType.Normal, "Test");
 
             removeItem = menuBar.addItem("Remove", MenuItemType.Normal);
             removeItem.MouseButtonClick += new MyGUIEvent(removeItem_MouseButtonClick);
@@ -200,6 +210,30 @@ namespace Medical.GUI
             else if (mcae.Item == newItem)
             {
                 newAnalysis();
+            }
+        }
+
+        void addMenuItem_ItemAccept(Widget source, EventArgs e)
+        {
+            if (SelectedComponent != null)
+            {
+                ActionBlockEditor actionBlock = SelectedComponent.OwnerActionBlockEditor;
+                MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+                switch (mcae.Item.ItemId)
+                {
+                    case "StartParagraph":
+                        actionBlock.addChildEditor(new StartParagraphEditor(actionBlock));
+                        break;
+                    case "EndParagraph":
+                        actionBlock.addChildEditor(new EndParagraphEditor(actionBlock));
+                        break;
+                    case "Write":
+                        actionBlock.addChildEditor(new WriteEditor(actionBlock));
+                        break;
+                    case "Test":
+                        actionBlock.addChildEditor(new TestEditor(actionBlock));
+                        break;
+                }
             }
         }
 
