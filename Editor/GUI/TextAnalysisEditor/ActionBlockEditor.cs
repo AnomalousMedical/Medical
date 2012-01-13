@@ -47,24 +47,36 @@ namespace Medical.GUI
         {
             AllowLayout = false;
             empty();
-            foreach (AnalysisAction action in actionBlock.Actions)
+            mergeActionBlock(actionBlock);
+            AllowLayout = true;
+            requestLayout();
+        }
+
+        public void addFromAction(AnalysisAction action)
+        {
+            AllowLayout = false;
+            if (action is ActionBlock)
             {
-                if (action is StartParagraph)
-                {
-                    addChildEditor(new StartParagraphEditor(this));
-                }
-                else if (action is EndParagraph)
-                {
-                    addChildEditor(new EndParagraphEditor(this));
-                }
-                else if (action is Write)
-                {
-                    addChildEditor(new WriteEditor(this, (Write)action));
-                }
-                else if (action is TestAction)
-                {
-                    addChildEditor(new TestEditor(this, (TestAction)action));
-                }
+                mergeActionBlock((ActionBlock)action);
+            }
+            else
+            {
+                addChildEditor(createEditorFromAction(action));
+            }
+            AllowLayout = true;
+            requestLayout();
+        }
+
+        public void insertFromAction(AnalysisAction action, AnalysisEditorComponent before)
+        {
+            AllowLayout = false;
+            if (action is ActionBlock)
+            {
+                mergeInsertActionBlock((ActionBlock)action, before);
+            }
+            else
+            {
+                insertChildEditor(createEditorFromAction(action), before);
             }
             AllowLayout = true;
             requestLayout();
@@ -144,6 +156,43 @@ namespace Medical.GUI
             {
                 child.Dispose();
             }
+        }
+
+        private void mergeActionBlock(ActionBlock actionBlock)
+        {
+            foreach (AnalysisAction action in actionBlock.Actions)
+            {
+                addChildEditor(createEditorFromAction(action));
+            }
+        }
+
+        private void mergeInsertActionBlock(ActionBlock actionBlock, AnalysisEditorComponent before)
+        {
+            foreach (AnalysisAction action in actionBlock.Actions)
+            {
+                insertChildEditor(createEditorFromAction(action), before);
+            }
+        }
+
+        private AnalysisEditorComponent createEditorFromAction(AnalysisAction action)
+        {
+            if (action is StartParagraph)
+            {
+                return new StartParagraphEditor(this);
+            }
+            else if (action is EndParagraph)
+            {
+                return new EndParagraphEditor(this);
+            }
+            else if (action is Write)
+            {
+                return new WriteEditor(this, (Write)action);
+            }
+            else if (action is TestAction)
+            {
+                return new TestEditor(this, (TestAction)action);
+            }
+            throw new NotSupportedException();
         }
     }
 }

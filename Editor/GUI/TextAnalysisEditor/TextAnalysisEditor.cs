@@ -17,6 +17,7 @@ namespace Medical.GUI
         private Browser browser = new Browser("Variables");
         private TimelinePropertiesController timelinePropertiesController;
         private AnalysisEditorComponent selectedComponent;
+        private SaveableClipboard clipboard;
 
         private ActionBlockEditor actionBlockEditor;
         private ScrollView scrollView;
@@ -31,9 +32,10 @@ namespace Medical.GUI
 
         private VariableChosenCallback variableChosenCallback;
 
-        public TextAnalysisEditor(BrowserWindow browser, TimelinePropertiesController timelinePropertiesController)
+        public TextAnalysisEditor(BrowserWindow browser, TimelinePropertiesController timelinePropertiesController, SaveableClipboard clipboard)
             : base("Medical.GUI.TextAnalysisEditor.TextAnalysisEditor.layout")
         {
+            this.clipboard = clipboard;
             this.browserWindow = browser;
             this.timelinePropertiesController = timelinePropertiesController;
 
@@ -57,6 +59,14 @@ namespace Medical.GUI
             refreshVariables = fileMenu.addItem("Refresh Variables");
             inject = fileMenu.addItem("Inject");
 
+            MenuItem edit = menuBar.addItem("Edit", MenuItemType.Popup);
+            MenuCtrl editItem = menuBar.createItemPopupMenuChild(edit);
+            editItem.ItemAccept += new MyGUIEvent(editItem_ItemAccept);
+            editItem.addItem("Cut", MenuItemType.Normal, "Cut");
+            editItem.addItem("Copy", MenuItemType.Normal, "Copy");
+            editItem.addItem("Paste", MenuItemType.Normal, "Paste");
+            editItem.addItem("Insert Paste", MenuItemType.Normal, "InsertPaste");
+
             MenuItem addItem = menuBar.addItem("Add", MenuItemType.Popup);
             MenuCtrl addMenuItem = menuBar.createItemPopupMenuChild(addItem);
             addMenuItem.ItemAccept += new MyGUIEvent(addMenuItem_ItemAccept);
@@ -64,7 +74,6 @@ namespace Medical.GUI
             addMenuItem.addItem("End Paragraph", MenuItemType.Normal, "EndParagraph");
             addMenuItem.addItem("Write", MenuItemType.Normal, "Write");
             addMenuItem.addItem("Test", MenuItemType.Normal, "Test");
-
 
             MenuItem insert = menuBar.addItem("Insert", MenuItemType.Popup);
             MenuCtrl insertItem = menuBar.createItemPopupMenuChild(insert);
@@ -263,6 +272,55 @@ namespace Medical.GUI
                         break;
                     case "Test":
                         actionBlock.insertChildEditor(new TestEditor(actionBlock), SelectedComponent);
+                        break;
+                }
+            }
+        }
+
+        void editItem_ItemAccept(Widget source, EventArgs e)
+        {
+            if (SelectedComponent != null)
+            {
+                ActionBlockEditor actionBlock = SelectedComponent.OwnerActionBlockEditor;
+                MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+                AnalysisAction action;
+                switch (mcae.Item.ItemId)
+                {
+                    case "Cut":
+                        clipboard.copyToSourceObject(SelectedComponent.createAction());
+                        if (SelectedComponent != null)
+                        {
+                            if (SelectedComponent.Removeable)
+                            {
+                                AnalysisEditorComponent component = SelectedComponent;
+                                SelectedComponent = null;
+                                component.OwnerActionBlockEditor.removeChildEditor(component);
+                                component.Dispose();
+                            }
+                            else
+                            {
+                                ActionBlockEditor block = SelectedComponent as ActionBlockEditor;
+                                if (block != null)
+                                {
+                                    block.empty();
+                                }
+                            }
+                        }
+                        break;
+                    case "Copy":
+                        clipboard.copyToSourceObject(SelectedComponent.createAction());
+                        break;
+                    case "Paste":
+                        if (clipboard.HasSourceObject && (action = clipboard.createCopy<AnalysisAction>()) != null)
+                        {
+                            actionBlock.addFromAction(action);
+                        }
+                        break;
+                    case "InsertPaste":
+                        if (clipboard.HasSourceObject && (action = clipboard.createCopy<AnalysisAction>()) != null)
+                        {
+                            actionBlock.insertFromAction(action, SelectedComponent);
+                        }
                         break;
                 }
             }

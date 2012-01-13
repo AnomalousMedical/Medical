@@ -119,7 +119,7 @@ namespace Medical
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(advancedMandibleMovement);
 
-            textAnalysisEditor = new TextAnalysisEditor(browserWindow, timelinePropertiesController);
+            textAnalysisEditor = new TextAnalysisEditor(browserWindow, timelinePropertiesController, standaloneController.Clipboard);
             guiManager.addManagedDialog(textAnalysisEditor);
 
             //Tasks Menu
