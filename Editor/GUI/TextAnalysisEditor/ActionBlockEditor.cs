@@ -43,6 +43,12 @@ namespace Medical.GUI
             requestLayout();
         }
 
+        public override void cut(SaveableClipboard clipboard)
+        {
+            clipboard.copyToSourceObject(createAction());
+            empty();
+        }
+
         public void createFromAnalyzer(ActionBlock actionBlock)
         {
             AllowLayout = false;
@@ -130,6 +136,10 @@ namespace Medical.GUI
 
         public void removeChildEditor(AnalysisEditorComponent child)
         {
+            if (child.Selected)
+            {
+                requestSelected();
+            }
             childEditors.Remove(child);
             requestLayout();
         }

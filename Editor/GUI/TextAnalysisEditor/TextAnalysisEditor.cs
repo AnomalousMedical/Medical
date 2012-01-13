@@ -283,44 +283,19 @@ namespace Medical.GUI
             {
                 ActionBlockEditor actionBlock = SelectedComponent.OwnerActionBlockEditor;
                 MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
-                AnalysisAction action;
                 switch (mcae.Item.ItemId)
                 {
                     case "Cut":
-                        clipboard.copyToSourceObject(SelectedComponent.createAction());
-                        if (SelectedComponent != null)
-                        {
-                            if (SelectedComponent.Removeable)
-                            {
-                                AnalysisEditorComponent component = SelectedComponent;
-                                SelectedComponent = null;
-                                component.OwnerActionBlockEditor.removeChildEditor(component);
-                                component.Dispose();
-                            }
-                            else
-                            {
-                                ActionBlockEditor block = SelectedComponent as ActionBlockEditor;
-                                if (block != null)
-                                {
-                                    block.empty();
-                                }
-                            }
-                        }
+                        SelectedComponent.cut(clipboard);
                         break;
                     case "Copy":
-                        clipboard.copyToSourceObject(SelectedComponent.createAction());
+                        SelectedComponent.copy(clipboard);
                         break;
                     case "Paste":
-                        if (clipboard.HasSourceObject && (action = clipboard.createCopy<AnalysisAction>()) != null)
-                        {
-                            actionBlock.addFromAction(action);
-                        }
+                        SelectedComponent.paste(clipboard);
                         break;
                     case "InsertPaste":
-                        if (clipboard.HasSourceObject && (action = clipboard.createCopy<AnalysisAction>()) != null)
-                        {
-                            actionBlock.insertFromAction(action, SelectedComponent);
-                        }
+                        SelectedComponent.paste(clipboard);
                         break;
                 }
             }
@@ -331,7 +306,6 @@ namespace Medical.GUI
             if (SelectedComponent != null && SelectedComponent.Removeable)
             {
                 AnalysisEditorComponent component = SelectedComponent;
-                SelectedComponent = null;
                 component.OwnerActionBlockEditor.removeChildEditor(component);
                 component.Dispose();
             }

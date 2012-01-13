@@ -87,6 +87,36 @@ namespace Medical.GUI
             requestSelected(this);
         }
 
+        public virtual void cut(SaveableClipboard clipboard)
+        {
+            clipboard.copyToSourceObject(createAction());
+            OwnerActionBlockEditor.removeChildEditor(this);
+            Dispose();
+        }
+
+        public virtual void copy(SaveableClipboard clipboard)
+        {
+            clipboard.copyToSourceObject(createAction());
+        }
+
+        public virtual void paste(SaveableClipboard clipboard)
+        {
+            AnalysisAction action;
+            if (clipboard.HasSourceObject && (action = clipboard.createCopy<AnalysisAction>()) != null)
+            {
+                OwnerActionBlockEditor.addFromAction(action);
+            }
+        }
+
+        public virtual void insertPaste(SaveableClipboard clipboard)
+        {
+            AnalysisAction action;
+            if (clipboard.HasSourceObject && (action = clipboard.createCopy<AnalysisAction>()) != null)
+            {
+                OwnerActionBlockEditor.insertFromAction(action, this);
+            }
+        }
+
         public AnalysisEditorComponentParent Parent { get; set; }
 
         public virtual ActionBlockEditor OwnerActionBlockEditor
