@@ -20,10 +20,13 @@ namespace Medical.GUI
         private int childStartHeight;
         private int extraHeight;
 
-        public ActionBlockEditor(AnalysisEditorComponentParent parent)
+        public ActionBlockEditor(String name, AnalysisEditorComponentParent parent)
             :base("Medical.GUI.TextAnalysisEditor.ActionBlockEditor.layout", parent)
         {
-            childStartHeight = 16;
+            StaticText actionBlockText = (StaticText)widget.findWidget("ActionBlockText");
+            actionBlockText.Caption = name;
+
+            childStartHeight = actionBlockText.Bottom;
             extraHeight = widget.Height - childStartHeight;
         }
 
@@ -96,6 +99,20 @@ namespace Medical.GUI
         public void addChildEditor(AnalysisEditorComponent child)
         {
             childEditors.Add(child);
+            requestLayout();
+        }
+
+        public void insertChildEditor(AnalysisEditorComponent newChild, AnalysisEditorComponent before)
+        {
+            int index = childEditors.IndexOf(before);
+            if (index != -1)
+            {
+                childEditors.Insert(index, newChild);
+            }
+            else
+            {
+                childEditors.Add(newChild);
+            }
             requestLayout();
         }
 

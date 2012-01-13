@@ -27,7 +27,6 @@ namespace Medical.GUI
         private MenuItem openItem;
         private MenuItem newItem;
         private MenuItem removeItem;
-        private MenuItem addItem;
         private Edit name;
 
         private VariableChosenCallback variableChosenCallback;
@@ -45,7 +44,7 @@ namespace Medical.GUI
 
             name = (Edit)window.findWidget("Name");
 
-            actionBlockEditor = new ActionBlockEditor(this);
+            actionBlockEditor = new ActionBlockEditor("Document", this);
             layoutEditor();
 
             MenuBar menuBar = (MenuBar)window.findWidget("Menu");
@@ -58,14 +57,22 @@ namespace Medical.GUI
             refreshVariables = fileMenu.addItem("Refresh Variables");
             inject = fileMenu.addItem("Inject");
 
-            addItem = menuBar.addItem("Add", MenuItemType.Popup);
-
+            MenuItem addItem = menuBar.addItem("Add", MenuItemType.Popup);
             MenuCtrl addMenuItem = menuBar.createItemPopupMenuChild(addItem);
             addMenuItem.ItemAccept += new MyGUIEvent(addMenuItem_ItemAccept);
             addMenuItem.addItem("Start Paragraph", MenuItemType.Normal, "StartParagraph");
             addMenuItem.addItem("End Paragraph", MenuItemType.Normal, "EndParagraph");
             addMenuItem.addItem("Write", MenuItemType.Normal, "Write");
             addMenuItem.addItem("Test", MenuItemType.Normal, "Test");
+
+
+            MenuItem insert = menuBar.addItem("Insert", MenuItemType.Popup);
+            MenuCtrl insertItem = menuBar.createItemPopupMenuChild(insert);
+            insertItem.ItemAccept += new MyGUIEvent(insertMenuItem_ItemAccept);
+            insertItem.addItem("Start Paragraph", MenuItemType.Normal, "StartParagraph");
+            insertItem.addItem("End Paragraph", MenuItemType.Normal, "EndParagraph");
+            insertItem.addItem("Write", MenuItemType.Normal, "Write");
+            insertItem.addItem("Test", MenuItemType.Normal, "Test");
 
             removeItem = menuBar.addItem("Remove", MenuItemType.Normal);
             removeItem.MouseButtonClick += new MyGUIEvent(removeItem_MouseButtonClick);
@@ -232,6 +239,30 @@ namespace Medical.GUI
                         break;
                     case "Test":
                         actionBlock.addChildEditor(new TestEditor(actionBlock));
+                        break;
+                }
+            }
+        }
+
+        void insertMenuItem_ItemAccept(Widget source, EventArgs e)
+        {
+            if (SelectedComponent != null)
+            {
+                ActionBlockEditor actionBlock = SelectedComponent.OwnerActionBlockEditor;
+                MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+                switch (mcae.Item.ItemId)
+                {
+                    case "StartParagraph":
+                        actionBlock.insertChildEditor(new StartParagraphEditor(actionBlock), SelectedComponent);
+                        break;
+                    case "EndParagraph":
+                        actionBlock.insertChildEditor(new EndParagraphEditor(actionBlock), SelectedComponent);
+                        break;
+                    case "Write":
+                        actionBlock.insertChildEditor(new WriteEditor(actionBlock), SelectedComponent);
+                        break;
+                    case "Test":
+                        actionBlock.insertChildEditor(new TestEditor(actionBlock), SelectedComponent);
                         break;
                 }
             }

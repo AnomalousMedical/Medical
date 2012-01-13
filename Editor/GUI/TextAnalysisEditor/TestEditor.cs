@@ -52,8 +52,8 @@ namespace Medical.GUI
             conditionCombo.addItem(NOT_EQUAL);
             conditionCombo.addItem(IS_TRUE);
 
-            successEditor = new ActionBlockEditor(this);
-            failEditor = new ActionBlockEditor(this);
+            successEditor = new ActionBlockEditor("Success", this);
+            failEditor = new ActionBlockEditor("Failure", this);
         }
 
         public TestEditor(AnalysisEditorComponentParent parent, TestAction action)
