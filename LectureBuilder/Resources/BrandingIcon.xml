@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="LectureBuilder/BrandingImage">
+  <Group name="Icons" texture="LectureBuilder.Resources.BrandingIcon.png" size="100 100">
+    <Index name="Icon">
+      <Frame point="0 0"/>
+    </Index>
+  </Group>
+</Resource>
+
+</MyGUI>

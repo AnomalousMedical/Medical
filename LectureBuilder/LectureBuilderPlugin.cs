@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical;
 using Engine.ObjectManagement;
+using MyGUIPlugin;
 
 namespace LectureBuilder
 {
@@ -21,7 +22,7 @@ namespace LectureBuilder
 
         public void loadGUIResources()
         {
-            
+            Gui.Instance.load("LectureBuilder.Resources.Imagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -74,7 +75,7 @@ namespace LectureBuilder
         {
             get
             {
-                return "";
+                return "LectureBuilder/BrandingImage";
             }
         }
 
