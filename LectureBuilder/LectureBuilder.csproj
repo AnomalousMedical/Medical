@@ -61,4 +61,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <UsingTask TaskName="WriteSubversionVersion" AssemblyFile="$(MSBUILD_EXT_HOME)\Anomalous\bin\Release\AnomalousMSBuild.dll" />
+  <Target Name="BeforeBuild">
+    <WriteSubversionVersion Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
+  </Target>
 </Project>
