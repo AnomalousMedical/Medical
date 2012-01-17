@@ -14,6 +14,8 @@ namespace LectureBuilder
         private TimelineController lectureTimelineController;
         private TimelineController mainTimelineController;
 
+        private LectureCompanion lecComp;
+
         private Edit name;
         private MultiList slides;
 
@@ -47,7 +49,41 @@ namespace LectureBuilder
             LectureCompanion = new LectureCompanion();
         }
 
-        public LectureCompanion LectureCompanion { get; set; }
+        public LectureCompanion LectureCompanion
+        {
+            get
+            {
+                return lecComp;
+            }
+            set
+            {
+                if (lecComp != null)
+                {
+                    lecComp.SlideAdded -= lecComp_SlideAdded;
+                    lecComp.SlideRemoved -= lecComp_SlideRemoved;
+                }
+                lecComp = value;
+                if (lecComp != null)
+                {
+                    lecComp.SlideAdded += lecComp_SlideAdded;
+                    lecComp.SlideRemoved += lecComp_SlideRemoved;
+                }
+            }
+        }
+
+        void lecComp_SlideRemoved(string name)
+        {
+            uint index;
+            if (slides.findSubItemWith(0, name, out index))
+            {
+                slides.removeItemAt(index);
+            }
+        }
+
+        void lecComp_SlideAdded(string name)
+        {
+            slides.addItem(name);
+        }
 
         void remove_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -55,7 +91,6 @@ namespace LectureBuilder
             {
                 uint selectedIndex = slides.getIndexSelected();
                 LectureCompanion.deleteSlide(slides.getItemNameAt(selectedIndex), lectureTimelineController);
-                slides.removeItemAt(selectedIndex);
             }
         }
 
@@ -67,8 +102,28 @@ namespace LectureBuilder
 
         void capture_MouseButtonClick(Widget source, EventArgs e)
         {
-            LectureCompanion.addSlide(name.OnlyText, lectureTimelineController);
-            slides.addItem(name.OnlyText);
+            String slideName = name.OnlyText;
+            if (!String.IsNullOrEmpty(slideName))
+            {
+                if (LectureCompanion.hasSlide(slideName))
+                {
+                    MessageBox.show(String.Format("Are you sure you want to overwrite the slide named '{0}'.", slideName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+                    {
+                        if (result == MessageBoxStyle.Yes)
+                        {
+                            LectureCompanion.addSlide(slideName, lectureTimelineController);
+                        }
+                    });
+                }
+                else
+                {
+                    LectureCompanion.addSlide(slideName, lectureTimelineController);
+                }
+            }
+            else
+            {
+                MessageBox.show("Please enter a name for this slide.", "No Name", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
         }
     }
 }

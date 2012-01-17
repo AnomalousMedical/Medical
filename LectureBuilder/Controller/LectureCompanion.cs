@@ -9,6 +9,11 @@ namespace LectureBuilder
 {
     class LectureCompanion : Saveable
     {
+        public delegate void SlideEvent(String name);
+
+        public event SlideEvent SlideAdded;
+        public event SlideEvent SlideRemoved;
+
         private List<String> slides = new List<String>();
 
         public LectureCompanion()
@@ -37,13 +42,30 @@ namespace LectureBuilder
             timeline.addAction(musclePosition);
             musclePosition.capture();
 
-            slides.Add(name);
+            if (!slides.Contains(name))
+            {
+                slides.Add(name);
+                if (SlideAdded != null)
+                {
+                    SlideAdded.Invoke(name);
+                }
+            }
             timelineController.saveTimeline(timeline, name);
         }
 
         public void deleteSlide(String name, TimelineController timelineController)
         {
+            if (SlideRemoved != null)
+            {
+                SlideRemoved.Invoke(name);
+            }
             timelineController.deleteFile(name);
+            slides.Remove(name);
+        }
+
+        public bool hasSlide(String name)
+        {
+            return slides.Contains(name);
         }
 
         public void preview(TimelineController timelineController)
@@ -68,6 +90,14 @@ namespace LectureBuilder
             timelineController.saveTimeline(timeline, "Startup.tl");
             timeline.SourceFile = "Startup.tl";
             timelineController.startPlayback(timeline);
+        }
+
+        public int SlideCount
+        {
+            get
+            {
+                return slides.Count;
+            }
         }
 
         protected LectureCompanion(LoadInfo info)
