@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="52 30 229 311" layer="Back">
+        <Property key="Widget_Caption" value="Lecture Builder"/>
+        <Widget type="StaticText" skin="StaticText" position="3 1 41 16">
+            <Property key="Widget_Caption" value="Slides"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 187 67 26" align="Left Bottom" name="MoveUp">
+            <Property key="Widget_Caption" value="Move Up"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="75 187 80 26" align="Left Bottom" name="MoveDown">
+            <Property key="Widget_Caption" value="Move Down"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="157 232 66 26" align="Left Bottom" name="Capture">
+            <Property key="Widget_Caption" value="Capture"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="157 187 69 26" align="Left Bottom" name="Remove">
+            <Property key="Widget_Caption" value="Remove"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 262 67 26" align="Left Bottom" name="Preview">
+            <Property key="Widget_Caption" value="Preview"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="4 216 118 16" align="Left Bottom">
+            <Property key="Widget_Caption" value="Name"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="5 232 150 26" align="Left Bottom" name="Name"/>
+        <Widget type="MultiList" skin="MultiList" position="3 17 224 167" align="Stretch" name="Slides"/>
+    </Widget>
+</MyGUI>

@@ -5,11 +5,15 @@ using System.Text;
 using Medical;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
+using Medical.GUI;
 
 namespace LectureBuilder
 {
     class LectureBuilderPlugin : AtlasPlugin
     {
+        private LectureBuilderWindow lectureBuilderWindow = null;
+        private TimelineController lectureTimelineController;
+
         public LectureBuilderPlugin()
         {
 
@@ -17,7 +21,10 @@ namespace LectureBuilder
 
         public void Dispose()
         {
-            
+            if (lectureBuilderWindow != null)
+            {
+                lectureBuilderWindow.Dispose();
+            }
         }
 
         public void loadGUIResources()
@@ -27,7 +34,15 @@ namespace LectureBuilder
 
         public void initialize(StandaloneController standaloneController)
         {
-            
+            lectureTimelineController = new TimelineController(standaloneController);
+
+            GUIManager guiManager = standaloneController.GUIManager;
+
+            lectureBuilderWindow = new LectureBuilderWindow(lectureTimelineController, standaloneController.TimelineController);
+            guiManager.addManagedDialog(lectureBuilderWindow);
+
+            TaskController taskController = standaloneController.TaskController;
+            taskController.addTask(new MDIDialogOpenTask(lectureBuilderWindow, "LectureBuilder", "Lecture Builder", "", TaskMenuCategories.Editor));
         }
 
         public void sceneLoaded(SimScene scene)

@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\LectureCompanion.cs" />
+    <Compile Include="GUI\LectureBuilderWindow.cs" />
     <Compile Include="LectureBuilderEntryPoint.cs" />
     <Compile Include="LectureBuilderPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +60,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\LectureBuilderWindow.layout" />
     <EmbeddedResource Include="Resources\BrandingIcon.png" />
   </ItemGroup>
   <ItemGroup>

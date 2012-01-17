@@ -8,7 +8,7 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    partial class DataFieldCollection : Saveable
+    public partial class DataFieldCollection : Saveable
     {
         private List<DataField> dataFields = new List<DataField>();
 

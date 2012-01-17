@@ -83,6 +83,14 @@ namespace Medical
         [Editable]
         public String PrettyName { get; set; }
 
+        public DataFieldCollection DataFields
+        {
+            get
+            {
+                return dataFields;
+            }
+        }
+
         protected DataDrivenTimelineGUIData(LoadInfo info)
             :base(info)
         {

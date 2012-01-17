@@ -18,6 +18,12 @@ namespace Medical
 
         }
 
+        public PlayExampleDataField(String name, String timeline)
+            : this(name)
+        {
+            this.Timeline = timeline;
+        }
+
         public override void createControl(DataControlFactory factory)
         {
             factory.addField(this);
