@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using System.IO;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -146,14 +147,22 @@ namespace Medical.GUI
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (File.Exists(SavePath))
+            try
             {
-                MessageBox.show(String.Format("The file {0} already exists. Would you like to overwrite it?", fileNameTextBox.Caption),
-                    "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, overwriteMessageCallback);
+                if (File.Exists(SavePath))
+                {
+                    MessageBox.show(String.Format("The file {0} already exists. Would you like to overwrite it?", fileNameTextBox.Caption),
+                        "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, overwriteMessageCallback);
+                }
+                else
+                {
+                    doSaveAndClose();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                doSaveAndClose();
+                MessageBox.show(String.Format("There was an error saving this patient.\nTry using a different file name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Exception saving patient data. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
             }
         }
 
@@ -167,11 +176,19 @@ namespace Medical.GUI
 
         private void doSaveAndClose()
         {
-            patientData = new PatientDataFile(SavePath);
-            patientData.FirstName = firstText.Caption;
-            patientData.LastName = lastText.Caption;
-            this.hide();
-            fireSaveFile();
+            try
+            {
+                patientData = new PatientDataFile(SavePath);
+                patientData.FirstName = firstText.Caption;
+                patientData.LastName = lastText.Caption;
+                this.hide();
+                fireSaveFile();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error saving this patient.\nTry using a different file name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Exception saving patient data. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+            }
         }
 
         public PatientDataFile PatientData

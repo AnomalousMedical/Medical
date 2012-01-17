@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Engine;
 using System.Drawing;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -65,7 +66,15 @@ namespace Medical.GUI
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            bookmarksController.createBookmark(bookmarkName.Caption);
+            try
+            {
+                bookmarksController.createBookmark(bookmarkName.Caption);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error creating this bookmark.\nTry using a different name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Exception saving bookmark. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+            }
         }
 
         void bookmarksController_BookmarkAdded(Bookmark bookmark)
