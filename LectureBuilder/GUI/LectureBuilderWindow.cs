@@ -46,7 +46,7 @@ namespace LectureBuilder
             slides = (MultiList)window.findWidget("Slides");
             slides.addColumn("Name", slides.ClientCoord.width);
 
-            LectureCompanion = new LectureCompanion();
+            LectureCompanion = new LectureCompanion(lectureTimelineController);
         }
 
         public LectureCompanion LectureCompanion

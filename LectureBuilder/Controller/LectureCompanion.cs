@@ -16,9 +16,12 @@ namespace LectureBuilder
 
         private List<String> slides = new List<String>();
 
-        public LectureCompanion()
+        public LectureCompanion(TimelineController timelineController)
         {
-            
+            Timeline closeTimeline = new Timeline();
+            closeTimeline.addAction(new MusclePositionAction(timelineController.MovementSequenceController.NeutralMovementState));
+            closeTimeline.addAction(new ChangeMedicalStateAction(timelineController.MedicalStateController.NormalState, 0.0f));
+            timelineController.saveTimeline(closeTimeline, "Close.tl");
         }
 
         public void addSlide(String name, TimelineController timelineController)
@@ -86,11 +89,6 @@ namespace LectureBuilder
             ShowTimelineGUIAction showTimelineGUI = new ShowTimelineGUIAction();
             showTimelineGUI.GUIData = dataDrivenGUI;
             showTimelineGUI.GUIName = "DataDrivenGUI";
-            
-            Timeline closeTimeline = new Timeline();
-            closeTimeline.addAction(new MusclePositionAction(timelineController.MovementSequenceController.NeutralMovementState));
-            closeTimeline.addAction(new ChangeMedicalStateAction(timelineController.MedicalStateController.NormalState, 0.0f));
-            timelineController.saveTimeline(closeTimeline, "Close.tl");
 
             timeline.addPreAction(showTimelineGUI);
             timeline.Fullscreen = false;
