@@ -106,6 +106,7 @@ namespace Medical.GUI
             Task task = source.Task;
             taskbarItems.Remove(task);
             taskbar.removeItem(source);
+            source.Dispose();
             taskbar.layout();
             if (task.Active)
             {
