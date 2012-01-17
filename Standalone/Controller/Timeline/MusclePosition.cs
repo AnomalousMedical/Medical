@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    class MusclePosition : Saveable
+    public class MusclePosition : Saveable
     {
         private float leftCPPosition;
         private float rightCPPosition;

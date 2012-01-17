@@ -9,6 +9,7 @@ using Logging;
 using Engine.Saving.XMLSaver;
 using Engine.Platform;
 using Engine;
+using Engine.ObjectManagement;
 
 namespace Medical.Controller
 {
@@ -39,9 +40,16 @@ namespace Medical.Controller
         private bool playing = false;
         private MovementSequenceSet currentSequenceSet = new MovementSequenceSet();
 
+        private MusclePosition neutralMovementState = new MusclePosition();
+
         public MovementSequenceController(MedicalController medicalController)
         {
             this.medicalController = medicalController;
+        }
+
+        internal void sceneLoaded(SimScene scene)
+        {
+            neutralMovementState.captureState();
         }
 
         /// <summary>
@@ -184,6 +192,17 @@ namespace Medical.Controller
                     currentTime %= currentSequence.Duration;
                 }
                 currentSequence.setPosition(currentTime);
+            }
+        }
+
+        /// <summary>
+        /// This is the muscle position that the scene has when it loads.
+        /// </summary>
+        public MusclePosition NeutralMovementState
+        {
+            get
+            {
+                return neutralMovementState;
             }
         }
 

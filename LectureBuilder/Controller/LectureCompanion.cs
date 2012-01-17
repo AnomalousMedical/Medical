@@ -80,12 +80,20 @@ namespace LectureBuilder
             }
             dataDrivenGUI.AllowSubmit = false;
             dataDrivenGUI.CancelButtonText = "Close";
+            dataDrivenGUI.PlayTimelineOnCancel = true;
+            dataDrivenGUI.CancelTimeline = "Close.tl";
 
             ShowTimelineGUIAction showTimelineGUI = new ShowTimelineGUIAction();
             showTimelineGUI.GUIData = dataDrivenGUI;
             showTimelineGUI.GUIName = "DataDrivenGUI";
+            
+            Timeline closeTimeline = new Timeline();
+            closeTimeline.addAction(new MusclePositionAction(timelineController.MovementSequenceController.NeutralMovementState));
+            closeTimeline.addAction(new ChangeMedicalStateAction(timelineController.MedicalStateController.NormalState, 0.0f));
+            timelineController.saveTimeline(closeTimeline, "Close.tl");
 
             timeline.addPreAction(showTimelineGUI);
+            timeline.Fullscreen = false;
 
             timelineController.saveTimeline(timeline, "Startup.tl");
             timeline.SourceFile = "Startup.tl";
@@ -102,12 +110,12 @@ namespace LectureBuilder
 
         protected LectureCompanion(LoadInfo info)
         {
-
+            info.RebuildList<String>("Slide", slides);
         }
 
         public void getInfo(SaveInfo info)
         {
-
+            info.ExtractList<String>("Slide", slides);
         }
     }
 }

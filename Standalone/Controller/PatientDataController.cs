@@ -32,10 +32,6 @@ namespace Medical
 
         public void saveMedicalState(PatientDataFile dataFile)
         {
-            if (medicalStateController.getNumStates() == 0)
-            {
-                medicalStateController.createNormalStateFromScene();
-            }
             dataFile.PatientData.MedicalStates = medicalStateController.getSavedState(medicalController.CurrentSceneFile);
             examController.addExamsToData(dataFile.PatientData);
             dataFile.save();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -36,7 +37,7 @@ namespace Medical
         private MedicalState directStartState;
         private MedicalState directEndState;
 
-        private MedicalState normalState;
+        private MedicalState sceneLoadNormalState;
 
         public MedicalStateController(ImageRenderer imageRenderer, MedicalController medicalController)
         {
@@ -80,14 +81,13 @@ namespace Medical
         public void addState(MedicalState state)
         {
             //No states and normal state defined, add it as the first state.
-            if (states.Count == 0 && normalState != null)
+            if (states.Count == 0)
             {
-                states.Add(normalState);
+                states.Add(sceneLoadNormalState);
                 if (StateAdded != null)
                 {
-                    StateAdded.Invoke(this, normalState);
+                    StateAdded.Invoke(this, sceneLoadNormalState);
                 }
-                normalState = null;//Normal state added, does not need to be added again so null it.
             }
             states.Add(state);
             if (state.Thumbnail == null)
@@ -113,11 +113,6 @@ namespace Medical
 
         public void clearStates()
         {
-            if (normalState != null)
-            {
-                normalState.Dispose();
-            }
-            normalState = null;
             foreach (MedicalState state in states)
             {
                 state.Dispose();
@@ -145,12 +140,21 @@ namespace Medical
         /// <summary>
         /// Use the current setup of the scene to create a "normal" state.
         /// </summary>
-        public void createNormalStateFromScene()
+        public void sceneLoaded(SimScene scene)
         {
-            normalState = this.createState("Normal");
-            normalState.Notes.Notes = "Normal";
-            normalState.Notes.DataSource = "Automatic";
-            normalState.Thumbnail = imageRenderer.renderImage(imageProperties);
+            sceneLoadNormalState = this.createState("Normal");
+            sceneLoadNormalState.Notes.Notes = "Normal";
+            sceneLoadNormalState.Notes.DataSource = "Automatic";
+            sceneLoadNormalState.Thumbnail = imageRenderer.renderImage(imageProperties);
+        }
+
+        public void sceneUnloading(SimScene scene)
+        {
+            if (sceneLoadNormalState != null)
+            {
+                sceneLoadNormalState.Dispose();
+                sceneLoadNormalState = null;
+            }
         }
 
         /// <summary>
@@ -213,6 +217,14 @@ namespace Medical
                 {
                     BlendingStopped.Invoke(this);
                 }
+            }
+        }
+
+        public MedicalState NormalState
+        {
+            get
+            {
+                return sceneLoadNormalState;
             }
         }
 

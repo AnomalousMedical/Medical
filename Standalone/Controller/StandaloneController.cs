@@ -170,10 +170,13 @@ namespace Medical
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
+            SceneLoaded += medicalStateController.sceneLoaded;
+            SceneUnloading += medicalStateController.sceneUnloading;
             tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
 
             //Movement sequences
             movementSequenceController = new MovementSequenceController(medicalController);
+            this.SceneLoaded += movementSequenceController.sceneLoaded;
 
             //Teeth mover
             teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
@@ -336,7 +339,6 @@ namespace Medical
         {
             medicalStateController.clearStates();
             bool success = changeScene(filename);
-            medicalStateController.createNormalStateFromScene();
             examController.clear();
             patientDataController.clearData();
             return success;

@@ -18,8 +18,14 @@ namespace Medical
         private float lastTime = 0.0f;
 
         public MusclePositionAction()
+            :this(new MusclePosition())
         {
-            targetState = new MusclePosition();
+            
+        }
+
+        public MusclePositionAction(MusclePosition targetState)
+        {
+            this.targetState = targetState;
             Duration = 1.0f;
         }
 

@@ -54,6 +54,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Simulation\Simulation.csproj">
+      <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
+      <Name>Simulation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Standalone\Standalone.csproj">
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>
