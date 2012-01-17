@@ -11,7 +11,7 @@ using System.Drawing.Imaging;
 
 namespace Medical.GUI
 {
-    public class RenderPropertiesDialog : MDIDialog
+    public class RenderPropertiesDialog : FixedSizeMDIDialog
     {
         private NumericEdit width;
         private NumericEdit height;

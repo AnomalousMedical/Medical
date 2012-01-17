@@ -13,7 +13,7 @@ using Medical;
 
 namespace Developer.GUI
 {
-    public class DeveloperRenderPropertiesDialog : MDIDialog
+    public class DeveloperRenderPropertiesDialog : FixedSizeMDIDialog
     {
         private NumericEdit width;
         private NumericEdit height;
