@@ -9,8 +9,8 @@ namespace LectureBuilder
 {
     class LectureCompanion : Saveable
     {
-        private readonly String CLOSE_TIMELINE = "Close.tl";
-        private readonly String STARTUP_TIMELINE = "Startup.tl";
+        private readonly String CLOSE_TIMELINE = "LectureCompanion_Close.tl";
+        private readonly String STARTUP_TIMELINE = "LectureCompanion_Startup.tl";
 
         public delegate void SlideEvent(String name);
 
@@ -23,13 +23,25 @@ namespace LectureBuilder
         public LectureCompanion(TimelineController timelineController)
         {
             Timeline closeTimeline = new Timeline();
-            closeTimeline.addAction(new MusclePositionAction(timelineController.MovementSequenceController.NeutralMovementState));
-            closeTimeline.addAction(new ChangeMedicalStateAction(timelineController.MedicalStateController.NormalState, 0.0f));
+            
+            MusclePositionAction musclePosition = new MusclePositionAction(timelineController.MovementSequenceController.NeutralMovementState);
+            musclePosition.Duration = 0.5f;
+            closeTimeline.addAction(musclePosition);
+            
+            ChangeMedicalStateAction changeState = new ChangeMedicalStateAction(timelineController.MedicalStateController.NormalState, 0.0f);
+            changeState.Duration = 0.5f;
+            closeTimeline.addAction(changeState);
+            
             timelineController.saveTimeline(closeTimeline, CLOSE_TIMELINE);
         }
 
         public void addSlide(String name, TimelineController timelineController)
         {
+            if (name.StartsWith("LectureCompanion_"))
+            {
+                throw new LectureCompanionException("A slide name cannot start with 'LectureCompanion_'. Those names are reserved.\nPlease try another.");
+            }
+
             Timeline timeline = new Timeline();
             timelineController.setAsTimelineController(timeline);
             

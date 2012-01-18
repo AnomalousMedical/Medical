@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\LectureCompanion.cs" />
+    <Compile Include="Controller\LectureCompanionException.cs" />
     <Compile Include="GUI\LectureBuilderWindow.cs" />
     <Compile Include="LectureBuilderEntryPoint.cs" />
     <Compile Include="LectureBuilderPlugin.cs" />

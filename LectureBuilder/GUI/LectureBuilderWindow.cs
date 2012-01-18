@@ -167,18 +167,31 @@ namespace LectureBuilder
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
-                            LectureCompanion.addSlide(slideName, lectureTimelineController);
+                            doAddSlide(slideName);
                         }
                     });
                 }
                 else
                 {
-                    LectureCompanion.addSlide(slideName, lectureTimelineController);
+                    doAddSlide(slideName);
                 }
             }
             else
             {
                 MessageBox.show("Please enter a name for this slide.", "No Name", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+        }
+
+        void doAddSlide(String slideName)
+        {
+            try
+            {
+                LectureCompanion.addSlide(slideName, lectureTimelineController);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error saving the slide {0}.\nReason: {1}", slideName, ex.Message), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Could not save lecture companion slide. {0}", ex.Message);
             }
         }
 
