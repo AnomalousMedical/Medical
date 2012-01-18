@@ -9,6 +9,9 @@ namespace LectureBuilder
 {
     class LectureCompanion : Saveable
     {
+        private readonly String CLOSE_TIMELINE = "Close.tl";
+        private readonly String STARTUP_TIMELINE = "Startup.tl";
+
         public delegate void SlideEvent(String name);
 
         public event SlideEvent SlideAdded;
@@ -22,7 +25,7 @@ namespace LectureBuilder
             Timeline closeTimeline = new Timeline();
             closeTimeline.addAction(new MusclePositionAction(timelineController.MovementSequenceController.NeutralMovementState));
             closeTimeline.addAction(new ChangeMedicalStateAction(timelineController.MedicalStateController.NormalState, 0.0f));
-            timelineController.saveTimeline(closeTimeline, "Close.tl");
+            timelineController.saveTimeline(closeTimeline, CLOSE_TIMELINE);
         }
 
         public void addSlide(String name, TimelineController timelineController)
@@ -92,7 +95,7 @@ namespace LectureBuilder
             return slides.Contains(name);
         }
 
-        public void preview(TimelineController timelineController)
+        public Timeline createStartupTimeline(TimelineController timelineController)
         {
             Timeline timeline = new Timeline();
 
@@ -105,7 +108,7 @@ namespace LectureBuilder
             dataDrivenGUI.AllowSubmit = false;
             dataDrivenGUI.CancelButtonText = "Close";
             dataDrivenGUI.PlayTimelineOnCancel = true;
-            dataDrivenGUI.CancelTimeline = "Close.tl";
+            dataDrivenGUI.CancelTimeline = CLOSE_TIMELINE;
 
             ShowTimelineGUIAction showTimelineGUI = new ShowTimelineGUIAction();
             showTimelineGUI.GUIData = dataDrivenGUI;
@@ -114,9 +117,9 @@ namespace LectureBuilder
             timeline.addPreAction(showTimelineGUI);
             timeline.Fullscreen = false;
 
-            timelineController.saveTimeline(timeline, "Startup.tl");
-            timeline.SourceFile = "Startup.tl";
-            timelineController.startPlayback(timeline);
+            timelineController.saveTimeline(timeline, STARTUP_TIMELINE);
+            timeline.SourceFile = STARTUP_TIMELINE;
+            return timeline;
         }
 
         public int SlideCount

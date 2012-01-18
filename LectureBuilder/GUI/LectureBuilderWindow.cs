@@ -6,6 +6,7 @@ using Medical.GUI;
 using Medical;
 using MyGUIPlugin;
 using System.IO;
+using Logging;
 
 namespace LectureBuilder
 {
@@ -15,10 +16,16 @@ namespace LectureBuilder
         private TimelineController mainTimelineController;
 
         private LectureCompanion lecComp;
+        private String currentProject = null;
 
         private Edit name;
         private ScrollView slideScroller;
         private ButtonGrid slides;
+        private Button capture;
+        private Button preview;
+        private Button remove;
+        private Button moveUp;
+        private Button moveDown;
 
         public LectureBuilderWindow(TimelineController lectureTimelineController, TimelineController mainTimelineController)
             : base("LectureBuilder.GUI.LectureBuilderWindow.layout")
@@ -26,26 +33,19 @@ namespace LectureBuilder
             this.lectureTimelineController = lectureTimelineController;
             this.mainTimelineController = mainTimelineController;
 
-            String outputPath = Path.Combine(MedicalConfig.UserDocRoot, "TEMP_LectureCompanion");
-            if (!Directory.Exists(outputPath))
-            {
-                Directory.CreateDirectory(outputPath);
-            }
-            lectureTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(outputPath);
-
-            Button capture = (Button)window.findWidget("Capture");
+            capture = (Button)window.findWidget("Capture");
             capture.MouseButtonClick += new MyGUIEvent(capture_MouseButtonClick);
 
-            Button preview = (Button)window.findWidget("Preview");
+            preview = (Button)window.findWidget("Preview");
             preview.MouseButtonClick += new MyGUIEvent(preview_MouseButtonClick);
 
-            Button remove = (Button)window.findWidget("Remove");
+            remove = (Button)window.findWidget("Remove");
             remove.MouseButtonClick += new MyGUIEvent(remove_MouseButtonClick);
 
-            Button moveUp = (Button)window.findWidget("MoveUp");
+            moveUp = (Button)window.findWidget("MoveUp");
             moveUp.MouseButtonClick += new MyGUIEvent(moveUp_MouseButtonClick);
 
-            Button moveDown = (Button)window.findWidget("MoveDown");
+            moveDown = (Button)window.findWidget("MoveDown");
             moveDown.MouseButtonClick += new MyGUIEvent(moveDown_MouseButtonClick);
 
             name = (Edit)window.findWidget("Name");
@@ -54,7 +54,14 @@ namespace LectureBuilder
             slides = new ButtonGrid(slideScroller, new ButtonGridListLayout());
             slides.ItemActivated += new EventHandler(slides_ItemActivated);
 
-            LectureCompanion = new LectureCompanion(lectureTimelineController);
+            MenuBar menuBar = (MenuBar)window.findWidget("MenuBar");
+            MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
+            PopupMenu fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
+            fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
+            fileMenu.addItem("New", MenuItemType.Normal, "New");
+            fileMenu.addItem("Open", MenuItemType.Normal, "Open");
+
+            setInterfaceEnabled(false);
         }
 
         public LectureCompanion LectureCompanion
@@ -116,7 +123,7 @@ namespace LectureBuilder
         void preview_MouseButtonClick(Widget source, EventArgs e)
         {
             mainTimelineController.ResourceProvider = lectureTimelineController.ResourceProvider.clone();
-            LectureCompanion.preview(mainTimelineController);
+            mainTimelineController.startPlayback(LectureCompanion.createStartupTimeline(mainTimelineController));
         }
 
         void moveDown_MouseButtonClick(Widget source, EventArgs e)
@@ -173,6 +180,60 @@ namespace LectureBuilder
             {
                 MessageBox.show("Please enter a name for this slide.", "No Name", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
             }
+        }
+
+        void fileMenu_ItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+            switch (mcae.Item.ItemId)
+            {
+                case "New":
+                    newClicked();
+                    break;
+                case "Open":
+                    break;
+            }
+        }
+
+        void newClicked()
+        {
+            try
+            {
+                createNewLectureCompanion("Untitled");
+                setInterfaceEnabled(true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error saving your lecture companion project to\n'{0}'\nPlease make sure that destination is valid.", currentProject), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                setInterfaceEnabled(false);
+                Log.Error("Could not create lecture companion. {0}", ex.Message);
+            }
+        }
+
+        void createNewLectureCompanion(String name)
+        {
+            currentProject = Path.Combine(MedicalConfig.UserDocRoot, "Lecture Companions", name);
+            if (Directory.Exists(currentProject))
+            {
+                Directory.Delete(currentProject, true);
+            }
+            if (!Directory.Exists(currentProject))
+            {
+                Directory.CreateDirectory(currentProject);
+            }
+            lectureTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(currentProject);
+
+            LectureCompanion = new LectureCompanion(lectureTimelineController);
+        }
+
+        void setInterfaceEnabled(bool enabled)
+        {
+            name.Enabled = enabled;
+            capture.Enabled = enabled;
+            preview.Enabled = enabled;
+            remove.Enabled = enabled;
+            moveUp.Enabled = enabled;
+            moveDown.Enabled = enabled;
         }
     }
 }

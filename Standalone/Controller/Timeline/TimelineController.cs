@@ -326,26 +326,19 @@ namespace Medical
         {
             if (resourceProvider != null)
             {
-                try
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    using (MemoryStream memoryStream = new MemoryStream())
+                    using (XmlTextWriter writer = new XmlTextWriter(memoryStream, Encoding.Default))
                     {
-                        using (XmlTextWriter writer = new XmlTextWriter(memoryStream, Encoding.Default))
-                        {
-                            writer.Formatting = Formatting.Indented;
-                            xmlSaver.saveObject(timeline, writer);
-                            writer.Flush();
+                        writer.Formatting = Formatting.Indented;
+                        xmlSaver.saveObject(timeline, writer);
+                        writer.Flush();
 
-                            memoryStream.Seek(0, SeekOrigin.Begin);
-                            resourceProvider.addStream(filename, memoryStream);
-                        }
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        resourceProvider.addStream(filename, memoryStream);
                     }
-                    timeline.SourceFile = filename;
                 }
-                catch (Exception e)
-                {
-                    Log.Error("Could not save timeline because of {0}.", e.Message);
-                }
+                timeline.SourceFile = filename;
             }
         }
 

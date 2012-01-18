@@ -184,7 +184,7 @@ namespace Medical.GUI
             stopTimelineIfPlaying();
             if (timelinePropertiesController.CurrentTimelineFile != null)
             {
-                timelineController.saveTimeline(timelinePropertiesController.CurrentTimeline, timelinePropertiesController.CurrentTimelineFile);
+                timelinePropertiesController.saveTimeline(timelinePropertiesController.CurrentTimeline, timelinePropertiesController.CurrentTimelineFile);
             }
             else
             {

@@ -180,8 +180,16 @@ namespace Medical.GUI
 
         public void saveTimeline(Timeline timeline, String filename)
         {
-            editorTimelineController.saveTimeline(timeline, filename);
-            updateWindowCaption();
+            try
+            {
+                editorTimelineController.saveTimeline(timeline, filename);
+                updateWindowCaption();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error saving your timeline to\n'{0}'\nPlease make sure that destination is valid.", filename), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Could not create lecture companion. {0}", ex.Message);
+            }
         }
 
         public void createNewTimeline()
