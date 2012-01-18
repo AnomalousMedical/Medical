@@ -17,7 +17,8 @@ namespace LectureBuilder
         private LectureCompanion lecComp;
 
         private Edit name;
-        private MultiList slides;
+        private ScrollView slideScroller;
+        private ButtonGrid slides;
 
         public LectureBuilderWindow(TimelineController lectureTimelineController, TimelineController mainTimelineController)
             : base("LectureBuilder.GUI.LectureBuilderWindow.layout")
@@ -41,10 +42,17 @@ namespace LectureBuilder
             Button remove = (Button)window.findWidget("Remove");
             remove.MouseButtonClick += new MyGUIEvent(remove_MouseButtonClick);
 
+            Button moveUp = (Button)window.findWidget("MoveUp");
+            moveUp.MouseButtonClick += new MyGUIEvent(moveUp_MouseButtonClick);
+
+            Button moveDown = (Button)window.findWidget("MoveDown");
+            moveDown.MouseButtonClick += new MyGUIEvent(moveDown_MouseButtonClick);
+
             name = (Edit)window.findWidget("Name");
 
-            slides = (MultiList)window.findWidget("Slides");
-            slides.addColumn("Name", slides.ClientCoord.width);
+            slideScroller = (ScrollView)window.findWidget("SlideScroller");
+            slides = new ButtonGrid(slideScroller, new ButtonGridListLayout());
+            slides.ItemActivated += new EventHandler(slides_ItemActivated);
 
             LectureCompanion = new LectureCompanion(lectureTimelineController);
         }
@@ -61,36 +69,47 @@ namespace LectureBuilder
                 {
                     lecComp.SlideAdded -= lecComp_SlideAdded;
                     lecComp.SlideRemoved -= lecComp_SlideRemoved;
+                    lecComp.SlideMoved -= lecComp_SlideMoved;
                 }
                 lecComp = value;
                 if (lecComp != null)
                 {
                     lecComp.SlideAdded += lecComp_SlideAdded;
                     lecComp.SlideRemoved += lecComp_SlideRemoved;
+                    lecComp.SlideMoved += lecComp_SlideMoved;
                 }
+            }
+        }
+
+        void lecComp_SlideMoved(string name)
+        {
+            slides.clear();
+            foreach (String slideName in LectureCompanion.SlideNames)
+            {
+                slides.addItem("", slideName);
             }
         }
 
         void lecComp_SlideRemoved(string name)
         {
-            uint index;
-            if (slides.findSubItemWith(0, name, out index))
+            ButtonGridItem item = slides.findItemByCaption(name);
+            if (item != null)
             {
-                slides.removeItemAt(index);
+                slides.removeItem(item);
             }
         }
 
         void lecComp_SlideAdded(string name)
         {
-            slides.addItem(name);
+            slides.addItem("", name);
         }
 
         void remove_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (slides.hasItemSelected())
+            ButtonGridItem item = slides.SelectedItem;
+            if (item != null)
             {
-                uint selectedIndex = slides.getIndexSelected();
-                LectureCompanion.deleteSlide(slides.getItemNameAt(selectedIndex), lectureTimelineController);
+                LectureCompanion.deleteSlide(item.Caption, lectureTimelineController);
             }
         }
 
@@ -98,6 +117,36 @@ namespace LectureBuilder
         {
             mainTimelineController.ResourceProvider = lectureTimelineController.ResourceProvider.clone();
             LectureCompanion.preview(mainTimelineController);
+        }
+
+        void moveDown_MouseButtonClick(Widget source, EventArgs e)
+        {
+            //ButtonGridItem item = slides.SelectedItem;
+            //if (item != null)
+            //{
+            //    uint selectedIndex = slides.getIndexSelected();
+            //    LectureCompanion.moveSlideDown(slides.getItemNameAt(selectedIndex));
+            //}
+        }
+
+        void moveUp_MouseButtonClick(Widget source, EventArgs e)
+        {
+            //if (slides.hasItemSelected())
+            //{
+            //    uint selectedIndex = slides.getIndexSelected();
+            //    LectureCompanion.moveSlideUp(slides.getItemNameAt(selectedIndex));
+            //}
+        }
+
+        void slides_ItemActivated(object sender, EventArgs e)
+        {
+            String selectedName = slides.SelectedItem.Caption;
+            Timeline tl = lectureTimelineController.openTimeline(selectedName);
+            if (tl != null)
+            {
+                lectureTimelineController.startPlayback(tl);
+            }
+            name.OnlyText = selectedName;
         }
 
         void capture_MouseButtonClick(Widget source, EventArgs e)

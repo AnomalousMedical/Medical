@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="52 30 229 311" layer="Back">
+    <Widget type="Window" skin="WindowCSX" position="52 30 229 311" layer="Overlapped">
         <Property key="Widget_Caption" value="Lecture Builder"/>
+        <Property key="Window_MinSize" value="229 311"/>
         <Widget type="StaticText" skin="StaticText" position="3 1 41 16">
             <Property key="Widget_Caption" value="Slides"/>
         </Widget>
@@ -24,6 +25,11 @@
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="5 232 150 26" align="Left Bottom" name="Name"/>
-        <Widget type="MultiList" skin="MultiList" position="3 17 224 167" align="Stretch" name="Slides"/>
+        <Widget type="ScrollView" skin="ScrollView" position="4 17 222 168" align="Stretch" name="SlideScroller">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <UserString key="ShowGroupCaptions" value="false"/>
+            <UserString key="ItemHeight" value="25"/>
+            <UserString key="ButtonSkin" value="ButtonGridButton"/>
+        </Widget>
     </Widget>
 </MyGUI>

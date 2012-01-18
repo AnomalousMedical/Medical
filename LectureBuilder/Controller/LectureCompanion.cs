@@ -13,6 +13,7 @@ namespace LectureBuilder
 
         public event SlideEvent SlideAdded;
         public event SlideEvent SlideRemoved;
+        public event SlideEvent SlideMoved;
 
         private List<String> slides = new List<String>();
 
@@ -66,6 +67,26 @@ namespace LectureBuilder
             slides.Remove(name);
         }
 
+        public void moveSlideUp(String name)
+        {
+            int oldIndex = slides.IndexOf(name);
+            if (oldIndex != -1 && oldIndex > 0)
+            {
+                int newIndex = oldIndex - 1;
+                slides.Insert(newIndex, name);
+                slides.RemoveAt(oldIndex);
+                if (SlideMoved != null)
+                {
+                    SlideMoved.Invoke(name);
+                }
+            }
+        }
+
+        public void moveSlideDown(String name)
+        {
+
+        }
+
         public bool hasSlide(String name)
         {
             return slides.Contains(name);
@@ -103,6 +124,14 @@ namespace LectureBuilder
             get
             {
                 return slides.Count;
+            }
+        }
+
+        public IEnumerable<String> SlideNames
+        {
+            get
+            {
+                return slides;
             }
         }
 
