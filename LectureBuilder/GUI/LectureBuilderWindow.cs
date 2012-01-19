@@ -27,6 +27,8 @@ namespace LectureBuilder
         private Button moveUp;
         private Button moveDown;
 
+        private NewProjectDialog newProjectDialog;
+
         public LectureBuilderWindow(TimelineController lectureTimelineController, TimelineController mainTimelineController)
             : base("LectureBuilder.GUI.LectureBuilderWindow.layout")
         {
@@ -61,7 +63,16 @@ namespace LectureBuilder
             fileMenu.addItem("New", MenuItemType.Normal, "New");
             fileMenu.addItem("Open", MenuItemType.Normal, "Open");
 
+            newProjectDialog = new NewProjectDialog();
+            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
+
             setInterfaceEnabled(false);
+        }
+
+        public override void Dispose()
+        {
+            newProjectDialog.Dispose();
+            base.Dispose();
         }
 
         public LectureCompanion LectureCompanion
@@ -201,42 +212,11 @@ namespace LectureBuilder
             switch (mcae.Item.ItemId)
             {
                 case "New":
-                    newClicked();
+                    newProjectDialog.open(true);
                     break;
                 case "Open":
                     break;
             }
-        }
-
-        void newClicked()
-        {
-            try
-            {
-                createNewLectureCompanion("Untitled");
-                setInterfaceEnabled(true);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.show(String.Format("There was an error saving your lecture companion project to\n'{0}'\nPlease make sure that destination is valid.", currentProject), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                setInterfaceEnabled(false);
-                Log.Error("Could not create lecture companion. {0}", ex.Message);
-            }
-        }
-
-        void createNewLectureCompanion(String name)
-        {
-            currentProject = Path.Combine(MedicalConfig.UserDocRoot, "Lecture Companions", name);
-            if (Directory.Exists(currentProject))
-            {
-                Directory.Delete(currentProject, true);
-            }
-            if (!Directory.Exists(currentProject))
-            {
-                Directory.CreateDirectory(currentProject);
-            }
-            lectureTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(currentProject);
-
-            LectureCompanion = new LectureCompanion(lectureTimelineController);
         }
 
         void setInterfaceEnabled(bool enabled)
@@ -247,6 +227,33 @@ namespace LectureBuilder
             remove.Enabled = enabled;
             moveUp.Enabled = enabled;
             moveDown.Enabled = enabled;
+        }
+
+        void newProjectDialog_ProjectCreated(object sender, EventArgs e)
+        {
+            try
+            {
+                currentProject = newProjectDialog.FullProjectName;
+                if (Directory.Exists(currentProject))
+                {
+                    Directory.Delete(currentProject, true);
+                }
+                if (!Directory.Exists(currentProject))
+                {
+                    Directory.CreateDirectory(currentProject);
+                }
+                lectureTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(currentProject);
+
+                LectureCompanion = new LectureCompanion(lectureTimelineController);
+
+                setInterfaceEnabled(true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error saving your lecture companion project to\n'{0}'\nPlease make sure that destination is valid.", currentProject), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                setInterfaceEnabled(false);
+                Log.Error("Could not create lecture companion. {0}", ex.Message);
+            }
         }
     }
 }

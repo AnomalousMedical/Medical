@@ -47,9 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\LectureBuilderConfig.cs" />
     <Compile Include="Controller\LectureCompanion.cs" />
     <Compile Include="Controller\LectureCompanionException.cs" />
     <Compile Include="GUI\LectureBuilderWindow.cs" />
+    <Compile Include="GUI\NewProjectDialog.cs" />
     <Compile Include="LectureBuilderEntryPoint.cs" />
     <Compile Include="LectureBuilderPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\LectureBuilderWindow.layout" />
+    <EmbeddedResource Include="GUI\NewProjectDialog.layout" />
     <EmbeddedResource Include="Resources\BrandingIcon.png" />
   </ItemGroup>
   <ItemGroup>
