@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Medical;
+using System.IO;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace LectureBuilder
 {
-    class LectureCompanion : Saveable
+    class LectureCompanion
     {
+        private static XmlSaver xmlSaver = new XmlSaver();
+
         private readonly String CLOSE_TIMELINE = "LectureCompanion_Close.tl";
         private readonly String STARTUP_TIMELINE = "LectureCompanion_Startup.tl";
 
@@ -19,9 +24,29 @@ namespace LectureBuilder
         public event SlideEvent SlideMoved;
 
         private List<String> slides = new List<String>();
+        private DDAtlasPlugin plugin;
 
-        public LectureCompanion(TimelineController timelineController)
+        public LectureCompanion(TimelineController timelineController, String projectDirectory)
         {
+            String timelinesDirectory = Path.Combine(projectDirectory, "Timelines");
+            if (Directory.Exists(projectDirectory))
+            {
+                Directory.Delete(projectDirectory, true);
+            }
+            if (!Directory.Exists(projectDirectory))
+            {
+                Directory.CreateDirectory(projectDirectory);
+                Directory.CreateDirectory(timelinesDirectory);
+            }
+            timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(timelinesDirectory);
+
+            plugin = new DDAtlasPlugin();
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(Path.Combine(projectDirectory, "Plugin.ddp"), Encoding.Default))
+            {
+                xmlWriter.Formatting = Formatting.Indented;
+                xmlSaver.saveObject(plugin, xmlWriter);
+            }
+
             Timeline closeTimeline = new Timeline();
             
             MusclePositionAction musclePosition = new MusclePositionAction(timelineController.MovementSequenceController.NeutralMovementState);
@@ -148,16 +173,6 @@ namespace LectureBuilder
             {
                 return slides;
             }
-        }
-
-        protected LectureCompanion(LoadInfo info)
-        {
-            info.RebuildList<String>("Slide", slides);
-        }
-
-        public void getInfo(SaveInfo info)
-        {
-            info.ExtractList<String>("Slide", slides);
         }
     }
 }

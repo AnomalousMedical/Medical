@@ -234,18 +234,7 @@ namespace LectureBuilder
             try
             {
                 currentProject = newProjectDialog.FullProjectName;
-                if (Directory.Exists(currentProject))
-                {
-                    Directory.Delete(currentProject, true);
-                }
-                if (!Directory.Exists(currentProject))
-                {
-                    Directory.CreateDirectory(currentProject);
-                }
-                lectureTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(currentProject);
-
-                LectureCompanion = new LectureCompanion(lectureTimelineController);
-
+                LectureCompanion = new LectureCompanion(lectureTimelineController, currentProject);
                 setInterfaceEnabled(true);
             }
             catch (Exception ex)
