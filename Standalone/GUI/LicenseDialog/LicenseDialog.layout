@@ -34,8 +34,8 @@
         <Widget type="Button" skin="CheckBox" position="8 140 174 15" name="RememberPassword">
             <Property key="Widget_Caption" value="Remember my password"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="260 199 105 25" name="Register">
-            <Property key="Widget_Caption" value="Register"/>
+        <Widget type="Button" skin="Button" position="252 199 113 25" name="Register">
+            <Property key="Widget_Caption" value="Create Account"/>
         </Widget>
     </Widget>
 </MyGUI>
