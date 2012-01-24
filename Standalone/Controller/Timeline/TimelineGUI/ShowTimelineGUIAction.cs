@@ -6,6 +6,7 @@ using Logging;
 using Engine.Saving;
 using Engine.Editing;
 using Engine;
+using System.IO;
 
 namespace Medical
 {
@@ -23,6 +24,11 @@ namespace Medical
         public ShowTimelineGUIAction()
         {
 
+        }
+
+        public Stream openFile(String filename)
+        {
+            return timelineControllerAfterDoAction.ResourceProvider.openFile(filename);
         }
 
         public void stopTimelines()

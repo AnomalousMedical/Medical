@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.GUI;
+using System.IO;
 
 namespace Medical
 {
@@ -35,6 +36,11 @@ namespace Medical
         public override sealed void forceClose(GUIManager guiManager)
         {
             close();
+        }
+
+        public Stream openFile(String filename)
+        {
+            return showTimelineAction.openFile(filename);
         }
 
         public void playExampleTimeline(String timeline)

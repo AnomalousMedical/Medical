@@ -6,6 +6,8 @@ using Medical.GUI;
 using Engine;
 using MyGUIPlugin;
 using Logging;
+using System.IO;
+using Medical.LayoutDataControls;
 
 namespace Medical
 {
@@ -107,9 +109,23 @@ namespace Medical
                 startPos.y = previousButton.Bottom + BUTTON_TO_PANEL_PAD;
             }
 
-            MyGUIDataControlFactory myGuiFactory = new MyGUIDataControlFactory(widget, this);
-            GUIData.createControls(myGuiFactory);
-            topLevelDataControl = myGuiFactory.TopLevelControl;
+            if (String.IsNullOrEmpty(GUIData.LayoutFile))
+            {
+                MyGUIDataControlFactory myGuiFactory = new MyGUIDataControlFactory(widget, this);
+                GUIData.createControls(myGuiFactory);
+                topLevelDataControl = myGuiFactory.TopLevelControl;
+            }
+            else
+            {
+                using(Stream layoutStream = this.openFile(GUIData.LayoutFile))
+                {
+                    LayoutDataControl layoutDataControl = new LayoutDataControl(layoutStream, widget);
+                    LayoutDataControlFactory dataControlFactory = new LayoutDataControlFactory(layoutDataControl, this);
+                    GUIData.createControls(dataControlFactory);
+                    topLevelDataControl = layoutDataControl;
+                }
+            }
+
             topLevelDataControl.displayData(guiSection);
             topLevelDataControl.WorkingSize = new Size2(widget.Width - WIDTH_ADJUSTMENT, 10000);
             topLevelDataControl.Location = startPos;

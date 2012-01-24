@@ -60,6 +60,9 @@ namespace Medical
         }
 
         [Editable]
+        public String LayoutFile { get; set; }
+
+        [Editable]
         public bool AllowSubmit { get; set; }
 
         [Editable]
