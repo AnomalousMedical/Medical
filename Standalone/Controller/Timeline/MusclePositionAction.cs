@@ -42,7 +42,13 @@ namespace Medical
         public override void skipTo(float timelineTime)
         {
             start();
-            startState.blend(targetState, (timelineTime - StartTime) / Duration);
+            lastTime = timelineTime;
+            float blendFactor = (timelineTime - StartTime) / Duration;
+            if (blendFactor > 1.0f)
+            {
+                blendFactor = 0.0f;
+            }
+            startState.blend(targetState, blendFactor);
         }
 
         public override void stopped(float timelineTime, Clock clock)
