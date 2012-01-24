@@ -52,6 +52,7 @@ namespace Medical
             {
                 navigationBar = new TimelineNavigationBar();
             }
+            navigationBar.Enabled = true;
             guiManager.changeTopPanel(navigationBar.Layout, null);
         }
 
@@ -59,6 +60,7 @@ namespace Medical
         {
             if (navigationBar != null)
             {
+                navigationBar.Enabled = false;
                 guiManager.changeTopPanel(null, delegate(LayoutContainer oldChild)
                 {
                     navigationBar.Dispose();

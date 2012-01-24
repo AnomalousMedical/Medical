@@ -118,6 +118,17 @@ namespace Medical
             }
         }
 
+        public bool Enabled
+        {
+            get
+            {
+                return widget.Enabled;
+            }
+            set
+            {
+                widget.Enabled = value;
+            }
+        }
 
         class TimelineButtonContainer : IDisposable
         {
