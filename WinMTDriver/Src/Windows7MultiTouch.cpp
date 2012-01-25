@@ -29,11 +29,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				GetMonitorInfo(monitor, &monitorInfo);
 				float width = (monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left) * 100.0f;
 				float height = (monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top) * 100.0f;
+				POINT ptConvert;
 
 				for (int i=0; i < static_cast<INT>(cInputs); i++)
 				{
 					TOUCHINPUT ti = pInputs[i];
 					touchInfo.id = ti.dwID;
+
+					//Convert point to window coord
+					ptConvert.x = TOUCH_COORD_TO_PIXEL(ti.x);
+					ptConvert.y = TOUCH_COORD_TO_PIXEL(ti.y);
+					ScreenToClient(hWnd, &ptConvert);
+					touchInfo.pixelX = ptConvert.x;
+					touchInfo.pixelY = ptConvert.y;
+
+					//Set the rest of the info
 					touchInfo.normalizedX = ti.x / width;
 					touchInfo.normalizedY = ti.y / height;
 					if(ti.dwFlags & TOUCHEVENTF_MOVE)

@@ -33,8 +33,8 @@ namespace Medical
             {
                 Finger finger1 = fingers[0];
                 Finger finger2 = fingers[1];
-                Vector2 finger1Vec = new Vector2(finger1.DeltaX, finger1.DeltaY);
-                Vector2 finger2Vec = new Vector2(finger2.DeltaX, finger2.DeltaY);
+                Vector2 finger1Vec = new Vector2(finger1.NrmlDeltaX, finger1.NrmlDeltaY);
+                Vector2 finger2Vec = new Vector2(finger2.NrmlDeltaX, finger2.NrmlDeltaY);
                 float finger1Len = finger1Vec.length2();
                 float finger2Len = finger2Vec.length2();
                 if (finger1Len > 0 && finger2Len > 0)
@@ -80,8 +80,8 @@ namespace Medical
 
         private void computeZoom(ref bool didGesture, Finger finger1, Finger finger2, ref Vector2 finger1Vec, ref Vector2 finger2Vec)
         {
-            Vector2 finger1Pos = new Vector2(finger1.X, finger1.Y);
-            Vector2 finger2Pos = new Vector2(finger2.X, finger2.Y);
+            Vector2 finger1Pos = new Vector2(finger1.NrmlX, finger1.NrmlY);
+            Vector2 finger2Pos = new Vector2(finger2.NrmlX, finger2.NrmlY);
             float currentPinchDistance = (finger1Pos - finger2Pos).length2();
 
             Vector2 vectorSum = finger1Vec - finger2Vec;

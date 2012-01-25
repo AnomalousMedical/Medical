@@ -24,7 +24,7 @@ namespace Medical
                 didGesture = true;
                 if (fingers.Count == 1)
                 {
-                    InputManager.Instance.injectScrollGesture((int)(fingers[0].X * Gui.Instance.getViewWidth()), (int)(fingers[0].Y * Gui.Instance.getViewHeight()), (int)(fingers[0].DeltaX * Gui.Instance.getViewWidth()), (int)(fingers[0].DeltaY * Gui.Instance.getViewHeight()));
+                    InputManager.Instance.injectScrollGesture(fingers[0].PixelX, fingers[0].PixelY, fingers[0].PixelDeltaX, fingers[0].PixelDeltaY);
                 }
             }
             return didGesture;

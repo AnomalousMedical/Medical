@@ -9,7 +9,7 @@ using Engine;
 
 namespace Medical
 {
-    [StructLayout(LayoutKind.Explicit, Size=12)]
+    [StructLayout(LayoutKind.Explicit, Size=20)]
     public struct TouchInfo
     {
         [FieldOffset(0)]
@@ -17,6 +17,10 @@ namespace Medical
         [FieldOffset(4)]
         public float normalizedY;
         [FieldOffset(8)]
+        public int pixelX;
+        [FieldOffset(12)]
+        public int pixelY;
+        [FieldOffset(16)]
         public int id;
     };
 

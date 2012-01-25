@@ -57,7 +57,7 @@ namespace Medical
                 multiTouch_TouchStarted(info);
                 finger = fingers[info.id];
             }
-            finger.setCurrentPosition(info.normalizedX, info.normalizedY);
+            finger.setCurrentPosition(info.normalizedX, info.normalizedY, info.pixelX, info.pixelY);
             //Log.Debug("GestureEngine Touch moved {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
         }
 
@@ -80,7 +80,7 @@ namespace Medical
                 finger = fingerPool.getPooledObject();
                 fingers.Add(info.id, finger);
             }
-            finger.setInfoOutOfPool(info.id, info.normalizedX, info.normalizedY);
+            finger.setInfoOutOfPool(info.id, info.normalizedX, info.normalizedY, info.pixelX, info.pixelY);
             //Log.Debug("GestureEngine Touch started {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
         }
 

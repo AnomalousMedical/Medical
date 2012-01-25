@@ -30,7 +30,7 @@ namespace Medical
         {
             if (fingers.Count == fingerCount)
             {
-                Vector2 primaryFingerVec = new Vector2(fingers[0].DeltaX, fingers[0].DeltaY);
+                Vector2 primaryFingerVec = new Vector2(fingers[0].NrmlDeltaX, fingers[0].NrmlDeltaY);
                 float primaryFingerLen = primaryFingerVec.length();
                 Vector2 longestLengthVec = primaryFingerVec;
                 float longestLength = primaryFingerLen;
@@ -39,7 +39,7 @@ namespace Medical
                     bool allVectorsSameDirection = true;
                     for (int i = 1; i < fingerCount && allVectorsSameDirection; ++i)
                     {
-                        Vector2 testFingerVec = new Vector2(fingers[i].DeltaX, fingers[i].DeltaY);
+                        Vector2 testFingerVec = new Vector2(fingers[i].NrmlDeltaX, fingers[i].NrmlDeltaY);
                         float testFingerLen = testFingerVec.length();
                         if (testFingerLen > 0)
                         {

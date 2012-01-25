@@ -16,6 +16,8 @@ class TouchInfo
 public:
 	float normalizedX;
 	float normalizedY;
+	int pixelX;
+	int pixelY;
 	int id;
 };
 

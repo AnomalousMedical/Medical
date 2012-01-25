@@ -9,12 +9,12 @@ namespace Medical
     public class Finger : PooledObject
     {
         private int id;
-        private float xPos;
-        private float yPos;
-        private float lastXPos;
-        private float lastYPos;
-        private float deltaX;
-        private float deltaY;
+        private float xNrmlPos;
+        private float yNrmlPos;
+        private float lastNrmlXPos;
+        private float lastNrmlYPos;
+        private float deltaNrmlX;
+        private float deltaNrmlY;
 
         public Finger()
         {
@@ -29,68 +29,90 @@ namespace Medical
             }
         }
 
-        public float X
+        public float NrmlX
         {
             get
             {
-                return xPos;
+                return xNrmlPos;
             }
         }
 
-        public float Y
+        public float NrmlY
         {
             get
             {
-                return yPos;
+                return yNrmlPos;
             }
         }
 
-        public float LastX
+        public float NrmlLastX
         {
             get
             {
-                return lastXPos;
+                return lastNrmlXPos;
             }
         }
 
-        public float LastY
+        public float NrmlLastY
         {
             get
             {
-                return lastYPos;
+                return lastNrmlYPos;
             }
         }
 
-        public float DeltaX
+        public float NrmlDeltaX
         {
             get
             {
-                return deltaX;
+                return deltaNrmlX;
             }
         }
 
-        public float DeltaY
+        public float NrmlDeltaY
         {
             get
             {
-                return deltaY;
+                return deltaNrmlY;
             }
         }
 
-        internal void setCurrentPosition(float xPos, float yPos)
+        public int PixelX { get; private set; }
+
+        public int PixelY { get; private set; }
+
+        public int PixelLastX { get; private set; }
+
+        public int PixelLastY { get; private set; }
+        
+        public int PixelDeltaX { get; private set; }
+        
+        public int PixelDeltaY { get; private set; }
+
+        internal void setCurrentPosition(float xNrmlPos, float yNrmlPos, int xPixelPos, int yPixelPos)
         {
-            this.xPos = xPos;
-            this.yPos = yPos;
-            deltaX = xPos - lastXPos;
-            deltaY = yPos - lastYPos;
+            this.xNrmlPos = xNrmlPos;
+            this.yNrmlPos = yNrmlPos;
+            deltaNrmlX = xNrmlPos - lastNrmlXPos;
+            deltaNrmlY = yNrmlPos - lastNrmlYPos;
+
+            PixelX = xPixelPos;
+            PixelY = yPixelPos;
+            PixelDeltaX = xPixelPos - PixelLastX;
+            PixelDeltaY = yPixelPos - PixelLastY;
         }
 
         internal void captureCurrentPositionAsLast()
         {
-            lastXPos = xPos;
-            lastYPos = yPos;
-            deltaX = 0;
-            deltaY = 0;
+            lastNrmlXPos = xNrmlPos;
+            lastNrmlYPos = yNrmlPos;
+            deltaNrmlX = 0;
+            deltaNrmlY = 0;
+
+            PixelLastX = PixelX;
+            PixelLastY = PixelY;
+            PixelDeltaX = 0;
+            PixelDeltaY = 0;
         }
 
         internal void finished()
@@ -98,11 +120,14 @@ namespace Medical
             this.returnToPool();
         }
 
-        internal void setInfoOutOfPool(int id, float xPos, float yPos)
+        internal void setInfoOutOfPool(int id, float xPos, float yPos, int xPixelPos, int yPixelPos)
         {
             this.id = id;
-            this.xPos = lastXPos = xPos;
-            this.yPos = lastYPos = yPos;
+            this.xNrmlPos = lastNrmlXPos = xPos;
+            this.yNrmlPos = lastNrmlYPos = yPos;
+
+            this.PixelX = PixelLastX = xPixelPos;
+            this.PixelY = PixelLastY = yPixelPos;
         }
 
         protected override void reset()
