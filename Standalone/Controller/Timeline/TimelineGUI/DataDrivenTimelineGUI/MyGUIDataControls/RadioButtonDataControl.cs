@@ -20,6 +20,7 @@ namespace Medical
             text = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
             text.Caption = field.Name;
             text.setSize(text.getTextRegion().width, text.Height);
+            text.NeedMouseFocus = false;
 
             optionScrollView = (ScrollView)parentWidget.createWidgetT("ScrollView", "ScrollViewEmpty", 0, 0, 10, 15, Align.Default, "");
             optionScrollView.CanvasAlign = Align.Left | Align.Top;

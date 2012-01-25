@@ -18,7 +18,6 @@ namespace Medical
             text.EditWordWrap = true;
             text.EditStatic = true;
             text.NeedMouseFocus = false;
-            text.ForwardMouseWheelToParent = true;
             text.Caption = field.Text;
         }
 

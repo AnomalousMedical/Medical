@@ -20,6 +20,7 @@ namespace Medical
             Size2 textSize = checkButton.Button.getTextSize();
             checkButton.Button.setSize((int)(textRegion.left + textSize.Width), checkButton.Button.Height);
             checkButton.Checked = field.StartingValue;
+            checkButton.Button.ForwardMouseWheelToParent = true;
 
             valueName = field.Name;
         }

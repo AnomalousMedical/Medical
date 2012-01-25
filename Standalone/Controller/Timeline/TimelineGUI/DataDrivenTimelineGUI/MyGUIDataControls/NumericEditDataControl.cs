@@ -19,6 +19,7 @@ namespace Medical
             text = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
             text.Caption = numericField.Name;
             text.setSize(text.getTextRegion().width, text.Height);
+            text.NeedMouseFocus = false;
 
             edit = (Edit)parentWidget.createWidgetT("Edit", "Edit", 0, 16, 100, 20, Align.Default, "");
             numberEdit = new NumericEdit(edit);

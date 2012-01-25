@@ -19,6 +19,7 @@ namespace Medical
             button = (Button)parentWidget.createWidgetT("Button", "Button", 0, 0, 100, DataDrivenTimelineGUI.BUTTON_HEIGHT, Align.Default, "");
             button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
             button.Caption = playExampleField.Name;
+            button.ForwardMouseWheelToParent = true;
 
             this.playExampleField = playExampleField;
             this.gui = gui;
