@@ -27,5 +27,7 @@ namespace Medical
         void addField(NumericDataField field);
 
         void addField(PlayExampleDataField field);
+
+        void addField(StaticTextDataField field);
     }
 }

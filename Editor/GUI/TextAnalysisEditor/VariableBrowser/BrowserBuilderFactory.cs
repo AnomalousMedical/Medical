@@ -85,5 +85,10 @@ namespace Medical.GUI
         {
             
         }
+
+        public void addField(StaticTextDataField field)
+        {
+
+        }
     }
 }

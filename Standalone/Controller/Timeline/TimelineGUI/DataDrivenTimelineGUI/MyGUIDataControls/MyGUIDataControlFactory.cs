@@ -80,6 +80,11 @@ namespace Medical
             currentLayoutDataControl.addControl(new PlayExampleButton(parentWidget, gui, field));
         }
 
+        public void addField(StaticTextDataField field)
+        {
+            currentLayoutDataControl.addControl(new TextDisplayDataControl(parentWidget, field));
+        }
+
         public DataControl TopLevelControl
         {
             get

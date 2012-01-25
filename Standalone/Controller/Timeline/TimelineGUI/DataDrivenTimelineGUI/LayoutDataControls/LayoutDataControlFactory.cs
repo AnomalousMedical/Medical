@@ -102,5 +102,10 @@ namespace Medical.LayoutDataControls
                 Log.Error("Could not find a Button control named '{0}' on the layout to make a Play Example Item. Skipping this button.", field.Name);
             }
         }
+
+        public void addField(StaticTextDataField field)
+        {
+            throw new NotSupportedException();
+        }
     }
 }

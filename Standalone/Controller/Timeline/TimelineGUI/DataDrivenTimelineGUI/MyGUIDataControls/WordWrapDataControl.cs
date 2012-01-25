@@ -22,6 +22,7 @@ namespace Medical
             edit = (Edit)parentWidget.createWidgetT("Edit", "WordWrapWhite", 0, 16, 100, 20, Align.Default, "");
             edit.EditMultiLine = true;
             edit.EditWordWrap = true;
+            edit.TextAlign = Align.Left | Align.Top;
             int height = edit.FontHeight * field.NumberOfLines;
             edit.setSize(edit.Width, height);
 
