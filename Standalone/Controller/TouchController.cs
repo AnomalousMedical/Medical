@@ -52,7 +52,7 @@ namespace Medical
             SceneViewWindow sceneView = sceneViewController.ActiveWindow;
             if (sceneView != null)
             {
-                float sensitivity = 10.0f;
+                float sensitivity = 4.0f;
                 sceneView.rotate(-deltaX * sensitivity, deltaY * sensitivity);
             }
         }
@@ -62,7 +62,7 @@ namespace Medical
             SceneViewWindow sceneView = sceneViewController.ActiveWindow;
             if (sceneView != null)
             {
-                float sensitivity = 50.0f;
+                float sensitivity = 15.0f;
                 sceneView.pan(deltaX * sensitivity, deltaY * sensitivity);
             }
         }
@@ -72,7 +72,7 @@ namespace Medical
             SceneViewWindow sceneView = sceneViewController.ActiveWindow;
             if (sceneView != null)
             {
-                float sensitivity = 200.0f;
+                float sensitivity = 80.0f;
                 sceneView.zoom(zoomDelta * sensitivity);
             }
         }

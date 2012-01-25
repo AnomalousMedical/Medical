@@ -11,8 +11,6 @@ namespace Medical
     public class GuiGestures : Gesture
     {
         private bool didGesture;
-        private IntVector2 lastFingerPos;
-        private bool fingerDown = false;
 
         public GuiGestures()
         {
@@ -23,18 +21,10 @@ namespace Medical
         {
             if (Gui.Instance.HandledMouseButtons)
             {
+                didGesture = true;
                 if (fingers.Count == 1)
                 {
-                    lastFingerPos = new IntVector2((int)(fingers[0].X * Gui.Instance.getViewWidth()), (int)(fingers[0].Y * Gui.Instance.getViewHeight()));
-                    if (fingerDown)
-                    {
-                        Gui.Instance.injectMousePress(lastFingerPos.x, lastFingerPos.y, MouseButtonCode.MB_BUTTON0);
-                    }
-                    else
-                    {
-                        Gui.Instance.injectMouseMove(lastFingerPos.x, lastFingerPos.y, 0);
-                    }
-                    didGesture = true;
+                    InputManager.Instance.injectScrollGesture((int)(fingers[0].X * Gui.Instance.getViewWidth()), (int)(fingers[0].Y * Gui.Instance.getViewHeight()), (int)(fingers[0].DeltaX * Gui.Instance.getViewWidth()), (int)(fingers[0].DeltaY * Gui.Instance.getViewHeight()));
                 }
             }
             return didGesture;
@@ -42,11 +32,6 @@ namespace Medical
 
         public void additionalProcessing(Clock clock)
         {
-            if (!didGesture && fingerDown)
-            {
-                Gui.Instance.injectMouseRelease(lastFingerPos.x, lastFingerPos.y, MouseButtonCode.MB_BUTTON0);
-                fingerDown = false;
-            }
             didGesture = false;
         }
     }
