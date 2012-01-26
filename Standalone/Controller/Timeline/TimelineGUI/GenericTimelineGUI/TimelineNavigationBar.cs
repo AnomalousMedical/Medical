@@ -41,6 +41,7 @@ namespace Medical
             {
                 Button button = iconScrollView.createWidgetT("Button", "RibbonButton", 0, 0, 78, 64, Align.Default, "") as Button;
                 button.Caption = text;
+                button.ForwardMouseWheelToParent = true;
                 int captionWidth = (int)button.getTextSize().Width;
                 button.setSize(captionWidth + 10, button.Height);
                 button.StaticImage.setItemResource(imageKey);
