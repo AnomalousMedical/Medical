@@ -54,7 +54,12 @@ namespace Medical
                 case 0:
                     return name;
                 case 1:
-                    return propertyInfo.getValue(instance, null).ToString();
+                    Object value = propertyInfo.getValue(instance, null);
+                    if(value != null)
+                    {
+                        return value.ToString();
+                    }
+                    return null;
                 default:
                     return null;
             }
