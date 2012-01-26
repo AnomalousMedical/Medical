@@ -24,6 +24,7 @@ namespace Medical.GUI
             editInterface.OnBackColorChanged += editInterface_OnBackColorChanged;
             editInterface.OnForeColorChanged += editInterface_OnForeColorChanged;
             editInterface.OnIconReferenceChanged += editInterface_OnIconReferenceChanged;
+            editInterface.OnNameChanged += editInterface_OnNameChanged;
 
             if (editInterface.hasSubEditInterfaces())
             {
@@ -41,6 +42,7 @@ namespace Medical.GUI
             editInterface.OnBackColorChanged -= editInterface_OnBackColorChanged;
             editInterface.OnForeColorChanged -= editInterface_OnForeColorChanged;
             editInterface.OnIconReferenceChanged -= editInterface_OnIconReferenceChanged;
+            editInterface.OnNameChanged -= editInterface_OnNameChanged;
             base.Dispose();
         }
 
@@ -65,6 +67,11 @@ namespace Medical.GUI
         void editInterface_OnBackColorChanged(EditInterface editInterface)
         {
 
+        }
+
+        void editInterface_OnNameChanged(EditInterface editInterface)
+        {
+            this.Text = editInterface.getName();
         }
 
         void editInterface_OnSubInterfaceRemoved(EditInterface editInterface)

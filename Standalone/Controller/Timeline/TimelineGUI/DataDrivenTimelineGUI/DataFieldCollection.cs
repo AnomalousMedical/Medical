@@ -81,6 +81,7 @@ namespace Medical
 
                 dataFieldEdits = new EditInterfaceManager<DataField>(editInterface);
                 dataFieldEdits.addCommand(new EditInterfaceCommand("Remove", removeField));
+                dataFieldEdits.addCommand(new EditInterfaceCommand("Rename", renameField));
 
                 foreach (DataField field in dataFields)
                 {
@@ -199,6 +200,24 @@ namespace Medical
         {
             DataField field = dataFieldEdits.resolveSourceObject(callback.getSelectedEditInterface());
             removeDataField(field);
+        }
+
+        private void renameField(EditUICallback callback, EditInterfaceCommand command)
+        {
+            callback.getInputString("Enter a new name.", delegate(String input, ref String errorPrompt)
+            {
+                if (!hasDataField(input))
+                {
+                    //This works, but need to update the EditInterface
+                    EditInterface editInterface = callback.getSelectedEditInterface();
+                    DataField field = dataFieldEdits.resolveSourceObject(editInterface);
+                    field.Name = input;
+                    editInterface.setName(String.Format("{0} - {1}", input, field.Type));
+                    return true;
+                }
+                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
+                return false;
+            });
         }
 
         private void addDataFieldDefinition(DataField field)
