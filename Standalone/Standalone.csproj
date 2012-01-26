@@ -210,6 +210,7 @@
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControlFactory.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\StaticTextDataField.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\TimelineEditableProperty.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutCheckBoxDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutWidgetDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutDataControl.cs" />

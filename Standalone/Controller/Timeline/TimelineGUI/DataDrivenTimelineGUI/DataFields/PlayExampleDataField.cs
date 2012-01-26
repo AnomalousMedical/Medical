@@ -5,10 +5,11 @@ using System.Text;
 using MyGUIPlugin;
 using Engine.Saving;
 using Engine.Editing;
+using Engine.Reflection;
 
 namespace Medical
 {
-    public class PlayExampleDataField : DataField
+    public partial class PlayExampleDataField : DataField
     {
         private String timeline;
 
@@ -29,7 +30,6 @@ namespace Medical
             factory.addField(this);
         }
 
-        [Editable]
         public String Timeline
         {
             get
@@ -51,6 +51,14 @@ namespace Medical
             :base(info)
         {
 
+        }
+    }
+
+    public partial class PlayExampleDataField
+    {
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            editInterface.addEditableProperty(new TimelineEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this));
         }
     }
 }
