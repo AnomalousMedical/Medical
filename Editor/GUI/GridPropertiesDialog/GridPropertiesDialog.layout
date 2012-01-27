@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="115 157 273 60" layer="Back">
+    <Widget type="Window" skin="WindowCX" position="115 157 276 74" layer="Back">
         <Property key="Widget_Caption" value="Grid"/>
         <Widget type="Widget" skin="PanelEmpty" position="0 2 272 39" layer="Back" name="GridControl">
             <Widget type="StaticText" skin="StaticText" position="0 0 262 15">

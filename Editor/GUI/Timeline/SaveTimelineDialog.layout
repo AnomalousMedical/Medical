@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="139 366 236 81" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="139 366 244 95" layer="Overlapped">
         <Property key="Widget_Caption" value="Save Timeline"/>
         <Widget type="StaticText" skin="StaticText" position="4 4 35 14">
             <Property key="Widget_Caption" value="Name"/>

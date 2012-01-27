@@ -4,7 +4,7 @@
         <Property key="Widget_Caption" value="Timeline Explorer"/>
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="ScrollView" skin="ScrollView" position="7 3 196 320" align="Stretch" name="ScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position="0 0 198 314" align="Stretch" name="ScrollView">
             <Property key="ScrollView_CanvasSize" value="196 320"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>

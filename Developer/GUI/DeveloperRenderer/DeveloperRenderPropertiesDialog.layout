@@ -1,90 +1,90 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="117 49 218 588" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="117 49 221 600" layer="Overlapped">
         <Property key="Widget_Caption" value="Developer Renderer"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
-        <Widget type="Button" skin="Button" position="147 276 66 22" name="RenderingTab/SizeButton">
+        <Widget type="Button" skin="Button" position="140 276 66 22" name="RenderingTab/SizeButton">
             <Property key="Widget_Caption" value="Size"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="5 264 33 13">
+        <Widget type="StaticText" skin="StaticText" position="0 264 33 13">
             <Property key="Widget_Caption" value="Width"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="84 264 42 12">
+        <Widget type="StaticText" skin="StaticText" position="79 264 42 12">
             <Property key="Widget_Caption" value="Height"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="5 277 59 20" name="RenderingTab/WidthEdit">
+        <Widget type="Edit" skin="Edit" position="0 277 59 20" name="RenderingTab/WidthEdit">
             <Property key="Widget_Caption" value="1280"/>
             <UserString key="AllowFloat" value="False"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="MaxValue" value="4096"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="84 277 59 20" name="RenderingTab/HeightEdit">
+        <Widget type="Edit" skin="Edit" position="79 277 59 20" name="RenderingTab/HeightEdit">
             <Property key="Widget_Caption" value="1024"/>
             <UserString key="MaxValue" value="4096"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="AllowFloat" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="9 220 72 26" name="RenderingTab/Render">
+        <Widget type="Button" skin="Button" position="3 220 72 26" name="RenderingTab/Render">
             <Property key="Widget_Caption" value="Render"/>
             <Property key="Button_ImageResource" value="RenderIcon"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="5 3 59 13">
+        <Widget type="StaticText" skin="StaticText" position="0 3 59 13">
             <Property key="Widget_Caption" value="Preview"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="8 16 202 202" name="PreviewImage"/>
-        <Widget type="StaticText" skin="StaticText" position="5 249 67 14">
+        <Widget type="StaticImage" skin="StaticImage" position="2 16 202 202" name="PreviewImage"/>
+        <Widget type="StaticText" skin="StaticText" position="0 249 67 14">
             <Property key="Widget_Caption" value="Properties"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="5 338 99 14">
+        <Widget type="StaticText" skin="StaticText" position="0 338 99 14">
             <Property key="Widget_Caption" value="Output Folder"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="5 353 178 22" name="OutputFolder"/>
-        <Widget type="Button" skin="Button" position="185 353 31 22" name="OutputBrowse">
+        <Widget type="Edit" skin="Edit" position="0 353 178 22" name="OutputFolder"/>
+        <Widget type="Button" skin="Button" position="179 353 31 22" name="OutputBrowse">
             <Property key="Widget_Caption" value="..."/>
         </Widget>
-        <Widget type="Button" skin="Button" position="85 220 124 26" name="FullSize">
+        <Widget type="Button" skin="Button" position="79 220 124 26" name="FullSize">
             <Property key="Widget_Caption" value="View Full Size"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="5 300 49 14">
+        <Widget type="StaticText" skin="StaticText" position="0 300 49 14">
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="5 315 178 22" name="ImageName"/>
-        <Widget type="Button" skin="Button" position="5 541 84 26" align="Left Bottom" name="Save">
+        <Widget type="Edit" skin="Edit" position="0 315 178 22" name="ImageName"/>
+        <Widget type="Button" skin="Button" position="0 541 84 26" align="Left Bottom" name="Save">
             <Property key="Widget_Caption" value="Save"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="5 378 111 14">
+        <Widget type="StaticText" skin="StaticText" position="0 378 111 14">
             <Property key="Widget_Caption" value="Image Format"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="5 393 178 22" name="ImageFormat">
+        <Widget type="ComboBox" skin="ComboBox" position="0 393 178 22" name="ImageFormat">
             <Property key="ComboBox_AddItem" value="PNG (.png)"/>
             <Property key="ComboBox_AddItem" value="Bitmap (.bmp)"/>
             <Property key="ComboBox_AddItem" value="JPEG (.jpg)"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="92 541 123 26" align="Left Bottom" name="OpenOutputFolder">
+        <Widget type="Button" skin="Button" position="87 541 123 26" align="Left Bottom" name="OpenOutputFolder">
             <Property key="Widget_Caption" value="Open Output Folder"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="5 417 158 14">
+        <Widget type="StaticText" skin="StaticText" position="0 417 158 14">
             <Property key="Widget_Caption" value="Anti-Aliasing"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="5 432 178 22" name="AACombo">
+        <Widget type="ComboBox" skin="ComboBox" position="0 432 178 22" name="AACombo">
             <Property key="ComboBox_AddItem" value="None"/>
             <Property key="ComboBox_AddItem" value="2x"/>
             <Property key="ComboBox_AddItem" value="4x"/>
             <Property key="ComboBox_AddItem" value="6x"/>
             <Property key="ComboBox_AddItem" value="8x"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="5 457 132 21" name="ShowBackground">
+        <Widget type="Button" skin="CheckBox" position="0 457 132 21" name="ShowBackground">
             <Property key="Widget_Caption" value="Show Background"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="5 478 131 21" name="ShowWatermark">
+        <Widget type="Button" skin="CheckBox" position="0 478 131 21" name="ShowWatermark">
             <Property key="Widget_Caption" value="Show Watermark"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="5 499 131 21" name="Transparent">
+        <Widget type="Button" skin="CheckBox" position="0 499 131 21" name="Transparent">
             <Property key="Widget_Caption" value="Transparent"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="5 520 100 21" name="Copyright">
+        <Widget type="Button" skin="CheckBox" position="0 520 100 21" name="Copyright">
             <Property key="Widget_Caption" value="Copyright"/>
         </Widget>
     </Widget>
