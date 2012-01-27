@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="131 48 212 299" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="131 48 215 310" layer="Overlapped">
         <Property key="Widget_Caption" value="Browse"/>
-        <Widget type="ScrollView" skin="ScrollView" position="5 2 202 247" align="Stretch" name="ScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position="0 2 202 248" align="Stretch" name="ScrollView">
             <Property key="ScrollView_CanvasSize" value="202 247"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>

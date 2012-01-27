@@ -5,31 +5,30 @@
         <Property key="Widget_Caption" value="Notes"/>
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="StaticText" skin="StaticText" position="4 4 109 15">
+        <Widget type="StaticText" skin="StaticText" position="0 4 109 15">
             <Property key="Widget_Caption" value="Distortion Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="6 18 211 21" align="HStretch Top" name="Notes/DistortionName">
+        <Widget type="Edit" skin="Edit" position="0 18 211 21" align="HStretch Top" name="Notes/DistortionName">
             <Property key="Widget_Caption" value="Custom Distortion"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 45 110 15">
+        <Widget type="StaticText" skin="StaticText" position="0 45 110 15">
             <Property key="Widget_Caption" value="Date Created"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="6 59 211 21" align="HStretch Top" name="Notes/DateCreated"/>
-        <Widget type="StaticText" skin="StaticText" position="4 86 110 15">
+        <Widget type="Edit" skin="Edit" position="0 59 211 21" align="HStretch Top" name="Notes/DateCreated"/>
+        <Widget type="StaticText" skin="StaticText" position="0 86 110 15">
             <Property key="Widget_Caption" value="Distortion Wizard"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="6 100 211 21" align="HStretch Top" name="Notes/DistortionWizard">
+        <Widget type="Edit" skin="Edit" position="0 100 211 21" align="HStretch Top" name="Notes/DistortionWizard">
             <Property key="Edit_ReadOnly" value="true"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 128 47 15">
+        <Widget type="StaticText" skin="StaticText" position="0 128 47 15">
             <Property key="Widget_Caption" value="Notes"/>
         </Widget>
-        <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="6 144 211 234" align="Stretch">
-            <Widget type="Edit" skin="WordWrap" position="0 0 211 234" align="HStretch VCenter" name="Notes/NotesText">
-                <Property key="Edit_MultiLine" value="true"/>
-                <Property key="Edit_MaxTextLength" value="2900"/>
-            </Widget>
+        <Widget type="Edit" skin="WordWrapWhite" position="0 142 211 225" align="Stretch" name="Notes/NotesText">
+            <Property key="Edit_MultiLine" value="true"/>
+            <Property key="Edit_MaxTextLength" value="2900"/>
+            <Property key="Text_TextAlign" value="Left Top"/>
         </Widget>
     </Widget>
 </MyGUI>

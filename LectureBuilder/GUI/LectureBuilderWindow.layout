@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="193 117 229 354" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="153 49 234 364" layer="Overlapped">
         <Property key="Widget_Caption" value="Lecture Builder"/>
-        <Property key="Window_MinSize" value="229 311"/>
-        <Widget type="StaticText" skin="StaticText" position="3 29 41 16">
+        <Property key="Window_MinSize" value="234 364"/>
+        <Widget type="StaticText" skin="StaticText" position="0 29 41 16">
             <Property key="Widget_Caption" value="Slides"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="5 230 67 26" align="Left Bottom" name="MoveUp">
+        <Widget type="Button" skin="Button" position="0 230 67 26" align="Left Bottom" name="MoveUp">
             <Property key="Widget_Caption" value="Move Up"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="75 230 80 26" align="Left Bottom" name="MoveDown">
+        <Widget type="Button" skin="Button" position="70 230 80 26" align="Left Bottom" name="MoveDown">
             <Property key="Widget_Caption" value="Move Down"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="157 275 66 26" align="Left Bottom" name="Capture">
+        <Widget type="Button" skin="Button" position="155 275 66 26" align="Left Bottom" name="Capture">
             <Property key="Widget_Caption" value="Capture"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="157 230 69 26" align="Left Bottom" name="Remove">
+        <Widget type="Button" skin="Button" position="153 230 69 26" align="Left Bottom" name="Remove">
             <Property key="Widget_Caption" value="Remove"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="5 305 67 26" align="Left Bottom" name="Preview">
+        <Widget type="Button" skin="Button" position="0 305 67 26" align="Left Bottom" name="Preview">
             <Property key="Widget_Caption" value="Preview"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 259 118 16" align="Left Bottom">
+        <Widget type="StaticText" skin="StaticText" position="0 259 118 16" align="Left Bottom">
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="5 275 150 26" align="Left Bottom" name="Name"/>
-        <Widget type="ScrollView" skin="ScrollView" position="4 46 222 182" align="Stretch" name="SlideScroller">
+        <Widget type="Edit" skin="Edit" position="0 275 153 26" align="Left Bottom" name="Name"/>
+        <Widget type="ScrollView" skin="ScrollView" position="0 46 222 182" align="Stretch" name="SlideScroller">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="false"/>
             <UserString key="ItemHeight" value="25"/>
             <UserString key="ButtonSkin" value="ButtonGridButton"/>
         </Widget>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 230 26" align="HStretch Top" name="MenuBar"/>
+        <Widget type="MenuBar" skin="MenuBar" position="0 0 1 26" align="Left Top" name="MenuBar"/>
     </Widget>
 </MyGUI>

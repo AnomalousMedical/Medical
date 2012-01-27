@@ -2,6 +2,6 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="273 96 198 217" layer="Overlapped">
         <Property key="Widget_Caption" value="Exam Viewer"/>
-        <Widget type="MultiList" skin="MultiList" position="0 0 198 199" align="Stretch" name="ExamList"/>
+        <Widget type="MultiList" skin="MultiList" position="0 0 186 184" align="Stretch" name="ExamList"/>
     </Widget>
 </MyGUI>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="131 108 178 273" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="131 108 190 285" layer="Overlapped">
         <Property key="Widget_Caption" value="Mandible Movement"/>
         <Property key="Window_MinSize" value="178 273"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
@@ -38,28 +38,28 @@
         <Widget type="HScroll" skin="HSlider" position="37 126 106 16" align="HRelative VRelative" name="Movement/HingeSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 4 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="0 4 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipRightHorizontalBack"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 40 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="0 40 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipLeftHorizontalBack"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="143 4 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="147 4 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipRightHorizontalForward"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="143 40 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="147 40 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipLeftHorizontalForward"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 112 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="0 112 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipVerticalClosed"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 76 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="0 76 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipHorizontalBothBack"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="143 112 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="147 112 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipVerticalOpen"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="143 76 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="147 76 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipHorizontalBothForward"/>
         </Widget>
         <Widget type="HScroll" skin="HSlider" position="37 163 106 16" align="HRelative VRelative" name="Movement/ForceSlider">
@@ -68,10 +68,10 @@
         <Widget type="StaticText" skin="StaticText" position="38 149 91 15" align="HRelative VRelative">
             <Property key="Widget_Caption" value="Force"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 148 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="0 148 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipForceDown"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="143 148 32 32" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="StaticImage" position="147 148 32 32" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipForceUp"/>
         </Widget>
     </Widget>

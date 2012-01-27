@@ -164,11 +164,11 @@ namespace Medical.GUI
             currentFile = file;
             if (currentFile != null)
             {
-                window.Caption = String.Format("Exam Editor - {0}", currentFile);
+                window.Caption = String.Format("Plugin Editor - {0}", currentFile);
             }
             else
             {
-                window.Caption = String.Format("Exam Editor");
+                window.Caption = String.Format("Plugin Editor");
             }
         }
 

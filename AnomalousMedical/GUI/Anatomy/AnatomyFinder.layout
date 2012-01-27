@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="107 189 268 381" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="98 59 268 381" layer="Overlapped">
         <Property key="Widget_Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="Edit" skin="Edit" position="5 5 163 23" align="HStretch Top" name="SearchBox"/>
-        <Widget type="Button" skin="Button" position="170 7 44 20" align="Right Top" name="ClearButton">
+        <Widget type="Edit" skin="Edit" position="1 5 161 23" align="HStretch Top" name="SearchBox"/>
+        <Widget type="Button" skin="Button" position="164 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Widget_Caption" value="Clear"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="215 7 46 20" align="Right Top" name="UnhideAll">
+        <Widget type="Button" skin="Button" position="210 7 46 20" align="Right Top" name="UnhideAll">
             <Property key="Widget_Caption" value="Unhide"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="6 32 256 326" align="Stretch" name="AnatomyList">
+        <Widget type="ScrollView" skin="ScrollView" position="0 32 256 316" align="Stretch" name="AnatomyList">
             <Property key="ScrollView_CanvasSize" value="238 10"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="AnatomyFinderIconButtonButton"/>

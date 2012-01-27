@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="140 43 210 292" layer="Overlapped">
         <Property key="Widget_Caption" value="Scratch Area"/>
-        <Widget type="ScrollView" skin="ScrollView" position="6 0 198 269" align="Stretch" name="TableScroll">
+        <Widget type="ScrollView" skin="ScrollView" position="0 0 198 259" align="Stretch" name="TableScroll">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
     </Widget>

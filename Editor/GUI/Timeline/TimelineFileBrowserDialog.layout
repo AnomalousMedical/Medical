@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="146 390 204 276" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="146 390 216 288" layer="Overlapped">
         <Property key="Widget_Caption" value="Choose File"/>
-        <Property key="Window_MinSize" value="204 50"/>
+        <Property key="Window_MinSize" value="216 150"/>
         <Widget type="MultiList" skin="MultiList" position="0 0 204 231" align="Stretch" name="FileList"/>
         <Widget type="Button" skin="Button" position="5 235 63 19" align="Left Bottom" name="OpenButton">
             <Property key="Widget_Caption" value="Open"/>

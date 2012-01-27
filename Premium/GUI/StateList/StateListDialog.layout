@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="153 245 244 485" align="Default" layer="Overlapped" name="StateList/StatePicker">
+    <Widget type="Window" skin="WindowCSX" position="146 39 248 479" align="Default" layer="Overlapped" name="StateList/StatePicker">
         <Property key="Widget_Visible" value="true"/>
         <Property key="Widget_Caption" value="States"/>
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="ScrollView" skin="ScrollView" position="4 27 236 437" align="Stretch" name="StateList/ScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position="0 27 236 419" align="Stretch" name="StateList/ScrollView">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="209 10"/>
             <UserString key="ButtonSkin" value="ButtonListIconButton"/>
             <UserString key="ItemHeight" value="102"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 4 68 20" align="Left Top" name="StateList/DeleteButton">
+        <Widget type="Button" skin="Button" position="0 4 68 20" align="Left Top" name="StateList/DeleteButton">
             <Property key="Widget_Caption" value="Delete"/>
         </Widget>
     </Widget>

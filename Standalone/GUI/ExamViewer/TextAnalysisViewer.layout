@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="148 43 230 282" layer="Overlapped">
-        <Widget type="Edit" skin="Edit" position="5 5 222 257" align="Stretch" name="TextArea">
+        <Widget type="Edit" skin="WordWrapWhite" position="0 1 217 247" align="Stretch" name="TextArea">
             <Property key="Edit_MultiLine" value="true"/>
             <Property key="Text_TextAlign" value="Left Top"/>
             <Property key="Edit_WordWrap" value="true"/>
