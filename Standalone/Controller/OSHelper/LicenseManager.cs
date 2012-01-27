@@ -11,6 +11,7 @@ using Medical.GUI;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Medical.Controller;
+using Logging;
 
 namespace Medical
 {
@@ -253,6 +254,7 @@ namespace Medical
             licenseDialog = new LicenseDialog(programName, getMachineId(), keyDialogMessage);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
+            licenseDialog.Closed += new EventHandler(licenseDialog_Closed);
             licenseDialog.center();
             licenseDialog.open(true);
             if (KeyDialogShown != null)
@@ -261,9 +263,13 @@ namespace Medical
             }
         }
 
-        void licenseDialog_KeyInvalid(object sender, EventArgs e)
+        void licenseDialog_Closed(object sender, EventArgs e)
         {
             licenseDialog.Dispose();
+        }
+
+        void licenseDialog_KeyInvalid(object sender, EventArgs e)
+        {
             if (KeyInvalid != null)
             {
                 KeyInvalid.Invoke(this, EventArgs.Empty);
@@ -274,7 +280,6 @@ namespace Medical
         {
             storeLicenseFile(licenseDialog.License);
             license = new AnomalousLicense(licenseDialog.License);
-            licenseDialog.Dispose();
             fireKeyValid();
         }
 

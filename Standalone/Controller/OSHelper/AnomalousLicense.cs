@@ -9,8 +9,8 @@ namespace Engine
 {
     class LicenseInvalidException : Exception
     {
-        public LicenseInvalidException()
-            :base()
+        public LicenseInvalidException(String message)
+            :base(message)
         {
 
         }
@@ -63,13 +63,13 @@ namespace Engine
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new LicenseInvalidException();
+                throw new LicenseInvalidException(String.Format("{1} Exception occured. Message: {0}", ex.GetType().ToString(), ex.Message));
             }
             if (!match)
             {
-                throw new LicenseInvalidException();
+                throw new LicenseInvalidException("Invalid signature on license file.");
             }
         }
 

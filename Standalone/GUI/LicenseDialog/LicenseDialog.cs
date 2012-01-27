@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Engine;
 using System.Threading;
 using Medical.Controller;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -160,10 +161,21 @@ namespace Medical.GUI
 
         void licenseCaptured()
         {
-            this.close();
-            if (KeyEnteredSucessfully != null)
+            try
             {
-                KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+                if (KeyEnteredSucessfully != null)
+                {
+                    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+                }
+                this.close();
+            }
+            catch (LicenseInvalidException ex)
+            {
+                Log.Error("Invalid license returned from server. Reason: {0}", ex.Message);
+                activateButton.Enabled = true;
+                cancelButton.Enabled = true;
+                passwordEdit.Caption = "";
+                MessageBox.show(String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message), "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 
