@@ -84,7 +84,7 @@ namespace Medical.GUI
             chooseSceneDialog = new ChooseSceneDialog(guiManager);
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
 
-            anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController);
+            anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController, standaloneController.MedicalController.EventManager);
             guiManager.addManagedDialog(anatomyFinder);
 
             options = new OptionsDialog(guiManager);

@@ -25,9 +25,9 @@ namespace Medical.GUI
 
         static AnatomyFinder()
         {
-            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
-            pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
-            DefaultEvents.registerDefaultEvent(pickAnatomy);
+            //pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
+            //pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
+            //DefaultEvents.registerDefaultEvent(pickAnatomy);
 
             changeSelectionMode = new MessageEvent(AnatomyFinderEvents.ChangeSelectionMode);
             changeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
@@ -57,9 +57,15 @@ namespace Medical.GUI
         private int currentThumbnailIndex = 0;
         private bool allowAnatomySelectionChanges = true;
 
-        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
+        private EventManager eventManager;
+
+        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, EventManager eventManager)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
+            this.eventManager = eventManager;
+            eventManager.Mouse.ButtonDown += mouse_ButtonDown;
+            eventManager.Mouse.ButtonUp += mouse_ButtonUp;
+
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             this.sceneViewController = sceneViewController;
@@ -73,8 +79,8 @@ namespace Medical.GUI
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
             searchBox.KeyButtonReleased += new MyGUIEvent(searchBox_KeyButtonReleased);
 
-            pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
-            pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
+            //pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
+            //pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
             changeSelectionMode.FirstFrameUpEvent += new MessageEventCallback(changeSelectionMode_FirstFrameUpEvent);
             openAnatomyFinder.FirstFrameUpEvent += new MessageEventCallback(openAnatomyFinder_FirstFrameUpEvent);
 
@@ -92,6 +98,8 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            eventManager.Mouse.ButtonDown -= mouse_ButtonDown;
+            eventManager.Mouse.ButtonUp -= mouse_ButtonUp;
             anatomyWindowManager.Dispose();
             base.Dispose();
         }
@@ -210,6 +218,22 @@ namespace Medical.GUI
             {
                 anatomyWindowManager.closeUnpinnedWindow();
                 return null;
+            }
+        }
+
+        void mouse_ButtonUp(Mouse mouse, MouseButtonCode buttonCode)
+        {
+            if (buttonCode == MouseButtonCode.MB_BUTTON0)
+            {
+                pickAnatomy_FirstFrameUpEvent(eventManager);
+            }
+        }
+
+        void mouse_ButtonDown(Mouse mouse, MouseButtonCode buttonCode)
+        {
+            if (buttonCode == MouseButtonCode.MB_BUTTON0)
+            {
+                pickAnatomy_FirstFrameDownEvent(eventManager);
             }
         }
 
