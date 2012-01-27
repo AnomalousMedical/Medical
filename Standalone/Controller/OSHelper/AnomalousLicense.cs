@@ -65,7 +65,7 @@ namespace Engine
             }
             catch (Exception ex)
             {
-                throw new LicenseInvalidException(String.Format("{1} Exception occured. Message: {0}", ex.GetType().ToString(), ex.Message));
+                throw new LicenseInvalidException(String.Format("{0} Exception occured. Message: {1}", ex.GetType().ToString(), ex.Message));
             }
             if (!match)
             {
