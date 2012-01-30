@@ -10,6 +10,8 @@ namespace Medical.Controller
 {
     class MDIBorderContainerDock : MDIChildContainerBase, IDisposable
     {
+        private const int MIN_PIXEL_SIZE = 35;
+
         private MDILayoutContainer layoutContainer;
         private Widget separator;
         private int separatorSecondSize = 5;
@@ -164,22 +166,27 @@ namespace Medical.Controller
             switch (CurrentDockLocation)
             {
                 case DockLocation.Left:
-                    size = new Size2(me.Position.x - (int)Location.x, 10);
-                    invalidate();
+                    size = new Size2(me.Position.x - (int)Location.x, MIN_PIXEL_SIZE);
                     break;
                 case DockLocation.Right:
-                    size = new Size2((int)(Location.x + WorkingSize.Width) - me.Position.x, 10);
-                    invalidate();
+                    size = new Size2((int)(Location.x + WorkingSize.Width) - me.Position.x, MIN_PIXEL_SIZE);
                     break;
                 case DockLocation.Top:
-                    size = new Size2(10, me.Position.y - (int)Location.y);
-                    invalidate();
+                    size = new Size2(MIN_PIXEL_SIZE, me.Position.y - (int)Location.y);
                     break;
                 case DockLocation.Bottom:
-                    size = new Size2(10, (int)(Location.y + WorkingSize.Height) - me.Position.y);
-                    invalidate();
+                    size = new Size2(MIN_PIXEL_SIZE, (int)(Location.y + WorkingSize.Height) - me.Position.y);
                     break;
             }
+            if (size.Width < MIN_PIXEL_SIZE)
+            {
+                size.Width = MIN_PIXEL_SIZE;
+            }
+            if (size.Height < MIN_PIXEL_SIZE)
+            {
+                size.Height = MIN_PIXEL_SIZE;
+            }
+            invalidate();
         }
 
         private void setFirstWindowSize(MDIWindow child)
