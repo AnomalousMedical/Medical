@@ -9,7 +9,7 @@
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="94 0 62 23" align="Left Top" name="PlayButton">
+            <Widget type="Button" skin="ImageButton" position="30 0 62 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
@@ -28,10 +28,10 @@
             <Widget type="Button" skin="Button" position="0 0 28 23" name="Rewind">
                 <Property key="Widget_Caption" value="&lt;&lt;"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="158 0 30 23" name="FastForward">
+            <Widget type="Button" skin="Button" position="94 0 30 23" name="FastForward">
                 <Property key="Widget_Caption" value="&gt;&gt;"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="30 0 62 23" name="PlayFull">
+            <Widget type="Button" skin="Button" position="126 0 62 23" name="PlayFull">
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
                 <Property key="Widget_Caption" value="Preview"/>
             </Widget>

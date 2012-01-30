@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using Logging;
 using Engine.Editing;
+using Engine.Reflection;
 
 namespace Medical
 {
@@ -23,7 +24,7 @@ namespace Medical
             this.TargetTimeline = targetTimeline;
         }
 
-        [Editable]
+        //[Editable]
         public String TargetTimeline { get; set; }
 
         [Editable]
@@ -70,6 +71,11 @@ namespace Medical
         private void changeTimelineButton()
         {
             timelineControllerAfterDoAction.startPlayback(timelineControllerAfterDoAction.openTimeline(TargetTimeline));
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            editInterface.addEditableProperty(new TimelineEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("TargetTimeline")), this));
         }
 
 #region Saving
