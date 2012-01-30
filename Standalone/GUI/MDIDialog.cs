@@ -505,7 +505,28 @@ namespace Medical.GUI
         {
             MouseEventArgs me = (MouseEventArgs)e;
             IntVector2 mousePosition = new IntVector2(me.Position.x, me.Position.y);
-            window.setPosition((int)(mousePosition.x - captionMouseOffset.x), (int)(mousePosition.y - captionMouseOffset.y));
+            int newMouseX = (int)(mousePosition.x - captionMouseOffset.x);
+            int newMouseY = (int)(mousePosition.y - captionMouseOffset.y);
+
+            int maxHiddenWidth = -window.Width / 2;
+
+            if (newMouseX < maxHiddenWidth)
+            {
+                newMouseX = maxHiddenWidth;
+            }
+            if (newMouseX > Gui.Instance.getViewWidth() + maxHiddenWidth)
+            {
+                newMouseX = Gui.Instance.getViewWidth() + maxHiddenWidth;
+            }
+            if (newMouseY < 0)
+            {
+                newMouseY = 0;
+            }
+            if (newMouseY > Gui.Instance.getViewHeight() - 25)
+            {
+                newMouseY = Gui.Instance.getViewHeight() - 25;
+            }
+            window.setPosition(newMouseX, newMouseY);
             fireMouseDrag((MouseEventArgs)e);
         }
 
