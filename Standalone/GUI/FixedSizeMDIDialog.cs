@@ -22,6 +22,16 @@ namespace Medical.GUI
             String location = section.getValue("Location", DesiredLocation.ToString());
             Rect desiredLocation = new Rect();
             desiredLocation.fromString(location);
+
+            if (desiredLocation.Left < 0)
+            {
+                desiredLocation.Left = 0;
+            }
+            if (desiredLocation.Top < 0)
+            {
+                desiredLocation.Top = 0;
+            }
+
             DesiredLocation = desiredLocation;
 
             window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, window.Width, window.Height);
