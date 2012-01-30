@@ -35,7 +35,7 @@ namespace Medical
         {
             if (timelineControllerAfterDoAction.Playing)
             {
-                timelineControllerAfterDoAction.stopPlayback();
+                timelineControllerAfterDoAction.stopPlayback(false);
             }
             timelineControllerAfterDoAction._fireMultiTimelineStopEvent();
         }
