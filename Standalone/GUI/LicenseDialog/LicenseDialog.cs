@@ -71,10 +71,31 @@ namespace Medical.GUI
             register.MouseButtonClick += new MyGUIEvent(register_MouseButtonClick);
         }
 
+        public String UserName
+        {
+            get
+            {
+                return userEdit.Caption;
+            }
+            set
+            {
+                userEdit.Caption = value;
+            }
+        }
+
+        public bool SelectPasswordOnOpen { get; set; }
+
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
-            InputManager.Instance.setKeyFocusWidget(userEdit);
+            if (SelectPasswordOnOpen)
+            {
+                InputManager.Instance.setKeyFocusWidget(passwordEdit);
+            }
+            else
+            {
+                InputManager.Instance.setKeyFocusWidget(userEdit);
+            }
         }
 
         void passwordEdit_KeyButtonReleased(Widget source, EventArgs e)

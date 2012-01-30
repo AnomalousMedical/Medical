@@ -44,6 +44,7 @@ namespace Medical
 
         private AnomalousLicense license;
         private String keyDialogMessage = null;
+        private String keyDialogUserName = null;
 
         public LicenseManager(String programName, String keyFile)
         {
@@ -101,6 +102,7 @@ namespace Medical
                                 else
                                 {
                                     //Null the license. Something was not valid from the server.
+                                    keyDialogUserName = license.User;
                                     keyDialogMessage = "License has expired. Please log in again.";
                                     license = null;
 
@@ -256,6 +258,11 @@ namespace Medical
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
             licenseDialog.Closed += new EventHandler(licenseDialog_Closed);
             licenseDialog.center();
+            if (keyDialogUserName != null)
+            {
+                licenseDialog.UserName = keyDialogUserName;
+                licenseDialog.SelectPasswordOnOpen = true;
+            }
             licenseDialog.open(true);
             if (KeyDialogShown != null)
             {
