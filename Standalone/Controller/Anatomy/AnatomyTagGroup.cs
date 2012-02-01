@@ -122,7 +122,7 @@ namespace Medical
         {
             get
             {
-                return showInTextSearch;
+                return showInTextSearch && groupAnatomy.Count > 0;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Medical
         {
             get
             {
-                return showInClickSearch;
+                return showInClickSearch && groupAnatomy.Count > 0;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Medical
         {
             get
             {
-                return showInTree;
+                return showInTree && groupAnatomy.Count > 0;
             }
         }
 
