@@ -54,18 +54,19 @@ namespace Medical
 
         protected override void onShown()
         {
+            int buttonSize = (widget.Width - WIDTH_ADJUSTMENT) / 3;
             Vector2 startPos = new Vector2(0, 0);
             if (DataDrivenNavigationManager.Instance.Count == 0)
             {
                 //Make a cancel and submit button and exam if this was launched directly.
                 if (GUIData.AllowSubmit)
                 {
-                    submitButton = (Button)widget.createWidgetT("Button", "Button", widget.Width - 100 - WIDTH_ADJUSTMENT, 0, 100, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                    submitButton = (Button)widget.createWidgetT("Button", "Button", widget.Width - buttonSize - WIDTH_ADJUSTMENT, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                     submitButton.MouseButtonClick += new MyGUIEvent(submitButton_MouseButtonClick);
                     submitButton.Caption = GUIData.SubmitButtonText;
                 }
 
-                cancelButton = (Button)widget.createWidgetT("Button", "Button", WIDTH_ADJUSTMENT, 0, 100, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                cancelButton = (Button)widget.createWidgetT("Button", "Button", 0, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                 cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
                 cancelButton.Caption = GUIData.CancelButtonText;
                 startPos.y = cancelButton.Bottom + BUTTON_TO_PANEL_PAD;
@@ -86,19 +87,21 @@ namespace Medical
                 guiSection = DataDrivenExamController.Instance.CurrentSection.getSection(SectionName);
 
                 int xLoc = 0;
-                int buttonSize = (widget.Width - WIDTH_ADJUSTMENT) / 3;
 
-                previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
-                previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
-                previousButton.Caption = "Previous";
-                xLoc += previousButton.Width;
-                previousButton.Enabled = DataDrivenNavigationManager.Instance.Current.PreviousTimeline != null;
-                
-                nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
-                nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
-                nextButton.Caption = "Next";
-                xLoc += nextButton.Width;
-                nextButton.Enabled = DataDrivenNavigationManager.Instance.Current.NextTimeline != null;
+                if (DataDrivenNavigationManager.Instance.Current.Count > 1)
+                {
+                    previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                    previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
+                    previousButton.Caption = "Previous";
+                    xLoc += previousButton.Width;
+                    previousButton.Enabled = DataDrivenNavigationManager.Instance.Current.PreviousTimeline != null;
+
+                    nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
+                    nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
+                    nextButton.Caption = "Next";
+                    xLoc += nextButton.Width;
+                    nextButton.Enabled = DataDrivenNavigationManager.Instance.Current.NextTimeline != null;
+                }
                 
                 finishButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                 finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
@@ -106,7 +109,7 @@ namespace Medical
                 xLoc += finishButton.Width;
                 finishButton.Enabled = DataDrivenNavigationManager.Instance.Current.MenuTimeline != null;
 
-                startPos.y = previousButton.Bottom + BUTTON_TO_PANEL_PAD;
+                startPos.y = finishButton.Bottom + BUTTON_TO_PANEL_PAD;
             }
 
             if (String.IsNullOrEmpty(GUIData.LayoutFile))

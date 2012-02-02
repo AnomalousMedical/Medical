@@ -24,12 +24,12 @@ namespace Medical
         public void configureGUI(AbstractTimelineGUI gui)
         {
             gui.clearNavigationBar();
-            foreach (TimelineEntry timeline in timelines)
+            if (timelines.Count > 1)
             {
-                gui.addToNavigationBar(timeline.Timeline, timeline.Name, timeline.ImageKey);
-            }
-            if (timelines.Count > 0)
-            {
+                foreach (TimelineEntry timeline in timelines)
+                {
+                    gui.addToNavigationBar(timeline.Timeline, timeline.Name, timeline.ImageKey);
+                }
                 gui.showNavigationBar();
             }
             else
@@ -103,6 +103,14 @@ namespace Medical
             get
             {
                 return menuTimeline;
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                return timelines.Count;
             }
         }
     }
