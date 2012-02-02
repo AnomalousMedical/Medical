@@ -35,6 +35,15 @@ namespace Medical
             }
         }
 
+        public void insertDataField(int index, DataField field)
+        {
+            dataFields.Insert(index, field);
+            if (editInterface != null)
+            {
+                refreshDataFieldDefinitions();
+            }
+        }
+
         public void createControls(DataControlFactory factory)
         {
             factory.pushColumnLayout();
@@ -82,6 +91,8 @@ namespace Medical
                 dataFieldEdits = new EditInterfaceManager<DataField>(editInterface);
                 dataFieldEdits.addCommand(new EditInterfaceCommand("Remove", removeField));
                 dataFieldEdits.addCommand(new EditInterfaceCommand("Rename", renameField));
+                dataFieldEdits.addCommand(new EditInterfaceCommand("Move Up", moveUp));
+                dataFieldEdits.addCommand(new EditInterfaceCommand("Move Down", moveDown));
 
                 foreach (DataField field in dataFields)
                 {
@@ -220,6 +231,28 @@ namespace Medical
             });
         }
 
+        private void moveUp(EditUICallback callback, EditInterfaceCommand command)
+        {
+            DataField field = dataFieldEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            int index = dataFields.IndexOf(field) - 1;
+            if (index >= 0)
+            {
+                removeDataField(field);
+                insertDataField(index, field);
+            }
+        }
+
+        private void moveDown(EditUICallback callback, EditInterfaceCommand command)
+        {
+            DataField field = dataFieldEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            int index = dataFields.IndexOf(field) + 1;
+            if (index < dataFields.Count)
+            {
+                removeDataField(field);
+                insertDataField(index, field);
+            }
+        }
+
         private void addDataFieldDefinition(DataField field)
         {
             dataFieldEdits.addSubInterface(field, field.getEditInterface());
@@ -228,6 +261,16 @@ namespace Medical
         private void removeDataFieldDefinition(DataField field)
         {
             dataFieldEdits.removeSubInterface(field);
+        }
+
+        private void refreshDataFieldDefinitions()
+        {
+            dataFieldEdits.clearSubInterfaces();
+            foreach (DataField field in dataFields)
+            {
+                field.getEditInterface().clearCommands();
+                dataFieldEdits.addSubInterface(field, field.getEditInterface());
+            }
         }
 
         private bool hasDataField(String name)

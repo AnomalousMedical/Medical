@@ -4,11 +4,22 @@ using System.Linq;
 using System.Text;
 using Engine;
 using MyGUIPlugin;
+using Medical.GUI;
 
 namespace Medical
 {
     class TextDisplayDataControl : DataControl
     {
+        private static MyGUIDynamicFontManager timelineText = new MyGUIDynamicFontManager();
+
+        static TextDisplayDataControl()
+        {
+            timelineText.addFont("TimelineText.10", 10);
+            timelineText.addFont("TimelineText.25", 25);
+            timelineText.addFont("TimelineText.50", 50);
+            timelineText.addFont("TimelineText.100", 100);
+        }
+
         private Edit text;
 
         public TextDisplayDataControl(Widget parentWidget, StaticTextDataField field)
@@ -19,6 +30,8 @@ namespace Medical
             text.EditStatic = true;
             text.NeedMouseFocus = false;
             text.Caption = field.Text;
+            text.FontName = timelineText.getFont(field.FontHeight);
+            text.FontHeight = field.FontHeight;
         }
 
         public override void Dispose()
