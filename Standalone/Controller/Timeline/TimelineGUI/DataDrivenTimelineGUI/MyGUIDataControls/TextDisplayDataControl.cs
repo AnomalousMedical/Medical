@@ -11,6 +11,7 @@ namespace Medical
     class TextDisplayDataControl : DataControl
     {
         private static MyGUIDynamicFontManager timelineText = new MyGUIDynamicFontManager();
+        private int indentation;
 
         static TextDisplayDataControl()
         {
@@ -32,6 +33,7 @@ namespace Medical
             text.Caption = field.Text;
             text.FontName = timelineText.getFont(field.FontHeight);
             text.FontHeight = field.FontHeight;
+            this.indentation = field.Indentation;
         }
 
         public override void Dispose()
@@ -61,9 +63,9 @@ namespace Medical
 
         public override void layout()
         {
-            text.setSize((int)WorkingSize.Width, (int)WorkingSize.Height);
+            text.setSize((int)WorkingSize.Width - indentation, (int)WorkingSize.Height);
             int textHeight = (int)text.getTextSize().Height +(text.Height - text.ClientCoord.height);
-            text.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, textHeight);
+            text.setCoord((int)Location.x + indentation, (int)Location.y, (int)WorkingSize.Width - indentation, textHeight);
             Height = textHeight;
         }
 

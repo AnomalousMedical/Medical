@@ -11,6 +11,7 @@ namespace Medical
     public class StaticTextDataField : DataField
     {
         private int fontHeight = 14;
+        private int indentation = 0;
 
         public StaticTextDataField(String name)
             :base(name)
@@ -44,6 +45,19 @@ namespace Medical
             set
             {
                 fontHeight = value;
+            }
+        }
+
+        [Editable]
+        public int Indentation
+        {
+            get
+            {
+                return indentation;
+            }
+            set
+            {
+                indentation = value;
             }
         }
 
