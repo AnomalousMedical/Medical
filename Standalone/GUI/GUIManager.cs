@@ -15,6 +15,9 @@ namespace Medical.GUI
 {
     public class GUIManager : IDisposable
     {
+        private static String INFO_SECTION = "__Info_Section_Reserved__";
+        private static String INFO_VERSION = "Version";
+
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
         private HorizontalPopoutLayoutContainer leftAnimatedContainer;
@@ -61,6 +64,8 @@ namespace Medical.GUI
             if (saveWindowsOnExit && MedicalConfig.WindowsFile != null)
             {
                 ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+                ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
+                infoSection.setValue(INFO_VERSION, this.GetType().Assembly.GetName().Version.ToString());
                 dialogManager.saveDialogLayout(configFile);
                 guiTaskManager.savePinnedTasks(configFile);
                 guiTimelineTaskManager.saveUI(configFile);
@@ -329,7 +334,21 @@ namespace Medical.GUI
             timelineGUITaskbar.SuppressLayout = true;
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
-            dialogManager.loadDialogLayout(configFile);
+            ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
+            String versionString = infoSection.getValue(INFO_VERSION, "0.0.0.0");
+            Version version;
+            try
+            {
+                version = new Version(versionString);
+            }
+            catch (Exception)
+            {
+                version = new Version("0.0.0.0");
+            }
+            if (version > new Version("2.0.0.2818"))
+            {
+                dialogManager.loadDialogLayout(configFile);
+            }
             guiTaskManager.loadPinnedTasks(configFile);
             guiTimelineTaskManager.loadSavedUI(configFile);
             taskbar.SuppressLayout = false;
