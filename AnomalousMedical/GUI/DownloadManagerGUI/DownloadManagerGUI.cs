@@ -273,7 +273,7 @@ namespace Medical.GUI
 
         void installPanel_Restart(DownloadGUIInfo info)
         {
-            standaloneController.restartWithWarning("Restarting Anomalous Medical will loose all unsaved data. Are you sure you wish to continue?", info.AutoStartUpdate);
+            standaloneController.restartWithWarning("Restarting Anomalous Medical will lose all unsaved data. Are you sure you wish to continue?", info.AutoStartUpdate);
         }
 
         public override void setSize(int width, int height)

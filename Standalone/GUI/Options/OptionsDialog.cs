@@ -15,6 +15,9 @@ namespace Medical.GUI
     public class OptionsDialog : AbstractFullscreenGUIPopup
     {
         public event EventHandler VideoOptionsChanged;
+        public event EventHandler RequestRestart;
+
+        private GUIManager guiManager;
 
         private ComboBox cameraSpeedCombo;
 
@@ -32,6 +35,7 @@ namespace Medical.GUI
             :base("Medical.GUI.Options.OptionsDialog.layout", guiManager)
         {
             this.SmoothShow = true;
+            this.guiManager = guiManager;
 
             cameraSpeedCombo = widget.findWidget("CameraSpeedCombo") as ComboBox;
             enableMultitouchCheck = new CheckButton(widget.findWidget("EnableMultitouch") as Button);
@@ -78,6 +82,9 @@ namespace Medical.GUI
 
             Button cancelButton = widget.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            Button resetWindows = widget.findWidget("ResetWindows") as Button;
+            resetWindows.MouseButtonClick += new MyGUIEvent(resetWindows_MouseButtonClick);
 
             this.Showing += new EventHandler(OptionsDialog_Showing);
         }
@@ -204,6 +211,24 @@ namespace Medical.GUI
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.hide();
+        }
+
+        void resetWindows_MouseButtonClick(Widget source, EventArgs e)
+        {
+            MessageBox.show("This will reset all window positions back to their defaults.\nIt will remove all icons from the Task Bar and you will have to put them back.\nAnomalous Medical will need to restart and you will lose any unsaved data.\nAre you sure you want to continue?", "Restart", MessageBoxStyle.IconInfo | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+            {
+                if (guiManager.deleteWindowsFile())
+                {
+                    if (RequestRestart != null)
+                    {
+                        RequestRestart.Invoke(this, EventArgs.Empty);
+                    }
+                }
+                else
+                {
+                    MessageBox.show(String.Format("Could not delete windows.ini file located at '{0}'.\nPlease delete this file manually to reset your UI.", MedicalConfig.WindowsFile), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                }
+            });
         }
     }
 }

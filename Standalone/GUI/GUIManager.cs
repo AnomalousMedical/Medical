@@ -9,6 +9,7 @@ using Engine.Platform;
 using Medical.Controller;
 using Engine;
 using Logging;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -28,6 +29,8 @@ namespace Medical.GUI
         private Taskbar timelineGUITaskbar;
 
         private bool mainGuiShowing = true;
+
+        private bool saveWindowsOnExit = true;
 
         //Dialogs
         private DialogManager dialogManager;
@@ -55,7 +58,7 @@ namespace Medical.GUI
         public void Dispose()
         {
             //Dialogs
-            if (MedicalConfig.WindowsFile != null)
+            if (saveWindowsOnExit && MedicalConfig.WindowsFile != null)
             {
                 ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
                 dialogManager.saveDialogLayout(configFile);
@@ -272,6 +275,28 @@ namespace Medical.GUI
         public void removeFullscreenPopup(FullscreenGUIPopup popup)
         {
             fullscreenPopups.Remove(popup);
+        }
+
+        /// <summary>
+        /// Delete the windows file and tell the manager to not write a new one on close.
+        /// </summary>
+        /// <returns>True if the file was deleted. False otherwise.</returns>
+        public bool deleteWindowsFile()
+        {
+            if (MedicalConfig.WindowsFile != null)
+            {
+                try
+                {
+                    File.Delete(MedicalConfig.WindowsFile);
+                    saveWindowsOnExit = false;
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Could not delete windows file. Reason: {0}", ex.Message);
+                }
+            }
+            return false;
         }
 
         public Taskbar Taskbar

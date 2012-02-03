@@ -89,6 +89,7 @@ namespace Medical.GUI
 
             options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
+            options.RequestRestart += new EventHandler(options_RequestRestart);
 
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager);
             guiManager.addManagedDialog(renderDialog);
@@ -233,6 +234,11 @@ namespace Medical.GUI
         private void options_VideoOptionsChanged(object sender, EventArgs e)
         {
             standaloneController.recreateMainWindow();
+        }
+
+        void options_RequestRestart(object sender, EventArgs e)
+        {
+            standaloneController.restartWithWarning();
         }
 
         private void chooseSceneDialog_ChooseScene(object sender, EventArgs e)

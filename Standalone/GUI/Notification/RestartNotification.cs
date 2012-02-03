@@ -20,7 +20,7 @@ namespace Medical.GUI
 
         public override void clicked()
         {
-            standaloneController.restartWithWarning("Restarting Anomalous Medical will loose all unsaved data. Are you sure you wish to continue?", autoStartPlatformUpdate);
+            standaloneController.restartWithWarning("Restarting Anomalous Medical will lose all unsaved data. Are you sure you wish to continue?", autoStartPlatformUpdate);
         }
     }
 }
