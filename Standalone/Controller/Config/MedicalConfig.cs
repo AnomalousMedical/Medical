@@ -65,7 +65,7 @@ namespace Medical
             MedicalConfig.PluginDownloadURL = "https://www.anomalousmedical.com/DRM/FileDownloader.aspx";
             MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store.aspx";
             MedicalConfig.WebsiteImagesBaseURL = "http://www.anomalousmedical.com";
-            MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/ProductInfo.aspx?ProductId={0}";
+            MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/ProductInfo.aspx?PluginId={0}";
             MedicalConfig.UpdateCheckURL = "https://www.anomalousmedical.com/DRM/UpdateCheck.aspx";
             MedicalConfig.LicenseReaderURL = "https://www.anomalousmedical.com/DRM/LicenseReader.aspx";
             MedicalConfig.LicenseImageURL = "https://www.anomalousmedical.com/DRM/LicenseImage.aspx";
