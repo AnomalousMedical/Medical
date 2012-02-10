@@ -65,7 +65,7 @@ namespace Medical
         public void createEllipse()
         {
             manualObject.clear();
-            manualObject.begin("colorvertex", OperationType.OT_TRIANGLE_STRIP);
+            manualObject.begin("ManualTwoSidedPropShapeMaterial", OperationType.OT_TRIANGLE_STRIP);
             uint vertexCount = (uint)(numSections * 2);
             uint indexCount = vertexCount + 2;
             manualObject.estimateVertexCount(vertexCount);
