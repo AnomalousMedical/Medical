@@ -1,0 +1,78 @@
+<Save>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="1">
+    <Float name="leftCPPosition">0.515</Float>
+    <Float name="rightCPPosition">0.535</Float>
+    <Vector3 name="movingTargetPosition">0, 0, 0</Vector3>
+    <Float name="muscleForce">20</Float>
+    <Float name="startTime">0.005518764</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="2">
+    <Float name="leftCPPosition">0.555</Float>
+    <Float name="rightCPPosition">0.575</Float>
+    <Vector3 name="movingTargetPosition">0, -6.500001, 0</Vector3>
+    <Float name="muscleForce">20</Float>
+    <Float name="startTime">0.6843268</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="3">
+    <Float name="leftCPPosition">0.645</Float>
+    <Float name="rightCPPosition">0.635</Float>
+    <Vector3 name="movingTargetPosition">0, -10.5, 0</Vector3>
+    <Float name="muscleForce">20</Float>
+    <Float name="startTime">1.374172</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="4">
+    <Float name="leftCPPosition">0.735</Float>
+    <Float name="rightCPPosition">0.675</Float>
+    <Vector3 name="movingTargetPosition">0, -14, 0</Vector3>
+    <Float name="muscleForce">20</Float>
+    <Float name="startTime">2.09713</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="5">
+    <Float name="leftCPPosition">0.755</Float>
+    <Float name="rightCPPosition">0.605</Float>
+    <Vector3 name="movingTargetPosition">0, -12.5, 0</Vector3>
+    <Float name="muscleForce">20</Float>
+    <Float name="startTime">2.836645</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="6">
+    <Float name="leftCPPosition">0.635</Float>
+    <Float name="rightCPPosition">0.515</Float>
+    <Vector3 name="movingTargetPosition">0, -6.000001, 0</Vector3>
+    <Float name="muscleForce">20</Float>
+    <Float name="startTime">3.623544</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="7">
+    <Float name="leftCPPosition">0.565</Float>
+    <Float name="rightCPPosition">0.519</Float>
+    <Vector3 name="movingTargetPosition">0, -3, 0</Vector3>
+    <Float name="muscleForce">3</Float>
+    <Float name="startTime">4.301877</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="8">
+    <Float name="leftCPPosition">0.525</Float>
+    <Float name="rightCPPosition">0.535</Float>
+    <Vector3 name="movingTargetPosition">0, -0.75, 0</Vector3>
+    <Float name="muscleForce">5</Float>
+    <Float name="startTime">4.966279</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequenceState, Simulation" id="9">
+    <Float name="leftCPPosition">0.525</Float>
+    <Float name="rightCPPosition">0.535</Float>
+    <Vector3 name="movingTargetPosition">0, -0.75, 0</Vector3>
+    <Float name="muscleForce">3</Float>
+    <Float name="startTime">4.97241</Float>
+  </Saveable>
+  <Saveable type="Medical.Muscles.MovementSequence, Simulation" id="0">
+    <String name="Name" />
+    <Float name="Duration">5</Float>
+    <Saveable name="State0" id="1" />
+    <Saveable name="State1" id="2" />
+    <Saveable name="State2" id="3" />
+    <Saveable name="State3" id="4" />
+    <Saveable name="State4" id="5" />
+    <Saveable name="State5" id="6" />
+    <Saveable name="State6" id="7" />
+    <Saveable name="State7" id="8" />
+    <Saveable name="State8" id="9" />
+  </Saveable>
+</Save>
