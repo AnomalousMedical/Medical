@@ -11,6 +11,7 @@ namespace Medical.GUI
     {
         private NotificationGUIManager notificationManager;
         private Notification notification;
+        private bool allowClose = true;
 
         public NotificationGUI(Notification notification, NotificationGUIManager notificationManager)
             : base("Medical.GUI.Notification.NotificationGUI.layout")
@@ -52,17 +53,25 @@ namespace Medical.GUI
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.Hiding += new EventHandler(NotificationGUI_Hiding);
-            this.Hidden += new EventHandler(NotificationGUI_Hidden);
-            this.hide();
+            if (allowClose)
+            {
+                this.Hiding += new EventHandler(NotificationGUI_Hiding);
+                this.Hidden += new EventHandler(NotificationGUI_Hidden);
+                this.hide();
+                allowClose = false;
+            }
         }
 
         void widget_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.Hiding += new EventHandler(NotificationGUI_Hiding);
-            this.Hidden += new EventHandler(NotificationGUI_Hidden);
-            clicked();
-            this.hide();
+            if (allowClose)
+            {
+                this.Hiding += new EventHandler(NotificationGUI_Hiding);
+                this.Hidden += new EventHandler(NotificationGUI_Hidden);
+                clicked();
+                this.hide();
+                allowClose = false;
+            }
         }
 
         void NotificationGUI_Hiding(object sender, EventArgs e)
