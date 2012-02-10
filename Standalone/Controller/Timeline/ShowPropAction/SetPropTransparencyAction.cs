@@ -34,10 +34,11 @@ namespace Medical
             if (timelineTime <= EndTime)
             {
                 //Figure out how transparent we should be
+                //This is pretty screwy right now, but whatever can fix later.
                 if (Duration != 0.0f)
                 {
                     float partialFade = ((timelineTime - StartTime) / Duration) * transparency;
-                    propBehavior.setTransparency(partialFade);
+                    propBehavior.CurrentTransparency += (transparency - propBehavior.CurrentTransparency) * partialFade;
                 }
                 propBehavior.fade(transparency, EndTime - timelineTime);
             }
