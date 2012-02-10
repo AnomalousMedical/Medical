@@ -12,27 +12,27 @@ namespace Medical
 {
     class PropFadeBehavior : Behavior
     {
-        private String nodeName = PropFactory.NodeName;
+        protected String nodeName = PropFactory.NodeName;
         private String entityName = PropFactory.EntityName;
-        private String alphaSuffix = "Alpha";
-        private uint subEntityIndex = 0;
-        private bool disableOnHidden = true;
-        private byte renderGroupOffset = 0;
+        protected String alphaSuffix = "Alpha";
+        protected uint subEntityIndex = 0;
+        protected bool disableOnHidden = true;
+        protected byte renderGroupOffset = 0;
 
         private Entity entity;
         private SubEntity subEntity;
-        private String baseMaterialName;
+        protected String baseMaterialName;
 
         [DoNotSave]
         [DoNotCopy]
-        private String finalAlphaMaterialName;
+        protected String finalAlphaMaterialName;
 
         [DoNotSave]
         [DoNotCopy]
-        private Quaternion alphaQuat = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
+        protected Quaternion alphaQuat = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
 
         //Transparency controls
-        private float workingAlpha = 1.0f;
+        protected float workingAlpha = 1.0f;
         private float targetOpacity = 1.0f;
         private bool changingOpacity = false;
         private float opacityChangeMultiplier = 1.0f;
@@ -136,7 +136,7 @@ namespace Medical
             }
         }
 
-        private void applyAlphaToMaterial(float alpha)
+        protected virtual void applyAlphaToMaterial(float alpha)
         {
             workingAlpha = alpha;
             alphaQuat.w = alpha;

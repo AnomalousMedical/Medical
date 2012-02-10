@@ -18,16 +18,16 @@ namespace Medical
         {
             GenericSimObjectDefinition simObject = new GenericSimObjectDefinition("CircularHighlightPrototype");
             simObject.Enabled = true;
-            ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition("ManualObject");
+            ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition(PropFactory.ManualObjectName);
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(manualObjectDefinition);
             simObject.addElement(nodeDefinition);
             CircularHighlight behavior = new CircularHighlight();
             BehaviorDefinition behaviorDef = new BehaviorDefinition(BehaviorName, behavior);
             simObject.addElement(behaviorDef);
-            //PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
-            //BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            //simObject.addElement(propFadeBehaviorDef);
+            PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior();
+            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
+            simObject.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(DefinitionName, simObject);
         }
 

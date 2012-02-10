@@ -13,6 +13,7 @@ namespace Medical
     {
         public const String NodeName = "Node";
         public const String EntityName = "Entity";
+        public const String ManualObjectName = "ManualObject";
         public const String FadeBehaviorName = "FadeBehavior";
         public const String DetachableFollowerName = "DetachableFollower";
         public const String RigidBodyName = "RigidBody";
