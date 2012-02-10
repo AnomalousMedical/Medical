@@ -205,6 +205,7 @@
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerAnimator.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerSectionAnimator.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableThumbAnimator.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\SetPropTransparencyAction.cs" />
     <Compile Include="Controller\Timeline\ShowTextAction\ITextDisplay.cs" />
     <Compile Include="Controller\Timeline\ShowTextAction\ITextDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowTextAction\ShowTextAction.cs" />
