@@ -30,14 +30,20 @@ namespace Medical
 
         public override void skipTo(float timelineTime)
         {
+            propBehavior = PropSimObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
             if (timelineTime <= EndTime)
             {
-                started(timelineTime, null);
+                //Figure out how transparent we should be
+                if (Duration != 0.0f)
+                {
+                    float partialFade = ((timelineTime - StartTime) / Duration) * transparency;
+                    propBehavior.setTransparency(partialFade);
+                }
+                propBehavior.fade(transparency, EndTime - timelineTime);
             }
             else
             {
-                propBehavior = PropSimObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
-                propBehavior.fade(transparency, Duration);
+                propBehavior.fade(transparency, 0.0f);
                 finished = true;
             }
         }

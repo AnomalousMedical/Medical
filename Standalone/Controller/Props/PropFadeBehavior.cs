@@ -87,6 +87,14 @@ namespace Medical
             }
         }
 
+        public void setTransparency(float opacity)
+        {
+            workingAlpha = opacity;
+            targetOpacity = opacity;
+            changingOpacity = false;
+            applyAlphaToMaterial(workingAlpha);
+        }
+
         public void hide()
         {
             applyAlphaToMaterial(0.0f);
