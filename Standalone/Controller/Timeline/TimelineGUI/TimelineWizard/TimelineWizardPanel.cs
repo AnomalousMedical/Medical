@@ -135,23 +135,6 @@ namespace Medical.GUI
             base.navigationBarChangedTimelines(timeline);
         }
 
-        public void applyLayers(LayerState layers)
-        {
-            if (layers != null)
-            {
-                layers.apply();
-            }
-        }
-
-        public void applyCameraPosition(CameraPosition cameraPosition)
-        {
-            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
-            if (window != null)
-            {
-                window.setPosition(cameraPosition);
-            }
-        }
-
         void finishButton_MouseButtonClick(Widget source, EventArgs e)
         {
             commitOutstandingData();

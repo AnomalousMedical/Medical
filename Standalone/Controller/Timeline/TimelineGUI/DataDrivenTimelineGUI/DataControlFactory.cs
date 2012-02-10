@@ -29,5 +29,9 @@ namespace Medical
         void addField(PlayExampleDataField field);
 
         void addField(StaticTextDataField field);
+
+        void addField(MoveCameraDataField field);
+
+        void addField(ChangeLayersDataField field);
     }
 }

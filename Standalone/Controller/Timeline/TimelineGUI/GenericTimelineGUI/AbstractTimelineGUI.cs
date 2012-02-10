@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 using System.IO;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -41,6 +42,23 @@ namespace Medical
         public Stream openFile(String filename)
         {
             return showTimelineAction.openFile(filename);
+        }
+
+        public void applyLayers(LayerState layers)
+        {
+            if (layers != null)
+            {
+                layers.apply();
+            }
+        }
+
+        public void applyCameraPosition(CameraPosition cameraPosition)
+        {
+            SceneViewWindow window = showTimelineAction.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                window.setPosition(cameraPosition);
+            }
         }
 
         public void playExampleTimeline(String timeline)

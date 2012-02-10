@@ -7,6 +7,7 @@ using Engine.Saving;
 using Engine.Editing;
 using Engine;
 using System.IO;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -64,6 +65,14 @@ namespace Medical
             {
                 Log.Warning("ShowGUIAction playback: Error loading timeline '{0}'", timelineName);
                 stopTimelines();
+            }
+        }
+
+        public SceneViewController SceneViewController
+        {
+            get
+            {
+                return timelineControllerAfterDoAction.SceneViewController;
             }
         }
 

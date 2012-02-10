@@ -90,5 +90,15 @@ namespace Medical.GUI
         {
 
         }
+
+        public void addField(MoveCameraDataField field)
+        {
+            
+        }
+
+        public void addField(ChangeLayersDataField field)
+        {
+            
+        }
     }
 }
