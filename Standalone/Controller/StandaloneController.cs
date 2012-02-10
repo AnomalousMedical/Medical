@@ -200,6 +200,7 @@ namespace Medical
             JVAProp.createPropDefinition(propFactory);
             Mustache.createPropDefinition(propFactory);
             CircularHighlight.createPropDefinition(propFactory);
+            Plane.createPropDefinition(propFactory);
             PoseableHand.createPropDefinition(propFactory);
             BiteStick.createPropDefinition(propFactory);
             RangeOfMotionScale.createPropDefinition(propFactory);
