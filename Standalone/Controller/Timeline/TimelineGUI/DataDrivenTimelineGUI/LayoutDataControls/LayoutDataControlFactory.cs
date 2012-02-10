@@ -122,12 +122,26 @@ namespace Medical.LayoutDataControls
             Button button = layoutControl.findWidget(field.Name) as Button;
             if (button != null)
             {
-                LayoutChangeLayersDataField control = new LayoutChangeLayersDataField(button, gui, field);
+                LayoutChangeLayersDataControl control = new LayoutChangeLayersDataControl(button, gui, field);
                 layoutControl.addControl(control);
             }
             else
             {
                 Log.Error("Could not find a Button control named '{0}' on the layout to make a Change Layers Item. Skipping this button.", field.Name);
+            }
+        }
+
+        public void addField(MoveCameraChangeLayersDataField field)
+        {
+            Button button = layoutControl.findWidget(field.Name) as Button;
+            if (button != null)
+            {
+                LayoutMoveCameraChangeLayersDataField control = new LayoutMoveCameraChangeLayersDataField(button, gui, field);
+                layoutControl.addControl(control);
+            }
+            else
+            {
+                Log.Error("Could not find a Button control named '{0}' on the layout to make a Move Camera, Change Layers Item. Skipping this button.", field.Name);
             }
         }
 

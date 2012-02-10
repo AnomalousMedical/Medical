@@ -210,11 +210,14 @@
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataControlFactory.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\ChangeLayersDataField.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\MoveCameraChangeLayersDataField.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\MoveCameraDataField.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\StaticTextDataField.cs" />
-    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutChangeLayersDataField.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutChangeLayersDataControl.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutMoveCameraChangeLayersDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutMoveCameraDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\MyGUIDataControls\ChangeLayersDataControl.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\MyGUIDataControls\MoveCameraChangeLayersDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\MyGUIDataControls\MoveCameraDataControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\TimelineEditableProperty.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutCheckBoxDataControl.cs" />
