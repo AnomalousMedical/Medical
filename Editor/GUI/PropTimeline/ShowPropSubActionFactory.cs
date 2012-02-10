@@ -100,6 +100,12 @@ namespace Medical.GUI
             caliperData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             caliperData.addTrack(typeof(SetCaliperMeasurement), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(Caliper.DefinitionName, caliperData);
+
+            //Plane
+            ShowPropSubActionFactoryData planeData = new ShowPropSubActionFactoryData();
+            planeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            planeData.addTrack(typeof(ChangePlaneSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
+            trackInfo.Add(Plane.DefinitionName, planeData);
         }
 
         public void Dispose()

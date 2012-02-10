@@ -175,6 +175,7 @@
     <Compile Include="Controller\Props\Pen\Pen.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controller\Props\Plane\ChangePlaneSettings.cs" />
     <Compile Include="Controller\Props\Plane\Plane.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableFinger.cs" />
     <Compile Include="Controller\Props\JVAProp.cs" />

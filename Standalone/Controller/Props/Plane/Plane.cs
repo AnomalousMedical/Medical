@@ -9,7 +9,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class Plane : Interface
+    public class Plane : Interface
     {
         public const String DefinitionName = "Plane";
         public const String BehaviorName = "Behavior";
@@ -37,7 +37,7 @@ namespace Medical
 
         public Plane()
         {
-            size = new Size2(1.0f, 1.0f);
+            size = new Size2(3.0f, 3.0f);
         }
 
         protected override void constructed()
@@ -104,6 +104,18 @@ namespace Medical
             set
             {
                 color = value;
+            }
+        }
+
+        public Size2 Size
+        {
+            get
+            {
+                return size;
+            }
+            set
+            {
+                size = value;
             }
         }
     }
