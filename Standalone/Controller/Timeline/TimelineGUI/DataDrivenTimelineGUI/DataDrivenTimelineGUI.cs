@@ -92,20 +92,20 @@ namespace Medical
                 {
                     previousButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                     previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
-                    previousButton.Caption = "Previous";
+                    previousButton.Caption = GUIData.PreviousButtonText;
                     xLoc += previousButton.Width;
                     previousButton.Enabled = DataDrivenNavigationManager.Instance.Current.PreviousTimeline != null;
 
                     nextButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                     nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
-                    nextButton.Caption = "Next";
+                    nextButton.Caption = GUIData.NextButtonText;
                     xLoc += nextButton.Width;
                     nextButton.Enabled = DataDrivenNavigationManager.Instance.Current.NextTimeline != null;
                 }
                 
                 finishButton = (Button)widget.createWidgetT("Button", "Button", xLoc, 0, buttonSize, BUTTON_HEIGHT, MyGUIPlugin.Align.Default, "");
                 finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
-                finishButton.Caption = "Finish";
+                finishButton.Caption = GUIData.FinishButtonText;
                 xLoc += finishButton.Width;
                 finishButton.Enabled = DataDrivenNavigationManager.Instance.Current.MenuTimeline != null;
 

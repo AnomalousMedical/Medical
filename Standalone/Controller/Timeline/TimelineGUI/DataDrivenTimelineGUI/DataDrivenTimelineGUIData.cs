@@ -47,6 +47,9 @@ namespace Medical
             CancelButtonText = "Cancel";
             PlayTimelineOnCancel = false;
             AllowSubmit = true;
+            PreviousButtonText = "Previous";
+            NextButtonText = "Next";
+            FinishButtonText = "Finish";
         }
 
         public void createControls(DataControlFactory factory)
@@ -86,6 +89,15 @@ namespace Medical
         [Editable]
         public String PrettyName { get; set; }
 
+        [Editable]
+        public String PreviousButtonText { get; set; }
+
+        [Editable]
+        public String NextButtonText { get; set; }
+
+        [Editable]
+        public String FinishButtonText { get; set; }
+
         public DataFieldCollection DataFields
         {
             get
@@ -97,7 +109,18 @@ namespace Medical
         protected DataDrivenTimelineGUIData(LoadInfo info)
             :base(info)
         {
-            
+            if (PreviousButtonText == null)
+            {
+                PreviousButtonText = "Previous";
+            }
+            if (NextButtonText == null)
+            {
+                NextButtonText = "Next";
+            }
+            if (FinishButtonText == null)
+            {
+                FinishButtonText = "Finish";
+            }
         }
     }
 }
