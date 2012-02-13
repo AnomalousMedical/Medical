@@ -2,4 +2,5 @@
 
 <MyGUI type="List">
   <List file="Developer.Resources.DeveloperBrandingIcon.xml"/>
+  <List file="Developer.Resources.DeveloperIcons.xml"/>
 </MyGUI>

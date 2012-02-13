@@ -31,7 +31,7 @@ namespace Medical.GUI
         CheckButton lateralPoleDisplacementCheck;
 
         public DiscPanel(Widget parent, int x, int y)
-            :base("Medical.GUI.DiscEditor.DiscPanel.layout")
+            : base("Developer.GUI.DiscEditor.DiscPanel.layout")
         {
             widget.attachToWidget(parent);
             widget.setPosition(x, y);

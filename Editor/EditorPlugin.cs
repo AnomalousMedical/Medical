@@ -20,10 +20,6 @@ namespace Medical
         private TimelinePropertiesController timelinePropertiesController;
         private OpenPropManager openPropManager;
         private ScratchArea scratchArea;
-        private DiscControl discControl;
-        private GridPropertiesDialog gridProperties;
-        private DDAtlasPluginEditor pluginEditor;
-        private AdvancedMandibleMovementDialog advancedMandibleMovement;
         private TextAnalysisEditor textAnalysisEditor;
 
         private TimelineController editorTimelineController;
@@ -41,9 +37,7 @@ namespace Medical
 
         public void Dispose()
         {
-            advancedMandibleMovement.Dispose();
             TimelineBrowserController.setTimelineController(null);
-            discControl.Dispose();
             timelinePropertiesController.Dispose();
             timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
@@ -52,8 +46,6 @@ namespace Medical
             scratchArea.Dispose();
             browserWindow.Dispose();
             aspectRatioTask.Dispose();
-            gridProperties.Dispose();
-            pluginEditor.Dispose();
             textAnalysisEditor.Dispose();
         }
 
@@ -88,9 +80,6 @@ namespace Medical
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
             //Dialogs
-            gridProperties = new GridPropertiesDialog(standaloneController.MeasurementGrid);
-            guiManager.addManagedDialog(gridProperties);
-
             propTimeline = new PropTimeline(standaloneController.Clipboard);
             guiManager.addManagedDialog(propTimeline);
 
@@ -107,17 +96,8 @@ namespace Medical
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard);
             guiManager.addManagedDialog(movementSequenceEditor);
 
-            discControl = new DiscControl();
-            guiManager.addManagedDialog(discControl);
-
             scratchArea = new ScratchArea(scratchAreaController, browserWindow);
             guiManager.addManagedDialog(scratchArea);
-
-            pluginEditor = new DDAtlasPluginEditor(browserWindow, standaloneController.TimelineController, standaloneController.AtlasPluginManager);
-            guiManager.addManagedDialog(pluginEditor);
-
-            advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
-            guiManager.addManagedDialog(advancedMandibleMovement);
 
             textAnalysisEditor = new TextAnalysisEditor(browserWindow, timelinePropertiesController, standaloneController.Clipboard);
             guiManager.addManagedDialog(textAnalysisEditor);
@@ -130,11 +110,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropEditorIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "DiscEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "GridIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "MovementIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
@@ -143,16 +119,12 @@ namespace Medical
 
         public void sceneLoaded(SimScene scene)
         {
-            advancedMandibleMovement.sceneLoaded(scene);
             propMover.sceneLoaded(scene);
-            discControl.sceneLoaded(scene);
         }
 
         public void sceneUnloading(SimScene scene)
         {
-            advancedMandibleMovement.sceneUnloading(scene);
             propMover.sceneUnloading(scene);
-            discControl.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

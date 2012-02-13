@@ -16,6 +16,11 @@ namespace Developer
         private PluginPublisher pluginPublisher;
         private PluginPublishController pluginPublishController;
         private DeveloperRenderPropertiesDialog developerRenderer;
+        private DiscControl discControl;
+        private DDAtlasPluginEditor pluginEditor;
+        private BrowserWindow browserWindow;
+        private AdvancedMandibleMovementDialog advancedMandibleMovement;
+        private GridPropertiesDialog gridProperties;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -24,9 +29,14 @@ namespace Developer
 
         public void Dispose()
         {
+            advancedMandibleMovement.Dispose();
             examViewer.Dispose();
             pluginPublisher.Dispose();
             developerRenderer.Dispose();
+            discControl.Dispose();
+            pluginEditor.Dispose();
+            browserWindow.Dispose();
+            gridProperties.Dispose();
         }
 
         public void createMenuBar(NativeMenuBar menu)
@@ -45,6 +55,13 @@ namespace Developer
 
             GUIManager guiManager = standaloneController.GUIManager;
 
+            //UI Helpers
+            browserWindow = new BrowserWindow();
+            guiManager.addManagedDialog(browserWindow);
+
+            gridProperties = new GridPropertiesDialog(standaloneController.MeasurementGrid);
+            guiManager.addManagedDialog(gridProperties);
+
             examViewer = new ExamViewer(standaloneController.ExamController);
             guiManager.addManagedDialog(examViewer);
 
@@ -54,19 +71,33 @@ namespace Developer
             developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, guiManager);
             guiManager.addManagedDialog(developerRenderer);
 
+            discControl = new DiscControl();
+            guiManager.addManagedDialog(discControl);
+
+            pluginEditor = new DDAtlasPluginEditor(browserWindow, standaloneController.TimelineController, standaloneController.AtlasPluginManager);
+            guiManager.addManagedDialog(pluginEditor);
+
+            advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
+            guiManager.addManagedDialog(advancedMandibleMovement);
+
             //Task Controller
             TaskController taskController = standaloneController.TaskController;
 
-            taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient, 4));
+            taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "Developer.ExamIcon", TaskMenuCategories.Developer, 4));
 
-            taskController.addTask(new MDIDialogOpenTask(pluginPublisher, "Developer.PluginPublisher", "Plugin Publisher", "ExamIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(pluginPublisher, "Developer.PluginPublisher", "Plugin Publisher", "Developer.PublisherIcon", TaskMenuCategories.Developer));
 
-            taskController.addTask(new MDIDialogOpenTask(developerRenderer, "Developer.DeveloperRender", "Developer Renderer", "RenderIcon", TaskMenuCategories.Tools));
+            taskController.addTask(new MDIDialogOpenTask(developerRenderer, "Developer.DeveloperRender", "Developer Renderer", "Developer.RenderIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "Developer.DiscEditorIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "Developer.PlugInEditorIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
         }
 
         public void sceneLoaded(SimScene scene)
         {
-
+            advancedMandibleMovement.sceneLoaded(scene);
+            discControl.sceneLoaded(scene);
         }
 
         public void sceneRevealed()
@@ -76,7 +107,8 @@ namespace Developer
 
         public void sceneUnloading(SimScene scene)
         {
-
+            advancedMandibleMovement.sceneUnloading(scene);
+            discControl.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

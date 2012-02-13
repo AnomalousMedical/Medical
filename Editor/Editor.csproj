@@ -86,12 +86,6 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleControlSlider.cs" />
-    <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.cs" />
-    <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
-    <Compile Include="GUI\DiscEditor\DiscControl.cs" />
-    <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
-    <Compile Include="GUI\GridPropertiesDialog\GridPropertiesDialog.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
@@ -159,11 +153,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.layout" />
-    <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
-    <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
-    <EmbeddedResource Include="GUI\DiscEditor\DiscPanel.layout" />
-    <EmbeddedResource Include="GUI\GridPropertiesDialog\GridPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
@@ -227,6 +216,7 @@
     <EmbeddedResource Include="Resources\EditorBrandingIcon.png" />
     <EmbeddedResource Include="Resources\EditorBrandingIcon.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

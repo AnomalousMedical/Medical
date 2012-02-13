@@ -11,7 +11,7 @@ namespace Medical.GUI
         GridPropertiesControl gridPropertiesControl;
 
         public GridPropertiesDialog(MeasurementGrid measurementGrid)
-            :base("Medical.GUI.GridPropertiesDialog.GridPropertiesDialog.layout")
+            :base("Developer.GUI.GridPropertiesDialog.GridPropertiesDialog.layout")
         {
             gridPropertiesControl = new GridPropertiesControl(measurementGrid, window);
             gridPropertiesControl.GridSpacing = 2;

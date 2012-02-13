@@ -68,18 +68,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\PluginPublishController.cs" />
     <Compile Include="Controller\ZipStatusTextWriter.cs" />
     <Compile Include="DeveloperAtlasPlugin.cs" />
     <Compile Include="DeveloperAtlasPluginEntryPoint.cs" />
+    <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleControlSlider.cs" />
+    <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.cs" />
+    <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.cs" />
     <Compile Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.cs" />
+    <Compile Include="GUI\DiscEditor\DiscControl.cs" />
+    <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
+    <Compile Include="GUI\GridPropertiesDialog\GridPropertiesDialog.cs" />
     <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.layout" />
+    <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.layout" />
+    <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
+    <EmbeddedResource Include="GUI\DiscEditor\DiscPanel.layout" />
+    <EmbeddedResource Include="GUI\GridPropertiesDialog\GridPropertiesDialog.layout" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.png" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.xml" />
     <EmbeddedResource Include="Resources\DeveloperImagesets.xml" />
@@ -96,6 +108,12 @@
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DeveloperIcons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DeveloperIcons.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

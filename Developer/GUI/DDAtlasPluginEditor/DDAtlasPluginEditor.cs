@@ -32,7 +32,7 @@ namespace Medical.GUI
         private AtlasPluginManager pluginManager;
 
         public DDAtlasPluginEditor(BrowserWindow browserWindow, TimelineController mainTimelineController, AtlasPluginManager pluginManager)
-            : base("Medical.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
+            : base("Developer.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
         {
             this.mainTimelineController = mainTimelineController;
             this.pluginManager = pluginManager;
@@ -80,7 +80,7 @@ namespace Medical.GUI
 
         public void loadExamDefinition()
         {
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a plugin definition.", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD, false))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a plugin definition.", DeveloperConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD, false))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
@@ -126,7 +126,7 @@ namespace Medical.GUI
 
         public void saveExamDefinitionAs()
         {
-            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a plugin definition", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD))
+            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a plugin definition", DeveloperConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {

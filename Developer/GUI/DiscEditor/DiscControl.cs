@@ -19,7 +19,7 @@ namespace Medical.GUI
         DiscPanel rightDiscPanel;
 
         public DiscControl()
-            :base("Medical.GUI.DiscEditor.DiscControl.layout")
+            : base("Developer.GUI.DiscEditor.DiscControl.layout")
         {
             horizontalOffsetTrackBar = new MinMaxScroll((VScroll)window.findWidget("horizontalOffsetTrackBar"));
             horizontalOffsetTrackBar.Maximum = 10000;
