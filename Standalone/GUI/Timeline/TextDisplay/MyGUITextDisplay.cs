@@ -363,8 +363,8 @@ namespace Medical.GUI
         private void positionOnPoint()
         {
             Vector3 screenPos = sceneWindow.getScreenPosition(scenePoint);
-            int windowLeft = (int)sceneWindow.Location.x;
-            int windowTop = (int)sceneWindow.Location.y;
+            int windowLeft = sceneWindow.RenderXLoc;
+            int windowTop = sceneWindow.RenderYLoc;
             int windowRight = windowLeft + sceneWindow.RenderWidth;
             int windowBottom = windowTop + sceneWindow.RenderHeight;
 
