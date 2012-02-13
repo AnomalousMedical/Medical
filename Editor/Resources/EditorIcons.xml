@@ -72,6 +72,14 @@
       </Index>
     </Group>
   </Resource>
+
+  <Resource type="ResourceImageSet" name="PropManagerIcon">
+    <Group name="Icons" texture="Medical.Resources.EditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="288 0"/>
+      </Index>
+    </Group>
+  </Resource>
   
 </MyGUI>
 
