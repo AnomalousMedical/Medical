@@ -11,10 +11,10 @@ namespace Medical
     {
         private ContinuePromptCallback callback;
 
-        public void showPrompt(ContinuePromptCallback callback)
+        public void showPrompt(String text, ContinuePromptCallback callback)
         {
             this.callback = callback;
-            doShowPrompt();
+            doShowPrompt(text);
         }
 
         public void hidePrompt()
@@ -32,7 +32,7 @@ namespace Medical
             callback = null;
         }
 
-        protected abstract void doShowPrompt();
+        protected abstract void doShowPrompt(String text);
 
         protected abstract void doHidePrompt();
     }

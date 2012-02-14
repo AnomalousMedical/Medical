@@ -221,11 +221,11 @@ namespace Medical
             standaloneController.openNewScene(filename);
         }
 
-        public void showContinuePrompt(ContinuePromptCallback callback)
+        public void showContinuePrompt(String text, ContinuePromptCallback callback)
         {
             if (ContinuePrompt != null)
             {
-                ContinuePrompt.showPrompt(callback);
+                ContinuePrompt.showPrompt(text, callback);
             }
             else
             {

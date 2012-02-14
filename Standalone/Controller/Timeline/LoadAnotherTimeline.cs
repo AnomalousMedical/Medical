@@ -45,7 +45,7 @@ namespace Medical
             if (showContinuePrompt)
             {
                 timelineControllerAfterDoAction = TimelineController;
-                TimelineController.showContinuePrompt(changeTimelineButton);
+                TimelineController.showContinuePrompt("Continue", changeTimelineButton);
             }
             else
             {

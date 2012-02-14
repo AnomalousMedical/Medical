@@ -14,7 +14,7 @@ namespace Medical.GUI
         {
             button = (Button)Gui.Instance.createWidgetT("Button", "Button", 0, 0, 100, 25, Align.Default, "Overlapped", "");
             button.Caption = "Continue";
-            button.setSize((int)button.getTextSize().Width, 25);
+            button.setSize((int)button.getTextSize().Width + 25, 25);
             button.Visible = false;
             button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
         }
@@ -24,10 +24,12 @@ namespace Medical.GUI
             Gui.Instance.destroyWidget(button);
         }
 
-        protected override void doShowPrompt()
+        protected override void doShowPrompt(String text)
         {
             ensureVisible();
             LayerManager.Instance.upLayerItem(button);
+            button.Caption = text;
+            button.setSize((int)button.getTextSize().Width + 25, 25);
             button.Visible = true;
         }
 
