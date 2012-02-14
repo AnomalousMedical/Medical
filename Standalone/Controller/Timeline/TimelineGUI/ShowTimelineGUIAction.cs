@@ -76,6 +76,14 @@ namespace Medical
             }
         }
 
+        public MedicalStateController MedicalStateController
+        {
+            get
+            {
+                return timelineControllerAfterDoAction.MedicalStateController;
+            }
+        }
+
         public override void doAction()
         {
             Timeline.AutoFireMultiTimelineStopped = false;

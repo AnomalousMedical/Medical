@@ -105,6 +105,11 @@ namespace Medical
             currentLayoutDataControl.addControl(new CloseGUIPlayTimelineDataControl(parentWidget, gui, field));
         }
 
+        public void addField(ChangeMedicalStateDataField field)
+        {
+            currentLayoutDataControl.addControl(new ChangeMedicalStateDataControl(parentWidget, gui, field));
+        }
+
         public DataControl TopLevelControl
         {
             get

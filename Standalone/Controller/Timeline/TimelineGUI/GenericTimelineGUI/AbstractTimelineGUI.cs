@@ -61,6 +61,11 @@ namespace Medical
             }
         }
 
+        internal void applyMedicalState(MedicalState medicalState, float speed)
+        {
+            showTimelineAction.MedicalStateController.directBlend(medicalState, speed);
+        }
+
         public void playExampleTimeline(String timeline)
         {
             showTimelineAction.playTimeline(timeline, false);

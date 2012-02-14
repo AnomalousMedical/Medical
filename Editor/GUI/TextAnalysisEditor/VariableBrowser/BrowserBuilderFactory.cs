@@ -110,5 +110,10 @@ namespace Medical.GUI
         {
             
         }
+
+        public void addField(ChangeMedicalStateDataField field)
+        {
+            
+        }
     }
 }
