@@ -145,6 +145,20 @@ namespace Medical.LayoutDataControls
             }
         }
 
+        public void addField(CloseGUIPlayTimelineField field)
+        {
+            Button button = layoutControl.findWidget(field.Name) as Button;
+            if (button != null)
+            {
+                LayoutCloseGUIPlayTimelineControl control = new LayoutCloseGUIPlayTimelineControl(button, gui, field);
+                layoutControl.addControl(control);
+            }
+            else
+            {
+                Log.Error("Could not find a Button control named '{0}' on the layout to make a Close GUI, Play Timeline Item. Skipping this button.", field.Name);
+            }
+        }
+
         public void addField(StaticTextDataField field)
         {
             throw new NotSupportedException();

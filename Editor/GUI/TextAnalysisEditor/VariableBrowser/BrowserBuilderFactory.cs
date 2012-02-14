@@ -105,5 +105,10 @@ namespace Medical.GUI
         {
 
         }
+
+        public void addField(CloseGUIPlayTimelineField closeGUIPlayTimelineField)
+        {
+            
+        }
     }
 }

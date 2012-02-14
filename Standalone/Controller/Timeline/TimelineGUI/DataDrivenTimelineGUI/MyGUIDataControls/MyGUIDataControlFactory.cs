@@ -100,6 +100,11 @@ namespace Medical
             currentLayoutDataControl.addControl(new MoveCameraChangeLayersDataControl(parentWidget, gui, field));
         }
 
+        public void addField(CloseGUIPlayTimelineField field)
+        {
+            currentLayoutDataControl.addControl(new CloseGUIPlayTimelineDataControl(parentWidget, gui, field));
+        }
+
         public DataControl TopLevelControl
         {
             get
