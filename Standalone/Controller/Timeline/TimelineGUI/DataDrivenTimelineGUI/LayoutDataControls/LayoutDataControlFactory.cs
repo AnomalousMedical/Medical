@@ -103,48 +103,6 @@ namespace Medical.LayoutDataControls
             }
         }
 
-        public void addField(MoveCameraDataField field)
-        {
-            Button button = layoutControl.findWidget(field.Name) as Button;
-            if (button != null)
-            {
-                LayoutMoveCameraDataControl control = new LayoutMoveCameraDataControl(button, gui, field);
-                layoutControl.addControl(control);
-            }
-            else
-            {
-                Log.Error("Could not find a Button control named '{0}' on the layout to make a Move Camera Item. Skipping this button.", field.Name);
-            }
-        }
-
-        public void addField(ChangeLayersDataField field)
-        {
-            Button button = layoutControl.findWidget(field.Name) as Button;
-            if (button != null)
-            {
-                LayoutChangeLayersDataControl control = new LayoutChangeLayersDataControl(button, gui, field);
-                layoutControl.addControl(control);
-            }
-            else
-            {
-                Log.Error("Could not find a Button control named '{0}' on the layout to make a Change Layers Item. Skipping this button.", field.Name);
-            }
-        }
-
-        public void addField(MoveCameraChangeLayersDataField field)
-        {
-            Button button = layoutControl.findWidget(field.Name) as Button;
-            if (button != null)
-            {
-                LayoutMoveCameraChangeLayersDataField control = new LayoutMoveCameraChangeLayersDataField(button, gui, field);
-                layoutControl.addControl(control);
-            }
-            else
-            {
-                Log.Error("Could not find a Button control named '{0}' on the layout to make a Move Camera, Change Layers Item. Skipping this button.", field.Name);
-            }
-        }
-
         public void addField(CloseGUIPlayTimelineField field)
         {
             Button button = layoutControl.findWidget(field.Name) as Button;
@@ -156,20 +114,6 @@ namespace Medical.LayoutDataControls
             else
             {
                 Log.Error("Could not find a Button control named '{0}' on the layout to make a Close GUI, Play Timeline Item. Skipping this button.", field.Name);
-            }
-        }
-
-        public void addField(ChangeMedicalStateDataField field)
-        {
-            Button button = layoutControl.findWidget(field.Name) as Button;
-            if (button != null)
-            {
-                LayoutChangeMedicalStateDataControl control = new LayoutChangeMedicalStateDataControl(button, gui, field);
-                layoutControl.addControl(control);
-            }
-            else
-            {
-                Log.Error("Could not find a Button control named '{0}' on the layout to make a Change Medical State Item. Skipping this button.", field.Name);
             }
         }
 

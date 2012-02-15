@@ -91,27 +91,7 @@ namespace Medical.GUI
 
         }
 
-        public void addField(MoveCameraDataField field)
-        {
-            
-        }
-
-        public void addField(ChangeLayersDataField field)
-        {
-            
-        }
-
-        public void addField(MoveCameraChangeLayersDataField field)
-        {
-
-        }
-
         public void addField(CloseGUIPlayTimelineField closeGUIPlayTimelineField)
-        {
-            
-        }
-
-        public void addField(ChangeMedicalStateDataField field)
         {
             
         }

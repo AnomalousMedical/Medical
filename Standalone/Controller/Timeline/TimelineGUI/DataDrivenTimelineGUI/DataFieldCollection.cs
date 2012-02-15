@@ -87,10 +87,6 @@ namespace Medical
                 editInterface.addCommand(new EditInterfaceCommand("Add Multiple Choice Field", addMultipleChoiceField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Notes Field", addNotesField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Static Text Field", addStaticTextField));
-                editInterface.addCommand(new EditInterfaceCommand("Add Move Camera Field", addMoveCameraField));
-                editInterface.addCommand(new EditInterfaceCommand("Add Change Layers Field", addChangeLayersField));
-                editInterface.addCommand(new EditInterfaceCommand("Add Move Camera and Change Layers Field", addMoveCameraChangeLayersField));
-                editInterface.addCommand(new EditInterfaceCommand("Add Change Medical State Field", addChangeMedicalStateField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Close GUI Play Timeline Field", addCloseGUIPlayTimelineField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Do Actions Field", addDoActionsField));
 
@@ -205,66 +201,6 @@ namespace Medical
                 if (!hasDataField(input))
                 {
                     StaticTextDataField field = new StaticTextDataField(input);
-                    addDataField(field);
-                    return true;
-                }
-                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
-                return false;
-            });
-        }
-
-        private void addMoveCameraField(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
-            {
-                if (!hasDataField(input))
-                {
-                    MoveCameraDataField field = new MoveCameraDataField(input);
-                    addDataField(field);
-                    return true;
-                }
-                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
-                return false;
-            });
-        }
-
-        private void addChangeLayersField(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
-            {
-                if (!hasDataField(input))
-                {
-                    ChangeLayersDataField field = new ChangeLayersDataField(input);
-                    addDataField(field);
-                    return true;
-                }
-                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
-                return false;
-            });
-        }
-
-        private void addMoveCameraChangeLayersField(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
-            {
-                if (!hasDataField(input))
-                {
-                    MoveCameraChangeLayersDataField field = new MoveCameraChangeLayersDataField(input);
-                    addDataField(field);
-                    return true;
-                }
-                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
-                return false;
-            });
-        }
-
-        private void addChangeMedicalStateField(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
-            {
-                if (!hasDataField(input))
-                {
-                    ChangeMedicalStateDataField field = new ChangeMedicalStateDataField(input);
                     addDataField(field);
                     return true;
                 }
