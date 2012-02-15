@@ -9,12 +9,17 @@ namespace Medical
 {
     public class ChangeMedicalStateDataField : DataField
     {
-        private MedicalState medicalState;
+        public enum CustomEditQueries
+        {
+            CapturePresetState
+        }
+
+        private PresetState presetState;
 
         public ChangeMedicalStateDataField(String name)
             :base(name)
         {
-            medicalState = new MedicalState(name);
+            presetState = new CompoundPresetState(name, "", "");
             Duration = 1.0f;
         }
 
@@ -23,15 +28,15 @@ namespace Medical
             factory.addField(this);
         }
 
-        public MedicalState MedicalState
+        public PresetState PresetState
         {
             get
             {
-                return medicalState;
+                return presetState;
             }
             set
             {
-                medicalState = value;
+                presetState = value;
             }
         }
 
@@ -53,7 +58,22 @@ namespace Medical
 
         private void captureState(EditUICallback callback, EditInterfaceCommand caller)
         {
-            medicalState.update();
+            callback.runCustomQuery(CustomEditQueries.CapturePresetState, presetStateResult);
+        }
+
+        private bool presetStateResult(Object result, ref string errorPrompt)
+        {
+            if (result is PresetState)
+            {
+                presetState = (PresetState)result;
+                errorPrompt = "";
+                return true;
+            }
+            else
+            {
+                errorPrompt = "The result is not a Preset State";
+                return false;
+            }
         }
 
         protected ChangeMedicalStateDataField(LoadInfo info)

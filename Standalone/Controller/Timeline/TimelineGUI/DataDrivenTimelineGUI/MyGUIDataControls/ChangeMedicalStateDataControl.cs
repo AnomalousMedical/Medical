@@ -31,7 +31,7 @@ namespace Medical
 
         void button_MouseButtonClick(Widget source, EventArgs e)
         {
-            gui.applyMedicalState(dataField.MedicalState, dataField.Duration);
+            gui.applyPresetState(dataField.PresetState, dataField.Duration);
         }
 
         public override void captureData(DataDrivenExamSection examSection)

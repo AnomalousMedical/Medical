@@ -61,9 +61,13 @@ namespace Medical
             }
         }
 
-        internal void applyMedicalState(MedicalState medicalState, float speed)
+        internal void applyPresetState(PresetState presetState, float speed)
         {
-            showTimelineAction.MedicalStateController.directBlend(medicalState, speed);
+            TemporaryStateBlender stateBlender = showTimelineAction.StateBlender;
+            MedicalState createdState;
+            createdState = stateBlender.createBaselineState();
+            presetState.applyToState(createdState);
+            stateBlender.startTemporaryBlend(createdState);
         }
 
         public void playExampleTimeline(String timeline)

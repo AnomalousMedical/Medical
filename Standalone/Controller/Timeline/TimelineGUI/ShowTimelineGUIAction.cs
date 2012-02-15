@@ -84,6 +84,14 @@ namespace Medical
             }
         }
 
+        public TemporaryStateBlender StateBlender
+        {
+            get
+            {
+                return timelineControllerAfterDoAction.StateBlender;
+            }
+        }
+
         public override void doAction()
         {
             Timeline.AutoFireMultiTimelineStopped = false;

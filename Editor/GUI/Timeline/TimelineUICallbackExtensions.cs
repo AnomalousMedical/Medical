@@ -30,6 +30,7 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.GetGUIData, getGUIData);
             medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.OpenQuestionEditor, openQuestionEditor);
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
+            medicalUICallback.addCustomQuery(ChangeMedicalStateDataField.CustomEditQueries.CapturePresetState, capturePresetState);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -103,6 +104,13 @@ namespace Medical.GUI
             changeGUITypeCallback = null;
             browserWindow.ItemSelected -= browserWindow_ChangeGUIType_ItemSelected;
             browserWindow.Canceled -= browserWindow_ChangeGUIType_Canceled;
+        }
+
+        private void capturePresetState(SendResult<Object> resultCallback, params Object[] args)
+        {
+            PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
+            stateCaptureDialog.SmoothShow = true;
+            stateCaptureDialog.open(true);
         }
     }
 }
