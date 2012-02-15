@@ -36,8 +36,10 @@ namespace Medical
 
         void addField(MoveCameraChangeLayersDataField field);
 
-        void addField(CloseGUIPlayTimelineField closeGUIPlayTimelineField);
+        void addField(CloseGUIPlayTimelineField field);
 
-        void addField(ChangeMedicalStateDataField changeMedicalStateDataField);
+        void addField(ChangeMedicalStateDataField field);
+
+        void addField(DoActionsDataField field);
     }
 }

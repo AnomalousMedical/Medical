@@ -92,6 +92,7 @@ namespace Medical
                 editInterface.addCommand(new EditInterfaceCommand("Add Move Camera and Change Layers Field", addMoveCameraChangeLayersField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Change Medical State Field", addChangeMedicalStateField));
                 editInterface.addCommand(new EditInterfaceCommand("Add Close GUI Play Timeline Field", addCloseGUIPlayTimelineField));
+                editInterface.addCommand(new EditInterfaceCommand("Add Do Actions Field", addDoActionsField));
 
                 dataFieldEdits = new EditInterfaceManager<DataField>(editInterface);
                 dataFieldEdits.addCommand(new EditInterfaceCommand("Remove", removeField));
@@ -279,6 +280,21 @@ namespace Medical
                 if (!hasDataField(input))
                 {
                     CloseGUIPlayTimelineField field = new CloseGUIPlayTimelineField(input);
+                    addDataField(field);
+                    return true;
+                }
+                errorPrompt = String.Format("A Data Field named {0} already exists. Please input another name.", input);
+                return false;
+            });
+        }
+
+        private void addDoActionsField(EditUICallback callback, EditInterfaceCommand command)
+        {
+            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
+            {
+                if (!hasDataField(input))
+                {
+                    DoActionsDataField field = new DoActionsDataField(input);
                     addDataField(field);
                     return true;
                 }

@@ -115,5 +115,10 @@ namespace Medical.GUI
         {
             
         }
+
+        public void addField(DoActionsDataField doActionsDataField)
+        {
+
+        }
     }
 }
