@@ -55,10 +55,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\BulletPlugin.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetZip, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>
-    </Reference>
     <Reference Include="Engine, Version=1.0.0.1004, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
@@ -83,7 +79,6 @@
     <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaItem.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
-    <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />

@@ -157,7 +157,7 @@ namespace Medical.GUI
 
         void newProjectDialog_ProjectCreated(object sender, EventArgs e)
         {
-            timelinePropertiesController.createNewProject(newProjectDialog.FullProjectName, false, newProjectDialog.CreateFolder);
+            timelinePropertiesController.createNewProject(newProjectDialog.FullProjectName, false);
         }
 
         void openProjectClicked(Widget source, EventArgs e)

@@ -128,7 +128,7 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="filename">The file name of the new project.</param>
         /// <param name="deleteOld">True to delete any existing project first.</param>
-        public void createNewProject(String filename, bool deleteOld, bool asFolder)
+        public void createNewProject(String filename, bool deleteOld)
         {
             try
             {
@@ -136,12 +136,12 @@ namespace Medical.GUI
                 {
                     File.Delete(filename);
                 }
-                createProject(filename, asFolder);
+                createProject(filename);
                 updateWindowCaption();
-                if (!asFolder)
-                {
-                    documentController.addToRecentDocuments(filename);
-                }
+                //if (!asFolder)
+                //{
+                //    documentController.addToRecentDocuments(filename);
+                //}
             }
             catch (Exception ex)
             {
@@ -157,10 +157,6 @@ namespace Medical.GUI
             {
                 editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
                 openTimelineFile(projectPath);
-            }
-            else
-            {
-                editorTimelineController.ResourceProvider = new TimelineZipResources(projectPath);
             }
             updateWindowCaption();
         }
@@ -330,24 +326,13 @@ namespace Medical.GUI
             }
         }
 
-        private void createProject(string projectName, bool asFolder)
+        private void createProject(string projectName)
         {
-            if (asFolder)
+            if (!Directory.Exists(projectName))
             {
-                if (!Directory.Exists(projectName))
-                {
-                    Directory.CreateDirectory(projectName);
-                }
-                editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(projectName);
+                Directory.CreateDirectory(projectName);
             }
-            else
-            {
-                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
-                {
-                    ionicZip.Save();
-                }
-                editorTimelineController.ResourceProvider = new TimelineZipResources(projectName);
-            }
+            editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(projectName);
         }
 
         private void updateWindowCaption()
