@@ -361,11 +361,7 @@ namespace Medical
         /// <param name="path"></param>
         public void importFile(String path)
         {
-            if (path.EndsWith(".tlp"))
-            {
-                throw new TimelineException("Do not import Timeline Projects (.tlp) into other Timeline Projects. No changes made.");
-            }
-            else if (resourceProvider != null)
+            if (resourceProvider != null)
             {
                 resourceProvider.addFile(path);
             }

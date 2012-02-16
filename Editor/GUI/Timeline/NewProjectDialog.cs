@@ -14,13 +14,10 @@ namespace Medical.GUI
 
         private Edit projectName;
         private Edit projectLocation;
-        private String extension;
 
-        public NewProjectDialog(String extension)
+        public NewProjectDialog()
             :base("Medical.GUI.Timeline.NewProjectDialog.layout")
         {
-            this.extension = extension;
-
             projectName = window.findWidget("ProjectName") as Edit;
             projectName.EventEditSelectAccept += new MyGUIEvent(projectName_EventEditSelectAccept);
             projectLocation = window.findWidget("ProjectLocation") as Edit;

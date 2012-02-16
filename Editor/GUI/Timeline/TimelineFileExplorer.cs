@@ -10,8 +10,7 @@ namespace Medical.GUI
 {
     class TimelineFileExplorer : MDIDialog
     {
-        public const String PROJECT_EXTENSION = ".tlp";
-        public const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tl)|*.tlp;*.tl|Timeline Projects (*.tlp)|*.tlp|Timelines (*.tl)|*.tl";
+        public const String PROJECT_WILDCARD = "Timelines (*.tl)|*.tl";
 
         //File Menu
         MenuItem newProject;
@@ -81,7 +80,7 @@ namespace Medical.GUI
             fileList.ListSelectAccept += new MyGUIEvent(fileList_ListSelectAccept);
 
             //Dialogs
-            newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
+            newProjectDialog = new NewProjectDialog();
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
 
             saveTimelineDialog = new SaveTimelineDialog();
