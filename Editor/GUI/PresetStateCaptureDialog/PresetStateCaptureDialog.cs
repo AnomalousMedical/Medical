@@ -71,7 +71,35 @@ namespace Medical.GUI
             }
             if (mandible.Checked)
             {
+                AnimationManipulatorPresetState animationManipPresetState = new AnimationManipulatorPresetState("", "", "");
+                animationManipPresetState.captureFromState(medicalState.BoneManipulator);
+                compoundPresetState.addSubState(animationManipPresetState);
                 //Need to implement mandible, may be just as easy to support each individual element
+                /* bonescalarstateentry
+                 * rightRamusHeightMandible
+                 * rightAntegonialNotchMandible
+                 * rightCondyleHeightMandible
+                 * rightCondyleDegenerationMandible
+                 * rightMandibularNotchMandible
+                 * rightLateralPoleMandible
+                 * rightMedialPoleScaleMandible
+                 * 
+                 * leftRamusHeightMandible
+                 * leftCondyleHeightMandible
+                 * leftAntegonialNotchMandible
+                 * leftMandibularNotchMandible
+                 * leftCondyleDegenerationMandible
+                 * leftLateralPoleMandible
+                 * leftMedialPoleScaleMandible
+                 */
+                /* bonerotator
+                 * leftCondyleRotationMandible
+                 * rightCondyleRotationMandible
+                 */ 
+                /* Pose Manipulator
+                 * leftCondyleRoughnessMandible
+                 * rightCondyleRoughnessMandible
+                 */
             }
             if (teeth.Checked)
             {

@@ -26,6 +26,14 @@ namespace Medical
             addPosition(state.clone());
         }
 
+        public void captureFromState(AnimationManipulatorState animManipulator)
+        {
+            foreach (AnimationManipulatorStateEntry entry in animManipulator.Entries)
+            {
+                captureFromState(entry);
+            }
+        }
+
         public override void applyToState(MedicalState state)
         {
             foreach (AnimationManipulatorStateEntry position in positions)

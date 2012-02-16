@@ -57,5 +57,13 @@ namespace Medical
         }
 
         #endregion
+
+        public IEnumerable<AnimationManipulatorStateEntry> Entries
+        {
+            get
+            {
+                return positions.Values;
+            }
+        }
     }
 }
