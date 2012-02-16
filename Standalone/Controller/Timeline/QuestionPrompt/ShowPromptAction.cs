@@ -114,9 +114,19 @@ namespace Medical
         {
             callback.runCustomQuery(CustomEditQueries.OpenQuestionEditor, delegate(Object result, ref String message)
             {
-                questions.Clear();
-                addQuestion((PromptQuestion)result);
-                return true;
+                EditQuestionsResults questionResults = result as EditQuestionsResults;
+                if (questionResults != null)
+                {
+                    questions.Clear();
+                    addQuestion(questionResults.Question);
+                    this.SoundFile = questionResults.SoundFile;
+                    return true;
+                }
+                else
+                {
+                    message = "Returned class was not a EditQuestionResults, can not read data.";
+                    return false;
+                }
             }, this);
         }
 

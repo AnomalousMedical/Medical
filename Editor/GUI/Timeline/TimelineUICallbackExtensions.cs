@@ -64,7 +64,7 @@ namespace Medical.GUI
             if (questionEditor.Ok && showQuestionEditorCallback != null)
             {
                 String error = null;
-                showQuestionEditorCallback.Invoke(questionEditor.Question, ref error);
+                showQuestionEditorCallback.Invoke(new EditQuestionsResults(questionEditor.Question, questionEditor.SoundFile), ref error);
             }
             questionEditor.Closed -= questionEditor_Closed;
             showQuestionEditorCallback = null;
