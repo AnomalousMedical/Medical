@@ -77,6 +77,11 @@ namespace Medical
 
             editInterfaceManager = new EditInterfaceManager<DoActionsDataFieldCommand>(editInterface);
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));
+
+            foreach (DoActionsDataFieldCommand command in commands)
+            {
+                commandAdded(command);
+            }
         }
 
         private void addMoveCamera(EditUICallback callback, EditInterfaceCommand command)
