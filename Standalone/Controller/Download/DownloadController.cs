@@ -109,7 +109,7 @@ namespace Medical
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
                 request.Timeout = 60000;
                 request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type={2}&{3}", licenseManager.User, licenseManager.MachinePassword, download.Type, download.AdditionalArgs);
+                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type={2}&version={3}&{4}", licenseManager.User, licenseManager.MachinePassword, download.Type, UpdateController.CurrentVersion, download.AdditionalArgs);
                 byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
                 request.ContentType = "application/x-www-form-urlencoded";
 
@@ -126,7 +126,7 @@ namespace Medical
                     {
                         using (Stream serverDataStream = response.GetResponseStream())
                         {
-                            download.FileName = response.Headers["content-disposition"].Substring(21);
+                            download.FileName = Path.GetFileName(response.ResponseUri.LocalPath);
                             String sizeStr = response.Headers["Content-Length"];
                             download.TotalSize = NumberParser.ParseLong(sizeStr);
                             String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);

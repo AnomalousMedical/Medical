@@ -64,7 +64,6 @@ namespace Medical
             MedicalConfig.PluginInfoURL = "https://www.anomalousmedical.com/DRM/DownloadInfo.aspx";
             MedicalConfig.PluginDownloadURL = "https://www.anomalousmedical.com/DRM/FileDownloader.aspx";
             MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store.aspx";
-            MedicalConfig.WebsiteImagesBaseURL = "http://www.anomalousmedical.com";
             MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/ProductInfo.aspx?PluginId={0}";
             MedicalConfig.UpdateCheckURL = "https://www.anomalousmedical.com/DRM/UpdateCheck.aspx";
             MedicalConfig.LicenseReaderURL = "https://www.anomalousmedical.com/DRM/LicenseReader.aspx";
@@ -107,7 +106,6 @@ namespace Medical
                 PluginInfoURL = updates.getValue("PluginInfoURL", PluginInfoURL);
                 PluginDownloadURL = updates.getValue("PluginDownloadURL", PluginDownloadURL);
                 AnomalousMedicalStoreURL = updates.getValue("AnomalousMedicalStoreURL", AnomalousMedicalStoreURL);
-                WebsiteImagesBaseURL = updates.getValue("WebsiteImagesBaseURL", WebsiteImagesBaseURL);
                 ProductPageBaseURL = updates.getValue("ProductPageBaseURL", ProductPageBaseURL);
                 UpdateCheckURL = updates.getValue("UpdateCheckURL", UpdateCheckURL);
                 LicenseReaderURL = updates.getValue("LicenseReaderURL", LicenseReaderURL);
@@ -363,8 +361,6 @@ namespace Medical
         public static String AnomalousMedicalStoreURL { get; private set; }
 
         public static String ProductPageBaseURL { get; private set; }
-
-        public static String WebsiteImagesBaseURL { get; private set; }
 
         public static String UpdateCheckURL { get; private set; }
 

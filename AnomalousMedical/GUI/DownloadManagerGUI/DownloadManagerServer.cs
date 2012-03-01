@@ -225,7 +225,7 @@ namespace Medical.GUI
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.WebsiteImagesBaseURL + url));
+                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(url));
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
                     if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
