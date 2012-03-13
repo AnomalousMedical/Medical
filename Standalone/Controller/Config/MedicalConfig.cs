@@ -57,18 +57,18 @@ namespace Medical
 
             //Configure website urls
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
-            MedicalConfig.HelpURL = "http://www.anomalousmedical.com/Help.aspx";
-            MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword.aspx";
-            MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register.aspx";
+            MedicalConfig.HelpURL = "http://www.anomalousmedical.com/Help";
+            MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword";
+            MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register";
             MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
             MedicalConfig.PluginInfoURL = "https://www.anomalousmedical.com/DRM/DownloadInfo.aspx";
             MedicalConfig.PluginDownloadURL = "https://www.anomalousmedical.com/DRM/FileDownloader.aspx";
-            MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store.aspx";
-            MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/ProductInfo.aspx?PluginId={0}";
+            MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store";
+            MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/Product/Plugin/{0}";
             MedicalConfig.UpdateCheckURL = "https://www.anomalousmedical.com/DRM/UpdateCheck.aspx";
             MedicalConfig.LicenseReaderURL = "https://www.anomalousmedical.com/DRM/LicenseReader.aspx";
             MedicalConfig.LicenseImageURL = "https://www.anomalousmedical.com/DRM/LicenseImage.aspx";
-            MedicalConfig.ImageStoreURL = "http://www.anomalousmedical.com/Images.aspx";
+            MedicalConfig.ImageStoreURL = "http://www.anomalousmedical.com/Store/Image_Licensing";
             
             //User configuration settings
             configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
