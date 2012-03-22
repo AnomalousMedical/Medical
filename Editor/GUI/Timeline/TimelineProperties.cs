@@ -248,7 +248,7 @@ namespace Medical.GUI
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             playButton.Caption = "Play";
-            playButton.StaticImage.setItemResource("Timeline/PlayIcon");
+            playButton.ImageBox.setItemResource("Timeline/PlayIcon");
             rewindButton.Enabled = true;
             fastForwardButton.Enabled = true;
             timelineView.CurrentData = editingStoppedLastData;
@@ -257,7 +257,7 @@ namespace Medical.GUI
         void timelineController_TimelinePlaybackStarted(object sender, EventArgs e)
         {
             playButton.Caption = "Stop";
-            playButton.StaticImage.setItemResource("Timeline/StopIcon");
+            playButton.ImageBox.setItemResource("Timeline/StopIcon");
             rewindButton.Enabled = false;
             fastForwardButton.Enabled = false;
             timelineView.CurrentData = null;

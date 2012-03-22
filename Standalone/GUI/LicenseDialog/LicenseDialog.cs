@@ -36,7 +36,7 @@ namespace Medical.GUI
             this.programName = programName;
             this.machineID = machineID;
 
-            Widget prompt = window.findWidget("Prompt");
+            StaticText prompt = (StaticText)window.findWidget("Prompt");
             if (message != null)
             {
                 prompt.Caption = message;

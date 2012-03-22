@@ -172,7 +172,7 @@ namespace Medical.GUI
             set
             {
                 fontName = value;
-                textBox.FontName = textFactory.getMyGUIFont(fontName, FontHeight);
+                textBox.Font = textFactory.getMyGUIFont(fontName, FontHeight);
             }
         }
 
@@ -184,7 +184,7 @@ namespace Medical.GUI
             }
             set
             {
-                textBox.FontName = textFactory.getMyGUIFont(fontName, value);
+                textBox.Font = textFactory.getMyGUIFont(fontName, value);
                 textBox.FontHeight = value;
             }
         }

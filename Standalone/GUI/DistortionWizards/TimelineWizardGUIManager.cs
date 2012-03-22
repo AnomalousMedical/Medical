@@ -12,7 +12,7 @@ namespace Medical.GUI
 
         public TimelineWizardGUIManager(StandaloneController standaloneController)
         {
-            Gui.Instance.load("Medical.Resources.WizardImagesets.xml");
+            ResourceManager.Instance.load("Medical.Resources.WizardImagesets.xml");
 
             timelineWizard = new TimelineWizard(standaloneController);
 

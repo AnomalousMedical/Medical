@@ -37,7 +37,7 @@ namespace Medical
 
         public void loadGUIResources()
         {
-            Gui.Instance.load(System.IO.Path.Combine(PluginRootFolder, IconResourceFile));
+            ResourceManager.Instance.load(System.IO.Path.Combine(PluginRootFolder, IconResourceFile));
         }
 
         public void initialize(StandaloneController standaloneController)

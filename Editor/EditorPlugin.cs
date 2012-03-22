@@ -51,7 +51,7 @@ namespace Medical
 
         public void loadGUIResources()
         {
-            Gui.Instance.load("Medical.Resources.EditorImagesets.xml");
+            ResourceManager.Instance.load("Medical.Resources.EditorImagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)

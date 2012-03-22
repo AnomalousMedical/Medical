@@ -44,7 +44,7 @@ namespace Medical
                 button.ForwardMouseWheelToParent = true;
                 int captionWidth = (int)button.getTextSize().Width;
                 button.setSize(captionWidth + 10, button.Height);
-                button.StaticImage.setItemResource(imageKey);
+                button.ImageBox.setItemResource(imageKey);
                 timelineButton = new TimelineButtonContainer(button);
                 timelineButton.Clicked += new EventDelegate<TimelineButtonContainer>(timelineButton_Clicked);
             }
@@ -76,11 +76,11 @@ namespace Medical
 
             if (selectedButton != null)
             {
-                selectedButton.StateCheck = false;
+                selectedButton.Selected = false;
             }
             if (panels.TryGetValue(gui.TimelineFile, out selectedButton))
             {
-                selectedButton.StateCheck = true;
+                selectedButton.Selected = true;
             }
             else
             {
@@ -175,15 +175,15 @@ namespace Medical
                 }
             }
 
-            public bool StateCheck
+            public bool Selected
             {
                 get
                 {
-                    return button.StateCheck;
+                    return button.Selected;
                 }
                 set
                 {
-                    button.StateCheck = value;
+                    button.Selected = value;
                 }
             }
 

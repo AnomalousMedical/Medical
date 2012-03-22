@@ -46,7 +46,7 @@ namespace Developer
 
         public void loadGUIResources()
         {
-            Gui.Instance.load("Developer.Resources.DeveloperImagesets.xml");
+            ResourceManager.Instance.load("Developer.Resources.DeveloperImagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)

@@ -75,17 +75,17 @@ namespace Medical
             MenuItem sequenceItem = groupItemChild.addItem(sequenceInfo.Name, MenuItemType.Normal);
             sequenceItem.MouseButtonClick += sequenceItem_Click;
             sequenceItem.UserObject = sequenceInfo;
-            sequenceItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
-            sequenceItem.StaticImage.setItemGroup("Icons");
-            sequenceItem.StaticImage.setItemName("Icon");
+            sequenceItem.ImageBox.setItemResource("SequenceToolstrip/Sequence");
+            sequenceItem.ImageBox.setItemGroup("Icons");
+            sequenceItem.ImageBox.setItemName("Icon");
         }
 
         void sequenceController_GroupAdded(MovementSequenceController controller, MovementSequenceGroup group)
         {
             MenuItem groupItem = sequenceMenu.addItem(group.Name, MenuItemType.Popup);
-            groupItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
-            groupItem.StaticImage.setItemGroup("Icons");
-            groupItem.StaticImage.setItemName("Icon");
+            groupItem.ImageBox.setItemResource("SequenceToolstrip/Sequence");
+            groupItem.ImageBox.setItemGroup("Icons");
+            groupItem.ImageBox.setItemName("Icon");
             MenuCtrl groupItemChild = groupItem.createItemChild();
             groupMenuCtrls.Add(group, groupItemChild);
         }

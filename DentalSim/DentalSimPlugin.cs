@@ -35,7 +35,7 @@ namespace DentalSim
 
         public void loadGUIResources()
         {
-            Gui.Instance.load("DentalSim.Resources.Imagesets.xml");
+            ResourceManager.Instance.load("DentalSim.Resources.Imagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)

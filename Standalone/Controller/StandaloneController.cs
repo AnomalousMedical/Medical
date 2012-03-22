@@ -86,8 +86,7 @@ namespace Medical
             medicalController.initialize(app, mainWindow, createWindow);
             mainWindow.setPointerManager(PointerManager.Instance);
 
-            Gui gui = Gui.Instance;
-            gui.setVisiblePointer(false);
+            PointerManager.Instance.Visible = false;
         }
 
         public void Dispose()

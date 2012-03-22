@@ -30,7 +30,7 @@ namespace Medical.Controller
             SmoothShow = true;
 
             Gui gui = Gui.Instance;
-            gui.load(splashScreenResourceFile);
+            ResourceManager.Instance.load(splashScreenResourceFile);
             layout = LayoutManager.Instance.loadLayout(splashScreenLayoutFile);
             mainWidget = layout.getWidget(0);
 

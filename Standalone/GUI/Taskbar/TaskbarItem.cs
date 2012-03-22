@@ -42,7 +42,7 @@ namespace Medical.GUI
             }
             this.taskbar = taskbar;
             this.taskbarButton = taskbarButton;
-            taskbarButton.StaticImage.setItemResource(IconName);
+            taskbarButton.ImageBox.setItemResource(IconName);
             taskbarButton.MouseButtonClick += clicked;
             taskbarButton.MouseButtonReleased += new MyGUIEvent(taskbarButton_MouseButtonReleased);
             taskbarButton.NeedToolTip = true;
@@ -125,7 +125,7 @@ namespace Medical.GUI
 
         protected void setIcon(String iconName)
         {
-            taskbarButton.StaticImage.setItemResource(iconName);
+            taskbarButton.ImageBox.setItemResource(iconName);
         }
 
         void taskbarButton_MouseButtonReleased(Widget source, EventArgs e)

@@ -46,7 +46,7 @@ namespace Medical.GUI
         {
             if (!colorsLoaded)
             {
-                Gui.Instance.load("Medical.GUI.ColorMenu.Colors.xml");
+                ResourceManager.Instance.load("Medical.GUI.ColorMenu.Colors.xml");
                 colorsLoaded = true;
             }
         }

@@ -31,7 +31,7 @@ namespace Medical
             text.EditStatic = true;
             text.NeedMouseFocus = false;
             text.Caption = field.Text;
-            text.FontName = timelineText.getFont(field.FontHeight);
+            text.Font = timelineText.getFont(field.FontHeight);
             text.FontHeight = field.FontHeight;
             this.indentation = field.Indentation;
         }

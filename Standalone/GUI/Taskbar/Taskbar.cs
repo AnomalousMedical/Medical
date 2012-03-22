@@ -121,7 +121,7 @@ namespace Medical.GUI
         {
             this.wideIcon = wideIcon;
             this.narrowIcon = narrowIcon;
-            appButton.StaticImage.setItemResource(wideIcon);
+            appButton.ImageBox.setItemResource(wideIcon);
         }
 
         public void addItem(TaskbarItem item)
@@ -388,8 +388,8 @@ namespace Medical.GUI
 
         private void layoutTaskbarVertical()
         {
-            appButton.StaticImage.setItemResource(narrowIcon);
-            appButton.StaticImage.setSize(32, 32);
+            appButton.ImageBox.setItemResource(narrowIcon);
+            appButton.ImageBox.setSize(32, 32);
             appButton.setSize(appButtonNarrowWidth, appButton.Height);
             Vector2 startLocation = new Vector2(appButton.Left, 0);
             Vector2 currentLocation = startLocation;
@@ -455,8 +455,8 @@ namespace Medical.GUI
 
         private void layoutTaskbarHorizontal()
         {
-            appButton.StaticImage.setItemResource(wideIcon);
-            appButton.StaticImage.setSize(130, 32);
+            appButton.ImageBox.setItemResource(wideIcon);
+            appButton.ImageBox.setSize(130, 32);
             appButton.setSize(appButtonWideWidth, appButton.Height);
             Vector2 startLocation = new Vector2(0, appButton.Top);
             Vector2 currentLocation = startLocation;

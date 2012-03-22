@@ -29,7 +29,7 @@ namespace LectureBuilder
 
         public void loadGUIResources()
         {
-            Gui.Instance.load("LectureBuilder.Resources.Imagesets.xml");
+            ResourceManager.Instance.load("LectureBuilder.Resources.Imagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)
