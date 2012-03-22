@@ -106,7 +106,7 @@ namespace Medical.GUI
             simObjectMover.addMovableObject("Prop", this);
             simObjectMover.setDrawingSurfaceVisible(true);
             propTimeline.setPropData(showProp);
-            keepOpenButton.StateCheck = showProp.KeepOpen;
+            keepOpenButton.Selected = showProp.KeepOpen;
         }
 
         public override void editingCompleted()
@@ -184,7 +184,7 @@ namespace Medical.GUI
 
         void keepOpenButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (keepOpenButton.StateCheck)
+            if (keepOpenButton.Selected)
             {
                 propManager.removeOpenProp(showProp);
             }
@@ -196,14 +196,14 @@ namespace Medical.GUI
                     propManager.Visible = true;
                 }
             }
-            keepOpenButton.StateCheck = showProp.KeepOpen;
+            keepOpenButton.Selected = showProp.KeepOpen;
         }
 
         void propManager_PropClosed(OpenPropManager source, ShowPropAction arg)
         {
             if (arg == showProp)
             {
-                keepOpenButton.StateCheck = arg.KeepOpen;
+                keepOpenButton.Selected = arg.KeepOpen;
             }
         }
 

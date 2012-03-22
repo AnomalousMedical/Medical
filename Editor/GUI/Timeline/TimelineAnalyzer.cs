@@ -426,12 +426,12 @@ namespace Medical.GUI
                 {
                     if (activeButton != null)
                     {
-                        activeButton.StateCheck = false;
+                        activeButton.Selected = false;
                     }
                     activeButton = value;
                     if (activeButton != null)
                     {
-                        activeButton.StateCheck = true;
+                        activeButton.Selected = true;
                     }
                 }
             }

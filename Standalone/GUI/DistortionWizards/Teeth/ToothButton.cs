@@ -22,8 +22,8 @@ namespace Medical.GUI
 
         void button_MouseButtonClick(Widget source, EventArgs e)
         {
-            bool extracted = !button.StateCheck;
-            button.StateCheck = extracted;
+            bool extracted = !button.Selected;
+            button.Selected = extracted;
             if (ExtractedStatusChanged != null)
             {
                 ExtractedStatusChanged.Invoke(this, EventArgs.Empty);
@@ -34,11 +34,11 @@ namespace Medical.GUI
         {
             get
             {
-                return button.StateCheck;
+                return button.Selected;
             }
             set
             {
-                button.StateCheck = value;
+                button.Selected = value;
             }
         }
 

@@ -20,17 +20,17 @@ namespace Medical.GUI
             checkButton = (Button)parentWidget.createWidgetT("Button", "CheckBox", 0, 0, parentWidget.Width - SIDE_PADDING, 20, Align.Default, "");
             checkButton.MouseButtonClick += new MyGUIEvent(checkButton_MouseButtonClick);
             checkButton.Caption = command.UIText;
-            checkButton.StateCheck = command.BooleanValue;
+            checkButton.Selected = command.BooleanValue;
         }
 
         void checkButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            command.BooleanValue = checkButton.StateCheck = !checkButton.StateCheck;
+            command.BooleanValue = checkButton.Selected = !checkButton.Selected;
         }
 
         void command_BooleanValueChanged(AnatomyCommand command, bool value)
         {
-            checkButton.StateCheck = value;
+            checkButton.Selected = value;
         }
 
         public override void Dispose()

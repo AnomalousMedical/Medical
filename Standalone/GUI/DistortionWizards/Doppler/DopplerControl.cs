@@ -309,15 +309,15 @@ namespace Medical.GUI
         void rdaGroup_SelectedButtonChanged(object sender, EventArgs e)
         {
             RdaReduction oldReduction = currentReduction;
-            if (mildRDAReductionButton.StateCheck)
+            if (mildRDAReductionButton.Selected)
             {
                 currentReduction = RdaReduction.Mild;
             }
-            else if (moderateRDAReductionButton.StateCheck)
+            else if (moderateRDAReductionButton.Selected)
             {
                 currentReduction = RdaReduction.Moderate;
             }
-            else if (severeRDAReductionButton.StateCheck)
+            else if (severeRDAReductionButton.Selected)
             {
                 currentReduction = RdaReduction.Severe;
             }
@@ -343,27 +343,27 @@ namespace Medical.GUI
         void stageGroup_SelectedButtonChanged(object sender, EventArgs e)
         {
             PiperStage oldStage = currentStage;
-            if (stageIButton.StateCheck)
+            if (stageIButton.Selected)
             {
                 currentStage = PiperStage.I;
                 rdaGroup.Enabled = false;
             }
-            else if (stageIIButton.StateCheck)
+            else if (stageIIButton.Selected)
             {
                 currentStage = PiperStage.II;
                 rdaGroup.Enabled = false;
             }
-            else if (stageIIIaButton.StateCheck)
+            else if (stageIIIaButton.Selected)
             {
                 currentStage = PiperStage.IIIa;
                 rdaGroup.Enabled = false;
             }
-            else if (stageIIIbButton.StateCheck)
+            else if (stageIIIbButton.Selected)
             {
                 currentStage = PiperStage.IIIb;
                 rdaGroup.Enabled = false;
             }
-            else if (stageIVaButton.StateCheck)
+            else if (stageIVaButton.Selected)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVa;
@@ -371,7 +371,7 @@ namespace Medical.GUI
                 rdaGroup.SelectedButton = mildRDAReductionButton;
                 allowRdaReductionEventFire = true;
             }
-            else if (stageIVbButton.StateCheck)
+            else if (stageIVbButton.Selected)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVb;
@@ -379,12 +379,12 @@ namespace Medical.GUI
                 rdaGroup.SelectedButton = mildRDAReductionButton;
                 allowRdaReductionEventFire = true;
             }
-            else if (stageVaButton.StateCheck)
+            else if (stageVaButton.Selected)
             {
                 currentStage = PiperStage.Va;
                 rdaGroup.Enabled = false;
             }
-            else if (stageVbButton.StateCheck)
+            else if (stageVbButton.Selected)
             {
                 currentStage = PiperStage.Vb;
                 rdaGroup.Enabled = false;

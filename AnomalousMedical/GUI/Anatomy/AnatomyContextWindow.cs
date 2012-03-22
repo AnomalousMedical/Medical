@@ -44,7 +44,7 @@ namespace Medical.GUI
             anatomyName = (StaticText)widget.findWidget("AnatomyName");
             captionToBorderDelta = widget.Width - anatomyName.Right;
 
-            transparencySlider = new AnatomyTransparencySlider((HScroll)widget.findWidget("TransparencySlider"));
+            transparencySlider = new AnatomyTransparencySlider((VScroll)widget.findWidget("TransparencySlider"));
 
             windowStartSize = new IntSize2(widget.Width, widget.Height);
 
@@ -141,13 +141,13 @@ namespace Medical.GUI
         public void pinOpen()
         {
             windowManager.alertWindowPinned(this);
-            pinButton.StateCheck = true;
+            pinButton.Selected = true;
             this.Hidden += new EventHandler(AnatomyContextWindow_Hidden);
         }
 
         void pinButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (pinButton.StateCheck)
+            if (pinButton.Selected)
             {
                 this.hide();
             }

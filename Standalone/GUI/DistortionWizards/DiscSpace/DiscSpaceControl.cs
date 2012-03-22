@@ -329,15 +329,15 @@ namespace Medical.GUI
         void RDAReductionButton_CheckedChanged(object sender, EventArgs e)
         {
             RdaReduction oldReduction = currentReduction;
-            if (mildRDAReductionButton.StateCheck)
+            if (mildRDAReductionButton.Selected)
             {
                 currentReduction = RdaReduction.Mild;
             }
-            else if (moderateRDAReductionButton.StateCheck)
+            else if (moderateRDAReductionButton.Selected)
             {
                 currentReduction = RdaReduction.Moderate;
             }
-            else if (severeRDAReductionButton.StateCheck)
+            else if (severeRDAReductionButton.Selected)
             {
                 currentReduction = RdaReduction.Severe;
             }
@@ -353,18 +353,18 @@ namespace Medical.GUI
         void clockRadio_CheckedChanged(object sender, EventArgs e)
         {
             ClockFace oldClockFace = currentClockFace;
-            if (clock10Radio.StateCheck)
+            if (clock10Radio.Selected)
             {
                 currentClockFace = ClockFace.Clock10;
                 rdaPanel.Visible = true;
                 rdaReductionGroup.SelectedButton = mildRDAReductionButton;
             }
-            else if (clock11Radio.StateCheck)
+            else if (clock11Radio.Selected)
             {
                 currentClockFace = ClockFace.Clock11;
                 rdaPanel.Visible = false;
             }
-            else if (clock12Radio.StateCheck)
+            else if (clock12Radio.Selected)
             {
                 currentClockFace = ClockFace.Clock12;
                 rdaPanel.Visible = false;
@@ -381,40 +381,40 @@ namespace Medical.GUI
         void stageButton_CheckedChanged(object sender, EventArgs e)
         {
             PiperStage oldStage = currentStage;
-            if (stageIButton.StateCheck)
+            if (stageIButton.Selected)
             {
                 currentStage = PiperStage.I;
                 rdaPanel.Visible = false;
                 clockFacePanel.Visible = false;
             }
-            else if (stageIIButton.StateCheck)
+            else if (stageIIButton.Selected)
             {
                 currentStage = PiperStage.II;
                 rdaPanel.Visible = false;
                 clockFacePanel.Visible = false;
             }
-            else if (stageIIIaButton.StateCheck)
+            else if (stageIIIaButton.Selected)
             {
                 currentStage = PiperStage.IIIa;
                 rdaPanel.Visible = false;
                 clockFacePanel.Visible = false;
             }
-            else if (stageIIIbButton.StateCheck)
+            else if (stageIIIbButton.Selected)
             {
                 currentStage = PiperStage.IIIb;
                 rdaPanel.Visible = false;
                 clockFacePanel.Visible = false;
             }
-            else if (stageIVaButton.StateCheck)
+            else if (stageIVaButton.Selected)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVa;
-                rdaPanel.Visible = clock10Radio.StateCheck;
+                rdaPanel.Visible = clock10Radio.Selected;
                 rdaReductionGroup.SelectedButton = mildRDAReductionButton;
                 clockFacePanel.Visible = true;
                 allowRdaReductionEventFire = true;
             }
-            else if (stageIVbButton.StateCheck)
+            else if (stageIVbButton.Selected)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVb;
@@ -422,13 +422,13 @@ namespace Medical.GUI
                 clockFacePanel.Visible = false;
                 allowRdaReductionEventFire = true;
             }
-            else if (stageVaButton.StateCheck)
+            else if (stageVaButton.Selected)
             {
                 currentStage = PiperStage.Va;
                 rdaPanel.Visible = false;
                 clockFacePanel.Visible = false;
             }
-            else if (stageVbButton.StateCheck)
+            else if (stageVbButton.Selected)
             {
                 currentStage = PiperStage.Vb;
                 rdaPanel.Visible = false;

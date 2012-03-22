@@ -126,7 +126,7 @@ namespace Medical.Controller
 
         protected override void activeStatusChanged(bool active)
         {
-            captionButton.StateCheck = Active;
+            captionButton.Selected = Active;
             if (ActiveStatusChanged != null)
             {
                 ActiveStatusChanged.Invoke(this, EventArgs.Empty);

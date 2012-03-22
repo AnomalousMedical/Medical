@@ -11,10 +11,10 @@ namespace Medical.GUI
         private const float SCROLL_MAX = 10000;
         private const float SCROLL_MAX_RANGE_MIN = SCROLL_MAX - 50;//The minimum postion of a scroll bar to count as the max value.
 
-        private HScroll slider;
+        private VScroll slider;
         private AnatomyCommand command;
 
-        public AnatomyTransparencySlider(HScroll slider)
+        public AnatomyTransparencySlider(VScroll slider)
         {
             this.slider = slider;
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
@@ -56,7 +56,7 @@ namespace Medical.GUI
         {
             if (command != null)
             {
-                HScroll scroll = (HScroll)source;
+                VScroll scroll = (VScroll)source;
                 float normalizedValue = scroll.ScrollPosition / SCROLL_MAX;
                 if (scroll.ScrollPosition > SCROLL_MAX_RANGE_MIN)
                 {
