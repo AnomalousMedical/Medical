@@ -140,7 +140,7 @@ namespace Medical.GUI
                     adImage = null;
                     iconScroller.setPosition(2, iconScroller.Top);
                     iconScroller.setSize(widget.Width, iconScroller.Height);
-                    iconGrid.resizeAndLayout(iconScroller.ClientCoord.width);
+                    iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace Medical.GUI
                     firstTimeShown = false;
                     iconScroller.setPosition(232, iconScroller.Top);
                     iconScroller.setSize(widget.Width - 230, iconScroller.Height);
-                    iconGrid.resizeAndLayout(iconScroller.ClientCoord.width);
+                    iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
                     adImage = (StaticImage)widget.createWidgetT("StaticImage", "StaticImage", 2, iconScroller.Top, 200, 400, Align.Left | Align.Top, "");
                     adImage.setItemResource(AdImageKey);
                     adImage.MouseButtonClick += adImage_MouseButtonClick;
