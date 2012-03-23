@@ -54,8 +54,8 @@ namespace Medical.GUI
             }
             set
             {
-                int x = (int)((Gui.Instance.getViewWidth() - mainWidget.Width) / 2.0f);
-                int y = (int)((Gui.Instance.getViewHeight() - mainWidget.Height) / 2.0f);
+                int x = (int)((RenderManager.Instance.ViewWidth - mainWidget.Width) / 2.0f);
+                int y = (int)((RenderManager.Instance.ViewHeight - mainWidget.Height) / 2.0f);
                 mainWidget.setPosition(x, y);
                 mainWidget.Visible = value;
             }

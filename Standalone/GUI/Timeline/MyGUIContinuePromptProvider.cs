@@ -44,8 +44,8 @@ namespace Medical.GUI
         public void ensureVisible()
         {
             //Adjust the position if needed
-            int guiWidth = Gui.Instance.getViewWidth();
-            int guiHeight = Gui.Instance.getViewHeight();
+            int guiWidth = RenderManager.Instance.ViewWidth;
+            int guiHeight = RenderManager.Instance.ViewHeight;
 
             int left = guiWidth - button.Width - 30;
             int top = guiHeight - button.Height - 30;

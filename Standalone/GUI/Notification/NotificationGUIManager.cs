@@ -83,21 +83,21 @@ namespace Medical.GUI
                     currentHeight = taskbar.Height;
                     foreach (NotificationGUI openNotification in openNotifications)
                     {
-                        openNotification.setPosition(Gui.Instance.getViewWidth() - openNotification.Width, currentHeight);
+                        openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
                         currentHeight += openNotification.Height;
                     }
                     break;
                 case TaskbarAlignment.Right:
                     foreach (NotificationGUI openNotification in openNotifications)
                     {
-                        openNotification.setPosition(Gui.Instance.getViewWidth() - openNotification.Width - taskbar.Width, currentHeight);
+                        openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width - taskbar.Width, currentHeight);
                         currentHeight += openNotification.Height;
                     }
                     break;
                 default:
                     foreach (NotificationGUI openNotification in openNotifications)
                     {
-                        openNotification.setPosition(Gui.Instance.getViewWidth() - openNotification.Width, currentHeight);
+                        openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
                         currentHeight += openNotification.Height;
                     }
                     break;
@@ -115,13 +115,13 @@ namespace Medical.GUI
             switch (taskbar.Alignment)
             {
                 case TaskbarAlignment.Top:
-                    notification.show(Gui.Instance.getViewWidth() - notification.Width, taskbar.Height + additionalHeightOffset);
+                    notification.show(RenderManager.Instance.ViewWidth - notification.Width, taskbar.Height + additionalHeightOffset);
                     break;
                 case TaskbarAlignment.Right:
-                    notification.show(Gui.Instance.getViewWidth() - notification.Width - taskbar.Width, additionalHeightOffset);
+                    notification.show(RenderManager.Instance.ViewWidth - notification.Width - taskbar.Width, additionalHeightOffset);
                     break;
                 default:
-                    notification.show(Gui.Instance.getViewWidth() - notification.Width, additionalHeightOffset);
+                    notification.show(RenderManager.Instance.ViewWidth - notification.Width, additionalHeightOffset);
                     break;
             }
         }

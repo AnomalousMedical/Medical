@@ -188,8 +188,8 @@ namespace Medical.GUI
                 int right = (int)(left + desiredLocation.Width);
                 int bottom = (int)(top + desiredLocation.Height);
 
-                int guiWidth = Gui.Instance.getViewWidth();
-                int guiHeight = Gui.Instance.getViewHeight();
+                int guiWidth = RenderManager.Instance.ViewWidth;
+                int guiHeight = RenderManager.Instance.ViewHeight;
 
                 if (right > guiWidth)
                 {
@@ -514,17 +514,17 @@ namespace Medical.GUI
             {
                 newMouseX = maxHiddenWidth;
             }
-            if (newMouseX > Gui.Instance.getViewWidth() + maxHiddenWidth)
+            if (newMouseX > RenderManager.Instance.ViewWidth + maxHiddenWidth)
             {
-                newMouseX = Gui.Instance.getViewWidth() + maxHiddenWidth;
+                newMouseX = RenderManager.Instance.ViewWidth + maxHiddenWidth;
             }
             if (newMouseY < 0)
             {
                 newMouseY = 0;
             }
-            if (newMouseY > Gui.Instance.getViewHeight() - 25)
+            if (newMouseY > RenderManager.Instance.ViewHeight - 25)
             {
-                newMouseY = Gui.Instance.getViewHeight() - 25;
+                newMouseY = RenderManager.Instance.ViewHeight - 25;
             }
             window.setPosition(newMouseX, newMouseY);
             fireMouseDrag((MouseEventArgs)e);

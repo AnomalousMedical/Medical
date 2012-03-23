@@ -39,8 +39,8 @@ namespace Medical.Controller
             int imageHeight = 1200;
             NumberParser.TryParse(mainWidget.getUserString("ImageHeight"), out imageHeight);
 
-            int viewWidth = gui.getViewWidth();
-            int viewHeight = gui.getViewHeight();
+            int viewWidth = RenderManager.Instance.ViewWidth;
+            int viewHeight = RenderManager.Instance.ViewHeight;
 
             float heightRatio = (float)viewHeight / (float)imageHeight;
             int widgetWidth = (int)(imageWidth * heightRatio);

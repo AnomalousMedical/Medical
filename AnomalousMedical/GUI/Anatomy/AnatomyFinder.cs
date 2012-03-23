@@ -367,7 +367,7 @@ namespace Medical.GUI
                 {
                     //float x = window.Right;
                     //float y = anatomyList.SelectedItem.AbsoluteTop;
-                    //if (x + contextWindow.Width > Gui.Instance.getViewWidth())
+                    //if (x + contextWindow.Width > RenderManager.Instance.ViewWidth)
                     //{
                     //    x = window.Left - contextWindow.Width;
                     //}

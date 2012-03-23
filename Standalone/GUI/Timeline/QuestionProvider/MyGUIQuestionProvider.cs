@@ -67,17 +67,17 @@ namespace Medical.GUI
             answerScroll.CanvasSize = new Size2(answerWidth, verticalPosition);
 
             int windowHeight = verticalPosition + 47 + answerScroll.Top;
-            if(windowHeight > Gui.Instance.getViewHeight() - 100)
+            if(windowHeight > RenderManager.Instance.ViewHeight - 100)
             {
-                windowHeight = Gui.Instance.getViewHeight() - 100;
+                windowHeight = RenderManager.Instance.ViewHeight - 100;
             }
             window.setSize(window.Width, windowHeight);
         }
 
         public void showPrompt(PromptAnswerSelected answerSelectedCallback)
         {
-            int halfWidth = Gui.Instance.getViewWidth() / 2;
-            int halfHeight = Gui.Instance.getViewHeight() / 2;
+            int halfWidth = RenderManager.Instance.ViewWidth / 2;
+            int halfHeight = RenderManager.Instance.ViewHeight / 2;
             this.Position = new Vector2(halfWidth - window.Width / 2, halfHeight - window.Height / 2);
             this.answerSelectedCallback = answerSelectedCallback;
             LayerManager.Instance.upLayerItem(window);

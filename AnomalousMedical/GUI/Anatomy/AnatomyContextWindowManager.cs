@@ -69,7 +69,7 @@ namespace Medical.GUI
                 ((windowLeft > deadzoneLeft && windowLeft < deadzoneRight) ||
                 (windowRight > deadzoneLeft && windowRight < deadzoneRight)))
             {
-                if (windowWidth < Gui.Instance.getViewWidth() - deadzoneRight)
+                if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight)
                 {
                     currentAnatomyWindow.setPosition(deadzoneRight, currentAnatomyWindow.Top);
                 }

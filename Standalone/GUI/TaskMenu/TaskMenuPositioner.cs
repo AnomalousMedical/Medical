@@ -20,13 +20,15 @@ namespace Medical.GUI
             {
                 int left = CurrentItem.AbsoluteLeft;
                 int top = CurrentItem.AbsoluteTop + CurrentItem.Height;
-                if (left + width > Gui.Instance.getViewWidth())
+                int viewWidth = RenderManager.Instance.ViewWidth;
+                int viewHeight = RenderManager.Instance.ViewHeight;
+                if (left + width > viewWidth)
                 {
-                    left -= left + width - Gui.Instance.getViewWidth();
+                    left -= left + width - viewWidth;
                 }
-                if (top + height > Gui.Instance.getViewHeight())
+                if (top + height > viewHeight)
                 {
-                    top -= top + height - Gui.Instance.getViewHeight();
+                    top -= top + height - viewHeight;
                 }
                 return new IntVector2(left, top);
             }
