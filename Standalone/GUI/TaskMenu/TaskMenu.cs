@@ -105,9 +105,9 @@ namespace Medical.GUI
         public void setSize(int width, int height)
         {
             widget.setSize(width, height);
-            IntCoord clientCoord = iconScroller.ClientCoord;
-            iconGrid.resizeAndLayout(clientCoord.width);
-            recentDocuments.resizeAndLayout(clientCoord.width);
+            IntCoord viewCoord = iconScroller.ViewCoord;
+            iconGrid.resizeAndLayout(viewCoord.width);
+            recentDocuments.resizeAndLayout(viewCoord.width);
         }
 
         public bool SuppressLayout
