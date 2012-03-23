@@ -4,7 +4,7 @@
         <Property key="Widget_Caption" value="Timeline"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="MenuBar" skin="MenuBar" position="1 0 1 26" align="Left Top" name="MenuBar"/>
+        <Widget type="MenuBar" skin="MenuBar" position="1 0 85 26" align="Left Top" name="MenuBar"/>
         <Widget type="MultiList" skin="MultiList" position="0 31 199 283" align="Stretch" name="FileList"/>
     </Widget>
 </MyGUI>
