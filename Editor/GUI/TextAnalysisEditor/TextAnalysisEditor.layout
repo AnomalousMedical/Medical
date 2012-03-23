@@ -5,7 +5,7 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 69 353 213" align="Stretch" name="ScrollView">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 25 26" align="Left Top" name="Menu"/>
+        <Widget type="MenuBar" skin="MenuBar" position="0 0 260 26" align="Left Top" name="Menu"/>
         <Widget type="StaticText" skin="StaticText" position="0 26 43 15">
             <Property key="Widget_Caption" value="Name"/>
         </Widget>

@@ -42,7 +42,7 @@ namespace Medical.GUI
             this.Resized += new EventHandler(TextAnalysisEditor_Resized);
 
             scrollView = (ScrollView)window.findWidget("ScrollView");
-            windowWidth = scrollView.ClientCoord.width;
+            windowWidth = scrollView.ViewCoord.width;
 
             name = (Edit)window.findWidget("Name");
 
@@ -97,16 +97,16 @@ namespace Medical.GUI
 
         void TextAnalysisEditor_Resized(object sender, EventArgs e)
         {
-            if (scrollView.ClientCoord.width != windowWidth)
+            if (scrollView.ViewCoord.width != windowWidth)
             {
-                windowWidth = scrollView.ClientCoord.width;
+                windowWidth = scrollView.ViewCoord.width;
                 layoutEditor();
             }
         }
 
         private void layoutEditor()
         {
-            int newWidth = scrollView.ClientCoord.width;
+            int newWidth = scrollView.ViewCoord.width;
             actionBlockEditor.layout(0, 0, newWidth);
             scrollView.CanvasSize = new Engine.Size2(newWidth, actionBlockEditor.Height);
         }
