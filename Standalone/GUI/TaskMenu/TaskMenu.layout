@@ -13,7 +13,6 @@
         </Widget>
         <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="2 11 66 22" name="Tasks">
             <Property key="Widget_Caption" value="Tasks"/>
-            <Property key="Text_TextColour" value="FFFFFF"/>
         </Widget>
         <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="70 11 76 22" name="Documents">
             <Property key="Widget_Caption" value="Documents"/>

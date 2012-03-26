@@ -317,7 +317,7 @@ namespace Medical.GUI
 
         void TimelineFileExplorer_Resized(object sender, EventArgs e)
         {
-            fileList.setColumnWidthAt(0, fileList.Width);
+            fileList.setColumnWidthAt(0, fileList.ClientWidget.Width);
         }
     }
 }

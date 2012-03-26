@@ -165,10 +165,11 @@ namespace Medical.GUI
         public override void setSize(int width, int height)
         {
             base.setSize(width, height);
-            int fileGridWidth = fileDataGrid.Width - 2;
-            fileDataGrid.setColumnWidthAt(0, fileGridWidth / 3);
-            fileDataGrid.setColumnWidthAt(1, fileGridWidth / 3);
-            fileDataGrid.setColumnWidthAt(2, fileGridWidth / 3);
+            int fileGridWidth = fileDataGrid.ClientWidget.Width;
+            int columnWidth = fileGridWidth / 3;
+            fileDataGrid.setColumnWidthAt(0, columnWidth);
+            fileDataGrid.setColumnWidthAt(1, columnWidth);
+            fileDataGrid.setColumnWidthAt(2, fileGridWidth - columnWidth * 2);
         }
 
         void searchBox_KeyButtonReleased(Widget source, EventArgs e)
