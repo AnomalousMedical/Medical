@@ -14,8 +14,6 @@ namespace Medical.GUI
         private Taskbar timelineGUITaskbar;
         private TaskController taskController;
 
-        private bool addTasksAsAdded = false;
-
         private Dictionary<Task, TimelineTaskbarItem> timelineTaskbarItems = new Dictionary<Task, TimelineTaskbarItem>();
 
         public GUITimelineTaskManager(Taskbar timelineGUITaskbar, TaskController taskController)
@@ -46,15 +44,6 @@ namespace Medical.GUI
             {
                 Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
             }
-
-            foreach (Task task in taskController.Tasks)
-            {
-                if (task.ShowOnTimelineTaskbar)
-                {
-                    addTimelineTaskbarItem(task);
-                }
-            }
-            addTasksAsAdded = true;
         }
 
         void TaskController_TaskRemoved(Task task)
@@ -70,9 +59,7 @@ namespace Medical.GUI
 
         void TaskController_TaskAdded(Task task)
         {
-            //Check to see that the task should show up on the timeline taskbar, if this is done as tasks are added the first one's icon won't work, so this hack
-            //works around that.
-            if (addTasksAsAdded && task.ShowOnTimelineTaskbar)
+            if (task.ShowOnTimelineTaskbar)
             {
                 addTimelineTaskbarItem(task);
             }
