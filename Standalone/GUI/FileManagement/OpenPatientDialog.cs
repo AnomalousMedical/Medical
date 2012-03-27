@@ -109,9 +109,12 @@ namespace Medical.GUI
             Button browseButton = widget.findWidget("Open/BrowseButton") as Button;
 
             int fileGridWidth = fileDataGrid.Width - 2;
-            fileDataGrid.addColumn("First Name", fileGridWidth / 3);
-            fileDataGrid.addColumn("Last Name", fileGridWidth / 3);
-            fileDataGrid.addColumn("Date Modified", fileGridWidth / 3);
+            fileDataGrid.addColumn("First Name", 50);
+            fileDataGrid.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
+            fileDataGrid.addColumn("Last Name", 50);
+            fileDataGrid.setColumnResizingPolicyAt(1, ResizingPolicy.Fill);
+            fileDataGrid.addColumn("Date Modified", 50);
+            fileDataGrid.setColumnResizingPolicyAt(2, ResizingPolicy.Fill);
             fileDataGrid.ListChangePosition += new MyGUIEvent(fileDataGrid_ListChangePosition);
             fileDataGrid.ListSelectAccept += new MyGUIEvent(fileDataGrid_ListSelectAccept);
             fileDataGrid.SortOnChanges = false;
@@ -160,16 +163,6 @@ namespace Medical.GUI
             this.Shown += new EventHandler(OpenPatientDialog_Shown);
             this.Hiding += new EventHandler(OpenPatientDialog_Hiding);
             this.Hidden += new EventHandler(OpenPatientDialog_Hidden);
-        }
-
-        public override void setSize(int width, int height)
-        {
-            base.setSize(width, height);
-            int fileGridWidth = fileDataGrid.ClientWidget.Width;
-            int columnWidth = fileGridWidth / 3;
-            fileDataGrid.setColumnWidthAt(0, columnWidth);
-            fileDataGrid.setColumnWidthAt(1, columnWidth);
-            fileDataGrid.setColumnWidthAt(2, fileGridWidth - columnWidth * 2);
         }
 
         void searchBox_KeyButtonReleased(Widget source, EventArgs e)
