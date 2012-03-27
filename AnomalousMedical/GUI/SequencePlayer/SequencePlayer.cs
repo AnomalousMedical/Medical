@@ -14,7 +14,7 @@ namespace Medical
         private SequenceMenu sequenceMenu;
         private Button playButton;
         private Button stopButton;
-        private Edit nowPlaying;
+        private EditBox nowPlaying;
 
         public SequencePlayer(MovementSequenceController sequenceController)
             :base("Medical.GUI.SequencePlayer.SequencePlayer.layout")
@@ -31,7 +31,7 @@ namespace Medical
             stopButton = window.findWidget("Stop") as Button;
             stopButton.MouseButtonClick += new MyGUIEvent(stopButton_MouseButtonClick);
 
-            nowPlaying = window.findWidget("NowPlaying") as Edit;
+            nowPlaying = window.findWidget("NowPlaying") as EditBox;
 
             sequenceController.PlaybackStarted += new MovementSequenceEvent(sequenceController_PlaybackStarted);
             sequenceController.PlaybackStopped += new MovementSequenceEvent(sequenceController_PlaybackStopped);

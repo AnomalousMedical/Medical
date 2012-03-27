@@ -13,13 +13,13 @@ namespace Medical.GUI
         private NumericEdit yawEdit;
         private NumericEdit pitchEdit;
 
-        public PoseableFingerSectionControl(Edit pitchEdit)
+        public PoseableFingerSectionControl(EditBox pitchEdit)
             :this(null, pitchEdit)
         {
 
         }
 
-        public PoseableFingerSectionControl(Edit yawEdit, Edit pitchEdit)
+        public PoseableFingerSectionControl(EditBox yawEdit, EditBox pitchEdit)
         {
             if (yawEdit != null)
             {

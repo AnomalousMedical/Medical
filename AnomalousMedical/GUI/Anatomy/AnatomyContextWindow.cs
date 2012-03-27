@@ -16,8 +16,8 @@ namespace Medical.GUI
 
         private IntSize2 windowStartSize;
 
-        private StaticImage thumbnailImage;
-        private StaticText anatomyName;
+        private ImageBox thumbnailImage;
+        private TextBox anatomyName;
         private AnatomyTransparencySlider transparencySlider;
         int captionToBorderDelta = 0;
         private IntVector2 mouseOffset;
@@ -40,11 +40,11 @@ namespace Medical.GUI
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
-            thumbnailImage = (StaticImage)widget.findWidget("ThumbnailImage");
-            anatomyName = (StaticText)widget.findWidget("AnatomyName");
+            thumbnailImage = (ImageBox)widget.findWidget("ThumbnailImage");
+            anatomyName = (TextBox)widget.findWidget("AnatomyName");
             captionToBorderDelta = widget.Width - anatomyName.Right;
 
-            transparencySlider = new AnatomyTransparencySlider((VScroll)widget.findWidget("TransparencySlider"));
+            transparencySlider = new AnatomyTransparencySlider((ScrollBar)widget.findWidget("TransparencySlider"));
 
             windowStartSize = new IntSize2(widget.Width, widget.Height);
 

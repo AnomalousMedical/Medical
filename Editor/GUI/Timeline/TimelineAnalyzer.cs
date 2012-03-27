@@ -27,8 +27,8 @@ namespace Medical.GUI
 
             timelineProperties.CurrentTimelineChanged +=new SingleArgumentEvent<TimelinePropertiesController,Timeline>(timelineProperties_CurrentTimelineChanged);
 
-            actionManager = new ActionManager(window.findWidget("LastQuery") as StaticText, window.findWidget("BackButton") as Button, window.findWidget("ForwardButton") as Button);
-            timelineList = new TimelineList(window.findWidget("TimelineList") as MultiList, actionManager);
+            actionManager = new ActionManager(window.findWidget("LastQuery") as TextBox, window.findWidget("BackButton") as Button, window.findWidget("ForwardButton") as Button);
+            timelineList = new TimelineList(window.findWidget("TimelineList") as MultiListBox, actionManager);
             timelineList.TimelineSelected += new TimelineList.TimelineSelectedDelegate(timelineList_TimelineSelected);
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
@@ -283,7 +283,7 @@ namespace Medical.GUI
 
         class ActionManager
         {
-            private StaticText lastQueryText;
+            private TextBox lastQueryText;
 
             /// <summary>
             /// Action function. Returns the name of the timeline file that was manipulated.
@@ -320,7 +320,7 @@ namespace Medical.GUI
             private List<ActionFunctionInfo> history = new List<ActionFunctionInfo>();
             private int historyIndex = 0;
 
-            public ActionManager(StaticText lastQueryText, Button backButton, Button forwardButton)
+            public ActionManager(TextBox lastQueryText, Button backButton, Button forwardButton)
             {
                 this.lastQueryText = lastQueryText;
                 backButton.MouseButtonClick += new MyGUIEvent(backButton_MouseButtonClick);
@@ -439,12 +439,12 @@ namespace Medical.GUI
 
         class TimelineList
         {
-            private MultiList timelineList;
+            private MultiListBox timelineList;
             private ActionManager actionManager;
             public delegate void TimelineSelectedDelegate(String timeline);
             public event TimelineSelectedDelegate TimelineSelected;
 
-            public TimelineList(MultiList timelineList, ActionManager actionManager)
+            public TimelineList(MultiListBox timelineList, ActionManager actionManager)
             {
                 this.timelineList = timelineList;
                 this.actionManager = actionManager;

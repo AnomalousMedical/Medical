@@ -8,7 +8,7 @@ namespace Medical.GUI
 {
     class LicensePopup : AbstractFullscreenGUIPopup
     {
-        private Edit licenseTextArea;
+        private EditBox licenseTextArea;
 
         public LicensePopup(GUIManager guiManager)
             :base("Medical.GUI.Render.LicensePopup.layout", guiManager)
@@ -16,7 +16,7 @@ namespace Medical.GUI
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
-            licenseTextArea = (Edit)widget.findWidget("LicenseTextArea");
+            licenseTextArea = (EditBox)widget.findWidget("LicenseTextArea");
         }
 
         public String LicenseText

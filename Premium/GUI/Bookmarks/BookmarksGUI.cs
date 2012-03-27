@@ -15,12 +15,12 @@ namespace Medical.GUI
         BookmarksController bookmarksController;
 
         ButtonGrid bookmarksList;
-        Edit bookmarkName;
+        EditBox bookmarkName;
 
         IntSize2 widgetSmallSize;
-        StaticImage trash;
+        ImageBox trash;
 
-        private StaticImage dragIconPreview;
+        private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
 
         public BookmarksGUI(BookmarksController bookmarksController, GUIManager guiManager)
@@ -37,15 +37,15 @@ namespace Medical.GUI
             Button addButton = (Button)widget.findWidget("AddButton");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);
 
-            bookmarkName = (Edit)widget.findWidget("BookmarkName");
+            bookmarkName = (EditBox)widget.findWidget("BookmarkName");
 
             widgetSmallSize = new IntSize2(widget.Width, widget.Height - bookmarksListScroll.Height);
             widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height);
 
-            trash = (StaticImage)widget.findWidget("TrashPanel");
+            trash = (ImageBox)widget.findWidget("TrashPanel");
             trash.Visible = false;
 
-            dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
             dragIconPreview.Visible = false;
 
             Button closeButton = (Button)widget.findWidget("CloseButton");

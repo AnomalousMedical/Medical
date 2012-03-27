@@ -9,7 +9,7 @@ namespace Medical.GUI
     class LayerChangeProperties : TimelineDataPanel
     {
         private LayerChangeAction layerChange;
-        private StaticText windowText;
+        private TextBox windowText;
         private CheckButton useSystemDuration;
 
         public LayerChangeProperties(Widget parentWidget)
@@ -18,7 +18,7 @@ namespace Medical.GUI
             Button capture = mainWidget.findWidget("Capture") as Button;
             capture.MouseButtonClick += new MyGUIEvent(capture_MouseButtonClick);
 
-            windowText = mainWidget.findWidget("WindowText") as StaticText;
+            windowText = mainWidget.findWidget("WindowText") as TextBox;
 
             useSystemDuration = new CheckButton(mainWidget.findWidget("UseSystemDuration") as Button);
             useSystemDuration.CheckedChanged += new MyGUIEvent(useSystemDuration_CheckedChanged);

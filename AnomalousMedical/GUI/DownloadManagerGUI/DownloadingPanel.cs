@@ -10,11 +10,11 @@ namespace Medical.GUI
     {
         private Widget widget;
         public event EventHandler CancelDownload;
-        private StaticImage installIcon;
-        private Edit installName;
+        private ImageBox installIcon;
+        private EditBox installName;
         private ServerDownloadInfo currentInfo = null;
-        private Progress downloadProgressBar;
-        private StaticText downloadStatusText;
+        private ProgressBar downloadProgressBar;
+        private TextBox downloadStatusText;
 
         public DownloadingPanel(Widget widget)
         {
@@ -23,10 +23,10 @@ namespace Medical.GUI
             Button cancelButton = (Button)widget.findWidget("CancelButton");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
-            installIcon = (StaticImage)widget.findWidget("DownloadingIcon");
-            installName = (Edit)widget.findWidget("DownloadingName");
-            downloadProgressBar = (Progress)widget.findWidget("DownloadProgressBar");
-            downloadStatusText = (StaticText)widget.findWidget("DownloadingStatusText");
+            installIcon = (ImageBox)widget.findWidget("DownloadingIcon");
+            installName = (EditBox)widget.findWidget("DownloadingName");
+            downloadProgressBar = (ProgressBar)widget.findWidget("DownloadProgressBar");
+            downloadStatusText = (TextBox)widget.findWidget("DownloadingStatusText");
         }
 
         public void setDownloadInfo(ServerDownloadInfo info)

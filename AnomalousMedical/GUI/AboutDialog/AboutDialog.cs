@@ -30,43 +30,43 @@ namespace Medical.GUI
             Button closeButton = window.findWidget("CloseButton") as Button;
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
-            StaticText versionText = window.findWidget("VersionText") as StaticText;
+            TextBox versionText = window.findWidget("VersionText") as TextBox;
             versionText.Caption = "Version " + Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version;
 
-            StaticText anomalousMedicalText = window.findWidget("AnomalousMedicalLink") as StaticText;
+            TextBox anomalousMedicalText = window.findWidget("AnomalousMedicalLink") as TextBox;
             anomalousMedicalText.MouseButtonClick += new MyGUIEvent(anomalousMedicalText_MouseButtonClick);
 
-            StaticText ogreText = window.findWidget("Ogre3DLink") as StaticText;
+            TextBox ogreText = window.findWidget("Ogre3DLink") as TextBox;
             ogreText.MouseButtonClick += new MyGUIEvent(ogreText_MouseButtonClick);
 
-            StaticText myGUIText = window.findWidget("MyGUILink") as StaticText;
+            TextBox myGUIText = window.findWidget("MyGUILink") as TextBox;
             myGUIText.MouseButtonClick += new MyGUIEvent(myGUIText_MouseButtonClick);
 
-            StaticText bulletText = window.findWidget("BulletPhysicsLink") as StaticText;
+            TextBox bulletText = window.findWidget("BulletPhysicsLink") as TextBox;
             bulletText.MouseButtonClick += new MyGUIEvent(bulletText_MouseButtonClick);
 
-            StaticText ZZiplibText = window.findWidget("ZZiplibLink") as StaticText;
+            TextBox ZZiplibText = window.findWidget("ZZiplibLink") as TextBox;
             ZZiplibText.MouseButtonClick += new MyGUIEvent(ZZiplibText_MouseButtonClick);
 
-            StaticText zlibText = window.findWidget("ZlibLink") as StaticText;
+            TextBox zlibText = window.findWidget("ZlibLink") as TextBox;
             zlibText.MouseButtonClick += new MyGUIEvent(zlibText_MouseButtonClick);
 
-            StaticText freetypeText = window.findWidget("FreetypeLink") as StaticText;
+            TextBox freetypeText = window.findWidget("FreetypeLink") as TextBox;
             freetypeText.MouseButtonClick += new MyGUIEvent(freetypeText_MouseButtonClick);
 
-            StaticText freeimageText = window.findWidget("FreeimageLink") as StaticText;
+            TextBox freeimageText = window.findWidget("FreeimageLink") as TextBox;
             freeimageText.MouseButtonClick += new MyGUIEvent(freeimageText_MouseButtonClick);
 
-            StaticText openALText = window.findWidget("OpenALLink") as StaticText;
+            TextBox openALText = window.findWidget("OpenALLink") as TextBox;
             openALText.MouseButtonClick += new MyGUIEvent(openALText_MouseButtonClick);
 
-            StaticText oggVorbisText = window.findWidget("OggVorbisLink") as StaticText;
+            TextBox oggVorbisText = window.findWidget("OggVorbisLink") as TextBox;
             oggVorbisText.MouseButtonClick += new MyGUIEvent(oggVorbisText_MouseButtonClick);
 
-            StaticText wxWidgetsText = window.findWidget("wxWidgetsLink") as StaticText;
+            TextBox wxWidgetsText = window.findWidget("wxWidgetsLink") as TextBox;
             wxWidgetsText.MouseButtonClick += new MyGUIEvent(wxWidgetsText_MouseButtonClick);
 
-            StaticText monoText = window.findWidget("MonoLink") as StaticText;
+            TextBox monoText = window.findWidget("MonoLink") as TextBox;
             monoText.MouseButtonClick += new MyGUIEvent(monoText_MouseButtonClick);
         }
 

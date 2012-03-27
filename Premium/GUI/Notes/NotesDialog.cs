@@ -10,20 +10,20 @@ namespace Medical.GUI
     {
         private MedicalStateController stateController;
 
-        private Edit stateNameTextBox;
-        private Edit datePicker;
-        private Edit distortionWizard;
-        private Edit notes;
+        private EditBox stateNameTextBox;
+        private EditBox datePicker;
+        private EditBox distortionWizard;
+        private EditBox notes;
 
         public NotesDialog(MedicalStateController stateController)
             : base("Medical.GUI.Notes.NotesDialog.layout")
         {
             window.Visible = false;
 
-            stateNameTextBox = window.findWidget("Notes/DistortionName") as Edit;
-            datePicker = window.findWidget("Notes/DateCreated") as Edit;
-            distortionWizard = window.findWidget("Notes/DistortionWizard") as Edit;
-            notes = window.findWidget("Notes/NotesText") as Edit;
+            stateNameTextBox = window.findWidget("Notes/DistortionName") as EditBox;
+            datePicker = window.findWidget("Notes/DateCreated") as EditBox;
+            distortionWizard = window.findWidget("Notes/DistortionWizard") as EditBox;
+            notes = window.findWidget("Notes/NotesText") as EditBox;
 
             this.stateController = stateController;
             stateController.StateChanged += new MedicalStateStatusUpdate(stateController_StateChanged);

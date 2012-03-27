@@ -11,7 +11,7 @@ namespace Medical.GUI
     {
         private ShowImageAction showImage;
         private TimelineData timelineData;
-        private Edit imageFileEdit;
+        private EditBox imageFileEdit;
 
         private EnumComboBox<ImageAlignment> alignment;
         private NumericEdit xPosition;
@@ -21,12 +21,12 @@ namespace Medical.GUI
 
         private CheckButton keepAspectRatio;
 
-        private StaticText cameraText;
+        private TextBox cameraText;
 
         public ShowImageProperties(Widget parentWidget)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowImageProperties.layout")
         {
-            imageFileEdit = mainWidget.findWidget("ImageFileEdit") as Edit;
+            imageFileEdit = mainWidget.findWidget("ImageFileEdit") as EditBox;
 
             Button browseButton = mainWidget.findWidget("BrowseButton") as Button;
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
@@ -34,25 +34,25 @@ namespace Medical.GUI
             alignment = new EnumComboBox<ImageAlignment>((ComboBox)mainWidget.findWidget("Alignment"));
             alignment.EventComboChangePosition += new MyGUIEvent(alignment_EventComboChangePosition);
 
-            xPosition = new NumericEdit(mainWidget.findWidget("XPositionEdit") as Edit);
+            xPosition = new NumericEdit(mainWidget.findWidget("XPositionEdit") as EditBox);
             xPosition.ValueChanged += position_ValueChanged;
             xPosition.MinValue = 0.0f;
             xPosition.MaxValue = 1.0f;
             xPosition.Increment = 0.05f;
             
-            yPosition = new NumericEdit(mainWidget.findWidget("YPositionEdit") as Edit);
+            yPosition = new NumericEdit(mainWidget.findWidget("YPositionEdit") as EditBox);
             yPosition.ValueChanged += position_ValueChanged;
             yPosition.MinValue = 0.0f;
             yPosition.MaxValue = 1.0f;
             yPosition.Increment = 0.05f;
             
-            width = new NumericEdit(mainWidget.findWidget("WidthEdit") as Edit);
+            width = new NumericEdit(mainWidget.findWidget("WidthEdit") as EditBox);
             width.ValueChanged += size_ValueChanged;
             width.MinValue = 0.0f;
             width.MaxValue = 1.0f;
             width.Increment = 0.05f;
             
-            height = new NumericEdit(mainWidget.findWidget("HeightEdit") as Edit);
+            height = new NumericEdit(mainWidget.findWidget("HeightEdit") as EditBox);
             height.ValueChanged += size_ValueChanged;
             height.MinValue = 0.0f;
             height.MaxValue = 1.0f;
@@ -61,7 +61,7 @@ namespace Medical.GUI
             keepAspectRatio = new CheckButton(mainWidget.findWidget("KeepAspectCheck") as Button);
             keepAspectRatio.CheckedChanged += new MyGUIEvent(keepAspectRatio_CheckedChanged);
 
-            cameraText = mainWidget.findWidget("Camera") as StaticText;
+            cameraText = mainWidget.findWidget("Camera") as TextBox;
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
             useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);
         }

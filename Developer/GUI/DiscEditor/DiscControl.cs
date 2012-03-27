@@ -21,12 +21,12 @@ namespace Medical.GUI
         public DiscControl()
             : base("Developer.GUI.DiscEditor.DiscControl.layout")
         {
-            horizontalOffsetTrackBar = new MinMaxScroll((VScroll)window.findWidget("horizontalOffsetTrackBar"));
+            horizontalOffsetTrackBar = new MinMaxScroll((ScrollBar)window.findWidget("horizontalOffsetTrackBar"));
             horizontalOffsetTrackBar.Maximum = 10000;
             horizontalOffsetTrackBar.Minimum = -10000;
             horizontalOffsetTrackBar.ScrollChangePosition += new MyGUIEvent(horizontalOffsetTrackBar_ValueChanged);
 
-            horizontalOffsetUpDown = new NumericEdit((Edit)window.findWidget("horizontalOffsetUpDown"));
+            horizontalOffsetUpDown = new NumericEdit((EditBox)window.findWidget("horizontalOffsetUpDown"));
             horizontalOffsetUpDown.ValueChanged += new MyGUIEvent(horizontalOffsetUpDown_ValueChanged);
             horizontalOffsetUpDown.MaxValue = 1.0f;
             horizontalOffsetUpDown.MinValue = -1.0f;

@@ -9,14 +9,14 @@ namespace Medical.GUI
 {
     public class OpenPropManager : MDIDialog
     {
-        private MultiList propList;
+        private MultiListBox propList;
 
         public event EventDelegate<OpenPropManager, ShowPropAction> PropClosed;
 
         public OpenPropManager()
             :base("Medical.GUI.Timeline.OpenPropManager.layout")
         {
-            propList = (MultiList)window.findWidget("propList");
+            propList = (MultiListBox)window.findWidget("propList");
             propList.addColumn("Prop", 50);
             propList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
 

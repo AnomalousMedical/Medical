@@ -37,19 +37,19 @@ namespace DentalSim.GUI
         public MandibleMovementDialog(MovementSequenceController movementSequenceController)
             : base("DentalSim.GUI.MandibleMovement.MandibleMovementDialog.layout")
         {            
-            openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as VScroll);
+            openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as ScrollBar);
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
-            rightForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionRightSlider") as VScroll);
+            rightForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionRightSlider") as ScrollBar);
             rightForwardBack.Minimum = 0;
             rightForwardBack.Maximum = 1;
-            leftForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionLeftSlider") as VScroll);
+            leftForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionLeftSlider") as ScrollBar);
             leftForwardBack.Minimum = 0;
             leftForwardBack.Maximum = 1;
-            bothForwardBack = new MandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as VScroll);
+            bothForwardBack = new MandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as ScrollBar);
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
-            forceSlider = new MandibleControlSlider(window.findWidget("Movement/ForceSlider") as VScroll);
+            forceSlider = new MandibleControlSlider(window.findWidget("Movement/ForceSlider") as ScrollBar);
             forceSlider.Minimum = 0;
             forceSlider.Maximum = 100;
             resetButton = window.findWidget("Movement/Reset") as Button;

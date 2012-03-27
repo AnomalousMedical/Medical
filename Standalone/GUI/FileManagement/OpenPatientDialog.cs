@@ -20,14 +20,14 @@ namespace Medical.GUI
         public event EventHandler OpenFile;
 
         private BackgroundWorker fileListWorker = new BackgroundWorker();
-        private MultiList fileDataGrid;
-        private Edit locationTextBox;
-        private StaticImage warningImage;
-        private StaticText warningText;
-        private Progress loadingProgress;
+        private MultiListBox fileDataGrid;
+        private EditBox locationTextBox;
+        private ImageBox warningImage;
+        private TextBox warningText;
+        private ProgressBar loadingProgress;
         private Button openButton;
         private Button deleteButton;
-        private Edit searchBox;
+        private EditBox searchBox;
         private Widget loadingWidget;
         private bool allowOpen = false;
 
@@ -97,15 +97,15 @@ namespace Medical.GUI
         public OpenPatientDialog(GUIManager guiManager)
             : base("Medical.GUI.FileManagement.OpenPatientDialog.layout", guiManager)
         {
-            fileDataGrid = widget.findWidget("Open/FileList") as MultiList;
-            locationTextBox = widget.findWidget("Open/LoadLocation") as Edit;
-            warningImage = widget.findWidget("Open/WarningImage") as StaticImage;
-            warningText = widget.findWidget("Open/WarningText") as StaticText;
-            loadingProgress = widget.findWidget("Open/LoadingProgress") as Progress;
+            fileDataGrid = widget.findWidget("Open/FileList") as MultiListBox;
+            locationTextBox = widget.findWidget("Open/LoadLocation") as EditBox;
+            warningImage = widget.findWidget("Open/WarningImage") as ImageBox;
+            warningText = widget.findWidget("Open/WarningText") as TextBox;
+            loadingProgress = widget.findWidget("Open/LoadingProgress") as ProgressBar;
             openButton = widget.findWidget("Open/OpenButton") as Button;
             deleteButton = widget.findWidget("Open/DeleteButton") as Button;
             Button cancelButton = widget.findWidget("Open/CancelButton") as Button;
-            searchBox = widget.findWidget("Open/SearchText") as Edit;
+            searchBox = widget.findWidget("Open/SearchText") as EditBox;
             Button browseButton = widget.findWidget("Open/BrowseButton") as Button;
 
             int fileGridWidth = fileDataGrid.Width - 2;

@@ -11,7 +11,7 @@ namespace Medical.GUI
     class MyGUIQuestionProvider : Dialog, IQuestionProvider
     {
         private ScrollView answerScroll;
-        private Edit questionEdit;
+        private EditBox questionEdit;
         private List<PromptTextArea> textAreas = new List<PromptTextArea>();
         private PromptAnswerSelected answerSelectedCallback;
         private GUIManager guiManager;
@@ -24,7 +24,7 @@ namespace Medical.GUI
             guiManager.ScreenSizeChanged += new ScreenSizeChanged(guiManager_ScreenSizeChanged);
 
             answerScroll = window.findWidget("Answers") as ScrollView;
-            questionEdit = window.findWidget("Question") as Edit;
+            questionEdit = window.findWidget("Question") as EditBox;
             questionEdit.Font = "font_DejaVuSans.Large_Question";
         }
 

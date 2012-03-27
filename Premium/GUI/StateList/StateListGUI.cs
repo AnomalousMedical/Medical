@@ -14,11 +14,11 @@ namespace Medical.GUI
         private Dictionary<MedicalState, ButtonGridItem> entries = new Dictionary<MedicalState, ButtonGridItem>();
         private bool ignoreIndexChanges = false;
 
-        StaticImage trash;
+        ImageBox trash;
 
         private MedicalStateController stateController;
 
-        private StaticImage dragIconPreview;
+        private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
 
         public StateListGUI(MedicalStateController stateController, GUIManager guiManager)
@@ -39,10 +39,10 @@ namespace Medical.GUI
             stateController.BlendingStopped += stateController_BlendingStopped;
             stateController.StateUpdated += stateController_StateUpdated;
 
-            trash = (StaticImage)widget.findWidget("TrashPanel");
+            trash = (ImageBox)widget.findWidget("TrashPanel");
             trash.Visible = false;
 
-            dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
             dragIconPreview.Visible = false;
         }
 

@@ -31,9 +31,9 @@ namespace Medical.GUI
 
         public override void initialize(ShowTimelineGUIAction showGUIAction)
         {
-            heightControl = new HeightControl(widget.findWidget("TeethAdaptPanel/LeftSideSlider") as VScroll,
-                widget.findWidget("TeethAdaptPanel/RightSideSlider") as VScroll,
-                widget.findWidget("TeethAdaptPanel/BothSidesSlider") as VScroll);
+            heightControl = new HeightControl(widget.findWidget("TeethAdaptPanel/LeftSideSlider") as ScrollBar,
+                widget.findWidget("TeethAdaptPanel/RightSideSlider") as ScrollBar,
+                widget.findWidget("TeethAdaptPanel/BothSidesSlider") as ScrollBar);
             teethMovementPanel = new TeethMovementGUI(widget, (TeethAdaptationGUIData)showGUIAction.GUIData, this);
 
             undoButton = widget.findWidget("TeethAdaptPanel/UndoButton") as Button;

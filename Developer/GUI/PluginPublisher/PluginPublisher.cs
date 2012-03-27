@@ -14,9 +14,9 @@ namespace Developer.GUI
         private const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
         private const String SIGNATURE_WILDCARD = "Signature File (*.xml)|*.xml;";
 
-        private Edit pluginFileEdit;
-        private Edit signatureFileEdit;
-        private Edit outDirEdit;
+        private EditBox pluginFileEdit;
+        private EditBox signatureFileEdit;
+        private EditBox outDirEdit;
 
         private PluginPublishController pluginPublishController;
 
@@ -25,9 +25,9 @@ namespace Developer.GUI
         {
             this.pluginPublishController = pluginPublishController;
 
-            pluginFileEdit = (Edit)window.findWidget("PluginFileEdit");
-            signatureFileEdit = (Edit)window.findWidget("SignatureFileEdit");
-            outDirEdit = (Edit)window.findWidget("OutDirEdit");
+            pluginFileEdit = (EditBox)window.findWidget("PluginFileEdit");
+            signatureFileEdit = (EditBox)window.findWidget("SignatureFileEdit");
+            outDirEdit = (EditBox)window.findWidget("OutDirEdit");
 
             Button pluginFileBrowser = (Button)window.findWidget("PluginFileBrowser");
             pluginFileBrowser.MouseButtonClick += new MyGUIEvent(pluginFileBrowser_MouseButtonClick);

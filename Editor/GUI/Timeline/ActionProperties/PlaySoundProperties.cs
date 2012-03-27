@@ -10,12 +10,12 @@ namespace Medical.GUI
     {
         private PlaySoundAction playSound;
         private TimelineData timelineData;
-        private Edit soundFileEdit;
+        private EditBox soundFileEdit;
 
         public PlaySoundProperties(Widget parentWidget)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.PlaySoundProperties.layout")
         {
-            soundFileEdit = mainWidget.findWidget("SoundFileEdit") as Edit;
+            soundFileEdit = mainWidget.findWidget("SoundFileEdit") as EditBox;
 
             Button browseButton = mainWidget.findWidget("BrowseButton") as Button;
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);

@@ -35,19 +35,19 @@ namespace Medical.GUI
         public AdvancedMandibleMovementDialog(MovementSequenceController movementSequenceController)
             : base("Developer.GUI.AdvancedMandibleMovement.AdvancedMandibleMovementDialog.layout")
         {
-            openTrackBar = new AdvancedMandibleControlSlider(window.findWidget("Movement/HingeSlider") as VScroll, (Edit)window.findWidget("HingeEdit"));
+            openTrackBar = new AdvancedMandibleControlSlider(window.findWidget("Movement/HingeSlider") as ScrollBar, (EditBox)window.findWidget("HingeEdit"));
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
-            rightForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ExcursionRightSlider") as VScroll, (Edit)window.findWidget("ExcursionRightEdit"));
+            rightForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ExcursionRightSlider") as ScrollBar, (EditBox)window.findWidget("ExcursionRightEdit"));
             rightForwardBack.Minimum = 0;
             rightForwardBack.Maximum = 1;
-            leftForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ExcursionLeftSlider") as VScroll, (Edit)window.findWidget("ExcursionLeftEdit"));
+            leftForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ExcursionLeftSlider") as ScrollBar, (EditBox)window.findWidget("ExcursionLeftEdit"));
             leftForwardBack.Minimum = 0;
             leftForwardBack.Maximum = 1;
-            bothForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as VScroll, (Edit)window.findWidget("ProtrusionEdit"));
+            bothForwardBack = new AdvancedMandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as ScrollBar, (EditBox)window.findWidget("ProtrusionEdit"));
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
-            forceSlider = new AdvancedMandibleControlSlider(window.findWidget("Movement/ForceSlider") as VScroll, (Edit)window.findWidget("ForceEdit"));
+            forceSlider = new AdvancedMandibleControlSlider(window.findWidget("Movement/ForceSlider") as ScrollBar, (EditBox)window.findWidget("ForceEdit"));
             forceSlider.Minimum = 0;
             forceSlider.Maximum = 100;
             resetButton = window.findWidget("Movement/Reset") as Button;

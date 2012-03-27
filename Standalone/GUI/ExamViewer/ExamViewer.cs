@@ -9,7 +9,7 @@ namespace Medical.GUI
     public class ExamViewer : MDIDialog
     {
         private ExamController examController;
-        private MultiList examList;
+        private MultiListBox examList;
         private MyGUIAnalysisDisplayProvider displayProvider = new MyGUIAnalysisDisplayProvider();
 
         public ExamViewer(ExamController examController)
@@ -20,7 +20,7 @@ namespace Medical.GUI
             examController.ExamRemoved += new ExamController.ExamControllerEvent(examController_ExamRemoved);
             examController.ExamsCleared += new ExamController.ExamControllerEvent(examController_ExamsCleared);
 
-            examList = (MultiList)window.findWidget("ExamList");
+            examList = (MultiListBox)window.findWidget("ExamList");
             examList.addColumn("Exam", 50);
             examList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
             examList.addColumn("Date", 50);

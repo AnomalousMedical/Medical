@@ -40,7 +40,7 @@ namespace Medical.GUI
         }
 
         private ButtonGrid anatomyList;
-        private Edit searchBox;
+        private EditBox searchBox;
 
         private AnatomyContextWindowManager anatomyWindowManager;
 
@@ -75,7 +75,7 @@ namespace Medical.GUI
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
             anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
 
-            searchBox = (Edit)window.findWidget("SearchBox");
+            searchBox = (EditBox)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
             searchBox.KeyButtonReleased += new MyGUIEvent(searchBox_KeyButtonReleased);
 

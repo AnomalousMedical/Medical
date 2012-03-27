@@ -19,7 +19,7 @@ namespace Medical.GUI
         {
             this.grid = grid;
 
-            gridSpaceControl = new NumericEdit(mainWidget.findWidget("GridControl/GridSpace") as Edit, mainWidget.findWidget("GridControl/GridSpaceUp") as Button, mainWidget.findWidget("GridControl/GridSpaceDown") as Button);
+            gridSpaceControl = new NumericEdit(mainWidget.findWidget("GridControl/GridSpace") as EditBox, mainWidget.findWidget("GridControl/GridSpaceUp") as Button, mainWidget.findWidget("GridControl/GridSpaceDown") as Button);
             showGridCheckBox = new CheckButton(mainWidget.findWidget("GridControl/ShowGrid") as Button);
 
             gridSpaceControl.MinValue = 1;

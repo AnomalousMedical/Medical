@@ -23,11 +23,11 @@ namespace Medical.GUI
             : base("Medical.GUI.DistortionWizards.Mandible.RightCondylarGrowthGUI.layout", wizard)
         {
 
-            rightRamusHeightSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/RamusHeightSlider") as VScroll);
-            rightCondyleHeightSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/CondyleHeightSlider") as VScroll);
-            rightCondyleRotationSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/CondyleRotationSlider") as VScroll);
-            rightMandibularNotchSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/MandibularNotchSlider") as VScroll);
-            rightAntegonialNotchSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/AntegonialNotchSlider") as VScroll);
+            rightRamusHeightSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/RamusHeightSlider") as ScrollBar);
+            rightCondyleHeightSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/CondyleHeightSlider") as ScrollBar);
+            rightCondyleRotationSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/CondyleRotationSlider") as ScrollBar);
+            rightMandibularNotchSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/MandibularNotchSlider") as ScrollBar);
+            rightAntegonialNotchSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleGrowth/AntegonialNotchSlider") as ScrollBar);
 
             addBoneManipulator(rightRamusHeightSlider);
             addBoneManipulator(rightCondyleHeightSlider);

@@ -13,7 +13,7 @@ namespace Medical.GUI
 
         private MinMaxScroll valueTrackBar;
 
-        public HeightComboSlider(VScroll scrollBar)
+        public HeightComboSlider(ScrollBar scrollBar)
         {
             valueTrackBar = new MinMaxScroll(scrollBar);
             valueTrackBar.ScrollChangePosition += new MyGUIEvent(valueTrackBar_ScrollChangePosition);

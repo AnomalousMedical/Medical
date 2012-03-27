@@ -12,9 +12,9 @@ namespace Medical.GUI
     {
         const int BROWSE_BUTTON_WIDTH = 25;
 
-        private Edit editWidget;
+        private EditBox editWidget;
         private Button browseButton;
-        private StaticText staticWidget;
+        private TextBox staticWidget;
         private String value = null;
         private EditUICallback uiCallback;
         private EditableProperty editProperty;
@@ -152,7 +152,7 @@ namespace Medical.GUI
         {
             if (staticWidget == null)
             {
-                staticWidget = (StaticText)parentWidget.createWidgetT("Button", "Button", Position.x, Position.y, Size.Width, Size.Height, Align.Default, "");
+                staticWidget = (TextBox)parentWidget.createWidgetT("Button", "Button", Position.x, Position.y, Size.Width, Size.Height, Align.Default, "");
                 staticWidget.MouseButtonClick += new MyGUIEvent(staticWidget_MouseButtonClick);
                 staticWidget.Caption = value;
                 staticWidget.Visible = false;
@@ -163,7 +163,7 @@ namespace Medical.GUI
         {
             if (editWidget == null)
             {
-                editWidget = parentWidget.createWidgetT("Edit", "Edit", Position.x, Position.y, Size.Width - BROWSE_BUTTON_WIDTH, Size.Height, Align.Default, "") as Edit;
+                editWidget = parentWidget.createWidgetT("Edit", "Edit", Position.x, Position.y, Size.Width - BROWSE_BUTTON_WIDTH, Size.Height, Align.Default, "") as EditBox;
                 editWidget.KeyLostFocus += new MyGUIEvent(editWidget_KeyLostFocus);
                 editWidget.KeyButtonReleased += new MyGUIEvent(editWidget_KeyButtonReleased);
                 editWidget.OnlyText = value;

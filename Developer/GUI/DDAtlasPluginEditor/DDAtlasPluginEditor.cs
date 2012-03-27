@@ -50,7 +50,7 @@ namespace Medical.GUI
 
             MenuBar menu = window.findWidget("MenuBar") as MenuBar;
             MenuItem fileMenu = menu.addItem("File", MenuItemType.Popup);
-            MenuCtrl fileMenuCtrl = menu.createItemPopupMenuChild(fileMenu);
+            MenuControl fileMenuCtrl = menu.createItemPopupMenuChild(fileMenu);
             fileMenuCtrl.ItemAccept += new MyGUIEvent(fileMenuCtrl_ItemAccept);
             fileMenuCtrl.addItem("New", MenuItemType.Normal, "New");
             fileMenuCtrl.addItem("Open", MenuItemType.Normal, "Open");

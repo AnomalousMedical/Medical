@@ -15,8 +15,8 @@ namespace Medical.GUI
 
         private const int ROW_SIZE_ADJUST = 8;
 
-        private Edit answerText;
-        private Edit timelineText;
+        private EditBox answerText;
+        private EditBox timelineText;
         private TimelineFileBrowserDialog fileBrowser;
 
         public QuestionEditorAnswerRow(Widget parent, int yPos, TimelineFileBrowserDialog fileBrowser)
@@ -40,8 +40,8 @@ namespace Medical.GUI
             Button browseButton = widget.findWidget("BrowseButton") as Button;
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
 
-            answerText = widget.findWidget("AnswerText") as Edit;
-            timelineText = widget.findWidget("TimelineText") as Edit;
+            answerText = widget.findWidget("AnswerText") as EditBox;
+            timelineText = widget.findWidget("TimelineText") as EditBox;
         }
 
         public String AnswerText

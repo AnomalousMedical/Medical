@@ -13,9 +13,9 @@ namespace Medical.Controller
     {
         Layout layout;
         Widget mainWidget;
-        Progress progressBar;
+        ProgressBar progressBar;
         OgreWindow ogreWindow;
-        StaticText statusText;
+        TextBox statusText;
         private float smoothShowPosition;
         private bool runningShowTransition; //True to be making the popup visible, false to be hiding.
 
@@ -58,10 +58,10 @@ namespace Medical.Controller
                 imageX = 0;
             }
 
-            progressBar = mainWidget.findWidget("SplashScreen/ProgressBar") as Progress;
+            progressBar = mainWidget.findWidget("SplashScreen/ProgressBar") as ProgressBar;
             progressBar.Range = progressRange;
 
-            statusText = mainWidget.findWidget("SplashScreen/Status") as StaticText;
+            statusText = mainWidget.findWidget("SplashScreen/Status") as TextBox;
             statusText.TextColor = Color.White;
 
             //Set Sizes

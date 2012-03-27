@@ -10,25 +10,25 @@ namespace Medical.GUI
     class MoveCameraProperties : TimelineDataPanel
     {
         private MoveCameraAction moveAction;
-        private Edit translationEdit;
-        private Edit lookAtEdit;
+        private EditBox translationEdit;
+        private EditBox lookAtEdit;
         private Color defaultColor;
-        private StaticText cameraText;
+        private TextBox cameraText;
         private CheckButton useSystemDuration;
 
         public MoveCameraProperties(Widget parent)
             :base(parent, "Medical.GUI.Timeline.ActionProperties.MoveCameraProperties.layout")
         {
-            translationEdit = mainWidget.findWidget("TranslationEdit") as Edit;
+            translationEdit = mainWidget.findWidget("TranslationEdit") as EditBox;
             translationEdit.EventEditTextChange += new MyGUIEvent(translationEdit_EventEditTextChange);
-            lookAtEdit = mainWidget.findWidget("LookAtEdit") as Edit;
+            lookAtEdit = mainWidget.findWidget("LookAtEdit") as EditBox;
             lookAtEdit.EventEditTextChange += new MyGUIEvent(lookAtEdit_EventEditTextChange);
             defaultColor = translationEdit.TextColor;
 
             Button useCurrentButton = mainWidget.findWidget("UseCurrentButton") as Button;
             useCurrentButton.MouseButtonClick += new MyGUIEvent(useCurrentButton_MouseButtonClick);
 
-            cameraText = mainWidget.findWidget("CameraText") as StaticText;
+            cameraText = mainWidget.findWidget("CameraText") as TextBox;
 
             useSystemDuration = new CheckButton(mainWidget.findWidget("UseSystemDuration") as Button);
             useSystemDuration.CheckedChanged += new MyGUIEvent(useSystemDuration_CheckedChanged);

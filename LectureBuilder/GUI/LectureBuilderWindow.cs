@@ -18,7 +18,7 @@ namespace LectureBuilder
         private LectureCompanion lecComp;
         private String currentProject = null;
 
-        private Edit name;
+        private EditBox name;
         private ScrollView slideScroller;
         private ButtonGrid slides;
         private Button capture;
@@ -50,7 +50,7 @@ namespace LectureBuilder
             moveDown = (Button)window.findWidget("MoveDown");
             moveDown.MouseButtonClick += new MyGUIEvent(moveDown_MouseButtonClick);
 
-            name = (Edit)window.findWidget("Name");
+            name = (EditBox)window.findWidget("Name");
 
             slideScroller = (ScrollView)window.findWidget("SlideScroller");
             slides = new ButtonGrid(slideScroller, new ButtonGridListLayout());

@@ -19,39 +19,39 @@ namespace Medical.GUI
         private NumericEdit fontHeight;
         private ComboBox fontNameCombo;
         private EnumComboBox<TextualAlignment> alignCombo;
-        private Edit scenePointEdit;
+        private EditBox scenePointEdit;
         private CheckButton positionOnScenePoint;
 
-        private StaticText cameraText;
+        private TextBox cameraText;
 
         public ShowTextProperties(Widget parentWidget, ITextDisplayFactory textFactory)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowTextProperties.layout")
         {
-            xPosition = new NumericEdit(mainWidget.findWidget("XPositionEdit") as Edit);
+            xPosition = new NumericEdit(mainWidget.findWidget("XPositionEdit") as EditBox);
             xPosition.ValueChanged += position_ValueChanged;
             xPosition.MinValue = 0.0f;
             xPosition.MaxValue = 1.0f;
             xPosition.Increment = 0.05f;
             
-            yPosition = new NumericEdit(mainWidget.findWidget("YPositionEdit") as Edit);
+            yPosition = new NumericEdit(mainWidget.findWidget("YPositionEdit") as EditBox);
             yPosition.ValueChanged += position_ValueChanged;
             yPosition.MinValue = 0.0f;
             yPosition.MaxValue = 1.0f;
             yPosition.Increment = 0.05f;
             
-            width = new NumericEdit(mainWidget.findWidget("WidthEdit") as Edit);
+            width = new NumericEdit(mainWidget.findWidget("WidthEdit") as EditBox);
             width.ValueChanged += size_ValueChanged;
             width.MinValue = 0.0f;
             width.MaxValue = 1.0f;
             width.Increment = 0.05f;
             
-            height = new NumericEdit(mainWidget.findWidget("HeightEdit") as Edit);
+            height = new NumericEdit(mainWidget.findWidget("HeightEdit") as EditBox);
             height.ValueChanged += size_ValueChanged;
             height.MinValue = 0.0f;
             height.MaxValue = 1.0f;
             height.Increment = 0.05f;
 
-            fontHeight = new NumericEdit(mainWidget.findWidget("FontHeight") as Edit);
+            fontHeight = new NumericEdit(mainWidget.findWidget("FontHeight") as EditBox);
             fontHeight.ValueChanged += new MyGUIEvent(fontHeight_ValueChanged);
             fontHeight.MinValue = 1;
             fontHeight.MaxValue = 1000;
@@ -67,7 +67,7 @@ namespace Medical.GUI
             alignCombo = new EnumComboBox<TextualAlignment>((ComboBox)mainWidget.findWidget("AlignCombo"));
             alignCombo.EventComboChangePosition += new MyGUIEvent(alignCombo_EventComboAccept);
 
-            cameraText = mainWidget.findWidget("Camera") as StaticText;
+            cameraText = mainWidget.findWidget("Camera") as TextBox;
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
             useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);
 
@@ -77,7 +77,7 @@ namespace Medical.GUI
             positionOnScenePoint = new CheckButton((Button)mainWidget.findWidget("PositionOnScenePoint"));
             positionOnScenePoint.CheckedChanged += new MyGUIEvent(positionOnScenePoint_CheckedChanged);
 
-            scenePointEdit = (Edit)mainWidget.findWidget("ScenePointEdit");
+            scenePointEdit = (EditBox)mainWidget.findWidget("ScenePointEdit");
             scenePointEdit.EventEditSelectAccept += new MyGUIEvent(scenePointEdit_EventEditSelectAccept);
         }
 

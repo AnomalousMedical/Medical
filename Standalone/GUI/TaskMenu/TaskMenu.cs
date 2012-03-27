@@ -41,9 +41,9 @@ namespace Medical.GUI
         public event TaskDragDropEventDelegate TaskItemDropped;
         public event TaskDragDropEventDelegate TaskItemDragged;
 
-        private StaticImage dragIconPreview;
+        private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
-        private StaticImage adImage = null;
+        private ImageBox adImage = null;
 
         private bool firstTimeShown = true;
         private bool showAdImage = true;
@@ -82,7 +82,7 @@ namespace Medical.GUI
 
             this.Hidden += new EventHandler(TaskMenu_Hidden);
 
-            dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 32, 32, Align.Default, "Info", "TaskMenuDragIconPreview");
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 32, 32, Align.Default, "Info", "TaskMenuDragIconPreview");
             dragIconPreview.Visible = false;
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
@@ -155,7 +155,7 @@ namespace Medical.GUI
                     iconScroller.setPosition(232, iconScroller.Top);
                     iconScroller.setSize(widget.Width - 230, iconScroller.Height);
                     iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
-                    adImage = (StaticImage)widget.createWidgetT("StaticImage", "StaticImage", 2, iconScroller.Top, 200, 400, Align.Left | Align.Top, "");
+                    adImage = (ImageBox)widget.createWidgetT("StaticImage", "StaticImage", 2, iconScroller.Top, 200, 400, Align.Left | Align.Top, "");
                     adImage.setItemResource(AdImageKey);
                     adImage.MouseButtonClick += adImage_MouseButtonClick;
                 }

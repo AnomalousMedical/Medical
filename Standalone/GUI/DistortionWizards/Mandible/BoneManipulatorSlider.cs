@@ -15,7 +15,7 @@ namespace Medical.GUI
 
         private MinMaxScroll valueTrackBar;
 
-        public BoneManipulatorSlider(VScroll scroll)
+        public BoneManipulatorSlider(ScrollBar scroll)
         {
             valueTrackBar = new MinMaxScroll(scroll);
             valueTrackBar.Minimum = 0;

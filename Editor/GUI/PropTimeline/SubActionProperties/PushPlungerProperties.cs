@@ -14,7 +14,7 @@ namespace Medical.GUI
         public PushPlungerProperties(Widget parentWidget)
             :base(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PushPlungerProperties.layout")
         {
-            pushPlungerEdit = new NumericEdit(mainWidget.findWidget("PlungeAmountEdit") as Edit);
+            pushPlungerEdit = new NumericEdit(mainWidget.findWidget("PlungeAmountEdit") as EditBox);
             pushPlungerEdit.MinValue = 0.0f;
             pushPlungerEdit.MaxValue = 1.0f;
             pushPlungerEdit.Increment = 0.1f;

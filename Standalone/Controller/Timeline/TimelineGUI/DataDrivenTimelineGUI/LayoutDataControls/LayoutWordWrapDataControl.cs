@@ -8,10 +8,10 @@ namespace Medical.LayoutDataControls
 {
     class LayoutWordWrapDataControl : LayoutWidgetDataControl
     {
-        private Edit edit;
+        private EditBox edit;
         private String valueName;
 
-        public LayoutWordWrapDataControl(Edit edit, NotesDataField field)
+        public LayoutWordWrapDataControl(EditBox edit, NotesDataField field)
         {
             this.edit = edit;
             valueName = field.Name;

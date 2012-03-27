@@ -16,12 +16,12 @@ namespace Medical.GUI
         private bool allowFileNameUpdate = true;
         private bool autoUpdate = false;
 
-        Edit lastText;
-        Edit firstText;
-        Edit fileNameTextBox;
-        Edit locationTextBox;
-        StaticText warningLabel;
-        StaticImage warningImage;
+        EditBox lastText;
+        EditBox firstText;
+        EditBox fileNameTextBox;
+        EditBox locationTextBox;
+        TextBox warningLabel;
+        ImageBox warningImage;
         Button saveButton;
         Button cancelButton;
         Widget dataPanel;
@@ -29,12 +29,12 @@ namespace Medical.GUI
         public SavePatientDialog(GUIManager guiManager)
             : base("Medical.GUI.FileManagement.SavePatientDialog.layout", guiManager)
         {
-            firstText = widget.findWidget("Save/FirstName") as Edit;
-            lastText = widget.findWidget("Save/LastName") as Edit;
-            fileNameTextBox = widget.findWidget("Save/Filename") as Edit;
-            locationTextBox = widget.findWidget("Save/Location") as Edit;
-            warningLabel = widget.findWidget("Save/WarningLabel") as StaticText;
-            warningImage = widget.findWidget("Save/WarningImage") as StaticImage;
+            firstText = widget.findWidget("Save/FirstName") as EditBox;
+            lastText = widget.findWidget("Save/LastName") as EditBox;
+            fileNameTextBox = widget.findWidget("Save/Filename") as EditBox;
+            locationTextBox = widget.findWidget("Save/Location") as EditBox;
+            warningLabel = widget.findWidget("Save/WarningLabel") as TextBox;
+            warningImage = widget.findWidget("Save/WarningImage") as ImageBox;
             saveButton = widget.findWidget("Save/SaveButton") as Button;
             cancelButton = widget.findWidget("Save/CancelButton") as Button;
             Button browseButton = widget.findWidget("Save/BrowseButton") as Button;

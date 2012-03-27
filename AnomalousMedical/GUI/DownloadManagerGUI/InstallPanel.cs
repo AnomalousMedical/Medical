@@ -13,12 +13,12 @@ namespace Medical.GUI
         public event Action<DownloadGUIInfo> Restart;
 
         private Widget widget;
-        private StaticImage icon;
-        private Edit nameText;
-        private Edit descriptionText;
+        private ImageBox icon;
+        private EditBox nameText;
+        private EditBox descriptionText;
         private Button actionButton;
         private Button moreInfoButton;
-        private StaticText instructionText;
+        private TextBox instructionText;
 
         private DownloadGUIInfo currentInfo;
 
@@ -32,10 +32,10 @@ namespace Medical.GUI
             moreInfoButton = (Button)widget.findWidget("MoreInfoButton");
             moreInfoButton.MouseButtonClick += new MyGUIEvent(moreInfoButton_MouseButtonClick);
 
-            icon = (StaticImage)widget.findWidget("InstallIcon");
-            nameText = (Edit)widget.findWidget("InstallName");
-            descriptionText = (Edit)widget.findWidget("InstallDescription");
-            instructionText = (StaticText)widget.findWidget("InstructionText");
+            icon = (ImageBox)widget.findWidget("InstallIcon");
+            nameText = (EditBox)widget.findWidget("InstallName");
+            descriptionText = (EditBox)widget.findWidget("InstallDescription");
+            instructionText = (TextBox)widget.findWidget("InstructionText");
         }
 
         public void setDownloadInfo(DownloadGUIInfo info)

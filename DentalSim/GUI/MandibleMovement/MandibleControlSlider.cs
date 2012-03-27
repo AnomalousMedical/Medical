@@ -15,9 +15,9 @@ namespace DentalSim.GUI
         private float maximum = 0.0f;
         private float sequentialChange = 0.0f;
 
-        private VScroll scrollBar;
+        private ScrollBar scrollBar;
 
-        public MandibleControlSlider(VScroll scrollBar)
+        public MandibleControlSlider(ScrollBar scrollBar)
         {
             this.scrollBar = scrollBar;
             scrollBar.ScrollChangePosition += new MyGUIEvent(scrollBar_ScrollChangePosition);

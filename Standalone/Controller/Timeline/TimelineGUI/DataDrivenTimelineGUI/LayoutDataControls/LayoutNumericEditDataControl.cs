@@ -11,7 +11,7 @@ namespace Medical.LayoutDataControls
         private NumericEdit numberEdit;
         private String valueName;
 
-        public LayoutNumericEditDataControl(Edit edit, NumericDataField numericField)
+        public LayoutNumericEditDataControl(EditBox edit, NumericDataField numericField)
         {
             numberEdit = new NumericEdit(edit);
             numberEdit.AllowFloat = numericField.AllowDecimalPlaces;

@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     class WriteEditor : AnalysisEditorComponent, TextVariableTextBody
     {
-        private Edit text;
+        private EditBox text;
         private int extraHeight;
         private int lastTextHeight;
         private int variableLeft;
@@ -19,7 +19,7 @@ namespace Medical.GUI
         public WriteEditor(AnalysisEditorComponentParent parent)
             : base("Medical.GUI.TextAnalysisEditor.WriteEditor.layout", parent)
         {
-            text = (Edit)widget.findWidget("Text");
+            text = (EditBox)widget.findWidget("Text");
             text.EventEditTextChange += new MyGUIEvent(text_EventEditTextChange);
 
             Button addVariable = (Button)widget.findWidget("AddVariable");

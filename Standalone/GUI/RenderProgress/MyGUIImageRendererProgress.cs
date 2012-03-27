@@ -13,16 +13,16 @@ namespace Medical.GUI
         private Layout layout;
         private Widget mainWidget;
 
-        private Progress rendererProgress;
-        private StaticText statusText; 
+        private ProgressBar rendererProgress;
+        private TextBox statusText; 
 
         public MyGUIImageRendererProgress()
         {
             layout = LayoutManager.Instance.loadLayout("Medical.GUI.RenderProgress.MyGUIImageRendererProgress.layout");
             mainWidget = layout.getWidget(0);
 
-            rendererProgress = mainWidget.findWidget("RenderingProgress") as Progress;
-            statusText = mainWidget.findWidget("StatusText") as StaticText;
+            rendererProgress = mainWidget.findWidget("RenderingProgress") as ProgressBar;
+            statusText = mainWidget.findWidget("StatusText") as TextBox;
 
             Button cancelButton = (Button)mainWidget.findWidget("CancelButton");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);

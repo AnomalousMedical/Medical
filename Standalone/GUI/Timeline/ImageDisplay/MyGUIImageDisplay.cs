@@ -13,7 +13,7 @@ namespace Medical.GUI
     class MyGUIImageDisplay : Component, IImageDisplay
     {
         private ImageAtlas imageAtlas;
-        private StaticImage imageBox;
+        private ImageBox imageBox;
         private MyGUIImageDisplayFactory displayFactory;
         private Vector2 position = new Vector2();
         private Size2 size = new Size2();
@@ -30,7 +30,7 @@ namespace Medical.GUI
             sceneWindow.Resized += sceneWindow_Resized;
 
             widget.Visible = false;
-            imageBox = widget.findWidget("ImageBox") as StaticImage;
+            imageBox = widget.findWidget("ImageBox") as ImageBox;
             SuppressLayout = false;
         }
 

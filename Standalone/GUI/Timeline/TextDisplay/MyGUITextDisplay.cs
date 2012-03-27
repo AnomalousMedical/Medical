@@ -12,7 +12,7 @@ namespace Medical.GUI
 {
     class MyGUITextDisplay : Component, ITextDisplay
     {
-        private Edit textBox;
+        private EditBox textBox;
         private MyGUITextDisplayFactory textFactory;
         private Vector2 position = new Vector2();
         private Size2 size = new Size2();
@@ -31,7 +31,7 @@ namespace Medical.GUI
             sceneWindow.Resized += sceneWindow_Resized;
 
             widget.Visible = false;
-            textBox = (Edit)widget.findWidget("TextBox");
+            textBox = (EditBox)widget.findWidget("TextBox");
         }
 
         public override void Dispose()

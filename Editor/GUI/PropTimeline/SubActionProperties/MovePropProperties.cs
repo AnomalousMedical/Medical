@@ -10,16 +10,16 @@ namespace Medical.GUI
     class MovePropProperties : TimelineDataPanel
     {
         private MovePropAction moveProp;
-        private Edit translationEdit;
-        private Edit rotationEdit;
+        private EditBox translationEdit;
+        private EditBox rotationEdit;
 
         public MovePropProperties(Widget parent)
             : base(parent, "Medical.GUI.PropTimeline.SubActionProperties.MovePropProperties.layout")
         {
-            translationEdit = mainWidget.findWidget("TranslationEdit") as Edit;
+            translationEdit = mainWidget.findWidget("TranslationEdit") as EditBox;
             translationEdit.EventEditSelectAccept += new MyGUIEvent(translationEdit_EventEditSelectAccept);
 
-            rotationEdit = mainWidget.findWidget("RotationEdit") as Edit;
+            rotationEdit = mainWidget.findWidget("RotationEdit") as EditBox;
             rotationEdit.EventEditSelectAccept += new MyGUIEvent(rotationEdit_EventEditSelectAccept);
         }
 

@@ -36,42 +36,42 @@ namespace Medical.GUI
             widget.attachToWidget(parent);
             widget.setPosition(x, y);
 
-            discPopSlider = new MinMaxScroll((VScroll)widget.findWidget("discPopSlider"));
+            discPopSlider = new MinMaxScroll((ScrollBar)widget.findWidget("discPopSlider"));
             discPopSlider.Minimum = 0;
             discPopSlider.Maximum = 10000;
-            discPopUpDown = new NumericEdit((Edit)widget.findWidget("discPopUpDown"));
+            discPopUpDown = new NumericEdit((EditBox)widget.findWidget("discPopUpDown"));
             discPopUpDown.MinValue = 0.0f;
             discPopUpDown.MaxValue = 1.0f;
             discPopUpDown.Increment = 0.01f;
 
-            rdaOffsetSlider = new MinMaxScroll((VScroll)widget.findWidget("rdaOffsetSlider"));
+            rdaOffsetSlider = new MinMaxScroll((ScrollBar)widget.findWidget("rdaOffsetSlider"));
             rdaOffsetSlider.Minimum = 0;
             rdaOffsetSlider.Maximum = 10000;
-            rdaOffsetUpDown = new NumericEdit((Edit)widget.findWidget("rdaOffsetUpDown"));
+            rdaOffsetUpDown = new NumericEdit((EditBox)widget.findWidget("rdaOffsetUpDown"));
             rdaOffsetUpDown.MinValue = -1.0f;
             rdaOffsetUpDown.MaxValue = 0.0f;
             rdaOffsetUpDown.Increment = 0.1f;
 
-            discOffsetSlider = new MinMaxScroll((VScroll)widget.findWidget("discOffsetSlider"));
+            discOffsetSlider = new MinMaxScroll((ScrollBar)widget.findWidget("discOffsetSlider"));
             discOffsetSlider.Minimum = 0;
             discOffsetSlider.Maximum = 10000;
-            discOffsetUpDown = new NumericEdit((Edit)widget.findWidget("discOffsetUpDown"));
+            discOffsetUpDown = new NumericEdit((EditBox)widget.findWidget("discOffsetUpDown"));
             discOffsetUpDown.MinValue = -1.0f;
             discOffsetUpDown.MaxValue = 0.0f;
             discOffsetUpDown.Increment = 0.1f;
 
-            horizontalClockFaceSlider = new MinMaxScroll((VScroll)widget.findWidget("horizontalClockFaceSlider"));
+            horizontalClockFaceSlider = new MinMaxScroll((ScrollBar)widget.findWidget("horizontalClockFaceSlider"));
             horizontalClockFaceSlider.Minimum = -10000;
             horizontalClockFaceSlider.Maximum = 10000;
-            horizontalClockFaceUpDown = new NumericEdit((Edit)widget.findWidget("horizontalClockFaceUpDown"));
+            horizontalClockFaceUpDown = new NumericEdit((EditBox)widget.findWidget("horizontalClockFaceUpDown"));
             horizontalClockFaceUpDown.MinValue = -1.0f;
             horizontalClockFaceUpDown.MaxValue = 1.0f;
             horizontalClockFaceUpDown.Increment = 0.1f;
 
-            verticalClockFaceSlider = new MinMaxScroll((VScroll)widget.findWidget("verticalClockFaceSlider"));
+            verticalClockFaceSlider = new MinMaxScroll((ScrollBar)widget.findWidget("verticalClockFaceSlider"));
             verticalClockFaceSlider.Minimum = 0;
             verticalClockFaceSlider.Maximum = 10000;
-            verticalClockFaceUpDown = new NumericEdit((Edit)widget.findWidget("verticalClockFaceUpDown"));
+            verticalClockFaceUpDown = new NumericEdit((EditBox)widget.findWidget("verticalClockFaceUpDown"));
             verticalClockFaceUpDown.MinValue = -1.0f;
             verticalClockFaceUpDown.MaxValue = 0.0f;
             verticalClockFaceUpDown.Increment = 0.1f;

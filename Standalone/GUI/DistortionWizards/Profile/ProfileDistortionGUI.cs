@@ -39,9 +39,9 @@ namespace Medical.GUI
             leftMidCamera.MouseButtonClick += new MyGUIEvent(leftMidCamera_MouseButtonClick);
             leftSideCamera.MouseButtonClick += new MyGUIEvent(leftSideCamera_MouseButtonClick);
 
-            heightControl = new HeightControl(widget.findWidget("ProfilePanel/LeftSideSlider") as VScroll,
-                widget.findWidget("ProfilePanel/RightSideSlider") as VScroll,
-                widget.findWidget("ProfilePanel/BothSidesSlider") as VScroll);
+            heightControl = new HeightControl(widget.findWidget("ProfilePanel/LeftSideSlider") as ScrollBar,
+                widget.findWidget("ProfilePanel/RightSideSlider") as ScrollBar,
+                widget.findWidget("ProfilePanel/BothSidesSlider") as ScrollBar);
 
             adaptButton = new CheckButton(widget.findWidget("ProfilePanel/AdaptButton") as Button);
             adaptButton.CheckedChanged += new MyGUIEvent(adaptButton_CheckedChanged);

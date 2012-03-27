@@ -24,10 +24,10 @@ namespace Medical.GUI
         public LeftCondylarDegenerationGUI(TimelineWizard wizard)
             : base("Medical.GUI.DistortionWizards.Mandible.LeftCondylarDegenerationGUI.layout", wizard)
         {
-            leftCondyleDegenerationSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/CondyleSlider") as VScroll);
-            leftLateralPoleSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/LateralPoleSlider") as VScroll);
-            leftMedialPoleScaleSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/MedialPoleSlider") as VScroll);
-            wearSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/WearSlider") as VScroll);
+            leftCondyleDegenerationSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/CondyleSlider") as ScrollBar);
+            leftLateralPoleSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/LateralPoleSlider") as ScrollBar);
+            leftMedialPoleScaleSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/MedialPoleSlider") as ScrollBar);
+            wearSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/WearSlider") as ScrollBar);
 
             addBoneManipulator(leftCondyleDegenerationSlider);
             addBoneManipulator(leftLateralPoleSlider);

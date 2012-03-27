@@ -9,7 +9,7 @@ namespace Medical
 {
     public class RadioButtonDataControl : DataControl
     {
-        private StaticText text;
+        private TextBox text;
         private ButtonGrid optionGrid;
         private ScrollView optionScrollView;
         private String valueName;
@@ -17,7 +17,7 @@ namespace Medical
 
         public RadioButtonDataControl(Widget parentWidget, MultipleChoiceField field)
         {
-            text = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
+            text = (TextBox)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
             text.Caption = field.Name;
             text.setSize(text.getTextRegion().width, text.Height);
             text.NeedMouseFocus = false;

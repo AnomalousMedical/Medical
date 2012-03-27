@@ -18,7 +18,7 @@ namespace Developer.GUI
 
         public event EventHandler ResolutionChanged;
 
-        private MultiList presets;
+        private MultiListBox presets;
         private DeveloperRenderPropertiesDialog renderDialog;
 
         public DeveloperResolutionMenu(DeveloperRenderPropertiesDialog renderDialog)
@@ -32,7 +32,7 @@ namespace Developer.GUI
             Button removeButton = (Button)widget.findWidget("RemoveButton");
             removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
 
-            presets = (MultiList)widget.findWidget("PresetList");
+            presets = (MultiListBox)widget.findWidget("PresetList");
             presets.addColumn("Preset", 50);
             presets.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
             if (!File.Exists(RenderPresetsFile))

@@ -74,7 +74,7 @@ namespace Medical.GUI
             removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
             
             //Duration Edit
-            durationEdit = new NumericEdit(window.findWidget("SequenceDuration") as Edit);
+            durationEdit = new NumericEdit(window.findWidget("SequenceDuration") as EditBox);
             durationEdit.AllowFloat = true;
             durationEdit.ValueChanged += new MyGUIEvent(durationEdit_ValueChanged);
             durationEdit.MinValue = 0.0f;

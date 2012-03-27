@@ -22,8 +22,8 @@ namespace Medical.GUI
         /// </summary>
         public event EventHandler KeyInvalid;
 
-        private Edit userEdit;
-        private Edit passwordEdit;
+        private EditBox userEdit;
+        private EditBox passwordEdit;
         private string programName;
         private String machineID;
         private Button activateButton;
@@ -36,7 +36,7 @@ namespace Medical.GUI
             this.programName = programName;
             this.machineID = machineID;
 
-            StaticText prompt = (StaticText)window.findWidget("Prompt");
+            TextBox prompt = (TextBox)window.findWidget("Prompt");
             if (message != null)
             {
                 prompt.Caption = message;
@@ -46,10 +46,10 @@ namespace Medical.GUI
                 prompt.Caption = prompt.Caption.Replace("$(PROGRAM_NAME)", programName);
             }
 
-            userEdit = window.findWidget("UserText") as Edit;
+            userEdit = window.findWidget("UserText") as EditBox;
             userEdit.KeyButtonReleased += new MyGUIEvent(userEdit_KeyButtonReleased);
             
-            passwordEdit = window.findWidget("PasswordText") as Edit;
+            passwordEdit = window.findWidget("PasswordText") as EditBox;
             passwordEdit.KeyButtonReleased += new MyGUIEvent(passwordEdit_KeyButtonReleased);
 
             activateButton = window.findWidget("ActivateButton") as Button;
@@ -61,7 +61,7 @@ namespace Medical.GUI
             rememberPasswordButton = new CheckButton(window.findWidget("RememberPassword") as Button);
             rememberPasswordButton.Checked = MedicalConfig.StoreCredentials;
 
-            StaticText connectionLabel = window.findWidget("ConnectionLabel") as StaticText;
+            TextBox connectionLabel = window.findWidget("ConnectionLabel") as TextBox;
             connectionLabel.Caption = MedicalConfig.LicenseServerURL;
 
             Button forgotPassword = window.findWidget("ForgotPassword") as Button;

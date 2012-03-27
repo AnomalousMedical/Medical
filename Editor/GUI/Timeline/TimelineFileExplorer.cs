@@ -27,7 +27,7 @@ namespace Medical.GUI
         MenuItem paste;
 
         //File list
-        private MultiList fileList;
+        private MultiListBox fileList;
 
         //Dialogs
         private NewProjectDialog newProjectDialog;
@@ -51,7 +51,7 @@ namespace Medical.GUI
 
             //File Menu
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
-            MenuCtrl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
+            MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
             fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
             newProject = fileMenu.addItem("New Project");
             openProject = fileMenu.addItem("Open Project");
@@ -64,7 +64,7 @@ namespace Medical.GUI
 
             //Edit menu
             editMenuItem = menuBar.addItem("Edit", MenuItemType.Popup);
-            MenuCtrl editMenu = menuBar.createItemPopupMenuChild(editMenuItem);
+            MenuControl editMenu = menuBar.createItemPopupMenuChild(editMenuItem);
             editMenu.ItemAccept += new MyGUIEvent(editMenu_ItemAccept);
             selectAll = editMenu.addItem("Select All");
             cut = editMenu.addItem("Cut");
@@ -74,7 +74,7 @@ namespace Medical.GUI
             AllMenusEnabled = false;
 
             //File list
-            fileList = window.findWidget("FileList") as MultiList;
+            fileList = window.findWidget("FileList") as MultiListBox;
             fileList.addColumn("File", 50);
             fileList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
             fileList.ListSelectAccept += new MyGUIEvent(fileList_ListSelectAccept);

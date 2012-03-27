@@ -14,15 +14,15 @@ namespace LectureBuilder
     {
         public event EventHandler ProjectCreated;
 
-        private Edit projectName;
-        private Edit projectLocation;
+        private EditBox projectName;
+        private EditBox projectLocation;
 
         public NewProjectDialog()
             : base("LectureBuilder.GUI.NewProjectDialog.layout")
         {
-            projectName = window.findWidget("ProjectName") as Edit;
+            projectName = window.findWidget("ProjectName") as EditBox;
             projectName.EventEditSelectAccept += new MyGUIEvent(projectName_EventEditSelectAccept);
-            projectLocation = window.findWidget("ProjectLocation") as Edit;
+            projectLocation = window.findWidget("ProjectLocation") as EditBox;
             projectLocation.Caption = LectureBuilderConfig.LectureProjectDirectory;
             if (!Directory.Exists(projectLocation.Caption))
             {

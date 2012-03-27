@@ -21,11 +21,11 @@ namespace Medical
             timelineText.addFont("TimelineText.100", 100);
         }
 
-        private Edit text;
+        private EditBox text;
 
         public TextDisplayDataControl(Widget parentWidget, StaticTextDataField field)
         {
-            text = (Edit)parentWidget.createWidgetT("Edit", "WordWrapSimple", 0, 16, 100, 20, Align.Default, "");
+            text = (EditBox)parentWidget.createWidgetT("Edit", "WordWrapSimple", 0, 16, 100, 20, Align.Default, "");
             text.EditMultiLine = true;
             text.EditWordWrap = true;
             text.EditStatic = true;

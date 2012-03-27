@@ -11,12 +11,12 @@ namespace Medical.GUI
     {
         public event EventHandler SaveFile;
 
-        private Edit filename;
+        private EditBox filename;
 
         public SaveTimelineDialog()
             :base("Medical.GUI.Timeline.SaveTimelineDialog.layout")
         {
-            filename = window.findWidget("Filename") as Edit;
+            filename = window.findWidget("Filename") as EditBox;
             filename.EventEditSelectAccept += new MyGUIEvent(filename_EventEditSelectAccept);
 
             Button saveButton = window.findWidget("SaveButton") as Button;

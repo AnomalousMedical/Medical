@@ -8,10 +8,10 @@ namespace Medical.GUI
 {
     public class NotesGUI : TimelineWizardPanel
     {
-        Edit stateNameTextBox;
-        Edit datePicker;
-        Edit distortionWizard;
-        Edit notes;
+        EditBox stateNameTextBox;
+        EditBox datePicker;
+        EditBox distortionWizard;
+        EditBox notes;
 
         private ThumbnailPickerGUI thumbnailPicker;
         private TimelineWizard wizard;
@@ -25,10 +25,10 @@ namespace Medical.GUI
 
             this.wizard = wizard;
 
-            stateNameTextBox = widget.findWidget("Notes/DistortionName") as Edit;
-            datePicker = widget.findWidget("Notes/DateCreated") as Edit;
-            distortionWizard = widget.findWidget("Notes/DistortionWizard") as Edit;
-            notes = widget.findWidget("Notes/NotesText") as Edit;
+            stateNameTextBox = widget.findWidget("Notes/DistortionName") as EditBox;
+            datePicker = widget.findWidget("Notes/DateCreated") as EditBox;
+            distortionWizard = widget.findWidget("Notes/DistortionWizard") as EditBox;
+            notes = widget.findWidget("Notes/NotesText") as EditBox;
 
             thumbnailPicker = new ThumbnailPickerGUI(wizard.ImageRenderer, widget.findWidget("Notes/Thumbnails") as ScrollView);
         }

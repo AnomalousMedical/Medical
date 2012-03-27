@@ -9,8 +9,8 @@ namespace Medical.GUI
 {
     class QuestionEditor : Dialog
     {
-        private Edit questionText;
-        private Edit soundFileEdit;
+        private EditBox questionText;
+        private EditBox soundFileEdit;
         private ScrollView answerScroll;
         private int lastWidth;
         private TimelineFileBrowserDialog fileBrowser;
@@ -37,10 +37,10 @@ namespace Medical.GUI
             Button browseSoundButton = window.findWidget("SoundBrowser") as Button;
             browseSoundButton.MouseButtonClick += new MyGUIEvent(browseSoundButton_MouseButtonClick);
 
-            soundFileEdit = window.findWidget("SoundFileEdit") as Edit;
+            soundFileEdit = window.findWidget("SoundFileEdit") as EditBox;
 
             answerScroll = window.findWidget("AnswerScroll") as ScrollView;
-            questionText = window.findWidget("QuestionText") as Edit;
+            questionText = window.findWidget("QuestionText") as EditBox;
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
             lastWidth = window.Width;

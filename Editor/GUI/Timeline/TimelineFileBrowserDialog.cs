@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     class TimelineFileBrowserDialog : Dialog, ITimelineFileBrowser
     {
-        private MultiList fileList;
+        private MultiListBox fileList;
         private TimelineController timelineController;
         private FileChosenCallback callback;
         private String filterString;
@@ -19,7 +19,7 @@ namespace Medical.GUI
         {
             this.timelineController = timelineController;
 
-            fileList = window.findWidget("FileList") as MultiList;
+            fileList = window.findWidget("FileList") as MultiListBox;
             fileList.addColumn("File", 50);
             fileList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
             fileList.ListSelectAccept += new MyGUIEvent(fileList_ListSelectAccept);

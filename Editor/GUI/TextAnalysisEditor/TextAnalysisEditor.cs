@@ -28,7 +28,7 @@ namespace Medical.GUI
         private MenuItem openItem;
         private MenuItem newItem;
         private MenuItem removeItem;
-        private Edit name;
+        private EditBox name;
 
         private VariableChosenCallback variableChosenCallback;
 
@@ -44,14 +44,14 @@ namespace Medical.GUI
             scrollView = (ScrollView)window.findWidget("ScrollView");
             windowWidth = scrollView.ViewCoord.width;
 
-            name = (Edit)window.findWidget("Name");
+            name = (EditBox)window.findWidget("Name");
 
             actionBlockEditor = new ActionBlockEditor("Document", this);
             layoutEditor();
 
             MenuBar menuBar = (MenuBar)window.findWidget("Menu");
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
-            MenuCtrl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
+            MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
             fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
             newItem = fileMenu.addItem("New");
             saveItem = fileMenu.addItem("Save");
@@ -60,7 +60,7 @@ namespace Medical.GUI
             inject = fileMenu.addItem("Inject");
 
             MenuItem edit = menuBar.addItem("Edit", MenuItemType.Popup);
-            MenuCtrl editItem = menuBar.createItemPopupMenuChild(edit);
+            MenuControl editItem = menuBar.createItemPopupMenuChild(edit);
             editItem.ItemAccept += new MyGUIEvent(editItem_ItemAccept);
             editItem.addItem("Cut", MenuItemType.Normal, "Cut");
             editItem.addItem("Copy", MenuItemType.Normal, "Copy");
@@ -68,7 +68,7 @@ namespace Medical.GUI
             editItem.addItem("Insert Paste", MenuItemType.Normal, "InsertPaste");
 
             MenuItem addItem = menuBar.addItem("Add", MenuItemType.Popup);
-            MenuCtrl addMenuItem = menuBar.createItemPopupMenuChild(addItem);
+            MenuControl addMenuItem = menuBar.createItemPopupMenuChild(addItem);
             addMenuItem.ItemAccept += new MyGUIEvent(addMenuItem_ItemAccept);
             addMenuItem.addItem("Start Paragraph", MenuItemType.Normal, "StartParagraph");
             addMenuItem.addItem("End Paragraph", MenuItemType.Normal, "EndParagraph");
@@ -76,7 +76,7 @@ namespace Medical.GUI
             addMenuItem.addItem("Test", MenuItemType.Normal, "Test");
 
             MenuItem insert = menuBar.addItem("Insert", MenuItemType.Popup);
-            MenuCtrl insertItem = menuBar.createItemPopupMenuChild(insert);
+            MenuControl insertItem = menuBar.createItemPopupMenuChild(insert);
             insertItem.ItemAccept += new MyGUIEvent(insertMenuItem_ItemAccept);
             insertItem.addItem("Start Paragraph", MenuItemType.Normal, "StartParagraph");
             insertItem.addItem("End Paragraph", MenuItemType.Normal, "EndParagraph");

@@ -9,19 +9,19 @@ namespace Medical
 {
     class NumericEditDataControl : DataControl
     {
-        private Edit edit;
+        private EditBox edit;
         private NumericEdit numberEdit;
-        private StaticText text;
+        private TextBox text;
         private String valueName;
 
         public NumericEditDataControl(Widget parentWidget, NumericDataField numericField)
         {
-            text = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
+            text = (TextBox)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
             text.Caption = numericField.Name;
             text.setSize(text.getTextRegion().width, text.Height);
             text.NeedMouseFocus = false;
 
-            edit = (Edit)parentWidget.createWidgetT("Edit", "Edit", 0, 16, 100, 20, Align.Default, "");
+            edit = (EditBox)parentWidget.createWidgetT("Edit", "Edit", 0, 16, 100, 20, Align.Default, "");
             numberEdit = new NumericEdit(edit);
             numberEdit.AllowFloat = numericField.AllowDecimalPlaces;
             numberEdit.MinValue = (float)numericField.MinValue;

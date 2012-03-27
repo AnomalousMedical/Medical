@@ -12,7 +12,7 @@ namespace Medical
     {
         private MovementSequenceController sequenceController;
         private PopupMenu sequenceMenu;
-        private Dictionary<MovementSequenceGroup, MenuCtrl> groupMenuCtrls = new Dictionary<MovementSequenceGroup, MenuCtrl>();
+        private Dictionary<MovementSequenceGroup, MenuControl> groupMenuCtrls = new Dictionary<MovementSequenceGroup, MenuControl>();
 
         public SequenceMenu(MovementSequenceController sequenceController)
         {
@@ -63,7 +63,7 @@ namespace Medical
 
         void sequenceController_SequenceAdded(MovementSequenceController controller, MovementSequenceGroup group, MovementSequenceInfo sequenceInfo)
         {
-            MenuCtrl groupItemChild;
+            MenuControl groupItemChild;
             groupMenuCtrls.TryGetValue(group, out groupItemChild);
             //Double check that we have the group.
             if (groupItemChild == null)
@@ -86,7 +86,7 @@ namespace Medical
             groupItem.ImageBox.setItemResource("SequenceToolstrip/Sequence");
             groupItem.ImageBox.setItemGroup("Icons");
             groupItem.ImageBox.setItemName("Icon");
-            MenuCtrl groupItemChild = groupItem.createItemChild();
+            MenuControl groupItemChild = groupItem.createItemChild();
             groupMenuCtrls.Add(group, groupItemChild);
         }
     }

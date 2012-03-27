@@ -13,7 +13,7 @@ namespace Medical.GUI
         private HeightComboSlider rightHeightSlider;
         private MinMaxScroll bothSidesSlider;
 
-        public HeightControl(VScroll leftHeightScroll, VScroll rightHeightScroll, VScroll bothSidesScroll)
+        public HeightControl(ScrollBar leftHeightScroll, ScrollBar rightHeightScroll, ScrollBar bothSidesScroll)
         {
             leftHeightSlider = new HeightComboSlider(leftHeightScroll);
             rightHeightSlider = new HeightComboSlider(rightHeightScroll);

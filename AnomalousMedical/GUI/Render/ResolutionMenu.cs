@@ -17,7 +17,7 @@ namespace Medical.GUI
 
         public event EventHandler ResolutionChanged;
 
-        private MultiList presets;
+        private MultiListBox presets;
         private RenderPropertiesDialog renderDialog;
 
         public ResolutionMenu(RenderPropertiesDialog renderDialog)
@@ -31,7 +31,7 @@ namespace Medical.GUI
             Button removeButton = (Button)widget.findWidget("RemoveButton");
             removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
 
-            presets = (MultiList)widget.findWidget("PresetList");
+            presets = (MultiListBox)widget.findWidget("PresetList");
             presets.addColumn("Preset", 20);
             presets.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
             if (!File.Exists(RenderPresetsFile))

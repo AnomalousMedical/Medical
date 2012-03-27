@@ -8,14 +8,14 @@ namespace Medical.GUI
 {
     class TextAnalysisViewer : Dialog
     {
-        Edit textArea;
+        EditBox textArea;
 
         public TextAnalysisViewer(String caption, String text)
             :base("Medical.GUI.ExamViewer.TextAnalysisViewer.layout")
         {
             window.Caption = caption;
 
-            textArea = (Edit)window.findWidget("TextArea");
+            textArea = (EditBox)window.findWidget("TextArea");
             textArea.MaxTextLength = (uint)text.Length;
             textArea.Caption = text;
         }

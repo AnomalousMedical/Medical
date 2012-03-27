@@ -12,8 +12,8 @@ namespace Medical.GUI
         private const float SCROLL_MAX = 10000;
         private const float SCROLL_MAX_RANGE_MIN = SCROLL_MAX - 50;//The minimum postion of a scroll bar to count as the max value.
 
-        private VScroll slider;
-        private StaticText caption;
+        private ScrollBar slider;
+        private TextBox caption;
         private AnatomyCommand command;
 
         public CommandHScroll(AnatomyCommand command, Widget parentWidget)
@@ -21,10 +21,10 @@ namespace Medical.GUI
             this.command = command;
             command.NumericValueChanged += command_NumericValueChanged;
 
-            caption = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, parentWidget.Width - SIDE_PADDING, 15, Align.Default, "");
+            caption = (TextBox)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, parentWidget.Width - SIDE_PADDING, 15, Align.Default, "");
             caption.Caption = command.UIText;
 
-            slider = (VScroll)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width - SIDE_PADDING, 20, Align.Default, "");
+            slider = (ScrollBar)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width - SIDE_PADDING, 20, Align.Default, "");
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
             slider.UserObject = command;
             slider.ScrollRange = (int)SCROLL_MAX;
@@ -67,7 +67,7 @@ namespace Medical.GUI
 
         void slider_ScrollChangePosition(Widget source, EventArgs e)
         {
-            VScroll scroll = (VScroll)source;
+            ScrollBar scroll = (ScrollBar)source;
             float normalizedValue = scroll.ScrollPosition / SCROLL_MAX;
             if (scroll.ScrollPosition > SCROLL_MAX_RANGE_MIN)
             {

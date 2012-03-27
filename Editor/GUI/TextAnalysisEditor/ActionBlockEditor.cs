@@ -23,7 +23,7 @@ namespace Medical.GUI
         public ActionBlockEditor(String name, AnalysisEditorComponentParent parent)
             :base("Medical.GUI.TextAnalysisEditor.ActionBlockEditor.layout", parent)
         {
-            StaticText actionBlockText = (StaticText)widget.findWidget("ActionBlockText");
+            TextBox actionBlockText = (TextBox)widget.findWidget("ActionBlockText");
             actionBlockText.Caption = name;
 
             childStartHeight = actionBlockText.Bottom;

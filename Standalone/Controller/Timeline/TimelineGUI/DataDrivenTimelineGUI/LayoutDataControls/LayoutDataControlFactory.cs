@@ -63,7 +63,7 @@ namespace Medical.LayoutDataControls
 
         public void addField(NotesDataField field)
         {
-            Edit edit = layoutControl.findWidget(field.Name) as Edit;
+            EditBox edit = layoutControl.findWidget(field.Name) as EditBox;
             if (edit != null)
             {
                 LayoutWordWrapDataControl control = new LayoutWordWrapDataControl(edit, field);
@@ -77,7 +77,7 @@ namespace Medical.LayoutDataControls
 
         public void addField(NumericDataField field)
         {
-            Edit edit = layoutControl.findWidget(field.Name) as Edit;
+            EditBox edit = layoutControl.findWidget(field.Name) as EditBox;
             if (edit != null)
             {
                 NumericEditDataControl control = new NumericEditDataControl(edit, field);

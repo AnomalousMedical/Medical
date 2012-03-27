@@ -15,8 +15,8 @@ namespace Medical.GUI
         private SimObjectMover simObjectMover;
 
         private ComboBox propTypes;
-        private Edit translationEdit;
-        private Edit rotationEdit;
+        private EditBox translationEdit;
+        private EditBox rotationEdit;
         private NumericEdit fadeDurationEdit;
         private ButtonGroup toolButtonGroup = new ButtonGroup();
 
@@ -37,13 +37,13 @@ namespace Medical.GUI
             propTypes = mainWidget.findWidget("PropTypeCombo") as ComboBox;
             propTypes.EventComboChangePosition += new MyGUIEvent(propTypes_EventComboChangePosition);
 
-            translationEdit = mainWidget.findWidget("TranslationEdit") as Edit;
+            translationEdit = mainWidget.findWidget("TranslationEdit") as EditBox;
             translationEdit.EventEditSelectAccept += new MyGUIEvent(translationEdit_EventEditSelectAccept);
 
-            rotationEdit = mainWidget.findWidget("RotationEdit") as Edit;
+            rotationEdit = mainWidget.findWidget("RotationEdit") as EditBox;
             rotationEdit.EventEditSelectAccept += new MyGUIEvent(rotationEdit_EventEditSelectAccept);
 
-            fadeDurationEdit = new NumericEdit(mainWidget.findWidget("FadeDurationEdit") as Edit);
+            fadeDurationEdit = new NumericEdit(mainWidget.findWidget("FadeDurationEdit") as EditBox);
             fadeDurationEdit.ValueChanged += new MyGUIEvent(fadeDurationEdit_ValueChanged);
             fadeDurationEdit.MinValue = 0.0f;
             fadeDurationEdit.MaxValue = 100.0f;

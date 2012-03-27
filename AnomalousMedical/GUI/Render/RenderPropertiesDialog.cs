@@ -18,11 +18,11 @@ namespace Medical.GUI
         private Button sizeButton;
 
         private Button outputBrowse;
-        private Edit imageName;
-        private Edit outputFolder;
+        private EditBox imageName;
+        private EditBox outputFolder;
         private ComboBox imageFormat;
 
-        private StaticImage previewImage;
+        private ImageBox previewImage;
         private Button fullSizeButton;
 
         private ButtonGroup licenseTypeGroup = new ButtonGroup();
@@ -56,8 +56,8 @@ namespace Medical.GUI
             this.notificationManager = guiManager.NotificationManager;
             this.guiManager = guiManager;
 
-            width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as Edit);
-            height = new NumericEdit(window.findWidget("RenderingTab/HeightEdit") as Edit);
+            width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as EditBox);
+            height = new NumericEdit(window.findWidget("RenderingTab/HeightEdit") as EditBox);
 
             width.ValueChanged += new MyGUIEvent(renderSizeChanged);
             height.ValueChanged += new MyGUIEvent(renderSizeChanged);
@@ -65,7 +65,7 @@ namespace Medical.GUI
             renderButton = window.findWidget("RenderingTab/Render") as Button;
             renderButton.MouseButtonClick += new MyGUIEvent(renderButton_MouseButtonClick);
 
-            previewImage = (StaticImage)window.findWidget("PreviewImage");
+            previewImage = (ImageBox)window.findWidget("PreviewImage");
             previewMaxWidth = previewImage.Width;
             previewMaxHeight = previewImage.Height;
 
@@ -80,10 +80,10 @@ namespace Medical.GUI
             resolutionMenu.ResolutionChanged += new EventHandler(resolutionMenu_ResolutionChanged);
 
             //Image save properties
-            imageName = (Edit)window.findWidget("ImageName");
+            imageName = (EditBox)window.findWidget("ImageName");
             imageName.Caption = "Anomalous Image";
 
-            outputFolder = (Edit)window.findWidget("OutputFolder");
+            outputFolder = (EditBox)window.findWidget("OutputFolder");
             outputFolder.Caption = MedicalConfig.ImageOutputFolder;
             outputBrowse = (Button)window.findWidget("OutputBrowse");
             outputBrowse.MouseButtonClick += new MyGUIEvent(outputBrowse_MouseButtonClick);

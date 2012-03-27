@@ -18,11 +18,11 @@ namespace Medical.GUI
         private const String IS_TRUE = "Is True";
 
         private Button variableButton;
-        private StaticText successText;
-        private StaticText failText;
+        private TextBox successText;
+        private TextBox failText;
         private DataFieldInfo fieldInfo;
         private ComboBox conditionCombo;
-        private Edit testValueEdit;
+        private EditBox testValueEdit;
 
         private ActionBlockEditor successEditor;
         private ActionBlockEditor failEditor;
@@ -38,9 +38,9 @@ namespace Medical.GUI
             variableButton = (Button)widget.findWidget("VariableButton");
             variableButton.MouseButtonClick += new MyGUIEvent(variableButton_MouseButtonClick);
 
-            successText = (StaticText)widget.findWidget("SuccessText");
-            failText = (StaticText)widget.findWidget("FailText");
-            testValueEdit = (Edit)widget.findWidget("TestValueEdit");
+            successText = (TextBox)widget.findWidget("SuccessText");
+            failText = (TextBox)widget.findWidget("FailText");
+            testValueEdit = (EditBox)widget.findWidget("TestValueEdit");
             minTestValueFieldWidth = testValueEdit.Width;
 
             conditionCombo = (ComboBox)widget.findWidget("ConditionCombo");

@@ -18,7 +18,7 @@ namespace Medical.GUI
         public FossaGUI(String fossaName, String panelFile, TimelineWizard wizard)
             : base(panelFile, wizard)
         {
-            eminanceSlider = new MinMaxScroll(widget.findWidget("FlatnessSlider") as VScroll);
+            eminanceSlider = new MinMaxScroll(widget.findWidget("FlatnessSlider") as ScrollBar);
             eminanceSlider.Minimum = 0;
             eminanceSlider.Maximum = 1000;
 

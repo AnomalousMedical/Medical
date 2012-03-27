@@ -24,10 +24,10 @@ namespace Medical.GUI
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
-            StaticText staticText = (StaticText)widget.findWidget("Text");
+            TextBox staticText = (TextBox)widget.findWidget("Text");
             staticText.Caption = notification.Text;
 
-            StaticImage image = (StaticImage)widget.findWidget("Image");
+            ImageBox image = (ImageBox)widget.findWidget("Image");
             image.setItemResource(notification.ImageKey);
 
             //Setup size

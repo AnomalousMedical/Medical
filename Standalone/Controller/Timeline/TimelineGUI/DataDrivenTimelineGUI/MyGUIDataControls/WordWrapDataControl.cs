@@ -9,17 +9,17 @@ namespace Medical
 {
     class WordWrapDataControl : DataControl
     {
-        private Edit edit;
-        private StaticText text;
+        private EditBox edit;
+        private TextBox text;
         private String valueName;
 
         public WordWrapDataControl(Widget parentWidget, NotesDataField field)
         {
-            text = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
+            text = (TextBox)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
             text.Caption = field.Name;
             text.setSize(text.getTextRegion().width, text.Height);
 
-            edit = (Edit)parentWidget.createWidgetT("Edit", "WordWrapWhite", 0, 16, 100, 20, Align.Default, "");
+            edit = (EditBox)parentWidget.createWidgetT("Edit", "WordWrapWhite", 0, 16, 100, 20, Align.Default, "");
             edit.EditMultiLine = true;
             edit.EditWordWrap = true;
             edit.TextAlign = Align.Left | Align.Top;

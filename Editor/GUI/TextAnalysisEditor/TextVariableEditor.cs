@@ -10,7 +10,7 @@ namespace Medical.GUI
     class TextVariableEditor : Component
     {
         private TextVariableTextBody textBody;
-        private StaticText name;
+        private TextBox name;
         private DataFieldInfo dataFieldInfo = null;
 
         public TextVariableEditor(TextVariableTextBody textBody, Widget parent)
@@ -18,7 +18,7 @@ namespace Medical.GUI
         {
             this.textBody = textBody;
 
-            name = (StaticText)widget.findWidget("Name");
+            name = (TextBox)widget.findWidget("Name");
 
             Button insert = (Button)widget.findWidget("Insert");
             insert.MouseButtonClick += new MyGUIEvent(insert_MouseButtonClick);
