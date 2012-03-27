@@ -21,11 +21,11 @@ namespace Medical.GUI
             examController.ExamsCleared += new ExamController.ExamControllerEvent(examController_ExamsCleared);
 
             examList = (MultiList)window.findWidget("ExamList");
-            examList.addColumn("Exam", examList.Width / 2);
-            examList.addColumn("Date", examList.Width / 2);
+            examList.addColumn("Exam", 50);
+            examList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
+            examList.addColumn("Date", 50);
+            examList.setColumnResizingPolicyAt(1, ResizingPolicy.Fill);
             examList.ListSelectAccept += new MyGUIEvent(examList_ListSelectAccept);
-
-            this.Resized += new EventHandler(ExamViewer_Resized);
         }
 
         public override void Dispose()
@@ -65,12 +65,6 @@ namespace Medical.GUI
                 menu.RunExamAnalyzer += new Engine.EventDelegate<ExamAnalyzerMenu, ExamAnalyzer>(menu_RunExamAnalyzer);
                 menu.show(source.AbsoluteLeft, source.AbsoluteTop);
             }
-        }
-
-        void ExamViewer_Resized(object sender, EventArgs e)
-        {
-            examList.setColumnWidthAt(0, examList.Width / 2);
-            examList.setColumnWidthAt(1, examList.Width / 2);
         }
 
         void menu_Closed(ExamAnalyzerMenu source)

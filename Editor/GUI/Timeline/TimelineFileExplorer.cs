@@ -47,7 +47,6 @@ namespace Medical.GUI
             this.documentController = documentController;
             this.timelinePropertiesController = timelinePropertiesController;
 
-            this.Resized += new EventHandler(TimelineFileExplorer_Resized);
             MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
 
             //File Menu
@@ -76,7 +75,8 @@ namespace Medical.GUI
 
             //File list
             fileList = window.findWidget("FileList") as MultiList;
-            fileList.addColumn("File", fileList.Width);
+            fileList.addColumn("File", 50);
+            fileList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
             fileList.ListSelectAccept += new MyGUIEvent(fileList_ListSelectAccept);
 
             //Dialogs
@@ -313,11 +313,6 @@ namespace Medical.GUI
             {
                 window.Caption = "Timeline";
             }
-        }
-
-        void TimelineFileExplorer_Resized(object sender, EventArgs e)
-        {
-            fileList.setColumnWidthAt(0, fileList.ClientWidget.Width);
         }
     }
 }

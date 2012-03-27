@@ -448,8 +448,9 @@ namespace Medical.GUI
             {
                 this.timelineList = timelineList;
                 this.actionManager = actionManager;
-                timelineList.addColumn("Timeline", timelineList.Width / 3);
-                timelineList.addColumn("Info", timelineList.Width - timelineList.getColumnWidthAt(0));
+                int clientWidth = timelineList.ClientWidget.Width;
+                timelineList.addColumn("Timeline", clientWidth / 3);
+                timelineList.addColumn("Info", clientWidth - timelineList.getColumnWidthAt(0));
                 timelineList.SortOnChanges = false;
                 timelineList.ListSelectAccept += new MyGUIEvent(timelineList_ListSelectAccept);
             }
@@ -499,9 +500,10 @@ namespace Medical.GUI
 
             public void resizeColumns()
             {
-                int width = timelineList.Width / 3;
+                int clientWidth = timelineList.ClientWidget.Width;
+                int width = clientWidth / 3;
                 timelineList.setColumnWidthAt(0, width);
-                timelineList.setColumnWidthAt(1, timelineList.Width - width);
+                timelineList.setColumnWidthAt(1, clientWidth - width);
             }
         }
 

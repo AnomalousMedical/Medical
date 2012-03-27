@@ -33,7 +33,8 @@ namespace Developer.GUI
             removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
 
             presets = (MultiList)widget.findWidget("PresetList");
-            presets.addColumn("Preset", presets.Width);
+            presets.addColumn("Preset", 50);
+            presets.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
             if (!File.Exists(RenderPresetsFile))
             {
                 presets.addItem("Web", new RenderPreset("Web", 640, 480));

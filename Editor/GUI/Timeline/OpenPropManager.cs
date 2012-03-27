@@ -16,10 +16,9 @@ namespace Medical.GUI
         public OpenPropManager()
             :base("Medical.GUI.Timeline.OpenPropManager.layout")
         {
-            this.Resized += new EventHandler(OpenPropManager_Resized);
-
             propList = (MultiList)window.findWidget("propList");
-            propList.addColumn("Prop", propList.ClientWidget.Width);
+            propList.addColumn("Prop", 50);
+            propList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
 
             Button close = (Button)window.findWidget("close");
             close.MouseButtonClick += new MyGUIEvent(close_MouseButtonClick);
@@ -80,11 +79,6 @@ namespace Medical.GUI
                 ShowPropAction prop = (ShowPropAction)propList.getItemDataAt(i);
                 prop.KeepOpen = true;
             }
-        }
-
-        void OpenPropManager_Resized(object sender, EventArgs e)
-        {
-            propList.setColumnWidthAt(0, propList.ClientWidget.Width);
         }
 
         void close_MouseButtonClick(Widget source, EventArgs e)
