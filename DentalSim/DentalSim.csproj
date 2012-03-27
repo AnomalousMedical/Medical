@@ -132,9 +132,9 @@
     <EmbeddedResource Include="Sequences\Protrusion\Open Protrusion.seq" />
     <EmbeddedResource Include="Sequences\Protrusion\Protrusion Maximal.seq" />
     <EmbeddedResource Include="Sequences\Protrusion\Protrusion Tooth Contact Edge to Edge.seq" />
-    <EmbeddedResource Include="Sequences\Vertical Opening\Hinge Opening.seq" />
-    <EmbeddedResource Include="Sequences\Vertical Opening\Maximal Opening.seq" />
-    <EmbeddedResource Include="Sequences\Vertical Opening\Tapping Teeth.seq" />
+    <EmbeddedResource Include="Sequences\VerticalOpening\Hinge Opening.seq" />
+    <EmbeddedResource Include="Sequences\VerticalOpening\Maximal Opening.seq" />
+    <EmbeddedResource Include="Sequences\VerticalOpening\Tapping Teeth.seq" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
