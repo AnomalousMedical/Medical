@@ -11,7 +11,6 @@
         <Widget type="Widget" skin="PanelEmpty" position="1 294 196 30" align="HStretch Bottom" name="AddRemovePanel">
             <Widget type="Button" skin="Button" position="72 2 62 26" name="RemoveButton">
                 <Property key="Caption" value="Remove"/>
-                <Controller type=""/>
             </Widget>
             <Widget type="Button" skin="Button" position="7 2 62 26" name="AddButton">
                 <Property key="Caption" value="Add"/>
