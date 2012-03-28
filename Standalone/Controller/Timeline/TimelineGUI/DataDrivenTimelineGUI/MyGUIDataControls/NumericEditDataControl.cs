@@ -16,7 +16,7 @@ namespace Medical
 
         public NumericEditDataControl(Widget parentWidget, NumericDataField numericField)
         {
-            text = (TextBox)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
+            text = (TextBox)parentWidget.createWidgetT("TextBox", "TextBox", 0, 0, 10, 15, Align.Default, "");
             text.Caption = numericField.Name;
             text.setSize(text.getTextRegion().width, text.Height);
             text.NeedMouseFocus = false;

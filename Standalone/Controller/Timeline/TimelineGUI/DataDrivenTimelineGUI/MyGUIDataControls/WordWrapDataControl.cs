@@ -15,7 +15,7 @@ namespace Medical
 
         public WordWrapDataControl(Widget parentWidget, NotesDataField field)
         {
-            text = (TextBox)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Default, "");
+            text = (TextBox)parentWidget.createWidgetT("TextBox", "TextBox", 0, 0, 10, 15, Align.Default, "");
             text.Caption = field.Name;
             text.setSize(text.getTextRegion().width, text.Height);
 

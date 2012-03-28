@@ -21,7 +21,7 @@ namespace Medical.GUI
             this.command = command;
             command.NumericValueChanged += command_NumericValueChanged;
 
-            caption = (TextBox)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, parentWidget.Width - SIDE_PADDING, 15, Align.Default, "");
+            caption = (TextBox)parentWidget.createWidgetT("TextBox", "TextBox", 0, 0, parentWidget.Width - SIDE_PADDING, 15, Align.Default, "");
             caption.Caption = command.UIText;
 
             slider = (ScrollBar)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width - SIDE_PADDING, 20, Align.Default, "");
