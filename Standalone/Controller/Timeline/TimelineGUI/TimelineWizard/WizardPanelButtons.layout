@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="6 31 352 56" layer="Overlapped">
+    <Widget type="Widget" skin="PanelSkin" position="6 31 352 56" layer="Overlapped">
         <Widget type="Button" skin="Button" position="4 4 83 28" name="StateWizardButtons/Cancel">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>

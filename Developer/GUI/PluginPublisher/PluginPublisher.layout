@@ -5,24 +5,24 @@
         <Widget type="Button" skin="Button" position="5 129 68 22" align="Left Bottom" name="PublishButton">
             <Property key="Widget_Caption" value="Publish"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="3 4 157 15">
+        <Widget type="StaticText" skin="TextBox" position="3 4 157 15">
             <Property key="Widget_Caption" value="Plugin File"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 21 331 22" align="HStretch Top" name="PluginFileEdit"/>
+        <Widget type="Edit" skin="EditBox" position="4 21 331 22" align="HStretch Top" name="PluginFileEdit"/>
         <Widget type="Button" skin="Button" position="337 19 29 26" align="Right Top" name="PluginFileBrowser">
             <Property key="Widget_Caption" value="..."/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="3 45 164 15">
+        <Widget type="StaticText" skin="TextBox" position="3 45 164 15">
             <Property key="Widget_Caption" value="Signature Private Key File"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 63 331 22" align="HStretch Top" name="SignatureFileEdit"/>
+        <Widget type="Edit" skin="EditBox" position="4 63 331 22" align="HStretch Top" name="SignatureFileEdit"/>
         <Widget type="Button" skin="Button" position="337 61 29 26" align="Right Top" name="SignatureFileBrowser">
             <Property key="Widget_Caption" value="..."/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 87 179 15">
+        <Widget type="StaticText" skin="TextBox" position="4 87 179 15">
             <Property key="Widget_Caption" value="Output Directory"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 103 331 22" align="HStretch Top" name="OutDirEdit"/>
+        <Widget type="Edit" skin="EditBox" position="4 103 331 22" align="HStretch Top" name="OutDirEdit"/>
         <Widget type="Button" skin="Button" position="337 101 29 28" align="Right Top" name="OutDirBrowser">
             <Property key="Widget_Caption" value="..."/>
         </Widget>

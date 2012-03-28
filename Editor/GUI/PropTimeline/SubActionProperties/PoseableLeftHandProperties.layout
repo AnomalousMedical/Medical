@@ -1,77 +1,77 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="StaticImage" skin="StaticImage" position="129 113 210 311" layer="Back">
+    <Widget type="StaticImage" skin="ImageBox" position="129 113 210 311" layer="Back">
         <Property key="Image_Resource" value="LeftHandOutline"/>
-        <Widget type="Edit" skin="Edit" position="22 225 34 19" name="PinkyMetaTop">
+        <Widget type="Edit" skin="EditBox" position="22 225 34 19" name="PinkyMetaTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="33 245 34 19" name="PinkyMetaBottom">
+        <Widget type="Edit" skin="EditBox" position="33 245 34 19" name="PinkyMetaBottom">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="48 195 34 19" name="RingMetaTop">
+        <Widget type="Edit" skin="EditBox" position="48 195 34 19" name="RingMetaTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="57 215 34 19" name="RingMetaBottom">
+        <Widget type="Edit" skin="EditBox" position="57 215 34 19" name="RingMetaBottom">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="80 162 34 19" name="MiddleMetaTop">
+        <Widget type="Edit" skin="EditBox" position="80 162 34 19" name="MiddleMetaTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="82 182 34 19" name="MiddleMetaBottom">
+        <Widget type="Edit" skin="EditBox" position="82 182 34 19" name="MiddleMetaBottom">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="118 187 34 19" name="IndexMetaTop">
+        <Widget type="Edit" skin="EditBox" position="118 187 34 19" name="IndexMetaTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="114 207 34 19" name="IndexMetaBottom">
+        <Widget type="Edit" skin="EditBox" position="114 207 34 19" name="IndexMetaBottom">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="151 217 34 19" name="ThumbMetaTop">
+        <Widget type="Edit" skin="EditBox" position="151 217 34 19" name="ThumbMetaTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="140 237 34 19" name="ThumbMetaBottom">
+        <Widget type="Edit" skin="EditBox" position="140 237 34 19" name="ThumbMetaBottom">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="7 159 34 19" name="PinkyProxTop">
+        <Widget type="Edit" skin="EditBox" position="7 159 34 19" name="PinkyProxTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="40 131 34 19" name="RingProxTop">
+        <Widget type="Edit" skin="EditBox" position="40 131 34 19" name="RingProxTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="80 106 34 19" name="MiddleProxTop">
+        <Widget type="Edit" skin="EditBox" position="80 106 34 19" name="MiddleProxTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="126 116 34 19" name="IndexProxTop">
+        <Widget type="Edit" skin="EditBox" position="126 116 34 19" name="IndexProxTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="168 168 34 19" name="ThumbProxTop">
+        <Widget type="Edit" skin="EditBox" position="168 168 34 19" name="ThumbProxTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="174 126 34 19" name="ThumbDistalTop">
+        <Widget type="Edit" skin="EditBox" position="174 126 34 19" name="ThumbDistalTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="128 66 34 19" name="IndexInterTop">
+        <Widget type="Edit" skin="EditBox" position="128 66 34 19" name="IndexInterTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="130 29 34 19" name="IndexDistalTop">
+        <Widget type="Edit" skin="EditBox" position="130 29 34 19" name="IndexDistalTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="78 12 34 19" name="MiddleDistalTop">
+        <Widget type="Edit" skin="EditBox" position="78 12 34 19" name="MiddleDistalTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="79 53 34 19" name="MiddleInterTop">
+        <Widget type="Edit" skin="EditBox" position="79 53 34 19" name="MiddleInterTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="2 125 34 19" name="PinkyInterTop">
+        <Widget type="Edit" skin="EditBox" position="2 125 34 19" name="PinkyInterTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="0 93 34 19" name="PinkyDistalTop">
+        <Widget type="Edit" skin="EditBox" position="0 93 34 19" name="PinkyDistalTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="30 33 34 19" name="RingDistalTop">
+        <Widget type="Edit" skin="EditBox" position="30 33 34 19" name="RingDistalTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="35 75 34 19" name="RingInterTop">
+        <Widget type="Edit" skin="EditBox" position="35 75 34 19" name="RingInterTop">
             <Property key="Widget_Alpha" value="0.7"/>
         </Widget>
     </Widget>

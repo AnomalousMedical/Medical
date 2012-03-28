@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanel2" position="96 99 291 66" layer="Back">
-        <Widget type="StaticText" skin="StaticText" position="2 7 10 16">
+        <Widget type="StaticText" skin="TextBox" position="2 7 10 16">
             <Property key="Widget_Caption" value="If"/>
             <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
         <Widget type="ComboBox" skin="ComboBox" position="63 2 66 26" align="Left Top" name="ConditionCombo"/>
-        <Widget type="StaticText" skin="StaticText" position="3 29 55 16" name="SuccessText">
+        <Widget type="StaticText" skin="TextBox" position="3 29 55 16" name="SuccessText">
             <Property key="Widget_Caption" value="Success"/>
             <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="3 46 29 16" name="FailText">
+        <Widget type="StaticText" skin="TextBox" position="3 46 29 16" name="FailText">
             <Property key="Widget_Caption" value="Fail"/>
             <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
@@ -18,6 +18,6 @@
             <Property key="Widget_Caption" value="Choose"/>
             <Property key="Text_TextAlign" value="Left VCenter"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="130 2 70 26" align="Left Top" name="TestValueEdit"/>
+        <Widget type="Edit" skin="EditBox" position="130 2 70 26" align="Left Top" name="TestValueEdit"/>
     </Widget>
 </MyGUI>

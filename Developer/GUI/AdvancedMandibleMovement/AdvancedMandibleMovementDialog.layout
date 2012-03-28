@@ -5,25 +5,25 @@
         <Property key="Window_MinSize" value="178 273"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="StaticText" skin="StaticText" position="46 111 91 14" align="HRelative VRelative" name="Movement/HingeOpenText">
+        <Widget type="StaticText" skin="TextBox" position="46 111 91 14" align="HRelative VRelative" name="Movement/HingeOpenText">
             <Property key="Widget_Caption" value="Hinge Opening"/>
         </Widget>
-        <Widget type="HScroll" skin="HSlider" position="45 18 95 15" align="HRelative VRelative" name="Movement/ExcursionRightSlider">
+        <Widget type="HScroll" skin="SliderH" position="45 18 95 15" align="HRelative VRelative" name="Movement/ExcursionRightSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="46 3 92 14" align="HRelative VRelative" name="Movement/ExcursionRightText">
+        <Widget type="StaticText" skin="TextBox" position="46 3 92 14" align="HRelative VRelative" name="Movement/ExcursionRightText">
             <Property key="Widget_Caption" value="Excursion Left"/>
         </Widget>
-        <Widget type="HScroll" skin="HSlider" position="45 54 95 15" align="HRelative VRelative" name="Movement/ExcursionLeftSlider">
+        <Widget type="HScroll" skin="SliderH" position="45 54 95 15" align="HRelative VRelative" name="Movement/ExcursionLeftSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="46 39 92 14" align="HRelative VRelative" name="Movement/ExcursionLeftText">
+        <Widget type="StaticText" skin="TextBox" position="46 39 92 14" align="HRelative VRelative" name="Movement/ExcursionLeftText">
             <Property key="Widget_Caption" value="Excursion Right"/>
         </Widget>
-        <Widget type="HScroll" skin="HSlider" position="45 89 95 15" align="HRelative VRelative" name="Movement/ProtrusionSlider">
+        <Widget type="HScroll" skin="SliderH" position="45 89 95 15" align="HRelative VRelative" name="Movement/ProtrusionSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="46 75 66 14" align="HRelative VRelative" name="Movement/ProtrusionText">
+        <Widget type="StaticText" skin="TextBox" position="46 75 66 14" align="HRelative VRelative" name="Movement/ProtrusionText">
             <Property key="Widget_Caption" value="Protrusion"/>
         </Widget>
         <Widget type="Button" skin="RibbonButton" position="5 187 101 64" align="HRelative Bottom" name="Movement/Reset">
@@ -35,49 +35,49 @@
             <Property key="Button_ImageResource" value="Movement/Restore"/>
             <Property key="Button_ModeImage" value="true"/>
         </Widget>
-        <Widget type="HScroll" skin="HSlider" position="45 125 95 15" align="HRelative VRelative" name="Movement/HingeSlider">
+        <Widget type="HScroll" skin="SliderH" position="45 125 95 15" align="HRelative VRelative" name="Movement/HingeSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 3 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="4 3 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipRightHorizontalBack"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 39 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="4 39 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipLeftHorizontalBack"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="175 3 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="175 3 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipRightHorizontalForward"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="175 39 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="175 39 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipLeftHorizontalForward"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 111 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="4 111 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipVerticalClosed"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 75 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="4 75 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipHorizontalBothBack"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="175 111 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="175 111 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipVerticalOpen"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="175 75 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="175 75 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipHorizontalBothForward"/>
         </Widget>
-        <Widget type="HScroll" skin="HSlider" position="45 162 95 15" align="HRelative VRelative" name="Movement/ForceSlider">
+        <Widget type="HScroll" skin="SliderH" position="45 162 95 15" align="HRelative VRelative" name="Movement/ForceSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="46 148 44 14" align="HRelative VRelative">
+        <Widget type="StaticText" skin="TextBox" position="46 148 44 14" align="HRelative VRelative">
             <Property key="Widget_Caption" value="Force"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="4 147 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="4 147 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipForceDown"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="175 147 38 31" align="HRelative VRelative">
+        <Widget type="StaticImage" skin="ImageBox" position="175 147 38 31" align="HRelative VRelative">
             <Property key="Image_Resource" value="Movement/ManipForceUp"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="143 3 29 31" align="HRelative VRelative" name="ExcursionRightEdit"/>
-        <Widget type="Edit" skin="Edit" position="143 39 29 31" align="HRelative VRelative" name="ExcursionLeftEdit"/>
-        <Widget type="Edit" skin="Edit" position="143 75 29 31" align="HRelative VRelative" name="ProtrusionEdit"/>
-        <Widget type="Edit" skin="Edit" position="143 111 29 31" align="HRelative VRelative" name="HingeEdit"/>
-        <Widget type="Edit" skin="Edit" position="143 147 29 31" align="HRelative VRelative" name="ForceEdit"/>
+        <Widget type="Edit" skin="EditBox" position="143 3 29 31" align="HRelative VRelative" name="ExcursionRightEdit"/>
+        <Widget type="Edit" skin="EditBox" position="143 39 29 31" align="HRelative VRelative" name="ExcursionLeftEdit"/>
+        <Widget type="Edit" skin="EditBox" position="143 75 29 31" align="HRelative VRelative" name="ProtrusionEdit"/>
+        <Widget type="Edit" skin="EditBox" position="143 111 29 31" align="HRelative VRelative" name="HingeEdit"/>
+        <Widget type="Edit" skin="EditBox" position="143 147 29 31" align="HRelative VRelative" name="ForceEdit"/>
     </Widget>
 </MyGUI>

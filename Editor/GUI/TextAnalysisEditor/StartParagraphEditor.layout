@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanel2" position="188 133 243 19" layer="Back">
-        <Widget type="StaticText" skin="StaticText" position="0 0 92 16">
+        <Widget type="StaticText" skin="TextBox" position="0 0 92 16">
             <Property key="Widget_Caption" value="Start Paragraph"/>
             <Property key="Widget_NeedMouse" value="false"/>
         </Widget>

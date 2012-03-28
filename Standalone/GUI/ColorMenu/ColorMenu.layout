@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanelNoTranspo" position="132 162 181 166" layer="Overlapped">
-        <Widget type="StaticText" skin="StaticText" position="4 4 45 15">
+        <Widget type="StaticText" skin="TextBox" position="4 4 45 15">
             <Property key="Widget_Caption" value="Colors"/>
         </Widget>
         <Widget type="Widget" skin="Separator3" position="1 16 180 1"/>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanel" position="89 91 181 204" layer="Overlapped" name="ResolutionMenu">
-        <Widget type="StaticText" skin="StaticText" position="4 4 70 13">
+        <Widget type="StaticText" skin="TextBox" position="4 4 70 13">
             <Property key="Widget_Caption" value="Presets"/>
         </Widget>
         <Widget type="Button" skin="Button" position="10 172 76 26" name="AddButton">

@@ -4,7 +4,7 @@
         <Property key="Widget_Caption" value="Movement Sequence"/>
         <UserString key="CurrentDockLocation" value="Bottom"/>
         <UserString key="AllowedDockLocations" value="Top | Bottom | Floating"/>
-        <Widget type="Widget" skin="Panel" position="0 3 678 69" align="Stretch">
+        <Widget type="Widget" skin="PanelSkin" position="0 3 678 69" align="Stretch">
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 487 39" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
@@ -24,8 +24,8 @@
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="Edit" skin="Edit" position="90 1 52 20" name="SequenceDuration"/>
-            <Widget type="StaticText" skin="StaticText" position="39 1 50 19">
+            <Widget type="Edit" skin="EditBox" position="90 1 52 20" name="SequenceDuration"/>
+            <Widget type="StaticText" skin="TextBox" position="39 1 50 19">
                 <Property key="Widget_Caption" value="Duration"/>
                 <Property key="Text_TextAlign" value="Left VCenter"/>
             </Widget>
@@ -36,13 +36,13 @@
         <Widget type="ScrollView" skin="CustomScrollView2" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="StaticText" skin="StaticText" position="0 1 66 16" align="HStretch Top" name="PropertiesText">
+            <Widget type="StaticText" skin="TextBox" position="0 1 66 16" align="HStretch Top" name="PropertiesText">
                 <Property key="Widget_Caption" value="Properties"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="1 24 74 15">
+            <Widget type="StaticText" skin="TextBox" position="1 24 74 15">
                 <Property key="Widget_Caption" value="Start Time"/>
             </Widget>
-            <Widget type="Edit" skin="Edit" position="76 23 132 18" name="StartTime"/>
+            <Widget type="Edit" skin="EditBox" position="76 23 132 18" name="StartTime"/>
             <Widget type="Button" skin="Button" position="137 2 73 18" name="RemoveAction">
                 <Property key="Widget_Caption" value="Remove"/>
             </Widget>

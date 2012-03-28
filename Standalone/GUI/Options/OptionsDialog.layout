@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="TaskMenuBackground" position="253 98 338 437" layer="Overlapped">
-        <Widget type="StaticText" skin="StaticText" position="6 146 76 15">
+        <Widget type="StaticText" skin="TextBox" position="6 146 76 15">
             <Property key="Widget_Caption" value="Anti Aliasing"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
@@ -16,14 +16,14 @@
             <Property key="Widget_Caption" value="Fullscreen"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="6 188 70 15">
+        <Widget type="StaticText" skin="TextBox" position="6 188 70 15">
             <Property key="Widget_Caption" value="Resolution"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="ComboBox" skin="ComboBox" position="8 202 214 23" name="ResolutionCombo">
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 127 105 15">
+        <Widget type="StaticText" skin="TextBox" position="4 127 105 15">
             <Property key="Widget_Caption" value="Graphics Options"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
@@ -37,11 +37,11 @@
         <Widget type="Button" skin="ButtonXBig" position="313 3 24 20" align="Right Top" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 4 105 15">
+        <Widget type="StaticText" skin="TextBox" position="4 4 105 15">
             <Property key="Widget_Caption" value="Program Options"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="6 23 155 15">
+        <Widget type="StaticText" skin="TextBox" position="6 23 155 15">
             <Property key="Widget_Caption" value="Camera Transition Speed"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
@@ -53,7 +53,7 @@
         </Widget>
         <Widget type="Widget" skin="Separator1" position="1 123 337 1" align="HStretch Top"/>
         <Widget type="Widget" skin="Separator1" position="1 280 337 1" align="HStretch Top"/>
-        <Widget type="StaticText" skin="StaticText" position="6 62 155 15">
+        <Widget type="StaticText" skin="TextBox" position="6 62 155 15">
             <Property key="Widget_Caption" value="Camera Mouse Button"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
@@ -65,11 +65,11 @@
             <Property key="Widget_Caption" value="Enable Multitouch"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 318 141 16">
+        <Widget type="StaticText" skin="TextBox" position="4 318 141 16">
             <Property key="Text_TextColour" value="#FFFFFF"/>
             <Property key="Widget_Caption" value="Windows"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="6 337 318 46">
+        <Widget type="StaticText" skin="TextBox" position="6 337 318 46">
             <Property key="Widget_Caption" value="Click the Reset Windows button below to set your\nwindow positions back to their original positions.\nThis will require you to restart."/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>

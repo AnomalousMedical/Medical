@@ -6,9 +6,9 @@
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 260 26" align="Left Top" name="Menu"/>
-        <Widget type="StaticText" skin="StaticText" position="0 26 43 15">
+        <Widget type="StaticText" skin="TextBox" position="0 26 43 15">
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="0 41 352 26" align="HStretch Top" name="Name"/>
+        <Widget type="Edit" skin="EditBox" position="0 41 352 26" align="HStretch Top" name="Name"/>
     </Widget>
 </MyGUI>

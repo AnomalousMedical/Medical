@@ -5,21 +5,21 @@
             <Property key="Edit_ReadOnly" value="true"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="3 4 71 12">
+        <Widget type="StaticText" skin="TextBox" position="3 4 71 12">
             <Property key="Widget_Caption" value="Prop Type"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="3 86 204 20" name="TranslationEdit"/>
-        <Widget type="Edit" skin="Edit" position="3 129 204 20" name="RotationEdit"/>
+        <Widget type="Edit" skin="EditBox" position="3 86 204 20" name="TranslationEdit"/>
+        <Widget type="Edit" skin="EditBox" position="3 129 204 20" name="RotationEdit"/>
         <Widget type="Button" skin="Button" position="3 107 79 20" name="RotationButton">
             <Property key="Widget_Caption" value="Rotation"/>
         </Widget>
         <Widget type="Button" skin="Button" position="3 64 79 20" name="TranslationButton">
             <Property key="Widget_Caption" value="Translation"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="3 151 83 13">
+        <Widget type="StaticText" skin="TextBox" position="3 151 83 13">
             <Property key="Widget_Caption" value="Fade Duration"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="3 165 204 20" name="FadeDurationEdit"/>
+        <Widget type="Edit" skin="EditBox" position="3 165 204 20" name="FadeDurationEdit"/>
         <Widget type="Button" skin="Button" position="3 42 134 20" name="startPosButton">
             <Property key="Widget_Caption" value="Move to Start Position"/>
         </Widget>

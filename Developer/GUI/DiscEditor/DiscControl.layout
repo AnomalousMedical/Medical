@@ -2,10 +2,10 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCX" position="117 68 281 785" layer="Overlapped">
         <Property key="Widget_Caption" value="Disc Properties"/>
-        <Widget type="HScroll" skin="HSlider" position="68 2 125 25" name="horizontalOffsetTrackBar"/>
-        <Widget type="StaticText" skin="StaticText" position="0 6 62 17">
+        <Widget type="HScroll" skin="SliderH" position="68 2 125 25" name="horizontalOffsetTrackBar"/>
+        <Widget type="StaticText" skin="TextBox" position="0 6 62 17">
             <Property key="Widget_Caption" value="Horizontal"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="197 5 66 18" name="horizontalOffsetUpDown"/>
+        <Widget type="Edit" skin="EditBox" position="197 5 66 18" name="horizontalOffsetUpDown"/>
     </Widget>
 </MyGUI>

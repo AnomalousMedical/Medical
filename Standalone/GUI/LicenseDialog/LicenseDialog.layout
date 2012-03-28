@@ -1,41 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="Window" position="324 242 485 258" layer="Back">
-        <Widget type="Edit" skin="WordWrapSimple" position="0 3 474 38" name="Prompt">
-            <Property key="Edit_Static" value="true"/>
-            <Property key="Widget_Caption" value="You need to sign in to use $(PROGRAM_NAME)."/>
+        <Widget type="EditBox" skin="WordWrapEmpty" position="0 3 474 38" name="Prompt">
+            <Property key="Static" value="true"/>
+            <Property key="Caption" value="You need to sign in to use $(PROGRAM_NAME)."/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="0 57 123 15">
-            <Property key="Widget_Caption" value="User Name or Email"/>
+        <Widget type="TextBox" skin="TextBox" position="0 57 123 15">
+            <Property key="Caption" value="User Name or Email"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="2 72 467 22" name="UserText"/>
+        <Widget type="EditBox" skin="EditBox" position="2 72 467 22" name="UserText"/>
         <Widget type="Button" skin="Button" position="2 199 82 25" align="Left Bottom" name="ActivateButton">
-            <Property key="Widget_Caption" value="Log In"/>
+            <Property key="Caption" value="Log In"/>
         </Widget>
         <Widget type="Button" skin="Button" position="88 199 82 25" align="Left Bottom" name="CancelButton">
-            <Property key="Widget_Caption" value="Cancel"/>
+            <Property key="Caption" value="Cancel"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="0 42 356 14">
-            <Property key="Widget_Caption" value="Enter your AnomalousMedical.com user name and password."/>
+        <Widget type="TextBox" skin="TextBox" position="0 42 356 14">
+            <Property key="Caption" value="Enter your AnomalousMedical.com user name and password."/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="0 98 61 15">
-            <Property key="Widget_Caption" value="Password"/>
+        <Widget type="TextBox" skin="TextBox" position="0 98 61 15">
+            <Property key="Caption" value="Password"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="2 113 467 22" name="PasswordText">
-            <Property key="Edit_Password" value="true"/>
+        <Widget type="EditBox" skin="EditBox" position="2 113 467 22" name="PasswordText">
+            <Property key="Password" value="true"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="0 163 123 14">
-            <Property key="Widget_Caption" value="Connecting to:"/>
+        <Widget type="TextBox" skin="TextBox" position="0 163 123 14">
+            <Property key="Caption" value="Connecting to:"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="1 179 468 14" align="HStretch Top" name="ConnectionLabel"/>
+        <Widget type="TextBox" skin="TextBox" position="1 179 468 14" align="HStretch Top" name="ConnectionLabel"/>
         <Widget type="Button" skin="Button" position="368 199 105 25" align="Left Bottom" name="ForgotPassword">
-            <Property key="Widget_Caption" value="Forgot Password"/>
+            <Property key="Caption" value="Forgot Password"/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="2 140 174 15" name="RememberPassword">
-            <Property key="Widget_Caption" value="Remember my password"/>
+            <Property key="Caption" value="Remember my password"/>
         </Widget>
         <Widget type="Button" skin="Button" position="251 199 113 25" name="Register">
-            <Property key="Widget_Caption" value="Create Account"/>
+            <Property key="Caption" value="Create Account"/>
         </Widget>
     </Widget>
 </MyGUI>
