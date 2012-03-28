@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="Window" position="251 127 481 575" layer="Overlapped">
         <Widget type="EditBox" skin="WordWrapWhite" position="0 8 469 89" align="HStretch Top" name="Question">
-            <Property key="Edit_Static" value="true"/>
-            <Property key="Edit_ReadOnly" value="true"/>
-            <Property key="Edit_MultiLine" value="true"/>
-            <Property key="Text_TextAlign" value="Left Top"/>
+            <Property key="Static" value="true"/>
+            <Property key="ReadOnly" value="true"/>
+            <Property key="MultiLine" value="true"/>
+            <Property key="TextAlign" value="Left Top"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="5 106 460 435" align="Stretch" name="Answers">
-            <Property key="ScrollView_CanvasAlign" value="HCenter Top"/>
+            <Property key="CanvasAlign" value="HCenter Top"/>
         </Widget>
     </Widget>
 </MyGUI>

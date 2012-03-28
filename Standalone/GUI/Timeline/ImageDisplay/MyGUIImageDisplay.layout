@@ -1,4 +1,4 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="ImageBox" skin="ImageBox" position="49 78 190 169" layer="Overlapped" name="ImageBox"/>
 </MyGUI>

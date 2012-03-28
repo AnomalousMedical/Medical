@@ -4,7 +4,7 @@
         <Widget type="ScrollView" skin="CustomScrollView2" position="0 0 352 374" align="Stretch" name="PresetPanel/ScrollView">
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="CanvasSize" value="344 100"/>
-            <UserString key="GroupSeparatorSkin" value="Separator3"/>
+            <UserString key="GroupSeparatorSkin" value="SepUpHSkin"/>
         </Widget>
     </Widget>
 </MyGUI>
