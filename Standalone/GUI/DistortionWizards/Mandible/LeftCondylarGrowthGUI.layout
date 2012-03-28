@@ -96,8 +96,8 @@
                     <Property key="Text_TextAlign" value="Left VCenter"/>
                 </Widget>
                 <Widget type="Edit" skin="EditBox" position="150 16 67 20" name="GridControl/GridSpace"/>
-                <Widget type="Button" skin="ButtonUp" position="218 16 10 10" name="GridControl/GridSpaceUp"/>
-                <Widget type="Button" skin="ButtonDown" position="218 26 10 10" name="GridControl/GridSpaceDown"/>
+                <Widget type="Button" skin="ButtonUpSkin" position="218 16 10 10" name="GridControl/GridSpaceUp"/>
+                <Widget type="Button" skin="ButtonDownSkin" position="218 26 10 10" name="GridControl/GridSpaceDown"/>
                 <Widget type="StaticText" skin="TextBox" position="231 18 21 15">
                     <Property key="Text_TextAlign" value="Left VCenter"/>
                     <Property key="Widget_Caption" value="MM"/>

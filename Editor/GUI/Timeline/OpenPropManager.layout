@@ -5,7 +5,7 @@
         <Widget type="Button" skin="Button" position="70 191 64 21" align="Left Bottom" name="closeAll">
             <Property key="Widget_Caption" value="Close All"/>
         </Widget>
-        <Widget type="MultiList" skin="MultiList" position="0 1 180 187" align="Stretch" name="propList"/>
+        <Widget type="MultiList" skin="MultiListBox" position="0 1 180 187" align="Stretch" name="propList"/>
         <Widget type="Button" skin="Button" position="0 191 64 21" align="Left Bottom" name="close">
             <Property key="Widget_Caption" value="Close"/>
         </Widget>

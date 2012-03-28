@@ -7,7 +7,7 @@
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
         <Widget type="Edit" skin="EditBox" position="320 1 134 20" align="Relative" name="TimelineText"/>
-        <Widget type="Button" skin="ButtonUp" position="51 4 22 15" name="InsertAbove"/>
-        <Widget type="Button" skin="ButtonDown" position="26 4 22 15" name="InsertBelow"/>
+        <Widget type="Button" skin="ButtonUpSkin" position="51 4 22 15" name="InsertAbove"/>
+        <Widget type="Button" skin="ButtonDownSkin" position="26 4 22 15" name="InsertBelow"/>
     </Widget>
 </MyGUI>

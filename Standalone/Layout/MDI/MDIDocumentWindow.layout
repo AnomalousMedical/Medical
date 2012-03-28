@@ -10,7 +10,7 @@
         <Widget type="Button" skin="ButtonSound" position="3 136 24 24" align="Right Bottom" name="VolumeSliderButton">
             <Property key="Widget_Caption" value="V"/>
         </Widget>
-        <Widget type="VScroll" skin="VSlider" position_real="0 0 1 0.819876" name="VolumeSlider">
+        <Widget type="VScroll" skin="SliderV" position_real="0 0 1 0.819876" name="VolumeSlider">
             <Property key="Scroll_Range" value="1000"/>
             <Property key="Scroll_Position" value="0"/>
         </Widget>

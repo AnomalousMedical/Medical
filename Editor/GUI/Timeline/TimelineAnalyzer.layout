@@ -4,7 +4,7 @@
         <Property key="Widget_Caption" value="Timeline Analyzer"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="MultiList" skin="MultiList" position="126 24 292 203" align="Stretch" name="TimelineList"/>
+        <Widget type="MultiList" skin="MultiListBox" position="126 24 292 203" align="Stretch" name="TimelineList"/>
         <Widget type="StaticText" skin="TextBox" position="126 0 294 24" align="HStretch Top" name="LastQuery">
             <Property key="Text_TextAlign" value="Left VCenter"/>
         </Widget>
@@ -23,8 +23,8 @@
         <Widget type="Button" skin="Button" position="5 132 118 22" name="Reset to Current">
             <Property key="Widget_Caption" value="Reset to Current"/>
         </Widget>
-        <Widget type="Button" skin="ButtonLeft" position="6 4 21 22" name="BackButton"/>
-        <Widget type="Button" skin="ButtonRight" position="32 4 21 22" name="ForwardButton"/>
+        <Widget type="Button" skin="ButtonLeftSkin" position="6 4 21 22" name="BackButton"/>
+        <Widget type="Button" skin="ButtonRightSkin" position="32 4 21 22" name="ForwardButton"/>
         <Widget type="Button" skin="Button" position="5 204 118 22" name="ListUnreferenced">
             <Property key="Widget_Caption" value="List Unreferenced"/>
         </Widget>

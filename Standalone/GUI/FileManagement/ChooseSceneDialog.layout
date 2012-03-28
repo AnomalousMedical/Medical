@@ -17,7 +17,7 @@
             <Property key="Widget_Caption" value="Choose Scene"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
-        <Widget type="Widget" skin="Separator1" position="4 28 555 2" align="HStretch Top"/>
+        <Widget type="Widget" skin="SepUpVSkin" position="4 28 555 2" align="HStretch Top"/>
         <Widget type="StaticText" skin="TextBox" position="145 136 275 87" align="Center" name="Loading">
             <Property key="Widget_Caption" value="Loading"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>

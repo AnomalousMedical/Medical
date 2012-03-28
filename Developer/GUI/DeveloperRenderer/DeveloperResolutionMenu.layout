@@ -10,6 +10,6 @@
         <Widget type="Button" skin="Button" position="93 172 76 26" name="RemoveButton">
             <Property key="Widget_Caption" value="Remove"/>
         </Widget>
-        <Widget type="MultiList" skin="MultiList" position="5 18 170 150" name="PresetList"/>
+        <Widget type="MultiList" skin="MultiListBox" position="5 18 170 150" name="PresetList"/>
     </Widget>
 </MyGUI>

@@ -4,7 +4,7 @@
         <Widget type="StaticText" skin="TextBox" position="4 4 45 15">
             <Property key="Widget_Caption" value="Colors"/>
         </Widget>
-        <Widget type="Widget" skin="Separator3" position="1 16 180 1"/>
+        <Widget type="Widget" skin="SepUpHSkin" position="1 16 180 1"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 20 177 120" name="ColorGrid">
             <Property key="ScrollView_CanvasSize" value="177 120"/>
             <Property key="ScrollView_VisibleVScroll" value="false"/>

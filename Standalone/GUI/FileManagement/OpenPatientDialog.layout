@@ -3,7 +3,7 @@
     <Widget type="Widget" skin="TaskMenuBackground" position="55 42 716 502" layer="Overlapped">
         <Property key="Widget_Caption" value="Open"/>
         <Property key="Window_MinSize" value="510 310"/>
-        <Widget type="MultiList" skin="MultiList" position="4 121 710 360" align="Stretch" name="Open/FileList"/>
+        <Widget type="MultiList" skin="MultiListBox" position="4 121 710 360" align="Stretch" name="Open/FileList"/>
         <Widget type="Widget" skin="PanelEmpty" position="1 2 714 117" align="HStretch Top" layer="Back">
             <Widget type="StaticText" skin="TextBox" position="4 2 150 15" align="Left Top">
                 <Property key="Widget_Caption" value="Search Last Name"/>
