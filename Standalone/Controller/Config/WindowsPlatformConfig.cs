@@ -60,7 +60,7 @@ namespace Medical
         {
             get
             {
-                return "MyGUIPlugin.Resources.core_theme.xml";
+                return "MyGUIPlugin.Resources.MyGUIPlugin_Windows.xml";
             }
         }
 

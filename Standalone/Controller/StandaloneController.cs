@@ -77,7 +77,7 @@ namespace Medical
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             guiManager = new GUIManager(this);
 
-            MyGUIInterface.Theme = PlatformConfig.ThemeFile;
+            MyGUIInterface.OSTheme = PlatformConfig.ThemeFile;
 
             //Engine core
             medicalController = new MedicalController();

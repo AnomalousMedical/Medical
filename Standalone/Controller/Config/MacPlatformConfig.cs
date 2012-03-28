@@ -66,7 +66,7 @@ namespace Medical
         {
             get
             {
-                return "MyGUIPlugin.Resources.core_theme_osx.xml";
+                return "MyGUIPlugin.Resources.MyGUIPlugin_OSX.xml";
             }
         }
 
