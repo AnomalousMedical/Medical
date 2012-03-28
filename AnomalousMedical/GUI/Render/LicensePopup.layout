@@ -3,7 +3,7 @@
     <Widget type="Widget" skin="TaskMenuBackground" position="224 51 347 537" layer="Overlapped">
         <Property key="Widget_Caption" value="Bookmarks"/>
         <Widget type="Button" skin="ButtonXBig" position="318 7 24 20" align="Right Top" name="CloseButton"/>
-        <Widget type="Edit" skin="WordWrapEmpty" position="9 37 330 491" align="Stretch" name="LicenseTextArea">
+        <Widget type="EditBox" skin="WordWrapEmpty" position="9 37 330 491" align="Stretch" name="LicenseTextArea">
             <Property key="Edit_Static" value="true"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>

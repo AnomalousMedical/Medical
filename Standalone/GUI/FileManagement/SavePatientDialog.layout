@@ -5,37 +5,37 @@
       
       
         <Widget type="Widget" skin="PanelEmpty" position="0 0 436 224" layer="Overlapped" name="DataPanel">
-            <Widget type="StaticText" skin="TextBox" position="6 22 66 15">
+            <Widget type="TextBox" skin="TextBox" position="6 22 66 15">
                 <Property key="Widget_Caption" value="First Name"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="6 61 71 15">
+            <Widget type="TextBox" skin="TextBox" position="6 61 71 15">
                 <Property key="Widget_Caption" value="Last Name"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
-            <Widget type="Edit" skin="EditBox" position="8 34 197 23" align="HStretch Top" name="Save/FirstName"/>
-            <Widget type="Edit" skin="EditBox" position="8 73 197 23" align="HStretch Top" name="Save/LastName"/>
-            <Widget type="StaticText" skin="TextBox" position="6 101 92 15">
+            <Widget type="EditBox" skin="EditBox" position="8 34 197 23" align="HStretch Top" name="Save/FirstName"/>
+            <Widget type="EditBox" skin="EditBox" position="8 73 197 23" align="HStretch Top" name="Save/LastName"/>
+            <Widget type="TextBox" skin="TextBox" position="6 101 92 15">
                 <Property key="Widget_Caption" value="Save Location"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
-            <Widget type="Edit" skin="EditBox" position="8 113 342 23" align="HStretch Top" name="Save/Location"/>
+            <Widget type="EditBox" skin="EditBox" position="8 113 342 23" align="HStretch Top" name="Save/Location"/>
             <Widget type="Button" skin="Button" position="351 113 80 23" align="Right Top" name="Save/BrowseButton">
                 <Property key="Widget_Caption" value="Browse"/>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="6 141 69 15">
+            <Widget type="TextBox" skin="TextBox" position="6 141 69 15">
                 <Property key="Widget_Caption" value="FIle Name"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
-            <Widget type="Edit" skin="EditBox" position="9 153 223 23" align="HStretch Top" name="Save/Filename"/>
-            <Widget type="StaticText" skin="TextBox" position="283 158 139 15" align="Right Top" name="Save/WarningLabel">
+            <Widget type="EditBox" skin="EditBox" position="9 153 223 23" align="HStretch Top" name="Save/Filename"/>
+            <Widget type="TextBox" skin="TextBox" position="283 158 139 15" align="Right Top" name="Save/WarningLabel">
                 <Property key="Widget_Caption" value="This file already exists."/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 179 88 23" name="Save/SaveButton">
                 <Property key="Widget_Caption" value="Save"/>
             </Widget>
-            <Widget type="StaticImage" skin="ImageBox" position="233 140 50 50" align="Right Top" name="Save/WarningImage">
+            <Widget type="ImageBox" skin="ImageBox" position="233 140 50 50" align="Right Top" name="Save/WarningImage">
                 <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
                 <Property key="Image_Index" value="Warning"/>
                 <Property key="Image_Group" value="Icons"/>
@@ -47,7 +47,7 @@
         <Property key="Widget_Caption" value="Cancel"/>
       </Widget>
 
-      <Widget type="StaticText" skin="TextBox" position="4 4 83 15">
+      <Widget type="TextBox" skin="TextBox" position="4 4 83 15">
         <Property key="Widget_Caption" value="Patient Data"/>
         <Property key="Text_TextColour" value="#FFFFFF"/>
       </Widget>

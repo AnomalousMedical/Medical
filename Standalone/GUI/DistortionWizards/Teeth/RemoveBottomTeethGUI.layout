@@ -4,7 +4,7 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="ScrollView_CanvasSize" value="352 274"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="Edit" skin="WordWrapEmpty" position="4 0 344 31" align="HStretch Top">
+            <Widget type="EditBox" skin="WordWrapEmpty" position="4 0 344 31" align="HStretch Top">
                 <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
                 <Property key="Edit_Static" value="true"/>
                 <Property key="Text_TextAlign" value="Center"/>

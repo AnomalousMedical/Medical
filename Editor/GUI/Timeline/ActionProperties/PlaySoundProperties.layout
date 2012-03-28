@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="PanelEmpty" position="99 352 211 48" layer="Back">
-        <Widget type="StaticText" skin="TextBox" position="3 5 66 13">
+        <Widget type="TextBox" skin="TextBox" position="3 5 66 13">
             <Property key="Widget_Caption" value="Sound File"/>
         </Widget>
-        <Widget type="Edit" skin="EditBox" position="71 3 137 17" name="SoundFileEdit">
+        <Widget type="EditBox" skin="EditBox" position="71 3 137 17" name="SoundFileEdit">
             <Property key="Edit_Static" value="true"/>
         </Widget>
         <Widget type="Button" skin="Button" position="71 23 57 18" name="BrowseButton">

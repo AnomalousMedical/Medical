@@ -4,8 +4,8 @@
         <Property key="Widget_Caption" value="Timeline Analyzer"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="MultiList" skin="MultiListBox" position="126 24 292 203" align="Stretch" name="TimelineList"/>
-        <Widget type="StaticText" skin="TextBox" position="126 0 294 24" align="HStretch Top" name="LastQuery">
+        <Widget type="MultiListBox" skin="MultiListBox" position="126 24 292 203" align="Stretch" name="TimelineList"/>
+        <Widget type="TextBox" skin="TextBox" position="126 0 294 24" align="HStretch Top" name="LastQuery">
             <Property key="Text_TextAlign" value="Left VCenter"/>
         </Widget>
         <Widget type="Button" skin="Button" position="5 28 118 22" name="Open">
@@ -28,7 +28,7 @@
         <Widget type="Button" skin="Button" position="5 204 118 22" name="ListUnreferenced">
             <Property key="Widget_Caption" value="List Unreferenced"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="7 188 74 14">
+        <Widget type="TextBox" skin="TextBox" position="7 188 74 14">
             <Property key="Widget_Caption" value="This is slow."/>
         </Widget>
     </Widget>

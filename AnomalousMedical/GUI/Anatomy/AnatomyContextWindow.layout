@@ -4,17 +4,17 @@
         <Widget type="Button" skin="ButtonV" position="176 2 22 22" align="Right Top" name="PinButton">
             <Property key="Widget_Caption" value="Pin"/>
         </Widget>
-        <Widget type="StaticImage" skin="ImageBox" position="2 1 50 50" name="ThumbnailImage">
+        <Widget type="ImageBox" skin="ImageBox" position="2 1 50 50" name="ThumbnailImage">
             <Property key="Widget_NeedMouse" value="false"/>
             <Property key="Widget_NeedKey" value="false"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="57 5 101 14" align="Left Top" name="AnatomyName">
+        <Widget type="TextBox" skin="TextBox" position="57 5 101 14" align="Left Top" name="AnatomyName">
             <Property key="Widget_NeedKey" value="false"/>
             <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
-        <Widget type="HScroll" skin="SliderH" position="48 67 129 16" align="HStretch Top" name="TransparencySlider"/>
+        <Widget type="ScrollBar" skin="SliderH" position="48 67 129 16" align="HStretch Top" name="TransparencySlider"/>
         <Widget type="Button" skin="ButtonXBig" position="199 2 22 22" align="Right Top" name="CloseButton"/>
-        <Widget type="StaticText" skin="TextBox" position="69 56 78 13" align="HCenter Top">
+        <Widget type="TextBox" skin="TextBox" position="69 56 78 13" align="HCenter Top">
             <Property key="Widget_Caption" value="Transparency"/>
         </Widget>
         <Widget type="Button" skin="Button" position="58 24 62 26" align="HRelative Top" name="CenterButton">

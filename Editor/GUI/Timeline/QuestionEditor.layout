@@ -2,13 +2,13 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="163 146 523 381" layer="Overlapped">
         <Property key="Widget_Caption" value="Question Editor"/>
-        <Widget type="StaticText" skin="TextBox" position="4 6 56 14">
+        <Widget type="TextBox" skin="TextBox" position="4 6 56 14">
             <Property key="Widget_Caption" value="Question"/>
         </Widget>
         <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="5 22 502 67" align="HStretch Top">
-            <Widget type="Edit" skin="WordWrapEmpty" position_real="0 0 1 1" align="Stretch" name="QuestionText"/>
+            <Widget type="EditBox" skin="WordWrapEmpty" position_real="0 0 1 1" align="Stretch" name="QuestionText"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="4 111 52 14">
+        <Widget type="TextBox" skin="TextBox" position="4 111 52 14">
             <Property key="Widget_Caption" value="Answers"/>
         </Widget>
         <Widget type="Button" skin="Button" position="4 323 52 21" align="Left Bottom" name="ApplyButton">
@@ -24,16 +24,16 @@
             <Property key="ScrollView_CanvasSize" value="0 0"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="39 126 34 14">
+        <Widget type="TextBox" skin="TextBox" position="39 126 34 14">
             <Property key="Widget_Caption" value="Text"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="324 126 57 13" align="Right Top">
+        <Widget type="TextBox" skin="TextBox" position="324 126 57 13" align="Right Top">
             <Property key="Widget_Caption" value="Timeline"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="4 95 68 13">
+        <Widget type="TextBox" skin="TextBox" position="4 95 68 13">
             <Property key="Widget_Caption" value="Play Sound"/>
         </Widget>
-        <Widget type="Edit" skin="EditBox" position="72 92 354 18" align="HStretch Top" name="SoundFileEdit"/>
+        <Widget type="EditBox" skin="EditBox" position="72 92 354 18" align="HStretch Top" name="SoundFileEdit"/>
         <Widget type="Button" skin="Button" position="428 92 78 18" align="Right Top" name="SoundBrowser">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>

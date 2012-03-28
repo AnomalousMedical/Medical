@@ -18,10 +18,10 @@
             <Property key="Button_ImageResource" value="SequenceToolstrip/Stop"/>
             <Property key="Widget_Enabled" value="false"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="74 7 72 14">
+        <Widget type="TextBox" skin="TextBox" position="74 7 72 14">
             <Property key="Widget_Caption" value="Now Playing"/>
         </Widget>
-        <Widget type="Edit" skin="WordWrapEmpty" position="74 21 152 30" name="NowPlaying">
+        <Widget type="EditBox" skin="WordWrapEmpty" position="74 21 152 30" name="NowPlaying">
             <Property key="Edit_Static" value="true"/>
             <Property key="Edit_ReadOnly" value="true"/>
             <Property key="Edit_MultiLine" value="true"/>

@@ -4,16 +4,16 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="ScrollView_CanvasSize" value="193 448"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="StaticText" skin="TextBox" position="4 4 187 15">
+            <Widget type="TextBox" skin="TextBox" position="4 4 187 15">
                 <Property key="Widget_Caption" value="Check this box to show the disc."/>
             </Widget>
             <Widget type="Button" skin="CheckBox" position="8 21 117 15" name="DiscSpace/ShowDisc">
                 <Property key="Widget_Caption" value="Show Disc"/>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="4 38 147 15">
+            <Widget type="TextBox" skin="TextBox" position="4 38 147 15">
                 <Property key="Widget_Caption" value="Input Joint Location"/>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="6 57 121 15">
+            <Widget type="TextBox" skin="TextBox" position="6 57 121 15">
                 <Property key="Widget_Caption" value="Vertical Space"/>
             </Widget>
             <Widget type="ComboBox" skin="ComboBox" position="8 71 177 24" name="DiscSpace/VerticalSpaceCombo">
@@ -24,7 +24,7 @@
                 <Property key="ComboBox_AddItem" value="Bone on Bone"/>
                 <Property key="Edit_Static" value="true"/>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="6 99 121 15">
+            <Widget type="TextBox" skin="TextBox" position="6 99 121 15">
                 <Property key="Widget_Caption" value="Horizontal Space"/>
             </Widget>
             <Widget type="ComboBox" skin="ComboBox" position="8 113 177 24" name="DiscSpace/HorizontalSpaceCombo">
@@ -33,7 +33,7 @@
                 <Property key="ComboBox_AddItem" value="Posterior Shift"/>
                 <Property key="Edit_Static" value="true"/>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="6 141 121 15">
+            <Widget type="TextBox" skin="TextBox" position="6 141 121 15">
                 <Property key="Widget_Caption" value="Condyle Shape"/>
             </Widget>
             <Widget type="ComboBox" skin="ComboBox" position="8 155 177 24" name="DiscSpace/CondyleShapeCombo">
@@ -43,7 +43,7 @@
                 <Property key="Edit_Static" value="true"/>
             </Widget>
             <Widget type="Widget" skin="MultiListCustomPanel" position="4 200 186 161">
-                <Widget type="StaticText" skin="TextBox" position="4 4 42 15">
+                <Widget type="TextBox" skin="TextBox" position="4 4 42 15">
                     <Property key="Widget_Caption" value="Stage"/>
                 </Widget>
                 <Widget type="Button" skin="RadioButton" position="9 23 57 15" name="DiscSpace/StageI">
@@ -71,7 +71,7 @@
                     <Property key="Widget_Caption" value="Vb"/>
                 </Widget>
                 <Widget type="Widget" skin="MultiListCustomPanel" position="79 4 103 74" name="DiscSpace/ClockFace">
-                    <Widget type="StaticText" skin="TextBox" position="4 4 92 15">
+                    <Widget type="TextBox" skin="TextBox" position="4 4 92 15">
                         <Property key="Widget_Caption" value="Clock Face"/>
                     </Widget>
                     <Widget type="Button" skin="RadioButton" position="6 22 91 15" name="DiscSpace/Clock12">
@@ -85,7 +85,7 @@
                     </Widget>
                 </Widget>
                 <Widget type="Widget" skin="MultiListCustomPanel" position="79 82 103 75" name="DiscSpace/RDAReduction">
-                    <Widget type="StaticText" skin="TextBox" position="4 4 92 15">
+                    <Widget type="TextBox" skin="TextBox" position="4 4 92 15">
                         <Property key="Widget_Caption" value="RDA Reduction"/>
                     </Widget>
                     <Widget type="Button" skin="RadioButton" position="6 23 91 15" name="DiscSpace/RDAMild">
@@ -99,7 +99,7 @@
                     </Widget>
                 </Widget>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="4 184 160 15">
+            <Widget type="TextBox" skin="TextBox" position="4 184 160 15">
                 <Property key="Widget_Caption" value="Piper Classification Stage"/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 365 88 26" name="DiscSpace/Reset">

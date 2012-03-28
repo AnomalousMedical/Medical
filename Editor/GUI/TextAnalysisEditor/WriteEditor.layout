@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanel2" position="132 70 232 120" layer="Back">
-        <Widget type="StaticText" skin="TextBox" position="0 0 35 16">
+        <Widget type="TextBox" skin="TextBox" position="0 0 35 16">
             <Property key="Widget_Caption" value="Write"/>
             <Property key="Widget_NeedMouse" value="false"/>
         </Widget>
         <Widget type="Button" skin="Button" position="29 91 89 26" align="Left Bottom" name="AddVariable">
             <Property key="Widget_Caption" value="Add Variable"/>
         </Widget>
-        <Widget type="Edit" skin="WordWrapWhite" position="2 18 226 70" align="HStretch Top" name="Text">
+        <Widget type="EditBox" skin="WordWrapWhite" position="2 18 226 70" align="HStretch Top" name="Text">
             <Property key="Edit_MaxTextLength" value="250000"/>
         </Widget>
     </Widget>

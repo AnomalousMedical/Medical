@@ -13,12 +13,12 @@
         <Widget type="Button" skin="ButtonXBig" position="534 4 24 20" align="Right Top" name="ChooseScene/Cancel">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="4 6 99 15">
+        <Widget type="TextBox" skin="TextBox" position="4 6 99 15">
             <Property key="Widget_Caption" value="Choose Scene"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Widget" skin="SepUpVSkin" position="4 28 555 2" align="HStretch Top"/>
-        <Widget type="StaticText" skin="TextBox" position="145 136 275 87" align="Center" name="Loading">
+        <Widget type="TextBox" skin="TextBox" position="145 136 275 87" align="Center" name="Loading">
             <Property key="Widget_Caption" value="Loading"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
             <Property key="Text_FontHeight" value="100"/>

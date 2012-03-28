@@ -5,7 +5,7 @@
         <Widget type="Button" skin="CheckBox" position="3 29 100 21" name="LeftDisc">
             <Property key="Widget_Caption" value="Left Disc"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="0 0 197 28">
+        <Widget type="TextBox" skin="TextBox" position="0 0 197 28">
             <Property key="Widget_Caption" value="Capture the selected objects\nInto a Medical State Preset."/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="3 52 100 21" name="RightDisc">

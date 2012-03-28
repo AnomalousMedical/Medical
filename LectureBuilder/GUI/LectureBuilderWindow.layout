@@ -3,7 +3,7 @@
     <Widget type="Window" skin="WindowCSX" position="153 49 234 364" layer="Overlapped">
         <Property key="Widget_Caption" value="Lecture Builder"/>
         <Property key="Window_MinSize" value="234 364"/>
-        <Widget type="StaticText" skin="TextBox" position="0 29 41 16">
+        <Widget type="TextBox" skin="TextBox" position="0 29 41 16">
             <Property key="Widget_Caption" value="Slides"/>
         </Widget>
         <Widget type="Button" skin="Button" position="0 230 67 26" align="Left Bottom" name="MoveUp">
@@ -21,10 +21,10 @@
         <Widget type="Button" skin="Button" position="0 305 67 26" align="Left Bottom" name="Preview">
             <Property key="Widget_Caption" value="Preview"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="0 259 118 16" align="Left Bottom">
+        <Widget type="TextBox" skin="TextBox" position="0 259 118 16" align="Left Bottom">
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
-        <Widget type="Edit" skin="EditBox" position="0 275 153 26" align="Left Bottom" name="Name"/>
+        <Widget type="EditBox" skin="EditBox" position="0 275 153 26" align="Left Bottom" name="Name"/>
         <Widget type="ScrollView" skin="ScrollView" position="0 46 222 182" align="Stretch" name="SlideScroller">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="false"/>

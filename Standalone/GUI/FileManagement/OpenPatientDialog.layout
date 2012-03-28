@@ -3,26 +3,26 @@
     <Widget type="Widget" skin="TaskMenuBackground" position="55 42 716 502" layer="Overlapped">
         <Property key="Widget_Caption" value="Open"/>
         <Property key="Window_MinSize" value="510 310"/>
-        <Widget type="MultiList" skin="MultiListBox" position="4 121 710 360" align="Stretch" name="Open/FileList"/>
+        <Widget type="MultiListBox" skin="MultiListBox" position="4 121 710 360" align="Stretch" name="Open/FileList"/>
         <Widget type="Widget" skin="PanelEmpty" position="1 2 714 117" align="HStretch Top" layer="Back">
-            <Widget type="StaticText" skin="TextBox" position="4 2 150 15" align="Left Top">
+            <Widget type="TextBox" skin="TextBox" position="4 2 150 15" align="Left Top">
                 <Property key="Widget_Caption" value="Search Last Name"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
-            <Widget type="Edit" skin="EditBox" position="8 17 226 25" align="Left Top" name="Open/SearchText"/>
-            <Widget type="StaticText" skin="TextBox" position="4 46 155 15" align="Left Top">
+            <Widget type="EditBox" skin="EditBox" position="8 17 226 25" align="Left Top" name="Open/SearchText"/>
+            <Widget type="TextBox" skin="TextBox" position="4 46 155 15" align="Left Top">
                 <Property key="Widget_Caption" value="Load Location"/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
-            <Widget type="Edit" skin="EditBox" position="8 61 396 25" align="HStretch Top" name="Open/LoadLocation"/>
+            <Widget type="EditBox" skin="EditBox" position="8 61 396 25" align="HStretch Top" name="Open/LoadLocation"/>
             <Widget type="Button" skin="Button" position="405 61 72 25" align="Right Top" name="Open/BrowseButton">
                 <Property key="Widget_Caption" value="Browse"/>
             </Widget>
-            <Widget type="StaticText" skin="TextBox" position="529 67 174 15" align="Right Top" name="Open/WarningText">
+            <Widget type="TextBox" skin="TextBox" position="529 67 174 15" align="Right Top" name="Open/WarningText">
                 <Property key="Widget_Caption" value="This directory does not exist."/>
                 <Property key="Text_TextColour" value="#FFFFFF"/>
             </Widget>
-            <Widget type="StaticImage" skin="ImageBox" position="479 49 50 50" align="Right Top" name="Open/WarningImage">
+            <Widget type="ImageBox" skin="ImageBox" position="479 49 50 50" align="Right Top" name="Open/WarningImage">
                 <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
                 <Property key="Image_Group" value="Icons"/>
                 <Property key="Image_Name" value="Warning"/>
@@ -36,9 +36,9 @@
             <Widget type="Button" skin="ButtonXBig" position="689 1 24 20" align="Right Top" name="Open/CancelButton">
                 <Property key="Widget_Caption" value="Cancel"/>
             </Widget>
-            <Widget type="Progress" skin="ProgressBarFill" position="571 93 140 23" align="Right Top" name="Open/LoadingProgress"/>
+            <Widget type="ProgressBar" skin="ProgressBarFill" position="571 93 140 23" align="Right Top" name="Open/LoadingProgress"/>
         </Widget>
-        <Widget type="StaticText" skin="TextBox" position="220 207 275 87" align="Center" name="Loading">
+        <Widget type="TextBox" skin="TextBox" position="220 207 275 87" align="Center" name="Loading">
             <Property key="Widget_Caption" value="Loading"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
             <Property key="Text_FontHeight" value="100"/>

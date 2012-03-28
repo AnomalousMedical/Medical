@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Window" skin="Window" position="251 127 481 575" layer="Overlapped">
-        <Widget type="Edit" skin="WordWrapWhite" position="0 8 469 89" align="HStretch Top" name="Question">
+        <Widget type="EditBox" skin="WordWrapWhite" position="0 8 469 89" align="HStretch Top" name="Question">
             <Property key="Edit_Static" value="true"/>
             <Property key="Edit_ReadOnly" value="true"/>
             <Property key="Edit_MultiLine" value="true"/>
