@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="1 70 211 72" layer="Back">
         <Widget type="Button" skin="Button" position="0 22 89 21" name="Capture">
-            <Property key="Widget_Caption" value="Use Current"/>
+            <Property key="Caption" value="Use Current"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 5 49 14">
-            <Property key="Widget_Caption" value="Window"/>
+            <Property key="Caption" value="Window"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="55 5 152 14" name="WindowText"/>
         <Widget type="Button" skin="CheckBox" position="0 45 207 21" name="UseSystemDuration">
-            <Property key="Widget_Caption" value="Use System Layer Duration"/>
+            <Property key="Caption" value="Use System Layer Duration"/>
         </Widget>
     </Widget>
 </MyGUI>

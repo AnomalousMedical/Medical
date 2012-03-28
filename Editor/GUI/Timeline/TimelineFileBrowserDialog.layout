@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="146 390 216 288" layer="Overlapped">
-        <Property key="Widget_Caption" value="Choose File"/>
-        <Property key="Window_MinSize" value="216 150"/>
+        <Property key="Caption" value="Choose File"/>
+        <Property key="MinSize" value="216 150"/>
         <Widget type="MultiListBox" skin="MultiListBox" position="0 0 204 231" align="Stretch" name="FileList"/>
         <Widget type="Button" skin="Button" position="5 235 63 19" align="Left Bottom" name="OpenButton">
-            <Property key="Widget_Caption" value="Open"/>
+            <Property key="Caption" value="Open"/>
         </Widget>
         <Widget type="Button" skin="Button" position="72 235 62 19" align="Left Bottom" name="CancelButton">
-            <Property key="Widget_Caption" value="Cancel"/>
+            <Property key="Caption" value="Cancel"/>
         </Widget>
         <Widget type="Button" skin="Button" position="138 235 63 19" align="Left Bottom" name="ImportButton">
-            <Property key="Widget_Caption" value="Import"/>
+            <Property key="Caption" value="Import"/>
         </Widget>
     </Widget>
 </MyGUI>

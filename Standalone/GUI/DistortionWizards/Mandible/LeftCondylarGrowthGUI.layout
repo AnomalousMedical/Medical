@@ -1,106 +1,106 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="63 73 352 436" layer="Overlapped">
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-            <Property key="ScrollView_CanvasSize" value="352 436"/>
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="352 436"/>
+            <Property key="CanvasAlign" value="Left Top"/>
             <Widget type="TextBox" skin="TextBox" position="4 4 343 15">
-                <Property key="Widget_Caption" value="Adjust the sliders to match the patient&apos;s left condyle."/>
-                <Property key="Text_TextAlign" value="Left Top"/>
+                <Property key="Caption" value="Adjust the sliders to match the patient&apos;s left condyle."/>
+                <Property key="TextAlign" value="Left Top"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="70 24 106 15">
-                <Property key="Widget_Caption" value="Ramus Height"/>
+                <Property key="Caption" value="Ramus Height"/>
             </Widget>
             <Widget type="ScrollBar" skin="SliderH" position="67 46 219 18" name="LeftCondyleGrowth/RamusHeightSlider">
-                <Property key="Scroll_Range" value="10000"/>
-                <Property key="Scroll_Position" value="0"/>
+                <Property key="Range" value="10000"/>
+                <Property key="RangePosition" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="6 25 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftRamusHeight"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftRamusHeight"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="288 25 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftRamusHeightSmall"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftRamusHeightSmall"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="70 89 122 15">
-                <Property key="Widget_Caption" value="Condyle Height"/>
+                <Property key="Caption" value="Condyle Height"/>
             </Widget>
             <Widget type="ScrollBar" skin="SliderH" position="67 111 219 17" name="LeftCondyleGrowth/CondyleHeightSlider">
-                <Property key="Scroll_Range" value="10000"/>
-                <Property key="Scroll_Position" value="0"/>
+                <Property key="Range" value="10000"/>
+                <Property key="RangePosition" value="0"/>
                 <UserString key="BoneManipulator" value="leftCondyleHeightMandible"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="288 90 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftCondyleHeightSmall"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftCondyleHeightSmall"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="6 90 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftCondyleHeight"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftCondyleHeight"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="70 154 142 15">
-                <Property key="Widget_Caption" value="Condyle Rotation"/>
+                <Property key="Caption" value="Condyle Rotation"/>
             </Widget>
             <Widget type="ScrollBar" skin="SliderH" position="67 176 219 17" name="LeftCondyleGrowth/CondyleRotationSlider">
-                <Property key="Scroll_Range" value="10000"/>
-                <Property key="Scroll_Position" value="0"/>
+                <Property key="Range" value="10000"/>
+                <Property key="RangePosition" value="0"/>
                 <UserString key="BoneManipulator" value="leftCondyleRotationMandible"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="288 155 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftCondyleRotationRotated"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftCondyleRotationRotated"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="6 155 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftCondyleRotation"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftCondyleRotation"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="70 219 132 15">
-                <Property key="Widget_Caption" value="Mandibular Notch"/>
+                <Property key="Caption" value="Mandibular Notch"/>
             </Widget>
             <Widget type="ScrollBar" skin="SliderH" position="67 241 219 17" name="LeftCondyleGrowth/MandibularNotchSlider">
-                <Property key="Scroll_Range" value="10000"/>
-                <Property key="Scroll_Position" value="0"/>
+                <Property key="Range" value="10000"/>
+                <Property key="RangePosition" value="0"/>
                 <UserString key="BoneManipulator" value="leftMandibularNotchMandible"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="288 220 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftMandibularNotchDistorted"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftMandibularNotchDistorted"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="6 220 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftMandibularNotch"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftMandibularNotch"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="70 284 125 15">
-                <Property key="Widget_Caption" value="Antegonial Notch"/>
+                <Property key="Caption" value="Antegonial Notch"/>
             </Widget>
             <Widget type="ScrollBar" skin="SliderH" position="67 306 219 17" name="LeftCondyleGrowth/AntegonialNotchSlider">
-                <Property key="Scroll_Range" value="10000"/>
-                <Property key="Scroll_Position" value="0"/>
+                <Property key="Range" value="10000"/>
+                <Property key="RangePosition" value="0"/>
                 <UserString key="BoneManipulator" value="leftAntegonialNotchMandible"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="288 285 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftAntegonialNotchDistorted"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftAntegonialNotchDistorted"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="6 285 60 60">
-                <Property key="Image_Resource" value="GrowthImages/GrowthLeftAntegonialNotch"/>
+                <Property key="ImageResource" value="GrowthImages/GrowthLeftAntegonialNotch"/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 391 88 30" name="LeftCondyleGrowth/UndoButton">
-                <Property key="Widget_Caption" value="Undo"/>
+                <Property key="Caption" value="Undo"/>
             </Widget>
             <Widget type="Button" skin="Button" position="96 391 88 30" name="LeftCondyleGrowth/MakeNormalButton">
-                <Property key="Widget_Caption" value="Make Normal"/>
+                <Property key="Caption" value="Make Normal"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="4 350 344 39" layer="Back" name="GridControl">
                 <Widget type="TextBox" skin="TextBox" position="0 0 262 15">
-                    <Property key="Widget_Caption" value="Turn the grid on or off and adjust its spacing."/>
+                    <Property key="Caption" value="Turn the grid on or off and adjust its spacing."/>
                 </Widget>
                 <Widget type="Button" skin="CheckBox" position="6 18 89 15" name="GridControl/ShowGrid">
-                    <Property key="Widget_Caption" value="Show Grid"/>
+                    <Property key="Caption" value="Show Grid"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position="96 18 50 15">
-                    <Property key="Widget_Caption" value="Spacing"/>
-                    <Property key="Text_TextAlign" value="Left VCenter"/>
+                    <Property key="Caption" value="Spacing"/>
+                    <Property key="TextAlign" value="Left VCenter"/>
                 </Widget>
                 <Widget type="EditBox" skin="EditBox" position="150 16 67 20" name="GridControl/GridSpace"/>
                 <Widget type="Button" skin="ButtonUpSkin" position="218 16 10 10" name="GridControl/GridSpaceUp"/>
                 <Widget type="Button" skin="ButtonDownSkin" position="218 26 10 10" name="GridControl/GridSpaceDown"/>
                 <Widget type="TextBox" skin="TextBox" position="231 18 21 15">
-                    <Property key="Text_TextAlign" value="Left VCenter"/>
-                    <Property key="Widget_Caption" value="MM"/>
+                    <Property key="TextAlign" value="Left VCenter"/>
+                    <Property key="Caption" value="MM"/>
                 </Widget>
             </Widget>
         </Widget>

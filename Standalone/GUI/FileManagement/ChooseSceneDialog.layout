@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="TaskMenuBackground" position="226 51 565 360" layer="Overlapped">
-        <Property key="Widget_Caption" value="Choose Scene"/>
-        <Property key="Window_MinSize" value="563 372"/>
-        <Property key="Window_MaxSize" value="563 372"/>
+        <Property key="Caption" value="Choose Scene"/>
+        <Property key="MinSize" value="563 372"/>
+        <Property key="MaxSize" value="563 372"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 36 555 315" align="Stretch" name="ChooseScene/FileSelect">
-            <Property key="ScrollView_CanvasSize" value="539 300"/>
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="539 300"/>
+            <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="False"/>
             <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="534 4 24 20" align="Right Top" name="ChooseScene/Cancel">
-            <Property key="Widget_Caption" value="Cancel"/>
+            <Property key="Caption" value="Cancel"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 6 99 15">
-            <Property key="Widget_Caption" value="Choose Scene"/>
-            <Property key="Text_TextColour" value="#FFFFFF"/>
+            <Property key="Caption" value="Choose Scene"/>
+            <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Widget" skin="SepUpVSkin" position="4 28 555 2" align="HStretch Top"/>
         <Widget type="TextBox" skin="TextBox" position="145 136 275 87" align="Center" name="Loading">
-            <Property key="Widget_Caption" value="Loading"/>
-            <Property key="Text_TextColour" value="#FFFFFF"/>
-            <Property key="Text_FontHeight" value="100"/>
-            <Property key="Text_FontName" value="TimelineText.100"/>
+            <Property key="Caption" value="Loading"/>
+            <Property key="TextColour" value="#FFFFFF"/>
+            <Property key="FontHeight" value="100"/>
+            <Property key="FontName" value="TimelineText.100"/>
         </Widget>
     </Widget>
 </MyGUI>

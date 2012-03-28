@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="1 68 211 23" layer="Back">
         <Widget type="TextBox" skin="TextBox" position="1 1 89 15">
-            <Property key="Widget_Caption" value="Plunge Amount"/>
+            <Property key="Caption" value="Plunge Amount"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="92 1 116 18" align="HStretch Top" name="PlungeAmountEdit"/>
     </Widget>

@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="ImageBox" skin="ImageBox" position="0 0 1024 768" align="Left Top" layer="Main">
-        <Property key="Image_Resource" value="SplashScreen/Logo"/>
-        <Property key="Image_Group" value="Icons"/>
-        <Property key="Image_Name" value="Icon"/>
+        <Property key="ImageResource" value="SplashScreen/Logo"/>
+        <Property key="ImageGroup" value="Icons"/>
+        <Property key="ImageName" value="Icon"/>
         <UserString key="ImageWidth" value="1920"/>
         <UserString key="ImageHeight" value="1200"/>
         <Widget type="Widget" skin="PanelEmpty" position="2 2 1024 768" layer="Main" name="WidgetPanel">
             <Widget type="ProgressBar" skin="ProgressBarFill" position="240 742 544 25" align="HStretch Bottom" name="SplashScreen/ProgressBar"/>
             <Widget type="TextBox" skin="TextBox" position="240 726 544 15" align="HStretch Bottom" name="SplashScreen/Status">
-                <Property key="Widget_Caption" value="Loading..."/>
-                <Property key="Text_TextAlign" value="Left Top"/>
+                <Property key="Caption" value="Loading..."/>
+                <Property key="TextAlign" value="Left Top"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="313 219 398 468" align="HCenter Top">
-                <Property key="Image_Resource" value="SplashScreen/Image"/>
+                <Property key="ImageResource" value="SplashScreen/Image"/>
                 <UserString key="ResizeKeepAspectRatio" value="True"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="263 61 498 136" align="HCenter Top">
-                <Property key="Image_Resource" value="SplashScreen/Text"/>
+                <Property key="ImageResource" value="SplashScreen/Text"/>
                 <UserString key="ResizeKeepAspectRatio" value="True"/>
             </Widget>
         </Widget>

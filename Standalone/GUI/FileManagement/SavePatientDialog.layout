@@ -1,55 +1,50 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="TaskMenuBackground" position="72 80 436 224" layer="Overlapped">
-
-      
-      
         <Widget type="Widget" skin="PanelEmpty" position="0 0 436 224" layer="Overlapped" name="DataPanel">
             <Widget type="TextBox" skin="TextBox" position="6 22 66 15">
-                <Property key="Widget_Caption" value="First Name"/>
-                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Caption" value="First Name"/>
+                <Property key="TextColour" value="#FFFFFF"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="6 61 71 15">
-                <Property key="Widget_Caption" value="Last Name"/>
-                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Caption" value="Last Name"/>
+                <Property key="TextColour" value="#FFFFFF"/>
             </Widget>
             <Widget type="EditBox" skin="EditBox" position="8 34 197 23" align="HStretch Top" name="Save/FirstName"/>
             <Widget type="EditBox" skin="EditBox" position="8 73 197 23" align="HStretch Top" name="Save/LastName"/>
             <Widget type="TextBox" skin="TextBox" position="6 101 92 15">
-                <Property key="Widget_Caption" value="Save Location"/>
-                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Caption" value="Save Location"/>
+                <Property key="TextColour" value="#FFFFFF"/>
             </Widget>
             <Widget type="EditBox" skin="EditBox" position="8 113 342 23" align="HStretch Top" name="Save/Location"/>
             <Widget type="Button" skin="Button" position="351 113 80 23" align="Right Top" name="Save/BrowseButton">
-                <Property key="Widget_Caption" value="Browse"/>
+                <Property key="Caption" value="Browse"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="6 141 69 15">
-                <Property key="Widget_Caption" value="FIle Name"/>
-                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Caption" value="FIle Name"/>
+                <Property key="TextColour" value="#FFFFFF"/>
             </Widget>
             <Widget type="EditBox" skin="EditBox" position="9 153 223 23" align="HStretch Top" name="Save/Filename"/>
             <Widget type="TextBox" skin="TextBox" position="283 158 139 15" align="Right Top" name="Save/WarningLabel">
-                <Property key="Widget_Caption" value="This file already exists."/>
-                <Property key="Text_TextColour" value="#FFFFFF"/>
+                <Property key="Caption" value="This file already exists."/>
+                <Property key="TextColour" value="#FFFFFF"/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 179 88 23" name="Save/SaveButton">
-                <Property key="Widget_Caption" value="Save"/>
+                <Property key="Caption" value="Save"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="233 140 50 50" align="Right Top" name="Save/WarningImage">
-                <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
-                <Property key="Image_Index" value="Warning"/>
-                <Property key="Image_Group" value="Icons"/>
-                <Property key="Image_Name" value="Warning"/>
+                <Property key="ImageResource" value="pic_CoreMessageIcon"/>
+                <Property key="ImageIndex" value="Warning"/>
+                <Property key="ImageGroup" value="Icons"/>
+                <Property key="ImageName" value="Warning"/>
             </Widget>
         </Widget>
-
-      <Widget type="Button" skin="ButtonXBig" position="410 2 24 20" align="Right Top" name="Save/CancelButton">
-        <Property key="Widget_Caption" value="Cancel"/>
-      </Widget>
-
-      <Widget type="TextBox" skin="TextBox" position="4 4 83 15">
-        <Property key="Widget_Caption" value="Patient Data"/>
-        <Property key="Text_TextColour" value="#FFFFFF"/>
-      </Widget>
+        <Widget type="Button" skin="ButtonXBig" position="410 2 24 20" align="Right Top" name="Save/CancelButton">
+            <Property key="Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="4 4 83 15">
+            <Property key="Caption" value="Patient Data"/>
+            <Property key="TextColour" value="#FFFFFF"/>
+        </Widget>
     </Widget>
 </MyGUI>

@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="98 59 268 381" layer="Overlapped">
-        <Property key="Widget_Caption" value="Anatomy Finder"/>
+        <Property key="Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="EditBox" skin="EditBox" position="1 5 161 23" align="HStretch Top" name="SearchBox"/>
         <Widget type="Button" skin="Button" position="164 7 44 20" align="Right Top" name="ClearButton">
-            <Property key="Widget_Caption" value="Clear"/>
+            <Property key="Caption" value="Clear"/>
         </Widget>
         <Widget type="Button" skin="Button" position="210 7 46 20" align="Right Top" name="UnhideAll">
-            <Property key="Widget_Caption" value="Unhide"/>
+            <Property key="Caption" value="Unhide"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="0 32 256 316" align="Stretch" name="AnatomyList">
-            <Property key="ScrollView_CanvasSize" value="238 10"/>
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="238 10"/>
+            <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="AnatomyFinderIconButtonButton"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>

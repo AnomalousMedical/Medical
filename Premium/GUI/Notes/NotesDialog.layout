@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="60 80 223 400" layer="Overlapped">
-        <Property key="Widget_Visible" value="true"/>
-        <Property key="Widget_Caption" value="Notes"/>
+        <Property key="Visible" value="true"/>
+        <Property key="Caption" value="Notes"/>
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="TextBox" skin="TextBox" position="0 4 109 15">
-            <Property key="Widget_Caption" value="Distortion Name"/>
+            <Property key="Caption" value="Distortion Name"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="0 18 211 21" align="HStretch Top" name="Notes/DistortionName">
-            <Property key="Widget_Caption" value="Custom Distortion"/>
+            <Property key="Caption" value="Custom Distortion"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 45 110 15">
-            <Property key="Widget_Caption" value="Date Created"/>
+            <Property key="Caption" value="Date Created"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="0 59 211 21" align="HStretch Top" name="Notes/DateCreated"/>
         <Widget type="TextBox" skin="TextBox" position="0 86 110 15">
-            <Property key="Widget_Caption" value="Distortion Wizard"/>
+            <Property key="Caption" value="Distortion Wizard"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="0 100 211 21" align="HStretch Top" name="Notes/DistortionWizard">
-            <Property key="Edit_ReadOnly" value="true"/>
-            <Property key="Edit_Static" value="true"/>
+            <Property key="ReadOnly" value="true"/>
+            <Property key="Static" value="true"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 128 47 15">
-            <Property key="Widget_Caption" value="Notes"/>
+            <Property key="Caption" value="Notes"/>
         </Widget>
         <Widget type="EditBox" skin="WordWrapWhite" position="0 142 211 225" align="Stretch" name="Notes/NotesText">
-            <Property key="Edit_MultiLine" value="true"/>
-            <Property key="Edit_MaxTextLength" value="2900"/>
-            <Property key="Text_TextAlign" value="Left Top"/>
+            <Property key="MultiLine" value="true"/>
+            <Property key="MaxTextLength" value="2900"/>
+            <Property key="TextAlign" value="Left Top"/>
         </Widget>
     </Widget>
 </MyGUI>

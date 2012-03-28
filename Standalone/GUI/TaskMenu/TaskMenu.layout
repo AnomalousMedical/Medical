@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="TaskMenuBackground" position="0 40 584 482" layer="Popup">
-        <Property key="Widget_Alpha" value="1"/>
+        <Property key="Alpha" value="1"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 574 432" align="Stretch" name="IconScroller">
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Property key="ScrollView_CanvasSize" value="381 437"/>
+            <Property key="CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="381 437"/>
             <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
             <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>
@@ -12,15 +12,15 @@
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
         <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="2 11 66 22" name="Tasks">
-            <Property key="Widget_Caption" value="Tasks"/>
+            <Property key="Caption" value="Tasks"/>
         </Widget>
         <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="70 11 76 22" name="Documents">
-            <Property key="Widget_Caption" value="Documents"/>
+            <Property key="Caption" value="Documents"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 574 432" align="Stretch" name="DocumentScroller">
-            <Property key="ScrollView_CanvasSize" value="300 300"/>
-            <Property key="Widget_Visible" value="false"/>
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="300 300"/>
+            <Property key="Visible" value="false"/>
+            <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
             <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>

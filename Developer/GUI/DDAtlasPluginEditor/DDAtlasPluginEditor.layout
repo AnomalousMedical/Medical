@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="19 33 348 313" layer="Overlapped">
-        <Property key="Widget_Caption" value="Plugin Editor"/>
+        <Property key="Caption" value="Plugin Editor"/>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 1 27" align="Left Top" name="MenuBar"/>
         <Widget type="ScrollView" skin="ScrollView" position="0 29 111 251" align="HRelative VStretch" name="TreeScroller">
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="116 29 219 251" align="HRelative VStretch" name="TableScroller">
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
     </Widget>
 </MyGUI>

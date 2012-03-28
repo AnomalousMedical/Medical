@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="SolidBackground" position="97 162 224 114" layer="Overlapped">
         <Widget type="Button" skin="ButtonV" position="176 2 22 22" align="Right Top" name="PinButton">
-            <Property key="Widget_Caption" value="Pin"/>
+            <Property key="Caption" value="Pin"/>
         </Widget>
         <Widget type="ImageBox" skin="ImageBox" position="2 1 50 50" name="ThumbnailImage">
-            <Property key="Widget_NeedMouse" value="false"/>
-            <Property key="Widget_NeedKey" value="false"/>
+            <Property key="NeedMouse" value="false"/>
+            <Property key="NeedKey" value="false"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="57 5 101 14" align="Left Top" name="AnatomyName">
-            <Property key="Widget_NeedKey" value="false"/>
-            <Property key="Widget_NeedMouse" value="false"/>
+            <Property key="NeedKey" value="false"/>
+            <Property key="NeedMouse" value="false"/>
         </Widget>
         <Widget type="ScrollBar" skin="SliderH" position="48 67 129 16" align="HStretch Top" name="TransparencySlider"/>
         <Widget type="Button" skin="ButtonXBig" position="199 2 22 22" align="Right Top" name="CloseButton"/>
-        <Widget type="TextBox" skin="TextBox" position="69 56 78 13" align="HCenter Top">
-            <Property key="Widget_Caption" value="Transparency"/>
+        <Widget type="TextBox" skin="TextBox" position="73 56 78 13" align="HCenter Top">
+            <Property key="Caption" value="Transparency"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="58 24 62 26" align="HRelative Top" name="CenterButton">
-            <Property key="Widget_Caption" value="Center"/>
+        <Widget type="Button" skin="Button" position="58 24 61 26" align="HRelative Top" name="CenterButton">
+            <Property key="Caption" value="Center"/>
         </Widget>
         <Widget type="Button" skin="Button" position="126 24 61 26" align="HRelative Top" name="HighlightButton">
-            <Property key="Widget_Caption" value="Highlight"/>
+            <Property key="Caption" value="Highlight"/>
         </Widget>
         <Widget type="Button" skin="Button" position="3 85 219 26" align="HStretch Top" name="RelatedAnatomyButton">
-            <Property key="Widget_Caption" value="Search for Related Anatomy"/>
+            <Property key="Caption" value="Search for Related Anatomy"/>
         </Widget>
         <Widget type="Button" skin="Button" position="3 55 42 26" name="HideButton">
-            <Property key="Widget_Caption" value="Hide"/>
+            <Property key="Caption" value="Hide"/>
         </Widget>
         <Widget type="Button" skin="Button" position="180 55 42 26" align="Right Top" name="ShowButton">
-            <Property key="Widget_Caption" value="Show"/>
+            <Property key="Caption" value="Show"/>
         </Widget>
     </Widget>
 </MyGUI>

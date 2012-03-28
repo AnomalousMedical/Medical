@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="TaskMenuBackground" position="224 51 347 537" layer="Overlapped">
-        <Property key="Widget_Caption" value="Bookmarks"/>
+        <Property key="Caption" value="Bookmarks"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 38 340 495" align="Stretch" name="StatesList">
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Property key="ScrollView_CanvasSize" value="209 10"/>
-            <Property key="ScrollView_VisibleHScroll" value="false"/>
+            <Property key="CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="209 10"/>
+            <Property key="VisibleHScroll" value="false"/>
             <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
             <UserString key="ItemHeight" value="122"/>
             <UserString key="ItemWidth" value="122"/>
             <UserString key="ShowGroupCaptions" value="false"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="8 8 76 16">
-            <Property key="Widget_Caption" value="States"/>
-            <Property key="Text_TextColour" value="#FFFFFF"/>
+            <Property key="Caption" value="States"/>
+            <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="318 7 24 20" align="Right Top" name="CloseButton"/>
         <Widget type="Widget" skin="SepUpVSkin" position="8 31 332 2" align="HStretch Top"/>
-        <Widget type="ImageBox" skin="ImageBox" position="147 426 100 100" align="HCenter Bottom" name="TrashPanel">
-            <Property key="Image_Resource" value="Bookmarks/Trash"/>
+        <Widget type="ImageBox" skin="ImageBox" position="123 426 100 100" align="HCenter Bottom" name="TrashPanel">
+            <Property key="ImageResource" value="Bookmarks/Trash"/>
         </Widget>
     </Widget>
 </MyGUI>

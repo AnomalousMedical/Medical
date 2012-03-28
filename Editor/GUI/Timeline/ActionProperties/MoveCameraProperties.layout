@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="1 68 211 112" layer="Back">
         <Widget type="TextBox" skin="TextBox" position="1 21 74 15">
-            <Property key="Widget_Caption" value="Translation"/>
+            <Property key="Caption" value="Translation"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="76 21 132 18" align="HStretch Top" name="TranslationEdit"/>
         <Widget type="TextBox" skin="TextBox" position="1 41 74 15">
-            <Property key="Widget_Caption" value="Look At"/>
+            <Property key="Caption" value="Look At"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="76 41 132 18" name="LookAtEdit"/>
         <Widget type="Button" skin="Button" position="3 61 88 24" name="UseCurrentButton">
-            <Property key="Widget_Caption" value="Use Current"/>
+            <Property key="Caption" value="Use Current"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="1 1 74 15">
-            <Property key="Widget_Caption" value="Camera"/>
+            <Property key="Caption" value="Camera"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="76 1 132 18" name="CameraText"/>
         <Widget type="Button" skin="CheckBox" position="3 87 205 21" name="UseSystemDuration">
-            <Property key="Widget_Caption" value="Use System Camera Duration"/>
+            <Property key="Caption" value="Use System Camera Duration"/>
         </Widget>
     </Widget>
 </MyGUI>

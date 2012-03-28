@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="1 68 211 25" layer="Back">
         <Widget type="Button" skin="Button" position="0 2 80 21" name="UseCurrent">
-            <Property key="Widget_Caption" value="Use Current"/>
+            <Property key="Caption" value="Use Current"/>
         </Widget>
     </Widget>
 </MyGUI>

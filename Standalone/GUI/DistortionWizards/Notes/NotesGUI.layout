@@ -1,40 +1,40 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="53 80 352 600" layer="Back">
         <Widget type="TextBox" skin="TextBox" position="4 4 109 15">
-            <Property key="Widget_Caption" value="Distortion Name"/>
+            <Property key="Caption" value="Distortion Name"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="6 17 341 21" align="HStretch Top" name="Notes/DistortionName">
-            <Property key="Widget_Caption" value="Custom Distortion"/>
+            <Property key="Caption" value="Custom Distortion"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 44 110 15">
-            <Property key="Widget_Caption" value="Date Created"/>
+            <Property key="Caption" value="Date Created"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="6 57 341 21" align="HStretch Top" name="Notes/DateCreated">
-            <Property key="Edit_ReadOnly" value="true"/>
-            <Property key="Edit_Static" value="true"/>
+            <Property key="ReadOnly" value="true"/>
+            <Property key="Static" value="true"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 84 110 15">
-            <Property key="Widget_Caption" value="Distortion Wizard"/>
+            <Property key="Caption" value="Distortion Wizard"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="6 97 341 21" align="HStretch Top" name="Notes/DistortionWizard">
-            <Property key="Edit_ReadOnly" value="true"/>
-            <Property key="Edit_Static" value="true"/>
+            <Property key="ReadOnly" value="true"/>
+            <Property key="Static" value="true"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 124 116 15">
-            <Property key="Widget_Caption" value="Select Thumbnail"/>
+            <Property key="Caption" value="Select Thumbnail"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="6 137 339 165" align="HStretch Top" name="Notes/Thumbnails">
-            <Property key="ScrollView_CanvasSize" value="245 10"/>
+            <Property key="CanvasSize" value="245 10"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 309 47 15">
-            <Property key="Widget_Caption" value="Notes"/>
+            <Property key="Caption" value="Notes"/>
         </Widget>
         <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="6 322 340 271" align="HStretch VStretch">
             <Widget type="EditBox" skin="WordWrapEmpty" position="0 0 340 271" align="Stretch" name="Notes/NotesText">
-                <Property key="Edit_MultiLine" value="true"/>
-                <Property key="Edit_MaxTextLength" value="2900"/>
+                <Property key="MultiLine" value="true"/>
+                <Property key="MaxTextLength" value="2900"/>
             </Widget>
         </Widget>
     </Widget>

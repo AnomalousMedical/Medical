@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="CustomPanelOnPanel2" position="77 214 385 31" layer="Back">
         <Widget type="TextBox" skin="TextBox" position="2 7 160 16" align="Stretch" name="Name"/>
         <Widget type="Button" skin="Button" position="223 3 53 26" align="Right Top" name="Insert">
-            <Property key="Widget_Caption" value="Insert"/>
+            <Property key="Caption" value="Insert"/>
         </Widget>
         <Widget type="Button" skin="Button" position="320 3 63 26" align="Right Top" name="Remove">
-            <Property key="Widget_Caption" value="Remove"/>
+            <Property key="Caption" value="Remove"/>
         </Widget>
         <Widget type="Button" skin="Button" position="277 3 42 26" align="Right Top" name="Find">
-            <Property key="Widget_Caption" value="Find"/>
+            <Property key="Caption" value="Find"/>
         </Widget>
         <Widget type="Button" skin="Button" position="164 3 57 26" align="Right Top" name="Choose">
-            <Property key="Widget_Caption" value="Choose"/>
+            <Property key="Caption" value="Choose"/>
         </Widget>
     </Widget>
 </MyGUI>

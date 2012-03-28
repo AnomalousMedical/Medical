@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCX" position="87 79 240 117" layer="Overlapped">
-        <Property key="Widget_Caption" value="Movement Sequences"/>
+        <Property key="Caption" value="Movement Sequences"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
         <Widget type="Button" skin="RibbonButton" position="0 7 68 75" name="Sequence">
-            <Property key="Widget_Caption" value="Sequence"/>
-            <Property key="Button_ImageResource" value="SequenceToolstrip/Sequence"/>
+            <Property key="Caption" value="Sequence"/>
+            <Property key="ImageResource" value="SequenceToolstrip/Sequence"/>
         </Widget>
         <Widget type="Button" skin="RibbonButtonSmall" position="74 57 47 25" name="Play">
-            <Property key="Widget_Caption" value="Play"/>
-            <Property key="Button_ImageResource" value="SequenceToolstrip/Play"/>
-            <Property key="Widget_Enabled" value="false"/>
+            <Property key="Caption" value="Play"/>
+            <Property key="ImageResource" value="SequenceToolstrip/Play"/>
+            <Property key="Enabled" value="false"/>
         </Widget>
         <Widget type="Button" skin="RibbonButtonSmall" position="129 57 51 25" name="Stop">
-            <Property key="Widget_Caption" value="Stop"/>
-            <Property key="Button_ImageResource" value="SequenceToolstrip/Stop"/>
-            <Property key="Widget_Enabled" value="false"/>
+            <Property key="Caption" value="Stop"/>
+            <Property key="ImageResource" value="SequenceToolstrip/Stop"/>
+            <Property key="Enabled" value="false"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="74 7 72 14">
-            <Property key="Widget_Caption" value="Now Playing"/>
+            <Property key="Caption" value="Now Playing"/>
         </Widget>
         <Widget type="EditBox" skin="WordWrapEmpty" position="74 21 152 30" name="NowPlaying">
-            <Property key="Edit_Static" value="true"/>
-            <Property key="Edit_ReadOnly" value="true"/>
-            <Property key="Edit_MultiLine" value="true"/>
-            <Property key="Widget_Caption" value="None"/>
+            <Property key="Static" value="true"/>
+            <Property key="ReadOnly" value="true"/>
+            <Property key="MultiLine" value="true"/>
+            <Property key="Caption" value="None"/>
         </Widget>
     </Widget>
 </MyGUI>

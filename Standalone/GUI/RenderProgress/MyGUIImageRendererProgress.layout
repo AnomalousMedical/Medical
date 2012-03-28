@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelSkin" position="68 216 360 70" layer="Overlapped">
         <Widget type="ProgressBar" skin="ProgressBarFill" position="4 20 352 18" align="HStretch Top" name="RenderingProgress">
-            <Property key="Progress_Range" value="100"/>
-            <Property key="Progress_Position" value="0"/>
+            <Property key="Range" value="100"/>
+            <Property key="RangePosition" value="0"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 4 342 15" align="HStretch Top" name="StatusText">
-            <Property key="Widget_Caption" value="Rendering Image"/>
+            <Property key="Caption" value="Rendering Image"/>
         </Widget>
         <Widget type="Button" skin="Button" position="4 40 64 26" name="CancelButton">
-            <Property key="Widget_Caption" value="Cancel"/>
+            <Property key="Caption" value="Cancel"/>
         </Widget>
     </Widget>
 </MyGUI>

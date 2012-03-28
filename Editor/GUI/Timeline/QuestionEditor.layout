@@ -1,41 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="163 146 523 381" layer="Overlapped">
-        <Property key="Widget_Caption" value="Question Editor"/>
+        <Property key="Caption" value="Question Editor"/>
         <Widget type="TextBox" skin="TextBox" position="4 6 56 14">
-            <Property key="Widget_Caption" value="Question"/>
+            <Property key="Caption" value="Question"/>
         </Widget>
         <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="5 22 502 67" align="HStretch Top">
             <Widget type="EditBox" skin="WordWrapEmpty" position_real="0 0 1 1" align="Stretch" name="QuestionText"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 111 52 14">
-            <Property key="Widget_Caption" value="Answers"/>
+            <Property key="Caption" value="Answers"/>
         </Widget>
         <Widget type="Button" skin="Button" position="4 323 52 21" align="Left Bottom" name="ApplyButton">
-            <Property key="Widget_Caption" value="Apply"/>
+            <Property key="Caption" value="Apply"/>
         </Widget>
         <Widget type="Button" skin="Button" position="58 323 52 21" align="Left Bottom" name="CancelButton">
-            <Property key="Widget_Caption" value="Cancel"/>
+            <Property key="Caption" value="Cancel"/>
         </Widget>
         <Widget type="Button" skin="Button" position="4 296 92 21" align="Left Bottom" name="AddAnswerButton">
-            <Property key="Widget_Caption" value="Add Answer"/>
+            <Property key="Caption" value="Add Answer"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="4 141 504 152" align="Stretch" name="AnswerScroll">
-            <Property key="ScrollView_CanvasSize" value="0 0"/>
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="0 0"/>
+            <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="39 126 34 14">
-            <Property key="Widget_Caption" value="Text"/>
+            <Property key="Caption" value="Text"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="324 126 57 13" align="Right Top">
-            <Property key="Widget_Caption" value="Timeline"/>
+            <Property key="Caption" value="Timeline"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 95 68 13">
-            <Property key="Widget_Caption" value="Play Sound"/>
+            <Property key="Caption" value="Play Sound"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="72 92 354 18" align="HStretch Top" name="SoundFileEdit"/>
         <Widget type="Button" skin="Button" position="428 92 78 18" align="Right Top" name="SoundBrowser">
-            <Property key="Widget_Caption" value="Browse"/>
+            <Property key="Caption" value="Browse"/>
         </Widget>
     </Widget>
 </MyGUI>

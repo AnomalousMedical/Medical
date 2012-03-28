@@ -1,88 +1,88 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCX" position="116 51 222 608" layer="Overlapped">
-        <Property key="Widget_Caption" value="Rendering"/>
+        <Property key="Caption" value="Rendering"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
         <Widget type="Button" skin="Button" position="140 276 66 22" name="RenderingTab/SizeButton">
-            <Property key="Widget_Caption" value="Size"/>
+            <Property key="Caption" value="Size"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 264 33 13">
-            <Property key="Widget_Caption" value="Width"/>
+            <Property key="Caption" value="Width"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="78 264 42 12">
-            <Property key="Widget_Caption" value="Height"/>
+            <Property key="Caption" value="Height"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="0 277 59 20" name="RenderingTab/WidthEdit">
-            <Property key="Widget_Caption" value="1280"/>
+            <Property key="Caption" value="1280"/>
             <UserString key="AllowFloat" value="False"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="MaxValue" value="4096"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="78 277 59 20" name="RenderingTab/HeightEdit">
-            <Property key="Widget_Caption" value="1024"/>
+            <Property key="Caption" value="1024"/>
             <UserString key="MaxValue" value="4096"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="AllowFloat" value="False"/>
         </Widget>
         <Widget type="Button" skin="Button" position="6 220 72 26" name="RenderingTab/Render">
-            <Property key="Widget_Caption" value="Render"/>
-            <Property key="Button_ImageResource" value="RenderIcon"/>
+            <Property key="Caption" value="Render"/>
+            <Property key="ImageResource" value="RenderIcon"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 3 59 13">
-            <Property key="Widget_Caption" value="Preview"/>
+            <Property key="Caption" value="Preview"/>
         </Widget>
         <Widget type="ImageBox" skin="ImageBox" position="4 16 202 202" name="PreviewImage"/>
         <Widget type="TextBox" skin="TextBox" position="0 249 67 14">
-            <Property key="Widget_Caption" value="Properties"/>
+            <Property key="Caption" value="Properties"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 338 99 14">
-            <Property key="Widget_Caption" value="Output Folder"/>
+            <Property key="Caption" value="Output Folder"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="0 353 178 22" name="OutputFolder"/>
         <Widget type="Button" skin="Button" position="180 353 31 22" name="OutputBrowse">
-            <Property key="Widget_Caption" value="..."/>
+            <Property key="Caption" value="..."/>
         </Widget>
         <Widget type="Button" skin="Button" position="82 220 124 26" name="FullSize">
-            <Property key="Widget_Caption" value="View Full Size"/>
+            <Property key="Caption" value="View Full Size"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 300 49 14">
-            <Property key="Widget_Caption" value="Name"/>
+            <Property key="Caption" value="Name"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="0 315 178 22" name="ImageName"/>
         <Widget type="Button" skin="Button" position="0 545 84 26" name="Save">
-            <Property key="Widget_Caption" value="Save"/>
+            <Property key="Caption" value="Save"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 419 199 14">
-            <Property key="Widget_Caption" value="License Type"/>
+            <Property key="Caption" value="License Type"/>
         </Widget>
         <Widget type="Button" skin="RadioButton" position="0 436 80 19" name="Personal">
-            <Property key="Widget_Caption" value="Personal"/>
+            <Property key="Caption" value="Personal"/>
         </Widget>
         <Widget type="Button" skin="RadioButton" position="82 436 100 19" name="Commercial">
-            <Property key="Widget_Caption" value="Commercial"/>
+            <Property key="Caption" value="Commercial"/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="0 517 83 21" name="Agree">
-            <Property key="Widget_Caption" value="I Agree"/>
+            <Property key="Caption" value="I Agree"/>
         </Widget>
         <Widget type="EditBox" skin="WordWrapEmpty" position="0 453 208 62">
-            <Property key="Widget_Caption" value="By rendering and saving this image you agree to follow the Anomalous Medical Image License selected above."/>
-            <Property key="Edit_Static" value="true"/>
+            <Property key="Caption" value="By rendering and saving this image you agree to follow the Anomalous Medical Image License selected above."/>
+            <Property key="Static" value="true"/>
         </Widget>
         <Widget type="Button" skin="Button" position="108 514 84 26" name="ViewLicense">
-            <Property key="Widget_Caption" value="View"/>
+            <Property key="Caption" value="View"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 378 111 14">
-            <Property key="Widget_Caption" value="Image Format"/>
+            <Property key="Caption" value="Image Format"/>
         </Widget>
         <Widget type="ComboBox" skin="ComboBox" position="0 393 178 22" name="ImageFormat">
-            <Property key="ComboBox_AddItem" value="PNG (.png)"/>
-            <Property key="ComboBox_AddItem" value="Bitmap (.bmp)"/>
-            <Property key="ComboBox_AddItem" value="JPEG (.jpg)"/>
-            <Property key="Edit_Static" value="true"/>
+            <Property key="AddItem" value="PNG (.png)"/>
+            <Property key="AddItem" value="Bitmap (.bmp)"/>
+            <Property key="AddItem" value="JPEG (.jpg)"/>
+            <Property key="Static" value="true"/>
         </Widget>
         <Widget type="Button" skin="Button" position="87 545 123 26" name="OpenOutputFolder">
-            <Property key="Widget_Caption" value="Open Output Folder"/>
+            <Property key="Caption" value="Open Output Folder"/>
         </Widget>
     </Widget>
 </MyGUI>

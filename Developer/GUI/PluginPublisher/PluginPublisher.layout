@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="45 61 382 188" layer="Overlapped">
-        <Property key="Widget_Caption" value="Plugin Publisher"/>
+        <Property key="Caption" value="Plugin Publisher"/>
         <Widget type="Button" skin="Button" position="5 129 68 22" align="Left Bottom" name="PublishButton">
-            <Property key="Widget_Caption" value="Publish"/>
+            <Property key="Caption" value="Publish"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="3 4 157 15">
-            <Property key="Widget_Caption" value="Plugin File"/>
+            <Property key="Caption" value="Plugin File"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="4 21 331 22" align="HStretch Top" name="PluginFileEdit"/>
         <Widget type="Button" skin="Button" position="337 19 29 26" align="Right Top" name="PluginFileBrowser">
-            <Property key="Widget_Caption" value="..."/>
+            <Property key="Caption" value="..."/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="3 45 164 15">
-            <Property key="Widget_Caption" value="Signature Private Key File"/>
+            <Property key="Caption" value="Signature Private Key File"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="4 63 331 22" align="HStretch Top" name="SignatureFileEdit"/>
         <Widget type="Button" skin="Button" position="337 61 29 26" align="Right Top" name="SignatureFileBrowser">
-            <Property key="Widget_Caption" value="..."/>
+            <Property key="Caption" value="..."/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 87 179 15">
-            <Property key="Widget_Caption" value="Output Directory"/>
+            <Property key="Caption" value="Output Directory"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="4 103 331 22" align="HStretch Top" name="OutDirEdit"/>
         <Widget type="Button" skin="Button" position="337 101 29 28" align="Right Top" name="OutDirBrowser">
-            <Property key="Widget_Caption" value="..."/>
+            <Property key="Caption" value="..."/>
         </Widget>
     </Widget>
 </MyGUI>

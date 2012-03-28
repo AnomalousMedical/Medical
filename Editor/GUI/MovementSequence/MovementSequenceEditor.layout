@@ -1,50 +1,50 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
+<MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="204 195 929 106" layer="Overlapped">
-        <Property key="Widget_Caption" value="Movement Sequence"/>
+        <Property key="Caption" value="Movement Sequence"/>
         <UserString key="CurrentDockLocation" value="Bottom"/>
         <UserString key="AllowedDockLocations" value="Top | Bottom | Floating"/>
         <Widget type="Widget" skin="PanelSkin" position="0 3 678 69" align="Stretch">
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 487 39" align="Stretch" name="ActionView">
-                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-                <Property key="ScrollView_CanvasSize" value="0 100"/>
+                <Property key="CanvasAlign" value="Left Top"/>
+                <Property key="CanvasSize" value="0 100"/>
             </Widget>
             <Widget type="Button" skin="ImageButton" position="143 1 45 20" align="Left Top" name="PlayButton">
-                <Property key="Widget_Caption" value="Play"/>
-                <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
+                <Property key="Caption" value="Play"/>
+                <Property key="ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
-                <Property key="ScrollView_CanvasSize" value="179 200"/>
-                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-                <Property key="ScrollView_VisibleVScroll" value="false"/>
-                <Property key="ScrollView_VisibleHScroll" value="false"/>
+                <Property key="CanvasSize" value="179 200"/>
+                <Property key="CanvasAlign" value="Left Top"/>
+                <Property key="VisibleVScroll" value="false"/>
+                <Property key="VisibleHScroll" value="false"/>
             </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 2 486 21" align="HStretch Top" name="NumberLine">
-                <Property key="ScrollView_VisibleVScroll" value="false"/>
-                <Property key="ScrollView_VisibleHScroll" value="false"/>
-                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                <Property key="VisibleVScroll" value="false"/>
+                <Property key="VisibleHScroll" value="false"/>
+                <Property key="CanvasAlign" value="Left Top"/>
             </Widget>
             <Widget type="EditBox" skin="EditBox" position="90 1 52 20" name="SequenceDuration"/>
             <Widget type="TextBox" skin="TextBox" position="39 1 50 19">
-                <Property key="Widget_Caption" value="Duration"/>
-                <Property key="Text_TextAlign" value="Left VCenter"/>
+                <Property key="Caption" value="Duration"/>
+                <Property key="TextAlign" value="Left VCenter"/>
             </Widget>
             <Widget type="Button" skin="Button" position="1 1 38 20" name="FileButton">
-                <Property key="Widget_Caption" value="File"/>
+                <Property key="Caption" value="File"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="CustomScrollView2" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
-            <Property key="ScrollView_CanvasSize" value="214 314"/>
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="214 314"/>
+            <Property key="CanvasAlign" value="Left Top"/>
             <Widget type="TextBox" skin="TextBox" position="0 1 66 16" align="HStretch Top" name="PropertiesText">
-                <Property key="Widget_Caption" value="Properties"/>
+                <Property key="Caption" value="Properties"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="1 24 74 15">
-                <Property key="Widget_Caption" value="Start Time"/>
+                <Property key="Caption" value="Start Time"/>
             </Widget>
             <Widget type="EditBox" skin="EditBox" position="76 23 132 18" name="StartTime"/>
             <Widget type="Button" skin="Button" position="137 2 73 18" name="RemoveAction">
-                <Property key="Widget_Caption" value="Remove"/>
+                <Property key="Caption" value="Remove"/>
             </Widget>
         </Widget>
     </Widget>
