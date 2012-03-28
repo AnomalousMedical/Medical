@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="TaskMenuBackground" position="55 42 716 502" layer="Overlapped">
-        <Property key="Caption" value="Open"/>
-        <Property key="MinSize" value="510 310"/>
         <Widget type="MultiListBox" skin="MultiListBox" position="4 121 710 360" align="Stretch" name="Open/FileList"/>
         <Widget type="Widget" skin="PanelEmpty" position="1 2 714 117" align="HStretch Top" layer="Back">
             <Widget type="TextBox" skin="TextBox" position="4 2 150 15" align="Left Top">

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="TaskMenuBackground" position="224 51 347 537" layer="Overlapped">
-        <Property key="Caption" value="Bookmarks"/>
         <Widget type="Button" skin="Button" position="167 28 57 20" align="Left Top" name="AddButton">
             <Property key="Caption" value="Add"/>
         </Widget>

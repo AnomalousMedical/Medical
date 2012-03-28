@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="TaskMenuBackground" position="226 51 565 360" layer="Overlapped">
-        <Property key="Caption" value="Choose Scene"/>
-        <Property key="MinSize" value="563 372"/>
-        <Property key="MaxSize" value="563 372"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 36 555 315" align="Stretch" name="ChooseScene/FileSelect">
             <Property key="CanvasSize" value="539 300"/>
             <Property key="CanvasAlign" value="Left Top"/>
