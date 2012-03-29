@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="CustomRibbonPanel" position="13 27 1634 92" layer="Overlapped" name="WizardIconPanel">
+    <Widget type="Widget" skin="TimelineNavigationBarSkin" position="13 27 1634 92" layer="Overlapped" name="WizardIconPanel">
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch" name="WizardIconPanel/ScrollView">
             <Property key="CanvasSize" value="1015 77"/>
             <Property key="CanvasAlign" value="Left Top"/>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="CustomPanel2" position="96 99 291 66" layer="Back">
+    <Widget type="Widget" skin="3dBorderPanelSkin" position="96 99 291 66" layer="Back">
         <Widget type="TextBox" skin="TextBox" position="2 7 10 16">
             <Property key="Caption" value="If"/>
             <Property key="NeedMouse" value="false"/>
