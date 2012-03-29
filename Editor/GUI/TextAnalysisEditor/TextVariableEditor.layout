@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="CustomPanelOnPanel2" position="77 214 385 31" layer="Back">
+    <Widget type="Widget" skin="GradientPanel" position="77 214 385 31" layer="Back">
         <Widget type="TextBox" skin="TextBox" position="2 7 160 16" align="Stretch" name="Name"/>
         <Widget type="Button" skin="Button" position="223 3 53 26" align="Right Top" name="Insert">
             <Property key="Caption" value="Insert"/>
