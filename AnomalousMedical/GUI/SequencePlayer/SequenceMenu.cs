@@ -21,7 +21,7 @@ namespace Medical
             sequenceController.GroupAdded += new MovementSequenceGroupEvent(sequenceController_GroupAdded);
             sequenceController.SequenceAdded += new MovementSequenceInfoEvent(sequenceController_SequenceAdded);
 
-            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "LargeIconPopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
+            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
             sequenceMenu.Visible = false;
         }
 
