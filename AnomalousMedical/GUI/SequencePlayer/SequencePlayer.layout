@@ -4,16 +4,16 @@
         <Property key="Caption" value="Movement Sequences"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
-        <Widget type="Button" skin="RibbonButton" position="0 7 68 75" name="Sequence">
+        <Widget type="Button" skin="VerticalIconTextButton" position="0 7 68 75" name="Sequence">
             <Property key="Caption" value="Sequence"/>
             <Property key="ImageResource" value="SequenceToolstrip/Sequence"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButtonSmall" position="74 57 47 25" name="Play">
+        <Widget type="Button" skin="HorizontalIconTextButton" position="74 57 47 25" name="Play">
             <Property key="Caption" value="Play"/>
             <Property key="ImageResource" value="SequenceToolstrip/Play"/>
             <Property key="Enabled" value="false"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButtonSmall" position="129 57 51 25" name="Stop">
+        <Widget type="Button" skin="HorizontalIconTextButton" position="129 57 51 25" name="Stop">
             <Property key="Caption" value="Stop"/>
             <Property key="ImageResource" value="SequenceToolstrip/Stop"/>
             <Property key="Enabled" value="false"/>

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelSkin" position="187 65 81 205" layer="Overlapped">
-        <Widget type="Button" skin="RibbonButton" position="8 3 64 64" name="GroupButton">
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 3 64 64" name="GroupButton">
             <Property key="Caption" value="Group"/>
             <Property key="ImageResource" value="SelectionIcons\GroupSelection"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="8 70 64 64" name="IndividualButton">
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 70 64 64" name="IndividualButton">
             <Property key="Caption" value="Individual"/>
             <Property key="ImageResource" value="SelectionIcons\IndividualSelection"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="8 137 64 64" name="NoneButton">
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 137 64 64" name="NoneButton">
             <Property key="Caption" value="None"/>
             <Property key="ImageResource" value="SelectionIcons\NoSelection"/>
         </Widget>

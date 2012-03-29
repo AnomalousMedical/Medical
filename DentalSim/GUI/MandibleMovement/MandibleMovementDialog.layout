@@ -26,11 +26,11 @@
         <Widget type="TextBox" skin="TextBox" position="38 76 64 15" align="HRelative VRelative" name="Movement/ProtrusionText">
             <Property key="Caption" value="Protrusion"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="5 187 83 64" align="HRelative Bottom" name="Movement/Reset">
+        <Widget type="Button" skin="VerticalIconTextButton" position="5 187 83 64" align="HRelative Bottom" name="Movement/Reset">
             <Property key="Caption" value="Reset"/>
             <Property key="ImageResource" value="Movement/Reset"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="91 187 83 64" align="HRelative Bottom" name="Movement/Restore">
+        <Widget type="Button" skin="VerticalIconTextButton" position="91 187 83 64" align="HRelative Bottom" name="Movement/Restore">
             <Property key="Caption" value="Restore"/>
             <Property key="ImageResource" value="Movement/Restore"/>
             <Property key="ModeImage" value="true"/>

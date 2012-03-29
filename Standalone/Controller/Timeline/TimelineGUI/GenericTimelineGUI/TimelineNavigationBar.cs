@@ -39,7 +39,7 @@ namespace Medical
             TimelineButtonContainer timelineButton;
             if (!panels.TryGetValue(timelineFile, out timelineButton))
             {
-                Button button = iconScrollView.createWidgetT("Button", "RibbonButton", 0, 0, 78, 64, Align.Default, "") as Button;
+                Button button = iconScrollView.createWidgetT("Button", "VerticalIconTextButton", 0, 0, 78, 64, Align.Default, "") as Button;
                 button.Caption = text;
                 button.ForwardMouseWheelToParent = true;
                 int captionWidth = (int)button.getTextSize().Width;
