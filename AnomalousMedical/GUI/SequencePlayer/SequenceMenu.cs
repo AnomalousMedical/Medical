@@ -83,9 +83,6 @@ namespace Medical
         void sequenceController_GroupAdded(MovementSequenceController controller, MovementSequenceGroup group)
         {
             MenuItem groupItem = sequenceMenu.addItem(group.Name, MenuItemType.Popup);
-            groupItem.ImageBox.setItemResource("SequenceToolstrip/Sequence");
-            groupItem.ImageBox.setItemGroup("Icons");
-            groupItem.ImageBox.setItemName("Icon");
             MenuControl groupItemChild = groupItem.createItemChild();
             groupMenuCtrls.Add(group, groupItemChild);
         }
