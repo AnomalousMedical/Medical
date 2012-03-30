@@ -35,6 +35,7 @@ namespace Medical
         //An optional alpha material, if this is defined the alpha suffix will be ignored
         //and this material will be used instead.
         [Editable] private String alphaMaterialName = null;
+        [Editable] private String hiddenMaterialName = null;
         [Editable] private String nodeName;
         [Editable] private String childNodeName;
         [Editable] private String entityName;
@@ -275,10 +276,6 @@ namespace Medical
         {
             alphaQuat.w = alpha;
             subEntity.setCustomParameter(0, alphaQuat);
-            if (disableOnHidden)
-            {
-                subEntity.setVisible(alpha != 0.0f);
-            }
             if (alpha == 1.0f)
             {
                 subEntity.setMaterialName(baseMaterialName);
@@ -318,6 +315,18 @@ namespace Medical
                         break;
                 }
             }
+
+            bool hidden = alpha == 0.0f;
+            if (disableOnHidden)
+            {
+                subEntity.setVisible(!hidden);
+            }
+            else if (hidden && hiddenMaterialName != null)
+            {
+                subEntity.setMaterialName(hiddenMaterialName);
+                entity.setRenderQueueGroup(0);
+            }
+
             if (subInterfaces != null)
             {
                 foreach (TransparencySubInterface subInterface in subInterfaces)
