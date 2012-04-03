@@ -26,6 +26,7 @@ OutputDir=S:\Medical\Release\Setups
 OutputBaseFilename=AnomalousMedicalInternalSetup
 Compression=lzma
 SolidCompression=yes
+SignTool=AnomalousMedicalSign /d $qAnomalous Medical Internal Installer$q /t http://timestamp.comodoca.com/authenticode $f
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
