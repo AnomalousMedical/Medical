@@ -141,6 +141,7 @@
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\AssemblyInfoSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
