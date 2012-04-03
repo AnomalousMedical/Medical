@@ -23,7 +23,6 @@ namespace Medical
 
         private static String sceneDirectory;
 
-        private static String updateURL;
         private static String userAnomalousFolder;
         private static String commonAnomalousFolder;
 
@@ -54,21 +53,6 @@ namespace Medical
 
             //Configure plugins
             pluginConfig = new PluginConfig(Path.Combine(commonAnomalousFolder, "Plugins"));
-
-            //Configure website urls
-            MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
-            MedicalConfig.HelpURL = "http://www.anomalousmedical.com/Help";
-            MedicalConfig.ForgotPasswordURL = "https://www.anomalousmedical.com/RecoverPassword";
-            MedicalConfig.RegisterURL = "https://www.anomalousmedical.com/Register";
-            MedicalConfig.LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
-            MedicalConfig.PluginInfoURL = "https://www.anomalousmedical.com/DRM/DownloadInfo.aspx";
-            MedicalConfig.PluginDownloadURL = "https://www.anomalousmedical.com/DRM/FileDownloader.aspx";
-            MedicalConfig.AnomalousMedicalStoreURL = "https://www.anomalousmedical.com/Store";
-            MedicalConfig.ProductPageBaseURL = "http://www.anomalousmedical.com/Product/Plugin/{0}";
-            MedicalConfig.UpdateCheckURL = "https://www.anomalousmedical.com/DRM/UpdateCheck.aspx";
-            MedicalConfig.LicenseReaderURL = "https://www.anomalousmedical.com/DRM/LicenseReader.aspx";
-            MedicalConfig.LicenseImageURL = "https://www.anomalousmedical.com/DRM/LicenseImage.aspx";
-            MedicalConfig.ImageStoreURL = "http://www.anomalousmedical.com/Store/Image_Licensing";
             
             //User configuration settings
             configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
@@ -88,7 +72,11 @@ namespace Medical
                 Directory.CreateDirectory(SafeDownloadFolder);
             }
 
+            String websiteHostUrl = "https://www.anomalousmedical.com";
+            String buildSpecificPath = "";
+
 #if ALLOW_OVERRIDE
+            buildSpecificPath = "Internal/";
             //Override settings
 			String overrideFile = Path.Combine(FolderFinder.ExecutableFolder, PlatformConfig.OverrideFileLocation);
             if (File.Exists(overrideFile))
@@ -97,20 +85,8 @@ namespace Medical
                 overrideSettings.loadConfigFile();
                 resources = overrideSettings.createOrRetrieveConfigSection("Resources");
 
-                ConfigSection updates = overrideSettings.createOrRetrieveConfigSection("Updates");
-                updateURL = updates.getValue("UpdateURL", updateURL);
-                LicenseServerURL = updates.getValue("LicenseServerURL", LicenseServerURL);
-                HelpURL = updates.getValue("HelpURL", HelpURL);
-                ForgotPasswordURL = updates.getValue("ForgotPasswordURL", ForgotPasswordURL);
-                RegisterURL = updates.getValue("RegisterURL", RegisterURL);
-                PluginInfoURL = updates.getValue("PluginInfoURL", PluginInfoURL);
-                PluginDownloadURL = updates.getValue("PluginDownloadURL", PluginDownloadURL);
-                AnomalousMedicalStoreURL = updates.getValue("AnomalousMedicalStoreURL", AnomalousMedicalStoreURL);
-                ProductPageBaseURL = updates.getValue("ProductPageBaseURL", ProductPageBaseURL);
-                UpdateCheckURL = updates.getValue("UpdateCheckURL", UpdateCheckURL);
-                LicenseReaderURL = updates.getValue("LicenseReaderURL", LicenseReaderURL);
-                LicenseImageURL = updates.getValue("LicenseImageURL", LicenseImageURL);
-                ImageStoreURL = updates.getValue("ImageStoreURL", ImageStoreURL);
+                ConfigSection website = overrideSettings.createOrRetrieveConfigSection("Website");
+                websiteHostUrl = website.getValue("Host", websiteHostUrl);
 
                 pluginConfig.readPlugins(overrideSettings);
 
@@ -119,6 +95,20 @@ namespace Medical
                 Cracked = systemOverride.getValue("Cracked", Cracked);
             }
 #endif
+            //Configure website urls
+            MedicalConfig.HelpURL = String.Format("{0}/Help", websiteHostUrl);
+            MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", websiteHostUrl);
+            MedicalConfig.RegisterURL = String.Format("{0}/Register", websiteHostUrl);
+            MedicalConfig.LicenseServerURL = String.Format("{0}/DRM/LicenseServer.aspx", websiteHostUrl);
+            MedicalConfig.AnomalousMedicalStoreURL = String.Format("{0}/Store", websiteHostUrl);
+            MedicalConfig.ProductPageBaseURL = String.Format("{0}/Product/Plugin/{0}", websiteHostUrl);
+            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM/LicenseReader.aspx", websiteHostUrl);
+            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM/LicenseImage.aspx", websiteHostUrl);
+            MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
+
+            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM/{1}UpdateCheck.aspx", websiteHostUrl, buildSpecificPath);
+            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM/{1}DownloadInfo.aspx", websiteHostUrl, buildSpecificPath);
+            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM/{1}FileDownloader.aspx", websiteHostUrl, buildSpecificPath);
         }
 
         public static void setUser(String username)
@@ -271,14 +261,6 @@ namespace Medical
             get
             {
                 return sceneDirectory;
-            }
-        }
-
-        public static String UpdateURL
-        {
-            get
-            {
-                return updateURL;
             }
         }
 
