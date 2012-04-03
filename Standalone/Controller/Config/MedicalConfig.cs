@@ -73,10 +73,9 @@ namespace Medical
             }
 
             String websiteHostUrl = "https://www.anomalousmedical.com";
-            String buildSpecificPath = "";
+            String buildExtraPath = "";
 
 #if ALLOW_OVERRIDE
-            buildSpecificPath = "Internal/";
             //Override settings
 			String overrideFile = Path.Combine(FolderFinder.ExecutableFolder, PlatformConfig.OverrideFileLocation);
             if (!File.Exists(overrideFile))
@@ -98,6 +97,7 @@ namespace Medical
                 Cracked = false;
                 ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
                 Cracked = systemOverride.getValue("Cracked", Cracked);
+                buildExtraPath = systemOverride.getValue("BuildExtraPath", "Internal/");
             }
 #endif
             //Configure website urls
@@ -111,9 +111,9 @@ namespace Medical
             MedicalConfig.LicenseImageURL = String.Format("{0}/DRM/LicenseImage.aspx", websiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
 
-            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM/{1}UpdateCheck.aspx", websiteHostUrl, buildSpecificPath);
-            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM/{1}DownloadInfo.aspx", websiteHostUrl, buildSpecificPath);
-            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM/{1}FileDownloader.aspx", websiteHostUrl, buildSpecificPath);
+            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM/{1}UpdateCheck.aspx", websiteHostUrl, buildExtraPath);
+            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM/{1}DownloadInfo.aspx", websiteHostUrl, buildExtraPath);
+            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM/{1}FileDownloader.aspx", websiteHostUrl, buildExtraPath);
         }
 
         public static void setUser(String username)
