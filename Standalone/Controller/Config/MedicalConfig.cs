@@ -79,8 +79,13 @@ namespace Medical
             buildSpecificPath = "Internal/";
             //Override settings
 			String overrideFile = Path.Combine(FolderFinder.ExecutableFolder, PlatformConfig.OverrideFileLocation);
+            if (!File.Exists(overrideFile))
+            {
+                overrideFile = Path.Combine(userAnomalousFolder, "override.ini");
+            }
             if (File.Exists(overrideFile))
-            {				
+            {
+                Log.Info("Using override file {0}", overrideFile);
                 overrideSettings = new ConfigFile(overrideFile);
                 overrideSettings.loadConfigFile();
                 resources = overrideSettings.createOrRetrieveConfigSection("Resources");
