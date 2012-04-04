@@ -13,7 +13,6 @@ namespace Medical
     {
         private SceneViewController sceneViewController;
 
-        private PopupMenu menu;
         private MenuItem automatic;
         private MenuItem sixteenNine;
         private MenuItem fourThree;
@@ -24,26 +23,32 @@ namespace Medical
         {
             this.ShowOnTaskbar = false;
             this.sceneViewController = sceneViewController;
+        }
 
-            menu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1, 1, Align.Default, "Overlapped", "");
+        public void Dispose()
+        {
+            
+        }
+
+        public override void clicked(TaskPositioner positioner)
+        {
+            PopupMenu menu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1, 1, Align.Default, "Popup", "");
             menu.Visible = false;
             automatic = menu.addItem("Automatic");
             sixteenNine = menu.addItem("16:9");
             fourThree = menu.addItem("4:3");
             oneOne = menu.addItem("1:1");
             menu.ItemAccept += new MyGUIEvent(menu_ItemAccept);
-        }
+            menu.Closed += new MyGUIEvent(menu_Closed);
 
-        public void Dispose()
-        {
-            Gui.Instance.destroyWidget(menu);
-        }
-
-        public override void clicked(TaskPositioner positioner)
-        {
             IntVector2 position = positioner.findGoodWindowPosition(menu.Width, menu.Height);
             menu.setPosition(position.x, position.y);
             menu.setVisibleSmooth(true);
+        }
+
+        void menu_Closed(Widget source, EventArgs e)
+        {
+            Gui.Instance.destroyWidget(source);
         }
 
         public override bool Active
