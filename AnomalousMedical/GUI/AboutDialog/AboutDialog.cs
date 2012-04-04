@@ -31,7 +31,7 @@ namespace Medical.GUI
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             TextBox versionText = window.findWidget("VersionText") as TextBox;
-            versionText.Caption = "Version " + Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version;
+            versionText.Caption = String.Format("Version {0} {1}", Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version, MedicalConfig.BuildName);
 
             TextBox anomalousMedicalText = window.findWidget("AnomalousMedicalLink") as TextBox;
             anomalousMedicalText.MouseButtonClick += new MyGUIEvent(anomalousMedicalText_MouseButtonClick);

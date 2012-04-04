@@ -36,44 +36,24 @@ namespace Medical
         private static ConfigSection resources = null;
 #endif
 
+        static MedicalConfig()
+        {
+            BuildName = null;
+#if ALLOW_OVERRIDE
+            BuildName = "Internal";
+#endif
+        }
+
         public MedicalConfig(String userAnomalousFolder, String commonAnomalousFolder)
         {
+            String websiteHostUrl = "https://www.anomalousmedical.com";
+
             //Setup directories
             MedicalConfig.userAnomalousFolder = userAnomalousFolder;
             if (!Directory.Exists(userAnomalousFolder))
             {
                 Directory.CreateDirectory(userAnomalousFolder);
             }
-
-            MedicalConfig.commonAnomalousFolder = commonAnomalousFolder;
-            if (!Directory.Exists(commonAnomalousFolder))
-            {
-                Directory.CreateDirectory(commonAnomalousFolder);
-            }
-
-            //Configure plugins
-            pluginConfig = new PluginConfig(Path.Combine(commonAnomalousFolder, "Plugins"));
-            
-            //User configuration settings
-            configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
-            configFile.loadConfigFile();
-            
-            program = configFile.createOrRetrieveConfigSection("Program");
-            sceneDirectory = "Scenes";
-
-            cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
-            transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
-
-            EngineConfig = new EngineConfig(configFile);
-
-            SafeDownloadFolder = Path.Combine(commonAnomalousFolder, "Downloads");
-            if (!Directory.Exists(SafeDownloadFolder))
-            {
-                Directory.CreateDirectory(SafeDownloadFolder);
-            }
-
-            String websiteHostUrl = "https://www.anomalousmedical.com";
-            String buildExtraPath = "";
 
 #if ALLOW_OVERRIDE
             //Override settings
@@ -92,18 +72,52 @@ namespace Medical
                 ConfigSection website = overrideSettings.createOrRetrieveConfigSection("Website");
                 websiteHostUrl = website.getValue("Host", websiteHostUrl);
 
-                pluginConfig.readPlugins(overrideSettings);
-
                 Cracked = false;
                 ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
                 Cracked = systemOverride.getValue("Cracked", Cracked);
-                buildExtraPath = systemOverride.getValue("BuildExtraPath", "Internal/");
-            }
-            else
-            {
-                buildExtraPath = "Internal/";
+                BuildName = systemOverride.getValue("CustomBuildName", BuildName);
             }
 #endif
+            MedicalConfig.commonAnomalousFolder = commonAnomalousFolder;
+            if (!Directory.Exists(commonAnomalousFolder))
+            {
+                Directory.CreateDirectory(commonAnomalousFolder);
+            }
+
+            //Configure plugins
+            pluginConfig = new PluginConfig(Path.Combine(commonAnomalousFolder, "Plugins"));
+
+#if ALLOW_OVERRIDE
+            if (overrideSettings != null)
+            {
+                pluginConfig.readPlugins(overrideSettings);
+            }
+#endif
+
+            //User configuration settings
+            configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
+            configFile.loadConfigFile();
+
+            program = configFile.createOrRetrieveConfigSection("Program");
+            sceneDirectory = "Scenes";
+
+            cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
+            transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
+
+            EngineConfig = new EngineConfig(configFile);
+
+            SafeDownloadFolder = Path.Combine(commonAnomalousFolder, "Downloads");
+            if (!Directory.Exists(SafeDownloadFolder))
+            {
+                Directory.CreateDirectory(SafeDownloadFolder);
+            }
+
+            String buildExtraPath = "";
+            if(!String.IsNullOrEmpty(BuildName))
+            {
+                buildExtraPath = BuildName + "/";
+            }
+
             //Configure website urls
             MedicalConfig.HelpURL = String.Format("{0}/Help", websiteHostUrl);
             MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", websiteHostUrl);
@@ -222,6 +236,8 @@ namespace Medical
         public static String LicenseServerURL { get; private set; }
 
         public static String HelpURL { get; private set; }
+
+        public static String BuildName { get; private set; }
 
 #if ALLOW_OVERRIDE
         public static String WorkingResourceDirectory
