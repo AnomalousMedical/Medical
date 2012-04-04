@@ -78,6 +78,15 @@ namespace Medical
                 BuildName = systemOverride.getValue("CustomBuildName", BuildName);
             }
 #endif
+            //Fix up paths based on the build name
+            String buildUrlExtraPath = "";
+            if (!String.IsNullOrEmpty(BuildName))
+            {
+                buildUrlExtraPath = BuildName + "/";
+                commonAnomalousFolder = Path.Combine(commonAnomalousFolder, BuildName);
+            }
+
+            //Setup common folder
             MedicalConfig.commonAnomalousFolder = commonAnomalousFolder;
             if (!Directory.Exists(commonAnomalousFolder))
             {
@@ -112,12 +121,6 @@ namespace Medical
                 Directory.CreateDirectory(SafeDownloadFolder);
             }
 
-            String buildExtraPath = "";
-            if(!String.IsNullOrEmpty(BuildName))
-            {
-                buildExtraPath = BuildName + "/";
-            }
-
             //Configure website urls
             MedicalConfig.HelpURL = String.Format("{0}/Help", websiteHostUrl);
             MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", websiteHostUrl);
@@ -129,9 +132,9 @@ namespace Medical
             MedicalConfig.LicenseImageURL = String.Format("{0}/DRM/LicenseImage.aspx", websiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
 
-            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM/{1}UpdateCheck.aspx", websiteHostUrl, buildExtraPath);
-            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM/{1}DownloadInfo.aspx", websiteHostUrl, buildExtraPath);
-            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM/{1}FileDownloader.aspx", websiteHostUrl, buildExtraPath);
+            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM/{1}UpdateCheck.aspx", websiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM/{1}DownloadInfo.aspx", websiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM/{1}FileDownloader.aspx", websiteHostUrl, buildUrlExtraPath);
         }
 
         public static void setUser(String username)
