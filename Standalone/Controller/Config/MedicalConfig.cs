@@ -99,6 +99,10 @@ namespace Medical
                 Cracked = systemOverride.getValue("Cracked", Cracked);
                 buildExtraPath = systemOverride.getValue("BuildExtraPath", "Internal/");
             }
+            else
+            {
+                buildExtraPath = "Internal/";
+            }
 #endif
             //Configure website urls
             MedicalConfig.HelpURL = String.Format("{0}/Help", websiteHostUrl);
