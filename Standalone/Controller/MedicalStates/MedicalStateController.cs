@@ -194,7 +194,11 @@ namespace Medical
             clearStates();
             foreach (MedicalState state in states.getStates())
             {
-                addState(state);
+                this.states.Add(state);
+                if (StateAdded != null)
+                {
+                    StateAdded.Invoke(this, state);
+                }
             }
         }
 

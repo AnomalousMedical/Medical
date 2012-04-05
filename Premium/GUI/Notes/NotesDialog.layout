@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="60 80 223 400" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="89 65 223 400" layer="Overlapped">
         <Property key="Visible" value="true"/>
         <Property key="Caption" value="Notes"/>
         <UserString key="CurrentDockLocation" value="Right"/>
@@ -14,7 +14,10 @@
         <Widget type="TextBox" skin="TextBox" position="0 45 110 15">
             <Property key="Caption" value="Date Created"/>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position="0 59 211 21" align="HStretch Top" name="Notes/DateCreated"/>
+        <Widget type="EditBox" skin="EditBox" position="0 59 211 21" align="HStretch Top" name="Notes/DateCreated">
+            <Property key="Static" value="true"/>
+            <Property key="ReadOnly" value="true"/>
+        </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 86 110 15">
             <Property key="Caption" value="Distortion Wizard"/>
         </Widget>
@@ -25,10 +28,13 @@
         <Widget type="TextBox" skin="TextBox" position="0 128 47 15">
             <Property key="Caption" value="Notes"/>
         </Widget>
-        <Widget type="EditBox" skin="WordWrapWhite" position="0 142 211 225" align="Stretch" name="Notes/NotesText">
+        <Widget type="EditBox" skin="WordWrapWhite" position="0 142 211 198" align="Stretch" name="Notes/NotesText">
             <Property key="MultiLine" value="true"/>
             <Property key="MaxTextLength" value="2900"/>
             <Property key="TextAlign" value="Left Top"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 342 64 25" align="Left Bottom" name="Save">
+            <Property key="Caption" value="Save"/>
         </Widget>
     </Widget>
 </MyGUI>

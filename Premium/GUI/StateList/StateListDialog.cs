@@ -36,7 +36,7 @@ namespace Medical.GUI
             stateController.BlendingStopped += stateController_BlendingStopped;
             stateController.StateUpdated += stateController_StateUpdated;
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            this.Resized += new EventHandler(StateListDialog_Resized);
         }
 
         public override void Dispose()
@@ -60,7 +60,7 @@ namespace Medical.GUI
             fixListItemWidth();
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
+        void StateListDialog_Resized(object sender, EventArgs e)
         {
             fixListItemWidth();
         }
@@ -105,7 +105,7 @@ namespace Medical.GUI
         {
             ButtonGridItem entry = entries[state];
             entry.Caption = state.Name;
-            imageAtlas.replaceImage(state, state.Thumbnail);
+            //imageAtlas.replaceImage(state, state.Thumbnail);
         }
 
         void stateController_StatesCleared(MedicalStateController controller)
