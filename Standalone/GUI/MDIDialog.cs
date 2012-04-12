@@ -489,8 +489,8 @@ namespace Medical.GUI
 
         public override void layout()
         {
-            Position = Location;
-            Size = (IntSize2)WorkingSize;
+            window.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)WorkingSize.Height);
+            updateDesiredLocation();
         }
 
         public override Size2 DesiredSize
