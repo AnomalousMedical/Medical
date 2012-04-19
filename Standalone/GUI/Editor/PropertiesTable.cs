@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine.Editing;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -245,6 +246,10 @@ namespace Medical.GUI
             if (propType == typeof(bool))
             {
                 return new CheckTableCell();
+            }
+            if (propType == typeof(Color))
+            {
+                return new ColorEditCell();
             }
             if (hasBrowser)
             {

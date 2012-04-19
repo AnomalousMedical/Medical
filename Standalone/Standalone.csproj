@@ -343,6 +343,7 @@
     <Compile Include="GUI\DistortionWizards\TimelineWizardGUIManager.cs" />
     <Compile Include="GUI\Editor\AddRemoveButtons.cs" />
     <Compile Include="GUI\Editor\BrowserWindow.cs" />
+    <Compile Include="GUI\Editor\ColorEditCell.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTreeNode.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTreeView.cs" />
     <Compile Include="GUI\Editor\EditInterfaceViewEvent.cs" />
