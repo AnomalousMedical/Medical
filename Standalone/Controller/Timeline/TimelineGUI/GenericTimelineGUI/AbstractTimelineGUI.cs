@@ -87,6 +87,11 @@ namespace Medical
             showTimelineAction.stopTimelines();
         }
 
+        public void stopPlayingExample()
+        {
+            showTimelineAction.stopPlayingExample();
+        }
+
         public void showNavigationBar()
         {
             AbstractTimelineGUIManager.Instance.showNavigationBar();

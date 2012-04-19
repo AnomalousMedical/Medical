@@ -10,6 +10,7 @@ namespace Medical
 {
     public partial class DoActionsDataField : DataField
     {
+        [DoNotSave]
         private List<DoActionsDataFieldCommand> commands = new List<DoActionsDataFieldCommand>();
 
         public DoActionsDataField(String name)
@@ -74,6 +75,8 @@ namespace Medical
             editInterface.addCommand(new EditInterfaceCommand("Add Move Camera", addMoveCamera));
             editInterface.addCommand(new EditInterfaceCommand("Add Change Layers", addChangeLayers));
             editInterface.addCommand(new EditInterfaceCommand("Add Change Medical State", addChangeMedicalState));
+            editInterface.addCommand(new EditInterfaceCommand("Add Play Example Timeline", addPlayExampleTimeline));
+            editInterface.addCommand(new EditInterfaceCommand("Add Stop Timeline Playback", addStopTimelinePlayback));
 
             editInterfaceManager = new EditInterfaceManager<DoActionsDataFieldCommand>(editInterface);
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));
@@ -97,6 +100,16 @@ namespace Medical
         private void addChangeMedicalState(EditUICallback callback, EditInterfaceCommand command)
         {
             addCommand(new ChangeMedicalStateDoAction());
+        }
+
+        private void addPlayExampleTimeline(EditUICallback callback, EditInterfaceCommand command)
+        {
+            addCommand(new PlayExampleTimelineDoAction());
+        }
+
+        private void addStopTimelinePlayback(EditUICallback callback, EditInterfaceCommand command)
+        {
+            addCommand(new StopTimelinePlaybackDoAction());
         }
 
         private void removeCommand(EditUICallback callback, EditInterfaceCommand caller)

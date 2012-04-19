@@ -32,6 +32,9 @@ namespace Medical
             return timelineControllerAfterDoAction.ResourceProvider.openFile(filename);
         }
 
+        /// <summary>
+        /// Stop playing timelines and fire the multi stop event.
+        /// </summary>
         public void stopTimelines()
         {
             if (timelineControllerAfterDoAction.Playing)
@@ -39,6 +42,14 @@ namespace Medical
                 timelineControllerAfterDoAction.stopPlayback(false);
             }
             timelineControllerAfterDoAction._fireMultiTimelineStopEvent();
+        }
+
+        public void stopPlayingExample()
+        {
+            if (timelineControllerAfterDoAction.Playing)
+            {
+                timelineControllerAfterDoAction.stopAndStartPlayback(null, false);
+            }
         }
 
         public void playTimeline(String timelineName)

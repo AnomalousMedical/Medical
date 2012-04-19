@@ -221,6 +221,8 @@
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\DoActionsField\DoActionsDataField.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\DoActionsField\DoActionsDataFieldCommand.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\DoActionsField\MoveCameraDoAction.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\DoActionsField\PlayExampleTimelineDoAction.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\DoActionsField\StopTimelinePlaybackDoAction.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataFields\StaticTextDataField.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutCloseGUIPlayTimelineControl.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\LayoutDataControls\LayoutDoActionsDataControl.cs" />
