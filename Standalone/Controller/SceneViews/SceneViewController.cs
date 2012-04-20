@@ -18,6 +18,8 @@ namespace Medical.Controller
 
     public class SceneViewController : IDisposable
     {
+        private uint defaultMyGUIActiveViewport;
+
         public event SceneViewWindowEvent WindowCreated;
         public event SceneViewWindowEvent WindowDestroyed;
         public event SceneViewWindowEvent ActiveWindowChanged;
@@ -46,6 +48,7 @@ namespace Medical.Controller
             this.mdiLayout = mdiLayout;
 
             rm = renderManager;
+            defaultMyGUIActiveViewport = rm.getActiveViewport();
             mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
 
             MedicalConfig.EngineConfig.ShowStatsToggled += new EventHandler(EngineConfig_ShowStatsToggled);
@@ -158,7 +161,7 @@ namespace Medical.Controller
             {
                 cloneWindow.destroySceneView();
             }
-            rm.setActiveViewport(0);
+            rm.setActiveViewport(defaultMyGUIActiveViewport);
             camerasCreated = false;
             currentScene = null;
         }
