@@ -78,6 +78,7 @@
     <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="PremiumBodyAtlasPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\ChangeBackgroundColorTask.cs" />
     <Compile Include="Tasks\ChangeWindowLayoutTask.cs" />
     <Compile Include="Tasks\CloneWindowTaskMenuItem.cs" />

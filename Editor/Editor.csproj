@@ -135,6 +135,7 @@
     <Compile Include="GUI\Timeline\TimelineActionData.cs" />
     <Compile Include="GUI\Timeline\TimelineFileBrowserDialog.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
+    <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\AspectRatioTask.cs" />
     <Compile Include="Tasks\TimelineEditorTaskMenuItem.cs" />
   </ItemGroup>

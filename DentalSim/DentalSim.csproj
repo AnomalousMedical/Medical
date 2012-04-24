@@ -75,6 +75,7 @@
     <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\ShowToothContactsTaskMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
