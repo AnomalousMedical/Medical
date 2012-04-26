@@ -74,6 +74,7 @@
 	<ResourceFiles Include="..\..\$(Configuration)\Simulation.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\SoundPlugin.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\Standalone.dll" />
+	<ResourceFiles Include="..\..\$(Configuration)\libRocketPlugin.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
 	
 	<ResourceFiles Include="..\..\Release\libOSHelper.dylib" />
@@ -83,6 +84,7 @@
 	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libOgreCWrapper.dylib" />
 	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libSoundWrapper.dylib" />
 	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libZip.dylib" />
+	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libRocketWrapper.dylib" />
 	
 	<ResourceFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/Release/Plugin_CgProgramManager.dylib" />
 	<ResourceFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/Release/RenderSystem_GL.dylib" />
