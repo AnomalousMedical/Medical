@@ -23,28 +23,28 @@ namespace Medical.GUI
         private ImageBox imageBox;
 
         //temp
-        private ContextUpdater contextUpdater;
+        //private ContextUpdater contextUpdater;
         //end temp
 
-        public RocketWidget(String name, EventManager eventManager, UpdateTimer mainTimer)
+        public RocketWidget(String name, EventManager eventManager)//, UpdateTimer mainTimer)
         {
-            sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "libRocketScene");
-            //ogreWindow = pluginManager.RendererPlugin.PrimaryWindow as OgreWindow;
+            int width = 1024;
+            int height = 1024;
 
-            //Create camera and viewport
+            //Create ogre stuff
+            sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "__libRocketScene_" + name);
             camera = sceneManager.createCamera("libRocketCamera");
 
-            texture = TextureManager.getInstance().createManual("__RocketRTT", "Rocket", TextureType.TEX_TYPE_2D, (uint)2048, (uint)2048, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+            texture = TextureManager.getInstance().createManual("__RocketRTT", "Rocket", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
-            //vp = ogreWindow.OgreRenderWindow.addViewport(camera, 2000000, 0.0f, 0.0f, 1.0f, 1.0f);
             pixelBuffer = texture.Value.getBuffer();
             vp = pixelBuffer.Value.getRenderTarget().addViewport(camera);
             vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
             vp.setOverlaysEnabled(false);
-            //vp.setClearEveryFrame(false);
             vp.clear();
 
-            context = Core.CreateContext(name, new Vector2i(2048, 2048));
+            //Create context
+            context = Core.CreateContext(name, new Vector2i(width, height));
 
             using (ElementDocument document = context.LoadDocument("assets/demo.rml"))
             {
@@ -55,13 +55,19 @@ namespace Medical.GUI
             }
 
             sceneManager.addRenderQueueListener(new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface()));
-            contextUpdater = new ContextUpdater(context, eventManager);
-            mainTimer.addFixedUpdateListener(contextUpdater);
+            //contextUpdater = new ContextUpdater(context, eventManager);
+            //mainTimer.addFixedUpdateListener(contextUpdater);
 
-            imageBox = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, 2048, 2048, MyGUIPlugin.Align.Default, "Overlapped", name);
+            imageBox = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, width, height, MyGUIPlugin.Align.Default, "Overlapped", name);
             imageBox.setImageTexture("__RocketRTT");
-            //imagebox.setImageCoord(new MyGUIPlugin.IntCoord(600, 600, 2048, 2048));
-            //imagebox.setima
+            imageBox.NeedKeyFocus = true;
+            imageBox.NeedMouseFocus = true;
+
+            imageBox.MouseButtonPressed += new MyGUIEvent(imageBox_MouseButtonPressed);
+            imageBox.MouseButtonReleased += new MyGUIEvent(imageBox_MouseButtonReleased);
+            imageBox.MouseMove += new MyGUIEvent(imageBox_MouseMove);
+            imageBox.MouseDrag += new MyGUIEvent(imageBox_MouseDrag);
+            imageBox.MouseWheel += new MyGUIEvent(imageBox_MouseWheel);
         }
 
         public void Dispose()
@@ -70,10 +76,10 @@ namespace Medical.GUI
             {
                 Gui.Instance.destroyWidget(imageBox);
             }
-            if (contextUpdater != null)
-            {
-                contextUpdater.Dispose();
-            }
+            //if (contextUpdater != null)
+            //{
+            //    contextUpdater.Dispose();
+            //}
             if (context != null)
             {
                 context.Dispose();
@@ -100,5 +106,34 @@ namespace Medical.GUI
             }
         }
 
+        void imageBox_MouseMove(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            context.ProcessMouseMove(me.Position.x, me.Position.y, 0);
+        }
+
+        void imageBox_MouseDrag(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            context.ProcessMouseMove(me.Position.x, me.Position.y, 0);
+        }
+
+        void imageBox_MouseWheel(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            context.ProcessMouseWheel(me.RelativeWheelPosition / -120, 0);
+        }
+
+        void imageBox_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            context.ProcessMouseButtonUp((int)me.Button, 0);
+        }
+
+        void imageBox_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            context.ProcessMouseButtonDown((int)me.Button, 0);
+        }
     }
 }
