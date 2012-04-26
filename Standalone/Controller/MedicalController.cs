@@ -20,6 +20,7 @@ using Medical.GUI;
 using SoundPlugin;
 using Medical.Controller;
 using System.Globalization;
+using libRocketPlugin;
 
 namespace Medical
 {
@@ -44,6 +45,7 @@ namespace Medical
 
         //Controller
         private MedicalSceneController medicalScene;
+        private RocketGuiManager rocketGuiManager;
 
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
@@ -115,6 +117,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(MedicalController).Assembly);
             pluginManager.addPluginAssembly(typeof(MyGUIInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(RocketInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(SoundPluginInterface).Assembly);
             pluginManager.initializePlugins();
             if(mainForm == null)
@@ -142,6 +145,8 @@ namespace Medical
 
             //Initialize controllers
             medicalScene = new MedicalSceneController(pluginManager);
+            rocketGuiManager = new RocketGuiManager();
+            rocketGuiManager.initialize(pluginManager, eventManager, mainTimer);
 
             SoundConfig.initialize(MedicalConfig.ConfigFile);
         }
@@ -151,6 +156,10 @@ namespace Medical
         /// </summary>
         public virtual void Dispose()
         {
+            if (rocketGuiManager != null)
+            {
+                rocketGuiManager.Dispose();
+            }
             if (medicalScene != null)
             {
                 medicalScene.destroyScene();

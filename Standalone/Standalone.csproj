@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="libRocketPlugin">
+      <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -370,6 +373,10 @@
     <Compile Include="GUI\Notification\OpenImageNotification.cs" />
     <Compile Include="GUI\Notification\RestartNotification.cs" />
     <Compile Include="GUI\Notification\StartTaskNotification.cs" />
+    <Compile Include="GUI\RocketGui\ContextWindowListener.cs" />
+    <Compile Include="GUI\RocketGui\RocketGuiManager.cs" />
+    <Compile Include="GUI\RocketGui\TestEventListener.cs" />
+    <Compile Include="GUI\RocketGui\TestEventListenerInstancer.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
