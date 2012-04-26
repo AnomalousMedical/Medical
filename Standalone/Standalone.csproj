@@ -375,6 +375,7 @@
     <Compile Include="GUI\Notification\StartTaskNotification.cs" />
     <Compile Include="GUI\RocketGui\ContextWindowListener.cs" />
     <Compile Include="GUI\RocketGui\RocketGuiManager.cs" />
+    <Compile Include="GUI\RocketGui\RocketWidget.cs" />
     <Compile Include="GUI\RocketGui\TestEventListener.cs" />
     <Compile Include="GUI\RocketGui\TestEventListenerInstancer.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
