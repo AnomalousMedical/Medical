@@ -12,6 +12,8 @@ namespace Medical.GUI
 {
     public class RocketWidget : IDisposable
     {
+        private const String RTT_BASE_NAME = "__RocketRTT{0}{1}";
+
         private SceneManager sceneManager;
         private Camera camera;
         private Viewport vp;
@@ -19,8 +21,11 @@ namespace Medical.GUI
         private HardwarePixelBufferSharedPtr pixelBuffer;
         private int currentTextureWidth;
         private int currentTextureHeight;
-        private String textureName = "__RocketRTT";
+        private String textureName;
+        private String name;
+        private byte textureRenameIndex = 0;
 
+        private RocketRenderQueueListener renderQueueListener;
         private Context context;
 
         private ImageBox imageBox;
@@ -28,6 +33,8 @@ namespace Medical.GUI
         public RocketWidget(String name, ImageBox imageBox)
         {
             this.imageBox = imageBox;
+            this.name = name;
+            textureName = String.Format(RTT_BASE_NAME, name, textureRenameIndex++);
 
             currentTextureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
             currentTextureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
@@ -55,10 +62,12 @@ namespace Medical.GUI
                 }
             }
 
-            sceneManager.addRenderQueueListener(new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface()));
+            renderQueueListener = new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface());
+            sceneManager.addRenderQueueListener(renderQueueListener);
 
             imageBox.setImageTexture(textureName);
             imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
+            //imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageBox.Width, imageBox.Height), new IntSize2(imageBox.Width, imageBox.Height));
             imageBox.NeedKeyFocus = true;
             imageBox.NeedMouseFocus = true;
 
@@ -117,6 +126,10 @@ namespace Medical.GUI
                 texture.Dispose();
                 RenderManager.Instance.destroyTexture(textureName);
 
+                //MyGUI caches the textures to determine size, this hack of renaming the texture when it is remade
+                //gets us around that problem
+                textureName = String.Format(RTT_BASE_NAME, name, textureRenameIndex++);
+
                 texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
                 pixelBuffer = texture.Value.getBuffer();
@@ -126,11 +139,9 @@ namespace Medical.GUI
                 vp.clear();
 
                 context.Dimensions = new Vector2i(textureWidth, textureHeight);
-
-                imageBox.setImageTexture(textureName);
+                renderQueueListener.RenderDimensions = new IntSize2(textureWidth, textureHeight);
             }
-            imageBox.setImageTile(new IntSize2(imageBox.Width, imageBox.Height));
-            imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
+            imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageBox.Width, imageBox.Height), new IntSize2(imageBox.Width, imageBox.Height));
         }
 
         public bool Enabled
