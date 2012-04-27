@@ -119,7 +119,6 @@ namespace Medical.GUI
 
             if (textureWidth != currentTextureWidth || textureHeight != currentTextureHeight)
             {
-                Logging.Log.Debug("Texture resizing {0} {1}", textureWidth, textureHeight);
                 currentTextureWidth = textureWidth;
                 currentTextureHeight = textureHeight;
 
