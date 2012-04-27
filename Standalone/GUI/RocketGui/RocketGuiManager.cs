@@ -50,7 +50,7 @@ namespace Medical.GUI
             FontDatabase.LoadFontFace("assets/Delicious-BoldItalic.otf");
 
             //Debugger.Initialise(context);
-            rocketWidget = new RocketWidget("Test", eventManager);//, mainTimer);
+            rocketWidget = new RocketWidget("Test", eventManager);
         }
     }
 }

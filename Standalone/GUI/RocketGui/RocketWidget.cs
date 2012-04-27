@@ -22,11 +22,7 @@ namespace Medical.GUI
 
         private ImageBox imageBox;
 
-        //temp
-        //private ContextUpdater contextUpdater;
-        //end temp
-
-        public RocketWidget(String name, EventManager eventManager)//, UpdateTimer mainTimer)
+        public RocketWidget(String name, EventManager eventManager)
         {
             int width = 1024;
             int height = 1024;
@@ -55,8 +51,6 @@ namespace Medical.GUI
             }
 
             sceneManager.addRenderQueueListener(new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface()));
-            //contextUpdater = new ContextUpdater(context, eventManager);
-            //mainTimer.addFixedUpdateListener(contextUpdater);
 
             imageBox = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, width, height, MyGUIPlugin.Align.Default, "Overlapped", name);
             imageBox.setImageTexture("__RocketRTT");
@@ -68,6 +62,8 @@ namespace Medical.GUI
             imageBox.MouseMove += new MyGUIEvent(imageBox_MouseMove);
             imageBox.MouseDrag += new MyGUIEvent(imageBox_MouseDrag);
             imageBox.MouseWheel += new MyGUIEvent(imageBox_MouseWheel);
+            imageBox.KeyButtonPressed += new MyGUIEvent(imageBox_KeyButtonPressed);
+            imageBox.KeyButtonReleased += new MyGUIEvent(imageBox_KeyButtonReleased);
         }
 
         public void Dispose()
@@ -76,10 +72,6 @@ namespace Medical.GUI
             {
                 Gui.Instance.destroyWidget(imageBox);
             }
-            //if (contextUpdater != null)
-            //{
-            //    contextUpdater.Dispose();
-            //}
             if (context != null)
             {
                 context.Dispose();
@@ -134,6 +126,36 @@ namespace Medical.GUI
         {
             MouseEventArgs me = (MouseEventArgs)e;
             context.ProcessMouseButtonDown((int)me.Button, 0);
+        }
+
+        void imageBox_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            context.ProcessKeyUp(InputMap.GetKey(ke.Key), 0);
+        }
+
+        void imageBox_KeyButtonPressed(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            KeyIdentifier key = InputMap.GetKey(ke.Key);
+            char keyChar = ke.Char;
+
+            context.ProcessKeyDown(key, 0);
+
+            switch (key)
+            {
+                case KeyIdentifier.KI_DELETE:
+                    keyChar = (char)0;
+                    break;
+                case KeyIdentifier.KI_RETURN:
+                    keyChar = (char)0;
+                    context.ProcessTextInput('\n');
+                    break;
+            }
+            if (keyChar >= 32)
+            {
+                context.ProcessTextInput(keyChar);
+            }
         }
     }
 }
