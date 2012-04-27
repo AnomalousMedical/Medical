@@ -17,7 +17,7 @@ namespace Developer.GUI
             ImageBox imageBox = (ImageBox)window.findWidget("RocketImage");
             rocketWidget = new RocketWidget(name, imageBox);
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            this.Resized += new EventHandler(TestRocketWindow_Resized);
         }
 
         public override void Dispose()
@@ -32,7 +32,7 @@ namespace Developer.GUI
             //rocketWidget.resized();
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
+        void TestRocketWindow_Resized(object sender, EventArgs e)
         {
             rocketWidget.resized();
         }

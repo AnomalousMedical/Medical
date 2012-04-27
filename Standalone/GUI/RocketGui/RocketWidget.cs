@@ -13,6 +13,8 @@ namespace Medical.GUI
     public class RocketWidget : IDisposable
     {
         private const String RTT_BASE_NAME = "__RocketRTT{0}{1}";
+        private const int MAX_TEXTURE_SIZE_POW2 = 4096;
+        private const int MIN_TEXTURE_SIZE_POW2 = 2;
 
         private SceneManager sceneManager;
         private Camera camera;
@@ -34,7 +36,7 @@ namespace Medical.GUI
         {
             this.imageBox = imageBox;
             this.name = name;
-            textureName = String.Format(RTT_BASE_NAME, name, textureRenameIndex++);
+            generateTextureName();
 
             currentTextureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
             currentTextureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
@@ -111,8 +113,33 @@ namespace Medical.GUI
         public void resized()
         {
             //Compute texture size
-            int textureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
-            int textureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
+            int textureWidth = imageBox.Width;
+            if (textureWidth > MAX_TEXTURE_SIZE_POW2)
+            {
+                textureWidth = MAX_TEXTURE_SIZE_POW2;
+            }
+            else if (textureWidth < MIN_TEXTURE_SIZE_POW2)
+            {
+                textureWidth = MIN_TEXTURE_SIZE_POW2;
+            }
+            else
+            {
+                textureWidth = NumberFunctions.computeClosestLargerPow2(textureWidth, 256);
+            }
+
+            int textureHeight = imageBox.Height;
+            if (textureHeight > MAX_TEXTURE_SIZE_POW2)
+            {
+                textureHeight = MAX_TEXTURE_SIZE_POW2;
+            }
+            else if (textureHeight < MIN_TEXTURE_SIZE_POW2)
+            {
+                textureHeight = MIN_TEXTURE_SIZE_POW2;
+            }
+            else
+            {
+                textureHeight = NumberFunctions.computeClosestLargerPow2(textureHeight, 256);
+            }
 
             if (textureWidth != currentTextureWidth || textureHeight != currentTextureHeight)
             {
@@ -126,9 +153,7 @@ namespace Medical.GUI
                 texture.Dispose();
                 RenderManager.Instance.destroyTexture(textureName);
 
-                //MyGUI caches the textures to determine size, this hack of renaming the texture when it is remade
-                //gets us around that problem
-                textureName = String.Format(RTT_BASE_NAME, name, textureRenameIndex++);
+                generateTextureName();
 
                 texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
@@ -225,6 +250,13 @@ namespace Medical.GUI
                 value += (int)KeyModifier.KM_CTRL;
             }
             return value;
+        }
+
+        //MyGUI caches the textures to determine size, this hack of renaming the texture when it is remade
+        //gets us around that problem
+        private void generateTextureName()
+        {
+            textureName = String.Format(RTT_BASE_NAME, name, textureRenameIndex++);
         }
     }
 }
