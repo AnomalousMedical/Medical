@@ -24,8 +24,10 @@ namespace Medical.GUI
 
         public RocketWidget(String name, ImageBox imageBox)
         {
-            int textureWidth = computeClosestPow2(imageBox.Width, 256);
-            int textureHeight = computeClosestPow2(imageBox.Height, 256);
+            this.imageBox = imageBox;
+
+            int textureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
+            int textureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
 
             //Create ogre stuff
             sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "__libRocketScene_" + name);
@@ -52,7 +54,6 @@ namespace Medical.GUI
 
             sceneManager.addRenderQueueListener(new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface()));
 
-            this.imageBox = imageBox;
             imageBox.setImageTexture("__RocketRTT");
             imageBox.NeedKeyFocus = true;
             imageBox.NeedMouseFocus = true;
@@ -99,6 +100,11 @@ namespace Medical.GUI
             }
         }
 
+        public void resized()
+        {
+
+        }
+
         public bool Enabled
         {
             get
@@ -109,27 +115,6 @@ namespace Medical.GUI
             {
                 pixelBuffer.Value.getRenderTarget().setActive(value);
             }
-        }
-
-        private int computeClosestPow2(int actualSize, int pow2Start)
-        {
-            int pow2Size = pow2Start;
-            if (actualSize < pow2Start)
-            {
-                while(pow2Size > actualSize)
-                {
-                    pow2Size >>= 1;
-                }
-                pow2Size <<= 1;
-            }
-            else
-            {
-                while(pow2Size < actualSize)
-                {
-                    pow2Size <<= 1;
-                }
-            }
-            return pow2Size;
         }
 
         void imageBox_MouseMove(Widget source, EventArgs e)
