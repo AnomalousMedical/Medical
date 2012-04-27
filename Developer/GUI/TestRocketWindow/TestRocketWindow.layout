@@ -2,6 +2,9 @@
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="37 17 800 700" layer="Overlapped">
         <Property key="Caption" value="Test Rocket"/>
-        <Widget type="ImageBox" skin="ImageBox" position="0 0 788 667" align="Stretch" name="RocketImage"/>
+        <Widget type="ImageBox" skin="ImageBox" position="0 36 788 631" align="Stretch" name="RocketImage"/>
+        <Widget type="Button" skin="Button" position="4 6 90 25" name="Reload">
+            <Property key="Caption" value="Reload"/>
+        </Widget>
     </Widget>
 </MyGUI>

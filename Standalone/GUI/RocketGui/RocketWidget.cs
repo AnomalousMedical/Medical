@@ -32,7 +32,7 @@ namespace Medical.GUI
 
         private ImageBox imageBox;
 
-        public RocketWidget(String name, ImageBox imageBox)
+        public RocketWidget(String name, String doc, ImageBox imageBox)
         {
             this.imageBox = imageBox;
             this.name = name;
@@ -56,7 +56,7 @@ namespace Medical.GUI
             //Create context
             context = Core.CreateContext(name, new Vector2i(imageBox.Width, imageBox.Height));
 
-            using (ElementDocument document = context.LoadDocument("assets/demo.rml"))
+            using (ElementDocument document = context.LoadDocument(doc))
             {
                 if (document != null)
                 {
@@ -81,6 +81,18 @@ namespace Medical.GUI
             imageBox.MouseWheel += new MyGUIEvent(imageBox_MouseWheel);
             imageBox.KeyButtonPressed += new MyGUIEvent(imageBox_KeyButtonPressed);
             imageBox.KeyButtonReleased += new MyGUIEvent(imageBox_KeyButtonReleased);
+        }
+
+        public void changeDocument(String newDocumentName)
+        {
+            context.UnloadAllDocuments();
+            using (ElementDocument document = context.LoadDocument(newDocumentName))
+            {
+                if (document != null)
+                {
+                    document.Show();
+                }
+            }
         }
 
         public void Dispose()
