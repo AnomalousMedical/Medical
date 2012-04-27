@@ -10,13 +10,16 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class RocketWidget : IDisposable
+    public class RocketWidget : IDisposable
     {
         private SceneManager sceneManager;
         private Camera camera;
         private Viewport vp;
         private TexturePtr texture;
         private HardwarePixelBufferSharedPtr pixelBuffer;
+        private int currentTextureWidth;
+        private int currentTextureHeight;
+        private String textureName = "__RocketRTT";
 
         private Context context;
 
@@ -26,14 +29,14 @@ namespace Medical.GUI
         {
             this.imageBox = imageBox;
 
-            int textureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
-            int textureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
+            currentTextureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
+            currentTextureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
 
             //Create ogre stuff
             sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "__libRocketScene_" + name);
             camera = sceneManager.createCamera("libRocketCamera");
 
-            texture = TextureManager.getInstance().createManual("__RocketRTT", "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+            texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)currentTextureWidth, (uint)currentTextureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
             vp = pixelBuffer.Value.getRenderTarget().addViewport(camera);
@@ -42,7 +45,7 @@ namespace Medical.GUI
             vp.clear();
 
             //Create context
-            context = Core.CreateContext(name, new Vector2i(textureWidth, textureHeight));
+            context = Core.CreateContext(name, new Vector2i(currentTextureWidth, currentTextureHeight));
 
             using (ElementDocument document = context.LoadDocument("assets/demo.rml"))
             {
@@ -54,10 +57,10 @@ namespace Medical.GUI
 
             sceneManager.addRenderQueueListener(new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface()));
 
-            imageBox.setImageTexture("__RocketRTT");
+            imageBox.setImageTexture(textureName);
+            imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
             imageBox.NeedKeyFocus = true;
             imageBox.NeedMouseFocus = true;
-            imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
 
             imageBox.MouseButtonPressed += new MyGUIEvent(imageBox_MouseButtonPressed);
             imageBox.MouseButtonReleased += new MyGUIEvent(imageBox_MouseButtonReleased);
@@ -70,10 +73,6 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            if (imageBox != null)
-            {
-                Gui.Instance.destroyWidget(imageBox);
-            }
             if (context != null)
             {
                 context.Dispose();
@@ -102,7 +101,36 @@ namespace Medical.GUI
 
         public void resized()
         {
+            //Compute texture size
+            int textureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
+            int textureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
 
+            if (textureWidth != currentTextureWidth || textureHeight != currentTextureHeight)
+            {
+                Logging.Log.Debug("Texture resizing {0} {1}", textureWidth, textureHeight);
+                currentTextureWidth = textureWidth;
+                currentTextureHeight = textureHeight;
+
+                //Destroy old render target
+                pixelBuffer.Value.getRenderTarget().destroyViewport(vp);
+                pixelBuffer.Dispose();
+                texture.Dispose();
+                RenderManager.Instance.destroyTexture(textureName);
+
+                texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+
+                pixelBuffer = texture.Value.getBuffer();
+                vp = pixelBuffer.Value.getRenderTarget().addViewport(camera);
+                vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+                vp.setOverlaysEnabled(false);
+                vp.clear();
+
+                context.Dimensions = new Vector2i(textureWidth, textureHeight);
+
+                imageBox.setImageTexture(textureName);
+            }
+            imageBox.setImageTile(new IntSize2(imageBox.Width, imageBox.Height));
+            imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
         }
 
         public bool Enabled

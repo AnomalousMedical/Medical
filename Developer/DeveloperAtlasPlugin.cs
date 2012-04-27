@@ -21,6 +21,7 @@ namespace Developer
         private BrowserWindow browserWindow;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
         private GridPropertiesDialog gridProperties;
+        private TestRocketWindow testRocketWindow;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -29,6 +30,7 @@ namespace Developer
 
         public void Dispose()
         {
+            testRocketWindow.Dispose();
             advancedMandibleMovement.Dispose();
             examViewer.Dispose();
             pluginPublisher.Dispose();
@@ -80,6 +82,10 @@ namespace Developer
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(advancedMandibleMovement);
 
+            testRocketWindow = new TestRocketWindow("TestRocket");
+            guiManager.addManagedDialog(testRocketWindow);
+            testRocketWindow.Visible = true;
+
             //Task Controller
             TaskController taskController = standaloneController.TaskController;
 
@@ -92,6 +98,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "Developer.PlugInEditorIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(testRocketWindow, "Medical.TestRocketWindow", "Test Rocket", "Developer.GridIcon", TaskMenuCategories.Developer));
         }
 
         public void sceneLoaded(SimScene scene)

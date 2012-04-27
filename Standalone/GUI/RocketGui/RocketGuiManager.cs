@@ -50,9 +50,6 @@ namespace Medical.GUI
             FontDatabase.LoadFontFace("assets/Delicious-BoldItalic.otf");
 
             //Debugger.Initialise(context);
-            String name = "Test";
-            MyGUIPlugin.ImageBox imageBox = (MyGUIPlugin.ImageBox)MyGUIPlugin.Gui.Instance.createWidgetT("ImageBox", "ImageBox", 100, 100, 800, 600, MyGUIPlugin.Align.Default, "Overlapped", name);
-            rocketWidget = new RocketWidget(name, imageBox);
         }
     }
 }

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="37 17 557 435" layer="Overlapped">
+        <Property key="Caption" value="Test Rocket"/>
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 545 402" align="Stretch" name="RocketImage"/>
+    </Widget>
+</MyGUI>
