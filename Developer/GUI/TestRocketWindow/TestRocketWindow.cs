@@ -26,12 +26,6 @@ namespace Developer.GUI
             base.Dispose();
         }
 
-        public override void deserialize(Engine.ConfigFile configFile)
-        {
-            base.deserialize(configFile);
-            //rocketWidget.resized();
-        }
-
         void TestRocketWindow_Resized(object sender, EventArgs e)
         {
             rocketWidget.resized();

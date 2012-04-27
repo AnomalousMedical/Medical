@@ -38,8 +38,8 @@ namespace Medical.GUI
             this.name = name;
             generateTextureName();
 
-            currentTextureWidth = NumberFunctions.computeClosestLargerPow2(imageBox.Width, 256);
-            currentTextureHeight = NumberFunctions.computeClosestLargerPow2(imageBox.Height, 256);
+            currentTextureWidth = computeSize(imageBox.Width);
+            currentTextureHeight = computeSize(imageBox.Height);
 
             //Create ogre stuff
             sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "__libRocketScene_" + name);
@@ -54,7 +54,7 @@ namespace Medical.GUI
             vp.clear();
 
             //Create context
-            context = Core.CreateContext(name, new Vector2i(currentTextureWidth, currentTextureHeight));
+            context = Core.CreateContext(name, new Vector2i(imageBox.Width, imageBox.Height));
 
             using (ElementDocument document = context.LoadDocument("assets/demo.rml"))
             {
@@ -113,33 +113,8 @@ namespace Medical.GUI
         public void resized()
         {
             //Compute texture size
-            int textureWidth = imageBox.Width;
-            if (textureWidth > MAX_TEXTURE_SIZE_POW2)
-            {
-                textureWidth = MAX_TEXTURE_SIZE_POW2;
-            }
-            else if (textureWidth < MIN_TEXTURE_SIZE_POW2)
-            {
-                textureWidth = MIN_TEXTURE_SIZE_POW2;
-            }
-            else
-            {
-                textureWidth = NumberFunctions.computeClosestLargerPow2(textureWidth, 256);
-            }
-
-            int textureHeight = imageBox.Height;
-            if (textureHeight > MAX_TEXTURE_SIZE_POW2)
-            {
-                textureHeight = MAX_TEXTURE_SIZE_POW2;
-            }
-            else if (textureHeight < MIN_TEXTURE_SIZE_POW2)
-            {
-                textureHeight = MIN_TEXTURE_SIZE_POW2;
-            }
-            else
-            {
-                textureHeight = NumberFunctions.computeClosestLargerPow2(textureHeight, 256);
-            }
+            int textureWidth = computeSize(imageBox.Width);
+            int textureHeight = computeSize(imageBox.Height);
 
             if (textureWidth != currentTextureWidth || textureHeight != currentTextureHeight)
             {
@@ -163,9 +138,9 @@ namespace Medical.GUI
                 vp.setOverlaysEnabled(false);
                 vp.clear();
 
-                context.Dimensions = new Vector2i(textureWidth, textureHeight);
                 renderQueueListener.RenderDimensions = new IntSize2(textureWidth, textureHeight);
             }
+            context.Dimensions = new Vector2i(imageBox.Width, imageBox.Height);
             imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageBox.Width, imageBox.Height), new IntSize2(imageBox.Width, imageBox.Height));
         }
 
@@ -257,6 +232,22 @@ namespace Medical.GUI
         private void generateTextureName()
         {
             textureName = String.Format(RTT_BASE_NAME, name, textureRenameIndex++);
+        }
+
+        private static int computeSize(int dimension)
+        {
+            if (dimension > MAX_TEXTURE_SIZE_POW2)
+            {
+                return MAX_TEXTURE_SIZE_POW2;
+            }
+            else if (dimension < MIN_TEXTURE_SIZE_POW2)
+            {
+                return MIN_TEXTURE_SIZE_POW2;
+            }
+            else
+            {
+                return NumberFunctions.computeClosestLargerPow2(dimension, 256);
+            }
         }
     }
 }
