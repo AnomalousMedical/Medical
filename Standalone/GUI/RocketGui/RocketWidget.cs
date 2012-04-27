@@ -65,11 +65,12 @@ namespace Medical.GUI
             }
 
             renderQueueListener = new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface());
+            renderQueueListener.RenderDimensions = new IntSize2(currentTextureWidth, currentTextureHeight);
             sceneManager.addRenderQueueListener(renderQueueListener);
 
             imageBox.setImageTexture(textureName);
             imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
-            //imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageBox.Width, imageBox.Height), new IntSize2(imageBox.Width, imageBox.Height));
+            
             imageBox.NeedKeyFocus = true;
             imageBox.NeedMouseFocus = true;
 
