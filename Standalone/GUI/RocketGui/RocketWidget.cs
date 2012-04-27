@@ -22,16 +22,16 @@ namespace Medical.GUI
 
         private ImageBox imageBox;
 
-        public RocketWidget(String name, EventManager eventManager)
+        public RocketWidget(String name, ImageBox imageBox)
         {
-            int width = 1024;
-            int height = 1024;
+            int textureWidth = computeClosestPow2(imageBox.Width, 256);
+            int textureHeight = computeClosestPow2(imageBox.Height, 256);
 
             //Create ogre stuff
             sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "__libRocketScene_" + name);
             camera = sceneManager.createCamera("libRocketCamera");
 
-            texture = TextureManager.getInstance().createManual("__RocketRTT", "Rocket", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+            texture = TextureManager.getInstance().createManual("__RocketRTT", "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
             vp = pixelBuffer.Value.getRenderTarget().addViewport(camera);
@@ -40,7 +40,7 @@ namespace Medical.GUI
             vp.clear();
 
             //Create context
-            context = Core.CreateContext(name, new Vector2i(width, height));
+            context = Core.CreateContext(name, new Vector2i(textureWidth, textureHeight));
 
             using (ElementDocument document = context.LoadDocument("assets/demo.rml"))
             {
@@ -52,15 +52,16 @@ namespace Medical.GUI
 
             sceneManager.addRenderQueueListener(new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface()));
 
-            imageBox = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, width, height, MyGUIPlugin.Align.Default, "Overlapped", name);
+            this.imageBox = imageBox;
             imageBox.setImageTexture("__RocketRTT");
             imageBox.NeedKeyFocus = true;
             imageBox.NeedMouseFocus = true;
+            imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
 
             imageBox.MouseButtonPressed += new MyGUIEvent(imageBox_MouseButtonPressed);
             imageBox.MouseButtonReleased += new MyGUIEvent(imageBox_MouseButtonReleased);
             imageBox.MouseMove += new MyGUIEvent(imageBox_MouseMove);
-            imageBox.MouseDrag += new MyGUIEvent(imageBox_MouseDrag);
+            imageBox.MouseDrag += new MyGUIEvent(imageBox_MouseMove);
             imageBox.MouseWheel += new MyGUIEvent(imageBox_MouseWheel);
             imageBox.KeyButtonPressed += new MyGUIEvent(imageBox_KeyButtonPressed);
             imageBox.KeyButtonReleased += new MyGUIEvent(imageBox_KeyButtonReleased);
@@ -98,16 +99,46 @@ namespace Medical.GUI
             }
         }
 
+        public bool Enabled
+        {
+            get
+            {
+                return pixelBuffer.Value.getRenderTarget().isActive(); 
+            }
+            set
+            {
+                pixelBuffer.Value.getRenderTarget().setActive(value);
+            }
+        }
+
+        private int computeClosestPow2(int actualSize, int pow2Start)
+        {
+            int pow2Size = pow2Start;
+            if (actualSize < pow2Start)
+            {
+                while(pow2Size > actualSize)
+                {
+                    pow2Size >>= 1;
+                }
+                pow2Size <<= 1;
+            }
+            else
+            {
+                while(pow2Size < actualSize)
+                {
+                    pow2Size <<= 1;
+                }
+            }
+            return pow2Size;
+        }
+
         void imageBox_MouseMove(Widget source, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
-            context.ProcessMouseMove(me.Position.x, me.Position.y, 0);
-        }
-
-        void imageBox_MouseDrag(Widget source, EventArgs e)
-        {
-            MouseEventArgs me = (MouseEventArgs)e;
-            context.ProcessMouseMove(me.Position.x, me.Position.y, 0);
+            IntVector2 mousePos = me.Position;
+            mousePos.x -= imageBox.AbsoluteLeft;
+            mousePos.y -= imageBox.AbsoluteTop;
+            context.ProcessMouseMove(mousePos.x, mousePos.y, 0);
         }
 
         void imageBox_MouseWheel(Widget source, EventArgs e)
@@ -131,7 +162,7 @@ namespace Medical.GUI
         void imageBox_KeyButtonReleased(Widget source, EventArgs e)
         {
             KeyEventArgs ke = (KeyEventArgs)e;
-            context.ProcessKeyUp(InputMap.GetKey(ke.Key), 0);
+            context.ProcessKeyUp(InputMap.GetKey(ke.Key), buildModifier());
         }
 
         void imageBox_KeyButtonPressed(Widget source, EventArgs e)
@@ -140,7 +171,7 @@ namespace Medical.GUI
             KeyIdentifier key = InputMap.GetKey(ke.Key);
             char keyChar = ke.Char;
 
-            context.ProcessKeyDown(key, 0);
+            context.ProcessKeyDown(key, buildModifier());
 
             switch (key)
             {
@@ -156,6 +187,20 @@ namespace Medical.GUI
             {
                 context.ProcessTextInput(keyChar);
             }
+        }
+
+        int buildModifier()
+        {
+            int value = 0;
+            if (InputManager.Instance.isShiftPressed())
+            {
+                value += (int)KeyModifier.KM_SHIFT;
+            }
+            if (InputManager.Instance.isControlPressed())
+            {
+                value += (int)KeyModifier.KM_CTRL;
+            }
+            return value;
         }
     }
 }
