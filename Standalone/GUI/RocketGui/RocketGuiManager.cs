@@ -40,14 +40,16 @@ namespace Medical.GUI
             eventListenerInstancer = new TestEventListenerInstancer();
             Factory.RegisterEventListenerInstancer(eventListenerInstancer);
 
+            RocketInterface.Instance.FileInterface.addExtension(new MyGUIRocketResources());
+
             String sample_path = "S:/Junk/librocket/playing/";//"S:/dependencies/libRocket/src/Samples/";
             VirtualFileSystem.Instance.addArchive(sample_path);
             OgreResourceGroupManager.getInstance().addResourceLocation("assets", "EngineArchive", "Rocket", false);
 
-            FontDatabase.LoadFontFace("assets/Delicious-Roman.otf");
-            FontDatabase.LoadFontFace("assets/Delicious-Bold.otf");
-            FontDatabase.LoadFontFace("assets/Delicious-Italic.otf");
-            FontDatabase.LoadFontFace("assets/Delicious-BoldItalic.otf");
+            FontDatabase.LoadFontFace("MyGUIPlugin_DejaVuSans.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_NORMAL);
+            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-Bold.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_BOLD);
+            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-BoldOblique.ttf", "DejaVuSans", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_BOLD);
+            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-Oblique.ttf", "DejaVuSans", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_NORMAL);
 
             //Debugger.Initialise(context);
         }

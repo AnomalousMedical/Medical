@@ -55,6 +55,7 @@ namespace Medical.GUI
 
             //Create context
             context = Core.CreateContext(name, new Vector2i(imageBox.Width, imageBox.Height));
+            //Debugger.Initialise(context);
 
             using (ElementDocument document = context.LoadDocument(doc))
             {
