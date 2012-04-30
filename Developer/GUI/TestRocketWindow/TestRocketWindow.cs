@@ -5,13 +5,17 @@ using System.Text;
 using Medical.GUI;
 using MyGUIPlugin;
 using libRocketPlugin;
+using System.IO;
+using Engine;
+using Medical.Controller;
 
 namespace Developer.GUI
 {
     class TestRocketWindow : MDIDialog
     {
         private RocketWidget rocketWidget;
-        private String documentName = "assets/demo.rml";
+        private String documentName = "demo.rml";
+        private FileSystemWatcher fileWatcher;
 
         public TestRocketWindow(String name)
             :base("Developer.GUI.TestRocketWindow.TestRocketWindow.layout")
@@ -24,10 +28,22 @@ namespace Developer.GUI
             reload.MouseButtonClick += new MyGUIEvent(reload_MouseButtonClick);
 
             this.Resized += new EventHandler(TestRocketWindow_Resized);
+
+            VirtualFileInfo fileInfo = VirtualFileSystem.Instance.getFileInfo(documentName);
+            if(File.Exists(fileInfo.RealLocation))
+            {
+                fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(fileInfo.RealLocation));
+                fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
+                fileWatcher.EnableRaisingEvents = true;
+            }
         }
 
         public override void Dispose()
         {
+            if (fileWatcher != null)
+            {
+                fileWatcher.Dispose();
+            }
             rocketWidget.Dispose();
             base.Dispose();
         }
@@ -53,6 +69,15 @@ namespace Developer.GUI
         {
             Factory.ClearStyleSheetCache();
             rocketWidget.changeDocument(documentName);
+        }
+
+        void fileWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            ThreadManager.invoke(new Action(delegate()
+            {
+                Factory.ClearStyleSheetCache();
+                rocketWidget.changeDocument(documentName);
+            }));
         }
     }
 }

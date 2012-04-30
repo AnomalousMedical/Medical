@@ -42,9 +42,9 @@ namespace Medical.GUI
 
             RocketInterface.Instance.FileInterface.addExtension(new MyGUIRocketResources());
 
-            String sample_path = "S:/Junk/librocket/playing/";//"S:/dependencies/libRocket/src/Samples/";
+            String sample_path = "S:/Engine/libRocketPlugin/Resources/";//"S:/dependencies/libRocket/src/Samples/";
             VirtualFileSystem.Instance.addArchive(sample_path);
-            OgreResourceGroupManager.getInstance().addResourceLocation("assets", "EngineArchive", "Rocket", false);
+            OgreResourceGroupManager.getInstance().addResourceLocation("/", "EngineArchive", "Rocket", false);
 
             FontDatabase.LoadFontFace("MyGUIPlugin_DejaVuSans.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_NORMAL);
             FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-Bold.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_BOLD);
