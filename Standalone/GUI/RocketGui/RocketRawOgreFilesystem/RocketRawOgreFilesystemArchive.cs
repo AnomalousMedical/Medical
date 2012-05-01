@@ -8,9 +8,11 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    public class RawFilesystemArchive : OgreManagedArchive
+    public class RocketRawOgreFilesystemArchive : OgreManagedArchive
     {
-        public RawFilesystemArchive(String name, String archType)
+        public const String ArchiveName = "RocketRawOgreFilesystemArchive";
+
+        public RocketRawOgreFilesystemArchive(String name, String archType)
             :base(name, archType)
         {
             

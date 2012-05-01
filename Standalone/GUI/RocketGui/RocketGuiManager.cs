@@ -15,7 +15,7 @@ namespace Medical.GUI
     class RocketGuiManager : IDisposable
     {
         private EventListenerInstancer eventListenerInstancer;
-        private static RawFilesystemArchiveFactory rawFilesystemArchives = new RawFilesystemArchiveFactory();
+        private static RocketRawOgreFilesystemArchiveFactory rawFilesystemArchives = new RocketRawOgreFilesystemArchiveFactory();
 
         public RocketGuiManager()
         {

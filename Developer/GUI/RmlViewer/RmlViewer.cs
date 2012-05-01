@@ -98,10 +98,10 @@ namespace Developer.GUI
             try
             {
                 OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
-                OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", "RawFilesystemArchive", "Rocket", false);
+                OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", RocketRawOgreFilesystemArchive.ArchiveName, "Rocket", false);
 
-                RawFilesystemArchive.DirectoryHint = Path.GetDirectoryName(documentName);
-                window.Caption = String.Format("{0} - {1}, {2}", windowTitleBase, Path.GetFileName(documentName), RawFilesystemArchive.DirectoryHint);
+                RocketRawOgreFilesystemArchive.DirectoryHint = Path.GetDirectoryName(documentName);
+                window.Caption = String.Format("{0} - '{1}'  {2}", windowTitleBase, Path.GetFileName(documentName), RocketRawOgreFilesystemArchive.DirectoryHint);
 
                 Factory.ClearStyleSheetCache();
                 rocketWidget.Context.UnloadAllDocuments();
