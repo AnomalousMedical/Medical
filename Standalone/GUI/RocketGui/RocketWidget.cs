@@ -82,6 +82,15 @@ namespace Medical.GUI
             imageBox.MouseWheel += new MyGUIEvent(imageBox_MouseWheel);
             imageBox.KeyButtonPressed += new MyGUIEvent(imageBox_KeyButtonPressed);
             imageBox.KeyButtonReleased += new MyGUIEvent(imageBox_KeyButtonReleased);
+
+            //In mygui lost/got focus is mouse entered / left
+            imageBox.MouseLostFocus += new MyGUIEvent(imageBox_MouseLostFocus);
+        }
+
+        void imageBox_MouseLostFocus(Widget source, EventArgs e)
+        {
+            //Move the mouse offscreen to keep it from staying over stuff when the widget is not in focus
+            context.ProcessMouseMove(-100, -100, 0);
         }
 
         public void changeDocument(String newDocumentName)

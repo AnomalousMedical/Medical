@@ -87,7 +87,7 @@ namespace Developer
 
             testRocketWindow = new TestRocketWindow("TestRocket");
             guiManager.addManagedDialog(testRocketWindow);
-            testRocketWindow.Visible = true;
+            //testRocketWindow.Visible = true;
 
             //Task Controller
             TaskController taskController = standaloneController.TaskController;

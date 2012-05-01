@@ -86,6 +86,7 @@
     <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
     <Compile Include="GUI\GridPropertiesDialog\GridPropertiesDialog.cs" />
     <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />
+    <Compile Include="GUI\RmlViewer\RmlViewer.cs" />
     <Compile Include="GUI\TestRocketWindow\TestRocketWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -97,6 +98,7 @@
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscPanel.layout" />
     <EmbeddedResource Include="GUI\GridPropertiesDialog\GridPropertiesDialog.layout" />
+    <EmbeddedResource Include="GUI\RmlViewer\RmlViewer.layout" />
     <EmbeddedResource Include="GUI\TestRocketWindow\TestRocketWindow.layout" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.png" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.xml" />

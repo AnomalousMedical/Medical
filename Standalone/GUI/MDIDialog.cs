@@ -75,6 +75,16 @@ namespace Medical.GUI
             window.CaptionWidget.MouseButtonReleased += new MyGUIEvent(window_MouseButtonReleased);
             window.CaptionWidget.MouseDrag += new MyGUIEvent(window_MouseDrag); //Wont have to override this in mygui 3.2 as it has all multicast delegates
 
+            if (window.MinSize.Width < DOCKED_MIN_SIZE.Width || window.MinSize.Height < DOCKED_MIN_SIZE.Height)
+            {
+                window.MinSize = DOCKED_MIN_SIZE;
+            }
+
+            if (window.MaxSize.Width > DOCKED_MAX_SIZE.Width || window.MaxSize.Height > DOCKED_MAX_SIZE.Height)
+            {
+                window.MaxSize = DOCKED_MAX_SIZE;
+            }
+
             String currentDockLocProp = window.getUserString("CurrentDockLocation");
             if (!String.IsNullOrEmpty(currentDockLocProp))
             {
