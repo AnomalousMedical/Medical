@@ -16,6 +16,8 @@ namespace Developer.GUI
 {
     class RmlViewer : MDIDialog
     {
+        private const String RmlViewerOgreGroup = "RmlViewer";
+
         private RocketWidget rocketWidget;
         private String documentName = null;
         private FileSystemWatcher fileWatcher;
@@ -67,8 +69,10 @@ namespace Developer.GUI
             rocketWidget.Dispose();
             if (currentDocumentDirectory != null)
             {
-                OgreResourceGroupManager.getInstance().removeResourceLocation(currentDocumentDirectory, "Rocket");
-                OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
+                TextureDatabase.ReleaseTextures();
+                OgreResourceGroupManager.getInstance().removeResourceLocation(currentDocumentDirectory, RmlViewerOgreGroup);
+                OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", RmlViewerOgreGroup);
+                OgreResourceGroupManager.getInstance().destroyResourceGroup(RmlViewerOgreGroup);
             }
             base.Dispose();
         }
@@ -104,12 +108,14 @@ namespace Developer.GUI
             {
                 if (currentDocumentDirectory != null)
                 {
-                    OgreResourceGroupManager.getInstance().removeResourceLocation(currentDocumentDirectory, "Rocket");
-                    OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
+                    TextureDatabase.ReleaseTextures();
+                    OgreResourceGroupManager.getInstance().removeResourceLocation(currentDocumentDirectory, RmlViewerOgreGroup);
+                    OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", RmlViewerOgreGroup);
+                    OgreResourceGroupManager.getInstance().destroyResourceGroup(RmlViewerOgreGroup);
                 }
                 currentDocumentDirectory = Path.GetDirectoryName(documentName);
-                OgreResourceGroupManager.getInstance().addResourceLocation(currentDocumentDirectory, "FileSystem", "Rocket", false);
-                OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", RocketRawOgreFilesystemArchive.ArchiveName, "Rocket", false);
+                OgreResourceGroupManager.getInstance().addResourceLocation(currentDocumentDirectory, "FileSystem", RmlViewerOgreGroup, false);
+                OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", RocketRawOgreFilesystemArchive.ArchiveName, RmlViewerOgreGroup, false);
 
                 window.Caption = String.Format("{0} - '{1}'  {2}", windowTitleBase, Path.GetFileName(documentName), currentDocumentDirectory);
 
