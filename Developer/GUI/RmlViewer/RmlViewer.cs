@@ -8,43 +8,51 @@ using MyGUIPlugin;
 using Engine;
 using libRocketPlugin;
 using Medical.Controller;
+using Logging;
+using Medical;
+using OgreWrapper;
 
 namespace Developer.GUI
 {
     class RmlViewer : MDIDialog
     {
         private RocketWidget rocketWidget;
-        private String documentName = "Developer.GUI.TestRocketWindow.demo.rml";
+        private String documentName = null;
         private FileSystemWatcher fileWatcher;
 
         public RmlViewer()
             : base("Developer.GUI.RmlViewer.RmlViewer.layout")
         {
             ImageBox imageBox = (ImageBox)window.findWidget("RocketImage");
-            rocketWidget = new RocketWidget("Developer.GUI.RmlViewer", documentName, imageBox);
+            rocketWidget = new RocketWidget("Developer.GUI.RmlViewer", imageBox);
             rocketWidget.Enabled = false;
 
-            Button reload = (Button)window.findWidget("Reload");
-            reload.MouseButtonClick += new MyGUIEvent(reload_MouseButtonClick);
+            MenuBar menuBar = (MenuBar)window.findWidget("MenuBar");
+            MenuItem file = menuBar.addItem("File", MenuItemType.Popup, "File");
+            MenuControl fileControl = menuBar.createItemPopupMenuChild(file);
+            fileControl.addItem("Open", MenuItemType.Normal, "Open");
+            fileControl.ItemAccept += new MyGUIEvent(fileControl_ItemAccept);
 
             this.Resized += new EventHandler(TestRocketWindow_Resized);
 
-            try
-            {
-                if (VirtualFileSystem.Instance.exists(documentName))
-                {
-                    VirtualFileInfo fileInfo = VirtualFileSystem.Instance.getFileInfo(documentName);
-                    if (File.Exists(fileInfo.RealLocation))
-                    {
-                        fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(fileInfo.RealLocation));
-                        fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
-                        fileWatcher.EnableRaisingEvents = true;
-                    }
-                }
-            }
-            catch (Exception)
-            {
+            OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", "RawFilesystemArchive", "Rocket", false);
+        }
 
+        void fileControl_ItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+            switch (mcae.Item.ItemId)
+            {
+                case "Open":
+                    using (FileOpenDialog fileOpen = new FileOpenDialog(MainWindow.Instance, "Choose RML File"))
+                    {
+                        if (fileOpen.showModal() == NativeDialogResult.OK)
+                        {
+                            documentName = fileOpen.Path;
+                            loadDocument();
+                        }
+                    }
+                    break;
             }
         }
 
@@ -55,6 +63,7 @@ namespace Developer.GUI
                 fileWatcher.Dispose();
             }
             rocketWidget.Dispose();
+            OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
             base.Dispose();
         }
 
@@ -75,19 +84,57 @@ namespace Developer.GUI
             rocketWidget.resized();
         }
 
-        void reload_MouseButtonClick(Widget source, EventArgs e)
-        {
-            Factory.ClearStyleSheetCache();
-            rocketWidget.changeDocument(documentName);
-        }
-
         void fileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             ThreadManager.invoke(new Action(delegate()
             {
-                Factory.ClearStyleSheetCache();
-                rocketWidget.changeDocument(documentName);
+                loadDocument();
             }));
+        }
+
+        private void loadDocument()
+        {
+            try
+            {
+                RawFilesystemArchive.DirectoryHint = Path.GetDirectoryName(documentName);
+                Factory.ClearStyleSheetCache();
+                rocketWidget.Context.UnloadAllDocuments();
+                using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
+                {
+                    if (document != null)
+                    {
+                        document.Show();
+                    }
+                }
+
+                if (fileWatcher != null)
+                {
+                    fileWatcher.Dispose();
+                    fileWatcher = null;
+                }
+
+                String realLocation = documentName;
+
+                if (VirtualFileSystem.Instance.exists(realLocation))
+                {
+                    VirtualFileInfo fileInfo = VirtualFileSystem.Instance.getFileInfo(documentName);
+                    realLocation = fileInfo.RealLocation;
+                }
+                else
+                {
+
+                }
+                if (File.Exists(realLocation))
+                {
+                    fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(realLocation));
+                    fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
+                    fileWatcher.EnableRaisingEvents = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("Could not load file watcher for {0} because {1}", documentName, ex.Message);
+            }
         }
     }
 }

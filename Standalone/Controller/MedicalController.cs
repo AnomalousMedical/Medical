@@ -180,6 +180,10 @@ namespace Medical
             {
                 pluginManager.Dispose();
             }
+            if (rocketGuiManager != null)
+            {
+                rocketGuiManager.destroyOgreCustomArchive();
+            }
 
             MedicalConfig.save();
             logListener.closeLogFile();

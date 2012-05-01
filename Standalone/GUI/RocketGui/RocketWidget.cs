@@ -32,7 +32,7 @@ namespace Medical.GUI
 
         private ImageBox imageBox;
 
-        public RocketWidget(String name, String doc, ImageBox imageBox)
+        public RocketWidget(String name, ImageBox imageBox)
         {
             this.imageBox = imageBox;
             this.name = name;
@@ -56,14 +56,6 @@ namespace Medical.GUI
             //Create context
             context = Core.CreateContext(name, new Vector2i(imageBox.Width, imageBox.Height));
             //Debugger.Initialise(context);
-
-            using (ElementDocument document = context.LoadDocument(doc))
-            {
-                if (document != null)
-                {
-                    document.Show();
-                }
-            }
 
             renderQueueListener = new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface());
             renderQueueListener.RenderDimensions = new IntSize2(currentTextureWidth, currentTextureHeight);
@@ -91,18 +83,6 @@ namespace Medical.GUI
         {
             //Move the mouse offscreen to keep it from staying over stuff when the widget is not in focus
             context.ProcessMouseMove(-100, -100, 0);
-        }
-
-        public void changeDocument(String newDocumentName)
-        {
-            context.UnloadAllDocuments();
-            using (ElementDocument document = context.LoadDocument(newDocumentName))
-            {
-                if (document != null)
-                {
-                    document.Show();
-                }
-            }
         }
 
         public void Dispose()
@@ -175,6 +155,14 @@ namespace Medical.GUI
             set
             {
                 pixelBuffer.Value.getRenderTarget().setActive(value);
+            }
+        }
+
+        public Context Context
+        {
+            get
+            {
+                return context;
             }
         }
 

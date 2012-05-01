@@ -374,6 +374,8 @@
     <Compile Include="GUI\Notification\RestartNotification.cs" />
     <Compile Include="GUI\Notification\StartTaskNotification.cs" />
     <Compile Include="GUI\RocketGui\ContextWindowListener.cs" />
+    <Compile Include="GUI\RocketGui\RocketRawOgreFilesystem\RawFilesystemArchive.cs" />
+    <Compile Include="GUI\RocketGui\RocketRawOgreFilesystem\RawFilesystemArchiveFactory.cs" />
     <Compile Include="GUI\RocketGui\RocketGuiManager.cs" />
     <Compile Include="GUI\RocketGui\RocketWidget.cs" />
     <Compile Include="GUI\RocketGui\TestEventListener.cs" />

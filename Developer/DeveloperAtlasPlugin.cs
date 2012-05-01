@@ -22,7 +22,7 @@ namespace Developer
         private BrowserWindow browserWindow;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
         private GridPropertiesDialog gridProperties;
-        private TestRocketWindow testRocketWindow;
+        private RmlViewer rmlViewer;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -31,7 +31,7 @@ namespace Developer
 
         public void Dispose()
         {
-            testRocketWindow.Dispose();
+            rmlViewer.Dispose();
             advancedMandibleMovement.Dispose();
             examViewer.Dispose();
             pluginPublisher.Dispose();
@@ -85,8 +85,8 @@ namespace Developer
 
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
 
-            testRocketWindow = new TestRocketWindow("TestRocket");
-            guiManager.addManagedDialog(testRocketWindow);
+            rmlViewer = new RmlViewer();
+            guiManager.addManagedDialog(rmlViewer);
             //testRocketWindow.Visible = true;
 
             //Task Controller
@@ -101,7 +101,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "Developer.PlugInEditorIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(testRocketWindow, "Medical.TestRocketWindow", "Test Rocket", "Developer.GridIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(rmlViewer, "Medical.RmlViewer", "RML Viewer", "Developer.GridIcon", TaskMenuCategories.Developer));
         }
 
         public void sceneLoaded(SimScene scene)

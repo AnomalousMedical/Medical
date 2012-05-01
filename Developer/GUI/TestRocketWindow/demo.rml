@@ -1,8 +1,8 @@
 <rml>
   <head>
     <title>Demo</title>
-    <link type="text/rcss" href="libRocketPlugin.Resources.rkt.rcss"/>
-    <link type="text/rcss" href="libRocketPlugin.Resources.Anomalous.rcss"/>
+    <link type="text/rcss" href="/libRocketPlugin.Resources.rkt.rcss"/>
+    <link type="text/rcss" href="/libRocketPlugin.Resources.Anomalous.rcss"/>
     <style>
 
     </style>
