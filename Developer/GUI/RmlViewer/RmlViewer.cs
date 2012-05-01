@@ -34,8 +34,6 @@ namespace Developer.GUI
             fileControl.ItemAccept += new MyGUIEvent(fileControl_ItemAccept);
 
             this.Resized += new EventHandler(TestRocketWindow_Resized);
-
-            OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", "RawFilesystemArchive", "Rocket", false);
         }
 
         void fileControl_ItemAccept(Widget source, EventArgs e)
@@ -96,6 +94,9 @@ namespace Developer.GUI
         {
             try
             {
+                OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
+                OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", "RawFilesystemArchive", "Rocket", false);
+
                 RawFilesystemArchive.DirectoryHint = Path.GetDirectoryName(documentName);
                 Factory.ClearStyleSheetCache();
                 rocketWidget.Context.UnloadAllDocuments();
