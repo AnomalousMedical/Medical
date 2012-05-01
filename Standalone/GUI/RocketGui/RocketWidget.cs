@@ -181,7 +181,16 @@ namespace Medical.GUI
         void imageBox_MouseWheel(Widget source, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
-            context.ProcessMouseWheel(me.RelativeWheelPosition / -120, 0);
+			int wheelDelta = 0;
+			if(me.RelativeWheelPosition > 0.0f)
+			{
+				wheelDelta = -1;
+			}
+			if(me.RelativeWheelPosition < 0.0f)
+			{
+				wheelDelta = 1;
+			}
+            context.ProcessMouseWheel(wheelDelta, 0);
         }
 
         void imageBox_MouseButtonReleased(Widget source, EventArgs e)
