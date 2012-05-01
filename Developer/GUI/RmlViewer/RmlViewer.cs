@@ -20,6 +20,7 @@ namespace Developer.GUI
         private String documentName = null;
         private FileSystemWatcher fileWatcher;
         private String windowTitleBase;
+        private String currentDocumentDirectory = null;
 
         public RmlViewer()
             : base("Developer.GUI.RmlViewer.RmlViewer.layout")
@@ -64,7 +65,11 @@ namespace Developer.GUI
                 fileWatcher.Dispose();
             }
             rocketWidget.Dispose();
-            OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
+            if (currentDocumentDirectory != null)
+            {
+                OgreResourceGroupManager.getInstance().removeResourceLocation(currentDocumentDirectory, "Rocket");
+                OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
+            }
             base.Dispose();
         }
 
@@ -97,11 +102,16 @@ namespace Developer.GUI
         {
             try
             {
-                OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
+                if (currentDocumentDirectory != null)
+                {
+                    OgreResourceGroupManager.getInstance().removeResourceLocation(currentDocumentDirectory, "Rocket");
+                    OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", "Rocket");
+                }
+                currentDocumentDirectory = Path.GetDirectoryName(documentName);
+                OgreResourceGroupManager.getInstance().addResourceLocation(currentDocumentDirectory, "FileSystem", "Rocket", false);
                 OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", RocketRawOgreFilesystemArchive.ArchiveName, "Rocket", false);
 
-                RocketRawOgreFilesystemArchive.DirectoryHint = Path.GetDirectoryName(documentName);
-                window.Caption = String.Format("{0} - '{1}'  {2}", windowTitleBase, Path.GetFileName(documentName), RocketRawOgreFilesystemArchive.DirectoryHint);
+                window.Caption = String.Format("{0} - '{1}'  {2}", windowTitleBase, Path.GetFileName(documentName), currentDocumentDirectory);
 
                 Factory.ClearStyleSheetCache();
                 rocketWidget.Context.UnloadAllDocuments();
