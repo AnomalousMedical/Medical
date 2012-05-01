@@ -107,6 +107,7 @@ namespace Developer.GUI
             {
                 if (loadedOnce)
                 {
+                    //The textures are unloaded and released so they will refresh if they are updated.
                     TextureDatabase.ReleaseTextures();
                     OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", RmlViewerOgreGroup);
                     OgreResourceGroupManager.getInstance().destroyResourceGroup(RmlViewerOgreGroup);
