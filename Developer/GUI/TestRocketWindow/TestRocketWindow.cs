@@ -14,7 +14,7 @@ namespace Developer.GUI
     class TestRocketWindow : MDIDialog
     {
         private RocketWidget rocketWidget;
-        private String documentName = "demo.rml";
+        private String documentName = "Developer.GUI.TestRocketWindow.demo.rml";
         private FileSystemWatcher fileWatcher;
 
         public TestRocketWindow(String name)
@@ -29,12 +29,22 @@ namespace Developer.GUI
 
             this.Resized += new EventHandler(TestRocketWindow_Resized);
 
-            VirtualFileInfo fileInfo = VirtualFileSystem.Instance.getFileInfo(documentName);
-            if(File.Exists(fileInfo.RealLocation))
+            try
             {
-                fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(fileInfo.RealLocation));
-                fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
-                fileWatcher.EnableRaisingEvents = true;
+                if (VirtualFileSystem.Instance.exists(documentName))
+                {
+                    VirtualFileInfo fileInfo = VirtualFileSystem.Instance.getFileInfo(documentName);
+                    if (File.Exists(fileInfo.RealLocation))
+                    {
+                        fileWatcher = new FileSystemWatcher(Path.GetDirectoryName(fileInfo.RealLocation));
+                        fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
+                        fileWatcher.EnableRaisingEvents = true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
 

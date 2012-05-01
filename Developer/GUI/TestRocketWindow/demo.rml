@@ -1,0 +1,58 @@
+<rml>
+  <head>
+    <title>Demo</title>
+    <link type="text/rcss" href="libRocketPlugin.Resources.rkt.rcss"/>
+    <link type="text/rcss" href="libRocketPlugin.Resources.Anomalous.rcss"/>
+    <style>
+
+    </style>
+  </head>
+  <body>
+    <div class="ScrollArea">
+      <h1>Woot</h1>
+      <p onclick="damn ho">This is a sample paragraph.</p>
+      <p>
+        Hello this is some text. There is a <a onclick="test dis bitch">link</a> here too. The text is pretty long too. So it will probably wrap down to another line.
+      </p>
+      There is a list here:
+      <ol>
+        <li>One</li>
+        <li>Two</li>
+        <li>Three</li>
+        <li>Four</li>
+      </ol>
+      <br/>
+      <form onsubmit="i got submitted">
+        Text Input Box
+        <br/>
+        <input name="Text" type="text"></input>
+        <br/>
+        Choose a radio option
+        <br/>
+        <input name="Radio1" type="radio" value="Radio1"></input>Radio 1
+        <br/>
+        <input name="Radio1" type="radio" value="Radio2"></input>Radio 2
+        <br/>
+        <input name="Radio1" type="radio" value="Radio3"></input>Radio 3
+        <br/>
+        <input name="CheckBox" type="checkbox"></input>Checkbox
+        <br/>
+        There is a text area that starts here
+        <br/>
+        <textarea name="TextArea" cols="40" rows="6"></textarea>
+        <br/>
+        Select Something
+        <br/>
+        <select name="Select">
+          <option value="Woot">Woot</option>
+          <option value="Woot2">Woot 2</option>
+          <option value="Woot2">Woot 3</option>
+          <option value="Woot2">Woot 4</option>
+        </select>
+        <br/>
+        <input name="Submit" type="submit" style="width: 100px;">Submit</input>
+      </form>
+      <br/>
+    </div>
+  </body>
+</rml>

@@ -7,6 +7,7 @@ using Engine.ObjectManagement;
 using Medical.GUI;
 using Developer.GUI;
 using MyGUIPlugin;
+using libRocketPlugin;
 
 namespace Developer
 {
@@ -81,6 +82,8 @@ namespace Developer
 
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(advancedMandibleMovement);
+
+            RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
 
             testRocketWindow = new TestRocketWindow("TestRocket");
             guiManager.addManagedDialog(testRocketWindow);

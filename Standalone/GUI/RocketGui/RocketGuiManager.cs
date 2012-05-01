@@ -7,6 +7,8 @@ using OgreWrapper;
 using OgrePlugin;
 using Engine;
 using Engine.Platform;
+using MyGUIPlugin;
+using System.Reflection;
 
 namespace Medical.GUI
 {
@@ -40,10 +42,11 @@ namespace Medical.GUI
             eventListenerInstancer = new TestEventListenerInstancer();
             Factory.RegisterEventListenerInstancer(eventListenerInstancer);
 
-            RocketInterface.Instance.FileInterface.addExtension(new MyGUIRocketResources());
+            RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(typeof(RocketInterface).Assembly));
+            RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(typeof(MyGUIInterface).Assembly));
 
-            String sample_path = "S:/Engine/libRocketPlugin/Resources/";//"S:/dependencies/libRocket/src/Samples/";
-            VirtualFileSystem.Instance.addArchive(sample_path);
+            //String sample_path = "S:/Engine/libRocketPlugin/Resources/";//"S:/dependencies/libRocket/src/Samples/";
+            //VirtualFileSystem.Instance.addArchive(sample_path);
             OgreResourceGroupManager.getInstance().addResourceLocation("/", "EngineArchive", "Rocket", false);
 
             FontDatabase.LoadFontFace("MyGUIPlugin_DejaVuSans.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_NORMAL);
