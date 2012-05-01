@@ -19,6 +19,7 @@ namespace Developer.GUI
         private RocketWidget rocketWidget;
         private String documentName = null;
         private FileSystemWatcher fileWatcher;
+        private String windowTitleBase;
 
         public RmlViewer()
             : base("Developer.GUI.RmlViewer.RmlViewer.layout")
@@ -34,6 +35,8 @@ namespace Developer.GUI
             fileControl.ItemAccept += new MyGUIEvent(fileControl_ItemAccept);
 
             this.Resized += new EventHandler(TestRocketWindow_Resized);
+
+            windowTitleBase = window.Caption;
         }
 
         void fileControl_ItemAccept(Widget source, EventArgs e)
@@ -98,6 +101,8 @@ namespace Developer.GUI
                 OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", "RawFilesystemArchive", "Rocket", false);
 
                 RawFilesystemArchive.DirectoryHint = Path.GetDirectoryName(documentName);
+                window.Caption = String.Format("{0} - {1}, {2}", windowTitleBase, Path.GetFileName(documentName), RawFilesystemArchive.DirectoryHint);
+
                 Factory.ClearStyleSheetCache();
                 rocketWidget.Context.UnloadAllDocuments();
                 using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
