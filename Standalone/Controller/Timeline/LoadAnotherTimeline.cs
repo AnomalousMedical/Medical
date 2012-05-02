@@ -75,7 +75,7 @@ namespace Medical
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addEditableProperty(new TimelineEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("TargetTimeline")), this, TimelineBrowserController.TimelineSearchPattern));
+            editInterface.addEditableProperty(new BrowseableEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("TargetTimeline")), this, BrowserWindowController.TimelineSearchPattern));
         }
 
 #region Saving

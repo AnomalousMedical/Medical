@@ -10,7 +10,7 @@ namespace Medical
     /// <summary>
     /// This class can create Browser objects from TimeilneController information.
     /// </summary>
-    public class TimelineBrowserController
+    public class BrowserWindowController
     {
         public const String TimelineSearchPattern = "*.tl";
         public const String RmlSearchPattern = "*.rml";
@@ -19,7 +19,7 @@ namespace Medical
 
         public static void setTimelineController(TimelineController timelineController)
         {
-            TimelineBrowserController.timelineController = timelineController;
+            BrowserWindowController.timelineController = timelineController;
         }
 
         public static Browser createBrowser(String searchPattern)
@@ -39,7 +39,7 @@ namespace Medical
             return browser;
         }
 
-        private TimelineBrowserController()
+        private BrowserWindowController()
         {
 
         }

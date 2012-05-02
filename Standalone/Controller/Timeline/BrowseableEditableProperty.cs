@@ -10,14 +10,14 @@ namespace Medical
     /// <summary>
     /// An editable property for timelines to be used with the standard two column edit table layout.
     /// </summary>
-    class TimelineEditableProperty : EditableProperty
+    class BrowseableEditableProperty : EditableProperty
     {
         private MemberWrapper propertyInfo;
         private Object instance;
         private String name;
         private String browserSearchPattern;
 
-        public TimelineEditableProperty(String name, MemberWrapper propertyInfo, Object instance, String browserSearchPattern)
+        public BrowseableEditableProperty(String name, MemberWrapper propertyInfo, Object instance, String browserSearchPattern)
         {
             this.name = name;
             this.propertyInfo = propertyInfo;
@@ -38,7 +38,7 @@ namespace Medical
                 case 0:
                     return null;
                 case 1:
-                    return TimelineBrowserController.createBrowser(browserSearchPattern);
+                    return BrowserWindowController.createBrowser(browserSearchPattern);
                 default:
                     return null;
             }

@@ -31,7 +31,7 @@ namespace Medical
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addEditableProperty(new TimelineEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, TimelineBrowserController.RmlSearchPattern));
+            editInterface.addEditableProperty(new BrowseableEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, BrowserWindowController.RmlSearchPattern));
             editInterface.addSubInterface(actionManager.getEditInterface());
         }
 

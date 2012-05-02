@@ -39,7 +39,7 @@ namespace Medical
         public void Dispose()
         {
             rmlViewer.Dispose();
-            TimelineBrowserController.setTimelineController(null);
+            BrowserWindowController.setTimelineController(null);
             timelinePropertiesController.Dispose();
             timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
@@ -70,7 +70,7 @@ namespace Medical
             editorTimelineController.PlaybackStarted += editorTimelineController_PlaybackStarted;
             editorTimelineController.PlaybackStopped += new EventHandler(editorTimelineController_PlaybackStopped);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
-            TimelineBrowserController.setTimelineController(editorTimelineController);
+            BrowserWindowController.setTimelineController(editorTimelineController);
 
             standaloneController.TimelineController.PlaybackStarted += TimelineController_PlaybackStarted;
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
