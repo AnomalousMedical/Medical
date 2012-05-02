@@ -20,7 +20,6 @@ namespace Medical
 
         public override void ProcessEvent(Event evt)
         {
-            Logging.Log.Debug(name);
             rmlGui.runAction(name);
         }
     }
