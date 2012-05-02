@@ -22,7 +22,11 @@ namespace Medical.RmlTimeline.Actions
             gui.applyCameraPosition(CameraPosition);
         }
 
-        [Editable]
+        protected override void createEditInterface()
+        {
+            editInterface = CameraPosition.getEditInterface(Type, ReflectedEditInterface.DefaultScanner);
+        }
+
         public CameraPosition CameraPosition { get; set; }
 
         public override string Type

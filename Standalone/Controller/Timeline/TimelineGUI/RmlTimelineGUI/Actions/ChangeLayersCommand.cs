@@ -19,7 +19,11 @@ namespace Medical.RmlTimeline.Actions
             gui.applyLayers(Layers);
         }
 
-        [Editable]
+        protected override void createEditInterface()
+        {
+            editInterface = Layers.getEditInterface(Type, ReflectedEditInterface.DefaultScanner);
+        }
+
         public EditableLayerState Layers { get; set; }
 
         public override string Type

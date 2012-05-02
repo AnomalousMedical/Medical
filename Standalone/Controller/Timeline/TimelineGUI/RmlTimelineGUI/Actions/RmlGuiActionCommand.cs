@@ -34,7 +34,7 @@ namespace Medical.RmlTimeline.Actions
     partial class RmlGuiActionCommand
     {
         [DoNotSave]
-        private EditInterface editInterface = null;
+        protected EditInterface editInterface = null;
 
         public EditInterface EditInterface
         {
@@ -42,11 +42,16 @@ namespace Medical.RmlTimeline.Actions
             {
                 if (editInterface == null)
                 {
-                    editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, Type, null);
-                    customizeEditInterface(editInterface);
+                    createEditInterface();
                 }
                 return editInterface;
             }
+        }
+
+        protected virtual void createEditInterface()
+        {
+            editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, Type, null);
+            customizeEditInterface(editInterface);
         }
 
         protected virtual void customizeEditInterface(EditInterface editInterface)

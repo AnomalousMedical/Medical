@@ -104,7 +104,9 @@ namespace Medical.RmlTimeline.Actions
 
         private void addChangeLayers(EditUICallback callback, EditInterfaceCommand command)
         {
-            addCommand(new ChangeLayersCommand());
+            ChangeLayersCommand changeLayers = new ChangeLayersCommand();
+            changeLayers.Layers.captureState();
+            addCommand(changeLayers);
         }
 
         private void addChangeMedicalState(EditUICallback callback, EditInterfaceCommand command)
