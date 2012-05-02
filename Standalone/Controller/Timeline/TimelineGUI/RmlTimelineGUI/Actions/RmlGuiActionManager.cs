@@ -86,8 +86,6 @@ namespace Medical.RmlTimeline.Actions
                 actionEdits = new EditInterfaceManager<RmlGuiAction>(editInterface);
                 actionEdits.addCommand(new EditInterfaceCommand("Remove", deleteAction));
                 actionEdits.addCommand(new EditInterfaceCommand("Rename", renameAction));
-                actionEdits.addCommand(new EditInterfaceCommand("Move Up", moveUp));
-                actionEdits.addCommand(new EditInterfaceCommand("Move Down", moveDown));
 
                 foreach (RmlGuiAction action in actions)
                 {
@@ -134,28 +132,6 @@ namespace Medical.RmlTimeline.Actions
                 errorPrompt = String.Format("An action named {0} already exists. Please input another name.", input);
                 return false;
             });
-        }
-
-        private void moveUp(EditUICallback callback, EditInterfaceCommand command)
-        {
-            RmlGuiAction action = actionEdits.resolveSourceObject(callback.getSelectedEditInterface());
-            int index = actions.IndexOf(action) - 1;
-            if (index >= 0)
-            {
-                removeAction(action);
-                insertAction(index, action);
-            }
-        }
-
-        private void moveDown(EditUICallback callback, EditInterfaceCommand command)
-        {
-            RmlGuiAction field = actionEdits.resolveSourceObject(callback.getSelectedEditInterface());
-            int index = actions.IndexOf(field) + 1;
-            if (index < actions.Count)
-            {
-                removeAction(field);
-                insertAction(index, field);
-            }
         }
 
         private void addActionDefinition(RmlGuiAction action)
