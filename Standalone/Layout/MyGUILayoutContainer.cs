@@ -12,6 +12,8 @@ namespace Medical
         private Widget widget;
         private Size2 desiredSize;
 
+        public event Action LayoutChanged;
+
         public MyGUILayoutContainer(Widget widget)
         {
             this.widget = widget;
@@ -36,6 +38,10 @@ namespace Medical
         public override void layout()
         {
             widget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)WorkingSize.Height);
+            if (LayoutChanged != null)
+            {
+                LayoutChanged.Invoke();
+            }
         }
 
         public override Size2 DesiredSize

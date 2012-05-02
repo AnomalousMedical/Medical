@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelSkin" position="6 36 352 258" layer="Back">
+        <Widget type="ImageBox" skin="ImageBox" position="0 35 352 223" align="Left VStretch" name="RmlImage"/>
+        <Widget type="Button" skin="Button" position="5 5 92 26" name="Close">
+            <Property key="Caption" value="Close"/>
+        </Widget>
+    </Widget>
+</MyGUI>

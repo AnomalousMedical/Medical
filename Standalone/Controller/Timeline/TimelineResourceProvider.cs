@@ -20,6 +20,8 @@ namespace Medical
 
         bool exists(String path);
 
+        String getFullFilePath(String filename);
+
         String BackingLocation { get; }
 
         TimelineResourceProvider clone();

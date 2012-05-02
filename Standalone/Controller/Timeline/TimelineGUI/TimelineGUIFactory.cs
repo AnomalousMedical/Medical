@@ -21,18 +21,19 @@ namespace Medical
         public TimelineGUIFactory()
         {
             addPrototype(new DataDrivenTimelineGUIPrototype());
+            addPrototype(new RmlTimelineGUIPrototype());
         }
 
-        public void findPrototypes(Assembly assembly)
-        {
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (PrototypeType.IsAssignableFrom(type))
-                {
-                    addPrototype((TimelineGUIFactoryPrototype)Activator.CreateInstance(type));
-                }
-            }
-        }
+        //public void findPrototypes(Assembly assembly)
+        //{
+        //    foreach (Type type in assembly.GetTypes())
+        //    {
+        //        if (PrototypeType.IsAssignableFrom(type))
+        //        {
+        //            addPrototype((TimelineGUIFactoryPrototype)Activator.CreateInstance(type));
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Add a prototype that can be used with a given name.

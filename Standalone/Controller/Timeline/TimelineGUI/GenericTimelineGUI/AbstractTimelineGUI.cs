@@ -44,6 +44,11 @@ namespace Medical
             return showTimelineAction.openFile(filename);
         }
 
+        public String getFullPath(String filename)
+        {
+            return showTimelineAction.getFullPath(filename);
+        }
+
         public void applyLayers(LayerState layers)
         {
             if (layers != null)

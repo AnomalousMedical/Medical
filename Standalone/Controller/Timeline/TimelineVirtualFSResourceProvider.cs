@@ -53,6 +53,11 @@ namespace Medical
             return virtualFileSystem.exists(Path.Combine(parentDirectory, path));
         }
 
+        public String getFullFilePath(String filename)
+        {
+            return Path.Combine(parentDirectory, filename);
+        }
+
         public TimelineResourceProvider clone()
         {
             return new TimelineVirtualFSResourceProvider(parentDirectory);

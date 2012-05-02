@@ -70,6 +70,11 @@ namespace Medical
             return zipFile.exists(path);
         }
 
+        public String getFullFilePath(String filename)
+        {
+            return Path.Combine(resourceLocation, filename);
+        }
+
         public TimelineResourceProvider clone()
         {
             return new TimelineReadOnlyZipResources(resourceLocation);

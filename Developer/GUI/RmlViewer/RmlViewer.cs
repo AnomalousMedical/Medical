@@ -52,7 +52,7 @@ namespace Developer.GUI
                     {
                         if (fileOpen.showModal() == NativeDialogResult.OK)
                         {
-                            documentName = RocketInterface.MakeSafePath(fileOpen.Path);
+                            documentName = fileOpen.Path;
                             loadDocument();
                         }
                     }

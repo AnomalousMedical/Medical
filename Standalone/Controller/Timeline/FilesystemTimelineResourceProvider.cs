@@ -63,6 +63,11 @@ namespace Medical
             return File.Exists(path);
         }
 
+        public String getFullFilePath(String filename)
+        {
+            return Path.Combine(parentPath, filename);
+        }
+
         public TimelineResourceProvider clone()
         {
             return new FilesystemTimelineResourceProvider(parentPath);

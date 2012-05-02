@@ -63,6 +63,11 @@ namespace Medical
             return fileList.Contains(path);
         }
 
+        public String getFullFilePath(String filename)
+        {
+            return baseResourceString + filename;
+        }
+
         public TimelineResourceProvider clone()
         {
             return new TimelineEmbeddedResourceProvider(assembly, baseResourceString);

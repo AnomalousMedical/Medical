@@ -274,6 +274,9 @@
     <Compile Include="Controller\Layers\EditableLayerState.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\MyGUITimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUI.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIData.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIPrototype.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\ShowTimelineGUIAction.cs" />
     <Compile Include="Controller\Timeline\TimelineEmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUI.cs" />
@@ -556,6 +559,7 @@
     <None Include="Resources\AnomalousMedical.png" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUI.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.layout" />
+    <EmbeddedResource Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUI.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\TimelineWizard\WizardPanelButtons.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />

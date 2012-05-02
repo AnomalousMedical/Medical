@@ -32,6 +32,11 @@ namespace Medical
             return timelineControllerAfterDoAction.ResourceProvider.openFile(filename);
         }
 
+        public String getFullPath(String filename)
+        {
+            return timelineControllerAfterDoAction.ResourceProvider.getFullFilePath(filename);
+        }
+
         /// <summary>
         /// Stop playing timelines and fire the multi stop event.
         /// </summary>
