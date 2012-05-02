@@ -33,6 +33,17 @@ namespace Medical
         {
             editInterface.addEditableProperty(new BrowseableEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, BrowserWindowController.RmlSearchPattern));
             editInterface.addSubInterface(actionManager.getEditInterface());
+            editInterface.addCommand(new EditInterfaceCommand("Open file in viewer", openFileInViewer));
+        }
+
+        public enum CustomQueries
+        {
+            OpenFileInRmlViewer
+        }
+
+        private void openFileInViewer(EditUICallback callback, EditInterfaceCommand command)
+        {
+            callback.runCustomQuery(CustomQueries.OpenFileInRmlViewer, null, RmlFile);
         }
 
         protected RmlTimelineGUIData(LoadInfo info)

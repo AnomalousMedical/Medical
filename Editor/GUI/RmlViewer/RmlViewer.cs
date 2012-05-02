@@ -14,13 +14,12 @@ using OgreWrapper;
 
 namespace Medical.GUI
 {
-    class RmlViewer : MDIDialog
+    public class RmlViewer : MDIDialog
     {
         private RocketWidget rocketWidget;
         private String documentName = null;
         private FileSystemWatcher fileWatcher;
         private String windowTitleBase;
-        private bool loadedOnce = false;
 
         public RmlViewer()
             : base("Medical.GUI.RmlViewer.RmlViewer.layout")
@@ -40,6 +39,12 @@ namespace Medical.GUI
             windowTitleBase = window.Caption;
         }
 
+        public void changeDocument(string file)
+        {
+            documentName = file;
+            loadDocument();
+        }
+
         void fileControl_ItemAccept(Widget source, EventArgs e)
         {
             MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
@@ -50,8 +55,7 @@ namespace Medical.GUI
                     {
                         if (fileOpen.showModal() == NativeDialogResult.OK)
                         {
-                            documentName = fileOpen.Path;
-                            loadDocument();
+                            changeDocument(fileOpen.Path);
                         }
                     }
                     break;

@@ -223,6 +223,14 @@ namespace Medical
             }
         }
 
+        public RmlViewer RmlViewer
+        {
+            get
+            {
+                return rmlViewer;
+            }
+        }
+
         public void sceneRevealed()
         {
 

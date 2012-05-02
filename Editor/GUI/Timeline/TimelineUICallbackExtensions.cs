@@ -14,23 +14,26 @@ namespace Medical.GUI
         private BrowserWindow browserWindow;
         private QuestionEditor questionEditor;
         private StandaloneController standaloneController;
+        private TimelinePropertiesController propertiesController;
 
         private SendResult<Object> changeGUITypeCallback;
         private SendResult<Object> showQuestionEditorCallback;
 
-        public TimelineUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, TimelineController editorTimelineController, BrowserWindow browserWindow, QuestionEditor questionEditor)
+        public TimelineUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, TimelineController editorTimelineController, TimelinePropertiesController propertiesController)
         {
             this.medicalUICallback = medicalUICallback;
             this.editorTimelineController = editorTimelineController;
-            this.browserWindow = browserWindow;
-            this.questionEditor = questionEditor;
+            this.browserWindow = propertiesController.EditorPlugin.BrowserWindow;
+            this.questionEditor = propertiesController.QuestionEditor;
             this.standaloneController = standaloneController;
+            this.propertiesController = propertiesController;
 
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.ChangeGUIType, changeGUIType);
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.GetGUIData, getGUIData);
             medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.OpenQuestionEditor, openQuestionEditor);
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
             medicalUICallback.addCustomQuery(ChangeMedicalStateDoAction.CustomEditQueries.CapturePresetState, capturePresetState);
+            medicalUICallback.addCustomQuery(RmlTimelineGUIData.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -57,6 +60,17 @@ namespace Medical.GUI
             questionEditor.SoundFile = showPromptAction.SoundFile;
             questionEditor.Closed += questionEditor_Closed;
             questionEditor.open(true);
+        }
+
+        private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
+        {
+            RmlViewer rmlViewer = propertiesController.EditorPlugin.RmlViewer;
+            String file = editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString());
+            rmlViewer.changeDocument(file);
+            if (!rmlViewer.Visible)
+            {
+                rmlViewer.Visible = true;
+            }
         }
 
         void questionEditor_Closed(object sender, EventArgs e)

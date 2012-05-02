@@ -54,8 +54,12 @@ namespace Medical.GUI
 
         public event EventDelegate<TimelinePropertiesController> VisibilityChanged;
 
+        private EditorPlugin editorPlugin;
+
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
+            this.editorPlugin = editorPlugin;
+
             mainTimelineController = standaloneController.TimelineController;
             mainTimelineController.TimelinePlaybackStopped += new EventHandler(mainTimelineController_TimelinePlaybackStopped);
 
@@ -84,7 +88,7 @@ namespace Medical.GUI
             guiManager.addManagedDialog(questionEditor);
 
             medicalUICallback = new MedicalUICallback(editorPlugin.BrowserWindow);
-            uiCallbackExtensions = new TimelineUICallbackExtensions(standaloneController, medicalUICallback, editorTimelineController, editorPlugin.BrowserWindow, questionEditor);
+            uiCallbackExtensions = new TimelineUICallbackExtensions(standaloneController, medicalUICallback, editorTimelineController, this);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
             timelineObjectExplorer.Enabled = false;
@@ -323,6 +327,22 @@ namespace Medical.GUI
                     }
                     togglingVisible = false;
                 }
+            }
+        }
+
+        public EditorPlugin EditorPlugin
+        {
+            get
+            {
+                return editorPlugin;
+            }
+        }
+
+        public QuestionEditor QuestionEditor
+        {
+            get
+            {
+                return questionEditor;
             }
         }
 
