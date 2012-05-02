@@ -48,7 +48,7 @@ namespace Medical.GUI
             //Create a rocket group in ogre
             Root.getSingleton().addArchiveFactory(rawFilesystemArchives);
 
-            eventListenerInstancer = new TestEventListenerInstancer();
+            eventListenerInstancer = new RocketEventListenerInstancer();
             Factory.RegisterEventListenerInstancer(eventListenerInstancer);
 
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(typeof(RocketInterface).Assembly));

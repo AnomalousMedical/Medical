@@ -14,6 +14,7 @@ namespace Medical
         private RocketWidget rocketWidget;
         private ImageBox rmlImage;
         private int imageHeight;
+        RmlTimelineGUIEventController eventController = new RmlTimelineGUIEventController();
 
         public RmlTimelineGUI()
             :base("Medical.Controller.Timeline.TimelineGUI.RmlTimelineGUI.RmlTimelineGUI.layout")
@@ -36,6 +37,7 @@ namespace Medical
 
         protected override void onShown()
         {
+            RocketEventListenerInstancer.setEventController(eventController);
             using (ElementDocument document = rocketWidget.Context.LoadDocument(getFullPath(GUIData.RmlFile)))
             {
                 if (document != null)
@@ -43,6 +45,7 @@ namespace Medical
                     document.Show();
                 }
             }
+            RocketEventListenerInstancer.resetEventController();
         }
 
         void layoutContainer_LayoutChanged()

@@ -276,6 +276,8 @@
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIData.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIEventController.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIEventListener.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIPrototype.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\ShowTimelineGUIAction.cs" />
     <Compile Include="Controller\Timeline\TimelineEmbeddedResourceProvider.cs" />
@@ -377,13 +379,14 @@
     <Compile Include="GUI\Notification\RestartNotification.cs" />
     <Compile Include="GUI\Notification\StartTaskNotification.cs" />
     <Compile Include="GUI\RocketGui\ContextWindowListener.cs" />
+    <Compile Include="GUI\RocketGui\RocketEventController.cs" />
     <Compile Include="GUI\RocketGui\RocketOgreTextureManager.cs" />
     <Compile Include="GUI\RocketGui\RocketRawOgreFilesystem\RocketRawOgreFilesystemArchive.cs" />
     <Compile Include="GUI\RocketGui\RocketRawOgreFilesystem\RocketRawOgreFilesystemArchiveFactory.cs" />
     <Compile Include="GUI\RocketGui\RocketGuiManager.cs" />
     <Compile Include="GUI\RocketGui\RocketWidget.cs" />
-    <Compile Include="GUI\RocketGui\TestEventListener.cs" />
-    <Compile Include="GUI\RocketGui\TestEventListenerInstancer.cs" />
+    <Compile Include="GUI\RocketGui\DebugEventListener.cs" />
+    <Compile Include="GUI\RocketGui\RocketEventListenerInstancer.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
