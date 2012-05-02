@@ -15,12 +15,14 @@ namespace Medical
         private MemberWrapper propertyInfo;
         private Object instance;
         private String name;
+        private String browserSearchPattern;
 
-        public TimelineEditableProperty(String name, MemberWrapper propertyInfo, Object instance)
+        public TimelineEditableProperty(String name, MemberWrapper propertyInfo, Object instance, String browserSearchPattern)
         {
             this.name = name;
             this.propertyInfo = propertyInfo;
             this.instance = instance;
+            this.browserSearchPattern = browserSearchPattern;
         }
 
         public bool canParseString(int column, string value, out string errorMessage)
@@ -36,7 +38,7 @@ namespace Medical
                 case 0:
                     return null;
                 case 1:
-                    return TimelineBrowserController.createBrowser();
+                    return TimelineBrowserController.createBrowser(browserSearchPattern);
                 default:
                     return null;
             }

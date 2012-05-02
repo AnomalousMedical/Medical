@@ -6,6 +6,7 @@ using Engine.Saving;
 using Engine.Editing;
 using Engine.Attributes;
 using Medical.RmlTimeline.Actions;
+using Engine.Reflection;
 
 namespace Medical
 {
@@ -18,12 +19,6 @@ namespace Medical
             actionManager = new RmlGuiActionManager();
         }
 
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addSubInterface(actionManager.getEditInterface());
-        }
-
-        [Editable]
         public String RmlFile { get; set; }
 
         public RmlGuiActionManager ActionManager
@@ -32,6 +27,12 @@ namespace Medical
             {
                 return actionManager;
             }
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            editInterface.addEditableProperty(new TimelineEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, TimelineBrowserController.RmlSearchPattern));
+            editInterface.addSubInterface(actionManager.getEditInterface());
         }
 
         protected RmlTimelineGUIData(LoadInfo info)

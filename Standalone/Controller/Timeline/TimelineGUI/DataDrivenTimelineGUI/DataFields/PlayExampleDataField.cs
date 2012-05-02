@@ -58,7 +58,7 @@ namespace Medical
     {
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addEditableProperty(new TimelineEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this));
+            editInterface.addEditableProperty(new TimelineEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this, TimelineBrowserController.TimelineSearchPattern));
         }
     }
 }

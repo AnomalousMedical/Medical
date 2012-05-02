@@ -12,6 +12,9 @@ namespace Medical
     /// </summary>
     public class TimelineBrowserController
     {
+        public const String TimelineSearchPattern = "*.tl";
+        public const String RmlSearchPattern = "*.rml";
+
         private static TimelineController timelineController;
 
         public static void setTimelineController(TimelineController timelineController)
@@ -19,12 +22,12 @@ namespace Medical
             TimelineBrowserController.timelineController = timelineController;
         }
 
-        public static Browser createBrowser()
+        public static Browser createBrowser(String searchPattern)
         {
             Browser browser = new Browser("Timelines");
             if (timelineController != null)
             {
-                foreach (String timeline in timelineController.listResourceFiles("*.tl"))
+                foreach (String timeline in timelineController.listResourceFiles(searchPattern))
                 {
                     browser.addNode("", null, new BrowserNode(timeline, timeline));
                 }
