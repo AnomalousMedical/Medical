@@ -274,6 +274,15 @@
     <Compile Include="Controller\Layers\EditableLayerState.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\MyGUITimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\ChangeLayersCommand.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\ChangeMedicalStateCommand.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\CloseGuiCommand.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\RmlGuiAction.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\RmlGuiActionCommand.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\MoveCameraCommand.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\PlayTimelineCommand.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\RmlGuiActionManager.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\Actions\StopTimelineCommand.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIData.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUIEventController.cs" />
