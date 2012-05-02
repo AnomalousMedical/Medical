@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Editing;
 using Medical.Controller;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -34,6 +35,7 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
             medicalUICallback.addCustomQuery(ChangeMedicalStateDoAction.CustomEditQueries.CapturePresetState, capturePresetState);
             medicalUICallback.addCustomQuery(RmlTimelineGUIData.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
+            medicalUICallback.addCustomQuery(TimelineEditInterface.CustomQueries.OpenFolder, openTimelineFolder);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -60,17 +62,6 @@ namespace Medical.GUI
             questionEditor.SoundFile = showPromptAction.SoundFile;
             questionEditor.Closed += questionEditor_Closed;
             questionEditor.open(true);
-        }
-
-        private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
-        {
-            RmlViewer rmlViewer = propertiesController.EditorPlugin.RmlViewer;
-            String file = editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString());
-            rmlViewer.changeDocument(file);
-            if (!rmlViewer.Visible)
-            {
-                rmlViewer.Visible = true;
-            }
         }
 
         void questionEditor_Closed(object sender, EventArgs e)
@@ -125,6 +116,29 @@ namespace Medical.GUI
             PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
             stateCaptureDialog.SmoothShow = true;
             stateCaptureDialog.open(true);
+        }
+
+        private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
+        {
+            RmlViewer rmlViewer = propertiesController.EditorPlugin.RmlViewer;
+            String file = editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString());
+            rmlViewer.changeDocument(file);
+            if (!rmlViewer.Visible)
+            {
+                rmlViewer.Visible = true;
+            }
+        }
+
+        private void openTimelineFolder(SendResult<Object> resultCallback, params Object[] args)
+        {
+            if (args[0] != null)
+            {
+                OtherProcessManager.openLocalURL(Path.GetDirectoryName(editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString())));
+            }
+            else
+            {
+                OtherProcessManager.openLocalURL(editorTimelineController.ResourceProvider.getFullFilePath(""));
+            }
         }
     }
 }

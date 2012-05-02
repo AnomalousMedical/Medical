@@ -6,7 +6,7 @@ using Engine.Editing;
 
 namespace Medical
 {
-    class TimelineEditInterface
+    public class TimelineEditInterface
     {
         private Timeline timeline;
         private EditInterface editInterface;
@@ -29,6 +29,7 @@ namespace Medical
                 editInterface.addSubInterface(preActionEdit.getEditInterface());
                 editInterface.addSubInterface(postActionEdit.getEditInterface());
 
+                editInterface.addCommand(new EditInterfaceCommand("Open folder", openFolder));
                 editInterface.addCommand(new EditInterfaceCommand("Reverse Sides", reverseSides));
             }
             return editInterface;
@@ -67,9 +68,19 @@ namespace Medical
         {
             timeline.reverseSides();
         }
+
+        public enum CustomQueries
+        {
+            OpenFolder
+        }
+
+        private void openFolder(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.runCustomQuery(CustomQueries.OpenFolder, null, timeline.SourceFile);
+        }
     }
 
-    class TimelinePreActionEditInterface
+    public class TimelinePreActionEditInterface
     {
         private Timeline timeline;
         private EditInterface editInterface;
@@ -133,7 +144,7 @@ namespace Medical
         }
     }
 
-    class TimelinePostActionEditInterface
+    public class TimelinePostActionEditInterface
     {
         private Timeline timeline;
         private EditInterface editInterface;

@@ -19,11 +19,12 @@ namespace Medical.GUI
 
         public override void ProcessEvent(Event evt)
         {
-            Log.Debug("{0} phase {1} | type {2}", name, evt.Phase, evt.Type);
+            Log.Debug("--------- {0} | type {1} ----------", name, evt.Type);
             foreach (RktEntry param in evt.Parameters)
             {
                 Log.Debug("key {0} | type {1} | value {2}", param.Key, param.Value.VariantType, param.Value.StringValue);
             }
+            Log.Debug("-----------------------------------");
         }
     }
 }
