@@ -29,6 +29,7 @@ namespace Medical
         private BrowserWindow browserWindow;
 
         private AspectRatioTask aspectRatioTask;
+        private RmlViewer rmlViewer;
 
         public EditorPlugin()
         {
@@ -37,6 +38,7 @@ namespace Medical
 
         public void Dispose()
         {
+            rmlViewer.Dispose();
             TimelineBrowserController.setTimelineController(null);
             timelinePropertiesController.Dispose();
             timelineAnalyzer.Dispose();
@@ -102,6 +104,9 @@ namespace Medical
             textAnalysisEditor = new TextAnalysisEditor(browserWindow, timelinePropertiesController, standaloneController.Clipboard);
             guiManager.addManagedDialog(textAnalysisEditor);
 
+            rmlViewer = new RmlViewer();
+            guiManager.addManagedDialog(rmlViewer);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -111,6 +116,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(rmlViewer, "Medical.RmlViewer", "RML Viewer", "TimelineAnalyzerIcon", TaskMenuCategories.Developer));
             //taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);

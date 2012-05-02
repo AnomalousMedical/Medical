@@ -12,7 +12,7 @@ using Logging;
 using Medical;
 using OgreWrapper;
 
-namespace Developer.GUI
+namespace Medical.GUI
 {
     class RmlViewer : MDIDialog
     {
@@ -23,7 +23,7 @@ namespace Developer.GUI
         private bool loadedOnce = false;
 
         public RmlViewer()
-            : base("Developer.GUI.RmlViewer.RmlViewer.layout")
+            : base("Medical.GUI.RmlViewer.RmlViewer.layout")
         {
             ImageBox imageBox = (ImageBox)window.findWidget("RocketImage");
             rocketWidget = new RocketWidget("Developer.GUI.RmlViewer", imageBox);

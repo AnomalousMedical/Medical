@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="libRocketPlugin, Version=1.0.0.1387, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -95,6 +99,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
+    <Compile Include="GUI\RmlViewer\RmlViewer.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
     <Compile Include="GUI\TextAnalysisEditor\ActionBlockEditor.cs" />
     <Compile Include="GUI\TextAnalysisEditor\AnalysisCompilationError.cs" />
@@ -158,6 +163,7 @@
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.layout" />
+    <EmbeddedResource Include="GUI\RmlViewer\RmlViewer.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\ActionBlockEditor.layout" />
     <EmbeddedResource Include="GUI\TextAnalysisEditor\EndParagraphEditor.layout" />
