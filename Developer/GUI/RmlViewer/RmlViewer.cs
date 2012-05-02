@@ -16,8 +16,6 @@ namespace Developer.GUI
 {
     class RmlViewer : MDIDialog
     {
-        private const String RmlViewerOgreGroup = "RmlViewer";
-
         private RocketWidget rocketWidget;
         private String documentName = null;
         private FileSystemWatcher fileWatcher;
@@ -67,12 +65,6 @@ namespace Developer.GUI
                 fileWatcher.Dispose();
             }
             rocketWidget.Dispose();
-            if (loadedOnce)
-            {
-                TextureDatabase.ReleaseTextures();
-                OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", RmlViewerOgreGroup);
-                OgreResourceGroupManager.getInstance().destroyResourceGroup(RmlViewerOgreGroup);
-            }
             base.Dispose();
         }
 
@@ -105,15 +97,7 @@ namespace Developer.GUI
         {
             try
             {
-                if (loadedOnce)
-                {
-                    //The textures are unloaded and released so they will refresh if they are updated.
-                    TextureDatabase.ReleaseTextures();
-                    OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", RmlViewerOgreGroup);
-                    OgreResourceGroupManager.getInstance().destroyResourceGroup(RmlViewerOgreGroup);
-                }
-                loadedOnce = true;
-                OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", RocketRawOgreFilesystemArchive.ArchiveName, RmlViewerOgreGroup, false);
+                RocketOgreTextureManager.refreshTextures();
 
                 window.Caption = String.Format("{0} - '{1}'  {2}", windowTitleBase, Path.GetFileName(documentName), Path.GetDirectoryName(documentName));
 

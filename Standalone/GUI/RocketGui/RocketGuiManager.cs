@@ -12,7 +12,7 @@ using System.Reflection;
 
 namespace Medical.GUI
 {
-    class RocketGuiManager : IDisposable
+    public class RocketGuiManager : IDisposable
     {
         private EventListenerInstancer eventListenerInstancer;
         private static RocketRawOgreFilesystemArchiveFactory rawFilesystemArchives = new RocketRawOgreFilesystemArchiveFactory();
@@ -24,6 +24,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            RocketOgreTextureManager.shutdown();
             if (eventListenerInstancer != null)
             {
                 eventListenerInstancer.Dispose();
@@ -47,21 +48,18 @@ namespace Medical.GUI
             //Create a rocket group in ogre
             Root.getSingleton().addArchiveFactory(rawFilesystemArchives);
 
-            OgreResourceGroupManager.getInstance().createResourceGroup("Rocket");
-
             eventListenerInstancer = new TestEventListenerInstancer();
             Factory.RegisterEventListenerInstancer(eventListenerInstancer);
 
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(typeof(RocketInterface).Assembly));
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(typeof(MyGUIInterface).Assembly));
 
-            OgreResourceGroupManager.getInstance().addResourceLocation("/", "EngineArchive", "Rocket", false);
-
             FontDatabase.LoadFontFace("MyGUIPlugin_DejaVuSans.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_NORMAL);
             FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-Bold.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_BOLD);
             FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-BoldOblique.ttf", "DejaVuSans", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_BOLD);
             FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-Oblique.ttf", "DejaVuSans", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_NORMAL);
 
+            RocketOgreTextureManager.startup();
             //Debugger.Initialise(context);
         }
     }
