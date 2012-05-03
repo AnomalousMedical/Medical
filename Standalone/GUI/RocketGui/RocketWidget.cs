@@ -142,8 +142,19 @@ namespace Medical.GUI
 
                 renderQueueListener.RenderDimensions = new IntSize2(textureWidth, textureHeight);
             }
-            context.Dimensions = new Vector2i(imageBox.Width, imageBox.Height);
-            imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageBox.Width, imageBox.Height), new IntSize2(imageBox.Width, imageBox.Height));
+
+            int imageWidth = imageBox.Width;
+            if (imageWidth < 0)
+            {
+                imageWidth = 0;
+            }
+            int imageHeight = imageBox.Height;
+            if (imageHeight < 0)
+            {
+                imageHeight = 0;
+            }
+            context.Dimensions = new Vector2i(imageWidth, imageHeight);
+            imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageWidth, imageHeight), new IntSize2(imageWidth, imageHeight));
         }
 
         public bool Enabled

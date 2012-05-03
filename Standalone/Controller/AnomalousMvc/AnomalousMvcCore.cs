@@ -26,9 +26,9 @@ namespace Medical.Controller.AnomalousMvc
             viewHostManager = new ViewHostManager(updateTimer, guiManager);
         }
 
-        public void showView(View view)
+        public void showView(View view, AnomalousMvcContext context)
         {
-            ViewHost viewHost = viewHostFactory.createViewHost(view);
+            ViewHost viewHost = viewHostFactory.createViewHost(view, context);
             viewHostManager.requestOpen(viewHost);
         }
 
@@ -71,5 +71,9 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        internal String getFullPath(String file)
+        {
+            return timelineController.ResourceProvider.getFullFilePath(file);
+        }
     }
 }

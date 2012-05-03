@@ -7,6 +7,6 @@ namespace Medical.Controller.AnomalousMvc
 {
     public interface ViewHostFactory
     {
-        ViewHost createViewHost(View view);
+        ViewHost createViewHost(View view, AnomalousMvcContext context);
     }
 }

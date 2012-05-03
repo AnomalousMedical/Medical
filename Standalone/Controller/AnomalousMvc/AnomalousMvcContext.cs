@@ -22,7 +22,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void showView(String view)
         {
-            core.showView(views[view]);
+            core.showView(views[view], this);
         }
 
         public void stopTimelines()
@@ -53,6 +53,11 @@ namespace Medical.Controller.AnomalousMvc
             String actionName = address.Substring(slashLoc, address.Length - slashLoc);
             Controller controller = controllers[controllerName];
             controller.runAction(actionName, this);
+        }
+
+        public string getFullPath(string file)
+        {
+            return core.getFullPath(file);
         }
 
         public void queueTimeline(string Timeline)
