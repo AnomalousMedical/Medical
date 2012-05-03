@@ -32,9 +32,9 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        protected override void customizeEditInterface(EditInterface editInterface)
+        protected override EditInterface createEditInterface()
         {
-            editInterface.addSubInterface(actionCollection.getEditInterface());
+            return actionCollection.getEditInterface(Name);
         }
 
         protected Controller(LoadInfo info)

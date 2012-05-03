@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.Editor;
 using Engine.Saving;
+using Engine.Attributes;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -12,14 +13,6 @@ namespace Medical.Controller.AnomalousMvc
         public ControllerActionCollection()
         {
 
-        }
-
-        public override String EditInterfaceName
-        {
-            get
-            {
-                return "Actions";
-            }
         }
 
         public override void customizeEditInterface(Engine.Editing.EditInterface editInterface, Engine.Editing.EditInterfaceManager<ControllerAction> itemEdits)

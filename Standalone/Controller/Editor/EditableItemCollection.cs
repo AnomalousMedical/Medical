@@ -59,8 +59,6 @@ namespace Medical.Editor
                 throw new KeyNotFoundException("Cannot find an item named " + name);
             }
         }
-
-        public abstract String EditInterfaceName { get; }
     }
 
     //EditInterface functions
@@ -73,11 +71,11 @@ namespace Medical.Editor
         [DoNotSave]
         private EditInterfaceManager<ItemType> itemEdits;
 
-        public EditInterface getEditInterface()
+        public EditInterface getEditInterface(String editInterfaceName)
         {
             if (editInterface == null)
             {
-                editInterface = new EditInterface(EditInterfaceName);
+                editInterface = new EditInterface(editInterfaceName);
                 EditablePropertyInfo propertyInfo = new EditablePropertyInfo();
                 propertyInfo.addColumn(new EditablePropertyColumn("Name", true));
                 propertyInfo.addColumn(new EditablePropertyColumn("Value", false));

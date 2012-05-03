@@ -23,14 +23,6 @@ namespace Medical.Controller.AnomalousMvc
             });
         }
 
-        public override String EditInterfaceName
-        {
-            get
-            {
-                return "Views";
-            }
-        }
-
         protected ViewCollection(LoadInfo info)
             :base(info)
         {

@@ -146,8 +146,8 @@ namespace Medical.Controller.AnomalousMvc
             if (editInterface == null)
             {
                 editInterface = new EditInterface("MVC");
-                editInterface.addSubInterface(controllers.getEditInterface());
-                editInterface.addSubInterface(views.getEditInterface());
+                editInterface.addSubInterface(controllers.getEditInterface("Controllers"));
+                editInterface.addSubInterface(views.getEditInterface("Views"));
             }
             return editInterface;
         }
