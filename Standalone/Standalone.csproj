@@ -337,6 +337,8 @@
     <Compile Include="GUI\AbstractFullscreenGUIPopup.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHost.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlMvcEventController.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlMvcEventListener.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlWidgetViewHost.cs" />
     <Compile Include="GUI\DistortionWizards\Disclaimer\DisclaimerGUIPrototype.cs" />
     <Compile Include="GUI\DistortionWizards\DiscSpace\DiscSpaceControl.cs" />

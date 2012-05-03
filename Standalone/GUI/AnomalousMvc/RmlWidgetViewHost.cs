@@ -30,7 +30,7 @@ namespace Medical.GUI.AnomalousMvc
 
             layoutContainer.LayoutChanged += new Action(layoutContainer_LayoutChanged);
 
-            //RocketEventListenerInstancer.setEventController(eventController);
+            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context));
             using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(view.RmlFile)))
             {
                 if (document != null)
@@ -38,9 +38,7 @@ namespace Medical.GUI.AnomalousMvc
                     document.Show();
                 }
             }
-            //RocketEventListenerInstancer.resetEventController();
-
-            //eventController = new RmlTimelineGUIEventController(this);
+            RocketEventListenerInstancer.resetEventController();
         }
 
         public override void Dispose()
