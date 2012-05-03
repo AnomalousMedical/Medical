@@ -13,11 +13,8 @@ namespace Medical.Controller.AnomalousMvc
         public View(String name)
             :base(name)
         {
-            RmlFile = name + ".rml";
+            
         }
-
-        [Editable]
-        public String RmlFile { get; set; }
 
         protected View(LoadInfo info)
             :base (info)

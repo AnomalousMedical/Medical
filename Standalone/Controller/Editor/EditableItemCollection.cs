@@ -136,7 +136,7 @@ namespace Medical.Editor
                     EditInterface editInterface = callback.getSelectedEditInterface();
                     ItemType item = itemEdits.resolveSourceObject(editInterface);
                     item.Name = input;
-                    editInterface.setName(String.Format("{0} - {1}", input, item.Type));
+                    editInterface.setName(String.Format("{0}", input));
                     return true;
                 }
                 errorPrompt = String.Format("An item named {0} already exists. Please input another name.", input);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -11,16 +12,11 @@ namespace Medical.Controller.AnomalousMvc
         public RmlView(String name)
             :base(name)
         {
-
+            RmlFile = name + ".rml";
         }
 
-        public override string Type
-        {
-            get
-            {
-                return "Rml View";
-            }
-        }
+        [Editable]
+        public String RmlFile { get; set; }
 
         protected RmlView(LoadInfo info)
             :base (info)
