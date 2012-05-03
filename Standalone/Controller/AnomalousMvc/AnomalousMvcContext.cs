@@ -14,6 +14,10 @@ namespace Medical.Controller.AnomalousMvc
         private ViewCollection views;
         private AnomalousMvcCore core;
 
+        //Action queue stuff
+        private bool queuedCloseGui = false;
+        private String queuedTimeline = null;
+
         public AnomalousMvcContext()
         {
             controllers = new ControllerCollection();
@@ -47,12 +51,32 @@ namespace Medical.Controller.AnomalousMvc
 
         public void runAction(string address)
         {
+            queuedCloseGui = false;
+            queuedTimeline = null;
+
             int slashLoc = address.IndexOf('/');
             String controllerName = address.Substring(0, slashLoc);
             ++slashLoc;
             String actionName = address.Substring(slashLoc, address.Length - slashLoc);
             Controller controller = controllers[controllerName];
             controller.runAction(actionName, this);
+
+            if (queuedCloseGui)
+            {
+                //if (queuedTimeline == null)
+                //{
+                //    closeAndReturnToMainGUI();
+                //}
+                //else
+                //{
+                //    core.
+                //    closeAndPlayTimeline(queuedTimeline);
+                //}
+            }
+            else if (queuedTimeline != null)
+            {
+                playTimeline(queuedTimeline);
+            }
         }
 
         public string getFullPath(string file)
@@ -60,9 +84,9 @@ namespace Medical.Controller.AnomalousMvc
             return core.getFullPath(file);
         }
 
-        public void queueTimeline(string Timeline)
+        public void queueTimeline(string timeline)
         {
-            throw new NotImplementedException();
+            queuedTimeline = timeline;
         }
 
         public void queueClose()
@@ -72,17 +96,17 @@ namespace Medical.Controller.AnomalousMvc
 
         public void applyLayers(EditableLayerState layers)
         {
-            throw new NotImplementedException();
+            core.applyLayers(layers);
         }
 
         public void applyPresetState(PresetState presetState, float duration)
         {
-            throw new NotImplementedException();
+            core.applyPresetState(presetState, duration);
         }
 
         public void applyCameraPosition(CameraPosition cameraPosition)
         {
-            throw new NotImplementedException();
+            core.applyCameraPosition(cameraPosition);
         }
 
         internal void _setCore(AnomalousMvcCore core)

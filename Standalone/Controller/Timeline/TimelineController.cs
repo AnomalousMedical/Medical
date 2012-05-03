@@ -20,8 +20,19 @@ namespace Medical
 
     public class TimelineController : UpdateListener
     {
-        //TEMPORARY HACK TO MAKE THE MVC WORK
+        //TEMPORARY HACKS TO MAKE THE MVC WORK
         public Medical.Controller.AnomalousMvc.AnomalousMvcCore TEMP_MVC_CORE { get; set; }
+
+        /// <summary>
+        /// This is a temporary hack to allow MVC to operate the timeline
+        /// controller the way the show gui actions do. By turning this off the
+        /// TimelineController will never be able to fire its
+        /// MultiTimelineStopEvent. The MvcCore should be the only thing that
+        /// touches this. Later when the relationship between timelines and mvc
+        /// is worked out this should be removed and timelines should loose
+        /// their ability to change the scene gui state.
+        /// </summary>
+        public bool TEMP_AllowMultiTimelineStopEvents { get; set; }
         //END
 
         public event EventHandler ResourceLocationChanged;
@@ -47,6 +58,7 @@ namespace Medical
             this.mainTimer = standaloneController.MedicalController.MainTimer;
             this.standaloneController = standaloneController;
             GUIFactory = standaloneController.TimelineGUIFactory;
+            TEMP_AllowMultiTimelineStopEvents = true;
         }
 
         public Timeline ActiveTimeline
@@ -195,17 +207,21 @@ namespace Medical
 
         /// <summary>
         /// This function will fire the PlaybackStopped event. This should be
-        /// called by any post actions that need to shut down the timeline.
+        /// called by any post actions that need to shut down the timeline. It
+        /// will not fire if AllowMultiTimelineStopEvents is false;
         /// </summary>
         public void _fireMultiTimelineStopEvent()
         {
-            if (multiTimelinePlaybackInProgress)
+            if (TEMP_AllowMultiTimelineStopEvents)
             {
-                previousTimeline = null;
-                multiTimelinePlaybackInProgress = false;
-                if (PlaybackStopped != null)
+                if (multiTimelinePlaybackInProgress)
                 {
-                    PlaybackStopped.Invoke(this, EventArgs.Empty);
+                    previousTimeline = null;
+                    multiTimelinePlaybackInProgress = false;
+                    if (PlaybackStopped != null)
+                    {
+                        PlaybackStopped.Invoke(this, EventArgs.Empty);
+                    }
                 }
             }
         }

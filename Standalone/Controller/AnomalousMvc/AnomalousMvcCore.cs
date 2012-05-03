@@ -28,8 +28,14 @@ namespace Medical.Controller.AnomalousMvc
 
         public void showView(View view, AnomalousMvcContext context)
         {
+            timelineController.TEMP_AllowMultiTimelineStopEvents = false;
             ViewHost viewHost = viewHostFactory.createViewHost(view, context);
             viewHostManager.requestOpen(viewHost);
+        }
+
+        public void closeView(ViewHost viewHost)
+        {
+            viewHostManager.requestClose(viewHost);
         }
 
         public void stopTimelines()
@@ -71,9 +77,35 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        internal String getFullPath(String file)
+        public String getFullPath(String file)
         {
             return timelineController.ResourceProvider.getFullFilePath(file);
+        }
+
+        public void applyLayers(EditableLayerState layers)
+        {
+            if (layers != null)
+            {
+                layers.apply();
+            }
+        }
+
+        public void applyPresetState(PresetState presetState, float duration)
+        {
+            TemporaryStateBlender stateBlender = timelineController.StateBlender;
+            MedicalState createdState;
+            createdState = stateBlender.createBaselineState();
+            presetState.applyToState(createdState);
+            stateBlender.startTemporaryBlend(createdState);
+        }
+
+        public void applyCameraPosition(CameraPosition cameraPosition)
+        {
+            SceneViewWindow window = timelineController.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                window.setPosition(cameraPosition);
+            }
         }
     }
 }
