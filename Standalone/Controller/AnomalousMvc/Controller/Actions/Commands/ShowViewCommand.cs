@@ -3,30 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class StopTimelineCommand : ActionCommand
+    class ShowViewCommand : ActionCommand
     {
-        public StopTimelineCommand()
+        public ShowViewCommand()
         {
 
         }
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.stopPlayingExample();
+            context.showView(View);
         }
+
+        [Editable]
+        public String View { get; set; }
 
         public override string Type
         {
             get
             {
-                return "Stop Timeline Playback";
+                return "Show View";
             }
         }
 
-        protected StopTimelineCommand(LoadInfo info)
+        protected ShowViewCommand(LoadInfo info)
             :base(info)
         {
 

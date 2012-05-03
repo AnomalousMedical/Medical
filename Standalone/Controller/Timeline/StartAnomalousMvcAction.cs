@@ -19,7 +19,8 @@ namespace Medical
 
         public override void doAction()
         {
-            
+            context._setCore(Timeline.TimelineController.TEMP_MVC_CORE);
+            context.runAction(StartAction);
         }
 
         public override void dumpToLog()
@@ -32,6 +33,9 @@ namespace Medical
             
         }
 
+        [Editable]
+        public String StartAction { get; set; }
+
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.addSubInterface(context.getEditInterface());
@@ -41,11 +45,13 @@ namespace Medical
             :base(info)
         {
             context = info.GetValue<AnomalousMvcContext>("Context");
+            StartAction = info.GetString("StartAction");
         }
 
         public override void getInfo(SaveInfo info)
         {
             info.AddValue("Context", context);
+            info.AddValue("StartAction", StartAction);
         }
     }
 }

@@ -18,6 +18,8 @@ using Medical.Controller;
 using System.Drawing;
 using System.IO;
 using System.Diagnostics;
+using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
@@ -39,6 +41,8 @@ namespace Medical
         private SimObjectMover teethMover;
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
+        private AnomalousMvcCore mvcCore;
+        private MyGUIViewHostFactory viewHostFactory;
         private PropFactory propFactory;
         private ExamController examController;
         private TaskController taskController;
@@ -214,6 +218,10 @@ namespace Medical
             timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
 
             abstractTimelineGUIManager = new AbstractTimelineGUIManager(medicalController.MainTimer, guiManager);
+
+            viewHostFactory = new MyGUIViewHostFactory();
+            mvcCore = new AnomalousMvcCore(medicalController.MainTimer, guiManager, timelineController, viewHostFactory);
+            timelineController.TEMP_MVC_CORE = mvcCore;
 
             //Exams
             examController = new ExamController();

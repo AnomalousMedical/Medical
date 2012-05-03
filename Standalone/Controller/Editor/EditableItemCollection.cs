@@ -45,6 +45,21 @@ namespace Medical.Editor
             }
         }
 
+        public ItemType this[String name]
+        {
+            get
+            {
+                foreach (ItemType item in items)
+                {
+                    if (item.Name == name)
+                    {
+                        return item;
+                    }
+                }
+                throw new KeyNotFoundException("Cannot find an item named " + name);
+            }
+        }
+
         public abstract String EditInterfaceName { get; }
     }
 

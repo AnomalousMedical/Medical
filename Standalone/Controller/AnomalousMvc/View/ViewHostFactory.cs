@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ViewHostFactory
+    public interface ViewHostFactory
     {
+        ViewHost createViewHost(View view);
     }
 }

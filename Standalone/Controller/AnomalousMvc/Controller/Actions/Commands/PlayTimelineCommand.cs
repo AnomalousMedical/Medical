@@ -16,9 +16,9 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
-        public override void execute(RmlTimelineGUI gui)
+        public override void execute(AnomalousMvcContext context)
         {
-            gui.queueTimeline(Timeline);
+            context.queueTimeline(Timeline);
         }
 
         public String Timeline { get; set; }

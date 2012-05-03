@@ -17,9 +17,9 @@ namespace Medical.Controller.AnomalousMvc
             CameraPosition.Translation = new Vector3(0f, 0f, 150f);
         }
 
-        public override void execute(RmlTimelineGUI gui)
+        public override void execute(AnomalousMvcContext context)
         {
-            gui.applyCameraPosition(CameraPosition);
+            context.applyCameraPosition(CameraPosition);
         }
 
         protected override void createEditInterface()

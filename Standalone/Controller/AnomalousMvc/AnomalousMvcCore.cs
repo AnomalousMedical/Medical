@@ -13,22 +13,23 @@ namespace Medical.Controller.AnomalousMvc
     /// </summary>
     public class AnomalousMvcCore
     {
-        private GUIManager guiManager;
         private TimelineController timelineController;
-        private UpdateTimer updateTimer;
-
         private ViewHostFactory viewHostFactory;
 
-        public AnomalousMvcCore(UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController)
+        private ViewHostManager viewHostManager;
+
+        public AnomalousMvcCore(UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController, ViewHostFactory viewHostFactory)
         {
-            this.updateTimer = updateTimer;
-            this.guiManager = guiManager;
             this.timelineController = timelineController;
+            this.viewHostFactory = viewHostFactory;
+
+            viewHostManager = new ViewHostManager(updateTimer, guiManager);
         }
 
-        public void changeLeftPanel(View view)
+        public void showView(View view)
         {
-
+            ViewHost viewHost = viewHostFactory.createViewHost(view);
+            viewHostManager.requestOpen(viewHost);
         }
 
         public void stopTimelines()

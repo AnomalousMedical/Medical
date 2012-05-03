@@ -7,13 +7,15 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public class ControllerAction : SaveableEditableItem
+    public abstract class ControllerAction : SaveableEditableItem
     {
         public ControllerAction(String name)
             :base(name)
         {
 
         }
+
+        public abstract void execute(AnomalousMvcContext context);
 
         public override string Type
         {

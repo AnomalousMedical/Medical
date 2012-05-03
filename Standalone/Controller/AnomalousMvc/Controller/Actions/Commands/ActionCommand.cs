@@ -16,7 +16,7 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
-        public abstract void execute(RmlTimelineGUI gui);
+        public abstract void execute(AnomalousMvcContext context);
 
         public abstract String Type { get; }
 

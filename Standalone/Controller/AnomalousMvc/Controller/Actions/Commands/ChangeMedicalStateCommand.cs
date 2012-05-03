@@ -22,9 +22,9 @@ namespace Medical.Controller.AnomalousMvc
             Duration = 1.0f;
         }
 
-        public override void execute(RmlTimelineGUI gui)
+        public override void execute(AnomalousMvcContext context)
         {
- 	        gui.applyPresetState(presetState, Duration);
+ 	        context.applyPresetState(presetState, Duration);
         }
 
         public PresetState PresetState

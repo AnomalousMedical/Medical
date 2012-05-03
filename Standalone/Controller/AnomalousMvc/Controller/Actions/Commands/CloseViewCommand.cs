@@ -6,27 +6,27 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class CloseGuiCommand : ActionCommand
+    class CloseViewCommand : ActionCommand
     {
-        public CloseGuiCommand()
+        public CloseViewCommand()
         {
 
         }
 
-        public override void execute(RmlTimelineGUI gui)
+        public override void execute(AnomalousMvcContext context)
         {
-            gui.queueClose();
+            context.queueClose();
         }
 
         public override string Type
         {
             get
             {
-                return "Close GUI";
+                return "Close View";
             }
         }
 
-        protected CloseGuiCommand(LoadInfo info)
+        protected CloseViewCommand(LoadInfo info)
             :base(info)
         {
 

@@ -14,9 +14,9 @@ namespace Medical.Controller.AnomalousMvc
             Layers = new EditableLayerState("ChangeLayers");
         }
 
-        public override void execute(RmlTimelineGUI gui)
+        public override void execute(AnomalousMvcContext context)
         {
-            gui.applyLayers(Layers);
+            context.applyLayers(Layers);
         }
 
         protected override void createEditInterface()

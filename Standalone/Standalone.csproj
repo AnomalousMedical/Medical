@@ -87,8 +87,9 @@
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ChangeLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ChangeMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\CloseGuiCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\CloseViewCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RunCommandsAction.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowViewCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\ControllerActionCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\ControllerAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MoveCameraCommand.cs" />
@@ -97,12 +98,11 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\StopTimelineCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Controller.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
+    <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\AnomalousMvc\View\RmlView.cs" />
     <Compile Include="Controller\Editor\CreateEditableItemCommand.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\ViewHostMyGUI.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\ViewHostRmlWidget.cs" />
     <Compile Include="Controller\AnomalousMvc\View\View.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHost.cs" />
@@ -335,6 +335,9 @@
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
     <Compile Include="Controller\UpdateController.cs" />
     <Compile Include="GUI\AbstractFullscreenGUIPopup.cs" />
+    <Compile Include="GUI\AnomalousMvc\MyGUIViewHost.cs" />
+    <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlWidgetViewHost.cs" />
     <Compile Include="GUI\DistortionWizards\Disclaimer\DisclaimerGUIPrototype.cs" />
     <Compile Include="GUI\DistortionWizards\DiscSpace\DiscSpaceControl.cs" />
     <Compile Include="GUI\DistortionWizards\DiscSpace\DiscSpaceGUI.cs" />
@@ -601,6 +604,7 @@
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\RmlTimelineGUI\RmlTimelineGUI.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\TimelineWizard\WizardPanelButtons.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\RmlWidgetViewHost.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />

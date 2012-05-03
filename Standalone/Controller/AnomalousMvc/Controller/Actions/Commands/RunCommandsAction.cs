@@ -31,11 +31,11 @@ namespace Medical.Controller.AnomalousMvc
             commandRemoved(command);
         }
 
-        public void runCommands(RmlTimelineGUI gui)
+        public override void execute(AnomalousMvcContext context)
         {
             foreach (ActionCommand command in commands)
             {
-                command.execute(gui);
+                command.execute(context);
             }
         }
 
@@ -66,7 +66,8 @@ namespace Medical.Controller.AnomalousMvc
             editInterface.addCommand(new EditInterfaceCommand("Add Change Medical State", addChangeMedicalState));
             editInterface.addCommand(new EditInterfaceCommand("Add Play Timeline", addPlayTimeline));
             editInterface.addCommand(new EditInterfaceCommand("Add Stop Timeline", addStopTimeline));
-            editInterface.addCommand(new EditInterfaceCommand("Add Close GUI", addCloseGUI));
+            editInterface.addCommand(new EditInterfaceCommand("Add Close View", addCloseGUI));
+            editInterface.addCommand(new EditInterfaceCommand("Add Show View", addShowGUI));
 
             editInterfaceManager = new EditInterfaceManager<ActionCommand>(editInterface);
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));
@@ -108,7 +109,12 @@ namespace Medical.Controller.AnomalousMvc
 
         private void addCloseGUI(EditUICallback callback, EditInterfaceCommand command)
         {
-            addCommand(new CloseGuiCommand());
+            addCommand(new CloseViewCommand());
+        }
+
+        private void addShowGUI(EditUICallback callback, EditInterfaceCommand command)
+        {
+            addCommand(new ShowViewCommand());
         }
 
         private void removeCommand(EditUICallback callback, EditInterfaceCommand caller)

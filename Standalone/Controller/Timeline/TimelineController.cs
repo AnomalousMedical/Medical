@@ -20,6 +20,10 @@ namespace Medical
 
     public class TimelineController : UpdateListener
     {
+        //TEMPORARY HACK TO MAKE THE MVC WORK
+        public Medical.Controller.AnomalousMvc.AnomalousMvcCore TEMP_MVC_CORE { get; set; }
+        //END
+
         public event EventHandler ResourceLocationChanged;
         public event Action<TimelineController, Timeline> PlaybackStarted;
         public event EventHandler PlaybackStopped;
