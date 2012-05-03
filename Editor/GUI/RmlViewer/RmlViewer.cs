@@ -41,8 +41,27 @@ namespace Medical.GUI
 
         public void changeDocument(string file)
         {
-            documentName = file;
-            loadDocument();
+            if (!File.Exists(file))
+            {
+                MessageBox.show(String.Format("The file {0} does not exist. Would you like to create it?", file), "Create File", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, 
+                delegate(MessageBoxStyle result)
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        using (StreamWriter sw = new StreamWriter(file))
+                        {
+                            sw.Write(defaultRml);
+                        }
+                        documentName = file;
+                        loadDocument();
+                    }
+                });
+            }
+            else
+            {
+                documentName = file;
+                loadDocument();
+            }
         }
 
         void fileControl_ItemAccept(Widget source, EventArgs e)
@@ -144,5 +163,19 @@ namespace Medical.GUI
                 Log.Warning("Could not load file watcher for {0} because {1}", documentName, ex.Message);
             }
         }
+
+        private const String defaultRml = @"<rml>
+  <head>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
+  </head>
+  <body>
+    <div class=""ScrollArea"">
+      <h1>Empty Rml View</h1>
+      <p>You can start creating your Rml View here. You can erase this text to start.</p>
+    </div>
+  </body>
+</rml>
+";
     }
 }
