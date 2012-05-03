@@ -15,18 +15,14 @@ namespace Medical.Controller.AnomalousMvc
         private AnomalousMvcCore core;
 
         //Action queue stuff
-        private bool queuedCloseGui = false;
+        private bool queuedCloseView = false;
         private String queuedTimeline = null;
+        private String queuedShowView = null;
 
         public AnomalousMvcContext()
         {
             controllers = new ControllerCollection();
             views = new ViewCollection();
-        }
-
-        public void showView(String view)
-        {
-            core.showView(views[view], this);
         }
 
         public void stopPlayingExample()
@@ -46,8 +42,9 @@ namespace Medical.Controller.AnomalousMvc
 
         public void runAction(string address)
         {
-            queuedCloseGui = false;
+            queuedCloseView = false;
             queuedTimeline = null;
+            queuedShowView = null;
 
             int slashLoc = address.IndexOf('/');
             String controllerName = address.Substring(0, slashLoc);
@@ -56,12 +53,16 @@ namespace Medical.Controller.AnomalousMvc
             Controller controller = controllers[controllerName];
             controller.runAction(actionName, this);
 
-            if (queuedCloseGui)
+            if (queuedCloseView)
             {
                 if (queuedTimeline == null)
                 {
                     core.closeView();
-                    core.returnToMainGui();
+                    if (queuedShowView == null)
+                    {
+                        //No new timeline and no new view, shutdown.
+                        core.returnToMainGui();
+                    }
                 }
                 else
                 {
@@ -72,6 +73,14 @@ namespace Medical.Controller.AnomalousMvc
             else if (queuedTimeline != null)
             {
                 playTimeline(queuedTimeline);
+            }
+            if (queuedShowView != null)
+            {
+                if (!queuedCloseView)
+                {
+                    core.closeView();
+                }
+                core.showView(views[queuedShowView], this);
             }
         }
 
@@ -85,9 +94,14 @@ namespace Medical.Controller.AnomalousMvc
             queuedTimeline = timeline;
         }
 
+        public void queueShowView(String view)
+        {
+            queuedShowView = view;
+        }
+
         public void queueClose()
         {
-            queuedCloseGui = true;
+            queuedCloseView = true;
         }
 
         public void applyLayers(EditableLayerState layers)

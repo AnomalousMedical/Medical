@@ -16,7 +16,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.showView(View);
+            context.queueShowView(View);
         }
 
         [Editable]

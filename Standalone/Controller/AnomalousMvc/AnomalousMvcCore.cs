@@ -36,8 +36,12 @@ namespace Medical.Controller.AnomalousMvc
 
         public void closeView()
         {
-            timelineController.TEMP_AllowMultiTimelineStopEvents = true;
-            viewHostManager.requestClose(viewHost);
+            if (viewHost != null)
+            {
+                timelineController.TEMP_AllowMultiTimelineStopEvents = true;
+                viewHostManager.requestClose(viewHost);
+                viewHost = null;
+            }
         }
 
         public void returnToMainGui()
