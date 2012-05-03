@@ -29,11 +29,6 @@ namespace Medical.Controller.AnomalousMvc
             core.showView(views[view], this);
         }
 
-        public void stopTimelines()
-        {
-            core.stopTimelines();
-        }
-
         public void stopPlayingExample()
         {
             core.stopPlayingExample();
@@ -63,15 +58,16 @@ namespace Medical.Controller.AnomalousMvc
 
             if (queuedCloseGui)
             {
-                //if (queuedTimeline == null)
-                //{
-                //    closeAndReturnToMainGUI();
-                //}
-                //else
-                //{
-                //    core.
-                //    closeAndPlayTimeline(queuedTimeline);
-                //}
+                if (queuedTimeline == null)
+                {
+                    core.closeView();
+                    core.returnToMainGui();
+                }
+                else
+                {
+                    core.closeView();
+                    playTimeline(queuedTimeline);
+                }
             }
             else if (queuedTimeline != null)
             {
@@ -91,7 +87,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void queueClose()
         {
-            throw new NotImplementedException();
+            queuedCloseGui = true;
         }
 
         public void applyLayers(EditableLayerState layers)

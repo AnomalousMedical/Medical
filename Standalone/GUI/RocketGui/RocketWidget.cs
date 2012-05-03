@@ -67,16 +67,16 @@ namespace Medical.GUI
             imageBox.NeedKeyFocus = true;
             imageBox.NeedMouseFocus = true;
 
-            imageBox.MouseButtonPressed += new MyGUIEvent(imageBox_MouseButtonPressed);
-            imageBox.MouseButtonReleased += new MyGUIEvent(imageBox_MouseButtonReleased);
-            imageBox.MouseMove += new MyGUIEvent(imageBox_MouseMove);
-            imageBox.MouseDrag += new MyGUIEvent(imageBox_MouseMove);
-            imageBox.MouseWheel += new MyGUIEvent(imageBox_MouseWheel);
-            imageBox.KeyButtonPressed += new MyGUIEvent(imageBox_KeyButtonPressed);
-            imageBox.KeyButtonReleased += new MyGUIEvent(imageBox_KeyButtonReleased);
+            imageBox.MouseButtonPressed += imageBox_MouseButtonPressed;
+            imageBox.MouseButtonReleased += imageBox_MouseButtonReleased;
+            imageBox.MouseMove += imageBox_MouseMove;
+            imageBox.MouseDrag += imageBox_MouseMove;
+            imageBox.MouseWheel += imageBox_MouseWheel;
+            imageBox.KeyButtonPressed += imageBox_KeyButtonPressed;
+            imageBox.KeyButtonReleased += imageBox_KeyButtonReleased;
 
             //In mygui lost/got focus is mouse entered / left
-            imageBox.MouseLostFocus += new MyGUIEvent(imageBox_MouseLostFocus);
+            imageBox.MouseLostFocus += imageBox_MouseLostFocus;
         }
 
         void imageBox_MouseLostFocus(Widget source, EventArgs e)
@@ -87,6 +87,17 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            imageBox.MouseButtonPressed -= imageBox_MouseButtonPressed;
+            imageBox.MouseButtonReleased -= imageBox_MouseButtonReleased;
+            imageBox.MouseMove -= imageBox_MouseMove;
+            imageBox.MouseDrag -= imageBox_MouseMove;
+            imageBox.MouseWheel -= imageBox_MouseWheel;
+            imageBox.KeyButtonPressed -= imageBox_KeyButtonPressed;
+            imageBox.KeyButtonReleased -= imageBox_KeyButtonReleased;
+
+            //In mygui lost/got focus is mouse entered / left
+            imageBox.MouseLostFocus -= imageBox_MouseLostFocus;
+
             if (context != null)
             {
                 context.Dispose();

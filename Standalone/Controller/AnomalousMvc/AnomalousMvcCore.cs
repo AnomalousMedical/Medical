@@ -17,6 +17,7 @@ namespace Medical.Controller.AnomalousMvc
         private ViewHostFactory viewHostFactory;
 
         private ViewHostManager viewHostManager;
+        private ViewHost viewHost;
 
         public AnomalousMvcCore(UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController, ViewHostFactory viewHostFactory)
         {
@@ -29,16 +30,17 @@ namespace Medical.Controller.AnomalousMvc
         public void showView(View view, AnomalousMvcContext context)
         {
             timelineController.TEMP_AllowMultiTimelineStopEvents = false;
-            ViewHost viewHost = viewHostFactory.createViewHost(view, context);
+            viewHost = viewHostFactory.createViewHost(view, context);
             viewHostManager.requestOpen(viewHost);
         }
 
-        public void closeView(ViewHost viewHost)
+        public void closeView()
         {
+            timelineController.TEMP_AllowMultiTimelineStopEvents = true;
             viewHostManager.requestClose(viewHost);
         }
 
-        public void stopTimelines()
+        public void returnToMainGui()
         {
             if (timelineController.Playing)
             {
@@ -73,7 +75,6 @@ namespace Medical.Controller.AnomalousMvc
             else
             {
                 Log.Warning("AnomalousMvcCore playback: Error loading timeline '{0}'", timelineName);
-                stopTimelines();
             }
         }
 
