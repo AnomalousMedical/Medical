@@ -22,16 +22,23 @@ namespace Medical.Controller.AnomalousMvc
         {
             editInterface.addEditableProperty(new BrowseableEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, BrowserWindowController.RmlSearchPattern));
             editInterface.addCommand(new EditInterfaceCommand("View RML File", openFileInViewer));
+            editInterface.addCommand(new EditInterfaceCommand("Edit RML File", editFile));
         }
 
         public enum CustomQueries
         {
-            OpenFileInRmlViewer
+            OpenFileInRmlViewer,
+            EditWithSystemEditor
         }
 
         private void openFileInViewer(EditUICallback callback, EditInterfaceCommand command)
         {
             callback.runCustomQuery(CustomQueries.OpenFileInRmlViewer, null, RmlFile);
+        }
+
+        private void editFile(EditUICallback callback, EditInterfaceCommand command)
+        {
+            callback.runCustomQuery(CustomQueries.EditWithSystemEditor, null, RmlFile);
         }
 
         protected RmlView(LoadInfo info)

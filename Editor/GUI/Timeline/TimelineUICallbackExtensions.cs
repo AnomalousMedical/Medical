@@ -36,6 +36,7 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
             medicalUICallback.addCustomQuery(ChangeMedicalStateDoAction.CustomEditQueries.CapturePresetState, capturePresetState);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
+            medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);
             medicalUICallback.addCustomQuery(TimelineEditInterface.CustomQueries.OpenFolder, openTimelineFolder);
         }
 
@@ -139,6 +140,14 @@ namespace Medical.GUI
             else
             {
                 OtherProcessManager.openLocalURL(editorTimelineController.ResourceProvider.getFullFilePath(""));
+            }
+        }
+
+        private void openSystemEditor(SendResult<Object> resultCallback, params Object[] args)
+        {
+            if (args[0] != null)
+            {
+                OtherProcessManager.openLocalURL(editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString()));
             }
         }
     }
