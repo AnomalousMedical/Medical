@@ -346,6 +346,14 @@ namespace Medical.GUI
             }
         }
 
+        public MedicalUICallback UICallback
+        {
+            get
+            {
+                return medicalUICallback;
+            }
+        }
+
         private void createProject(string projectName)
         {
             if (!Directory.Exists(projectName))

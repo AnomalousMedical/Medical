@@ -109,7 +109,7 @@ namespace Medical
             rmlViewer = new RmlViewer();
             guiManager.addManagedDialog(rmlViewer);
 
-            mvcEditor = new GenericEditor(browserWindow, "Medical.GUI.MvcEditor", new MVCGenericEditorObject());
+            mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", new MVCGenericEditorObject(timelinePropertiesController.UICallback));
             guiManager.addManagedDialog(mvcEditor);
 
             //Tasks Menu

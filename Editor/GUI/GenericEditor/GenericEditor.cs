@@ -13,7 +13,6 @@ namespace Medical.GUI
 {
     class GenericEditor : MDIDialog
     {
-        private MedicalUICallback uiCallback;
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
 
@@ -27,21 +26,19 @@ namespace Medical.GUI
 
         private GenericEditorObject editorObject;
 
-        public GenericEditor(BrowserWindow browserWindow, String persistName, GenericEditorObject editorObject)
+        public GenericEditor(String persistName, GenericEditorObject editorObject)
             : base("Medical.GUI.GenericEditor.GenericEditor.layout", persistName)
         {
             this.editorObject = editorObject;
             window.Caption = String.Format("{0} Editor", editorObject.ObjectTypeName);
 
-            uiCallback = new MedicalUICallback(browserWindow);
-
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
-            editTreeView = new EditInterfaceTreeView(tree, uiCallback);
+            editTreeView = new EditInterfaceTreeView(tree, editorObject.UICallback);
 
             table = new ResizingTable((ScrollView)window.findWidget("TableScroller"));
-            propTable = new PropertiesTable(table);
+            propTable = new PropertiesTable(table, editorObject.UICallback);
 
-            objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
+            objectEditor = new ObjectEditor(editTreeView, propTable, editorObject.UICallback);
 
             MenuBar menu = window.findWidget("MenuBar") as MenuBar;
             MenuItem fileMenu = menu.addItem("File", MenuItemType.Popup);

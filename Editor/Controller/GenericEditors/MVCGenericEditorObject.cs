@@ -15,6 +15,12 @@ namespace Medical
     {
         private XmlSaver saver = new XmlSaver();
         private AnomalousMvcContext currentContext;
+        private MedicalUICallback uiCallback;
+
+        public MVCGenericEditorObject(MedicalUICallback uiCallback)
+        {
+            this.uiCallback = uiCallback;
+        }
 
         public void createNew()
         {
@@ -64,6 +70,14 @@ namespace Medical
             get
             {
                 return "Anomalous MVC Context (*.mvc)|*.mvc;";
+            }
+        }
+
+        public MedicalUICallback UICallback
+        {
+            get
+            {
+                return uiCallback;
             }
         }
     }

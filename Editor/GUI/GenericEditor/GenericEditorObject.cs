@@ -23,5 +23,7 @@ namespace Medical.GUI
         String ObjectTypeName { get; }
 
         String FileWildcard { get; }
+
+        MedicalUICallback UICallback { get; }
     }
 }

@@ -32,6 +32,12 @@ namespace Medical.GUI
             
         }
 
+        public PropertiesTable(Table propertiesTable, EditUICallback uiCallback)
+            : this(propertiesTable, uiCallback, null)
+        {
+
+        }
+
         public PropertiesTable(Table propertiesTable, EditUICallback uiCallback, AddRemoveButtons buttons)
         {
             this.uiCallback = uiCallback;
