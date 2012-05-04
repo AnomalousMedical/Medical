@@ -147,6 +147,16 @@ namespace Medical.Controller.AnomalousMvc
             info.AddValue("Controllers", controllers);
             info.AddValue("Views", views);
         }
+
+        public void hideMainInterface(bool showSharedGui)
+        {
+            core.hideMainInterface(showSharedGui);
+        }
+
+        internal void showMainInterface()
+        {
+            core.showMainInterface();
+        }
     }
 
     public partial class AnomalousMvcContext

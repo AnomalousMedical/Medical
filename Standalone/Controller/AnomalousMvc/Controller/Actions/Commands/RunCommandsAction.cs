@@ -68,6 +68,8 @@ namespace Medical.Controller.AnomalousMvc
             editInterface.addCommand(new EditInterfaceCommand("Add Stop Timeline", addStopTimeline));
             editInterface.addCommand(new EditInterfaceCommand("Add Close View", addCloseGUI));
             editInterface.addCommand(new EditInterfaceCommand("Add Show View", addShowGUI));
+            editInterface.addCommand(new EditInterfaceCommand("Add Hide Main Interface", addHideMainInterface));
+            editInterface.addCommand(new EditInterfaceCommand("Add Show Main Interface", addShowMainInterface));
 
             editInterfaceManager = new EditInterfaceManager<ActionCommand>(editInterface);
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));
@@ -115,6 +117,16 @@ namespace Medical.Controller.AnomalousMvc
         private void addShowGUI(EditUICallback callback, EditInterfaceCommand command)
         {
             addCommand(new ShowViewCommand());
+        }
+        
+        private void addHideMainInterface(EditUICallback callback, EditInterfaceCommand command)
+        {
+            addCommand(new HideMainInterfaceCommand());
+        }
+
+        private void addShowMainInterface(EditUICallback callback, EditInterfaceCommand command)
+        {
+            addCommand(new ShowMainInterfaceCommand());
         }
 
         private void removeCommand(EditUICallback callback, EditInterfaceCommand caller)

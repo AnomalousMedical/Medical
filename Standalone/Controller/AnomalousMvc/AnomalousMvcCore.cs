@@ -134,13 +134,18 @@ namespace Medical.Controller.AnomalousMvc
         public void startRunningContext(AnomalousMvcContext context)
         {
             context._setCore(this);
-            hideMainInterface(false); //need way to show shared interface !timeline.Fullscreen
+            //hideMainInterface(false); //need way to show shared interface !timeline.Fullscreen
             context.runAction(context.StartupAction); //Need to make this configurable
         }
 
         public void hideMainInterface(bool showSharedInterface)
         {
             guiManager.setMainInterfaceEnabled(false, showSharedInterface);
+        }
+
+        internal void showMainInterface()
+        {
+            guiManager.setMainInterfaceEnabled(true, false);
         }
 
         void timelineController_LEGACY_MultiTimelineStoppedEvent(object sender, EventArgs e)
