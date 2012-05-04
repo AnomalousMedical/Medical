@@ -8,11 +8,11 @@ using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public class Controller : SaveableEditableItem
+    public class MvcController : SaveableEditableItem
     {
         private ControllerActionCollection actionCollection;
 
-        public Controller(String name)
+        public MvcController(String name)
             :base(name)
         {
             actionCollection = new ControllerActionCollection();
@@ -37,7 +37,7 @@ namespace Medical.Controller.AnomalousMvc
             return actionCollection.getEditInterface(Name);
         }
 
-        protected Controller(LoadInfo info)
+        protected MvcController(LoadInfo info)
             :base(info)
         {
 
