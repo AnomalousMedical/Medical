@@ -20,15 +20,19 @@ namespace Medical.Controller.AnomalousMvc
 
         private ViewHostManager viewHostManager;
         private ViewHost viewHost;
+        private GUIManager guiManager;
 
         private XmlSaver xmlSaver = new XmlSaver();
 
         public AnomalousMvcCore(UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController, ViewHostFactory viewHostFactory)
         {
             this.timelineController = timelineController;
+            this.guiManager = guiManager;
             this.viewHostFactory = viewHostFactory;
 
             viewHostManager = new ViewHostManager(updateTimer, guiManager);
+
+            timelineController.LEGACY_MultiTimelineStoppedEvent += new EventHandler(timelineController_LEGACY_MultiTimelineStoppedEvent);
         }
 
         public void showView(View view, AnomalousMvcContext context)
@@ -125,6 +129,25 @@ namespace Medical.Controller.AnomalousMvc
                 context._setCore(this);
                 return context;
             }
+        }
+
+        public void startRunningContext(AnomalousMvcContext context)
+        {
+            context._setCore(this);
+            hideMainInterface(false); //need way to show shared interface !timeline.Fullscreen
+            context.runAction("Startup/Start"); //Need to make this configurable
+        }
+
+        public void hideMainInterface(bool showSharedInterface)
+        {
+            guiManager.setMainInterfaceEnabled(false, showSharedInterface);
+        }
+
+        void timelineController_LEGACY_MultiTimelineStoppedEvent(object sender, EventArgs e)
+        {
+            //This is the legacy way to deal with old timelines until they can be replaced with new ones
+            guiManager.setMainInterfaceEnabled(true, false);
+            timelineController.ResourceProvider = null;
         }
     }
 }

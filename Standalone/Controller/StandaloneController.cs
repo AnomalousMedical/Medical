@@ -214,8 +214,6 @@ namespace Medical
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();
             timelineController = new TimelineController(this);
-            timelineController.PlaybackStarted += timelineController_PlaybackStarted;
-            timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
 
             abstractTimelineGUIManager = new AbstractTimelineGUIManager(medicalController.MainTimer, guiManager);
 
@@ -537,6 +535,14 @@ namespace Medical
             }
         }
 
+        public AnomalousMvcCore MvcCore
+        {
+            get
+            {
+                return mvcCore;
+            }
+        }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();
@@ -667,17 +673,6 @@ namespace Medical
 
         void medicalController_FixedLoopUpdate(Clock time)
         {
-        }
-
-        void timelineController_PlaybackStopped(object sender, EventArgs e)
-        {
-            guiManager.setMainInterfaceEnabled(true, false);
-            timelineController.ResourceProvider = null;
-        }
-
-        void timelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
-        {
-            guiManager.setMainInterfaceEnabled(false, !timeline.Fullscreen);
         }
 
         void atlasPluginManager_PluginLoadError(string message)

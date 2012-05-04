@@ -28,6 +28,7 @@ namespace Medical
             {
                 timelineController.ResourceProvider = new TimelineVirtualFSResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
                 Timeline start = timelineController.openTimeline(StartupTimeline);
+                timelineController.TEMP_MVC_CORE.hideMainInterface(!start.Fullscreen);
                 timelineController.startPlayback(start);
             }
         }

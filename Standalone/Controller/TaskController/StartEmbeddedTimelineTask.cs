@@ -34,6 +34,7 @@ namespace Medical
         {
             timelineController.ResourceProvider = new TimelineEmbeddedResourceProvider(assembly, resourceRoot); ;
             Timeline start = timelineController.openTimeline(startTimeline);
+            timelineController.TEMP_MVC_CORE.hideMainInterface(!start.Fullscreen);
             timelineController.startPlayback(start);
         }
 

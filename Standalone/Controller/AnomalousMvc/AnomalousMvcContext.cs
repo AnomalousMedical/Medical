@@ -141,6 +141,11 @@ namespace Medical.Controller.AnomalousMvc
     {
         private EditInterface editInterface;
 
+        public enum CustomQueries
+        {
+            Preview
+        }
+
         public EditInterface getEditInterface()
         {
             if (editInterface == null)
@@ -148,8 +153,14 @@ namespace Medical.Controller.AnomalousMvc
                 editInterface = new EditInterface("MVC");
                 editInterface.addSubInterface(views.getEditInterface("Views"));
                 editInterface.addSubInterface(controllers.getEditInterface("Controllers"));
+                editInterface.addCommand(new EditInterfaceCommand("Preview", preview));
             }
             return editInterface;
+        }
+
+        private void preview(EditUICallback callback, EditInterfaceCommand command)
+        {
+            callback.runCustomQuery(CustomQueries.Preview, null, this);
         }
     }
 }

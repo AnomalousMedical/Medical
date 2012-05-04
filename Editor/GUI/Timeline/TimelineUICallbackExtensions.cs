@@ -6,6 +6,7 @@ using Engine.Editing;
 using Medical.Controller;
 using System.IO;
 using Medical.Controller.AnomalousMvc;
+using MyGUIPlugin;
 
 namespace Medical.GUI
 {
@@ -38,6 +39,7 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);
             medicalUICallback.addCustomQuery(TimelineEditInterface.CustomQueries.OpenFolder, openTimelineFolder);
+            medicalUICallback.addCustomQuery(AnomalousMvcContext.CustomQueries.Preview, previewMvcContext);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -140,6 +142,22 @@ namespace Medical.GUI
             else
             {
                 OtherProcessManager.openLocalURL(editorTimelineController.ResourceProvider.getFullFilePath(""));
+            }
+        }
+
+        private void previewMvcContext(SendResult<Object> resultCallback, params Object[] args)
+        {
+            if (args[0] != null)
+            {
+                if (editorTimelineController.ResourceProvider != null)
+                {
+                    standaloneController.TimelineController.ResourceProvider = editorTimelineController.ResourceProvider.clone();
+                    standaloneController.MvcCore.startRunningContext((AnomalousMvcContext)args[0]);
+                }
+                else
+                {
+                    MessageBox.show("Cannot run MVC Context. Please open a timeline project first.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
             }
         }
 

@@ -36,11 +36,10 @@ namespace Medical
         //END
 
         public event EventHandler ResourceLocationChanged;
-        public event Action<TimelineController, Timeline> PlaybackStarted;
-        public event EventHandler PlaybackStopped;
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
+        public event EventHandler LEGACY_MultiTimelineStoppedEvent;
 
         private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
@@ -130,10 +129,6 @@ namespace Medical
                 if (!multiTimelinePlaybackInProgress)
                 {
                     multiTimelinePlaybackInProgress = true;
-                    if (PlaybackStarted != null) //Alert that the multi timeline playback has started.
-                    {
-                        PlaybackStarted.Invoke(this, timeline);
-                    }
                 }
             }
         }
@@ -218,9 +213,9 @@ namespace Medical
                 {
                     previousTimeline = null;
                     multiTimelinePlaybackInProgress = false;
-                    if (PlaybackStopped != null)
+                    if (LEGACY_MultiTimelineStoppedEvent != null)
                     {
-                        PlaybackStopped.Invoke(this, EventArgs.Empty);
+                        LEGACY_MultiTimelineStoppedEvent.Invoke(this, EventArgs.Empty);
                     }
                 }
             }
