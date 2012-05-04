@@ -30,6 +30,7 @@ namespace Medical
 
         private AspectRatioTask aspectRatioTask;
         private RmlViewer rmlViewer;
+        private GenericSaveableEditor mvcEditor;
 
         public EditorPlugin()
         {
@@ -38,6 +39,7 @@ namespace Medical
 
         public void Dispose()
         {
+            mvcEditor.Dispose();
             rmlViewer.Dispose();
             BrowserWindowController.setTimelineController(null);
             timelinePropertiesController.Dispose();
@@ -107,6 +109,9 @@ namespace Medical
             rmlViewer = new RmlViewer();
             guiManager.addManagedDialog(rmlViewer);
 
+            mvcEditor = new GenericSaveableEditor(browserWindow, "Medical.GUI.MvcEditor", new MVCGenericEditorObject());
+            guiManager.addManagedDialog(mvcEditor);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -116,7 +121,8 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(rmlViewer, "Medical.RmlViewer", "RML Viewer", "TimelineAnalyzerIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(rmlViewer, "Medical.RmlViewer", "RML Viewer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
             //taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
