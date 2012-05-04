@@ -51,6 +51,10 @@ namespace Medical.GUI
         GUITaskManager guiTaskManager;
         GUITimelineTaskManager guiTimelineTaskManager;
 
+        //Events
+        public event Action MainGUIShown;
+        public event Action MainGUIHidden;
+
         public GUIManager(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
@@ -237,6 +241,10 @@ namespace Medical.GUI
                     timelineGUITaskbar.Visible = false;
                     dialogManager.reopenMainGUIDialogs();
                     notificationManager.reshowAllNotifications();
+                    if (MainGUIShown != null)
+                    {
+                        MainGUIShown.Invoke();
+                    }
                 }
                 else
                 {
@@ -247,6 +255,10 @@ namespace Medical.GUI
                     taskbar.Visible = false;
                     dialogManager.closeMainGUIDialogs();
                     notificationManager.hideAllNotifications();
+                    if (MainGUIHidden != null)
+                    {
+                        MainGUIHidden.Invoke();
+                    }
                 }
                 mainGuiShowing = enabled;
                 taskbar.SuppressLayout = false;

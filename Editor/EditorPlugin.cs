@@ -61,6 +61,8 @@ namespace Medical
         public void initialize(StandaloneController standaloneController)
         {
             GUIManager guiManager = standaloneController.GUIManager;
+            guiManager.MainGUIShown += new Action(guiManager_MainGUIShown);
+            guiManager.MainGUIHidden += new Action(guiManager_MainGUIHidden);
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
@@ -69,13 +71,8 @@ namespace Medical
 
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);
-            editorTimelineController.PlaybackStarted += editorTimelineController_PlaybackStarted;
-            editorTimelineController.PlaybackStopped += new EventHandler(editorTimelineController_PlaybackStopped);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
             BrowserWindowController.setTimelineController(editorTimelineController);
-
-            standaloneController.TimelineController.PlaybackStarted += TimelineController_PlaybackStarted;
-            standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
 
             //UI Helpers
             browserWindow = new BrowserWindow();
@@ -242,34 +239,14 @@ namespace Medical
 
         }
 
-        private void playbackStarted()
+        void guiManager_MainGUIHidden()
         {
             openPropManager.hideOpenProps();
         }
 
-        private void playbackStopped()
+        void guiManager_MainGUIShown()
         {
             openPropManager.showOpenProps();
-        }
-
-        void TimelineController_PlaybackStopped(object sender, EventArgs e)
-        {
-            playbackStopped();
-        }
-
-        void TimelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
-        {
-            playbackStarted();
-        }
-
-        void editorTimelineController_PlaybackStopped(object sender, EventArgs e)
-        {
-            playbackStopped();
-        }
-
-        void editorTimelineController_PlaybackStarted(TimelineController timelineController, Timeline timeline)
-        {
-            playbackStarted();
         }
 
         void timelinePropertiesController_CurrentTimelineChanged(TimelinePropertiesController source, Timeline arg)
