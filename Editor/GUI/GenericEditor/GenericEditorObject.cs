@@ -20,8 +20,6 @@ namespace Medical.GUI
 
         bool load(Stream stream);
 
-        void unloaded();
-
         String ObjectTypeName { get; }
 
         String FileWildcard { get; }

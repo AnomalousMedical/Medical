@@ -51,11 +51,6 @@ namespace Medical
             }
         }
 
-        public void unloaded()
-        {
-            
-        }
-
         public string ObjectTypeName
         {
             get

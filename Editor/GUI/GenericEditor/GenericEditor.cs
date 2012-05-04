@@ -52,9 +52,9 @@ namespace Medical.GUI
             fileMenuCtrl.addItem("Save", MenuItemType.Normal, "Save");
             fileMenuCtrl.addItem("Save As", MenuItemType.Normal, "Save As");
 
-            createNewExamDefinition();
+            createNew();
 
-            this.Resized += new EventHandler(DataDrivenExamEditor_Resized);
+            this.Resized += new EventHandler(GenericEditor_Resized);
         }
 
         public override void Dispose()
@@ -67,13 +67,13 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void createNewExamDefinition()
+        public void createNew()
         {
             editorObject.createNew();
-            currentDefinitionChanged(null);
+            currentFileChanged(null);
         }
 
-        public void loadExamDefinition()
+        public void load()
         {
             using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, String.Format("Open a {0} definition.", editorObject.ObjectTypeName), defaultDirectory, "", editorObject.FileWildcard, false))
             {
@@ -85,7 +85,7 @@ namespace Medical.GUI
                         {
                             if (editorObject.load(stream))
                             {
-                                currentDefinitionChanged(fileDialog.Path);
+                                currentFileChanged(fileDialog.Path);
                             }
                             else
                             {
@@ -101,7 +101,7 @@ namespace Medical.GUI
             }
         }
 
-        public void saveExamDefinition()
+        public void save()
         {
             if (currentFile != null)
             {
@@ -112,11 +112,11 @@ namespace Medical.GUI
             }
             else
             {
-                saveExamDefinitionAs();
+                saveAs();
             }
         }
 
-        public void saveExamDefinitionAs()
+        public void saveAs()
         {
             using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, String.Format("Save a {0} definition", editorObject.ObjectTypeName), defaultDirectory, "", editorObject.FileWildcard))
             {
@@ -138,13 +138,13 @@ namespace Medical.GUI
             }
         }
 
-        void DataDrivenExamEditor_Resized(object sender, EventArgs e)
+        void GenericEditor_Resized(object sender, EventArgs e)
         {
             tree.layout();
             table.layout();
         }
 
-        private void currentDefinitionChanged(String file)
+        private void currentFileChanged(String file)
         {
             editTreeView.EditInterface = editorObject.getEditInterface();
             fileChanged(file);
@@ -169,16 +169,16 @@ namespace Medical.GUI
             switch (mcae.Item.ItemId)
             {
                 case "New":
-                    createNewExamDefinition();
+                    createNew();
                     break;
                 case "Open":
-                    loadExamDefinition();
+                    load();
                     break;
                 case "Save":
-                    saveExamDefinition();
+                    save();
                     break;
                 case "Save As":
-                    saveExamDefinitionAs();
+                    saveAs();
                     break;
             }
         }
