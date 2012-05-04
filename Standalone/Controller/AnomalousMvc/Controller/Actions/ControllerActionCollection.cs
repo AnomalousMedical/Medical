@@ -8,7 +8,7 @@ using Engine.Attributes;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ControllerActionCollection : SaveableEditableItemCollection<ControllerAction>
+    public class ControllerActionCollection : SaveableEditableItemCollection<ControllerAction>
     {
         public ControllerActionCollection()
         {

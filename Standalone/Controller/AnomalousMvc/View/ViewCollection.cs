@@ -8,7 +8,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ViewCollection : SaveableEditableItemCollection<View>
+    public class ViewCollection : SaveableEditableItemCollection<View>
     {
         public ViewCollection()
         {

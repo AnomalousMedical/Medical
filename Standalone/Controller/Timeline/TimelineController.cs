@@ -13,6 +13,7 @@ using SoundPlugin;
 using ZipAccess;
 using MyGUIPlugin;
 using Medical.GUI;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical
 {
@@ -20,21 +21,6 @@ namespace Medical
 
     public class TimelineController : UpdateListener
     {
-        //TEMPORARY HACKS TO MAKE THE MVC WORK
-        public Medical.Controller.AnomalousMvc.AnomalousMvcCore TEMP_MVC_CORE { get; set; }
-
-        /// <summary>
-        /// This is a temporary hack to allow MVC to operate the timeline
-        /// controller the way the show gui actions do. By turning this off the
-        /// TimelineController will never be able to fire its
-        /// MultiTimelineStopEvent. The MvcCore should be the only thing that
-        /// touches this. Later when the relationship between timelines and mvc
-        /// is worked out this should be removed and timelines should loose
-        /// their ability to change the scene gui state.
-        /// </summary>
-        public bool TEMP_AllowMultiTimelineStopEvents { get; set; }
-        //END
-
         public event EventHandler ResourceLocationChanged;
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
@@ -57,7 +43,6 @@ namespace Medical
             this.mainTimer = standaloneController.MedicalController.MainTimer;
             this.standaloneController = standaloneController;
             GUIFactory = standaloneController.TimelineGUIFactory;
-            TEMP_AllowMultiTimelineStopEvents = true;
         }
 
         public Timeline ActiveTimeline
@@ -207,16 +192,13 @@ namespace Medical
         /// </summary>
         public void _fireMultiTimelineStopEvent()
         {
-            if (TEMP_AllowMultiTimelineStopEvents)
+            if (multiTimelinePlaybackInProgress)
             {
-                if (multiTimelinePlaybackInProgress)
+                previousTimeline = null;
+                multiTimelinePlaybackInProgress = false;
+                if (LEGACY_MultiTimelineStoppedEvent != null)
                 {
-                    previousTimeline = null;
-                    multiTimelinePlaybackInProgress = false;
-                    if (LEGACY_MultiTimelineStoppedEvent != null)
-                    {
-                        LEGACY_MultiTimelineStoppedEvent.Invoke(this, EventArgs.Empty);
-                    }
+                    LEGACY_MultiTimelineStoppedEvent.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -495,6 +477,14 @@ namespace Medical
             get
             {
                 return standaloneController.PropFactory;
+            }
+        }
+
+        public AnomalousMvcCore MvcCore
+        {
+            get
+            {
+                return standaloneController.MvcCore;
             }
         }
 

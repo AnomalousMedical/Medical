@@ -31,13 +31,10 @@ namespace Medical.Controller.AnomalousMvc
             this.viewHostFactory = viewHostFactory;
 
             viewHostManager = new ViewHostManager(updateTimer, guiManager);
-
-            timelineController.LEGACY_MultiTimelineStoppedEvent += new EventHandler(timelineController_LEGACY_MultiTimelineStoppedEvent);
         }
 
         public void showView(View view, AnomalousMvcContext context)
         {
-            timelineController.TEMP_AllowMultiTimelineStopEvents = false;
             viewHost = viewHostFactory.createViewHost(view, context);
             viewHostManager.requestOpen(viewHost);
         }
@@ -46,7 +43,6 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (viewHost != null)
             {
-                timelineController.TEMP_AllowMultiTimelineStopEvents = true;
                 viewHostManager.requestClose(viewHost);
                 viewHost = null;
             }
@@ -143,9 +139,23 @@ namespace Medical.Controller.AnomalousMvc
             guiManager.setMainInterfaceEnabled(false, showSharedInterface);
         }
 
-        internal void showMainInterface()
+        public void showMainInterface()
         {
             guiManager.setMainInterfaceEnabled(true, false);
+        }
+
+        bool runningLegacyMode = false;
+
+        /// <summary>
+        /// This method will put the core into a mode to handle legacy timeline
+        /// playback. This way it will responst to the
+        /// LEGACY_MultiTimelineStopped event and shutdown like the
+        /// timelinecontroller used to. This keeps old timelines working.
+        /// </summary>
+        internal void setLegacyTimelineMode()
+        {
+            timelineController.LEGACY_MultiTimelineStoppedEvent += timelineController_LEGACY_MultiTimelineStoppedEvent;
+            runningLegacyMode = true;
         }
 
         void timelineController_LEGACY_MultiTimelineStoppedEvent(object sender, EventArgs e)
@@ -153,6 +163,8 @@ namespace Medical.Controller.AnomalousMvc
             //This is the legacy way to deal with old timelines until they can be replaced with new ones
             guiManager.setMainInterfaceEnabled(true, false);
             timelineController.ResourceProvider = null;
+            timelineController.LEGACY_MultiTimelineStoppedEvent -= timelineController_LEGACY_MultiTimelineStoppedEvent;
+            runningLegacyMode = false;
         }
     }
 }

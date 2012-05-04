@@ -10,6 +10,7 @@ using Engine;
 using MyGUIPlugin;
 using Medical.Controller;
 using System.IO;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical
 {
@@ -45,6 +46,7 @@ namespace Medical
             if (PluginId == -1 || standaloneController.App.LicenseManager.allowFeature(PluginId))
             {
                 TimelineController = standaloneController.TimelineController;
+                MvcCore = standaloneController.MvcCore;
 
                 TaskController taskController = standaloneController.TaskController;
                 foreach (DDPluginTask task in tasks)
@@ -147,6 +149,8 @@ namespace Medical
         public String SequencesDirectory { get; set; }
 
         public TimelineController TimelineController { get; private set; }
+
+        public AnomalousMvcCore MvcCore { get; private set; }
 
         public String PluginRootFolder { get; set; }
 

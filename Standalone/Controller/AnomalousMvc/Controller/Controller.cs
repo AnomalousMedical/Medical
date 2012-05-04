@@ -24,6 +24,14 @@ namespace Medical.Controller.AnomalousMvc
             action.execute(context);
         }
 
+        public ControllerActionCollection Actions
+        {
+            get
+            {
+                return actionCollection;
+            }
+        }
+
         protected override EditInterface createEditInterface()
         {
             return actionCollection.getEditInterface(Name);

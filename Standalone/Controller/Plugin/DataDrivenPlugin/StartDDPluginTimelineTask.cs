@@ -5,6 +5,8 @@ using System.Text;
 using Engine.Saving;
 using Engine.Editing;
 using System.IO;
+using Medical.Controller.AnomalousMvc;
+using Medical.Controller.AnomalousMvc.Legacy;
 
 namespace Medical
 {
@@ -27,9 +29,28 @@ namespace Medical
             if (!timelineController.MultiTimelinePlaybackInProgress)
             {
                 timelineController.ResourceProvider = new TimelineVirtualFSResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
+                //Have to load the timeline to know if it is fullscreen, technicly this loads it twice, but this code will be gone eventually
                 Timeline start = timelineController.openTimeline(StartupTimeline);
-                timelineController.TEMP_MVC_CORE.hideMainInterface(!start.Fullscreen);
-                timelineController.startPlayback(start);
+
+                //Build a MvcContext
+                AnomalousMvcContext context = new AnomalousMvcContext();
+                context.StartupAction = "Common/Start";
+                context.ShutdownAction = "Common/Shutdown";
+                Medical.Controller.AnomalousMvc.Controller controller = new Medical.Controller.AnomalousMvc.Controller("Common");
+                RunCommandsAction action = new RunCommandsAction("Start");
+                PlayLegacyTimelineCommand playLegacyTimeline = new PlayLegacyTimelineCommand();
+                playLegacyTimeline.Timeline = StartupTimeline;
+                HideMainInterfaceCommand hideMainInterface = new HideMainInterfaceCommand();
+                hideMainInterface.ShowSharedGui = !start.Fullscreen;
+                action.addCommand(hideMainInterface);
+                action.addCommand(playLegacyTimeline);
+                controller.Actions.add(action);
+                context.Controllers.add(controller);
+
+                Plugin.MvcCore.startRunningContext(context);
+
+                //timelineController.TEMP_MVC_CORE.hideMainInterface(!start.Fullscreen);
+                //timelineController.startPlayback(start);
             }
         }
 

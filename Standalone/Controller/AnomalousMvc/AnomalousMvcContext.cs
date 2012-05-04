@@ -127,6 +127,22 @@ namespace Medical.Controller.AnomalousMvc
         [Editable]
         public String ShutdownAction { get; set; }
 
+        public ControllerCollection Controllers
+        {
+            get
+            {
+                return controllers;
+            }
+        }
+
+        public ViewCollection Views
+        {
+            get
+            {
+                return views;
+            }
+        }
+
         internal void _setCore(AnomalousMvcCore core)
         {
             this.core = core;
@@ -156,6 +172,11 @@ namespace Medical.Controller.AnomalousMvc
         internal void showMainInterface()
         {
             core.showMainInterface();
+        }
+
+        internal void setLegacyTimelineMode()
+        {
+            core.setLegacyTimelineMode();
         }
     }
 

@@ -20,7 +20,7 @@ namespace Medical.Controller.AnomalousMvc
         }
 
         [Editable]
-        bool ShowSharedGui { get; set; }
+        public bool ShowSharedGui { get; set; }
 
         public override string Type
         {

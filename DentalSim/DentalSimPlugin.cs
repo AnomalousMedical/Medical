@@ -57,10 +57,10 @@ namespace DentalSim
             mandibleMovementTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(mandibleMovementTask);
 
-            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Eminence", "Eminence", "DistortionPanelIcons/LeftFossa", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Eminence.tl", standaloneController.TimelineController));
-            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Dentition.tl", standaloneController.TimelineController));
-            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_DiscClockFace.tl", standaloneController.TimelineController));
-            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Mandible.tl", standaloneController.TimelineController));
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Eminence", "Eminence", "DistortionPanelIcons/LeftFossa", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Eminence.tl", standaloneController.TimelineController, standaloneController.MvcCore));
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Dentition.tl", standaloneController.TimelineController, standaloneController.MvcCore));
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_DiscClockFace.tl", standaloneController.TimelineController, standaloneController.MvcCore));
+            taskController.addTask(new StartEmbeddedTimelineTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Disclaimer_Mandible.tl", standaloneController.TimelineController, standaloneController.MvcCore));
 
             //Movement Sequences
             MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
