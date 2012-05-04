@@ -61,6 +61,14 @@ namespace Medical
             }
         }
 
+        public bool HasQueuedTimeline
+        {
+            get
+            {
+                return queuedTimeline != null;
+            }
+        }
+
         public Timeline openTimeline(String filename)
         {
             if (!String.IsNullOrEmpty(filename) && resourceProvider.exists(filename))

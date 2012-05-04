@@ -24,9 +24,12 @@ namespace Medical.Controller.AnomalousMvc
 
         private XmlSaver xmlSaver = new XmlSaver();
 
+        public event Action TimelineStopped;
+
         public AnomalousMvcCore(UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController, ViewHostFactory viewHostFactory)
         {
             this.timelineController = timelineController;
+            timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
             this.guiManager = guiManager;
             this.viewHostFactory = viewHostFactory;
 
@@ -148,11 +151,27 @@ namespace Medical.Controller.AnomalousMvc
 
         public void showMainInterface()
         {
+            guiManager.setMainInterfaceEnabled(true, false);
+        }
+
+        public void shutdownContext()
+        {
             if (!runningLegacyMode)
             {
-                guiManager.setMainInterfaceEnabled(true, false);
+                timelineController.stopPlayback(false);
+                showMainInterface();
             }
         }
+
+        void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
+        {
+            if (TimelineStopped != null && !timelineController.HasQueuedTimeline)
+            {
+                TimelineStopped.Invoke();
+            }
+        }
+
+        //----------------LEGACY TIMELINE CONTROLLER STUFF------------------
 
         bool runningLegacyMode = false;
 

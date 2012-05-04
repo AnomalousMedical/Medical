@@ -72,16 +72,7 @@ namespace Medical.Controller.AnomalousMvc
                 core.showView(views[queuedShowView], this);
             }
 
-            //Check for shutdown conditions
-            //Not playing a timeline and not trying to start one
-            if (!core.PlayingTimeline && queuedTimeline == null)
-            {
-                //No views are open
-                if (!core.HasOpenViews)
-                {
-                    core.showMainInterface();
-                }
-            }
+            checkShutdownConditions();
         }
 
         public string getFullPath(string file)
@@ -167,7 +158,7 @@ namespace Medical.Controller.AnomalousMvc
             core.hideMainInterface(showSharedGui);
         }
 
-        internal void showMainInterface()
+        public void showMainInterface()
         {
             core.showMainInterface();
         }
@@ -175,6 +166,31 @@ namespace Medical.Controller.AnomalousMvc
         internal void setLegacyTimelineMode()
         {
             core.setLegacyTimelineMode();
+        }
+
+        private void checkShutdownConditions()
+        {
+            //Check for shutdown conditions
+            //No views are open
+            if (!core.HasOpenViews)
+            {
+                if (core.PlayingTimeline)
+                {
+                    //Reevaluate again when the timeline stops playing
+                    core.TimelineStopped += core_TimelineStopped;
+                }
+                else
+                {
+                    //Not timelines playing and no views showing, shutdown
+                    core.shutdownContext();
+                }
+            }
+        }
+
+        void core_TimelineStopped()
+        {
+            core.TimelineStopped -= core_TimelineStopped;
+            checkShutdownConditions();
         }
     }
 
