@@ -16,13 +16,13 @@ namespace Medical
         public override void doAction()
         {
             TimelineController.showContinuePrompt("Skip", skipToEndButton);
-            TimelineController.PlaybackStopped += TimelineController_PlaybackStopped;
+            TimelineController.TimelinePlaybackStopped += TimelineController_PlaybackStopped;
         }
 
         void TimelineController_PlaybackStopped(object sender, EventArgs e)
         {
             TimelineController timelineController = (TimelineController)sender;
-            timelineController.PlaybackStopped -= TimelineController_PlaybackStopped;
+            timelineController.TimelinePlaybackStopped -= TimelineController_PlaybackStopped;
             timelineController.ContinuePrompt.hidePrompt();
         }
 
