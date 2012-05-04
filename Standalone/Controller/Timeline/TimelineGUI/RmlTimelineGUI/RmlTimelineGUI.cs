@@ -24,7 +24,7 @@ namespace Medical
             :base("Medical.Controller.Timeline.TimelineGUI.RmlTimelineGUI.RmlTimelineGUI.layout")
         {
             rmlImage = (ImageBox)widget.findWidget("RmlImage");
-            rocketWidget = new RocketWidget("RmlGUI", rmlImage);
+            rocketWidget = new RocketWidget(rmlImage);
             imageHeight = rmlImage.Height;
 
             Button closeButton = (Button)widget.findWidget("Close");

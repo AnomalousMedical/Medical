@@ -25,7 +25,7 @@ namespace Medical.GUI
             : base("Medical.GUI.RmlViewer.RmlViewer.layout")
         {
             ImageBox imageBox = (ImageBox)window.findWidget("RocketImage");
-            rocketWidget = new RocketWidget("Developer.GUI.RmlViewer", imageBox);
+            rocketWidget = new RocketWidget(imageBox);
             rocketWidget.Enabled = false;
 
             MenuBar menuBar = (MenuBar)window.findWidget("MenuBar");

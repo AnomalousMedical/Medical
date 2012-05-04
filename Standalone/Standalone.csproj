@@ -428,6 +428,7 @@
     <Compile Include="GUI\RocketGui\RocketWidget.cs" />
     <Compile Include="GUI\RocketGui\DebugEventListener.cs" />
     <Compile Include="GUI\RocketGui\RocketEventListenerInstancer.cs" />
+    <Compile Include="GUI\RocketGui\RocketWidgetManager.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />

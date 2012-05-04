@@ -22,7 +22,7 @@ namespace Medical.GUI.AnomalousMvc
             this.context = context;
 
             rmlImage = (ImageBox)widget.findWidget("RmlImage");
-            rocketWidget = new RocketWidget("RmlGUI", rmlImage);
+            rocketWidget = new RocketWidget(rmlImage);
             imageHeight = rmlImage.Height;
 
             Button closeButton = (Button)widget.findWidget("Close");

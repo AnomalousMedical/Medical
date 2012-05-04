@@ -32,10 +32,10 @@ namespace Medical.GUI
 
         private ImageBox imageBox;
 
-        public RocketWidget(String name, ImageBox imageBox)
+        public RocketWidget(ImageBox imageBox)
         {
             this.imageBox = imageBox;
-            this.name = name;
+            this.name = RocketWidgetManager.generateRocketWidgetName();
             generateTextureName();
 
             currentTextureWidth = computeSize(imageBox.Width);
@@ -87,6 +87,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            RocketWidgetManager.rocketWidgetDisposed(name);
             imageBox.MouseButtonPressed -= imageBox_MouseButtonPressed;
             imageBox.MouseButtonReleased -= imageBox_MouseButtonReleased;
             imageBox.MouseMove -= imageBox_MouseMove;
