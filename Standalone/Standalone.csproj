@@ -99,7 +99,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\PlayTimelineCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ActionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\StopTimelineCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Controller.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\MvcController.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\AnomalousMvc\View\RmlView.cs" />

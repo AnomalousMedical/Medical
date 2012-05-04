@@ -52,7 +52,7 @@ namespace Medical.Controller.AnomalousMvc
             String controllerName = address.Substring(0, slashLoc);
             ++slashLoc;
             String actionName = address.Substring(slashLoc, address.Length - slashLoc);
-            Controller controller = controllers[controllerName];
+            MvcController controller = controllers[controllerName];
             controller.runAction(actionName, this);
 
             if (queuedCloseView)

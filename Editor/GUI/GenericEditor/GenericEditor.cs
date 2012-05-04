@@ -102,7 +102,7 @@ namespace Medical.GUI
         {
             if (currentFile != null)
             {
-                using (Stream stream = File.OpenWrite(currentFile))
+                using (Stream stream = File.Open(currentFile, FileMode.Create, FileAccess.Write))
                 {
                     editorObject.save(stream);
                 }

@@ -8,18 +8,18 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public class ControllerCollection : SaveableEditableItemCollection<Controller>
+    public class ControllerCollection : SaveableEditableItemCollection<MvcController>
     {
         public ControllerCollection()
         {
 
         }
 
-        public override void customizeEditInterface(EditInterface editInterface, EditInterfaceManager<Controller> itemEdits)
+        public override void customizeEditInterface(EditInterface editInterface, EditInterfaceManager<MvcController> itemEdits)
         {
             addItemCreation("Add Controller", delegate(String name)
             {
-                return new Controller(name);
+                return new MvcController(name);
             });
         }
 

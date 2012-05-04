@@ -44,7 +44,7 @@ namespace Medical
             AnomalousMvcContext context = new AnomalousMvcContext();
             context.StartupAction = "Common/Start";
             context.ShutdownAction = "Common/Shutdown";
-            Medical.Controller.AnomalousMvc.Controller controller = new Medical.Controller.AnomalousMvc.Controller("Common");
+            MvcController controller = new MvcController("Common");
             RunCommandsAction action = new RunCommandsAction("Start");
             PlayLegacyTimelineCommand playLegacyTimeline = new PlayLegacyTimelineCommand();
             playLegacyTimeline.Timeline = startTimeline;
