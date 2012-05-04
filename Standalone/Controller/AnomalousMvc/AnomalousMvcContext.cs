@@ -27,9 +27,9 @@ namespace Medical.Controller.AnomalousMvc
             ShutdownAction = "Common/Shutdown";
         }
 
-        public void stopPlayingExample()
+        public void stopPlayingTimeline()
         {
-            core.stopPlayingExample();
+            core.stopPlayingTimeline();
         }
 
         public void playTimeline(String timelineName)
@@ -57,22 +57,9 @@ namespace Medical.Controller.AnomalousMvc
 
             if (queuedCloseView)
             {
-                if (queuedTimeline == null)
-                {
-                    core.closeView();
-                    if (queuedShowView == null)
-                    {
-                        //No new timeline and no new view, shutdown.
-                        core.returnToMainGui();
-                    }
-                }
-                else
-                {
-                    core.closeView();
-                    playTimeline(queuedTimeline);
-                }
+                core.closeView();
             }
-            else if (queuedTimeline != null)
+            if (queuedTimeline != null)
             {
                 playTimeline(queuedTimeline);
             }
@@ -83,6 +70,17 @@ namespace Medical.Controller.AnomalousMvc
                     core.closeView();
                 }
                 core.showView(views[queuedShowView], this);
+            }
+
+            //Check for shutdown conditions
+            //Not playing a timeline and not trying to start one
+            if (!core.PlayingTimeline && queuedTimeline == null)
+            {
+                //No views are open
+                if (!core.HasOpenViews)
+                {
+                    core.showMainInterface();
+                }
             }
         }
 

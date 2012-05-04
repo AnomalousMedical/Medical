@@ -15,7 +15,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.stopPlayingExample();
+            context.stopPlayingTimeline();
         }
 
         public override string Type

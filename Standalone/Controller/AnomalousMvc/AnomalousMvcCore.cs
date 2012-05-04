@@ -48,16 +48,23 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public void returnToMainGui()
+        public bool HasOpenViews
         {
-            if (timelineController.Playing)
+            get
             {
-                timelineController.stopPlayback(false);
+                return viewHost != null;
             }
-            timelineController._fireMultiTimelineStopEvent();
         }
 
-        public void stopPlayingExample()
+        public bool PlayingTimeline
+        {
+            get
+            {
+                return timelineController.Playing;
+            }
+        }
+
+        public void stopPlayingTimeline()
         {
             if (timelineController.Playing)
             {
@@ -141,7 +148,10 @@ namespace Medical.Controller.AnomalousMvc
 
         public void showMainInterface()
         {
-            guiManager.setMainInterfaceEnabled(true, false);
+            if (!runningLegacyMode)
+            {
+                guiManager.setMainInterfaceEnabled(true, false);
+            }
         }
 
         bool runningLegacyMode = false;
