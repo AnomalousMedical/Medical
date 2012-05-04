@@ -10,16 +10,15 @@ namespace Medical
 {
     class StartAnomalousMvcAction : TimelineInstantAction
     {
-        private AnomalousMvcContext context;
-
         public StartAnomalousMvcAction()
         {
-            context = new AnomalousMvcContext();
+            
         }
 
         public override void doAction()
         {
-            context._setCore(Timeline.TimelineController.TEMP_MVC_CORE);
+            AnomalousMvcCore core = Timeline.TimelineController.TEMP_MVC_CORE;
+            AnomalousMvcContext context = core.loadContext(Context);
             context.runAction(StartAction);
         }
 
@@ -34,23 +33,21 @@ namespace Medical
         }
 
         [Editable]
-        public String StartAction { get; set; }
+        public String Context { get; set; }
 
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addSubInterface(context.getEditInterface());
-        }
+        [Editable]
+        public String StartAction { get; set; }
 
         protected StartAnomalousMvcAction(LoadInfo info)
             :base(info)
         {
-            context = info.GetValue<AnomalousMvcContext>("Context");
             StartAction = info.GetString("StartAction");
+            Context = info.GetString("Context");
         }
 
         public override void getInfo(SaveInfo info)
         {
-            info.AddValue("Context", context);
+            info.AddValue("Context", Context);
             info.AddValue("StartAction", StartAction);
         }
     }

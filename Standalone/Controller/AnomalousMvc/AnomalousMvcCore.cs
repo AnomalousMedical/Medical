@@ -5,6 +5,8 @@ using System.Text;
 using Medical.GUI;
 using Logging;
 using Engine.Platform;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -18,6 +20,8 @@ namespace Medical.Controller.AnomalousMvc
 
         private ViewHostManager viewHostManager;
         private ViewHost viewHost;
+
+        private XmlSaver xmlSaver = new XmlSaver();
 
         public AnomalousMvcCore(UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController, ViewHostFactory viewHostFactory)
         {
@@ -110,6 +114,16 @@ namespace Medical.Controller.AnomalousMvc
             if (window != null)
             {
                 window.setPosition(cameraPosition);
+            }
+        }
+
+        public AnomalousMvcContext loadContext(String fileName)
+        {
+            using (XmlReader xmlReader = new XmlTextReader(getFullPath(fileName)))
+            {
+                AnomalousMvcContext context = (AnomalousMvcContext)xmlSaver.restoreObject(xmlReader);
+                context._setCore(this);
+                return context;
             }
         }
     }
