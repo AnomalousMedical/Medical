@@ -59,7 +59,7 @@ namespace Medical.Controller.AnomalousMvc
 
         protected override EditInterface createEditInterface()
         {
-            EditInterface editInterface = new EditInterface(String.Format("{0} - Action", Name), null);
+            EditInterface editInterface = new EditInterface(Name, null);
 
             editInterface.addCommand(new EditInterfaceCommand("Add Move Camera", addMoveCamera));
             editInterface.addCommand(new EditInterfaceCommand("Add Change Layers", addChangeLayers));
