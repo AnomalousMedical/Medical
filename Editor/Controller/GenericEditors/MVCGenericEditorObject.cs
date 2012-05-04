@@ -7,11 +7,13 @@ using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using System.IO;
 
 namespace Medical
 {
-    class MVCGenericEditorObject : GenericSaveableEditorObject
+    class MVCGenericEditorObject : GenericEditorObject
     {
+        private XmlSaver saver = new XmlSaver();
         private AnomalousMvcContext currentContext;
 
         public void createNew()
@@ -24,17 +26,24 @@ namespace Medical
             return currentContext.getEditInterface();
         }
 
-        public void save(XmlSaver saver, XmlTextWriter xmlWriter)
+        public void save(Stream stream)
         {
-            saver.saveObject(currentContext, xmlWriter);
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(stream, Encoding.Default))
+            {
+                xmlWriter.Formatting = Formatting.Indented;
+                saver.saveObject(currentContext, xmlWriter);
+            }
         }
 
-        public bool load(XmlSaver saver, XmlReader xmlReader)
+        public bool load(Stream stream)
         {
             try
             {
-                currentContext = (AnomalousMvcContext)saver.restoreObject(xmlReader);
-                return true;
+                using (XmlTextReader xmlReader = new XmlTextReader(stream))
+                {
+                    currentContext = (AnomalousMvcContext)saver.restoreObject(xmlReader);
+                    return true;
+                }
             }
             catch (Exception)
             {
@@ -52,6 +61,14 @@ namespace Medical
             get
             {
                 return "MVC";
+            }
+        }
+
+        public String FileWildcard
+        {
+            get
+            {
+                return "Anomalous MVC Context (*.mvc)|*.mvc;";
             }
         }
     }

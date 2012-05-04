@@ -30,7 +30,7 @@ namespace Medical
 
         private AspectRatioTask aspectRatioTask;
         private RmlViewer rmlViewer;
-        private GenericSaveableEditor mvcEditor;
+        private GenericEditor mvcEditor;
 
         public EditorPlugin()
         {
@@ -109,7 +109,7 @@ namespace Medical
             rmlViewer = new RmlViewer();
             guiManager.addManagedDialog(rmlViewer);
 
-            mvcEditor = new GenericSaveableEditor(browserWindow, "Medical.GUI.MvcEditor", new MVCGenericEditorObject());
+            mvcEditor = new GenericEditor(browserWindow, "Medical.GUI.MvcEditor", new MVCGenericEditorObject());
             guiManager.addManagedDialog(mvcEditor);
 
             //Tasks Menu

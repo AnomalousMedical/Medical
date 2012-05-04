@@ -6,21 +6,24 @@ using Engine.Editing;
 using Engine.Saving.XMLSaver;
 using Engine.Saving;
 using System.Xml;
+using System.IO;
 
 namespace Medical.GUI
 {
-    interface GenericSaveableEditorObject
+    interface GenericEditorObject
     {
         void createNew();
 
         EditInterface getEditInterface();
 
-        void save(XmlSaver saver, XmlTextWriter xmlWriter);
+        void save(Stream stream);
 
-        bool load(XmlSaver saver, XmlReader xmlReader);
+        bool load(Stream stream);
 
         void unloaded();
 
         String ObjectTypeName { get; }
+
+        String FileWildcard { get; }
     }
 }

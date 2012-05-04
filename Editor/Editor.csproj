@@ -86,8 +86,8 @@
     <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\GenericSaveableEditor\GenericSaveableEditor.cs" />
-    <Compile Include="GUI\GenericSaveableEditor\GenericSaveableEditorObject.cs" />
+    <Compile Include="GUI\GenericEditor\GenericEditor.cs" />
+    <Compile Include="GUI\GenericEditor\GenericEditorObject.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
@@ -158,7 +158,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\GenericSaveableEditor\GenericSaveableEditor.layout" />
+    <EmbeddedResource Include="GUI\GenericEditor\GenericEditor.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.layout" />

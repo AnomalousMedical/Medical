@@ -11,10 +11,8 @@ using Engine.Saving;
 
 namespace Medical.GUI
 {
-    class GenericSaveableEditor : MDIDialog
+    class GenericEditor : MDIDialog
     {
-        public const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
-
         private MedicalUICallback uiCallback;
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
@@ -24,14 +22,13 @@ namespace Medical.GUI
 
         private ObjectEditor objectEditor;
 
-        private XmlSaver xmlSaver = new XmlSaver();
         private String currentFile = null;
         private String defaultDirectory = "";
 
-        private GenericSaveableEditorObject editorObject;
+        private GenericEditorObject editorObject;
 
-        public GenericSaveableEditor(BrowserWindow browserWindow, String persistName, GenericSaveableEditorObject editorObject)
-            : base("Medical.GUI.GenericSaveableEditor.GenericSaveableEditor.layout", persistName)
+        public GenericEditor(BrowserWindow browserWindow, String persistName, GenericEditorObject editorObject)
+            : base("Medical.GUI.GenericEditor.GenericEditor.layout", persistName)
         {
             this.editorObject = editorObject;
             window.Caption = String.Format("{0} Editor", editorObject.ObjectTypeName);
@@ -78,15 +75,15 @@ namespace Medical.GUI
 
         public void loadExamDefinition()
         {
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, String.Format("Open a {0} definition.", editorObject.ObjectTypeName), defaultDirectory, "", PLUGIN_WILDCARD, false))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, String.Format("Open a {0} definition.", editorObject.ObjectTypeName), defaultDirectory, "", editorObject.FileWildcard, false))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
                     try
                     {
-                        using (XmlReader xmlReader = new XmlTextReader(File.Open(fileDialog.Path, FileMode.Open, FileAccess.Read)))
+                        using (Stream stream = File.Open(fileDialog.Path, FileMode.Open, FileAccess.Read))
                         {
-                            if (editorObject.load(xmlSaver, xmlReader))
+                            if (editorObject.load(stream))
                             {
                                 currentDefinitionChanged(fileDialog.Path);
                             }
@@ -108,10 +105,9 @@ namespace Medical.GUI
         {
             if (currentFile != null)
             {
-                using (XmlTextWriter xmlWriter = new XmlTextWriter(currentFile, Encoding.Default))
+                using (Stream stream = File.OpenWrite(currentFile))
                 {
-                    xmlWriter.Formatting = Formatting.Indented;
-                    editorObject.save(xmlSaver, xmlWriter);
+                    editorObject.save(stream);
                 }
             }
             else
@@ -122,18 +118,17 @@ namespace Medical.GUI
 
         public void saveExamDefinitionAs()
         {
-            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, String.Format("Save a {0} definition", editorObject.ObjectTypeName), defaultDirectory, "", PLUGIN_WILDCARD))
+            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, String.Format("Save a {0} definition", editorObject.ObjectTypeName), defaultDirectory, "", editorObject.FileWildcard))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
                     try
                     {
-                        using (XmlTextWriter xmlWriter = new XmlTextWriter(fileDialog.Path, Encoding.Default))
+                        using (Stream stream = File.OpenWrite(fileDialog.Path))
                         {
-                            xmlWriter.Formatting = Formatting.Indented;
-                            editorObject.save(xmlSaver, xmlWriter);
-                            fileChanged(fileDialog.Path);
+                            editorObject.save(stream);
                         }
+                        fileChanged(fileDialog.Path);
                     }
                     catch (Exception e)
                     {
