@@ -135,7 +135,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             context._setCore(this);
             hideMainInterface(false); //need way to show shared interface !timeline.Fullscreen
-            context.runAction("Startup/Start"); //Need to make this configurable
+            context.runAction(context.StartupAction); //Need to make this configurable
         }
 
         public void hideMainInterface(bool showSharedInterface)

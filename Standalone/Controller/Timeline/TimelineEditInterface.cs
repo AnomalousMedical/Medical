@@ -101,7 +101,6 @@ namespace Medical
                 browser.addNode("", SEPS, new BrowserNode("Change Scene", typeof(OpenNewSceneAction)));
                 browser.addNode("", SEPS, new BrowserNode("Show GUI", typeof(ShowTimelineGUIAction)));
                 browser.addNode("", SEPS, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
-                browser.addNode("", SEPS, new BrowserNode("Start MVC", typeof(StartAnomalousMvcAction)));
 
                 editInterface = ReflectedEditInterface.createEditInterface("Pre Actions", null);
                 editInterface.addCommand(new EditInterfaceCommand("Add Pre Action", addAction));

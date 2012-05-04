@@ -23,6 +23,8 @@ namespace Medical.Controller.AnomalousMvc
         {
             controllers = new ControllerCollection();
             views = new ViewCollection();
+            StartupAction = "Common/Start";
+            ShutdownAction = "Common/Shutdown";
         }
 
         public void stopPlayingExample()
@@ -119,6 +121,12 @@ namespace Medical.Controller.AnomalousMvc
             core.applyCameraPosition(cameraPosition);
         }
 
+        [Editable]
+        public String StartupAction { get; set; }
+
+        [Editable]
+        public String ShutdownAction { get; set; }
+
         internal void _setCore(AnomalousMvcCore core)
         {
             this.core = core;
@@ -128,10 +136,14 @@ namespace Medical.Controller.AnomalousMvc
         {
             controllers = info.GetValue<ControllerCollection>("Controllers");
             views = info.GetValue<ViewCollection>("Views");
+            StartupAction = info.GetString("StartupAction");
+            ShutdownAction = info.GetString("ShutdownAction");
         }
 
         public void getInfo(SaveInfo info)
         {
+            info.AddValue("StartupAction", StartupAction);
+            info.AddValue("ShutdownAction", ShutdownAction);
             info.AddValue("Controllers", controllers);
             info.AddValue("Views", views);
         }
@@ -150,7 +162,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (editInterface == null)
             {
-                editInterface = new EditInterface("MVC");
+                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "MVC", null);// new EditInterface("MVC");
                 editInterface.addSubInterface(views.getEditInterface("Views"));
                 editInterface.addSubInterface(controllers.getEditInterface("Controllers"));
                 editInterface.addCommand(new EditInterfaceCommand("Preview", preview));
