@@ -21,7 +21,6 @@ namespace Medical
         public TimelineGUIFactory()
         {
             addPrototype(new DataDrivenTimelineGUIPrototype());
-            addPrototype(new RmlTimelineGUIPrototype());
         }
 
         //public void findPrototypes(Assembly assembly)

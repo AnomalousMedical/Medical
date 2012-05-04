@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Editing;
 using Medical.Controller;
 using System.IO;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
@@ -34,7 +35,7 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.OpenQuestionEditor, openQuestionEditor);
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
             medicalUICallback.addCustomQuery(ChangeMedicalStateDoAction.CustomEditQueries.CapturePresetState, capturePresetState);
-            medicalUICallback.addCustomQuery(RmlTimelineGUIData.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
+            medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
             medicalUICallback.addCustomQuery(TimelineEditInterface.CustomQueries.OpenFolder, openTimelineFolder);
         }
 
