@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI;
 using Engine.Editing;
 using Engine.Saving;
+using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -105,10 +106,10 @@ namespace Medical.Controller.AnomalousMvc
             core.applyCameraPosition(cameraPosition);
         }
 
-        [Editable]
+        [EditableAction]
         public String StartupAction { get; set; }
 
-        [Editable]
+        [EditableAction]
         public String ShutdownAction { get; set; }
 
         public ControllerCollection Controllers

@@ -103,8 +103,10 @@
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\AnomalousMvc\View\RmlView.cs" />
+    <Compile Include="Controller\Editor\ActionBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\CreateEditableItemCommand.cs" />
-    <Compile Include="Controller\Editor\EditableFileBrowseAttribute.cs" />
+    <Compile Include="Controller\Editor\EditableActionAttribute.cs" />
+    <Compile Include="Controller\Editor\EditableFileAttribute.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\View\View.cs" />
@@ -136,9 +138,11 @@
     <Compile Include="Controller\Download\DownloadListener.cs" />
     <Compile Include="Controller\Download\PlatformUpdateDownload.cs" />
     <Compile Include="Controller\Download\PluginDownload.cs" />
+    <Compile Include="Controller\Editor\EditableViewAttribute.cs" />
     <Compile Include="Controller\Editor\FileBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\SaveableEditableItem.cs" />
     <Compile Include="Controller\Editor\SaveableEditableItemCollection.cs" />
+    <Compile Include="Controller\Editor\ViewBrowserEditableProperty.cs" />
     <Compile Include="Controller\Exam\AbstractExam.cs" />
     <Compile Include="Controller\Exam\Analysis\AbstractExamAnalyzer.cs" />
     <Compile Include="Controller\Exam\AbstractExamMemberScanner.cs" />

@@ -8,7 +8,7 @@ using Engine.Attributes;
 
 namespace Medical.Editor
 {
-    public abstract partial class EditableItemCollection<ItemType>
+    public abstract partial class EditableItemCollection<ItemType> : IEnumerable<ItemType>
         where ItemType : EditableItem
     {
         protected List<ItemType> items = new List<ItemType>();
@@ -58,6 +58,16 @@ namespace Medical.Editor
                 }
                 throw new KeyNotFoundException("Cannot find an item named " + name);
             }
+        }
+
+        public IEnumerator<ItemType> GetEnumerator()
+        {
+            return items.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return items.GetEnumerator();
         }
     }
 

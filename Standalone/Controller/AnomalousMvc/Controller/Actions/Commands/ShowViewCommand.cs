@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine.Editing;
+using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -19,7 +20,7 @@ namespace Medical.Controller.AnomalousMvc
             context.queueShowView(View);
         }
 
-        [Editable]
+        [EditableView]
         public String View { get; set; }
 
         public override string Type

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine.Editing;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -29,7 +30,7 @@ namespace Medical
             
         }
 
-        [Editable]
+        [EditableAction]
         public String Action { get; set; }
 
         protected RunMvcAction(LoadInfo info)

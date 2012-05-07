@@ -8,6 +8,7 @@ using Engine.Editing;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using System.IO;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -25,6 +26,7 @@ namespace Medical
         public void createNew()
         {
             currentContext = new AnomalousMvcContext();
+            BrowserWindowController.setCurrentEditingMvcContext(currentContext);
         }
 
         public EditInterface getEditInterface()
@@ -48,6 +50,7 @@ namespace Medical
                 using (XmlTextReader xmlReader = new XmlTextReader(stream))
                 {
                     currentContext = (AnomalousMvcContext)saver.restoreObject(xmlReader);
+                    BrowserWindowController.setCurrentEditingMvcContext(currentContext);
                     return true;
                 }
             }

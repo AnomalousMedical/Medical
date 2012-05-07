@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Editing;
 using Engine.Saving;
+using Medical.Editor;
 
 namespace Medical
 {

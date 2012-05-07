@@ -7,6 +7,7 @@ using Logging;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
 using Medical.Controller;
+using Medical.Editor;
 
 namespace Medical
 {
