@@ -234,6 +234,7 @@
     <Compile Include="Controller\Props\Arrow\ChangeArrowShapeAction.cs" />
     <Compile Include="Controller\Props\CircularHighlight\ChangeCircularHighlightSettings.cs" />
     <Compile Include="Controller\Props\PoseableHand\ChangeHandPosition.cs" />
+    <Compile Include="Controller\Timeline\RunMvcAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\EditableShowPropSubAction.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerAnimator.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerSectionAnimator.cs" />

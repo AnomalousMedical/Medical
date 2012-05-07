@@ -142,6 +142,7 @@ namespace Medical.Controller.AnomalousMvc
             context._setCore(this);
             //hideMainInterface(false); //need way to show shared interface !timeline.Fullscreen
             context.runAction(context.StartupAction); //Need to make this configurable
+            this.CurrentContext = context;
         }
 
         public void hideMainInterface(bool showSharedInterface)
@@ -162,6 +163,8 @@ namespace Medical.Controller.AnomalousMvc
                 showMainInterface();
             }
         }
+
+        public AnomalousMvcContext CurrentContext { get; private set; }
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
