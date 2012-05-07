@@ -104,6 +104,7 @@
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\AnomalousMvc\View\RmlView.cs" />
     <Compile Include="Controller\Editor\CreateEditableItemCommand.cs" />
+    <Compile Include="Controller\Editor\EditableFileBrowseAttribute.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\View\View.cs" />

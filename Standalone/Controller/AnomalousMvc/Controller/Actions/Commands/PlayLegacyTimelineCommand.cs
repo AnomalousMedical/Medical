@@ -22,6 +22,7 @@ namespace Medical.Controller.AnomalousMvc.Legacy
             context.queueTimeline(Timeline);
         }
 
+        [EditableFile(BrowserWindowController.TimelineSearchPattern)]
         public String Timeline { get; set; }
 
         public override string Type
@@ -30,11 +31,6 @@ namespace Medical.Controller.AnomalousMvc.Legacy
             {
                 return "Play Legacy Timeline";
             }
-        }
-
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addEditableProperty(new FileBrowserEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this, BrowserWindowController.TimelineSearchPattern));
         }
 
         protected PlayLegacyTimelineCommand(LoadInfo info)

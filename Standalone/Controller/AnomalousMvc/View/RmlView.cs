@@ -17,11 +17,11 @@ namespace Medical.Controller.AnomalousMvc
             RmlFile = name + ".rml";
         }
 
+        [EditableFile(BrowserWindowController.RmlSearchPattern)]
         public String RmlFile { get; set; }
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addEditableProperty(new FileBrowserEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, BrowserWindowController.RmlSearchPattern));
             editInterface.addCommand(new EditInterfaceCommand("View RML File", openFileInViewer));
             editInterface.addCommand(new EditInterfaceCommand("Edit RML File", editFile));
         }

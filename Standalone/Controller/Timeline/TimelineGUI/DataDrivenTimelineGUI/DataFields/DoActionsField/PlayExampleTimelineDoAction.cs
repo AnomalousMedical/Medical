@@ -22,6 +22,7 @@ namespace Medical
             gui.playExampleTimeline(Timeline);
         }
 
+        [EditableFile(BrowserWindowController.TimelineSearchPattern)]
         public String Timeline { get; set; }
 
         public override string Type
@@ -36,14 +37,6 @@ namespace Medical
             :base(info)
         {
 
-        }
-    }
-
-    public partial class PlayExampleTimelineDoAction
-    {
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addEditableProperty(new FileBrowserEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this, BrowserWindowController.TimelineSearchPattern));
         }
     }
 }

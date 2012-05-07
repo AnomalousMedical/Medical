@@ -10,7 +10,7 @@ using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public partial class PlayTimelineCommand : ActionCommand
+    public class PlayTimelineCommand : ActionCommand
     {
         public PlayTimelineCommand()
         {
@@ -22,6 +22,7 @@ namespace Medical.Controller.AnomalousMvc
             context.queueTimeline(Timeline);
         }
 
+        [EditableFile(BrowserWindowController.TimelineSearchPattern)]
         public String Timeline { get; set; }
 
         public override string Type
@@ -36,14 +37,6 @@ namespace Medical.Controller.AnomalousMvc
             :base(info)
         {
 
-        }
-    }
-
-    public partial class PlayTimelineCommand
-    {
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addEditableProperty(new FileBrowserEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this, BrowserWindowController.TimelineSearchPattern));
         }
     }
 }

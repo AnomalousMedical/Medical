@@ -31,6 +31,7 @@ namespace Medical
             factory.addField(this);
         }
 
+        [EditableFile(BrowserWindowController.TimelineSearchPattern)]
         public String Timeline
         {
             get
@@ -52,14 +53,6 @@ namespace Medical
             :base(info)
         {
 
-        }
-    }
-
-    public partial class CloseGUIPlayTimelineField
-    {
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addEditableProperty(new FileBrowserEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this, BrowserWindowController.TimelineSearchPattern));
         }
     }
 }

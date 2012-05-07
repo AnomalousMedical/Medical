@@ -25,7 +25,7 @@ namespace Medical
             this.TargetTimeline = targetTimeline;
         }
 
-        //[Editable]
+        [EditableFile(BrowserWindowController.TimelineSearchPattern)]
         public String TargetTimeline { get; set; }
 
         [Editable]
@@ -72,11 +72,6 @@ namespace Medical
         private void changeTimelineButton()
         {
             timelineControllerAfterDoAction.startPlayback(timelineControllerAfterDoAction.openTimeline(TargetTimeline));
-        }
-
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            editInterface.addEditableProperty(new FileBrowserEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("TargetTimeline")), this, BrowserWindowController.TimelineSearchPattern));
         }
 
 #region Saving
