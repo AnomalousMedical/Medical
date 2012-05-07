@@ -488,13 +488,7 @@ namespace Medical
             }
         }
 
-        public AnomalousMvcCore MvcCore
-        {
-            get
-            {
-                return standaloneController.MvcCore;
-            }
-        }
+        public AnomalousMvcContext MvcContext { get; set; }
 
         public ContinuePromptProvider ContinuePrompt { get; set; }
 

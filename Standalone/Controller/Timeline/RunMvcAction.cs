@@ -16,7 +16,7 @@ namespace Medical
 
         public override void doAction()
         {
-            Timeline.TimelineController.MvcCore.CurrentContext.runAction(Action);
+            Timeline.TimelineController.MvcContext.runAction(Action);
         }
 
         public override void dumpToLog()

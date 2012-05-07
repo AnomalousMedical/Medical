@@ -139,9 +139,9 @@ namespace Medical.Controller.AnomalousMvc
 
         public void startRunningContext(AnomalousMvcContext context)
         {
+            timelineController.MvcContext = context;
             context._setCore(this);
             context.runAction(context.StartupAction);
-            this.CurrentContext = context;
         }
 
         public void hideMainInterface(bool showSharedInterface)
@@ -162,8 +162,6 @@ namespace Medical.Controller.AnomalousMvc
                 context.runFinalAction(context.ShutdownAction);
             }
         }
-
-        public AnomalousMvcContext CurrentContext { get; private set; }
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
