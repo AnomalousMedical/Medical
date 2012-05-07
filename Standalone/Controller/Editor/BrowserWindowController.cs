@@ -22,7 +22,7 @@ namespace Medical
             BrowserWindowController.timelineController = timelineController;
         }
 
-        public static Browser createBrowser(String searchPattern)
+        public static Browser createFileBrowser(String searchPattern)
         {
             Browser browser = new Browser("Timelines");
             if (timelineController != null)

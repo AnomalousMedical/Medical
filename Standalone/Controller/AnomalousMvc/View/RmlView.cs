@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using Engine.Editing;
 using Engine.Reflection;
+using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -20,7 +21,7 @@ namespace Medical.Controller.AnomalousMvc
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addEditableProperty(new BrowseableEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, BrowserWindowController.RmlSearchPattern));
+            editInterface.addEditableProperty(new FileBrowserEditableProperty("RmlFile", new PropertyMemberWrapper(this.GetType().GetProperty("RmlFile")), this, BrowserWindowController.RmlSearchPattern));
             editInterface.addCommand(new EditInterfaceCommand("View RML File", openFileInViewer));
             editInterface.addCommand(new EditInterfaceCommand("Edit RML File", editFile));
         }

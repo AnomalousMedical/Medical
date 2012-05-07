@@ -5,24 +5,22 @@ using System.Text;
 using Engine.Editing;
 using Engine.Reflection;
 
-namespace Medical
+namespace Medical.Editor
 {
     /// <summary>
     /// An editable property for timelines to be used with the standard two column edit table layout.
     /// </summary>
-    class BrowseableEditableProperty : EditableProperty
+    abstract class BrowseableEditableProperty : EditableProperty
     {
         private MemberWrapper propertyInfo;
         private Object instance;
         private String name;
-        private String browserSearchPattern;
 
-        public BrowseableEditableProperty(String name, MemberWrapper propertyInfo, Object instance, String browserSearchPattern)
+        public BrowseableEditableProperty(String name, MemberWrapper propertyInfo, Object instance)
         {
             this.name = name;
             this.propertyInfo = propertyInfo;
             this.instance = instance;
-            this.browserSearchPattern = browserSearchPattern;
         }
 
         public bool canParseString(int column, string value, out string errorMessage)
@@ -38,11 +36,13 @@ namespace Medical
                 case 0:
                     return null;
                 case 1:
-                    return BrowserWindowController.createBrowser(browserSearchPattern);
+                    return buildBrowser();
                 default:
                     return null;
             }
         }
+
+        protected abstract Browser buildBrowser();
 
         public Type getPropertyType(int column)
         {

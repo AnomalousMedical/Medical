@@ -6,6 +6,7 @@ using Engine.Editing;
 using Medical;
 using Engine.Reflection;
 using Engine.Saving;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -58,7 +59,7 @@ namespace Medical
     {
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addEditableProperty(new BrowseableEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this, BrowserWindowController.TimelineSearchPattern));
+            editInterface.addEditableProperty(new FileBrowserEditableProperty("Timeline", new PropertyMemberWrapper(this.GetType().GetProperty("Timeline")), this, BrowserWindowController.TimelineSearchPattern));
         }
     }
 }

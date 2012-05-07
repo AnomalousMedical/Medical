@@ -106,7 +106,7 @@ namespace Medical
                 case 0:
                     return null;
                 case 1:
-                    return BrowserWindowController.createBrowser(BrowserWindowController.TimelineSearchPattern);
+                    return BrowserWindowController.createFileBrowser(BrowserWindowController.TimelineSearchPattern);
                 case 2:
                     return null;
                 default:
