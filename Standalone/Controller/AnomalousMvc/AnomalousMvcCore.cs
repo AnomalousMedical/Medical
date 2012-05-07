@@ -140,8 +140,7 @@ namespace Medical.Controller.AnomalousMvc
         public void startRunningContext(AnomalousMvcContext context)
         {
             context._setCore(this);
-            //hideMainInterface(false); //need way to show shared interface !timeline.Fullscreen
-            context.runAction(context.StartupAction); //Need to make this configurable
+            context.runAction(context.StartupAction);
             this.CurrentContext = context;
         }
 
@@ -155,12 +154,12 @@ namespace Medical.Controller.AnomalousMvc
             guiManager.setMainInterfaceEnabled(true, false);
         }
 
-        public void shutdownContext()
+        public void shutdownContext(AnomalousMvcContext context)
         {
             if (!runningLegacyMode)
             {
                 timelineController.stopPlayback(false);
-                showMainInterface();
+                context.runFinalAction(context.ShutdownAction);
             }
         }
 

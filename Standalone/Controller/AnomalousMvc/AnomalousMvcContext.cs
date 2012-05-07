@@ -48,12 +48,7 @@ namespace Medical.Controller.AnomalousMvc
             queuedTimeline = null;
             queuedShowView = null;
 
-            int slashLoc = address.IndexOf('/');
-            String controllerName = address.Substring(0, slashLoc);
-            ++slashLoc;
-            String actionName = address.Substring(slashLoc, address.Length - slashLoc);
-            MvcController controller = controllers[controllerName];
-            controller.runAction(actionName, this);
+            doRunAction(address);
 
             if (queuedCloseView)
             {
@@ -168,6 +163,17 @@ namespace Medical.Controller.AnomalousMvc
             core.setLegacyTimelineMode();
         }
 
+        /// <summary>
+        /// This is a special method to run the last action for a context. It
+        /// does not allow views or timelines to be queued, but it can do a few
+        /// things on shutdown.
+        /// </summary>
+        /// <param name="address"></param>
+        internal void runFinalAction(String address)
+        {
+            doRunAction(address);
+        }
+
         private void checkShutdownConditions()
         {
             //Check for shutdown conditions
@@ -182,9 +188,19 @@ namespace Medical.Controller.AnomalousMvc
                 else
                 {
                     //Not timelines playing and no views showing, shutdown
-                    core.shutdownContext();
+                    core.shutdownContext(this);
                 }
             }
+        }
+
+        private void doRunAction(string address)
+        {
+            int slashLoc = address.IndexOf('/');
+            String controllerName = address.Substring(0, slashLoc);
+            ++slashLoc;
+            String actionName = address.Substring(slashLoc, address.Length - slashLoc);
+            MvcController controller = controllers[controllerName];
+            controller.runAction(actionName, this);
         }
 
         void core_TimelineStopped()
