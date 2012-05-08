@@ -18,7 +18,6 @@ namespace Medical.Controller.AnomalousMvc.Legacy
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.setLegacyTimelineMode();
             context.queueTimeline(Timeline);
         }
 

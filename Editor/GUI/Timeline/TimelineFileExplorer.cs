@@ -43,7 +43,6 @@ namespace Medical.GUI
             : base("Medical.GUI.Timeline.TimelineFileExplorer.layout")
         {
             this.timelineController = timelineController;
-            timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
             this.documentController = documentController;
             this.timelinePropertiesController = timelinePropertiesController;
 
@@ -97,6 +96,12 @@ namespace Medical.GUI
         public void save()
         {
             saveTimelineClicked(window, EventArgs.Empty);
+        }
+
+        public void updateFiles()
+        {
+            updateFileList();
+            updateWindowCaption();
         }
 
         public bool AllMenusEnabled
@@ -271,13 +276,6 @@ namespace Medical.GUI
             }
         }
 
-        void timelineController_ResourceLocationChanged(object sender, EventArgs e)
-        {
-            AllMenusEnabled = timelineController.ResourceProvider != null;
-            updateFileList();
-            updateWindowCaption();
-        }
-
         void fileList_ListSelectAccept(Widget source, EventArgs e)
         {
             stopTimelineIfPlaying();
@@ -305,9 +303,9 @@ namespace Medical.GUI
 
         public void updateWindowCaption()
         {
-            if (timelineController.ResourceProvider != null)
+            if (timelinePropertiesController.ResourceProvider != null)
             {
-                window.Caption = String.Format("Timeline - {0}", timelineController.ResourceProvider.BackingLocation);
+                window.Caption = String.Format("Timeline - {0}", timelinePropertiesController.ResourceProvider.BackingLocation);
             }
             else
             {

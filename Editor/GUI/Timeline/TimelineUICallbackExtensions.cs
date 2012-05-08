@@ -125,7 +125,7 @@ namespace Medical.GUI
         private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
         {
             RmlViewer rmlViewer = propertiesController.EditorPlugin.RmlViewer;
-            String file = editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString());
+            String file = propertiesController.ResourceProvider.getFullFilePath(args[0].ToString());
             rmlViewer.changeDocument(file);
             if (!rmlViewer.Visible)
             {
@@ -137,11 +137,11 @@ namespace Medical.GUI
         {
             if (args[0] != null)
             {
-                OtherProcessManager.openLocalURL(Path.GetDirectoryName(editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString())));
+                OtherProcessManager.openLocalURL(Path.GetDirectoryName(propertiesController.ResourceProvider.getFullFilePath(args[0].ToString())));
             }
             else
             {
-                OtherProcessManager.openLocalURL(editorTimelineController.ResourceProvider.getFullFilePath(""));
+                OtherProcessManager.openLocalURL(propertiesController.ResourceProvider.getFullFilePath(""));
             }
         }
 
@@ -149,10 +149,12 @@ namespace Medical.GUI
         {
             if (args[0] != null)
             {
-                if (editorTimelineController.ResourceProvider != null)
+                if (propertiesController.ResourceProvider != null)
                 {
-                    standaloneController.TimelineController.ResourceProvider = editorTimelineController.ResourceProvider.clone();
-                    standaloneController.MvcCore.startRunningContext((AnomalousMvcContext)args[0]);
+                    standaloneController.TimelineController.setResourceProvider(propertiesController.ResourceProvider);
+                    AnomalousMvcContext context = (AnomalousMvcContext)args[0];
+                    context.setResourceProvider(propertiesController.ResourceProvider);
+                    standaloneController.MvcCore.startRunningContext(context);
                 }
                 else
                 {
@@ -165,7 +167,7 @@ namespace Medical.GUI
         {
             if (args[0] != null)
             {
-                OtherProcessManager.openLocalURL(editorTimelineController.ResourceProvider.getFullFilePath(args[0].ToString()));
+                OtherProcessManager.openLocalURL(propertiesController.ResourceProvider.getFullFilePath(args[0].ToString()));
             }
         }
     }

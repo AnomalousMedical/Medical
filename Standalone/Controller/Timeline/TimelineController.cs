@@ -21,7 +21,6 @@ namespace Medical
 
     public class TimelineController : UpdateListener
     {
-        public event EventHandler ResourceLocationChanged;
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
@@ -389,6 +388,16 @@ namespace Medical
             }
         }
 
+        public void setResourceProvider(ResourceProvider resourceProvider)
+        {
+            this.resourceProvider = resourceProvider;
+        }
+
+        public Stream openFile(String filename)
+        {
+            return resourceProvider.openFile(filename);
+        }
+
         #region UpdateListener Members
 
         public void exceededMaxDelta()
@@ -502,26 +511,26 @@ namespace Medical
         /// 
         /// You can clear the active provider by setting this to null.
         /// </summary>
-        public ResourceProvider ResourceProvider
-        {
-            get
-            {
-                return resourceProvider;
-            }
-            set
-            {
-                if (resourceProvider != null)
-                {
-                    resourceProvider.Dispose();
-                }
+        //public ResourceProvider ResourceProvider
+        //{
+        //    get
+        //    {
+        //        return resourceProvider;
+        //    }
+        //    set
+        //    {
+        //        if (resourceProvider != null)
+        //        {
+        //            resourceProvider.Dispose();
+        //        }
 
-                resourceProvider = value;
+        //        resourceProvider = value;
 
-                if (ResourceLocationChanged != null)
-                {
-                    ResourceLocationChanged.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
+        //        if (ResourceLocationChanged != null)
+        //        {
+        //            ResourceLocationChanged.Invoke(this, EventArgs.Empty);
+        //        }
+        //    }
+        //}
     }
 }

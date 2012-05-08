@@ -45,7 +45,6 @@ namespace Medical.GUI
             timelineController.TimelinePlaybackStarted += new EventHandler(timelineController_TimelinePlaybackStarted);
             timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
-            timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
@@ -97,7 +96,7 @@ namespace Medical.GUI
                 }
             }
 
-            setEnabled(false);
+            Enabled = false;
         }
 
         public override void Dispose()
@@ -121,7 +120,7 @@ namespace Medical.GUI
 
         public void updateWindowCaption()
         {
-            if (timelineController.ResourceProvider != null && timelinePropertiesController.CurrentTimelineFile != null)
+            if (timelinePropertiesController.ResourceProvider != null && timelinePropertiesController.CurrentTimelineFile != null)
             {
                 window.Caption = String.Format("Timeline - {0}", Path.GetFileName(timelinePropertiesController.CurrentTimelineFile));
             }
@@ -207,20 +206,22 @@ namespace Medical.GUI
             timelineView.removeData(actionDataBindings[action]);
         }
 
-        void timelineController_ResourceLocationChanged(object sender, EventArgs e)
+        public bool Enabled
         {
-            setEnabled(timelineController.ResourceProvider != null);
-            updateWindowCaption();
-        }
-
-        private void setEnabled(bool enabled)
-        {
-            actionFilter.Enabled = enabled;
-            playButton.Enabled = enabled;
-            playFullButton.Enabled = enabled;
-            timelineView.Enabled = enabled;
-            fastForwardButton.Enabled = enabled;
-            rewindButton.Enabled = enabled;
+            get
+            {
+                return actionFilter.Enabled;
+            }
+            set
+            {
+                actionFilter.Enabled = value;
+                playButton.Enabled = value;
+                playFullButton.Enabled = value;
+                timelineView.Enabled = value;
+                fastForwardButton.Enabled = value;
+                rewindButton.Enabled = value;
+                updateWindowCaption();
+            }
         }
 
         void rewindButton_MouseButtonClick(Widget source, EventArgs e)

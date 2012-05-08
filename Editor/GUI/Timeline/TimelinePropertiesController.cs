@@ -56,6 +56,8 @@ namespace Medical.GUI
 
         private EditorPlugin editorPlugin;
 
+        private ResourceProvider resourceProvider;
+
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
             this.editorPlugin = editorPlugin;
@@ -65,7 +67,6 @@ namespace Medical.GUI
 
             GUIManager guiManager = standaloneController.GUIManager;
             editorTimelineController = editorPlugin.TimelineController;
-            editorTimelineController.ResourceLocationChanged += new EventHandler(editorTimelineController_ResourceLocationChanged);
             editorTimelineController.TimelinePlaybackStopped += new EventHandler(editorTimelineController_TimelinePlaybackStopped);
 
             this.documentController = standaloneController.DocumentController;
@@ -159,7 +160,9 @@ namespace Medical.GUI
         {
             if (projectPath.EndsWith(".tl"))
             {
-                editorTimelineController.ResourceProvider = new FilesystemResourceProvider(Path.GetDirectoryName(projectPath));
+                resourceProvider = new FilesystemResourceProvider(Path.GetDirectoryName(projectPath));
+                editorTimelineController.setResourceProvider(resourceProvider);
+                resourceProviderChanged();
                 openTimelineFile(projectPath);
             }
             updateWindowCaption();
@@ -215,7 +218,7 @@ namespace Medical.GUI
             if (currentTimeline != null)
             {
                 timelineProperties.stopEditing();
-                mainTimelineController.ResourceProvider = editorTimelineController.ResourceProvider.clone();
+                mainTimelineController.setResourceProvider(resourceProvider);
                 mainTimelineController.startPlayback(currentTimeline, true);
             }
         }
@@ -354,13 +357,23 @@ namespace Medical.GUI
             }
         }
 
+        public ResourceProvider ResourceProvider
+        {
+            get
+            {
+                return resourceProvider;
+            }
+        }
+
         private void createProject(string projectName)
         {
             if (!Directory.Exists(projectName))
             {
                 Directory.CreateDirectory(projectName);
             }
-            editorTimelineController.ResourceProvider = new FilesystemResourceProvider(projectName);
+            resourceProvider = new FilesystemResourceProvider(projectName);
+            editorTimelineController.setResourceProvider(resourceProvider);
+            resourceProviderChanged();
         }
 
         private void updateWindowCaption()
@@ -379,9 +392,10 @@ namespace Medical.GUI
             timelineProperties.addActionToTimeline(e.Action);
         }
 
-        void editorTimelineController_ResourceLocationChanged(object sender, EventArgs e)
+        void resourceProviderChanged()
         {
-            timelineObjectExplorer.Enabled = timelineObjectProperties.Enabled = editorTimelineController.ResourceProvider != null;
+            timelineFileExplorer.AllMenusEnabled = timelineProperties.Enabled = timelineObjectExplorer.Enabled = timelineObjectProperties.Enabled = resourceProvider != null;
+            timelineFileExplorer.updateFiles();
         }
 
         void save_FirstFrameUpEvent(EventManager eventManager)

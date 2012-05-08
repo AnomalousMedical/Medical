@@ -12,6 +12,9 @@ namespace Medical
 {
     class StartDDPluginTimelineTask : DDPluginTask
     {
+        private VirtualFilesystemResourceProvider resourceProvider;
+        private AnomalousMvcContext context;
+
         public StartDDPluginTimelineTask(String uniqueName, String name, String iconName, String category)
             :base(uniqueName, name, iconName, category)
         {
@@ -28,30 +31,45 @@ namespace Medical
             TimelineController timelineController = Plugin.TimelineController;
             if (!timelineController.MultiTimelinePlaybackInProgress)
             {
-                timelineController.ResourceProvider = new VirtualFilesystemResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
+                resourceProvider = new VirtualFilesystemResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
+                timelineController.setResourceProvider(resourceProvider);
+                timelineController.LEGACY_MultiTimelineStoppedEvent += timelineController_LEGACY_MultiTimelineStoppedEvent;
                 //Have to load the timeline to know if it is fullscreen, technicly this loads it twice, but this code will be gone eventually
                 Timeline start = timelineController.openTimeline(StartupTimeline);
 
                 //Build a MvcContext
-                AnomalousMvcContext context = new AnomalousMvcContext();
+                context = new AnomalousMvcContext();
+                context.setResourceProvider(resourceProvider);
+                context.AllowShutdown = false;
                 context.StartupAction = "Common/Start";
                 context.ShutdownAction = "Common/Shutdown";
                 MvcController controller = new MvcController("Common");
-                RunCommandsAction action = new RunCommandsAction("Start");
+                RunCommandsAction startAction = new RunCommandsAction("Start");
                 PlayLegacyTimelineCommand playLegacyTimeline = new PlayLegacyTimelineCommand();
                 playLegacyTimeline.Timeline = StartupTimeline;
                 HideMainInterfaceCommand hideMainInterface = new HideMainInterfaceCommand();
                 hideMainInterface.ShowSharedGui = !start.Fullscreen;
-                action.addCommand(hideMainInterface);
-                action.addCommand(playLegacyTimeline);
-                controller.Actions.add(action);
+                startAction.addCommand(hideMainInterface);
+                startAction.addCommand(playLegacyTimeline);
+                controller.Actions.add(startAction);
+                RunCommandsAction shutdownAction = new RunCommandsAction("Shutdown");
+                shutdownAction.addCommand(new ShowMainInterfaceCommand());
+                controller.Actions.add(shutdownAction);
                 context.Controllers.add(controller);
 
                 Plugin.MvcCore.startRunningContext(context);
-
-                //timelineController.TEMP_MVC_CORE.hideMainInterface(!start.Fullscreen);
-                //timelineController.startPlayback(start);
             }
+        }
+
+        void timelineController_LEGACY_MultiTimelineStoppedEvent(object sender, EventArgs e)
+        {
+            context.AllowShutdown = true;
+            context.shutdown();
+            TimelineController timelineController = Plugin.TimelineController;
+            timelineController.setResourceProvider(null);
+            resourceProvider.Dispose();
+            resourceProvider = null;
+            timelineController.LEGACY_MultiTimelineStoppedEvent -= timelineController_LEGACY_MultiTimelineStoppedEvent;
         }
 
         [Editable]

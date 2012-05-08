@@ -7,6 +7,7 @@ using Logging;
 using Engine.Platform;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using System.IO;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -96,11 +97,6 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public String getFullPath(String file)
-        {
-            return timelineController.ResourceProvider.getFullFilePath(file);
-        }
-
         public void applyLayers(EditableLayerState layers)
         {
             if (layers != null)
@@ -127,9 +123,9 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public AnomalousMvcContext loadContext(String fileName)
+        public AnomalousMvcContext loadContext(Stream stream)
         {
-            using (XmlReader xmlReader = new XmlTextReader(getFullPath(fileName)))
+            using (XmlReader xmlReader = new XmlTextReader(stream))
             {
                 AnomalousMvcContext context = (AnomalousMvcContext)xmlSaver.restoreObject(xmlReader);
                 context._setCore(this);
@@ -156,11 +152,8 @@ namespace Medical.Controller.AnomalousMvc
 
         public void shutdownContext(AnomalousMvcContext context)
         {
-            if (!runningLegacyMode)
-            {
-                timelineController.stopPlayback(false);
-                context.runFinalAction(context.ShutdownAction);
-            }
+            timelineController.stopPlayback(false);
+            context.runFinalAction(context.ShutdownAction);
         }
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
@@ -169,31 +162,6 @@ namespace Medical.Controller.AnomalousMvc
             {
                 TimelineStopped.Invoke();
             }
-        }
-
-        //----------------LEGACY TIMELINE CONTROLLER STUFF------------------
-
-        bool runningLegacyMode = false;
-
-        /// <summary>
-        /// This method will put the core into a mode to handle legacy timeline
-        /// playback. This way it will responst to the
-        /// LEGACY_MultiTimelineStopped event and shutdown like the
-        /// timelinecontroller used to. This keeps old timelines working.
-        /// </summary>
-        internal void setLegacyTimelineMode()
-        {
-            timelineController.LEGACY_MultiTimelineStoppedEvent += timelineController_LEGACY_MultiTimelineStoppedEvent;
-            runningLegacyMode = true;
-        }
-
-        void timelineController_LEGACY_MultiTimelineStoppedEvent(object sender, EventArgs e)
-        {
-            //This is the legacy way to deal with old timelines until they can be replaced with new ones
-            guiManager.setMainInterfaceEnabled(true, false);
-            timelineController.ResourceProvider = null;
-            timelineController.LEGACY_MultiTimelineStoppedEvent -= timelineController_LEGACY_MultiTimelineStoppedEvent;
-            runningLegacyMode = false;
         }
     }
 }

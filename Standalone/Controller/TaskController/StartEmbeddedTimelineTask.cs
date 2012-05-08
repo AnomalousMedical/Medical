@@ -15,6 +15,8 @@ namespace Medical
         private Assembly assembly;
         private String resourceRoot;
         private AnomalousMvcCore mvcCore;
+        private EmbeddedResourceProvider embeddedResourceProvider;
+        private AnomalousMvcContext context;
 
         public StartEmbeddedTimelineTask(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController, AnomalousMvcCore mvcCore)
             : this(uniqueName, name, iconName, category, typeInAssembly, resourceRoot, startTimeline, timelineController, mvcCore, DEFAULT_WEIGHT)
@@ -36,28 +38,43 @@ namespace Medical
 
         public override void clicked(TaskPositioner positioner)
         {
-            timelineController.ResourceProvider = new EmbeddedResourceProvider(assembly, resourceRoot); ;
+            embeddedResourceProvider = new EmbeddedResourceProvider(assembly, resourceRoot);
+            timelineController.setResourceProvider(embeddedResourceProvider);
+            timelineController.LEGACY_MultiTimelineStoppedEvent += timelineController_LEGACY_MultiTimelineStoppedEvent;
             //Have to load the timeline to know if it is fullscreen, technicly this loads it twice, but this code will be gone eventually
             Timeline start = timelineController.openTimeline(startTimeline);
 
             //Build a MvcContext
-            AnomalousMvcContext context = new AnomalousMvcContext();
+            context = new AnomalousMvcContext();
+            context.setResourceProvider(embeddedResourceProvider);
+            context.AllowShutdown = false;
             context.StartupAction = "Common/Start";
             context.ShutdownAction = "Common/Shutdown";
             MvcController controller = new MvcController("Common");
-            RunCommandsAction action = new RunCommandsAction("Start");
+            RunCommandsAction startAction = new RunCommandsAction("Start");
             PlayLegacyTimelineCommand playLegacyTimeline = new PlayLegacyTimelineCommand();
             playLegacyTimeline.Timeline = startTimeline;
             HideMainInterfaceCommand hideMainInterface = new HideMainInterfaceCommand();
             hideMainInterface.ShowSharedGui = !start.Fullscreen;
-            action.addCommand(hideMainInterface);
-            action.addCommand(playLegacyTimeline);
-            controller.Actions.add(action);
+            startAction.addCommand(hideMainInterface);
+            startAction.addCommand(playLegacyTimeline);
+            controller.Actions.add(startAction);
+            RunCommandsAction shutdownAction = new RunCommandsAction("Shutdown");
+            shutdownAction.addCommand(new ShowMainInterfaceCommand());
+            controller.Actions.add(shutdownAction);
             context.Controllers.add(controller);
 
             mvcCore.startRunningContext(context);
-            //timelineController.TEMP_MVC_CORE.hideMainInterface(!start.Fullscreen);
-            //timelineController.startPlayback(start);
+        }
+
+        void timelineController_LEGACY_MultiTimelineStoppedEvent(object sender, EventArgs e)
+        {
+            context.AllowShutdown = true;
+            context.shutdown();
+            timelineController.setResourceProvider(null);
+            embeddedResourceProvider.Dispose();
+            embeddedResourceProvider = null;
+            timelineController.LEGACY_MultiTimelineStoppedEvent -= timelineController_LEGACY_MultiTimelineStoppedEvent;
         }
 
         public override bool Active

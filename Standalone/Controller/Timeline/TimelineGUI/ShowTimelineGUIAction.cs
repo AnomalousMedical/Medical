@@ -29,12 +29,7 @@ namespace Medical
 
         public Stream openFile(String filename)
         {
-            return timelineControllerAfterDoAction.ResourceProvider.openFile(filename);
-        }
-
-        public String getFullPath(String filename)
-        {
-            return timelineControllerAfterDoAction.ResourceProvider.getFullFilePath(filename);
+            return timelineControllerAfterDoAction.openFile(filename);
         }
 
         /// <summary>

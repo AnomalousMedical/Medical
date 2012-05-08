@@ -6,6 +6,7 @@ using Medical.GUI;
 using Engine.Editing;
 using Engine.Saving;
 using Medical.Editor;
+using Engine.Attributes;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -14,11 +15,13 @@ namespace Medical.Controller.AnomalousMvc
         private ControllerCollection controllers;
         private ViewCollection views;
         private AnomalousMvcCore core;
+        private ResourceProvider resourceProvider;
 
         //Action queue stuff
         private bool queuedCloseView = false;
         private String queuedTimeline = null;
         private String queuedShowView = null;
+        private bool allowShutdown = true;
 
         public AnomalousMvcContext()
         {
@@ -73,7 +76,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public string getFullPath(string file)
         {
-            return core.getFullPath(file);
+            return resourceProvider.getFullFilePath(file);
         }
 
         public void queueTimeline(string timeline)
@@ -104,6 +107,11 @@ namespace Medical.Controller.AnomalousMvc
         public void applyCameraPosition(CameraPosition cameraPosition)
         {
             core.applyCameraPosition(cameraPosition);
+        }
+
+        public void setResourceProvider(ResourceProvider resourceProvider)
+        {
+            this.resourceProvider = resourceProvider;
         }
 
         [EditableAction]
@@ -159,9 +167,21 @@ namespace Medical.Controller.AnomalousMvc
             core.showMainInterface();
         }
 
-        internal void setLegacyTimelineMode()
+        public void shutdown()
         {
-            core.setLegacyTimelineMode();
+            checkShutdownConditions();
+        }
+
+        public bool AllowShutdown
+        {
+            get
+            {
+                return allowShutdown;
+            }
+            set
+            {
+                allowShutdown = value;
+            }
         }
 
         /// <summary>
@@ -177,19 +197,22 @@ namespace Medical.Controller.AnomalousMvc
 
         private void checkShutdownConditions()
         {
-            //Check for shutdown conditions
-            //No views are open
-            if (!core.HasOpenViews)
+            if (allowShutdown)
             {
-                if (core.PlayingTimeline)
+                //Check for shutdown conditions
+                //No views are open
+                if (!core.HasOpenViews)
                 {
-                    //Reevaluate again when the timeline stops playing
-                    core.TimelineStopped += core_TimelineStopped;
-                }
-                else
-                {
-                    //Not timelines playing and no views showing, shutdown
-                    core.shutdownContext(this);
+                    if (core.PlayingTimeline)
+                    {
+                        //Reevaluate again when the timeline stops playing
+                        core.TimelineStopped += core_TimelineStopped;
+                    }
+                    else
+                    {
+                        //Not timelines playing and no views showing, shutdown
+                        core.shutdownContext(this);
+                    }
                 }
             }
         }
