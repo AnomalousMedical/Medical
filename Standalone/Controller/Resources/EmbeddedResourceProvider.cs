@@ -28,11 +28,6 @@ namespace Medical
             }
         }
 
-        public void Dispose()
-        {
-            fileList.Clear();
-        }
-
         public Stream openFile(string filename)
         {
             return assembly.GetManifestResourceStream(baseResourceString + filename);

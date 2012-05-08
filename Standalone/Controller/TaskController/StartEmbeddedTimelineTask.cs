@@ -14,7 +14,6 @@ namespace Medical
         private Assembly assembly;
         private String resourceRoot;
         private AnomalousMvcCore mvcCore;
-        private EmbeddedResourceProvider embeddedResourceProvider;
         private AnomalousMvcContext context;
 
         public StartEmbeddedTimelineTask(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController, AnomalousMvcCore mvcCore)
@@ -37,7 +36,7 @@ namespace Medical
 
         public override void clicked(TaskPositioner positioner)
         {
-            embeddedResourceProvider = new EmbeddedResourceProvider(assembly, resourceRoot);
+            EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(assembly, resourceRoot);
             timelineController.setResourceProvider(embeddedResourceProvider);
             timelineController.LEGACY_MultiTimelineStoppedEvent += timelineController_LEGACY_MultiTimelineStoppedEvent;
             //Have to load the timeline to know if it is fullscreen, technicly this loads it twice, but this code will be gone eventually
@@ -71,8 +70,6 @@ namespace Medical
             context.AllowShutdown = true;
             context.shutdown();
             timelineController.setResourceProvider(null);
-            embeddedResourceProvider.Dispose();
-            embeddedResourceProvider = null;
             timelineController.LEGACY_MultiTimelineStoppedEvent -= timelineController_LEGACY_MultiTimelineStoppedEvent;
         }
 

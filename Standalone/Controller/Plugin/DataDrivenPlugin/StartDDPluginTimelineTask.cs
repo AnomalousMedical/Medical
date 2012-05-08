@@ -11,7 +11,6 @@ namespace Medical
 {
     class StartDDPluginTimelineTask : DDPluginTask
     {
-        private VirtualFilesystemResourceProvider resourceProvider;
         private AnomalousMvcContext context;
 
         public StartDDPluginTimelineTask(String uniqueName, String name, String iconName, String category)
@@ -30,7 +29,7 @@ namespace Medical
             TimelineController timelineController = Plugin.TimelineController;
             if (!timelineController.MultiTimelinePlaybackInProgress)
             {
-                resourceProvider = new VirtualFilesystemResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
+                VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
                 timelineController.setResourceProvider(resourceProvider);
                 timelineController.LEGACY_MultiTimelineStoppedEvent += timelineController_LEGACY_MultiTimelineStoppedEvent;
                 //Have to load the timeline to know if it is fullscreen, technicly this loads it twice, but this code will be gone eventually
@@ -66,8 +65,6 @@ namespace Medical
             context.shutdown();
             TimelineController timelineController = Plugin.TimelineController;
             timelineController.setResourceProvider(null);
-            resourceProvider.Dispose();
-            resourceProvider = null;
             timelineController.LEGACY_MultiTimelineStoppedEvent -= timelineController_LEGACY_MultiTimelineStoppedEvent;
         }
 

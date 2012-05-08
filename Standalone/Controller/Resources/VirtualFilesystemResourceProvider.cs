@@ -18,11 +18,6 @@ namespace Medical
             virtualFileSystem = VirtualFileSystem.Instance;
         }
 
-        public void Dispose()
-        {
-            
-        }
-
         public Stream openFile(string filename)
         {
             return virtualFileSystem.openStream(Path.Combine(parentDirectory, filename), Engine.Resources.FileMode.Open);

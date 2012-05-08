@@ -9,7 +9,10 @@ using System.Xml;
 
 namespace Medical
 {
-    public class ReadOnlyZipResourceProvider : ResourceProvider
+    /// <summary>
+    /// This resource provider will read files from a zipped file. Don't forget to dispose it.
+    /// </summary>
+    public class ReadOnlyZipResourceProvider : ResourceProvider, IDisposable
     {
         private String resourceLocation;
         private ZipFile zipFile;

@@ -15,11 +15,6 @@ namespace Medical
             this.parentPath = path;
         }
 
-        public void Dispose()
-        {
-            
-        }
-
         public Stream openFile(string filename)
         {
             return File.OpenRead(Path.Combine(parentPath, filename));

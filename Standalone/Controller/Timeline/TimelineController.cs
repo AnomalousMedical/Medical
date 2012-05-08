@@ -502,35 +502,5 @@ namespace Medical
         public ContinuePromptProvider ContinuePrompt { get; set; }
 
         public IQuestionProvider QuestionProvider { get; set; }
-
-        /// <summary>
-        /// Set the resource provider. This will cause the ResourceProvider to
-        /// become owned by the TimelineController. You will not be able to
-        /// recovery it without it being disposed. So as soon as you set this
-        /// property forget about the TimelineResourceProvider you just set.
-        /// 
-        /// You can clear the active provider by setting this to null.
-        /// </summary>
-        //public ResourceProvider ResourceProvider
-        //{
-        //    get
-        //    {
-        //        return resourceProvider;
-        //    }
-        //    set
-        //    {
-        //        if (resourceProvider != null)
-        //        {
-        //            resourceProvider.Dispose();
-        //        }
-
-        //        resourceProvider = value;
-
-        //        if (ResourceLocationChanged != null)
-        //        {
-        //            ResourceLocationChanged.Invoke(this, EventArgs.Empty);
-        //        }
-        //    }
-        //}
     }
 }

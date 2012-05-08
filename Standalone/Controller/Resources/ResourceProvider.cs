@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Medical
 {
-    public interface ResourceProvider : IDisposable
+    public interface ResourceProvider
     {
         Stream openFile(String filename);
 
