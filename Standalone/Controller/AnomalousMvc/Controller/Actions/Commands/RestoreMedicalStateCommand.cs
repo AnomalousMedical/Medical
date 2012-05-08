@@ -12,7 +12,7 @@ namespace Medical.Controller.AnomalousMvc
     {
         public RestoreMedicalStateCommand()
         {
-            Name = "Default";
+            Name = "DefaultMedicalState";
         }
 
         public override void execute(AnomalousMvcContext context)

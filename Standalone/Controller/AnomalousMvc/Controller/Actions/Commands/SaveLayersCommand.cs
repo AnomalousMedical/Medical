@@ -12,7 +12,7 @@ namespace Medical.Controller.AnomalousMvc
     {
         public SaveLayersCommand()
         {
-            Name = "Default";
+            Name = "DefaultLayers";
         }
 
         public override void execute(AnomalousMvcContext context)

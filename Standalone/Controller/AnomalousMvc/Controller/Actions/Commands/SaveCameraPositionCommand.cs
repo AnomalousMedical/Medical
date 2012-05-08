@@ -12,7 +12,7 @@ namespace Medical.Controller.AnomalousMvc
     {
         public SaveCameraPositionCommand()
         {
-            Name = "Default";
+            Name = "DefaultCamera";
         }
 
         public override void execute(AnomalousMvcContext context)

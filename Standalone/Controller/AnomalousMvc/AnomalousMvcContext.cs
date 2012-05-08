@@ -19,9 +19,7 @@ namespace Medical.Controller.AnomalousMvc
         private ResourceProvider resourceProvider;
 
         //State recording stuff
-        private Dictionary<String, LayerState> savedLayers = new Dictionary<string, LayerState>();
-        private Dictionary<String, CameraPosition> savedCameras = new Dictionary<string, CameraPosition>();
-        private Dictionary<String, MedicalState> savedMedicalStates = new Dictionary<string, MedicalState>();
+        private ModelMemory modelMemory = new ModelMemory();
 
         //Action queue stuff
         private bool queuedCloseView = false;
@@ -125,14 +123,7 @@ namespace Medical.Controller.AnomalousMvc
             CameraPosition cameraPosition = core.getCurrentCameraPosition();
             if (cameraPosition != null)
             {
-                if (savedCameras.ContainsKey(name))
-                {
-                    savedCameras[name] = cameraPosition;
-                }
-                else
-                {
-                    savedCameras.Add(name, cameraPosition);
-                }
+                modelMemory.add(name, cameraPosition);
             }
             else
             {
@@ -142,8 +133,8 @@ namespace Medical.Controller.AnomalousMvc
 
         public void restoreCamera(String name)
         {
-            CameraPosition cameraPos;
-            if (savedCameras.TryGetValue(name, out cameraPos))
+            CameraPosition cameraPos = modelMemory.get<CameraPosition>(name);
+            if (cameraPos != null)
             {
                 core.applyCameraPosition(cameraPos);
             }
@@ -157,20 +148,13 @@ namespace Medical.Controller.AnomalousMvc
         {
             LayerState layerState = new LayerState(name);
             layerState.captureState();
-            if (savedLayers.ContainsKey(name))
-            {
-                savedLayers[name] = layerState;
-            }
-            else
-            {
-                savedLayers.Add(name, layerState);
-            }
+            modelMemory.add(name, layerState);
         }
 
         public void restoreLayers(String name)
         {
-            LayerState layers;
-            if (savedLayers.TryGetValue(name, out layers))
+            LayerState layers = modelMemory.get<LayerState>(name);
+            if (layers != null)
             {
                 core.applyLayers(layers);
             }
@@ -183,20 +167,13 @@ namespace Medical.Controller.AnomalousMvc
         public void saveMedicalState(String name)
         {
             MedicalState medicalState = core.generateMedicalState();
-            if (savedMedicalStates.ContainsKey(name))
-            {
-                savedMedicalStates[name] = medicalState;
-            }
-            else
-            {
-                savedMedicalStates.Add(name, medicalState);
-            }
+            modelMemory.add(name, medicalState);
         }
 
         public void restoreMedicalState(String name)
         {
-            MedicalState medicalState;
-            if (savedMedicalStates.TryGetValue(name, out medicalState))
+            MedicalState medicalState = modelMemory.get<MedicalState>(name);
+            if (medicalState != null)
             {
                 core.applyMedicalState(medicalState);
             }
