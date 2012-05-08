@@ -43,15 +43,18 @@ namespace Medical.GUI.AnomalousMvc
 
             gridPropertiesControl = new GridPropertiesControl(context.MeasurementGrid, widget);
             gridPropertiesControl.GridSpacing = 5;
-            gridPropertiesControl.updateGrid();
-
-            setupSliders();
         }
 
-        public override void Dispose()
+        public override void opening()
+        {
+            gridPropertiesControl.updateGrid();
+            base.opening();
+        }
+
+        public override void closing()
         {
             context.MeasurementGrid.Visible = false;
-            base.Dispose();
+            base.closing();
         }
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)

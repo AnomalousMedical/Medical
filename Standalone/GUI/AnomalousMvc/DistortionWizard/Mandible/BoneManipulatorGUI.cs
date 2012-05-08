@@ -25,7 +25,7 @@ namespace Medical.GUI.AnomalousMvc
             openingValues.Add(slider);
         }
 
-        public void setupSliders()
+        public override void opening()
         {
             foreach (BoneManipulatorSlider slider in openingValues)
             {

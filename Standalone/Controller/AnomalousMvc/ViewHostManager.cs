@@ -22,6 +22,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void requestOpen(ViewHost viewHost)
         {
+            viewHost.opening();
             viewHost._RequestClosed = false;
             requestList.Add(viewHost);
             subscribeToUpdates();
@@ -29,6 +30,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void requestClose(ViewHost viewHost)
         {
+            viewHost.closing();
             viewHost._RequestClosed = true;
             requestList.Add(viewHost);
             subscribeToUpdates();
@@ -48,7 +50,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             ViewHost gui;
             LayoutContainer nextContainer;
-            ViewHost currentGui;
+            ViewHost currentGui = null;
             for (int i = 0; i < requestList.Count; ++i)
             {
                 gui = requestList[i];

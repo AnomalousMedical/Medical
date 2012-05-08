@@ -28,6 +28,16 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
+        public virtual void opening()
+        {
+
+        }
+
+        public virtual void closing()
+        {
+
+        }
+
         public LayoutContainer Container
         {
             get
