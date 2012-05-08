@@ -6,7 +6,6 @@ using Engine.Saving;
 using Engine.Editing;
 using System.IO;
 using Medical.Controller.AnomalousMvc;
-using Medical.Controller.AnomalousMvc.Legacy;
 
 namespace Medical
 {
@@ -45,7 +44,7 @@ namespace Medical
                 context.ShutdownAction = "Common/Shutdown";
                 MvcController controller = new MvcController("Common");
                 RunCommandsAction startAction = new RunCommandsAction("Start");
-                PlayLegacyTimelineCommand playLegacyTimeline = new PlayLegacyTimelineCommand();
+                PlayTimelineCommand playLegacyTimeline = new PlayTimelineCommand();
                 playLegacyTimeline.Timeline = StartupTimeline;
                 HideMainInterfaceCommand hideMainInterface = new HideMainInterfaceCommand();
                 hideMainInterface.ShowSharedGui = !start.Fullscreen;
