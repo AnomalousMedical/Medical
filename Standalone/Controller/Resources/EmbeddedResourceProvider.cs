@@ -63,11 +63,6 @@ namespace Medical
             return baseResourceString + filename;
         }
 
-        public ResourceProvider clone()
-        {
-            return new EmbeddedResourceProvider(assembly, baseResourceString);
-        }
-
         public string BackingLocation
         {
             get

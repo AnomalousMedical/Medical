@@ -78,11 +78,6 @@ namespace Medical
             return Path.Combine(resourceLocation, filename);
         }
 
-        public ResourceProvider clone()
-        {
-            return new ReadOnlyZipResourceProvider(resourceLocation);
-        }
-
         public String BackingLocation
         {
             get

@@ -63,11 +63,6 @@ namespace Medical
             return Path.Combine(parentPath, filename);
         }
 
-        public ResourceProvider clone()
-        {
-            return new FilesystemResourceProvider(parentPath);
-        }
-
         public string BackingLocation
         {
             get

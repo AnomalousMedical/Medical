@@ -23,7 +23,5 @@ namespace Medical
         String getFullFilePath(String filename);
 
         String BackingLocation { get; }
-
-        ResourceProvider clone();
     }
 }

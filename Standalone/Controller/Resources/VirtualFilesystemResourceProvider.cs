@@ -53,11 +53,6 @@ namespace Medical
             return Path.Combine(parentDirectory, filename);
         }
 
-        public ResourceProvider clone()
-        {
-            return new VirtualFilesystemResourceProvider(parentDirectory);
-        }
-
         public string BackingLocation
         {
             get
