@@ -88,6 +88,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ChangeLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ChangeMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\CloseViewCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\CreateMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\HideMainInterfaceCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\SaveCameraPositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\SaveLayersCommand.cs" />
@@ -95,7 +96,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreCameraPositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RunCommandsAction.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\RunCommandsAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowMainInterfaceCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowViewCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\ControllerActionCollection.cs" />

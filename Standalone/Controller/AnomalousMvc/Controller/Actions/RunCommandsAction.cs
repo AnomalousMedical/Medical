@@ -100,6 +100,11 @@ namespace Medical.Controller.AnomalousMvc
                 addCommand(new RestoreMedicalStateCommand());
             }));
 
+            editInterface.addCommand(new EditInterfaceCommand("Add Create Medical State", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new CreateMedicalStateCommand());
+            }));
+
             editInterfaceManager = new EditInterfaceManager<ActionCommand>(editInterface);
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));
 

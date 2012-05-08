@@ -206,6 +206,11 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public void createMedicalState()
+        {
+            core.createMedicalState();
+        }
+
         [EditableAction]
         public String StartupAction { get; set; }
 

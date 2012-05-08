@@ -126,6 +126,13 @@ namespace Medical.Controller.AnomalousMvc
             return standaloneController.TemporaryStateBlender.createBaselineState();
         }
 
+        internal void createMedicalState()
+        {
+            standaloneController.TemporaryStateBlender.forceFinishBlend();
+            MedicalState createdState = standaloneController.TemporaryStateBlender.createBaselineState();
+            standaloneController.MedicalStateController.addState(createdState);
+        }
+
         public void applyCameraPosition(CameraPosition cameraPosition)
         {
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
