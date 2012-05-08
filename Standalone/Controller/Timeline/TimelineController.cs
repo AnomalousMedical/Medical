@@ -35,7 +35,7 @@ namespace Medical
         private StandaloneController standaloneController;
         private bool updating = false;
         private bool playPrePostActions = true;
-        private TimelineResourceProvider resourceProvider = null;
+        private ResourceProvider resourceProvider = null;
         private bool multiTimelinePlaybackInProgress = false;
 
         public TimelineController(StandaloneController standaloneController)
@@ -502,7 +502,7 @@ namespace Medical
         /// 
         /// You can clear the active provider by setting this to null.
         /// </summary>
-        public TimelineResourceProvider ResourceProvider
+        public ResourceProvider ResourceProvider
         {
             get
             {

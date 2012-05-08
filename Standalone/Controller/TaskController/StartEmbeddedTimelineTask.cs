@@ -36,7 +36,7 @@ namespace Medical
 
         public override void clicked(TaskPositioner positioner)
         {
-            timelineController.ResourceProvider = new TimelineEmbeddedResourceProvider(assembly, resourceRoot); ;
+            timelineController.ResourceProvider = new EmbeddedResourceProvider(assembly, resourceRoot); ;
             //Have to load the timeline to know if it is fullscreen, technicly this loads it twice, but this code will be gone eventually
             Timeline start = timelineController.openTimeline(startTimeline);
 

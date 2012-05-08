@@ -28,7 +28,7 @@ namespace Medical
             TimelineController timelineController = Plugin.TimelineController;
             if (!timelineController.MultiTimelinePlaybackInProgress)
             {
-                timelineController.ResourceProvider = new TimelineVirtualFSResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
+                timelineController.ResourceProvider = new VirtualFilesystemResourceProvider(Path.Combine(Plugin.PluginRootFolder, TimelineDirectory));
                 //Have to load the timeline to know if it is fullscreen, technicly this loads it twice, but this code will be gone eventually
                 Timeline start = timelineController.openTimeline(StartupTimeline);
 

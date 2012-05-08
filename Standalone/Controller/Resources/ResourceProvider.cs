@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Medical
 {
-    public interface TimelineResourceProvider : IDisposable
+    public interface ResourceProvider : IDisposable
     {
         Stream openFile(String filename);
 
@@ -24,6 +24,6 @@ namespace Medical
 
         String BackingLocation { get; }
 
-        TimelineResourceProvider clone();
+        ResourceProvider clone();
     }
 }

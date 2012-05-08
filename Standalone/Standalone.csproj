@@ -231,7 +231,7 @@
     <Compile Include="Controller\TaskController\Task.cs" />
     <Compile Include="Controller\TaskController\TaskController.cs" />
     <Compile Include="Controller\TaskController\TaskPositioner.cs" />
-    <Compile Include="Controller\Resources\FilesystemTimelineResourceProvider.cs" />
+    <Compile Include="Controller\Resources\FilesystemResourceProvider.cs" />
     <Compile Include="Controller\Timeline\MusclePosition.cs" />
     <Compile Include="Controller\Timeline\MusclePositionAction.cs" />
     <Compile Include="Controller\Timeline\QuestionPrompt\EditQuestionsResults.cs" />
@@ -311,7 +311,7 @@
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\MyGUITimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\ShowTimelineGUIAction.cs" />
-    <Compile Include="Controller\Resources\TimelineEmbeddedResourceProvider.cs" />
+    <Compile Include="Controller\Resources\EmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUIData.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUIEditMemberScanner.cs" />
@@ -320,10 +320,10 @@
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineWizard\TimelineWizard.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineWizard\TimelineWizardPanel.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineWizard\TimelineWizardPanelData.cs" />
-    <Compile Include="Controller\Resources\TimelineResourceProvider.cs" />
-    <Compile Include="Controller\Resources\TimelineReadOnlyZipResources.cs" />
+    <Compile Include="Controller\Resources\ResourceProvider.cs" />
+    <Compile Include="Controller\Resources\ReadOnlyZipResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineStaticInfo.cs" />
-    <Compile Include="Controller\Resources\TimelineVirtualFSResourceProvider.cs" />
+    <Compile Include="Controller\Resources\VirtualFilesystemResourceProvider.cs" />
     <Compile Include="Controller\TouchController.cs" />
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />

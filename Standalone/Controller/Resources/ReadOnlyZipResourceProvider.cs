@@ -9,12 +9,12 @@ using System.Xml;
 
 namespace Medical
 {
-    public class TimelineReadOnlyZipResources : TimelineResourceProvider
+    public class ReadOnlyZipResourceProvider : ResourceProvider
     {
         private String resourceLocation;
         private ZipFile zipFile;
 
-        public TimelineReadOnlyZipResources(String resourceLocation)
+        public ReadOnlyZipResourceProvider(String resourceLocation)
         {
             this.resourceLocation = resourceLocation;
             zipFile = new ZipFile(resourceLocation);
@@ -75,9 +75,9 @@ namespace Medical
             return Path.Combine(resourceLocation, filename);
         }
 
-        public TimelineResourceProvider clone()
+        public ResourceProvider clone()
         {
-            return new TimelineReadOnlyZipResources(resourceLocation);
+            return new ReadOnlyZipResourceProvider(resourceLocation);
         }
 
         public String BackingLocation

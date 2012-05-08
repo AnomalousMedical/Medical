@@ -7,12 +7,12 @@ using Engine;
 
 namespace Medical
 {
-    public class TimelineVirtualFSResourceProvider : TimelineResourceProvider
+    public class VirtualFilesystemResourceProvider : ResourceProvider
     {
         private String parentDirectory;
         private VirtualFileSystem virtualFileSystem;
 
-        public TimelineVirtualFSResourceProvider(String parentDirectory)
+        public VirtualFilesystemResourceProvider(String parentDirectory)
         {
             this.parentDirectory = parentDirectory;
             virtualFileSystem = VirtualFileSystem.Instance;
@@ -58,9 +58,9 @@ namespace Medical
             return Path.Combine(parentDirectory, filename);
         }
 
-        public TimelineResourceProvider clone()
+        public ResourceProvider clone()
         {
-            return new TimelineVirtualFSResourceProvider(parentDirectory);
+            return new VirtualFilesystemResourceProvider(parentDirectory);
         }
 
         public string BackingLocation

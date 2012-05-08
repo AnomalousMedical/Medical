@@ -7,13 +7,13 @@ using System.Reflection;
 
 namespace Medical
 {
-    public class TimelineEmbeddedResourceProvider : TimelineResourceProvider
+    public class EmbeddedResourceProvider : ResourceProvider
     {
         private Assembly assembly;
         private String baseResourceString;
         private List<String> fileList = new List<string>();
 
-        public TimelineEmbeddedResourceProvider(Assembly assembly, String baseResourceString)
+        public EmbeddedResourceProvider(Assembly assembly, String baseResourceString)
         {
             this.assembly = assembly;
             this.baseResourceString = baseResourceString;
@@ -68,9 +68,9 @@ namespace Medical
             return baseResourceString + filename;
         }
 
-        public TimelineResourceProvider clone()
+        public ResourceProvider clone()
         {
-            return new TimelineEmbeddedResourceProvider(assembly, baseResourceString);
+            return new EmbeddedResourceProvider(assembly, baseResourceString);
         }
 
         public string BackingLocation

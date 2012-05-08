@@ -159,7 +159,7 @@ namespace Medical.GUI
         {
             if (projectPath.EndsWith(".tl"))
             {
-                editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
+                editorTimelineController.ResourceProvider = new FilesystemResourceProvider(Path.GetDirectoryName(projectPath));
                 openTimelineFile(projectPath);
             }
             updateWindowCaption();
@@ -360,7 +360,7 @@ namespace Medical.GUI
             {
                 Directory.CreateDirectory(projectName);
             }
-            editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(projectName);
+            editorTimelineController.ResourceProvider = new FilesystemResourceProvider(projectName);
         }
 
         private void updateWindowCaption()

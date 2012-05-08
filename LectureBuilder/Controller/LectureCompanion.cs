@@ -38,7 +38,7 @@ namespace LectureBuilder
                 Directory.CreateDirectory(projectDirectory);
                 Directory.CreateDirectory(timelinesDirectory);
             }
-            timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(timelinesDirectory);
+            timelineController.ResourceProvider = new FilesystemResourceProvider(timelinesDirectory);
 
             plugin = new DDAtlasPlugin();
             using (XmlTextWriter xmlWriter = new XmlTextWriter(Path.Combine(projectDirectory, "Plugin.ddp"), Encoding.Default))

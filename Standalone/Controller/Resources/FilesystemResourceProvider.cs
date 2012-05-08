@@ -6,11 +6,11 @@ using System.IO;
 
 namespace Medical
 {
-    public class FilesystemTimelineResourceProvider : TimelineResourceProvider
+    public class FilesystemResourceProvider : ResourceProvider
     {
         private String parentPath;
 
-        public FilesystemTimelineResourceProvider(String path)
+        public FilesystemResourceProvider(String path)
         {
             this.parentPath = path;
         }
@@ -68,9 +68,9 @@ namespace Medical
             return Path.Combine(parentPath, filename);
         }
 
-        public TimelineResourceProvider clone()
+        public ResourceProvider clone()
         {
-            return new FilesystemTimelineResourceProvider(parentPath);
+            return new FilesystemResourceProvider(parentPath);
         }
 
         public string BackingLocation
