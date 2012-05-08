@@ -17,7 +17,7 @@ namespace Medical.GUI.AnomalousMvc
         private AnomalousMvcContext context;
 
         public RmlWidgetViewHost(RmlView view, AnomalousMvcContext context)
-            :base("Medical.GUI.AnomalousMvc.RmlWidgetViewHost.layout")
+            :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetViewHost.layout")
         {
             this.context = context;
 

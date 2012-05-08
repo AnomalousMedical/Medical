@@ -6,8 +6,9 @@ using Engine.Saving;
 using Engine.Editing;
 using Engine.Reflection;
 using Medical.Editor;
+using Medical.Controller.AnomalousMvc;
 
-namespace Medical.Controller.AnomalousMvc
+namespace Medical.GUI.AnomalousMvc
 {
     public class RmlView : View
     {

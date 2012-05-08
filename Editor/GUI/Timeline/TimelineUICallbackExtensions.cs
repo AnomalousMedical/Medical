@@ -7,6 +7,7 @@ using Medical.Controller;
 using System.IO;
 using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical.GUI
 {
@@ -19,7 +20,7 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
         private TimelinePropertiesController propertiesController;
 
-        private SendResult<Object> changeGUITypeCallback;
+        private SendResult<Object> browserResultCallback;
         private SendResult<Object> showQuestionEditorCallback;
 
         public TimelineUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, TimelineController editorTimelineController, TimelinePropertiesController propertiesController)
@@ -40,6 +41,7 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);
             medicalUICallback.addCustomQuery(TimelineEditInterface.CustomQueries.OpenFolder, openTimelineFolder);
             medicalUICallback.addCustomQuery(AnomalousMvcContext.CustomQueries.Preview, previewMvcContext);
+            medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.ShowViewBrowser, showViewBrowser);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -89,7 +91,7 @@ namespace Medical.GUI
 
         private void changeGUIType(SendResult<Object> resultCallback, params Object[] args)
         {
-            changeGUITypeCallback = resultCallback;
+            browserResultCallback = resultCallback;
             browserWindow.setBrowser(editorTimelineController.GUIFactory.GUIBrowser);
             browserWindow.ItemSelected += browserWindow_ChangeGUIType_ItemSelected;
             browserWindow.Canceled += browserWindow_ChangeGUIType_Canceled;
@@ -98,11 +100,11 @@ namespace Medical.GUI
 
         void browserWindow_ChangeGUIType_ItemSelected(object sender, EventArgs e)
         {
-            if (changeGUITypeCallback != null)
+            if (browserResultCallback != null)
             {
                 String error = null;
-                changeGUITypeCallback.Invoke(browserWindow.SelectedValue, ref error);
-                changeGUITypeCallback = null;
+                browserResultCallback.Invoke(browserWindow.SelectedValue, ref error);
+                browserResultCallback = null;
             }
             browserWindow.ItemSelected -= browserWindow_ChangeGUIType_ItemSelected;
             browserWindow.Canceled -= browserWindow_ChangeGUIType_Canceled;
@@ -110,7 +112,7 @@ namespace Medical.GUI
 
         void browserWindow_ChangeGUIType_Canceled(object sender, EventArgs e)
         {
-            changeGUITypeCallback = null;
+            browserResultCallback = null;
             browserWindow.ItemSelected -= browserWindow_ChangeGUIType_ItemSelected;
             browserWindow.Canceled -= browserWindow_ChangeGUIType_Canceled;
         }
@@ -169,6 +171,36 @@ namespace Medical.GUI
             {
                 OtherProcessManager.openLocalURL(propertiesController.ResourceProvider.getFullFilePath(args[0].ToString()));
             }
+        }
+
+        private void showViewBrowser(SendResult<Object> resultCallback, params Object[] args)
+        {
+            browserResultCallback = resultCallback;
+            Browser browser = new Browser("Views");
+            standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
+            browserWindow.setBrowser(browser);
+            browserWindow.ItemSelected += browserWindow_showViewBrowser_ItemSelected;
+            browserWindow.Canceled += browserWindow_showViewBrowser_Canceled;
+            browserWindow.open(true);
+        }
+
+        void browserWindow_showViewBrowser_ItemSelected(object sender, EventArgs e)
+        {
+            if (browserResultCallback != null)
+            {
+                String error = null;
+                browserResultCallback.Invoke(browserWindow.SelectedValue, ref error);
+                browserResultCallback = null;
+            }
+            browserWindow.ItemSelected -= browserWindow_showViewBrowser_ItemSelected;
+            browserWindow.Canceled -= browserWindow_showViewBrowser_Canceled;
+        }
+
+        void browserWindow_showViewBrowser_Canceled(object sender, EventArgs e)
+        {
+            browserResultCallback = null;
+            browserWindow.ItemSelected -= browserWindow_showViewBrowser_ItemSelected;
+            browserWindow.Canceled -= browserWindow_showViewBrowser_Canceled;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public event Action TimelineStopped;
 
-        public AnomalousMvcCore(StandaloneController standaloneController, ViewHostFactory viewHostFactory)//, UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController)
+        public AnomalousMvcCore(StandaloneController standaloneController, ViewHostFactory viewHostFactory)
         {
             this.standaloneController = standaloneController;
             this.timelineController = standaloneController.TimelineController;
@@ -191,6 +191,14 @@ namespace Medical.Controller.AnomalousMvc
         {
             timelineController.stopPlayback(false);
             context.runFinalAction(context.ShutdownAction);
+        }
+
+        public ViewHostFactory ViewHostFactory
+        {
+            get
+            {
+                return viewHostFactory;
+            }
         }
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)

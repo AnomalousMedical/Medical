@@ -174,7 +174,7 @@ namespace Medical.Editor
             }
         }
 
-        private bool hasItem(String name)
+        public bool hasItem(String name)
         {
             foreach (ItemType item in items)
             {

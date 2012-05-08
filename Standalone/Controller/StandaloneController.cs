@@ -42,7 +42,7 @@ namespace Medical
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private AnomalousMvcCore mvcCore;
-        private MyGUIViewHostFactory viewHostFactory;
+        private ViewHostFactoryCompound viewHostFactory;
         private PropFactory propFactory;
         private ExamController examController;
         private TaskController taskController;
@@ -217,7 +217,8 @@ namespace Medical
 
             abstractTimelineGUIManager = new AbstractTimelineGUIManager(medicalController.MainTimer, guiManager);
 
-            viewHostFactory = new MyGUIViewHostFactory();
+            viewHostFactory = new ViewHostFactoryCompound();
+            viewHostFactory.addSubFactory(new RmlViewHostFactory());
             mvcCore = new AnomalousMvcCore(this, viewHostFactory);
 
             //Exams
