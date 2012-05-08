@@ -14,7 +14,7 @@ namespace Medical.GUI.AnomalousMvc
         private Widget subLayoutWidget;
         private ScrollView panelScroll;
         private WizardView wizardView;
-        private AnomalousMvcContext context;
+        protected AnomalousMvcContext context;
 
         public WizardPanel(String layoutFile, WizardView view, AnomalousMvcContext context)
             :base("Medical.GUI.AnomalousMvc.DistortionWizard.WizardPanel.layout")

@@ -201,6 +201,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public MeasurementGrid MeasurementGrid
+        {
+            get
+            {
+                return standaloneController.MeasurementGrid;
+            }
+        }
+
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             if (TimelineStopped != null && !timelineController.HasQueuedTimeline)

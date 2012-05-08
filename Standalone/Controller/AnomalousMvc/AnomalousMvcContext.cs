@@ -269,6 +269,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public MeasurementGrid MeasurementGrid
+        {
+            get
+            {
+                return core.MeasurementGrid;
+            }
+        }
+
         /// <summary>
         /// This is a special method to run the last action for a context. It
         /// does not allow views or timelines to be queued, but it can do a few
