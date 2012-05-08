@@ -11,11 +11,11 @@ namespace Medical.GUI.AnomalousMvc
     {
         public ViewHost createViewHost(View view, AnomalousMvcContext context)
         {
-            if (view.GetType().IsAssignableFrom(typeof(RmlView)))
+            if (typeof(RmlView).IsAssignableFrom(view.GetType()))
             {
                 return new RmlWidgetViewHost((RmlView)view, context);
             }
-            throw new Exception(String.Format("No ViewHost defined for {0}", view));
+            return null;
         }
 
         public void createViewBrowser(Browser browser)

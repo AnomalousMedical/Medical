@@ -110,6 +110,9 @@
     <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\WizardStateInfo.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Disclaimer\DisclaimerView.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\WizardPanel.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\WizardView.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlView.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHostFactoryCompound.cs" />
     <Compile Include="Controller\Editor\ActionBrowserEditableProperty.cs" />
@@ -350,7 +353,7 @@
     <Compile Include="GUI\DistortionWizards\DiscSpace\DiscSpaceGUIData.cs" />
     <Compile Include="GUI\DistortionWizards\DiscSpace\LeftDiscSpaceGUIPrototype.cs" />
     <Compile Include="GUI\DistortionWizards\DiscSpace\RightDiscSpaceGUIPrototype.cs" />
-    <Compile Include="GUI\DistortionWizards\DistortionWizardViewHostFactory.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\DistortionWizardViewHostFactory.cs" />
     <Compile Include="GUI\DistortionWizards\Doppler\DopplerControl.cs" />
     <Compile Include="GUI\DistortionWizards\Doppler\DopplerGUI.cs" />
     <Compile Include="GUI\DistortionWizards\Doppler\DopplerGUIData.cs" />
@@ -611,6 +614,8 @@
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUI.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\TimelineWizard\WizardPanelButtons.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Disclaimer\DisclaimerGUI.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\WizardPanel.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetViewHost.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />

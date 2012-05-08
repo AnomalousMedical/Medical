@@ -14,16 +14,13 @@ namespace Medical.Controller.AnomalousMvc
         {
             foreach (ViewHostFactory factory in subFactories)
             {
-                try
+                ViewHost host = factory.createViewHost(view, context);
+                if (host != null)
                 {
-                    return factory.createViewHost(view, context);
-                }
-                catch (Exception)
-                {
-
+                    return host;
                 }
             }
-            throw new Exception(String.Format("No ViewHost defined for {0}", view));
+            return null;
         }
 
         public void createViewBrowser(Browser browser)
