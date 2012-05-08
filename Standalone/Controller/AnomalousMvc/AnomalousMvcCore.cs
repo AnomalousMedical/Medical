@@ -22,19 +22,21 @@ namespace Medical.Controller.AnomalousMvc
         private ViewHostManager viewHostManager;
         private ViewHost viewHost;
         private GUIManager guiManager;
+        private StandaloneController standaloneController;
 
         private XmlSaver xmlSaver = new XmlSaver();
 
         public event Action TimelineStopped;
 
-        public AnomalousMvcCore(UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController, ViewHostFactory viewHostFactory)
+        public AnomalousMvcCore(StandaloneController standaloneController, ViewHostFactory viewHostFactory)//, UpdateTimer updateTimer, GUIManager guiManager, TimelineController timelineController)
         {
-            this.timelineController = timelineController;
+            this.standaloneController = standaloneController;
+            this.timelineController = standaloneController.TimelineController;
             timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
-            this.guiManager = guiManager;
+            this.guiManager = standaloneController.GUIManager;
             this.viewHostFactory = viewHostFactory;
 
-            viewHostManager = new ViewHostManager(updateTimer, guiManager);
+            viewHostManager = new ViewHostManager(standaloneController.MedicalController.MainTimer, guiManager);
         }
 
         public void showView(View view, AnomalousMvcContext context)
@@ -97,7 +99,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public void applyLayers(EditableLayerState layers)
+        public void applyLayers(LayerState layers)
         {
             if (layers != null)
             {
@@ -107,20 +109,43 @@ namespace Medical.Controller.AnomalousMvc
 
         public void applyPresetState(PresetState presetState, float duration)
         {
-            TemporaryStateBlender stateBlender = timelineController.StateBlender;
+            TemporaryStateBlender stateBlender = standaloneController.TemporaryStateBlender;
             MedicalState createdState;
             createdState = stateBlender.createBaselineState();
             presetState.applyToState(createdState);
             stateBlender.startTemporaryBlend(createdState);
         }
 
+        public void applyMedicalState(MedicalState medicalState)
+        {
+            standaloneController.TemporaryStateBlender.startTemporaryBlend(medicalState);
+        }
+
+        public MedicalState generateMedicalState()
+        {
+            return standaloneController.TemporaryStateBlender.createBaselineState();
+        }
+
         public void applyCameraPosition(CameraPosition cameraPosition)
         {
-            SceneViewWindow window = timelineController.SceneViewController.ActiveWindow;
+            SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
             if (window != null)
             {
                 window.setPosition(cameraPosition);
             }
+        }
+
+        public CameraPosition getCurrentCameraPosition()
+        {
+            SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                CameraPosition position = new CameraPosition();
+                position.Translation = window.Translation;
+                position.LookAt = window.LookAt;
+                return position;
+            }
+            return null;
         }
 
         public AnomalousMvcContext loadContext(Stream stream)

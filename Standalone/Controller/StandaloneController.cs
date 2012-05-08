@@ -218,7 +218,7 @@ namespace Medical
             abstractTimelineGUIManager = new AbstractTimelineGUIManager(medicalController.MainTimer, guiManager);
 
             viewHostFactory = new MyGUIViewHostFactory();
-            mvcCore = new AnomalousMvcCore(medicalController.MainTimer, guiManager, timelineController, viewHostFactory);
+            mvcCore = new AnomalousMvcCore(this, viewHostFactory);
 
             //Exams
             examController = new ExamController();

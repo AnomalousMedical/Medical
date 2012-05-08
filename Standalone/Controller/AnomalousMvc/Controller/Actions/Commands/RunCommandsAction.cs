@@ -70,6 +70,35 @@ namespace Medical.Controller.AnomalousMvc
             editInterface.addCommand(new EditInterfaceCommand("Add Show View", addShowGUI));
             editInterface.addCommand(new EditInterfaceCommand("Add Hide Main Interface", addHideMainInterface));
             editInterface.addCommand(new EditInterfaceCommand("Add Show Main Interface", addShowMainInterface));
+            editInterface.addCommand(new EditInterfaceCommand("Add Save Layers", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new SaveLayersCommand());
+            }));
+
+            editInterface.addCommand(new EditInterfaceCommand("Add Restore Layers", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new RestoreLayersCommand());
+            }));
+
+            editInterface.addCommand(new EditInterfaceCommand("Add Save Camera Position", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new SaveCameraPositionCommand());
+            }));
+
+            editInterface.addCommand(new EditInterfaceCommand("Add Restore Camera Position", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new RestoreCameraPositionCommand());
+            }));
+
+            editInterface.addCommand(new EditInterfaceCommand("Add Save Medical State", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new SaveMedicalStateCommand());
+            }));
+
+            editInterface.addCommand(new EditInterfaceCommand("Add Restore Medical State", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new RestoreMedicalStateCommand());
+            }));
 
             editInterfaceManager = new EditInterfaceManager<ActionCommand>(editInterface);
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));

@@ -7,6 +7,7 @@ using Engine.Editing;
 using Engine.Saving;
 using Medical.Editor;
 using Engine.Attributes;
+using Logging;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -16,6 +17,11 @@ namespace Medical.Controller.AnomalousMvc
         private ViewCollection views;
         private AnomalousMvcCore core;
         private ResourceProvider resourceProvider;
+
+        //State recording stuff
+        private Dictionary<String, LayerState> savedLayers = new Dictionary<string, LayerState>();
+        private Dictionary<String, CameraPosition> savedCameras = new Dictionary<string, CameraPosition>();
+        private Dictionary<String, MedicalState> savedMedicalStates = new Dictionary<string, MedicalState>();
 
         //Action queue stuff
         private bool queuedCloseView = false;
@@ -112,6 +118,92 @@ namespace Medical.Controller.AnomalousMvc
         public void setResourceProvider(ResourceProvider resourceProvider)
         {
             this.resourceProvider = resourceProvider;
+        }
+
+        public void saveCamera(String name)
+        {
+            CameraPosition cameraPosition = core.getCurrentCameraPosition();
+            if (cameraPosition != null)
+            {
+                if (savedCameras.ContainsKey(name))
+                {
+                    savedCameras[name] = cameraPosition;
+                }
+                else
+                {
+                    savedCameras.Add(name, cameraPosition);
+                }
+            }
+            else
+            {
+                Log.Warning("Problem saving camera position for '{0}'. A position could not be generated.", name);
+            }
+        }
+
+        public void restoreCamera(String name)
+        {
+            CameraPosition cameraPos;
+            if (savedCameras.TryGetValue(name, out cameraPos))
+            {
+                core.applyCameraPosition(cameraPos);
+            }
+            else
+            {
+                Log.Warning("A camera named '{0}' cannot be found to restore.", name);
+            }
+        }
+
+        public void saveLayers(String name)
+        {
+            LayerState layerState = new LayerState(name);
+            layerState.captureState();
+            if (savedLayers.ContainsKey(name))
+            {
+                savedLayers[name] = layerState;
+            }
+            else
+            {
+                savedLayers.Add(name, layerState);
+            }
+        }
+
+        public void restoreLayers(String name)
+        {
+            LayerState layers;
+            if (savedLayers.TryGetValue(name, out layers))
+            {
+                core.applyLayers(layers);
+            }
+            else
+            {
+                Log.Warning("A layer state named '{0}' cannot be found to restore.", name);
+            }
+        }
+
+        public void saveMedicalState(String name)
+        {
+            MedicalState medicalState = core.generateMedicalState();
+            if (savedMedicalStates.ContainsKey(name))
+            {
+                savedMedicalStates[name] = medicalState;
+            }
+            else
+            {
+                savedMedicalStates.Add(name, medicalState);
+            }
+        }
+
+        public void restoreMedicalState(String name)
+        {
+            MedicalState medicalState;
+            if (savedMedicalStates.TryGetValue(name, out medicalState))
+            {
+                core.applyMedicalState(medicalState);
+            }
+            else
+            {
+                Log.Warning("A medical state named '{0}' cannot be found to restore.", name);
+            }
         }
 
         [EditableAction]
