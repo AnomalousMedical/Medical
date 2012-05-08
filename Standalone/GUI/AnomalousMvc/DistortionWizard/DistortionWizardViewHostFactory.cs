@@ -24,6 +24,7 @@ namespace Medical.GUI.AnomalousMvc
             BrowserNode wizardNode = new BrowserNode("Wizard Views", null);
             wizardNode.addChild(new BrowserNode("Disclaimer", typeof(DisclaimerView)));
             wizardNode.addChild(new BrowserNode("Left Condylar Growth", typeof(LeftCondylarGrowthView)));
+            wizardNode.addChild(new BrowserNode("Right Condylar Growth", typeof(RightCondylarGrowthView)));
             browser.addNode("", null, wizardNode);
         }
     }
