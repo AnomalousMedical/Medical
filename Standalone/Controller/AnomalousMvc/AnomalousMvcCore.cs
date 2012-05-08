@@ -8,6 +8,7 @@ using Engine.Platform;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using System.IO;
+using Medical.Model;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -126,10 +127,14 @@ namespace Medical.Controller.AnomalousMvc
             return standaloneController.TemporaryStateBlender.createBaselineState();
         }
 
-        internal void createMedicalState()
+        internal void createMedicalState(WizardStateInfo stateInfo)
         {
             standaloneController.TemporaryStateBlender.forceFinishBlend();
             MedicalState createdState = standaloneController.TemporaryStateBlender.createBaselineState();
+            createdState.Notes.DataSource = stateInfo.DataSource;
+            createdState.Notes.Notes = stateInfo.Notes;
+            createdState.Notes.ProcedureDate = stateInfo.ProcedureDate;
+            createdState.Name = stateInfo.Name;
             standaloneController.MedicalStateController.addState(createdState);
         }
 

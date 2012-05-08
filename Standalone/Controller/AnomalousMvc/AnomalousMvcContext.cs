@@ -8,6 +8,7 @@ using Engine.Saving;
 using Medical.Editor;
 using Engine.Attributes;
 using Logging;
+using Medical.Model;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -185,7 +186,17 @@ namespace Medical.Controller.AnomalousMvc
 
         public void createMedicalState()
         {
-            core.createMedicalState();
+            WizardStateInfo stateInfo = modelMemory.get<WizardStateInfo>(WizardStateInfo.ModelMemoryName);
+            if (stateInfo == null)
+            {
+                stateInfo = new WizardStateInfo();
+            }
+            core.createMedicalState(stateInfo);
+        }
+
+        public void addModel(String name, Object model)
+        {
+            modelMemory.add(name, model);
         }
 
         [EditableAction]

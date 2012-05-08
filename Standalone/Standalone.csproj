@@ -108,6 +108,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\MvcController.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />
+    <Compile Include="Controller\AnomalousMvc\Model\WizardStateInfo.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\AnomalousMvc\View\RmlView.cs" />
     <Compile Include="Controller\Editor\ActionBrowserEditableProperty.cs" />
