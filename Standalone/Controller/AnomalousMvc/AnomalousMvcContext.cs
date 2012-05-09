@@ -190,13 +190,8 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public void createMedicalState()
+        public void createMedicalState(WizardStateInfo stateInfo)
         {
-            WizardStateInfo stateInfo = modelMemory.get<WizardStateInfo>(WizardStateInfo.ModelMemoryName);
-            if (stateInfo == null)
-            {
-                stateInfo = new WizardStateInfo();
-            }
             core.createMedicalState(stateInfo);
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
+using Engine.Editing;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -13,7 +14,11 @@ namespace Medical.GUI.AnomalousMvc
             : base(name)
         {
             AttachToScrollView = false;
+            WizardStateInfoName = "DefaultWizardStateInfo";
         }
+
+        [Editable]
+        public String WizardStateInfoName { get; set; }
 
         public override ViewHost createViewHost(AnomalousMvcContext context)
         {

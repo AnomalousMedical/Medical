@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using Engine.Editing;
 using Logging;
+using Medical.Model;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -12,13 +13,21 @@ namespace Medical.Controller.AnomalousMvc
     {
         public CreateMedicalStateCommand()
         {
-            
+            WizardStateInfoName = "DefaultWizardStateInfo";
         }
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.createMedicalState();
+            WizardStateInfo stateInfo = context.getModel<WizardStateInfo>(WizardStateInfoName);
+            if (stateInfo == null)
+            {
+                stateInfo = new WizardStateInfo();
+            }
+            context.createMedicalState(stateInfo);
         }
+
+        [Editable]
+        public String WizardStateInfoName { get; set; }
 
         public override string Type
         {

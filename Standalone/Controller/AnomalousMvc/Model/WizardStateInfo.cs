@@ -5,10 +5,8 @@ using System.Text;
 
 namespace Medical.Model
 {
-    class WizardStateInfo
+    public class WizardStateInfo
     {
-        public const string ModelMemoryName = "__WizardStateInfo";
-
         public WizardStateInfo()
         {
             ProcedureDate = DateTime.Now;
