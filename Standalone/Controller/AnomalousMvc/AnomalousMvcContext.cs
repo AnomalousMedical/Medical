@@ -281,6 +281,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public ResourceProvider ResourceProvider
+        {
+            get
+            {
+                return resourceProvider;
+            }
+        }
+
         public MeasurementGrid MeasurementGrid
         {
             get
