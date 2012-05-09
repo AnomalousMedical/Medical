@@ -50,6 +50,7 @@ namespace Medical.GUI.AnomalousMvc
                 flowLayout.SuppressLayout = false;
                 flowLayout.invalidate();
                 navModel.CurrentIndexChanged += new NavigationModelEvent(navModel_CurrentIndexChanged);
+                navModel_CurrentIndexChanged(navModel);
             }
             else
             {
