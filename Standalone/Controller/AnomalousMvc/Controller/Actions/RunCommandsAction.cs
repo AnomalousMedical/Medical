@@ -126,6 +126,11 @@ namespace Medical.Controller.AnomalousMvc
                 addCommand(new NavigateNextCommand());
             }));
 
+            editInterface.addCommand(new EditInterfaceCommand("Add Setup State Wizard Info", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new SetupWizardStateInfoCommand());
+            }));
+
             editInterfaceManager = new EditInterfaceManager<ActionCommand>(editInterface);
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));
 

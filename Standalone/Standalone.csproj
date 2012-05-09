@@ -100,6 +100,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\SetupNavigationModel.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\SetupWizardStateInfoCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\RunCommandsAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowMainInterfaceCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowViewCommand.cs" />
