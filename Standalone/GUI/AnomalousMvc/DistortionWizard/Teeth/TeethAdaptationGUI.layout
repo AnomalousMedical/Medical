@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position="101 199 352 374" layer="Overlapped">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0.00568182 0 1 1" align="Stretch">
+            <Property key="CanvasSize" value="352 374"/>
+            <Property key="CanvasAlign" value="Left Top"/>
+            <Widget type="TextBox" skin="TextBox" position="4 4 291 15">
+                <Property key="Caption" value="Choose a camera angle.  Change when required."/>
+            </Widget>
+            <Widget type="Button" skin="ButtonImageBackground" position="17 23 53 53" name="TeethMovementPanel/TopCameraButton">
+                <Property key="Caption" value="Top"/>
+                <Property key="ImageResource" value="TeethMovementIcons/AdaptTopTeeth"/>
+            </Widget>
+            <Widget type="Button" skin="ButtonImageBackground" position="84 23 53 53" name="TeethMovementPanel/BottomCameraButton">
+                <Property key="Caption" value="Bottom"/>
+                <Property key="ImageResource" value="TeethMovementIcons/AdaptBottomTeeth"/>
+            </Widget>
+            <Widget type="Button" skin="ButtonImageBackground" position="150 23 53 53" name="TeethMovementPanel/LeftLateralCameraButton">
+                <Property key="Caption" value="Right"/>
+                <Property key="ImageResource" value="TeethMovementIcons/AdaptRightLateral"/>
+            </Widget>
+            <Widget type="Button" skin="ButtonImageBackground" position="216 23 53 53" name="TeethMovementPanel/MidlineAnteriorCameraButton">
+                <Property key="Caption" value="Midline"/>
+                <Property key="ImageResource" value="TeethMovementIcons/AdaptMidlineAnterior"/>
+            </Widget>
+            <Widget type="Button" skin="ButtonImageBackground" position="282 23 53 53" name="TeethMovementPanel/RightLateralCameraButton">
+                <Property key="Caption" value="Left"/>
+                <Property key="ImageResource" value="TeethMovementIcons/AdaptLeftLateral"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="3 194 344 45">
+                <Property key="Caption" value="Click the Tooth Intrusion button to automatically intrude the\nteeth to fit the mandible you have created. Click it again\nto stop the adaptation if it is suitable."/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="3 242 108 30" name="TeethMovmentPanel/AdaptButton">
+                <Property key="Caption" value="Tooth Intrusion"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="3 79 344 44">
+                <Property key="Caption" value="Manually move the teeth to fine tune their positions.\nOr manually move and rotate the teeth to match your\npatient exactly."/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="3 126 160 30" name="TeethMovmentPanel/MoveButton">
+                <Property key="Caption" value="Linear Movements"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="3 159 160 30" name="TeethMovmentPanel/RotateButton">
+                <Property key="Caption" value="Rotational Movements"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="4 316 88 30" name="TeethAdaptationPanel/UndoButton">
+                <Property key="Caption" value="Undo"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="96 316 98 30" name="TeethAdaptationPanel/ResetButton">
+                <Property key="Caption" value="Make Normal"/>
+            </Widget>
+            <Widget type="Widget" skin="PanelEmpty" position="4 275 344 39" layer="Back" name="GridControl">
+                <Widget type="TextBox" skin="TextBox" position="0 0 262 15">
+                    <Property key="Caption" value="Turn the grid on or off and adjust its spacing."/>
+                </Widget>
+                <Widget type="Button" skin="CheckBox" position="6 18 89 15" name="GridControl/ShowGrid">
+                    <Property key="Caption" value="Show Grid"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position="96 18 50 15">
+                    <Property key="Caption" value="Spacing"/>
+                    <Property key="TextAlign" value="Left VCenter"/>
+                </Widget>
+                <Widget type="EditBox" skin="EditBox" position="150 16 67 20" name="GridControl/GridSpace"/>
+                <Widget type="Button" skin="ButtonUpSkin" position="218 16 10 10" name="GridControl/GridSpaceUp"/>
+                <Widget type="Button" skin="ButtonDownSkin" position="218 26 10 10" name="GridControl/GridSpaceDown"/>
+                <Widget type="TextBox" skin="TextBox" position="231 18 21 15">
+                    <Property key="TextAlign" value="Left VCenter"/>
+                    <Property key="Caption" value="MM"/>
+                </Widget>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>

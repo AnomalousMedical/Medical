@@ -35,6 +35,8 @@ namespace Medical.GUI.AnomalousMvc
             wizardNode.addChild(new BrowserNode("Profile Distortion", typeof(ProfileDistortionView)));
             wizardNode.addChild(new BrowserNode("Remove Bottom Teeth", typeof(RemoveBottomTeethView)));
             wizardNode.addChild(new BrowserNode("Remove Top Teeth", typeof(RemoveTopTeethView)));
+            wizardNode.addChild(new BrowserNode("Teeth Adaptation", typeof(TeethAdaptationView)));
+            wizardNode.addChild(new BrowserNode("Teeth Height Adaptation", typeof(TeethHeightAdaptationView)));
             browser.addNode("", null, wizardNode);
         }
     }

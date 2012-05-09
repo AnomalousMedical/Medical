@@ -149,6 +149,12 @@
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveBottomTeethView.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveTeethGUI.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveTopTeethView.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationGUI.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationView.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationGUI.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationView.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethMovementGUI.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Teeth\ToothButton.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\WizardPanel.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\WizardView.cs" />
     <Compile Include="GUI\AnomalousMvc\NavigationView\NavigationButton.cs" />
@@ -665,6 +671,8 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Profile\ProfileDistortionGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveBottomTeethGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\WizardPanel.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationGui.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetViewHost.layout" />

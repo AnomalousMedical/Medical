@@ -213,6 +213,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public AnatomyController AnatomyController
+        {
+            get
+            {
+                return standaloneController.AnatomyController;
+            }
+        }
+
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             if (TimelineStopped != null && !timelineController.HasQueuedTimeline)
