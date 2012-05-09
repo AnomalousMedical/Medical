@@ -140,6 +140,11 @@
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Mandible\LeftCondylarGrowthGUI.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Mandible\LeftCondylarGrowthView.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Mandible\RightCondylarGrowthGUI.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Notes\NotesGUI.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Notes\NotesThumbnail.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Notes\NotesView.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Notes\ThumbnailPickerGUI.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Notes\ThumbnailPickerInfo.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Preset\PresetStateGUI.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Preset\PresetStateView.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Profile\HeightComboSlider.cs" />
@@ -667,6 +672,7 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Mandible\LeftCondylarGrowthGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Mandible\RightCondylarDegenerationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Mandible\RightCondylarGrowthGUI.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Notes\NotesGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Preset\PresetStateGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Profile\ProfileDistortionGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveBottomTeethGUI.layout" />

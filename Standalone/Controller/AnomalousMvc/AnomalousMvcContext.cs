@@ -305,6 +305,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public ImageRenderer ImageRenderer
+        {
+            get
+            {
+                return core.ImageRenderer;
+            }
+        }
+
         /// <summary>
         /// This is a special method to run the last action for a context. It
         /// does not allow views or timelines to be queued, but it can do a few

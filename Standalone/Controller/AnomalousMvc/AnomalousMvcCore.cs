@@ -221,6 +221,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public ImageRenderer ImageRenderer
+        {
+            get
+            {
+                return standaloneController.ImageRenderer;
+            }
+        }
+
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             if (TimelineStopped != null && !timelineController.HasQueuedTimeline)
