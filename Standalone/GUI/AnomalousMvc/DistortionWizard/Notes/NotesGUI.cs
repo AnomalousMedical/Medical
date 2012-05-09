@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller.AnomalousMvc;
+using Medical.Model;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -35,16 +36,22 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void opening()
         {
-            //distortionWizard.OnlyText = wizard.DataSource;
-            //stateNameTextBox.OnlyText = wizard.StateName;
-            //notes.OnlyText = wizard.Notes;
-            //datePicker.Caption = wizard.ProcedureDate.ToString();
+            WizardStateInfo wizardStateInfo = context.getModel<WizardStateInfo>(wizardView.WizardStateInfoName);
+            if (wizardStateInfo == null)
+            {
+                wizardStateInfo = new WizardStateInfo();
+            }
 
-            //foreach (NotesThumbnail thumb in notesData.Thumbnails)
-            //{
-            //    thumbnailPicker.addThumbnail(thumb);
-            //}
-            //thumbnailPicker.updateThumbnails();
+            distortionWizard.OnlyText = wizardStateInfo.DataSource;
+            stateNameTextBox.OnlyText = wizardStateInfo.Name;
+            notes.OnlyText = wizardStateInfo.Notes;
+            datePicker.Caption = wizardStateInfo.ProcedureDate.ToString();
+
+            foreach (NotesThumbnail thumb in wizardView.Thumbnails)
+            {
+                thumbnailPicker.addThumbnail(thumb);
+            }
+            thumbnailPicker.updateThumbnails();
         }
 
         //protected override void commitOutstandingData()

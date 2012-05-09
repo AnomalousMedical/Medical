@@ -42,8 +42,6 @@ namespace Medical.GUI.AnomalousMvc
             }
             subLayoutWidget.Align = Align.Stretch;
 
-            //int buttonAreaHeight = widget.Height;
-
             Button cancelButton = (Button)widget.findWidget("StateWizardButtons/Cancel");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
