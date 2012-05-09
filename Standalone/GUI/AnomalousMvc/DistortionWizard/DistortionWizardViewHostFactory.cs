@@ -33,6 +33,8 @@ namespace Medical.GUI.AnomalousMvc
             wizardNode.addChild(new BrowserNode("Right Fossa", typeof(RightFossaView)));
             wizardNode.addChild(new BrowserNode("Preset State", typeof(PresetStateView)));
             wizardNode.addChild(new BrowserNode("Profile Distortion", typeof(ProfileDistortionView)));
+            wizardNode.addChild(new BrowserNode("Remove Bottom Teeth", typeof(RemoveBottomTeethView)));
+            wizardNode.addChild(new BrowserNode("Remove Top Teeth", typeof(RemoveTopTeethView)));
             browser.addNode("", null, wizardNode);
         }
     }
