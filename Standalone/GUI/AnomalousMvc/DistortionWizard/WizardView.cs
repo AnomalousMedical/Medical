@@ -17,6 +17,8 @@ namespace Medical.GUI.AnomalousMvc
             AttachToScrollView = true;
             CancelAction = "Wizard/Cancel";
             FinishAction = "Wizard/Finish";
+            NextAction = "Wizard/Next";
+            PreviousAction = "Wizard/Previous";
         }
 
         [Editable]
@@ -27,6 +29,12 @@ namespace Medical.GUI.AnomalousMvc
 
         [EditableAction]
         public String FinishAction { get; set; }
+
+        [EditableAction]
+        public String NextAction { get; set; }
+
+        [EditableAction]
+        public String PreviousAction { get; set; }
 
         public abstract ViewHost createViewHost(AnomalousMvcContext context);
 

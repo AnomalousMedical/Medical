@@ -27,6 +27,7 @@ namespace Medical.Controller.AnomalousMvc
         private String queuedTimeline = null;
         private String queuedShowView = null;
         private bool allowShutdown = true;
+        private Queue<String> queuedActions = new Queue<string>();
 
         public AnomalousMvcContext()
         {
@@ -76,7 +77,19 @@ namespace Medical.Controller.AnomalousMvc
                 core.showView(views[queuedShowView], this);
             }
 
-            checkShutdownConditions();
+            if (queuedActions.Count > 0)
+            {
+                runAction(queuedActions.Dequeue());
+            }
+            else
+            {
+                checkShutdownConditions();
+            }
+        }
+
+        public void queueRunAction(String address)
+        {
+            queuedActions.Enqueue(address);
         }
 
         public string getFullPath(string file)
@@ -197,6 +210,12 @@ namespace Medical.Controller.AnomalousMvc
         public void addModel(String name, Object model)
         {
             modelMemory.add(name, model);
+        }
+
+        internal TypeName getModel<TypeName>(String name)
+            where TypeName : class
+        {
+            return modelMemory.get<TypeName>(name);
         }
 
         [EditableAction]

@@ -48,6 +48,22 @@ namespace Medical.GUI.AnomalousMvc
 
             Button finishButton = (Button)widget.findWidget("StateWizardButtons/Finish");
             finishButton.MouseButtonClick += new MyGUIEvent(finishButton_MouseButtonClick);
+
+            Button nextButton = (Button)widget.findWidget("StateWizardButtons/Next");
+            nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
+
+            Button previousButton = (Button)widget.findWidget("StateWizardButtons/Previous");
+            previousButton.MouseButtonClick += new MyGUIEvent(previousButton_MouseButtonClick);
+        }
+
+        void previousButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            context.runAction(wizardView.PreviousAction);
+        }
+
+        void nextButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            context.runAction(wizardView.NextAction);
         }
 
         void finishButton_MouseButtonClick(Widget source, EventArgs e)
