@@ -4,9 +4,20 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Medical.GUI;
+using Engine.Attributes;
 
 namespace Medical.Controller.AnomalousMvc
 {
+    [SingleEnum]
+    public enum ViewLocations
+    {
+        Left,
+        Right,
+        Top,
+        Bottom,
+        Floating
+    }
+
     class ViewHostManager
     {
         private GUIManager guiManager;
@@ -33,9 +44,9 @@ namespace Medical.Controller.AnomalousMvc
             this.viewHostFactory = viewHostFactory;
         }
 
-        public void requestOpen(View view, AnomalousMvcContext context)
+        public void requestOpen(View view, AnomalousMvcContext context, ViewLocations viewLocation)
         {
-            switch (view.ViewLocation)
+            switch (viewLocation)
             {
                 case ViewLocations.Left:
                     queuedLeft = view;

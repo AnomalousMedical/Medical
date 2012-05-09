@@ -23,11 +23,10 @@ namespace Medical.Controller.AnomalousMvc
         private ModelMemory modelMemory = new ModelMemory();
 
         //Action queue stuff
-        private bool queuedCloseView = false;
         private String queuedTimeline = null;
-        private String queuedShowView = null;
         private bool allowShutdown = true;
         private Queue<String> queuedActions = new Queue<string>();
+        private ViewHost runningActionViewHost;
 
         public AnomalousMvcContext()
         {
@@ -54,23 +53,14 @@ namespace Medical.Controller.AnomalousMvc
 
         public void runAction(string address, ViewHost viewHost = null)
         {
-            queuedCloseView = false;
+            runningActionViewHost = viewHost;
             queuedTimeline = null;
-            queuedShowView = null;
 
             doRunAction(address);
 
-            if (queuedCloseView)
-            {
-                core.queueCloseView(viewHost);
-            }
             if (queuedTimeline != null)
             {
                 playTimeline(queuedTimeline);
-            }
-            if (queuedShowView != null)
-            {
-                core.queueShowView(views[queuedShowView], this);
             }
 
             core.processViewChanges();
@@ -100,14 +90,14 @@ namespace Medical.Controller.AnomalousMvc
             queuedTimeline = timeline;
         }
 
-        public void queueShowView(String view)
+        public void queueShowView(String view, ViewLocations viewLocation)
         {
-            queuedShowView = view;
+            core.queueShowView(views[view], this, viewLocation);
         }
 
         public void queueClose()
         {
-            queuedCloseView = true;
+            core.queueCloseView(runningActionViewHost);
         }
 
         public void applyLayers(EditableLayerState layers)

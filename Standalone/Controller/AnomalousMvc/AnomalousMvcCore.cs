@@ -39,9 +39,9 @@ namespace Medical.Controller.AnomalousMvc
             viewHostManager = new ViewHostManager(guiManager, viewHostFactory);
         }
 
-        public void queueShowView(View view, AnomalousMvcContext context)
+        public void queueShowView(View view, AnomalousMvcContext context, ViewLocations viewLocation)
         {
-            viewHostManager.requestOpen(view, context);
+            viewHostManager.requestOpen(view, context, viewLocation);
         }
 
         public void queueCloseView(ViewHost viewHost)

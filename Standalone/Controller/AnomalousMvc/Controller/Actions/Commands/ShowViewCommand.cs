@@ -12,16 +12,19 @@ namespace Medical.Controller.AnomalousMvc
     {
         public ShowViewCommand()
         {
-
+            ViewLocation = ViewLocations.Left;
         }
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.queueShowView(View);
+            context.queueShowView(View, ViewLocation);
         }
 
         [EditableView]
         public String View { get; set; }
+
+        [Editable]
+        public ViewLocations ViewLocation { get; set; }
 
         public override string Type
         {
