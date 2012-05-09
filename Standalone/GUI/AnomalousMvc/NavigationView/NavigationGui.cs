@@ -49,7 +49,7 @@ namespace Medical.GUI.AnomalousMvc
                 }
                 flowLayout.SuppressLayout = false;
                 flowLayout.invalidate();
-                navModel.CurrentIndexChanged += new NavigationModelEvent(navModel_CurrentIndexChanged);
+                navModel.CurrentIndexChanged += navModel_CurrentIndexChanged;
                 navModel_CurrentIndexChanged(navModel);
             }
             else
@@ -62,6 +62,7 @@ namespace Medical.GUI.AnomalousMvc
         public override void closing()
         {
             base.closing();
+            navModel.CurrentIndexChanged -= navModel_CurrentIndexChanged;
         }
 
         void navModel_CurrentIndexChanged(NavigationModel navModel)
