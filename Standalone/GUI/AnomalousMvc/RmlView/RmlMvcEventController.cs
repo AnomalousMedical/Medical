@@ -10,15 +10,17 @@ namespace Medical.GUI.AnomalousMvc
     class RmlMvcEventController : RocketEventController
     {
         private AnomalousMvcContext mvcContext;
+        private ViewHost viewHost;
 
-        public RmlMvcEventController(AnomalousMvcContext mvcContext)
+        public RmlMvcEventController(AnomalousMvcContext mvcContext, ViewHost viewHost)
         {
             this.mvcContext = mvcContext;
+            this.viewHost = viewHost;
         }
 
         public EventListener createEventListener(string name)
         {
-            return new RmlMvcEventListener(name, mvcContext);
+            return new RmlMvcEventListener(name, mvcContext, viewHost);
         }
     }
 }

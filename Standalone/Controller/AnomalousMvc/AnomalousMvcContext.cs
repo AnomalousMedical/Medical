@@ -52,7 +52,7 @@ namespace Medical.Controller.AnomalousMvc
             core.playTimeline(timelineName, allowPlaybackStop);
         }
 
-        public void runAction(string address)
+        public void runAction(string address, ViewHost viewHost = null)
         {
             queuedCloseView = false;
             queuedTimeline = null;
@@ -62,7 +62,7 @@ namespace Medical.Controller.AnomalousMvc
 
             if (queuedCloseView)
             {
-                core.closeView();
+                core.queueCloseView(viewHost);
             }
             if (queuedTimeline != null)
             {
@@ -70,16 +70,14 @@ namespace Medical.Controller.AnomalousMvc
             }
             if (queuedShowView != null)
             {
-                if (!queuedCloseView)
-                {
-                    core.closeView();
-                }
-                core.showView(views[queuedShowView], this);
+                core.queueShowView(views[queuedShowView], this);
             }
+
+            core.processViewChanges();
 
             if (queuedActions.Count > 0)
             {
-                runAction(queuedActions.Dequeue());
+                runAction(queuedActions.Dequeue(), viewHost);
             }
             else
             {

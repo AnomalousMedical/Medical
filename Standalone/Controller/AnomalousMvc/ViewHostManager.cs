@@ -7,93 +7,105 @@ using Medical.GUI;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ViewHostManager : UpdateListener
+    class ViewHostManager
     {
-        private UpdateTimer updateTimer;
         private GUIManager guiManager;
-        private List<ViewHost> requestList = new List<ViewHost>();
-        private bool updating = false;
+        private ViewHostFactory viewHostFactory;
 
-        public ViewHostManager(UpdateTimer updateTimer, GUIManager guiManager)
+        private ViewHost currentLeft;
+        private ViewHost currentRight;
+        private ViewHost currentTop;
+        private ViewHost currentBottom;
+
+        private View queuedLeft;
+        private View queuedRight;
+        private View queuedTop;
+        private View queuedBottom;
+
+        private AnomalousMvcContext queuedLeftContext;
+        private AnomalousMvcContext queuedRightContext;
+        private AnomalousMvcContext queuedTopContext;
+        private AnomalousMvcContext queuedBottomContext;
+
+        public ViewHostManager(GUIManager guiManager, ViewHostFactory viewHostFactory)
         {
-            this.updateTimer = updateTimer;
             this.guiManager = guiManager;
+            this.viewHostFactory = viewHostFactory;
         }
 
-        public void requestOpen(ViewHost viewHost)
+        public void requestOpen(View view, AnomalousMvcContext context)
         {
-            viewHost.opening();
-            viewHost._RequestClosed = false;
-            requestList.Add(viewHost);
-            subscribeToUpdates();
+            switch (view.ViewLocation)
+            {
+                case ViewLocations.Left:
+                    queuedLeft = view;
+                    queuedLeftContext = context;
+                    break;
+                case ViewLocations.Right:
+                    queuedRight = view;
+                    queuedRightContext = context;
+                    break;
+                case ViewLocations.Top:
+                    queuedTop = view;
+                    queuedTopContext = context;
+                    break;
+                case ViewLocations.Bottom:
+                    queuedBottom = view;
+                    queuedBottomContext = context;
+                    break;
+            }
         }
 
         public void requestClose(ViewHost viewHost)
         {
-            viewHost.closing();
-            viewHost._RequestClosed = true;
-            requestList.Add(viewHost);
-            subscribeToUpdates();
-        }
-
-        public void exceededMaxDelta()
-        {
-            
-        }
-
-        public void loopStarting()
-        {
-            
-        }
-
-        public void sendUpdate(Clock clock)
-        {
-            ViewHost gui;
-            LayoutContainer nextContainer;
-            ViewHost currentGui = null;
-            for (int i = 0; i < requestList.Count; ++i)
+            if (viewHost != null)
             {
-                gui = requestList[i];
-                if (gui._RequestClosed)
+                viewHost._RequestClosed = true;
+            }
+        }
+
+        public void processViewChanges()
+        {
+            //If we have another panel queued
+            if (queuedLeft != null)
+            {
+                //If there is no panel open
+                if (currentLeft == null)
                 {
-                    //Read ahead and find any other guis that want to be open.
-                    nextContainer = null;
-                    for (int j = i; j < requestList.Count && nextContainer == null; ++j)
-                    {
-                        currentGui = requestList[j];
-                        if (!currentGui._RequestClosed)
-                        {
-                            //Found another gui that wants to be open. Store it and open it, also remove it from the request list.
-                            nextContainer = currentGui.Container;
-                            requestList.Remove(currentGui);
-                        }
-                    }
-                    guiManager.changeLeftPanel(nextContainer, gui._animationCallback);
+                    currentLeft = viewHostFactory.createViewHost(queuedLeft, queuedLeftContext);
+                    currentLeft.opening();
+                    guiManager.changeLeftPanel(currentLeft.Container);
                 }
+                //If there is a panel open they must be switched
                 else
                 {
-                    guiManager.changeLeftPanel(gui.Container);
+                    ViewHost lastLeft = currentLeft;
+                    lastLeft.closing();
+                    currentLeft = viewHostFactory.createViewHost(queuedLeft, queuedLeftContext);
+                    currentLeft.opening();
+                    guiManager.changeLeftPanel(currentLeft.Container, lastLeft._animationCallback);
                 }
             }
-            requestList.Clear();
-            unsubscribeFromUpdates();
-        }
-
-        private void subscribeToUpdates()
-        {
-            if (!updating)
+            //There is no other panel queued and the current panel wants to be closed
+            else if (currentLeft != null && currentLeft._RequestClosed)
             {
-                updateTimer.addFixedUpdateListener(this);
-                updating = true;
+                currentLeft.closing();
+                guiManager.changeLeftPanel(null, currentLeft._animationCallback);
+                currentLeft = null;
             }
+
+            queuedLeft = null;
+            queuedLeftContext = null;
         }
 
-        private void unsubscribeFromUpdates()
+        public bool HasOpenViews
         {
-            if (updating)
+            get
             {
-                updateTimer.removeFixedUpdateListener(this);
-                updating = false;
+                return currentLeft != null ||
+                    currentRight != null ||
+                    currentTop != null ||
+                    currentBottom != null;
             }
         }
     }

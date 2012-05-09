@@ -30,7 +30,7 @@ namespace Medical.GUI.AnomalousMvc
 
             layoutContainer.LayoutChanged += new Action(layoutContainer_LayoutChanged);
 
-            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context));
+            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, this));
             using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(view.RmlFile)))
             {
                 if (document != null)

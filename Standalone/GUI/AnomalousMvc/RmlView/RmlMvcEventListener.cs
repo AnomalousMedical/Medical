@@ -12,18 +12,20 @@ namespace Medical.GUI.AnomalousMvc
     {
         private AnomalousMvcContext mvcContext;
         private String name;
+        private ViewHost viewHost;
 
-        public RmlMvcEventListener(String name, AnomalousMvcContext mvcContext)
+        public RmlMvcEventListener(String name, AnomalousMvcContext mvcContext, ViewHost viewHost)
         {
             this.name = name;
             this.mvcContext = mvcContext;
+            this.viewHost = viewHost;
         }
 
         public override void ProcessEvent(Event evt)
         {
             try
             {
-                mvcContext.runAction(name);
+                mvcContext.runAction(name, viewHost);
             }
             catch (Exception ex)
             {

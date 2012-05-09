@@ -58,22 +58,22 @@ namespace Medical.GUI.AnomalousMvc
 
         void previousButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.PreviousAction);
+            context.runAction(wizardView.PreviousAction, this);
         }
 
         void nextButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.NextAction);
+            context.runAction(wizardView.NextAction, this);
         }
 
         void finishButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.FinishAction);
+            context.runAction(wizardView.FinishAction, this);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.CancelAction);
+            context.runAction(wizardView.CancelAction, this);
         }
     }
 }

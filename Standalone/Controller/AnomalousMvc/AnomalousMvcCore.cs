@@ -21,7 +21,6 @@ namespace Medical.Controller.AnomalousMvc
         private ViewHostFactory viewHostFactory;
 
         private ViewHostManager viewHostManager;
-        private ViewHost viewHost;
         private GUIManager guiManager;
         private StandaloneController standaloneController;
 
@@ -37,29 +36,29 @@ namespace Medical.Controller.AnomalousMvc
             this.guiManager = standaloneController.GUIManager;
             this.viewHostFactory = viewHostFactory;
 
-            viewHostManager = new ViewHostManager(standaloneController.MedicalController.MainTimer, guiManager);
+            viewHostManager = new ViewHostManager(guiManager, viewHostFactory);
         }
 
-        public void showView(View view, AnomalousMvcContext context)
+        public void queueShowView(View view, AnomalousMvcContext context)
         {
-            viewHost = viewHostFactory.createViewHost(view, context);
-            viewHostManager.requestOpen(viewHost);
+            viewHostManager.requestOpen(view, context);
         }
 
-        public void closeView()
+        public void queueCloseView(ViewHost viewHost)
         {
-            if (viewHost != null)
-            {
-                viewHostManager.requestClose(viewHost);
-                viewHost = null;
-            }
+            viewHostManager.requestClose(viewHost);
+        }
+
+        public void processViewChanges()
+        {
+            viewHostManager.processViewChanges();
         }
 
         public bool HasOpenViews
         {
             get
             {
-                return viewHost != null;
+                return viewHostManager.HasOpenViews;
             }
         }
 
