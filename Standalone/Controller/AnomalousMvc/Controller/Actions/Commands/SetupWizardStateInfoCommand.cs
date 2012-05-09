@@ -19,6 +19,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public override void execute(AnomalousMvcContext context)
         {
+            WizardStateInfo.ProcedureDate = DateTime.Now;
             context.addModel(WizardStateInfoName, WizardStateInfo);
         }
 
