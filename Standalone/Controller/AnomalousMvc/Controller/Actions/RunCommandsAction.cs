@@ -66,8 +66,14 @@ namespace Medical.Controller.AnomalousMvc
             editInterface.addCommand(new EditInterfaceCommand("Add Change Medical State", addChangeMedicalState));
             editInterface.addCommand(new EditInterfaceCommand("Add Play Timeline", addPlayTimeline));
             editInterface.addCommand(new EditInterfaceCommand("Add Stop Timeline", addStopTimeline));
-            editInterface.addCommand(new EditInterfaceCommand("Add Close View", addCloseGUI));
             editInterface.addCommand(new EditInterfaceCommand("Add Show View", addShowGUI));
+            editInterface.addCommand(new EditInterfaceCommand("Add Close View", addCloseGUI));
+
+            editInterface.addCommand(new EditInterfaceCommand("Add Close All Views", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new CloseAllViewsCommand());
+            }));
+
             editInterface.addCommand(new EditInterfaceCommand("Add Hide Main Interface", addHideMainInterface));
             editInterface.addCommand(new EditInterfaceCommand("Add Show Main Interface", addShowMainInterface));
             editInterface.addCommand(new EditInterfaceCommand("Add Save Layers", delegate(EditUICallback callback, EditInterfaceCommand command)

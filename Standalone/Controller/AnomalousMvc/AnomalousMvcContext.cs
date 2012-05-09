@@ -95,9 +95,14 @@ namespace Medical.Controller.AnomalousMvc
             core.queueShowView(views[view], this, viewLocation);
         }
 
-        public void queueClose()
+        public void queueCloseView()
         {
             core.queueCloseView(runningActionViewHost);
+        }
+
+        public void queueCloseAllViews()
+        {
+            core.queueCloseAllViews();
         }
 
         public void applyLayers(EditableLayerState layers)

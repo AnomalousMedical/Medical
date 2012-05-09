@@ -87,6 +87,7 @@
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ChangeLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ChangeMedicalStateCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\CloseAllViewsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\CloseViewCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\CreateMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\HideMainInterfaceCommand.cs" />

@@ -49,6 +49,11 @@ namespace Medical.Controller.AnomalousMvc
             viewHostManager.requestClose(viewHost);
         }
 
+        public void queueCloseAllViews()
+        {
+            viewHostManager.requestCloseAll();
+        }
+
         public void processViewChanges()
         {
             viewHostManager.processViewChanges();

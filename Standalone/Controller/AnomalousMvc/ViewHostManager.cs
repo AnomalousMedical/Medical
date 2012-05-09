@@ -75,6 +75,26 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public void requestCloseAll()
+        {
+            if (currentLeft != null)
+            {
+                currentLeft._RequestClosed = true;
+            }
+            if (currentRight != null)
+            {
+                currentRight._RequestClosed = true;
+            }
+            if (currentTop != null)
+            {
+                currentTop._RequestClosed = true;
+            }
+            if (currentBottom != null)
+            {
+                currentBottom._RequestClosed = true;
+            }
+        }
+
         public void processViewChanges()
         {
             //-----------Left Panel-----------------

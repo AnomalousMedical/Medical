@@ -6,27 +6,27 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class CloseViewCommand : ActionCommand
+    class CloseAllViewsCommand : ActionCommand
     {
-        public CloseViewCommand()
+        public CloseAllViewsCommand()
         {
 
         }
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.queueCloseView();
+            context.queueCloseAllViews();
         }
 
         public override string Type
         {
             get
             {
-                return "Close View";
+                return "Close All Views";
             }
         }
 
-        protected CloseViewCommand(LoadInfo info)
+        protected CloseAllViewsCommand(LoadInfo info)
             :base(info)
         {
 

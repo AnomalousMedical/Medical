@@ -58,7 +58,7 @@ namespace Medical.GUI.AnomalousMvc
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.queueClose();
+            context.queueCloseView();
         }
     }
 }
