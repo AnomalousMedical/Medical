@@ -53,6 +53,20 @@ namespace Medical
             return fileList.ToArray();
         }
 
+        public String[] listFiles(String pattern, String directory, bool recursive)
+        {
+            List<String> files = new List<string>();
+            directory = directory.Replace('\\', '/').Replace('/', '.');
+            foreach (String file in fileList)
+            {
+                if (file.StartsWith(directory))
+                {
+                    files.Add(file);
+                }
+            }
+            return files.ToArray();
+        }
+
         public bool exists(string path)
         {
             return fileList.Contains(path);

@@ -43,6 +43,11 @@ namespace Medical
             return virtualFileSystem.listFiles(parentDirectory, pattern, false);
         }
 
+        public String[] listFiles(String pattern, String directory, bool recursive)
+        {
+            return virtualFileSystem.listFiles(Path.Combine(parentDirectory, directory), pattern, recursive);
+        }
+
         public bool exists(string path)
         {
             return virtualFileSystem.exists(Path.Combine(parentDirectory, path));

@@ -31,6 +31,7 @@ namespace Medical.GUI.AnomalousMvc
             wizardNode.addChild(new BrowserNode("Doppler", typeof(DopplerView)));
             wizardNode.addChild(new BrowserNode("Left Fossa", typeof(LeftFossaView)));
             wizardNode.addChild(new BrowserNode("Right Fossa", typeof(RightFossaView)));
+            wizardNode.addChild(new BrowserNode("Preset State", typeof(PresetStateView)));
             browser.addNode("", null, wizardNode);
         }
     }
