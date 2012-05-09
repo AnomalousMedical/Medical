@@ -172,7 +172,7 @@ namespace Medical.GUI
             screenLayoutManager.changeOSWindow(newWindow);
         }
 
-        public void changeTopPanel(LayoutContainer topContainer, AnimationCompletedDelegate animationCompleted)
+        public void changeTopPanel(LayoutContainer topContainer, AnimationCompletedDelegate animationCompleted = null)
         {
             if (topContainer != null)
             {
@@ -182,17 +182,7 @@ namespace Medical.GUI
             topAnimatedContainer.changePanel(topContainer, 0.25f, animationCompleted);
         }
 
-        public void resetTopPanel(AnimationCompletedDelegate animationCompleted)
-        {
-            changeTopPanel(null, animationCompleted);
-        }
-
-        public void changeLeftPanel(LayoutContainer leftContainer)
-        {
-            changeLeftPanel(leftContainer, null);
-        }
-
-        public void changeLeftPanel(LayoutContainer leftContainer, AnimationCompletedDelegate animationCompleted)
+        public void changeLeftPanel(LayoutContainer leftContainer, AnimationCompletedDelegate animationCompleted = null)
         {
             if (leftContainer != null)
             {
@@ -205,7 +195,7 @@ namespace Medical.GUI
             }
         }
 
-        public void changeRightPanel(LayoutContainer rightContainer, AnimationCompletedDelegate animationCompleted)
+        public void changeRightPanel(LayoutContainer rightContainer, AnimationCompletedDelegate animationCompleted = null)
         {
             if (rightContainer != null)
             {
@@ -218,7 +208,7 @@ namespace Medical.GUI
             }
         }
 
-        public void changeBottomPanel(LayoutContainer bottomContainer, AnimationCompletedDelegate animationCompleted)
+        public void changeBottomPanel(LayoutContainer bottomContainer, AnimationCompletedDelegate animationCompleted = null)
         {
             if (bottomContainer != null)
             {
