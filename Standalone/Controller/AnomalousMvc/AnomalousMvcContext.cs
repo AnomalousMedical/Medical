@@ -325,11 +325,18 @@ namespace Medical.Controller.AnomalousMvc
         private void doRunAction(string address)
         {
             int slashLoc = address.IndexOf('/');
-            String controllerName = address.Substring(0, slashLoc);
-            ++slashLoc;
-            String actionName = address.Substring(slashLoc, address.Length - slashLoc);
-            MvcController controller = controllers[controllerName];
-            controller.runAction(actionName, this);
+            if (slashLoc != -1)
+            {
+                String controllerName = address.Substring(0, slashLoc);
+                ++slashLoc;
+                String actionName = address.Substring(slashLoc, address.Length - slashLoc);
+                MvcController controller = controllers[controllerName];
+                controller.runAction(actionName, this);
+            }
+            else
+            {
+                Log.Error("Malformed action address '{0}' the format must be 'Controller/Action' cannot run action", address);
+            }
         }
 
         void core_TimelineStopped()

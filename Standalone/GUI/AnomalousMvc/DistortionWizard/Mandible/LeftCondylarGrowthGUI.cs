@@ -7,7 +7,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class LeftCondylarGrowthGUI : BoneManipulatorGUI
+    class LeftCondylarGrowthGUI : BoneManipulatorGUI<LeftCondylarGrowthView>
     {
         private BoneManipulatorSlider leftRamusHeightSlider;
         private BoneManipulatorSlider leftCondyleHeightSlider;
@@ -20,7 +20,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private GridPropertiesControl gridPropertiesControl;
 
-        public LeftCondylarGrowthGUI(WizardView view, AnomalousMvcContext context)
+        public LeftCondylarGrowthGUI(LeftCondylarGrowthView view, AnomalousMvcContext context)
             : base("Medical.GUI.AnomalousMvc.DistortionWizard.Mandible.LeftCondylarGrowthGUI.layout", view, context)
         {
             leftRamusHeightSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleGrowth/RamusHeightSlider") as ScrollBar);

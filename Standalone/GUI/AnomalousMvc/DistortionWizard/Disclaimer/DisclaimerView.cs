@@ -17,7 +17,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHost createViewHost(AnomalousMvcContext context)
         {
-            return new WizardPanel("Medical.GUI.AnomalousMvc.DistortionWizard.Disclaimer.DisclaimerGUI.layout", this, context);
+            return new WizardPanel<WizardView>("Medical.GUI.AnomalousMvc.DistortionWizard.Disclaimer.DisclaimerGUI.layout", this, context);
         }
 
         protected DisclaimerView(LoadInfo info)

@@ -8,15 +8,16 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class WizardPanel : MyGUIViewHost
+    class WizardPanel<WizardViewType> : MyGUIViewHost
+        where WizardViewType : WizardView
     {
         private Layout layout;
         private Widget subLayoutWidget;
         private ScrollView panelScroll;
-        private WizardView wizardView;
+        protected WizardViewType wizardView;
         protected AnomalousMvcContext context;
 
-        public WizardPanel(String layoutFile, WizardView view, AnomalousMvcContext context)
+        public WizardPanel(String layoutFile, WizardViewType view, AnomalousMvcContext context)
             :base("Medical.GUI.AnomalousMvc.DistortionWizard.WizardPanel.layout")
         {
             this.wizardView = view;
