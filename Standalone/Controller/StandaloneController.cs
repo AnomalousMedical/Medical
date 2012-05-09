@@ -219,6 +219,7 @@ namespace Medical
 
             viewHostFactory = new ViewHostFactoryCompound();
             viewHostFactory.addSubFactory(new RmlViewHostFactory());
+            viewHostFactory.addSubFactory(new NavigationViewHostFactory());
             viewHostFactory.addSubFactory(new DistortionWizardViewHostFactory());
             mvcCore = new AnomalousMvcCore(this, viewHostFactory);
 

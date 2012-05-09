@@ -8,10 +8,13 @@ using Engine.Attributes;
 
 namespace Medical.Controller.AnomalousMvc
 {
+    delegate void NavigationModelEvent(NavigationModel navModel);
+
     partial class NavigationModel : Saveable
     {
         private List<NavigationLink> links = new List<NavigationLink>();
         private int currentIndex = 0;
+        public event NavigationModelEvent CurrentIndexChanged;
 
         public NavigationModel()
         {
@@ -43,21 +46,19 @@ namespace Medical.Controller.AnomalousMvc
 
         public NavigationLink getNext()
         {
-            if (++currentIndex < links.Count)
+            if (HasNext)
             {
-                return links[currentIndex];
+                return links[++CurrentIndex];
             }
-            --currentIndex;
             return null;
         }
 
         public NavigationLink getPrevious()
         {
-            if (--currentIndex > -1 && links.Count > 0)
+            if (HasPrevious)
             {
-                return links[currentIndex];
+                return links[--CurrentIndex];
             }
-            ++currentIndex;
             return null;
         }
 
@@ -82,7 +83,23 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return currentIndex - 1 > -1;
+                return currentIndex - 1 > -1 && links.Count > 0;
+            }
+        }
+
+        public int CurrentIndex
+        {
+            get
+            {
+                return currentIndex;
+            }
+            set
+            {
+                currentIndex = value;
+                if (CurrentIndexChanged != null)
+                {
+                    CurrentIndexChanged.Invoke(this);
+                }
             }
         }
 
@@ -99,6 +116,14 @@ namespace Medical.Controller.AnomalousMvc
         {
             info.AddValue("Name", Name);
             info.ExtractList<NavigationLink>("Link", links);
+        }
+
+        public IEnumerable<NavigationLink> Links
+        {
+            get
+            {
+                return links;
+            }
         }
     }
 
