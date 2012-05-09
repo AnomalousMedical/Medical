@@ -332,18 +332,25 @@ namespace Medical.Controller.AnomalousMvc
 
         private void doRunAction(string address)
         {
-            int slashLoc = address.IndexOf('/');
-            if (slashLoc != -1)
+            if (address != null)
             {
-                String controllerName = address.Substring(0, slashLoc);
-                ++slashLoc;
-                String actionName = address.Substring(slashLoc, address.Length - slashLoc);
-                MvcController controller = controllers[controllerName];
-                controller.runAction(actionName, this);
+                int slashLoc = address.IndexOf('/');
+                if (slashLoc != -1)
+                {
+                    String controllerName = address.Substring(0, slashLoc);
+                    ++slashLoc;
+                    String actionName = address.Substring(slashLoc, address.Length - slashLoc);
+                    MvcController controller = controllers[controllerName];
+                    controller.runAction(actionName, this);
+                }
+                else
+                {
+                    Log.Error("Malformed action address '{0}' the format must be 'Controller/Action' cannot run action", address);
+                }
             }
             else
             {
-                Log.Error("Malformed action address '{0}' the format must be 'Controller/Action' cannot run action", address);
+                Log.Error("Address was null, cannot run action.", address);
             }
         }
 

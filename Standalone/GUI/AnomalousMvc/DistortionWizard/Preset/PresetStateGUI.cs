@@ -24,7 +24,7 @@ namespace Medical.GUI.AnomalousMvc
         private ButtonGrid presetListView;
 
         public PresetStateGUI(PresetStateView wizardView, AnomalousMvcContext context)
-            : base("Medical.GUI.DistortionWizards.Preset.PresetStateGUI.layout", wizardView, context)
+            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Preset.PresetStateGUI.layout", wizardView, context)
         {
             this.subDirectory = wizardView.PresetDirectory;
 

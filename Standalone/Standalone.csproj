@@ -142,6 +142,10 @@
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Mandible\RightCondylarGrowthGUI.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Preset\PresetStateGUI.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\Preset\PresetStateView.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Profile\HeightComboSlider.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Profile\HeightControl.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Profile\ProfileDistortionGUI.cs" />
+    <Compile Include="GUI\AnomalousMvc\DistortionWizard\Profile\ProfileDistortionView.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\WizardPanel.cs" />
     <Compile Include="GUI\AnomalousMvc\DistortionWizard\WizardView.cs" />
     <Compile Include="GUI\AnomalousMvc\NavigationView\NavigationButton.cs" />
@@ -655,6 +659,7 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Mandible\RightCondylarDegenerationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Mandible\RightCondylarGrowthGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Preset\PresetStateGUI.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Profile\ProfileDistortionGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\WizardPanel.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationGui.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetViewHost.layout" />
