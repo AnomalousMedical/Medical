@@ -47,9 +47,20 @@ namespace Medical.Controller.AnomalousMvc
             refreshLinkDefinitions();
         }
 
-        public void resetIndex()
+        public override void reset()
         {
-            currentIndex = 0;
+            if (StartIndex < links.Count)
+            {
+                currentIndex = StartIndex;
+            }
+            else if (links.Count > 0)
+            {
+                currentIndex = links.Count - 1;
+            }
+            else
+            {
+                currentIndex = 0;
+            }
         }
 
         public NavigationLink getNext()
@@ -111,6 +122,17 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        [Editable]
+        public int StartIndex { get; set; }
+
+        public IEnumerable<NavigationLink> Links
+        {
+            get
+            {
+                return links;
+            }
+        }
+
         protected NavigationModel(LoadInfo info)
             :base(info)
         {
@@ -121,14 +143,6 @@ namespace Medical.Controller.AnomalousMvc
         {
             base.getInfo(info);
             info.ExtractList<NavigationLink>("Link", links);
-        }
-
-        public IEnumerable<NavigationLink> Links
-        {
-            get
-            {
-                return links;
-            }
         }
     }
 
