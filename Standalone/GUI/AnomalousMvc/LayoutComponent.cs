@@ -12,19 +12,47 @@ namespace Medical.GUI.AnomalousMvc
         protected Widget widget;
 
         public LayoutComponent(String layoutFile, MyGUIViewHost viewHost)
-            :base(viewHost)
         {
             layout = LayoutManager.Instance.loadLayout(layoutFile);
             widget = layout.getWidget(0);
-
-            //Hmmmm
-            Widget = widget;
+            this.viewHost = viewHost;
         }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
             LayoutManager.Instance.unloadLayout(layout);
-            base.Dispose();
+        }
+
+        public virtual void topLevelResized()
+        {
+            
+        }
+
+        public virtual void opening()
+        {
+            
+        }
+
+        public virtual void closing()
+        {
+            
+        }
+
+        public Widget Widget
+        {
+            get
+            {
+                return widget;
+            }
+        }
+
+        private MyGUIViewHost viewHost;
+        public MyGUIViewHost ViewHost
+        {
+            get
+            {
+                return viewHost;
+            }
         }
     }
 }

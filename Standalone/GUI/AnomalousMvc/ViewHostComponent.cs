@@ -6,35 +6,16 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class ViewHostComponent : IDisposable
+    interface ViewHostComponent : IDisposable
     {
-        public ViewHostComponent(MyGUIViewHost viewHost)
-        {
-            this.ViewHost = viewHost;
-        }
+        void topLevelResized();
 
-        public virtual void Dispose()
-        {
+        void opening();
 
-        }
+        void closing();
 
-        public virtual void topLevelResized()
-        {
+        MyGUIViewHost ViewHost { get; }
 
-        }
-
-        public virtual void opening()
-        {
-
-        }
-
-        public virtual void closing()
-        {
-
-        }
-
-        public MyGUIViewHost ViewHost { get; private set; }
-
-        public Widget Widget { get; set; }
+        Widget Widget { get; }
     }
 }
