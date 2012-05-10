@@ -12,7 +12,7 @@ namespace Medical.Controller.AnomalousMvc
     {
         public NavigateNextCommand()
         {
-            NavigationModelName = "DefaultNavigation";
+            NavigationModelName = NavigationModel.DefaultName;
         }
 
         public override void execute(AnomalousMvcContext context)

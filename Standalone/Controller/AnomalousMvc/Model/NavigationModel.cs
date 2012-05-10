@@ -12,6 +12,8 @@ namespace Medical.Controller.AnomalousMvc
 
     public partial class NavigationModel : Model
     {
+        public const String DefaultName = "DefaultNavigation";
+
         [DoNotSave]
         private List<NavigationLink> links = new List<NavigationLink>();
 
@@ -24,7 +26,7 @@ namespace Medical.Controller.AnomalousMvc
         public NavigationModel(String name)
             :base(name)
         {
-            Name = "DefaultNavigation";
+            
         }
 
         public void addNavigationLink(NavigationLink link)

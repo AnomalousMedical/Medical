@@ -171,7 +171,7 @@ namespace Medical.GUI
             browserResultCallback = resultCallback;
             Browser browser = new Browser("Models");
 
-            browser.addNode("", null, new BrowserNode("Navigation", typeof(NavigationModel)));
+            browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
 
             browserWindow.setBrowser(browser);
             browserWindow.ItemSelected += browserWindow_ItemSelected;

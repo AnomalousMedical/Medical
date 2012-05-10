@@ -22,27 +22,31 @@ namespace Medical.Controller.AnomalousMvc
         {
             editInterface.addCommand(new EditInterfaceCommand("Add Model", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {
-                ConstructorInfo constructor = null;
                 callback.runCustomQuery(CustomQueries.ShowModelBrowser, delegate(Object result, ref string errorPrompt)
                 {
-                    Type returnedTypeInfo = result as Type;
+                    ModelCreationInfo returnedTypeInfo = result as ModelCreationInfo;
                     if (returnedTypeInfo != null)
                     {
-                        constructor = returnedTypeInfo.GetConstructor(BindingFlags.Public | BindingFlags.Instance, null, constructorArgs, null);
-                        if (constructor != null)
+                        //Try to add with the default name.
+                        if (!hasItem(returnedTypeInfo.DefaultName))
                         {
+                            add(returnedTypeInfo.createModel(returnedTypeInfo.DefaultName));
+                        }
+                        else
+                        {
+                            //Default name in use (second instance of model). Ask user for new name.
                             callback.getInputString("Enter a name.", delegate(String input, ref String err)
                             {
                                 if (!hasItem(input))
                                 {
-                                    add((Model)constructor.Invoke(new Object[] { input }));
+                                    add(returnedTypeInfo.createModel(input));
                                     return true;
                                 }
                                 err = String.Format("An item named {0} already exists. Please input another name.", input);
                                 return false;
                             });
-                            return true;
                         }
+                        return true;
                     }
                     return false;
                 });

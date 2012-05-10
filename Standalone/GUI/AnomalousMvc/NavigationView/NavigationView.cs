@@ -13,7 +13,7 @@ namespace Medical.GUI.AnomalousMvc
         public NavigationView(String name)
             :base(name)
         {
-            NavigationModelName = "DefaultNavigation";
+            NavigationModelName = NavigationModel.DefaultName;
         }
 
         [Editable]
