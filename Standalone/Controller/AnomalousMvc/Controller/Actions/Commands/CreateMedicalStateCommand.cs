@@ -13,15 +13,15 @@ namespace Medical.Controller.AnomalousMvc
     {
         public CreateMedicalStateCommand()
         {
-            WizardStateInfoName = "DefaultWizardStateInfo";
+            WizardStateInfoName = MedicalStateInfoModel.DefaultName;
         }
 
         public override void execute(AnomalousMvcContext context)
         {
-            WizardStateInfo stateInfo = context.getModel<WizardStateInfo>(WizardStateInfoName);
+            MedicalStateInfoModel stateInfo = context.getModel<MedicalStateInfoModel>(WizardStateInfoName);
             if (stateInfo == null)
             {
-                stateInfo = new WizardStateInfo();
+                stateInfo = new MedicalStateInfoModel(WizardStateInfoName);
             }
             context.createMedicalState(stateInfo);
         }

@@ -131,14 +131,14 @@ namespace Medical.Controller.AnomalousMvc
             return standaloneController.TemporaryStateBlender.createBaselineState();
         }
 
-        internal void createMedicalState(WizardStateInfo stateInfo)
+        internal void createMedicalState(MedicalStateInfoModel stateInfo)
         {
             standaloneController.TemporaryStateBlender.forceFinishBlend();
             MedicalState createdState = standaloneController.TemporaryStateBlender.createBaselineState();
             createdState.Notes.DataSource = stateInfo.DataSource;
             createdState.Notes.Notes = stateInfo.Notes;
             createdState.Notes.ProcedureDate = stateInfo.ProcedureDate;
-            createdState.Name = stateInfo.Name;
+            createdState.Name = stateInfo.StateName;
             standaloneController.MedicalStateController.addState(createdState);
         }
 

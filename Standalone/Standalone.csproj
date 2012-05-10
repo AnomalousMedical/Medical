@@ -99,7 +99,6 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreCameraPositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\SetupWizardStateInfoCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\RunCommandsAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowMainInterfaceCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowViewCommand.cs" />
@@ -118,7 +117,7 @@
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationLink.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ReflectedModelCreationInfo.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\WizardStateInfo.cs" />
+    <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection.cs" />

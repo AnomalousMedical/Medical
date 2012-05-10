@@ -8,6 +8,7 @@ using System.IO;
 using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
 using Medical.GUI.AnomalousMvc;
+using Medical.Model;
 
 namespace Medical.GUI
 {
@@ -172,6 +173,7 @@ namespace Medical.GUI
             Browser browser = new Browser("Models");
 
             browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
+            browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
 
             browserWindow.setBrowser(browser);
             browserWindow.ItemSelected += browserWindow_ItemSelected;

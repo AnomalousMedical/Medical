@@ -36,14 +36,14 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void opening()
         {
-            WizardStateInfo wizardStateInfo = context.getModel<WizardStateInfo>(wizardView.WizardStateInfoName);
+            MedicalStateInfoModel wizardStateInfo = context.getModel<MedicalStateInfoModel>(wizardView.WizardStateInfoName);
             if (wizardStateInfo == null)
             {
-                wizardStateInfo = new WizardStateInfo();
+                wizardStateInfo = new MedicalStateInfoModel("MissingStateInfo");
             }
 
             distortionWizard.OnlyText = wizardStateInfo.DataSource;
-            stateNameTextBox.OnlyText = wizardStateInfo.Name;
+            stateNameTextBox.OnlyText = wizardStateInfo.StateName;
             notes.OnlyText = wizardStateInfo.Notes;
             datePicker.Caption = wizardStateInfo.ProcedureDate.ToString();
 

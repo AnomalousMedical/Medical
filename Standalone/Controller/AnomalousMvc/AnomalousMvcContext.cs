@@ -192,7 +192,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public void createMedicalState(WizardStateInfo stateInfo)
+        public void createMedicalState(MedicalStateInfoModel stateInfo)
         {
             core.createMedicalState(stateInfo);
         }

@@ -6,6 +6,7 @@ using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
 using Engine.Attributes;
+using Medical.Model;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -18,7 +19,7 @@ namespace Medical.GUI.AnomalousMvc
             : base(name)
         {
             AttachToScrollView = false;
-            WizardStateInfoName = "DefaultWizardStateInfo";
+            WizardStateInfoName = MedicalStateInfoModel.DefaultName;
         }
 
         public void addThumbnail(NotesThumbnail thumbnail)
