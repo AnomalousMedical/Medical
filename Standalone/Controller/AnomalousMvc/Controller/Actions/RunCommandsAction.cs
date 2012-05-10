@@ -111,11 +111,6 @@ namespace Medical.Controller.AnomalousMvc
                 addCommand(new CreateMedicalStateCommand());
             }));
 
-            editInterface.addCommand(new EditInterfaceCommand("Add Setup Navigation", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new SetupNavigationModel());
-            }));
-
             editInterface.addCommand(new EditInterfaceCommand("Add Navigate Previous", delegate(EditUICallback callback, EditInterfaceCommand command)
             {
                 addCommand(new NavigatePreviousCommand());

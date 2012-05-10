@@ -8,15 +8,21 @@ using Engine.Attributes;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    delegate void NavigationModelEvent(NavigationModel navModel);
+    public delegate void NavigationModelEvent(NavigationModel navModel);
 
-    partial class NavigationModel : Saveable
+    public partial class NavigationModel : Model
     {
+        [DoNotSave]
         private List<NavigationLink> links = new List<NavigationLink>();
+
+        [DoNotSave]
         private int currentIndex = 0;
+
+        [DoNotSave]
         public event NavigationModelEvent CurrentIndexChanged;
 
-        public NavigationModel()
+        public NavigationModel(String name)
+            :base(name)
         {
             Name = "DefaultNavigation";
         }
@@ -103,18 +109,15 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        [Editable]
-        public String Name { get; set; }
-
         protected NavigationModel(LoadInfo info)
+            :base(info)
         {
-            Name = info.GetString("Name");
             info.RebuildList<NavigationLink>("Link", links);
         }
 
-        public void getInfo(SaveInfo info)
+        public override void getInfo(SaveInfo info)
         {
-            info.AddValue("Name", Name);
+            base.getInfo(info);
             info.ExtractList<NavigationLink>("Link", links);
         }
 
@@ -129,27 +132,21 @@ namespace Medical.Controller.AnomalousMvc
 
     partial class NavigationModel
     {
-        private EditInterface editInterface;
         private EditInterfaceManager<NavigationLink> linkEdits;
 
-        public EditInterface getEditInterface(String name)
+        protected override void customizeEditInterface(EditInterface editInterface)
         {
-            if (editInterface == null)
+            editInterface.addCommand(new EditInterfaceCommand("Add Link", addLink));
+
+            linkEdits = new EditInterfaceManager<NavigationLink>(editInterface);
+            linkEdits.addCommand(new EditInterfaceCommand("Remove", removeLink));
+            linkEdits.addCommand(new EditInterfaceCommand("Move Up", moveUp));
+            linkEdits.addCommand(new EditInterfaceCommand("Move Down", moveDown));
+
+            foreach (NavigationLink link in links)
             {
-                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, name, null);
-                editInterface.addCommand(new EditInterfaceCommand("Add Link", addLink));
-
-                linkEdits = new EditInterfaceManager<NavigationLink>(editInterface);
-                linkEdits.addCommand(new EditInterfaceCommand("Remove", removeLink));
-                linkEdits.addCommand(new EditInterfaceCommand("Move Up", moveUp));
-                linkEdits.addCommand(new EditInterfaceCommand("Move Down", moveDown));
-
-                foreach (NavigationLink link in links)
-                {
-                    addLinkDefinition(link);
-                }
+                addLinkDefinition(link);
             }
-            return editInterface;
         }
 
         private void addLink(EditUICallback callback, EditInterfaceCommand command)
@@ -187,7 +184,7 @@ namespace Medical.Controller.AnomalousMvc
 
         private void addLinkDefinition(NavigationLink link)
         {
-            if (editInterface != null)
+            if (linkEdits != null)
             {
                 linkEdits.addSubInterface(link, link.getEditInterface());
             }
@@ -195,7 +192,7 @@ namespace Medical.Controller.AnomalousMvc
 
         private void removeLinkDefinition(NavigationLink link)
         {
-            if (editInterface != null)
+            if (linkEdits != null)
             {
                 linkEdits.removeSubInterface(link);
             }
@@ -203,7 +200,7 @@ namespace Medical.Controller.AnomalousMvc
 
         private void refreshLinkDefinitions()
         {
-            if (editInterface != null)
+            if (linkEdits != null)
             {
                 linkEdits.clearSubInterfaces();
                 foreach (NavigationLink link in links)

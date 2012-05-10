@@ -99,7 +99,6 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreCameraPositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\RestoreMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\SetupNavigationModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\SetupWizardStateInfoCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\RunCommandsAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ShowMainInterfaceCommand.cs" />
@@ -112,6 +111,8 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\StopTimelineCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\MvcController.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
+    <Compile Include="Controller\AnomalousMvc\Model\Model.cs" />
+    <Compile Include="Controller\AnomalousMvc\Model\ModelCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\NavigationLink.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\NavigationModel.cs" />

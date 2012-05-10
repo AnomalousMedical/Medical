@@ -18,6 +18,7 @@ namespace Medical.Controller.AnomalousMvc
         private ViewCollection views;
         private AnomalousMvcCore core;
         private ResourceProvider resourceProvider;
+        private ModelCollection models;
 
         //State recording stuff
         private ModelMemory modelMemory = new ModelMemory();
@@ -32,6 +33,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             controllers = new ControllerCollection();
             views = new ViewCollection();
+            models = new ModelCollection();
             StartupAction = "Common/Start";
             ShutdownAction = "Common/Shutdown";
         }
@@ -200,7 +202,7 @@ namespace Medical.Controller.AnomalousMvc
             modelMemory.add(name, model);
         }
 
-        internal TypeName getModel<TypeName>(String name)
+        public TypeName getModel<TypeName>(String name)
             where TypeName : class
         {
             return modelMemory.get<TypeName>(name);
@@ -228,17 +230,31 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        internal void _setCore(AnomalousMvcCore core)
+        public ModelCollection Models
+        {
+            get
+            {
+                return models;
+            }
+        }
+
+        internal void starting(AnomalousMvcCore core)
         {
             this.core = core;
+            foreach (Model model in models)
+            {
+                model.reset();
+                modelMemory.add(model.Name, model);
+            }
         }
 
         protected AnomalousMvcContext(LoadInfo info)
         {
-            controllers = info.GetValue<ControllerCollection>("Controllers");
-            views = info.GetValue<ViewCollection>("Views");
             StartupAction = info.GetString("StartupAction");
             ShutdownAction = info.GetString("ShutdownAction");
+            controllers = info.GetValue<ControllerCollection>("Controllers");
+            views = info.GetValue<ViewCollection>("Views");
+            models = info.GetValue<ModelCollection>("Models", null);
         }
 
         public void getInfo(SaveInfo info)
@@ -247,6 +263,7 @@ namespace Medical.Controller.AnomalousMvc
             info.AddValue("ShutdownAction", ShutdownAction);
             info.AddValue("Controllers", controllers);
             info.AddValue("Views", views);
+            info.AddValue("Models", models);
         }
 
         public void hideMainInterface(bool showSharedGui)
@@ -388,6 +405,7 @@ namespace Medical.Controller.AnomalousMvc
                 editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "MVC", null);// new EditInterface("MVC");
                 editInterface.addSubInterface(views.getEditInterface("Views"));
                 editInterface.addSubInterface(controllers.getEditInterface("Controllers"));
+                editInterface.addSubInterface(models.getEditInterface("Models"));
                 editInterface.addCommand(new EditInterfaceCommand("Preview", preview));
             }
             return editInterface;

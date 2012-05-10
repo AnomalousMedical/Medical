@@ -169,7 +169,6 @@ namespace Medical.Controller.AnomalousMvc
             using (XmlReader xmlReader = new XmlTextReader(stream))
             {
                 AnomalousMvcContext context = (AnomalousMvcContext)xmlSaver.restoreObject(xmlReader);
-                context._setCore(this);
                 return context;
             }
         }
@@ -177,7 +176,7 @@ namespace Medical.Controller.AnomalousMvc
         public void startRunningContext(AnomalousMvcContext context)
         {
             timelineController.MvcContext = context;
-            context._setCore(this);
+            context.starting(this);
             context.runAction(context.StartupAction);
         }
 

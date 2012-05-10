@@ -8,7 +8,7 @@ using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    partial class NavigationLink : Saveable
+    public partial class NavigationLink : Saveable
     {
         public NavigationLink()
         {
