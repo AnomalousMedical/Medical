@@ -26,7 +26,6 @@ namespace Medical
         public VerticalPopoutLayoutContainer(UpdateTimer mainTimer)
         {
             this.mainTimer = mainTimer;
-            mainTimer.addFixedUpdateListener(this);
         }
 
         public override void setAlpha(float alpha)
@@ -113,7 +112,7 @@ namespace Medical
             }
 
             sizeDelta = newSize - oldSize;
-            animating = true;
+            subscribeToUpdates();
         }
 
         public override Size2 DesiredSize
@@ -138,27 +137,21 @@ namespace Medical
         {
             if (animating)
             {
-                bool finishAnimatingThisFrame = false;
                 currentTime += clock.fSeconds;
-                if (currentTime > animationLength)
+                alpha = currentTime / animationLength;
+                if (alpha > 1.0f)
                 {
-                    currentTime = animationLength;
-                    finishAnimatingThisFrame = true;
+                    alpha = 1.0f;
 
                     finishAnimation();
                     oldChildContainer = null;
                 }
-                alpha = currentTime / animationLength;
                 if (childContainer != null && oldChildContainer != null)
                 {
                     childContainer.setAlpha(alpha);
                 }
                 currentSize = new Size2(WorkingSize.Width, oldSize.Height + sizeDelta.Height * alpha);
                 invalidate();
-                if (finishAnimatingThisFrame)
-                {
-                    animating = false;
-                }
             }
         }
 
@@ -176,6 +169,7 @@ namespace Medical
             {
                 animationComplete(oldChildContainer);
             }
+            unsubscribeFromUpdates();
         }
 
         public override void bringToFront()
@@ -203,6 +197,18 @@ namespace Medical
                     childContainer.Visible = value;
                 }
             }
+        }
+
+        private void subscribeToUpdates()
+        {
+            animating = true;
+            mainTimer.addFixedUpdateListener(this);
+        }
+
+        private void unsubscribeFromUpdates()
+        {
+            animating = false;
+            mainTimer.removeFixedUpdateListener(this);
         }
     }
 }
