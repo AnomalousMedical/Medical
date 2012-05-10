@@ -14,6 +14,7 @@ namespace Medical.GUI.AnomalousMvc
         EditBox datePicker;
         EditBox distortionWizard;
         EditBox notes;
+        private MedicalStateInfoModel stateInfo;
 
         private ThumbnailPickerGUI thumbnailPicker;
 
@@ -21,9 +22,11 @@ namespace Medical.GUI.AnomalousMvc
             : base("Medical.GUI.AnomalousMvc.DistortionWizard.Notes.NotesGUI.layout", wizardView, context)
         {
             stateNameTextBox = widget.findWidget("Notes/DistortionName") as EditBox;
+            stateNameTextBox.EventEditTextChange += new MyGUIEvent(stateNameTextBox_EventEditTextChange);
             datePicker = widget.findWidget("Notes/DateCreated") as EditBox;
             distortionWizard = widget.findWidget("Notes/DistortionWizard") as EditBox;
             notes = widget.findWidget("Notes/NotesText") as EditBox;
+            notes.EventEditTextChange += new MyGUIEvent(notes_EventEditTextChange);
 
             thumbnailPicker = new ThumbnailPickerGUI(context.ImageRenderer, widget.findWidget("Notes/Thumbnails") as ScrollView);
         }
@@ -36,16 +39,17 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void opening()
         {
-            MedicalStateInfoModel wizardStateInfo = context.getModel<MedicalStateInfoModel>(wizardView.WizardStateInfoName);
-            if (wizardStateInfo == null)
+            stateInfo = context.getModel<MedicalStateInfoModel>(wizardView.WizardStateInfoName);
+            if (stateInfo == null)
             {
-                wizardStateInfo = new MedicalStateInfoModel("MissingStateInfo");
+                stateInfo = new MedicalStateInfoModel("MissingStateInfo");
+                context.addModel(wizardView.WizardStateInfoName, stateInfo);
             }
 
-            distortionWizard.OnlyText = wizardStateInfo.DataSource;
-            stateNameTextBox.OnlyText = wizardStateInfo.StateName;
-            notes.OnlyText = wizardStateInfo.Notes;
-            datePicker.Caption = wizardStateInfo.ProcedureDate.ToString();
+            distortionWizard.OnlyText = stateInfo.DataSource;
+            stateNameTextBox.OnlyText = stateInfo.StateName;
+            notes.OnlyText = stateInfo.Notes;
+            datePicker.Caption = stateInfo.ProcedureDate.ToString();
 
             foreach (NotesThumbnail thumb in wizardView.Thumbnails)
             {
@@ -54,11 +58,14 @@ namespace Medical.GUI.AnomalousMvc
             thumbnailPicker.updateThumbnails();
         }
 
-        //protected override void commitOutstandingData()
-        //{
-        //    wizard.StateName = stateNameTextBox.OnlyText;
-        //    wizard.Notes = notes.OnlyText;
-        //    wizard.Thumbnail = thumbnailPicker.SelectedThumbnail;
-        //}
+        void stateNameTextBox_EventEditTextChange(Widget source, EventArgs e)
+        {
+            stateInfo.StateName = stateNameTextBox.OnlyText;
+        }
+
+        void notes_EventEditTextChange(Widget source, EventArgs e)
+        {
+            stateInfo.Notes = notes.OnlyText;
+        }
     }
 }

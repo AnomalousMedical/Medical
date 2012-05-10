@@ -13,7 +13,6 @@ namespace Medical.GUI.AnomalousMvc
     {
         private ImageAtlas thumbnailImages;
         private List<ThumbnailPickerInfo> thumbnailProperties = new List<ThumbnailPickerInfo>();
-        private Dictionary<ButtonGridItem, Bitmap> currentImages = new Dictionary<ButtonGridItem, Bitmap>();
         private ImageRenderer imageRenderer;
         private ButtonGrid imageGrid;
 
@@ -44,48 +43,28 @@ namespace Medical.GUI.AnomalousMvc
         {
             if (imageRenderer != null)
             {
-                foreach (Bitmap bitmap in currentImages.Values)
-                {
-                    bitmap.Dispose();
-                }
                 thumbnailImages.clear();
-                currentImages.Clear();
+                imageGrid.SuppressLayout = true;
                 imageGrid.clear();
-                foreach (ThumbnailPickerInfo imageProperties in thumbnailProperties)
+                foreach (ThumbnailPickerInfo thumbProp in thumbnailProperties)
                 {
-                    Bitmap thumb = imageRenderer.renderImage(imageProperties.configureProperties());
-                    String imageId = thumbnailImages.addImage(thumb, thumb);
-                    ButtonGridItem item = imageGrid.addItem("Main", "", imageId);
-                    currentImages.Add(item, thumb);
+                    using (Bitmap thumb = imageRenderer.renderImage(thumbProp.ImageProperties))
+                    {
+                        String imageId = thumbnailImages.addImage(thumb, thumb);
+                        ButtonGridItem item = imageGrid.addItem("Main", "", imageId);
+                        item.UserObject = thumbProp;
+                    }
                 }
                 if (imageGrid.Count > 0)
                 {
                     imageGrid.SelectedItem = imageGrid.getItem(0);
                 }
+                imageGrid.SuppressLayout = false;
+                imageGrid.layout();
             }
             else
             {
                 throw new Exception("Cannot generate thumbnails for the Thumbnail Picker. Image Renderer is null.");
-            }
-        }
-
-        /// <summary>
-        /// Returns the currently selected thumbnail bitmap. This actually
-        /// renders a new thumbnail when this function is called, so the
-        /// thumbnail will always be up to date. This means that the caller is
-        /// responsible for disposing the returned image. This will return null
-        /// if no thumbnail is selected.
-        /// </summary>
-        public Bitmap SelectedThumbnail
-        {
-            get
-            {
-                ButtonGridItem selectedItem = imageGrid.SelectedItem;
-                if (selectedItem != null)
-                {
-                    return currentImages[selectedItem];
-                }
-                return null;
             }
         }
     }

@@ -31,15 +31,12 @@ namespace Medical.GUI.AnomalousMvc
             imageProp.CameraLookAt = thumb.CameraPosition.LookAt;
         }
 
-        public ImageRendererProperties configureProperties()
+        public ImageRendererProperties ImageProperties
         {
-            //imageProp.NavigationStateName = navigationState;
-            //imageProp.LayerStateName = layerState;
-            //imageProp.LayerState = layerController.CurrentLayers.getState(layerState);
-            //NavigationState navState = navigationController.getState(navigationState);
-            //imageProp.CameraLookAt = navState.LookAt;
-            //imageProp.CameraPosition = navState.Translation;
-            return imageProp;
+            get
+            {
+                return imageProp;
+            }
         }
     }
 }
