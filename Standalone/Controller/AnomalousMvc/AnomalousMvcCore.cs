@@ -139,6 +139,12 @@ namespace Medical.Controller.AnomalousMvc
             createdState.Notes.Notes = stateInfo.Notes;
             createdState.Notes.ProcedureDate = stateInfo.ProcedureDate;
             createdState.Name = stateInfo.StateName;
+
+            if (stateInfo.ThumbInfo != null)
+            {
+                createdState.Thumbnail = ImageRenderer.renderImage(stateInfo.ThumbInfo);
+            }
+
             standaloneController.MedicalStateController.addState(createdState);
         }
 

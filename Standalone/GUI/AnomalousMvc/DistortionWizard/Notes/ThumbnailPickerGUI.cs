@@ -9,6 +9,8 @@ using Medical.Controller;
 
 namespace Medical.GUI.AnomalousMvc
 {
+    delegate void ThumbnailPickerGUIEvent(ThumbnailPickerGUI thumbPicker);
+
     class ThumbnailPickerGUI : IDisposable
     {
         private ImageAtlas thumbnailImages;
@@ -16,10 +18,13 @@ namespace Medical.GUI.AnomalousMvc
         private ImageRenderer imageRenderer;
         private ButtonGrid imageGrid;
 
+        public event ThumbnailPickerGUIEvent SelectedThumbnailChanged;
+
         public ThumbnailPickerGUI(ImageRenderer imageRenderer, ScrollView thumbnailScroll)
         {
             this.imageRenderer = imageRenderer;
             imageGrid = new ButtonGrid(thumbnailScroll);
+            imageGrid.SelectedValueChanged += new EventHandler(imageGrid_SelectedValueChanged);
             thumbnailImages = new ImageAtlas("ThumbnailPicker", new Size2(imageGrid.ItemWidth, imageGrid.ItemHeight), new Size2(512, 512));
         }
 
@@ -65,6 +70,35 @@ namespace Medical.GUI.AnomalousMvc
             else
             {
                 throw new Exception("Cannot generate thumbnails for the Thumbnail Picker. Image Renderer is null.");
+            }
+        }
+
+        public ImageRendererProperties SelectedThumbnailProperties
+        {
+            get
+            {
+                ThumbnailPickerInfo thumbInfo = (ThumbnailPickerInfo)imageGrid.SelectedItem.UserObject;
+                if (thumbInfo != null)
+                {
+                    return thumbInfo.ImageProperties;
+                }
+                else if (imageGrid.Count > 0)
+                {
+                    thumbInfo = (ThumbnailPickerInfo)imageGrid.getItem(0).UserObject;
+                    return thumbInfo.ImageProperties;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        void imageGrid_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (SelectedThumbnailChanged != null)
+            {
+                SelectedThumbnailChanged.Invoke(this);
             }
         }
     }

@@ -19,6 +19,7 @@ namespace Medical.Model
             DataSource = "Anomalous Medical";
             DefaultStateName = "Custom Distortion";
             DefaultNotes = "";
+            ThumbInfo = null;
         }
 
         public override void reset()
@@ -26,6 +27,7 @@ namespace Medical.Model
             procedureDate = DateTime.Now;
             Notes = DefaultNotes;
             StateName = DefaultStateName;
+            ThumbInfo = null;
         }
 
         [DoNotSave]
@@ -76,6 +78,20 @@ namespace Medical.Model
             set
             {
                 stateName = value;
+            }
+        }
+
+        [DoNotSave]
+        private ImageRendererProperties thumbInfo;
+        public ImageRendererProperties ThumbInfo
+        {
+            get
+            {
+                return thumbInfo;
+            }
+            set
+            {
+                thumbInfo = value;
             }
         }
 
