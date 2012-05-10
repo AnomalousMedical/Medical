@@ -7,20 +7,18 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class MyGUIWindowViewHost : Dialog, ViewHost
+    class WindowDecorator : Dialog, ViewHostComponent
     {
-        protected MyGUILayoutContainer layoutContainer;
         private ViewHostComponent child;
 
-        public MyGUIWindowViewHost(ViewHostComponent child)
-            :base("Medical.GUI.AnomalousMvc.Decorators.MyGUIWindowViewHost.layout")
+        public WindowDecorator(ViewHostComponent child)
+            : base("Medical.GUI.AnomalousMvc.Decorators.WindowDecorator.layout")
         {
             this.child = child;
             child.Widget.attachToWidget(window);
             IntCoord clientCoord = window.ClientCoord;
             child.Widget.setCoord(0, 0, clientCoord.width, clientCoord.height);
             child.Widget.Align = Align.Stretch;
-            layoutContainer = new MyGUILayoutContainer(window);
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
             child.topLevelResized();
@@ -44,11 +42,24 @@ namespace Medical.GUI.AnomalousMvc
             this.close();
         }
 
-        public LayoutContainer Container
+        public void topLevelResized()
+        {
+            child.topLevelResized();
+        }
+
+        public MyGUIViewHost ViewHost
         {
             get
             {
-                return layoutContainer;
+                return child.ViewHost;
+            }
+        }
+
+        public Widget Widget
+        {
+            get
+            {
+                return window;
             }
         }
 

@@ -18,15 +18,27 @@ namespace Medical.GUI.AnomalousMvc
 
         public ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
+            ViewHostComponent component = null;
             foreach (ViewHostComponentFactory factory in concreteComponentFactories)
             {
-                ViewHostComponent component = factory.createViewHostComponent(view, context, viewHost);
+                component = factory.createViewHostComponent(view, context, viewHost);
                 if (component != null)
                 {
-                    return component;
+                    break;
                 }
             }
-            return null;
+
+            if(component == null)
+            {
+                return component;
+            }
+
+            if (view.ViewLocation == ViewLocations.Floating)
+            {
+                component = new WindowDecorator(component);
+            }
+
+            return component;
         }
 
         public void createViewBrowser(Browser browser)

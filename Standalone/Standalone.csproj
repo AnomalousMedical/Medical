@@ -122,7 +122,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\MyGUIWindowViewHost.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
     <Compile Include="Layout\FloatingLayoutContainer.cs" />
@@ -691,7 +691,7 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\WizardComponent.layout" />
-    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\MyGUIWindowViewHost.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\WindowDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationComponent.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetViewHost.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
