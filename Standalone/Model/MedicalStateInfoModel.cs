@@ -17,13 +17,15 @@ namespace Medical.Model
             :base(name)
         {
             DataSource = "Anomalous Medical";
-            StateName = "Custom Distortion";
-            Notes = "";
+            DefaultStateName = "Custom Distortion";
+            DefaultNotes = "";
         }
 
         public override void reset()
         {
             procedureDate = DateTime.Now;
+            Notes = DefaultNotes;
+            StateName = DefaultStateName;
         }
 
         [DoNotSave]
@@ -44,10 +46,38 @@ namespace Medical.Model
         public String DataSource { get; set; }
 
         [Editable]
-        public String Notes { get; set; }
+        public String DefaultNotes { get; set; }
 
         [Editable]
-        public String StateName { get; set; }
+        public String DefaultStateName { get; set; }
+
+        [DoNotSave]
+        private String notes;
+        public String Notes
+        {
+            get
+            {
+                return notes;
+            }
+            set
+            {
+                notes = value;
+            }
+        }
+
+        [DoNotSave]
+        private String stateName;
+        public String StateName
+        {
+            get
+            {
+                return stateName;
+            }
+            set
+            {
+                stateName = value;
+            }
+        }
 
         protected MedicalStateInfoModel(LoadInfo info)
             :base(info)
