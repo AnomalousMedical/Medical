@@ -10,7 +10,7 @@ namespace Medical.Controller.AnomalousMvc
 {
     public delegate void NavigationModelEvent(NavigationModel navModel);
 
-    public partial class NavigationModel : Model
+    public partial class NavigationModel : MvcModel
     {
         public const String DefaultName = "DefaultNavigation";
 

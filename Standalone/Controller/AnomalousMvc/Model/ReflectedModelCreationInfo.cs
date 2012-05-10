@@ -16,12 +16,12 @@ namespace Medical.Controller.AnomalousMvc
             this.ModelType = modelType;
         }
 
-        public Model createModel(String name)
+        public MvcModel createModel(String name)
         {
             ConstructorInfo constructor = ModelType.GetConstructor(BindingFlags.Public | BindingFlags.Instance, null, constructorArgs, null);
             if (constructor != null)
             {
-                return (Model)constructor.Invoke(new Object[] { name });
+                return (MvcModel)constructor.Invoke(new Object[] { name });
             }
             return null;
         }

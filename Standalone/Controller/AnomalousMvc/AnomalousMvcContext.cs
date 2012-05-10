@@ -241,7 +241,7 @@ namespace Medical.Controller.AnomalousMvc
         internal void starting(AnomalousMvcCore core)
         {
             this.core = core;
-            foreach (Model model in models)
+            foreach (MvcModel model in models)
             {
                 model.reset();
                 modelMemory.add(model.Name, model);

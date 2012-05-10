@@ -7,9 +7,9 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public abstract class Model : SaveableEditableItem
+    public abstract class MvcModel : SaveableEditableItem
     {
-        public Model(String name)
+        public MvcModel(String name)
             :base(name)
         {
 
@@ -20,7 +20,7 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
-        protected Model(LoadInfo info)
+        protected MvcModel(LoadInfo info)
             : base(info)
         {
 

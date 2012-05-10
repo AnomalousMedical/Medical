@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public class ModelCollection : SaveableEditableItemCollection<Model>
+    public class ModelCollection : SaveableEditableItemCollection<MvcModel>
     {
         private static readonly Type[] constructorArgs = { typeof(String) };
 
@@ -18,7 +18,7 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
-        public override void customizeEditInterface(EditInterface editInterface, EditInterfaceManager<Model> itemEdits)
+        public override void customizeEditInterface(EditInterface editInterface, EditInterfaceManager<MvcModel> itemEdits)
         {
             editInterface.addCommand(new EditInterfaceCommand("Add Model", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {

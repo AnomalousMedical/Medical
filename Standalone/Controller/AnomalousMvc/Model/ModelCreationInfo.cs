@@ -7,7 +7,7 @@ namespace Medical.Controller.AnomalousMvc
 {
     public interface ModelCreationInfo
     {
-        Model createModel(String name);
+        MvcModel createModel(String name);
 
         String DefaultName { get; set; }
     }
