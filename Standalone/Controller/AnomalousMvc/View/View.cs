@@ -14,8 +14,11 @@ namespace Medical.Controller.AnomalousMvc
         public View(String name)
             :base(name)
         {
-            
+            ViewLocation = ViewLocations.Left;
         }
+
+        [Editable]
+        public ViewLocations ViewLocation { get; set; }
 
         protected View(LoadInfo info)
             :base (info)

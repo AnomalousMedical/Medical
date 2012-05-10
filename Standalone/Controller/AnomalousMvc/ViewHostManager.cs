@@ -47,9 +47,9 @@ namespace Medical.Controller.AnomalousMvc
             this.viewHostFactory = viewHostFactory;
         }
 
-        public void requestOpen(View view, AnomalousMvcContext context, ViewLocations viewLocation)
+        public void requestOpen(View view, AnomalousMvcContext context)
         {
-            switch (viewLocation)
+            switch (view.ViewLocation)
             {
                 case ViewLocations.Left:
                     queuedLeft = view;
