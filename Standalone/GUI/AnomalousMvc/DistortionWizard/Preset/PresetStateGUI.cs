@@ -13,7 +13,7 @@ using Engine.Saving.XMLSaver;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class PresetStateGUI : WizardPanel<PresetStateView>
+    class PresetStateGUI : WizardComponent<PresetStateView>
     {
         private static XmlSaver xmlSaver = new XmlSaver();
         private ButtonGridItem defaultItem = null;

@@ -8,7 +8,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class TeethAdaptationGUI : WizardPanel<TeethAdaptationView>
+    class TeethAdaptationGUI : WizardComponent<TeethAdaptationView>
     {
         private TeethMovementGUI teethMovementPanel;
 

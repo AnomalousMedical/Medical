@@ -9,7 +9,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class BoneManipulatorGUI<WizardViewType> : WizardPanel<WizardViewType>
+    class BoneManipulatorGUI<WizardViewType> : WizardComponent<WizardViewType>
         where WizardViewType : WizardView
     {
         private List<BoneManipulatorSlider> openingValues = new List<BoneManipulatorSlider>();

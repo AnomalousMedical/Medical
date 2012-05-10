@@ -14,7 +14,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class DopplerGUI : WizardPanel<DopplerView>
+    class DopplerGUI : WizardComponent<DopplerView>
     {
         private DopplerControl dopplerControl;
 

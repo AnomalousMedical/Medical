@@ -8,7 +8,7 @@ using libRocketPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RmlWidgetViewHost : LayoutComponent
+    class RmlWidgetComponent : LayoutComponent
     {
         private RocketWidget rocketWidget;
         private ImageBox rmlImage;
@@ -16,7 +16,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private AnomalousMvcContext context;
 
-        public RmlWidgetViewHost(RmlView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+        public RmlWidgetComponent(RmlView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
             :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetViewHost.layout", viewHost)
         {
             this.context = context;

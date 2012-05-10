@@ -9,7 +9,7 @@ using Logging;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class NavigationGui : LayoutComponent
+    class NavigationComponent : LayoutComponent
     {
         private ScrollView iconScrollView;
         private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10.0f, new Vector2(4.0f, 10.0f));
@@ -19,8 +19,8 @@ namespace Medical.GUI.AnomalousMvc
         private AnomalousMvcContext context;
         private NavigationModel navModel;
 
-        public NavigationGui(NavigationView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            :base("Medical.GUI.AnomalousMvc.NavigationView.NavigationGui.layout", viewHost)
+        public NavigationComponent(NavigationView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.AnomalousMvc.NavigationView.NavigationComponent.layout", viewHost)
         {
             this.view = view;
             this.context = context;

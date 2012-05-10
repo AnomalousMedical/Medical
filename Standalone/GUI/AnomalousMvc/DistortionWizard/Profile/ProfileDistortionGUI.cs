@@ -8,7 +8,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class ProfileDistortionGUI : WizardPanel<ProfileDistortionView>
+    class ProfileDistortionGUI : WizardComponent<ProfileDistortionView>
     {
         private Button rightSideCamera;
         private Button rightMidCamera;

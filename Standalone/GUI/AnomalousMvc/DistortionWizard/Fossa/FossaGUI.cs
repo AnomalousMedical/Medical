@@ -7,7 +7,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class FossaGUI : WizardPanel<WizardView>
+    class FossaGUI : WizardComponent<WizardView>
     {
         Fossa fossa;
         private bool allowUpdates = true;

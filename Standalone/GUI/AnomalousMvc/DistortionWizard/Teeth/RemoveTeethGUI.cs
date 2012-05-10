@@ -7,7 +7,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RemoveTeethGUI : WizardPanel<WizardView>
+    class RemoveTeethGUI : WizardComponent<WizardView>
     {
         private List<ToothButton> toothButtons = new List<ToothButton>();
 

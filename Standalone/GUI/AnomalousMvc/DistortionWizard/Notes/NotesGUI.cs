@@ -8,7 +8,7 @@ using Medical.Model;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class NotesGUI : WizardPanel<NotesView>
+    class NotesGUI : WizardComponent<NotesView>
     {
         EditBox stateNameTextBox;
         EditBox datePicker;

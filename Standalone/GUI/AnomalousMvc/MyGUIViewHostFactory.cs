@@ -13,9 +13,9 @@ namespace Medical.GUI.AnomalousMvc
 
         public MyGUIViewHostFactory()
         {
-            componentFactory.addFactory(new RmlViewHostFactory());
-            componentFactory.addFactory(new NavigationViewHostFactory());
-            componentFactory.addFactory(new DistortionWizardViewHostFactory());
+            componentFactory.addFactory(new RmlComponentFactory());
+            componentFactory.addFactory(new NavigationComponentFactory());
+            componentFactory.addFactory(new WizardComponentFactory());
         }
 
         public ViewHost createViewHost(View view, AnomalousMvcContext context)

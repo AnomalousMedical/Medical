@@ -13,7 +13,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class DiscSpaceGUI : WizardPanel<DiscSpaceView>
+    class DiscSpaceGUI : WizardComponent<DiscSpaceView>
     {
         private Vector3 openingStateOffset = Vector3.Zero;
 
