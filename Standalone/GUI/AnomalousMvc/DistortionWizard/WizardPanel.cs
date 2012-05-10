@@ -8,7 +8,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class WizardPanel<WizardViewType> : MyGUIViewHost
+    class WizardPanel<WizardViewType> : LayoutComponent
         where WizardViewType : WizardView
     {
         private Layout layout;
@@ -17,8 +17,8 @@ namespace Medical.GUI.AnomalousMvc
         protected WizardViewType wizardView;
         protected AnomalousMvcContext context;
 
-        public WizardPanel(String layoutFile, WizardViewType view, AnomalousMvcContext context)
-            :base("Medical.GUI.AnomalousMvc.DistortionWizard.WizardPanel.layout")
+        public WizardPanel(String layoutFile, WizardViewType view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            :base("Medical.GUI.AnomalousMvc.DistortionWizard.WizardPanel.layout", viewHost)
         {
             this.wizardView = view;
             this.context = context;
@@ -57,22 +57,22 @@ namespace Medical.GUI.AnomalousMvc
 
         void previousButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.PreviousAction, this);
+            context.runAction(wizardView.PreviousAction, ViewHost);
         }
 
         void nextButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.NextAction, this);
+            context.runAction(wizardView.NextAction, ViewHost);
         }
 
         void finishButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.FinishAction, this);
+            context.runAction(wizardView.FinishAction, ViewHost);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.CancelAction, this);
+            context.runAction(wizardView.CancelAction, ViewHost);
         }
     }
 }

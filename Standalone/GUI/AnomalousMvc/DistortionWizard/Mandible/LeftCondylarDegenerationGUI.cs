@@ -22,8 +22,8 @@ namespace Medical.GUI.AnomalousMvc
 
         private GridPropertiesControl gridPropertiesControl;
 
-        public LeftCondylarDegenerationGUI(LeftCondylarDegenerationView view, AnomalousMvcContext context)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Mandible.LeftCondylarDegenerationGUI.layout", view, context)
+        public LeftCondylarDegenerationGUI(LeftCondylarDegenerationView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Mandible.LeftCondylarDegenerationGUI.layout", view, context, viewHost)
         {
             leftCondyleDegenerationSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/CondyleSlider") as ScrollBar);
             leftLateralPoleSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleDegen/LateralPoleSlider") as ScrollBar);
@@ -69,7 +69,7 @@ namespace Medical.GUI.AnomalousMvc
             {
                 if (wizardView.ShowOsteophyteAction != null)
                 {
-                    context.runAction(wizardView.ShowOsteophyteAction, this);
+                    context.runAction(wizardView.ShowOsteophyteAction, ViewHost);
                 }
                 showingWear = true;
             }
@@ -81,7 +81,7 @@ namespace Medical.GUI.AnomalousMvc
             {
                 if (wizardView.NormalAction != null)
                 {
-                    context.runAction(wizardView.NormalAction, this);
+                    context.runAction(wizardView.NormalAction, ViewHost);
                 }
                 showingWear = false;
             }

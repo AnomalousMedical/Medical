@@ -7,35 +7,36 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    abstract class MyGUIViewHost : ViewHost
+    class MyGUIViewHost : ViewHost
     {
-        private Layout layout;
-        protected Widget widget;
-        protected MyGUILayoutContainer layoutContainer;
+        private ViewHostComponent component;
+        private MyGUILayoutContainer layoutContainer;
 
-        public MyGUIViewHost(String layoutFile)
+        public MyGUIViewHost()
         {
-            layout = LayoutManager.Instance.loadLayout(layoutFile);
-            widget = layout.getWidget(0);
-            layoutContainer = new MyGUILayoutContainer(widget);
+            
         }
 
-        public virtual void Dispose()
+        public void setTopComponent(ViewHostComponent component)
         {
-            if (layout != null)
-            {
-                LayoutManager.Instance.unloadLayout(layout);
-            }
+            this.component = component;
+            layoutContainer = new MyGUILayoutContainer(component.Widget);
+            layoutContainer.LayoutChanged += new Action(layoutContainer_LayoutChanged);
         }
 
-        public virtual void opening()
+        public void Dispose()
         {
-
+            component.Dispose();
         }
 
-        public virtual void closing()
+        public void opening()
         {
+            component.opening();
+        }
 
+        public void closing()
+        {
+            component.closing();
         }
 
         public LayoutContainer Container
@@ -46,12 +47,16 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
-
         public bool _RequestClosed { get; set; }
 
         public void _animationCallback(LayoutContainer oldChild)
         {
             Dispose();
+        }
+
+        void layoutContainer_LayoutChanged()
+        {
+            component.topLevelResized();
         }
     }
 }

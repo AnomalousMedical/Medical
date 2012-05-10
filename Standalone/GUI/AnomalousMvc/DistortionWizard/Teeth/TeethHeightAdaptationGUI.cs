@@ -20,8 +20,8 @@ namespace Medical.GUI.AnomalousMvc
 
         GridPropertiesControl gridPropertiesControl;
 
-        public TeethHeightAdaptationGUI(TeethHeightAdaptationView wizardView, AnomalousMvcContext context)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Teeth.TeethHeightAdaptationGUI.layout", wizardView, context)
+        public TeethHeightAdaptationGUI(TeethHeightAdaptationView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Teeth.TeethHeightAdaptationGUI.layout", wizardView, context, viewHost)
         {
             gridPropertiesControl = new GridPropertiesControl(context.MeasurementGrid, widget);
             gridPropertiesControl.GridSpacing = 2;
@@ -99,7 +99,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             if (style == MessageBoxStyle.Yes)
             {
-                context.runAction(wizardView.UndoAction, this);
+                context.runAction(wizardView.UndoAction, ViewHost);
                 heightControl.getPositionFromScene();
             }
         }

@@ -14,8 +14,8 @@ namespace Medical.GUI.AnomalousMvc
     {
         private List<BoneManipulatorSlider> openingValues = new List<BoneManipulatorSlider>();
 
-        public BoneManipulatorGUI(String panelFile, WizardViewType view, AnomalousMvcContext context)
-            : base(panelFile, view, context)
+        public BoneManipulatorGUI(String panelFile, WizardViewType view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base(panelFile, view, context, viewHost)
         {
             
         }

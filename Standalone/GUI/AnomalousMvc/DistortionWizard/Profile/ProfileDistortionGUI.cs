@@ -23,8 +23,8 @@ namespace Medical.GUI.AnomalousMvc
         private Button undoButton;
         private Button makeNormalButton;
 
-        public ProfileDistortionGUI(ProfileDistortionView wizardView, AnomalousMvcContext context)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Profile.ProfileDistortionGUI.layout", wizardView, context)
+        public ProfileDistortionGUI(ProfileDistortionView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Profile.ProfileDistortionGUI.layout", wizardView, context, viewHost)
         {
             rightSideCamera = widget.findWidget("ProfilePanel/RightCamera") as Button;
             rightMidCamera = widget.findWidget("ProfilePanel/RightMidCamera") as Button;
@@ -60,27 +60,27 @@ namespace Medical.GUI.AnomalousMvc
 
         void leftSideCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.LeftSideAction, this);
+            context.runAction(wizardView.LeftSideAction, ViewHost);
         }
 
         void leftMidCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.LeftMidAction, this);
+            context.runAction(wizardView.LeftMidAction, ViewHost);
         }
 
         void midlineCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.MidlineAction, this);
+            context.runAction(wizardView.MidlineAction, ViewHost);
         }
 
         void rightMidCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.RightMidAction, this);
+            context.runAction(wizardView.RightMidAction, ViewHost);
         }
 
         void rightSideCamera_MouseButtonClick(Widget source, EventArgs e)
         {
-            context.runAction(wizardView.RightSideAction, this);
+            context.runAction(wizardView.RightSideAction, ViewHost);
         }
 
         void adaptButton_CheckedChanged(Widget sender, EventArgs e)
@@ -125,7 +125,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             if (style == MessageBoxStyle.Yes)
             {
-                context.runAction(wizardView.UndoAction, this);
+                context.runAction(wizardView.UndoAction, ViewHost);
                 heightControl.getPositionFromScene();
             }
         }

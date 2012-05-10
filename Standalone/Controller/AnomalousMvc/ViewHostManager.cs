@@ -38,6 +38,9 @@ namespace Medical.Controller.AnomalousMvc
         private AnomalousMvcContext queuedTopContext;
         private AnomalousMvcContext queuedBottomContext;
 
+        private List<KeyValuePair<View, AnomalousMvcContext>> queuedFloatingViews = new List<KeyValuePair<View, AnomalousMvcContext>>();
+        private List<ViewHost> openFloatingViews = new List<ViewHost>();
+
         public ViewHostManager(GUIManager guiManager, ViewHostFactory viewHostFactory)
         {
             this.guiManager = guiManager;
@@ -63,6 +66,9 @@ namespace Medical.Controller.AnomalousMvc
                 case ViewLocations.Bottom:
                     queuedBottom = view;
                     queuedBottomContext = context;
+                    break;
+                case ViewLocations.Floating:
+                    queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
                     break;
             }
         }
@@ -92,6 +98,10 @@ namespace Medical.Controller.AnomalousMvc
             if (currentBottom != null)
             {
                 currentBottom._RequestClosed = true;
+            }
+            foreach (ViewHost viewHost in openFloatingViews)
+            {
+                viewHost._RequestClosed = true;
             }
         }
 
@@ -220,6 +230,29 @@ namespace Medical.Controller.AnomalousMvc
             }
             queuedBottom = null;
             queuedBottomContext = null;
+
+            //Floating views
+            for (int i = 0; i < openFloatingViews.Count; ++i)
+            {
+                ViewHost host = openFloatingViews[i];
+                if (host._RequestClosed)
+                {
+                    host.closing();
+                    //TEMP, this will crash unless it happens after the event fires, so delay the close for a bit
+                    ThreadManager.invoke(new Action(delegate()
+                    {
+                        host._animationCallback(null);
+                    }));
+                    openFloatingViews.RemoveAt(i--);
+                }
+            }
+            foreach (KeyValuePair<View, AnomalousMvcContext> viewInfo in queuedFloatingViews)
+            {
+                ViewHost viewHost = viewHostFactory.createViewHost(viewInfo.Key, viewInfo.Value);
+                viewHost.opening();
+                openFloatingViews.Add(viewHost);
+            }
+            queuedFloatingViews.Clear();
         }
 
         public bool HasOpenViews
@@ -229,7 +262,8 @@ namespace Medical.Controller.AnomalousMvc
                 return currentLeft != null ||
                     currentRight != null ||
                     currentTop != null ||
-                    currentBottom != null;
+                    currentBottom != null ||
+                    openFloatingViews.Count > 0;
             }
         }
     }

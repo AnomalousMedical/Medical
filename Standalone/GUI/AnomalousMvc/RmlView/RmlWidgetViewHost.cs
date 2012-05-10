@@ -8,7 +8,7 @@ using libRocketPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RmlWidgetViewHost : MyGUIViewHost
+    class RmlWidgetViewHost : LayoutComponent
     {
         private RocketWidget rocketWidget;
         private ImageBox rmlImage;
@@ -16,8 +16,8 @@ namespace Medical.GUI.AnomalousMvc
 
         private AnomalousMvcContext context;
 
-        public RmlWidgetViewHost(RmlView view, AnomalousMvcContext context)
-            :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetViewHost.layout")
+        public RmlWidgetViewHost(RmlView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetViewHost.layout", viewHost)
         {
             this.context = context;
 
@@ -25,12 +25,7 @@ namespace Medical.GUI.AnomalousMvc
             rocketWidget = new RocketWidget(rmlImage);
             imageHeight = rmlImage.Height;
 
-            Button closeButton = (Button)widget.findWidget("Close");
-            closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
-
-            layoutContainer.LayoutChanged += new Action(layoutContainer_LayoutChanged);
-
-            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, this));
+            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
             using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(view.RmlFile)))
             {
                 if (document != null)
@@ -47,18 +42,14 @@ namespace Medical.GUI.AnomalousMvc
             base.Dispose();
         }
 
-        void layoutContainer_LayoutChanged()
+        public override void topLevelResized()
         {
             if (widget.Height != imageHeight)
             {
                 rocketWidget.resized();
                 imageHeight = widget.Height;
             }
-        }
-
-        void closeButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            context.queueCloseView();
+            base.topLevelResized();
         }
     }
 }

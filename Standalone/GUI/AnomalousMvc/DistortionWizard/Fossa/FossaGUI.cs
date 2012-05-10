@@ -16,8 +16,8 @@ namespace Medical.GUI.AnomalousMvc
 
         MinMaxScroll eminanceSlider;
 
-        public FossaGUI(String fossaName, String panelFile, WizardView view, AnomalousMvcContext context)
-            : base(panelFile, view, context)
+        public FossaGUI(String fossaName, String panelFile, WizardView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base(panelFile, view, context, viewHost)
         {
             eminanceSlider = new MinMaxScroll(widget.findWidget("FlatnessSlider") as ScrollBar);
             eminanceSlider.Minimum = 0;

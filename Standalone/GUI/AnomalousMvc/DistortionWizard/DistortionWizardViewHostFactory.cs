@@ -7,14 +7,14 @@ using Engine.Editing;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class DistortionWizardViewHostFactory : ViewHostFactory
+    class DistortionWizardViewHostFactory : ViewHostComponentFactory
     {
-        public ViewHost createViewHost(View view, AnomalousMvcContext context)
+        public ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             if (typeof(WizardView).IsAssignableFrom(view.GetType()))
             {
                 WizardView wizardView = (WizardView)view;
-                return wizardView.createViewHost(context);
+                return wizardView.createViewHost(context, viewHost);
             }
             return null;
         }

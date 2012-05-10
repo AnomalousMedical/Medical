@@ -11,8 +11,8 @@ namespace Medical.GUI.AnomalousMvc
     {
         private List<ToothButton> toothButtons = new List<ToothButton>();
 
-        public RemoveTeethGUI(String layoutFile, WizardView wizardView, AnomalousMvcContext context)
-            : base(layoutFile, wizardView, context)
+        public RemoveTeethGUI(String layoutFile, WizardView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base(layoutFile, wizardView, context, viewHost)
         {
             Widget toothPanel = widget.findWidget("ToothPanel");
             uint numChildren = toothPanel.ChildCount;

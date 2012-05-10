@@ -27,8 +27,8 @@ namespace Medical.GUI.AnomalousMvc
         private Button superiorJointCameraButton;
         private Button bothJointsCameraButton;
 
-        public DopplerGUI(DopplerView wizardView, AnomalousMvcContext context)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Doppler.DopplerGUI.layout", wizardView, context)
+        public DopplerGUI(DopplerView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Doppler.DopplerGUI.layout", wizardView, context, viewHost)
         {
             dopplerControl = new DopplerControl(widget);
 

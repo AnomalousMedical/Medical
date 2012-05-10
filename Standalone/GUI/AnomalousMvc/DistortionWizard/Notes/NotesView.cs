@@ -46,9 +46,9 @@ namespace Medical.GUI.AnomalousMvc
         [EditableModel(typeof(MedicalStateInfoModel))]
         public String WizardStateInfoName { get; set; }
 
-        public override ViewHost createViewHost(AnomalousMvcContext context)
+        public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new NotesGUI(this, context);
+            return new NotesGUI(this, context, viewHost);
         }
 
         protected NotesView(LoadInfo info)

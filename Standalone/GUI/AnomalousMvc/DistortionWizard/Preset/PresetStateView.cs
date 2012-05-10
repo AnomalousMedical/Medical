@@ -16,9 +16,9 @@ namespace Medical.GUI.AnomalousMvc
             AttachToScrollView = false;
         }
 
-        public override ViewHost createViewHost(AnomalousMvcContext context)
+        public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new PresetStateGUI(this, context);
+            return new PresetStateGUI(this, context, viewHost);
         }
 
         [Editable]

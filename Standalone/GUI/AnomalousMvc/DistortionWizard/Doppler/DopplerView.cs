@@ -18,9 +18,9 @@ namespace Medical.GUI.AnomalousMvc
             
         }
 
-        public override ViewHost createViewHost(AnomalousMvcContext context)
+        public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new DopplerGUI(this, context);
+            return new DopplerGUI(this, context, viewHost);
         }
 
         [Editable]

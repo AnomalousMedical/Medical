@@ -119,6 +119,13 @@
     <Compile Include="Controller\AnomalousMvc\Model\ReflectedModelCreationInfo.cs" />
     <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
+    <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
+    <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\MyGUIWindowViewHost.cs" />
+    <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
+    <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="Layout\FloatingLayoutContainer.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />
@@ -635,7 +642,6 @@
     <Compile Include="Controller\Watermark\SideLogoWatermark.cs" />
     <Compile Include="Controller\Watermark\TextWatermark.cs" />
     <Compile Include="Controller\Watermark\Watermark.cs" />
-    <Compile Include="Layout\CrossFadeLayoutContainer.cs" />
     <Compile Include="Layout\FlowLayoutContainer.cs" />
     <Compile Include="Layout\HorizontalPopoutLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />
@@ -685,6 +691,7 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\WizardPanel.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\MyGUIWindowViewHost.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationGui.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetViewHost.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />

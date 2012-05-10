@@ -7,13 +7,13 @@ using Engine.Editing;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RmlViewHostFactory : ViewHostFactory
+    class RmlViewHostFactory : ViewHostComponentFactory
     {
-        public ViewHost createViewHost(View view, AnomalousMvcContext context)
+        public ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             if (typeof(RmlView).IsAssignableFrom(view.GetType()))
             {
-                return new RmlWidgetViewHost((RmlView)view, context);
+                return new RmlWidgetViewHost((RmlView)view, context, viewHost);
             }
             return null;
         }

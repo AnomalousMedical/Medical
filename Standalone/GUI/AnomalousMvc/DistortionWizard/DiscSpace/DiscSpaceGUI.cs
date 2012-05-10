@@ -24,8 +24,8 @@ namespace Medical.GUI.AnomalousMvc
         private DiscSpaceControl discSpaceControl;
         private CheckButton showDiscCheckBox;
 
-        public DiscSpaceGUI(String subDirectory, DiscSpaceView wizardView, AnomalousMvcContext context)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.DiscSpace.DiscSpaceGUI.layout", wizardView, context)
+        public DiscSpaceGUI(String subDirectory, DiscSpaceView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.AnomalousMvc.DistortionWizard.DiscSpace.DiscSpaceGUI.layout", wizardView, context, viewHost)
         {
             this.subDirectory = subDirectory;
 
@@ -142,11 +142,11 @@ namespace Medical.GUI.AnomalousMvc
         {
             if (showDiscCheckBox.Checked)
             {
-                context.runAction(wizardView.ShowDiscAction, this);
+                context.runAction(wizardView.ShowDiscAction, ViewHost);
             }
             else
             {
-                context.runAction(wizardView.NormalViewAction, this);
+                context.runAction(wizardView.NormalViewAction, ViewHost);
             }
         }
     }

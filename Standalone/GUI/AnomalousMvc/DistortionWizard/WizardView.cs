@@ -36,7 +36,7 @@ namespace Medical.GUI.AnomalousMvc
         [EditableAction]
         public String PreviousAction { get; set; }
 
-        public abstract ViewHost createViewHost(AnomalousMvcContext context);
+        public abstract ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost);
 
         protected WizardView(LoadInfo info)
             :base (info)

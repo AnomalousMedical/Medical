@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Medical.Controller.AnomalousMvc;
+using Engine.Editing;
+
+namespace Medical.GUI.AnomalousMvc
+{
+    interface ViewHostComponentFactory
+    {
+        ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost);
+
+        void createViewBrowser(Browser browser);
+    }
+}
