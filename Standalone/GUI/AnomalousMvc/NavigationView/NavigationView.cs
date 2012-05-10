@@ -5,6 +5,7 @@ using System.Text;
 using Medical.Controller.AnomalousMvc;
 using Engine.Saving;
 using Engine.Editing;
+using Medical.Editor;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -16,7 +17,7 @@ namespace Medical.GUI.AnomalousMvc
             NavigationModelName = NavigationModel.DefaultName;
         }
 
-        [Editable]
+        [EditableModel(typeof(NavigationModel))]
         public String NavigationModelName { get; set; }
 
         protected NavigationView(LoadInfo info)

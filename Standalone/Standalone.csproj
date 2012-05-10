@@ -117,6 +117,8 @@
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationLink.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ReflectedModelCreationInfo.cs" />
+    <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
+    <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />

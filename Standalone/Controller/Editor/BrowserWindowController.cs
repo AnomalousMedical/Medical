@@ -77,6 +77,22 @@ namespace Medical.Editor
             return browser;
         }
 
+        public static Browser createModelBrowser(Type assignableFromType)
+        {
+            Browser browser = new Browser("Models");
+            if (currentEditingContext != null)
+            {
+                foreach (MvcModel model in currentEditingContext.Models)
+                {
+                    if (assignableFromType.IsAssignableFrom(model.GetType()))
+                    {
+                        browser.addNode("", null, new BrowserNode(model.Name, model.Name));
+                    }
+                }
+            }
+            return browser;
+        }
+
         private BrowserWindowController()
         {
 

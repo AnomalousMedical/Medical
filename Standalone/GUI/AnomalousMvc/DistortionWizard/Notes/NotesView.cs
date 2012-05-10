@@ -7,6 +7,7 @@ using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
 using Engine.Attributes;
 using Medical.Model;
+using Medical.Editor;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -42,7 +43,7 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
-        [Editable]
+        [EditableModel(typeof(MedicalStateInfoModel))]
         public String WizardStateInfoName { get; set; }
 
         public override ViewHost createViewHost(AnomalousMvcContext context)
