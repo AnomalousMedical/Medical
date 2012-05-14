@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 349 255" align="Left VStretch" name="RmlImage" layer="Back"/>
+</MyGUI>

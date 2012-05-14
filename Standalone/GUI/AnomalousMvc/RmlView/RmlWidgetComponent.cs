@@ -13,15 +13,16 @@ namespace Medical.GUI.AnomalousMvc
         private RocketWidget rocketWidget;
         private ImageBox rmlImage;
         private int imageHeight;
+        private int imageWidth;
 
         private AnomalousMvcContext context;
 
         public RmlWidgetComponent(RmlView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetViewHost.layout", viewHost)
+            :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetComponent.layout", viewHost)
         {
             this.context = context;
 
-            rmlImage = (ImageBox)widget.findWidget("RmlImage");
+            rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
             imageHeight = rmlImage.Height;
 
@@ -44,10 +45,11 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void topLevelResized()
         {
-            if (widget.Height != imageHeight)
+            if (widget.Height != imageHeight || widget.Width != imageWidth)
             {
                 rocketWidget.resized();
                 imageHeight = widget.Height;
+                imageWidth = widget.Width;
             }
             base.topLevelResized();
         }

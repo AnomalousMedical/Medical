@@ -693,7 +693,7 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\WizardComponent.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\WindowDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationComponent.layout" />
-    <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetViewHost.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
