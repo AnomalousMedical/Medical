@@ -33,9 +33,17 @@ namespace Medical.GUI.AnomalousMvc
                 return component;
             }
 
-            if (view.ViewLocation == ViewLocations.Floating)
+            switch (view.ViewLocation)
             {
-                component = new WindowDecorator(component);
+                case ViewLocations.Left:
+                    component = new SidePanelDecorator(component);
+                    break;
+                case ViewLocations.Right:
+                    component = new SidePanelDecorator(component);
+                    break;
+                case ViewLocations.Floating:
+                    component = new WindowDecorator(component);
+                    break;
             }
 
             return component;
