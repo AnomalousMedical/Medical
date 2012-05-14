@@ -11,6 +11,7 @@ namespace Medical.GUI.AnomalousMvc
         private ViewHostComponent child;
         private int widgetHeight;
         private const int BUTTON_AREA_HEIGHT = 36;
+        private const int BUTTON_PADDING = 3;
 
         private List<Button> buttons = new List<Button>();
 
@@ -26,15 +27,16 @@ namespace Medical.GUI.AnomalousMvc
             widgetHeight = widget.Height;
 
             int buttonWidth = widget.Width / buttonDefinitions.Count;
-            int currentX = 0;
+            int currentX = BUTTON_PADDING;
 
             foreach (ButtonDefinition buttonDef in buttonDefinitions)
             {
-                Button button = (Button)widget.createWidgetT("Button", "Button", currentX, 4, buttonWidth, 28, Align.Default, "");
+                Button button = (Button)widget.createWidgetT("Button", "Button", currentX, 4, buttonWidth - BUTTON_PADDING, 28, Align.Default, "");
                 button.Caption = buttonDef.Text;
                 button.UserObject = buttonDef.Action;
                 button.MouseButtonClick +=new MyGUIEvent(button_MouseButtonClick);
                 currentX += buttonWidth;
+                buttons.Add(button);
             }
         }
 
@@ -46,6 +48,14 @@ namespace Medical.GUI.AnomalousMvc
 
         public void topLevelResized()
         {
+            int buttonWidth = widget.Width / buttons.Count;
+            int currentX = BUTTON_PADDING;
+
+            foreach (Button button in buttons)
+            {
+                button.setCoord(currentX, button.Top, buttonWidth - BUTTON_PADDING, button.Height);
+                currentX += buttonWidth;
+            }
             child.topLevelResized();
         }
 
