@@ -67,12 +67,15 @@ namespace Medical.GUI.AnomalousMvc
 
         void navModel_CurrentIndexChanged(NavigationModel navModel)
         {
-            if (selectedButton != null)
+            if (buttons.Count > 0)
             {
-                selectedButton.Selected = false;
+                if (selectedButton != null)
+                {
+                    selectedButton.Selected = false;
+                }
+                selectedButton = buttons[navModel.CurrentIndex];
+                selectedButton.Selected = true;
             }
-            selectedButton = buttons[navModel.CurrentIndex];
-            selectedButton.Selected = true;
         }
 
         private void addButton(String action, String text, String imageKey)
