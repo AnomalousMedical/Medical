@@ -25,6 +25,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             editInterface.addCommand(new EditInterfaceCommand("View RML File", openFileInViewer));
             editInterface.addCommand(new EditInterfaceCommand("Edit RML File", editFile));
+            base.customizeEditInterface(editInterface);
         }
 
         public enum CustomQueries

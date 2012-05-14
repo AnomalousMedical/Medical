@@ -13,7 +13,7 @@ namespace Medical.GUI.AnomalousMvc
         public PresetStateView(String name)
             :base(name)
         {
-            AttachToScrollView = false;
+            
         }
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)

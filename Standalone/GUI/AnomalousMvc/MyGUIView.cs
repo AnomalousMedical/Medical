@@ -10,12 +10,12 @@ namespace Medical.GUI.AnomalousMvc
 {
     public class MyGUIView : View
     {
-        private ButtonCollection buttons = new ButtonCollection();
+        private ButtonCollection buttons;
 
         public MyGUIView(String name)
             : base(name)
         {
-
+            buttons = new ButtonCollection();
         }
 
         public ButtonCollection Buttons

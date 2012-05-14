@@ -14,27 +14,8 @@ namespace Medical.GUI.AnomalousMvc
         public WizardView(String name)
             :base(name)
         {
-            AttachToScrollView = true;
-            CancelAction = "Wizard/Cancel";
-            FinishAction = "Wizard/Finish";
-            NextAction = "Wizard/Next";
-            PreviousAction = "Wizard/Previous";
+
         }
-
-        [Editable]
-        public bool AttachToScrollView { get; set; }
-
-        [EditableAction]
-        public String CancelAction { get; set; }
-
-        [EditableAction]
-        public String FinishAction { get; set; }
-
-        [EditableAction]
-        public String NextAction { get; set; }
-
-        [EditableAction]
-        public String PreviousAction { get; set; }
 
         public abstract ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost);
 

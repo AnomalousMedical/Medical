@@ -90,9 +90,14 @@ namespace Medical.GUI
                     parentNode = new EditInterfaceTreeNode(mainEditInterface, this);
                     tree.Nodes.add(parentNode);
                     tree.SelectedNode = parentNode;
+                    parentNode.Expanded = true;
                 }
-                tree.expandAll();
             }
+        }
+
+        public void expandAll()
+        {
+            tree.expandAll();
         }
 
         public void nodeAdded(EditInterfaceTreeNode editInterfaceTreeNode)

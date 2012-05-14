@@ -19,7 +19,6 @@ namespace Medical.GUI.AnomalousMvc
         public NotesView(String name)
             : base(name)
         {
-            AttachToScrollView = false;
             WizardStateInfoName = MedicalStateInfoModel.DefaultName;
         }
 
