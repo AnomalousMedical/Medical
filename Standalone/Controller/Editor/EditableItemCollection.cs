@@ -185,5 +185,13 @@ namespace Medical.Editor
             }
             return false;
         }
+
+        public int Count
+        {
+            get
+            {
+                return items.Count;
+            }
+        }
     }
 }

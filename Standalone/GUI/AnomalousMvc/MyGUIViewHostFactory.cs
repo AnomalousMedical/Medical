@@ -20,9 +20,14 @@ namespace Medical.GUI.AnomalousMvc
 
         public ViewHost createViewHost(View view, AnomalousMvcContext context)
         {
-            MyGUIViewHost viewHost = new MyGUIViewHost();
-            viewHost.setTopComponent(componentFactory.createViewHostComponent(view, context, viewHost));
-            return viewHost;
+            MyGUIView myGUIView = view as MyGUIView;
+            if (myGUIView != null)
+            {
+                MyGUIViewHost viewHost = new MyGUIViewHost(context);
+                viewHost.setTopComponent(componentFactory.createViewHostComponent(myGUIView, context, viewHost));
+                return viewHost;
+            }
+            return null;
         }
 
         public void createViewBrowser(Browser browser)

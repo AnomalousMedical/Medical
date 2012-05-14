@@ -9,7 +9,7 @@ namespace Medical.GUI.AnomalousMvc
 {
     class NavigationComponentFactory : ViewHostComponentFactory
     {
-        public ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+        public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             if (typeof(NavigationView).IsAssignableFrom(view.GetType()))
             {

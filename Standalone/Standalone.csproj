@@ -119,9 +119,13 @@
     <Compile Include="Controller\AnomalousMvc\Model\ReflectedModelCreationInfo.cs" />
     <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />
+    <Compile Include="GUI\AnomalousMvc\MyGUIView.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
@@ -676,6 +680,7 @@
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUI.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\TimelineWizard\WizardPanelButtons.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -696,7 +701,6 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
-    <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\WizardComponent.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\WindowDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationComponent.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.layout" />

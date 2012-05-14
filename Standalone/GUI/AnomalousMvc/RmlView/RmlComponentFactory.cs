@@ -9,7 +9,7 @@ namespace Medical.GUI.AnomalousMvc
 {
     class RmlComponentFactory : ViewHostComponentFactory
     {
-        public ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+        public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             if (typeof(RmlView).IsAssignableFrom(view.GetType()))
             {

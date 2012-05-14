@@ -9,7 +9,7 @@ using Medical.Editor;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    abstract class WizardView : View
+    abstract class WizardView : MyGUIView
     {
         public WizardView(String name)
             :base(name)

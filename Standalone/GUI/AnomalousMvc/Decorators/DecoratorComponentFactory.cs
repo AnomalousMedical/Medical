@@ -16,7 +16,7 @@ namespace Medical.GUI.AnomalousMvc
             concreteComponentFactories.Add(factory);
         }
 
-        public ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+        public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             ViewHostComponent component = null;
             foreach (ViewHostComponentFactory factory in concreteComponentFactories)
@@ -31,6 +31,11 @@ namespace Medical.GUI.AnomalousMvc
             if(component == null)
             {
                 return component;
+            }
+
+            if (view.Buttons.Count > 0)
+            {
+                component = new ButtonDecorator(component, view.Buttons);
             }
 
             switch (view.ViewLocation)

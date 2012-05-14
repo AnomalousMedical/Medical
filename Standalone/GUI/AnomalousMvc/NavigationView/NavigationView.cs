@@ -9,10 +9,10 @@ using Medical.Editor;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class NavigationView : View
+    class NavigationView : MyGUIView
     {
         public NavigationView(String name)
-            :base(name)
+            : base(name)
         {
             NavigationModelName = NavigationModel.DefaultName;
         }

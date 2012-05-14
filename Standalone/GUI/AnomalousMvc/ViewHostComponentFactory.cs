@@ -9,7 +9,7 @@ namespace Medical.GUI.AnomalousMvc
 {
     interface ViewHostComponentFactory
     {
-        ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost);
+        ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost);
 
         void createViewBrowser(Browser browser);
     }

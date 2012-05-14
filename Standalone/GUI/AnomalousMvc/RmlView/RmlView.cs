@@ -10,7 +10,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    public class RmlView : View
+    public class RmlView : MyGUIView
     {
         public RmlView(String name)
             :base(name)

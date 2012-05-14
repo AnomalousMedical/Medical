@@ -9,12 +9,13 @@ namespace Medical.GUI.AnomalousMvc
 {
     class WizardComponentFactory : ViewHostComponentFactory
     {
-        public ViewHostComponent createViewHostComponent(View view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+        public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            if (typeof(WizardView).IsAssignableFrom(view.GetType()))
+            WizardView wizardView = view as WizardView;
+            if (wizardView != null)
             {
-                WizardView wizardView = (WizardView)view;
-                return wizardView.createViewHost(context, viewHost);
+                ViewHostComponent component = wizardView.createViewHost(context, viewHost);
+                return component;
             }
             return null;
         }
