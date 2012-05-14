@@ -121,6 +121,7 @@
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
@@ -678,6 +679,7 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Disclaimer\DisclaimerGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\DiscSpace\DiscSpaceGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Doppler\DopplerGUI.layout" />

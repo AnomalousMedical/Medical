@@ -6,13 +6,13 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class SidePanelDecorator : Component, ViewHostComponent
+    class TopBottomPanelDecorator : Component, ViewHostComponent
     {
         private ViewHostComponent child;
-        private int widgetHeight;
+        private int widgetWidth;
 
-        public SidePanelDecorator(ViewHostComponent child)
-            :base("Medical.GUI.AnomalousMvc.Decorators.SidePanelDecorator.layout")
+        public TopBottomPanelDecorator(ViewHostComponent child)
+            : base("Medical.GUI.AnomalousMvc.Decorators.TopBottomPanelDecorator.layout")
         {
             this.child = child;
             child.Widget.attachToWidget(widget);
@@ -20,9 +20,9 @@ namespace Medical.GUI.AnomalousMvc
                                   int.Parse(widget.getUserString("ChildY")),
                                   widget.Width - int.Parse(widget.getUserString("ChildWidthOffset")),
                                   widget.Height - int.Parse(widget.getUserString("ChildHeightOffset")));
-            child.Widget.Align = Align.Left | Align.VStretch;
+            child.Widget.Align = Align.Top | Align.HStretch;
 
-            widgetHeight = widget.Height;
+            widgetWidth = widget.Width;
         }
 
         public override void Dispose()
@@ -33,10 +33,10 @@ namespace Medical.GUI.AnomalousMvc
 
         public void topLevelResized()
         {
-            if (widget.Height != widgetHeight)
+            if (widget.Width != widgetWidth)
             {
                 child.topLevelResized();
-                widgetHeight = widget.Height;
+                widgetWidth = widget.Width;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             get
             {
-                return widget; 
+                return widget;
             }
         }
     }

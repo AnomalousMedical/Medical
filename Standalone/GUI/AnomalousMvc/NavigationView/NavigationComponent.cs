@@ -25,7 +25,7 @@ namespace Medical.GUI.AnomalousMvc
             this.view = view;
             this.context = context;
 
-            iconScrollView = widget.findWidget("WizardIconPanel/ScrollView") as ScrollView;
+            iconScrollView = (ScrollView)widget;
             Size2 size = iconScrollView.CanvasSize;
             size.Width = 10;
             iconScrollView.CanvasSize = size;

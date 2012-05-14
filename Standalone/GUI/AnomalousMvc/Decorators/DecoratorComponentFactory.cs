@@ -41,6 +41,12 @@ namespace Medical.GUI.AnomalousMvc
                 case ViewLocations.Right:
                     component = new SidePanelDecorator(component);
                     break;
+                case ViewLocations.Top:
+                    component = new TopBottomPanelDecorator(component);
+                    break;
+                case ViewLocations.Bottom:
+                    component = new TopBottomPanelDecorator(component);
+                    break;
                 case ViewLocations.Floating:
                     component = new WindowDecorator(component);
                     break;
