@@ -276,9 +276,10 @@ namespace Medical.Controller.AnomalousMvc
             core.showMainInterface();
         }
 
-        public void shutdown()
+        public void queueShutdown()
         {
-            checkShutdownConditions();
+            queueCloseAllViews();
+            stopPlayingTimeline();
         }
 
         public bool AllowShutdown
@@ -334,6 +335,14 @@ namespace Medical.Controller.AnomalousMvc
         internal void runFinalAction(String address)
         {
             doRunAction(address);
+        }
+
+        /// <summary>
+        /// This is here for legacy so the multi timeline events can shutdown the context.
+        /// </summary>
+        internal void LEGACY_shutdown()
+        {
+            checkShutdownConditions();
         }
 
         private void checkShutdownConditions()

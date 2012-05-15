@@ -68,7 +68,7 @@ namespace Medical
         void timelineController_LEGACY_MultiTimelineStoppedEvent(object sender, EventArgs e)
         {
             context.AllowShutdown = true;
-            context.shutdown();
+            context.LEGACY_shutdown();
             timelineController.setResourceProvider(null);
             timelineController.LEGACY_MultiTimelineStoppedEvent -= timelineController_LEGACY_MultiTimelineStoppedEvent;
         }

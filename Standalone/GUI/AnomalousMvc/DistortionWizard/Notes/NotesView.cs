@@ -76,6 +76,7 @@ namespace Medical.GUI.AnomalousMvc
             {
                 onThumbnailAdded(thumb);
             }
+            base.customizeEditInterface(editInterface);
         }
 
         private void addThumbnail(EditUICallback callback, EditInterfaceCommand command)
