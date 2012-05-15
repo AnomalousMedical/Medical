@@ -121,6 +121,7 @@
     <Compile Include="Controller\AnomalousMvc\Model\ReflectedModelCreationInfo.cs" />
     <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
+    <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.cs" />

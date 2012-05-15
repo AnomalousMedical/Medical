@@ -236,6 +236,7 @@ namespace Medical
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasPlugin", null);
                     editInterface.addCommand(new EditInterfaceCommand("Add Start Timeline Task", addStartTimelineTask));
+                    editInterface.addCommand(new EditInterfaceCommand("Add Start Mvc Context Task", addStartMvcContextTask));
                     taskManager = new EditInterfaceManager<DDPluginTask>(editInterface);
                     taskManager.addCommand(new EditInterfaceCommand("Remove", removeDDPluginTask));
                     foreach (DDPluginTask task in tasks)
@@ -249,11 +250,25 @@ namespace Medical
 
         private void addStartTimelineTask(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.getInputString("Enter a name for this exam", delegate(String result, ref string errorPrompt)
+            callback.getInputString("Enter a name for this task.", delegate(String result, ref string errorPrompt)
             {
                 if (!hasTask(result))
                 {
                     addTask(new StartDDPluginTimelineTask(result, "", "", ""));
+                    return true;
+                }
+                errorPrompt = String.Format("A task named {0} already exists. Please enter another.", result);
+                return false;
+            });
+        }
+
+        private void addStartMvcContextTask(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.getInputString("Enter a name for this task.", delegate(String result, ref string errorPrompt)
+            {
+                if (!hasTask(result))
+                {
+                    addTask(new StartAnomalousMvcTask(result, "", "", ""));
                     return true;
                 }
                 errorPrompt = String.Format("A task named {0} already exists. Please enter another.", result);
