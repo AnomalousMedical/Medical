@@ -21,6 +21,20 @@ namespace Medical.GUI.AnomalousMvc
             {
                 return new ButtonDefinition(name);
             });
+
+            editInterface.addCommand(new EditInterfaceCommand("Add Navigation Buttons", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            {
+                if (!hasItem("Cancel") &&
+                    !hasItem("Previous") &&
+                    !hasItem("Next") &&
+                    !hasItem("Finish"))
+                {
+                    add(new ButtonDefinition("Cancel", "Common/Cancel"));
+                    add(new ButtonDefinition("Previous", "Common/Previous"));
+                    add(new ButtonDefinition("Next", "Common/Next"));
+                    add(new ButtonDefinition("Finish", "Common/Finish"));
+                }
+            }));
         }
 
         protected ButtonCollection(LoadInfo info)

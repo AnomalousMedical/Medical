@@ -16,6 +16,13 @@ namespace Medical.GUI.AnomalousMvc
             Text = name;
         }
 
+        public ButtonDefinition(String name, String action)
+            : base(name)
+        {
+            Text = name;
+            Action = action;
+        }
+
         [Editable]
         public String Text { get; set; }
 
