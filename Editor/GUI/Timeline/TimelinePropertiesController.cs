@@ -10,6 +10,7 @@ using Logging;
 using Engine.Editing;
 using Engine.Platform;
 using Engine;
+using Medical.Editor;
 
 namespace Medical.GUI
 {
@@ -162,6 +163,7 @@ namespace Medical.GUI
             {
                 resourceProvider = new FilesystemResourceProvider(Path.GetDirectoryName(projectPath));
                 editorTimelineController.setResourceProvider(resourceProvider);
+                BrowserWindowController.setResourceProvider(resourceProvider);
                 resourceProviderChanged();
                 openTimelineFile(projectPath);
             }
@@ -373,6 +375,7 @@ namespace Medical.GUI
             }
             resourceProvider = new FilesystemResourceProvider(projectName);
             editorTimelineController.setResourceProvider(resourceProvider);
+            BrowserWindowController.setResourceProvider(resourceProvider);
             resourceProviderChanged();
         }
 

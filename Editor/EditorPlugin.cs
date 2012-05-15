@@ -42,7 +42,6 @@ namespace Medical
         {
             mvcEditor.Dispose();
             rmlViewer.Dispose();
-            BrowserWindowController.setTimelineController(null);
             timelinePropertiesController.Dispose();
             timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
@@ -73,7 +72,6 @@ namespace Medical
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
-            BrowserWindowController.setTimelineController(editorTimelineController);
 
             //UI Helpers
             browserWindow = new BrowserWindow();

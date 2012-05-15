@@ -16,12 +16,12 @@ namespace Medical.Editor
         public const String TimelineSearchPattern = "*.tl";
         public const String RmlSearchPattern = "*.rml";
 
-        private static TimelineController timelineController;
+        private static ResourceProvider resourceProvider;
         private static AnomalousMvcContext currentEditingContext;
 
-        public static void setTimelineController(TimelineController timelineController)
+        public static void setResourceProvider(ResourceProvider resourceProvider)
         {
-            BrowserWindowController.timelineController = timelineController;
+            BrowserWindowController.resourceProvider = resourceProvider;
         }
 
         public static void setCurrentEditingMvcContext(AnomalousMvcContext context)
@@ -32,9 +32,9 @@ namespace Medical.Editor
         public static Browser createFileBrowser(String searchPattern)
         {
             Browser browser = new Browser("Files");
-            if (timelineController != null)
+            if (resourceProvider != null)
             {
-                foreach (String timeline in timelineController.listResourceFiles(searchPattern))
+                foreach (String timeline in resourceProvider.listFiles(searchPattern, "", true))
                 {
                     browser.addNode("", null, new BrowserNode(timeline, timeline));
                 }
