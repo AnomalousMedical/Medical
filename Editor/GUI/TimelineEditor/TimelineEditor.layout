@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCS" position="204 297 929 266" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="204 297 929 266" layer="Overlapped">
         <Property key="Caption" value="Timeline"/>
         <UserString key="CurrentDockLocation" value="Bottom"/>
         <UserString key="AllowedDockLocations" value="Bottom | Top | Floating"/>

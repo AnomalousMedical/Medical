@@ -60,6 +60,8 @@ namespace Medical.GUI
 
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
+
+            this.Resized += new EventHandler(ProjectExplorer_Resized);
         }
 
         public override void Dispose()
@@ -295,6 +297,11 @@ namespace Medical.GUI
                 parentNodeCollection.add(dirNode);
             }
             return dirNode;
+        }
+
+        void ProjectExplorer_Resized(object sender, EventArgs e)
+        {
+            fileTree.layout();
         }
     }
 }

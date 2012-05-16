@@ -128,6 +128,7 @@ namespace Medical
             guiManager.addManagedDialog(pluginEditor);
 
             timelineEditor = new TimelineEditor(editorTimelineController, editorController, standaloneController.Clipboard, this);
+            timelineEditor.MarkerMoved += new Engine.EventDelegate<GUI.TimelineEditor, float>(timelineEditor_MarkerMoved);
             guiManager.addManagedDialog(timelineEditor);
 
             //Tasks Menu
@@ -319,6 +320,11 @@ namespace Medical
         }
 
         void timelinePropertiesController_MarkerMoved(TimelinePropertiesController source, float arg)
+        {
+            propTimeline.MarkerTime = arg;
+        }
+
+        void timelineEditor_MarkerMoved(TimelineEditor source, float arg)
         {
             propTimeline.MarkerTime = arg;
         }
