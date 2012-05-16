@@ -16,16 +16,11 @@ namespace Medical.GUI
         //File Menu
         MenuItem newProject;
         MenuItem openProject;
-        MenuItem newTimelineItem;
-        MenuItem saveTimelineItem;
-        MenuItem saveTimelineAsItem;
-        MenuItem deleteItem;
 
         Tree fileTree;
 
         //Dialogs
         private NewProjectDialog newProjectDialog;
-        private SaveTimelineDialog saveTimelineDialog;
 
         private EditorController editorController;
 
@@ -47,19 +42,10 @@ namespace Medical.GUI
             fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
             newProject = fileMenu.addItem("New Project");
             openProject = fileMenu.addItem("Open Project");
-            fileMenu.addItem("", MenuItemType.Separator);
-            newTimelineItem = fileMenu.addItem("New Timeline");
-            saveTimelineItem = fileMenu.addItem("Save Timeline");
-            saveTimelineAsItem = fileMenu.addItem("Save Timeline As");
-            fileMenu.addItem("", MenuItemType.Separator);
-            deleteItem = fileMenu.addItem("Delete Selected");
 
             //Dialogs
             newProjectDialog = new NewProjectDialog();
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
-
-            saveTimelineDialog = new SaveTimelineDialog();
-            saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
         }
@@ -68,7 +54,6 @@ namespace Medical.GUI
         {
             fileTree.Dispose();
             newProjectDialog.Dispose();
-            saveTimelineDialog.Dispose();
             base.Dispose();
         }
 
@@ -82,22 +67,6 @@ namespace Medical.GUI
             else if (menuEventArgs.Item == openProject)
             {
                 openProjectClicked(source, e);
-            }
-            else if (menuEventArgs.Item == newTimelineItem)
-            {
-                newTimelineClicked(source, e);
-            }
-            else if (menuEventArgs.Item == saveTimelineItem)
-            {
-                saveTimelineClicked(source, e);
-            }
-            else if (menuEventArgs.Item == saveTimelineAsItem)
-            {
-                saveTimelineAsClicked(source, e);
-            }
-            else if (menuEventArgs.Item == deleteItem)
-            {
-                deleteClicked(source, e);
             }
         }
 
@@ -124,95 +93,6 @@ namespace Medical.GUI
                     editorController.openProject(fileDialog.Path);
                 }
             }
-        }
-
-        void newTimelineClicked(Widget source, EventArgs e)
-        {
-            //stopTimelineIfPlaying();
-            //timelinePropertiesController.createNewTimeline();
-        }
-
-        void saveTimelineClicked(Widget source, EventArgs e)
-        {
-            //stopTimelineIfPlaying();
-            //if (timelinePropertiesController.CurrentTimelineFile != null)
-            //{
-            //    timelinePropertiesController.saveTimeline(timelinePropertiesController.CurrentTimeline, timelinePropertiesController.CurrentTimelineFile);
-            //}
-            //else
-            //{
-            //    saveTimelineAsClicked(source, e);
-            //}
-        }
-
-        void saveTimelineAsClicked(Widget source, EventArgs e)
-        {
-            //stopTimelineIfPlaying();
-            //saveTimelineDialog.open(true);
-            //saveTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            //saveTimelineDialog.ensureVisible();
-        }
-
-        void deleteClicked(Widget source, EventArgs e)
-        {
-            //if (fileList.hasItemSelected())
-            //{
-            //    String filename = (String)fileList.getItemDataAt(fileList.getIndexSelected());
-            //    MessageBox.show(String.Format("Are you sure you want to delete {0}?", filename), "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, delegate(MessageBoxStyle result)
-            //    {
-            //        if (result == MessageBoxStyle.Yes)
-            //        {
-            //            timelinePropertiesController.deleteFile(filename);
-            //            updateFileList();
-            //        }
-            //    });
-            //}
-        }
-
-        void saveTimelineDialog_SaveFile(object sender, EventArgs e)
-        {
-            //String filename = saveTimelineDialog.Filename;
-            //if (timelineController.resourceExists(filename))
-            //{
-            //    MessageBox.show(String.Format("The file {0} already exists. Would you like to overwrite it?", filename), "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, delegate(MessageBoxStyle result)
-            //    {
-            //        if (result == MessageBoxStyle.Yes)
-            //        {
-            //            timelinePropertiesController.saveTimeline(timelinePropertiesController.CurrentTimeline, saveTimelineDialog.Filename);
-            //            updateFileList();
-            //        }
-            //    });
-            //}
-            //else
-            //{
-            //    timelinePropertiesController.saveTimeline(timelinePropertiesController.CurrentTimeline, filename);
-            //    updateFileList();
-            //}
-        }
-
-        //void fileList_ListSelectAccept(Widget source, EventArgs e)
-        //{
-        //    stopTimelineIfPlaying();
-        //    uint selectedIndex = fileList.getIndexSelected();
-        //    if (selectedIndex != uint.MaxValue)
-        //    {
-        //        timelinePropertiesController.openTimelineFile(fileList.getItemDataAt(selectedIndex).ToString());
-        //    }
-        //    else
-        //    {
-        //        MessageBox.show("Please select a file to open.", "Warning", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
-        //    }
-        //}
-
-        void updateFileList()
-        {
-            //fileList.removeAllItems();
-            //String[] files = timelineController.LEGACY_listResourceFiles("*.tl");
-            //foreach (String file in files)
-            //{
-            //    String fileName = Path.GetFileName(file);
-            //    fileList.addItem(fileName, fileName);
-            //}
         }
 
         void fileTree_NodeMouseDoubleClick(object sender, TreeEventArgs e)
