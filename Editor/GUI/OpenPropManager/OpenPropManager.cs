@@ -14,7 +14,7 @@ namespace Medical.GUI
         public event EventDelegate<OpenPropManager, ShowPropAction> PropClosed;
 
         public OpenPropManager()
-            :base("Medical.GUI.Timeline.OpenPropManager.layout")
+            :base("Medical.GUI.OpenPropManager.OpenPropManager.layout")
         {
             propList = (MultiListBox)window.findWidget("propList");
             propList.addColumn("Prop", 50);

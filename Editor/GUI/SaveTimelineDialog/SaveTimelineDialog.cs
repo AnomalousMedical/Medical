@@ -14,7 +14,7 @@ namespace Medical.GUI
         private EditBox filename;
 
         public SaveTimelineDialog()
-            :base("Medical.GUI.Timeline.SaveTimelineDialog.layout")
+            :base("Medical.GUI.SaveTimelineDialog.SaveTimelineDialog.layout")
         {
             filename = window.findWidget("Filename") as EditBox;
             filename.EventEditSelectAccept += new MyGUIEvent(filename_EventEditSelectAccept);

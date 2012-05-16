@@ -124,9 +124,9 @@
     <Compile Include="GUI\TimelineEditor\TimelineEditor.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.cs" />
-    <Compile Include="GUI\Timeline\OpenPropManager.cs" />
-    <Compile Include="GUI\Timeline\TimelineActionClipboardContainer.cs" />
-    <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
+    <Compile Include="GUI\OpenPropManager\OpenPropManager.cs" />
+    <Compile Include="GUI\TimelineEditor\TimelineActionClipboardContainer.cs" />
+    <Compile Include="GUI\TimelineEditor\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
     <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
     <Compile Include="GUI\Timeline\TimelineObjectProperties.cs" />
@@ -141,11 +141,11 @@
     <Compile Include="GUI\TimelineEditor\ActionProperties\PlaySoundProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowImageProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowPropProperties.cs" />
-    <Compile Include="GUI\Timeline\NewProjectDialog.cs" />
+    <Compile Include="GUI\NewProjectDialog\NewProjectDialog.cs" />
     <Compile Include="GUI\Timeline\QuestionEditor.cs" />
     <Compile Include="GUI\Timeline\QuestionEditorAnswerRow.cs" />
-    <Compile Include="GUI\Timeline\SaveTimelineDialog.cs" />
-    <Compile Include="GUI\Timeline\TimelineActionData.cs" />
+    <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
+    <Compile Include="GUI\TimelineEditor\TimelineActionData.cs" />
     <Compile Include="GUI\Timeline\TimelineFileBrowserDialog.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
@@ -194,11 +194,11 @@
     <EmbeddedResource Include="GUI\PropTimeline\PropTimeline.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ShowImageProperties.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ShowPropProperties.layout" />
-    <EmbeddedResource Include="GUI\Timeline\NewProjectDialog.layout" />
-    <EmbeddedResource Include="GUI\Timeline\OpenPropManager.layout" />
+    <EmbeddedResource Include="GUI\NewProjectDialog\NewProjectDialog.layout" />
+    <EmbeddedResource Include="GUI\OpenPropManager\OpenPropManager.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionEditorAnswerRow.layout" />
-    <EmbeddedResource Include="GUI\Timeline\SaveTimelineDialog.layout" />
+    <EmbeddedResource Include="GUI\SaveTimelineDialog\SaveTimelineDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineAnalyzer.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineFileExplorer.layout">
       <SubType>Designer</SubType>

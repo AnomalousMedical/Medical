@@ -16,7 +16,7 @@ namespace Medical.GUI
         private EditBox projectLocation;
 
         public NewProjectDialog()
-            :base("Medical.GUI.Timeline.NewProjectDialog.layout")
+            :base("Medical.GUI.NewProjectDialog.NewProjectDialog.layout")
         {
             projectName = window.findWidget("ProjectName") as EditBox;
             projectName.EventEditSelectAccept += new MyGUIEvent(projectName_EventEditSelectAccept);
