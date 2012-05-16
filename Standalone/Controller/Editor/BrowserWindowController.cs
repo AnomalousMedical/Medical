@@ -11,7 +11,7 @@ namespace Medical.Editor
     /// <summary>
     /// This class can create Browser objects from TimeilneController information.
     /// </summary>
-    public class BrowserWindowController
+    public static class BrowserWindowController
     {
         public const String TimelineSearchPattern = "*.tl";
         public const String RmlSearchPattern = "*.rml";
@@ -91,11 +91,6 @@ namespace Medical.Editor
                 }
             }
             return browser;
-        }
-
-        private BrowserWindowController()
-        {
-
         }
     }
 }

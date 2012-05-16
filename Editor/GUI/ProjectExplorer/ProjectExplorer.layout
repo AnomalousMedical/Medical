@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="228 118 210 347" layer="Overlapped">
+        <Property key="Caption" value="Project Explorer"/>
+        <UserString key="CurrentDockLocation" value="Left"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <Widget type="MenuBar" skin="MenuBar" position="1 0 85 26" align="Left Top" name="MenuBar"/>
+        <Widget type="ScrollView" skin="ScrollView" position="0 31 199 283" align="Stretch" name="FileTableScroll">
+            <Property key="CanvasSize" value="199 283"/>
+            <Property key="CanvasAlign" value="Left Top"/>
+        </Widget>
+    </Widget>
+</MyGUI>

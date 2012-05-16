@@ -32,6 +32,9 @@ namespace Medical
         private AspectRatioTask aspectRatioTask;
         private RmlViewer rmlViewer;
         private GenericEditor mvcEditor;
+        private ProjectExplorer projectExplorer;
+
+        private EditorController editorController;
 
         public EditorPlugin()
         {
@@ -40,6 +43,7 @@ namespace Medical
 
         public void Dispose()
         {
+            projectExplorer.Dispose();
             mvcEditor.Dispose();
             rmlViewer.Dispose();
             timelinePropertiesController.Dispose();
@@ -79,6 +83,9 @@ namespace Medical
 
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
+            //Controller
+            editorController = new EditorController(this, standaloneController);
+
             //Dialogs
             propTimeline = new PropTimeline(standaloneController.Clipboard);
             guiManager.addManagedDialog(propTimeline);
@@ -108,6 +115,9 @@ namespace Medical
             mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", new MVCGenericEditorObject(timelinePropertiesController.UICallback));
             guiManager.addManagedDialog(mvcEditor);
 
+            projectExplorer = new ProjectExplorer(editorController);
+            guiManager.addManagedDialog(projectExplorer);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -119,6 +129,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(rmlViewer, "Medical.RmlViewer", "RML Viewer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
             //taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
@@ -230,6 +241,14 @@ namespace Medical
             get
             {
                 return rmlViewer;
+            }
+        }
+
+        public GenericEditor MvcEditor
+        {
+            get
+            {
+                return mvcEditor;
             }
         }
 

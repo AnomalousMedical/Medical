@@ -11,7 +11,7 @@ using Engine.Saving;
 
 namespace Medical.GUI
 {
-    class GenericEditor : MDIDialog
+    public class GenericEditor : MDIDialog
     {
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
@@ -76,25 +76,30 @@ namespace Medical.GUI
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    try
+                    load(fileDialog.Path);
+                }
+            }
+        }
+
+        public void load(String filename)
+        {
+            try
+            {
+                using (Stream stream = File.Open(filename, FileMode.Open, FileAccess.Read))
+                {
+                    if (editorObject.load(stream))
                     {
-                        using (Stream stream = File.Open(fileDialog.Path, FileMode.Open, FileAccess.Read))
-                        {
-                            if (editorObject.load(stream))
-                            {
-                                currentFileChanged(fileDialog.Path);
-                            }
-                            else
-                            {
-                                MessageBox.show("Load error", String.Format("There was an error loading this {0}.", editorObject.ObjectTypeName), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                            }
-                        }
+                        currentFileChanged(filename);
                     }
-                    catch (Exception e)
+                    else
                     {
-                        MessageBox.show("Load error", String.Format("Exception loading {0}:\n{1}.", editorObject.ObjectTypeName, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                        MessageBox.show("Load error", String.Format("There was an error loading this {0}.", editorObject.ObjectTypeName), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                MessageBox.show("Load error", String.Format("Exception loading {0}:\n{1}.", editorObject.ObjectTypeName, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 

@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
+    <Compile Include="Controller\EditorController.cs" />
     <Compile Include="Controller\GenericEditors\MVCGenericEditorObject.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
+    <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineClipboardContainer.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />
@@ -162,6 +164,7 @@
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.layout" />
+    <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.layout" />

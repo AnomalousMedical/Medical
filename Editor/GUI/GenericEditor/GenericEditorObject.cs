@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    interface GenericEditorObject
+    public interface GenericEditorObject
     {
         void createNew();
 
