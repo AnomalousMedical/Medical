@@ -350,7 +350,7 @@ namespace Medical
         /// List the files in the current resource location that match pattern.
         /// </summary>
         /// <param name="pattern"></param>
-        public String[] listResourceFiles(String pattern)
+        public String[] LEGACY_listResourceFiles(String pattern)
         {
             if (resourceProvider != null)
             {

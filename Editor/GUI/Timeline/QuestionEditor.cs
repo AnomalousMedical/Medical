@@ -130,7 +130,7 @@ namespace Medical.GUI
                             String timeline = row.Timeline;
                             if (timeline != null && timeline != "")
                             {
-                                if (timelineController.listResourceFiles(timeline).Length > 0)
+                                if (timelineController.LEGACY_listResourceFiles(timeline).Length > 0)
                                 {
                                     answer.Action = new PromptLoadTimelineAction(timeline);
                                 }

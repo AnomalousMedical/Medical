@@ -155,7 +155,7 @@ namespace Medical.GUI
                 bool foundNoMatches = true;
                 TimelineStaticInfo info = new ExactMatchStaticInfo(tlFile);
 
-                String[] files = timelineController.listResourceFiles("*.tl");
+                String[] files = timelineController.LEGACY_listResourceFiles("*.tl");
                 foreach (String file in files)
                 {
                     Timeline tl = timelineController.openTimeline(file);
@@ -188,7 +188,7 @@ namespace Medical.GUI
         String listAllUnreferenced()
         {
             timelineList.removeAllItems();
-            String[] files = timelineController.listResourceFiles("*.tl");
+            String[] files = timelineController.LEGACY_listResourceFiles("*.tl");
             foreach (String outerFile in files)
             {
                 bool noMatches = true;

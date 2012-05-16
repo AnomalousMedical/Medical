@@ -293,7 +293,7 @@ namespace Medical.GUI
         void updateFileList()
         {
             fileList.removeAllItems();
-            String[] files = timelineController.listResourceFiles("*.tl");
+            String[] files = timelineController.LEGACY_listResourceFiles("*.tl");
             foreach (String file in files)
             {
                 String fileName = Path.GetFileName(file);

@@ -57,7 +57,7 @@ namespace Medical.GUI
                 throw new Exception("ChooseTimelineDialog opened without a callback. Use the promptForFile function not the show functions to show the dialog.");
             }
             fileList.removeAllItems();
-            String[] files = timelineController.listResourceFiles(filterString);
+            String[] files = timelineController.LEGACY_listResourceFiles(filterString);
             foreach (String file in files)
             {
                 String fileName = Path.GetFileName(file);
