@@ -28,7 +28,7 @@ namespace Medical.GUI
         private OpenPropManager propManager;
 
         public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline, OpenPropManager propManager, SimObjectMover simObjectMover)
-            :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowPropProperties.layout")
+            :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.ShowPropProperties.layout")
         {
             this.simObjectMover = simObjectMover;
             this.propManager = propManager;

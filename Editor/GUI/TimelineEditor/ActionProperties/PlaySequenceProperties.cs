@@ -13,7 +13,7 @@ namespace Medical.GUI
         private bool allowSync = true;
 
         public PlaySequenceProperties(Widget parentWidget)
-            :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.PlaySequenceProperties.layout")
+            :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.PlaySequenceProperties.layout")
         {
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
             useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);

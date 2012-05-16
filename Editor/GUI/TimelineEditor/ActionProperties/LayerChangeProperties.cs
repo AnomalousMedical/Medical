@@ -13,7 +13,7 @@ namespace Medical.GUI
         private CheckButton useSystemDuration;
 
         public LayerChangeProperties(Widget parentWidget)
-            : base(parentWidget, "Medical.GUI.Timeline.ActionProperties.LayerChangeProperties.layout")
+            : base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.LayerChangeProperties.layout")
         {
             Button capture = mainWidget.findWidget("Capture") as Button;
             capture.MouseButtonClick += new MyGUIEvent(capture_MouseButtonClick);

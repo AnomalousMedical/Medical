@@ -11,7 +11,7 @@ namespace Medical.GUI
         private MusclePositionAction playSequence;
 
         public MusclePositionActionProperties(Widget parentWidget)
-            : base(parentWidget, "Medical.GUI.Timeline.ActionProperties.MusclePositionActionProperties.layout")
+            : base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.MusclePositionActionProperties.layout")
         {
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
             useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);

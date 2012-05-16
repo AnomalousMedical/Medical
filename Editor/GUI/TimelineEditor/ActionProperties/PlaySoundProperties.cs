@@ -13,7 +13,7 @@ namespace Medical.GUI
         private EditBox soundFileEdit;
 
         public PlaySoundProperties(Widget parentWidget)
-            :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.PlaySoundProperties.layout")
+            :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.PlaySoundProperties.layout")
         {
             soundFileEdit = mainWidget.findWidget("SoundFileEdit") as EditBox;
 

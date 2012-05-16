@@ -25,7 +25,7 @@ namespace Medical.GUI
         private TextBox cameraText;
 
         public ShowTextProperties(Widget parentWidget, ITextDisplayFactory textFactory)
-            :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowTextProperties.layout")
+            :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.ShowTextProperties.layout")
         {
             xPosition = new NumericEdit(mainWidget.findWidget("XPositionEdit") as EditBox);
             xPosition.ValueChanged += position_ValueChanged;

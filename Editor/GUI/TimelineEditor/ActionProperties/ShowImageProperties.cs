@@ -24,7 +24,7 @@ namespace Medical.GUI
         private TextBox cameraText;
 
         public ShowImageProperties(Widget parentWidget)
-            :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowImageProperties.layout")
+            :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.ShowImageProperties.layout")
         {
             imageFileEdit = mainWidget.findWidget("ImageFileEdit") as EditBox;
 

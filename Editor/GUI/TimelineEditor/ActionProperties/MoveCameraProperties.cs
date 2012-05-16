@@ -17,7 +17,7 @@ namespace Medical.GUI
         private CheckButton useSystemDuration;
 
         public MoveCameraProperties(Widget parent)
-            :base(parent, "Medical.GUI.Timeline.ActionProperties.MoveCameraProperties.layout")
+            :base(parent, "Medical.GUI.TimelineEditor.ActionProperties.MoveCameraProperties.layout")
         {
             translationEdit = mainWidget.findWidget("TranslationEdit") as EditBox;
             translationEdit.EventEditTextChange += new MyGUIEvent(translationEdit_EventEditTextChange);
