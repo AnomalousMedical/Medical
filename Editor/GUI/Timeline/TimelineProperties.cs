@@ -35,7 +35,7 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
-        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController, TimelineFileBrowserDialog fileBrowserDialog, SaveableClipboard clipboard)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController, SaveableClipboard clipboard)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.clipboard = clipboard;
@@ -102,7 +102,6 @@ namespace Medical.GUI
         public override void Dispose()
         {
             actionFactory.Dispose();
-            timelineController.FileBrowser = null;
             actionFilter.Dispose();
             timelineView.Dispose();
             base.Dispose();

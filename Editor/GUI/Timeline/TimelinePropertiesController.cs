@@ -38,7 +38,6 @@ namespace Medical.GUI
         private TimelineUICallbackExtensions uiCallbackExtensions;
         private ObjectEditor timelineObjectEditor;
         private QuestionEditor questionEditor;
-        private TimelineFileBrowserDialog fileBrowserDialog;
         private MedicalUICallback medicalUICallback;
         public event SingleArgumentEvent<TimelinePropertiesController, Timeline> CurrentTimelineChanged;
         public event EventDelegate<TimelinePropertiesController, float> MarkerMoved;
@@ -74,11 +73,7 @@ namespace Medical.GUI
             documentHandler = new TimelineDocumentHandler(this);
             documentController.addDocumentHandler(documentHandler);
 
-            fileBrowserDialog = new TimelineFileBrowserDialog(editorTimelineController);
-            editorTimelineController.FileBrowser = fileBrowserDialog;
-            guiManager.addManagedDialog(fileBrowserDialog);
-
-            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this, fileBrowserDialog, standaloneController.Clipboard);
+            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this, standaloneController.Clipboard);
             timelineProperties.MarkerMoved += new EventDelegate<TimelineProperties, float>(timelineProperties_MarkerMoved);
             guiManager.addManagedDialog(timelineProperties);
 
@@ -86,7 +81,7 @@ namespace Medical.GUI
             timelineFileExplorer.Closed += new EventHandler(timelineFileExplorer_Closed);
             guiManager.addManagedDialog(timelineFileExplorer);
 
-            questionEditor = new QuestionEditor(fileBrowserDialog, editorTimelineController);
+            questionEditor = new QuestionEditor(editorTimelineController);
             guiManager.addManagedDialog(questionEditor);
 
             medicalUICallback = editorPlugin.MedicalUICallback;
@@ -114,7 +109,6 @@ namespace Medical.GUI
             timelineProperties.Dispose();
             timelineObjectExplorer.Dispose();
             questionEditor.Dispose();
-            fileBrowserDialog.Dispose();
         }
 
         public event EventHandler Closed

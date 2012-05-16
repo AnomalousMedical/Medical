@@ -550,7 +550,6 @@
     <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
-    <Compile Include="Controller\Timeline\ITimelineFileBrowser.cs" />
     <Compile Include="Controller\Timeline\QuestionPrompt\IQuestionProvider.cs" />
     <Compile Include="Controller\Timeline\QuestionPrompt\PromptAnswer.cs" />
     <Compile Include="Controller\Timeline\QuestionPrompt\PromptAnswerAction.cs" />

@@ -17,13 +17,10 @@ namespace Medical.GUI
 
         private EditBox answerText;
         private EditBox timelineText;
-        private TimelineFileBrowserDialog fileBrowser;
 
-        public QuestionEditorAnswerRow(Widget parent, int yPos, TimelineFileBrowserDialog fileBrowser)
+        public QuestionEditorAnswerRow(Widget parent, int yPos)
             :base("Medical.GUI.Timeline.QuestionEditorAnswerRow.layout")
         {
-            this.fileBrowser = fileBrowser;
-
             widget.setPosition(0, yPos);
             widget.setSize(parent.Width - ROW_SIZE_ADJUST, widget.Height);
             widget.attachToWidget(parent);
@@ -126,9 +123,7 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            fileBrowser.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            fileBrowser.ensureVisible();
-            fileBrowser.promptForFile("*.tl", fileChosen);
+            
         }
 
         private void fileChosen(String filename)

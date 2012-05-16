@@ -314,18 +314,6 @@ namespace Medical
             return textDisplay;
         }
 
-        public void promptForFile(String filterString, FileChosenCallback callback)
-        {
-            if (FileBrowser != null)
-            {
-                FileBrowser.promptForFile(filterString, callback);
-            }
-            else
-            {
-                Log.Warning("Tried to show ITimelineFileBrowser, but it is null. Nothing changed.");
-            }
-        }
-
         public void saveTimeline(Timeline timeline, String filename)
         {
             if (resourceProvider != null)
@@ -432,8 +420,6 @@ namespace Medical
                 return previousTimeline;
             }
         }
-
-        public ITimelineFileBrowser FileBrowser { get; set; }
 
         public IImageDisplayFactory ImageDisplayFactory { get; set; }
 

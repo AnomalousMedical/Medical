@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Engine.Editing;
+using Medical.Editor;
 
 namespace Medical.GUI
 {
@@ -12,6 +14,7 @@ namespace Medical.GUI
         private ShowImageAction showImage;
         private TimelineData timelineData;
         private EditBox imageFileEdit;
+        private MedicalUICallback uiCallback;
 
         private EnumComboBox<ImageAlignment> alignment;
         private NumericEdit xPosition;
@@ -23,9 +26,11 @@ namespace Medical.GUI
 
         private TextBox cameraText;
 
-        public ShowImageProperties(Widget parentWidget)
+        public ShowImageProperties(Widget parentWidget, MedicalUICallback uiCallback)
             :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.ShowImageProperties.layout")
         {
+            this.uiCallback = uiCallback;
+
             imageFileEdit = mainWidget.findWidget("ImageFileEdit") as EditBox;
 
             Button browseButton = mainWidget.findWidget("BrowseButton") as Button;
@@ -84,13 +89,15 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            showImage.TimelineController.promptForFile("*.png", fileChosen);
+            Browser browser = BrowserWindowController.createFileBrowser("*.png");
+            uiCallback.showBrowser(browser, fileChosen);
         }
 
-        void fileChosen(String filename)
+        bool fileChosen(Object filename, ref String errorMessage)
         {
-            showImage.ImageFile = filename;
+            showImage.ImageFile = filename.ToString();
             imageFileEdit.Caption = showImage.ImageFile;
+            return true;
         }
 
         void position_ValueChanged(Widget source, EventArgs e)

@@ -13,16 +13,14 @@ namespace Medical.GUI
         private EditBox soundFileEdit;
         private ScrollView answerScroll;
         private int lastWidth;
-        private TimelineFileBrowserDialog fileBrowser;
         private PromptQuestion currentSourceQuestion = null;
         private TimelineController timelineController;
 
         private List<QuestionEditorAnswerRow> rows = new List<QuestionEditorAnswerRow>();
 
-        public QuestionEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
+        public QuestionEditor(TimelineController timelineController)
             :base("Medical.GUI.Timeline.QuestionEditor.layout")
         {
-            this.fileBrowser = fileBrowser;
             this.timelineController = timelineController;
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
@@ -202,7 +200,7 @@ namespace Medical.GUI
         private QuestionEditorAnswerRow addRow(String answerText, String timeline)
         {
             int yPos = rows.Count > 0 ? rows[rows.Count - 1].Bottom : 0;
-            QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos, fileBrowser);
+            QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos);
             row.RemoveRow += new EventHandler(row_RemoveRow);
             row.InsertAbove += new EventHandler(row_InsertAbove);
             row.InsertBelow += new EventHandler(row_InsertBelow);
@@ -267,9 +265,7 @@ namespace Medical.GUI
 
         void browseSoundButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            fileBrowser.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            fileBrowser.ensureVisible();
-            fileBrowser.promptForFile("*.ogg", fileChosen);
+            
         }
 
         private void fileChosen(String filename)

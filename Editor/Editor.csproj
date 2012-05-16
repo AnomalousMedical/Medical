@@ -146,7 +146,6 @@
     <Compile Include="GUI\Timeline\QuestionEditorAnswerRow.cs" />
     <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionData.cs" />
-    <Compile Include="GUI\Timeline\TimelineFileBrowserDialog.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\AspectRatioTask.cs" />
@@ -203,7 +202,6 @@
     <EmbeddedResource Include="GUI\Timeline\TimelineFileExplorer.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Timeline\TimelineFileBrowserDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineObjectProperties.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
