@@ -33,6 +33,7 @@ namespace Medical
         private RmlViewer rmlViewer;
         private GenericEditor mvcEditor;
         private ProjectExplorer projectExplorer;
+        private DDAtlasPluginEditor pluginEditor;
 
         private EditorController editorController;
         private MedicalUICallback medicalUICallback;
@@ -44,6 +45,7 @@ namespace Medical
 
         public void Dispose()
         {
+            pluginEditor.Dispose();
             projectExplorer.Dispose();
             mvcEditor.Dispose();
             rmlViewer.Dispose();
@@ -120,6 +122,9 @@ namespace Medical
             projectExplorer = new ProjectExplorer(editorController);
             guiManager.addManagedDialog(projectExplorer);
 
+            pluginEditor = new DDAtlasPluginEditor(medicalUICallback, standaloneController.TimelineController, standaloneController.AtlasPluginManager);
+            guiManager.addManagedDialog(pluginEditor);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -132,6 +137,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(rmlViewer, "Medical.RmlViewer", "RML Viewer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
             //taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
@@ -251,6 +257,14 @@ namespace Medical
             get
             {
                 return mvcEditor;
+            }
+        }
+
+        public DDAtlasPluginEditor AtlasPluginEditor
+        {
+            get
+            {
+                return pluginEditor;
             }
         }
 

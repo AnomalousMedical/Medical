@@ -10,11 +10,10 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    class DDAtlasPluginEditor : MDIDialog
+    public class DDAtlasPluginEditor : MDIDialog
     {
         public const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
 
-        private MedicalUICallback uiCallback;
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
 
@@ -31,14 +30,11 @@ namespace Medical.GUI
 
         private AtlasPluginManager pluginManager;
 
-        public DDAtlasPluginEditor(BrowserWindow browserWindow, TimelineController mainTimelineController, AtlasPluginManager pluginManager)
-            : base("Developer.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
+        public DDAtlasPluginEditor(MedicalUICallback uiCallback, TimelineController mainTimelineController, AtlasPluginManager pluginManager)
+            : base("Medical.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
         {
             this.mainTimelineController = mainTimelineController;
             this.pluginManager = pluginManager;
-
-            uiCallback = new MedicalUICallback(browserWindow);
-            uiCallback.addCustomQuery(DDAtlasPluginCustomQueries.GetTimelineController, getTimelineController);
 
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
@@ -57,9 +53,9 @@ namespace Medical.GUI
             fileMenuCtrl.addItem("Save", MenuItemType.Normal, "Save");
             fileMenuCtrl.addItem("Save As", MenuItemType.Normal, "Save As");
 
-            createNewExamDefinition();
+            createNewPlugin();
 
-            this.Resized += new EventHandler(DataDrivenExamEditor_Resized);
+            this.Resized += new EventHandler(DDAtlasPluginEditor_Resized);
         }
 
         public override void Dispose()
@@ -72,43 +68,48 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void createNewExamDefinition()
+        public void createNewPlugin()
         {
             currentDefinition = new DDAtlasPlugin();
             currentDefinitionChanged(null);
         }
 
-        public void loadExamDefinition()
+        public void loadPlugin()
         {
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a plugin definition.", DeveloperConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD, false))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a plugin definition.", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD, false))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    try
-                    {
-                        using (Stream pluginStream = File.Open(fileDialog.Path, FileMode.Open, FileAccess.Read))
-                        {
-                            DDAtlasPlugin loadedPlugin = pluginManager.loadPlugin(pluginStream);
-                            if (loadedPlugin != null)
-                            {
-                                currentDefinition = loadedPlugin;
-                                currentDefinitionChanged(fileDialog.Path);
-                            }
-                            else
-                            {
-                                MessageBox.show("Load error", "There was an error loading this plugin.", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.show("Load error", "Exception loading plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                    }
+                    loadPlugin(fileDialog.Path);
                 }
             }
         }
 
-        public void saveExamDefinition()
+        public void loadPlugin(String file)
+        {
+            try
+            {
+                using (Stream pluginStream = File.Open(file, FileMode.Open, FileAccess.Read))
+                {
+                    DDAtlasPlugin loadedPlugin = pluginManager.loadPlugin(pluginStream);
+                    if (loadedPlugin != null)
+                    {
+                        currentDefinition = loadedPlugin;
+                        currentDefinitionChanged(file);
+                    }
+                    else
+                    {
+                        MessageBox.show("Load error", "There was an error loading this plugin.", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.show("Load error", "Exception loading plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            }
+        }
+
+        public void savePlugin()
         {
             if (currentFile != null)
             {
@@ -120,13 +121,13 @@ namespace Medical.GUI
             }
             else
             {
-                saveExamDefinitionAs();
+                savePluginAs();
             }
         }
 
-        public void saveExamDefinitionAs()
+        public void savePluginAs()
         {
-            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a plugin definition", DeveloperConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD))
+            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a plugin definition", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
@@ -147,7 +148,7 @@ namespace Medical.GUI
             }
         }
 
-        void DataDrivenExamEditor_Resized(object sender, EventArgs e)
+        void DDAtlasPluginEditor_Resized(object sender, EventArgs e)
         {
             tree.layout();
             table.layout();
@@ -172,28 +173,22 @@ namespace Medical.GUI
             }
         }
 
-        private void getTimelineController(SendResult<Object> resultCallback, params Object[] args)
-        {
-            String errorPrompt = null;
-            resultCallback.Invoke(mainTimelineController, ref errorPrompt);
-        }
-
         void fileMenuCtrl_ItemAccept(Widget source, EventArgs e)
         {
             MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
             switch (mcae.Item.ItemId)
             {
                 case "New":
-                    createNewExamDefinition();
+                    createNewPlugin();
                     break;
                 case "Open":
-                    loadExamDefinition();
+                    loadPlugin();
                     break;
                 case "Save":
-                    saveExamDefinition();
+                    savePlugin();
                     break;
                 case "Save As":
-                    saveExamDefinitionAs();
+                    savePluginAs();
                     break;
             }
         }

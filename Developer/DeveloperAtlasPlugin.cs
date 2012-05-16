@@ -18,7 +18,6 @@ namespace Developer
         private PluginPublishController pluginPublishController;
         private DeveloperRenderPropertiesDialog developerRenderer;
         private DiscControl discControl;
-        private DDAtlasPluginEditor pluginEditor;
         private BrowserWindow browserWindow;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
         private GridPropertiesDialog gridProperties;
@@ -35,7 +34,6 @@ namespace Developer
             pluginPublisher.Dispose();
             developerRenderer.Dispose();
             discControl.Dispose();
-            pluginEditor.Dispose();
             browserWindow.Dispose();
             gridProperties.Dispose();
         }
@@ -75,9 +73,6 @@ namespace Developer
             discControl = new DiscControl();
             guiManager.addManagedDialog(discControl);
 
-            pluginEditor = new DDAtlasPluginEditor(browserWindow, standaloneController.TimelineController, standaloneController.AtlasPluginManager);
-            guiManager.addManagedDialog(pluginEditor);
-
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(advancedMandibleMovement);
 
@@ -92,7 +87,6 @@ namespace Developer
 
             taskController.addTask(new MDIDialogOpenTask(developerRenderer, "Developer.DeveloperRender", "Developer Renderer", "Developer.RenderIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "Developer.DiscEditorIcon", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "Developer.PlugInEditorIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
         }

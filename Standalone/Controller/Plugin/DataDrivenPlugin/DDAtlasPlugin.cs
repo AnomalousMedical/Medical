@@ -14,11 +14,6 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical
 {
-    public enum DDAtlasPluginCustomQueries
-    {
-        GetTimelineController
-    }
-
     public partial class DDAtlasPlugin : AtlasPlugin, Saveable
     {
         private List<DDPluginTask> tasks = new List<DDPluginTask>();

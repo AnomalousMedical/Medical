@@ -76,14 +76,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\PluginPublishController.cs" />
     <Compile Include="Controller\ZipStatusTextWriter.cs" />
     <Compile Include="DeveloperAtlasPlugin.cs" />
     <Compile Include="DeveloperAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleControlSlider.cs" />
     <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.cs" />
-    <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.cs" />
     <Compile Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.cs" />
     <Compile Include="GUI\DiscEditor\DiscControl.cs" />
@@ -94,7 +92,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.layout" />
-    <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
@@ -122,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DeveloperIcons.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GUI\DDAtlasPluginEditor\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
