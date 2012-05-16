@@ -35,6 +35,7 @@ namespace Medical
         private ProjectExplorer projectExplorer;
 
         private EditorController editorController;
+        private MedicalUICallback medicalUICallback;
 
         public EditorPlugin()
         {
@@ -80,6 +81,7 @@ namespace Medical
             //UI Helpers
             browserWindow = new BrowserWindow();
             guiManager.addManagedDialog(browserWindow);
+            medicalUICallback = new MedicalUICallback(browserWindow);
 
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
@@ -249,6 +251,14 @@ namespace Medical
             get
             {
                 return mvcEditor;
+            }
+        }
+
+        public MedicalUICallback MedicalUICallback
+        {
+            get
+            {
+                return medicalUICallback;
             }
         }
 

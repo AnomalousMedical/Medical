@@ -85,6 +85,7 @@
     <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaItem.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
+    <Compile Include="Controller\EditorUICallbackExtensions.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditor.cs" />

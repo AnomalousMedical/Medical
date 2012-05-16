@@ -36,14 +36,6 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.ChangeGUIType, changeGUIType);
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.GetGUIData, getGUIData);
             medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.OpenQuestionEditor, openQuestionEditor);
-            medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
-            medicalUICallback.addCustomQuery(ChangeMedicalStateDoAction.CustomEditQueries.CapturePresetState, capturePresetState);
-            medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
-            medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);
-            medicalUICallback.addCustomQuery(TimelineEditInterface.CustomQueries.OpenFolder, openTimelineFolder);
-            medicalUICallback.addCustomQuery(AnomalousMvcContext.CustomQueries.Preview, previewMvcContext);
-            medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.ShowViewBrowser, showViewBrowser);
-            medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.ShowModelBrowser, showModelBrowser);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -95,87 +87,6 @@ namespace Medical.GUI
         {
             browserResultCallback = resultCallback;
             browserWindow.setBrowser(editorTimelineController.GUIFactory.GUIBrowser);
-            browserWindow.ItemSelected += browserWindow_ItemSelected;
-            browserWindow.Canceled += browserWindow_Canceled;
-            browserWindow.open(true);
-        }
-
-        private void capturePresetState(SendResult<Object> resultCallback, params Object[] args)
-        {
-            PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
-            stateCaptureDialog.SmoothShow = true;
-            stateCaptureDialog.open(true);
-        }
-
-        private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
-        {
-            RmlViewer rmlViewer = propertiesController.EditorPlugin.RmlViewer;
-            String file = propertiesController.ResourceProvider.getFullFilePath(args[0].ToString());
-            rmlViewer.changeDocument(file);
-            if (!rmlViewer.Visible)
-            {
-                rmlViewer.Visible = true;
-            }
-        }
-
-        private void openTimelineFolder(SendResult<Object> resultCallback, params Object[] args)
-        {
-            if (args[0] != null)
-            {
-                OtherProcessManager.openLocalURL(Path.GetDirectoryName(propertiesController.ResourceProvider.getFullFilePath(args[0].ToString())));
-            }
-            else
-            {
-                OtherProcessManager.openLocalURL(propertiesController.ResourceProvider.getFullFilePath(""));
-            }
-        }
-
-        private void previewMvcContext(SendResult<Object> resultCallback, params Object[] args)
-        {
-            if (args[0] != null)
-            {
-                if (propertiesController.ResourceProvider != null)
-                {
-                    standaloneController.TimelineController.setResourceProvider(propertiesController.ResourceProvider);
-                    AnomalousMvcContext context = (AnomalousMvcContext)args[0];
-                    context.setResourceProvider(propertiesController.ResourceProvider);
-                    standaloneController.MvcCore.startRunningContext(context);
-                }
-                else
-                {
-                    MessageBox.show("Cannot run MVC Context. Please open a timeline project first.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                }
-            }
-        }
-
-        private void openSystemEditor(SendResult<Object> resultCallback, params Object[] args)
-        {
-            if (args[0] != null)
-            {
-                OtherProcessManager.openLocalURL(propertiesController.ResourceProvider.getFullFilePath(args[0].ToString()));
-            }
-        }
-
-        private void showViewBrowser(SendResult<Object> resultCallback, params Object[] args)
-        {
-            browserResultCallback = resultCallback;
-            Browser browser = new Browser("Views");
-            standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
-            browserWindow.setBrowser(browser);
-            browserWindow.ItemSelected += browserWindow_ItemSelected;
-            browserWindow.Canceled += browserWindow_Canceled;
-            browserWindow.open(true);
-        }
-
-        private void showModelBrowser(SendResult<Object> resultCallback, params Object[] args)
-        {
-            browserResultCallback = resultCallback;
-            Browser browser = new Browser("Models");
-
-            browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
-            browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
-
-            browserWindow.setBrowser(browser);
             browserWindow.ItemSelected += browserWindow_ItemSelected;
             browserWindow.Canceled += browserWindow_Canceled;
             browserWindow.open(true);

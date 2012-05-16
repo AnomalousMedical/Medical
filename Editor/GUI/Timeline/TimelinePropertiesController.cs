@@ -89,7 +89,7 @@ namespace Medical.GUI
             questionEditor = new QuestionEditor(fileBrowserDialog, editorTimelineController);
             guiManager.addManagedDialog(questionEditor);
 
-            medicalUICallback = new MedicalUICallback(editorPlugin.BrowserWindow);
+            medicalUICallback = editorPlugin.MedicalUICallback;
             uiCallbackExtensions = new TimelineUICallbackExtensions(standaloneController, medicalUICallback, editorTimelineController, this);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);

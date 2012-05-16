@@ -6,6 +6,8 @@ using System.IO;
 using Logging;
 using MyGUIPlugin;
 using Medical.Editor;
+using Engine.Editing;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -15,6 +17,8 @@ namespace Medical
     {
         private EditorPlugin plugin;
         private StandaloneController standaloneController;
+        private SendResult<Object> browserResultCallback;
+        private EditorUICallbackExtensions uiCallbackExtensions;
 
         public event EditorControllerEvent ProjectChanged;
 
@@ -22,6 +26,8 @@ namespace Medical
         {
             this.plugin = plugin;
             this.standaloneController = standaloneController;
+
+            uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, plugin.MedicalUICallback, this);
         }
 
         public void createNewProject(String filename, bool deleteOld)
@@ -34,11 +40,7 @@ namespace Medical
                 }
                 createProject(filename);
                 projectChanged();
-                
-                //if (!asFolder)
-                //{
-                //    documentController.addToRecentDocuments(filename);
-                //}
+                //Add to recent documents
             }
             catch (Exception ex)
             {
@@ -52,14 +54,10 @@ namespace Medical
         {
             ResourceProvider = new FilesystemResourceProvider(Path.GetDirectoryName(projectPath));
             projectChanged();
-
-            //if (projectPath.EndsWith(".tl"))
-            //{
-            //    openTimelineFile(projectPath);
-            //}
+            //Add to recent documents
         }
 
-        internal void openFile(String file)
+        public void openFile(String file)
         {
             String fullPath = ResourceProvider.getFullFilePath(file);
             if (file.EndsWith(".rml"))
@@ -92,7 +90,39 @@ namespace Medical
             }
         }
 
+        public void showBrowser(Browser browser, SendResult<Object> browserResultCallback)
+        {
+            this.browserResultCallback = browserResultCallback;
+
+            BrowserWindow browserWindow = plugin.BrowserWindow;
+            browserWindow.setBrowser(browser);
+            browserWindow.ItemSelected += browserWindow_ItemSelected;
+            browserWindow.Canceled += browserWindow_Canceled;
+            browserWindow.open(true);
+        }
+
         public ResourceProvider ResourceProvider { get; private set; }
+
+        void browserWindow_ItemSelected(object sender, EventArgs e)
+        {
+            BrowserWindow browserWindow = plugin.BrowserWindow;
+            if (browserResultCallback != null)
+            {
+                String error = null;
+                browserResultCallback.Invoke(browserWindow.SelectedValue, ref error);
+                browserResultCallback = null;
+            }
+            browserWindow.ItemSelected -= browserWindow_ItemSelected;
+            browserWindow.Canceled -= browserWindow_Canceled;
+        }
+
+        void browserWindow_Canceled(object sender, EventArgs e)
+        {
+            BrowserWindow browserWindow = plugin.BrowserWindow;
+            browserResultCallback = null;
+            browserWindow.ItemSelected -= browserWindow_ItemSelected;
+            browserWindow.Canceled -= browserWindow_Canceled;
+        }
 
         private void createProject(string projectName)
         {
