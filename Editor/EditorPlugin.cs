@@ -268,6 +268,14 @@ namespace Medical
             }
         }
 
+        public MovementSequenceEditor MovementSequenceEditor
+        {
+            get
+            {
+                return movementSequenceEditor;
+            }
+        }
+
         public MedicalUICallback MedicalUICallback
         {
             get

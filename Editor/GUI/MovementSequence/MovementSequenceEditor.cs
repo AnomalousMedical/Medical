@@ -12,7 +12,7 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class MovementSequenceEditor : MDIDialog
+    public class MovementSequenceEditor : MDIDialog
     {
         private PopupMenu fileMenu;
         private TimelineDataProperties actionProperties;
@@ -112,6 +112,25 @@ namespace Medical.GUI
         {
             Gui.Instance.destroyWidget(fileMenu);
             base.Dispose();
+        }
+
+        public void openSequence(String filename)
+        {
+            try
+            {
+                using (XmlReader xmlReader = new XmlTextReader(filename))
+                {
+                    loadingSequenceFromFile = true;
+                    CurrentSequenceFile = filename;
+                    MovementSequence movementSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                    movementSequenceController.CurrentSequence = movementSequence;
+                    loadingSequenceFromFile = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error opening movement sequence {0}.\nReason: {1}", filename, ex.Message), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         internal void addStateToTimeline(MovementSequenceState state)
@@ -335,14 +354,7 @@ namespace Medical.GUI
                 openDialog.Wildcard = "Sequence files (*.seq)|*.seq";
                 if (openDialog.showModal() == NativeDialogResult.OK)
                 {
-                    using (XmlReader xmlReader = new XmlTextReader(openDialog.Path))
-                    {
-                        loadingSequenceFromFile = true;
-                        CurrentSequenceFile = openDialog.Path;
-                        MovementSequence movementSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
-                        movementSequenceController.CurrentSequence = movementSequence;
-                        loadingSequenceFromFile = false;
-                    }
+                    openSequence(openDialog.Path);
                 }
             }
             fileMenu.setVisibleSmooth(false);

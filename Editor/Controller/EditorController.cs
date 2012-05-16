@@ -84,6 +84,14 @@ namespace Medical
                     plugin.AtlasPluginEditor.open(false);
                 }
             }
+            else if (file.EndsWith(".seq"))
+            {
+                plugin.MovementSequenceEditor.openSequence(fullPath);
+                if (!plugin.MovementSequenceEditor.Visible)
+                {
+                    plugin.MovementSequenceEditor.open(false);
+                }
+            }
             else
             {
                 OtherProcessManager.openLocalURL(fullPath);
