@@ -64,6 +64,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            fileTree.Dispose();
             newProjectDialog.Dispose();
             saveTimelineDialog.Dispose();
             base.Dispose();

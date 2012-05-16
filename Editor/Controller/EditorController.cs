@@ -11,9 +11,9 @@ using Medical.GUI;
 
 namespace Medical
 {
-    delegate void EditorControllerEvent(EditorController editorController);
+    public delegate void EditorControllerEvent(EditorController editorController);
 
-    class EditorController
+    public class EditorController
     {
         private EditorPlugin plugin;
         private StandaloneController standaloneController;
@@ -90,6 +90,14 @@ namespace Medical
                 if (!plugin.MovementSequenceEditor.Visible)
                 {
                     plugin.MovementSequenceEditor.open(false);
+                }
+            }
+            else if (file.EndsWith(".tl"))
+            {
+                plugin.TimelineEditor.loadTimeline(fullPath);
+                if (!plugin.TimelineEditor.Visible)
+                {
+                    plugin.TimelineEditor.open(false);
                 }
             }
             else

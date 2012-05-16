@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="204 195 929 106" layer="Overlapped">
-        <Property key="Caption" value="Prop Editor"/>
+        <Property key="Caption" value="Prop Timeline Editor"/>
         <UserString key="CurrentDockLocation" value="Bottom"/>
         <UserString key="AllowedDockLocations" value="Top | Bottom | Floating"/>
         <Widget type="Widget" skin="PanelSkin" position="0 3 678 69" align="Stretch">

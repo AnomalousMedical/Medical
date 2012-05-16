@@ -34,6 +34,7 @@ namespace Medical
         private GenericEditor mvcEditor;
         private ProjectExplorer projectExplorer;
         private DDAtlasPluginEditor pluginEditor;
+        private TimelineEditor timelineEditor;
 
         private EditorController editorController;
         private MedicalUICallback medicalUICallback;
@@ -45,6 +46,7 @@ namespace Medical
 
         public void Dispose()
         {
+            timelineEditor.Dispose();
             pluginEditor.Dispose();
             projectExplorer.Dispose();
             mvcEditor.Dispose();
@@ -125,6 +127,9 @@ namespace Medical
             pluginEditor = new DDAtlasPluginEditor(medicalUICallback, standaloneController.TimelineController, standaloneController.AtlasPluginManager);
             guiManager.addManagedDialog(pluginEditor);
 
+            timelineEditor = new TimelineEditor(editorTimelineController, editorController, standaloneController.Clipboard, this);
+            guiManager.addManagedDialog(timelineEditor);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -138,6 +143,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(timelineEditor, "Medical.NewTimelineEditor", "Timeline Editor", "TimelineEditorIcon", TaskMenuCategories.Editor));
             //taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
@@ -273,6 +279,14 @@ namespace Medical
             get
             {
                 return movementSequenceEditor;
+            }
+        }
+
+        public TimelineEditor TimelineEditor
+        {
+            get
+            {
+                return timelineEditor;
             }
         }
 
