@@ -33,7 +33,7 @@ namespace Medical.GUI
             rocketWidget.Enabled = false;
 
             this.Resized += new EventHandler(TestRocketWindow_Resized);
-            window.RootMouseChangeFocus += new MyGUIEvent(window_RootMouseChangeFocus);
+            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             extensionActions.Add(new ExtensionAction("Open System Editor", "Edit", openInSystemEditor));
 
@@ -100,7 +100,7 @@ namespace Medical.GUI
             base.onShown(args);
         }
 
-        void window_RootMouseChangeFocus(Widget source, EventArgs e)
+        void window_RootKeyChangeFocus(Widget source, EventArgs e)
         {
             RootFocusEventArgs rfea = (RootFocusEventArgs)e;
             if (rfea.Focus)

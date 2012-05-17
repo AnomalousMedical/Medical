@@ -53,7 +53,7 @@ namespace Medical.GUI
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
-            window.RootMouseChangeFocus += new MyGUIEvent(window_RootMouseChangeFocus);
+            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -201,7 +201,7 @@ namespace Medical.GUI
             }
         }
 
-        void window_RootMouseChangeFocus(Widget source, EventArgs e)
+        void window_RootKeyChangeFocus(Widget source, EventArgs e)
         {
             RootFocusEventArgs rfea = (RootFocusEventArgs)e;
             if (rfea.Focus)

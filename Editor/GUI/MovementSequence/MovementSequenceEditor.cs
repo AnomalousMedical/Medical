@@ -24,8 +24,6 @@ namespace Medical.GUI
         private bool allowSynchronization = true;
         private String currentSequenceFile = null;
         private bool loadingSequenceFromFile = false;
-        private XmlSaver xmlSaver = new XmlSaver();
-        private ShowMenuButton showMenuButton;
         private SaveableClipboard clipboard;
         private EditorController editorController;
 
@@ -38,7 +36,7 @@ namespace Medical.GUI
             this.editorController = editorController;
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
-            window.RootMouseChangeFocus += new MyGUIEvent(window_RootMouseChangeFocus);
+            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             this.movementSequenceController = movementSequenceController;
             movementSequenceController.CurrentSequenceChanged += new MovementSequenceEvent(movementSequenceController_CurrentSequenceChanged);
@@ -99,7 +97,7 @@ namespace Medical.GUI
             editorController.ExtensionActions = extensionActions;
         }
 
-        void window_RootMouseChangeFocus(Widget source, EventArgs e)
+        void window_RootKeyChangeFocus(Widget source, EventArgs e)
         {
             RootFocusEventArgs rfae = (RootFocusEventArgs)e;
             if (rfae.Focus)
@@ -121,7 +119,7 @@ namespace Medical.GUI
                 {
                     loadingSequenceFromFile = true;
                     CurrentSequenceFile = filename;
-                    MovementSequence movementSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                    MovementSequence movementSequence = EditorController.XmlSaver.restoreObject(xmlReader) as MovementSequence;
                     movementSequenceController.CurrentSequence = movementSequence;
                     loadingSequenceFromFile = false;
                 }
@@ -305,7 +303,7 @@ namespace Medical.GUI
                     using(XmlTextWriter textWriter = new XmlTextWriter(saveDialog.Path, Encoding.Default))
                     {
                         textWriter.Formatting = Formatting.Indented;
-                        xmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
+                        EditorController.XmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
                         CurrentSequenceFile = saveDialog.Path;
                     }
                 }
@@ -319,7 +317,7 @@ namespace Medical.GUI
                 using (XmlTextWriter textWriter = new XmlTextWriter(CurrentSequenceFile, Encoding.Default))
                 {
                     textWriter.Formatting = Formatting.Indented;
-                    xmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
+                    EditorController.XmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
                 }
             }
             else
