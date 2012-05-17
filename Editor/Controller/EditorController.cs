@@ -90,6 +90,7 @@ namespace Medical
                 {
                     plugin.MvcEditor.open(false);
                 }
+                plugin.MvcEditor.activateExtensionActions();
                 plugin.MvcEditor.bringToFront();
             }
             else if (file.EndsWith(".ddp"))

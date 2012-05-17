@@ -2,11 +2,10 @@
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="19 33 348 313" layer="Overlapped">
         <Property key="Caption" value="Editor"/>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 44 27" align="Left Top" name="MenuBar"/>
-        <Widget type="ScrollView" skin="ScrollView" position="0 28 168 251" align="HRelative VStretch" name="TreeScroller">
+        <Widget type="ScrollView" skin="ScrollView" position="0 1 168 278" align="HRelative VStretch" name="TreeScroller">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="168 28 168 251" align="HRelative VStretch" name="TableScroller">
+        <Widget type="ScrollView" skin="ScrollView" position="168 1 168 278" align="HRelative VStretch" name="TableScroller">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
     </Widget>

@@ -25,12 +25,16 @@ namespace Medical.GUI
         private String defaultDirectory = "";
 
         private GenericEditorObject editorObject;
+        private EditorController editorController;
+        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
 
-        public GenericEditor(String persistName, GenericEditorObject editorObject)
+        public GenericEditor(String persistName, GenericEditorObject editorObject, EditorController editorController)
             : base("Medical.GUI.GenericEditor.GenericEditor.layout", persistName)
         {
+            this.editorController = editorController;
             this.editorObject = editorObject;
             window.Caption = String.Format("{0} Editor", editorObject.ObjectTypeName);
+            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, editorObject.UICallback);
@@ -40,14 +44,8 @@ namespace Medical.GUI
 
             objectEditor = new ObjectEditor(editTreeView, propTable, editorObject.UICallback);
 
-            MenuBar menu = window.findWidget("MenuBar") as MenuBar;
-            MenuItem fileMenu = menu.addItem("File", MenuItemType.Popup);
-            MenuControl fileMenuCtrl = menu.createItemPopupMenuChild(fileMenu);
-            fileMenuCtrl.ItemAccept += new MyGUIEvent(fileMenuCtrl_ItemAccept);
-            fileMenuCtrl.addItem("New", MenuItemType.Normal, "New");
-            fileMenuCtrl.addItem("Open", MenuItemType.Normal, "Open");
-            fileMenuCtrl.addItem("Save", MenuItemType.Normal, "Save");
-            fileMenuCtrl.addItem("Save As", MenuItemType.Normal, "Save As");
+            extensionActions.Add(new ExtensionAction(String.Format("Save {0}", editorObject.ObjectTypeName), "File", save));
+            extensionActions.Add(new ExtensionAction(String.Format("Save {0} As", editorObject.ObjectTypeName), "File", saveAs));
 
             createNew();
 
@@ -140,6 +138,19 @@ namespace Medical.GUI
             }
         }
 
+        public void activateExtensionActions()
+        {
+            editorController.ExtensionActions = extensionActions;
+        }
+
+        void window_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            if (((RootFocusEventArgs)e).Focus)
+            {
+                activateExtensionActions();
+            }
+        }
+
         void GenericEditor_Resized(object sender, EventArgs e)
         {
             tree.layout();
@@ -162,26 +173,6 @@ namespace Medical.GUI
             else
             {
                 window.Caption = String.Format("{0} Editor", editorObject.ObjectTypeName);
-            }
-        }
-
-        void fileMenuCtrl_ItemAccept(Widget source, EventArgs e)
-        {
-            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
-            switch (mcae.Item.ItemId)
-            {
-                case "New":
-                    createNew();
-                    break;
-                case "Open":
-                    load();
-                    break;
-                case "Save":
-                    save();
-                    break;
-                case "Save As":
-                    saveAs();
-                    break;
             }
         }
     }
