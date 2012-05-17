@@ -84,7 +84,6 @@
     <Compile Include="Controller\EditorTypeController.cs" />
     <Compile Include="Controller\ExtensionAction.cs" />
     <Compile Include="Controller\ExtensionActionCollection.cs" />
-    <Compile Include="Controller\GenericEditors\MVCGenericEditorObject.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaItem.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditor.cs" />
-    <Compile Include="GUI\GenericEditor\GenericEditorObject.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
