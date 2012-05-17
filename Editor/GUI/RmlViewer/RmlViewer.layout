@@ -2,8 +2,6 @@
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="37 17 800 700" layer="Overlapped">
         <Property key="Caption" value="RML Viewer"/>
-        <Widget type="ImageBox" skin="ImageBox" position="0 27 788 640" align="Stretch" name="RocketImage"/>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 788 27" align="HStretch Top" name="MenuBar">
-        </Widget>
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 788 667" align="Stretch" name="RocketImage"/>
     </Widget>
 </MyGUI>

@@ -102,6 +102,10 @@ namespace Medical.GUI
 
             extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
             extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
+            extensionActions.Add(new ExtensionAction("Cut", "Edit", cut));
+            extensionActions.Add(new ExtensionAction("Copy", "Edit", copy));
+            extensionActions.Add(new ExtensionAction("Paste", "Edit", paste));
+            extensionActions.Add(new ExtensionAction("Select All", "Edit", selectAll));
         }
 
         public void loadTimeline(String filename)
@@ -137,6 +141,33 @@ namespace Medical.GUI
                     saveTimeline(currentTimeline, saveDialog.Path);
                 }
             }
+        }
+
+        public void paste()
+        {
+            TimelineActionClipboardContainer clipContainer = clipboard.createCopy<TimelineActionClipboardContainer>();
+            if (clipContainer != null)
+            {
+                clipContainer.addActionsToTimeline(currentTimeline, timelineView.MarkerTime);
+            }
+        }
+
+        public void copy()
+        {
+            TimelineActionClipboardContainer clipContainer = new TimelineActionClipboardContainer();
+            clipContainer.addActions(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
+        }
+
+        public void cut()
+        {
+            copy();
+            deleteSelectedActions();
+        }
+
+        public void selectAll()
+        {
+            timelineView.selectAll();
         }
 
         public void activateExtensionActions()

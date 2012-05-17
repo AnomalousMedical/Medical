@@ -115,7 +115,7 @@ namespace Medical
             textAnalysisEditor = new TextAnalysisEditor(browserWindow, timelinePropertiesController, standaloneController.Clipboard);
             guiManager.addManagedDialog(textAnalysisEditor);
 
-            rmlViewer = new RmlViewer();
+            rmlViewer = new RmlViewer(editorController);
             guiManager.addManagedDialog(rmlViewer);
 
             mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", new MVCGenericEditorObject(timelinePropertiesController.UICallback));

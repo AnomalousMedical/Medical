@@ -80,6 +80,8 @@ namespace Medical
                 {
                     plugin.RmlViewer.open(false);
                 }
+                plugin.RmlViewer.activateExtensionActions();
+                plugin.RmlViewer.bringToFront();
             }
             else if (file.EndsWith(".mvc"))
             {
@@ -88,6 +90,7 @@ namespace Medical
                 {
                     plugin.MvcEditor.open(false);
                 }
+                plugin.MvcEditor.bringToFront();
             }
             else if (file.EndsWith(".ddp"))
             {
@@ -96,6 +99,7 @@ namespace Medical
                 {
                     plugin.AtlasPluginEditor.open(false);
                 }
+                plugin.AtlasPluginEditor.bringToFront();
             }
             else if (file.EndsWith(".seq"))
             {
@@ -104,6 +108,7 @@ namespace Medical
                 {
                     plugin.MovementSequenceEditor.open(false);
                 }
+                plugin.MovementSequenceEditor.bringToFront();
             }
             else if (file.EndsWith(".tl"))
             {
@@ -113,6 +118,7 @@ namespace Medical
                     plugin.TimelineEditor.open(false);
                 }
                 plugin.TimelineEditor.activateExtensionActions();
+                plugin.TimelineEditor.bringToFront();
             }
             else
             {

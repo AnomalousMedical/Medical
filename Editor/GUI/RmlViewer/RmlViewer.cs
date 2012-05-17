@@ -20,23 +20,34 @@ namespace Medical.GUI
         private String documentName = null;
         private FileSystemWatcher fileWatcher;
         private String windowTitleBase;
+        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
+        private EditorController editorController;
 
-        public RmlViewer()
+        public RmlViewer(EditorController editorController)
             : base("Medical.GUI.RmlViewer.RmlViewer.layout")
         {
+            this.editorController = editorController;
+
             ImageBox imageBox = (ImageBox)window.findWidget("RocketImage");
             rocketWidget = new RocketWidget(imageBox);
             rocketWidget.Enabled = false;
 
-            MenuBar menuBar = (MenuBar)window.findWidget("MenuBar");
-            MenuItem file = menuBar.addItem("File", MenuItemType.Popup, "File");
-            MenuControl fileControl = menuBar.createItemPopupMenuChild(file);
-            fileControl.addItem("Open", MenuItemType.Normal, "Open");
-            fileControl.ItemAccept += new MyGUIEvent(fileControl_ItemAccept);
-
             this.Resized += new EventHandler(TestRocketWindow_Resized);
+            window.RootMouseChangeFocus += new MyGUIEvent(window_RootMouseChangeFocus);
+
+            extensionActions.Add(new ExtensionAction("Open System Editor", "Edit", openInSystemEditor));
 
             windowTitleBase = window.Caption;
+        }
+
+        public override void Dispose()
+        {
+            if (fileWatcher != null)
+            {
+                fileWatcher.Dispose();
+            }
+            rocketWidget.Dispose();
+            base.Dispose();
         }
 
         public void changeDocument(string file)
@@ -64,31 +75,17 @@ namespace Medical.GUI
             }
         }
 
-        void fileControl_ItemAccept(Widget source, EventArgs e)
+        public void openInSystemEditor()
         {
-            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
-            switch (mcae.Item.ItemId)
+            if (documentName != null)
             {
-                case "Open":
-                    using (FileOpenDialog fileOpen = new FileOpenDialog(MainWindow.Instance, "Choose RML File"))
-                    {
-                        if (fileOpen.showModal() == NativeDialogResult.OK)
-                        {
-                            changeDocument(fileOpen.Path);
-                        }
-                    }
-                    break;
+                OtherProcessManager.openLocalURL(documentName);
             }
         }
 
-        public override void Dispose()
+        public void activateExtensionActions()
         {
-            if (fileWatcher != null)
-            {
-                fileWatcher.Dispose();
-            }
-            rocketWidget.Dispose();
-            base.Dispose();
+            editorController.ExtensionActions = extensionActions;
         }
 
         protected override void onClosed(EventArgs args)
@@ -101,6 +98,15 @@ namespace Medical.GUI
         {
             rocketWidget.Enabled = true;
             base.onShown(args);
+        }
+
+        void window_RootMouseChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
+            if (rfea.Focus)
+            {
+                activateExtensionActions();
+            }
         }
 
         void TestRocketWindow_Resized(object sender, EventArgs e)
