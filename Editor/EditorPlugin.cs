@@ -106,7 +106,7 @@ namespace Medical
             timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelinePropertiesController);
             guiManager.addManagedDialog(timelineAnalyzer);
 
-            movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard);
+            movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard, editorController);
             guiManager.addManagedDialog(movementSequenceEditor);
 
             scratchArea = new ScratchArea(scratchAreaController, browserWindow);

@@ -14,7 +14,7 @@ namespace Medical.GUI
 {
     public class MovementSequenceEditor : MDIDialog
     {
-        private PopupMenu fileMenu;
+        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
         private TimelineView timelineView;
@@ -26,16 +26,19 @@ namespace Medical.GUI
         private bool loadingSequenceFromFile = false;
         private XmlSaver xmlSaver = new XmlSaver();
         private ShowMenuButton showMenuButton;
-        SaveableClipboard clipboard;
+        private SaveableClipboard clipboard;
+        private EditorController editorController;
 
         private MovementSequenceController movementSequenceController;
 
-        public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard)
+        public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard, EditorController editorController)
             : base("Medical.GUI.MovementSequence.MovementSequenceEditor.layout")
         {
             this.clipboard = clipboard;
+            this.editorController = editorController;
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+            window.RootMouseChangeFocus += new MyGUIEvent(window_RootMouseChangeFocus);
 
             this.movementSequenceController = movementSequenceController;
             movementSequenceController.CurrentSequenceChanged += new MovementSequenceEvent(movementSequenceController_CurrentSequenceChanged);
@@ -44,30 +47,13 @@ namespace Medical.GUI
             movementSequenceController.PlaybackUpdate += new MovementSequenceEvent(movementSequenceController_PlaybackUpdate);
 
             //Menu
-            Button fileButton = window.findWidget("FileButton") as Button;
-            fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
-            fileMenu.Visible = false;
-            MenuItem newSequence = fileMenu.addItem("New");
-            newSequence.MouseButtonClick += new MyGUIEvent(newSequence_MouseButtonClick);
-            MenuItem openSequence = fileMenu.addItem("Open");
-            openSequence.MouseButtonClick += new MyGUIEvent(openSequence_MouseButtonClick);
-            MenuItem saveSequence = fileMenu.addItem("Save");
-            saveSequence.MouseButtonClick += new MyGUIEvent(saveSequence_MouseButtonClick);
-            MenuItem saveSequenceAs = fileMenu.addItem("Save As");
-            saveSequenceAs.MouseButtonClick += new MyGUIEvent(saveSequenceAs_MouseButtonClick);
-            showMenuButton = new ShowMenuButton(fileButton, fileMenu);
-            fileMenu.addItem("Sep", MenuItemType.Separator);
-            MenuItem reverseSides = fileMenu.addItem("Reverse Sides");
-            reverseSides.MouseButtonClick += new MyGUIEvent(reverseSides_MouseButtonClick);
-            fileMenu.addItem("Sep2", MenuItemType.Separator);
-            MenuItem selectAll = fileMenu.addItem("Select All");
-            selectAll.MouseButtonClick += new MyGUIEvent(selectAll_MouseButtonClick);
-            MenuItem cut = fileMenu.addItem("Cut");
-            cut.MouseButtonClick += new MyGUIEvent(cut_MouseButtonClick);
-            MenuItem copy = fileMenu.addItem("Copy");
-            copy.MouseButtonClick += new MyGUIEvent(copy_MouseButtonClick);
-            MenuItem paste = fileMenu.addItem("Paste");
-            paste.MouseButtonClick += new MyGUIEvent(paste_MouseButtonClick);
+            extensionActions.Add(new ExtensionAction("Save Movement Sequence", "File", saveSequence));
+            extensionActions.Add(new ExtensionAction("Save Movement Sequence As", "File", saveSequenceAs));
+            extensionActions.Add(new ExtensionAction("Cut", "Edit", cut));
+            extensionActions.Add(new ExtensionAction("Copy", "Edit", copy));
+            extensionActions.Add(new ExtensionAction("Paste", "Edit", paste));
+            extensionActions.Add(new ExtensionAction("Select All", "Edit", selectAll));
+            extensionActions.Add(new ExtensionAction("Reverse Sides", "Sequence", reverseSides));
 
             //Remove button
             Button removeButton = window.findWidget("RemoveAction") as Button;
@@ -108,9 +94,22 @@ namespace Medical.GUI
             timelineView.addTrack("Muscle Position", Color.Red);
         }
 
+        public void activateExtensionActions()
+        {
+            editorController.ExtensionActions = extensionActions;
+        }
+
+        void window_RootMouseChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfae = (RootFocusEventArgs)e;
+            if (rfae.Focus)
+            {
+                activateExtensionActions();
+            }
+        }
+
         public override void Dispose()
         {
-            Gui.Instance.destroyWidget(fileMenu);
             base.Dispose();
         }
 
@@ -213,8 +212,6 @@ namespace Medical.GUI
             }
         }
 
-        #region MovementSequenceController Callbacks
-
         void movementSequenceController_PlaybackStopped(MovementSequenceController controller)
         {
             playButton.Caption = "Play";
@@ -253,10 +250,6 @@ namespace Medical.GUI
                 timelineView.Duration = 5.0f;
             }
         }
-
-        #endregion
-
-        #region Timeline Callbacks
 
         void trackFilter_AddTrackItem(string name)
         {
@@ -302,17 +295,7 @@ namespace Medical.GUI
             synchronizeDuration(durationEdit, durationEdit.FloatValue);
         }
 
-        #endregion
-
-        #region File Menu
-
-        void newSequence_MouseButtonClick(Widget source, EventArgs e)
-        {
-            createNewSequence();
-            fileMenu.setVisibleSmooth(false);
-        }
-
-        void saveSequenceAs_MouseButtonClick(Widget source, EventArgs e)
+        void saveSequenceAs()
         {
             using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Save a sequence."))
             {
@@ -327,10 +310,9 @@ namespace Medical.GUI
                     }
                 }
             }
-            fileMenu.setVisibleSmooth(false);
         }
 
-        void saveSequence_MouseButtonClick(Widget source, EventArgs e)
+        void saveSequence()
         {
             if (CurrentSequenceFile != null)
             {
@@ -342,12 +324,11 @@ namespace Medical.GUI
             }
             else
             {
-                saveSequenceAs_MouseButtonClick(source, e);
+                saveSequenceAs();
             }
-            fileMenu.setVisibleSmooth(false);
         }
 
-        void openSequence_MouseButtonClick(Widget source, EventArgs e)
+        void openSequence()
         {
             using (FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Open a sequence."))
             {
@@ -357,51 +338,43 @@ namespace Medical.GUI
                     openSequence(openDialog.Path);
                 }
             }
-            fileMenu.setVisibleSmooth(false);
         }
 
-        void reverseSides_MouseButtonClick(Widget source, EventArgs e)
+        void reverseSides()
         {
             if (movementSequenceController.CurrentSequence != null)
             {
                 movementSequenceController.CurrentSequence.reverseSides();
             }
-            fileMenu.setVisibleSmooth(false);
         }
 
-        void cut_MouseButtonClick(Widget source, EventArgs e)
+        void cut()
         {
             MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
             clipContainer.addKeyFrames(timelineView.SelectedData);
             clipboard.copyToSourceObject(clipContainer);
             deleteSelectedActions();
-            fileMenu.setVisibleSmooth(false);
         }
 
-        void copy_MouseButtonClick(Widget source, EventArgs e)
+        void copy()
         {
             MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
             clipContainer.addKeyFrames(timelineView.SelectedData);
             clipboard.copyToSourceObject(clipContainer);
-            fileMenu.setVisibleSmooth(false);
         }
 
-        void paste_MouseButtonClick(Widget source, EventArgs e)
+        void paste()
         {
             MovementSequenceClipboardContainer clipContainer = clipboard.createCopy<MovementSequenceClipboardContainer>();
             if (clipContainer != null)
             {
                 clipContainer.addKeyFramesToSequence(movementSequenceController.CurrentSequence, this, timelineView.MarkerTime, timelineView.Duration);
             }
-            fileMenu.setVisibleSmooth(false);
         }
 
-        void selectAll_MouseButtonClick(Widget source, EventArgs e)
+        void selectAll()
         {
             timelineView.selectAll();
-            fileMenu.setVisibleSmooth(false);
         }
-
-        #endregion
     }
 }

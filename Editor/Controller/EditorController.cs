@@ -108,6 +108,7 @@ namespace Medical
                 {
                     plugin.MovementSequenceEditor.open(false);
                 }
+                plugin.MovementSequenceEditor.activateExtensionActions();
                 plugin.MovementSequenceEditor.bringToFront();
             }
             else if (file.EndsWith(".tl"))

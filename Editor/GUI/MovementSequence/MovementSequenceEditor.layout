@@ -9,7 +9,7 @@
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="143 1 45 20" align="Left Top" name="PlayButton">
+            <Widget type="Button" skin="ImageButton" position="124 1 64 20" align="Left Top" name="PlayButton">
                 <Property key="Caption" value="Play"/>
                 <Property key="ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
@@ -24,13 +24,10 @@
                 <Property key="VisibleHScroll" value="false"/>
                 <Property key="CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="EditBox" skin="EditBox" position="90 1 52 20" name="SequenceDuration"/>
-            <Widget type="TextBox" skin="TextBox" position="39 1 50 19">
+            <Widget type="EditBox" skin="EditBox" position="51 1 71 20" name="SequenceDuration"/>
+            <Widget type="TextBox" skin="TextBox" position="0 1 50 19">
                 <Property key="Caption" value="Duration"/>
                 <Property key="TextAlign" value="Left VCenter"/>
-            </Widget>
-            <Widget type="Button" skin="Button" position="1 1 38 20" name="FileButton">
-                <Property key="Caption" value="File"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="BorderScrollView" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
