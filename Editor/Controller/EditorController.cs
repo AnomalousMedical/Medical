@@ -99,6 +99,7 @@ namespace Medical
                 {
                     plugin.AtlasPluginEditor.open(false);
                 }
+                plugin.AtlasPluginEditor.activateExtensionActions();
                 plugin.AtlasPluginEditor.bringToFront();
             }
             else if (file.EndsWith(".seq"))

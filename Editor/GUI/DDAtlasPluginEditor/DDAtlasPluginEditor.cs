@@ -23,18 +23,17 @@ namespace Medical.GUI
         private ObjectEditor objectEditor;
 
         private DDAtlasPlugin currentDefinition;
-        private TimelineController mainTimelineController;
-
-        private XmlSaver xmlSaver = new XmlSaver();
         private String currentFile = null;
 
         private AtlasPluginManager pluginManager;
+        private EditorController editorController;
+        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
 
-        public DDAtlasPluginEditor(MedicalUICallback uiCallback, TimelineController mainTimelineController, AtlasPluginManager pluginManager)
+        public DDAtlasPluginEditor(MedicalUICallback uiCallback, AtlasPluginManager pluginManager, EditorController editorController)
             : base("Medical.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
         {
-            this.mainTimelineController = mainTimelineController;
             this.pluginManager = pluginManager;
+            this.editorController = editorController;
 
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
@@ -44,18 +43,14 @@ namespace Medical.GUI
 
             objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
 
-            MenuBar menu = window.findWidget("MenuBar") as MenuBar;
-            MenuItem fileMenu = menu.addItem("File", MenuItemType.Popup);
-            MenuControl fileMenuCtrl = menu.createItemPopupMenuChild(fileMenu);
-            fileMenuCtrl.ItemAccept += new MyGUIEvent(fileMenuCtrl_ItemAccept);
-            fileMenuCtrl.addItem("New", MenuItemType.Normal, "New");
-            fileMenuCtrl.addItem("Open", MenuItemType.Normal, "Open");
-            fileMenuCtrl.addItem("Save", MenuItemType.Normal, "Save");
-            fileMenuCtrl.addItem("Save As", MenuItemType.Normal, "Save As");
+            extensionActions.Add(new ExtensionAction("Save Plugin", "File", savePlugin));
+            extensionActions.Add(new ExtensionAction("Save Plugin As", "File", savePluginAs));
 
             createNewPlugin();
 
             this.Resized += new EventHandler(DDAtlasPluginEditor_Resized);
+
+            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
         }
 
         public override void Dispose()
@@ -116,7 +111,7 @@ namespace Medical.GUI
                 using (XmlTextWriter xmlWriter = new XmlTextWriter(currentFile, Encoding.Default))
                 {
                     xmlWriter.Formatting = Formatting.Indented;
-                    xmlSaver.saveObject(currentDefinition, xmlWriter);
+                    EditorController.XmlSaver.saveObject(currentDefinition, xmlWriter);
                 }
             }
             else
@@ -136,7 +131,7 @@ namespace Medical.GUI
                         using (XmlTextWriter xmlWriter = new XmlTextWriter(fileDialog.Path, Encoding.Default))
                         {
                             xmlWriter.Formatting = Formatting.Indented;
-                            xmlSaver.saveObject(currentDefinition, xmlWriter);
+                            EditorController.XmlSaver.saveObject(currentDefinition, xmlWriter);
                             fileChanged(fileDialog.Path);
                         }
                     }
@@ -145,6 +140,20 @@ namespace Medical.GUI
                         MessageBox.show("Load error", "Exception saving plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                     }
                 }
+            }
+        }
+
+        public void activateExtensionActions()
+        {
+            editorController.ExtensionActions = extensionActions;
+        }
+
+        void window_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfae = (RootFocusEventArgs)e;
+            if (rfae.Focus)
+            {
+                activateExtensionActions();
             }
         }
 
@@ -170,26 +179,6 @@ namespace Medical.GUI
             else
             {
                 window.Caption = String.Format("Plugin Editor");
-            }
-        }
-
-        void fileMenuCtrl_ItemAccept(Widget source, EventArgs e)
-        {
-            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
-            switch (mcae.Item.ItemId)
-            {
-                case "New":
-                    createNewPlugin();
-                    break;
-                case "Open":
-                    loadPlugin();
-                    break;
-                case "Save":
-                    savePlugin();
-                    break;
-                case "Save As":
-                    savePluginAs();
-                    break;
             }
         }
     }

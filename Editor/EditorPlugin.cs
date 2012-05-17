@@ -124,7 +124,7 @@ namespace Medical
             projectExplorer = new ProjectExplorer(editorController);
             guiManager.addManagedDialog(projectExplorer);
 
-            pluginEditor = new DDAtlasPluginEditor(medicalUICallback, standaloneController.TimelineController, standaloneController.AtlasPluginManager);
+            pluginEditor = new DDAtlasPluginEditor(medicalUICallback, standaloneController.AtlasPluginManager, editorController);
             guiManager.addManagedDialog(pluginEditor);
 
             timelineEditor = new TimelineEditor(editorTimelineController, editorController, standaloneController.Clipboard, this);
