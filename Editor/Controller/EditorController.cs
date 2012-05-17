@@ -32,11 +32,10 @@ namespace Medical
         private EditorUICallbackExtensions uiCallbackExtensions;
         private ExtensionActionCollection extensionActions;
         private Dictionary<String, EditorTypeController> typeControllers = new Dictionary<String, EditorTypeController>();
+        private EditorResourceProvider resourceProvider;
 
         public event EditorControllerEvent ProjectChanged;
         public event EditorControllerEvent ExtensionActionsChanged;
-
-        private FileSystemWatcher fileWatcher = null;
 
         public EditorController(EditorPlugin plugin, StandaloneController standaloneController)
         {
@@ -48,9 +47,9 @@ namespace Medical
 
         public void Dispose()
         {
-            if (fileWatcher != null)
+            if (resourceProvider != null)
             {
-                fileWatcher.Dispose();
+                resourceProvider.Dispose();
             }
         }
 
@@ -68,7 +67,6 @@ namespace Medical
                     File.Delete(filename);
                 }
                 createProject(filename);
-                projectChanged();
                 //Add to recent documents
             }
             catch (Exception ex)
@@ -81,8 +79,7 @@ namespace Medical
 
         public void openProject(String projectPath)
         {
-            ResourceProvider = new FilesystemResourceProvider(Path.GetDirectoryName(projectPath));
-            projectChanged();
+            projectChanged(Path.GetDirectoryName(projectPath));
             //Add to recent documents
         }
 
@@ -121,7 +118,13 @@ namespace Medical
             browserWindow.open(true);
         }
 
-        public ResourceProvider ResourceProvider { get; private set; }
+        public ResourceProvider ResourceProvider
+        {
+            get
+            {
+                return resourceProvider;
+            }
+        }
 
         public ExtensionActionCollection ExtensionActions
         {
@@ -169,38 +172,21 @@ namespace Medical
             {
                 Directory.CreateDirectory(projectName);
             }
-            ResourceProvider = new FilesystemResourceProvider(projectName);
-            projectChanged();
+            projectChanged(projectName);
         }
 
-        private void projectChanged()
+        private void projectChanged(String projectPath)
         {
-            if (fileWatcher != null)
+            if (resourceProvider != null)
             {
-                fileWatcher.Dispose();
+                resourceProvider.Dispose();
             }
+            resourceProvider = new EditorResourceProvider(projectPath);
             plugin.TimelineController.setResourceProvider(ResourceProvider);
             BrowserWindowController.setResourceProvider(ResourceProvider);
             if (ProjectChanged != null)
             {
                 ProjectChanged.Invoke(this);
-            }
-            String projectDirectory = ResourceProvider.BackingLocation;
-            if (Directory.Exists(ResourceProvider.BackingLocation))
-            {
-                fileWatcher = new FileSystemWatcher(projectDirectory);
-                fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
-                fileWatcher.EnableRaisingEvents = true;
-            }
-        }
-
-        void fileWatcher_Changed(object sender, FileSystemEventArgs e)
-        {
-            EditorTypeController typeController;
-            String extension = Path.GetExtension(e.FullPath);
-            if (typeControllers.TryGetValue(extension, out typeController))
-            {
-                typeController.fileChanged(e, extension);
             }
         }
     }

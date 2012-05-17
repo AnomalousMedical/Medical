@@ -80,6 +80,7 @@
     <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\EditorController.cs" />
+    <Compile Include="Controller\EditorResourceProvider.cs" />
     <Compile Include="Controller\EditorTypeController.cs" />
     <Compile Include="Controller\ExtensionAction.cs" />
     <Compile Include="Controller\ExtensionActionCollection.cs" />
