@@ -6,15 +6,11 @@ using MyGUIPlugin;
 using Engine.Platform;
 using Engine;
 using Logging;
-using System.IO;
-using System.Xml;
 
 namespace Medical.GUI
 {
     public class TimelineEditor : MDIDialog
     {
-        public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
-
         public event EventDelegate<TimelineEditor, float> MarkerMoved;
 
         private String windowTitle;
@@ -31,13 +27,10 @@ namespace Medical.GUI
         private TimelineDataProperties dataProperties;
         private TimelineData editingStoppedLastData;
         private Timeline currentTimeline;
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
 
         private Button playButton;
         private Button rewindButton;
         private Button fastForwardButton;
-
-        private String currentFile;
 
         public TimelineEditor(TimelineController timelineController, EditorController editorController, SaveableClipboard clipboard, EditorPlugin editorPlugin)
             :base("Medical.GUI.TimelineEditor.TimelineEditor.layout")
@@ -53,7 +46,6 @@ namespace Medical.GUI
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
-            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -99,48 +91,6 @@ namespace Medical.GUI
                     dataProperties.addPanel(actionProp.TypeName, actionProp.Panel);
                 }
             }
-
-            extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
-            extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
-            extensionActions.Add(new ExtensionAction("Cut", "Edit", cut));
-            extensionActions.Add(new ExtensionAction("Copy", "Edit", copy));
-            extensionActions.Add(new ExtensionAction("Paste", "Edit", paste));
-            extensionActions.Add(new ExtensionAction("Select All", "Edit", selectAll));
-        }
-
-        public void loadTimeline(String filename)
-        {
-            CurrentTimeline = timelineController.openTimeline(filename);
-            currentFile = filename;
-            currentFileChanged();
-            timelineView.removeAllData();
-            foreach (TimelineAction action in currentTimeline.Actions)
-            {
-                addActionToTimeline(action);
-            }
-        }
-
-        public void saveTimeline()
-        {
-            if (currentFile != null)
-            {
-                saveTimeline(currentTimeline, currentFile);
-            }
-            else
-            {
-                saveTimelineAs();
-            }
-        }
-
-        public void saveTimelineAs()
-        {
-            using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Save Timeline", "", "", TIMELINE_WILDCARD))
-            {
-                if (saveDialog.showModal() == NativeDialogResult.OK)
-                {
-                    saveTimeline(currentTimeline, saveDialog.Path);
-                }
-            }
         }
 
         public void paste()
@@ -170,9 +120,16 @@ namespace Medical.GUI
             timelineView.selectAll();
         }
 
-        public void activateExtensionActions()
+        public void updateFileName(String currentFile)
         {
-            editorController.ExtensionActions = extensionActions;
+            if (currentFile == null)
+            {
+                window.Caption = windowTitle;
+            }
+            else
+            {
+                window.Caption = String.Format(windowTitleFormat, windowTitle, currentFile);
+            }
         }
 
         public Timeline CurrentTimeline
@@ -192,21 +149,17 @@ namespace Medical.GUI
                     }
                     currentTimeline = value;
                     timelineController.setAsTimelineController(currentTimeline);
+                    timelineView.removeAllData();
+                    foreach (TimelineAction action in currentTimeline.Actions)
+                    {
+                        addActionToTimeline(action);
+                    }
                     if (currentTimeline != null)
                     {
                         currentTimeline.ActionAdded += currentTimeline_ActionAdded;
                         currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
                     }
                 }
-            }
-        }
-
-        void window_RootKeyChangeFocus(Widget source, EventArgs e)
-        {
-            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
-            if (rfea.Focus)
-            {
-                activateExtensionActions();
             }
         }
 
@@ -341,18 +294,6 @@ namespace Medical.GUI
             togglePlayPreview(timelineView.MarkerTime);
         }
 
-        private void currentFileChanged()
-        {
-            if (currentFile == null)
-            {
-                window.Caption = windowTitle;
-            }
-            else
-            {
-                window.Caption = String.Format(windowTitleFormat, windowTitle, currentFile);
-            }
-        }
-
         void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
         {
             removeActionFromTimeline(e.Action);
@@ -373,29 +314,6 @@ namespace Medical.GUI
             TimelineActionData data = new TimelineActionData(action);
             actionDataBindings.Add(action, data);
             timelineView.addData(data);
-        }
-
-        private void saveTimeline(Timeline timeline, String filename)
-        {
-            try
-            {
-                using (Stream stream = File.Open(filename, FileMode.Create, FileAccess.Write))
-                {
-                    using (XmlTextWriter writer = new XmlTextWriter(stream, Encoding.Default))
-                    {
-                        writer.Formatting = Formatting.Indented;
-                        EditorController.XmlSaver.saveObject(timeline, writer);
-                    }
-                }
-                timeline.LEGACY_SourceFile = filename;
-                currentFile = filename;
-                currentFileChanged();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.show(String.Format("There was an error saving your timeline to\n'{0}'\nPlease make sure that destination is valid.", filename), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                Log.Error("Could not save timeline. {0}", ex.Message);
-            }
         }
     }
 }

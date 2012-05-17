@@ -148,11 +148,11 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(timelineEditor, "Medical.NewTimelineEditor", "Timeline Editor", "TimelineEditorIcon", TaskMenuCategories.Editor));
             //taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
-            editorController.addTypeController(new RmlTypeController(rmlViewer));
-            editorController.addTypeController(new MvcTypeController(mvcEditor));
-            editorController.addTypeController(new PluginTypeController(pluginEditor));
-            editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor));
-            editorController.addTypeController(new TimelineTypeController(timelineEditor));
+            editorController.addTypeController(new RmlTypeController(rmlViewer, editorController));
+            editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
+            editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
+            editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
+            editorController.addTypeController(new TimelineTypeController(timelineEditor, editorController));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);

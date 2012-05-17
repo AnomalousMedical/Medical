@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Engine.Saving;
+using Engine.Saving.XMLSaver;
+using System.Xml;
+using MyGUIPlugin;
+using Logging;
 
 namespace Medical
 {
     public class EditorResourceProvider : ResourceProvider, IDisposable
     {
+        private static XmlSaver xmlSaver = new XmlSaver();
         private String parentPath;
         private FileSystemWatcher fileWatcher;
 
@@ -17,7 +23,7 @@ namespace Medical
             if (Directory.Exists(parentPath))
             {
                 fileWatcher = new FileSystemWatcher(parentPath);
-                fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
+                fileWatcher.IncludeSubdirectories = true;
                 fileWatcher.EnableRaisingEvents = true;
             }
         }
@@ -25,6 +31,28 @@ namespace Medical
         public void Dispose()
         {
             fileWatcher.Dispose();
+        }
+
+        public Saveable openSaveable(String filename)
+        {
+            filename = Path.Combine(parentPath, filename);
+            using (XmlTextReader xmlReader = new XmlTextReader(File.Open(filename, FileMode.Open, FileAccess.Read)))
+            {
+                return (Saveable)xmlSaver.restoreObject(xmlReader);
+            }
+        }
+
+        public void saveSaveable(String filename, Saveable saveable)
+        {
+            filename = Path.Combine(parentPath, filename);
+            using (Stream stream = File.Open(filename, FileMode.Create, FileAccess.Write))
+            {
+                using (XmlTextWriter writer = new XmlTextWriter(stream, Encoding.Default))
+                {
+                    writer.Formatting = Formatting.Indented;
+                    EditorController.XmlSaver.saveObject(saveable, writer);
+                }
+            }
         }
 
         public Stream openFile(string filename)
@@ -93,14 +121,52 @@ namespace Medical
             }
         }
 
-        void fileWatcher_Changed(object sender, FileSystemEventArgs e)
+        public event FileSystemEventHandler FileChanged
         {
-            //EditorTypeController typeController;
-            //String extension = Path.GetExtension(e.FullPath);
-            //if (typeControllers.TryGetValue(extension, out typeController))
-            //{
-            //    typeController.fileChanged(e, extension);
-            //}
+            add
+            {
+                fileWatcher.Changed += value;
+            }
+            remove
+            {
+                fileWatcher.Changed -= value;
+            }
+        }
+
+        public event FileSystemEventHandler FileDeleted
+        {
+            add
+            {
+                fileWatcher.Deleted += value;
+            }
+            remove
+            {
+                fileWatcher.Deleted -= value;
+            }
+        }
+
+        public event FileSystemEventHandler FileCreated
+        {
+            add
+            {
+                fileWatcher.Created += value;
+            }
+            remove
+            {
+                fileWatcher.Created -= value;
+            }
+        }
+
+        public event RenamedEventHandler FileRenamed
+        {
+            add
+            {
+                fileWatcher.Renamed += value;
+            }
+            remove
+            {
+                fileWatcher.Renamed -= value;
+            }
         }
     }
 }

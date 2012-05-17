@@ -32,6 +32,9 @@ namespace Medical.GUI
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             editorController.ExtensionActionsChanged += new EditorControllerEvent(editorController_ExtensionActionsChanged);
+            editorController.FileCreated += new FileSystemEventHandler(editorController_FileCreated);
+            editorController.FileDeleted += new FileSystemEventHandler(editorController_FileDeleted);
+            editorController.FileRenamed += new RenamedEventHandler(editorController_FileRenamed);
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -46,12 +49,6 @@ namespace Medical.GUI
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
-        }
-
-        void editorController_ExtensionActionsChanged(EditorController editorController)
-        {
-            currentExtensionActions = editorController.ExtensionActions;
-            rebuildMenus();
         }
 
         public override void Dispose()
@@ -231,6 +228,27 @@ namespace Medical.GUI
             {
                 action.execute();
             }
+        }
+
+        void editorController_FileRenamed(object sender, RenamedEventArgs e)
+        {
+
+        }
+
+        void editorController_FileDeleted(object sender, FileSystemEventArgs e)
+        {
+
+        }
+
+        void editorController_FileCreated(object sender, FileSystemEventArgs e)
+        {
+
+        }
+
+        void editorController_ExtensionActionsChanged(EditorController editorController)
+        {
+            currentExtensionActions = editorController.ExtensionActions;
+            rebuildMenus();
         }
     }
 }

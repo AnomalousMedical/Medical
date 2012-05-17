@@ -9,16 +9,18 @@ namespace Medical
     class MovementSequenceTypeController : EditorTypeController
     {
         private MovementSequenceEditor editor;
+        private EditorController editorController;
 
-        public MovementSequenceTypeController(MovementSequenceEditor editor)
+        public MovementSequenceTypeController(MovementSequenceEditor editor, EditorController editorController)
             :base(".seq")
         {
             this.editor = editor;
+            this.editorController = editorController;
         }
 
-        public override void openFile(string fullPath)
+        public override void openFile(string file)
         {
-            editor.openSequence(fullPath);
+            editor.openSequence(editorController.ResourceProvider.getFullFilePath(file));
             if (!editor.Visible)
             {
                 editor.open(false);

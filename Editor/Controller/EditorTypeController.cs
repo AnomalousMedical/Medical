@@ -15,7 +15,7 @@ namespace Medical
 
         public String Extension { get; private set; }
 
-        public abstract void openFile(String fullPath);
+        public abstract void openFile(String file);
 
         public virtual void fileChanged(FileSystemEventArgs e, String extension)
         {

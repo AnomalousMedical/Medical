@@ -9,16 +9,18 @@ namespace Medical
     class RmlTypeController : EditorTypeController
     {
         private RmlViewer editor;
+        private EditorController editorController;
 
-        public RmlTypeController(RmlViewer editor)
+        public RmlTypeController(RmlViewer editor, EditorController editorController)
             :base(".rml")
         {
             this.editor = editor;
+            this.editorController = editorController;
         }
 
-        public override void openFile(string fullPath)
+        public override void openFile(string file)
         {
-            editor.changeDocument(fullPath);
+            editor.changeDocument(editorController.ResourceProvider.getFullFilePath(file));
             if (!editor.Visible)
             {
                 editor.open(false);

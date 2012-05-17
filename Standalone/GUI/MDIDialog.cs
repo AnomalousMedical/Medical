@@ -46,6 +46,16 @@ namespace Medical.GUI
         /// </summary>
         public event EventHandler Resized;
 
+        /// <summary>
+        /// Called when the dialog gets focus
+        /// </summary>
+        public event EventHandler GotFocus;
+
+        /// <summary>
+        /// Called when the dialog looses focus
+        /// </summary>
+        public event EventHandler LostFocus;
+
         public MDIDialog(String layoutFile)
             : this(layoutFile, "")
         {
@@ -71,6 +81,7 @@ namespace Medical.GUI
             desiredLocation = new Rect(window.Left, window.Top, window.Width, window.Height);
             dockedSize = new Size2(window.Width, window.Height);
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
             window.CaptionWidget.MouseButtonPressed += new MyGUIEvent(window_MouseButtonPressed);
             window.CaptionWidget.MouseButtonReleased += new MyGUIEvent(window_MouseButtonReleased);
             window.CaptionWidget.MouseDrag += new MyGUIEvent(window_MouseDrag); //Wont have to override this in mygui 3.2 as it has all multicast delegates
@@ -552,6 +563,24 @@ namespace Medical.GUI
             captionMouseOffset = new IntVector2(me.Position.x - window.CaptionWidget.AbsoluteLeft, me.Position.y - window.CaptionWidget.AbsoluteTop);
             layoutManager.ActiveWindow = this;
             fireMouseDragStarted(me);
+        }
+
+        void window_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            if (((RootFocusEventArgs)e).Focus)
+            {
+                if (GotFocus != null)
+                {
+                    GotFocus.Invoke(this, EventArgs.Empty);
+                }
+            }
+            else
+            {
+                if (LostFocus != null)
+                {
+                    LostFocus.Invoke(this, EventArgs.Empty);
+                }
+            }
         }
     }
 }
