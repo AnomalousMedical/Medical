@@ -31,6 +31,7 @@ namespace Medical
         private SendResult<Object> browserResultCallback;
         private EditorUICallbackExtensions uiCallbackExtensions;
         private ExtensionActionCollection extensionActions;
+        private List<EditorTypeController> typeControllers = new List<EditorTypeController>();
 
         public event EditorControllerEvent ProjectChanged;
         public event EditorControllerEvent ExtensionActionsChanged;
@@ -41,6 +42,11 @@ namespace Medical
             this.standaloneController = standaloneController;
 
             uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, plugin.MedicalUICallback, this);
+        }
+
+        public void addTypeController(EditorTypeController typeController)
+        {
+            typeControllers.Add(typeController);
         }
 
         public void createNewProject(String filename, bool deleteOld)
@@ -73,57 +79,20 @@ namespace Medical
         public void openFile(String file)
         {
             String fullPath = ResourceProvider.getFullFilePath(file);
-            if (file.EndsWith(".rml"))
+            String extension = Path.GetExtension(file).ToLowerInvariant();
+
+            bool openedFile = false;
+            foreach (EditorTypeController typeController in typeControllers)
             {
-                plugin.RmlViewer.changeDocument(fullPath);
-                if(!plugin.RmlViewer.Visible)
+                if (typeController.canOpenFile(extension))
                 {
-                    plugin.RmlViewer.open(false);
+                    typeController.openFile(fullPath);
+                    openedFile = true;
+                    break;
                 }
-                plugin.RmlViewer.activateExtensionActions();
-                plugin.RmlViewer.bringToFront();
             }
-            else if (file.EndsWith(".mvc"))
-            {
-                plugin.MvcEditor.load(fullPath);
-                if (!plugin.MvcEditor.Visible)
-                {
-                    plugin.MvcEditor.open(false);
-                }
-                plugin.MvcEditor.activateExtensionActions();
-                plugin.MvcEditor.bringToFront();
-            }
-            else if (file.EndsWith(".ddp"))
-            {
-                plugin.AtlasPluginEditor.loadPlugin(fullPath);
-                if (!plugin.AtlasPluginEditor.Visible)
-                {
-                    plugin.AtlasPluginEditor.open(false);
-                }
-                plugin.AtlasPluginEditor.activateExtensionActions();
-                plugin.AtlasPluginEditor.bringToFront();
-            }
-            else if (file.EndsWith(".seq"))
-            {
-                plugin.MovementSequenceEditor.openSequence(fullPath);
-                if (!plugin.MovementSequenceEditor.Visible)
-                {
-                    plugin.MovementSequenceEditor.open(false);
-                }
-                plugin.MovementSequenceEditor.activateExtensionActions();
-                plugin.MovementSequenceEditor.bringToFront();
-            }
-            else if (file.EndsWith(".tl"))
-            {
-                plugin.TimelineEditor.loadTimeline(fullPath);
-                if (!plugin.TimelineEditor.Visible)
-                {
-                    plugin.TimelineEditor.open(false);
-                }
-                plugin.TimelineEditor.activateExtensionActions();
-                plugin.TimelineEditor.bringToFront();
-            }
-            else
+
+            if (!openedFile)
             {
                 OtherProcessManager.openLocalURL(fullPath);
             }
