@@ -14,8 +14,10 @@ namespace Medical.GUI
         private const String windowTitleFormat = "{0} - {1}";
 
         //File Menu
+        MenuBar menuBar;
         MenuItem newProject;
         MenuItem openProject;
+        ExtensionActionCollection currentExtensionActions = null;
 
         Tree fileTree;
 
@@ -29,19 +31,15 @@ namespace Medical.GUI
         {
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            editorController.ExtensionActionsChanged += new EditorControllerEvent(editorController_ExtensionActionsChanged);
 
             windowTitle = window.Caption;
-            MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
+            menuBar = window.findWidget("MenuBar") as MenuBar;
 
             fileTree = new Tree((ScrollView)window.findWidget("FileTableScroll"));
             fileTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(fileTree_NodeMouseDoubleClick);
 
-            //File Menu
-            MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
-            MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
-            fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
-            newProject = fileMenu.addItem("New Project");
-            openProject = fileMenu.addItem("Open Project");
+            rebuildMenus();
 
             //Dialogs
             newProjectDialog = new NewProjectDialog();
@@ -50,24 +48,17 @@ namespace Medical.GUI
             this.Resized += new EventHandler(ProjectExplorer_Resized);
         }
 
+        void editorController_ExtensionActionsChanged(EditorController editorController)
+        {
+            currentExtensionActions = editorController.ExtensionActions;
+            rebuildMenus();
+        }
+
         public override void Dispose()
         {
             fileTree.Dispose();
             newProjectDialog.Dispose();
             base.Dispose();
-        }
-
-        void fileMenu_ItemAccept(Widget source, EventArgs e)
-        {
-            MenuCtrlAcceptEventArgs menuEventArgs = (MenuCtrlAcceptEventArgs)e;
-            if (menuEventArgs.Item == newProject)
-            {
-                createNewProjectClicked(source, e);
-            }
-            else if (menuEventArgs.Item == openProject)
-            {
-                openProjectClicked(source, e);
-            }
         }
 
         void createNewProjectClicked(Widget source, EventArgs e)
@@ -182,6 +173,64 @@ namespace Medical.GUI
         void ProjectExplorer_Resized(object sender, EventArgs e)
         {
             fileTree.layout();
+        }
+
+        private void rebuildMenus()
+        {
+            menuBar.removeAllItems();
+            //File Menu
+            MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
+            MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
+            fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
+            newProject = fileMenu.addItem("New Project");
+            openProject = fileMenu.addItem("Open Project");
+
+            if (currentExtensionActions != null)
+            {
+                Dictionary<String, MenuControl> menus = new Dictionary<string, MenuControl>();
+                menus.Add("File", fileMenu);
+
+                foreach (ExtensionAction action in currentExtensionActions)
+                {
+                    MenuControl menu;
+                    if (!menus.TryGetValue(action.Category, out menu))
+                    {
+                        MenuItem menuItem = menuBar.addItem(action.Category, MenuItemType.Popup);
+                        menu = menuBar.createItemPopupMenuChild(menuItem);
+                        menu.ItemAccept += new MyGUIEvent(menu_ItemAccept);
+                        menus.Add(action.Category, menu);
+                    }
+                    MenuItem item = menu.addItem(action.Name);
+                    item.UserObject = action;
+                }
+            }
+        }
+
+        void fileMenu_ItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs menuEventArgs = (MenuCtrlAcceptEventArgs)e;
+            if (menuEventArgs.Item == newProject)
+            {
+                createNewProjectClicked(source, e);
+            }
+            else if (menuEventArgs.Item == openProject)
+            {
+                openProjectClicked(source, e);
+            }
+            else
+            {
+                menu_ItemAccept(source, e);
+            }
+        }
+
+        void menu_ItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+            ExtensionAction action = mcae.Item.UserObject as ExtensionAction;
+            if (action != null)
+            {
+                action.execute();
+            }
         }
     }
 }

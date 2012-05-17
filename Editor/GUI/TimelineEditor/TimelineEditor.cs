@@ -5,11 +5,16 @@ using System.Text;
 using MyGUIPlugin;
 using Engine.Platform;
 using Engine;
+using Logging;
+using System.IO;
+using System.Xml;
 
 namespace Medical.GUI
 {
     public class TimelineEditor : MDIDialog
     {
+        public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
+
         public event EventDelegate<TimelineEditor, float> MarkerMoved;
 
         private String windowTitle;
@@ -26,9 +31,9 @@ namespace Medical.GUI
         private TimelineDataProperties dataProperties;
         private TimelineData editingStoppedLastData;
         private Timeline currentTimeline;
+        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
 
         private Button playButton;
-        private Button playFullButton;
         private Button rewindButton;
         private Button fastForwardButton;
 
@@ -48,6 +53,7 @@ namespace Medical.GUI
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+            window.RootMouseChangeFocus += new MyGUIEvent(window_RootMouseChangeFocus);
 
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -94,7 +100,8 @@ namespace Medical.GUI
                 }
             }
 
-            //Enabled = false;
+            extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
+            extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
         }
 
         public void loadTimeline(String filename)
@@ -107,6 +114,34 @@ namespace Medical.GUI
             {
                 addActionToTimeline(action);
             }
+        }
+
+        public void saveTimeline()
+        {
+            if (currentFile != null)
+            {
+                saveTimeline(currentTimeline, currentFile);
+            }
+            else
+            {
+                saveTimelineAs();
+            }
+        }
+
+        public void saveTimelineAs()
+        {
+            using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Save Timeline", "", "", TIMELINE_WILDCARD))
+            {
+                if (saveDialog.showModal() == NativeDialogResult.OK)
+                {
+                    saveTimeline(currentTimeline, saveDialog.Path);
+                }
+            }
+        }
+
+        public void activateExtensionActions()
+        {
+            editorController.ExtensionActions = extensionActions;
         }
 
         public Timeline CurrentTimeline
@@ -132,6 +167,15 @@ namespace Medical.GUI
                         currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
                     }
                 }
+            }
+        }
+
+        void window_RootMouseChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
+            if (rfea.Focus)
+            {
+                activateExtensionActions();
             }
         }
 
@@ -298,6 +342,29 @@ namespace Medical.GUI
             TimelineActionData data = new TimelineActionData(action);
             actionDataBindings.Add(action, data);
             timelineView.addData(data);
+        }
+
+        private void saveTimeline(Timeline timeline, String filename)
+        {
+            try
+            {
+                using (Stream stream = File.Open(filename, FileMode.Create, FileAccess.Write))
+                {
+                    using (XmlTextWriter writer = new XmlTextWriter(stream, Encoding.Default))
+                    {
+                        writer.Formatting = Formatting.Indented;
+                        EditorController.XmlSaver.saveObject(timeline, writer);
+                    }
+                }
+                timeline.SourceFile = filename;
+                currentFile = filename;
+                currentFileChanged();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error saving your timeline to\n'{0}'\nPlease make sure that destination is valid.", filename), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Could not save timeline. {0}", ex.Message);
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ using MyGUIPlugin;
 using Medical.Editor;
 using Engine.Editing;
 using Medical.GUI;
+using Engine.Saving.XMLSaver;
 
 namespace Medical
 {
@@ -15,12 +16,24 @@ namespace Medical
 
     public class EditorController
     {
+        private static XmlSaver xmlSaver = new XmlSaver();
+
+        public static XmlSaver XmlSaver
+        {
+            get
+            {
+                return xmlSaver;
+            }
+        }
+
         private EditorPlugin plugin;
         private StandaloneController standaloneController;
         private SendResult<Object> browserResultCallback;
         private EditorUICallbackExtensions uiCallbackExtensions;
+        private ExtensionActionCollection extensionActions;
 
         public event EditorControllerEvent ProjectChanged;
+        public event EditorControllerEvent ExtensionActionsChanged;
 
         public EditorController(EditorPlugin plugin, StandaloneController standaloneController)
         {
@@ -99,6 +112,7 @@ namespace Medical
                 {
                     plugin.TimelineEditor.open(false);
                 }
+                plugin.TimelineEditor.activateExtensionActions();
             }
             else
             {
@@ -126,6 +140,25 @@ namespace Medical
         }
 
         public ResourceProvider ResourceProvider { get; private set; }
+
+        public ExtensionActionCollection ExtensionActions
+        {
+            get
+            {
+                return extensionActions;
+            }
+            set
+            {
+                if (this.extensionActions != value)
+                {
+                    this.extensionActions = value;
+                    if (ExtensionActionsChanged != null)
+                    {
+                        ExtensionActionsChanged.Invoke(this);
+                    }
+                }
+            }
+        }
 
         void browserWindow_ItemSelected(object sender, EventArgs e)
         {

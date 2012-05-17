@@ -181,7 +181,7 @@ namespace Medical.GUI
         {
             try
             {
-                editorTimelineController.saveTimeline(timeline, filename);
+                editorTimelineController.LEGACY_saveTimeline(timeline, filename);
                 updateWindowCaption();
             }
             catch (Exception ex)

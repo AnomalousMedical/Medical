@@ -314,7 +314,7 @@ namespace Medical
             return textDisplay;
         }
 
-        public void saveTimeline(Timeline timeline, String filename)
+        public void LEGACY_saveTimeline(Timeline timeline, String filename)
         {
             if (resourceProvider != null)
             {
