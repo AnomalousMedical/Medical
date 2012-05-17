@@ -60,6 +60,7 @@ namespace Medical
             browserWindow.Dispose();
             aspectRatioTask.Dispose();
             textAnalysisEditor.Dispose();
+            editorController.Dispose();
         }
 
         public void loadGUIResources()

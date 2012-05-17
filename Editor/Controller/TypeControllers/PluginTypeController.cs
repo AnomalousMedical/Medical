@@ -11,16 +11,12 @@ namespace Medical
         private DDAtlasPluginEditor editor;
 
         public PluginTypeController(DDAtlasPluginEditor editor)
+            :base(".ddp")
         {
             this.editor = editor;
         }
 
-        public bool canOpenFile(string extension)
-        {
-            return extension == ".ddp";
-        }
-
-        public void openFile(string fullPath)
+        public override void openFile(string fullPath)
         {
             editor.loadPlugin(fullPath);
             if (!editor.Visible)

@@ -11,16 +11,12 @@ namespace Medical
         private MovementSequenceEditor editor;
 
         public MovementSequenceTypeController(MovementSequenceEditor editor)
+            :base(".seq")
         {
             this.editor = editor;
         }
 
-        public bool canOpenFile(string extension)
-        {
-            return extension == ".seq";
-        }
-
-        public void openFile(string fullPath)
+        public override void openFile(string fullPath)
         {
             editor.openSequence(fullPath);
             if (!editor.Visible)

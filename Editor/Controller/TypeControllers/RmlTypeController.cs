@@ -11,16 +11,12 @@ namespace Medical
         private RmlViewer editor;
 
         public RmlTypeController(RmlViewer editor)
+            :base(".rml")
         {
             this.editor = editor;
         }
 
-        public bool canOpenFile(string extension)
-        {
-            return extension == ".rml";
-        }
-
-        public void openFile(string fullPath)
+        public override void openFile(string fullPath)
         {
             editor.changeDocument(fullPath);
             if (!editor.Visible)

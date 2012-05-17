@@ -11,16 +11,12 @@ namespace Medical
         private TimelineEditor editor;
 
         public TimelineTypeController(TimelineEditor editor)
+            :base(".tl")
         {
             this.editor = editor;
         }
 
-        public bool canOpenFile(string extension)
-        {
-            return extension == ".tl";
-        }
-
-        public void openFile(string fullPath)
+        public override void openFile(string fullPath)
         {
             editor.loadTimeline(fullPath);
             if (!editor.Visible)

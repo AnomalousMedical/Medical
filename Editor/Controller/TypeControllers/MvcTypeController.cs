@@ -11,16 +11,12 @@ namespace Medical
         private GenericEditor editor;
 
         public MvcTypeController(GenericEditor editor)
+            :base(".mvc")
         {
             this.editor = editor;
         }
 
-        public bool canOpenFile(string extension)
-        {
-            return extension == ".mvc";
-        }
-
-        public void openFile(string fullPath)
+        public override void openFile(string fullPath)
         {
             editor.load(fullPath);
             if (!editor.Visible)

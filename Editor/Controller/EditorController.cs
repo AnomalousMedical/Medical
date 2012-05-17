@@ -14,7 +14,7 @@ namespace Medical
 {
     public delegate void EditorControllerEvent(EditorController editorController);
 
-    public class EditorController
+    public class EditorController : IDisposable
     {
         private static XmlSaver xmlSaver = new XmlSaver();
 
@@ -31,10 +31,12 @@ namespace Medical
         private SendResult<Object> browserResultCallback;
         private EditorUICallbackExtensions uiCallbackExtensions;
         private ExtensionActionCollection extensionActions;
-        private List<EditorTypeController> typeControllers = new List<EditorTypeController>();
+        private Dictionary<String, EditorTypeController> typeControllers = new Dictionary<String, EditorTypeController>();
 
         public event EditorControllerEvent ProjectChanged;
         public event EditorControllerEvent ExtensionActionsChanged;
+
+        private FileSystemWatcher fileWatcher = null;
 
         public EditorController(EditorPlugin plugin, StandaloneController standaloneController)
         {
@@ -44,9 +46,17 @@ namespace Medical
             uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, plugin.MedicalUICallback, this);
         }
 
+        public void Dispose()
+        {
+            if (fileWatcher != null)
+            {
+                fileWatcher.Dispose();
+            }
+        }
+
         public void addTypeController(EditorTypeController typeController)
         {
-            typeControllers.Add(typeController);
+            typeControllers.Add(typeController.Extension, typeController);
         }
 
         public void createNewProject(String filename, bool deleteOld)
@@ -81,18 +91,12 @@ namespace Medical
             String fullPath = ResourceProvider.getFullFilePath(file);
             String extension = Path.GetExtension(file).ToLowerInvariant();
 
-            bool openedFile = false;
-            foreach (EditorTypeController typeController in typeControllers)
+            EditorTypeController typeController;
+            if (typeControllers.TryGetValue(extension, out typeController))
             {
-                if (typeController.canOpenFile(extension))
-                {
-                    typeController.openFile(fullPath);
-                    openedFile = true;
-                    break;
-                }
+                typeController.openFile(fullPath);
             }
-
-            if (!openedFile)
+            else
             {
                 OtherProcessManager.openLocalURL(fullPath);
             }
@@ -171,11 +175,32 @@ namespace Medical
 
         private void projectChanged()
         {
+            if (fileWatcher != null)
+            {
+                fileWatcher.Dispose();
+            }
             plugin.TimelineController.setResourceProvider(ResourceProvider);
             BrowserWindowController.setResourceProvider(ResourceProvider);
             if (ProjectChanged != null)
             {
                 ProjectChanged.Invoke(this);
+            }
+            String projectDirectory = ResourceProvider.BackingLocation;
+            if (Directory.Exists(ResourceProvider.BackingLocation))
+            {
+                fileWatcher = new FileSystemWatcher(projectDirectory);
+                fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
+                fileWatcher.EnableRaisingEvents = true;
+            }
+        }
+
+        void fileWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            EditorTypeController typeController;
+            String extension = Path.GetExtension(e.FullPath);
+            if (typeControllers.TryGetValue(extension, out typeController))
+            {
+                typeController.fileChanged(e, extension);
             }
         }
     }

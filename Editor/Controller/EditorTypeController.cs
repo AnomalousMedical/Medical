@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Medical
 {
-    public interface EditorTypeController
+    public abstract class EditorTypeController
     {
-        bool canOpenFile(String extension);
+        public EditorTypeController(String extension)
+        {
+            this.Extension = extension;
+        }
 
-        void openFile(String fullPath);
+        public String Extension { get; private set; }
+
+        public abstract void openFile(String fullPath);
+
+        public virtual void fileChanged(FileSystemEventArgs e, String extension)
+        {
+
+        }
     }
 }
