@@ -75,7 +75,7 @@ namespace Medical
                 using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(filename)))
                 {
                     Timeline timeline = xmlSaver.restoreObject(file) as Timeline;
-                    timeline.SourceFile = filename;
+                    timeline.LEGACY_SourceFile = filename;
                     return timeline;
                 }
             }
@@ -330,7 +330,7 @@ namespace Medical
                         resourceProvider.addStream(filename, memoryStream);
                     }
                 }
-                timeline.SourceFile = filename;
+                timeline.LEGACY_SourceFile = filename;
             }
         }
 

@@ -76,7 +76,7 @@ namespace Medical
 
         private void openFolder(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.runCustomQuery(CustomQueries.OpenFolder, null, timeline.SourceFile);
+            callback.runCustomQuery(CustomQueries.OpenFolder, null, timeline.LEGACY_SourceFile);
         }
     }
 

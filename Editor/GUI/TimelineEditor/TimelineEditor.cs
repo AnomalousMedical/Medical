@@ -387,7 +387,7 @@ namespace Medical.GUI
                         EditorController.XmlSaver.saveObject(timeline, writer);
                     }
                 }
-                timeline.SourceFile = filename;
+                timeline.LEGACY_SourceFile = filename;
                 currentFile = filename;
                 currentFileChanged();
             }

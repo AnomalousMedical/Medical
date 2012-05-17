@@ -280,7 +280,7 @@ namespace Medical.GUI
         {
             get
             {
-                return currentTimeline != null ? currentTimeline.SourceFile : null;
+                return currentTimeline != null ? currentTimeline.LEGACY_SourceFile : null;
             }
         }
 

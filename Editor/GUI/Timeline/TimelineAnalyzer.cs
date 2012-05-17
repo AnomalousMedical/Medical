@@ -71,7 +71,7 @@ namespace Medical.GUI
                 String tlFile = timelineList.SelectedTimeline;
                 Log.Debug("-----------------------------------------------------------");
                 Timeline tl = timelineController.openTimeline(tlFile);
-                Log.Debug("Dumping post actions for timeline \"{0}\".", tl.SourceFile);
+                Log.Debug("Dumping post actions for timeline \"{0}\".", tl.LEGACY_SourceFile);
                 tl.dumpPostActionsToLog();
                 Log.Debug("-----------------------------------------------------------");
                 Log.Debug("");
@@ -83,8 +83,8 @@ namespace Medical.GUI
         String reset()
         {
             timelineList.removeAllItems();
-            doListTargets(timelineProperties.CurrentTimeline.SourceFile, false);
-            return timelineProperties.CurrentTimeline.SourceFile;
+            doListTargets(timelineProperties.CurrentTimeline.LEGACY_SourceFile, false);
+            return timelineProperties.CurrentTimeline.LEGACY_SourceFile;
         }
 
         void resetUndo(String file)
@@ -124,7 +124,7 @@ namespace Medical.GUI
                         String fileName = Path.GetFileName(matchInfo.File);
                         timelineList.addItem(fileName, infoStr);
                     }
-                    file = targetListTl.SourceFile;
+                    file = targetListTl.LEGACY_SourceFile;
                 }
                 else if(allowMessage)
                 {
@@ -259,9 +259,9 @@ namespace Medical.GUI
 
         void addTimeline(Timeline timeline, String info)
         {
-            if (timeline != null && timeline.SourceFile != null)
+            if (timeline != null && timeline.LEGACY_SourceFile != null)
             {
-                String fileName = Path.GetFileName(timeline.SourceFile);
+                String fileName = Path.GetFileName(timeline.LEGACY_SourceFile);
                 timelineList.addItem(fileName, info);
             }
         }

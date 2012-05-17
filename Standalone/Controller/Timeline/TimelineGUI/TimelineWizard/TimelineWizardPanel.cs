@@ -87,7 +87,7 @@ namespace Medical.GUI
             }
 
             timelineWizard.show(this);
-            timelineWizard.CurrentTimeline = showGUIAction.Timeline.SourceFile;
+            timelineWizard.CurrentTimeline = showGUIAction.Timeline.LEGACY_SourceFile;
 
             Button nextButton = (Button)widget.findWidget("StateWizardButtons/Next");
             nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);

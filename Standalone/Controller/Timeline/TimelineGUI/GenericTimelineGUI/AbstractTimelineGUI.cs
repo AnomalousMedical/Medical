@@ -151,7 +151,7 @@ namespace Medical
         {
             get
             {
-                return showTimelineAction.Timeline.SourceFile;
+                return showTimelineAction.Timeline.LEGACY_SourceFile;
             }
         }
 
