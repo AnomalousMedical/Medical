@@ -23,9 +23,9 @@ namespace Medical
             return virtualFileSystem.openStream(Path.Combine(parentDirectory, filename), Engine.Resources.FileMode.Open);
         }
 
-        public void addStream(string filename, System.IO.MemoryStream memoryStream)
+        public Stream openWriteStream(String filename)
         {
-            throw new NotImplementedException("Cannot add files to the VirtualFSResourceProvider");
+            throw new NotImplementedException("stream writing not supported by this resource provider.");
         }
 
         public void addFile(string path)

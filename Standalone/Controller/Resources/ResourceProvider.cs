@@ -10,7 +10,7 @@ namespace Medical
     {
         Stream openFile(String filename);
 
-        void addStream(String filename, MemoryStream memoryStream);
+        Stream openWriteStream(String filename);
 
         void addFile(String path);
 

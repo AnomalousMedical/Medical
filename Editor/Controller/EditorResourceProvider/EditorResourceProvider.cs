@@ -40,36 +40,6 @@ namespace Medical
             fileWatcher.Dispose();
         }
 
-        public Saveable openSaveable(String filename)
-        {
-            //Check the cahce
-            SaveableCachedResource cachedResource = ResourceCache[filename] as SaveableCachedResource;
-            if (cachedResource != null)
-            {
-                return cachedResource.Saveable;
-            }
-
-            //Missed open real file
-            filename = Path.Combine(parentPath, filename);
-            using (XmlTextReader xmlReader = new XmlTextReader(File.Open(filename, FileMode.Open, FileAccess.Read)))
-            {
-                return (Saveable)xmlSaver.restoreObject(xmlReader);
-            }
-        }
-
-        public void saveSaveable(String filename, Saveable saveable)
-        {
-            filename = Path.Combine(parentPath, filename);
-            using (Stream stream = File.Open(filename, FileMode.Create, FileAccess.Write))
-            {
-                using (XmlTextWriter writer = new XmlTextWriter(stream, Encoding.Default))
-                {
-                    writer.Formatting = Formatting.Indented;
-                    EditorController.XmlSaver.saveObject(saveable, writer);
-                }
-            }
-        }
-
         public Stream openFile(string filename)
         {
             CachedResource cachedResource = ResourceCache[filename];
@@ -83,12 +53,9 @@ namespace Medical
             }
         }
 
-        public void addStream(string filename, MemoryStream memoryStream)
+        public Stream openWriteStream(String filename)
         {
-            using (FileStream fileStream = new FileStream(Path.Combine(parentPath, filename), FileMode.Create))
-            {
-                memoryStream.WriteTo(fileStream);
-            }
+            return new FileStream(Path.Combine(parentPath, filename), FileMode.Create, FileAccess.Write);
         }
 
         public void addFile(string path)

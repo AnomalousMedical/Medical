@@ -7,7 +7,7 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    class PluginTypeController : EditorTypeController
+    class PluginTypeController : SaveableTypeController
     {
         public const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
 
@@ -17,7 +17,7 @@ namespace Medical
         private String currentFile;
 
         public PluginTypeController(DDAtlasPluginEditor editor, EditorController editorController)
-            :base(".ddp")
+            :base(".ddp", editorController)
         {
             this.editor = editor;
             editor.GotFocus += new EventHandler(editor_GotFocus);
@@ -30,7 +30,7 @@ namespace Medical
         public override void openFile(string file)
         {
             currentFile = file;
-            DDAtlasPlugin plugin = (DDAtlasPlugin)editorController.loadObject(file);
+            DDAtlasPlugin plugin = (DDAtlasPlugin)loadObject(file);
             editor.CurrentPlugin = plugin;
             editor.updateCaption(file);
             if (!editor.Visible)
@@ -91,7 +91,7 @@ namespace Medical
         {
             if (currentFile != null)
             {
-                editorController.saveObject(currentFile, editor.CurrentPlugin);
+                saveObject(currentFile, editor.CurrentPlugin);
             }
             else
             {
@@ -108,7 +108,7 @@ namespace Medical
                     try
                     {
                         currentFile = fileDialog.Path;
-                        editorController.saveObject(currentFile, editor.CurrentPlugin);
+                        saveObject(currentFile, editor.CurrentPlugin);
                         editor.updateCaption(currentFile);
                     }
                     catch (Exception e)

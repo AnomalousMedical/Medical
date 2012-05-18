@@ -9,7 +9,7 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    class MovementSequenceTypeController : EditorTypeController
+    class MovementSequenceTypeController : SaveableTypeController
     {
         private MovementSequenceEditor editor;
         private EditorController editorController;
@@ -17,7 +17,7 @@ namespace Medical
         private String currentSequenceFile = null;
 
         public MovementSequenceTypeController(MovementSequenceEditor editor, EditorController editorController)
-            :base(".seq")
+            :base(".seq", editorController)
         {
             this.editor = editor;
             editor.GotFocus += new EventHandler(editor_GotFocus);
@@ -36,7 +36,7 @@ namespace Medical
         {
             try
             {
-                MovementSequence movementSequence = (MovementSequence)editorController.loadObject(file);
+                MovementSequence movementSequence = (MovementSequence)loadObject(file);
                 editor.CurrentSequence = movementSequence;
                 editor.updateTitle(file);
                 if (!editor.Visible)
@@ -91,7 +91,7 @@ namespace Medical
                 if (saveDialog.showModal() == NativeDialogResult.OK)
                 {
                     currentSequenceFile = saveDialog.Path;
-                    editorController.saveObject(currentSequenceFile, editor.CurrentSequence);
+                    saveObject(currentSequenceFile, editor.CurrentSequence);
                     editor.updateTitle(currentSequenceFile);
                 }
             }
@@ -101,7 +101,7 @@ namespace Medical
         {
             if (currentSequenceFile != null)
             {
-                editorController.saveObject(currentSequenceFile, editor.CurrentSequence);
+                saveObject(currentSequenceFile, editor.CurrentSequence);
             }
             else
             {

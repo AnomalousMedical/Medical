@@ -32,6 +32,16 @@ namespace Medical
             cachedResources.Remove(filename.ToLowerInvariant());
         }
 
+        public void closeResource(String filename)
+        {
+            filename = filename.ToLowerInvariant();
+            CachedResource resource;
+            if (cachedResources.TryGetValue(filename, out resource) && resource.AllowClose)
+            {
+                cachedResources.Remove(filename);
+            }
+        }
+
         public void clear()
         {
             cachedResources.Clear();
@@ -44,6 +54,14 @@ namespace Medical
                 CachedResource resource;
                 cachedResources.TryGetValue(filename.ToLowerInvariant(), out resource);
                 return resource;
+            }
+        }
+
+        public IEnumerable<CachedResource> Resources
+        {
+            get
+            {
+                return cachedResources.Values;
             }
         }
     }

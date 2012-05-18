@@ -10,7 +10,7 @@ using Logging;
 
 namespace Medical
 {
-    class TimelineTypeController : EditorTypeController
+    class TimelineTypeController : SaveableTypeController
     {
         public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
 
@@ -20,7 +20,7 @@ namespace Medical
         private String currentFile;
 
         public TimelineTypeController(TimelineEditor editor, EditorController editorController)
-            :base(".tl")
+            :base(".tl", editorController)
         {
             this.editor = editor;
             this.editorController = editorController;
@@ -36,7 +36,7 @@ namespace Medical
 
         public override void openFile(string path)
         {
-            editor.CurrentTimeline = (Timeline)editorController.loadObject(path);
+            editor.CurrentTimeline = (Timeline)loadObject(path);
             currentFile = path;
             editor.updateFileName(currentFile);
             if (!editor.Visible)
@@ -82,7 +82,7 @@ namespace Medical
         {
             try
             {
-                editorController.saveObject(filename, timeline);
+                saveObject(filename, timeline);
                 timeline.LEGACY_SourceFile = filename;
                 currentFile = filename;
                 editor.updateFileName(currentFile);

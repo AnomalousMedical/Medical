@@ -14,10 +14,13 @@ namespace Medical
         public CachedResource(String file)
         {
             this.File = file;
+            AllowClose = true;
         }
 
         public abstract Stream openStream();
 
         public String File { get; private set; }
+
+        public bool AllowClose { get; set; }
     }
 }

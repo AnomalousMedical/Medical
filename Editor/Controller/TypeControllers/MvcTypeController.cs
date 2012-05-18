@@ -8,7 +8,7 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    class MvcTypeController : EditorTypeController
+    class MvcTypeController : SaveableTypeController
     {
         public const String WILDCARD = "MVC Contexts (*.mvc)|*.mvc";
 
@@ -19,7 +19,7 @@ namespace Medical
         private AnomalousMvcContext context;
 
         public MvcTypeController(GenericEditor editor, EditorController editorController)
-            :base(".mvc")
+            :base(".mvc", editorController)
         {
             this.editor = editor;
             editor.GotFocus += new EventHandler(editor_GotFocus);
@@ -31,7 +31,7 @@ namespace Medical
 
         public override void openFile(string file)
         {
-            context = (AnomalousMvcContext)editorController.loadObject(file);
+            context = (AnomalousMvcContext)loadObject(file);
             currentFile = file;
             editor.CurrentEditInterface = context.getEditInterface();
             editor.changeCaption(currentFile);
@@ -52,7 +52,7 @@ namespace Medical
         {
             if (currentFile != null)
             {
-                editorController.saveObject(currentFile, context);
+                saveObject(currentFile, context);
             }
             else
             {
@@ -69,7 +69,7 @@ namespace Medical
                     try
                     {
                         currentFile = fileDialog.Path;
-                        editorController.saveObject(currentFile, context);
+                        saveObject(currentFile, context);
                         editor.changeCaption(currentFile);
                     }
                     catch (Exception e)

@@ -33,9 +33,9 @@ namespace Medical
             return assembly.GetManifestResourceStream(baseResourceString + filename);
         }
 
-        public void addStream(String filename, MemoryStream memoryStream)
+        public Stream openWriteStream(String filename)
         {
-            throw new NotImplementedException("addStream not supported by this resource provider.");
+            throw new NotImplementedException("stream writing not supported by this resource provider.");
         }
 
         public void addFile(String path)

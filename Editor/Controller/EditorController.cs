@@ -10,6 +10,7 @@ using Engine.Editing;
 using Medical.GUI;
 using Engine.Saving.XMLSaver;
 using Engine.Saving;
+using System.Xml;
 
 namespace Medical
 {
@@ -122,16 +123,6 @@ namespace Medical
             browserWindow.open(true);
         }
 
-        public Saveable loadObject(String filename)
-        {
-            return resourceProvider.openSaveable(filename);
-        }
-
-        public void saveObject(String filename, Saveable saveable)
-        {
-            resourceProvider.saveSaveable(filename, saveable);
-        }
-
         public void addCachedResource(CachedResource cachedResource)
         {
             resourceProvider.ResourceCache.add(cachedResource);
@@ -142,7 +133,7 @@ namespace Medical
             resourceProvider.ResourceCache.remove(filename);
         }
 
-        public ResourceProvider ResourceProvider
+        public EditorResourceProvider ResourceProvider
         {
             get
             {

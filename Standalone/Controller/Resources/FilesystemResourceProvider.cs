@@ -26,12 +26,9 @@ namespace Medical
             return File.OpenRead(Path.Combine(parentPath, filename));
         }
 
-        public void addStream(string filename, MemoryStream memoryStream)
+        public Stream openWriteStream(String filename)
         {
-            using (FileStream fileStream = new FileStream(Path.Combine(parentPath, filename), FileMode.Create))
-            {
-                memoryStream.WriteTo(fileStream);
-            }
+            return new FileStream(Path.Combine(parentPath, filename), FileMode.Create, FileAccess.Write);
         }
 
         public void addFile(string path)

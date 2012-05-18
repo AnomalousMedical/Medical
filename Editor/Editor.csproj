@@ -95,8 +95,9 @@
     <Compile Include="Controller\TypeControllers\MvcTypeController.cs" />
     <Compile Include="Controller\TypeControllers\RmlTypeController.cs" />
     <Compile Include="Controller\TypeControllers\MovementSequenceTypeController.cs" />
-    <Compile Include="Controller\EditorResourceProvider\SaveableObjectStream.cs" />
-    <Compile Include="Controller\EditorResourceProvider\SaveableCachedResource.cs" />
+    <Compile Include="Controller\TypeControllers\SaveableObjectStream.cs" />
+    <Compile Include="Controller\TypeControllers\SaveableCachedResource.cs" />
+    <Compile Include="Controller\TypeControllers\SaveableTypeController.cs" />
     <Compile Include="Controller\TypeControllers\TimelineTypeController.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />

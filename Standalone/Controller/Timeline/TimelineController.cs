@@ -318,17 +318,11 @@ namespace Medical
         {
             if (resourceProvider != null)
             {
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (XmlTextWriter writer = new XmlTextWriter(resourceProvider.openWriteStream(filename), Encoding.Default))
                 {
-                    using (XmlTextWriter writer = new XmlTextWriter(memoryStream, Encoding.Default))
-                    {
-                        writer.Formatting = Formatting.Indented;
-                        xmlSaver.saveObject(timeline, writer);
-                        writer.Flush();
-
-                        memoryStream.Seek(0, SeekOrigin.Begin);
-                        resourceProvider.addStream(filename, memoryStream);
-                    }
+                    writer.Formatting = Formatting.Indented;
+                    xmlSaver.saveObject(timeline, writer);
+                    writer.Flush();
                 }
                 timeline.LEGACY_SourceFile = filename;
             }
