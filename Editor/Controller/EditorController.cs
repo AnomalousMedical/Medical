@@ -134,12 +134,12 @@ namespace Medical
 
         public void addCachedResource(CachedResource cachedResource)
         {
-            resourceProvider.addCachedResource(cachedResource);
+            resourceProvider.ResourceCache.add(cachedResource);
         }
 
         public void removeCachedResource(String filename)
         {
-            resourceProvider.removeCachedResource(filename);
+            resourceProvider.ResourceCache.remove(filename);
         }
 
         public ResourceProvider ResourceProvider

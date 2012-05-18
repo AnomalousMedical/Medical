@@ -77,11 +77,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\CachedResource.cs" />
+    <Compile Include="Controller\EditorResourceProvider\CachedResource.cs" />
     <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\EditorController.cs" />
-    <Compile Include="Controller\EditorResourceProvider.cs" />
+    <Compile Include="Controller\EditorResourceProvider\EditorResourceProvider.cs" />
+    <Compile Include="Controller\EditorResourceProvider\ResourceCache.cs" />
     <Compile Include="Controller\EditorTypeController.cs" />
     <Compile Include="Controller\ExtensionAction.cs" />
     <Compile Include="Controller\ExtensionActionCollection.cs" />
@@ -94,8 +95,8 @@
     <Compile Include="Controller\TypeControllers\MvcTypeController.cs" />
     <Compile Include="Controller\TypeControllers\RmlTypeController.cs" />
     <Compile Include="Controller\TypeControllers\MovementSequenceTypeController.cs" />
-    <Compile Include="Controller\TypeControllers\SaveableObjectStream.cs" />
-    <Compile Include="Controller\TypeControllers\SaveableCachedResource.cs" />
+    <Compile Include="Controller\EditorResourceProvider\SaveableObjectStream.cs" />
+    <Compile Include="Controller\EditorResourceProvider\SaveableCachedResource.cs" />
     <Compile Include="Controller\TypeControllers\TimelineTypeController.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />

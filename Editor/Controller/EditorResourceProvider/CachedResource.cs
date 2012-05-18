@@ -6,6 +6,9 @@ using System.IO;
 
 namespace Medical
 {
+    /// <summary>
+    /// An abstract base class for a cacheable resource.
+    /// </summary>
     public abstract class CachedResource
     {
         public CachedResource(String file)
