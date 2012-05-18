@@ -34,9 +34,6 @@ namespace Medical.GUI
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             editorController.ExtensionActionsChanged += new EditorControllerEvent(editorController_ExtensionActionsChanged);
-            editorController.FileCreated += new FileSystemEventHandler(editorController_FileCreated);
-            editorController.FileDeleted += new FileSystemEventHandler(editorController_FileDeleted);
-            editorController.FileRenamed += new RenamedEventHandler(editorController_FileRenamed);
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;

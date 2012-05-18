@@ -91,6 +91,8 @@ namespace Medical.GUI
                     dataProperties.addPanel(actionProp.TypeName, actionProp.Panel);
                 }
             }
+
+            Enabled = false;
         }
 
         public void paste()
@@ -147,16 +149,18 @@ namespace Medical.GUI
                         currentTimeline.ActionAdded -= currentTimeline_ActionAdded;
                         currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
                     }
-                    currentTimeline = value;
-                    timelineController.setAsTimelineController(currentTimeline);
                     timelineView.removeAllData();
                     actionDataBindings.Clear();
-                    foreach (TimelineAction action in currentTimeline.Actions)
-                    {
-                        addActionToTimeline(action);
-                    }
+                    currentTimeline = value;
+                    Enabled = currentTimeline != null;
                     if (currentTimeline != null)
                     {
+                        timelineController.setAsTimelineController(currentTimeline);
+                        foreach (TimelineAction action in currentTimeline.Actions)
+                        {
+                            addActionToTimeline(action);
+                        }
+
                         currentTimeline.ActionAdded += currentTimeline_ActionAdded;
                         currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
                     }

@@ -75,6 +75,8 @@ namespace Medical.GUI
 
             //Add tracks to timeline.
             timelineView.addTrack("Muscle Position", Color.Red);
+
+            Enabled = false;
         }
 
         public override void Dispose()
@@ -141,6 +143,7 @@ namespace Medical.GUI
             {
                 movementSequence = value;
                 timelineView.removeAllData();
+                Enabled = movementSequence != null;
                 if (movementSequence != null)
                 {
                     timelineView.Duration = movementSequence.Duration;

@@ -69,11 +69,11 @@ namespace Medical.GUI
         {
             get
             {
-                return editTreeView.EditInterface;
+                return objectEditor.EditInterface;
             }
             set
             {
-                editTreeView.EditInterface = value;
+                objectEditor.EditInterface = value;
             }
         }
 

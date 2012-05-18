@@ -24,6 +24,7 @@ namespace Medical
         {
             this.editor = editor;
             this.editorController = editorController;
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             editor.GotFocus += new EventHandler(editor_GotFocus);
 
             extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
@@ -89,6 +90,12 @@ namespace Medical
                 MessageBox.show(String.Format("There was an error saving your timeline to\n'{0}'\nPlease make sure that destination is valid.", filename), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                 Log.Error("Could not save timeline. {0}", ex.Message);
             }
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            editor.CurrentTimeline = null;
+            editor.updateFileName(null);
         }
     }
 }

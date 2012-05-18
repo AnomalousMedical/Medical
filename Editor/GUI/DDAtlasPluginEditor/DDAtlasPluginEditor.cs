@@ -73,7 +73,14 @@ namespace Medical.GUI
             set
             {
                 currentPlugin = value;
-                objectEditor.EditInterface = currentPlugin.EditInterface;
+                if (currentPlugin != null)
+                {
+                    objectEditor.EditInterface = currentPlugin.EditInterface;
+                }
+                else
+                {
+                    objectEditor.EditInterface = null;
+                }
             }
         }
 

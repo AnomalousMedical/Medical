@@ -38,10 +38,6 @@ namespace Medical
 
         public event EditorControllerEvent ProjectChanged;
         public event EditorControllerEvent ExtensionActionsChanged;
-        public event FileSystemEventHandler FileChanged;
-        public event FileSystemEventHandler FileDeleted;
-        public event FileSystemEventHandler FileCreated;
-        public event RenamedEventHandler FileRenamed;
 
         public EditorController(EditorPlugin plugin, StandaloneController standaloneController)
         {
@@ -205,47 +201,11 @@ namespace Medical
                 resourceProvider.Dispose();
             }
             resourceProvider = new EditorResourceProvider(projectPath);
-            resourceProvider.FileChanged += new FileSystemEventHandler(resourceProvider_FileChanged);
-            resourceProvider.FileCreated += new FileSystemEventHandler(resourceProvider_FileCreated);
-            resourceProvider.FileDeleted += new FileSystemEventHandler(resourceProvider_FileDeleted);
-            resourceProvider.FileRenamed += new RenamedEventHandler(resourceProvider_FileRenamed);
             plugin.TimelineController.setResourceProvider(ResourceProvider);
             BrowserWindowController.setResourceProvider(ResourceProvider);
             if (ProjectChanged != null)
             {
                 ProjectChanged.Invoke(this);
-            }
-        }
-
-        void resourceProvider_FileRenamed(object sender, RenamedEventArgs e)
-        {
-            if (FileRenamed != null)
-            {
-                FileRenamed.Invoke(sender, e);
-            }
-        }
-
-        void resourceProvider_FileDeleted(object sender, FileSystemEventArgs e)
-        {
-            if (FileDeleted != null)
-            {
-                FileDeleted.Invoke(sender, e);
-            }
-        }
-
-        void resourceProvider_FileCreated(object sender, FileSystemEventArgs e)
-        {
-            if (FileCreated != null)
-            {
-                FileCreated.Invoke(sender, e);
-            }
-        }
-
-        void resourceProvider_FileChanged(object sender, FileSystemEventArgs e)
-        {
-            if (FileChanged != null)
-            {
-                FileChanged.Invoke(sender, e);
             }
         }
     }

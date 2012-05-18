@@ -22,6 +22,7 @@ namespace Medical
             this.editor = editor;
             editor.GotFocus += new EventHandler(editor_GotFocus);
             this.editorController = editorController;
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
             extensionActions.Add(new ExtensionAction("Save Plugin", "File", savePlugin));
             extensionActions.Add(new ExtensionAction("Save Plugin As", "File", savePluginAs));
@@ -117,6 +118,12 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            editor.CurrentPlugin = null;
+            editor.updateCaption(null);
         }
     }
 }

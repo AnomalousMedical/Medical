@@ -24,6 +24,7 @@ namespace Medical
             this.editor = editor;
             editor.GotFocus += new EventHandler(editor_GotFocus);
             this.editorController = editorController;
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
             extensionActions.Add(new ExtensionAction("Save MVC Context", "File", save));
             extensionActions.Add(new ExtensionAction("Save MVC Context As", "File", saveAs));
@@ -78,6 +79,12 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            editor.CurrentEditInterface = null;
+            editor.changeCaption(null);
         }
     }
 }

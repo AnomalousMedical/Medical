@@ -373,6 +373,18 @@ namespace Medical.GUI
             }
         }
 
+        public bool Enabled
+        {
+            get
+            {
+                return window.ClientWidget.Enabled;
+            }
+            set
+            {
+                window.ClientWidget.Enabled = value;
+            }
+        }
+
         protected String PersistName
         {
             get

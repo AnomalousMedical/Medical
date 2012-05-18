@@ -22,6 +22,7 @@ namespace Medical
             this.editor = editor;
             editor.GotFocus += new EventHandler(editor_GotFocus);
             this.editorController = editorController;
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
             extensionActions.Add(new ExtensionAction("Save Movement Sequence", "File", saveSequence));
             extensionActions.Add(new ExtensionAction("Save Movement Sequence As", "File", saveSequenceAs));
@@ -107,6 +108,12 @@ namespace Medical
             {
                 saveSequenceAs();
             }
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            editor.CurrentSequence = null;
+            editor.updateTitle(null);
         }
     }
 }
