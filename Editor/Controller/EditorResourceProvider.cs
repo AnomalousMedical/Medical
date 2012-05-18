@@ -15,11 +15,17 @@ namespace Medical
     {
         private static XmlSaver xmlSaver = new XmlSaver();
         private String parentPath;
+        private int parentPathLength;
         private FileSystemWatcher fileWatcher;
 
         public EditorResourceProvider(String path)
         {
-            this.parentPath = path;
+            this.parentPath = path.Replace('\\', '/');
+            parentPathLength = parentPath.Length;
+            if (!parentPath.EndsWith("/"))
+            {
+                ++parentPathLength;
+            }
             if (Directory.Exists(parentPath))
             {
                 fileWatcher = new FileSystemWatcher(parentPath);
@@ -84,7 +90,7 @@ namespace Medical
             String[] files = Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly);
             for (int i = 0; i < files.Length; ++i)
             {
-                files[i] = files[i].Remove(0, parentPath.Length + 1);
+                files[i] = files[i].Remove(0, parentPathLength);
             }
             return files;
         }
@@ -94,7 +100,7 @@ namespace Medical
             String[] files = Directory.GetFiles(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             for (int i = 0; i < files.Length; ++i)
             {
-                files[i] = files[i].Remove(0, parentPath.Length + 1);
+                files[i] = files[i].Remove(0, parentPathLength);
             }
             return files;
         }
@@ -104,7 +110,7 @@ namespace Medical
             String[] directories = Directory.GetDirectories(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             for (int i = 0; i < directories.Length; ++i)
             {
-                directories[i] = directories[i].Remove(0, parentPath.Length + 1);
+                directories[i] = directories[i].Remove(0, parentPathLength);
             }
             return directories;
         }

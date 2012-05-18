@@ -9,10 +9,16 @@ namespace Medical
     public class FilesystemResourceProvider : ResourceProvider
     {
         private String parentPath;
+        private int parentPathLength;
 
         public FilesystemResourceProvider(String path)
         {
-            this.parentPath = path;
+            this.parentPath = path.Replace('\\', '/');
+            parentPathLength = parentPath.Length;
+            if (!parentPath.EndsWith("/"))
+            {
+                ++parentPathLength;
+            }
         }
 
         public Stream openFile(string filename)
@@ -44,7 +50,7 @@ namespace Medical
             String[] files = Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly);
             for (int i = 0; i < files.Length; ++i)
             {
-                files[i] = files[i].Remove(0, parentPath.Length + 1);
+                files[i] = files[i].Remove(0, parentPathLength);
             }
             return files;
         }
@@ -54,7 +60,7 @@ namespace Medical
             String[] files = Directory.GetFiles(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             for (int i = 0; i < files.Length; ++i)
             {
-                files[i] = files[i].Remove(0, parentPath.Length + 1);
+                files[i] = files[i].Remove(0, parentPathLength);
             }
             return files;
         }
@@ -64,7 +70,7 @@ namespace Medical
             String[] directories = Directory.GetDirectories(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             for (int i = 0; i < directories.Length; ++i)
             {
-                directories[i] = directories[i].Remove(0, parentPath.Length + 1);
+                directories[i] = directories[i].Remove(0, parentPathLength);
             }
             return directories;
         }
