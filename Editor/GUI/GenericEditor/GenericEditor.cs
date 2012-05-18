@@ -25,8 +25,8 @@ namespace Medical.GUI
 
         private EditorController editorController;
 
-        public GenericEditor(String persistName, String name, MedicalUICallback uiCallback, EditorController editorController)
-            : base("Medical.GUI.GenericEditor.GenericEditor.layout", persistName)
+        public GenericEditor(String persistName, String name, MedicalUICallback uiCallback, EditorController editorController, bool horizontalAlignment = true)
+            : base(horizontalAlignment ? "Medical.GUI.GenericEditor.GenericEditor.layout" : "Medical.GUI.GenericEditor.GenericEditorVertical.layout", persistName)
         {
             this.name = name;
             this.editorController = editorController;

@@ -18,10 +18,12 @@ namespace Medical
         private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
         private EditorController editorController;
         private String currentFile;
+        private GenericEditor propertiesEditor;
 
-        public TimelineTypeController(TimelineEditor editor, EditorController editorController)
+        public TimelineTypeController(TimelineEditor editor, GenericEditor propertiesEditor, EditorController editorController)
             :base(".tl", editorController)
         {
+            this.propertiesEditor = propertiesEditor;
             this.editor = editor;
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
@@ -33,11 +35,13 @@ namespace Medical
             extensionActions.Add(new ExtensionAction("Copy", "Edit", editor.copy));
             extensionActions.Add(new ExtensionAction("Paste", "Edit", editor.paste));
             extensionActions.Add(new ExtensionAction("Select All", "Edit", editor.selectAll));
+            extensionActions.Add(new ExtensionAction("Edit Properties", "Timeline", showTimelineProperties));
         }
 
         public override void openFile(string path)
         {
             editor.CurrentTimeline = (Timeline)loadObject(path);
+            propertiesEditor.CurrentEditInterface = editor.CurrentTimeline.getEditInterface();
             currentFile = path;
             editor.updateFileName(currentFile);
             if (!editor.Visible)
@@ -92,10 +96,19 @@ namespace Medical
             }
         }
 
+        private void showTimelineProperties()
+        {
+            if (!propertiesEditor.Visible)
+            {
+                propertiesEditor.open(false);
+            }
+        }
+
         void editorController_ProjectChanged(EditorController editorController)
         {
             editor.CurrentTimeline = null;
             editor.updateFileName(null);
+            propertiesEditor.CurrentEditInterface = null;
         }
     }
 }

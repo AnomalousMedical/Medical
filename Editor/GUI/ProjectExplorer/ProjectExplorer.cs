@@ -160,6 +160,7 @@ namespace Medical.GUI
             {
                 createNodesForPath(fileTree.Nodes, "");
                 fileTree.layout();
+                window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
             }
             else
             {
