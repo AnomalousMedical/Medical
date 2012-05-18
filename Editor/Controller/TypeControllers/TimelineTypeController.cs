@@ -44,6 +44,7 @@ namespace Medical
             propertiesEditor.CurrentEditInterface = editor.CurrentTimeline.getEditInterface();
             currentFile = path;
             editor.updateFileName(currentFile);
+            propertiesEditor.changeCaption(currentFile);
             if (!editor.Visible)
             {
                 editor.open(false);
@@ -109,6 +110,7 @@ namespace Medical
             editor.CurrentTimeline = null;
             editor.updateFileName(null);
             propertiesEditor.CurrentEditInterface = null;
+            propertiesEditor.changeCaption(null);
         }
     }
 }
