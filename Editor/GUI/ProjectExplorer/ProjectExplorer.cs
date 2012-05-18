@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Engine;
 using System.IO;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -42,6 +43,7 @@ namespace Medical.GUI
 
             fileTree = new Tree((ScrollView)window.findWidget("FileTableScroll"));
             fileTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(fileTree_NodeMouseDoubleClick);
+            fileTree.NodeMouseReleased += new EventHandler<TreeMouseEventArgs>(fileTree_NodeMouseReleased);
 
             rebuildMenus();
 
@@ -61,9 +63,28 @@ namespace Medical.GUI
 
         void createNewProjectClicked(Widget source, EventArgs e)
         {
+            if (editorController.ResourceProvider == null || editorController.ResourceProvider.ResourceCache.Count == 0)
+            {
+                showNewProjectDialog(source.AbsoluteLeft, source.AbsoluteTop);
+            }
+            else
+            {
+                MessageBox.show("You have open files, would you like to save them before creating a new project?", "Save", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+                {
+                    if (result == MessageBoxStyle.Ok)
+                    {
+                        editorController.saveAllCachedResources();
+                    }
+                    showNewProjectDialog(source.AbsoluteLeft, source.AbsoluteTop);
+                });
+            }
+        }
+
+        void showNewProjectDialog(int x, int y)
+        {
             editorController.stopPlayingTimelines();
             newProjectDialog.open(true);
-            newProjectDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            newProjectDialog.Position = new Vector2(x, y);
             newProjectDialog.ensureVisible();
         }
 
@@ -73,6 +94,25 @@ namespace Medical.GUI
         }
 
         void openProjectClicked(Widget source, EventArgs e)
+        {
+            if (editorController.ResourceProvider == null || editorController.ResourceProvider.ResourceCache.Count == 0)
+            {
+                showOpenProjectDialog();
+            }
+            else
+            {
+                MessageBox.show("You have open files, would you like to save them before opening a new project?", "Save", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+                {
+                    if (result == MessageBoxStyle.Ok)
+                    {
+                        editorController.saveAllCachedResources();
+                    }
+                    showOpenProjectDialog();
+                });
+            }
+        }
+
+        void showOpenProjectDialog()
         {
             editorController.stopPlayingTimelines();
             using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", "", false))
@@ -218,6 +258,42 @@ namespace Medical.GUI
         {
             currentExtensionActions = editorController.ExtensionActions;
             rebuildMenus();
+        }
+
+        void fileTree_NodeMouseReleased(object sender, TreeMouseEventArgs e)
+        {
+            if (e.Button == MouseButtonCode.MB_BUTTON1)
+            {
+                ProjectExplorerDirectoryNode dirNode = e.Node as ProjectExplorerDirectoryNode;
+                if (dirNode != null)
+                {
+                    PopupMenu directoryPopupMenu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1, 1, Align.Default, "Overlapped", "");
+                    directoryPopupMenu.Visible = false;
+                    directoryPopupMenu.ItemAccept += new MyGUIEvent(directoryPopupMenu_ItemAccept);
+                    directoryPopupMenu.Closed += new MyGUIEvent(directoryPopupMenu_Closed);
+                    directoryPopupMenu.addItem("Create Directory", MenuItemType.Normal, "Create Directory");
+                    LayerManager.Instance.upLayerItem(directoryPopupMenu);
+                    directoryPopupMenu.setPosition(e.MousePosition.x, e.MousePosition.y);
+                    directoryPopupMenu.ensureVisible();
+                    directoryPopupMenu.setVisibleSmooth(true);
+                }
+            }
+        }
+
+        void directoryPopupMenu_ItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
+            switch (mcae.Item.ItemId)
+            {
+                case "Create Directory":
+                    throw new NotImplementedException();
+                    break;
+            }
+        }
+
+        void directoryPopupMenu_Closed(Widget source, EventArgs e)
+        {
+            Gui.Instance.destroyWidget(source);
         }
     }
 }

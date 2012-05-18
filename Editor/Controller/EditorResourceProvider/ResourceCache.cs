@@ -64,5 +64,13 @@ namespace Medical
                 return new LinkedList<CachedResource>(cachedResources.Values);
             }
         }
+
+        public int Count
+        {
+            get
+            {
+                return cachedResources.Count;
+            }
+        }
     }
 }
