@@ -35,6 +35,7 @@ namespace Medical.GUI
         public override void rightClicked(Widget source, EventArgs e)
         {
             popupMenu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 10, 10, Align.Default, "Info", "");
+            popupMenu.Visible = false;
             customizeMenu();
             if (popupMenu.getItemCount() > 0)
             {
@@ -42,6 +43,9 @@ namespace Medical.GUI
                 popupMenu.setPosition(position.x, position.y);
                 popupMenu.Closed += new MyGUIEvent(popupMenu_Closed);
                 popupMenu.ItemAccept += new MyGUIEvent(popupMenu_ItemAccept);
+                LayerManager.Instance.upLayerItem(popupMenu);
+                popupMenu.ensureVisible();
+                popupMenu.setVisibleSmooth(true);
             }
             else
             {
