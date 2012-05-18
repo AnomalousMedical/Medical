@@ -45,9 +45,6 @@ namespace Medical
             }
             editorController.ExtensionActions = extensionActions;
             editor.bringToFront();
-
-            //Cache the file
-            editorController.addCachedResource(new SaveableCachedResource(path, editor.CurrentTimeline));
         }
 
         void editor_GotFocus(object sender, EventArgs e)

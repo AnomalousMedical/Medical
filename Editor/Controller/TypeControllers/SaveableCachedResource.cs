@@ -11,7 +11,7 @@ namespace Medical
     /// <summary>
     /// A class that can easily cache objects that extend saveable.
     /// </summary>
-    class SaveableCachedResource : CachedResource
+    public class SaveableCachedResource : CachedResource
     {
         public SaveableCachedResource(String file, Saveable saveable)
             :base(file)
