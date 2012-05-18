@@ -29,9 +29,9 @@ namespace Medical.GUI
             }
         }
 
-        protected override void expandedStatusChanged()
+        protected override void expandedStatusChanged(bool expanding)
         {
-            if (Children.Count == 0)
+            if (expanding && Children.Count == 0)
             {
                 projectExplorer.createNodesForPath(Children, DirectoryPath);
             }
