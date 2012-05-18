@@ -99,6 +99,16 @@ namespace Medical
             return files;
         }
 
+        public String[] listDirectories(String pattern, String directory, bool recursive)
+        {
+            String[] directories = Directory.GetDirectories(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
+            for (int i = 0; i < directories.Length; ++i)
+            {
+                directories[i] = directories[i].Remove(0, parentPath.Length + 1);
+            }
+            return directories;
+        }
+
         public bool exists(string path)
         {
             if (!path.StartsWith(parentPath))

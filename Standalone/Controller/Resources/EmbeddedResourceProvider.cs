@@ -67,6 +67,11 @@ namespace Medical
             return files.ToArray();
         }
 
+        public String[] listDirectories(String pattern, String directory, bool recursive)
+        {
+            return new String[0];
+        }
+
         public bool exists(string path)
         {
             return fileList.Contains(path);

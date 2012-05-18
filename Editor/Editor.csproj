@@ -104,6 +104,8 @@
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
+    <Compile Include="GUI\ProjectExplorer\ProjectExplorerDirectoryNode.cs" />
+    <Compile Include="GUI\ProjectExplorer\ProjectExplorerFileNode.cs" />
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineClipboardContainer.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />

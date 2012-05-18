@@ -88,6 +88,26 @@ namespace Medical
             return new String[0];
         }
 
+        public String[] listDirectories(String pattern, String directory, bool recursive)
+        {
+            try
+            {
+                List<ZipFileInfo> zipDirs = zipFile.listDirectories(Path.Combine(resourceLocation, directory), pattern, recursive);
+                String[] ret = new String[zipDirs.Count];
+                int i = 0;
+                foreach (ZipFileInfo info in zipDirs)
+                {
+                    ret[i++] = info.FullName;
+                }
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Could not list directories in directory {0}.\nReason: {1}", Path.Combine(resourceLocation, directory), ex.Message);
+            }
+            return new String[0];
+        }
+
         public bool exists(String path)
         {
             return zipFile.exists(path);

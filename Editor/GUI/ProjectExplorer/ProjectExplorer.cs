@@ -85,86 +85,48 @@ namespace Medical.GUI
 
         void fileTree_NodeMouseDoubleClick(object sender, TreeEventArgs e)
         {
-            if(e.Node != null && e.Node.Children.Count == 0)
+            ProjectExplorerFileNode fileNode = e.Node as ProjectExplorerFileNode;
+            if(fileNode != null)
             {
-                editorController.openFile(e.Node.UserData.ToString());
+                if (editorController.ResourceProvider.exists(fileNode.FilePath))
+                {
+                    editorController.openFile(fileNode.FilePath);
+                }
+            }
+        }
+
+        public void createNodesForPath(TreeNodeCollection parentCollection, String path)
+        {
+            ResourceProvider resourceProvider = editorController.ResourceProvider;
+            if (resourceProvider != null)
+            {
+                fileTree.SuppressLayout = true;
+                String[] directories = resourceProvider.listDirectories("*", path, false);
+                foreach (String dir in directories)
+                {
+                    parentCollection.add(new ProjectExplorerDirectoryNode(dir, this));
+                }
+                String[] files = resourceProvider.listFiles("*", path, false);
+                foreach (String file in files)
+                {
+                    parentCollection.add(new ProjectExplorerFileNode(file));
+                }
+                fileTree.SuppressLayout = false;
             }
         }
 
         void editorController_ProjectChanged(EditorController editorController)
         {
             fileTree.Nodes.clear();
-            ResourceProvider resourceProvider = editorController.ResourceProvider;
-            if (resourceProvider != null)
+            if (editorController.ResourceProvider != null)
             {
-                window.Caption = String.Format(windowTitleFormat, windowTitle, resourceProvider.BackingLocation);
-                //Update the file list
-                fileTree.SuppressLayout = true;
-                String[] files = resourceProvider.listFiles("*", "", true);
-                foreach (String file in files)
-                {
-                    String fileName = Path.GetFileName(file);
-                    String filePath = Path.GetDirectoryName(file);
-                    TreeNodeCollection parentNodeCollection = fileTree.Nodes;
-                    if (!String.IsNullOrEmpty(filePath))
-                    {
-                        filePath = filePath.Replace('\\', '/');
-                        int i;
-                        String directoryName;
-                        String fullDirectoryPath;
-                        TreeNode dirNode = null;
-                        int slashLoc = 0;
-                        for (i = 0; i < filePath.Length; i = slashLoc + 1)
-                        {
-                            slashLoc = filePath.IndexOf('/', i);
-                            if (slashLoc > 0)
-                            {
-                                directoryName = filePath.Substring(i, slashLoc - i);
-                                fullDirectoryPath = filePath.Substring(0, slashLoc);
-                                dirNode = computeDirectoryNode(parentNodeCollection, directoryName, fullDirectoryPath);
-                                parentNodeCollection = dirNode.Children;
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        directoryName = filePath.Substring(i);
-                        dirNode = computeDirectoryNode(parentNodeCollection, directoryName, filePath);
-                        parentNodeCollection = dirNode.Children;
-                    }
-                    TreeNode fileNode = new TreeNode(fileName);
-                    fileNode.UserData = file;
-                    parentNodeCollection.add(fileNode);
-                }
-                fileTree.SuppressLayout = false;
+                createNodesForPath(fileTree.Nodes, "");
                 fileTree.layout();
             }
             else
             {
                 window.Caption = windowTitle;
             }
-        }
-
-        private TreeNode computeDirectoryNode(TreeNodeCollection parentNodeCollection, String nodeName, String fullDirectoryPath)
-        {
-            TreeNode dirNode = null;
-            //Look for existing node with the directory name
-            foreach (TreeNode node in parentNodeCollection)
-            {
-                if (node.Text == nodeName)
-                {
-                    dirNode = node;
-                    break;
-                }
-            }
-            if (dirNode == null)
-            {
-                dirNode = new TreeNode(nodeName);
-                dirNode.UserData = fullDirectoryPath;
-                parentNodeCollection.add(dirNode);
-            }
-            return dirNode;
         }
 
         void ProjectExplorer_Resized(object sender, EventArgs e)
