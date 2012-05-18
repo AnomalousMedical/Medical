@@ -132,6 +132,16 @@ namespace Medical
             resourceProvider.saveSaveable(filename, saveable);
         }
 
+        public void addCachedResource(CachedResource cachedResource)
+        {
+            resourceProvider.addCachedResource(cachedResource);
+        }
+
+        public void removeCachedResource(String filename)
+        {
+            resourceProvider.removeCachedResource(filename);
+        }
+
         public ResourceProvider ResourceProvider
         {
             get

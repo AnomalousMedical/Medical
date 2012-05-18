@@ -17,6 +17,7 @@ namespace Medical
         private String parentPath;
         private int parentPathLength;
         private FileSystemWatcher fileWatcher;
+        private Dictionary<String, CachedResource> cachedResources = new Dictionary<string, CachedResource>();
 
         public EditorResourceProvider(String path)
         {
@@ -41,6 +42,18 @@ namespace Medical
 
         public Saveable openSaveable(String filename)
         {
+            //Check the cahce
+            CachedResource cachedResource;
+            if (cachedResources.TryGetValue(filename.ToLowerInvariant(), out cachedResource))
+            {
+                SaveableCachedResource saveableCachedResource = cachedResource as SaveableCachedResource;
+                if (saveableCachedResource != null)
+                {
+                    return saveableCachedResource.Saveable;
+                }
+            }
+
+            //Missed open real file
             filename = Path.Combine(parentPath, filename);
             using (XmlTextReader xmlReader = new XmlTextReader(File.Open(filename, FileMode.Open, FileAccess.Read)))
             {
@@ -61,9 +74,40 @@ namespace Medical
             }
         }
 
+        public void addCachedResource(CachedResource resource)
+        {
+            String file = resource.File.ToLowerInvariant();
+            if (!cachedResources.ContainsKey(file))
+            {
+                cachedResources.Add(file, resource);
+            }
+            else
+            {
+                cachedResources[file] = resource;
+            }
+        }
+
+        public void removeCachedResource(String filename)
+        {
+            cachedResources.Remove(filename.ToLowerInvariant());
+        }
+
+        public void clearCachedResources()
+        {
+            cachedResources.Clear();
+        }
+
         public Stream openFile(string filename)
         {
-            return File.OpenRead(Path.Combine(parentPath, filename));
+            CachedResource cachedResource;
+            if (cachedResources.TryGetValue(filename.ToLowerInvariant(), out cachedResource))
+            {
+                return cachedResource.openStream();
+            }
+            else
+            {
+                return File.OpenRead(Path.Combine(parentPath, filename));
+            }
         }
 
         public void addStream(string filename, MemoryStream memoryStream)

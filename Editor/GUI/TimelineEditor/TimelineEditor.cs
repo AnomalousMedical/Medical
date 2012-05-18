@@ -150,6 +150,7 @@ namespace Medical.GUI
                     currentTimeline = value;
                     timelineController.setAsTimelineController(currentTimeline);
                     timelineView.removeAllData();
+                    actionDataBindings.Clear();
                     foreach (TimelineAction action in currentTimeline.Actions)
                     {
                         addActionToTimeline(action);
@@ -307,6 +308,7 @@ namespace Medical.GUI
         void removeActionFromTimeline(TimelineAction action)
         {
             timelineView.removeData(actionDataBindings[action]);
+            actionDataBindings.Remove(action);
         }
 
         void addActionToTimeline(TimelineAction action)
