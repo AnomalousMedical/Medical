@@ -19,6 +19,8 @@ namespace Medical
 
         public abstract Stream openStream();
 
+        public abstract void save();
+
         public String File { get; private set; }
 
         public bool AllowClose { get; set; }

@@ -89,6 +89,14 @@ namespace Medical
             //Add to recent documents
         }
 
+        public void saveAllCachedResources()
+        {
+            foreach (CachedResource resource in resourceProvider.ResourceCache.Resources)
+            {
+                resource.save();
+            }
+        }
+
         public void openFile(String file)
         {
             String extension = Path.GetExtension(file).ToLowerInvariant();

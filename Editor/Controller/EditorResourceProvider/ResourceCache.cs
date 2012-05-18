@@ -61,7 +61,7 @@ namespace Medical
         {
             get
             {
-                return cachedResources.Values;
+                return new LinkedList<CachedResource>(cachedResources.Values);
             }
         }
     }

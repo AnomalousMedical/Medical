@@ -23,7 +23,7 @@ namespace Medical
             this.editorController = editorController;
         }
 
-        protected Saveable loadObject(String filename)
+        public Saveable loadObject(String filename)
         {
             //Check the cahce
             SaveableCachedResource cachedResource = editorController.ResourceProvider.ResourceCache[filename] as SaveableCachedResource;
@@ -32,7 +32,7 @@ namespace Medical
                 //Missed open real file
                 using (XmlTextReader xmlReader = new XmlTextReader(editorController.ResourceProvider.openFile(filename)))
                 {
-                    cachedResource = new SaveableCachedResource(filename, (Saveable)EditorController.XmlSaver.restoreObject(xmlReader));
+                    cachedResource = new SaveableTypeControllerCachedResource(filename, (Saveable)EditorController.XmlSaver.restoreObject(xmlReader), this);
                     editorController.ResourceProvider.ResourceCache.add(cachedResource);
                 }
             }
@@ -40,7 +40,7 @@ namespace Medical
             return cachedResource.Saveable;
         }
 
-        protected void saveObject(String filename, Saveable saveable)
+        public void saveObject(String filename, Saveable saveable)
         {
             using (XmlTextWriter writer = new XmlTextWriter(editorController.ResourceProvider.openWriteStream(filename), Encoding.Default))
             {

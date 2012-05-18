@@ -17,6 +17,7 @@ namespace Medical.GUI
         MenuBar menuBar;
         MenuItem newProject;
         MenuItem openProject;
+        MenuItem saveAll;
         ExtensionActionCollection currentExtensionActions = null;
 
         Tree fileTree;
@@ -163,6 +164,8 @@ namespace Medical.GUI
                     item.UserObject = action;
                 }
             }
+
+            saveAll = fileMenu.addItem("Save All");
         }
 
         void fileMenu_ItemAccept(Widget source, EventArgs e)
@@ -175,6 +178,10 @@ namespace Medical.GUI
             else if (menuEventArgs.Item == openProject)
             {
                 openProjectClicked(source, e);
+            }
+            else if (menuEventArgs.Item == saveAll)
+            {
+                editorController.saveAllCachedResources();
             }
             else
             {
