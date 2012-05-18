@@ -12,8 +12,6 @@ namespace Medical.GUI
 {
     public class DDAtlasPluginEditor : MDIDialog
     {
-        public const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
-
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
 
@@ -22,12 +20,10 @@ namespace Medical.GUI
 
         private ObjectEditor objectEditor;
 
-        private DDAtlasPlugin currentDefinition;
-        private String currentFile = null;
+        private DDAtlasPlugin currentPlugin;
 
         private AtlasPluginManager pluginManager;
         private EditorController editorController;
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
 
         public DDAtlasPluginEditor(MedicalUICallback uiCallback, AtlasPluginManager pluginManager, EditorController editorController)
             : base("Medical.GUI.DDAtlasPluginEditor.DDAtlasPluginEditor.layout")
@@ -43,14 +39,7 @@ namespace Medical.GUI
 
             objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
 
-            extensionActions.Add(new ExtensionAction("Save Plugin", "File", savePlugin));
-            extensionActions.Add(new ExtensionAction("Save Plugin As", "File", savePluginAs));
-
-            createNewPlugin();
-
             this.Resized += new EventHandler(DDAtlasPluginEditor_Resized);
-
-            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
         }
 
         public override void Dispose()
@@ -63,97 +52,28 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void createNewPlugin()
+        public void updateCaption(String file)
         {
-            currentDefinition = new DDAtlasPlugin();
-            currentDefinitionChanged(null);
-        }
-
-        public void loadPlugin()
-        {
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a plugin definition.", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD, false))
+            if (file != null)
             {
-                if (fileDialog.showModal() == NativeDialogResult.OK)
-                {
-                    loadPlugin(fileDialog.Path);
-                }
-            }
-        }
-
-        public void loadPlugin(String file)
-        {
-            try
-            {
-                using (Stream pluginStream = File.Open(file, FileMode.Open, FileAccess.Read))
-                {
-                    DDAtlasPlugin loadedPlugin = pluginManager.loadPlugin(pluginStream);
-                    if (loadedPlugin != null)
-                    {
-                        currentDefinition = loadedPlugin;
-                        currentDefinitionChanged(file);
-                    }
-                    else
-                    {
-                        MessageBox.show("Load error", "There was an error loading this plugin.", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.show("Load error", "Exception loading plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            }
-        }
-
-        public void savePlugin()
-        {
-            if (currentFile != null)
-            {
-                using (XmlTextWriter xmlWriter = new XmlTextWriter(currentFile, Encoding.Default))
-                {
-                    xmlWriter.Formatting = Formatting.Indented;
-                    EditorController.XmlSaver.saveObject(currentDefinition, xmlWriter);
-                }
+                window.Caption = String.Format("Plugin Editor - {0}", file);
             }
             else
             {
-                savePluginAs();
+                window.Caption = String.Format("Plugin Editor");
             }
         }
 
-        public void savePluginAs()
+        public DDAtlasPlugin CurrentPlugin
         {
-            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a plugin definition", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD))
+            get
             {
-                if (fileDialog.showModal() == NativeDialogResult.OK)
-                {
-                    try
-                    {
-                        using (XmlTextWriter xmlWriter = new XmlTextWriter(fileDialog.Path, Encoding.Default))
-                        {
-                            xmlWriter.Formatting = Formatting.Indented;
-                            EditorController.XmlSaver.saveObject(currentDefinition, xmlWriter);
-                            fileChanged(fileDialog.Path);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.show("Load error", "Exception saving plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                    }
-                }
+                return currentPlugin;
             }
-        }
-
-        public void activateExtensionActions()
-        {
-            editorController.ExtensionActions = extensionActions;
-        }
-
-        void window_RootKeyChangeFocus(Widget source, EventArgs e)
-        {
-            RootFocusEventArgs rfae = (RootFocusEventArgs)e;
-            if (rfae.Focus)
+            set
             {
-                activateExtensionActions();
+                currentPlugin = value;
+                objectEditor.EditInterface = currentPlugin.EditInterface;
             }
         }
 
@@ -161,25 +81,6 @@ namespace Medical.GUI
         {
             tree.layout();
             table.layout();
-        }
-
-        private void currentDefinitionChanged(String file)
-        {
-            editTreeView.EditInterface = currentDefinition.EditInterface;
-            fileChanged(file);
-        }
-
-        private void fileChanged(String file)
-        {
-            currentFile = file;
-            if (currentFile != null)
-            {
-                window.Caption = String.Format("Plugin Editor - {0}", currentFile);
-            }
-            else
-            {
-                window.Caption = String.Format("Plugin Editor");
-            }
         }
     }
 }
