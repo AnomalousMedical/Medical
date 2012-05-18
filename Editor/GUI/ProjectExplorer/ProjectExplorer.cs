@@ -161,6 +161,7 @@ namespace Medical.GUI
                 createNodesForPath(fileTree.Nodes, "");
                 fileTree.layout();
                 window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
+                editorController.ResourceProvider.FileCreated += new FileSystemEventHandler(ResourceProvider_FileCreated);
             }
             else
             {
@@ -237,17 +238,7 @@ namespace Medical.GUI
             }
         }
 
-        void editorController_FileRenamed(object sender, RenamedEventArgs e)
-        {
-
-        }
-
-        void editorController_FileDeleted(object sender, FileSystemEventArgs e)
-        {
-
-        }
-
-        void editorController_FileCreated(object sender, FileSystemEventArgs e)
+        void ResourceProvider_FileCreated(object sender, FileSystemEventArgs e)
         {
 
         }
@@ -265,15 +256,25 @@ namespace Medical.GUI
                 ProjectExplorerDirectoryNode dirNode = e.Node as ProjectExplorerDirectoryNode;
                 if (dirNode != null)
                 {
+                    fileTree.SelectedNode = dirNode;
                     PopupMenu directoryPopupMenu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1, 1, Align.Default, "Overlapped", "");
                     directoryPopupMenu.Visible = false;
                     directoryPopupMenu.ItemAccept += new MyGUIEvent(directoryPopupMenu_ItemAccept);
                     directoryPopupMenu.Closed += new MyGUIEvent(directoryPopupMenu_Closed);
-                    directoryPopupMenu.addItem("Create Directory", MenuItemType.Normal, "Create Directory");
+                    MenuItem item = directoryPopupMenu.addItem("Create Directory", MenuItemType.Normal, "Create Directory");
+                    item.UserObject = dirNode;
                     LayerManager.Instance.upLayerItem(directoryPopupMenu);
                     directoryPopupMenu.setPosition(e.MousePosition.x, e.MousePosition.y);
                     directoryPopupMenu.ensureVisible();
                     directoryPopupMenu.setVisibleSmooth(true);
+                }
+                else
+                {
+                    ProjectExplorerFileNode fileNode = e.Node as ProjectExplorerFileNode;
+                    if (fileNode != null)
+                    {
+
+                    }
                 }
             }
         }
@@ -284,7 +285,12 @@ namespace Medical.GUI
             switch (mcae.Item.ItemId)
             {
                 case "Create Directory":
-                    throw new NotImplementedException();
+                    ProjectExplorerDirectoryNode dirNode = mcae.Item.UserObject as ProjectExplorerDirectoryNode;
+                    InputBox.GetInput("Directory Name", "Please enter a name for the directory.", true, delegate(String result, ref String errorPrompt)
+                    {
+                        editorController.ResourceProvider.createDirectory(dirNode.DirectoryPath, result);
+                        return true;
+                    });
                     break;
             }
         }

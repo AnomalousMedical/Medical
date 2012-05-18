@@ -113,6 +113,11 @@ namespace Medical
             return Path.Combine(parentPath, filename);
         }
 
+        public void createDirectory(string path, string directoryName)
+        {
+            Directory.CreateDirectory(Path.Combine(parentPath, path, directoryName));
+        }
+
         public string BackingLocation
         {
             get
