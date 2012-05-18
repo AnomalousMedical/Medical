@@ -26,6 +26,7 @@ namespace Medical
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
+            extensionActions.Add(new ExtensionAction("Close MVC Context", "File", close));
             extensionActions.Add(new ExtensionAction("Save MVC Context", "File", save));
             extensionActions.Add(new ExtensionAction("Save MVC Context As", "File", saveAs));
         }
@@ -83,8 +84,14 @@ namespace Medical
 
         void editorController_ProjectChanged(EditorController editorController)
         {
+            close();
+        }
+
+        private void close()
+        {
             editor.CurrentEditInterface = null;
             editor.changeCaption(null);
+            closeCurrentCachedResource();
         }
     }
 }

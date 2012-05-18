@@ -24,6 +24,7 @@ namespace Medical
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
+            extensionActions.Add(new ExtensionAction("Close Plugin", "File", close));
             extensionActions.Add(new ExtensionAction("Save Plugin", "File", savePlugin));
             extensionActions.Add(new ExtensionAction("Save Plugin As", "File", savePluginAs));
         }
@@ -122,8 +123,14 @@ namespace Medical
 
         void editorController_ProjectChanged(EditorController editorController)
         {
+            close();
+        }
+
+        private void close()
+        {
             editor.CurrentPlugin = null;
             editor.updateCaption(null);
+            closeCurrentCachedResource();
         }
     }
 }

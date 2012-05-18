@@ -29,6 +29,7 @@ namespace Medical
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             editor.GotFocus += new EventHandler(editor_GotFocus);
 
+            extensionActions.Add(new ExtensionAction("Close Timeline", "File", close));
             extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
             extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
             extensionActions.Add(new ExtensionAction("Cut", "Edit", editor.cut));
@@ -107,10 +108,16 @@ namespace Medical
 
         void editorController_ProjectChanged(EditorController editorController)
         {
+            close();
+        }
+
+        private void close()
+        {
             editor.CurrentTimeline = null;
             editor.updateFileName(null);
             propertiesEditor.CurrentEditInterface = null;
             propertiesEditor.changeCaption(null);
+            closeCurrentCachedResource();
         }
     }
 }

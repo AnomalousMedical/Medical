@@ -50,7 +50,17 @@ namespace Medical
             editorController.ResourceProvider.ResourceCache.closeResource(filename);
         }
 
-        protected void changeCachedResource(SaveableCachedResource newCachedResource)
+        protected void closeCurrentCachedResource()
+        {
+            if(currentCachedResource != null)
+            {
+                currentCachedResource.AllowClose = true;
+                editorController.ResourceProvider.ResourceCache.closeResource(currentCachedResource.File);
+                changeCachedResource(null);
+            }
+        }
+
+        private void changeCachedResource(SaveableCachedResource newCachedResource)
         {
             if (currentCachedResource != null)
             {

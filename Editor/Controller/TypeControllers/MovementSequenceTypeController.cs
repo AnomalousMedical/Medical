@@ -24,6 +24,7 @@ namespace Medical
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
+            extensionActions.Add(new ExtensionAction("Close Movement Sequence", "File", close));
             extensionActions.Add(new ExtensionAction("Save Movement Sequence", "File", saveSequence));
             extensionActions.Add(new ExtensionAction("Save Movement Sequence As", "File", saveSequenceAs));
             extensionActions.Add(new ExtensionAction("Cut", "Edit", editor.cut));
@@ -112,8 +113,14 @@ namespace Medical
 
         void editorController_ProjectChanged(EditorController editorController)
         {
+            close();
+        }
+
+        private void close()
+        {
             editor.CurrentSequence = null;
             editor.updateTitle(null);
+            closeCurrentCachedResource();
         }
     }
 }

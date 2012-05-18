@@ -55,7 +55,7 @@ namespace Medical
 
         private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
         {
-            editorController.openFile(editorController.ResourceProvider.getFullFilePath(args[0].ToString()));
+            editorController.openFile(args[0].ToString());
         }
 
         private void openTimelineFolder(SendResult<Object> resultCallback, params Object[] args)
