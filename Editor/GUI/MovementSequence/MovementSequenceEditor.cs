@@ -6,15 +6,12 @@ using MyGUIPlugin;
 using Engine;
 using Medical.Controller;
 using Medical.Muscles;
-using Engine.Saving.XMLSaver;
-using System.Xml;
 using Engine.Platform;
 
 namespace Medical.GUI
 {
     public class MovementSequenceEditor : MDIDialog
     {
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
         private TimelineView timelineView;
@@ -22,12 +19,11 @@ namespace Medical.GUI
         private Button playButton;
         private NumericEdit durationEdit;
         private bool allowSynchronization = true;
-        private String currentSequenceFile = null;
-        private bool loadingSequenceFromFile = false;
         private SaveableClipboard clipboard;
         private EditorController editorController;
 
         private MovementSequenceController movementSequenceController;
+        private MovementSequence movementSequence;
 
         public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard, EditorController editorController)
             : base("Medical.GUI.MovementSequence.MovementSequenceEditor.layout")
@@ -36,22 +32,11 @@ namespace Medical.GUI
             this.editorController = editorController;
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
-            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             this.movementSequenceController = movementSequenceController;
-            movementSequenceController.CurrentSequenceChanged += new MovementSequenceEvent(movementSequenceController_CurrentSequenceChanged);
             movementSequenceController.PlaybackStarted += new MovementSequenceEvent(movementSequenceController_PlaybackStarted);
             movementSequenceController.PlaybackStopped += new MovementSequenceEvent(movementSequenceController_PlaybackStopped);
             movementSequenceController.PlaybackUpdate += new MovementSequenceEvent(movementSequenceController_PlaybackUpdate);
-
-            //Menu
-            extensionActions.Add(new ExtensionAction("Save Movement Sequence", "File", saveSequence));
-            extensionActions.Add(new ExtensionAction("Save Movement Sequence As", "File", saveSequenceAs));
-            extensionActions.Add(new ExtensionAction("Cut", "Edit", cut));
-            extensionActions.Add(new ExtensionAction("Copy", "Edit", copy));
-            extensionActions.Add(new ExtensionAction("Paste", "Edit", paste));
-            extensionActions.Add(new ExtensionAction("Select All", "Edit", selectAll));
-            extensionActions.Add(new ExtensionAction("Reverse Sides", "Sequence", reverseSides));
 
             //Remove button
             Button removeButton = window.findWidget("RemoveAction") as Button;
@@ -92,47 +77,88 @@ namespace Medical.GUI
             timelineView.addTrack("Muscle Position", Color.Red);
         }
 
-        public void activateExtensionActions()
-        {
-            editorController.ExtensionActions = extensionActions;
-        }
-
-        void window_RootKeyChangeFocus(Widget source, EventArgs e)
-        {
-            RootFocusEventArgs rfae = (RootFocusEventArgs)e;
-            if (rfae.Focus)
-            {
-                activateExtensionActions();
-            }
-        }
-
         public override void Dispose()
         {
             base.Dispose();
         }
 
-        public void openSequence(String filename)
+        public void reverseSides()
         {
-            try
+            if (movementSequence != null)
             {
-                using (XmlReader xmlReader = new XmlTextReader(filename))
-                {
-                    loadingSequenceFromFile = true;
-                    CurrentSequenceFile = filename;
-                    MovementSequence movementSequence = EditorController.XmlSaver.restoreObject(xmlReader) as MovementSequence;
-                    movementSequenceController.CurrentSequence = movementSequence;
-                    loadingSequenceFromFile = false;
-                }
+                movementSequence.reverseSides();
             }
-            catch (Exception ex)
+        }
+
+        public void cut()
+        {
+            MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
+            clipContainer.addKeyFrames(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
+            deleteSelectedActions();
+        }
+
+        public void copy()
+        {
+            MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
+            clipContainer.addKeyFrames(timelineView.SelectedData);
+            clipboard.copyToSourceObject(clipContainer);
+        }
+
+        public void paste()
+        {
+            MovementSequenceClipboardContainer clipContainer = clipboard.createCopy<MovementSequenceClipboardContainer>();
+            if (clipContainer != null)
             {
-                MessageBox.show(String.Format("Error opening movement sequence {0}.\nReason: {1}", filename, ex.Message), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                clipContainer.addKeyFramesToSequence(movementSequence, this, timelineView.MarkerTime, timelineView.Duration);
+            }
+        }
+
+        public void selectAll()
+        {
+            timelineView.selectAll();
+        }
+
+        public void updateTitle(String file)
+        {
+            if (file != null)
+            {
+                window.Caption = String.Format("Movement Sequence - {0}", file);
+            }
+            else
+            {
+                window.Caption = "Movement Sequence";
+            }
+        }
+
+        public MovementSequence CurrentSequence
+        {
+            get
+            {
+                return movementSequence;
+            }
+            set
+            {
+                movementSequence = value;
+                timelineView.removeAllData();
+                if (movementSequence != null)
+                {
+                    timelineView.Duration = movementSequence.Duration;
+                    foreach (MovementSequenceState state in movementSequence.States)
+                    {
+                        timelineView.addData(new MovementKeyframeData(state, movementSequence));
+                    }
+                }
+                else
+                {
+                    timelineView.Duration = 5.0f;
+                }
             }
         }
 
         internal void addStateToTimeline(MovementSequenceState state)
         {
-            timelineView.addData(new MovementKeyframeData(state, movementSequenceController.CurrentSequence));
+            timelineView.addData(new MovementKeyframeData(state, movementSequence));
         }
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)
@@ -143,22 +169,16 @@ namespace Medical.GUI
             }
             else
             {
+                movementSequenceController.CurrentSequence = movementSequence;
                 movementSequenceController.playCurrentSequence();
             }
-        }
-
-        void createNewSequence()
-        {
-            MovementSequence movementSequence = new MovementSequence();
-            movementSequence.Duration = 5.0f;
-            movementSequenceController.CurrentSequence = movementSequence;
         }
 
         void removeButton_MouseButtonClick(Widget source, EventArgs e)
         {
             MovementKeyframeData data = timelineView.CurrentData as MovementKeyframeData;
             timelineView.removeData(data);
-            movementSequenceController.CurrentSequence.deleteState(data.KeyFrame);
+            movementSequence.deleteState(data.KeyFrame);
         }
 
         private void deleteSelectedActions()
@@ -166,27 +186,7 @@ namespace Medical.GUI
             foreach (MovementKeyframeData data in timelineView.SelectedData)
             {
                 timelineView.removeData(data);
-                movementSequenceController.CurrentSequence.deleteState(data.KeyFrame);
-            }
-        }
-
-        private String CurrentSequenceFile
-        {
-            get
-            {
-                return currentSequenceFile;
-            }
-            set
-            {
-                currentSequenceFile = value;
-                if (currentSequenceFile != null)
-                {
-                    window.Caption = String.Format("Movement Sequence - {0}", currentSequenceFile);
-                }
-                else
-                {
-                    window.Caption = "Movement Sequence";
-                }
+                movementSequence.deleteState(data.KeyFrame);
             }
         }
 
@@ -227,38 +227,12 @@ namespace Medical.GUI
             timelineView.MarkerTime = controller.CurrentTime;
         }
 
-        void movementSequenceController_CurrentSequenceChanged(MovementSequenceController controller)
-        {
-            if (!loadingSequenceFromFile)
-            {
-                CurrentSequenceFile = null;
-            }
-            timelineView.removeAllData();
-            MovementSequence movementSequence = controller.CurrentSequence;
-            if (movementSequence != null)
-            {
-                timelineView.Duration = movementSequence.Duration;
-                foreach (MovementSequenceState state in movementSequence.States)
-                {
-                    timelineView.addData(new MovementKeyframeData(state, movementSequence));
-                }
-            }
-            else
-            {
-                timelineView.Duration = 5.0f;
-            }
-        }
-
         void trackFilter_AddTrackItem(string name)
         {
-            if (movementSequenceController.CurrentSequence == null)
-            {
-                createNewSequence();
-            }
             MovementSequenceState state = new MovementSequenceState();
             state.captureState();
             state.StartTime = timelineView.MarkerTime;
-            movementSequenceController.CurrentSequence.addState(state);
+            movementSequence.addState(state);
             addStateToTimeline(state);
         }
 
@@ -275,9 +249,9 @@ namespace Medical.GUI
                 {
                     timelineView.Duration = duration;
                 }
-                if (sender != movementSequenceController.CurrentSequence && movementSequenceController.CurrentSequence != null)
+                if (sender != movementSequence && movementSequence != null)
                 {
-                    movementSequenceController.CurrentSequence.Duration = duration;
+                    movementSequence.Duration = duration;
                 }
                 allowSynchronization = true;
             }
@@ -291,88 +265,6 @@ namespace Medical.GUI
         void durationEdit_ValueChanged(Widget source, EventArgs e)
         {
             synchronizeDuration(durationEdit, durationEdit.FloatValue);
-        }
-
-        void saveSequenceAs()
-        {
-            using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Save a sequence."))
-            {
-                saveDialog.Wildcard = "Sequence files (*.seq)|*.seq";
-                if (saveDialog.showModal() == NativeDialogResult.OK)
-                {
-                    using(XmlTextWriter textWriter = new XmlTextWriter(saveDialog.Path, Encoding.Default))
-                    {
-                        textWriter.Formatting = Formatting.Indented;
-                        EditorController.XmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
-                        CurrentSequenceFile = saveDialog.Path;
-                    }
-                }
-            }
-        }
-
-        void saveSequence()
-        {
-            if (CurrentSequenceFile != null)
-            {
-                using (XmlTextWriter textWriter = new XmlTextWriter(CurrentSequenceFile, Encoding.Default))
-                {
-                    textWriter.Formatting = Formatting.Indented;
-                    EditorController.XmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
-                }
-            }
-            else
-            {
-                saveSequenceAs();
-            }
-        }
-
-        void openSequence()
-        {
-            using (FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Open a sequence."))
-            {
-                openDialog.Wildcard = "Sequence files (*.seq)|*.seq";
-                if (openDialog.showModal() == NativeDialogResult.OK)
-                {
-                    openSequence(openDialog.Path);
-                }
-            }
-        }
-
-        void reverseSides()
-        {
-            if (movementSequenceController.CurrentSequence != null)
-            {
-                movementSequenceController.CurrentSequence.reverseSides();
-            }
-        }
-
-        void cut()
-        {
-            MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
-            clipContainer.addKeyFrames(timelineView.SelectedData);
-            clipboard.copyToSourceObject(clipContainer);
-            deleteSelectedActions();
-        }
-
-        void copy()
-        {
-            MovementSequenceClipboardContainer clipContainer = new MovementSequenceClipboardContainer();
-            clipContainer.addKeyFrames(timelineView.SelectedData);
-            clipboard.copyToSourceObject(clipContainer);
-        }
-
-        void paste()
-        {
-            MovementSequenceClipboardContainer clipContainer = clipboard.createCopy<MovementSequenceClipboardContainer>();
-            if (clipContainer != null)
-            {
-                clipContainer.addKeyFramesToSequence(movementSequenceController.CurrentSequence, this, timelineView.MarkerTime, timelineView.Duration);
-            }
-        }
-
-        void selectAll()
-        {
-            timelineView.selectAll();
         }
     }
 }

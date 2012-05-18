@@ -21,8 +21,6 @@ namespace Medical.GUI
 
         private ObjectEditor objectEditor;
 
-        private String currentFile = null;
-        private String defaultDirectory = "";
         private String name;
 
         private EditorController editorController;
@@ -57,10 +55,9 @@ namespace Medical.GUI
 
         public void changeCaption(String file)
         {
-            currentFile = file;
-            if (currentFile != null)
+            if (file != null)
             {
-                window.Caption = String.Format("{0} Editor - {1}", name, currentFile);
+                window.Caption = String.Format("{0} Editor - {1}", name, file);
             }
             else
             {
