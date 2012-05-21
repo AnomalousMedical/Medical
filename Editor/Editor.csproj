@@ -102,7 +102,10 @@
     <Compile Include="Controller\TypeControllers\TimelineTypeController.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
+    <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
+    <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
+    <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditor.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
@@ -110,8 +113,8 @@
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
-    <Compile Include="GUI\ProjectExplorer\ProjectExplorerDirectoryNode.cs" />
-    <Compile Include="GUI\ProjectExplorer\ProjectExplorerFileNode.cs" />
+    <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />
+    <Compile Include="GUI\FileBrowserTree\FileNode.cs" />
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineClipboardContainer.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />

@@ -7,9 +7,9 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class ProjectExplorerFileNode : TreeNode
+    class FileNode : TreeNode
     {
-        public ProjectExplorerFileNode(String file)
+        public FileNode(String file)
         {
             changePath(file);
         }

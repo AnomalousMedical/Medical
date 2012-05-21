@@ -7,11 +7,11 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class ProjectExplorerDirectoryNode : TreeNode
+    class DirectoryNode : TreeNode
     {
-        private ProjectExplorer projectExplorer;
+        private FileBrowserTree projectExplorer;
 
-        public ProjectExplorerDirectoryNode(String directory, ProjectExplorer projectExplorer)
+        public DirectoryNode(String directory, FileBrowserTree projectExplorer)
         {
             this.projectExplorer = projectExplorer;
             ListedChildren = false;
@@ -36,7 +36,7 @@ namespace Medical.GUI
             }
         }
 
-        public void addDirectoryNode(ProjectExplorerDirectoryNode node)
+        public void addDirectoryNode(DirectoryNode node)
         {
             //foreach (TreeNode node in Children)
             //{
@@ -45,7 +45,7 @@ namespace Medical.GUI
             Children.add(node);
         }
 
-        public void addFileNode(ProjectExplorerFileNode node)
+        public void addFileNode(FileNode node)
         {
             Children.add(node);
         }

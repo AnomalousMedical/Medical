@@ -79,7 +79,16 @@ namespace Medical
 
         public void deleteFile(String filename)
         {
-            File.Delete(Path.Combine(parentPath, filename));
+            String path = Path.Combine(parentPath, filename);
+            FileAttributes attrs = File.GetAttributes(path);
+            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                Directory.Delete(path, true);
+            }
+            else
+            {
+                File.Delete(path);
+            }
         }
 
         public string[] listFiles(string pattern)

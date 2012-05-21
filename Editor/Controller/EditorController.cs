@@ -87,9 +87,12 @@ namespace Medical
 
         public void saveAllCachedResources()
         {
-            foreach (CachedResource resource in resourceProvider.ResourceCache.Resources)
+            if (resourceProvider != null)
             {
-                resource.save();
+                foreach (CachedResource resource in resourceProvider.ResourceCache.Resources)
+                {
+                    resource.save();
+                }
             }
         }
 
