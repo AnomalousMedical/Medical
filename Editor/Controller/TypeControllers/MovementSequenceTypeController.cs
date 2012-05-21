@@ -6,6 +6,7 @@ using Medical.GUI;
 using System.Xml;
 using Medical.Muscles;
 using MyGUIPlugin;
+using System.IO;
 
 namespace Medical
 {
@@ -40,7 +41,8 @@ namespace Medical
             {
                 MovementSequence movementSequence = (MovementSequence)loadObject(file);
                 editor.CurrentSequence = movementSequence;
-                editor.updateTitle(file);
+                currentSequenceFile = file;
+                editor.updateTitle(currentSequenceFile);
                 if (!editor.Visible)
                 {
                     editor.open(false);
@@ -54,36 +56,46 @@ namespace Medical
             }
         }
 
+        public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        {
+            contextMenu.add(new ContextMenuItem("Create Movement Sequence", path, delegate(ContextMenuItem item)
+            {
+                InputBox.GetInput("Movement Sequence Name", "Enter a name for the movement sequence.", true, delegate(String result, ref String errorMessage)
+                {
+                    String filePath = Path.Combine(path, result);
+                    filePath = Path.ChangeExtension(filePath, ".seq");
+                    if (editorController.ResourceProvider.exists(filePath))
+                    {
+                        MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
+                        {
+                            if (overrideResult == MessageBoxStyle.Yes)
+                            {
+                                createNewMovementSequence(filePath);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        createNewMovementSequence(filePath);
+                    }
+                    return true;
+                });
+            }));
+        }
+
+        void createNewMovementSequence(String filePath)
+        {
+            MovementSequence movementSequence = new MovementSequence();
+            movementSequence.Duration = 5.0f;
+            creatingNewFile(filePath);
+            saveObject(filePath, movementSequence);
+            openFile(filePath);
+        }
+
         void editor_GotFocus(object sender, EventArgs e)
         {
             editorController.ExtensionActions = extensionActions;
         }
-
-        //void createNewSequence()
-        //{
-        //    MovementSequence movementSequence = new MovementSequence();
-        //    movementSequence.Duration = 5.0f;
-        //    movementSequenceController.CurrentSequence = movementSequence;
-        //}
-
-        //public void openSequence(String filename)
-        //{
-        //    try
-        //    {
-        //        using (XmlReader xmlReader = new XmlTextReader(filename))
-        //        {
-        //            loadingSequenceFromFile = true;
-        //            CurrentSequenceFile = filename;
-        //            MovementSequence movementSequence = EditorController.XmlSaver.restoreObject(xmlReader) as MovementSequence;
-        //            movementSequenceController.CurrentSequence = movementSequence;
-        //            loadingSequenceFromFile = false;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.show(String.Format("Error opening movement sequence {0}.\nReason: {1}", filename, ex.Message), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-        //    }
-        //}
 
         void saveSequenceAs()
         {

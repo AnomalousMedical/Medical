@@ -39,6 +39,21 @@ namespace Medical
             extensionActions.Add(new ExtensionAction("Edit Properties", "Timeline", showTimelineProperties));
         }
 
+        public override void openFile(string path)
+        {
+            editor.CurrentTimeline = (Timeline)loadObject(path);
+            propertiesEditor.CurrentEditInterface = editor.CurrentTimeline.getEditInterface();
+            currentFile = path;
+            editor.updateFileName(currentFile);
+            propertiesEditor.changeCaption(currentFile);
+            if (!editor.Visible)
+            {
+                editor.open(false);
+            }
+            editorController.ExtensionActions = extensionActions;
+            editor.bringToFront();
+        }
+
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
         {
             contextMenu.add(new ContextMenuItem("Create Timeline", path, delegate(ContextMenuItem item)
@@ -64,21 +79,6 @@ namespace Medical
                     return true;
                 });
             }));
-        }
-
-        public override void openFile(string path)
-        {
-            editor.CurrentTimeline = (Timeline)loadObject(path);
-            propertiesEditor.CurrentEditInterface = editor.CurrentTimeline.getEditInterface();
-            currentFile = path;
-            editor.updateFileName(currentFile);
-            propertiesEditor.changeCaption(currentFile);
-            if (!editor.Visible)
-            {
-                editor.open(false);
-            }
-            editorController.ExtensionActions = extensionActions;
-            editor.bringToFront();
         }
 
         void createNewTimeline(String filePath)

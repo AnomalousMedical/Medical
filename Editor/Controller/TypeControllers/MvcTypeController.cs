@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI;
 using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
+using System.IO;
 
 namespace Medical
 {
@@ -80,6 +81,41 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        {
+            contextMenu.add(new ContextMenuItem("Create MVC Context", path, delegate(ContextMenuItem item)
+            {
+                InputBox.GetInput("MVC Context Name", "Enter a name for the MVC Context.", true, delegate(String result, ref String errorMessage)
+                {
+                    String filePath = Path.Combine(path, result);
+                    filePath = Path.ChangeExtension(filePath, ".mvc");
+                    if (editorController.ResourceProvider.exists(filePath))
+                    {
+                        MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
+                        {
+                            if (overrideResult == MessageBoxStyle.Yes)
+                            {
+                                createNewContext(filePath);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        createNewContext(filePath);
+                    }
+                    return true;
+                });
+            }));
+        }
+
+        void createNewContext(String filePath)
+        {
+            AnomalousMvcContext mvcContext = new AnomalousMvcContext();
+            creatingNewFile(filePath);
+            saveObject(filePath, mvcContext);
+            openFile(filePath);
         }
 
         void editorController_ProjectChanged(EditorController editorController)
