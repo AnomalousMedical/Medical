@@ -39,6 +39,33 @@ namespace Medical
             extensionActions.Add(new ExtensionAction("Edit Properties", "Timeline", showTimelineProperties));
         }
 
+        public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        {
+            contextMenu.add(new ContextMenuItem("Create Timeline", path, delegate(ContextMenuItem item)
+            {
+                InputBox.GetInput("Timeline Name", "Enter a name for the timeline.", true, delegate(String result, ref String errorMessage)
+                {
+                    String filePath = Path.Combine(path, result);
+                    filePath = Path.ChangeExtension(filePath, ".tl");
+                    if (editorController.ResourceProvider.exists(filePath))
+                    {
+                        MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
+                        {
+                            if (overrideResult == MessageBoxStyle.Yes)
+                            {
+                                createNewTimeline(filePath);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        createNewTimeline(filePath);
+                    }
+                    return true;
+                });
+            }));
+        }
+
         public override void openFile(string path)
         {
             editor.CurrentTimeline = (Timeline)loadObject(path);
@@ -52,6 +79,14 @@ namespace Medical
             }
             editorController.ExtensionActions = extensionActions;
             editor.bringToFront();
+        }
+
+        void createNewTimeline(String filePath)
+        {
+            Timeline timeline = new Timeline();
+            creatingNewFile(filePath);
+            saveObject(filePath, timeline);
+            openFile(filePath);
         }
 
         void editor_GotFocus(object sender, EventArgs e)

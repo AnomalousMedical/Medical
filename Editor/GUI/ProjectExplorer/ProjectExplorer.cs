@@ -245,6 +245,11 @@ namespace Medical.GUI
                         return true;
                     });
                 }));
+
+                foreach (EditorTypeController typeController in editorController.TypeControllers)
+                {
+                    typeController.addCreationMethod(contextMenu, path, isDirectory, isTopLevel);
+                }
             }
             if (!isTopLevel)
             {

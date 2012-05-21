@@ -50,6 +50,14 @@ namespace Medical
             editorController.ResourceProvider.ResourceCache.closeResource(filename);
         }
 
+        protected void creatingNewFile(String filePath)
+        {
+            if (currentCachedResource != null && currentCachedResource.isSameFile(filePath))
+            {
+                closeCurrentCachedResource();
+            }
+        }
+
         protected void closeCurrentCachedResource()
         {
             if(currentCachedResource != null)

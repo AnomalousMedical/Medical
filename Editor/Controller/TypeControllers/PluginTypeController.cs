@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 using MyGUIPlugin;
+using System.IO;
 
 namespace Medical
 {
@@ -43,46 +44,37 @@ namespace Medical
             editor.bringToFront();
         }
 
-        //public void createNewPlugin()
-        //{
-        //    currentDefinition = new DDAtlasPlugin();
-        //    currentDefinitionChanged(null);
-        //}
+        public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        {
+            if (isTopLevel)
+            {
+                contextMenu.add(new ContextMenuItem("Create Plugin Definition", path, delegate(ContextMenuItem item)
+                {
+                    String filePath = Path.Combine(item.UserObject.ToString(), "Plugin.ddp");
+                    if (editorController.ResourceProvider.exists(filePath))
+                    {
+                        MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+                        {
+                            if (result == MessageBoxStyle.Yes)
+                            {
+                                createNewPlugin(filePath);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        createNewPlugin(filePath);
+                    }
+                }));
+            }
+        }
 
-        //public void loadPlugin()
-        //{
-        //    using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a plugin definition.", EditorConfig.TimelineProjectDirectory, "", PLUGIN_WILDCARD, false))
-        //    {
-        //        if (fileDialog.showModal() == NativeDialogResult.OK)
-        //        {
-        //            loadPlugin(fileDialog.Path);
-        //        }
-        //    }
-        //}
-
-        //public void loadPlugin(String file)
-        //{
-        //    try
-        //    {
-        //        using (Stream pluginStream = File.Open(file, FileMode.Open, FileAccess.Read))
-        //        {
-        //            DDAtlasPlugin loadedPlugin = pluginManager.loadPlugin(pluginStream);
-        //            if (loadedPlugin != null)
-        //            {
-        //                currentDefinition = loadedPlugin;
-        //                currentDefinitionChanged(file);
-        //            }
-        //            else
-        //            {
-        //                MessageBox.show("Load error", "There was an error loading this plugin.", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        MessageBox.show("Load error", "Exception loading plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-        //    }
-        //}
+        private void createNewPlugin(String filePath)
+        {
+            DDAtlasPlugin newPlugin = new DDAtlasPlugin();
+            saveObject(filePath, newPlugin);
+            openFile(filePath);
+        }
 
         void editor_GotFocus(object sender, EventArgs e)
         {

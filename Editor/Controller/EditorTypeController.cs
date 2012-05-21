@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -20,6 +21,11 @@ namespace Medical
         public virtual void fileChanged(FileSystemEventArgs e, String extension)
         {
 
+        }
+
+        public virtual void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        {
+            
         }
     }
 }

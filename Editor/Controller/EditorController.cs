@@ -148,6 +148,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<EditorTypeController> TypeControllers
+        {
+            get
+            {
+                return typeControllers.Values;
+            }
+        }
+
         public ExtensionActionCollection ExtensionActions
         {
             get

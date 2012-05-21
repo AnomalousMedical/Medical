@@ -21,6 +21,11 @@ namespace Medical
 
         public abstract void save();
 
+        public bool isSameFile(string filePath)
+        {
+            return filePath.ToLowerInvariant() == File.ToLowerInvariant();
+        }
+
         public String File { get; private set; }
 
         public bool AllowClose { get; set; }
