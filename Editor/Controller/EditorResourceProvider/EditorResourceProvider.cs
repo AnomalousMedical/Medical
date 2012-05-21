@@ -11,12 +11,21 @@ using Logging;
 
 namespace Medical
 {
+    public delegate void ResourceProviderFileEvent(String path, bool isDirectory);
+    public delegate void ResourceProviderFileRenamedEvent(String path, String oldPath, bool isDirectory);
+    public delegate void ResourceProviderFileDeletedEvent(String path);
+
     public class EditorResourceProvider : ResourceProvider, IDisposable
     {
         private static XmlSaver xmlSaver = new XmlSaver();
         private String parentPath;
         private int parentPathLength;
         private FileSystemWatcher fileWatcher;
+
+        public event ResourceProviderFileEvent FileCreated;
+        public event ResourceProviderFileEvent FileChanged;
+        public event ResourceProviderFileDeletedEvent FileDeleted;
+        public event ResourceProviderFileRenamedEvent FileRenamed;
 
         public EditorResourceProvider(String path)
         {
@@ -31,6 +40,10 @@ namespace Medical
             {
                 fileWatcher = new FileSystemWatcher(parentPath);
                 fileWatcher.IncludeSubdirectories = true;
+                fileWatcher.Created += new FileSystemEventHandler(fileWatcher_Created);
+                fileWatcher.Deleted += new FileSystemEventHandler(fileWatcher_Deleted);
+                fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
+                fileWatcher.Renamed += new RenamedEventHandler(fileWatcher_Renamed);
                 fileWatcher.EnableRaisingEvents = true;
             }
         }
@@ -125,54 +138,41 @@ namespace Medical
                 return parentPath;
             }
         }
-        
+
         public ResourceCache ResourceCache { get; private set; }
 
-        public event FileSystemEventHandler FileChanged
+        void fileWatcher_Renamed(object sender, RenamedEventArgs e)
         {
-            add
+            if (FileRenamed != null)
             {
-                fileWatcher.Changed += value;
-            }
-            remove
-            {
-                fileWatcher.Changed -= value;
+                FileAttributes attr = File.GetAttributes(e.FullPath);
+                FileRenamed.Invoke(e.Name, e.OldName, (attr & FileAttributes.Directory) == FileAttributes.Directory);
             }
         }
 
-        public event FileSystemEventHandler FileDeleted
+        void fileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            add
+            if (FileChanged != null)
             {
-                fileWatcher.Deleted += value;
-            }
-            remove
-            {
-                fileWatcher.Deleted -= value;
+                FileAttributes attr = File.GetAttributes(e.FullPath);
+                FileChanged.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
             }
         }
 
-        public event FileSystemEventHandler FileCreated
+        void fileWatcher_Deleted(object sender, FileSystemEventArgs e)
         {
-            add
+            if (FileDeleted != null)
             {
-                fileWatcher.Created += value;
-            }
-            remove
-            {
-                fileWatcher.Created -= value;
+                FileDeleted.Invoke(e.Name);
             }
         }
 
-        public event RenamedEventHandler FileRenamed
+        void fileWatcher_Created(object sender, FileSystemEventArgs e)
         {
-            add
+            if (FileCreated != null)
             {
-                fileWatcher.Renamed += value;
-            }
-            remove
-            {
-                fileWatcher.Renamed -= value;
+                FileAttributes attr = File.GetAttributes(e.FullPath);
+                FileCreated.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
             }
         }
     }

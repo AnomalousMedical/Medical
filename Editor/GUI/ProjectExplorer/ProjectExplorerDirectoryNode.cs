@@ -14,12 +14,19 @@ namespace Medical.GUI
         public ProjectExplorerDirectoryNode(String directory, ProjectExplorer projectExplorer)
         {
             this.projectExplorer = projectExplorer;
+            ListedChildren = false;
+            changePath(directory);
+        }
 
+        public void changePath(String directory)
+        {
             Text = Path.GetFileName(directory);
             DirectoryPath = directory;
         }
 
         public String DirectoryPath { get; set; }
+
+        public bool ListedChildren { get; private set; }
 
         public override bool HasChildren
         {
@@ -29,11 +36,26 @@ namespace Medical.GUI
             }
         }
 
+        public void addDirectoryNode(ProjectExplorerDirectoryNode node)
+        {
+            //foreach (TreeNode node in Children)
+            //{
+
+            //}
+            Children.add(node);
+        }
+
+        public void addFileNode(ProjectExplorerFileNode node)
+        {
+            Children.add(node);
+        }
+
         protected override void expandedStatusChanged(bool expanding)
         {
-            if (expanding && Children.Count == 0)
+            if (expanding && !ListedChildren)
             {
                 projectExplorer.createNodesForPath(Children, DirectoryPath);
+                ListedChildren = true;
             }
         }
     }

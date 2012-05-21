@@ -11,6 +11,11 @@ namespace Medical.GUI
     {
         public ProjectExplorerFileNode(String file)
         {
+            changePath(file);
+        }
+
+        public void changePath(String file)
+        {
             Text = Path.GetFileName(file);
             FilePath = file;
         }

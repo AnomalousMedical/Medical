@@ -13,6 +13,7 @@ namespace Medical.GUI
     {
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
+        private readonly char[] SEPS = new char[] { '/', '\\' };
 
         //File Menu
         MenuBar menuBar;
@@ -161,7 +162,9 @@ namespace Medical.GUI
                 createNodesForPath(fileTree.Nodes, "");
                 fileTree.layout();
                 window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
-                editorController.ResourceProvider.FileCreated += new FileSystemEventHandler(ResourceProvider_FileCreated);
+                editorController.ResourceProvider.FileCreated += new ResourceProviderFileEvent(ResourceProvider_FileCreated);
+                editorController.ResourceProvider.FileDeleted += new ResourceProviderFileDeletedEvent(ResourceProvider_FileDeleted);
+                editorController.ResourceProvider.FileRenamed += new ResourceProviderFileRenamedEvent(ResourceProvider_FileRenamed);
             }
             else
             {
@@ -238,9 +241,96 @@ namespace Medical.GUI
             }
         }
 
-        void ResourceProvider_FileCreated(object sender, FileSystemEventArgs e)
+        void ResourceProvider_FileCreated(string path, bool isDirectory)
         {
+            String parentPath = Path.GetDirectoryName(path);
+            if (String.IsNullOrEmpty(parentPath))
+            {
+                fileTree.SuppressLayout = true;
+                if (isDirectory)
+                {
+                    fileTree.Nodes.add(new ProjectExplorerDirectoryNode(path, this));
+                }
+                else
+                {
+                    fileTree.Nodes.add(new ProjectExplorerFileNode(path));
+                }
+                fileTree.SuppressLayout = false;
+                fileTree.layout();
+            }
+            else
+            {
+                ProjectExplorerDirectoryNode node = findNodeForPath(parentPath) as ProjectExplorerDirectoryNode;
+                if (node != null && node.ListedChildren)
+                {
+                    fileTree.SuppressLayout = true;
+                    if (isDirectory)
+                    {
+                        node.addDirectoryNode(new ProjectExplorerDirectoryNode(path, this));
+                    }
+                    else
+                    {
+                        node.addFileNode(new ProjectExplorerFileNode(path));
+                    }
+                    fileTree.SuppressLayout = false;
+                    fileTree.layout();
+                }
+            }
+        }
 
+        void ResourceProvider_FileRenamed(string path, string oldPath, bool isDirectory)
+        {
+            TreeNode node = findNodeForPath(oldPath);
+            if (node != null)
+            {
+                if (isDirectory)
+                {
+                    ((ProjectExplorerDirectoryNode)node).changePath(path);
+                }
+                else
+                {
+                    ((ProjectExplorerFileNode)node).changePath(path);
+                }
+            }
+        }
+
+        void ResourceProvider_FileDeleted(string path)
+        {
+            TreeNode node = findNodeForPath(path);
+            if (node != null)
+            {
+                fileTree.SuppressLayout = true;
+                if (node.Parent == null)
+                {
+                    fileTree.Nodes.remove(node);
+                }
+                else
+                {
+                    node.Parent.Children.remove(node);
+                }
+                fileTree.SuppressLayout = false;
+                fileTree.layout();
+            }
+        }
+
+        TreeNode findNodeForPath(String path)
+        {
+            String[] names = path.Split(SEPS);
+            TreeNode result = null;
+            TreeNodeCollection nodes = fileTree.Nodes;
+            for (int i = 0; i < names.Length; ++i)
+            {
+                result = nodes.findByText(names[i]);
+                if (result != null)
+                {
+                    nodes = result.Children;
+                }
+                else
+                {
+                    i = names.Length;
+                }
+            }
+            return result;
         }
 
         void editorController_ExtensionActionsChanged(EditorController editorController)
