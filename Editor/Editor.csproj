@@ -77,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Documents\ProjectDocumentHandler.cs" />
     <Compile Include="Controller\EditorResourceProvider\CachedResource.cs" />
     <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />

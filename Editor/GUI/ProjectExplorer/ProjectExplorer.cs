@@ -9,7 +9,7 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class ProjectExplorer : MDIDialog
+    public class ProjectExplorer : MDIDialog
     {
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
@@ -116,7 +116,7 @@ namespace Medical.GUI
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    editorController.openProject(fileDialog.Path);
+                    editorController.openProject(Path.GetDirectoryName(fileDialog.Path));
                 }
             }
         }

@@ -303,6 +303,14 @@ namespace Medical
             }
         }
 
+        public ProjectExplorer ProjectExplorer
+        {
+            get
+            {
+                return projectExplorer;
+            }
+        }
+
         public MedicalUICallback MedicalUICallback
         {
             get

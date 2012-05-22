@@ -43,6 +43,7 @@ namespace Medical
         {
             this.plugin = plugin;
             this.standaloneController = standaloneController;
+            standaloneController.DocumentController.addDocumentHandler(new ProjectDocumentHandler(this));
 
             uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, plugin.MedicalUICallback, this);
         }
@@ -69,7 +70,7 @@ namespace Medical
                     File.Delete(filename);
                 }
                 createProject(filename);
-                //Add to recent documents
+                standaloneController.DocumentController.addToRecentDocuments(filename);
             }
             catch (Exception ex)
             {
@@ -81,8 +82,12 @@ namespace Medical
 
         public void openProject(String projectPath)
         {
-            projectChanged(Path.GetDirectoryName(projectPath));
-            //Add to recent documents
+            projectChanged(projectPath);
+            standaloneController.DocumentController.addToRecentDocuments(projectPath);
+            if (!plugin.ProjectExplorer.Visible)
+            {
+                plugin.ProjectExplorer.open(false);
+            }
         }
 
         public void saveAllCachedResources()

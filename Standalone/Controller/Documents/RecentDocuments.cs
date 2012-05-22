@@ -73,7 +73,7 @@ namespace Medical
             for (int i = 0; section.hasValue("Document" + i); ++i)
             {
                 String doc = section.getValue("Document" + i, "");
-                if (File.Exists(doc) && documentController.canReadFile(doc))
+                if ((File.Exists(doc) || Directory.Exists(doc)) && documentController.canReadFile(doc))
                 {
                     recentDocumentList.Add(doc);
                 }
