@@ -140,11 +140,6 @@ namespace Medical
             resourceProvider.ResourceCache.add(cachedResource);
         }
 
-        public void removeCachedResource(String filename)
-        {
-            resourceProvider.ResourceCache.remove(filename);
-        }
-
         public void importFiles(LinkedList<String> files, String targetPath)
         {
             Queue<String> conflictedFiles = new Queue<string>();

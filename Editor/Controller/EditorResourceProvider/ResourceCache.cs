@@ -16,7 +16,7 @@ namespace Medical
 
         public void add(CachedResource resource)
         {
-            String file = resource.File.ToLowerInvariant();
+            String file = fixPath(resource.File);
             if (!cachedResources.ContainsKey(file))
             {
                 cachedResources.Add(file, resource);
@@ -27,14 +27,9 @@ namespace Medical
             }
         }
 
-        public void remove(String filename)
-        {
-            cachedResources.Remove(filename.ToLowerInvariant());
-        }
-
         public void closeResource(String filename)
         {
-            filename = filename.ToLowerInvariant();
+            filename = fixPath(filename);
             CachedResource resource;
             if (cachedResources.TryGetValue(filename, out resource) && resource.AllowClose)
             {
@@ -47,12 +42,44 @@ namespace Medical
             cachedResources.Clear();
         }
 
+        public LinkedList<CachedResource> getResourcesInDirectory(String directory)
+        {
+            LinkedList<CachedResource> directoryResources = new LinkedList<CachedResource>();
+            foreach (CachedResource cachedResource in cachedResources.Values)
+            {
+                if (cachedResource.isInDirectory(directory))
+                {
+                    directoryResources.AddLast(cachedResource);
+                }
+            }
+            return directoryResources;
+        }
+
+        public void forceCloseResourceFile(String filename)
+        {
+            CachedResource cachedResource = this[filename];
+            if (cachedResource != null)
+            {
+                cachedResource.AllowClose = true;
+                closeResource(cachedResource.File);
+            }
+        }
+
+        public void forceCloseResourcesInDirectroy(String filename)
+        {
+            foreach (CachedResource cachedResource in getResourcesInDirectory(filename))
+            {
+                cachedResource.AllowClose = true;
+                closeResource(cachedResource.File);
+            }
+        }
+
         public CachedResource this[String filename]
         {
             get
             {
                 CachedResource resource;
-                cachedResources.TryGetValue(filename.ToLowerInvariant(), out resource);
+                cachedResources.TryGetValue(fixPath(filename), out resource);
                 return resource;
             }
         }
@@ -71,6 +98,11 @@ namespace Medical
             {
                 return cachedResources.Count;
             }
+        }
+
+        public static String fixPath(String path)
+        {
+            return path.ToLowerInvariant().Replace('\\', '/');
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Medical
             File.Copy(path, Path.Combine(parentPath, targetDirectory, filename), true);
         }
 
-        public void deleteFile(String filename)
+        public void delete(String filename)
         {
             File.Delete(Path.Combine(parentPath, filename));
         }

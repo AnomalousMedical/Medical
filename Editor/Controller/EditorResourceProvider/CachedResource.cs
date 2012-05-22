@@ -23,7 +23,12 @@ namespace Medical
 
         public bool isSameFile(string filePath)
         {
-            return filePath.ToLowerInvariant() == File.ToLowerInvariant();
+            return ResourceCache.fixPath(filePath) == ResourceCache.fixPath(File);
+        }
+
+        public bool isInDirectory(String directory)
+        {
+            return ResourceCache.fixPath(File).StartsWith(ResourceCache.fixPath(directory));
         }
 
         public String File { get; private set; }

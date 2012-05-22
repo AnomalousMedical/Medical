@@ -354,7 +354,7 @@ namespace Medical
         {
             if (resourceProvider != null)
             {
-                resourceProvider.deleteFile(filename);
+                resourceProvider.delete(filename);
             }
         }
 

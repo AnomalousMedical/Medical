@@ -14,7 +14,7 @@ namespace Medical
 
         void addFile(String path, string targetDirectory);
 
-        void deleteFile(String filename);
+        void delete(String filename);
 
         String[] listFiles(String pattern);
 

@@ -43,7 +43,7 @@ namespace Medical
             throw new NotImplementedException("addFile not supported by this resource provider.");
         }
 
-        public void deleteFile(String filename)
+        public void delete(String filename)
         {
             throw new NotImplementedException("deleteFile not supported by this resource provider.");
         }

@@ -264,13 +264,29 @@ namespace Medical.GUI
             }
             if (!isTopLevel)
             {
+                contextMenu.add(new ContextMenuItem("Rename", path, delegate(ContextMenuItem item)
+                {
+                    InputBox.GetInput("Rename", String.Format("Please enter a new name for {0}.", item.UserObject.ToString()), true, delegate(String result, ref String errorPrompt)
+                    {
+                        String originalExtension = Path.GetExtension(item.UserObject.ToString());
+                        String targetName = Path.ChangeExtension(Path.Combine(Path.GetDirectoryName(item.UserObject.ToString()), result), originalExtension);
+                        if (editorController.ResourceProvider.exists(targetName))
+                        {
+                            errorPrompt = String.Format("A file named {0} already exists. Please enter another name.", targetName);
+                            return false;
+                        }
+
+                        editorController.ResourceProvider.move(path, targetName);
+                        return true;
+                    });
+                }));
                 contextMenu.add(new ContextMenuItem("Delete", path, delegate(ContextMenuItem item)
                 {
                     MessageBox.show(String.Format("Are you sure you want to delete {0}?", item.UserObject.ToString()), "Delete?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
-                            editorController.ResourceProvider.deleteFile(item.UserObject.ToString());
+                            editorController.ResourceProvider.delete(item.UserObject.ToString());
                         }
                     });
                 }));

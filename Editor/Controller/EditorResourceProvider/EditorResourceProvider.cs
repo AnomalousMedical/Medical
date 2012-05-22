@@ -74,20 +74,46 @@ namespace Medical
         public void addFile(string path, string targetDirectory)
         {
             String filename = Path.GetFileName(path);
-            File.Copy(path, Path.Combine(parentPath, targetDirectory, filename), true);
+            String destinationPath = Path.Combine(parentPath, targetDirectory, filename);
+            File.Copy(path, destinationPath, true);
+            CachedResource cachedResource = ResourceCache[destinationPath];
+            if (cachedResource != null)
+            {
+                cachedResource.AllowClose = true;
+                ResourceCache.closeResource(path);
+            }
         }
 
-        public void deleteFile(String filename)
+        public void delete(String filename)
         {
             String path = Path.Combine(parentPath, filename);
             FileAttributes attrs = File.GetAttributes(path);
             if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
             {
                 Directory.Delete(path, true);
+                ResourceCache.forceCloseResourcesInDirectroy(path);
             }
             else
             {
                 File.Delete(path);
+                ResourceCache.forceCloseResourceFile(filename);
+            }
+        }
+
+        public void move(String oldPath, String newPath)
+        {
+            String fullOldPath = Path.Combine(parentPath, oldPath);
+            String fullNewPath = Path.Combine(parentPath, newPath);
+            FileAttributes attrs = File.GetAttributes(fullOldPath);
+            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                Directory.Move(fullOldPath, fullNewPath);
+                ResourceCache.forceCloseResourcesInDirectroy(oldPath);
+            }
+            else
+            {
+                File.Move(fullOldPath, fullNewPath);
+                ResourceCache.forceCloseResourceFile(oldPath);
             }
         }
 

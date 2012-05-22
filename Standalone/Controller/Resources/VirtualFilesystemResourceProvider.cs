@@ -33,7 +33,7 @@ namespace Medical
             throw new NotImplementedException("Cannot add files to the VirtualFSResourceProvider");
         }
 
-        public void deleteFile(String filename)
+        public void delete(String filename)
         {
             throw new NotImplementedException("Cannot delete files in the VirtualFSResourceProvider");
         }
