@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="63 107 194 450" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="63 107 352 450" layer="Back">
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="CanvasSize" value="193 448"/>
             <Property key="CanvasAlign" value="Left Top"/>

@@ -121,7 +121,7 @@ namespace Medical
             rmlViewer = new RmlViewer(editorController);
             guiManager.addManagedDialog(rmlViewer);
 
-            mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", "MVC Context", timelinePropertiesController.UICallback, editorController);
+            mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", "MVC Context", timelinePropertiesController.UICallback, editorController, false);
             guiManager.addManagedDialog(mvcEditor);
 
             projectExplorer = new ProjectExplorer(editorController);

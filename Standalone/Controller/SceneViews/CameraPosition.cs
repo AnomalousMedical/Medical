@@ -24,6 +24,11 @@ namespace Medical
             /// pass this CameraPosition class in argument slot 0.
             /// </summary>
             CaptureCameraPosition,
+            /// <summary>
+            /// This query will preview the current camera position. This will
+            /// pass this CameraPosition class in argument slot 0.
+            /// </summary>
+            PreviewCameraPosition
         }
 
         public CameraPosition()
@@ -85,6 +90,10 @@ namespace Medical
             {
                 editInterface = ReflectedEditInterface.createEditInterface(this, scanner, memberName, null);
                 editInterface.addCommand(new EditInterfaceCommand("Capture Camera Position", captureCameraPosition));
+                editInterface.addCommand(new EditInterfaceCommand("Preview", delegate(EditUICallback callback, EditInterfaceCommand caller)
+                {
+                    callback.runCustomQuery(CustomEditQueries.PreviewCameraPosition, null, this);
+                }));
             }
             return editInterface;
         }
@@ -101,7 +110,7 @@ namespace Medical
             Translation = info.GetVector3("Translation", Translation);
             LookAt = info.GetVector3("LookAt", LookAt);
             IncludePoint = info.GetVector3("IncludePoint", IncludePoint);
-            UseIncludePoint = info.GetBoolean("IncludePoint", false);
+            UseIncludePoint = info.GetBoolean("UseIncludePoint", false);
         }
 
         public void getInfo(SaveInfo info)
@@ -109,7 +118,7 @@ namespace Medical
             info.AddValue("Translation", Translation);
             info.AddValue("LookAt", LookAt);
             info.AddValue("IncludePoint", IncludePoint);
-            info.AddValue("IncludePoint", UseIncludePoint);
+            info.AddValue("UseIncludePoint", UseIncludePoint);
         }
 
         #endregion

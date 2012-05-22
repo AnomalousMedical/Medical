@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using Engine;
 
 namespace Medical
 {
@@ -28,9 +30,18 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Sort the files in the resource provider, do this if file name order matters.
+        /// </summary>
+        /// <param name="fileComparer"></param>
+        public void sortFiles(Comparison<String> fileComparer)
+        {
+            fileList.Sort(fileComparer);
+        }
+
         public Stream openFile(string filename)
         {
-            return assembly.GetManifestResourceStream(baseResourceString + filename);
+            return assembly.GetManifestResourceStream(baseResourceString + convertToNamespacePath(filename));
         }
 
         public Stream openWriteStream(String filename)
@@ -50,18 +61,33 @@ namespace Medical
 
         public string[] listFiles(string pattern)
         {
-            return fileList.ToArray();
+            Regex r = new Regex(FileUtility.wildcardToRegex(pattern));
+            List<String> files = new List<string>(fileList.Count);
+            foreach (String file in fileList)
+            {
+                Match match = r.Match(file);
+                if (match.Success)
+                {
+                    files.Add(convertToDirectoryStyleFileName(file));
+                }
+            }
+            return files.ToArray();
         }
 
         public String[] listFiles(String pattern, String directory, bool recursive)
         {
-            List<String> files = new List<string>();
-            directory = directory.Replace('\\', '/').Replace('/', '.');
+            Regex r = new Regex(FileUtility.wildcardToRegex(pattern));
+            List<String> files = new List<string>(fileList.Count);
+            directory = convertToNamespacePath(directory);
             foreach (String file in fileList)
             {
                 if (file.StartsWith(directory))
                 {
-                    files.Add(file);
+                    Match match = r.Match(file);
+                    if (match.Success)
+                    {
+                        files.Add(convertToDirectoryStyleFileName(file));
+                    }
                 }
             }
             return files.ToArray();
@@ -74,12 +100,12 @@ namespace Medical
 
         public bool exists(string path)
         {
-            return fileList.Contains(path);
+            return fileList.Contains(convertToNamespacePath(path));
         }
 
         public String getFullFilePath(String filename)
         {
-            return baseResourceString + filename;
+            return convertToDirectoryStyleFileName(baseResourceString + filename);
         }
 
         public string BackingLocation
@@ -88,6 +114,23 @@ namespace Medical
             {
                 return baseResourceString;
             }
+        }
+
+        private String convertToDirectoryStyleFileName(String filePath)
+        {
+            int lastDotIndex = filePath.LastIndexOf('.');
+            if(lastDotIndex == -1)
+            {
+                return filePath;
+            }
+            String pathPart = filePath.Substring(0, lastDotIndex);
+            String extension = filePath.Substring(lastDotIndex, filePath.Length - lastDotIndex);
+            return pathPart.Replace('.', '/') + extension;
+        }
+
+        private String convertToNamespacePath(String directory)
+        {
+            return directory.Replace('\\', '/').Replace('/', '.');
         }
     }
 }

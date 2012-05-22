@@ -77,6 +77,32 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\ShowToothContactsTaskMenuItem.cs" />
+    <EmbeddedResource Include="Timeline\Dentition.mvc" />
+    <EmbeddedResource Include="Timeline\DiscClockFace.mvc" />
+    <EmbeddedResource Include="Timeline\Eminence.mvc" />
+    <EmbeddedResource Include="Timeline\LeftDisc\a1O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\b12O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\c11O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\d10O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\e9O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\f9O%27ClockLocked.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\gLateral12O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\hLateral11O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\iLateral10O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\jLateral9O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\LeftDisc\kLateral9O%27ClockLocked.pre" />
+    <EmbeddedResource Include="Timeline\Mandible.mvc" />
+    <EmbeddedResource Include="Timeline\RightDisc\a1O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\b12O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\c11O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\d10O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\e9O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\f9O%27ClockLocked.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\gLateral12O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\hLateral11O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\iLateral10O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\jLateral9O%27Clock.pre" />
+    <EmbeddedResource Include="Timeline\RightDisc\kLateral9O%27ClockLocked.pre" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
@@ -89,22 +115,6 @@
     <EmbeddedResource Include="Resources\Imagesets.xml" />
     <EmbeddedResource Include="Resources\MovementIcons.png" />
     <EmbeddedResource Include="Resources\MovementIcons.xml" />
-    <EmbeddedResource Include="Timeline\Disclaimer_Dentition.tl" />
-    <EmbeddedResource Include="Timeline\Disclaimer_DiscClockFace.tl" />
-    <EmbeddedResource Include="Timeline\Disclaimer_Eminence.tl" />
-    <EmbeddedResource Include="Timeline\Disclaimer_Mandible.tl" />
-    <EmbeddedResource Include="Timeline\LeftCondyleDegeneration.tl" />
-    <EmbeddedResource Include="Timeline\LeftCondyleGrowth.tl" />
-    <EmbeddedResource Include="Timeline\LeftDiscClockFace.tl" />
-    <EmbeddedResource Include="Timeline\LeftFossa.tl" />
-    <EmbeddedResource Include="Timeline\Notes.tl" />
-    <EmbeddedResource Include="Timeline\RemoveBottomTeeth.tl" />
-    <EmbeddedResource Include="Timeline\RemoveTopTeeth.tl" />
-    <EmbeddedResource Include="Timeline\RightCondyleDegeneration.tl" />
-    <EmbeddedResource Include="Timeline\RightCondyleGrowth.tl" />
-    <EmbeddedResource Include="Timeline\RightDiscClockFace.tl" />
-    <EmbeddedResource Include="Timeline\RightFossa.tl" />
-    <EmbeddedResource Include="Timeline\TeethHeightAdaptation.tl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -116,7 +126,30 @@
       <Name>Standalone</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Timeline\LeftDisc\10O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\11O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\12O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\1O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\9O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\9O%27ClockLocked.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\Lateral10O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\Lateral11O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\Lateral12O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\Lateral9O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\LeftDisc\Lateral9O%27ClockLocked.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\10O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\11O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\12O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\1O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\9O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\9O%27ClockLocked.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\Lateral10O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\Lateral11O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\Lateral12O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\Lateral9O%27Clock.png" />
+    <EmbeddedResource Include="Timeline\RightDisc\Lateral9O%27ClockLocked.png" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Sequences\BorderMovements\Posselt Sagittal.seq" />
     <EmbeddedResource Include="Sequences\Excursion\Left Tooth Contact Bruxism.seq" />

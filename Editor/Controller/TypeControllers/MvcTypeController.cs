@@ -6,6 +6,7 @@ using Medical.GUI;
 using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
 using System.IO;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -35,6 +36,7 @@ namespace Medical
         public override void openFile(string file)
         {
             context = (AnomalousMvcContext)loadObject(file);
+            BrowserWindowController.setCurrentEditingMvcContext(context);
             currentFile = file;
             editor.CurrentEditInterface = context.getEditInterface();
             editor.changeCaption(currentFile);

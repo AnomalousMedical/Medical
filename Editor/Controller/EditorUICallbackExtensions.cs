@@ -27,6 +27,7 @@ namespace Medical
             this.standaloneController = standaloneController;
 
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
+            medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.PreviewCameraPosition, previewCameraPosition);
             medicalUICallback.addCustomQuery(ChangeMedicalStateDoAction.CustomEditQueries.CapturePresetState, capturePresetState);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);
@@ -45,6 +46,16 @@ namespace Medical
                 camPos.Translation = activeWindow.Translation;
                 camPos.LookAt = activeWindow.LookAt;
                 camPos.calculateIncludePoint(activeWindow);
+            }
+        }
+
+        private void previewCameraPosition(SendResult<Object> resultCallback, params Object[] args)
+        {
+            CameraPosition camPos = (CameraPosition)args[0];
+            SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
+            if (activeWindow != null)
+            {
+                activeWindow.setPosition(camPos.computeTranslationWithIncludePoint(activeWindow), camPos.LookAt);
             }
         }
 

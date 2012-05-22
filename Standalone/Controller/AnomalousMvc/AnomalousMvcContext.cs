@@ -94,7 +94,14 @@ namespace Medical.Controller.AnomalousMvc
 
         public void queueShowView(String view)
         {
-            core.queueShowView(views[view], this);
+            try
+            {
+                core.queueShowView(views[view], this);
+            }
+            catch (KeyNotFoundException)
+            {
+                Log.Error("Cannot show a view named {0} because it does not exist.", view);
+            }
         }
 
         public void queueCloseView()
