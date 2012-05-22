@@ -68,11 +68,11 @@ namespace Medical.GUI
                 fileTree.SuppressLayout = true;
                 if (isDirectory)
                 {
-                    baseNode.Children.add(new DirectoryNode(path, this));
+                    baseNode.addDirectoryNode(new DirectoryNode(path, this));
                 }
                 else
                 {
-                    baseNode.Children.add(new FileNode(path));
+                    baseNode.addFileNode(new FileNode(path));
                 }
                 fileTree.SuppressLayout = false;
                 fileTree.layout();

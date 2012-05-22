@@ -38,16 +38,14 @@ namespace Medical.GUI
 
         public void addDirectoryNode(DirectoryNode node)
         {
-            //foreach (TreeNode node in Children)
-            //{
-
-            //}
             Children.add(node);
+            Children.sort(FileTreeSorter.Compare);
         }
 
         public void addFileNode(FileNode node)
         {
             Children.add(node);
+            Children.sort(FileTreeSorter.Compare);
         }
 
         protected override void expandedStatusChanged(bool expanding)
