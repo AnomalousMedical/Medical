@@ -6,6 +6,7 @@ using Engine.Editing;
 using Engine.Reflection;
 using Engine.Saving;
 using Engine;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -36,6 +37,46 @@ namespace Medical
         [Editable]
         public Vector3 LookAt { get; set; }
 
+        [Editable]
+        public Vector3 IncludePoint { get; set; }
+
+        [Editable]
+        public bool UseIncludePoint { get; set; }
+
+        public void calculateIncludePoint(SceneViewWindow sceneWindow)
+        {
+            //Make the include point projected out to the lookat location
+            Ray3 camRay = sceneWindow.getCameraToViewportRay(1, 0);
+            IncludePoint = camRay.Origin + camRay.Direction * (LookAt - Translation).length();
+            UseIncludePoint = true;
+        }
+
+        public Vector3 computeTranslationWithIncludePoint(SceneViewWindow sceneWindow)
+        {
+            if (UseIncludePoint && IncludePoint.isNumber())
+            {
+                float aspect = sceneWindow.Camera.getAspectRatio();
+                float fovy = sceneWindow.Camera.getFOVy() * 0.5f;
+
+                Vector3 direction = LookAt - Translation;
+
+                //Figure out direction, must use ogre fixed yaw calculation, first adjust direction to face -z
+                Vector3 zAdjustVec = -direction;
+                zAdjustVec.normalize();
+                Quaternion targetWorldOrientation = Quaternion.shortestArcQuatFixedYaw(ref zAdjustVec);
+
+                Matrix4x4 viewMatrix = Matrix4x4.makeViewMatrix(Translation, targetWorldOrientation);
+                Matrix4x4 projectionMatrix = sceneWindow.Camera.getProjectionMatrix();
+                float offset = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, projectionMatrix, IncludePoint, aspect, fovy);
+
+                direction.normalize();
+                Vector3 newTrans = Translation + offset * direction;
+                return newTrans;
+            }
+
+            return Translation;
+        }
+
         private EditInterface editInterface;
 
         public EditInterface getEditInterface(string memberName, MemberScanner scanner)
@@ -59,12 +100,16 @@ namespace Medical
         {
             Translation = info.GetVector3("Translation", Translation);
             LookAt = info.GetVector3("LookAt", LookAt);
+            IncludePoint = info.GetVector3("IncludePoint", IncludePoint);
+            UseIncludePoint = info.GetBoolean("IncludePoint", false);
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue("Translation", Translation);
             info.AddValue("LookAt", LookAt);
+            info.AddValue("IncludePoint", IncludePoint);
+            info.AddValue("IncludePoint", UseIncludePoint);
         }
 
         #endregion

@@ -57,7 +57,7 @@ namespace Medical
             SceneViewWindow window = showTimelineAction.SceneViewController.ActiveWindow;
             if (window != null)
             {
-                window.setPosition(cameraPosition);
+                window.setPosition(cameraPosition.Translation, cameraPosition.LookAt);
             }
         }
 

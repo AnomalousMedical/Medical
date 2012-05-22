@@ -153,7 +153,7 @@ namespace Medical.Controller.AnomalousMvc
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
             if (window != null)
             {
-                window.setPosition(cameraPosition);
+                window.setPosition(cameraPosition.computeTranslationWithIncludePoint(window), cameraPosition.LookAt);
             }
         }
 

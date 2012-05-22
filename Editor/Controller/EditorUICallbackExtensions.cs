@@ -10,6 +10,7 @@ using MyGUIPlugin;
 using Medical.GUI.AnomalousMvc;
 using Medical.Model;
 using Medical.GUI;
+using Engine;
 
 namespace Medical
 {
@@ -43,6 +44,7 @@ namespace Medical
             {
                 camPos.Translation = activeWindow.Translation;
                 camPos.LookAt = activeWindow.LookAt;
+                camPos.calculateIncludePoint(activeWindow);
             }
         }
 
