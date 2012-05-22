@@ -341,18 +341,6 @@ namespace Medical
             return new String[0];
         }
 
-        /// <summary>
-        /// Import a file into the current ResourceLocation.
-        /// </summary>
-        /// <param name="path"></param>
-        public void importFile(String path)
-        {
-            if (resourceProvider != null)
-            {
-                resourceProvider.addFile(path);
-            }
-        }
-
         public bool resourceExists(String filename)
         {
             if (resourceProvider != null)

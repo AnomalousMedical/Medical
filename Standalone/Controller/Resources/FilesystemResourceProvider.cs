@@ -31,10 +31,10 @@ namespace Medical
             return new FileStream(Path.Combine(parentPath, filename), FileMode.Create, FileAccess.Write);
         }
 
-        public void addFile(string path)
+        public void addFile(string path, string targetDirectory)
         {
             String filename = Path.GetFileName(path);
-            File.Copy(path, Path.Combine(parentPath, filename), true);
+            File.Copy(path, Path.Combine(parentPath, targetDirectory, filename), true);
         }
 
         public void deleteFile(String filename)

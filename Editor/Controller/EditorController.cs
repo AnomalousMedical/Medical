@@ -140,6 +140,23 @@ namespace Medical
             resourceProvider.ResourceCache.remove(filename);
         }
 
+        public void importFiles(LinkedList<String> files, String targetPath)
+        {
+            Queue<String> conflictedFiles = new Queue<string>();
+            foreach (String file in files)
+            {
+                if (resourceProvider.exists(Path.Combine(targetPath, Path.GetFileName(file))))
+                {
+                    conflictedFiles.Enqueue(file);
+                }
+                else
+                {
+                    resourceProvider.addFile(file, targetPath);
+                }
+            }
+            importConflictedFiles(conflictedFiles, targetPath);
+        }
+
         public EditorResourceProvider ResourceProvider
         {
             get
@@ -172,6 +189,22 @@ namespace Medical
                         ExtensionActionsChanged.Invoke(this);
                     }
                 }
+            }
+        }
+
+        private void importConflictedFiles(Queue<String> conflictedFiles, String targetPath)
+        {
+            if (conflictedFiles.Count > 0)
+            {
+                String file = conflictedFiles.Dequeue();
+                MessageBox.show(String.Format("A file named {0} already exists in {1}.\nWould you like to overwrite it?", file, targetPath), "Overwrite", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        resourceProvider.addFile(file, targetPath);
+                    }
+                    importConflictedFiles(conflictedFiles, targetPath);
+                });
             }
         }
 

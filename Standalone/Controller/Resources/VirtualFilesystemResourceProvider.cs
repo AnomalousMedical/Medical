@@ -28,7 +28,7 @@ namespace Medical
             throw new NotImplementedException("stream writing not supported by this resource provider.");
         }
 
-        public void addFile(string path)
+        public void addFile(string path, string targetDirectory)
         {
             throw new NotImplementedException("Cannot add files to the VirtualFSResourceProvider");
         }

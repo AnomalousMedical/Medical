@@ -12,7 +12,7 @@ namespace Medical
 
         Stream openWriteStream(String filename);
 
-        void addFile(String path);
+        void addFile(String path, string targetDirectory);
 
         void deleteFile(String filename);
 

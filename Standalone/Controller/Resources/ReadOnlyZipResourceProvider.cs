@@ -38,7 +38,7 @@ namespace Medical
             throw new NotImplementedException("stream writing not supported by this resource provider.");
         }
 
-        public void addFile(String path)
+        public void addFile(String path, string targetDirectory)
         {
             throw new NotImplementedException("addFile not supported by this resource provider.");
         }

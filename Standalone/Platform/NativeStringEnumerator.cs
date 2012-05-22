@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    public class NativeStringEnumerator : IEnumerator<String>
+    public class NativeStringEnumerator : IEnumerator<String>, IEnumerable<String>
     {
         private IntPtr nativeEnum;
 
@@ -81,5 +81,15 @@ namespace Medical
         private static extern void NativeStringEnumerator_reset(IntPtr enumerator);
 
         #endregion
+
+        IEnumerator<string> IEnumerable<string>.GetEnumerator()
+        {
+            return this;
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this;
+        }
     }
 }

@@ -250,6 +250,17 @@ namespace Medical.GUI
                 {
                     typeController.addCreationMethod(contextMenu, path, isDirectory, isTopLevel);
                 }
+
+                contextMenu.add(new ContextMenuItem("Import Files", path, delegate(ContextMenuItem item)
+                {
+                    using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Choose files to import.", "", "", "", true))
+                    {
+                        if (fileDialog.showModal() == NativeDialogResult.OK)
+                        {
+                            editorController.importFiles(new LinkedList<string>(fileDialog.Paths), item.UserObject.ToString());
+                        }
+                    }
+                }));
             }
             if (!isTopLevel)
             {
