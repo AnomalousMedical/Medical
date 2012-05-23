@@ -23,6 +23,11 @@ namespace Medical.GUI.AnomalousMvc
                 {
                     ToothButton toothButton = new ToothButton(toothGUIButton);
                     toothButtons.Add(toothButton);
+                    Tooth tooth = TeethController.getTooth(toothButton.ToothName);
+                    if (tooth != null)
+                    {
+                        toothButton.Extracted = tooth.Extracted;
+                    }
                     toothButton.ExtractedStatusChanged += new EventHandler(toothButton_ExtractedStatusChanged);
                 }
             }
