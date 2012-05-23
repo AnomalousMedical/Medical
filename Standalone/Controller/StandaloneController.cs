@@ -61,7 +61,6 @@ namespace Medical
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
         private AbstractTimelineGUIManager abstractTimelineGUIManager;
-        private TimelineWizardGUIManager timelineWizardManager;
 
         //Platform
         private MainWindow mainWindow;
@@ -96,10 +95,6 @@ namespace Medical
         public void Dispose()
         {
             downloadController.Dispose();
-            if (timelineWizardManager != null)
-            {
-                timelineWizardManager.Dispose();
-            }
             DocumentController.saveRecentDocuments();
             if (touchController != null)
             {
@@ -261,7 +256,7 @@ namespace Medical
         public void initializePlugins()
         {
             //Wizards
-            timelineWizardManager = new TimelineWizardGUIManager(this);
+            ResourceManager.Instance.load("Medical.Resources.WizardImagesets.xml");
 
             Taskbar taskbar = GUIManager.Taskbar;
             TaskMenu taskMenu = GUIManager.TaskMenu;
