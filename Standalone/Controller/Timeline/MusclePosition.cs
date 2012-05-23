@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine;
+using Engine.Editing;
 
 namespace Medical
 {
-    public class MusclePosition : Saveable
+    public partial class MusclePosition : Saveable
     {
         private float leftCPPosition;
         private float rightCPPosition;
@@ -55,6 +56,58 @@ namespace Medical
             rightCP.setLocation(rightCPPosition + delta * blendFactor);
         }
 
+        [Editable]
+        public float LeftCPPosition
+        {
+            get
+            {
+                return leftCPPosition;
+            }
+            set
+            {
+                leftCPPosition = value;
+            }
+        }
+
+        [Editable]
+        public float RightCPPosition
+        {
+            get
+            {
+                return rightCPPosition;
+            }
+            set
+            {
+                rightCPPosition = value;
+            }
+        }
+
+        [Editable]
+        public Vector3 MovingTargetPosition
+        {
+            get
+            {
+                return movingTargetPosition;
+            }
+            set
+            {
+                movingTargetPosition = value;
+            }
+        }
+
+        [Editable]
+        public float MuscleForce
+        {
+            get
+            {
+                return muscleForce;
+            }
+            set
+            {
+                muscleForce = value;
+            }
+        }
+
         #region Saveable Members
 
         private const String LEFT_CP_POSITION = "leftCPPosition";
@@ -79,5 +132,27 @@ namespace Medical
         }
 
         #endregion
+    }
+
+    partial class MusclePosition
+    {
+        private EditInterface editInterface = null;
+
+        public EditInterface getEditInterface(String name = "Muscle Position")
+        {
+            if (editInterface == null)
+            {
+                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, name, null);
+                editInterface.addCommand(new EditInterfaceCommand("Capture", delegate(EditUICallback callback, EditInterfaceCommand caller)
+                {
+                    captureState();
+                }));
+                editInterface.addCommand(new EditInterfaceCommand("Preview", delegate(EditUICallback callback, EditInterfaceCommand caller)
+                {
+                    preview();
+                }));
+            }
+            return editInterface;
+        }
     }
 }

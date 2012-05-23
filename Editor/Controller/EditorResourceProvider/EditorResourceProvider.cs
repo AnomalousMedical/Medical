@@ -180,8 +180,12 @@ namespace Medical
         {
             if (FileRenamed != null)
             {
-                FileAttributes attr = File.GetAttributes(e.FullPath);
-                FileRenamed.Invoke(e.Name, e.OldName, (attr & FileAttributes.Directory) == FileAttributes.Directory);
+                try
+                {
+                    FileAttributes attr = File.GetAttributes(e.FullPath);
+                    FileRenamed.Invoke(e.Name, e.OldName, (attr & FileAttributes.Directory) == FileAttributes.Directory);
+                }
+                catch (Exception) { }
             }
         }
 
@@ -189,8 +193,12 @@ namespace Medical
         {
             if (FileChanged != null)
             {
-                FileAttributes attr = File.GetAttributes(e.FullPath);
-                FileChanged.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
+                try
+                {
+                    FileAttributes attr = File.GetAttributes(e.FullPath);
+                    FileChanged.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
+                }
+                catch (Exception) { }
             }
         }
 
@@ -198,7 +206,11 @@ namespace Medical
         {
             if (FileDeleted != null)
             {
-                FileDeleted.Invoke(e.Name);
+                try
+                {
+                    FileDeleted.Invoke(e.Name);
+                }
+                catch (Exception) { }
             }
         }
 
@@ -206,8 +218,12 @@ namespace Medical
         {
             if (FileCreated != null)
             {
-                FileAttributes attr = File.GetAttributes(e.FullPath);
-                FileCreated.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
+                try
+                {
+                    FileAttributes attr = File.GetAttributes(e.FullPath);
+                    FileCreated.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
+                }
+                catch (Exception) { }
             }
         }
     }

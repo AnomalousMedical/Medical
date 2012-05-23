@@ -51,8 +51,15 @@ namespace Medical
             else
             {
                 Timeline timeline = TimelineController.openTimeline(TargetTimeline);
-                timeline.AutoFireMultiTimelineStopped = Timeline.AutoFireMultiTimelineStopped;
-                TimelineController.queueTimeline(timeline);
+                if (timeline != null)
+                {
+                    timeline.AutoFireMultiTimelineStopped = Timeline.AutoFireMultiTimelineStopped;
+                    TimelineController.queueTimeline(timeline);
+                }
+                else
+                {
+                    Log.Error("Cannot load timeline {0}. It cannot be found.", TargetTimeline);
+                }
             }
         }
 

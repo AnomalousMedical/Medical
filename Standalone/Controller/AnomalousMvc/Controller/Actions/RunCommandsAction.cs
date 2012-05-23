@@ -126,6 +126,11 @@ namespace Medical.Controller.AnomalousMvc
                 addCommand(new RunActionCommand());
             }));
 
+            editInterface.addCommand(new EditInterfaceCommand("Add Set Muscle Position", delegate(EditUICallback callback, EditInterfaceCommand command)
+            {
+                addCommand(new SetMusclePositionCommand());
+            }));
+
             editInterface.addCommand(new EditInterfaceCommand("Add Shutdown", delegate(EditUICallback callback, EditInterfaceCommand command)
             {
                 addCommand(new ShutdownCommand());
