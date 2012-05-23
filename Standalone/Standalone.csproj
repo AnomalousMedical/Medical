@@ -399,9 +399,6 @@
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUIEditMemberScanner.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUIFactory.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUIFactoryPrototype.cs" />
-    <Compile Include="Controller\Timeline\TimelineGUI\TimelineWizard\TimelineWizard.cs" />
-    <Compile Include="Controller\Timeline\TimelineGUI\TimelineWizard\TimelineWizardPanel.cs" />
-    <Compile Include="Controller\Timeline\TimelineGUI\TimelineWizard\TimelineWizardPanelData.cs" />
     <Compile Include="Controller\Resources\ResourceProvider.cs" />
     <Compile Include="Controller\Resources\ReadOnlyZipResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineStaticInfo.cs" />
@@ -629,7 +626,6 @@
     <None Include="Resources\AnomalousMedical.png" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\DataDrivenTimelineGUI\DataDrivenTimelineGUI.layout" />
     <EmbeddedResource Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.layout" />
-    <EmbeddedResource Include="Controller\Timeline\TimelineGUI\TimelineWizard\WizardPanelButtons.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.layout">
       <SubType>Designer</SubType>
