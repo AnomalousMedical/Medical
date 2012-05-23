@@ -127,6 +127,8 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinitionBase.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\CloseButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />

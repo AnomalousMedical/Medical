@@ -14,6 +14,8 @@ namespace Medical.GUI.AnomalousMvc
         private const int BUTTON_PADDING = 3;
 
         private List<Button> buttons = new List<Button>();
+        private List<Button> variableSizeButtons = new List<Button>();
+        private int fixedSizeArea = 0;
 
         public ButtonDecorator(ViewHostComponent child, ButtonCollection buttonDefinitions)
             :base("Medical.GUI.AnomalousMvc.Decorators.ButtonDecorator.layout")
@@ -29,14 +31,21 @@ namespace Medical.GUI.AnomalousMvc
             int buttonWidth = widget.Width / buttonDefinitions.Count;
             int currentX = BUTTON_PADDING;
 
-            foreach (ButtonDefinition buttonDef in buttonDefinitions)
+            foreach (ButtonDefinitionBase buttonDef in buttonDefinitions)
             {
-                Button button = (Button)widget.createWidgetT("Button", "Button", currentX, 4, buttonWidth - BUTTON_PADDING, 28, Align.Default, "");
-                button.Caption = buttonDef.Text;
+                Button button = buttonDef.createButton(widget, currentX, 4, buttonWidth - BUTTON_PADDING, 28);
                 button.UserObject = buttonDef.Action;
                 button.MouseButtonClick +=new MyGUIEvent(button_MouseButtonClick);
-                currentX += buttonWidth;
+                currentX += button.Width + BUTTON_PADDING;
                 buttons.Add(button);
+                if (buttonDef.FixedSize)
+                {
+                    fixedSizeArea += button.Width + BUTTON_PADDING;
+                }
+                else
+                {
+                    variableSizeButtons.Add(button);
+                }
             }
         }
 
@@ -48,13 +57,21 @@ namespace Medical.GUI.AnomalousMvc
 
         public void topLevelResized()
         {
-            int buttonWidth = widget.Width / buttons.Count;
+            int variableButtonCount = variableSizeButtons.Count;
+            if (variableButtonCount > 0)
+            {
+                int buttonWidth = (widget.Width - fixedSizeArea) / variableSizeButtons.Count;
+                foreach (Button button in variableSizeButtons)
+                {
+                    button.setSize(buttonWidth - BUTTON_PADDING, button.Height);
+                }
+            }
             int currentX = BUTTON_PADDING;
 
             foreach (Button button in buttons)
             {
-                button.setCoord(currentX, button.Top, buttonWidth - BUTTON_PADDING, button.Height);
-                currentX += buttonWidth;
+                button.setPosition(currentX, button.Top);
+                currentX += button.Width + BUTTON_PADDING;
             }
             child.topLevelResized();
         }
