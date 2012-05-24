@@ -14,8 +14,8 @@ namespace Medical.GUI
 
         private Tree browserTree;
 
-        public BrowserWindow()
-            :base("Medical.GUI.Editor.BrowserWindow.layout")
+        public BrowserWindow(String name)
+            :base("Medical.GUI.Editor.BrowserWindow.layout", "Medical.GUI.BrowserWindow." + name)
         {
             browserTree = new Tree((ScrollView)window.findWidget("ScrollView"));
             browserTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(browserTree_NodeMouseDoubleClick);

@@ -55,7 +55,7 @@ namespace Developer
             GUIManager guiManager = standaloneController.GUIManager;
 
             //UI Helpers
-            browserWindow = new BrowserWindow();
+            browserWindow = new BrowserWindow("Developer");
             guiManager.addManagedDialog(browserWindow);
 
             gridProperties = new GridPropertiesDialog(standaloneController.MeasurementGrid);

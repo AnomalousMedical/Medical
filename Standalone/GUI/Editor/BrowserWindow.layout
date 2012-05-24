@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="131 48 215 310" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="306 173 567 437" layer="Overlapped">
         <Property key="Caption" value="Browse"/>
-        <Widget type="ScrollView" skin="ScrollView" position="0 2 202 248" align="Stretch" name="ScrollView">
-            <Property key="CanvasSize" value="202 247"/>
+        <Widget type="ScrollView" skin="ScrollView" position="0 2 554 375" align="Stretch" name="ScrollView">
+            <Property key="CanvasSize" value="546 367"/>
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="5 254 59 22" align="Left Bottom" name="Select">
+        <Widget type="Button" skin="Button" position="5 381 59 22" align="Left Bottom" name="Select">
             <Property key="Caption" value="Select"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="66 254 59 22" align="Left Bottom" name="Cancel">
+        <Widget type="Button" skin="Button" position="66 381 59 22" align="Left Bottom" name="Cancel">
             <Property key="Caption" value="Cancel"/>
         </Widget>
     </Widget>

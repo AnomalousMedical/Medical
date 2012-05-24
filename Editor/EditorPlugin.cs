@@ -86,7 +86,7 @@ namespace Medical
             guiManager.giveGUIsToTimelineController(editorTimelineController);
 
             //UI Helpers
-            browserWindow = new BrowserWindow();
+            browserWindow = new BrowserWindow("Editor");
             guiManager.addManagedDialog(browserWindow);
             medicalUICallback = new MedicalUICallback(browserWindow);
 
