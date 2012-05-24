@@ -30,7 +30,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return "Set Muscle Position";
+                return "Change Muscle Position";
             }
         }
 

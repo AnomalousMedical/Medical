@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Attributes;
 using Engine.Editing;
 using Engine.Saving;
+using System.Reflection;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -57,83 +58,26 @@ namespace Medical.Controller.AnomalousMvc
         [DoNotSave]
         private EditInterfaceManager<ActionCommand> editInterfaceManager = null;
 
+        public enum CustomQueries
+        {
+            ShowCommandBrowser,
+        }
+
         protected override EditInterface createEditInterface()
         {
             EditInterface editInterface = new EditInterface(Name, null);
 
-            editInterface.addCommand(new EditInterfaceCommand("Add Move Camera", addMoveCamera));
-            editInterface.addCommand(new EditInterfaceCommand("Add Change Layers", addChangeLayers));
-            editInterface.addCommand(new EditInterfaceCommand("Add Change Medical State", addChangeMedicalState));
-            editInterface.addCommand(new EditInterfaceCommand("Add Play Timeline", addPlayTimeline));
-            editInterface.addCommand(new EditInterfaceCommand("Add Stop Timeline", addStopTimeline));
-            editInterface.addCommand(new EditInterfaceCommand("Add Show View", addShowGUI));
-            editInterface.addCommand(new EditInterfaceCommand("Add Close View", addCloseGUI));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Close All Views", delegate(EditUICallback callback, EditInterfaceCommand command)
+            editInterface.addCommand(new EditInterfaceCommand("Add Command", delegate(EditUICallback callback, EditInterfaceCommand command)
             {
-                addCommand(new CloseAllViewsCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Hide Main Interface", addHideMainInterface));
-            editInterface.addCommand(new EditInterfaceCommand("Add Show Main Interface", addShowMainInterface));
-            editInterface.addCommand(new EditInterfaceCommand("Add Save Layers", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new SaveLayersCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Restore Layers", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new RestoreLayersCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Save Camera Position", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new SaveCameraPositionCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Restore Camera Position", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new RestoreCameraPositionCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Save Medical State", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new SaveMedicalStateCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Restore Medical State", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new RestoreMedicalStateCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Create Medical State", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new CreateMedicalStateCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Navigate Previous", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new NavigatePreviousCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Navigate Next", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new NavigateNextCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Run Action", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new RunActionCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Set Muscle Position", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new SetMusclePositionCommand());
-            }));
-
-            editInterface.addCommand(new EditInterfaceCommand("Add Shutdown", delegate(EditUICallback callback, EditInterfaceCommand command)
-            {
-                addCommand(new ShutdownCommand());
+                callback.runCustomQuery(CustomQueries.ShowCommandBrowser, delegate(Object result, ref string errorMessage)
+                {
+                    Type resultType = result as Type;
+                    if (resultType != null)
+                    {
+                        addCommand((ActionCommand)Activator.CreateInstance(resultType));
+                    }
+                    return true;
+                });
             }));
 
             editInterfaceManager = new EditInterfaceManager<ActionCommand>(editInterface);
@@ -145,53 +89,6 @@ namespace Medical.Controller.AnomalousMvc
             }
 
             return editInterface;
-        }
-
-        private void addMoveCamera(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new MoveCameraCommand());
-        }
-
-        private void addChangeLayers(EditUICallback callback, EditInterfaceCommand command)
-        {
-            ChangeLayersCommand changeLayers = new ChangeLayersCommand();
-            changeLayers.Layers.captureState();
-            addCommand(changeLayers);
-        }
-
-        private void addChangeMedicalState(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new ChangeMedicalStateCommand());
-        }
-
-        private void addPlayTimeline(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new PlayTimelineCommand());
-        }
-
-        private void addStopTimeline(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new StopTimelineCommand());
-        }
-
-        private void addCloseGUI(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new CloseViewCommand());
-        }
-
-        private void addShowGUI(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new ShowViewCommand());
-        }
-        
-        private void addHideMainInterface(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new HideMainInterfaceCommand());
-        }
-
-        private void addShowMainInterface(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addCommand(new ShowMainInterfaceCommand());
         }
 
         private void removeCommand(EditUICallback callback, EditInterfaceCommand caller)
@@ -213,6 +110,71 @@ namespace Medical.Controller.AnomalousMvc
             {
                 editInterfaceManager.removeSubInterface(command);
             }
+        }
+
+        public static Browser CreateCommandBrowser()
+        {
+            Browser browser = new Browser("Commands");
+            BrowserNode rootNode = browser.getTopNode();
+            //Camera
+            BrowserNode cameraCommands = new BrowserNode("Camera", null);
+            cameraCommands.addChild(new BrowserNode("Move Camera", typeof(MoveCameraCommand)));
+            cameraCommands.addChild(new BrowserNode("Save Camera Position", typeof(SaveCameraPositionCommand)));
+            cameraCommands.addChild(new BrowserNode("Restore Camera Position", typeof(RestoreCameraPositionCommand)));
+            rootNode.addChild(cameraCommands);
+
+            //Layers
+            BrowserNode layerCommands = new BrowserNode("Layers", null);
+            layerCommands.addChild(new BrowserNode("Change Layers", typeof(ChangeLayersCommand)));
+            layerCommands.addChild(new BrowserNode("Save Layers", typeof(SaveLayersCommand)));
+            layerCommands.addChild(new BrowserNode("Restore Layers", typeof(RestoreLayersCommand)));
+            rootNode.addChild(layerCommands);
+
+            //Medical State
+            BrowserNode medicalStateCommands = new BrowserNode("Medical State", null);
+            medicalStateCommands.addChild(new BrowserNode("Change Medical State", typeof(ChangeMedicalStateCommand)));
+            medicalStateCommands.addChild(new BrowserNode("Save Medical State", typeof(SaveMedicalStateCommand)));
+            medicalStateCommands.addChild(new BrowserNode("Restore Medical State", typeof(RestoreMedicalStateCommand)));
+            medicalStateCommands.addChild(new BrowserNode("Create Medical State", typeof(CreateMedicalStateCommand)));
+            rootNode.addChild(medicalStateCommands);
+
+            //Timeline
+            BrowserNode timelineCommands = new BrowserNode("Timeline", null);
+            timelineCommands.addChild(new BrowserNode("Play Timeline", typeof(PlayTimelineCommand)));
+            timelineCommands.addChild(new BrowserNode("Stop Timeline", typeof(StopTimelineCommand)));
+            rootNode.addChild(timelineCommands);
+
+            //View
+            BrowserNode viewCommands = new BrowserNode("Views", null);
+            viewCommands.addChild(new BrowserNode("Show View", typeof(ShowViewCommand)));
+            viewCommands.addChild(new BrowserNode("Close View", typeof(CloseViewCommand)));
+            viewCommands.addChild(new BrowserNode("Close All Views", typeof(CloseAllViewsCommand)));
+            rootNode.addChild(viewCommands);
+
+            //Main Interface
+            BrowserNode mainInterfaceCommands = new BrowserNode("Main Interface", null);
+            mainInterfaceCommands.addChild(new BrowserNode("Hide Main Interface", typeof(HideMainInterfaceCommand)));
+            mainInterfaceCommands.addChild(new BrowserNode("Show Main Interface", typeof(ShowMainInterfaceCommand)));
+            rootNode.addChild(mainInterfaceCommands);
+
+            //Navigation
+            BrowserNode navigationCommands = new BrowserNode("Navigation", null);
+            navigationCommands.addChild(new BrowserNode("Navigate Previous", typeof(NavigatePreviousCommand)));
+            navigationCommands.addChild(new BrowserNode("Navigate Next", typeof(NavigateNextCommand)));
+            rootNode.addChild(navigationCommands);
+
+            //Mvc Actions
+            BrowserNode mvcActions = new BrowserNode("Mvc Actions", null);
+            mvcActions.addChild(new BrowserNode("Run Action", typeof(RunActionCommand)));
+            mvcActions.addChild(new BrowserNode("Shutdown", typeof(ShutdownCommand)));
+            rootNode.addChild(mvcActions);
+
+            //Muscle Position
+            BrowserNode musclePosition = new BrowserNode("Muscle Position", null);
+            musclePosition.addChild(new BrowserNode("Change Muscle Position", typeof(SetMusclePositionCommand)));
+            rootNode.addChild(musclePosition);
+
+            return browser;
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Medical
             medicalUICallback.addCustomQuery(AnomalousMvcContext.CustomQueries.Preview, previewMvcContext);
             medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.ShowViewBrowser, showViewBrowser);
             medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.ShowModelBrowser, showModelBrowser);
+            medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, showCommandBrowser);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -125,6 +126,11 @@ namespace Medical
             browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
 
             editorController.showBrowser(browser, resultCallback);
+        }
+
+        private void showCommandBrowser(SendResult<Object> resultCallback, params Object[] args)
+        {
+            editorController.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
         }
     }
 }
