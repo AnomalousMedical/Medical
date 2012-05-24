@@ -9,6 +9,7 @@ using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
 using Medical.GUI.AnomalousMvc;
 using Medical.Model;
+using Medical.Editor;
 
 namespace Medical.GUI
 {
@@ -36,6 +37,7 @@ namespace Medical.GUI
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.ChangeGUIType, changeGUIType);
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.GetGUIData, getGUIData);
             medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.OpenQuestionEditor, openQuestionEditor);
+            medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.ConvertToMvc, convertToMvc);
         }
 
         private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
@@ -48,6 +50,162 @@ namespace Medical.GUI
                 camPos.LookAt = activeWindow.LookAt;
             }
         }
+
+        private void convertToMvc(SendResult<Object> resultCallback, params Object[] args)
+        {
+            //showQuestionEditorCallback = resultCallback;
+            //questionEditor.clear();
+            StringBuilder rml = new StringBuilder();
+            rml.Append(rmlHead);
+            AnomalousMvcContext context = BrowserWindowController.getCurrentEditingMvcContext();
+            ResourceProvider resourceProvider = BrowserWindowController.getResourceProvider();
+            ShowPromptAction showPromptAction = (ShowPromptAction)args[0];
+
+            String controllerName = Path.GetFileNameWithoutExtension(showPromptAction.Timeline.LEGACY_SourceFile);
+            String viewName = Path.GetFileNameWithoutExtension(showPromptAction.Timeline.LEGACY_SourceFile);
+            
+            String exampleControllerName = "Examples";
+            MvcController exampleController;
+            try
+            {
+                exampleController = context.Controllers[exampleControllerName];
+            }
+            catch(Exception)
+            {
+                exampleController = new MvcController(exampleControllerName);
+                context.Controllers.add(exampleController);
+            }
+
+            bool writingExamples = false;
+            foreach (PromptQuestion question in showPromptAction.Questions)
+            {
+                rml.AppendFormat(questionRml, question.Text);
+                foreach (PromptAnswer answer in question.Answers)
+                {
+                    if (writingExamples)
+                    {
+                        if (answer.Text.IndexOf("- Hear Example", 0, StringComparison.InvariantCultureIgnoreCase) != -1)
+                        {
+                            addMvcExample(rml, exampleControllerName, exampleController, answer);
+                        }
+                        else
+                        {
+                            writingExamples = false;
+                            rml.Append(endExample);
+                            addMvcAnswerLink(rml, answer);
+                        }
+                    }
+                    else
+                    {
+                        if (answer.Text.IndexOf("- Hear Example", 0, StringComparison.InvariantCultureIgnoreCase) != -1)
+                        {
+                            writingExamples = true;
+                            rml.Append(startExample);
+                            addMvcExample(rml, exampleControllerName, exampleController, answer);
+                        }
+                        else
+                        {
+                            addMvcAnswerLink(rml, answer);
+                        }
+                    }
+                }
+                //questionEditor.Question = question;
+                break;
+            }
+            rml.Append(rmlTail);
+            using (BinaryWriter saveStream = new BinaryWriter(resourceProvider.openWriteStream(viewName + ".rml")))
+            {
+                saveStream.Write(rml.ToString());
+            }
+
+            RmlView rmlView = new RmlView(viewName);
+            rmlView.RmlFile = viewName + ".rml";
+            context.Views.add(rmlView);
+
+            MvcController controller = new MvcController(controllerName);
+            RunCommandsAction playTimeline = new RunCommandsAction("PlayTimeline");
+            playTimeline.addCommand(new CloseViewCommand());
+            playTimeline.addCommand(new PlayTimelineCommand(showPromptAction.Timeline.LEGACY_SourceFile));
+            controller.Actions.add(playTimeline);
+            RunCommandsAction showView = new RunCommandsAction("Show");
+            showView.addCommand(new ShowViewCommand(viewName));
+            controller.Actions.add(showView);
+            context.Controllers.add(controller);
+
+            showPromptAction.Timeline.addPostAction(new RunMvcAction(String.Format("{0}/{1}", controllerName, "Show")));
+            showPromptAction.Timeline.removePostAction(showPromptAction);
+            //questionEditor.SoundFile = showPromptAction.SoundFile;
+            //questionEditor.Closed += questionEditor_Closed;
+            //questionEditor.open(true);
+        }
+
+        private void addMvcAnswerLink(StringBuilder rml, PromptAnswer answer)
+        {
+            String oldTimeline = Path.GetFileNameWithoutExtension(((PromptLoadTimelineAction)answer.Action).TargetTimeline);
+            String action;
+            if (oldTimeline != "END_ReturnToNormal")
+            {
+                action = String.Format("{0}/{1}", oldTimeline, "PlayTimeline");
+            }
+            else
+            {
+                action = "Common/StopDiagnosis";
+            }
+            rml.AppendFormat(answerRml, action, answer.Text);
+        }
+
+        private void addMvcExample(StringBuilder rml, String exampleControllerName, MvcController exampleController, PromptAnswer answer)
+        {
+            String exampleTimeline = ((PromptLoadTimelineAction)answer.Action).TargetTimeline;
+            String exampleAction = Path.GetFileNameWithoutExtension(exampleTimeline);
+            if (!exampleController.Actions.hasItem(exampleAction))
+            {
+                RunCommandsAction runCommands = new RunCommandsAction(exampleAction);
+                runCommands.addCommand(new CloseViewCommand());
+                runCommands.addCommand(new PlayTimelineCommand(exampleTimeline));
+                exampleController.Actions.add(runCommands);
+            }
+            rml.AppendFormat(exampleElement, String.Format("{0}/{1}", exampleControllerName, exampleAction), answer.Text);
+        }
+
+        private String rmlHead = @"<rml>
+  <head>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
+    <link type=""text/rcss"" href=""QuestionPrompt.rcss""/>
+  </head>
+  <body>
+    <div class=""ScrollArea"">";
+
+        private string questionRml = @"
+        <h1>{0}</h1>
+        <div class=""Separator""></div>
+	    <div class=""AnswerArea"">
+            <ul class=""AnswerList"">";
+
+            private string answerRml = @"
+                <li>
+                    <a onclick='{0}'>{1}</a>
+                </li>";
+
+            private string startExample = @"
+                    <ul class=""ExampleList"">";
+
+            private string exampleElement = @"
+                        <li>
+                            <a onclick='{0}'>{1}</a>
+                        </li>";
+
+            private string endExample = @"
+                    </ul>";
+
+            private String rmlTail = @"
+            </ul>
+        </div>
+    </div>
+  </body>
+</rml>
+";
 
         private void openQuestionEditor(SendResult<Object> resultCallback, params Object[] args)
         {

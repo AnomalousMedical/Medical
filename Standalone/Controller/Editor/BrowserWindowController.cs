@@ -24,9 +24,19 @@ namespace Medical.Editor
             BrowserWindowController.resourceProvider = resourceProvider;
         }
 
+        public static ResourceProvider getResourceProvider()
+        {
+            return resourceProvider;
+        }
+
         public static void setCurrentEditingMvcContext(AnomalousMvcContext context)
         {
             currentEditingContext = context;
+        }
+
+        public static AnomalousMvcContext getCurrentEditingMvcContext()
+        {
+            return currentEditingContext;
         }
 
         public static Browser createFileBrowser(String searchPattern)

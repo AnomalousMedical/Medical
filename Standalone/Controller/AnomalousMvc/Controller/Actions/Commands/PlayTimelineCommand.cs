@@ -17,6 +17,11 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
+        public PlayTimelineCommand(String timeline)
+        {
+            this.Timeline = timeline;
+        }
+
         public override void execute(AnomalousMvcContext context)
         {
             context.queueTimeline(Timeline);

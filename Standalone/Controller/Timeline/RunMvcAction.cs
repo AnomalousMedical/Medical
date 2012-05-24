@@ -8,11 +8,16 @@ using Medical.Editor;
 
 namespace Medical
 {
-    class RunMvcAction : TimelineInstantAction
+    public class RunMvcAction : TimelineInstantAction
     {
         public RunMvcAction()
         {
 
+        }
+
+        public RunMvcAction(String action)
+        {
+            this.Action = action;
         }
 
         public override void doAction()

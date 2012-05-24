@@ -8,11 +8,16 @@ using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ShowViewCommand : ActionCommand
+    public class ShowViewCommand : ActionCommand
     {
         public ShowViewCommand()
         {
             
+        }
+
+        public ShowViewCommand(String view)
+        {
+            this.View = view;
         }
 
         public override void execute(AnomalousMvcContext context)

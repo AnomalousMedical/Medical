@@ -102,12 +102,14 @@ namespace Medical
         public enum CustomEditQueries
         {
             OpenQuestionEditor,
+            ConvertToMvc
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
             editInterface.addCommand(new EditInterfaceCommand("Edit Questions", showQuestionEditor));
+            editInterface.addCommand(new EditInterfaceCommand("Convert to MVC", convertToMvc));
         }
 
         private void showQuestionEditor(EditUICallback callback, EditInterfaceCommand caller)
@@ -127,6 +129,14 @@ namespace Medical
                     message = "Returned class was not a EditQuestionResults, can not read data.";
                     return false;
                 }
+            }, this);
+        }
+
+        private void convertToMvc(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.runCustomQuery(CustomEditQueries.ConvertToMvc, delegate(Object result, ref String message)
+            {
+                return true;
             }, this);
         }
 
