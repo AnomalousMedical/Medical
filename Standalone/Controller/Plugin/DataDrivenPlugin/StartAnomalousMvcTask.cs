@@ -53,6 +53,7 @@ namespace Medical
             :base(info)
         {
             ContextFile = info.GetString("ContextFile");
+            ShowOnTaskbar = false;
         }
 
         public override void getInfo(SaveInfo info)

@@ -85,6 +85,7 @@ namespace Medical
             info.GetString("Category"))
         {
             TaskUniqueName = info.GetString("TaskUniqueName", UniqueName);
+            ShowOnTaskbar = info.GetBoolean("ShowOnTaskbar", ShowOnTaskbar);
         }
 
         public virtual void getInfo(SaveInfo info)
@@ -94,6 +95,7 @@ namespace Medical
             info.AddValue("IconName", IconName);
             info.AddValue("Category", Category);
             info.AddValue("TaskUniqueName", TaskUniqueName);
+            info.AddValue("ShowOnTaskbar", ShowOnTaskbar);
         }
     }
 
