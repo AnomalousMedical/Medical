@@ -172,6 +172,8 @@ namespace Medical.Controller.AnomalousMvc
             //Muscle Position
             BrowserNode musclePosition = new BrowserNode("Muscle Position", null);
             musclePosition.addChild(new BrowserNode("Change Muscle Position", typeof(SetMusclePositionCommand)));
+            musclePosition.addChild(new BrowserNode("Save Muscle Position", typeof(SaveMusclePositionCommand)));
+            musclePosition.addChild(new BrowserNode("Restore Muscle Position", typeof(RestoreMusclePositionCommand)));
             rootNode.addChild(musclePosition);
 
             return browser;
