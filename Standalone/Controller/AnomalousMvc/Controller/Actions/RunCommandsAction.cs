@@ -164,7 +164,7 @@ namespace Medical.Controller.AnomalousMvc
             rootNode.addChild(navigationCommands);
 
             //Mvc Actions
-            BrowserNode mvcActions = new BrowserNode("Mvc Actions", null);
+            BrowserNode mvcActions = new BrowserNode("Mvc", null);
             mvcActions.addChild(new BrowserNode("Run Action", typeof(RunActionCommand)));
             mvcActions.addChild(new BrowserNode("Shutdown", typeof(ShutdownCommand)));
             rootNode.addChild(mvcActions);
