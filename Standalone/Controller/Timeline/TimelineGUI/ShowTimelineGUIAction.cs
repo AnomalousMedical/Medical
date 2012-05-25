@@ -8,6 +8,8 @@ using Engine.Editing;
 using Engine;
 using System.IO;
 using Medical.Controller;
+using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
@@ -129,6 +131,11 @@ namespace Medical
             
         }
 
+        public void convertToMvc(AnomalousMvcContext context, StringBuilder rmlStringBuilder, MvcController controller, RmlView view)
+        {
+            guiData.convertToMvc(context, rmlStringBuilder, controller, view);
+        }
+
         public String GUIName
         {
             get
@@ -165,6 +172,7 @@ namespace Medical
         {
             ChangeGUIType,
             GetGUIData,
+            ConvertToMvc,
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
@@ -176,6 +184,7 @@ namespace Medical
                 editInterface.addSubInterface(guiData.getEditInterface());
             }
             editInterface.addCommand(new EditInterfaceCommand("Change GUI Type", changeGUIType));
+            editInterface.addCommand(new EditInterfaceCommand("Convert To MVC", convertToMvc));
             editInterface.addEditableProperty(new ShowTimelineGUIActionGUINameProperty(this));
         }
 
@@ -187,6 +196,14 @@ namespace Medical
                 callback.runCustomQuery(CustomEditQueries.GetGUIData, setGUIData, guiName);
                 return true;
             });
+        }
+
+        private void convertToMvc(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.runCustomQuery(CustomEditQueries.ConvertToMvc, delegate(Object result, ref String errorMessage)
+            {
+                return true;
+            }, this);
         }
 
         private bool setGUIData(Object guiData, ref String errorMessage)

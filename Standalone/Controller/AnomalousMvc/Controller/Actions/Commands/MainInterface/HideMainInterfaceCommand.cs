@@ -7,7 +7,7 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class HideMainInterfaceCommand : ActionCommand
+    public class HideMainInterfaceCommand : ActionCommand
     {
         public HideMainInterfaceCommand()
         {

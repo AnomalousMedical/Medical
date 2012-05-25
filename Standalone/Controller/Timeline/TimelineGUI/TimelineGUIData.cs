@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Engine.Editing;
 using Engine.Saving;
+using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
@@ -12,5 +14,7 @@ namespace Medical
         EditInterface getEditInterface();
 
         TimelineGUIData createCopy();
+
+        void convertToMvc(AnomalousMvcContext context, StringBuilder rmlStringBuilder, MvcController controller, RmlView view);
     }
 }

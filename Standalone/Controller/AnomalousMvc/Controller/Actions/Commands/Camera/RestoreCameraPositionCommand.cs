@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class RestoreCameraPositionCommand : ActionCommand
+    public class RestoreCameraPositionCommand : ActionCommand
     {
         public RestoreCameraPositionCommand()
         {

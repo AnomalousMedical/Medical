@@ -5,6 +5,8 @@ using System.Text;
 using Engine.Editing;
 using Engine.Saving;
 using MyGUIPlugin;
+using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
@@ -35,6 +37,20 @@ namespace Medical
                 }
             }
             return null;
+        }
+
+        public override void convertToMvc(AnomalousMvcContext context, StringBuilder rmlStringBuilder, MvcController controller, RmlView view)
+        {
+            dataFields.createControls(new MvcContextDataControlFactory(context, rmlStringBuilder, controller));
+
+            if (CancelButtonText.IndexOf("close", 0, StringComparison.InvariantCultureIgnoreCase) != -1)
+            {
+                RunCommandsAction closeView = new RunCommandsAction("Close");
+                closeView.addCommand(new CloseViewCommand());
+                controller.Actions.add(closeView);
+
+                view.Buttons.add(new CloseButtonDefinition("Close", String.Format("{0}/Close", controller.Name)));
+            }
         }
 
         private DataFieldCollection dataFields;

@@ -36,6 +36,7 @@ namespace Medical.GUI
 
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.ChangeGUIType, changeGUIType);
             medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.GetGUIData, getGUIData);
+            medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.ConvertToMvc, convertTimelineGuiToMvc);
             medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.OpenQuestionEditor, openQuestionEditor);
             medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.ConvertToMvc, convertToMvc);
         }
@@ -50,6 +51,81 @@ namespace Medical.GUI
                 camPos.LookAt = activeWindow.LookAt;
             }
         }
+
+        private void convertTimelineGuiToMvc(SendResult<Object> resultCallback, params Object[] args)
+        {
+            StringBuilder rml = new StringBuilder();
+            rml.Append(timelineGuiRmlHead);
+            AnomalousMvcContext context = BrowserWindowController.getCurrentEditingMvcContext();
+            ResourceProvider resourceProvider = BrowserWindowController.getResourceProvider();
+            ShowTimelineGUIAction showGuiAction = (ShowTimelineGUIAction)args[0];
+
+            String controllerName = Path.GetFileNameWithoutExtension(showGuiAction.Timeline.LEGACY_SourceFile);
+            String viewName = Path.GetFileNameWithoutExtension(showGuiAction.Timeline.LEGACY_SourceFile);
+
+            RmlView rmlView = new RmlView(viewName);
+            rmlView.RmlFile = viewName + ".rml";
+            context.Views.add(rmlView);
+
+            MvcController controller = new MvcController(controllerName);
+            //RunCommandsAction playTimeline = new RunCommandsAction("PlayTimeline");
+            //playTimeline.addCommand(new CloseViewCommand());
+            //playTimeline.addCommand(new PlayTimelineCommand(showPromptAction.Timeline.LEGACY_SourceFile));
+            //controller.Actions.add(playTimeline);
+            RunCommandsAction showView = new RunCommandsAction("Show");
+            showView.addCommand(new ShowViewCommand(viewName));
+            controller.Actions.add(showView);
+
+            context.Controllers.add(controller);
+
+            //Build common if needed
+            if(!context.Controllers.hasItem("Common"))
+            {
+                MvcController commonController = new MvcController("Common");
+                RunCommandsAction start = new RunCommandsAction("Start");
+                start.addCommand(new HideMainInterfaceCommand());
+                start.addCommand(new SaveCameraPositionCommand());
+                start.addCommand(new SaveLayersCommand());
+                start.addCommand(new SaveMedicalStateCommand());
+                start.addCommand(new SaveMusclePositionCommand());
+                start.addCommand(new RunActionCommand(String.Format("{0}/Show", controllerName)));
+                commonController.Actions.add(start);
+                RunCommandsAction shutdown = new RunCommandsAction("Shutdown");
+                shutdown.addCommand(new ShowMainInterfaceCommand());
+                shutdown.addCommand(new RestoreMedicalStateCommand());
+                shutdown.addCommand(new RestoreMusclePositionCommand());
+                shutdown.addCommand(new RestoreCameraPositionCommand());
+                shutdown.addCommand(new RestoreLayersCommand());
+                commonController.Actions.add(shutdown);
+                context.Controllers.add(commonController);
+            }
+
+            showGuiAction.convertToMvc(context, rml, controller, rmlView);
+
+            rml.Append(timelineGuiRmlTail);
+            using (StreamWriter saveStream = new StreamWriter(resourceProvider.openWriteStream(viewName + ".rml")))
+            {
+                saveStream.Write(rml.ToString());
+            }
+
+            //showGuiAction.Timeline.removePostAction(showGuiAction);
+        }
+
+        private String timelineGuiRmlHead = @"<rml>
+  <head>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
+  </head>
+  <body>
+    <div class=""ScrollArea"">
+        <ul>";
+
+        private String timelineGuiRmlTail = @"
+        </ul>
+    </div>
+  </body>
+</rml>
+";
 
         private void convertToMvc(SendResult<Object> resultCallback, params Object[] args)
         {
@@ -113,7 +189,7 @@ namespace Medical.GUI
                 break;
             }
             rml.Append(rmlTail);
-            using (BinaryWriter saveStream = new BinaryWriter(resourceProvider.openWriteStream(viewName + ".rml")))
+            using (StreamWriter saveStream = new StreamWriter(resourceProvider.openWriteStream(viewName + ".rml")))
             {
                 saveStream.Write(rml.ToString());
             }

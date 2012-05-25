@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class SaveLayersCommand : ActionCommand
+    public class SaveLayersCommand : ActionCommand
     {
         public SaveLayersCommand()
         {

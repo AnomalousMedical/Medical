@@ -8,11 +8,16 @@ using Medical.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class RunActionCommand : ActionCommand
+    public class RunActionCommand : ActionCommand
     {
         public RunActionCommand()
         {
 
+        }
+
+        public RunActionCommand(String action)
+        {
+            this.Action = action;
         }
 
         public override void execute(AnomalousMvcContext context)

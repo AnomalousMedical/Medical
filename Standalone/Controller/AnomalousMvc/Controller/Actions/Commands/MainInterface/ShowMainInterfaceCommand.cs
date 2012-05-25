@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ShowMainInterfaceCommand : ActionCommand
+    public class ShowMainInterfaceCommand : ActionCommand
     {
         public ShowMainInterfaceCommand()
         {

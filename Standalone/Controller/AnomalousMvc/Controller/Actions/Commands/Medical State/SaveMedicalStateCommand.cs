@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class SaveMedicalStateCommand : ActionCommand
+    public class SaveMedicalStateCommand : ActionCommand
     {
         public SaveMedicalStateCommand()
         {

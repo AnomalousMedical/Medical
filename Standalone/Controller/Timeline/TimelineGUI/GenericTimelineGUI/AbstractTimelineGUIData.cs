@@ -7,6 +7,8 @@ using Engine;
 using Engine.Saving;
 using Engine.Attributes;
 using Engine.Reflection;
+using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
@@ -47,6 +49,8 @@ namespace Medical
             }
             return false;
         }
+
+        public abstract void convertToMvc(AnomalousMvcContext context, StringBuilder rmlStringBuilder, MvcController controller, RmlView view);
 
         public TimelineGUIData createCopy()
         {

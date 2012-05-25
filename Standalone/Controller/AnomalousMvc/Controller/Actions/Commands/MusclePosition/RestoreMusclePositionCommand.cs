@@ -8,7 +8,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class RestoreMusclePositionCommand : ActionCommand
+    public class RestoreMusclePositionCommand : ActionCommand
     {
         public RestoreMusclePositionCommand()
         {
