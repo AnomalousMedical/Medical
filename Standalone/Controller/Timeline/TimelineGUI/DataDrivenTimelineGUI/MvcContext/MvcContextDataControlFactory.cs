@@ -32,27 +32,36 @@ namespace Medical
 
         public void addField(BooleanDataField field)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void addField(MenuItemField field)
         {
-            //rmlStringBuilder.AppendFormat("<a onclick='{0}'>{1}</a>", field.
+            if(field.Timelines.Count() > 1)
+            {
+                throw new Exception("Field timlines > 1, convert manually");
+            }
+            String otherControllerName = Path.GetFileNameWithoutExtension(field.Timelines.Single().Timeline);
+            String rml = @"
+            <li>
+                <a onclick='{0}'>{1}</a>
+            </li>";
+            rmlStringBuilder.AppendFormat(rml, String.Format("{0}/Show", otherControllerName), field.Name);
         }
 
         public void addField(MultipleChoiceField field)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void addField(NotesDataField field)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void addField(NumericDataField field)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void addField(PlayExampleDataField field)
@@ -71,17 +80,43 @@ namespace Medical
 
         public void addField(StaticTextDataField field)
         {
-            
+            String rml;
+            if (field.FontHeight == 30)
+            {
+                rml = @"
+            <h1>{0}</h1>";
+            }
+            else if (String.IsNullOrWhiteSpace(field.Text))
+            {
+                rml = @"
+            <br/>";
+            }
+            else if (field.Text.StartsWith("#707070"))
+            {
+                field.Text = field.Text.Replace("#707070", "");
+                rml = @"
+            <p class=""Citation"">
+                {0}
+            </p>";
+            }
+            else
+            {
+                rml = @"
+            <p>
+                {0}
+            </p>";
+            }
+            rmlStringBuilder.AppendFormat(rml, field.Text);
         }
 
         public void addField(CloseGUIPlayTimelineField field)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void addField(DoActionsDataField field)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

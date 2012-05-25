@@ -47,9 +47,15 @@ namespace Medical
             {
                 RunCommandsAction closeView = new RunCommandsAction("Close");
                 closeView.addCommand(new CloseViewCommand());
+                closeView.addCommand(new StopTimelineCommand());
                 controller.Actions.add(closeView);
 
                 view.Buttons.add(new CloseButtonDefinition("Close", String.Format("{0}/Close", controller.Name)));
+            }
+            else
+            {
+                //Return to the index
+                view.Buttons.add(new ButtonDefinition("Back", "Common/Index"));
             }
         }
 

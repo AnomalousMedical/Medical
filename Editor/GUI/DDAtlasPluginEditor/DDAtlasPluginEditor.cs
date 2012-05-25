@@ -35,7 +35,7 @@ namespace Medical.GUI
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
 
             table = new ResizingTable((ScrollView)window.findWidget("TableScroller"));
-            propTable = new PropertiesTable(table);
+            propTable = new PropertiesTable(table, uiCallback);
 
             objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
 

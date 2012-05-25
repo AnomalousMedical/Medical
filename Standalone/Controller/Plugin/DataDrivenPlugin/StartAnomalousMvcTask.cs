@@ -7,6 +7,7 @@ using Engine.Editing;
 using Medical.Controller.AnomalousMvc;
 using System.IO;
 using Logging;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -38,7 +39,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditableFile("*.mvc")]
         public String ContextFile { get; set; }
 
         public override bool Active

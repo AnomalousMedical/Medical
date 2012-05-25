@@ -74,11 +74,13 @@ namespace Medical.GUI
             //controller.Actions.add(playTimeline);
             RunCommandsAction showView = new RunCommandsAction("Show");
             showView.addCommand(new ShowViewCommand(viewName));
+            //Play the timeline that the index belongs to
+            showView.addCommand(new PlayTimelineCommand(Path.GetFileName(showGuiAction.Timeline.LEGACY_SourceFile)));
             controller.Actions.add(showView);
 
             context.Controllers.add(controller);
 
-            //Build common if needed
+            //Build common if needed, this is considered the index timeline if this is built to help with last couple conversions.
             if(!context.Controllers.hasItem("Common"))
             {
                 MvcController commonController = new MvcController("Common");
@@ -98,6 +100,10 @@ namespace Medical.GUI
                 shutdown.addCommand(new RestoreLayersCommand());
                 commonController.Actions.add(shutdown);
                 context.Controllers.add(commonController);
+                //Cheater way to return to index
+                RunCommandsAction index = new RunCommandsAction("Index");
+                index.addCommand(new RunActionCommand(String.Format("{0}/Show", controllerName)));
+                commonController.Actions.add(index);
             }
 
             showGuiAction.convertToMvc(context, rml, controller, rmlView);
@@ -108,13 +114,14 @@ namespace Medical.GUI
                 saveStream.Write(rml.ToString());
             }
 
-            //showGuiAction.Timeline.removePostAction(showGuiAction);
+            showGuiAction.Timeline.removePreAction(showGuiAction);
         }
 
         private String timelineGuiRmlHead = @"<rml>
   <head>
     <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
     <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
+    <link type=""text/rcss"" href=""App.rcss""/>
   </head>
   <body>
     <div class=""ScrollArea"">
