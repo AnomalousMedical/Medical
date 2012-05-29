@@ -124,11 +124,9 @@ namespace Medical.GUI
     <link type=""text/rcss"" href=""App.rcss""/>
   </head>
   <body>
-    <div class=""ScrollArea"">
-        <ul>";
+    <div class=""ScrollArea"">";
 
         private String timelineGuiRmlTail = @"
-        </ul>
     </div>
   </body>
 </rml>
