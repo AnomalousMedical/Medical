@@ -99,7 +99,6 @@ namespace Medical
             {
                 browser = new Browser("Pre Actions");
                 browser.addNode("", SEPS, new BrowserNode("Change Scene", typeof(OpenNewSceneAction)));
-                browser.addNode("", SEPS, new BrowserNode("Show GUI", typeof(ShowTimelineGUIAction)));
                 browser.addNode("", SEPS, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
                 browser.addNode("", SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
 
@@ -165,8 +164,6 @@ namespace Medical
                 browser = new Browser("Post Actions");
                 browser.addNode("", SEPS, new BrowserNode("Load Another Timeline", typeof(LoadAnotherTimeline)));
                 browser.addNode("", SEPS, new BrowserNode("Repeat Previous", typeof(RepeatPreviousPostActions)));
-                browser.addNode("", SEPS, new BrowserNode("Show Prompt", typeof(ShowPromptAction)));
-                browser.addNode("", SEPS, new BrowserNode("Show GUI", typeof(ShowTimelineGUIAction)));
                 browser.addNode("", SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
 
                 editInterface = ReflectedEditInterface.createEditInterface("Post Actions", null);

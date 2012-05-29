@@ -45,12 +45,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void playTimeline(String timelineName)
         {
-            core.playTimeline(timelineName, true);
-        }
-
-        public void playTimeline(String timelineName, bool allowPlaybackStop)
-        {
-            core.playTimeline(timelineName, allowPlaybackStop);
+            core.playTimeline(timelineName);
         }
 
         public void runAction(string address, ViewHost viewHost = null)

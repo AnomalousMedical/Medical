@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout" version="3.2.0">
-    <Widget type="ScrollView" skin="PanelScrollView" position="6 36 352 258" layer="Back">
-        <Property key="CanvasAlign" value="Left Top"/>
-        <Property key="CanvasSize" value="232 228"/>
-    </Widget>
-</MyGUI>

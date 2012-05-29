@@ -19,7 +19,6 @@ namespace Medical
         private List<TimelineInstantAction> postActions = new List<TimelineInstantAction>();
         private ActionSequencer<TimelineAction> sequencer;
         private int postActionIndex = -1;
-        private bool autoFireMultitimelineStopped = true; //True to fire the multi timeline stopped event if there are no post actions.
 
         private TimelineEditInterface timelineEditInterface;
 
@@ -169,14 +168,7 @@ namespace Medical
             sequencer.stop();
             if (playPostActions)
             {
-                if (postActions.Count == 0)
-                {
-                    if (autoFireMultitimelineStopped)
-                    {
-                        TimelineController._fireMultiTimelineStopEvent();
-                    }
-                }
-                else
+                if (postActions.Count != 0)
                 {
                     for (postActionIndex = 0; postActionIndex < postActions.Count; ++postActionIndex)
                     {
@@ -209,26 +201,6 @@ namespace Medical
             get
             {
                 return sequencer.Finished;
-            }
-        }
-
-        /// <summary>
-        /// If this is true and the timeline stops playing it will fire the
-        /// PlaybackStopped event on the TimelineController if there are no post
-        /// actions. If this is false this event will not be fired. If there are
-        /// post actions the timeline will rely on them to fire this event when
-        /// needed. If this is set to false then the event that set it to false
-        /// should shutdown the timeline somehow.
-        /// </summary>
-        public bool AutoFireMultiTimelineStopped
-        {
-            get
-            {
-                return autoFireMultitimelineStopped;
-            }
-            set
-            {
-                autoFireMultitimelineStopped = value;
             }
         }
 

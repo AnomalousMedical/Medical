@@ -28,7 +28,6 @@ namespace Medical
 
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
             medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.PreviewCameraPosition, previewCameraPosition);
-            medicalUICallback.addCustomQuery(ChangeMedicalStateDoAction.CustomEditQueries.CapturePresetState, capturePresetState);
             medicalUICallback.addCustomQuery(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, capturePresetState);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);

@@ -53,7 +53,6 @@ namespace Medical
                 Timeline timeline = TimelineController.openTimeline(TargetTimeline);
                 if (timeline != null)
                 {
-                    timeline.AutoFireMultiTimelineStopped = Timeline.AutoFireMultiTimelineStopped;
                     TimelineController.queueTimeline(timeline);
                 }
                 else

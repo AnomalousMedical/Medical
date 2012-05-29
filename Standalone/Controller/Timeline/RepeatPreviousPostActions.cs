@@ -25,10 +25,6 @@ namespace Medical
                 }
                 Timeline.removePostAction(this);
             }
-            else
-            {
-                TimelineController._fireMultiTimelineStopEvent();
-            }
         }
 
         public override void dumpToLog()

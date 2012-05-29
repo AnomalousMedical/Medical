@@ -24,7 +24,6 @@ namespace Medical
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
-        public event EventHandler LEGACY_MultiTimelineStoppedEvent;
 
         private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
@@ -35,13 +34,11 @@ namespace Medical
         private bool updating = false;
         private bool playPrePostActions = true;
         private ResourceProvider resourceProvider = null;
-        private bool multiTimelinePlaybackInProgress = false;
 
         public TimelineController(StandaloneController standaloneController)
         {
             this.mainTimer = standaloneController.MedicalController.MainTimer;
             this.standaloneController = standaloneController;
-            GUIFactory = standaloneController.TimelineGUIFactory;
         }
 
         public Timeline ActiveTimeline
@@ -118,10 +115,6 @@ namespace Medical
                 {
                     TimelinePlaybackStarted.Invoke(this, EventArgs.Empty);
                 }
-                if (!multiTimelinePlaybackInProgress)
-                {
-                    multiTimelinePlaybackInProgress = true;
-                }
             }
         }
 
@@ -135,10 +128,6 @@ namespace Medical
             if (updating)
             {
                 activeTimeline.stop(playPostActions);
-                if (!playPostActions)
-                {
-                    _fireMultiTimelineStopEvent();
-                }
                 previousTimeline = activeTimeline;
                 mainTimer.removeFixedUpdateListener(this);
                 activeTimeline.TimelineController = null;
@@ -190,24 +179,6 @@ namespace Medical
         public void setAsTimelineController(Timeline timeline)
         {
             timeline.TimelineController = this;
-        }
-
-        /// <summary>
-        /// This function will fire the PlaybackStopped event. This should be
-        /// called by any post actions that need to shut down the timeline. It
-        /// will not fire if AllowMultiTimelineStopEvents is false;
-        /// </summary>
-        public void _fireMultiTimelineStopEvent()
-        {
-            if (multiTimelinePlaybackInProgress)
-            {
-                previousTimeline = null;
-                multiTimelinePlaybackInProgress = false;
-                if (LEGACY_MultiTimelineStoppedEvent != null)
-                {
-                    LEGACY_MultiTimelineStoppedEvent.Invoke(this, EventArgs.Empty);
-                }
-            }
         }
 
         public void queueTimeline(Timeline timeline)
@@ -407,16 +378,6 @@ namespace Medical
 
         public ITextDisplayFactory TextDisplayFactory { get; set; }
 
-        public TimelineGUIFactory GUIFactory { get; private set; }
-
-        public bool MultiTimelinePlaybackInProgress
-        {
-            get
-            {
-                return multiTimelinePlaybackInProgress;
-            }
-        }
-
         public GUIManager GUIManager
         {
             get
@@ -468,7 +429,5 @@ namespace Medical
         public AnomalousMvcContext MvcContext { get; set; }
 
         public ContinuePromptProvider ContinuePrompt { get; set; }
-
-        public IQuestionProvider QuestionProvider { get; set; }
     }
 }

@@ -83,12 +83,11 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public void playTimeline(String timelineName, bool allowPlaybackStop)
+        public void playTimeline(String timelineName)
         {
             Timeline timeline = timelineController.openTimeline(timelineName);
             if (timeline != null)
             {
-                timeline.AutoFireMultiTimelineStopped = allowPlaybackStop;
                 if (timelineController.Playing)
                 {
                     timelineController.stopAndStartPlayback(timeline, true);

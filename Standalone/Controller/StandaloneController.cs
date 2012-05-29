@@ -60,7 +60,6 @@ namespace Medical
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
-        private AbstractTimelineGUIManager abstractTimelineGUIManager;
 
         //Platform
         private MainWindow mainWindow;
@@ -207,10 +206,7 @@ namespace Medical
             DentalFloss.createPropDefinition(propFactory);
 
             //Timeline
-            TimelineGUIFactory = new TimelineGUIFactory();
             timelineController = new TimelineController(this);
-
-            abstractTimelineGUIManager = new AbstractTimelineGUIManager(medicalController.MainTimer, guiManager);
 
             viewHostFactory = new MyGUIViewHostFactory();
             mvcCore = new AnomalousMvcCore(this, viewHostFactory);
@@ -508,8 +504,6 @@ namespace Medical
                 return anatomyController;
             }
         }
-
-        public TimelineGUIFactory TimelineGUIFactory { get; private set; }
 
         public DocumentController DocumentController { get; private set; }
 

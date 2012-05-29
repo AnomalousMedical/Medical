@@ -40,7 +40,6 @@ namespace Medical.GUI
 
         //Other GUI Elements
         private MyGUIContinuePromptProvider continuePrompt;
-        private MyGUIQuestionProvider questionProvider;
         private MyGUIImageDisplayFactory imageDisplayFactory;
         private MyGUITextDisplayFactory textDisplayFactory;
         private List<FullscreenGUIPopup> fullscreenPopups = new List<FullscreenGUIPopup>();
@@ -82,7 +81,6 @@ namespace Medical.GUI
 
             //Other
             imageRendererProgress.Dispose();
-            questionProvider.Dispose();
             continuePrompt.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
@@ -153,7 +151,6 @@ namespace Medical.GUI
             taskbar.layout();
 
             continuePrompt = new MyGUIContinuePromptProvider();
-            questionProvider = new MyGUIQuestionProvider(this);
 
             imageDisplayFactory = new MyGUIImageDisplayFactory(standaloneController.SceneViewController);
             textDisplayFactory = new MyGUITextDisplayFactory(standaloneController.SceneViewController);
@@ -162,7 +159,6 @@ namespace Medical.GUI
         public void giveGUIsToTimelineController(TimelineController timelineController)
         {
             timelineController.ContinuePrompt = continuePrompt;
-            timelineController.QuestionProvider = questionProvider;
             timelineController.ImageDisplayFactory = imageDisplayFactory;
             timelineController.TextDisplayFactory = textDisplayFactory;
         }
