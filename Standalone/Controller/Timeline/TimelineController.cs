@@ -72,7 +72,6 @@ namespace Medical
                 using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(filename)))
                 {
                     Timeline timeline = xmlSaver.restoreObject(file) as Timeline;
-                    timeline.LEGACY_SourceFile = filename;
                     return timeline;
                 }
             }
@@ -285,58 +284,9 @@ namespace Medical
             return textDisplay;
         }
 
-        public void LEGACY_saveTimeline(Timeline timeline, String filename)
-        {
-            if (resourceProvider != null)
-            {
-                using (XmlTextWriter writer = new XmlTextWriter(resourceProvider.openWriteStream(filename), Encoding.Default))
-                {
-                    writer.Formatting = Formatting.Indented;
-                    xmlSaver.saveObject(timeline, writer);
-                    writer.Flush();
-                }
-                timeline.LEGACY_SourceFile = filename;
-            }
-        }
-
-        /// <summary>
-        /// List the files in the current resource location that match pattern.
-        /// </summary>
-        /// <param name="pattern"></param>
-        public String[] LEGACY_listResourceFiles(String pattern)
-        {
-            if (resourceProvider != null)
-            {
-                return resourceProvider.listFiles(pattern);
-            }
-            return new String[0];
-        }
-
-        public bool resourceExists(String filename)
-        {
-            if (resourceProvider != null)
-            {
-                return resourceProvider.exists(filename);
-            }
-            return false;
-        }
-
-        public void deleteFile(string filename)
-        {
-            if (resourceProvider != null)
-            {
-                resourceProvider.delete(filename);
-            }
-        }
-
         public void setResourceProvider(ResourceProvider resourceProvider)
         {
             this.resourceProvider = resourceProvider;
-        }
-
-        public Stream openFile(String filename)
-        {
-            return resourceProvider.openFile(filename);
         }
 
         #region UpdateListener Members

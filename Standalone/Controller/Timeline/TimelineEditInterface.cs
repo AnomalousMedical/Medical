@@ -29,7 +29,6 @@ namespace Medical
                 editInterface.addSubInterface(preActionEdit.getEditInterface());
                 editInterface.addSubInterface(postActionEdit.getEditInterface());
 
-                editInterface.addCommand(new EditInterfaceCommand("Open folder", openFolder));
                 editInterface.addCommand(new EditInterfaceCommand("Reverse Sides", reverseSides));
             }
             return editInterface;
@@ -67,16 +66,6 @@ namespace Medical
         private void reverseSides(EditUICallback callback, EditInterfaceCommand caller)
         {
             timeline.reverseSides();
-        }
-
-        public enum CustomQueries
-        {
-            OpenFolder
-        }
-
-        private void openFolder(EditUICallback callback, EditInterfaceCommand caller)
-        {
-            callback.runCustomQuery(CustomQueries.OpenFolder, null, timeline.LEGACY_SourceFile);
         }
     }
 

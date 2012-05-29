@@ -339,14 +339,6 @@ namespace Medical.Controller.AnomalousMvc
             doRunAction(address);
         }
 
-        /// <summary>
-        /// This is here for legacy so the multi timeline events can shutdown the context.
-        /// </summary>
-        internal void LEGACY_shutdown()
-        {
-            checkShutdownConditions();
-        }
-
         private void checkShutdownConditions()
         {
             if (allowShutdown)

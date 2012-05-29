@@ -46,8 +46,6 @@ namespace Medical
         public override void openFile(string path)
         {
             editor.CurrentTimeline = (Timeline)loadObject(path);
-            //this is temporary to assist with conversions, you can delete it its part of the legacy
-            editor.CurrentTimeline.LEGACY_SourceFile = path;
             propertiesEditor.CurrentEditInterface = editor.CurrentTimeline.getEditInterface();
             currentFile = path;
             editor.updateFileName(currentFile);
@@ -132,7 +130,6 @@ namespace Medical
             try
             {
                 saveObject(filename, timeline);
-                timeline.LEGACY_SourceFile = filename;
                 currentFile = filename;
                 editor.updateFileName(currentFile);
             }

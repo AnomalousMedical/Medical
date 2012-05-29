@@ -31,7 +31,6 @@ namespace Medical
             medicalUICallback.addCustomQuery(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, capturePresetState);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
             medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);
-            medicalUICallback.addCustomQuery(TimelineEditInterface.CustomQueries.OpenFolder, openTimelineFolder);
             medicalUICallback.addCustomQuery(AnomalousMvcContext.CustomQueries.Preview, previewMvcContext);
             medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.ShowViewBrowser, showViewBrowser);
             medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.ShowModelBrowser, showModelBrowser);
@@ -70,18 +69,6 @@ namespace Medical
         private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
         {
             editorController.openFile(args[0].ToString());
-        }
-
-        private void openTimelineFolder(SendResult<Object> resultCallback, params Object[] args)
-        {
-            if (args[0] != null)
-            {
-                editorController.openFile(editorController.ResourceProvider.getFullFilePath(args[0].ToString()));
-            }
-            else
-            {
-                editorController.openFile(editorController.ResourceProvider.getFullFilePath(""));
-            }
         }
 
         private void previewMvcContext(SendResult<Object> resultCallback, params Object[] args)
