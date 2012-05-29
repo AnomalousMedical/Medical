@@ -80,21 +80,6 @@ namespace Medical.GUI
             imageBox.RootKeyChangeFocus += new MyGUIEvent(imageBox_RootKeyChangeFocus);
         }
 
-        void imageBox_RootKeyChangeFocus(Widget source, EventArgs e)
-        {
-            Element element = context.GetFocusElement();
-            if (element != null)
-            {
-                element.Blur();
-            }
-        }
-
-        void imageBox_MouseLostFocus(Widget source, EventArgs e)
-        {
-            //Move the mouse offscreen to keep it from staying over stuff when the widget is not in focus
-            context.ProcessMouseMove(-100, -100, 0);
-        }
-
         public void Dispose()
         {
             RocketWidgetManager.rocketWidgetDisposed(name);
@@ -188,6 +173,15 @@ namespace Medical.GUI
             set
             {
                 pixelBuffer.Value.getRenderTarget().setActive(value);
+            }
+        }
+
+        public void removeFocus()
+        {
+            Element element = context.GetFocusElement();
+            if (element != null)
+            {
+                element.Blur();
             }
         }
 
@@ -300,6 +294,21 @@ namespace Medical.GUI
             {
                 return NumberFunctions.computeClosestLargerPow2(dimension, 256);
             }
+        }
+
+        void imageBox_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs fe = (RootFocusEventArgs)e;
+            if (!fe.Focus)
+            {
+                removeFocus();
+            }
+        }
+
+        void imageBox_MouseLostFocus(Widget source, EventArgs e)
+        {
+            //Move the mouse offscreen to keep it from staying over stuff when the widget is not in focus
+            context.ProcessMouseMove(-100, -100, 0);
         }
     }
 }

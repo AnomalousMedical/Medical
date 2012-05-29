@@ -137,6 +137,7 @@ namespace Medical.GUI
                     if (document != null)
                     {
                         document.Show();
+                        rocketWidget.removeFocus();
                     }
                 }
 
