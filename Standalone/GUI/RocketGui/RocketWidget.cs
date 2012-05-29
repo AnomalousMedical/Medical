@@ -77,6 +77,16 @@ namespace Medical.GUI
 
             //In mygui lost/got focus is mouse entered / left
             imageBox.MouseLostFocus += imageBox_MouseLostFocus;
+            imageBox.RootKeyChangeFocus += new MyGUIEvent(imageBox_RootKeyChangeFocus);
+        }
+
+        void imageBox_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            Element element = context.GetFocusElement();
+            if (element != null)
+            {
+                element.Blur();
+            }
         }
 
         void imageBox_MouseLostFocus(Widget source, EventArgs e)
