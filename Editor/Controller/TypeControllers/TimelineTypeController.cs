@@ -10,6 +10,8 @@ using Logging;
 
 namespace Medical
 {
+    delegate void TimelineTypeEvent(TimelineTypeController typeController, Timeline timeline);
+
     class TimelineTypeController : SaveableTypeController
     {
         public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
@@ -19,6 +21,8 @@ namespace Medical
         private EditorController editorController;
         private String currentFile;
         private GenericEditor propertiesEditor;
+
+        public event TimelineTypeEvent TimelineChanged;
 
         public TimelineTypeController(TimelineEditor editor, GenericEditor propertiesEditor, EditorController editorController)
             :base(".tl", editorController)
@@ -54,6 +58,10 @@ namespace Medical
             }
             editorController.ExtensionActions = extensionActions;
             editor.bringToFront();
+            if (TimelineChanged != null)
+            {
+                TimelineChanged.Invoke(this, editor.CurrentTimeline);
+            }
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)

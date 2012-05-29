@@ -79,7 +79,6 @@
   <ItemGroup>
     <Compile Include="Controller\Documents\ProjectDocumentHandler.cs" />
     <Compile Include="Controller\EditorResourceProvider\CachedResource.cs" />
-    <Compile Include="Controller\Documents\TimelineDocumentHandler.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\EditorController.cs" />
     <Compile Include="Controller\EditorResourceProvider\EditorResourceProvider.cs" />
@@ -128,31 +127,12 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\RmlViewer\RmlViewer.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\ActionBlockEditor.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\AnalysisCompilationError.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponent.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\AnalysisEditorComponentParent.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\TestEditor.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\VariableBrowser\BrowserBuilderFactory.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\EndParagraphEditor.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\StartParagraphEditor.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\TextAnalysisEditor.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\TextVariableEditor.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\TextVariableTextBody.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\VariableBrowser\DataFieldInfo.cs" />
-    <Compile Include="GUI\TextAnalysisEditor\WriteEditor.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditor.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.cs" />
     <Compile Include="GUI\OpenPropManager\OpenPropManager.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionClipboardContainer.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionFactory.cs" />
-    <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
-    <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
-    <Compile Include="GUI\Timeline\TimelineObjectProperties.cs" />
-    <Compile Include="GUI\Timeline\TimelineObjectExplorer.cs" />
-    <Compile Include="GUI\Timeline\TimelinePropertiesController.cs" />
-    <Compile Include="GUI\Timeline\TimelineUICallbackExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ChangeMedicalStateProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\LayerChangeProperties.cs" />
@@ -162,14 +142,10 @@
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowImageProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowPropProperties.cs" />
     <Compile Include="GUI\NewProjectDialog\NewProjectDialog.cs" />
-    <Compile Include="GUI\Timeline\QuestionEditor.cs" />
-    <Compile Include="GUI\Timeline\QuestionEditorAnswerRow.cs" />
     <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionData.cs" />
-    <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\AspectRatioTask.cs" />
-    <Compile Include="Tasks\TimelineEditorTaskMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -196,13 +172,6 @@
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.layout" />
     <EmbeddedResource Include="GUI\RmlViewer\RmlViewer.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
-    <EmbeddedResource Include="GUI\TextAnalysisEditor\ActionBlockEditor.layout" />
-    <EmbeddedResource Include="GUI\TextAnalysisEditor\EndParagraphEditor.layout" />
-    <EmbeddedResource Include="GUI\TextAnalysisEditor\StartParagraphEditor.layout" />
-    <EmbeddedResource Include="GUI\TextAnalysisEditor\TestEditor.layout" />
-    <EmbeddedResource Include="GUI\TextAnalysisEditor\TextAnalysisEditor.layout" />
-    <EmbeddedResource Include="GUI\TextAnalysisEditor\TextVariableEditor.layout" />
-    <EmbeddedResource Include="GUI\TextAnalysisEditor\WriteEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.layout" />
@@ -216,20 +185,7 @@
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ShowPropProperties.layout" />
     <EmbeddedResource Include="GUI\NewProjectDialog\NewProjectDialog.layout" />
     <EmbeddedResource Include="GUI\OpenPropManager\OpenPropManager.layout" />
-    <EmbeddedResource Include="GUI\Timeline\QuestionEditor.layout" />
-    <EmbeddedResource Include="GUI\Timeline\QuestionEditorAnswerRow.layout" />
     <EmbeddedResource Include="GUI\SaveTimelineDialog\SaveTimelineDialog.layout" />
-    <EmbeddedResource Include="GUI\Timeline\TimelineAnalyzer.layout" />
-    <EmbeddedResource Include="GUI\Timeline\TimelineFileExplorer.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Timeline\TimelineObjectProperties.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Timeline\TimelineObjectExplorer.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\EditorIcons.xml" />

@@ -17,11 +17,8 @@ namespace Medical
 
         private PropTimeline propTimeline;
         private MovementSequenceEditor movementSequenceEditor;
-        private TimelineAnalyzer timelineAnalyzer;
-        private TimelinePropertiesController timelinePropertiesController;
         private OpenPropManager openPropManager;
         private ScratchArea scratchArea;
-        private TextAnalysisEditor textAnalysisEditor;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -53,15 +50,12 @@ namespace Medical
             projectExplorer.Dispose();
             mvcEditor.Dispose();
             rmlViewer.Dispose();
-            timelinePropertiesController.Dispose();
-            timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
             propTimeline.Dispose();
             openPropManager.Dispose();
             scratchArea.Dispose();
             browserWindow.Dispose();
             aspectRatioTask.Dispose();
-            textAnalysisEditor.Dispose();
             editorController.Dispose();
         }
 
@@ -102,26 +96,16 @@ namespace Medical
             openPropManager = new OpenPropManager();
             guiManager.addManagedDialog(openPropManager);
 
-            timelinePropertiesController = new TimelinePropertiesController(standaloneController, this);
-            timelinePropertiesController.CurrentTimelineChanged += new SingleArgumentEvent<TimelinePropertiesController, Timeline>(timelinePropertiesController_CurrentTimelineChanged);
-            timelinePropertiesController.MarkerMoved += new Engine.EventDelegate<TimelinePropertiesController, float>(timelinePropertiesController_MarkerMoved);
-
-            timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelinePropertiesController);
-            guiManager.addManagedDialog(timelineAnalyzer);
-
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard, editorController);
             guiManager.addManagedDialog(movementSequenceEditor);
 
             scratchArea = new ScratchArea(scratchAreaController, browserWindow);
             guiManager.addManagedDialog(scratchArea);
 
-            textAnalysisEditor = new TextAnalysisEditor(browserWindow, timelinePropertiesController, standaloneController.Clipboard);
-            guiManager.addManagedDialog(textAnalysisEditor);
-
             rmlViewer = new RmlViewer(editorController);
             guiManager.addManagedDialog(rmlViewer);
 
-            mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", "MVC Context", timelinePropertiesController.UICallback, editorController, false);
+            mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", "MVC Context", medicalUICallback, editorController, false);
             guiManager.addManagedDialog(mvcEditor);
 
             projectExplorer = new ProjectExplorer(editorController);
@@ -140,8 +124,6 @@ namespace Medical
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
-            taskController.addTask(new TimelineEditorTask(timelinePropertiesController));
-            taskController.addTask(new MDIDialogOpenTask(timelineAnalyzer, "Medical.TimelineAnalyzer", "Timeline Analyzer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropManagerIcon", TaskMenuCategories.Editor));
@@ -151,13 +133,14 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(timelineEditor, "Medical.NewTimelineEditor", "Timeline Editor", "TimelineEditorIcon", TaskMenuCategories.Editor));
-            //taskController.addTask(new MDIDialogOpenTask(textAnalysisEditor, "Medical.TextAnalysisEditor", "Text Analysis Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
 
             editorController.addTypeController(new RmlTypeController(rmlViewer, editorController));
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
-            editorController.addTypeController(new TimelineTypeController(timelineEditor, timelinePropertiesEditor, editorController));
+            TimelineTypeController timelineTypeController = new TimelineTypeController(timelineEditor, timelinePropertiesEditor, editorController);
+            timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
+            editorController.addTypeController(timelineTypeController);
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
@@ -334,14 +317,9 @@ namespace Medical
             openPropManager.showOpenProps();
         }
 
-        void timelinePropertiesController_CurrentTimelineChanged(TimelinePropertiesController source, Timeline arg)
+        void timelineTypeController_TimelineChanged(TimelineTypeController typeController, Timeline timeline)
         {
             openPropManager.removeAllOpenProps();
-        }
-
-        void timelinePropertiesController_MarkerMoved(TimelinePropertiesController source, float arg)
-        {
-            propTimeline.MarkerTime = arg;
         }
 
         void timelineEditor_MarkerMoved(TimelineEditor source, float arg)
