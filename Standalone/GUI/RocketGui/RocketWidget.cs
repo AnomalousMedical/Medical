@@ -21,6 +21,7 @@ namespace Medical.GUI
         private Viewport vp;
         private TexturePtr texture;
         private HardwarePixelBufferSharedPtr pixelBuffer;
+        private RenderTexture renderTexture;
         private int currentTextureWidth;
         private int currentTextureHeight;
         private String textureName;
@@ -32,10 +33,19 @@ namespace Medical.GUI
 
         private ImageBox imageBox;
 
+        //Conditions to turn on rendering
+        bool enabled = false; //This one has to be true to use the others
+
+        //Any one (or combo) of these has to be on
+        bool hasKeyFocus = false;
+        bool mouseOver = false;
+        bool renderOneFrame = true;
+        bool alwaysRender = false;
+
         public RocketWidget(ImageBox imageBox)
         {
             this.imageBox = imageBox;
-            this.name = RocketWidgetManager.generateRocketWidgetName();
+            this.name = RocketWidgetManager.generateRocketWidgetName(this);
             generateTextureName();
 
             currentTextureWidth = computeSize(imageBox.Width);
@@ -48,7 +58,8 @@ namespace Medical.GUI
             texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)currentTextureWidth, (uint)currentTextureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
-            vp = pixelBuffer.Value.getRenderTarget().addViewport(camera);
+            renderTexture = pixelBuffer.Value.getRenderTarget();
+            vp = renderTexture.addViewport(camera);
             vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
             vp.setOverlaysEnabled(false);
             vp.clear();
@@ -58,6 +69,7 @@ namespace Medical.GUI
             //Debugger.Initialise(context);
 
             renderQueueListener = new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface());
+            renderQueueListener.FrameCompleted += new Action(renderQueueListener_FrameCompleted);
             renderQueueListener.RenderDimensions = new IntSize2(currentTextureWidth, currentTextureHeight);
             sceneManager.addRenderQueueListener(renderQueueListener);
 
@@ -77,8 +89,11 @@ namespace Medical.GUI
             imageBox.EventScrollGesture += imageBox_EventScrollGesture;
 
             //In mygui lost/got focus is mouse entered / left
+            imageBox.MouseSetFocus += imageBox_MouseSetFocus;
             imageBox.MouseLostFocus += imageBox_MouseLostFocus;
             imageBox.RootKeyChangeFocus += imageBox_RootKeyChangeFocus;
+
+            determineRenderingActive();
         }
 
         public void Dispose()
@@ -94,6 +109,7 @@ namespace Medical.GUI
             imageBox.EventScrollGesture -= imageBox_EventScrollGesture;
 
             //In mygui lost/got focus is mouse entered / left
+            imageBox.MouseSetFocus -= imageBox_MouseSetFocus;
             imageBox.MouseLostFocus -= imageBox_MouseLostFocus;
             imageBox.RootKeyChangeFocus -= imageBox_RootKeyChangeFocus;
 
@@ -103,7 +119,7 @@ namespace Medical.GUI
             }
             if (vp != null)
             {
-                pixelBuffer.Value.getRenderTarget().destroyViewport(vp);
+                renderTexture.destroyViewport(vp);
             }
             if (pixelBuffer != null)
             {
@@ -135,7 +151,7 @@ namespace Medical.GUI
                 currentTextureHeight = textureHeight;
 
                 //Destroy old render target
-                pixelBuffer.Value.getRenderTarget().destroyViewport(vp);
+                renderTexture.destroyViewport(vp);
                 pixelBuffer.Dispose();
                 texture.Dispose();
                 RenderManager.Instance.destroyTexture(textureName);
@@ -145,7 +161,8 @@ namespace Medical.GUI
                 texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
                 pixelBuffer = texture.Value.getBuffer();
-                vp = pixelBuffer.Value.getRenderTarget().addViewport(camera);
+                renderTexture = pixelBuffer.Value.getRenderTarget();
+                vp = renderTexture.addViewport(camera);
                 vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
                 vp.setOverlaysEnabled(false);
                 vp.clear();
@@ -165,18 +182,8 @@ namespace Medical.GUI
             }
             context.Dimensions = new Vector2i(imageWidth, imageHeight);
             imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageWidth, imageHeight), new IntSize2(imageWidth, imageHeight));
-        }
-
-        public bool Enabled
-        {
-            get
-            {
-                return pixelBuffer.Value.getRenderTarget().isActive(); 
-            }
-            set
-            {
-                pixelBuffer.Value.getRenderTarget().setActive(value);
-            }
+            renderOneFrame = true;
+            determineRenderingActive();
         }
 
         public void removeFocus()
@@ -185,6 +192,61 @@ namespace Medical.GUI
             if (element != null)
             {
                 element.Blur();
+                renderOnNextFrame();
+            }
+        }
+
+        /// <summary>
+        /// The RocketWidget attempts to only render when it needs to (such as
+        /// the mouse being over it or having focus. If it is in the background
+        /// it will just use the last rendered frame. However, sometimes this
+        /// can cause old data to be shown, such as if a document was loaded
+        /// when the widget did not have focus. In that case call this function
+        /// to cause the widget to render on the next frame.
+        /// </summary>
+        public void renderOnNextFrame()
+        {
+            renderOneFrame = true;
+            determineRenderingActive();
+        }
+
+        /// <summary>
+        /// This can be set to true to override the attempt to only render the
+        /// RocketWidget when it needs updates and force it to render every
+        /// frame. This is still overridden by Enabled.
+        /// </summary>
+        public bool AlwaysRender
+        {
+            get
+            {
+                return alwaysRender;
+            }
+            set
+            {
+                alwaysRender = value;
+                determineRenderingActive();
+            }
+        }
+
+        /// <summary>
+        /// This is the master switch to enable / disable rendering. If this is
+        /// false the widget will never render. If it is true if will render
+        /// depending on the other conditions.
+        /// </summary>
+        public bool Enabled
+        {
+            get
+            {
+                return enabled;
+            }
+            set
+            {
+                enabled = value;
+                if (enabled)
+                {
+                    renderOneFrame = true;
+                }
+                determineRenderingActive();
             }
         }
 
@@ -320,14 +382,40 @@ namespace Medical.GUI
             RootFocusEventArgs fe = (RootFocusEventArgs)e;
             if (!fe.Focus)
             {
+                renderOneFrame = true;
                 removeFocus();
             }
+            hasKeyFocus = fe.Focus;
+            determineRenderingActive();
+        }
+
+        void imageBox_MouseSetFocus(Widget source, EventArgs e)
+        {
+            mouseOver = true;
+            determineRenderingActive();
         }
 
         void imageBox_MouseLostFocus(Widget source, EventArgs e)
         {
             //Move the mouse offscreen to keep it from staying over stuff when the widget is not in focus
             context.ProcessMouseMove(-100, -100, 0);
+            mouseOver = false;
+            renderOneFrame = true;
+            determineRenderingActive();
+        }
+
+        void renderQueueListener_FrameCompleted()
+        {
+            if (renderOneFrame)
+            {
+                renderOneFrame = false;
+                determineRenderingActive();
+            }
+        }
+
+        void determineRenderingActive()
+        {
+            renderTexture.setAutoUpdated(enabled && (alwaysRender || hasKeyFocus || mouseOver || renderOneFrame));
         }
     }
 }

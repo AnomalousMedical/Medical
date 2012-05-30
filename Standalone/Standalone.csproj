@@ -140,6 +140,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="Layout\FloatingLayoutContainer.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />

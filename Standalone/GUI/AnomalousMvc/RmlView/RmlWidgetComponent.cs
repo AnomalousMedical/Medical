@@ -33,6 +33,7 @@ namespace Medical.GUI.AnomalousMvc
                 {
                     document.Show();
                     rocketWidget.removeFocus();
+                    rocketWidget.renderOnNextFrame();
                 }
             }
             RocketEventListenerInstancer.resetEventController();

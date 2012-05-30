@@ -16,10 +16,11 @@ namespace Medical.GUI
     {
         private EventListenerInstancer eventListenerInstancer;
         private static RocketRawOgreFilesystemArchiveFactory rawFilesystemArchives = new RocketRawOgreFilesystemArchiveFactory();
+        private static RocketRenderSystemListener rocketRenderSystemListener;
 
         public RocketGuiManager()
         {
-
+            
         }
 
         public void Dispose()
@@ -41,12 +42,19 @@ namespace Medical.GUI
                 rawFilesystemArchives.Dispose();
                 rawFilesystemArchives = null;
             }
+            if (rocketRenderSystemListener != null)
+            {
+                rocketRenderSystemListener.Dispose();
+            }
         }
 
         public void initialize(PluginManager pluginManager, EventManager eventManager, UpdateTimer mainTimer)
         {
             //Create a rocket group in ogre
             Root.getSingleton().addArchiveFactory(rawFilesystemArchives);
+
+            rocketRenderSystemListener = new RocketRenderSystemListener();
+            Root.getSingleton().getRenderSystem().addListener(rocketRenderSystemListener);
 
             eventListenerInstancer = new RocketEventListenerInstancer();
             Factory.RegisterEventListenerInstancer(eventListenerInstancer);
