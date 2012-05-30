@@ -74,11 +74,11 @@ namespace Medical.GUI
             imageBox.MouseWheel += imageBox_MouseWheel;
             imageBox.KeyButtonPressed += imageBox_KeyButtonPressed;
             imageBox.KeyButtonReleased += imageBox_KeyButtonReleased;
-            imageBox.EventScrollGesture += new MyGUIEvent(imageBox_EventScrollGesture);
+            imageBox.EventScrollGesture += imageBox_EventScrollGesture;
 
             //In mygui lost/got focus is mouse entered / left
             imageBox.MouseLostFocus += imageBox_MouseLostFocus;
-            imageBox.RootKeyChangeFocus += new MyGUIEvent(imageBox_RootKeyChangeFocus);
+            imageBox.RootKeyChangeFocus += imageBox_RootKeyChangeFocus;
         }
 
         public void Dispose()
@@ -91,9 +91,11 @@ namespace Medical.GUI
             imageBox.MouseWheel -= imageBox_MouseWheel;
             imageBox.KeyButtonPressed -= imageBox_KeyButtonPressed;
             imageBox.KeyButtonReleased -= imageBox_KeyButtonReleased;
+            imageBox.EventScrollGesture -= imageBox_EventScrollGesture;
 
             //In mygui lost/got focus is mouse entered / left
             imageBox.MouseLostFocus -= imageBox_MouseLostFocus;
+            imageBox.RootKeyChangeFocus -= imageBox_RootKeyChangeFocus;
 
             if (context != null)
             {
