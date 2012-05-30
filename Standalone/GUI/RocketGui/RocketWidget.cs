@@ -34,7 +34,7 @@ namespace Medical.GUI
         private ImageBox imageBox;
 
         //Conditions to turn on rendering
-        bool enabled = false; //This one has to be true to use the others
+        bool enabled = true; //This one has to be true to use the others
 
         //Any one (or combo) of these has to be on
         bool hasKeyFocus = false;
