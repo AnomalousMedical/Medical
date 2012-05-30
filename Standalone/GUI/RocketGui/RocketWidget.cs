@@ -74,6 +74,7 @@ namespace Medical.GUI
             imageBox.MouseWheel += imageBox_MouseWheel;
             imageBox.KeyButtonPressed += imageBox_KeyButtonPressed;
             imageBox.KeyButtonReleased += imageBox_KeyButtonReleased;
+            imageBox.EventScrollGesture += new MyGUIEvent(imageBox_EventScrollGesture);
 
             //In mygui lost/got focus is mouse entered / left
             imageBox.MouseLostFocus += imageBox_MouseLostFocus;
@@ -256,6 +257,17 @@ namespace Medical.GUI
             if (keyChar >= 32)
             {
                 context.ProcessTextInput(keyChar);
+            }
+        }
+
+        void imageBox_EventScrollGesture(Widget source, EventArgs e)
+        {
+            Element element = context.GetFocusElement();
+            if (element != null)
+            {
+                ScrollGestureEventArgs sgea = (ScrollGestureEventArgs)e;
+                element.ScrollLeft -= sgea.DeltaX;
+                element.ScrollTop -= sgea.DeltaY;
             }
         }
 
