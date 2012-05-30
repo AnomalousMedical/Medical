@@ -263,6 +263,11 @@ namespace Medical.GUI
         void imageBox_EventScrollGesture(Widget source, EventArgs e)
         {
             Element element = context.GetFocusElement();
+            //Find the parent element that scrolls
+            while (element != null && element.ScrollHeight <= element.ClientHeight && element.ScrollWidth <= element.ClientWidth)
+            {
+                element = element.ParentNode;
+            }
             if (element != null)
             {
                 ScrollGestureEventArgs sgea = (ScrollGestureEventArgs)e;
