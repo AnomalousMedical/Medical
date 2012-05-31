@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="80 95 335 302" layer="Overlapped">
+        <Widget type="ImageBox" skin="ImageBox" position="26 27 103 84" name="ImageBox1"/>
+        <Widget type="ImageBox" skin="ImageBox" position="171 27 93 87" name="ImageBox2">
+        </Widget>
+    </Widget>
+</MyGUI>
