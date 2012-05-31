@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalBundle", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Developer", "Developer\Developer.csproj", "{75CA7304-5CC0-48B0-B40C-1E2E5E891F2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPlugin", "UnitTestPlugin\UnitTestPlugin.csproj", "{E4043002-4F98-42B0-BA3E-6C34510E16BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -192,6 +194,24 @@ Global
 		{75CA7304-5CC0-48B0-B40C-1E2E5E891F2B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{75CA7304-5CC0-48B0-B40C-1E2E5E891F2B}.Release|Win32.ActiveCfg = Release|Any CPU
 		{75CA7304-5CC0-48B0-B40C-1E2E5E891F2B}.Release|x86.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.PublicRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.PublicRelease|Win32.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.PublicRelease|x86.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Win32.ActiveCfg = Release|Any CPU
+		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
