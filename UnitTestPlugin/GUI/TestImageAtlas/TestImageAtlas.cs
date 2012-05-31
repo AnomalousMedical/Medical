@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Reflection;
 using MyGUIPlugin;
 using Engine;
+using Logging;
 
 namespace UnitTestPlugin.GUI
 {
@@ -20,6 +21,7 @@ namespace UnitTestPlugin.GUI
         {
             using (Bitmap bitmap = (Bitmap)Bitmap.FromStream(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.LegacyLogoSmall.jpg")))
             {
+                Log.Debug("Adding LegacyLogoSmall to image atlas");
                 ImageAtlasPage page = imageAtlas.addImage("LegacyLogoSmall", bitmap);
                 ImageBox imageBox1 = (ImageBox)window.findWidget("ImageBox1");
                 Rectangle coord;
@@ -31,6 +33,7 @@ namespace UnitTestPlugin.GUI
             }
             using (Bitmap bitmap = (Bitmap)Bitmap.FromStream(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.DownloadIcon.png")))
             {
+                Log.Debug("Adding DownloadIcon to image atlas");
                 ImageAtlasPage page = imageAtlas.addImage("DownloadIcon", bitmap);
                 ImageBox imageBox1 = (ImageBox)window.findWidget("ImageBox2");
                 Rectangle coord;
@@ -40,6 +43,12 @@ namespace UnitTestPlugin.GUI
                     imageBox1.setImageCoord(new IntCoord(coord.Left, coord.Top, coord.Width, coord.Height));
                 }
             }
+        }
+
+        public override void Dispose()
+        {
+            imageAtlas.Dispose();
+            base.Dispose();
         }
     }
 }

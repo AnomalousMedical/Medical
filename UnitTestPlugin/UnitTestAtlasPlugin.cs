@@ -11,6 +11,8 @@ namespace UnitTestPlugin
 {
     class UnitTestAtlasPlugin : AtlasPlugin
     {
+        TestImageAtlas testImageAtlas;
+
         public UnitTestAtlasPlugin()
         {
             
@@ -18,7 +20,7 @@ namespace UnitTestPlugin
 
         public void Dispose()
         {
-            
+            testImageAtlas.Dispose();
         }
 
         public void loadGUIResources()
@@ -30,8 +32,7 @@ namespace UnitTestPlugin
         {
             GUIManager guiManager = standaloneController.GUIManager;
 
-            //TEMP, and leaky
-            TestImageAtlas testImageAtlas = new TestImageAtlas();
+            testImageAtlas = new TestImageAtlas();
             guiManager.addManagedDialog(testImageAtlas);
             testImageAtlas.Visible = true;
         }
