@@ -26,7 +26,7 @@ namespace Medical.GUI.AnomalousMvc
             this.context = context;
 
             iconScrollView = (ScrollView)widget;
-            Size2 size = iconScrollView.CanvasSize;
+            IntSize2 size = iconScrollView.CanvasSize;
             size.Width = 10;
             iconScrollView.CanvasSize = size;
         }
@@ -94,8 +94,8 @@ namespace Medical.GUI.AnomalousMvc
             buttons.Add(navButton);
 
             //Adjust scroll area size
-            Size2 size = iconScrollView.CanvasSize;
-            size.Width = flowLayout.DesiredSize.Width;
+            IntSize2 size = iconScrollView.CanvasSize;
+            size.Width = (int)flowLayout.DesiredSize.Width;
             iconScrollView.CanvasSize = size;
         }
 

@@ -19,10 +19,10 @@ namespace Medical.GUI
         private int lastWidth = -1;
         private int lastHeight = -1;
         private IntVector2 captionMouseOffset;
-        private Size2 undockedMinSize;
-        private Size2 undockedMaxSize;
-        private static Size2 DOCKED_MIN_SIZE = new Size2();
-        private static Size2 DOCKED_MAX_SIZE = new Size2(3000, 3000);
+        private IntSize2 undockedMinSize;
+        private IntSize2 undockedMaxSize;
+        private static IntSize2 DOCKED_MIN_SIZE = new IntSize2();
+        private static IntSize2 DOCKED_MAX_SIZE = new IntSize2(3000, 3000);
         private String originalLayer;
         protected Size2 dockedSize;
 
