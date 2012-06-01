@@ -15,7 +15,7 @@ namespace Medical.Controller.AnomalousMvc
         Right,
         Top,
         Bottom,
-        Floating
+        Window
     }
 
     class ViewHostManager
@@ -67,7 +67,7 @@ namespace Medical.Controller.AnomalousMvc
                     queuedBottom = view;
                     queuedBottomContext = context;
                     break;
-                case ViewLocations.Floating:
+                case ViewLocations.Window:
                     queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
                     break;
             }

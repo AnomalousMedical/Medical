@@ -52,7 +52,7 @@ namespace Medical.GUI.AnomalousMvc
                 case ViewLocations.Bottom:
                     component = new TopBottomPanelDecorator(component);
                     break;
-                case ViewLocations.Floating:
+                case ViewLocations.Window:
                     component = new WindowDecorator(component);
                     break;
             }
