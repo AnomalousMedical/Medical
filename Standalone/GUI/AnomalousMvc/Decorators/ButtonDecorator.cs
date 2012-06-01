@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class ButtonDecorator : Component, ViewHostComponent
+    class ButtonDecorator : Component, ViewHostComponent, ButtonFactory
     {
         private ViewHostComponent child;
         private int widgetHeight;
@@ -16,8 +16,9 @@ namespace Medical.GUI.AnomalousMvc
         private List<Button> buttons = new List<Button>();
         private List<Button> variableSizeButtons = new List<Button>();
         private int fixedSizeArea = 0;
+        private int currentX;
 
-        public ButtonDecorator(ViewHostComponent child, ButtonCollection buttonDefinitions)
+        public ButtonDecorator(ViewHostComponent child, ButtonCollection buttonDefinitions, ButtonFactory buttonFactory = null)
             :base("Medical.GUI.AnomalousMvc.Decorators.ButtonDecorator.layout")
         {
             this.child = child;
@@ -29,23 +30,16 @@ namespace Medical.GUI.AnomalousMvc
             widgetHeight = widget.Height;
 
             int buttonWidth = widget.Width / buttonDefinitions.Count;
-            int currentX = BUTTON_PADDING;
+            currentX = BUTTON_PADDING;
+
+            if (buttonFactory == null)
+            {
+                buttonFactory = this;
+            }
 
             foreach (ButtonDefinitionBase buttonDef in buttonDefinitions)
             {
-                Button button = buttonDef.createButton(widget, currentX, 4, buttonWidth - BUTTON_PADDING, 28);
-                button.UserObject = buttonDef.Action;
-                button.MouseButtonClick +=new MyGUIEvent(button_MouseButtonClick);
-                currentX += button.Width + BUTTON_PADDING;
-                buttons.Add(button);
-                if (buttonDef.FixedSize)
-                {
-                    fixedSizeArea += button.Width + BUTTON_PADDING;
-                }
-                else
-                {
-                    variableSizeButtons.Add(button);
-                }
+                buttonDef.createButton(buttonFactory, currentX, 4, buttonWidth - BUTTON_PADDING, 28);                
             }
         }
 
@@ -105,6 +99,34 @@ namespace Medical.GUI.AnomalousMvc
         void button_MouseButtonClick(Widget source, EventArgs e)
         {
             child.ViewHost.Context.runAction(source.UserObject.ToString(), child.ViewHost);
+        }
+
+        public void addTextButton(ButtonDefinition buttonDefinition, int x, int y, int width, int height)
+        {
+            Button button = (Button)widget.createWidgetT("Button", "Button", x, y, width, height, Align.Default, "");
+            button.Caption = buttonDefinition.Text;
+            addButton(button, buttonDefinition);
+        }
+
+        public void addCloseButton(CloseButtonDefinition buttonDefinition, int x, int y, int width, int height)
+        {
+            addButton((Button)widget.createWidgetT("Button", "ButtonXBig", x, y + 4, 24, 20, Align.Default, ""), buttonDefinition);
+        }
+
+        private void addButton(Button button, ButtonDefinitionBase buttonDef)
+        {
+            button.UserObject = buttonDef.Action;
+            button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
+            currentX += button.Width + BUTTON_PADDING;
+            buttons.Add(button);
+            if (buttonDef.FixedSize)
+            {
+                fixedSizeArea += button.Width + BUTTON_PADDING;
+            }
+            else
+            {
+                variableSizeButtons.Add(button);
+            }
         }
     }
 }

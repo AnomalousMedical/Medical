@@ -11,9 +11,14 @@ namespace Medical.GUI.AnomalousMvc
         private ViewHostComponent child;
         private int widgetHeight;
 
-        public SidePanelDecorator(ViewHostComponent child)
+        public SidePanelDecorator(ViewHostComponent child, ButtonCollection buttons)
             :base("Medical.GUI.AnomalousMvc.Decorators.SidePanelDecorator.layout")
         {
+            if (buttons.Count > 0)
+            {
+                child = new ButtonDecorator(child, buttons);
+            }
+
             this.child = child;
             child.Widget.attachToWidget(widget);
             child.Widget.setPosition(int.Parse(widget.getUserString("ChildX")), int.Parse(widget.getUserString("ChildY")));

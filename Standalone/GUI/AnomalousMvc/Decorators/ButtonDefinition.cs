@@ -23,11 +23,9 @@ namespace Medical.GUI.AnomalousMvc
             Text = name;
         }
 
-        public override Button createButton(Widget parentWidget, int x, int y, int width, int height)
+        public override void createButton(ButtonFactory factory, int x, int y, int width, int height)
         {
-            Button button = (Button)parentWidget.createWidgetT("Button", "Button", x, y, width, height, Align.Default, "");
-            button.Caption = Text;
-            return button;
+            factory.addTextButton(this, x, y, width, height);
         }
 
         [Editable]

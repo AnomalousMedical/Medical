@@ -33,27 +33,22 @@ namespace Medical.GUI.AnomalousMvc
                 return component;
             }
 
-            if (view.Buttons.Count > 0)
-            {
-                component = new ButtonDecorator(component, view.Buttons);
-            }
-
             switch (view.ViewLocation)
             {
                 case ViewLocations.Left:
-                    component = new SidePanelDecorator(component);
+                    component = new SidePanelDecorator(component, view.Buttons);
                     break;
                 case ViewLocations.Right:
-                    component = new SidePanelDecorator(component);
+                    component = new SidePanelDecorator(component, view.Buttons);
                     break;
                 case ViewLocations.Top:
-                    component = new TopBottomPanelDecorator(component);
+                    component = new TopBottomPanelDecorator(component, view.Buttons);
                     break;
                 case ViewLocations.Bottom:
-                    component = new TopBottomPanelDecorator(component);
+                    component = new TopBottomPanelDecorator(component, view.Buttons);
                     break;
                 case ViewLocations.Window:
-                    component = new WindowDecorator(component);
+                    component = new WindowDecorator(component, view.Buttons);
                     break;
             }
 

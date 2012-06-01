@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class CloseButtonDefinition : ButtonDefinitionBase
+    public class CloseButtonDefinition : ButtonDefinitionBase
     {
         public CloseButtonDefinition(String name)
             :base(name)
@@ -21,9 +21,9 @@ namespace Medical.GUI.AnomalousMvc
             
         }
 
-        public override Button createButton(Widget parentWidget, int x, int y, int width, int height)
+        public override void createButton(ButtonFactory factory, int x, int y, int width, int height)
         {
-            return (Button)parentWidget.createWidgetT("Button", "ButtonXBig", x, y + 4, 24, 20, Align.Default, "");
+            factory.addCloseButton(this, x, y, width, height);
         }
 
         public override bool FixedSize

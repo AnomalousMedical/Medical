@@ -130,6 +130,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinitionBase.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\CloseButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
@@ -581,7 +582,6 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
-    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\WindowDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationComponent.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>

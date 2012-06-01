@@ -7,13 +7,38 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class WindowDecorator : Dialog, ViewHostComponent
+    class WindowDecorator : ViewHostComponent, ButtonFactory, IDisposable
     {
         private ViewHostComponent child;
 
-        public WindowDecorator(ViewHostComponent child)
-            : base("Medical.GUI.AnomalousMvc.Decorators.WindowDecorator.layout")
+        protected Window window;
+        private String closeAction = null;
+
+        public WindowDecorator(ViewHostComponent child, ButtonCollection buttons)
         {
+            if (buttons.Count > 0)
+            {
+                //Keep button decorator from being made if there is only one button and it is close
+                if (buttons.Count == 1 && buttons.hasItem("Close"))
+                {
+                    buttons["Close"].createButton(this, 0, 0, 0, 0);
+                }
+                else
+                {
+                    child = new ButtonDecorator(child, buttons, this);
+                }
+            }
+
+            if (closeAction != null)
+            {
+                window = (Window)Gui.Instance.createWidgetT("Window", "WindowCSX", 22, 21, 260, 440, Align.Default, "Overlapped", "");
+                window.WindowButtonPressed += new MyGUIEvent(window_WindowButtonPressed);
+            }
+            else
+            {
+                window = (Window)Gui.Instance.createWidgetT("Window", "WindowCS", 22, 21, 260, 440, Align.Default, "Overlapped", "");
+            }
+
             this.child = child;
             child.Widget.attachToWidget(window);
             IntCoord clientCoord = window.ClientCoord;
@@ -24,22 +49,30 @@ namespace Medical.GUI.AnomalousMvc
             child.topLevelResized();
         }
 
-        public override void Dispose()
+        void window_WindowButtonPressed(Widget source, EventArgs e)
+        {
+            MyGUIViewHost viewHost = child.ViewHost;
+            viewHost.Context.runAction(closeAction, viewHost);
+        }
+
+        public void Dispose()
         {
             child.Dispose();
-            base.Dispose();
+            Gui.Instance.destroyWidget(window);
         }
 
         public void opening()
         {
-            this.open(false);
+            ensureVisible();
+            LayerManager.Instance.upLayerItem(window);
+            window.setVisibleSmooth(true);
             child.opening();
         }
 
         public void closing()
         {
             child.closing();
-            this.close();
+            window.setVisibleSmooth(false);
         }
 
         public void topLevelResized()
@@ -73,6 +106,51 @@ namespace Medical.GUI.AnomalousMvc
         public void _animationCallback(LayoutContainer oldChild)
         {
             Dispose();
+        }
+
+        public void addTextButton(ButtonDefinition buttonDefinition, int x, int y, int width, int height)
+        {
+            ((ButtonDecorator)child).addTextButton(buttonDefinition, x, y, width, height);
+        }
+
+        public void addCloseButton(CloseButtonDefinition buttonDefinition, int x, int y, int width, int height)
+        {
+            closeAction = buttonDefinition.Action;
+        }
+
+        /// <summary>
+        /// Have the window compute its position to ensure it is visible in the given screen area.
+        /// </summary>
+        private void ensureVisible()
+        {
+            //Adjust the position if needed
+            int left = window.Left;
+            int top = window.Top;
+            int right = left + window.Width;
+            int bottom = top + window.Height;
+
+            int guiWidth = RenderManager.Instance.ViewWidth;
+            int guiHeight = RenderManager.Instance.ViewHeight;
+
+            if (right > guiWidth)
+            {
+                left -= right - guiWidth;
+                if (left < 0)
+                {
+                    left = 0;
+                }
+            }
+
+            if (bottom > guiHeight)
+            {
+                top -= bottom - guiHeight;
+                if (top < 0)
+                {
+                    top = 0;
+                }
+            }
+
+            window.setPosition(left, top);
         }
     }
 }

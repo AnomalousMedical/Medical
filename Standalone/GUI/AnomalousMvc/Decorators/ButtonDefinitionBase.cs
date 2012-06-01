@@ -23,7 +23,7 @@ namespace Medical.GUI.AnomalousMvc
             Action = action;
         }
 
-        public abstract Button createButton(Widget parentWidget, int x, int y, int width, int height);
+        public abstract void createButton(ButtonFactory factory, int x, int y, int width, int height);
 
         [EditableAction]
         public String Action { get; set; }
