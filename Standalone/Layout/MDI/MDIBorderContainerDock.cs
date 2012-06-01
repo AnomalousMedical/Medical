@@ -15,7 +15,7 @@ namespace Medical.Controller
         private MDILayoutContainer layoutContainer;
         private Widget separator;
         private int separatorSecondSize = 5;
-        private Size2 size = new Size2();
+        private IntSize2 size = new IntSize2();
 
         public MDIBorderContainerDock(MDILayoutContainer layoutContainer)
             :base(layoutContainer.CurrentDockLocation)
@@ -53,28 +53,28 @@ namespace Medical.Controller
             switch(CurrentDockLocation)
             {
                 case DockLocation.Left:
-                    separator.setPosition((int)(Location.x + WorkingSize.Width - separatorSecondSize), (int)Location.y);
-                    separator.setSize(separatorSecondSize, (int)WorkingSize.Height);
+                    separator.setPosition((Location.x + WorkingSize.Width - separatorSecondSize), Location.y);
+                    separator.setSize(separatorSecondSize, WorkingSize.Height);
                     layoutContainer.Location = Location;
-                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
                     break;
                 case DockLocation.Right:
-                    separator.setPosition((int)Location.x, (int)Location.y);
-                    separator.setSize(separatorSecondSize, (int)WorkingSize.Height);
-                    layoutContainer.Location = new Vector2(Location.x + separatorSecondSize, Location.y);
-                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
+                    separator.setPosition(Location.x, Location.y);
+                    separator.setSize(separatorSecondSize, WorkingSize.Height);
+                    layoutContainer.Location = new IntVector2(Location.x + separatorSecondSize, Location.y);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
                     break;
                 case DockLocation.Top:
-                    separator.setPosition((int)Location.x, (int)(Location.y + WorkingSize.Height - separatorSecondSize));
-                    separator.setSize((int)WorkingSize.Width, separatorSecondSize);
+                    separator.setPosition(Location.x, (Location.y + WorkingSize.Height - separatorSecondSize));
+                    separator.setSize(WorkingSize.Width, separatorSecondSize);
                     layoutContainer.Location = Location;
-                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
                     break;
                 case DockLocation.Bottom:
-                    separator.setPosition((int)Location.x, (int)(Location.y));
-                    separator.setSize((int)WorkingSize.Width, separatorSecondSize);
-                    layoutContainer.Location = new Vector2(Location.x, Location.y + separatorSecondSize);
-                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
+                    separator.setPosition(Location.x, (Location.y));
+                    separator.setSize(WorkingSize.Width, separatorSecondSize);
+                    layoutContainer.Location = new IntVector2(Location.x, Location.y + separatorSecondSize);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
                     break;
                 default:
                     layoutContainer.Location = Location;
@@ -84,11 +84,11 @@ namespace Medical.Controller
             layoutContainer.layout();
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get
             {
-                return layoutContainer.HasChildren ? size : new Size2();
+                return layoutContainer.HasChildren ? size : new IntSize2();
             }
         }
 
@@ -166,16 +166,16 @@ namespace Medical.Controller
             switch (CurrentDockLocation)
             {
                 case DockLocation.Left:
-                    size = new Size2(me.Position.x - (int)Location.x, MIN_PIXEL_SIZE);
+                    size = new IntSize2(me.Position.x - (int)Location.x, MIN_PIXEL_SIZE);
                     break;
                 case DockLocation.Right:
-                    size = new Size2((int)(Location.x + WorkingSize.Width) - me.Position.x, MIN_PIXEL_SIZE);
+                    size = new IntSize2((int)(Location.x + WorkingSize.Width) - me.Position.x, MIN_PIXEL_SIZE);
                     break;
                 case DockLocation.Top:
-                    size = new Size2(MIN_PIXEL_SIZE, me.Position.y - (int)Location.y);
+                    size = new IntSize2(MIN_PIXEL_SIZE, me.Position.y - (int)Location.y);
                     break;
                 case DockLocation.Bottom:
-                    size = new Size2(MIN_PIXEL_SIZE, (int)(Location.y + WorkingSize.Height) - me.Position.y);
+                    size = new IntSize2(MIN_PIXEL_SIZE, (int)(Location.y + WorkingSize.Height) - me.Position.y);
                     break;
             }
             if (size.Width < MIN_PIXEL_SIZE)
@@ -193,7 +193,7 @@ namespace Medical.Controller
         {
             if (!layoutContainer.HasChildren)
             {
-                size = child.DesiredSize + new Size2(separatorSecondSize, separatorSecondSize);
+                size = child.DesiredSize + new IntSize2(separatorSecondSize, separatorSecondSize);
             }
         }
     }

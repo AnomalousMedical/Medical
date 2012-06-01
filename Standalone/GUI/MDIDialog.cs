@@ -24,7 +24,7 @@ namespace Medical.GUI
         private static IntSize2 DOCKED_MIN_SIZE = new IntSize2();
         private static IntSize2 DOCKED_MAX_SIZE = new IntSize2(3000, 3000);
         private String originalLayer;
-        protected Size2 dockedSize;
+        protected IntSize2 dockedSize;
 
         /// <summary>
         /// Called after the dialog opens.
@@ -79,7 +79,7 @@ namespace Medical.GUI
             SmoothShow = true;
             IgnorePositionChanges = false;
             desiredLocation = new Rect(window.Left, window.Top, window.Width, window.Height);
-            dockedSize = new Size2(window.Width, window.Height);
+            dockedSize = new IntSize2(window.Width, window.Height);
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
             window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
             window.CaptionWidget.MouseButtonPressed += new MyGUIEvent(window_MouseButtonPressed);
@@ -411,7 +411,7 @@ namespace Medical.GUI
                 updateUndockedMinMaxSize();
                 window.MinSize = DOCKED_MIN_SIZE;
                 window.MaxSize = DOCKED_MAX_SIZE;
-                Size = (IntSize2)dockedSize;
+                Size = dockedSize;
 
                 window.setActionWidgetsEnabled(false);
             }
@@ -495,7 +495,7 @@ namespace Medical.GUI
                 }
                 if (CurrentDockLocation != DockLocation.Floating && CurrentDockLocation != DockLocation.None)
                 {
-                    dockedSize = new Size2(lastWidth, lastHeight);
+                    dockedSize = new IntSize2(lastWidth, lastHeight);
                 }
             }
         }
@@ -526,11 +526,11 @@ namespace Medical.GUI
             updateDesiredLocation();
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get 
             {
-                return new Size2(window.Width, window.Height);
+                return new IntSize2(window.Width, window.Height);
             }
         }
 

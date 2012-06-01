@@ -24,8 +24,8 @@ namespace Medical.GUI
         private Layout myGUIlayout;
         private Widget taskbarWidget;
         private Button appButton;
-        private float padding = 3;
-        private Size2 itemSize = new Size2(48, 48);
+        private int padding = 3;
+        private IntSize2 itemSize = new IntSize2(48, 48);
         private LayoutContainer child;
         private TaskbarAlignment alignment = TaskbarAlignment.Top;
         private IntCoord gapCoord = new IntCoord();
@@ -256,11 +256,11 @@ namespace Medical.GUI
             }
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get 
             {
-                return new Size2(itemSize.Width + 6, taskbarItems.Count * (itemSize.Height + padding) + appButton.Bottom);
+                return new IntSize2(itemSize.Width + 6, taskbarItems.Count * (itemSize.Height + padding) + appButton.Bottom);
             }
         }
 
@@ -434,8 +434,8 @@ namespace Medical.GUI
 
                 if (Child != null)
                 {
-                    Child.Location = new Vector2(Location.x + taskbarWidget.Width, Location.y);
-                    Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
+                    Child.Location = new IntVector2(Location.x + taskbarWidget.Width, Location.y);
+                    Child.WorkingSize = new IntSize2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
                     Child.layout();
                 }
             }
@@ -447,7 +447,7 @@ namespace Medical.GUI
                 if (Child != null)
                 {
                     Child.Location = Location;
-                    Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
+                    Child.WorkingSize = new IntSize2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
                     Child.layout();
                 }
             }
@@ -501,8 +501,8 @@ namespace Medical.GUI
 
                 if (Child != null)
                 {
-                    Child.Location = new Vector2(Location.x, Location.y + taskbarWidget.Height);
-                    Child.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - taskbarWidget.Height);
+                    Child.Location = new IntVector2(Location.x, Location.y + taskbarWidget.Height);
+                    Child.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - taskbarWidget.Height);
                     Child.layout();
                 }
             }
@@ -514,7 +514,7 @@ namespace Medical.GUI
                 if (Child != null)
                 {
                     Child.Location = Location;
-                    Child.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - taskbarWidget.Height);
+                    Child.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - taskbarWidget.Height);
                     Child.layout();
                 }
             }

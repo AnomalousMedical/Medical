@@ -17,12 +17,12 @@ namespace Medical
         private float alpha = 1.0f;
         private bool visible = true;
         private LayoutType layoutType;
-        private float padding;
-        private Vector2 startLocation;
+        private int padding;
+        private IntVector2 startLocation;
 
         private List<LayoutContainer> children = new List<LayoutContainer>();
 
-        public FlowLayoutContainer(LayoutType layoutType, float padding, Vector2 startLocation)
+        public FlowLayoutContainer(LayoutType layoutType, int padding, IntVector2 startLocation)
         {
             this.layoutType = layoutType;
             this.padding = padding;
@@ -88,12 +88,12 @@ namespace Medical
 
         public override void layout()
         {
-            Vector2 currentLocation = startLocation + Location;
+            IntVector2 currentLocation = startLocation + Location;
             if (layoutType == LayoutType.Horizontal)
             {
                 foreach (LayoutContainer child in children)
                 {
-                    Size2 childSize = child.DesiredSize;
+                    IntSize2 childSize = child.DesiredSize;
                     child.WorkingSize = childSize;
                     child.Location = currentLocation;
                     child.layout();
@@ -104,7 +104,7 @@ namespace Medical
             {
                 foreach (LayoutContainer child in children)
                 {
-                    Size2 childSize = child.DesiredSize;
+                    IntSize2 childSize = child.DesiredSize;
                     child.WorkingSize = childSize;
                     child.Location = currentLocation;
                     child.layout();
@@ -113,16 +113,16 @@ namespace Medical
             }
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get 
             {
-                Size2 desiredSize = new Size2(startLocation.x, startLocation.y);
+                IntSize2 desiredSize = new IntSize2(startLocation.x, startLocation.y);
                 if (layoutType == LayoutType.Horizontal)
                 {
                     foreach (LayoutContainer child in children)
                     {
-                        Size2 childSize = child.DesiredSize;
+                        IntSize2 childSize = child.DesiredSize;
                         if (childSize.Height > desiredSize.Height)
                         {
                             desiredSize.Height = childSize.Height;
@@ -134,7 +134,7 @@ namespace Medical
                 {
                     foreach (LayoutContainer child in children)
                     {
-                        Size2 childSize = child.DesiredSize;
+                        IntSize2 childSize = child.DesiredSize;
                         if (childSize.Width > desiredSize.Width)
                         {
                             desiredSize.Width = childSize.Width;
@@ -162,7 +162,7 @@ namespace Medical
             }
         }
 
-        public float Padding
+        public int Padding
         {
             get
             {
@@ -175,7 +175,7 @@ namespace Medical
             }
         }
 
-        public Vector2 StartLocation
+        public IntVector2 StartLocation
         {
             get
             {

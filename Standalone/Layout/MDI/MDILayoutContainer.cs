@@ -201,7 +201,7 @@ namespace Medical.Controller
         /// </summary>
         public override void layout()
         {
-            Vector2 currentLocation = Location;
+            IntVector2 currentLocation = Location;
             int i = 0;
             int childCount = children.Count - 1;
             if (layoutType == LayoutType.Horizontal)
@@ -209,8 +209,8 @@ namespace Medical.Controller
                 float sizeWithoutPadding = WorkingSize.Width - padding * childCount;
                 foreach (MDIContainerBase child in children)
                 {
-                    Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(sizeWithoutPadding * (child.Scale / totalScale), WorkingSize.Height);
+                    IntSize2 childSize = child.DesiredSize;
+                    IntSize2 actualSize = new IntSize2((int)(sizeWithoutPadding * (child.Scale / totalScale)), WorkingSize.Height);
                     if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
                     {
                         actualSize.Width = WorkingSize.Width + Location.x - currentLocation.x;
@@ -228,8 +228,8 @@ namespace Medical.Controller
                 float sizeWithoutPadding = WorkingSize.Height - padding * childCount;
                 foreach (MDIContainerBase child in children)
                 {
-                    Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(WorkingSize.Width, sizeWithoutPadding * (child.Scale / totalScale));
+                    IntSize2 childSize = child.DesiredSize;
+                    IntSize2 actualSize = new IntSize2(WorkingSize.Width, (int)(sizeWithoutPadding * (child.Scale / totalScale)));
                     if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
                     {
                         actualSize.Height = WorkingSize.Height + Location.y - currentLocation.y;
@@ -264,16 +264,16 @@ namespace Medical.Controller
         /// <summary>
         /// LayoutContainer propery
         /// </summary>
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get 
             {
-                Size2 desiredSize = new Size2();
+                IntSize2 desiredSize = new IntSize2();
                 if (layoutType == LayoutType.Horizontal)
                 {
                     foreach (MDIContainerBase child in children)
                     {
-                        Size2 childSize = child.DesiredSize;
+                        IntSize2 childSize = child.DesiredSize;
                         if (childSize.Height > desiredSize.Height)
                         {
                             desiredSize.Height = childSize.Height;
@@ -285,7 +285,7 @@ namespace Medical.Controller
                 {
                     foreach (MDIContainerBase child in children)
                     {
-                        Size2 childSize = child.DesiredSize;
+                        IntSize2 childSize = child.DesiredSize;
                         if (childSize.Width > desiredSize.Width)
                         {
                             desiredSize.Width = childSize.Width;

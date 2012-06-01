@@ -43,7 +43,7 @@ namespace Medical
             set
             {
                 rootContainer = value;
-                rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
+                rootContainer.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Medical
 
         public void resized(OSWindow window)
         {
-            rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
+            rootContainer.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
             layout();
             if (ScreenSizeChanged != null)
             {

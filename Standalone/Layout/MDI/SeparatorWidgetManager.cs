@@ -69,8 +69,8 @@ namespace Medical.Controller
             separatorWidgets[index].setCoord(x, y, width, height);
         }
 
-        private Vector2 dragStartPosition;
-        private Size2 dragScaleArea;
+        private IntVector2 dragStartPosition;
+        private IntSize2 dragScaleArea;
         private MDIContainerBase dragLowChild;
         private float dragLowScaleStart;
         private MDIContainerBase dragHighChild;
@@ -82,17 +82,17 @@ namespace Medical.Controller
             if (dragLowChild != null)
             {
                 MouseEventArgs me = e as MouseEventArgs;
-                Vector2 offset = me.Position - dragStartPosition - parentContainer.Location;
+                IntVector2 offset = me.Position - dragStartPosition - parentContainer.Location;
 
                 if (parentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
                 {
-                    dragLowChild.Scale = dragLowScaleStart + offset.x / dragScaleArea.Width * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart - offset.x / dragScaleArea.Width * dragTotalScale;
+                    dragLowChild.Scale = dragLowScaleStart + (float)offset.x / dragScaleArea.Width * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - (float)offset.x / dragScaleArea.Width * dragTotalScale;
                 }
                 else
                 {
-                    dragLowChild.Scale = dragLowScaleStart + offset.y / dragScaleArea.Height * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart - offset.y / dragScaleArea.Height * dragTotalScale;
+                    dragLowChild.Scale = dragLowScaleStart + (float)offset.y / dragScaleArea.Height * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - (float)offset.y / dragScaleArea.Height * dragTotalScale;
                 }
 
                 //Bounds checking
@@ -123,7 +123,7 @@ namespace Medical.Controller
                 dragHighChild = parentContainer.getChild(sepIndex + 1);
                 dragHighScaleStart = dragHighChild.Scale;
                 dragTotalScale = dragLowScaleStart + dragHighScaleStart;
-                dragScaleArea = dragTotalScale / parentContainer.TotalScale * parentContainer.WorkingSize;
+                dragScaleArea = (IntSize2)(dragTotalScale / parentContainer.TotalScale * parentContainer.WorkingSize);
             }
         }
 

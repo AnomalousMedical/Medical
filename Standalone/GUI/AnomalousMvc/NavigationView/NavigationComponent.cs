@@ -12,7 +12,7 @@ namespace Medical.GUI.AnomalousMvc
     class NavigationComponent : LayoutComponent
     {
         private ScrollView iconScrollView;
-        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10.0f, new Vector2(4.0f, 10.0f));
+        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10, new IntVector2(4, 10));
         private List<NavigationButton> buttons = new List<NavigationButton>();
         private NavigationButton selectedButton;
         private NavigationView view;
@@ -95,7 +95,7 @@ namespace Medical.GUI.AnomalousMvc
 
             //Adjust scroll area size
             IntSize2 size = iconScrollView.CanvasSize;
-            size.Width = (int)flowLayout.DesiredSize.Width;
+            size.Width = flowLayout.DesiredSize.Width;
             iconScrollView.CanvasSize = size;
         }
 

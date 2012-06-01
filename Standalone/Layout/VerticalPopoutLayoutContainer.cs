@@ -18,10 +18,10 @@ namespace Medical
         private float currentTime;
         private bool animating = false;
         private float alpha = 1.0f;
-        private Size2 oldSize;
-        private Size2 newSize;
-        private Size2 sizeDelta;
-        private Size2 currentSize;
+        private IntSize2 oldSize;
+        private IntSize2 newSize;
+        private IntSize2 sizeDelta;
+        private IntSize2 currentSize;
 
         public VerticalPopoutLayoutContainer(UpdateTimer mainTimer)
         {
@@ -97,7 +97,7 @@ namespace Medical
             }
             else
             {
-                oldSize = new Size2(0.0f, 0.0f);
+                oldSize = new IntSize2(0, 0);
             }
 
             this.childContainer = childContainer;
@@ -108,14 +108,14 @@ namespace Medical
             }
             else
             {
-                newSize = new Size2(0.0f, 0.0f);
+                newSize = new IntSize2(0, 0);
             }
 
             sizeDelta = newSize - oldSize;
             subscribeToUpdates();
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get 
             {
@@ -150,7 +150,7 @@ namespace Medical
                 {
                     childContainer.setAlpha(alpha);
                 }
-                currentSize = new Size2(WorkingSize.Width, oldSize.Height + sizeDelta.Height * alpha);
+                currentSize = new IntSize2(WorkingSize.Width, (int)(oldSize.Height + sizeDelta.Height * alpha));
                 invalidate();
             }
         }

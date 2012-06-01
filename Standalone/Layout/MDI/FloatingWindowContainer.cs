@@ -30,8 +30,8 @@ namespace Medical.Controller
         {
             foreach (MDIWindow window in windows)
             {
-                Vector2 topLeft = window.Location;
-                Vector2 bottomRight = new Vector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
+                IntVector2 topLeft = window.Location;
+                IntVector2 bottomRight = new IntVector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
                 if (topLeft.x < mouseX && topLeft.y < mouseY && bottomRight.x > mouseX && bottomRight.y > mouseY)
                 {
                     return window.findWindowAtPosition(mouseX, mouseY);
@@ -55,11 +55,11 @@ namespace Medical.Controller
             
         }
 
-        public override Engine.Size2 DesiredSize
+        public override Engine.IntSize2 DesiredSize
         {
             get 
             {
-                return new Size2(0, 0);
+                return new IntSize2(0, 0);
             }
         }
 

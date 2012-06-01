@@ -44,9 +44,9 @@ namespace Medical.GUI
             checkButton.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, checkButton.Height);
         }
 
-        public override Engine.Size2 DesiredSize
+        public override Engine.IntSize2 DesiredSize
         {
-            get { return new Size2(checkButton.getTextRegion().left + checkButton.getTextSize().Width, checkButton.Height); }
+            get { return new IntSize2(checkButton.getTextRegion().left + checkButton.getTextSize().Width, checkButton.Height); }
         }
 
         public override bool Visible

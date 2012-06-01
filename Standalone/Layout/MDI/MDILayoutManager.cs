@@ -193,7 +193,7 @@ namespace Medical.Controller
         /// <summary>
         /// LayoutContainer function
         /// </summary>
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get 
             {
@@ -297,8 +297,8 @@ namespace Medical.Controller
         {
             foreach (MDIWindow window in windows)
             {
-                Vector2 topLeft = window.Location;
-                Vector2 bottomRight = new Vector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
+                IntVector2 topLeft = window.Location;
+                IntVector2 bottomRight = new IntVector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
                 if (topLeft.x < absMouse.x && topLeft.y < absMouse.y && bottomRight.x > absMouse.x && bottomRight.y > absMouse.y)
                 {
                     return window;

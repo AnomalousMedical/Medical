@@ -10,21 +10,21 @@ namespace Medical
     public class MyGUILayoutContainer : LayoutContainer
     {
         private Widget widget;
-        private Size2 desiredSize;
+        private IntSize2 desiredSize;
 
         public event Action LayoutChanged;
 
         public MyGUILayoutContainer(Widget widget)
         {
             this.widget = widget;
-            this.desiredSize = new Size2(widget.Width, widget.Height);
+            this.desiredSize = new IntSize2(widget.Width, widget.Height);
         }
 
         /// <summary>
         /// Change the desired size and invalidate.
         /// </summary>
         /// <param name="desiredSize">The new desired size.</param>
-        public void changeDesiredSize(Size2 desiredSize)
+        public void changeDesiredSize(IntSize2 desiredSize)
         {
             this.desiredSize = desiredSize;
             invalidate();
@@ -44,7 +44,7 @@ namespace Medical
             }
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get
             {

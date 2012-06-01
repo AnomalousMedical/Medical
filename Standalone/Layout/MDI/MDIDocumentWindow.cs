@@ -118,8 +118,8 @@ namespace Medical.Controller
             volumePanel.setCoord((int)(Location.x + WorkingSize.Width - volumePanel.Width), (int)(Location.y + WorkingSize.Height) - volumePanel.Height, volumePanel.Width, volumePanel.Height);
             if (content != null)
             {
-                content.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height);
-                content.Location = new Vector2(Location.x, Location.y);
+                content.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height);
+                content.Location = new IntVector2(Location.x, Location.y);
                 content.layout();
             }
         }
@@ -141,14 +141,14 @@ namespace Medical.Controller
         /// <summary>
         /// LayoutContainer property.
         /// </summary>
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get 
             {
-                Size2 desiredSize = new Size2(mainWidget.Width, mainWidget.Height);
+                IntSize2 desiredSize = new IntSize2(mainWidget.Width, mainWidget.Height);
                 if (content != null)
                 {
-                    Size2 contentSize = content.DesiredSize;
+                    IntSize2 contentSize = content.DesiredSize;
                     desiredSize.Width = contentSize.Width;
                     desiredSize.Height += contentSize.Height;
                 }

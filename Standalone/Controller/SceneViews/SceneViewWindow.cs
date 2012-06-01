@@ -35,8 +35,8 @@ namespace Medical.Controller
         private Vector3 startPosition;
         private Vector3 startLookAt;
 
-        private Vector2 sceneViewLocation = new Vector2(0.0f, 0.0f);
-        private Size2 size = new Size2(1.0f, 1.0f);
+        private Vector2 sceneViewportLocation = new Vector2(0f, 0f);
+        private Size2 sceneViewportSize = new Size2(1f, 1f);
         private float inverseAspectRatio = 1.0f;
 
         private Color backColor = new Color(0.149f, 0.149f, 0.149f);
@@ -77,7 +77,7 @@ namespace Medical.Controller
             SimSubScene defaultScene = scene.getDefaultSubScene();
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
-            sceneView.setDimensions(sceneViewLocation.x, sceneViewLocation.y, size.Width, size.Height);
+            sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             sceneView.BackgroundColor = backColor;
             sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
@@ -139,14 +139,17 @@ namespace Medical.Controller
 
         public override void layout()
         {
-            Size2 totalSize = TopmostWorkingSize;
-            if (totalSize.Width == 0.0f)
+            IntVector2 sceneViewLocation = new IntVector2(0, 0);
+            IntSize2 size = new IntSize2(1, 1);
+
+            IntSize2 totalSize = TopmostWorkingSize;
+            if (totalSize.Width == 0)
             {
-                totalSize.Width = 1.0f;
+                totalSize.Width = 1;
             }
-            if (totalSize.Height == 0.0f)
+            if (totalSize.Height == 0)
             {
-                totalSize.Height = 1.0f;
+                totalSize.Height = 1;
             }
 
             sceneViewLocation = Location;
@@ -154,34 +157,34 @@ namespace Medical.Controller
 
             if (!AutoAspectRatio)
             {
-                size.Height = size.Width * inverseAspectRatio;
+                size.Height = (int)(size.Width * inverseAspectRatio);
                 if (size.Height > WorkingSize.Height) //Letterbox width
                 {
                     size.Height = WorkingSize.Height;
-                    size.Width = size.Height * (1 / inverseAspectRatio);
-                    sceneViewLocation.x += (WorkingSize.Width - size.Width) / 2.0f;
+                    size.Width = (int)(size.Height * (1 / inverseAspectRatio));
+                    sceneViewLocation.x += (WorkingSize.Width - size.Width) / 2;
 
                     borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(sceneViewLocation.x - Location.x), (int)WorkingSize.Height);
                     borderPanel1.setCoord((int)(sceneViewLocation.x + size.Width), (int)Location.y, (int)(sceneViewLocation.x - Location.x + 1), (int)WorkingSize.Height);
                 }
                 else
                 {
-                    sceneViewLocation.y += (WorkingSize.Height - size.Height) / 2.0f;
+                    sceneViewLocation.y += (WorkingSize.Height - size.Height) / 2;
 
                     borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y));
                     borderPanel1.setCoord((int)Location.x, (int)(sceneViewLocation.y + size.Height), (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y + 1));
                 }
             }
 
-            RenderXLoc = (int)sceneViewLocation.x;
-            RenderYLoc = (int)sceneViewLocation.y;
+            RenderXLoc = sceneViewLocation.x;
+            RenderYLoc = sceneViewLocation.y;
 
-            sceneViewLocation = new Vector2(sceneViewLocation.x / totalSize.Width, sceneViewLocation.y / totalSize.Height);
-            size = new Size2(size.Width / totalSize.Width, size.Height / totalSize.Height);
+            sceneViewportLocation = new Vector2((float)sceneViewLocation.x / totalSize.Width, (float)sceneViewLocation.y / totalSize.Height);
+            sceneViewportSize = new Size2((float)size.Width / totalSize.Width, (float)size.Height / totalSize.Height);
 
             if (sceneView != null)
             {
-                sceneView.setDimensions(sceneViewLocation.x, sceneViewLocation.y, size.Width, size.Height);
+                sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             }
 
             if (Resized != null)
@@ -190,15 +193,15 @@ namespace Medical.Controller
             }
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get
             {
                 if (sceneView != null)
                 {
-                    return new Size2(sceneView.RenderWidth, sceneView.RenderHeight);
+                    return new IntSize2(sceneView.RenderWidth, sceneView.RenderHeight);
                 }
-                return new Size2();
+                return new IntSize2();
             }
         }
 

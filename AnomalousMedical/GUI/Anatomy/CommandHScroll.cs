@@ -45,11 +45,11 @@ namespace Medical.GUI
             slider.setCoord((int)Location.x, (int)Location.y + caption.Height, (int)WorkingSize.Width, slider.Height);
         }
 
-        public override Size2 DesiredSize
+        public override IntSize2 DesiredSize
         {
             get
             {
-                return new Size2(caption.Width, caption.Height + slider.Height);
+                return new IntSize2(caption.Width, caption.Height + slider.Height);
             }
         }
 
