@@ -97,11 +97,6 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void setPosition(int left, int top)
-        {
-            widget.setPosition(left, top);
-        }
-
         public void setSize(int width, int height)
         {
             widget.setSize(width, height);

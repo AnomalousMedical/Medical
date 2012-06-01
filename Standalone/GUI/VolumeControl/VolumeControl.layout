@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="3dBorderPanelSkin" position="107 43 50 167" layer="Overlapped" name="VolumePanel">
+        <Widget type="Button" skin="ButtonSound" position="14 138 24 24" align="Right Bottom" name="VolumeSliderButton">
+            <Property key="Caption" value="V"/>
+        </Widget>
+        <Widget type="ScrollBar" skin="SliderV" position="10 2 29 132" align="HCenter Top" name="VolumeSlider">
+            <Property key="Range" value="1000"/>
+            <Property key="RangePosition" value="0"/>
+        </Widget>
+    </Widget>
+</MyGUI>

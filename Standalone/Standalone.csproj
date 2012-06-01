@@ -141,6 +141,8 @@
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
+    <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
+    <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
     <Compile Include="Layout\FloatingLayoutContainer.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
@@ -588,6 +590,7 @@
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
+    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />
     <EmbeddedResource Include="Resources\DegenerationImages.png" />
     <EmbeddedResource Include="Resources\TeethMovementIcons.xml" />
     <EmbeddedResource Include="Resources\DegenerationImages.xml" />
