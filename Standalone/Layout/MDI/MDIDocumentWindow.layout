@@ -6,13 +6,4 @@
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="332 3 24 20" align="Right Top" name="CloseButton"/>
     </Widget>
-    <Widget type="Widget" skin="PanelEmpty" position="414 140 29 161" layer="Back" name="VolumePanel">
-        <Widget type="Button" skin="ButtonSound" position="3 136 24 24" align="Right Bottom" name="VolumeSliderButton">
-            <Property key="Caption" value="V"/>
-        </Widget>
-        <Widget type="ScrollBar" skin="SliderV" position_real="0 0 1 0.819876" name="VolumeSlider">
-            <Property key="Range" value="1000"/>
-            <Property key="RangePosition" value="0"/>
-        </Widget>
-    </Widget>
 </MyGUI>
