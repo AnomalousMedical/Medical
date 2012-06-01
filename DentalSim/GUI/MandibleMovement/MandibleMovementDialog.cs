@@ -92,23 +92,6 @@ namespace DentalSim.GUI
             }
         }
 
-        public bool Enabled
-        {
-            get
-            {
-                return openTrackBar.Enabled;
-            }
-            set
-            {
-                openTrackBar.Enabled = value;
-                rightForwardBack.Enabled = value;
-                leftForwardBack.Enabled = value;
-                bothForwardBack.Enabled = value;
-                resetButton.Enabled = value;
-                forceSlider.Enabled = value;
-            }
-        }
-
         public void sceneLoaded(SimScene scene)
         {
             //restoreButton.Enabled = false;

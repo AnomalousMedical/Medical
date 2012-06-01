@@ -37,7 +37,7 @@ namespace Medical
 
         public override void layout()
         {
-            widget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)WorkingSize.Height);
+            widget.setCoord(Location.x, Location.y, WorkingSize.Width, WorkingSize.Height);
             if (LayoutChanged != null)
             {
                 LayoutChanged.Invoke();

@@ -24,11 +24,6 @@ namespace Medical.GUI
             widget.setSize(width, height);
         }
 
-        public virtual void setPosition(int x, int y)
-        {
-            widget.setPosition(x, y);
-        }
-
         void ChooseSceneDialog_Hidden(object sender, EventArgs e)
         {
             guiManager.removeFullscreenPopup(this);

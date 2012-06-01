@@ -164,15 +164,15 @@ namespace Medical.Controller
                     size.Width = (int)(size.Height * (1 / inverseAspectRatio));
                     sceneViewLocation.x += (WorkingSize.Width - size.Width) / 2;
 
-                    borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(sceneViewLocation.x - Location.x), (int)WorkingSize.Height);
-                    borderPanel1.setCoord((int)(sceneViewLocation.x + size.Width), (int)Location.y, (int)(sceneViewLocation.x - Location.x + 1), (int)WorkingSize.Height);
+                    borderPanel0.setCoord(Location.x, Location.y, sceneViewLocation.x - Location.x, WorkingSize.Height);
+                    borderPanel1.setCoord(sceneViewLocation.x + size.Width, Location.y, sceneViewLocation.x - Location.x + 1, WorkingSize.Height);
                 }
                 else
                 {
                     sceneViewLocation.y += (WorkingSize.Height - size.Height) / 2;
 
-                    borderPanel0.setCoord((int)Location.x, (int)Location.y, (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y));
-                    borderPanel1.setCoord((int)Location.x, (int)(sceneViewLocation.y + size.Height), (int)(WorkingSize.Width), (int)(sceneViewLocation.y - Location.y + 1));
+                    borderPanel0.setCoord(Location.x, Location.y, WorkingSize.Width, sceneViewLocation.y - Location.y);
+                    borderPanel1.setCoord(Location.x, sceneViewLocation.y + size.Height, WorkingSize.Width, sceneViewLocation.y - Location.y + 1);
                 }
             }
 
