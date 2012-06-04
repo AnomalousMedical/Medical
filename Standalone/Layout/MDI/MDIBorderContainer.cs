@@ -489,6 +489,24 @@ namespace Medical.Controller
             }
         }
 
+        internal StoredBorderContainer storeCurrentLayout()
+        {
+            StoredBorderContainer storedBorderContainer = new StoredBorderContainer();
+            storedBorderContainer.Left = left.storeCurrentLayout();
+            storedBorderContainer.Right = right.storeCurrentLayout();
+            storedBorderContainer.Top = top.storeCurrentLayout();
+            storedBorderContainer.Bottom = bottom.storeCurrentLayout();
+            return storedBorderContainer;
+        }
+
+        internal void restoreLayout(StoredBorderContainer storedBorderContainer)
+        {
+            left.restoreLayout(storedBorderContainer.Left);
+            right.restoreLayout(storedBorderContainer.Right);
+            top.restoreLayout(storedBorderContainer.Top);
+            bottom.restoreLayout(storedBorderContainer.Bottom);
+        }
+
         public override void bringToFront()
         {
             center.bringToFront();

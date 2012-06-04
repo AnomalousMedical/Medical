@@ -145,6 +145,9 @@
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
     <Compile Include="Layout\FloatingLayoutContainer.cs" />
+    <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainer.cs" />
+    <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainerDock.cs" />
+    <Compile Include="Layout\MDI\StoredLayout\StoredMDILayout.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />

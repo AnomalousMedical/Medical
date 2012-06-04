@@ -136,6 +136,17 @@ namespace Medical.Controller
             layoutContainer.removeChild(window);
         }
 
+        internal StoredBorderContainerDock storeCurrentLayout()
+        {
+            StoredBorderContainerDock storedDock = new StoredBorderContainerDock(size);
+            return storedDock;
+        }
+
+        internal void restoreLayout(StoredBorderContainerDock storedDock)
+        {
+            this.size = storedDock.Size;
+        }
+
         internal override MDILayoutContainer.LayoutType Layout
         {
             get

@@ -190,6 +190,19 @@ namespace Medical.Controller
             rootContainer.layout();
         }
 
+        internal StoredMDILayout storeCurrentLayout()
+        {
+            StoredMDILayout storedLayout = new StoredMDILayout();
+            storedLayout.BorderContainer = rootContainer.storeCurrentLayout();
+            return storedLayout;
+        }
+
+        internal void restoreLayout(StoredMDILayout storedLayout)
+        {
+            rootContainer.restoreLayout(storedLayout.BorderContainer);
+            this.invalidate();
+        }
+
         /// <summary>
         /// LayoutContainer function
         /// </summary>

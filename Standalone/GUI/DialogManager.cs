@@ -12,6 +12,7 @@ namespace Medical.GUI
     {
         private List<DialogEntry> dialogs = new List<DialogEntry>();
         private MDILayoutManager mdiLayoutManager;
+        private StoredMDILayout storedLayout;
 
         public DialogManager(MDILayoutManager mdiLayoutManager)
         {
@@ -55,6 +56,7 @@ namespace Medical.GUI
 
         public void closeMainGUIDialogs()
         {
+            storedLayout = mdiLayoutManager.storeCurrentLayout();
             foreach (DialogEntry dialog in dialogs)
             {
                 dialog.closeMainGUIDialog();
@@ -67,6 +69,7 @@ namespace Medical.GUI
             {
                 dialog.openMainGUIDialog();
             }
+            mdiLayoutManager.restoreLayout(storedLayout);
         }
     }
 }
