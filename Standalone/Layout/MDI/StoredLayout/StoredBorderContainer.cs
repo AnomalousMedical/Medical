@@ -19,5 +19,7 @@ namespace Medical.Controller
         public StoredBorderContainerDock Top { get; set; }
 
         public StoredBorderContainerDock Bottom { get; set; }
+
+        public StoredFloatingWindows Floating { get; set; }
     }
 }

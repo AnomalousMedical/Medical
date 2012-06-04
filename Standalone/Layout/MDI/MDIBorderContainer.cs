@@ -496,6 +496,7 @@ namespace Medical.Controller
             storedBorderContainer.Right = right.storeCurrentLayout();
             storedBorderContainer.Top = top.storeCurrentLayout();
             storedBorderContainer.Bottom = bottom.storeCurrentLayout();
+            storedBorderContainer.Floating = floating.storeCurrentLayout();
             return storedBorderContainer;
         }
 
@@ -505,6 +506,7 @@ namespace Medical.Controller
             right.restoreLayout(storedBorderContainer.Right);
             top.restoreLayout(storedBorderContainer.Top);
             bottom.restoreLayout(storedBorderContainer.Bottom);
+            floating.restoreLayout(storedBorderContainer.Floating);
         }
 
         public override void bringToFront()

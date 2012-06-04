@@ -117,5 +117,20 @@ namespace Medical.Controller
         {
             throw new NotSupportedException();
         }
+
+        internal StoredFloatingWindows storeCurrentLayout()
+        {
+            StoredFloatingWindows floatingWindows = new StoredFloatingWindows();
+            foreach (MDIWindow window in windows)
+            {
+                floatingWindows.addFloatingWindow(window);
+            }
+            return floatingWindows;
+        }
+
+        internal void restoreLayout(StoredFloatingWindows floatingWindows)
+        {
+            floatingWindows.restoreWindows();
+        }
     }
 }
