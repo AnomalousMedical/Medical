@@ -14,5 +14,7 @@ namespace Medical.Controller
         }
 
         public IntSize2 Size { get; set; }
+
+        public StoredMDILayoutContainer MDILayoutContainer { get; set; }
     }
 }

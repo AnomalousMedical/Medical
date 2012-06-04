@@ -261,6 +261,27 @@ namespace Medical.Controller
             return null;
         }
 
+        internal StoredMDILayoutContainer storeCurrentLayout()
+        {
+            StoredMDILayoutContainer storedLayout = new StoredMDILayoutContainer(layoutType == LayoutType.Horizontal ? WindowAlignment.Right : WindowAlignment.Bottom);
+            this.storeLayoutDetails(storedLayout);
+            return storedLayout;
+        }
+
+        internal void restoreLayout(StoredMDILayoutContainer storedLayout)
+        {
+            storedLayout.restoreWindows();
+        }
+
+        internal override void storeLayoutDetails(StoredMDILayoutContainer storedLayout)
+        {
+            storedLayout.CurrentAlignment = layoutType == LayoutType.Horizontal ? WindowAlignment.Right : WindowAlignment.Bottom;
+            foreach (MDIContainerBase container in children)
+            {
+                container.storeLayoutDetails(storedLayout);
+            }
+        }
+
         /// <summary>
         /// LayoutContainer propery
         /// </summary>

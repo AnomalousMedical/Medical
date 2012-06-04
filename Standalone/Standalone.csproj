@@ -148,6 +148,7 @@
     <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainer.cs" />
     <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainerDock.cs" />
     <Compile Include="Layout\MDI\StoredLayout\StoredMDILayout.cs" />
+    <Compile Include="Layout\MDI\StoredLayout\StoredMDILayoutContainer.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItem.cs" />

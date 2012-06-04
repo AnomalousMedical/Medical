@@ -10,24 +10,21 @@ namespace Medical.GUI
 {
     class MDIDialogEntry : DialogEntry
     {
-        private bool currentlyMainGUIVisible;
         private MDIDialog dialog;
 
         public MDIDialogEntry(MDIDialog dialog)
         {
             this.dialog = dialog;
-            currentlyMainGUIVisible = dialog.Visible;
         }
 
         public void closeMainGUIDialog()
         {
-            currentlyMainGUIVisible = dialog.Visible;
             dialog.Visible = false;
         }
 
         public void openMainGUIDialog()
         {
-            dialog.Visible = currentlyMainGUIVisible;
+            //Do nothing, this is restored by the layout manager
         }
 
         public void serialize(ConfigFile file)

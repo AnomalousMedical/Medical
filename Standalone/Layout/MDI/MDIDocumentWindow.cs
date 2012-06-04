@@ -107,6 +107,11 @@ namespace Medical.Controller
             }
         }
 
+        internal override void restoreToMDILayout(MDIWindow mDIWindow, WindowAlignment windowAlignment)
+        {
+
+        }
+
         protected override void activeStatusChanged(bool active)
         {
             captionButton.Selected = Active;

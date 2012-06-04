@@ -139,11 +139,13 @@ namespace Medical.Controller
         internal StoredBorderContainerDock storeCurrentLayout()
         {
             StoredBorderContainerDock storedDock = new StoredBorderContainerDock(size);
+            storedDock.MDILayoutContainer = layoutContainer.storeCurrentLayout();
             return storedDock;
         }
 
         internal void restoreLayout(StoredBorderContainerDock storedDock)
         {
+            layoutContainer.restoreLayout(storedDock.MDILayoutContainer);
             this.size = storedDock.Size;
         }
 

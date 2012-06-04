@@ -181,6 +181,10 @@ namespace Medical.GUI
                         ensureVisible();
                         doChangeVisibility(value);
                         onShown(EventArgs.Empty);
+                        if (MDIManager != null)
+                        {
+                            MDIManager.showWindow(this);
+                        }
                     }
                     else
                     {
@@ -271,6 +275,20 @@ namespace Medical.GUI
             else
             {
                 Size = (IntSize2)dockedSize;
+            }
+        }
+
+        internal override void restoreToMDILayout(MDIWindow mdiWindow, WindowAlignment windowAlignment)
+        {
+            if (!window.Visible)
+            {
+                ensureVisible();
+                doChangeVisibility(true);
+                onShown(EventArgs.Empty);
+                if (MDIManager != null)
+                {
+                    MDIManager.showWindow(this, mdiWindow, windowAlignment);
+                }
             }
         }
 
@@ -422,10 +440,6 @@ namespace Medical.GUI
             if (Shown != null)
             {
                 Shown.Invoke(this, args);
-            }
-            if (MDIManager != null)
-            {
-                MDIManager.showWindow(this);
             }
         }
 
