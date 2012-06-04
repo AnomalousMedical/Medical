@@ -70,6 +70,7 @@ namespace Medical.GUI
                 dialog.openMainGUIDialog();
             }
             mdiLayoutManager.restoreLayout(storedLayout);
+            storedLayout = null;
         }
     }
 }
