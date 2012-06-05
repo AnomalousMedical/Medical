@@ -42,6 +42,8 @@ Source: S:\Medical\PublicRelease\cg.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\Engine.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\MyGUIPlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\MyGUIWrapper.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\PublicRelease\libRocketPlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\PublicRelease\libRocketWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OgreCWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OgreMain.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
