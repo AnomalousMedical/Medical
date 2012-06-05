@@ -36,12 +36,11 @@ namespace Medical.GUI
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
             Browser oggBrowser = BrowserWindowController.createFileBrowser("*.ogg");
-            uiCallback.showBrowser(oggBrowser, fileChosen);
+            uiCallback.showBrowser<String>(oggBrowser, fileChosen);
         }
 
-        bool fileChosen(Object filename, ref string errorPrompt)
+        bool fileChosen(String file, ref string errorPrompt)
         {
-            String file = filename.ToString();
             playSound.SoundFile = file;
             soundFileEdit.Caption = playSound.SoundFile;
             timelineData.Duration = (float)playSound.TimelineController.getSoundDuration(file);

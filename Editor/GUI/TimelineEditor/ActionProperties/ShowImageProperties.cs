@@ -90,12 +90,12 @@ namespace Medical.GUI
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
             Browser browser = BrowserWindowController.createFileBrowser("*.png");
-            uiCallback.showBrowser(browser, fileChosen);
+            uiCallback.showBrowser<String>(browser, fileChosen);
         }
 
-        bool fileChosen(Object filename, ref String errorMessage)
+        bool fileChosen(String filename, ref String errorMessage)
         {
-            showImage.ImageFile = filename.ToString();
+            showImage.ImageFile = filename;
             imageFileEdit.Caption = showImage.ImageFile;
             return true;
         }

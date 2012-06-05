@@ -16,9 +16,9 @@ namespace Medical.GUI
         private CheckButton mandible;
         private CheckButton teeth;
 
-        private SendResult<Object> resultCallback;
+        private SendResult<CompoundPresetState> resultCallback;
 
-        public PresetStateCaptureDialog(SendResult<Object> resultCallback)
+        public PresetStateCaptureDialog(SendResult<CompoundPresetState> resultCallback)
             :base("Medical.GUI.PresetStateCaptureDialog.PresetStateCaptureDialog.layout")
         {
             this.resultCallback = resultCallback;

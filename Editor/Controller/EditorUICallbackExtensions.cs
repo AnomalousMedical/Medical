@@ -26,59 +26,48 @@ namespace Medical
             this.editorController = editorController;
             this.standaloneController = standaloneController;
 
-            medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
-            medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.PreviewCameraPosition, previewCameraPosition);
-            medicalUICallback.addCustomQuery(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, capturePresetState);
-            medicalUICallback.addCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, openFileInRmlViewer);
-            medicalUICallback.addCustomQuery(RmlView.CustomQueries.EditWithSystemEditor, openSystemEditor);
-            medicalUICallback.addCustomQuery(AnomalousMvcContext.CustomQueries.Preview, previewMvcContext);
-            medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.ShowViewBrowser, showViewBrowser);
-            medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.ShowModelBrowser, showModelBrowser);
-            medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, showCommandBrowser);
-        }
-
-        private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
-        {
-            CameraPosition camPos = (CameraPosition)args[0];
-            SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
-            if (activeWindow != null)
+            medicalUICallback.addOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, delegate(CameraPosition camPos)
             {
-                camPos.Translation = activeWindow.Translation;
-                camPos.LookAt = activeWindow.LookAt;
-                camPos.calculateIncludePoint(activeWindow);
-            }
-        }
+                SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
+                if (activeWindow != null)
+                {
+                    camPos.Translation = activeWindow.Translation;
+                    camPos.LookAt = activeWindow.LookAt;
+                    camPos.calculateIncludePoint(activeWindow);
+                }
+            });
 
-        private void previewCameraPosition(SendResult<Object> resultCallback, params Object[] args)
-        {
-            CameraPosition camPos = (CameraPosition)args[0];
-            SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
-            if (activeWindow != null)
+            medicalUICallback.addOneWayCustomQuery(CameraPosition.CustomEditQueries.PreviewCameraPosition, delegate(CameraPosition camPos)
             {
-                activeWindow.setPosition(camPos.computeTranslationWithIncludePoint(activeWindow), camPos.LookAt);
-            }
-        }
+                SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
+                if (activeWindow != null)
+                {
+                    activeWindow.setPosition(camPos.computeTranslationWithIncludePoint(activeWindow), camPos.LookAt);
+                }
+            });
 
-        private void capturePresetState(SendResult<Object> resultCallback, params Object[] args)
-        {
-            PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
-            stateCaptureDialog.SmoothShow = true;
-            stateCaptureDialog.open(true);
-        }
+            medicalUICallback.addCustomQuery(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, delegate(SendResult<CompoundPresetState> resultCallback)
+            {
+                PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
+                stateCaptureDialog.SmoothShow = true;
+                stateCaptureDialog.open(true);
+            });
 
-        private void openFileInRmlViewer(SendResult<Object> resultCallback, params Object[] args)
-        {
-            editorController.openFile(args[0].ToString());
-        }
+            medicalUICallback.addOneWayCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, delegate(String file)
+            {
+                editorController.openFile(file);
+            });
 
-        private void previewMvcContext(SendResult<Object> resultCallback, params Object[] args)
-        {
-            if (args[0] != null)
+            medicalUICallback.addOneWayCustomQuery<String>(RmlView.CustomQueries.EditWithSystemEditor, delegate(String path)
+            {
+                OtherProcessManager.openLocalURL(editorController.ResourceProvider.getFullFilePath(path));
+            });
+
+            medicalUICallback.addOneWayCustomQuery(AnomalousMvcContext.CustomQueries.Preview, delegate(AnomalousMvcContext context)
             {
                 if (editorController.ResourceProvider != null)
                 {
                     standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
-                    AnomalousMvcContext context = (AnomalousMvcContext)args[0];
                     context.setResourceProvider(editorController.ResourceProvider);
                     standaloneController.MvcCore.startRunningContext(context);
                 }
@@ -86,37 +75,33 @@ namespace Medical
                 {
                     MessageBox.show("Cannot run MVC Context. Please open a timeline project first.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                 }
-            }
-        }
-
-        private void openSystemEditor(SendResult<Object> resultCallback, params Object[] args)
-        {
-            if (args[0] != null)
+            });
+            
+            medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.ShowViewBrowser, delegate(SendResult<Type> resultCallback)
             {
-                OtherProcessManager.openLocalURL(editorController.ResourceProvider.getFullFilePath(args[0].ToString()));
-            }
-        }
+                Browser browser = new Browser("Views");
+                standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
+                medicalUICallback.showBrowser(browser, resultCallback);
+                //medicalUICallback.showInputBrowser("Choose View", browser, delegate(Type result, String input, ref String errorPrompt)
+                //{
+                //    return resultCallback(result, ref errorPrompt);
+                //});
+            });
 
-        private void showViewBrowser(SendResult<Object> resultCallback, params Object[] args)
-        {
-            Browser browser = new Browser("Views");
-            standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
-            editorController.showBrowser(browser, resultCallback);
-        }
+            medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.ShowModelBrowser, delegate(SendResult<Object> resultCallback)
+            {
+                Browser browser = new Browser("Models");
 
-        private void showModelBrowser(SendResult<Object> resultCallback, params Object[] args)
-        {
-            Browser browser = new Browser("Models");
+                browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
+                browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
 
-            browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
-            browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
-
-            editorController.showBrowser(browser, resultCallback);
-        }
-
-        private void showCommandBrowser(SendResult<Object> resultCallback, params Object[] args)
-        {
-            editorController.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
+                medicalUICallback.showBrowser(browser, resultCallback);
+            });
+            
+            medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Object> resultCallback)
+            {
+                medicalUICallback.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
+            });
         }
     }
 }

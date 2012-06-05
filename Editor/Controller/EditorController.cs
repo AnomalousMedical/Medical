@@ -30,7 +30,6 @@ namespace Medical
 
         private EditorPlugin plugin;
         private StandaloneController standaloneController;
-        private SendResult<Object> browserResultCallback;
         private EditorUICallbackExtensions uiCallbackExtensions;
         private ExtensionActionCollection extensionActions;
         private Dictionary<String, EditorTypeController> typeControllers = new Dictionary<String, EditorTypeController>();
@@ -124,17 +123,6 @@ namespace Medical
             }
         }
 
-        public void showBrowser(Browser browser, SendResult<Object> browserResultCallback)
-        {
-            this.browserResultCallback = browserResultCallback;
-
-            BrowserWindow browserWindow = plugin.BrowserWindow;
-            browserWindow.setBrowser(browser);
-            browserWindow.ItemSelected += browserWindow_ItemSelected;
-            browserWindow.Canceled += browserWindow_Canceled;
-            browserWindow.open(true);
-        }
-
         public void addCachedResource(CachedResource cachedResource)
         {
             resourceProvider.ResourceCache.add(cachedResource);
@@ -206,27 +194,6 @@ namespace Medical
                     importConflictedFiles(conflictedFiles, targetPath);
                 });
             }
-        }
-
-        void browserWindow_ItemSelected(object sender, EventArgs e)
-        {
-            BrowserWindow browserWindow = plugin.BrowserWindow;
-            if (browserResultCallback != null)
-            {
-                String error = null;
-                browserResultCallback.Invoke(browserWindow.SelectedValue, ref error);
-                browserResultCallback = null;
-            }
-            browserWindow.ItemSelected -= browserWindow_ItemSelected;
-            browserWindow.Canceled -= browserWindow_Canceled;
-        }
-
-        void browserWindow_Canceled(object sender, EventArgs e)
-        {
-            BrowserWindow browserWindow = plugin.BrowserWindow;
-            browserResultCallback = null;
-            browserWindow.ItemSelected -= browserWindow_ItemSelected;
-            browserWindow.Canceled -= browserWindow_Canceled;
         }
 
         private void createProject(string projectName)

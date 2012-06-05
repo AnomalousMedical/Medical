@@ -25,6 +25,7 @@ namespace Medical
         private ScratchAreaController scratchAreaController;
 
         private BrowserWindow browserWindow;
+        private InputBrowserWindow inputBrowserWindow;
 
         private AspectRatioTask aspectRatioTask;
         private RmlViewer rmlViewer;
@@ -54,6 +55,7 @@ namespace Medical
             propTimeline.Dispose();
             openPropManager.Dispose();
             scratchArea.Dispose();
+            inputBrowserWindow.Dispose();
             browserWindow.Dispose();
             aspectRatioTask.Dispose();
             editorController.Dispose();
@@ -82,7 +84,9 @@ namespace Medical
             //UI Helpers
             browserWindow = new BrowserWindow("Editor");
             guiManager.addManagedDialog(browserWindow);
-            medicalUICallback = new MedicalUICallback(browserWindow);
+            inputBrowserWindow = new InputBrowserWindow("Editor");
+            guiManager.addManagedDialog(inputBrowserWindow);
+            medicalUICallback = new MedicalUICallback(browserWindow, inputBrowserWindow);
 
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
@@ -99,7 +103,7 @@ namespace Medical
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard, editorController);
             guiManager.addManagedDialog(movementSequenceEditor);
 
-            scratchArea = new ScratchArea(scratchAreaController, browserWindow);
+            scratchArea = new ScratchArea(scratchAreaController, medicalUICallback);
             guiManager.addManagedDialog(scratchArea);
 
             rmlViewer = new RmlViewer(editorController);

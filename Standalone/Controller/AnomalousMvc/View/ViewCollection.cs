@@ -23,35 +23,29 @@ namespace Medical.Controller.AnomalousMvc
         {
             editInterface.addCommand(new EditInterfaceCommand("Add View", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {
-                ConstructorInfo constructor = null;
-                callback.runCustomQuery(CustomQueries.ShowViewBrowser, delegate(Object result, ref string errorPrompt)
+                callback.runCustomQuery(CustomQueries.ShowViewBrowser, delegate(Type returnedTypeInfo, ref string errorPrompt)
                 {
-                    Type returnedTypeInfo = result as Type;
-                    if (returnedTypeInfo != null)
+                    callback.getInputString("Enter a name.", delegate(String input, ref String err)
                     {
-                        constructor = returnedTypeInfo.GetConstructor(BindingFlags.Public | BindingFlags.Instance, null, constructorArgs, null);
-                        if (constructor != null)
+                        if (!hasItem(input))
                         {
-                            callback.getInputString("Enter a name.", delegate(String input, ref String err)
-                            {
-                                if (!hasItem(input))
-                                {
-                                    add((View)constructor.Invoke(new Object[] { input }));
-                                    return true;
-                                }
-                                err = String.Format("An item named {0} already exists. Please input another name.", input);
-                                return false;
-                            });
+                            add((View)Activator.CreateInstance(returnedTypeInfo, input));
                             return true;
                         }
-                    }
-                    return false;
+                        err = String.Format("An item named {0} already exists. Please input another name.", input);
+                        return false;
+                    });
+                    return true;
                 });
             }));
         }
 
         public enum CustomQueries
         {
+            /// <summary>
+            /// Input: no args
+            /// Output: 
+            /// </summary>
             ShowViewBrowser
         }
 

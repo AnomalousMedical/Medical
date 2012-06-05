@@ -36,12 +36,12 @@ namespace Medical.GUI.AnomalousMvc
 
         private void openFileInViewer(EditUICallback callback, EditInterfaceCommand command)
         {
-            callback.runCustomQuery(CustomQueries.OpenFileInRmlViewer, null, RmlFile);
+            callback.runOneWayCustomQuery(CustomQueries.OpenFileInRmlViewer, RmlFile);
         }
 
         private void editFile(EditUICallback callback, EditInterfaceCommand command)
         {
-            callback.runCustomQuery(CustomQueries.EditWithSystemEditor, null, RmlFile);
+            callback.runOneWayCustomQuery(CustomQueries.EditWithSystemEditor, RmlFile);
         }
 
         protected RmlView(LoadInfo info)

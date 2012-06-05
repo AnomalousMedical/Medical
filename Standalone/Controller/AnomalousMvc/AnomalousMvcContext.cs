@@ -416,7 +416,7 @@ namespace Medical.Controller.AnomalousMvc
 
         private void preview(EditUICallback callback, EditInterfaceCommand command)
         {
-            callback.runCustomQuery(CustomQueries.Preview, null, this);
+            callback.runOneWayCustomQuery(CustomQueries.Preview, this);
         }
     }
 }

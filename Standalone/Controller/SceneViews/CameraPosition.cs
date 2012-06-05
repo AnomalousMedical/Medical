@@ -92,7 +92,7 @@ namespace Medical
                 editInterface.addCommand(new EditInterfaceCommand("Capture Camera Position", captureCameraPosition));
                 editInterface.addCommand(new EditInterfaceCommand("Preview", delegate(EditUICallback callback, EditInterfaceCommand caller)
                 {
-                    callback.runCustomQuery(CustomEditQueries.PreviewCameraPosition, null, this);
+                    callback.runOneWayCustomQuery(CustomEditQueries.PreviewCameraPosition, this);
                 }));
             }
             return editInterface;
@@ -100,7 +100,7 @@ namespace Medical
 
         private void captureCameraPosition(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.runCustomQuery(CustomEditQueries.CaptureCameraPosition, null, this);
+            callback.runOneWayCustomQuery(CustomEditQueries.CaptureCameraPosition, this);
         }
 
         #region Saveable Members

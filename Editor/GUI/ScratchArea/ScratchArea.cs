@@ -14,13 +14,13 @@ namespace Medical.GUI
         private EditInterfaceTreeView editTreeView;
         private MedicalUICallback uiCallback;
 
-        public ScratchArea(ScratchAreaController scratchAreaController, BrowserWindow browserWindow)
+        public ScratchArea(ScratchAreaController scratchAreaController, MedicalUICallback uiCallback)
             :base("Medical.GUI.ScratchArea.ScratchArea.layout")
         {
             this.scratchAreaController = scratchAreaController;
 
-            uiCallback = new MedicalUICallback(browserWindow);
-            uiCallback.addCustomQuery(ScratchAreaCustomQueries.GetClipboard, getClipboardCallback);
+            this.uiCallback = uiCallback;
+            uiCallback.addCustomQuery<SaveableClipboard>(ScratchAreaCustomQueries.GetClipboard, getClipboardCallback);
 
             tree = new Tree((ScrollView)window.findWidget("TableScroll"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
@@ -47,7 +47,7 @@ namespace Medical.GUI
             uiCallback.SelectedEditInterface = evt.EditInterface;
         }
 
-        void getClipboardCallback(SendResult<Object> resultCallback, params Object[] args)
+        void getClipboardCallback(SendResult<SaveableClipboard> resultCallback)
         {
             String error = null;
             resultCallback.Invoke(scratchAreaController.Clipboard, ref error);

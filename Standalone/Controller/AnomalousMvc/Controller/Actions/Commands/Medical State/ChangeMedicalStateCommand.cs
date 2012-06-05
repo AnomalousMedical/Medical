@@ -57,22 +57,14 @@ namespace Medical.Controller.AnomalousMvc
 
         private void captureState(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.runCustomQuery(CustomEditQueries.CapturePresetState, presetStateResult);
+            callback.runCustomQuery<PresetState>(CustomEditQueries.CapturePresetState, presetStateResult);
         }
 
-        private bool presetStateResult(Object result, ref string errorPrompt)
+        private bool presetStateResult(PresetState result, ref string errorPrompt)
         {
-            if (result is PresetState)
-            {
-                presetState = (PresetState)result;
-                errorPrompt = "";
-                return true;
-            }
-            else
-            {
-                errorPrompt = "The result is not a Preset State";
-                return false;
-            }
+            presetState = (PresetState)result;
+            errorPrompt = "";
+            return true;
         }
 
         protected ChangeMedicalStateCommand(LoadInfo info)
