@@ -341,7 +341,7 @@ namespace Medical.Controller
                         }
                         else
                         {
-                            ((MDILayoutContainer)children[i]).storeLayoutInfo(storedLayout, currentWindow, layoutType);
+                            ((MDILayoutContainer)children[i]).storeLayoutInfo(storedLayout, previousWindow, layoutType);
                         }
                     }
                 }
