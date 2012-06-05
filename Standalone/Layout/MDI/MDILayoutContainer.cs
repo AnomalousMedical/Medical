@@ -264,7 +264,7 @@ namespace Medical.Controller
         internal StoredMDILayoutContainer storeCurrentLayout()
         {
             StoredMDILayoutContainer storedLayout = new StoredMDILayoutContainer();
-            this.storeLayoutInfo(storedLayout, null, layoutType);
+            this.storeLayoutInfo(storedLayout, null, layoutType == LayoutType.Horizontal ? WindowAlignment.Left : WindowAlignment.Top);
             return storedLayout;
         }
 
@@ -307,7 +307,7 @@ namespace Medical.Controller
 
         //so you need a function store level details, which takes the alignment to the parent and the parent dialog
         //assign the first dialog to have the parent and parent alignment, any other dialogs on that level parent to the previous found dialog and have right or bottom alignment
-        private void storeLayoutInfo(StoredMDILayoutContainer storedLayout, MDIWindow parent, LayoutType parentLayoutType)
+        private void storeLayoutInfo(StoredMDILayoutContainer storedLayout, MDIWindow parent, WindowAlignment alignmentToParent)
         {
             bool foundWindow = false;
             int i = 0;
@@ -321,11 +321,12 @@ namespace Medical.Controller
                     foundWindow = true;
                     //parent the dialog to the parent passed to the function with the alignment passed in
                     //add child level elements to the "left" or "top" from the list of stored dialogs (calling the recursive func)
-                    storedLayout.addWindowEntry(new WindowEntry(currentWindow, parentLayoutType == LayoutType.Horizontal ? WindowAlignment.Left : WindowAlignment.Top, parent));
+                    storedLayout.addWindowEntry(new WindowEntry(currentWindow, alignmentToParent, parent));
                     foundWindow = true;
                     for (int j = 0; j < i; ++j)
                     {
-                        ((MDILayoutContainer)children[j]).storeLayoutInfo(storedLayout, currentWindow, layoutType);
+                        MDILayoutContainer childLayout = (MDILayoutContainer)children[j];
+                        childLayout.storeLayoutInfo(storedLayout, currentWindow, layoutType == LayoutType.Horizontal ? WindowAlignment.Left : WindowAlignment.Top);
                     }
                     //add remaining child elements to the "right" or "bottom" of the current window
                     //if another window is found, change currentwindow
@@ -341,7 +342,8 @@ namespace Medical.Controller
                         }
                         else
                         {
-                            ((MDILayoutContainer)children[i]).storeLayoutInfo(storedLayout, previousWindow, layoutType);
+                            MDILayoutContainer childLayout = (MDILayoutContainer)children[i];
+                            childLayout.storeLayoutInfo(storedLayout, previousWindow, layoutType == LayoutType.Horizontal ? WindowAlignment.Right : WindowAlignment.Bottom);
                         }
                     }
                 }
@@ -352,7 +354,7 @@ namespace Medical.Controller
                 //the alignment and call again with no parent dialog (this will cause the first found dialog to be the parent and its sibling will get the correct flipped alignment
                 foreach (MDILayoutContainer child in children)
                 {
-                    child.storeLayoutInfo(storedLayout, parent, child.layoutType);
+                    child.storeLayoutInfo(storedLayout, parent, child.layoutType == LayoutType.Horizontal ? WindowAlignment.Left : WindowAlignment.Top);
                 }
             }
         }
