@@ -282,7 +282,18 @@ namespace Medical
                         }
                         else
                         {
+                            firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", Path.GetFileName(fullPath)));
                             Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it was null.", pluginDefinitionFile, path, fullPath);
+                            try
+                            {
+                                File.Delete(fullPath);
+                            }
+                            catch (Exception deleteEx)
+                            {
+                                Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                                managePluginInstructions.addFileToDelete(fullPath);
+                                saveManagementInstructions();
+                            }
                         }
                     }
                 }
