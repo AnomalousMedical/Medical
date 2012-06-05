@@ -263,8 +263,8 @@ namespace Medical.Controller
 
         internal StoredMDILayoutContainer storeCurrentLayout()
         {
-            StoredMDILayoutContainer storedLayout = new StoredMDILayoutContainer(layoutType == LayoutType.Horizontal ? WindowAlignment.Right : WindowAlignment.Bottom);
-            this.storeLayoutDetails(storedLayout);
+            StoredMDILayoutContainer storedLayout = new StoredMDILayoutContainer();
+            this.storeLayoutInfo(storedLayout, null, layoutType);
             return storedLayout;
         }
 
@@ -275,10 +275,85 @@ namespace Medical.Controller
 
         internal override void storeLayoutDetails(StoredMDILayoutContainer storedLayout)
         {
-            storedLayout.CurrentAlignment = layoutType == LayoutType.Horizontal ? WindowAlignment.Right : WindowAlignment.Bottom;
+            //All dialogs on a given level have the same alignment and can have the dialog found before it as the parent with "right" or "bottom" alignment
+            //A dialog on a child level will have the opposite alignment of its parent (that is why it is a child)
+
+            //so you need a function store level details, which takes the alignment to the parent and the parent dialog
+            //assign the first dialog to have the parent and parent alignment, any other dialogs on that level parent to the previous found dialog and have right or bottom alignment
+
+            //Search level for the first dialog, store all elements up till the dialog
+            //if a dialog is found
+                //parent the dialog to the parent passed to the function with the alignment passed in
+                //add child level elements to the "right" or "top" from the list of stored dialogs (calling the recursive func)
+                //new loop
+                    //add remaining child elements to the "left" or "bottom" of the current window
+                    //if another window is found, change currentwindow
+                    //parent the newly found window to the currentwindow with "left" or "bottom" alignment
+            //if no dialog is found it means we are at the top level and the default order was changed, no other levels should be able to be completely empty, in this case flip
+            //the alignment and call again with no parent dialog (this will cause the first found dialog to be the parent and its sibling will get the correct flipped alignment
+
+            //NONE OF THE WRITTEN CODE DOES THE ABOVE, needs to be written
+
+            //storedLayout.startLevel(layoutType == LayoutType.Horizontal ? WindowAlignment.Right : WindowAlignment.Bottom);
             foreach (MDIContainerBase container in children)
             {
                 container.storeLayoutDetails(storedLayout);
+            }
+            storedLayout.endLevel();
+        }
+
+        //All dialogs on a given level have the same alignment and can have the dialog found before it as the parent with "right" or "bottom" alignment
+        //A dialog on a child level will have the opposite alignment of its parent (that is why it is a child)
+
+        //so you need a function store level details, which takes the alignment to the parent and the parent dialog
+        //assign the first dialog to have the parent and parent alignment, any other dialogs on that level parent to the previous found dialog and have right or bottom alignment
+        private void storeLayoutInfo(StoredMDILayoutContainer storedLayout, MDIWindow parent, LayoutType parentLayoutType)
+        {
+            bool foundWindow = false;
+            int i = 0;
+            for (i = 0; i < children.Count; ++i)
+            {
+                //Search level for the first dialog, store all elements up till the dialog
+                //if a dialog is found
+                MDIWindow currentWindow = children[i] as MDIWindow;
+                if (currentWindow != null)
+                {
+                    foundWindow = true;
+                    //parent the dialog to the parent passed to the function with the alignment passed in
+                    //add child level elements to the "left" or "top" from the list of stored dialogs (calling the recursive func)
+                    storedLayout.addWindowEntry(new WindowEntry(currentWindow, parentLayoutType == LayoutType.Horizontal ? WindowAlignment.Left : WindowAlignment.Top, parent));
+                    foundWindow = true;
+                    for (int j = 0; j < i; ++j)
+                    {
+                        ((MDILayoutContainer)children[j]).storeLayoutInfo(storedLayout, currentWindow, layoutType);
+                    }
+                    //add remaining child elements to the "right" or "bottom" of the current window
+                    //if another window is found, change currentwindow
+                    //parent the newly found window to the currentwindow with "left" or "bottom" alignment
+                    MDIWindow previousWindow = currentWindow;
+                    for (++i; i < children.Count; ++i)
+                    {
+                        currentWindow = children[i] as MDIWindow;
+                        if (currentWindow != null)
+                        {
+                            storedLayout.addWindowEntry(new WindowEntry(currentWindow, layoutType == LayoutType.Horizontal ? WindowAlignment.Right : WindowAlignment.Bottom, previousWindow));
+                            previousWindow = currentWindow;
+                        }
+                        else
+                        {
+                            ((MDILayoutContainer)children[i]).storeLayoutInfo(storedLayout, currentWindow, layoutType);
+                        }
+                    }
+                }
+            }
+            if (!foundWindow)
+            {
+                //if no dialog is found it means we are at the top level and the default order was changed, no other levels should be able to be completely empty, in this case flip
+                //the alignment and call again with no parent dialog (this will cause the first found dialog to be the parent and its sibling will get the correct flipped alignment
+                foreach (MDILayoutContainer child in children)
+                {
+                    child.storeLayoutInfo(storedLayout, parent, child.layoutType);
+                }
             }
         }
 

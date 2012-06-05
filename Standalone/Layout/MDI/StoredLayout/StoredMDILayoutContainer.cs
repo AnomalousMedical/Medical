@@ -5,57 +5,93 @@ using System.Text;
 
 namespace Medical.Controller
 {
+    class WindowEntry
+    {
+        public WindowEntry(MDIWindow window, WindowAlignment alignment, MDIWindow previous = null)
+        {
+            this.Window = window;
+            this.Alignment = alignment;
+            this.PreviousWindow = previous;
+        }
+
+        public MDIWindow Window { get; set; }
+
+        public MDIWindow PreviousWindow { get; set; }
+
+        public WindowAlignment Alignment { get; set; }
+    }
+
     public class StoredMDILayoutContainer
     {
-        class WindowEntry
+        class LevelInfo
         {
-            public WindowEntry(MDIWindow window, WindowAlignment alignment)
+            public LevelInfo(WindowAlignment alignment, MDIWindow previousWindow = null)
             {
-                this.Window = window;
                 this.Alignment = alignment;
+                this.PreviousWindow = previousWindow;
             }
 
-            public MDIWindow Window { get; set; }
-
             public WindowAlignment Alignment { get; set; }
+
+            public MDIWindow PreviousWindow { get; set; }
         }
 
         private List<WindowEntry> storedWindows = new List<WindowEntry>();
-        private WindowAlignment currentAlignment;
+        private LevelInfo currentLevelInfo = null;
+        private Stack<LevelInfo> levelInfoStack = new Stack<LevelInfo>();
 
-        public StoredMDILayoutContainer(WindowAlignment startingAlignment)
+        public StoredMDILayoutContainer()
         {
-            currentAlignment = startingAlignment;
+            
+        }
+
+        internal void addWindowEntry(WindowEntry windowEntry)
+        {
+            Logging.Log.Debug("Added window entry, type {0}, alignment {1}, parent {2}", windowEntry.Window.GetType(), windowEntry.Alignment, windowEntry.PreviousWindow != null ? windowEntry.PreviousWindow.GetType().Name : "NULL");
+            storedWindows.Add(windowEntry);
         }
 
         public void addMDIWindow(MDIWindow window)
         {
-            storedWindows.Add(new WindowEntry(window, currentAlignment));
+            WindowEntry entry = new WindowEntry(window, currentLevelInfo.Alignment);
+            entry.PreviousWindow = currentLevelInfo.PreviousWindow;
+            storedWindows.Add(entry);
+            currentLevelInfo.PreviousWindow = window;
+        }
+
+        public void startLevel(WindowAlignment alignment, MDIWindow firstParent)
+        {
+            if (currentLevelInfo != null)
+            {
+                levelInfoStack.Push(currentLevelInfo);
+                currentLevelInfo = new LevelInfo(alignment, currentLevelInfo.PreviousWindow);
+            }
+            else
+            {
+                currentLevelInfo = new LevelInfo(alignment);
+            }
+        }
+
+        public void endLevel()
+        {
+            if (levelInfoStack.Count > 0)
+            {
+                currentLevelInfo = levelInfoStack.Pop();
+            }
         }
 
         internal void restoreWindows()
         {
-            if (storedWindows.Count > 0)
+            foreach (WindowEntry entry in storedWindows)
             {
-                WindowEntry previousWindow = storedWindows[0];
-                previousWindow.Window.Visible = true;
-                for (int i = 1; i < storedWindows.Count; ++i)
+                if (entry.PreviousWindow == null)
                 {
-                    storedWindows[i].Window.restoreToMDILayout(previousWindow.Window, previousWindow.Alignment);
-                    previousWindow = storedWindows[i];
+                    entry.Window.Visible = true;
                 }
-            }
-        }
-
-        public WindowAlignment CurrentAlignment
-        {
-            get
-            {
-                return currentAlignment;
-            }
-            set
-            {
-                currentAlignment = value;
+                else
+                {
+                    entry.Window.restoreToMDILayout(entry.PreviousWindow, entry.Alignment);
+                }
             }
         }
     }
