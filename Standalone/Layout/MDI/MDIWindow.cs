@@ -53,11 +53,6 @@ namespace Medical.Controller
             activeStatusChanged(active);
         }
 
-        internal override void storeLayoutDetails(StoredMDILayoutContainer storedLayout)
-        {
-            storedLayout.addMDIWindow(this);
-        }
-
         internal abstract void restoreToMDILayout(MDIWindow mDIWindow, WindowAlignment windowAlignment);
 
         protected abstract void activeStatusChanged(bool active);

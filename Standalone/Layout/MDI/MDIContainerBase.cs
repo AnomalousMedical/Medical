@@ -55,10 +55,5 @@ namespace Medical.Controller
         {
 
         }
-
-        internal virtual void storeLayoutDetails(StoredMDILayoutContainer storedLayout)
-        {
-
-        }
     }
 }
