@@ -114,7 +114,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public static Browser CreateCommandBrowser()
         {
-            Browser browser = new Browser("Commands");
+            Browser browser = new Browser("Commands", "Choose Command");
             BrowserNode rootNode = browser.getTopNode();
             //Camera
             BrowserNode cameraCommands = new BrowserNode("Camera", null);

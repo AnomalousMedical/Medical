@@ -24,7 +24,7 @@ namespace Medical.Controller.AnomalousMvc
             {
                 callback.runCustomQuery(CustomQueries.CreateModelBrowser, delegate(Browser modelBrowser, ref string errorPrompt)
                 {
-                    callback.showBrowser("Choose Model", modelBrowser, delegate(ModelCreationInfo returnedTypeInfo, ref string error)
+                    callback.showBrowser(modelBrowser, delegate(ModelCreationInfo returnedTypeInfo, ref string error)
                     {
                         //Try to add with the default name.
                         if (!hasItem(returnedTypeInfo.DefaultName))

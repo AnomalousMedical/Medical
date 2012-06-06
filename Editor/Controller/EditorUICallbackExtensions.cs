@@ -79,7 +79,7 @@ namespace Medical
 
             medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.CreateViewBrowser, delegate(SendResult<Browser> resultCallback)
             {
-                Browser browser = new Browser("Views");
+                Browser browser = new Browser("Views", "Choose View Type");
                 standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
                 String errorPrompt = null;
                 resultCallback(browser, ref errorPrompt);
@@ -87,7 +87,7 @@ namespace Medical
 
             medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.CreateModelBrowser, delegate(SendResult<Browser> resultCallback)
             {
-                Browser browser = new Browser("Models");
+                Browser browser = new Browser("Models", "Choose Model Type");
 
                 browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
                 browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
@@ -97,7 +97,7 @@ namespace Medical
             
             medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Object> resultCallback)
             {
-                medicalUICallback.showBrowser("Choose Command", RunCommandsAction.CreateCommandBrowser(), resultCallback);
+                medicalUICallback.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
             });
         }
     }

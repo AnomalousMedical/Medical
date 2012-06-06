@@ -27,14 +27,14 @@ namespace Medical.GUI
             return SelectedEditInterface;
         }
 
-        public void showBrowser<T>(String prompt, Browser browser, SendResult<T> resultCallback)
+        public void showBrowser<T>(Browser browser, SendResult<T> resultCallback)
         {
-            BrowserWindow<T>.GetInput(browser, prompt, true, resultCallback);
+            BrowserWindow<T>.GetInput(browser, true, resultCallback);
         }
 
-        public void showInputBrowser<T>(string prompt, Browser browser, SendResult<T, string> resultCallback)
+        public void showInputBrowser<T>(Browser browser, SendResult<T, string> resultCallback)
         {
-            InputBrowserWindow<T>.GetInput(browser, prompt, true, resultCallback);
+            InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
         }
 
         public void showFolderBrowserDialog(SendResult<string> resultCallback)

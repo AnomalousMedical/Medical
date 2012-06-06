@@ -25,7 +25,7 @@ namespace Medical
             this.TargetTimeline = targetTimeline;
         }
 
-        [EditableFile(BrowserWindowController.TimelineSearchPattern)]
+        [EditableFile(BrowserWindowController.TimelineSearchPattern, "Timeline Files")]
         public String TargetTimeline { get; set; }
 
         [Editable]

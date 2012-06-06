@@ -10,16 +10,18 @@ namespace Medical.Editor
     class FileBrowserEditableProperty : BrowseableEditableProperty
     {
         private String browserSearchPattern;
+        private String prompt;
 
-        public FileBrowserEditableProperty(String name, MemberWrapper propertyInfo, Object instance, String browserSearchPattern)
+        public FileBrowserEditableProperty(String name, MemberWrapper propertyInfo, Object instance, String browserSearchPattern, String prompt)
             :base(name, propertyInfo, instance)
         {
             this.browserSearchPattern = browserSearchPattern;
+            this.prompt = prompt;
         }
 
         protected override Browser buildBrowser()
         {
-            return BrowserWindowController.createFileBrowser(browserSearchPattern);
+            return BrowserWindowController.createFileBrowser(browserSearchPattern, prompt);
         }
     }
 }

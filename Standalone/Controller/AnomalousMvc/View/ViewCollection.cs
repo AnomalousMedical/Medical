@@ -26,7 +26,7 @@ namespace Medical.Controller.AnomalousMvc
             {
                 callback.runCustomQuery(CustomQueries.CreateViewBrowser, delegate(Browser browser, ref string errorPrompt)
                 {
-                    callback.showInputBrowser("Choose a view", browser, delegate(Type returnedTypeInfo, String name, ref string err)
+                    callback.showInputBrowser(browser, delegate(Type returnedTypeInfo, String name, ref string err)
                     {
                         if (!hasItem(name))
                         {

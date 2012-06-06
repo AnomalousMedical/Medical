@@ -89,8 +89,8 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            Browser browser = BrowserWindowController.createFileBrowser("*.png");
-            uiCallback.showBrowser<String>("Choose Image", browser, fileChosen);
+            Browser browser = BrowserWindowController.createFileBrowser("*.png", "Image Files");
+            uiCallback.showBrowser<String>(browser, fileChosen);
         }
 
         bool fileChosen(String filename, ref String errorMessage)

@@ -39,9 +39,9 @@ namespace Medical.Editor
             return currentEditingContext;
         }
 
-        public static Browser createFileBrowser(String searchPattern)
+        public static Browser createFileBrowser(String searchPattern, String prompt)
         {
-            Browser browser = new Browser("Files");
+            Browser browser = new Browser("Files", prompt);
             if (resourceProvider != null)
             {
                 foreach (String timeline in resourceProvider.listFiles(searchPattern, "", true))
@@ -58,7 +58,7 @@ namespace Medical.Editor
 
         public static Browser createViewBrowser()
         {
-            Browser browser = new Browser("Views");
+            Browser browser = new Browser("Views", "Choose View");
             if (currentEditingContext != null)
             {
                 foreach (View view in currentEditingContext.Views)
@@ -71,7 +71,7 @@ namespace Medical.Editor
 
         public static Browser createActionBrowser()
         {
-            Browser browser = new Browser("Action");
+            Browser browser = new Browser("Action", "Choose Action");
             if (currentEditingContext != null)
             {
                 foreach (MvcController controller in currentEditingContext.Controllers)
@@ -89,7 +89,7 @@ namespace Medical.Editor
 
         public static Browser createModelBrowser(Type assignableFromType)
         {
-            Browser browser = new Browser("Models");
+            Browser browser = new Browser("Models", "Choose Model");
             if (currentEditingContext != null)
             {
                 foreach (MvcModel model in currentEditingContext.Models)

@@ -12,7 +12,7 @@ namespace Medical
         static String[] delimiter = { "." };
 
         public AnatomyCommandBrowser()
-            : base("AnatomyCommands")
+            : base("AnatomyCommands", "Add Anatomy Command")
         {
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {

@@ -39,7 +39,7 @@ namespace Medical
             }
         }
 
-        [EditableFile("*.mvc")]
+        [EditableFile("*.mvc", "MVC Files")]
         public String ContextFile { get; set; }
 
         public override bool Active

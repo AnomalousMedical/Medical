@@ -27,7 +27,7 @@ namespace Medical.Controller.AnomalousMvc
             context.queueTimeline(Timeline);
         }
 
-        [EditableFile(BrowserWindowController.TimelineSearchPattern)]
+        [EditableFile(BrowserWindowController.TimelineSearchPattern, "Timeline Files")]
         public String Timeline { get; set; }
 
         public override string Type

@@ -35,8 +35,8 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            Browser oggBrowser = BrowserWindowController.createFileBrowser("*.ogg");
-            uiCallback.showBrowser<String>("Choose Ogg File", oggBrowser, fileChosen);
+            Browser oggBrowser = BrowserWindowController.createFileBrowser("*.ogg", "Choose Ogg File");
+            uiCallback.showBrowser<String>(oggBrowser, fileChosen);
         }
 
         bool fileChosen(String file, ref string errorPrompt)

@@ -86,7 +86,7 @@ namespace Medical
         {
             if (editInterface == null)
             {
-                browser = new Browser("Pre Actions");
+                browser = new Browser("Pre Actions", "Choose Pre Action");
                 browser.addNode("", SEPS, new BrowserNode("Change Scene", typeof(OpenNewSceneAction)));
                 browser.addNode("", SEPS, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
                 browser.addNode("", SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
@@ -117,7 +117,7 @@ namespace Medical
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.showBrowser("Choose Pre Action", browser, delegate(Object result, ref String errorMessage)
+            callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
             {
                 Type createType = (Type)result;
                 TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);
@@ -150,7 +150,7 @@ namespace Medical
         {
             if (editInterface == null)
             {
-                browser = new Browser("Post Actions");
+                browser = new Browser("Post Actions", "Choose Post Action");
                 browser.addNode("", SEPS, new BrowserNode("Load Another Timeline", typeof(LoadAnotherTimeline)));
                 browser.addNode("", SEPS, new BrowserNode("Repeat Previous", typeof(RepeatPreviousPostActions)));
                 browser.addNode("", SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
@@ -181,7 +181,7 @@ namespace Medical
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.showBrowser("Choose Post Action", browser, delegate(Object result, ref String errorMessage)
+            callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
             {
                 Type createType = (Type)result;
                 TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);
