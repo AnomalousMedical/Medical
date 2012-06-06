@@ -36,7 +36,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return "Save Layers";
+                return "Save Muscle Position";
             }
         }
 

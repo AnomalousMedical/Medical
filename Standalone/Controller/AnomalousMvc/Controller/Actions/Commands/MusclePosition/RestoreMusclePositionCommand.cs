@@ -42,7 +42,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return "Restore Layers";
+                return "Restore Muscle Position";
             }
         }
 
