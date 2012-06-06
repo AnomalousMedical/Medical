@@ -46,7 +46,7 @@ namespace Medical
                 }
             });
 
-            medicalUICallback.addCustomQuery(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, delegate(SendResult<CompoundPresetState> resultCallback)
+            medicalUICallback.addCustomQuery<CompoundPresetState>(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, delegate(SendResult<CompoundPresetState> resultCallback)
             {
                 PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
                 stateCaptureDialog.SmoothShow = true;
@@ -77,7 +77,7 @@ namespace Medical
                 }
             });
 
-            medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.CreateViewBrowser, delegate(SendResult<Browser> resultCallback)
+            medicalUICallback.addCustomQuery<Browser>(ViewCollection.CustomQueries.CreateViewBrowser, delegate(SendResult<Browser> resultCallback)
             {
                 Browser browser = new Browser("Views", "Choose View Type");
                 standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
@@ -85,7 +85,7 @@ namespace Medical
                 resultCallback(browser, ref errorPrompt);
             });
 
-            medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.CreateModelBrowser, delegate(SendResult<Browser> resultCallback)
+            medicalUICallback.addCustomQuery<Browser>(ModelCollection.CustomQueries.CreateModelBrowser, delegate(SendResult<Browser> resultCallback)
             {
                 Browser browser = new Browser("Models", "Choose Model Type");
 
@@ -95,7 +95,7 @@ namespace Medical
                 resultCallback(browser, ref error);
             });
             
-            medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Type> resultCallback)
+            medicalUICallback.addCustomQuery<Type>(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Type> resultCallback)
             {
                 medicalUICallback.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
             });
