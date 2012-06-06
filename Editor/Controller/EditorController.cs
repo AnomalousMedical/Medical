@@ -66,9 +66,15 @@ namespace Medical
             {
                 if (deleteOld)
                 {
-                    File.Delete(filename);
+                    //Make sure the old project is closed first, this prevents problems deleting the currently open project.
+                    closeProject();
+                    Directory.Delete(filename, true);
                 }
-                createProject(filename);
+                if (!Directory.Exists(filename))
+                {
+                    Directory.CreateDirectory(filename);
+                }
+                projectChanged(filename);
                 standaloneController.DocumentController.addToRecentDocuments(filename);
             }
             catch (Exception ex)
@@ -86,6 +92,15 @@ namespace Medical
             if (!plugin.ProjectExplorer.Visible)
             {
                 plugin.ProjectExplorer.open(false);
+            }
+        }
+
+        public void closeProject()
+        {
+            if (resourceProvider != null)
+            {
+                resourceProvider.Dispose();
+                resourceProvider = null;
             }
         }
 
@@ -196,21 +211,9 @@ namespace Medical
             }
         }
 
-        private void createProject(string projectName)
-        {
-            if (!Directory.Exists(projectName))
-            {
-                Directory.CreateDirectory(projectName);
-            }
-            projectChanged(projectName);
-        }
-
         private void projectChanged(String projectPath)
         {
-            if (resourceProvider != null)
-            {
-                resourceProvider.Dispose();
-            }
+            closeProject();
             resourceProvider = new EditorResourceProvider(projectPath);
             plugin.TimelineController.setResourceProvider(ResourceProvider);
             BrowserWindowController.setResourceProvider(ResourceProvider);

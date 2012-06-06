@@ -16,8 +16,8 @@ namespace Medical.GUI
 
         private SendResult<BrowseType, String> SendResult;
 
-        public InputBrowserWindow(String message, String text)
-            : base("Medical.GUI.Editor.InputBrowserWindow.layout")
+        protected InputBrowserWindow(String message, String text, String layout = "Medical.GUI.Editor.InputBrowserWindow.layout")
+            : base(layout)
         {
             browserTree = new Tree((ScrollView)window.findWidget("ScrollView"));
             browserTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(browserTree_NodeMouseDoubleClick);

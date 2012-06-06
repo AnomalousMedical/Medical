@@ -24,8 +24,6 @@ namespace Medical.GUI
         private FileBrowserTree fileBrowser;
 
         //Dialogs
-        private NewProjectDialog newProjectDialog;
-
         private EditorController editorController;
 
         public ProjectExplorer(EditorController editorController)
@@ -44,17 +42,12 @@ namespace Medical.GUI
 
             rebuildMenus();
 
-            //Dialogs
-            newProjectDialog = new NewProjectDialog();
-            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
-
             this.Resized += new EventHandler(ProjectExplorer_Resized);
         }
 
         public override void Dispose()
         {
             fileBrowser.Dispose();
-            newProjectDialog.Dispose();
             base.Dispose();
         }
 
@@ -62,7 +55,7 @@ namespace Medical.GUI
         {
             if (editorController.ResourceProvider == null || editorController.ResourceProvider.ResourceCache.Count == 0)
             {
-                showNewProjectDialog(source.AbsoluteLeft, source.AbsoluteTop);
+                showNewProjectDialog();
             }
             else
             {
@@ -72,22 +65,31 @@ namespace Medical.GUI
                     {
                         editorController.saveAllCachedResources();
                     }
-                    showNewProjectDialog(source.AbsoluteLeft, source.AbsoluteTop);
+                    showNewProjectDialog();
                 });
             }
         }
 
-        void showNewProjectDialog(int x, int y)
+        void showNewProjectDialog()
         {
             editorController.stopPlayingTimelines();
-            newProjectDialog.open(true);
-            newProjectDialog.Position = new Vector2(x, y);
-            newProjectDialog.ensureVisible();
-        }
-
-        void newProjectDialog_ProjectCreated(object sender, EventArgs e)
-        {
-            editorController.createNewProject(newProjectDialog.FullProjectName, false);
+            NewProjectDialog.ShowDialog((template, fullProjectName) =>
+            {
+                if (Directory.Exists(fullProjectName))
+                {
+                    MessageBox.show(String.Format("The project {0} already exists. Would you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                    {
+                        if (result == MessageBoxStyle.Yes)
+                        {
+                            editorController.createNewProject(fullProjectName, true);
+                        }
+                    });
+                }
+                else
+                {
+                    editorController.createNewProject(fullProjectName, false);
+                }
+            });
         }
 
         void openProjectClicked(Widget source, EventArgs e)

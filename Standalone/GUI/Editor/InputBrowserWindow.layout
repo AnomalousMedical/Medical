@@ -15,6 +15,6 @@
         <Widget type="TextBox" skin="TextBox" position="0 379 39 15" align="Left Bottom">
             <Property key="Caption" value="Name"/>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position="0 397 554 27" name="NameEdit"/>
+        <Widget type="EditBox" skin="EditBox" position="0 397 554 27" align="HStretch Bottom" name="NameEdit"/>
     </Widget>
 </MyGUI>

@@ -1,23 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCX" position="170 127 301 136" layer="Overlapped">
-        <Property key="Caption" value="New Timeline Project"/>
-        <Widget type="EditBox" skin="EditBox" position="4 16 283 22" name="ProjectName"/>
-        <Widget type="TextBox" skin="TextBox" position="4 4 80 13">
-            <Property key="Caption" value="Project Name"/>
+    <Widget type="Window" skin="WindowCSX" position="306 173 567 521" layer="Overlapped">
+        <Property key="Caption" value="Browse"/>
+        <Widget type="ScrollView" skin="ScrollView" position="0 3 554 372" align="Stretch" name="ScrollView">
+            <Property key="CanvasSize" value="546 367"/>
+            <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="4 43 98 14">
-            <Property key="Caption" value="Project Location"/>
-        </Widget>
-        <Widget type="EditBox" skin="EditBox" position="4 56 256 22" name="ProjectLocation"/>
-        <Widget type="Button" skin="Button" position="263 56 23 22" name="BrowseButton">
-            <Property key="Caption" value="..."/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="4 81 70 20" align="Left Bottom" name="CreateButton">
+        <Widget type="Button" skin="Button" position="0 465 59 22" align="Left Bottom" name="Select">
             <Property key="Caption" value="Create"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="78 81 70 20" align="Left Bottom" name="CancelButton">
+        <Widget type="Button" skin="Button" position="66 465 59 22" align="Left Bottom" name="Cancel">
             <Property key="Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="0 379 39 15" align="Left Bottom">
+            <Property key="Caption" value="Name"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="0 394 554 22" align="HStretch Bottom" name="NameEdit"/>
+        <Widget type="EditBox" skin="EditBox" position="0 435 529 22" align="HStretch Bottom" name="ProjectLocation"/>
+        <Widget type="Button" skin="Button" position="531 435 23 22" align="Right Bottom" name="BrowseButton">
+            <Property key="Caption" value="..."/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="0 419 78 15" align="Left Bottom">
+            <Property key="Caption" value="Location"/>
         </Widget>
     </Widget>
 </MyGUI>
