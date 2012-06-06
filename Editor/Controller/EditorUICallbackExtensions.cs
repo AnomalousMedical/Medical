@@ -11,6 +11,7 @@ using Medical.GUI.AnomalousMvc;
 using Medical.Model;
 using Medical.GUI;
 using Engine;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -98,6 +99,28 @@ namespace Medical
             medicalUICallback.addCustomQuery<Type>(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Type> resultCallback)
             {
                 medicalUICallback.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
+            });
+
+            medicalUICallback.addOneWayCustomQuery(View.CustomQueries.AddControllerForView, delegate(View view)
+            {
+                AnomalousMvcContext context = BrowserWindowController.getCurrentEditingMvcContext();
+                String controllerName = view.Name;
+                if (context.Controllers.hasItem(controllerName))
+                {
+                    MessageBox.show(String.Format("There is already a controller named {0}. Cannot create a new one.", controllerName), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
+                else
+                {
+                    MvcController controller = new MvcController(controllerName);
+                    RunCommandsAction showCommand = new RunCommandsAction("Show");
+                    showCommand.addCommand(new ShowViewCommand(view.Name));
+                    controller.Actions.add(showCommand);
+
+                    RunCommandsAction closeCommand = new RunCommandsAction("Close");
+                    closeCommand.addCommand(new CloseViewCommand());
+                    controller.Actions.add(closeCommand);
+                    context.Controllers.add(controller);
+                }
             });
         }
     }

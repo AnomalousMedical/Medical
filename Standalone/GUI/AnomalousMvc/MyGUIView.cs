@@ -30,6 +30,7 @@ namespace Medical.GUI.AnomalousMvc
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.addSubInterface(buttons.getEditInterface("Buttons"));
+            base.customizeEditInterface(editInterface);
         }
 
         protected MyGUIView(LoadInfo info)

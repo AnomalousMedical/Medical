@@ -25,5 +25,19 @@ namespace Medical.Controller.AnomalousMvc
         {
 
         }
+
+        public enum CustomQueries
+        {
+            AddControllerForView
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            editInterface.addCommand(new EditInterfaceCommand("Create Controller", (uiCallback, caller) =>
+            {
+                uiCallback.runOneWayCustomQuery(CustomQueries.AddControllerForView, this);
+            }));
+            base.customizeEditInterface(editInterface);
+        }
     }
 }
