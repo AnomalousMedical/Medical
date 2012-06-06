@@ -12,6 +12,7 @@ namespace Medical.GUI
     {
         private Tree browserTree;
         private EditBox inputBox;
+        private bool allowNameChanges = true;
 
         private SendResult<BrowseType, String> SendResult;
 
@@ -20,6 +21,7 @@ namespace Medical.GUI
         {
             browserTree = new Tree((ScrollView)window.findWidget("ScrollView"));
             browserTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(browserTree_NodeMouseDoubleClick);
+            browserTree.AfterSelect += new EventHandler<TreeEventArgs>(browserTree_AfterSelect);
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             Button selectButton = (Button)window.findWidget("Select");
@@ -29,15 +31,11 @@ namespace Medical.GUI
 
             inputBox = (EditBox)window.findWidget("NameEdit");
             inputBox.EventEditSelectAccept += new MyGUIEvent(inputBox_EventEditSelectAccept);
+            inputBox.KeyButtonPressed += inputBox_KeyButtonPressed;
 
             Accepted = false;
             window.Caption = message;
             Input = text;
-        }
-
-        void window_WindowChangedCoord(Widget source, EventArgs e)
-        {
-            browserTree.layout();
         }
 
         public void setBrowser(Browser browser)
@@ -51,7 +49,7 @@ namespace Medical.GUI
         private TreeNode addNodes(BrowserNode node, BrowserNode defaultNode)
         {
             TreeNode treeNode = new TreeNode(node.Text);
-            treeNode.UserData = node.Value;
+            treeNode.UserData = node;
             if (node == defaultNode)
             {
                 browserTree.SelectedNode = treeNode;
@@ -77,7 +75,7 @@ namespace Medical.GUI
             {
                 if (browserTree.SelectedNode != null)
                 {
-                    return (BrowseType)browserTree.SelectedNode.UserData;
+                    return (BrowseType)((BrowserNode)browserTree.SelectedNode.UserData).Value;
                 }
                 return default(BrowseType);
             }
@@ -138,6 +136,24 @@ namespace Medical.GUI
             close();
         }
 
+        void browserTree_AfterSelect(object sender, TreeEventArgs e)
+        {
+            if (allowNameChanges)
+            {
+                BrowserNode selectedNode = (BrowserNode)e.Node.UserData;
+                String defaultName = selectedNode.DefaultName;
+                if (!String.IsNullOrEmpty(defaultName))
+                {
+                    inputBox.Caption = defaultName;
+                }
+            }
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            browserTree.layout();
+        }
+
         public static void GetInput(Browser browser, bool modal, SendResult<BrowseType, String> sendResult)
         {
             InputBrowserWindow<BrowseType> inputBox = new InputBrowserWindow<BrowseType>(browser.Prompt, "");
@@ -165,6 +181,12 @@ namespace Medical.GUI
         {
             InputBrowserWindow<BrowseType> inputBox = (InputBrowserWindow<BrowseType>)sender;
             inputBox.Dispose();
+        }
+
+        void inputBox_KeyButtonPressed(Widget source, EventArgs e)
+        {
+            allowNameChanges = false;
+            inputBox.KeyButtonPressed -= inputBox_KeyButtonPressed;
         }
     }
 }

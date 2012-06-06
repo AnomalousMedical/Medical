@@ -117,11 +117,9 @@
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\MvcModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ModelCollection.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\ModelCreationInfo.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationLink.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationModel.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\ReflectedModelCreationInfo.cs" />
     <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />

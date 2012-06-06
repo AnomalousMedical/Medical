@@ -24,28 +24,15 @@ namespace Medical.Controller.AnomalousMvc
             {
                 callback.runCustomQuery(CustomQueries.CreateModelBrowser, delegate(Browser modelBrowser, ref string errorPrompt)
                 {
-                    callback.showBrowser(modelBrowser, delegate(ModelCreationInfo returnedTypeInfo, ref string error)
+                    callback.showInputBrowser(modelBrowser, delegate(Type returnedTypeInfo, String name, ref string error)
                     {
-                        //Try to add with the default name.
-                        if (!hasItem(returnedTypeInfo.DefaultName))
+                        if (!hasItem(name))
                         {
-                            add(returnedTypeInfo.createModel(returnedTypeInfo.DefaultName));
+                            add((MvcModel)Activator.CreateInstance(returnedTypeInfo, name));
+                            return true;
                         }
-                        else
-                        {
-                            //Default name in use (second instance of model). Ask user for new name.
-                            callback.getInputString("Enter a name.", delegate(String input, ref String err)
-                            {
-                                if (!hasItem(input))
-                                {
-                                    add(returnedTypeInfo.createModel(input));
-                                    return true;
-                                }
-                                err = String.Format("An item named {0} already exists. Please input another name.", input);
-                                return false;
-                            });
-                        }
-                        return true;
+                        error = String.Format("A model named {0} already exists. Please input another name.", name);
+                        return false;
                     });
                     return true;
                 });
