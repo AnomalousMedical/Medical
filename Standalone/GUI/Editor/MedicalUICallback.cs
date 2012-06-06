@@ -10,14 +10,11 @@ namespace Medical.GUI
 {
     public class MedicalUICallback : EditUICallback
     {
-        BrowserWindow browserWindow;
-        private SendResult<Object> showBrowserCallback;
-        private SendResult<Object, String> showInputBrowserCallback;
         private Dictionary<Object, Delegate> customQueries = new Dictionary<object, Delegate>();
 
-        public MedicalUICallback(BrowserWindow browserWindow)
+        public MedicalUICallback()
         {
-            this.browserWindow = browserWindow;
+
         }
 
         public void getInputString(string prompt, SendResult<string> resultCallback)
@@ -32,14 +29,7 @@ namespace Medical.GUI
 
         public void showBrowser<T>(Browser browser, SendResult<T> resultCallback)
         {
-            browserWindow.setBrowser(browser);
-            showBrowserCallback = delegate(Object result, ref String errorPrompt)
-            {
-                return resultCallback.Invoke((T)result, ref errorPrompt);
-            };
-            browserWindow.ItemSelected += browserWindow_ItemSelected;
-            browserWindow.Canceled += browserWindow_Canceled;
-            browserWindow.open(true);
+            BrowserWindow<T>.GetInput(browser, "Browse", true, resultCallback);
         }
 
         public void showInputBrowser<T>(string prompt, Browser browser, SendResult<T, string> resultCallback)
@@ -224,24 +214,5 @@ namespace Medical.GUI
         }
 
         public EditInterface SelectedEditInterface { get; set; }
-
-        void browserWindow_ItemSelected(object sender, EventArgs e)
-        {
-            if (showBrowserCallback != null)
-            {
-                String error = null;
-                showBrowserCallback.Invoke(browserWindow.SelectedValue, ref error);
-                showBrowserCallback = null;
-            }
-            browserWindow.ItemSelected -= browserWindow_ItemSelected;
-            browserWindow.Canceled -= browserWindow_Canceled;
-        }
-
-        void browserWindow_Canceled(object sender, EventArgs e)
-        {
-            showBrowserCallback = null;
-            browserWindow.ItemSelected -= browserWindow_ItemSelected;
-            browserWindow.Canceled -= browserWindow_Canceled;
-        }
     }
 }

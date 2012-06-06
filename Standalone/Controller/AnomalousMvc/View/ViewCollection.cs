@@ -43,10 +43,6 @@ namespace Medical.Controller.AnomalousMvc
 
         public enum CustomQueries
         {
-            /// <summary>
-            /// Input: no args
-            /// Output: 
-            /// </summary>
             CreateViewBrowser
         }
 

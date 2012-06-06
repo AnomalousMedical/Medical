@@ -18,7 +18,6 @@ namespace Developer
         private PluginPublishController pluginPublishController;
         private DeveloperRenderPropertiesDialog developerRenderer;
         private DiscControl discControl;
-        private BrowserWindow browserWindow;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
         private GridPropertiesDialog gridProperties;
 
@@ -34,7 +33,6 @@ namespace Developer
             pluginPublisher.Dispose();
             developerRenderer.Dispose();
             discControl.Dispose();
-            browserWindow.Dispose();
             gridProperties.Dispose();
         }
 
@@ -55,9 +53,6 @@ namespace Developer
             GUIManager guiManager = standaloneController.GUIManager;
 
             //UI Helpers
-            browserWindow = new BrowserWindow("Developer");
-            guiManager.addManagedDialog(browserWindow);
-
             gridProperties = new GridPropertiesDialog(standaloneController.MeasurementGrid);
             guiManager.addManagedDialog(gridProperties);
 

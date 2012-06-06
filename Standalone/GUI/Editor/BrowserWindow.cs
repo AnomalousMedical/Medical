@@ -7,24 +7,26 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    public class BrowserWindow : Dialog
+    public class BrowserWindow<BrowseType> : Dialog
     {
-        public event EventHandler ItemSelected;
-        public event EventHandler Canceled;
+        private SendResult<BrowseType> SendResult;
 
         private Tree browserTree;
 
-        public BrowserWindow(String name)
-            :base("Medical.GUI.Editor.BrowserWindow.layout", "Medical.GUI.BrowserWindow." + name)
+        public BrowserWindow(String message)
+            :base("Medical.GUI.Editor.BrowserWindow.layout")
         {
             browserTree = new Tree((ScrollView)window.findWidget("ScrollView"));
             browserTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(browserTree_NodeMouseDoubleClick);
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            window.Caption = message;
 
             Button selectButton = (Button)window.findWidget("Select");
             selectButton.MouseButtonClick += new MyGUIEvent(selectButton_MouseButtonClick);
             Button cancelButton = (Button)window.findWidget("Cancel");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            Accepted = false;
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
@@ -54,17 +56,19 @@ namespace Medical.GUI
         /// <summary>
         /// The value that is selected on the tree. Can be null.
         /// </summary>
-        public Object SelectedValue
+        public BrowseType SelectedValue
         {
             get
             {
                 if (browserTree.SelectedNode != null)
                 {
-                    return browserTree.SelectedNode.UserData;
+                    return (BrowseType)browserTree.SelectedNode.UserData;
                 }
-                return null;
+                return default(BrowseType);
             }
         }
+
+        public bool Accepted { get; set; }
 
         protected override void onShown(EventArgs args)
         {
@@ -75,30 +79,49 @@ namespace Medical.GUI
         {
             if (SelectedValue != null)
             {
-                if (ItemSelected != null)
-                {
-                    ItemSelected.Invoke(this, EventArgs.Empty);
-                }
+                Accepted = true;
                 close();
             }
         }
 
         void selectButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (ItemSelected != null)
-            {
-                ItemSelected.Invoke(this, EventArgs.Empty);
-            }
+            Accepted = true;
             close();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (Canceled != null)
-            {
-                Canceled.Invoke(this, EventArgs.Empty);
-            }
+            Accepted = false;
             close();
+        }
+
+        public static void GetInput(Browser browser, String message, bool modal, SendResult<BrowseType> sendResult)
+        {
+            BrowserWindow<BrowseType> inputBox = new BrowserWindow<BrowseType>(message);
+            inputBox.setBrowser(browser);
+            inputBox.SendResult = sendResult;
+            inputBox.Closing += new EventHandler<DialogCancelEventArgs>(inputBox_Closing);
+            inputBox.Closed += new EventHandler(inputBox_Closed);
+            inputBox.center();
+            inputBox.open(modal);
+        }
+
+        static void inputBox_Closing(object sender, DialogCancelEventArgs e)
+        {
+            BrowserWindow<BrowseType> inputBox = (BrowserWindow<BrowseType>)sender;
+            String errorPrompt = null;
+            if (inputBox.Accepted && !inputBox.SendResult(inputBox.SelectedValue, ref errorPrompt))
+            {
+                MessageBox.show(errorPrompt, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                e.Cancel = true;
+            }
+        }
+
+        private static void inputBox_Closed(object sender, EventArgs e)
+        {
+            BrowserWindow<BrowseType> inputBox = (BrowserWindow<BrowseType>)sender;
+            inputBox.Dispose();
         }
     }
 }
