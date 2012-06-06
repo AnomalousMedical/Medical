@@ -69,13 +69,9 @@ namespace Medical.Controller.AnomalousMvc
 
             editInterface.addCommand(new EditInterfaceCommand("Add Command", delegate(EditUICallback callback, EditInterfaceCommand command)
             {
-                callback.runCustomQuery(CustomQueries.ShowCommandBrowser, delegate(Object result, ref string errorMessage)
+                callback.runCustomQuery(CustomQueries.ShowCommandBrowser, delegate(Type resultType, ref string errorMessage)
                 {
-                    Type resultType = result as Type;
-                    if (resultType != null)
-                    {
-                        addCommand((ActionCommand)Activator.CreateInstance(resultType));
-                    }
+                    addCommand((ActionCommand)Activator.CreateInstance(resultType));
                     return true;
                 });
             }));

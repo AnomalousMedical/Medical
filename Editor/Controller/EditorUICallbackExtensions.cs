@@ -95,7 +95,7 @@ namespace Medical
                 resultCallback(browser, ref error);
             });
             
-            medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Object> resultCallback)
+            medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Type> resultCallback)
             {
                 medicalUICallback.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
             });
