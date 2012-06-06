@@ -37,18 +37,22 @@ namespace Medical.GUI
         public void setBrowser(Browser browser)
         {
             browserTree.Nodes.clear();
-            TreeNode parentNode = addNodes(browser.getTopNode());
+            TreeNode parentNode = addNodes(browser.getTopNode(), browser.DefaultSelection);
             browserTree.Nodes.add(parentNode);
             parentNode.Expanded = true;
         }
 
-        private TreeNode addNodes(BrowserNode node)
+        private TreeNode addNodes(BrowserNode node, BrowserNode defaultNode)
         {
             TreeNode treeNode = new TreeNode(node.Text);
             treeNode.UserData = node.Value;
+            if (node == defaultNode)
+            {
+                browserTree.SelectedNode = treeNode;
+            }
             foreach (BrowserNode child in node.getChildIterator())
             {
-                treeNode.Children.add(addNodes(child));
+                treeNode.Children.add(addNodes(child, defaultNode));
             }
             return treeNode;
         }

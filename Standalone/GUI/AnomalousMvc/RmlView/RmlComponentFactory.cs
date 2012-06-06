@@ -20,7 +20,9 @@ namespace Medical.GUI.AnomalousMvc
 
         public void createViewBrowser(Browser browser)
         {
-            browser.addNode("", null, new BrowserNode("Rml View", typeof(RmlView)));
+            BrowserNode rmlNode = new BrowserNode("Rml View", typeof(RmlView));
+            browser.addNode("", null, rmlNode);
+            browser.DefaultSelection = rmlNode;
         }
     }
 }
