@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine.Editing;
+using Engine;
 
 namespace Medical.GUI
 {
-    public class InputBrowserWindow : Dialog
+    public class InputBrowserWindow<BrowseType> : Dialog
     {
-        public event EventHandler ItemSelected;
-        public event EventHandler Canceled;
-
         private Tree browserTree;
         private EditBox inputBox;
 
-        public InputBrowserWindow(String name)
-            : base("Medical.GUI.Editor.InputBrowserWindow.layout", "Medical.GUI.InputBrowserWindow." + name)
+        private SendResult<BrowseType, String> SendResult;
+
+        public InputBrowserWindow(String message, String text)
+            : base("Medical.GUI.Editor.InputBrowserWindow.layout")
         {
             browserTree = new Tree((ScrollView)window.findWidget("ScrollView"));
             browserTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(browserTree_NodeMouseDoubleClick);
@@ -28,6 +28,11 @@ namespace Medical.GUI
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
             inputBox = (EditBox)window.findWidget("NameEdit");
+            inputBox.EventEditSelectAccept += new MyGUIEvent(inputBox_EventEditSelectAccept);
+
+            Accepted = false;
+            window.Caption = message;
+            Input = text;
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
@@ -54,18 +59,23 @@ namespace Medical.GUI
             return treeNode;
         }
 
+        public void selectAllText()
+        {
+            inputBox.setTextSelection(0, uint.MaxValue);
+        }
+
         /// <summary>
         /// The value that is selected on the tree. Can be null.
         /// </summary>
-        public Object SelectedValue
+        public BrowseType SelectedValue
         {
             get
             {
                 if (browserTree.SelectedNode != null)
                 {
-                    return browserTree.SelectedNode.UserData;
+                    return (BrowseType)browserTree.SelectedNode.UserData;
                 }
-                return null;
+                return default(BrowseType);
             }
         }
 
@@ -81,39 +91,76 @@ namespace Medical.GUI
             }
         }
 
-        protected override void onShown(EventArgs args)
-        {
-            base.onShown(args);
-        }
+        public bool Accepted { get; set; }
 
         void browserTree_NodeMouseDoubleClick(object sender, TreeEventArgs e)
         {
             if (SelectedValue != null)
             {
-                if (ItemSelected != null)
-                {
-                    ItemSelected.Invoke(this, EventArgs.Empty);
-                }
-                close();
+                fireSelected();
             }
         }
 
         void selectButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (ItemSelected != null)
+            fireSelected();
+        }
+
+        void inputBox_EventEditSelectAccept(Widget source, EventArgs e)
+        {
+            fireSelected();
+        }
+
+        private void fireSelected()
+        {
+            if (SelectedValue == null)
             {
-                ItemSelected.Invoke(this, EventArgs.Empty);
+                MessageBox.show("Please select an item.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
             }
-            close();
+            else if (String.IsNullOrEmpty(Input))
+            {
+                MessageBox.show("Please enter a name.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                Accepted = true;
+                close();
+            }
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (Canceled != null)
-            {
-                Canceled.Invoke(this, EventArgs.Empty);
-            }
+            Accepted = false;
             close();
+        }
+
+        public static void GetInput(Browser browser, String message, bool modal, SendResult<BrowseType, String> sendResult)
+        {
+            InputBrowserWindow<BrowseType> inputBox = new InputBrowserWindow<BrowseType>(message, "");
+            inputBox.setBrowser(browser);
+            inputBox.SendResult = sendResult;
+            inputBox.Closing += new EventHandler<DialogCancelEventArgs>(inputBox_Closing);
+            inputBox.Closed += new EventHandler(inputBox_Closed);
+            inputBox.center();
+            inputBox.open(modal);
+        }
+
+        static void inputBox_Closing(object sender, DialogCancelEventArgs e)
+        {
+            InputBrowserWindow<BrowseType> inputBox = (InputBrowserWindow<BrowseType>)sender;
+            String errorPrompt = null;
+            if (inputBox.Accepted && !inputBox.SendResult(inputBox.SelectedValue, inputBox.Input, ref errorPrompt))
+            {
+                MessageBox.show(errorPrompt, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                inputBox.selectAllText();
+                e.Cancel = true;
+            }
+        }
+
+        private static void inputBox_Closed(object sender, EventArgs e)
+        {
+            InputBrowserWindow<BrowseType> inputBox = (InputBrowserWindow<BrowseType>)sender;
+            inputBox.Dispose();
         }
     }
 }

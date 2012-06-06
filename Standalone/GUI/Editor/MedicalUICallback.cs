@@ -11,15 +11,13 @@ namespace Medical.GUI
     public class MedicalUICallback : EditUICallback
     {
         BrowserWindow browserWindow;
-        InputBrowserWindow inputBrowserWindow;
         private SendResult<Object> showBrowserCallback;
         private SendResult<Object, String> showInputBrowserCallback;
         private Dictionary<Object, Delegate> customQueries = new Dictionary<object, Delegate>();
 
-        public MedicalUICallback(BrowserWindow browserWindow, InputBrowserWindow inputBrowserWindow)
+        public MedicalUICallback(BrowserWindow browserWindow)
         {
             this.browserWindow = browserWindow;
-            this.inputBrowserWindow = inputBrowserWindow;
         }
 
         public void getInputString(string prompt, SendResult<string> resultCallback)
@@ -46,14 +44,7 @@ namespace Medical.GUI
 
         public void showInputBrowser<T>(string prompt, Browser browser, SendResult<T, string> resultCallback)
         {
-            inputBrowserWindow.setBrowser(browser);
-            inputBrowserWindow.Input = "";
-            showInputBrowserCallback = delegate(Object result, String input, ref String errorPrompt)
-            {
-                return resultCallback.Invoke((T)result, input, ref errorPrompt);
-            };
-            inputBrowserWindow.ItemSelected += new EventHandler(inputBrowserWindow_ItemSelected);
-            inputBrowserWindow.Canceled += new EventHandler(inputBrowserWindow_Canceled);
+            InputBrowserWindow<T>.GetInput(browser, prompt, true, resultCallback);
         }
 
         public void showFolderBrowserDialog(SendResult<string> resultCallback)
@@ -251,25 +242,6 @@ namespace Medical.GUI
             showBrowserCallback = null;
             browserWindow.ItemSelected -= browserWindow_ItemSelected;
             browserWindow.Canceled -= browserWindow_Canceled;
-        }
-
-        void inputBrowserWindow_ItemSelected(object sender, EventArgs e)
-        {
-            if (showInputBrowserCallback != null)
-            {
-                String error = null;
-                showInputBrowserCallback.Invoke(inputBrowserWindow.SelectedValue, inputBrowserWindow.Input, ref error);
-                showInputBrowserCallback = null;
-            }
-            inputBrowserWindow.ItemSelected -= inputBrowserWindow_ItemSelected;
-            inputBrowserWindow.Canceled -= inputBrowserWindow_Canceled;
-        }
-
-        void inputBrowserWindow_Canceled(object sender, EventArgs e)
-        {
-            showInputBrowserCallback = null;
-            inputBrowserWindow.ItemSelected -= inputBrowserWindow_ItemSelected;
-            inputBrowserWindow.Canceled -= inputBrowserWindow_Canceled;
         }
     }
 }

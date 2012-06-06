@@ -7,6 +7,7 @@ using Engine.Editing;
 using Engine.Saving;
 using Medical.GUI.AnomalousMvc;
 using System.Reflection;
+using Engine;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -23,16 +24,16 @@ namespace Medical.Controller.AnomalousMvc
         {
             editInterface.addCommand(new EditInterfaceCommand("Add View", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {
-                callback.runCustomQuery(CustomQueries.ShowViewBrowser, delegate(Type returnedTypeInfo, ref string errorPrompt)
+                callback.runCustomQuery(CustomQueries.CreateViewBrowser, delegate(Browser browser, ref string errorPrompt)
                 {
-                    callback.getInputString("Enter a name.", delegate(String input, ref String err)
+                    callback.showInputBrowser("Choose a view", browser, delegate(Type returnedTypeInfo, String name, ref string err)
                     {
-                        if (!hasItem(input))
+                        if (!hasItem(name))
                         {
-                            add((View)Activator.CreateInstance(returnedTypeInfo, input));
+                            add((View)Activator.CreateInstance(returnedTypeInfo, name));
                             return true;
                         }
-                        err = String.Format("An item named {0} already exists. Please input another name.", input);
+                        err = String.Format("A view named {0} already exists. Please input another name.", name);
                         return false;
                     });
                     return true;
@@ -46,7 +47,7 @@ namespace Medical.Controller.AnomalousMvc
             /// Input: no args
             /// Output: 
             /// </summary>
-            ShowViewBrowser
+            CreateViewBrowser
         }
 
         protected ViewCollection(LoadInfo info)

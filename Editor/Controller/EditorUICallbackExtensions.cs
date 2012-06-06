@@ -76,16 +76,13 @@ namespace Medical
                     MessageBox.show("Cannot run MVC Context. Please open a timeline project first.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                 }
             });
-            
-            medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.ShowViewBrowser, delegate(SendResult<Type> resultCallback)
+
+            medicalUICallback.addCustomQuery(ViewCollection.CustomQueries.CreateViewBrowser, delegate(SendResult<Browser> resultCallback)
             {
                 Browser browser = new Browser("Views");
                 standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
-                medicalUICallback.showBrowser(browser, resultCallback);
-                //medicalUICallback.showInputBrowser("Choose View", browser, delegate(Type result, String input, ref String errorPrompt)
-                //{
-                //    return resultCallback(result, ref errorPrompt);
-                //});
+                String errorPrompt = null;
+                resultCallback(browser, ref errorPrompt);
             });
 
             medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.ShowModelBrowser, delegate(SendResult<Object> resultCallback)
