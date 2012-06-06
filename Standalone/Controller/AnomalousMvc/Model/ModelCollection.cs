@@ -22,10 +22,9 @@ namespace Medical.Controller.AnomalousMvc
         {
             editInterface.addCommand(new EditInterfaceCommand("Add Model", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {
-                callback.runCustomQuery(CustomQueries.ShowModelBrowser, delegate(Object result, ref string errorPrompt)
+                callback.runCustomQuery(CustomQueries.CreateModelBrowser, delegate(Browser modelBrowser, ref string errorPrompt)
                 {
-                    ModelCreationInfo returnedTypeInfo = result as ModelCreationInfo;
-                    if (returnedTypeInfo != null)
+                    callback.showBrowser("Choose Model", modelBrowser, delegate(ModelCreationInfo returnedTypeInfo, ref string error)
                     {
                         //Try to add with the default name.
                         if (!hasItem(returnedTypeInfo.DefaultName))
@@ -47,15 +46,15 @@ namespace Medical.Controller.AnomalousMvc
                             });
                         }
                         return true;
-                    }
-                    return false;
+                    });
+                    return true;
                 });
             }));
         }
 
         public enum CustomQueries
         {
-            ShowModelBrowser
+            CreateModelBrowser
         }
 
         protected ModelCollection(LoadInfo info)

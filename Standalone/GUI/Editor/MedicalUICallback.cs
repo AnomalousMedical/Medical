@@ -32,9 +32,9 @@ namespace Medical.GUI
             BrowserWindow<T>.GetInput(browser, prompt, true, resultCallback);
         }
 
-        public void showInputBrowser<T>(string prompt, String defaultInput, Browser browser, SendResult<T, string> resultCallback)
+        public void showInputBrowser<T>(string prompt, Browser browser, SendResult<T, string> resultCallback)
         {
-            InputBrowserWindow<T>.GetInput(browser, prompt, defaultInput, true, resultCallback);
+            InputBrowserWindow<T>.GetInput(browser, prompt, true, resultCallback);
         }
 
         public void showFolderBrowserDialog(SendResult<string> resultCallback)

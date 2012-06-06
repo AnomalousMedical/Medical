@@ -134,9 +134,9 @@ namespace Medical.GUI
             close();
         }
 
-        public static void GetInput(Browser browser, String message, String defaultInput, bool modal, SendResult<BrowseType, String> sendResult)
+        public static void GetInput(Browser browser, String message, bool modal, SendResult<BrowseType, String> sendResult)
         {
-            InputBrowserWindow<BrowseType> inputBox = new InputBrowserWindow<BrowseType>(message, defaultInput);
+            InputBrowserWindow<BrowseType> inputBox = new InputBrowserWindow<BrowseType>(message, "");
             inputBox.setBrowser(browser);
             inputBox.SendResult = sendResult;
             inputBox.Closing += new EventHandler<DialogCancelEventArgs>(inputBox_Closing);

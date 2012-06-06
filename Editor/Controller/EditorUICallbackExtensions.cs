@@ -85,14 +85,14 @@ namespace Medical
                 resultCallback(browser, ref errorPrompt);
             });
 
-            medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.ShowModelBrowser, delegate(SendResult<Object> resultCallback)
+            medicalUICallback.addCustomQuery(ModelCollection.CustomQueries.CreateModelBrowser, delegate(SendResult<Browser> resultCallback)
             {
                 Browser browser = new Browser("Models");
 
                 browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
                 browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
-
-                medicalUICallback.showBrowser("Choose Model", browser, resultCallback);
+                String error = null;
+                resultCallback(browser, ref error);
             });
             
             medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Object> resultCallback)
