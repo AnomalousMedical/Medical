@@ -180,7 +180,7 @@ namespace Medical.GUI
             Browser browser = editProperty.getBrowser(ColumnIndex);
             if (browser != null)
             {
-                uiCallback.showBrowser(browser, delegate(Object result, ref string errorPrompt)
+                uiCallback.showBrowser("Choose Item", browser, delegate(Object result, ref string errorPrompt)
                 {
                     editWidget.OnlyText = result.ToString();
                     errorPrompt = "";

@@ -323,7 +323,7 @@ namespace Medical
             {
                 anatomyCommandBrowser = new AnatomyCommandBrowser();
             }
-            callback.showBrowser(anatomyCommandBrowser, delegate(Object result, ref String errorMessage)
+            callback.showBrowser("Add Anatomy Command", anatomyCommandBrowser, delegate(Object result, ref String errorMessage)
             {
                 Type commandType = result as Type;
                 if (commandType != null)

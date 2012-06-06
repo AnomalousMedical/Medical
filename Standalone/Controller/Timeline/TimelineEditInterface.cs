@@ -117,7 +117,7 @@ namespace Medical
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
+            callback.showBrowser("Choose Pre Action", browser, delegate(Object result, ref String errorMessage)
             {
                 Type createType = (Type)result;
                 TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);
@@ -181,7 +181,7 @@ namespace Medical
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
+            callback.showBrowser("Choose Post Action", browser, delegate(Object result, ref String errorMessage)
             {
                 Type createType = (Type)result;
                 TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);

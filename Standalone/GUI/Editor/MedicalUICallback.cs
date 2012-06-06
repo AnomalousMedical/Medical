@@ -27,9 +27,9 @@ namespace Medical.GUI
             return SelectedEditInterface;
         }
 
-        public void showBrowser<T>(Browser browser, SendResult<T> resultCallback)
+        public void showBrowser<T>(String prompt, Browser browser, SendResult<T> resultCallback)
         {
-            BrowserWindow<T>.GetInput(browser, "Browse", true, resultCallback);
+            BrowserWindow<T>.GetInput(browser, prompt, true, resultCallback);
         }
 
         public void showInputBrowser<T>(string prompt, Browser browser, SendResult<T, string> resultCallback)

@@ -92,12 +92,12 @@ namespace Medical
                 browser.addNode("", null, new BrowserNode("Navigation", new ReflectedModelCreationInfo(NavigationModel.DefaultName, typeof(NavigationModel))));
                 browser.addNode("", null, new BrowserNode("MedicalStateInfo", new ReflectedModelCreationInfo(MedicalStateInfoModel.DefaultName, typeof(MedicalStateInfoModel))));
 
-                medicalUICallback.showBrowser(browser, resultCallback);
+                medicalUICallback.showBrowser("Choose Model", browser, resultCallback);
             });
             
             medicalUICallback.addCustomQuery(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Object> resultCallback)
             {
-                medicalUICallback.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
+                medicalUICallback.showBrowser("Choose Command", RunCommandsAction.CreateCommandBrowser(), resultCallback);
             });
         }
     }
