@@ -60,7 +60,7 @@ namespace Medical
             typeControllers.Add(typeController.Extension, typeController);
         }
 
-        public void createNewProject(String filename, bool deleteOld)
+        public void createNewProject(String filename, bool deleteOld, ProjectTemplate projectTemplate)
         {
             try
             {
@@ -75,6 +75,7 @@ namespace Medical
                     Directory.CreateDirectory(filename);
                 }
                 projectChanged(filename);
+                projectTemplate.createProject(ResourceProvider);
                 standaloneController.DocumentController.addToRecentDocuments(filename);
             }
             catch (Exception ex)

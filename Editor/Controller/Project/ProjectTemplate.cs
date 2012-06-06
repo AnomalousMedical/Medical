@@ -6,21 +6,8 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class ProjectTemplate : Saveable
+    public interface ProjectTemplate
     {
-        public ProjectTemplate()
-        {
-
-        }
-
-        public void getInfo(SaveInfo info)
-        {
-            ReflectedSaver.SaveObject(this, info, ReflectedSaver.DefaultScanner);
-        }
-
-        protected ProjectTemplate(LoadInfo info)
-        {
-            ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
-        }
+        void createProject(EditorResourceProvider resourceProvider);
     }
 }

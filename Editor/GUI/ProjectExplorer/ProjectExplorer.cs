@@ -81,13 +81,13 @@ namespace Medical.GUI
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
-                            editorController.createNewProject(fullProjectName, true);
+                            editorController.createNewProject(fullProjectName, true, template);
                         }
                     });
                 }
                 else
                 {
-                    editorController.createNewProject(fullProjectName, false);
+                    editorController.createNewProject(fullProjectName, false, template);
                 }
             });
         }
