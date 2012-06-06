@@ -11,7 +11,7 @@ using Medical.Editor;
 
 namespace Medical
 {
-    class StartAnomalousMvcTask : DDPluginTask
+    public class StartAnomalousMvcTask : DDPluginTask
     {
         public StartAnomalousMvcTask(String uniqueName, String name, String iconName, String category)
             :base(uniqueName, name, iconName, category)

@@ -8,6 +8,6 @@ namespace Medical
 {
     public interface ProjectTemplate
     {
-        void createProject(EditorResourceProvider resourceProvider);
+        void createProject(EditorResourceProvider resourceProvider, String projectName);
     }
 }

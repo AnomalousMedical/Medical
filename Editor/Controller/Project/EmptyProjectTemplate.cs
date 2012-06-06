@@ -7,7 +7,7 @@ namespace Medical
 {
     class EmptyProjectTemplate : ProjectTemplate
     {
-        public void createProject(EditorResourceProvider resourceProvider)
+        public void createProject(EditorResourceProvider resourceProvider, String projectName)
         {
             
         }

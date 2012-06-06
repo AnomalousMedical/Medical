@@ -14,6 +14,9 @@ namespace Medical.GUI
         public static void ShowDialog(Action<ProjectTemplate, String> resultCallback)
         {
             Browser browse = new Browser("Project Templates", "Create Project");
+            BrowserNode appNode = new BrowserNode("App", new AppProjectTemplate());
+            browse.addNode("", null, appNode);
+            browse.DefaultSelection = appNode;
             browse.addNode("", null, new BrowserNode("Empty", new EmptyProjectTemplate()));
 
             NewProjectDialog projectDialog = new NewProjectDialog();

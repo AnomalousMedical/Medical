@@ -86,6 +86,7 @@
     <Compile Include="Controller\EditorTypeController.cs" />
     <Compile Include="Controller\ExtensionAction.cs" />
     <Compile Include="Controller\ExtensionActionCollection.cs" />
+    <Compile Include="Controller\Project\AppProjectTemplate.cs" />
     <Compile Include="Controller\Project\EmptyProjectTemplate.cs" />
     <Compile Include="Controller\Project\ProjectTemplate.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="GUI\NewProjectDialog\NewProjectDialog.cs" />
     <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionData.cs" />
+    <EmbeddedResource Include="Controller\Project\SimpleMvcContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\AspectRatioTask.cs" />
   </ItemGroup>

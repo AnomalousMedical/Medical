@@ -75,7 +75,7 @@ namespace Medical
                     Directory.CreateDirectory(filename);
                 }
                 projectChanged(filename);
-                projectTemplate.createProject(ResourceProvider);
+                projectTemplate.createProject(ResourceProvider, Path.GetFileName(filename));
                 standaloneController.DocumentController.addToRecentDocuments(filename);
             }
             catch (Exception ex)
