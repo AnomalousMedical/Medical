@@ -54,8 +54,6 @@ namespace Medical.GUI
         public GUIManager(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
-            standaloneController.SceneLoaded += standaloneController_SceneLoaded;
-            standaloneController.SceneUnloading += standaloneController_SceneUnloading;
         }
 
         public void Dispose()
@@ -78,8 +76,6 @@ namespace Medical.GUI
             //Other
             imageRendererProgress.Dispose();
             continuePrompt.Dispose();
-            standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
-            standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             taskMenu.Dispose();
             taskbar.Dispose();
             notificationManager.Dispose();
@@ -343,16 +339,6 @@ namespace Medical.GUI
             guiTaskManager.loadPinnedTasks(configFile);
             taskbar.SuppressLayout = false;
             taskbar.layout();
-        }
-
-        private void standaloneController_SceneUnloading(SimScene scene)
-        {
-            
-        }
-
-        private void standaloneController_SceneLoaded(SimScene scene)
-        {
-            this.changeLeftPanel(null);
         }
 
         private void screenLayoutManager_ScreenSizeChanged(int width, int height)
