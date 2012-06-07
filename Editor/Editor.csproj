@@ -109,6 +109,9 @@
     <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
+    <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
+    <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
+    <Compile Include="GUI\EditorInfoBar\EditorInfoBarView.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditor.cs" />
@@ -137,7 +140,6 @@
     <Compile Include="GUI\TextEditor\TextEditor.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditorComponent.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineComponentFactory.cs" />
-    <Compile Include="GUI\TimelineEditor\TimelineEditor.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.cs" />
     <Compile Include="GUI\OpenPropManager\OpenPropManager.cs" />
@@ -171,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
+    <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVerticalComponent.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorComponent.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVertical.layout" />
@@ -189,7 +192,6 @@
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
-    <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.layout" />

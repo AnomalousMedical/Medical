@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class CloseAllViewsCommand : ActionCommand
+    public class CloseAllViewsCommand : ActionCommand
     {
         public CloseAllViewsCommand()
         {

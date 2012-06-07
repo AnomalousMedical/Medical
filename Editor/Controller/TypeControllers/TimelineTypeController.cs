@@ -17,60 +17,68 @@ namespace Medical
     {
         public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
 
-        private TimelineEditor editor;
         private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
         private EditorController editorController;
         private String currentFile;
+        private Timeline currentTimeline;
 
         public event TimelineTypeEvent TimelineChanged;
 
-        public TimelineTypeController(TimelineEditor editor, EditorController editorController)
+        public TimelineTypeController(EditorController editorController)
             :base(".tl", editorController)
         {
-            this.editor = editor;
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-            editor.GotFocus += new EventHandler(editor_GotFocus);
 
             extensionActions.Add(new ExtensionAction("Close Timeline", "File", close));
             extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
             extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
-            extensionActions.Add(new ExtensionAction("Cut", "Edit", editor.cut));
-            extensionActions.Add(new ExtensionAction("Copy", "Edit", editor.copy));
-            extensionActions.Add(new ExtensionAction("Paste", "Edit", editor.paste));
-            extensionActions.Add(new ExtensionAction("Select All", "Edit", editor.selectAll));
+            //extensionActions.Add(new ExtensionAction("Cut", "Edit", editor.cut));
+            //extensionActions.Add(new ExtensionAction("Copy", "Edit", editor.copy));
+            //extensionActions.Add(new ExtensionAction("Paste", "Edit", editor.paste));
+            //extensionActions.Add(new ExtensionAction("Select All", "Edit", editor.selectAll));
+            //Also need to handle synchronizing the timeline editor marker with the prop timeline editor marker
+
+            //CURRENT WORKING
+            //Make it so you can add items to the EditorInfoBarView menus
+            //Add the timeline extension actions above to that menu, link it back to callback actions in the controller
+            //Create an interface and some actions for cut, copy, paste, add these to the context
+            //make the timeline editor extend this interface and add itself to the model, this way the actions can read
+            //from the model and run the cut, copy, paste, select all functions
         }
 
         public override void openFile(string path)
         {
-            editor.CurrentTimeline = (Timeline)loadObject(path);
+            currentTimeline = (Timeline)loadObject(path);
             currentFile = path;
-            editor.updateFileName(currentFile);
-            //if (!editor.Visible)
-            //{
-            //    editor.Visible = true;
-            //}
             editorController.ExtensionActions = extensionActions;
-            //editor.bringToFront();
             if (TimelineChanged != null)
             {
-                TimelineChanged.Invoke(this, editor.CurrentTimeline);
+                TimelineChanged.Invoke(this, currentTimeline);
             }
 
             AnomalousMvcContext mvcContext = new AnomalousMvcContext();
-            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", editor.CurrentTimeline));
-            mvcContext.Views.add(new GenericEditorView("TimelinePropertiesEditor", editor.CurrentTimeline.getEditInterface()));
+            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
+            mvcContext.Views.add(new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface()));
+            mvcContext.Views.add(new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close"));
             MvcController timelineEditorController = new MvcController("TimelineEditor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
             showAction.addCommand(new ShowViewCommand("TimelineEditor"));
             showAction.addCommand(new ShowViewCommand("TimelinePropertiesEditor"));
+            showAction.addCommand(new ShowViewCommand("TimelineInfoBar"));
             timelineEditorController.Actions.add(showAction);
+            RunCommandsAction closeAction = new RunCommandsAction("Close");
+            closeAction.addCommand(new CloseAllViewsCommand());
+            timelineEditorController.Actions.add(closeAction);
             mvcContext.Controllers.add(timelineEditorController);
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");
             startup.addCommand(new RunActionCommand("TimelineEditor/Show"));
             common.Actions.add(startup);
-            RunCommandsAction shutdown = new RunCommandsAction("Shutdown");
+            CallbackAction shutdown = new CallbackAction("Shutdown", context =>
+            {
+                
+            });
             common.Actions.add(shutdown);
             mvcContext.Controllers.add(common);
 
@@ -112,16 +120,11 @@ namespace Medical
             openFile(filePath);
         }
 
-        void editor_GotFocus(object sender, EventArgs e)
-        {
-            editorController.ExtensionActions = extensionActions;
-        }
-
         private void saveTimeline()
         {
-            if (editor.CurrentTimeline != null)
+            if (currentTimeline != null)
             {
-                saveTimeline(editor.CurrentTimeline, currentFile);
+                saveTimeline(currentTimeline, currentFile);
             }
             else
             {
@@ -135,7 +138,7 @@ namespace Medical
             {
                 if (saveDialog.showModal() == NativeDialogResult.OK)
                 {
-                    saveTimeline(editor.CurrentTimeline, saveDialog.Path);
+                    saveTimeline(currentTimeline, saveDialog.Path);
                 }
             }
         }
@@ -146,7 +149,7 @@ namespace Medical
             {
                 saveObject(filename, timeline);
                 currentFile = filename;
-                editor.updateFileName(currentFile);
+                //editor.updateFileName(currentFile);
             }
             catch (Exception ex)
             {
@@ -162,8 +165,8 @@ namespace Medical
 
         private void close()
         {
-            editor.CurrentTimeline = null;
-            editor.updateFileName(null);
+            currentTimeline = null;
+            //editor.updateFileName(null);
             closeCurrentCachedResource();
         }
     }

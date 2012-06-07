@@ -29,7 +29,6 @@ namespace Medical
         private GenericEditor mvcEditor;
         private ProjectExplorer projectExplorer;
         private DDAtlasPluginEditor pluginEditor;
-        private TimelineEditor timelineEditor;
 
         private EditorController editorController;
         private MedicalUICallback medicalUICallback;
@@ -41,7 +40,6 @@ namespace Medical
 
         public void Dispose()
         {
-            timelineEditor.Dispose();
             pluginEditor.Dispose();
             projectExplorer.Dispose();
             mvcEditor.Dispose();
@@ -107,10 +105,6 @@ namespace Medical
             pluginEditor = new DDAtlasPluginEditor(medicalUICallback, standaloneController.AtlasPluginManager, editorController);
             guiManager.addManagedDialog(pluginEditor);
 
-            timelineEditor = new TimelineEditor(editorTimelineController, editorController, standaloneController.Clipboard, this);
-            timelineEditor.MarkerMoved += new Engine.EventDelegate<GUI.TimelineEditor, float>(timelineEditor_MarkerMoved);
-            guiManager.addManagedDialog(timelineEditor);
-
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -122,14 +116,13 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(timelineEditor, "Medical.NewTimelineEditor", "Timeline Editor", "TimelineEditorIcon", TaskMenuCategories.Editor));
 
             editorController.addTypeController(new RmlTypeController(rmlViewer, editorController, guiManager));
             editorController.addTypeController(new RcssTypeController(editorController, guiManager));
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
-            TimelineTypeController timelineTypeController = new TimelineTypeController(timelineEditor, editorController);
+            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController);
             timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
             editorController.addTypeController(timelineTypeController);
 
@@ -138,6 +131,7 @@ namespace Medical
 
             standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(editorTimelineController, editorController, standaloneController.Clipboard, this));
             standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(medicalUICallback, editorController));
+            standaloneController.ViewHostFactory.addFactory(new EditorInfoBarFactory());
         }
 
         public void sceneLoaded(SimScene scene)
@@ -264,14 +258,6 @@ namespace Medical
             }
         }
 
-        public TimelineEditor TimelineEditor
-        {
-            get
-            {
-                return timelineEditor;
-            }
-        }
-
         public ProjectExplorer ProjectExplorer
         {
             get
@@ -306,11 +292,6 @@ namespace Medical
         void timelineTypeController_TimelineChanged(TimelineTypeController typeController, Timeline timeline)
         {
             openPropManager.removeAllOpenProps();
-        }
-
-        void timelineEditor_MarkerMoved(TimelineEditor source, float arg)
-        {
-            propTimeline.MarkerTime = arg;
         }
     }
 }
