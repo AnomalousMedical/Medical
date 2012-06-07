@@ -7,7 +7,7 @@ using Engine.Editing;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class MyGUIViewHostFactory : ViewHostFactory
+    public class MyGUIViewHostFactory : ViewHostFactory
     {
         DecoratorComponentFactory componentFactory = new DecoratorComponentFactory();
 

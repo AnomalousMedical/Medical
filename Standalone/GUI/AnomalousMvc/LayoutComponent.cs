@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class LayoutComponent : ViewHostComponent
+    public class LayoutComponent : ViewHostComponent
     {
         private Layout layout;
         protected Widget widget;

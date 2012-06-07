@@ -7,7 +7,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class MyGUIViewHost : ViewHost
+    public class MyGUIViewHost : ViewHost
     {
         private ViewHostComponent component;
         private MyGUILayoutContainer layoutContainer;

@@ -7,7 +7,7 @@ using Engine.Editing;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    interface ViewHostComponentFactory
+    public interface ViewHostComponentFactory
     {
         ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost);
 

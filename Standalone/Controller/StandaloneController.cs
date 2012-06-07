@@ -42,7 +42,7 @@ namespace Medical
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private AnomalousMvcCore mvcCore;
-        private ViewHostFactory viewHostFactory;
+        private MyGUIViewHostFactory viewHostFactory;
         private PropFactory propFactory;
         private ExamController examController;
         private TaskController taskController;
@@ -528,6 +528,14 @@ namespace Medical
             get
             {
                 return mvcCore;
+            }
+        }
+
+        public MyGUIViewHostFactory ViewHostFactory
+        {
+            get
+            {
+                return viewHostFactory;
             }
         }
 

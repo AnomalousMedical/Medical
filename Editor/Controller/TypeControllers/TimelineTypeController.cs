@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml;
 using MyGUIPlugin;
 using Logging;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical
 {
@@ -60,6 +61,25 @@ namespace Medical
             {
                 TimelineChanged.Invoke(this, editor.CurrentTimeline);
             }
+
+            AnomalousMvcContext mvcContext = new AnomalousMvcContext();
+            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", editor.CurrentTimeline));
+            mvcContext.Views.add(new GenericEditorView("TimelinePropertiesEditor", editor.CurrentTimeline.getEditInterface()));
+            MvcController timelineEditorController = new MvcController("TimelineEditor");
+            RunCommandsAction showAction = new RunCommandsAction("Show");
+            showAction.addCommand(new ShowViewCommand("TimelineEditor"));
+            showAction.addCommand(new ShowViewCommand("TimelinePropertiesEditor"));
+            timelineEditorController.Actions.add(showAction);
+            mvcContext.Controllers.add(timelineEditorController);
+            MvcController common = new MvcController("Common");
+            RunCommandsAction startup = new RunCommandsAction("Start");
+            startup.addCommand(new RunActionCommand("TimelineEditor/Show"));
+            common.Actions.add(startup);
+            RunCommandsAction shutdown = new RunCommandsAction("Shutdown");
+            common.Actions.add(shutdown);
+            mvcContext.Controllers.add(common);
+
+            editorController.runEditorContext(mvcContext);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)

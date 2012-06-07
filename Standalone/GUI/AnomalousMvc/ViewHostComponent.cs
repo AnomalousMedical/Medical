@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    interface ViewHostComponent : IDisposable
+    public interface ViewHostComponent : IDisposable
     {
         void topLevelResized();
 

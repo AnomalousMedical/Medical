@@ -112,6 +112,9 @@
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditor.cs" />
+    <Compile Include="GUI\GenericEditor\GenericEditorComponent.cs" />
+    <Compile Include="GUI\GenericEditor\GenericEditorComponentFactory.cs" />
+    <Compile Include="GUI\GenericEditor\GenericEditorView.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
@@ -132,12 +135,15 @@
     <Compile Include="GUI\RmlViewer\RmlViewer.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
     <Compile Include="GUI\TextEditor\TextEditor.cs" />
+    <Compile Include="GUI\TimelineEditor\TimelineEditorComponent.cs" />
+    <Compile Include="GUI\TimelineEditor\TimelineComponentFactory.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditor.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.cs" />
     <Compile Include="GUI\OpenPropManager\OpenPropManager.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionClipboardContainer.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionFactory.cs" />
+    <Compile Include="GUI\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ChangeMedicalStateProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\LayerChangeProperties.cs" />
@@ -180,6 +186,7 @@
     <EmbeddedResource Include="GUI\RmlViewer\RmlViewer.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditor.layout" />
+    <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.layout" />

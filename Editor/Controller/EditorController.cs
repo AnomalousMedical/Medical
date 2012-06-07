@@ -11,6 +11,7 @@ using Medical.GUI;
 using Engine.Saving.XMLSaver;
 using Engine.Saving;
 using System.Xml;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical
 {
@@ -194,6 +195,11 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        public void runEditorContext(AnomalousMvcContext mvcContext)
+        {
+            standaloneController.MvcCore.startRunningContext(mvcContext);
         }
 
         private void importConflictedFiles(Queue<String> conflictedFiles, String targetPath)
