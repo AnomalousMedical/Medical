@@ -10,25 +10,106 @@ namespace Medical
 {
     class RmlTypeController : EditorTypeController
     {
-        private RmlViewer editor;
-        private EditorController editorController;
+        public const String WILDCARD = "RML Files (*.rml)|*.rml";
 
-        public RmlTypeController(RmlViewer editor, EditorController editorController)
+        //private RmlViewer editor;
+        private EditorController editorController;
+        private GUIManager guiManager;
+        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
+        private TextEditor currentEditor;
+
+        public RmlTypeController(RmlViewer editor, EditorController editorController, GUIManager guiManager)
             :base(".rml")
         {
-            this.editor = editor;
+            //this.editor = editor;
             this.editorController = editorController;
+            this.guiManager = guiManager;
+
+            extensionActions.Add(new ExtensionAction("Close RML File", "File", close));
+            extensionActions.Add(new ExtensionAction("Save RML File", "File", save));
+            extensionActions.Add(new ExtensionAction("Save RML File As", "File", saveAs));
         }
 
         public override void openFile(string file)
         {
-            editor.changeDocument(editorController.ResourceProvider.getFullFilePath(file));
-            if (!editor.Visible)
+            //editor.changeDocument(editorController.ResourceProvider.getFullFilePath(file));
+            //if (!editor.Visible)
+            //{
+            //    editor.open(false);
+            //}
+            //editor.activateExtensionActions();
+            //editor.bringToFront();
+            String rmlText = null;
+            using (StreamReader streamReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
             {
-                editor.open(false);
+                rmlText = streamReader.ReadToEnd();
             }
-            editor.activateExtensionActions();
-            editor.bringToFront();
+            TextEditor textEditor = TextEditor.openTextEditor(guiManager);
+            textEditor.Caption = String.Format("{0} - Rml Text Editor", file);
+            textEditor.WordWrap = false;
+            textEditor.Text = rmlText;
+            textEditor.CurrentFile = file;
+            textEditor.GotFocus += new EventHandler(textEditor_GotFocus);
+            textEditor.Closing += new EventHandler<DialogCancelEventArgs>(textEditor_Closing);
+        }
+
+        public void save()
+        {
+            if (currentEditor != null)
+            {
+                using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(currentEditor.CurrentFile)))
+                {
+                    streamWriter.Write(currentEditor.Text);
+                }
+            }
+            else
+            {
+                saveAs();
+            }
+        }
+
+        public void saveAs()
+        {
+            if (currentEditor != null)
+            {
+                using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a MVC Context", "", "", WILDCARD))
+                {
+                    if (fileDialog.showModal() == NativeDialogResult.OK)
+                    {
+                        try
+                        {
+                            using (StreamWriter streamWriter = new StreamWriter(fileDialog.Path))
+                            {
+                                streamWriter.Write(currentEditor.Text);
+                            }
+                            currentEditor.CurrentFile = fileDialog.Path;
+                            currentEditor.Caption = String.Format("{0} - Rml Text Editor", currentEditor.CurrentFile);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.show("Save error", String.Format("Exception saving RML File to {0}:\n{1}.", fileDialog.Path, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                        }
+                    }
+                }
+            }
+        }
+
+        void textEditor_GotFocus(object sender, EventArgs e)
+        {
+            currentEditor = (TextEditor)sender;
+            editorController.ExtensionActions = extensionActions;
+        }
+
+        void textEditor_Closing(object sender, DialogCancelEventArgs e)
+        {
+            if (currentEditor == (TextEditor)sender)
+            {
+                currentEditor = null;
+                if (editorController.ExtensionActions == extensionActions)
+                {
+                    editorController.ExtensionActions = null;
+                }
+            }
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -56,6 +137,14 @@ namespace Medical
                     return true;
                 });
             }));
+        }
+
+        private void close()
+        {
+            if (currentEditor != null)
+            {
+                currentEditor.close();
+            }
         }
 
         void createNewRmlFile(String filePath)

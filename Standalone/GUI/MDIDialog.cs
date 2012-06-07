@@ -128,6 +128,7 @@ namespace Medical.GUI
             }
 
             updateUndockedMinMaxSize();
+            Serialize = true;
         }
 
         /// <summary>
@@ -242,11 +243,14 @@ namespace Medical.GUI
 
         public virtual void serialize(ConfigFile configFile)
         {
-            ConfigSection section = configFile.createOrRetrieveConfigSection(persistName);
-            section.setValue("Location", desiredLocation.ToString());
-            section.setValue("DockLocation", CurrentDockLocation.ToString());
-            section.setValue("Scale", Scale);
-            section.setValue("DockedSize", dockedSize.ToString());
+            if (Serialize)
+            {
+                ConfigSection section = configFile.createOrRetrieveConfigSection(persistName);
+                section.setValue("Location", desiredLocation.ToString());
+                section.setValue("DockLocation", CurrentDockLocation.ToString());
+                section.setValue("Scale", Scale);
+                section.setValue("DockedSize", dockedSize.ToString());
+            }
         }
 
         public virtual void deserialize(ConfigFile configFile)
@@ -334,6 +338,11 @@ namespace Medical.GUI
         /// The MDILayoutManager to add this class to.
         /// </summary>
         public MDILayoutManager MDIManager { get; set; }
+
+        /// <summary>
+        /// True to serialize the location of this dialog (default)
+        /// </summary>
+        public bool Serialize { get; set; }
 
         public Rect DesiredLocation
         {

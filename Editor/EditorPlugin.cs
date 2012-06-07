@@ -129,7 +129,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(timelineEditor, "Medical.NewTimelineEditor", "Timeline Editor", "TimelineEditorIcon", TaskMenuCategories.Editor));
 
-            editorController.addTypeController(new RmlTypeController(rmlViewer, editorController));
+            editorController.addTypeController(new RmlTypeController(rmlViewer, editorController, guiManager));
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));

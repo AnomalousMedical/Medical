@@ -130,6 +130,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\RmlViewer\RmlViewer.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
+    <Compile Include="GUI\TextEditor\TextEditor.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditor.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.cs" />
     <Compile Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.cs" />
@@ -177,6 +178,7 @@
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.layout" />
     <EmbeddedResource Include="GUI\RmlViewer\RmlViewer.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
+    <EmbeddedResource Include="GUI\TextEditor\TextEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\MusclePositionActionProperties.layout" />
