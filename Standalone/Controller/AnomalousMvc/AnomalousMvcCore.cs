@@ -23,6 +23,7 @@ namespace Medical.Controller.AnomalousMvc
         private ViewHostManager viewHostManager;
         private GUIManager guiManager;
         private StandaloneController standaloneController;
+        private AnomalousMvcContext currentContext = null;
 
         private XmlSaver xmlSaver = new XmlSaver();
 
@@ -180,6 +181,13 @@ namespace Medical.Controller.AnomalousMvc
 
         public void startRunningContext(AnomalousMvcContext context)
         {
+            if (currentContext != null)
+            {
+                currentContext.queueShutdown();
+                this.processViewChanges();
+                this.shutdownContext(currentContext);
+            }
+            currentContext = context;
             timelineController.MvcContext = context;
             context.starting(this);
             context.runAction(context.StartupAction);
@@ -197,6 +205,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void shutdownContext(AnomalousMvcContext context)
         {
+            currentContext = null;
             timelineController.stopPlayback(false);
             context.runFinalAction(context.ShutdownAction);
         }

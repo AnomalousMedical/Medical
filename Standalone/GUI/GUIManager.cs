@@ -29,8 +29,6 @@ namespace Medical.GUI
         private TaskMenu taskMenu;
         private BorderLayoutContainer innerBorderLayout;
 
-        private Taskbar timelineGUITaskbar;
-
         private bool mainGuiShowing = true;
 
         private bool saveWindowsOnExit = true;
@@ -48,7 +46,6 @@ namespace Medical.GUI
 
         //Helper classes
         GUITaskManager guiTaskManager;
-        GUITimelineTaskManager guiTimelineTaskManager;
 
         //Events
         public event Action MainGUIShown;
@@ -71,7 +68,6 @@ namespace Medical.GUI
                 infoSection.setValue(INFO_VERSION, this.GetType().Assembly.GetName().Version.ToString());
                 dialogManager.saveDialogLayout(configFile);
                 guiTaskManager.savePinnedTasks(configFile);
-                guiTimelineTaskManager.saveUI(configFile);
                 configFile.writeConfigFile();
             }
             else
@@ -110,15 +106,7 @@ namespace Medical.GUI
             taskbar.OpenTaskMenu += new GUI.Taskbar.OpenTaskMenuEvent(taskbar_OpenTaskMenu);
             taskbar.AlignmentChanged += new Action<GUI.Taskbar>(taskbar_AlignmentChanged);
 
-            //Timeline taskbar
-            timelineGUITaskbar = new Taskbar(standaloneController);
-            timelineGUITaskbar.Alignment = TaskbarAlignment.Right;
-            timelineGUITaskbar.SuppressLayout = true;
-            timelineGUITaskbar.AppButtonVisible = false;
-            timelineGUITaskbar.Visible = false;
-
-            taskbar.Child = timelineGUITaskbar;
-            timelineGUITaskbar.Child = innerBorderLayout;
+            taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
 
             notificationManager = new NotificationGUIManager(taskbar, standaloneController);
@@ -127,7 +115,6 @@ namespace Medical.GUI
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController);
 
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
-            guiTimelineTaskManager = new GUITimelineTaskManager(timelineGUITaskbar, standaloneController.TaskController);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -146,7 +133,6 @@ namespace Medical.GUI
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
 
-            timelineGUITaskbar.SuppressLayout = false;
             taskbar.SuppressLayout = false;
             taskbar.layout();
 
@@ -219,36 +205,39 @@ namespace Medical.GUI
             if (mainGuiShowing != enabled)
             {
                 taskbar.SuppressLayout = true;
-                timelineGUITaskbar.SuppressLayout = true;
                 standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
                 if (enabled)
                 {
-                    taskbar.Visible = true;
-                    timelineGUITaskbar.Visible = false;
-                    dialogManager.reopenMainGUIDialogs();
-                    notificationManager.reshowAllNotifications();
-                    if (MainGUIShown != null)
+                    if (!taskbar.Visible)
                     {
-                        MainGUIShown.Invoke();
+                        taskbar.Visible = true;
+                        dialogManager.reopenMainGUIDialogs();
+                        notificationManager.reshowAllNotifications();
+                        if (MainGUIShown != null)
+                        {
+                            MainGUIShown.Invoke();
+                        }
                     }
                 }
                 else
                 {
                     if (enableSharedInterface)
                     {
-                        timelineGUITaskbar.Visible = true;
+
                     }
-                    taskbar.Visible = false;
-                    dialogManager.closeMainGUIDialogs();
-                    notificationManager.hideAllNotifications();
-                    if (MainGUIHidden != null)
+                    else
                     {
-                        MainGUIHidden.Invoke();
+                        taskbar.Visible = false;
+                        dialogManager.closeMainGUIDialogs();
+                        notificationManager.hideAllNotifications();
+                        if (MainGUIHidden != null)
+                        {
+                            MainGUIHidden.Invoke();
+                        }
                     }
                 }
                 mainGuiShowing = enabled;
                 taskbar.SuppressLayout = false;
-                timelineGUITaskbar.SuppressLayout = false;
                 taskbar.layout();
             }
         }
@@ -334,7 +323,6 @@ namespace Medical.GUI
         internal void loadSavedUI()
         {
             taskbar.SuppressLayout = true;
-            timelineGUITaskbar.SuppressLayout = true;
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
             ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
@@ -353,9 +341,7 @@ namespace Medical.GUI
                 dialogManager.loadDialogLayout(configFile);
             }
             guiTaskManager.loadPinnedTasks(configFile);
-            guiTimelineTaskManager.loadSavedUI(configFile);
             taskbar.SuppressLayout = false;
-            timelineGUITaskbar.SuppressLayout = false;
             taskbar.layout();
         }
 

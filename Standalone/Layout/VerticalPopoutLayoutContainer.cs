@@ -13,7 +13,7 @@ namespace Medical
         private LayoutContainer childContainer;
         private LayoutContainer oldChildContainer;
 
-        private AnimationCompletedDelegate animationComplete;
+        private event AnimationCompletedDelegate animationComplete;
         private float animationLength;
         private float currentTime;
         private bool animating = false;
@@ -82,13 +82,19 @@ namespace Medical
                     this.childContainer.setAlpha(1.0f);
                     this.childContainer.WorkingSize = newSize;
                     this.childContainer.layout();
+                    finishAnimation();
                 }
-                finishAnimation();
+                else
+                {
+                    //If we were transitioning to null, but now there is another container use the child that was being transitioned
+                    this.childContainer = oldChildContainer;
+                    unsubscribeFromUpdates();
+                }
             }
 
             currentTime = 0.0f;
             animationLength = animDuration;
-            this.animationComplete = animationComplete;
+            this.animationComplete += animationComplete;
 
             oldChildContainer = this.childContainer;
             if (oldChildContainer != null)
@@ -167,7 +173,8 @@ namespace Medical
             }
             if (animationComplete != null)
             {
-                animationComplete(oldChildContainer);
+                animationComplete.Invoke(oldChildContainer);
+                animationComplete = null;
             }
             unsubscribeFromUpdates();
         }
