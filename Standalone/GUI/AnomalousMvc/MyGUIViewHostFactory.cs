@@ -34,5 +34,10 @@ namespace Medical.GUI.AnomalousMvc
         {
             componentFactory.createViewBrowser(browser);
         }
+
+        public void addFactory(ViewHostComponentFactory factory)
+        {
+            componentFactory.addFactory(factory);
+        }
     }
 }

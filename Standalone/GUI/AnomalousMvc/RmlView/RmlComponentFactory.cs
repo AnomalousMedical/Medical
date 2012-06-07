@@ -11,7 +11,7 @@ namespace Medical.GUI.AnomalousMvc
     {
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            if (typeof(RmlView).IsAssignableFrom(view.GetType()))
+            if (view is RmlView)
             {
                 return new RmlWidgetComponent((RmlView)view, context, viewHost);
             }

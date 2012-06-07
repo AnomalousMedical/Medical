@@ -11,7 +11,7 @@ namespace Medical.GUI.AnomalousMvc
     {
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            if (typeof(NavigationView).IsAssignableFrom(view.GetType()))
+            if (view is NavigationView)
             {
                 return new NavigationComponent((NavigationView)view, context, viewHost);
             }
