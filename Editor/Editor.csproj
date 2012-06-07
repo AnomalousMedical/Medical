@@ -171,6 +171,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
+    <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVerticalComponent.layout" />
+    <EmbeddedResource Include="GUI\GenericEditor\GenericEditorComponent.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVertical.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditor.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />

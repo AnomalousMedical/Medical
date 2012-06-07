@@ -21,14 +21,12 @@ namespace Medical
         private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
         private EditorController editorController;
         private String currentFile;
-        private GenericEditor propertiesEditor;
 
         public event TimelineTypeEvent TimelineChanged;
 
-        public TimelineTypeController(TimelineEditor editor, GenericEditor propertiesEditor, EditorController editorController)
+        public TimelineTypeController(TimelineEditor editor, EditorController editorController)
             :base(".tl", editorController)
         {
-            this.propertiesEditor = propertiesEditor;
             this.editor = editor;
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
@@ -41,22 +39,19 @@ namespace Medical
             extensionActions.Add(new ExtensionAction("Copy", "Edit", editor.copy));
             extensionActions.Add(new ExtensionAction("Paste", "Edit", editor.paste));
             extensionActions.Add(new ExtensionAction("Select All", "Edit", editor.selectAll));
-            extensionActions.Add(new ExtensionAction("Edit Properties", "Timeline", showTimelineProperties));
         }
 
         public override void openFile(string path)
         {
             editor.CurrentTimeline = (Timeline)loadObject(path);
-            propertiesEditor.CurrentEditInterface = editor.CurrentTimeline.getEditInterface();
             currentFile = path;
             editor.updateFileName(currentFile);
-            propertiesEditor.changeCaption(currentFile);
-            if (!editor.Visible)
-            {
-                editor.Visible = true;
-            }
+            //if (!editor.Visible)
+            //{
+            //    editor.Visible = true;
+            //}
             editorController.ExtensionActions = extensionActions;
-            editor.bringToFront();
+            //editor.bringToFront();
             if (TimelineChanged != null)
             {
                 TimelineChanged.Invoke(this, editor.CurrentTimeline);
@@ -160,14 +155,6 @@ namespace Medical
             }
         }
 
-        private void showTimelineProperties()
-        {
-            if (!propertiesEditor.Visible)
-            {
-                propertiesEditor.Visible = true;
-            }
-        }
-
         void editorController_ProjectChanged(EditorController editorController)
         {
             close();
@@ -177,8 +164,6 @@ namespace Medical
         {
             editor.CurrentTimeline = null;
             editor.updateFileName(null);
-            propertiesEditor.CurrentEditInterface = null;
-            propertiesEditor.changeCaption(null);
             closeCurrentCachedResource();
         }
     }

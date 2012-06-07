@@ -27,7 +27,7 @@ namespace Medical.GUI
         private EditorController editorController;
 
         public GenericEditorComponent(MyGUIViewHost viewHost, String name, MedicalUICallback uiCallback, EditorController editorController, bool horizontalAlignment = true)
-            : base(horizontalAlignment ? "Medical.GUI.GenericEditor.GenericEditor.layout" : "Medical.GUI.GenericEditor.GenericEditorVertical.layout", viewHost)
+            : base(horizontalAlignment ? "Medical.GUI.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
         {
             Widget window = this.widget;
 

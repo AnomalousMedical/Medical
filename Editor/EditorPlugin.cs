@@ -27,7 +27,6 @@ namespace Medical
         private AspectRatioTask aspectRatioTask;
         private RmlViewer rmlViewer;
         private GenericEditor mvcEditor;
-        private GenericEditor timelinePropertiesEditor;
         private ProjectExplorer projectExplorer;
         private DDAtlasPluginEditor pluginEditor;
         private TimelineEditor timelineEditor;
@@ -42,7 +41,6 @@ namespace Medical
 
         public void Dispose()
         {
-            timelinePropertiesEditor.Dispose();
             timelineEditor.Dispose();
             pluginEditor.Dispose();
             projectExplorer.Dispose();
@@ -113,9 +111,6 @@ namespace Medical
             timelineEditor.MarkerMoved += new Engine.EventDelegate<GUI.TimelineEditor, float>(timelineEditor_MarkerMoved);
             guiManager.addManagedDialog(timelineEditor);
 
-            timelinePropertiesEditor = new GenericEditor("Medical.GUI.TimelinePropertiesEditor", "Timeline Properties", medicalUICallback, editorController, false);
-            guiManager.addManagedDialog(timelinePropertiesEditor);
-
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -134,7 +129,7 @@ namespace Medical
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
-            TimelineTypeController timelineTypeController = new TimelineTypeController(timelineEditor, timelinePropertiesEditor, editorController);
+            TimelineTypeController timelineTypeController = new TimelineTypeController(timelineEditor, editorController);
             timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
             editorController.addTypeController(timelineTypeController);
 
