@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class TextEditor : MDIDialog
+    class TextEditor : MDIDialogAutoDispose
     {
         /// <summary>
         /// Open a text editor that disposes when it is closed.
@@ -14,24 +14,15 @@ namespace Medical.GUI
         /// <returns></returns>
         public static TextEditor openTextEditor(GUIManager guiManager)
         {
-            TextEditor textEditor = new TextEditor();
-            guiManager.addManagedDialog(textEditor);
-
-            textEditor.Closed += (sender, e) =>
-            {
-                guiManager.removeManagedDialog(textEditor);
-                textEditor.Dispose();
-            };
-
+            TextEditor textEditor = new TextEditor(guiManager);
             textEditor.Visible = true;
-
             return textEditor;
         }
 
         private EditBox text;
 
-        protected TextEditor()
-            :base("Medical.GUI.TextEditor.TextEditor.layout")
+        protected TextEditor(GUIManager guiManager)
+            :base("Medical.GUI.TextEditor.TextEditor.layout", guiManager)
         {
             text = (EditBox)window.findWidget("Text");
             Serialize = false;

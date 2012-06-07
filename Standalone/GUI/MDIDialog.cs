@@ -26,6 +26,8 @@ namespace Medical.GUI
         private String originalLayer;
         protected IntSize2 dockedSize;
 
+        protected bool hidingWithInterface = false;
+
         /// <summary>
         /// Called after the dialog opens.
         /// </summary>
@@ -176,6 +178,13 @@ namespace Medical.GUI
                     }
                 }
             }
+        }
+
+        internal void hidingMainInterface()
+        {
+            hidingWithInterface = true;
+            Visible = false;
+            hidingWithInterface = false;
         }
 
         /// <summary>
