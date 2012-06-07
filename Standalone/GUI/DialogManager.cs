@@ -11,6 +11,7 @@ namespace Medical.GUI
     public class DialogManager
     {
         private List<DialogEntry> dialogs = new List<DialogEntry>();
+        private Dictionary<MDIDialog, DialogEntry> mdiDialogs = new Dictionary<MDIDialog, DialogEntry>();
         private MDILayoutManager mdiLayoutManager;
         private StoredMDILayout storedLayout;
 
@@ -27,7 +28,19 @@ namespace Medical.GUI
         public void addManagedDialog(MDIDialog dialog)
         {
             dialog.MDIManager = mdiLayoutManager;
-            dialogs.Add(new MDIDialogEntry(dialog));
+            MDIDialogEntry entry = new MDIDialogEntry(dialog);
+            dialogs.Add(entry);
+            mdiDialogs.Add(dialog, entry);
+        }
+
+        internal void removeManagedDialog(MDIDialog dialog)
+        {
+            DialogEntry entry;
+            if(mdiDialogs.TryGetValue(dialog, out entry))
+            {
+                mdiDialogs.Remove(dialog);
+                dialogs.Remove(entry);
+            }
         }
 
         public void saveDialogLayout(ConfigFile windowConfig)

@@ -141,29 +141,6 @@ namespace Medical.GUI
         }
 
         /// <summary>
-        /// Open the dialog with the given modal setting.
-        /// </summary>
-        /// <param name="modal">True to be modal. False for non modal.</param>
-        public void open(bool modal)
-        {
-            if (Visible == false)
-            {
-                Visible = true;
-            }
-        }
-
-        /// <summary>
-        /// Close the dialog.
-        /// </summary>
-        public void close()
-        {
-            if (Visible == true)
-            {
-                Visible = false;
-            }
-        }
-
-        /// <summary>
         /// True if the window is shown, false otherwise. Setting to true will
         /// show the window with the current properties.
         /// </summary>

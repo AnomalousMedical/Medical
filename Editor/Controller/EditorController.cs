@@ -92,7 +92,7 @@ namespace Medical
             standaloneController.DocumentController.addToRecentDocuments(projectPath);
             if (!plugin.ProjectExplorer.Visible)
             {
-                plugin.ProjectExplorer.open(false);
+                plugin.ProjectExplorer.Visible = true;
             }
         }
 

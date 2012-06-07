@@ -52,7 +52,7 @@ namespace Medical
             propertiesEditor.changeCaption(currentFile);
             if (!editor.Visible)
             {
-                editor.open(false);
+                editor.Visible = true;
             }
             editorController.ExtensionActions = extensionActions;
             editor.bringToFront();
@@ -144,7 +144,7 @@ namespace Medical
         {
             if (!propertiesEditor.Visible)
             {
-                propertiesEditor.open(false);
+                propertiesEditor.Visible = true;
             }
         }
 

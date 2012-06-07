@@ -38,7 +38,7 @@ namespace Medical
             editor.updateCaption(file);
             if (!editor.Visible)
             {
-                editor.open(false);
+                editor.Visible = true;
             }
             editorController.ExtensionActions = extensionActions;
             editor.bringToFront();

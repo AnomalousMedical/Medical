@@ -5,47 +5,40 @@ using System.Text;
 using Medical.GUI;
 using System.IO;
 using MyGUIPlugin;
+using libRocketPlugin;
 
 namespace Medical
 {
-    class RmlTypeController : EditorTypeController
+    class RcssTypeController : EditorTypeController
     {
-        public const String WILDCARD = "RML Files (*.rml)|*.rml";
+        public const String WILDCARD = "RCSS Files (*.rcss)|*.rcss";
 
-        //private RmlViewer editor;
         private EditorController editorController;
         private GUIManager guiManager;
         private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
         private TextEditor currentEditor;
 
-        public RmlTypeController(RmlViewer editor, EditorController editorController, GUIManager guiManager)
-            :base(".rml")
+        public RcssTypeController(EditorController editorController, GUIManager guiManager)
+            : base(".rcss")
         {
             //this.editor = editor;
             this.editorController = editorController;
             this.guiManager = guiManager;
 
-            extensionActions.Add(new ExtensionAction("Close RML File", "File", close));
-            extensionActions.Add(new ExtensionAction("Save RML File", "File", save));
-            extensionActions.Add(new ExtensionAction("Save RML File As", "File", saveAs));
+            extensionActions.Add(new ExtensionAction("Close RCSS File", "File", close));
+            extensionActions.Add(new ExtensionAction("Save RCSS File", "File", save));
+            extensionActions.Add(new ExtensionAction("Save RCSS File As", "File", saveAs));
         }
 
         public override void openFile(string file)
         {
-            //editor.changeDocument(editorController.ResourceProvider.getFullFilePath(file));
-            //if (!editor.Visible)
-            //{
-            //    editor.open(false);
-            //}
-            //editor.activateExtensionActions();
-            //editor.bringToFront();
             String rmlText = null;
             using (StreamReader streamReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
             {
                 rmlText = streamReader.ReadToEnd();
             }
             TextEditor textEditor = TextEditor.openTextEditor(guiManager);
-            textEditor.Caption = String.Format("{0} - Rml Text Editor", file);
+            textEditor.Caption = String.Format("{0} - Rcss Text Editor", file);
             textEditor.WordWrap = false;
             textEditor.Text = rmlText;
             textEditor.CurrentFile = file;
@@ -62,6 +55,7 @@ namespace Medical
                 {
                     streamWriter.Write(currentEditor.Text);
                 }
+                Factory.ClearStyleSheetCache();
             }
             else
             {
@@ -73,7 +67,7 @@ namespace Medical
         {
             if (currentEditor != null)
             {
-                using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a MVC Context", "", "", WILDCARD))
+                using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a Rcss File", "", "", WILDCARD))
                 {
                     if (fileDialog.showModal() == NativeDialogResult.OK)
                     {
@@ -84,11 +78,11 @@ namespace Medical
                                 streamWriter.Write(currentEditor.Text);
                             }
                             currentEditor.CurrentFile = fileDialog.Path;
-                            currentEditor.Caption = String.Format("{0} - Rml Text Editor", currentEditor.CurrentFile);
+                            currentEditor.Caption = String.Format("{0} - Rcss Text Editor", currentEditor.CurrentFile);
                         }
                         catch (Exception e)
                         {
-                            MessageBox.show("Save error", String.Format("Exception saving RML File to {0}:\n{1}.", fileDialog.Path, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                            MessageBox.show("Save error", String.Format("Exception saving Rcss File to {0}:\n{1}.", fileDialog.Path, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                         }
                     }
                 }
@@ -98,12 +92,6 @@ namespace Medical
         void textEditor_GotFocus(object sender, EventArgs e)
         {
             focusEditor((TextEditor)sender);
-        }
-
-        private void focusEditor(TextEditor sender)
-        {
-            currentEditor = sender;
-            editorController.ExtensionActions = extensionActions;
         }
 
         void textEditor_Closing(object sender, DialogCancelEventArgs e)
@@ -120,29 +108,35 @@ namespace Medical
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
         {
-            contextMenu.add(new ContextMenuItem("Create Rml File", path, delegate(ContextMenuItem item)
+            contextMenu.add(new ContextMenuItem("Create Rcss File", path, delegate(ContextMenuItem item)
             {
-                InputBox.GetInput("Rml File Name", "Enter a name for the rml file.", true, delegate(String result, ref String errorMessage)
+                InputBox.GetInput("Rcss File Name", "Enter a name for the rcss file.", true, delegate(String result, ref String errorMessage)
                 {
                     String filePath = Path.Combine(path, result);
-                    filePath = Path.ChangeExtension(filePath, ".rml");
+                    filePath = Path.ChangeExtension(filePath, ".rcss");
                     if (editorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
                         {
                             if (overrideResult == MessageBoxStyle.Yes)
                             {
-                                createNewRmlFile(filePath);
+                                createNewRcssFile(filePath);
                             }
                         });
                     }
                     else
                     {
-                        createNewRmlFile(filePath);
+                        createNewRcssFile(filePath);
                     }
                     return true;
                 });
             }));
+        }
+
+        private void focusEditor(TextEditor sender)
+        {
+            currentEditor = sender;
+            editorController.ExtensionActions = extensionActions;
         }
 
         private void close()
@@ -153,28 +147,16 @@ namespace Medical
             }
         }
 
-        void createNewRmlFile(String filePath)
+        void createNewRcssFile(String filePath)
         {
             Timeline timeline = new Timeline();
             using (StreamWriter sw = new StreamWriter(editorController.ResourceProvider.openWriteStream(filePath)))
             {
-                sw.Write(defaultRml);
+                sw.Write(defaultRcss);
             }
             openFile(filePath);
         }
 
-        private const String defaultRml = @"<rml>
-  <head>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
-  </head>
-  <body>
-    <div class=""ScrollArea"">
-      <h1>Empty Rml View</h1>
-      <p>You can start creating your Rml View here. You can erase this text to start.</p>
-    </div>
-  </body>
-</rml>
-";
+        private const String defaultRcss = "";
     }
 }

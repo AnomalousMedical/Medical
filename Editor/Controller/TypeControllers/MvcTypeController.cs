@@ -42,7 +42,7 @@ namespace Medical
             editor.changeCaption(currentFile);
             if (!editor.Visible)
             {
-                editor.open(false);
+                editor.Visible = true;
             }
             editorController.ExtensionActions = extensionActions;
             editor.bringToFront();

@@ -45,7 +45,7 @@ namespace Medical
                 editor.updateTitle(currentSequenceFile);
                 if (!editor.Visible)
                 {
-                    editor.open(false);
+                    editor.Visible = false;
                 }
                 editorController.ExtensionActions = extensionActions;
                 editor.bringToFront();

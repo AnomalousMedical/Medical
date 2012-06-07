@@ -19,10 +19,11 @@ namespace Medical.GUI
 
             textEditor.Closed += (sender, e) =>
             {
+                guiManager.removeManagedDialog(textEditor);
                 textEditor.Dispose();
             };
 
-            textEditor.open(false);
+            textEditor.Visible = true;
 
             return textEditor;
         }

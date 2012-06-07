@@ -96,6 +96,7 @@
     <Compile Include="Controller\EditorUICallbackExtensions.cs" />
     <Compile Include="Controller\TypeControllers\PluginTypeController.cs" />
     <Compile Include="Controller\TypeControllers\MvcTypeController.cs" />
+    <Compile Include="Controller\TypeControllers\RcssTypeController.cs" />
     <Compile Include="Controller\TypeControllers\RmlTypeController.cs" />
     <Compile Include="Controller\TypeControllers\MovementSequenceTypeController.cs" />
     <Compile Include="Controller\EditorResourceProvider\SaveableObjectStream.cs" />

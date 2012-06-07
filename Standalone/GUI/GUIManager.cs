@@ -268,6 +268,11 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(dialog);
         }
 
+        public void removeManagedDialog(MDIDialog dialog)
+        {
+            dialogManager.removeManagedDialog(dialog);
+        }
+
         public void addFullscreenPopup(FullscreenGUIPopup popup)
         {
             popup.setPosition((int)innerBorderLayout.Location.x, (int)innerBorderLayout.Location.y);
