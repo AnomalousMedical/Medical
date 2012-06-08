@@ -12,6 +12,8 @@ namespace Medical.GUI.AnomalousMvc
 {
     public class RmlView : MyGUIView
     {
+        public event Action<RmlView, RmlWidgetComponent> ComponentCreated;
+
         public RmlView(String name)
             :base(name)
         {
@@ -42,6 +44,14 @@ namespace Medical.GUI.AnomalousMvc
         private void editFile(EditUICallback callback, EditInterfaceCommand command)
         {
             callback.runOneWayCustomQuery(CustomQueries.EditWithSystemEditor, RmlFile);
+        }
+
+        internal void _fireComponentCreated(RmlWidgetComponent component)
+        {
+            if (ComponentCreated != null)
+            {
+                ComponentCreated.Invoke(this, component);
+            }
         }
 
         protected RmlView(LoadInfo info)

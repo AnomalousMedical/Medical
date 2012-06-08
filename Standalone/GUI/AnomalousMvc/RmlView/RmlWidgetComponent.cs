@@ -8,7 +8,7 @@ using libRocketPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RmlWidgetComponent : LayoutComponent
+    public class RmlWidgetComponent : LayoutComponent
     {
         private RocketWidget rocketWidget;
         private ImageBox rmlImage;
@@ -37,6 +37,8 @@ namespace Medical.GUI.AnomalousMvc
                 }
             }
             RocketEventListenerInstancer.resetEventController();
+
+            view._fireComponentCreated(this);
         }
 
         public override void Dispose()
@@ -63,7 +65,7 @@ namespace Medical.GUI.AnomalousMvc
             RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
             Factory.ClearStyleSheetCache();
             rocketWidget.Context.UnloadAllDocuments();
-            using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
+            using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(documentName)))
             {
                 if (document != null)
                 {

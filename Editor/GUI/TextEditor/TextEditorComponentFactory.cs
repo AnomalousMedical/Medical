@@ -15,6 +15,7 @@ namespace Medical.GUI
             if (view is TextEditorView)
             {
                 TextEditorComponent component = new TextEditorComponent(viewHost, (TextEditorView)view);
+                ((TextEditorView)view)._fireComponentCreated(component);
                 return component;
             }
             return null;
