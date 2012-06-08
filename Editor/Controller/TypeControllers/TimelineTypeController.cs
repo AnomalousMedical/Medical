@@ -28,22 +28,6 @@ namespace Medical
         {
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-
-            //extensionActions.Add(new ExtensionAction("Close Timeline", "File", close));
-            //extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
-            //extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
-            //extensionActions.Add(new ExtensionAction("Cut", "Edit", editor.cut));
-            //extensionActions.Add(new ExtensionAction("Copy", "Edit", editor.copy));
-            //extensionActions.Add(new ExtensionAction("Paste", "Edit", editor.paste));
-            //extensionActions.Add(new ExtensionAction("Select All", "Edit", editor.selectAll));
-            //Also need to handle synchronizing the timeline editor marker with the prop timeline editor marker
-
-            //CURRENT WORKING
-            //Make it so you can add items to the EditorInfoBarView menus
-            //Add the timeline extension actions above to that menu, link it back to callback actions in the controller
-            //Create an interface and some actions for cut, copy, paste, add these to the context
-            //make the timeline editor extend this interface and add itself to the model, this way the actions can read
-            //from the model and run the cut, copy, paste, select all functions
         }
 
         public override void openFile(string path)
@@ -172,7 +156,6 @@ namespace Medical
             {
                 saveObject(filename, timeline);
                 currentFile = filename;
-                //editor.updateFileName(currentFile);
             }
             catch (Exception ex)
             {
@@ -189,7 +172,6 @@ namespace Medical
         private void closeTimeline()
         {
             currentTimeline = null;
-            //editor.updateFileName(null);
             closeCurrentCachedResource();
         }
     }
