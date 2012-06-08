@@ -110,12 +110,6 @@
     <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
-    <Compile Include="GUI\EditMenuHelper\CopyAction.cs" />
-    <Compile Include="GUI\EditMenuHelper\CutAction.cs" />
-    <Compile Include="GUI\EditMenuHelper\EditMenuHelper.cs" />
-    <Compile Include="GUI\EditMenuHelper\EditMenuImplementor.cs" />
-    <Compile Include="GUI\EditMenuHelper\PasteAction.cs" />
-    <Compile Include="GUI\EditMenuHelper\SelectAllAction.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarView.cs" />

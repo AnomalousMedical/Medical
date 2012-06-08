@@ -19,7 +19,8 @@ namespace Medical
     {
         enum Events
         {
-            Save
+            Save,
+            TogglePlay
         }
 
         public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
@@ -28,6 +29,7 @@ namespace Medical
         private EditorController editorController;
         private String currentFile;
         private Timeline currentTimeline;
+        private TimelineEditorComponent timelineEditorComponent = null;
 
         public event TimelineTypeEvent TimelineChanged;
 
@@ -50,7 +52,12 @@ namespace Medical
             }
 
             AnomalousMvcContext mvcContext = new AnomalousMvcContext();
-            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
+            TimelineEditorView timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline);
+            timelineEditorView.ComponentCreated += (view, component) =>
+            {
+                timelineEditorComponent = component;
+            };
+            mvcContext.Views.add(timelineEditorView);
             mvcContext.Views.add(new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface()));
             EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
@@ -83,10 +90,22 @@ namespace Medical
             {
                 saveTimelineAs();
             }));
-            timelineEditorController.Actions.add(new CutAction());
-            timelineEditorController.Actions.add(new CopyAction());
-            timelineEditorController.Actions.add(new PasteAction());
-            timelineEditorController.Actions.add(new SelectAllAction());
+            timelineEditorController.Actions.add(new CallbackAction("Cut", context =>
+            {
+                timelineEditorComponent.cut();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Copy", context =>
+            {
+                timelineEditorComponent.copy();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Paste", context =>
+            {
+                timelineEditorComponent.paste();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("SelectAll", context =>
+            {
+                timelineEditorComponent.selectAll();
+            }));
             mvcContext.Controllers.add(timelineEditorController);
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");
@@ -112,6 +131,14 @@ namespace Medical
                 saveTimeline();
             };
             eventContext.addEvent(saveEvent);
+            MessageEvent togglePlayEvent = new MessageEvent(Events.TogglePlay);
+            togglePlayEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
+            togglePlayEvent.addButton(KeyboardButtonCode.KC_SPACE);
+            togglePlayEvent.FirstFrameUpEvent += eventManager =>
+            {
+                timelineEditorComponent.togglePlayPreview();
+            };
+            eventContext.addEvent(togglePlayEvent);
 
             editorController.runEditorContext(mvcContext);
         }

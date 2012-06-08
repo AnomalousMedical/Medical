@@ -30,6 +30,7 @@ namespace Medical.GUI
                 TimelineEditorView editorView = (TimelineEditorView)view;
                 TimelineEditorComponent timelineEditor = new TimelineEditorComponent(viewHost, timelineController, editorController, clipboard, editorPlugin);
                 timelineEditor.CurrentTimeline = editorView.Timeline;
+                editorView._fireComponentCreated(timelineEditor);
                 return timelineEditor;
             }
             return null;

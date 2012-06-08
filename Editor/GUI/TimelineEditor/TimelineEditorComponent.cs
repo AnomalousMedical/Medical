@@ -10,7 +10,7 @@ using Medical.GUI.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class TimelineEditorComponent : LayoutComponent, EditMenuImplementor
+    public class TimelineEditorComponent : LayoutComponent
     {
         public event EventDelegate<TimelineEditorComponent, float> MarkerMoved;
 
@@ -94,8 +94,6 @@ namespace Medical.GUI
                     dataProperties.addPanel(actionProp.TypeName, actionProp.Panel);
                 }
             }
-
-            viewHost.Context.addModel(EditMenuHelper.MenuImplementorDefaultName, this);
 
             //Enabled = false;
         }
@@ -263,10 +261,12 @@ namespace Medical.GUI
                 case KeyboardButtonCode.KC_DELETE:
                     deleteSelectedActions();
                     break;
-                case KeyboardButtonCode.KC_SPACE:
-                    togglePlayPreview(timelineView.MarkerTime);
-                    break;
             }
+        }
+
+        public void togglePlayPreview()
+        {
+            togglePlayPreview(timelineView.MarkerTime);
         }
 
         public void togglePlayPreview(float startTime)
