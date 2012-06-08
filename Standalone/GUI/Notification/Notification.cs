@@ -12,5 +12,7 @@ namespace Medical.GUI
         String ImageKey { get; }
 
         String Text { get; }
+
+        double Timeout { get; }
     }
 }

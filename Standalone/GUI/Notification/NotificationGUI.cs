@@ -46,12 +46,7 @@ namespace Medical.GUI
             widget.setSize((int)textSize.Width + widthDelta, (int)textSize.Height + heightDelta);
         }
 
-        private void clicked()
-        {
-            notification.clicked();
-        }
-
-        void closeButton_MouseButtonClick(Widget source, EventArgs e)
+        public void closeNotification()
         {
             if (allowClose)
             {
@@ -62,15 +57,22 @@ namespace Medical.GUI
             }
         }
 
+        private void clicked()
+        {
+            notification.clicked();
+        }
+
+        void closeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            closeNotification();
+        }
+
         void widget_MouseButtonClick(Widget source, EventArgs e)
         {
             if (allowClose)
             {
-                this.Hiding += new EventHandler(NotificationGUI_Hiding);
-                this.Hidden += new EventHandler(NotificationGUI_Hidden);
                 clicked();
-                this.hide();
-                allowClose = false;
+                closeNotification();
             }
         }
 

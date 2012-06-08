@@ -197,6 +197,14 @@ namespace Medical
             }
         }
 
+        public NotificationGUIManager NotificationManager
+        {
+            get
+            {
+                return standaloneController.GUIManager.NotificationManager;
+            }
+        }
+
         public void runEditorContext(AnomalousMvcContext mvcContext)
         {
             mvcContext.setResourceProvider(resourceProvider);

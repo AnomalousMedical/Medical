@@ -9,13 +9,14 @@ namespace Medical.GUI
     {
         public AbstractNotification()
         {
-
+            Timeout = -1;
         }
 
-        public AbstractNotification(String text, String imageKey)
+        public AbstractNotification(String text, String imageKey, double timeout = -1)
         {
             Text = text;
             ImageKey = imageKey;
+            Timeout = timeout;
         }
 
         public virtual void clicked()
@@ -26,5 +27,7 @@ namespace Medical.GUI
         public String Text { get; set; }
 
         public String ImageKey { get; set; }
+
+        public double Timeout { get; set; }
     }
 }

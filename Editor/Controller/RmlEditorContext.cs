@@ -139,6 +139,7 @@ namespace Medical
                 {
                     rmlComponent.reloadDocument(currentFile);
                 }
+                editorController.NotificationManager.showNotification(String.Format("{0} saved.", currentFile), "", 2);
             }
             else
             {

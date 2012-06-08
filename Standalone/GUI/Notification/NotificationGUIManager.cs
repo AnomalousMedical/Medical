@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -30,11 +31,15 @@ namespace Medical.GUI
         {
             NotificationGUI notificationGUI = new NotificationGUI(notification, this);
             positionNotification(notificationGUI);
+            if (notification.Timeout > 0.0)
+            {
+                Coroutine.Start(timedNotification(notificationGUI, notification.Timeout));
+            }
         }
 
-        public void showNotification(String text, String imageKey)
+        public void showNotification(String text, String imageKey, double timeout = -1)
         {
-            showNotification(new AbstractNotification(text, imageKey));
+            showNotification(new AbstractNotification(text, imageKey, timeout));
         }
 
         public void showTaskNotification(String text, String imageKey, Task task)
@@ -138,6 +143,13 @@ namespace Medical.GUI
                 openNotification.setPosition(openNotification.Left, currentHeight);
                 currentHeight += openNotification.Height;
             }
+        }
+
+        private IEnumerator<YieldAction> timedNotification(NotificationGUI notificationGui, double waitTime)
+        {
+            yield return Coroutine.Wait(waitTime);
+            notificationGui.closeNotification();
+            yield break;
         }
     }
 }
