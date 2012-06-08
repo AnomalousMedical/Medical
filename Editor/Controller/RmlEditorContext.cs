@@ -56,11 +56,11 @@ namespace Medical
             EditorInfoBarView infoBar = new EditorInfoBarView("InfoBar", String.Format("{0} - Rml", file), "Editor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Rml File", "File", "Editor/CloseCurrentFile"));
             infoBar.addAction(new EditorInfoBarAction("Save Rml File", "File", "Editor/Save"));
-            infoBar.addAction(new EditorInfoBarAction("Save Rml File As", "File", "Editor/SaveAs"));
-            //infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "Editor/Cut"));
-            //infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "Editor/Copy"));
-            //infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "Editor/Paste"));
-            //infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "Editor/SelectAll"));
+            //infoBar.addAction(new EditorInfoBarAction("Save Rml File As", "File", "Editor/SaveAs"));
+            infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "Editor/Cut"));
+            infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "Editor/Copy"));
+            infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "Editor/Paste"));
+            infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "Editor/SelectAll"));
             mvcContext.Views.add(infoBar);
             MvcController timelineEditorController = new MvcController("Editor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
@@ -84,10 +84,22 @@ namespace Medical
             {
                 saveAs();
             }));
-            //timelineEditorController.Actions.add(new CutAction());
-            //timelineEditorController.Actions.add(new CopyAction());
-            //timelineEditorController.Actions.add(new PasteAction());
-            //timelineEditorController.Actions.add(new SelectAllAction());
+            timelineEditorController.Actions.add(new CallbackAction("Cut", context =>
+            {
+                textEditorComponent.cut();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Copy", context =>
+            {
+                textEditorComponent.copy();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Paste", context =>
+            {
+                textEditorComponent.paste();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("SelectAll", context =>
+            {
+                textEditorComponent.selectAll();
+            }));
             mvcContext.Controllers.add(timelineEditorController);
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");

@@ -21,6 +21,26 @@ namespace Medical.GUI
             WordWrap = view.WordWrap;
         }
 
+        public void cut()
+        {
+            text.cut();
+        }
+
+        public void copy()
+        {
+            text.copy();
+        }
+
+        public void paste()
+        {
+            text.paste();
+        }
+
+        public void selectAll()
+        {
+            text.setTextSelection(0, uint.MaxValue);
+        }
+
         public String Text
         {
             get
