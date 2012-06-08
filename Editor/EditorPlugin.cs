@@ -25,7 +25,6 @@ namespace Medical
         private ScratchAreaController scratchAreaController;
 
         private AspectRatioTask aspectRatioTask;
-        private RmlViewer rmlViewer;
         private GenericEditor mvcEditor;
         private ProjectExplorer projectExplorer;
         private DDAtlasPluginEditor pluginEditor;
@@ -43,7 +42,6 @@ namespace Medical
             pluginEditor.Dispose();
             projectExplorer.Dispose();
             mvcEditor.Dispose();
-            rmlViewer.Dispose();
             movementSequenceEditor.Dispose();
             propTimeline.Dispose();
             openPropManager.Dispose();
@@ -93,9 +91,6 @@ namespace Medical
             scratchArea = new ScratchArea(scratchAreaController, medicalUICallback);
             guiManager.addManagedDialog(scratchArea);
 
-            rmlViewer = new RmlViewer(editorController);
-            guiManager.addManagedDialog(rmlViewer);
-
             mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", "MVC Context", medicalUICallback, editorController, false);
             guiManager.addManagedDialog(mvcEditor);
 
@@ -112,12 +107,11 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(rmlViewer, "Medical.RmlViewer", "RML Viewer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
 
-            editorController.addTypeController(new RmlTypeController(rmlViewer, editorController, guiManager));
+            editorController.addTypeController(new RmlTypeController(editorController, guiManager));
             editorController.addTypeController(new RcssTypeController(editorController, guiManager));
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
@@ -224,14 +218,6 @@ namespace Medical
             get
             {
                 return GetType().Assembly.GetName().Version;
-            }
-        }
-
-        public RmlViewer RmlViewer
-        {
-            get
-            {
-                return rmlViewer;
             }
         }
 

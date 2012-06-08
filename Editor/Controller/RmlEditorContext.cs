@@ -31,7 +31,7 @@ namespace Medical
 
             mvcContext = new AnomalousMvcContext();
             TextEditorView textEditorView = new TextEditorView("RmlEditor", rmlText, wordWrap: false);
-            textEditorView.ViewLocation = ViewLocations.Right;
+            textEditorView.ViewLocation = ViewLocations.Left;
             textEditorView.ComponentCreated += (view, component) =>
             {
                 textEditorComponent = component;

@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="37 17 800 700" layer="Overlapped">
-        <Property key="Caption" value="RML Viewer"/>
-        <Widget type="ImageBox" skin="ImageBox" position="0 0 788 667" align="Stretch" name="RocketImage"/>
-    </Widget>
-</MyGUI>

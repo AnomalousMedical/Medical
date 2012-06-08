@@ -14,37 +14,18 @@ namespace Medical
     {
         public const String WILDCARD = "RML Files (*.rml)|*.rml";
 
-        //private RmlViewer editor;
         private EditorController editorController;
         private GUIManager guiManager;
 
-        public RmlTypeController(RmlViewer editor, EditorController editorController, GUIManager guiManager)
+        public RmlTypeController(EditorController editorController, GUIManager guiManager)
             :base(".rml")
         {
-            //this.editor = editor;
             this.editorController = editorController;
             this.guiManager = guiManager;
         }
 
         public override void openFile(string file)
         {
-            //editor.changeDocument(editorController.ResourceProvider.getFullFilePath(file));
-            //if (!editor.Visible)
-            //{
-            //    editor.open(false);
-            //}
-            //editor.activateExtensionActions();
-            //editor.bringToFront();
-            
-            //TextEditor textEditor = TextEditor.openTextEditor(guiManager);
-            //textEditor.Caption = String.Format("{0} - Rml Text Editor", file);
-            //textEditor.WordWrap = false;
-            //textEditor.Text = rmlText;
-            //textEditor.CurrentFile = file;
-            //textEditor.GotFocus += new EventHandler(textEditor_GotFocus);
-            //textEditor.Closing += new EventHandler<DialogCancelEventArgs>(textEditor_Closing);
-            //focusEditor(textEditor);
-
             RmlEditorContext editorContext = new RmlEditorContext(editorController, file);
             editorController.runEditorContext(editorContext.MvcContext);
         }

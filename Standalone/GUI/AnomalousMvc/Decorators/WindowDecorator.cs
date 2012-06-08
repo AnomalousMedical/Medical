@@ -31,12 +31,12 @@ namespace Medical.GUI.AnomalousMvc
 
             if (closeAction != null)
             {
-                window = (Window)Gui.Instance.createWidgetT("Window", "WindowCSX", 22, 21, 260, 440, Align.Default, "Overlapped", "");
+                window = (Window)Gui.Instance.createWidgetT("Window", "WindowCSX", 300, 150, 260, 440, Align.Default, "Overlapped", "");
                 window.WindowButtonPressed += new MyGUIEvent(window_WindowButtonPressed);
             }
             else
             {
-                window = (Window)Gui.Instance.createWidgetT("Window", "WindowCS", 22, 21, 260, 440, Align.Default, "Overlapped", "");
+                window = (Window)Gui.Instance.createWidgetT("Window", "WindowCS", 300, 150, 260, 440, Align.Default, "Overlapped", "");
             }
 
             this.child = child;

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-      <Widget type="EditBox" skin="WordWrapWhite" position="200 59 650 500" layer="Overlapped" align="Stretch" name="Text">
-          <Property key="TabPrinting" value="true"/>
-          <Property key="MultiLine" value="true"/>
-          <Property key="MaxTextLength" value="100000"/>
-          <Property key="VisibleHScroll" value="true"/>
-          <Property key="VisibleVScroll" value="true"/>
-      </Widget>
+    <Widget type="EditBox" skin="WordWrapWhite" position="200 59 650 500" align="Stretch" layer="Overlapped" name="Text">
+        <Property key="TabPrinting" value="true"/>
+        <Property key="MultiLine" value="true"/>
+        <Property key="MaxTextLength" value="100000"/>
+        <Property key="VisibleHScroll" value="true"/>
+        <Property key="VisibleVScroll" value="true"/>
+    </Widget>
 </MyGUI>
