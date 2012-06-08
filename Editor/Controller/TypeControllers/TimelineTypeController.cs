@@ -8,6 +8,8 @@ using System.Xml;
 using MyGUIPlugin;
 using Logging;
 using Medical.Controller.AnomalousMvc;
+using Medical.Platform;
+using Engine.Platform;
 
 namespace Medical
 {
@@ -15,13 +17,21 @@ namespace Medical
 
     class TimelineTypeController : SaveableTypeController
     {
+        enum Events
+        {
+            Save
+        }
+
         public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
+        public const String Icon = "TimelineEditorIcon";
 
         private EditorController editorController;
         private String currentFile;
         private Timeline currentTimeline;
 
         public event TimelineTypeEvent TimelineChanged;
+
+        private EventContext eventContext;
 
         public TimelineTypeController(EditorController editorController)
             :base(".tl", editorController)
@@ -81,13 +91,27 @@ namespace Medical
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");
             startup.addCommand(new RunActionCommand("TimelineEditor/Show"));
+            startup.addCommand(new CallbackCommand(context =>
+            {
+                GlobalContextEventHandler.setEventContext(eventContext);
+            }));
             common.Actions.add(startup);
             CallbackAction shutdown = new CallbackAction("Shutdown", context =>
             {
-                
+                GlobalContextEventHandler.disableEventContext(eventContext);
             });
             common.Actions.add(shutdown);
             mvcContext.Controllers.add(common);
+
+            eventContext = new EventContext();
+            MessageEvent saveEvent = new MessageEvent(Events.Save);
+            saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
+            saveEvent.addButton(KeyboardButtonCode.KC_S);
+            saveEvent.FirstFrameUpEvent += eventManager =>
+            {
+                saveTimeline();
+            };
+            eventContext.addEvent(saveEvent);
 
             editorController.runEditorContext(mvcContext);
         }
@@ -156,6 +180,7 @@ namespace Medical
             {
                 saveObject(filename, timeline);
                 currentFile = filename;
+                editorController.NotificationManager.showNotification(String.Format("{0} saved.", currentFile), Icon, 2);
             }
             catch (Exception ex)
             {

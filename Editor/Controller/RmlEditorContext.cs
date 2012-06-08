@@ -14,6 +14,8 @@ namespace Medical
 {
     class RmlEditorContext
     {
+        public const String Icon = "RmlEditorIcon";
+
         enum Events
         {
             Save
@@ -139,7 +141,7 @@ namespace Medical
                 {
                     rmlComponent.reloadDocument(currentFile);
                 }
-                editorController.NotificationManager.showNotification(String.Format("{0} saved.", currentFile), "", 2);
+                editorController.NotificationManager.showNotification(String.Format("{0} saved.", currentFile), Icon, 2);
             }
             else
             {
