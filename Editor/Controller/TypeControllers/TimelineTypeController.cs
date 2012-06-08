@@ -20,7 +20,11 @@ namespace Medical
         enum Events
         {
             Save,
-            TogglePlay
+            TogglePlay,
+            Cut,
+            Copy,
+            Paste,
+            SelectAll
         }
 
         public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
@@ -117,6 +121,7 @@ namespace Medical
             common.Actions.add(startup);
             CallbackAction shutdown = new CallbackAction("Shutdown", context =>
             {
+                timelineEditorComponent = null;
                 GlobalContextEventHandler.disableEventContext(eventContext);
             });
             common.Actions.add(shutdown);
@@ -139,6 +144,42 @@ namespace Medical
                 timelineEditorComponent.togglePlayPreview();
             };
             eventContext.addEvent(togglePlayEvent);
+
+            MessageEvent cut = new MessageEvent(Events.Cut);
+            cut.addButton(KeyboardButtonCode.KC_LCONTROL);
+            cut.addButton(KeyboardButtonCode.KC_X);
+            cut.FirstFrameUpEvent += eventManager =>
+            {
+                timelineEditorComponent.cut();
+            };
+            eventContext.addEvent(cut);
+
+            MessageEvent copy = new MessageEvent(Events.Copy);
+            copy.addButton(KeyboardButtonCode.KC_LCONTROL);
+            copy.addButton(KeyboardButtonCode.KC_C);
+            copy.FirstFrameUpEvent += eventManager =>
+            {
+                timelineEditorComponent.copy();
+            };
+            eventContext.addEvent(copy);
+
+            MessageEvent paste = new MessageEvent(Events.Paste);
+            paste.addButton(KeyboardButtonCode.KC_LCONTROL);
+            paste.addButton(KeyboardButtonCode.KC_V);
+            paste.FirstFrameUpEvent += eventManager =>
+            {
+                timelineEditorComponent.paste();
+            };
+            eventContext.addEvent(paste);
+
+            MessageEvent selectAll = new MessageEvent(Events.SelectAll);
+            selectAll.addButton(KeyboardButtonCode.KC_LCONTROL);
+            selectAll.addButton(KeyboardButtonCode.KC_A);
+            selectAll.FirstFrameUpEvent += eventManager =>
+            {
+                timelineEditorComponent.selectAll();
+            };
+            eventContext.addEvent(selectAll);
 
             editorController.runEditorContext(mvcContext);
         }
