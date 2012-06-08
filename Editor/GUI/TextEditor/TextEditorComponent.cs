@@ -14,7 +14,7 @@ namespace Medical.GUI
         public TextEditorComponent(MyGUIViewHost viewHost, TextEditorView view)
             : base("Medical.GUI.TextEditor.TextEditorComponent.layout", viewHost)
         {
-            text = (EditBox)widget;
+            text = (EditBox)widget.findWidget("Text");
 
             Text = view.Text;
             MaxLength = view.MaxLength;
