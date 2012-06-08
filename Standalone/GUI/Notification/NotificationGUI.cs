@@ -50,10 +50,18 @@ namespace Medical.GUI
         {
             if (allowClose)
             {
-                this.Hiding += new EventHandler(NotificationGUI_Hiding);
-                this.Hidden += new EventHandler(NotificationGUI_Hidden);
-                this.hide();
-                allowClose = false;
+                if (Visible)
+                {
+                    this.Hiding += new EventHandler(NotificationGUI_Hiding);
+                    this.Hidden += new EventHandler(NotificationGUI_Hidden);
+                    this.hide();
+                    allowClose = false;
+                }
+                else
+                {
+                    notificationManager.notificationClosed(this);
+                    this.Dispose();
+                }
             }
         }
 
