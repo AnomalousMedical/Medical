@@ -55,5 +55,24 @@ namespace Medical.GUI.AnomalousMvc
             }
             base.topLevelResized();
         }
+
+        public void reloadDocument(String documentName)
+        {
+            RocketOgreTextureManager.refreshTextures();
+
+            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+            Factory.ClearStyleSheetCache();
+            rocketWidget.Context.UnloadAllDocuments();
+            using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
+            {
+                if (document != null)
+                {
+                    document.Show();
+                    rocketWidget.removeFocus();
+                    rocketWidget.renderOnNextFrame();
+                }
+            }
+            RocketEventListenerInstancer.resetEventController();
+        }
     }
 }
