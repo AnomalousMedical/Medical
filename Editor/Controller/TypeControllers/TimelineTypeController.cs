@@ -79,6 +79,7 @@ namespace Medical
             timelineEditorController.Actions.add(new CallbackAction("CloseTimeline", context =>
             {
                 closeTimeline();
+                context.runAction("TimelineEditor/Close");
             }));
             timelineEditorController.Actions.add(new CallbackAction("Save", context =>
             {
@@ -88,6 +89,10 @@ namespace Medical
             {
                 saveTimelineAs();
             }));
+            timelineEditorController.Actions.add(new CutAction());
+            timelineEditorController.Actions.add(new CopyAction());
+            timelineEditorController.Actions.add(new PasteAction());
+            timelineEditorController.Actions.add(new SelectAllAction());
             mvcContext.Controllers.add(timelineEditorController);
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");

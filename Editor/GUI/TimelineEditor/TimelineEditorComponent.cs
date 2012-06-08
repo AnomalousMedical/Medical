@@ -10,7 +10,7 @@ using Medical.GUI.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class TimelineEditorComponent : LayoutComponent
+    public class TimelineEditorComponent : LayoutComponent, EditMenuImplementor
     {
         public event EventDelegate<TimelineEditorComponent, float> MarkerMoved;
 
@@ -94,6 +94,8 @@ namespace Medical.GUI
                     dataProperties.addPanel(actionProp.TypeName, actionProp.Panel);
                 }
             }
+
+            viewHost.Context.addModel(EditMenuHelper.MenuImplementorDefaultName, this);
 
             //Enabled = false;
         }
