@@ -44,9 +44,9 @@ namespace Medical.GUI
             this.editorController = editorController;
 
             this.timelineController = timelineController;
-            timelineController.TimelinePlaybackStarted += new EventHandler(timelineController_TimelinePlaybackStarted);
-            timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
-            timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
+            timelineController.TimelinePlaybackStarted += timelineController_TimelinePlaybackStarted;
+            timelineController.TimelinePlaybackStopped += timelineController_TimelinePlaybackStopped;
+            timelineController.TimeTicked += timelineController_TimeTicked;
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
@@ -96,6 +96,15 @@ namespace Medical.GUI
             }
 
             //Enabled = false;
+        }
+
+        public override void Dispose()
+        {
+            CurrentTimeline = null;
+            timelineController.TimelinePlaybackStarted -= timelineController_TimelinePlaybackStarted;
+            timelineController.TimelinePlaybackStopped -= timelineController_TimelinePlaybackStopped;
+            timelineController.TimeTicked -= timelineController_TimeTicked;
+            base.Dispose();
         }
 
         public void paste()

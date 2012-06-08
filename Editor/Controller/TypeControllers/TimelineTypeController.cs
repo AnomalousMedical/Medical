@@ -17,7 +17,6 @@ namespace Medical
     {
         public const String TIMELINE_WILDCARD = "Timelines (*.tl)|*.tl";
 
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
         private EditorController editorController;
         private String currentFile;
         private Timeline currentTimeline;
@@ -30,9 +29,9 @@ namespace Medical
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
-            extensionActions.Add(new ExtensionAction("Close Timeline", "File", close));
-            extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
-            extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
+            //extensionActions.Add(new ExtensionAction("Close Timeline", "File", close));
+            //extensionActions.Add(new ExtensionAction("Save Timeline", "File", saveTimeline));
+            //extensionActions.Add(new ExtensionAction("Save Timeline As", "File", saveTimelineAs));
             //extensionActions.Add(new ExtensionAction("Cut", "Edit", editor.cut));
             //extensionActions.Add(new ExtensionAction("Copy", "Edit", editor.copy));
             //extensionActions.Add(new ExtensionAction("Paste", "Edit", editor.paste));
@@ -51,7 +50,6 @@ namespace Medical
         {
             currentTimeline = (Timeline)loadObject(path);
             currentFile = path;
-            editorController.ExtensionActions = extensionActions;
             if (TimelineChanged != null)
             {
                 TimelineChanged.Invoke(this, currentTimeline);
@@ -60,7 +58,15 @@ namespace Medical
             AnomalousMvcContext mvcContext = new AnomalousMvcContext();
             mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
             mvcContext.Views.add(new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface()));
-            mvcContext.Views.add(new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close"));
+            EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
+            infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
+            infoBar.addAction(new EditorInfoBarAction("Save Timeline", "File", "TimelineEditor/Save"));
+            infoBar.addAction(new EditorInfoBarAction("Save Timeline As", "File", "TimelineEditor/SaveAs"));
+            infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "TimelineEditor/Cut"));
+            infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "TimelineEditor/Copy"));
+            infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "TimelineEditor/Paste"));
+            infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
+            mvcContext.Views.add(infoBar);
             MvcController timelineEditorController = new MvcController("TimelineEditor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
             showAction.addCommand(new ShowViewCommand("TimelineEditor"));
@@ -70,6 +76,18 @@ namespace Medical
             RunCommandsAction closeAction = new RunCommandsAction("Close");
             closeAction.addCommand(new CloseAllViewsCommand());
             timelineEditorController.Actions.add(closeAction);
+            timelineEditorController.Actions.add(new CallbackAction("CloseTimeline", context =>
+            {
+                closeTimeline();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Save", context =>
+            {
+                saveTimeline();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("SaveAs", context =>
+            {
+                saveTimelineAs();
+            }));
             mvcContext.Controllers.add(timelineEditorController);
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");
@@ -160,10 +178,10 @@ namespace Medical
 
         void editorController_ProjectChanged(EditorController editorController)
         {
-            close();
+            closeTimeline();
         }
 
-        private void close()
+        private void closeTimeline()
         {
             currentTimeline = null;
             //editor.updateFileName(null);

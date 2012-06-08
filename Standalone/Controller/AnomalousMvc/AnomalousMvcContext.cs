@@ -368,11 +368,18 @@ namespace Medical.Controller.AnomalousMvc
                 int slashLoc = address.IndexOf('/');
                 if (slashLoc != -1)
                 {
-                    String controllerName = address.Substring(0, slashLoc);
-                    ++slashLoc;
-                    String actionName = address.Substring(slashLoc, address.Length - slashLoc);
-                    MvcController controller = controllers[controllerName];
-                    controller.runAction(actionName, this);
+                    try
+                    {
+                        String controllerName = address.Substring(0, slashLoc);
+                        ++slashLoc;
+                        String actionName = address.Substring(slashLoc, address.Length - slashLoc);
+                        MvcController controller = controllers[controllerName];
+                        controller.runAction(actionName, this);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Cannot run action {0}. Reason {1}", address, ex.Message);
+                    }
                 }
                 else
                 {
