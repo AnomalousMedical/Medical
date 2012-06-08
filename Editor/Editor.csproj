@@ -95,6 +95,7 @@
     <Compile Include="Controller\ScratchArea\ScratchAreaItem.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
     <Compile Include="Controller\EditorUICallbackExtensions.cs" />
+    <Compile Include="Controller\TimelineEditorContext.cs" />
     <Compile Include="Controller\TypeControllers\PluginTypeController.cs" />
     <Compile Include="Controller\TypeControllers\MvcTypeController.cs" />
     <Compile Include="Controller\TypeControllers\RcssTypeController.cs" />
