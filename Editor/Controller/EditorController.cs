@@ -199,6 +199,7 @@ namespace Medical
 
         public void runEditorContext(AnomalousMvcContext mvcContext)
         {
+            mvcContext.setResourceProvider(resourceProvider);
             standaloneController.MvcCore.startRunningContext(mvcContext);
         }
 

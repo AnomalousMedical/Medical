@@ -132,6 +132,7 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(editorTimelineController, editorController, standaloneController.Clipboard, this));
             standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(medicalUICallback, editorController));
             standaloneController.ViewHostFactory.addFactory(new EditorInfoBarFactory());
+            standaloneController.ViewHostFactory.addFactory(new TextEditorComponentFactory());
         }
 
         public void sceneLoaded(SimScene scene)
