@@ -25,25 +25,18 @@ namespace Medical.GUI.AnomalousMvc
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addCommand(new EditInterfaceCommand("View RML File", openFileInViewer));
-            editInterface.addCommand(new EditInterfaceCommand("Edit RML File", editFile));
+            editInterface.addCommand(new EditInterfaceCommand("Edit", openFileInViewer));
             base.customizeEditInterface(editInterface);
         }
 
         public enum CustomQueries
         {
-            OpenFileInRmlViewer,
-            EditWithSystemEditor
+            OpenFileInRmlViewer
         }
 
         private void openFileInViewer(EditUICallback callback, EditInterfaceCommand command)
         {
             callback.runOneWayCustomQuery(CustomQueries.OpenFileInRmlViewer, RmlFile);
-        }
-
-        private void editFile(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.runOneWayCustomQuery(CustomQueries.EditWithSystemEditor, RmlFile);
         }
 
         internal void _fireComponentCreated(RmlWidgetComponent component)

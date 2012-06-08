@@ -38,7 +38,7 @@ namespace Medical
             };
             mvcContext.Views.add(textEditorView);
             RmlView rmlView = new RmlView("RmlView");
-            rmlView.ViewLocation = ViewLocations.Floating;
+            rmlView.ViewLocation = ViewLocations.Right;
             rmlView.RmlFile = file;
             rmlView.ComponentCreated += (view, component) =>
             {

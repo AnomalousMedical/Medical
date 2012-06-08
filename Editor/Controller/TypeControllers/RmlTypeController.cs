@@ -26,6 +26,10 @@ namespace Medical
 
         public override void openFile(string file)
         {
+            if (!editorController.ResourceProvider.exists(file))
+            {
+                createNewRmlFile(file);
+            }
             RmlEditorContext editorContext = new RmlEditorContext(editorController, file);
             editorController.runEditorContext(editorContext.MvcContext);
         }

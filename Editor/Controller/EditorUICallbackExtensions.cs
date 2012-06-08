@@ -59,11 +59,6 @@ namespace Medical
                 editorController.openFile(file);
             });
 
-            medicalUICallback.addOneWayCustomQuery<String>(RmlView.CustomQueries.EditWithSystemEditor, delegate(String path)
-            {
-                OtherProcessManager.openLocalURL(editorController.ResourceProvider.getFullFilePath(path));
-            });
-
             medicalUICallback.addOneWayCustomQuery(AnomalousMvcContext.CustomQueries.Preview, delegate(AnomalousMvcContext context)
             {
                 if (editorController.ResourceProvider != null)
