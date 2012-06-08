@@ -135,6 +135,7 @@ namespace Medical
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
             eventManager = new EventManager(inputHandler);
+            Medical.Platform.GlobalContextEventHandler.setEventManager(eventManager);
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addFixedUpdateListener(eventUpdate);
             pluginManager.setPlatformInfo(mainTimer, eventManager);

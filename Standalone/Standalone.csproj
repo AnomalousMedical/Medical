@@ -90,6 +90,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\ChangeMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\RestoreMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SaveMusclePositionCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\CallbackCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseAllViewsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseViewCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\CreateMedicalStateCommand.cs" />
@@ -429,6 +430,8 @@
     <Compile Include="Layout\MDI\MDIBorderContainer.cs" />
     <Compile Include="Layout\MDI\MDIChildContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIDocumentWindow.cs" />
+    <Compile Include="Platform\GlobalEventHandler\EventContext.cs" />
+    <Compile Include="Platform\GlobalEventHandler\GlobalContextEventHandler.cs" />
     <Compile Include="Platform\MultiTouch\Finger.cs" />
     <Compile Include="Platform\MultiTouch\Gesture.cs" />
     <Compile Include="Platform\MultiTouch\GestureEngine.cs" />

@@ -7,16 +7,24 @@ using Medical.GUI.AnomalousMvc;
 using Medical.GUI;
 using System.IO;
 using MyGUIPlugin;
+using Medical.Platform;
+using Engine.Platform;
 
 namespace Medical
 {
     class RmlEditorContext
     {
+        enum Events
+        {
+            Save
+        }
+
         private TextEditorComponent textEditorComponent;
         private RmlWidgetComponent rmlComponent;
         private EditorController editorController;
         private String currentFile;
         private AnomalousMvcContext mvcContext;
+        private EventContext eventContext;
 
         public RmlEditorContext(EditorController editorController, String file)
         {
@@ -84,13 +92,27 @@ namespace Medical
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");
             startup.addCommand(new RunActionCommand("Editor/Show"));
+            startup.addCommand(new CallbackCommand(context =>
+            {
+                GlobalContextEventHandler.setEventContext(eventContext);
+            }));
             common.Actions.add(startup);
             CallbackAction shutdown = new CallbackAction("Shutdown", context =>
             {
-
+                GlobalContextEventHandler.disableEventContext(eventContext);
             });
             common.Actions.add(shutdown);
             mvcContext.Controllers.add(common);
+
+            eventContext = new EventContext();
+            MessageEvent saveEvent = new MessageEvent(Events.Save);
+            saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
+            saveEvent.addButton(KeyboardButtonCode.KC_S);
+            saveEvent.FirstFrameUpEvent += eventManager =>
+            {
+                save();
+            };
+            eventContext.addEvent(saveEvent);
         }
 
         public void save()
