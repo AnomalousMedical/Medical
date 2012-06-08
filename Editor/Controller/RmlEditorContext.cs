@@ -14,7 +14,7 @@ namespace Medical
 {
     class RmlEditorContext
     {
-        public const String Icon = "RmlEditorIcon";
+        public event Action<RmlEditorContext> Shutdown;
 
         enum Events
         {
@@ -23,21 +23,15 @@ namespace Medical
 
         private TextEditorComponent textEditorComponent;
         private RmlWidgetComponent rmlComponent;
-        private EditorController editorController;
         private String currentFile;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
+        private RmlTypeController rmlTypeController;
 
-        public RmlEditorContext(EditorController editorController, String file)
+        public RmlEditorContext(String rmlText, String file, RmlTypeController rmlTypeController)
         {
-            this.editorController = editorController;
+            this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
-
-            String rmlText = null;
-            using (StreamReader streamReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
-            {
-                rmlText = streamReader.ReadToEnd();
-            }
 
             mvcContext = new AnomalousMvcContext();
             TextEditorView textEditorView = new TextEditorView("RmlEditor", rmlText, wordWrap: false);
@@ -58,7 +52,6 @@ namespace Medical
             EditorInfoBarView infoBar = new EditorInfoBarView("InfoBar", String.Format("{0} - Rml", file), "Editor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Rml File", "File", "Editor/CloseCurrentFile"));
             infoBar.addAction(new EditorInfoBarAction("Save Rml File", "File", "Editor/Save"));
-            //infoBar.addAction(new EditorInfoBarAction("Save Rml File As", "File", "Editor/SaveAs"));
             infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "Editor/Cut"));
             infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "Editor/Copy"));
             infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "Editor/Paste"));
@@ -81,10 +74,6 @@ namespace Medical
             timelineEditorController.Actions.add(new CallbackAction("Save", context =>
             {
                 save();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("SaveAs", context =>
-            {
-                saveAs();
             }));
             timelineEditorController.Actions.add(new CallbackAction("Cut", context =>
             {
@@ -114,6 +103,10 @@ namespace Medical
             CallbackAction shutdown = new CallbackAction("Shutdown", context =>
             {
                 GlobalContextEventHandler.disableEventContext(eventContext);
+                if (Shutdown != null)
+                {
+                    Shutdown.Invoke(this);
+                }
             });
             common.Actions.add(shutdown);
             mvcContext.Controllers.add(common);
@@ -129,50 +122,9 @@ namespace Medical
             eventContext.addEvent(saveEvent);
         }
 
-        public void save()
+        public void close()
         {
-            if (textEditorComponent != null)
-            {
-                using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(currentFile)))
-                {
-                    streamWriter.Write(textEditorComponent.Text);
-                }
-                if (rmlComponent != null)
-                {
-                    rmlComponent.reloadDocument(currentFile);
-                }
-                editorController.NotificationManager.showNotification(String.Format("{0} saved.", currentFile), Icon, 2);
-            }
-            else
-            {
-                saveAs();
-            }
-        }
-
-        public void saveAs()
-        {
-            //if (currentEditor != null)
-            //{
-            //    using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a MVC Context", "", "", WILDCARD))
-            //    {
-            //        if (fileDialog.showModal() == NativeDialogResult.OK)
-            //        {
-            //            try
-            //            {
-            //                using (StreamWriter streamWriter = new StreamWriter(fileDialog.Path))
-            //                {
-            //                    streamWriter.Write(currentEditor.Text);
-            //                }
-            //                currentEditor.CurrentFile = fileDialog.Path;
-            //                currentEditor.Caption = String.Format("{0} - Rml Text Editor", currentEditor.CurrentFile);
-            //            }
-            //            catch (Exception e)
-            //            {
-            //                MessageBox.show("Save error", String.Format("Exception saving RML File to {0}:\n{1}.", fileDialog.Path, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            //            }
-            //        }
-            //    }
-            //}
+            mvcContext.runAction("Editor/Close");
         }
 
         public AnomalousMvcContext MvcContext
@@ -183,12 +135,16 @@ namespace Medical
             }
         }
 
-        private void close()
+        private void save()
         {
-            //if (currentEditor != null)
-            //{
-            //    currentEditor.Visible = false;
-            //}
+            if (textEditorComponent != null)
+            {
+                rmlTypeController.saveFile(textEditorComponent.Text, currentFile);
+                if (rmlComponent != null)
+                {
+                    rmlComponent.reloadDocument(currentFile);
+                }
+            }
         }
     }
 }

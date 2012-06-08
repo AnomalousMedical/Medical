@@ -12,16 +12,17 @@ namespace Medical
 {
     class RmlTypeController : EditorTypeController
     {
-        public const String WILDCARD = "RML Files (*.rml)|*.rml";
-
         private EditorController editorController;
         private GUIManager guiManager;
+        public const String Icon = "RmlEditorIcon";
+        private RmlEditorContext editorContext;
 
         public RmlTypeController(EditorController editorController, GUIManager guiManager)
             :base(".rml")
         {
             this.editorController = editorController;
             this.guiManager = guiManager;
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
 
         public override void openFile(string file)
@@ -30,8 +31,25 @@ namespace Medical
             {
                 createNewRmlFile(file);
             }
-            RmlEditorContext editorContext = new RmlEditorContext(editorController, file);
+
+            String rmlText = null;
+            using (StreamReader streamReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
+            {
+                rmlText = streamReader.ReadToEnd();
+            }
+
+            editorContext = new RmlEditorContext(rmlText, file, this);
+            editorContext.Shutdown += new Action<RmlEditorContext>(editorContext_Shutdown);
             editorController.runEditorContext(editorContext.MvcContext);
+        }
+
+        public void saveFile(String rml, String file)
+        {
+            using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(file)))
+            {
+                streamWriter.Write(rml);
+            }
+            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -59,6 +77,22 @@ namespace Medical
                     return true;
                 });
             }));
+        }
+
+        void editorContext_Shutdown(RmlEditorContext obj)
+        {
+            if (editorContext == obj)
+            {
+                editorContext = null;
+            }
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            if (editorContext != null)
+            {
+                editorContext.close();
+            }
         }
 
         void createNewRmlFile(String filePath)
