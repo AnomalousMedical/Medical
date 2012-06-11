@@ -80,7 +80,7 @@ namespace Medical.GUI.AnomalousMvc
                         component = new TopBottomPanelDecorator(component, view.Buttons);
                         break;
                     case ViewLocations.Floating:
-                        component = new WindowDecorator(component, view.Buttons);
+                        component = new SidePanelDecorator(component, view.Buttons);
                         break;
                 }
             }
