@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
+using Medical.Controller;
 
 namespace Medical.GUI.AnomalousMvc
 {
     public class MyGUIViewHostFactory : ViewHostFactory
     {
-        DecoratorComponentFactory componentFactory = new DecoratorComponentFactory();
+        DecoratorComponentFactory componentFactory;
 
-        public MyGUIViewHostFactory()
+        public MyGUIViewHostFactory(MDILayoutManager mdiManager)
         {
+            componentFactory = new DecoratorComponentFactory(mdiManager);
             componentFactory.addFactory(new RmlComponentFactory());
             componentFactory.addFactory(new NavigationComponentFactory());
             componentFactory.addFactory(new WizardComponentFactory());

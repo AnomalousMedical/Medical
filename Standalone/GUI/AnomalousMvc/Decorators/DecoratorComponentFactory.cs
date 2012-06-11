@@ -4,12 +4,19 @@ using System.Linq;
 using System.Text;
 using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
+using Medical.Controller;
 
 namespace Medical.GUI.AnomalousMvc
 {
     class DecoratorComponentFactory : ViewHostComponentFactory
     {
         private List<ViewHostComponentFactory> concreteComponentFactories = new List<ViewHostComponentFactory>();
+        private MDILayoutManager mdiManager;
+
+        public DecoratorComponentFactory(MDILayoutManager mdiManager)
+        {
+            this.mdiManager = mdiManager;
+        }
 
         public void addFactory(ViewHostComponentFactory factory)
         {
@@ -48,7 +55,9 @@ namespace Medical.GUI.AnomalousMvc
                     component = new TopBottomPanelDecorator(component, view.Buttons);
                     break;
                 case ViewLocations.Floating:
-                    component = new WindowDecorator(component, view.Buttons);
+                    component = new MDIDialogDecorator(mdiManager, component, view.Buttons);
+                    //guiManager.addManagedDialog((MDIDialogDecorator)component);
+                    //mdiManager.
                     break;
             }
 

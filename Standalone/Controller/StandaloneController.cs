@@ -208,7 +208,7 @@ namespace Medical
             //Timeline
             timelineController = new TimelineController(this);
 
-            viewHostFactory = new MyGUIViewHostFactory();
+            viewHostFactory = new MyGUIViewHostFactory(mdiLayout);
             mvcCore = new AnomalousMvcCore(this, viewHostFactory);
 
             //Exams

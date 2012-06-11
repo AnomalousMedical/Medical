@@ -133,6 +133,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\CloseButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\MDIDialogDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIView.cs" />
@@ -570,6 +571,7 @@
     <None Include="Properties\Standalone.manifest" />
     <None Include="Resources\AnomalousMedical.png" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\MDIDialogDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
