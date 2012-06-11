@@ -43,7 +43,7 @@ namespace Medical.GUI.AnomalousMvc
             int widthDiffernce = window.ClientCoord.width - window.Width;
             int heightDifference = window.ClientCoord.height - window.Height;
 
-            window.setSize(child.Widget.Width + widthDiffernce, child.Widget.Height + heightDifference);
+            window.setCoord(child.Widget.Left, child.Widget.Top, child.Widget.Width + widthDiffernce, child.Widget.Height + heightDifference);
 
             this.child = child;
             child.Widget.attachToWidget(window);
