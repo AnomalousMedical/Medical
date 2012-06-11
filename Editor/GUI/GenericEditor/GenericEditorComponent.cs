@@ -80,8 +80,9 @@ namespace Medical.GUI
             }
         }
 
-        void GenericEditor_Resized(object sender, EventArgs e)
+        public override void topLevelResized()
         {
+            base.topLevelResized();
             tree.layout();
             table.layout();
         }

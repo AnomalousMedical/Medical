@@ -44,7 +44,9 @@ namespace Medical
                 timelineEditorComponent = component;
             };
             mvcContext.Views.add(timelineEditorView);
-            mvcContext.Views.add(new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface()));
+            GenericEditorView genericEditor = new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
+            genericEditor.IsWindow = true;
+            mvcContext.Views.add(genericEditor);
             EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
             infoBar.addAction(new EditorInfoBarAction("Save Timeline", "File", "TimelineEditor/Save"));
