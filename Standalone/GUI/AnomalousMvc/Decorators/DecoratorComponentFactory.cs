@@ -40,25 +40,49 @@ namespace Medical.GUI.AnomalousMvc
                 return component;
             }
 
-            switch (view.ViewLocation)
+            if (view.IsWindow)
             {
-                case ViewLocations.Left:
-                    component = new SidePanelDecorator(component, view.Buttons);
-                    break;
-                case ViewLocations.Right:
-                    component = new SidePanelDecorator(component, view.Buttons);
-                    break;
-                case ViewLocations.Top:
-                    component = new TopBottomPanelDecorator(component, view.Buttons);
-                    break;
-                case ViewLocations.Bottom:
-                    component = new TopBottomPanelDecorator(component, view.Buttons);
-                    break;
-                case ViewLocations.Floating:
-                    component = new MDIDialogDecorator(mdiManager, component, view.Buttons);
-                    //guiManager.addManagedDialog((MDIDialogDecorator)component);
-                    //mdiManager.
-                    break;
+                MDIDialogDecorator dialogDecorator = new MDIDialogDecorator(mdiManager, component, view.Buttons);
+                switch (view.ViewLocation)
+                {
+                    case ViewLocations.Left:
+                        dialogDecorator.CurrentDockLocation = DockLocation.Left;
+                        break;
+                    case ViewLocations.Right:
+                        dialogDecorator.CurrentDockLocation = DockLocation.Right;
+                        break;
+                    case ViewLocations.Top:
+                        dialogDecorator.CurrentDockLocation = DockLocation.Top;
+                        break;
+                    case ViewLocations.Bottom:
+                        dialogDecorator.CurrentDockLocation = DockLocation.Bottom;
+                        break;
+                    case ViewLocations.Floating:
+                        dialogDecorator.CurrentDockLocation = DockLocation.Floating;
+                        break;
+                }
+                component = dialogDecorator;
+            }
+            else
+            {
+                switch (view.ViewLocation)
+                {
+                    case ViewLocations.Left:
+                        component = new SidePanelDecorator(component, view.Buttons);
+                        break;
+                    case ViewLocations.Right:
+                        component = new SidePanelDecorator(component, view.Buttons);
+                        break;
+                    case ViewLocations.Top:
+                        component = new TopBottomPanelDecorator(component, view.Buttons);
+                        break;
+                    case ViewLocations.Bottom:
+                        component = new TopBottomPanelDecorator(component, view.Buttons);
+                        break;
+                    case ViewLocations.Floating:
+                        component = new WindowDecorator(component, view.Buttons);
+                        break;
+                }
             }
 
             return component;

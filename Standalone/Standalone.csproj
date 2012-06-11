@@ -571,7 +571,8 @@
     <None Include="Properties\Standalone.manifest" />
     <None Include="Resources\AnomalousMedical.png" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
-    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\MDIDialogDecorator.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\MDIDialogDecoratorCS.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\MDIDialogDecoratorCSX.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>

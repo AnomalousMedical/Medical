@@ -13,9 +13,10 @@ namespace Medical.GUI.AnomalousMvc
         private ViewHostComponent child;
 
         private String closeAction = null;
+        private bool fireCloseEvent;
 
         public MDIDialogDecorator(MDILayoutManager targetLayoutManager, ViewHostComponent child, ButtonCollection buttons)
-            : base("Medical.GUI.AnomalousMvc.Decorators.MDIDialogDecorator.layout")
+            : base(buttons.hasItem("Close") ? "Medical.GUI.AnomalousMvc.Decorators.MDIDialogDecoratorCSX.layout" : "Medical.GUI.AnomalousMvc.Decorators.MDIDialogDecoratorCS.layout")
         {
             this.MDIManager = targetLayoutManager;
 
@@ -32,39 +33,29 @@ namespace Medical.GUI.AnomalousMvc
                 }
             }
 
-            //if (closeAction != null)
-            //{
-            //    window = (Window)Gui.Instance.createWidgetT("Window", "WindowCSX", 300, 150, 260, 440, Align.Default, "Overlapped", "");
-            //    window.WindowButtonPressed += new MyGUIEvent(window_WindowButtonPressed);
-            //}
-            //else
-            //{
-            //    window = (Window)Gui.Instance.createWidgetT("Window", "WindowCS", 300, 150, 260, 440, Align.Default, "Overlapped", "");
-            //}
+            fireCloseEvent = closeAction != null;
 
             window.Visible = true;
 
-            int widthDiffernce = window.ClientCoord.width - window.Width;
-            int heightDifference = window.ClientCoord.height - window.Height;
+            IntCoord clientCoord = window.ClientCoord;
+            int widthDifference = window.Width - clientCoord.width;
+            int heightDifference = window.Height - clientCoord.height;
 
             Position = new Vector2(child.Widget.Left, child.Widget.Top);
-            Size = new IntSize2(child.Widget.Width + widthDiffernce, child.Widget.Height + heightDifference);
+            Size = new IntSize2(child.Widget.Width + widthDifference, child.Widget.Height + heightDifference);
+            dockedSize = Size;
 
+            clientCoord = window.ClientCoord;
             this.child = child;
             child.Widget.attachToWidget(window);
-            IntCoord clientCoord = window.ClientCoord;
             child.Widget.setCoord(0, 0, clientCoord.width, clientCoord.height);
             child.Widget.Align = Align.Stretch;
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            Resized += new EventHandler(MDIDialogDecorator_Resized);
+            Closed += new EventHandler(MDIDialogDecorator_Closed);
+
             child.topLevelResized();
             window.Visible = false;
-        }
-
-        void window_WindowButtonPressed(Widget source, EventArgs e)
-        {
-            MyGUIViewHost viewHost = child.ViewHost;
-            viewHost.Context.runAction(closeAction, viewHost);
         }
 
         public override void Dispose()
@@ -75,16 +66,13 @@ namespace Medical.GUI.AnomalousMvc
         public void opening()
         {
             this.Visible = true;
-            //ensureVisible();
-            //LayerManager.Instance.upLayerItem(window);
-            //window.setVisibleSmooth(true);
             child.opening();
         }
 
         public void closing()
         {
+            fireCloseEvent = false;
             child.closing();
-            //window.setVisibleSmooth(false);
             this.Visible = false;
         }
 
@@ -111,11 +99,6 @@ namespace Medical.GUI.AnomalousMvc
 
         public bool _RequestClosed { get; set; }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
-        {
-            child.topLevelResized();
-        }
-
         public void _animationCallback(LayoutContainer oldChild)
         {
             Dispose();
@@ -131,39 +114,18 @@ namespace Medical.GUI.AnomalousMvc
             closeAction = buttonDefinition.Action;
         }
 
-        /// <summary>
-        /// Have the window compute its position to ensure it is visible in the given screen area.
-        /// </summary>
-        private void ensureVisible()
+        void MDIDialogDecorator_Resized(object sender, EventArgs e)
         {
-            //Adjust the position if needed
-            int left = window.Left;
-            int top = window.Top;
-            int right = left + window.Width;
-            int bottom = top + window.Height;
+            child.topLevelResized();
+        }
 
-            int guiWidth = RenderManager.Instance.ViewWidth;
-            int guiHeight = RenderManager.Instance.ViewHeight;
-
-            if (right > guiWidth)
+        void MDIDialogDecorator_Closed(object sender, EventArgs e)
+        {
+            if (fireCloseEvent)
             {
-                left -= right - guiWidth;
-                if (left < 0)
-                {
-                    left = 0;
-                }
+                ViewHost.Context.runAction(closeAction, ViewHost);
+                ((DialogCancelEventArgs)e).Cancel = true;
             }
-
-            if (bottom > guiHeight)
-            {
-                top -= bottom - guiHeight;
-                if (top < 0)
-                {
-                    top = 0;
-                }
-            }
-
-            window.setPosition(left, top);
         }
     }
 }

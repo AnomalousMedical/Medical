@@ -15,6 +15,7 @@ namespace Medical.GUI
             :base(name)
         {
             ViewLocation = Controller.AnomalousMvc.ViewLocations.Bottom;
+            IsWindow = true;
             this.Timeline = timeline;
         }
 

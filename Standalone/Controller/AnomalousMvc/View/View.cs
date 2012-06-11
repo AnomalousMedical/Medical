@@ -15,10 +15,14 @@ namespace Medical.Controller.AnomalousMvc
             :base(name)
         {
             ViewLocation = ViewLocations.Left;
+            IsWindow = false;
         }
 
         [Editable]
         public ViewLocations ViewLocation { get; set; }
+
+        [Editable]
+        public bool IsWindow { get; set; }
 
         protected View(LoadInfo info)
             :base (info)

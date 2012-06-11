@@ -49,27 +49,34 @@ namespace Medical.Controller.AnomalousMvc
 
         public void requestOpen(View view, AnomalousMvcContext context)
         {
-            switch (view.ViewLocation)
+            if (view.IsWindow)
             {
-                case ViewLocations.Left:
-                    queuedLeft = view;
-                    queuedLeftContext = context;
-                    break;
-                case ViewLocations.Right:
-                    queuedRight = view;
-                    queuedRightContext = context;
-                    break;
-                case ViewLocations.Top:
-                    queuedTop = view;
-                    queuedTopContext = context;
-                    break;
-                case ViewLocations.Bottom:
-                    queuedBottom = view;
-                    queuedBottomContext = context;
-                    break;
-                case ViewLocations.Floating:
-                    queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
-                    break;
+                queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
+            }
+            else
+            {
+                switch (view.ViewLocation)
+                {
+                    case ViewLocations.Left:
+                        queuedLeft = view;
+                        queuedLeftContext = context;
+                        break;
+                    case ViewLocations.Right:
+                        queuedRight = view;
+                        queuedRightContext = context;
+                        break;
+                    case ViewLocations.Top:
+                        queuedTop = view;
+                        queuedTopContext = context;
+                        break;
+                    case ViewLocations.Bottom:
+                        queuedBottom = view;
+                        queuedBottomContext = context;
+                        break;
+                    case ViewLocations.Floating:
+                        queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
+                        break;
+                }
             }
         }
 
