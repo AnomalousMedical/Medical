@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -38,6 +39,11 @@ namespace Medical.GUI.AnomalousMvc
             {
                 window = (Window)Gui.Instance.createWidgetT("Window", "WindowCS", 300, 150, 260, 440, Align.Default, "Overlapped", "");
             }
+
+            int widthDiffernce = window.ClientCoord.width - window.Width;
+            int heightDifference = window.ClientCoord.height - window.Height;
+
+            window.setSize(child.Widget.Width + widthDiffernce, child.Widget.Height + heightDifference);
 
             this.child = child;
             child.Widget.attachToWidget(window);
