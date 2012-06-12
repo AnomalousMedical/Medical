@@ -73,9 +73,11 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            actionFactory.Dispose();
             propEditController.ShowPropActionChanged -= propEditController_ShowPropActionChanged;
             propEditController.DurationChanged -= propEditController_DurationChanged;
             Gui.Instance.destroyWidget(editMenu);
+            timelineView.Dispose();
             base.Dispose();
         }
 

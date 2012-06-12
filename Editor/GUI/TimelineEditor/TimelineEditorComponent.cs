@@ -105,6 +105,7 @@ namespace Medical.GUI
             timelineController.TimelinePlaybackStarted -= timelineController_TimelinePlaybackStarted;
             timelineController.TimelinePlaybackStopped -= timelineController_TimelinePlaybackStopped;
             timelineController.TimeTicked -= timelineController_TimeTicked;
+            timelineView.Dispose();
             base.Dispose();
         }
 
