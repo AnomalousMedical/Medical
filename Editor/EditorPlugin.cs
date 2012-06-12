@@ -31,6 +31,7 @@ namespace Medical
 
         private EditorController editorController;
         private MedicalUICallback medicalUICallback;
+        private PropEditController propEditController;
 
         public EditorPlugin()
         {
@@ -77,6 +78,7 @@ namespace Medical
 
             //Controller
             editorController = new EditorController(this, standaloneController);
+            propEditController = new PropEditController(propMover);
 
             //Dialogs
             propTimeline = new PropTimeline(standaloneController.Clipboard);
@@ -116,7 +118,7 @@ namespace Medical
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
-            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController);
+            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propMover);
             timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
             editorController.addTypeController(timelineTypeController);
 
@@ -258,6 +260,14 @@ namespace Medical
             get
             {
                 return medicalUICallback;
+            }
+        }
+
+        public PropEditController PropEditController
+        {
+            get
+            {
+                return propEditController;
             }
         }
 

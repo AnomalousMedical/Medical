@@ -30,12 +30,14 @@ namespace Medical
         private EventContext eventContext;
         private AnomalousMvcContext mvcContext;
         private TimelineTypeController timelineTypeController;
+        private SimObjectMover simObjectMover;
 
-        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController)
+        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, SimObjectMover simObjectMover)
         {
             this.currentTimeline = timeline;
             this.currentFile = path;
             this.timelineTypeController = timelineTypeController;
+            this.simObjectMover = simObjectMover;
 
             mvcContext = new AnomalousMvcContext();
             TimelineEditorView timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline);
@@ -54,6 +56,8 @@ namespace Medical
             infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "TimelineEditor/Copy"));
             infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "TimelineEditor/Paste"));
             infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
+            infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
+            infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
             mvcContext.Views.add(infoBar);
             MvcController timelineEditorController = new MvcController("TimelineEditor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
@@ -88,6 +92,16 @@ namespace Medical
             timelineEditorController.Actions.add(new CallbackAction("SelectAll", context =>
             {
                 timelineEditorComponent.selectAll();
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Translation", context =>
+            {
+                simObjectMover.ShowMoveTools = true;
+                simObjectMover.ShowRotateTools = false;
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Rotation", context =>
+            {
+                simObjectMover.ShowMoveTools = false;
+                simObjectMover.ShowRotateTools = true;
             }));
             mvcContext.Controllers.add(timelineEditorController);
             MvcController common = new MvcController("Common");

@@ -7,12 +7,11 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ShowPropProperties : TimelineDataPanel, MovableObject
+    class ShowPropProperties : TimelineDataPanel
     {
         private ShowPropAction showProp;
         private TimelineActionData actionData;
         private bool comboUninitialized = true;
-        private SimObjectMover simObjectMover;
 
         private ComboBox propTypes;
         private EditBox translationEdit;
@@ -24,13 +23,12 @@ namespace Medical.GUI
         private Button rotationButton;
         private Button keepOpenButton;
 
-        private PropTimeline propTimeline;
+        private PropEditController propEditController;
         private OpenPropManager propManager;
 
-        public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline, OpenPropManager propManager, SimObjectMover simObjectMover)
+        public ShowPropProperties(Widget parentWidget, PropEditController propEditController, OpenPropManager propManager)
             :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.ShowPropProperties.layout")
         {
-            this.simObjectMover = simObjectMover;
             this.propManager = propManager;
             propManager.PropClosed += new EventDelegate<OpenPropManager, ShowPropAction>(propManager_PropClosed);
 
@@ -58,7 +56,7 @@ namespace Medical.GUI
             toolButtonGroup.SelectedButton = translationButton;
             toolButtonGroup.SelectedButtonChanged += new EventHandler(toolButtonGroup_SelectedButtonChanged);
 
-            this.propTimeline = propTimeline;
+            this.propEditController = propEditController;
 
             Button moveToStart = (Button)mainWidget.findWidget("startPosButton");
             moveToStart.MouseButtonClick += new MyGUIEvent(moveToStart_MouseButtonClick);
@@ -73,17 +71,25 @@ namespace Medical.GUI
             {
                 actionData.DurationChanged -= actionData_DurationChanged;
             }
+            if (showProp != null)
+            {
+                showProp.Translated -= showProp_Translated;
+                showProp.Rotated -= showProp_Rotated;
+            }
             actionData = ((TimelineActionData)data);
             showProp = (ShowPropAction)actionData.Action;
             if(actionData != null)
             {
                 actionData.DurationChanged += actionData_DurationChanged;
             }
+            if (showProp != null)
+            {
+                showProp.Translated += showProp_Translated;
+                showProp.Rotated += showProp_Rotated;
+            }
 
             if (comboUninitialized)
             {
-                simObjectMover.ShowMoveTools = true;
-                simObjectMover.ToolSize = 3.0f;
                 PropFactory propFactory = showProp.TimelineController.PropFactory;
                 foreach (String propName in propFactory.PropNames)
                 {
@@ -102,19 +108,14 @@ namespace Medical.GUI
             euler *= 57.2957795f;
             rotationEdit.Caption = euler.ToString();
             fadeDurationEdit.FloatValue = showProp.FadeDuration;
-            simObjectMover.setActivePlanes(MovementAxis.All, MovementPlane.All);
-            simObjectMover.addMovableObject("Prop", this);
-            simObjectMover.setDrawingSurfaceVisible(true);
-            propTimeline.setPropData(showProp);
+            propEditController.CurrentShowPropAction = showProp;
             keepOpenButton.Selected = showProp.KeepOpen;
         }
 
         public override void editingCompleted()
         {
             showProp = null;
-            simObjectMover.removeMovableObject(this);
-            simObjectMover.setDrawingSurfaceVisible(false);
-            //propTimeline.setPropData(null);
+            propEditController.CurrentShowPropAction = null;
         }
 
         void propTypes_EventComboChangePosition(Widget source, EventArgs e)
@@ -122,7 +123,7 @@ namespace Medical.GUI
             if (showProp.SubActionCount == 0)
             {
                 showProp.PropType = propTypes.getItemNameAt(propTypes.SelectedIndex);
-                propTimeline.setPropData(showProp);
+                propEditController.CurrentShowPropAction = showProp;
             }
             else
             {
@@ -136,7 +137,7 @@ namespace Medical.GUI
             {
                 showProp.clearSubActions();
                 showProp.PropType = propTypes.getItemNameAt(propTypes.SelectedIndex);
-                propTimeline.setPropData(showProp);
+                propEditController.CurrentShowPropAction = showProp;
             }
             else
             {
@@ -167,13 +168,13 @@ namespace Medical.GUI
 
         void toolButtonGroup_SelectedButtonChanged(object sender, EventArgs e)
         {
-            simObjectMover.ShowMoveTools = toolButtonGroup.SelectedButton == translationButton;
-            simObjectMover.ShowRotateTools = toolButtonGroup.SelectedButton == rotationButton;
+            //simObjectMover.ShowMoveTools = toolButtonGroup.SelectedButton == translationButton;
+            //simObjectMover.ShowRotateTools = toolButtonGroup.SelectedButton == rotationButton;
         }
 
         void actionData_DurationChanged(float duration)
         {
-            propTimeline.Duration = duration;
+            propEditController.Duration = duration;
         }
 
         void moveToStart_MouseButtonClick(Widget source, EventArgs e)
@@ -207,78 +208,16 @@ namespace Medical.GUI
             }
         }
 
-        #region MovableObject Members
-
-        public Vector3 ToolTranslation
+        void showProp_Rotated(ShowPropAction obj)
         {
-            get
-            {
-                if (propTimeline.UsingTools)
-                {
-                    return propTimeline.Translation;
-                }
-                else
-                {
-                    return showProp.Translation;
-                }
-            }
+            Vector3 euler = obj.Rotation.getEuler();
+            euler *= 57.2957795f;
+            rotationEdit.Caption = euler.ToString();
         }
 
-        public void move(Vector3 offset)
+        void showProp_Translated(ShowPropAction obj)
         {
-            if (propTimeline.UsingTools)
-            {
-                propTimeline.Translation += offset;
-                showProp._movePreviewProp(propTimeline.Translation, propTimeline.Rotation);
-            }
-            else
-            {
-                showProp.Translation += offset;
-                translationEdit.Caption = showProp.Translation.ToString();
-            }
+            translationEdit.Caption = obj.Translation.ToString();
         }
-
-        public Quaternion ToolRotation
-        {
-            get
-            {
-                if (propTimeline.UsingTools)
-                {
-                    return propTimeline.Rotation;
-                }
-                else
-                {
-                    return showProp.Rotation;
-                }
-            }
-        }
-
-        public bool ShowTools
-        {
-            get { return true; }
-        }
-
-        public void rotate(ref Quaternion newRot)
-        {
-            if (propTimeline.UsingTools)
-            {
-                propTimeline.Rotation = newRot;
-                showProp._movePreviewProp(propTimeline.Translation, propTimeline.Rotation);
-            }
-            else
-            {
-                showProp.Rotation = newRot;
-                Vector3 euler = showProp.Rotation.getEuler();
-                euler *= 57.2957795f;
-                rotationEdit.Caption = euler.ToString();
-            }
-        }
-
-        public void alertToolHighlightStatus(bool highlighted)
-        {
-            
-        }
-
-        #endregion
     }
 }

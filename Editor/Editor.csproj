@@ -89,6 +89,7 @@
     <Compile Include="Controller\Project\AppProjectTemplate.cs" />
     <Compile Include="Controller\Project\EmptyProjectTemplate.cs" />
     <Compile Include="Controller\Project\ProjectTemplate.cs" />
+    <Compile Include="Controller\PropEditController.cs" />
     <Compile Include="Controller\RmlEditorContext.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />

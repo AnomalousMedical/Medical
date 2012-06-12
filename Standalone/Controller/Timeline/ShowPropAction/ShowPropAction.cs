@@ -16,6 +16,8 @@ namespace Medical
         public delegate void UpdatedDelegate(float time);
 
         public event UpdatedDelegate Updated;
+        public event Action<ShowPropAction> Translated;
+        public event Action<ShowPropAction> Rotated;
 
         private bool finished;
         private SimObjectBase simObject;
@@ -207,6 +209,10 @@ namespace Medical
                 {
                     simObject.updateTranslation(ref value, null);
                 }
+                if (Translated != null)
+                {
+                    Translated.Invoke(this);
+                }
             }
         }
 
@@ -222,6 +228,10 @@ namespace Medical
                 if (simObject != null)
                 {
                     simObject.updateRotation(ref value, null);
+                }
+                if (Rotated != null)
+                {
+                    Rotated.Invoke(this);
                 }
             }
         }
