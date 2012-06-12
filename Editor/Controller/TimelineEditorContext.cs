@@ -21,7 +21,8 @@ namespace Medical
             Paste,
             SelectAll,
             Translate,
-            Rotate
+            Rotate,
+            PropTimeline
         }
 
         public event Action<TimelineEditorContext> Shutdown;
@@ -225,15 +226,17 @@ namespace Medical
 
             eventContext.addEvent(new MessageEvent(Events.Rotate,
                 frameUp: eventManager =>
-                {
-                    mvcContext.runAction("TimelineEditor/Rotation");
-                },
-                keys:
-                    new KeyboardButtonCode[]
                     {
-                        KeyboardButtonCode.KC_LCONTROL, 
-                        KeyboardButtonCode.KC_R
-                    }));
+                        mvcContext.runAction("TimelineEditor/Rotation");
+                    },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_R }));
+
+            eventContext.addEvent(new MessageEvent(Events.PropTimeline,
+                frameUp: EventManager =>
+                    {
+                        mvcContext.runAction("PropTimeline/ShowIfNotOpen");
+                    },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_P }));
         }
 
         public void close()
