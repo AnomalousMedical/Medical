@@ -31,6 +31,7 @@ namespace Medical
         private Timeline currentTimeline;
         private TimelineEditorComponent timelineEditorComponent = null;
         private PropTimeline propTimeline = null;
+        private OpenPropManager openPropManager = null;
 
         private EventContext eventContext;
         private AnomalousMvcContext mvcContext;
@@ -64,6 +65,14 @@ namespace Medical
                 propTimeline = component;
             };
             mvcContext.Views.add(propTimelineView);
+
+            OpenPropManagerView propManagerView = new OpenPropManagerView("PropManager");
+            propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
+            propManagerView.ComponentCreated += (view, component) =>
+            {
+                openPropManager = component;
+            };
+            mvcContext.Views.add(propManagerView);
             
             EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
@@ -75,6 +84,7 @@ namespace Medical
             infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
             infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
             infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/ShowIfNotOpen"));
+            infoBar.addAction(new EditorInfoBarAction("Open Prop Manager", "Props", "PropManager/ShowIfNotOpen"));
             mvcContext.Views.add(infoBar);
 
             mvcContext.Controllers.add(new MvcController("TimelineEditor",
@@ -120,7 +130,7 @@ namespace Medical
                     })
             ));
 
-            mvcContext.Controllers.add(new MvcController("PropTimeline", 
+            mvcContext.Controllers.add(new MvcController("PropTimeline",
                 new CallbackAction("ShowIfNotOpen", context =>
                     {
                         if (propTimeline == null)
@@ -128,17 +138,32 @@ namespace Medical
                             context.runAction("PropTimeline/Show");
                         }
                     }),
-                new RunCommandsAction("Show", 
+                new RunCommandsAction("Show",
                     new ShowViewCommand("PropTimeline")
                 ),
-                new RunCommandsAction("Close", 
+                new RunCommandsAction("Close",
                     new CloseViewCommand(),
                     new CallbackCommand(context =>
                     {
                         propTimeline = null;
-                    })
-                )
-            ));
+                    }))));
+
+            mvcContext.Controllers.add(new MvcController("PropManager",
+                new CallbackAction("ShowIfNotOpen", context =>
+                    {
+                        if (openPropManager == null)
+                        {
+                            context.runAction("PropManager/Show");
+                        }
+                    }),
+                new RunCommandsAction("Show",
+                    new ShowViewCommand("PropManager")),
+                new RunCommandsAction("Close",
+                    new CloseViewCommand(),
+                    new CallbackCommand(context =>
+                        {
+                            openPropManager = null;
+                        }))));
 
             mvcContext.Controllers.add(new MvcController("Common",
                 new RunCommandsAction("Start",
@@ -152,6 +177,7 @@ namespace Medical
                         timelineEditorComponent = null;
                         propTimeline = null;
                         GlobalContextEventHandler.disableEventContext(eventContext);
+                        propEditController.removeAllOpenProps();
                         if (Shutdown != null)
                         {
                             Shutdown.Invoke(this);

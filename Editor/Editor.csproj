@@ -126,6 +126,7 @@
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
+    <Compile Include="GUI\OpenPropManager\OpenPropManagerView.cs" />
     <Compile Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
     <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />

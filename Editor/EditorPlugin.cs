@@ -16,7 +16,6 @@ namespace Medical
         private StandaloneController standaloneController;
 
         private MovementSequenceEditor movementSequenceEditor;
-        private OpenPropManager openPropManager;
         private ScratchArea scratchArea;
 
         private TimelineController editorTimelineController;
@@ -43,7 +42,6 @@ namespace Medical
             projectExplorer.Dispose();
             mvcEditor.Dispose();
             movementSequenceEditor.Dispose();
-            openPropManager.Dispose();
             scratchArea.Dispose();
             aspectRatioTask.Dispose();
             editorController.Dispose();
@@ -79,9 +77,6 @@ namespace Medical
             propEditController = new PropEditController(propMover);
 
             //Dialogs
-            openPropManager = new OpenPropManager(propEditController);
-            guiManager.addManagedDialog(openPropManager);
-
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard, editorController);
             guiManager.addManagedDialog(movementSequenceEditor);
 
@@ -101,7 +96,6 @@ namespace Medical
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
@@ -183,14 +177,6 @@ namespace Medical
             get
             {
                 return editorTimelineController;
-            }
-        }
-
-        public OpenPropManager PropManager
-        {
-            get
-            {
-                return openPropManager;
             }
         }
 

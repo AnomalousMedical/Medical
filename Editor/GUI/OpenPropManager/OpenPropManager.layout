@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="127 81 192 247" layer="Overlapped">
+    <Widget type="Widget" skin="PanelEmpty" position="127 81 180 212" layer="Overlapped">
         <Property key="Caption" value="Prop Manager"/>
-        <Widget type="Button" skin="Button" position="70 191 64 21" align="Left Bottom" name="closeAll">
+        <Widget type="Button" skin="Button" position="75 189 64 21" align="Left Bottom" name="closeAll">
             <Property key="Caption" value="Close All"/>
         </Widget>
         <Widget type="MultiListBox" skin="MultiListBox" position="0 1 180 187" align="Stretch" name="propList"/>
-        <Widget type="Button" skin="Button" position="0 191 64 21" align="Left Bottom" name="close">
+        <Widget type="Button" skin="Button" position="4 189 64 21" align="Left Bottom" name="close">
             <Property key="Caption" value="Close"/>
         </Widget>
     </Widget>

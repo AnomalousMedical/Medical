@@ -4,30 +4,31 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class OpenPropManager : MDIDialog
+    public class OpenPropManager : LayoutComponent
     {
         private MultiListBox propList;
 
         private PropEditController propEditController;
 
-        public OpenPropManager(PropEditController propEditController)
-            :base("Medical.GUI.OpenPropManager.OpenPropManager.layout")
+        public OpenPropManager(PropEditController propEditController, MyGUIViewHost viewHost)
+            :base("Medical.GUI.OpenPropManager.OpenPropManager.layout", viewHost)
         {
             this.propEditController = propEditController;
             propEditController.PropOpened += propEditController_PropOpened;
             propEditController.PropClosed += propEditController_PropClosed;
 
-            propList = (MultiListBox)window.findWidget("propList");
+            propList = (MultiListBox)widget.findWidget("propList");
             propList.addColumn("Prop", 50);
             propList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
 
-            Button close = (Button)window.findWidget("close");
+            Button close = (Button)widget.findWidget("close");
             close.MouseButtonClick += new MyGUIEvent(close_MouseButtonClick);
 
-            Button closeAll = (Button)window.findWidget("closeAll");
+            Button closeAll = (Button)widget.findWidget("closeAll");
             closeAll.MouseButtonClick += new MyGUIEvent(closeAll_MouseButtonClick);
         }
 
