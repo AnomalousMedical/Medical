@@ -62,7 +62,7 @@ namespace Medical
             infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
             infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
             infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
-            infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "TimelineEditor/OpenPropTimeline"));
+            infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/Show"));
             mvcContext.Views.add(infoBar);
             MvcController timelineEditorController = new MvcController("TimelineEditor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
@@ -109,13 +109,12 @@ namespace Medical
                 simObjectMover.ShowRotateTools = true;
             }));
 
-            timelineEditorController.Actions.add(new RunCommandsAction("OpenPropTimeline", 
-                new ShowViewCommand("PropTimeline")
-            ));
-
             mvcContext.Controllers.add(timelineEditorController);
 
             mvcContext.Controllers.add(new MvcController("PropTimeline", 
+                new RunCommandsAction("Show", 
+                    new ShowViewCommand("PropTimeline")
+                ),
                 new RunCommandsAction("Close", 
                     new CloseViewCommand()
                 )

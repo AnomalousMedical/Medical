@@ -10,11 +10,13 @@ namespace Medical
     {
         public event Action<float> DurationChanged;
         public event Action<ShowPropAction> ShowPropActionChanged;
+        public event Action<float> MarkerMoved;
 
         private ShowPropAction currentShowPropAction;
         private MovePropAction currentMovePropAction;
         private SimObjectMover simObjectMover;
-        private float duration;
+        private float duration = 0.0f;
+        private float markerPosition = 0.0f;
 
         private List<ShowPropAction> openProps = new List<ShowPropAction>();
         public event EventDelegate<PropEditController, ShowPropAction> PropClosed;
@@ -91,6 +93,22 @@ namespace Medical
                 if (DurationChanged != null)
                 {
                     DurationChanged.Invoke(duration);
+                }
+            }
+        }
+
+        public float MarkerPosition
+        {
+            get
+            {
+                return markerPosition;
+            }
+            set
+            {
+                markerPosition = value;
+                if (MarkerMoved != null)
+                {
+                    MarkerMoved.Invoke(markerPosition);
                 }
             }
         }

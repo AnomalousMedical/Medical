@@ -12,8 +12,6 @@ namespace Medical.GUI
 {
     public class TimelineEditorComponent : LayoutComponent
     {
-        public event EventDelegate<TimelineEditorComponent, float> MarkerMoved;
-
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
 
@@ -28,6 +26,7 @@ namespace Medical.GUI
         private TimelineDataProperties dataProperties;
         private TimelineData editingStoppedLastData;
         private Timeline currentTimeline;
+        private PropEditController propEditController;
 
         private Button playButton;
         private Button rewindButton;
@@ -42,6 +41,7 @@ namespace Medical.GUI
 
             this.clipboard = clipboard;
             this.editorController = editorController;
+            this.propEditController = editorPlugin.PropEditController;
 
             this.timelineController = timelineController;
             timelineController.TimelinePlaybackStarted += timelineController_TimelinePlaybackStarted;
@@ -292,10 +292,7 @@ namespace Medical.GUI
 
         void timelineView_MarkerMoved(TimelineView source, float arg)
         {
-            if (MarkerMoved != null)
-            {
-                MarkerMoved.Invoke(this, arg);
-            }
+            propEditController.MarkerPosition = arg;
         }
 
         void rewindButton_MouseButtonClick(Widget source, EventArgs e)

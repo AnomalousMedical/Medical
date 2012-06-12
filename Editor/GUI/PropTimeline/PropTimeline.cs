@@ -32,6 +32,7 @@ namespace Medical.GUI
             this.propEditController = propEditController;
             propEditController.ShowPropActionChanged += propEditController_ShowPropActionChanged;
             propEditController.DurationChanged += propEditController_DurationChanged;
+            propEditController.MarkerMoved += propEditController_MarkerMoved;
 
             widget.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
@@ -77,6 +78,7 @@ namespace Medical.GUI
         public override void Dispose()
         {
             actionFactory.Dispose();
+            propEditController.MarkerMoved -= propEditController_MarkerMoved;
             propEditController.ShowPropActionChanged -= propEditController_ShowPropActionChanged;
             propEditController.DurationChanged -= propEditController_DurationChanged;
             Gui.Instance.destroyWidget(editMenu);
@@ -111,6 +113,7 @@ namespace Medical.GUI
             {
                 propData.Updated += propData_Updated;
             }
+            MarkerTime = propEditController.MarkerPosition;
         }
 
         public float Duration
@@ -291,6 +294,11 @@ namespace Medical.GUI
         void propEditController_ShowPropActionChanged(ShowPropAction obj)
         {
             setPropData(obj);
+        }
+
+        void propEditController_MarkerMoved(float obj)
+        {
+            MarkerTime = obj;
         }
     }
 }
