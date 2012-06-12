@@ -52,7 +52,7 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.Align = Align.Stretch;
 
             Resized += new EventHandler(MDIDialogDecorator_Resized);
-            Closed += new EventHandler(MDIDialogDecorator_Closed);
+            Closing += new EventHandler<DialogCancelEventArgs>(MDIDialogDecorator_Closing);
 
             child.topLevelResized();
             window.Visible = false;
@@ -119,12 +119,12 @@ namespace Medical.GUI.AnomalousMvc
             child.topLevelResized();
         }
 
-        void MDIDialogDecorator_Closed(object sender, EventArgs e)
+        void MDIDialogDecorator_Closing(object sender, DialogCancelEventArgs e)
         {
             if (fireCloseEvent)
             {
                 ViewHost.Context.runAction(closeAction, ViewHost);
-                ((DialogCancelEventArgs)e).Cancel = true;
+                e.Cancel = true;
             }
         }
     }

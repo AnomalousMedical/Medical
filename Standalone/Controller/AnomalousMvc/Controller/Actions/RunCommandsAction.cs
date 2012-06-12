@@ -20,6 +20,12 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
+        public RunCommandsAction(String name, params ActionCommand[] commands)
+            : base(name)
+        {
+            this.commands.AddRange(commands);
+        }
+
         public void addCommand(ActionCommand command)
         {
             commands.Add(command);

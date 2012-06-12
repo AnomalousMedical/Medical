@@ -50,11 +50,11 @@ namespace Medical
                     simObjectMover.setActivePlanes(MovementAxis.All, MovementPlane.All);
                     simObjectMover.addMovableObject("Prop", this);
                     simObjectMover.setDrawingSurfaceVisible(true);
-                    if (ShowPropActionChanged != null)
-                    {
-                        ShowPropActionChanged.Invoke(currentShowPropAction);
-                    }
                     Duration = currentShowPropAction.Duration;
+                }
+                if (ShowPropActionChanged != null)
+                {
+                    ShowPropActionChanged.Invoke(currentShowPropAction);
                 }
             }
         }

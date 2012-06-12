@@ -15,7 +15,6 @@ namespace Medical
     {
         private StandaloneController standaloneController;
 
-        private PropTimeline propTimeline;
         private MovementSequenceEditor movementSequenceEditor;
         private OpenPropManager openPropManager;
         private ScratchArea scratchArea;
@@ -44,7 +43,6 @@ namespace Medical
             projectExplorer.Dispose();
             mvcEditor.Dispose();
             movementSequenceEditor.Dispose();
-            propTimeline.Dispose();
             openPropManager.Dispose();
             scratchArea.Dispose();
             aspectRatioTask.Dispose();
@@ -81,9 +79,6 @@ namespace Medical
             propEditController = new PropEditController(propMover);
 
             //Dialogs
-            propTimeline = new PropTimeline(standaloneController.Clipboard, propEditController);
-            guiManager.addManagedDialog(propTimeline);
-
             openPropManager = new OpenPropManager(propEditController);
             guiManager.addManagedDialog(openPropManager);
 
@@ -106,7 +101,6 @@ namespace Medical
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
@@ -129,6 +123,7 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(medicalUICallback, editorController));
             standaloneController.ViewHostFactory.addFactory(new EditorInfoBarFactory());
             standaloneController.ViewHostFactory.addFactory(new TextEditorComponentFactory());
+            standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard, propEditController));
         }
 
         public void sceneLoaded(SimScene scene)
@@ -173,14 +168,6 @@ namespace Medical
         public void createMenuBar(NativeMenuBar menu)
         {
 
-        }
-
-        public PropTimeline PropTimeline
-        {
-            get
-            {
-                return propTimeline;
-            }
         }
 
         public SimObjectMover SimObjectMover

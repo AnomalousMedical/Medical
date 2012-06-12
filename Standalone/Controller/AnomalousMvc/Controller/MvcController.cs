@@ -18,6 +18,12 @@ namespace Medical.Controller.AnomalousMvc
             actionCollection = new ControllerActionCollection();
         }
 
+        public MvcController(String name, params ControllerAction[] actions)
+            : this(name)
+        {
+            actionCollection.addRange(actions);
+        }
+
         public void runAction(String actionName, AnomalousMvcContext context)
         {
             ControllerAction action = actionCollection[actionName];

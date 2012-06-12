@@ -6,6 +6,7 @@ using Medical.Platform;
 using Medical.GUI;
 using Medical.Controller.AnomalousMvc;
 using Engine.Platform;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
@@ -49,6 +50,9 @@ namespace Medical
             GenericEditorView genericEditor = new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
             genericEditor.IsWindow = true;
             mvcContext.Views.add(genericEditor);
+            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline");
+            propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
+            mvcContext.Views.add(propTimelineView);
             EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
             infoBar.addAction(new EditorInfoBarAction("Save Timeline", "File", "TimelineEditor/Save"));
@@ -58,6 +62,7 @@ namespace Medical
             infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
             infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
             infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
+            infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "TimelineEditor/OpenPropTimeline"));
             mvcContext.Views.add(infoBar);
             MvcController timelineEditorController = new MvcController("TimelineEditor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
@@ -103,7 +108,19 @@ namespace Medical
                 simObjectMover.ShowMoveTools = false;
                 simObjectMover.ShowRotateTools = true;
             }));
+
+            timelineEditorController.Actions.add(new RunCommandsAction("OpenPropTimeline", 
+                new ShowViewCommand("PropTimeline")
+            ));
+
             mvcContext.Controllers.add(timelineEditorController);
+
+            mvcContext.Controllers.add(new MvcController("PropTimeline", 
+                new RunCommandsAction("Close", 
+                    new CloseViewCommand()
+                )
+            ));
+
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");
             startup.addCommand(new RunActionCommand("TimelineEditor/Show"));
@@ -147,7 +164,7 @@ namespace Medical
             cut.addButton(KeyboardButtonCode.KC_X);
             cut.FirstFrameUpEvent += eventManager =>
             {
-                timelineEditorComponent.cut();
+                mvcContext.runAction("TimelineEditor/Cut");
             };
             eventContext.addEvent(cut);
 
@@ -156,7 +173,7 @@ namespace Medical
             copy.addButton(KeyboardButtonCode.KC_C);
             copy.FirstFrameUpEvent += eventManager =>
             {
-                timelineEditorComponent.copy();
+                mvcContext.runAction("TimelineEditor/Copy");
             };
             eventContext.addEvent(copy);
 
@@ -165,7 +182,7 @@ namespace Medical
             paste.addButton(KeyboardButtonCode.KC_V);
             paste.FirstFrameUpEvent += eventManager =>
             {
-                timelineEditorComponent.paste();
+                mvcContext.runAction("TimelineEditor/Paste");
             };
             eventContext.addEvent(paste);
 
@@ -174,7 +191,7 @@ namespace Medical
             selectAll.addButton(KeyboardButtonCode.KC_A);
             selectAll.FirstFrameUpEvent += eventManager =>
             {
-                timelineEditorComponent.selectAll();
+                mvcContext.runAction("TimelineEditor/SelectAll");
             };
             eventContext.addEvent(selectAll);
         }

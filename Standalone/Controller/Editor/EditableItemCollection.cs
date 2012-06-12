@@ -27,6 +27,14 @@ namespace Medical.Editor
             }
         }
 
+        public void addRange(ItemType[] items)
+        {
+            foreach (ItemType item in items)
+            {
+                add(item);
+            }
+        }
+
         public void remove(ItemType item)
         {
             items.Remove(item);

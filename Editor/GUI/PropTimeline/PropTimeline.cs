@@ -6,10 +6,11 @@ using MyGUIPlugin;
 using Engine;
 using Engine.Saving;
 using Engine.Platform;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class PropTimeline : MDIDialog
+    public class PropTimeline : LayoutComponent
     {
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
@@ -24,35 +25,35 @@ namespace Medical.GUI
         private SaveableClipboard clipboard;
         private PropEditController propEditController;
 
-        public PropTimeline(SaveableClipboard clipboard, PropEditController propEditController)
-            :base("Medical.GUI.PropTimeline.PropTimeline.layout")
+        public PropTimeline(SaveableClipboard clipboard, PropEditController propEditController, MyGUIViewHost viewHost)
+            :base("Medical.GUI.PropTimeline.PropTimeline.layout", viewHost)
         {
             this.clipboard = clipboard;
             this.propEditController = propEditController;
             propEditController.ShowPropActionChanged += propEditController_ShowPropActionChanged;
             propEditController.DurationChanged += propEditController_DurationChanged;
 
-            window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+            widget.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
             //Timeline view
-            ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
+            ScrollView timelineViewScrollView = widget.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.Duration = 5.0f;
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
 
             //Properties
-            ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
+            ScrollView timelinePropertiesScrollView = widget.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
             actionFactory = new ShowPropSubActionFactory(timelinePropertiesScrollView, propEditController);
 
             //Timeline filter
-            ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
+            ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
             trackFilter = new TrackFilter(timelineFilterScrollView, timelineView);
             trackFilter.AddTrackItem += new AddTrackItemCallback(trackFilter_AddTrackItem);
 
             //Edit button
-            Button editButton = window.findWidget("EditButton") as Button;
+            Button editButton = widget.findWidget("EditButton") as Button;
             editMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             editMenu.Visible = false;
             MenuItem selectAll = editMenu.addItem("Select All");
@@ -65,10 +66,12 @@ namespace Medical.GUI
             paste.MouseButtonClick += new MyGUIEvent(paste_MouseButtonClick);
             editMenuButton = new ShowMenuButton(editButton, editMenu);
 
-            numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
+            numberLine = new NumberLine(widget.findWidget("NumberLine") as ScrollView, timelineView);
 
-            Button removeAction = window.findWidget("RemoveAction") as Button;
+            Button removeAction = widget.findWidget("RemoveAction") as Button;
             removeAction.MouseButtonClick += new MyGUIEvent(removeAction_MouseButtonClick);
+
+            setPropData(propEditController.CurrentShowPropAction);
         }
 
         public override void Dispose()

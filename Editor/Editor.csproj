@@ -133,6 +133,8 @@
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineClipboardContainer.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />
+    <Compile Include="GUI\PropTimeline\PropTimelineFactory.cs" />
+    <Compile Include="GUI\PropTimeline\PropTimelineView.cs" />
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
