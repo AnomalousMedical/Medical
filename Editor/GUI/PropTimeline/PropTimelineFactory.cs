@@ -22,7 +22,9 @@ namespace Medical.GUI
         {
             if (view is PropTimelineView)
             {
-                return new PropTimeline(clipboard, propEditController, viewHost);
+                PropTimeline propTimeline = new PropTimeline(clipboard, propEditController, viewHost);
+                ((PropTimelineView)view)._fireComponentCreated(propTimeline);
+                return propTimeline;
             }
             return null;
         }

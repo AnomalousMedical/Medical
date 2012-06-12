@@ -27,6 +27,7 @@ namespace Medical
         private String currentFile;
         private Timeline currentTimeline;
         private TimelineEditorComponent timelineEditorComponent = null;
+        private PropTimeline propTimeline = null;
 
         private EventContext eventContext;
         private AnomalousMvcContext mvcContext;
@@ -52,6 +53,10 @@ namespace Medical
             mvcContext.Views.add(genericEditor);
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline");
             propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
+            propTimelineView.ComponentCreated += (view, component) =>
+            {
+                propTimeline = component;
+            };
             mvcContext.Views.add(propTimelineView);
             EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
@@ -62,7 +67,7 @@ namespace Medical
             infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
             infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
             infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
-            infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/Show"));
+            infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/ShowIfNotOpen"));
             mvcContext.Views.add(infoBar);
             MvcController timelineEditorController = new MvcController("TimelineEditor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
@@ -112,11 +117,22 @@ namespace Medical
             mvcContext.Controllers.add(timelineEditorController);
 
             mvcContext.Controllers.add(new MvcController("PropTimeline", 
+                new CallbackAction("ShowIfNotOpen", context =>
+                    {
+                        if (propTimeline == null)
+                        {
+                            context.runAction("PropTimeline/Show");
+                        }
+                    }),
                 new RunCommandsAction("Show", 
                     new ShowViewCommand("PropTimeline")
                 ),
                 new RunCommandsAction("Close", 
-                    new CloseViewCommand()
+                    new CloseViewCommand(),
+                    new CallbackCommand(context =>
+                    {
+                        propTimeline = null;
+                    })
                 )
             ));
 
@@ -131,6 +147,7 @@ namespace Medical
             CallbackAction shutdown = new CallbackAction("Shutdown", context =>
             {
                 timelineEditorComponent = null;
+                propTimeline = null;
                 GlobalContextEventHandler.disableEventContext(eventContext);
                 if (Shutdown != null)
                 {
