@@ -45,15 +45,18 @@ namespace Medical
             this.propEditController = propEditController;
 
             mvcContext = new AnomalousMvcContext();
+            
             TimelineEditorView timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline);
             timelineEditorView.ComponentCreated += (view, component) =>
             {
                 timelineEditorComponent = component;
             };
             mvcContext.Views.add(timelineEditorView);
+            
             GenericEditorView genericEditor = new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
             genericEditor.IsWindow = true;
             mvcContext.Views.add(genericEditor);
+            
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline");
             propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
             propTimelineView.ComponentCreated += (view, component) =>
@@ -61,6 +64,7 @@ namespace Medical
                 propTimeline = component;
             };
             mvcContext.Views.add(propTimelineView);
+            
             EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
             infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
             infoBar.addAction(new EditorInfoBarAction("Save Timeline", "File", "TimelineEditor/Save"));
@@ -72,50 +76,49 @@ namespace Medical
             infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
             infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/ShowIfNotOpen"));
             mvcContext.Views.add(infoBar);
-            MvcController timelineEditorController = new MvcController("TimelineEditor");
-            RunCommandsAction showAction = new RunCommandsAction("Show");
-            showAction.addCommand(new ShowViewCommand("TimelineEditor"));
-            showAction.addCommand(new ShowViewCommand("TimelinePropertiesEditor"));
-            showAction.addCommand(new ShowViewCommand("TimelineInfoBar"));
-            timelineEditorController.Actions.add(showAction);
-            RunCommandsAction closeAction = new RunCommandsAction("Close");
-            closeAction.addCommand(new CloseAllViewsCommand());
-            timelineEditorController.Actions.add(closeAction);
-            timelineEditorController.Actions.add(new CallbackAction("CloseTimeline", context =>
-            {
-                timelineTypeController.closeTimeline();
-                context.runAction("TimelineEditor/Close");
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Save", context =>
-            {
-                timelineTypeController.saveTimeline(currentTimeline, currentFile);
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Cut", context =>
-            {
-                timelineEditorComponent.cut();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Copy", context =>
-            {
-                timelineEditorComponent.copy();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Paste", context =>
-            {
-                timelineEditorComponent.paste();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("SelectAll", context =>
-            {
-                timelineEditorComponent.selectAll();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Translation", context =>
-            {
-                propEditController.setMoveMode();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Rotation", context =>
-            {
-                propEditController.setRotateMode();
-            }));
 
-            mvcContext.Controllers.add(timelineEditorController);
+            mvcContext.Controllers.add(new MvcController("TimelineEditor",
+                new RunCommandsAction("Show",
+                    new ShowViewCommand("TimelineEditor"),
+                    new ShowViewCommand("TimelinePropertiesEditor"),
+                    new ShowViewCommand("TimelineInfoBar")
+                ),
+                new RunCommandsAction("Close",
+                    new CloseAllViewsCommand()),
+                new CallbackAction("CloseTimeline", context =>
+                    {
+                        timelineTypeController.closeTimeline();
+                        context.runAction("TimelineEditor/Close");
+                    }),
+                new CallbackAction("Save", context =>
+                    {
+                        timelineTypeController.saveTimeline(currentTimeline, currentFile);
+                    }),
+                new CallbackAction("Cut", context =>
+                    {
+                        timelineEditorComponent.cut();
+                    }),
+                new CallbackAction("Copy", context =>
+                    {
+                        timelineEditorComponent.copy();
+                    }),
+                new CallbackAction("Paste", context =>
+                    {
+                        timelineEditorComponent.paste();
+                    }),
+                new CallbackAction("SelectAll", context =>
+                    {
+                        timelineEditorComponent.selectAll();
+                    }),
+                new CallbackAction("Translation", context =>
+                    {
+                        propEditController.setMoveMode();
+                    }),
+                new CallbackAction("Rotation", context =>
+                    {
+                        propEditController.setRotateMode();
+                    })
+            ));
 
             mvcContext.Controllers.add(new MvcController("PropTimeline", 
                 new CallbackAction("ShowIfNotOpen", context =>
@@ -137,92 +140,74 @@ namespace Medical
                 )
             ));
 
-            MvcController common = new MvcController("Common");
-            RunCommandsAction startup = new RunCommandsAction("Start");
-            startup.addCommand(new RunActionCommand("TimelineEditor/Show"));
-            startup.addCommand(new CallbackCommand(context =>
-            {
-                GlobalContextEventHandler.setEventContext(eventContext);
-            }));
-            common.Actions.add(startup);
-            CallbackAction shutdown = new CallbackAction("Shutdown", context =>
-            {
-                timelineEditorComponent = null;
-                propTimeline = null;
-                GlobalContextEventHandler.disableEventContext(eventContext);
-                if (Shutdown != null)
-                {
-                    Shutdown.Invoke(this);
-                }
-            });
-            common.Actions.add(shutdown);
-            mvcContext.Controllers.add(common);
+            mvcContext.Controllers.add(new MvcController("Common",
+                new RunCommandsAction("Start",
+                    new RunActionCommand("TimelineEditor/Show"),
+                    new CallbackCommand(context =>
+                        {
+                            GlobalContextEventHandler.setEventContext(eventContext);
+                        })),
+                new CallbackAction("Shutdown", context =>
+                    {
+                        timelineEditorComponent = null;
+                        propTimeline = null;
+                        GlobalContextEventHandler.disableEventContext(eventContext);
+                        if (Shutdown != null)
+                        {
+                            Shutdown.Invoke(this);
+                        }
+                    })));
 
             eventContext = new EventContext();
-            MessageEvent saveEvent = new MessageEvent(Events.Save);
-            saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
-            saveEvent.addButton(KeyboardButtonCode.KC_S);
-            saveEvent.FirstFrameUpEvent += eventManager =>
-            {
-                timelineTypeController.saveTimeline(currentTimeline, currentFile);
-            };
-            eventContext.addEvent(saveEvent);
-            MessageEvent togglePlayEvent = new MessageEvent(Events.TogglePlay);
-            togglePlayEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
-            togglePlayEvent.addButton(KeyboardButtonCode.KC_SPACE);
-            togglePlayEvent.FirstFrameUpEvent += eventManager =>
-            {
-                timelineEditorComponent.togglePlayPreview();
-            };
-            eventContext.addEvent(togglePlayEvent);
 
-            MessageEvent cut = new MessageEvent(Events.Cut);
-            cut.addButton(KeyboardButtonCode.KC_LCONTROL);
-            cut.addButton(KeyboardButtonCode.KC_X);
-            cut.FirstFrameUpEvent += eventManager =>
-            {
-                mvcContext.runAction("TimelineEditor/Cut");
-            };
-            eventContext.addEvent(cut);
+            eventContext.addEvent(new MessageEvent(Events.Save,
+                frameUp: eventManager =>
+                {
+                    timelineTypeController.saveTimeline(currentTimeline, currentFile);
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_S }));
 
-            MessageEvent copy = new MessageEvent(Events.Copy);
-            copy.addButton(KeyboardButtonCode.KC_LCONTROL);
-            copy.addButton(KeyboardButtonCode.KC_C);
-            copy.FirstFrameUpEvent += eventManager =>
-            {
-                mvcContext.runAction("TimelineEditor/Copy");
-            };
-            eventContext.addEvent(copy);
+            eventContext.addEvent(new MessageEvent(Events.TogglePlay,
+                frameUp: eventManager =>
+                {
+                    timelineEditorComponent.togglePlayPreview();
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_SPACE }));
 
-            MessageEvent paste = new MessageEvent(Events.Paste);
-            paste.addButton(KeyboardButtonCode.KC_LCONTROL);
-            paste.addButton(KeyboardButtonCode.KC_V);
-            paste.FirstFrameUpEvent += eventManager =>
-            {
-                mvcContext.runAction("TimelineEditor/Paste");
-            };
-            eventContext.addEvent(paste);
+            eventContext.addEvent(new MessageEvent(Events.Cut,
+                frameUp: eventManager =>
+                {
+                    mvcContext.runAction("TimelineEditor/Cut");
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_X }));
 
-            MessageEvent selectAll = new MessageEvent(Events.SelectAll);
-            selectAll.addButton(KeyboardButtonCode.KC_LCONTROL);
-            selectAll.addButton(KeyboardButtonCode.KC_A);
-            selectAll.FirstFrameUpEvent += eventManager =>
-            {
-                mvcContext.runAction("TimelineEditor/SelectAll");
-            };
-            eventContext.addEvent(selectAll);
+            eventContext.addEvent(new MessageEvent(Events.Copy,
+                frameUp: eventManager =>
+                {
+                    mvcContext.runAction("TimelineEditor/Copy");
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_C }));
+
+            eventContext.addEvent(new MessageEvent(Events.Paste,
+                frameUp: eventManager =>
+                {
+                    mvcContext.runAction("TimelineEditor/Paste");
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_V }));
+
+            eventContext.addEvent(new MessageEvent(Events.SelectAll,
+                frameUp: eventManager =>
+                {
+                    mvcContext.runAction("TimelineEditor/SelectAll");
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_A }));
 
             eventContext.addEvent(new MessageEvent(Events.Translate,
                 frameUp: eventManager =>
                     {
                         mvcContext.runAction("TimelineEditor/Translation");
                     },
-                keys:
-                    new KeyboardButtonCode[]
-                    {
-                        KeyboardButtonCode.KC_LCONTROL, 
-                        KeyboardButtonCode.KC_T
-                    }));
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_T }));
 
             eventContext.addEvent(new MessageEvent(Events.Rotate,
                 frameUp: eventManager =>
