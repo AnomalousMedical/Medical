@@ -84,7 +84,7 @@ namespace Medical
             propTimeline = new PropTimeline(standaloneController.Clipboard, propEditController);
             guiManager.addManagedDialog(propTimeline);
 
-            openPropManager = new OpenPropManager();
+            openPropManager = new OpenPropManager(propEditController);
             guiManager.addManagedDialog(openPropManager);
 
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard, editorController);
@@ -278,17 +278,17 @@ namespace Medical
 
         void guiManager_MainGUIHidden()
         {
-            openPropManager.hideOpenProps();
+            propEditController.hideOpenProps();
         }
 
         void guiManager_MainGUIShown()
         {
-            openPropManager.showOpenProps();
+            propEditController.showOpenProps();
         }
 
         void timelineTypeController_TimelineChanged(TimelineTypeController typeController, Timeline timeline)
         {
-            openPropManager.removeAllOpenProps();
+            propEditController.removeAllOpenProps();
         }
     }
 }

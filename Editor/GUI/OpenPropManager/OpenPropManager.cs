@@ -11,11 +11,15 @@ namespace Medical.GUI
     {
         private MultiListBox propList;
 
-        public event EventDelegate<OpenPropManager, ShowPropAction> PropClosed;
+        private PropEditController propEditController;
 
-        public OpenPropManager()
+        public OpenPropManager(PropEditController propEditController)
             :base("Medical.GUI.OpenPropManager.OpenPropManager.layout")
         {
+            this.propEditController = propEditController;
+            propEditController.PropOpened += propEditController_PropOpened;
+            propEditController.PropClosed += propEditController_PropClosed;
+
             propList = (MultiListBox)window.findWidget("propList");
             propList.addColumn("Prop", 50);
             propList.setColumnResizingPolicyAt(0, ResizingPolicy.Fill);
@@ -27,58 +31,11 @@ namespace Medical.GUI
             closeAll.MouseButtonClick += new MyGUIEvent(closeAll_MouseButtonClick);
         }
 
-        public void addOpenProp(ShowPropAction prop)
+        public override void Dispose()
         {
-            propList.addItem(prop.PropType, prop);
-            prop.KeepOpen = true;
-        }
-
-        public void removeOpenProp(ShowPropAction prop)
-        {
-            uint index = propList.findItemWithData(prop);
-            removeOpenProp(index);
-        }
-
-        public void removeOpenProp(uint index)
-        {
-            ShowPropAction prop = (ShowPropAction)propList.getItemDataAt(index);
-            if (prop != null)
-            {
-                prop.KeepOpen = false;
-                propList.removeItemAt(index);
-                if (PropClosed != null)
-                {
-                    PropClosed.Invoke(this, prop);
-                }
-            }
-        }
-
-        public void removeAllOpenProps()
-        {
-            while (propList.getItemCount() > 0)
-            {
-                removeOpenProp(0);
-            }
-        }
-
-        public void hideOpenProps()
-        {
-            uint count = propList.getItemCount();
-            for (uint i = 0; i < count; ++i)
-            {
-                ShowPropAction prop = (ShowPropAction)propList.getItemDataAt(i);
-                prop.KeepOpen = false;
-            }
-        }
-
-        public void showOpenProps()
-        {
-            uint count = propList.getItemCount();
-            for (uint i = 0; i < count; ++i)
-            {
-                ShowPropAction prop = (ShowPropAction)propList.getItemDataAt(i);
-                prop.KeepOpen = true;
-            }
+            propEditController.PropOpened -= propEditController_PropOpened;
+            propEditController.PropClosed -= propEditController_PropClosed;
+            base.Dispose();
         }
 
         void close_MouseButtonClick(Widget source, EventArgs e)
@@ -86,13 +43,27 @@ namespace Medical.GUI
             uint selectedIndex = propList.getIndexSelected();
             if (selectedIndex != uint.MaxValue)
             {
-                removeOpenProp(selectedIndex);
+                propEditController.removeOpenProp((int)selectedIndex);
             }
         }
 
         void closeAll_MouseButtonClick(Widget source, EventArgs e)
         {
-            removeAllOpenProps();
+            propEditController.removeAllOpenProps();
+        }
+
+        void propEditController_PropOpened(PropEditController source, ShowPropAction arg)
+        {
+            propList.addItem(arg.PropType, arg);
+        }
+
+        void propEditController_PropClosed(PropEditController source, ShowPropAction arg)
+        {
+            uint itemIndex = propList.findItemWithData(arg);
+            if (itemIndex != uint.MaxValue)
+            {
+                propList.removeItemAt(itemIndex);
+            }
         }
     }
 }

@@ -100,6 +100,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            actionFactory.Dispose();
             CurrentTimeline = null;
             timelineController.TimelinePlaybackStarted -= timelineController_TimelinePlaybackStarted;
             timelineController.TimelinePlaybackStopped -= timelineController_TimelinePlaybackStopped;

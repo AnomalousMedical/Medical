@@ -16,6 +16,10 @@ namespace Medical
         private SimObjectMover simObjectMover;
         private float duration;
 
+        private List<ShowPropAction> openProps = new List<ShowPropAction>();
+        public event EventDelegate<PropEditController, ShowPropAction> PropClosed;
+        public event EventDelegate<PropEditController, ShowPropAction> PropOpened;
+
         public PropEditController(SimObjectMover simObjectMover)
         {
             this.simObjectMover = simObjectMover;
@@ -88,6 +92,55 @@ namespace Medical
                 {
                     DurationChanged.Invoke(duration);
                 }
+            }
+        }
+
+        public void addOpenProp(ShowPropAction prop)
+        {
+            openProps.Add(prop);
+            prop.KeepOpen = true;
+            if (PropOpened != null)
+            {
+                PropOpened.Invoke(this, prop);
+            }
+        }
+
+        public void removeOpenProp(ShowPropAction prop)
+        {
+            openProps.Remove(prop);
+            prop.KeepOpen = false;
+            if (PropClosed != null)
+            {
+                PropClosed.Invoke(this, prop);
+            }
+        }
+
+        public void removeOpenProp(int index)
+        {
+            removeOpenProp(openProps[index]);
+        }
+
+        public void removeAllOpenProps()
+        {
+            while (openProps.Count > 0)
+            {
+                removeOpenProp(openProps[0]);
+            }
+        }
+
+        public void hideOpenProps()
+        {
+            foreach (ShowPropAction prop in openProps)
+            {
+                prop.KeepOpen = false;
+            }
+        }
+
+        public void showOpenProps()
+        {
+            foreach (ShowPropAction prop in openProps)
+            {
+                prop.KeepOpen = true;
             }
         }
 

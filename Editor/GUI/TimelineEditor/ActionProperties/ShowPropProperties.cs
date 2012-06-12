@@ -21,13 +21,11 @@ namespace Medical.GUI
         private Button keepOpenButton;
 
         private PropEditController propEditController;
-        private OpenPropManager propManager;
 
-        public ShowPropProperties(Widget parentWidget, PropEditController propEditController, OpenPropManager propManager)
+        public ShowPropProperties(Widget parentWidget, PropEditController propEditController)
             :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.ShowPropProperties.layout")
         {
-            this.propManager = propManager;
-            propManager.PropClosed += new EventDelegate<OpenPropManager, ShowPropAction>(propManager_PropClosed);
+            propEditController.PropClosed += propManager_PropClosed;
 
             propTypes = mainWidget.findWidget("PropTypeCombo") as ComboBox;
             propTypes.EventComboChangePosition += new MyGUIEvent(propTypes_EventComboChangePosition);
@@ -53,17 +51,16 @@ namespace Medical.GUI
             keepOpenButton.MouseButtonClick += new MyGUIEvent(keepOpenButton_MouseButtonClick);
         }
 
+        public override void Dispose()
+        {
+            propEditController.PropClosed -= propManager_PropClosed;
+            unsubscribeActionEvents();
+            base.Dispose();
+        }
+
         public override void setCurrentData(TimelineData data)
         {
-            if (actionData != null)
-            {
-                actionData.DurationChanged -= actionData_DurationChanged;
-            }
-            if (showProp != null)
-            {
-                showProp.Translated -= showProp_Translated;
-                showProp.Rotated -= showProp_Rotated;
-            }
+            unsubscribeActionEvents();
             actionData = ((TimelineActionData)data);
             showProp = (ShowPropAction)actionData.Action;
             if(actionData != null)
@@ -102,6 +99,7 @@ namespace Medical.GUI
 
         public override void editingCompleted()
         {
+            unsubscribeActionEvents();
             showProp = null;
             propEditController.CurrentShowPropAction = null;
         }
@@ -169,20 +167,16 @@ namespace Medical.GUI
         {
             if (keepOpenButton.Selected)
             {
-                propManager.removeOpenProp(showProp);
+                propEditController.removeOpenProp(showProp);
             }
             else
             {
-                propManager.addOpenProp(showProp);
-                if (!propManager.Visible)
-                {
-                    propManager.Visible = true;
-                }
+                propEditController.addOpenProp(showProp);
             }
             keepOpenButton.Selected = showProp.KeepOpen;
         }
 
-        void propManager_PropClosed(OpenPropManager source, ShowPropAction arg)
+        void propManager_PropClosed(PropEditController source, ShowPropAction arg)
         {
             if (arg == showProp)
             {
@@ -200,6 +194,19 @@ namespace Medical.GUI
         void showProp_Translated(ShowPropAction obj)
         {
             translationEdit.Caption = obj.Translation.ToString();
+        }
+
+        private void unsubscribeActionEvents()
+        {
+            if (actionData != null)
+            {
+                actionData.DurationChanged -= actionData_DurationChanged;
+            }
+            if (showProp != null)
+            {
+                showProp.Translated -= showProp_Translated;
+                showProp.Rotated -= showProp_Rotated;
+            }
         }
     }
 }
