@@ -86,6 +86,12 @@
     <Compile Include="Controller\EditorTypeController.cs" />
     <Compile Include="Controller\ExtensionAction.cs" />
     <Compile Include="Controller\ExtensionActionCollection.cs" />
+    <Compile Include="Controller\Mvc\SelectAllAction.cs" />
+    <Compile Include="Controller\Mvc\PasteAction.cs" />
+    <Compile Include="Controller\Mvc\CopyAction.cs" />
+    <Compile Include="Controller\Mvc\CutAction.cs" />
+    <Compile Include="Controller\Mvc\EditMenuManager.cs" />
+    <Compile Include="Controller\Mvc\EditMenuProvider.cs" />
     <Compile Include="Controller\Project\AppProjectTemplate.cs" />
     <Compile Include="Controller\Project\EmptyProjectTemplate.cs" />
     <Compile Include="Controller\Project\ProjectTemplate.cs" />

@@ -7,10 +7,11 @@ using Engine;
 using Engine.Saving;
 using Engine.Platform;
 using Medical.GUI.AnomalousMvc;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class PropTimeline : LayoutComponent
+    public class PropTimeline : LayoutComponent, EditMenuProvider
     {
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
@@ -20,8 +21,6 @@ namespace Medical.GUI
         private ShowPropAction propData;
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
-        private ShowMenuButton editMenuButton;
-        private PopupMenu editMenu;
         private SaveableClipboard clipboard;
         private PropEditController propEditController;
 
@@ -35,6 +34,7 @@ namespace Medical.GUI
             propEditController.MarkerMoved += propEditController_MarkerMoved;
 
             widget.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+            widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
 
             //Timeline view
             ScrollView timelineViewScrollView = widget.findWidget("ActionView") as ScrollView;
@@ -53,35 +53,23 @@ namespace Medical.GUI
             trackFilter = new TrackFilter(timelineFilterScrollView, timelineView);
             trackFilter.AddTrackItem += new AddTrackItemCallback(trackFilter_AddTrackItem);
 
-            //Edit button
-            Button editButton = widget.findWidget("EditButton") as Button;
-            editMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
-            editMenu.Visible = false;
-            MenuItem selectAll = editMenu.addItem("Select All");
-            selectAll.MouseButtonClick += new MyGUIEvent(selectAll_MouseButtonClick);
-            MenuItem cut = editMenu.addItem("Cut");
-            cut.MouseButtonClick += new MyGUIEvent(cut_MouseButtonClick);
-            MenuItem copy = editMenu.addItem("Copy");
-            copy.MouseButtonClick += new MyGUIEvent(copy_MouseButtonClick);
-            MenuItem paste = editMenu.addItem("Paste");
-            paste.MouseButtonClick += new MyGUIEvent(paste_MouseButtonClick);
-            editMenuButton = new ShowMenuButton(editButton, editMenu);
-
             numberLine = new NumberLine(widget.findWidget("NumberLine") as ScrollView, timelineView);
 
             Button removeAction = widget.findWidget("RemoveAction") as Button;
             removeAction.MouseButtonClick += new MyGUIEvent(removeAction_MouseButtonClick);
 
             setPropData(propEditController.CurrentShowPropAction);
+
+            ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
         }
 
         public override void Dispose()
         {
+            ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).removeMenuProvider(this);
             actionFactory.Dispose();
             propEditController.MarkerMoved -= propEditController_MarkerMoved;
             propEditController.ShowPropActionChanged -= propEditController_ShowPropActionChanged;
             propEditController.DurationChanged -= propEditController_DurationChanged;
-            Gui.Instance.destroyWidget(editMenu);
             timelineView.Dispose();
             base.Dispose();
         }
@@ -249,42 +237,34 @@ namespace Medical.GUI
             }
         }
 
-        #region Edit Menu
-
-        void cut_MouseButtonClick(Widget source, EventArgs e)
+        public void cut()
         {
             PropTimelineClipboardContainer clipContainer = new PropTimelineClipboardContainer();
             clipContainer.addActions(timelineView.SelectedData);
             clipboard.copyToSourceObject(clipContainer);
             removeSelectedData();
-            editMenu.setVisibleSmooth(false);
         }
 
-        void paste_MouseButtonClick(Widget source, EventArgs e)
+        public void paste()
         {
             PropTimelineClipboardContainer clipContainer = clipboard.createCopy<PropTimelineClipboardContainer>();
             if (clipContainer != null)
             {
                 clipContainer.addActionsToTimeline(propData, this, timelineView.MarkerTime, timelineView.Duration);
             }
-            editMenu.setVisibleSmooth(false);
         }
 
-        void copy_MouseButtonClick(Widget source, EventArgs e)
+        public void copy()
         {
             PropTimelineClipboardContainer clipContainer = new PropTimelineClipboardContainer();
             clipContainer.addActions(timelineView.SelectedData);
             clipboard.copyToSourceObject(clipContainer);
-            editMenu.setVisibleSmooth(false);
         }
 
-        void selectAll_MouseButtonClick(Widget source, EventArgs e)
+        public void selectAll()
         {
             timelineView.selectAll();
-            editMenu.setVisibleSmooth(false);
         }
-
-        #endregion Edit Menu
 
         void propEditController_DurationChanged(float duration)
         {
@@ -299,6 +279,15 @@ namespace Medical.GUI
         void propEditController_MarkerMoved(float obj)
         {
             MarkerTime = obj;
+        }
+
+        void widget_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
+            if (rfea.Focus)
+            {
+                ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+            }
         }
     }
 }

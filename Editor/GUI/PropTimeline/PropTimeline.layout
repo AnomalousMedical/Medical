@@ -17,9 +17,6 @@
                 <Property key="VisibleHScroll" value="false"/>
                 <Property key="CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="2 0 40 23" name="EditButton">
-                <Property key="Caption" value="Edit"/>
-            </Widget>
         </Widget>
         <Widget type="ScrollView" skin="BorderScrollView" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="CanvasSize" value="214 314"/>

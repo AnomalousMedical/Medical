@@ -7,10 +7,11 @@ using Engine.Platform;
 using Engine;
 using Logging;
 using Medical.GUI.AnomalousMvc;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class TimelineEditorComponent : LayoutComponent
+    public class TimelineEditorComponent : LayoutComponent, EditMenuProvider
     {
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
@@ -36,6 +37,7 @@ namespace Medical.GUI
             :base("Medical.GUI.TimelineEditor.TimelineEditorComponent.layout", viewHost)
         {
             Widget window = this.widget;
+            window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             //windowTitle = window.Caption;
 
@@ -96,10 +98,13 @@ namespace Medical.GUI
             }
 
             //Enabled = false;
+
+            ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
         }
 
         public override void Dispose()
         {
+            ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).removeMenuProvider(this);
             actionFactory.Dispose();
             CurrentTimeline = null;
             timelineController.TimelinePlaybackStarted -= timelineController_TimelinePlaybackStarted;
@@ -333,6 +338,15 @@ namespace Medical.GUI
             TimelineActionData data = new TimelineActionData(action);
             actionDataBindings.Add(action, data);
             timelineView.addData(data);
+        }
+
+        void window_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
+            if (rfea.Focus)
+            {
+                ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+            }
         }
     }
 }

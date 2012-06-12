@@ -46,6 +46,7 @@ namespace Medical
             this.propEditController = propEditController;
 
             mvcContext = new AnomalousMvcContext();
+            mvcContext.Models.add(new EditMenuManager());
             
             TimelineEditorView timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline);
             timelineEditorView.ComponentCreated += (view, component) =>
@@ -104,22 +105,10 @@ namespace Medical
                     {
                         timelineTypeController.saveTimeline(currentTimeline, currentFile);
                     }),
-                new CallbackAction("Cut", context =>
-                    {
-                        timelineEditorComponent.cut();
-                    }),
-                new CallbackAction("Copy", context =>
-                    {
-                        timelineEditorComponent.copy();
-                    }),
-                new CallbackAction("Paste", context =>
-                    {
-                        timelineEditorComponent.paste();
-                    }),
-                new CallbackAction("SelectAll", context =>
-                    {
-                        timelineEditorComponent.selectAll();
-                    }),
+                new CutAction(),
+                new CopyAction(),
+                new PasteAction(),
+                new SelectAllAction(),
                 new CallbackAction("Translation", context =>
                     {
                         propEditController.setMoveMode();
