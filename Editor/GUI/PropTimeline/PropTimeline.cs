@@ -18,16 +18,19 @@ namespace Medical.GUI
         private ShowPropSubActionFactory actionFactory;
         private ShowPropAction propData;
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
-        private bool usingTools = false;
 
         private ShowMenuButton editMenuButton;
         private PopupMenu editMenu;
         private SaveableClipboard clipboard;
+        private PropEditController propEditController;
 
-        public PropTimeline(SaveableClipboard clipboard)
+        public PropTimeline(SaveableClipboard clipboard, PropEditController propEditController)
             :base("Medical.GUI.PropTimeline.PropTimeline.layout")
         {
             this.clipboard = clipboard;
+            this.propEditController = propEditController;
+            propEditController.ShowPropActionChanged += propEditController_ShowPropActionChanged;
+            propEditController.DurationChanged += propEditController_DurationChanged;
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
@@ -35,14 +38,13 @@ namespace Medical.GUI
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.Duration = 5.0f;
-            timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
 
             //Properties
             ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
-            actionFactory = new ShowPropSubActionFactory(timelinePropertiesScrollView);
+            actionFactory = new ShowPropSubActionFactory(timelinePropertiesScrollView, propEditController);
 
             //Timeline filter
             ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
@@ -71,6 +73,8 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            propEditController.ShowPropActionChanged -= propEditController_ShowPropActionChanged;
+            propEditController.DurationChanged -= propEditController_DurationChanged;
             Gui.Instance.destroyWidget(editMenu);
             base.Dispose();
         }
@@ -81,7 +85,6 @@ namespace Medical.GUI
             {
                 propData.Updated -= propData_Updated;
             }
-            usingTools = false;
             timelineView.clearTracks();
             actionDataBindings.Clear();
             actionProperties.clearPanels();
@@ -136,17 +139,6 @@ namespace Medical.GUI
             }
         }
 
-        /// <summary>
-        /// This will be true if the timeline is needing to use the move tool.
-        /// </summary>
-        public bool UsingTools
-        {
-            get
-            {
-                return usingTools;
-            }
-        }
-
         public Vector3 Translation
         {
             get
@@ -186,7 +178,7 @@ namespace Medical.GUI
                 //current location and set that for the move position. 
                 //This makes editing easier.
                 MovePropAction moveProp = (MovePropAction)subAction;
-                if (usingTools)
+                if (timelineView.CurrentData != null && timelineView.CurrentData.Track == "Move")
                 {
                     moveProp.Translation = Translation;
                     moveProp.Rotation = Rotation;
@@ -226,19 +218,6 @@ namespace Medical.GUI
             {
                 propData.removeSubAction(propTlData.Action);
                 timelineView.removeData(propTlData);
-            }
-        }
-
-        void timelineView_ActiveDataChanged(object sender, EventArgs e)
-        {
-            if (timelineView.CurrentData != null)
-            {
-                bool wasUsingTools = usingTools;
-                usingTools = timelineView.CurrentData.Track == "Move";
-                if (!usingTools && wasUsingTools)
-                {
-                    propData._movePreviewProp(propData.Translation, propData.Rotation);
-                }
             }
         }
 
@@ -298,5 +277,15 @@ namespace Medical.GUI
         }
 
         #endregion Edit Menu
+
+        void propEditController_DurationChanged(float duration)
+        {
+            Duration = duration;
+        }
+
+        void propEditController_ShowPropActionChanged(ShowPropAction obj)
+        {
+            setPropData(obj);
+        }
     }
 }

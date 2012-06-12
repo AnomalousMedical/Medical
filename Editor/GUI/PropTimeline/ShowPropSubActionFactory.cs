@@ -16,9 +16,9 @@ namespace Medical.GUI
         private PoseableHandProperties leftPoseableHandProperties;
         private PoseableHandProperties rightPoseableHandProperties;
 
-        public ShowPropSubActionFactory(Widget parentWidget)
+        public ShowPropSubActionFactory(Widget parentWidget, PropEditController propEditController)
         {
-            movePropProperties = new MovePropProperties(parentWidget);
+            movePropProperties = new MovePropProperties(parentWidget, propEditController);
             editInterfaceProperties = new EditInterfaceProperties(parentWidget);
             pushPlungerProperties = new PushPlungerProperties(parentWidget);
             leftPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout");

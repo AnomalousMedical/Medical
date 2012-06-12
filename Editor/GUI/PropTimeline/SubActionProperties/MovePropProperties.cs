@@ -12,10 +12,13 @@ namespace Medical.GUI
         private MovePropAction moveProp;
         private EditBox translationEdit;
         private EditBox rotationEdit;
+        private PropEditController propEditController;
 
-        public MovePropProperties(Widget parent)
+        public MovePropProperties(Widget parent, PropEditController propEditController)
             : base(parent, "Medical.GUI.PropTimeline.SubActionProperties.MovePropProperties.layout")
         {
+            this.propEditController = propEditController;
+
             translationEdit = mainWidget.findWidget("TranslationEdit") as EditBox;
             translationEdit.EventEditSelectAccept += new MyGUIEvent(translationEdit_EventEditSelectAccept);
 
@@ -29,6 +32,13 @@ namespace Medical.GUI
             moveProp = (MovePropAction)propData.Action;
             translationEdit.OnlyText = moveProp.Translation.ToString();
             rotationEdit.OnlyText = moveProp.Rotation.getEuler().ToString();
+            propEditController.CurrentMovePropAction = moveProp;
+        }
+
+        public override void editingCompleted()
+        {
+            base.editingCompleted();
+            propEditController.CurrentMovePropAction = null;
         }
 
         public Vector3 Translation

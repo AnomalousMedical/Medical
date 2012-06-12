@@ -17,10 +17,7 @@ namespace Medical.GUI
         private EditBox translationEdit;
         private EditBox rotationEdit;
         private NumericEdit fadeDurationEdit;
-        private ButtonGroup toolButtonGroup = new ButtonGroup();
 
-        private Button translationButton;
-        private Button rotationButton;
         private Button keepOpenButton;
 
         private PropEditController propEditController;
@@ -46,15 +43,6 @@ namespace Medical.GUI
             fadeDurationEdit.MinValue = 0.0f;
             fadeDurationEdit.MaxValue = 100.0f;
             fadeDurationEdit.AllowFloat = true;
-
-            translationButton = mainWidget.findWidget("TranslationButton") as Button;
-            toolButtonGroup.addButton(translationButton);
-
-            rotationButton = mainWidget.findWidget("RotationButton") as Button;
-            toolButtonGroup.addButton(rotationButton);
-
-            toolButtonGroup.SelectedButton = translationButton;
-            toolButtonGroup.SelectedButtonChanged += new EventHandler(toolButtonGroup_SelectedButtonChanged);
 
             this.propEditController = propEditController;
 
@@ -164,12 +152,6 @@ namespace Medical.GUI
         void fadeDurationEdit_ValueChanged(Widget source, EventArgs e)
         {
             showProp.FadeDuration = fadeDurationEdit.FloatValue;
-        }
-
-        void toolButtonGroup_SelectedButtonChanged(object sender, EventArgs e)
-        {
-            //simObjectMover.ShowMoveTools = toolButtonGroup.SelectedButton == translationButton;
-            //simObjectMover.ShowRotateTools = toolButtonGroup.SelectedButton == rotationButton;
         }
 
         void actionData_DurationChanged(float duration)

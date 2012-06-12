@@ -81,7 +81,7 @@ namespace Medical
             propEditController = new PropEditController(propMover);
 
             //Dialogs
-            propTimeline = new PropTimeline(standaloneController.Clipboard);
+            propTimeline = new PropTimeline(standaloneController.Clipboard, propEditController);
             guiManager.addManagedDialog(propTimeline);
 
             openPropManager = new OpenPropManager();

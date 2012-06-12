@@ -9,10 +9,12 @@ namespace Medical
     public class PropEditController : MovableObject
     {
         public event Action<float> DurationChanged;
+        public event Action<ShowPropAction> ShowPropActionChanged;
 
         private ShowPropAction currentShowPropAction;
         private MovePropAction currentMovePropAction;
         private SimObjectMover simObjectMover;
+        private float duration;
 
         public PropEditController(SimObjectMover simObjectMover)
         {
@@ -34,12 +36,21 @@ namespace Medical
                     simObjectMover.removeMovableObject(this);
                     simObjectMover.setDrawingSurfaceVisible(false);
                 }
+                if (currentMovePropAction != null)
+                {
+                    CurrentMovePropAction = null;
+                }
                 currentShowPropAction = value;
                 if (currentShowPropAction != null)
                 {
                     simObjectMover.setActivePlanes(MovementAxis.All, MovementPlane.All);
                     simObjectMover.addMovableObject("Prop", this);
                     simObjectMover.setDrawingSurfaceVisible(true);
+                    if (ShowPropActionChanged != null)
+                    {
+                        ShowPropActionChanged.Invoke(currentShowPropAction);
+                    }
+                    Duration = currentShowPropAction.Duration;
                 }
             }
         }
@@ -53,10 +64,32 @@ namespace Medical
             set
             {
                 currentMovePropAction = value;
+                if (currentMovePropAction != null)
+                {
+                    currentShowPropAction._movePreviewProp(currentMovePropAction.Translation, currentMovePropAction.Rotation);
+                }
+                else
+                {
+                    currentShowPropAction._movePreviewProp(currentShowPropAction.Translation, currentShowPropAction.Rotation);
+                }
             }
         }
 
-        public float Duration { get; set; }
+        public float Duration
+        {
+            get
+            {
+                return duration;
+            }
+            set
+            {
+                duration = value;
+                if (DurationChanged != null)
+                {
+                    DurationChanged.Invoke(duration);
+                }
+            }
+        }
 
         #region MovableObject Members
 
@@ -91,7 +124,6 @@ namespace Medical
                 else
                 {
                     currentShowPropAction.Translation += offset;
-                    //translationEdit.Caption = currentShowPropAction.Translation.ToString();
                 }
             }
         }
@@ -132,9 +164,6 @@ namespace Medical
                 else
                 {
                     currentShowPropAction.Rotation = newRot;
-                    //Vector3 euler = showProp.Rotation.getEuler();
-                    //euler *= 57.2957795f;
-                    //rotationEdit.Caption = euler.ToString();
                 }
             }
         }
