@@ -19,7 +19,9 @@ namespace Medical
             Cut,
             Copy,
             Paste,
-            SelectAll
+            SelectAll,
+            Translate,
+            Rotate
         }
 
         public event Action<TimelineEditorContext> Shutdown;
@@ -208,6 +210,30 @@ namespace Medical
                 mvcContext.runAction("TimelineEditor/SelectAll");
             };
             eventContext.addEvent(selectAll);
+
+            eventContext.addEvent(new MessageEvent(Events.Translate,
+                frameUp: eventManager =>
+                    {
+                        mvcContext.runAction("TimelineEditor/Translation");
+                    },
+                keys:
+                    new KeyboardButtonCode[]
+                    {
+                        KeyboardButtonCode.KC_LCONTROL, 
+                        KeyboardButtonCode.KC_T
+                    }));
+
+            eventContext.addEvent(new MessageEvent(Events.Rotate,
+                frameUp: eventManager =>
+                {
+                    mvcContext.runAction("TimelineEditor/Rotation");
+                },
+                keys:
+                    new KeyboardButtonCode[]
+                    {
+                        KeyboardButtonCode.KC_LCONTROL, 
+                        KeyboardButtonCode.KC_R
+                    }));
         }
 
         public void close()
