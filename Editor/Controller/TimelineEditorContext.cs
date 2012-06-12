@@ -29,7 +29,6 @@ namespace Medical
 
         private String currentFile;
         private Timeline currentTimeline;
-        private TimelineEditorComponent timelineEditorComponent = null;
 
         private EventContext eventContext;
         private AnomalousMvcContext mvcContext;
@@ -46,12 +45,7 @@ namespace Medical
             mvcContext = new AnomalousMvcContext();
             mvcContext.Models.add(new EditMenuManager());
             
-            TimelineEditorView timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline);
-            timelineEditorView.ComponentCreated += (view, component) =>
-            {
-                timelineEditorComponent = component;
-            };
-            mvcContext.Views.add(timelineEditorView);
+            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
             
             GenericEditorView genericEditor = new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
             genericEditor.IsWindow = true;
@@ -131,7 +125,6 @@ namespace Medical
                         })),
                 new CallbackAction("Shutdown", context =>
                     {
-                        timelineEditorComponent = null;
                         GlobalContextEventHandler.disableEventContext(eventContext);
                         propEditController.removeAllOpenProps();
                         if (Shutdown != null)
