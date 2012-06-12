@@ -23,13 +23,11 @@ namespace Medical.GUI
             if (view is PropTimelineView)
             {
                 PropTimeline propTimeline = new PropTimeline(clipboard, propEditController, viewHost);
-                ((PropTimelineView)view)._fireComponentCreated(propTimeline);
                 return propTimeline;
             }
             else if (view is OpenPropManagerView)
             {
                 OpenPropManager openPropManager = new OpenPropManager(propEditController, viewHost);
-                ((OpenPropManagerView)view)._fireComponentCreated(openPropManager);
                 return openPropManager;
             }
             return null;

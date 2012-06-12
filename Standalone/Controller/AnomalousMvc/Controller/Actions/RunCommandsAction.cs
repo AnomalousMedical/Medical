@@ -149,6 +149,7 @@ namespace Medical.Controller.AnomalousMvc
             //View
             BrowserNode viewCommands = new BrowserNode("Views", null);
             viewCommands.addChild(new BrowserNode("Show View", typeof(ShowViewCommand)));
+            viewCommands.addChild(new BrowserNode("Show View If Not Open", typeof(ShowViewIfNotOpenCommand)));
             viewCommands.addChild(new BrowserNode("Close View", typeof(CloseViewCommand)));
             viewCommands.addChild(new BrowserNode("Close All Views", typeof(CloseAllViewsCommand)));
             rootNode.addChild(viewCommands);

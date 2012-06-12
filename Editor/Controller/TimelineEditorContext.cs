@@ -30,8 +30,6 @@ namespace Medical
         private String currentFile;
         private Timeline currentTimeline;
         private TimelineEditorComponent timelineEditorComponent = null;
-        private PropTimeline propTimeline = null;
-        private OpenPropManager openPropManager = null;
 
         private EventContext eventContext;
         private AnomalousMvcContext mvcContext;
@@ -61,18 +59,10 @@ namespace Medical
             
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline");
             propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
-            propTimelineView.ComponentCreated += (view, component) =>
-            {
-                propTimeline = component;
-            };
             mvcContext.Views.add(propTimelineView);
 
             OpenPropManagerView propManagerView = new OpenPropManagerView("PropManager");
             propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
-            propManagerView.ComponentCreated += (view, component) =>
-            {
-                openPropManager = component;
-            };
             mvcContext.Views.add(propManagerView);
             
             EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
@@ -120,39 +110,17 @@ namespace Medical
             ));
 
             mvcContext.Controllers.add(new MvcController("PropTimeline",
-                new CallbackAction("ShowIfNotOpen", context =>
-                    {
-                        if (propTimeline == null)
-                        {
-                            context.runAction("PropTimeline/Show");
-                        }
-                    }),
-                new RunCommandsAction("Show",
-                    new ShowViewCommand("PropTimeline")
+                new RunCommandsAction("ShowIfNotOpen",
+                    new ShowViewIfNotOpenCommand("PropTimeline")
                 ),
                 new RunCommandsAction("Close",
-                    new CloseViewCommand(),
-                    new CallbackCommand(context =>
-                    {
-                        propTimeline = null;
-                    }))));
+                    new CloseViewCommand())));
 
             mvcContext.Controllers.add(new MvcController("PropManager",
-                new CallbackAction("ShowIfNotOpen", context =>
-                    {
-                        if (openPropManager == null)
-                        {
-                            context.runAction("PropManager/Show");
-                        }
-                    }),
-                new RunCommandsAction("Show",
-                    new ShowViewCommand("PropManager")),
+                new RunCommandsAction("ShowIfNotOpen",
+                    new ShowViewIfNotOpenCommand("PropManager")),
                 new RunCommandsAction("Close",
-                    new CloseViewCommand(),
-                    new CallbackCommand(context =>
-                        {
-                            openPropManager = null;
-                        }))));
+                    new CloseViewCommand())));
 
             mvcContext.Controllers.add(new MvcController("Common",
                 new RunCommandsAction("Start",
@@ -164,7 +132,6 @@ namespace Medical
                 new CallbackAction("Shutdown", context =>
                     {
                         timelineEditorComponent = null;
-                        propTimeline = null;
                         GlobalContextEventHandler.disableEventContext(eventContext);
                         propEditController.removeAllOpenProps();
                         if (Shutdown != null)

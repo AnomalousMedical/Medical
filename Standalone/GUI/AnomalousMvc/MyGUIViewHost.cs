@@ -13,9 +13,10 @@ namespace Medical.GUI.AnomalousMvc
         private MyGUILayoutContainer layoutContainer;
         private AnomalousMvcContext context;
 
-        public MyGUIViewHost(AnomalousMvcContext context)
+        public MyGUIViewHost(AnomalousMvcContext context, String name)
         {
             this.context = context;
+            this.Name = name;
         }
 
         public void setTopComponent(ViewHostComponent component)
@@ -55,6 +56,8 @@ namespace Medical.GUI.AnomalousMvc
                 return context;
             }
         }
+
+        public String Name { get; private set; }
 
         public bool _RequestClosed { get; set; }
 

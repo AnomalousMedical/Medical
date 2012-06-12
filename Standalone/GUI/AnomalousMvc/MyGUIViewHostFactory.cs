@@ -25,7 +25,7 @@ namespace Medical.GUI.AnomalousMvc
             MyGUIView myGUIView = view as MyGUIView;
             if (myGUIView != null)
             {
-                MyGUIViewHost viewHost = new MyGUIViewHost(context);
+                MyGUIViewHost viewHost = new MyGUIViewHost(context, view.Name);
                 viewHost.setTopComponent(componentFactory.createViewHostComponent(myGUIView, context, viewHost));
                 return viewHost;
             }

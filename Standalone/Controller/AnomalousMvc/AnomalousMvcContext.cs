@@ -87,6 +87,11 @@ namespace Medical.Controller.AnomalousMvc
             queuedTimeline = timeline;
         }
 
+        public bool isViewOpen(String name)
+        {
+            return core.isViewOpen(name);
+        }
+
         public void queueShowView(String view)
         {
             try

@@ -262,6 +262,29 @@ namespace Medical.Controller.AnomalousMvc
             queuedFloatingViews.Clear();
         }
 
+        public bool isViewOpen(String name)
+        {
+            bool isSidePanel = (currentLeft != null && currentLeft.Name == name)
+                || (currentRight != null && currentRight.Name == name)
+                || (currentTop != null && currentTop.Name == name)
+                || (currentBottom != null && currentBottom.Name == name);
+
+            if (isSidePanel)
+            {
+                return true;
+            }
+
+            foreach (ViewHost viewHost in openFloatingViews)
+            {
+                if (viewHost.Name == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public bool HasOpenViews
         {
             get

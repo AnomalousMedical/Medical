@@ -106,6 +106,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\RestoreMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SetMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\ShutdownCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\ShowViewIfNotOpenCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\RunCommandsAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MainInterface\ShowMainInterfaceCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\ShowViewCommand.cs" />
