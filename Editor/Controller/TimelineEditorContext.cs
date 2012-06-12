@@ -32,14 +32,14 @@ namespace Medical
         private EventContext eventContext;
         private AnomalousMvcContext mvcContext;
         private TimelineTypeController timelineTypeController;
-        private SimObjectMover simObjectMover;
+        private PropEditController propEditController;
 
-        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, SimObjectMover simObjectMover)
+        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, PropEditController propEditController)
         {
             this.currentTimeline = timeline;
             this.currentFile = path;
             this.timelineTypeController = timelineTypeController;
-            this.simObjectMover = simObjectMover;
+            this.propEditController = propEditController;
 
             mvcContext = new AnomalousMvcContext();
             TimelineEditorView timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline);
@@ -105,13 +105,11 @@ namespace Medical
             }));
             timelineEditorController.Actions.add(new CallbackAction("Translation", context =>
             {
-                simObjectMover.ShowMoveTools = true;
-                simObjectMover.ShowRotateTools = false;
+                propEditController.setMoveMode();
             }));
             timelineEditorController.Actions.add(new CallbackAction("Rotation", context =>
             {
-                simObjectMover.ShowMoveTools = false;
-                simObjectMover.ShowRotateTools = true;
+                propEditController.setRotateMode();
             }));
 
             mvcContext.Controllers.add(timelineEditorController);

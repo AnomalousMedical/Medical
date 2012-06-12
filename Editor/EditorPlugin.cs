@@ -112,7 +112,7 @@ namespace Medical
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
-            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propMover);
+            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propEditController);
             timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
             editorController.addTypeController(timelineTypeController);
 

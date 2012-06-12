@@ -162,6 +162,18 @@ namespace Medical
             }
         }
 
+        public void setRotateMode()
+        {
+            simObjectMover.ShowMoveTools = false;
+            simObjectMover.ShowRotateTools = true;
+        }
+
+        public void setMoveMode()
+        {
+            simObjectMover.ShowMoveTools = true;
+            simObjectMover.ShowRotateTools = false;
+        }
+
         #region MovableObject Members
 
         public Vector3 ToolTranslation

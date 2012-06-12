@@ -23,13 +23,13 @@ namespace Medical
 
         private EditorController editorController;
         private TimelineEditorContext timelineEditorContext;
-        private SimObjectMover simObjectMover;
+        private PropEditController propEditController;
 
-        public TimelineTypeController(EditorController editorController, SimObjectMover simObjectMover)
+        public TimelineTypeController(EditorController editorController, PropEditController propEditController)
             :base(".tl", editorController)
         {
             this.editorController = editorController;
-            this.simObjectMover = simObjectMover;
+            this.propEditController = propEditController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
 
@@ -40,7 +40,7 @@ namespace Medical
             {
                 TimelineChanged.Invoke(this, timeline);
             }
-            timelineEditorContext = new TimelineEditorContext(timeline, path, this, simObjectMover);
+            timelineEditorContext = new TimelineEditorContext(timeline, path, this, propEditController);
             timelineEditorContext.Shutdown += new Action<TimelineEditorContext>(timelineEditorContext_Shutdown);
 
             editorController.runEditorContext(timelineEditorContext.MvcContext);
