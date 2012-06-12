@@ -196,7 +196,14 @@ namespace Medical
             eventContext.addEvent(new MessageEvent(Events.TogglePlay,
                 frameUp: eventManager =>
                 {
-                    timelineEditorComponent.togglePlayPreview();
+                    if (timeline.TimelineController.Playing)
+                    {
+                        timeline.TimelineController.stopPlayback();
+                    }
+                    else
+                    {
+                        timeline.TimelineController.startPlayback(timeline, propEditController.MarkerPosition, false);
+                    }
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_SPACE }));
 
