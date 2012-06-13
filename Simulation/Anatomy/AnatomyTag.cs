@@ -60,6 +60,27 @@ namespace Medical
             }
         }
 
+        public Object getRealValue(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return Tag;
+                default:
+                    return null;
+            }
+        }
+
+        public void setValue(int column, Object value)
+        {
+            switch (column)
+            {
+                case 0:
+                    Tag = (String)value;
+                    break;
+            }
+        }
+
         public void setValueStr(int column, string value)
         {
             switch (column)

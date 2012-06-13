@@ -53,6 +53,28 @@ namespace Medical
             return null;
         }
 
+        public Object getRealValue(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return memberWrapper.getWrappedName();
+                case 1:
+                    LayerState layerState = LayerState;
+                    if (layerState != null)
+                    {
+                        return LayerState;
+                    }
+                    return null;
+            }
+            return null;
+        }
+
+        public void setValue(int column, Object value)
+        {
+
+        }
+
         public void setValueStr(int column, string value)
         {
             

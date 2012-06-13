@@ -41,6 +41,24 @@ namespace Medical
             }
         }
 
+        public Object getRealValue(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return key;
+                case 1:
+                    return value;
+                default:
+                    return "";
+            }
+        }
+
+        public void setValue(int column, Object value)
+        {
+
+        }
+
         public void setValueStr(int column, string value)
         {
 

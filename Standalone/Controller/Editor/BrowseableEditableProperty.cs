@@ -67,6 +67,37 @@ namespace Medical.Editor
             }
         }
 
+        public Object getRealValue(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return name;
+                case 1:
+                    Object value = propertyInfo.getValue(instance, null);
+                    if (value != null)
+                    {
+                        return value;
+                    }
+                    return null;
+                default:
+                    return null;
+            }
+        }
+
+        public void setValue(int column, Object value)
+        {
+            switch (column)
+            {
+                case 0:
+                    name = (String)value;
+                    break;
+                case 1:
+                    propertyInfo.setValue(instance, value, null);
+                    break;
+            }
+        }
+
         public bool hasBrowser(int column)
         {
             switch (column)

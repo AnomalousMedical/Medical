@@ -112,26 +112,11 @@ namespace Medical.GUI
             layout();
         }
 
-        /// <summary>
-        /// Add an EditableProperty to this table.
-        /// </summary>
-        /// <param name="property">The property to add.</param>
         private void addProperty(EditableProperty property)
         {
             PropertiesFormComponent component = createComponenet(property);
             components.Add(component);
             flowLayout.addChild(component.Container);
-            //TableRow newRow = new TableRow();
-
-            //for (int i = 0; i < currentPropInfo.getNumColumns(); i++)
-            //{
-            //    TableCell newCell = createCell(property.getPropertyType(i), property.hasBrowser(i), property);
-            //    newCell.Value = property.getValue(i);
-            //    newRow.Cells.add(newCell);
-            //}
-
-            //propertiesTable.Rows.add(newRow);
-            //rowProperties.Add(newRow, property);
         }
 
         private void removeProperty(EditableProperty property)
@@ -146,20 +131,19 @@ namespace Medical.GUI
                     break;
                 }
             }
-            //foreach (TableRow row in propertiesTable.Rows)
-            //{
-            //    if (rowProperties[row] == property)
-            //    {
-            //        propertiesTable.Rows.remove(row);
-            //        rowProperties.Remove(row);
-            //        row.Dispose();
-            //        break;
-            //    }
-            //}
         }
 
         private PropertiesFormComponent createComponenet(EditableProperty property)
         {
+            Type propertyType = property.getPropertyType(1);
+            if (propertyType == typeof(bool))
+            {
+                return new PropertiesFormCheckBox(property, scrollView);
+            }
+            else if (propertyType == typeof(Vector3))
+            {
+                return new PropertiesFormVector3(property, scrollView);
+            }
             return new PropertiesFormTextBox(property, scrollView);
         }
 
