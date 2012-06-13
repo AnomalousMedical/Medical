@@ -8,15 +8,14 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PropertiesFormVector3 : PropertiesFormLayoutComponent
+    class PropertiesFormIntVector2 : PropertiesFormLayoutComponent
     {
-        private SingleNumericEdit x;
-        private SingleNumericEdit y;
-        private SingleNumericEdit z;
+        private Int32NumericEdit x;
+        private Int32NumericEdit y;
         private bool allowValueChanges = true;
 
-        public PropertiesFormVector3(EditableProperty property, Widget parent)
-            : base(property, parent, "Medical.GUI.Editor.PropertiesForm.PropertiesFormXYZ.layout")
+        public PropertiesFormIntVector2(EditableProperty property, Widget parent)
+            : base(property, parent, "Medical.GUI.Editor.PropertiesForm.PropertiesFormXY.layout")
         {
             widget.ForwardMouseWheelToParent = true;
 
@@ -24,19 +23,15 @@ namespace Medical.GUI
             textBox.Caption = property.getValue(0);
             textBox.ForwardMouseWheelToParent = true;
 
-            Vector3 value = (Vector3)property.getRealValue(1);
+            IntVector2 value = (IntVector2)property.getRealValue(1);
 
-            x = new SingleNumericEdit((EditBox)widget.findWidget("X"));
+            x = new Int32NumericEdit((EditBox)widget.findWidget("X"));
             x.Value = value.x;
             x.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
 
-            y = new SingleNumericEdit((EditBox)widget.findWidget("Y"));
+            y = new Int32NumericEdit((EditBox)widget.findWidget("Y"));
             y.Value = value.y;
             y.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
-
-            z = new SingleNumericEdit((EditBox)widget.findWidget("Z"));
-            z.Value = value.z;
-            z.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
         }
 
         void editBox_ValueChanged(Widget source, EventArgs e)
@@ -50,7 +45,7 @@ namespace Medical.GUI
             {
                 allowValueChanges = false;
 
-                Property.setValue(1, new Vector3(x.Value, y.Value, z.Value));
+                Property.setValue(1, new IntVector2(x.Value, y.Value));
                 allowValueChanges = true;
             }
         }

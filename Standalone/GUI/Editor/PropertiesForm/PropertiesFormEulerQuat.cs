@@ -10,9 +10,9 @@ namespace Medical.GUI
 {
     class PropertiesFormEulerQuat : PropertiesFormLayoutComponent
     {
-        private NumericEdit x;
-        private NumericEdit y;
-        private NumericEdit z;
+        private SingleNumericEdit x;
+        private SingleNumericEdit y;
+        private SingleNumericEdit z;
         private bool allowValueChanges = true;
 
         public PropertiesFormEulerQuat(EditableProperty property, Widget parent)
@@ -28,25 +28,16 @@ namespace Medical.GUI
             Vector3 value = quat.getEuler();
             value *= 57.2957795f;
 
-            x = new NumericEdit((EditBox)widget.findWidget("X"));
-            x.MinValue = float.MinValue;
-            x.MaxValue = float.MaxValue;
-            x.AllowFloat = true;
-            x.FloatValue = value.x;
+            x = new SingleNumericEdit((EditBox)widget.findWidget("X"));
+            x.Value = value.x;
             x.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
 
-            y = new NumericEdit((EditBox)widget.findWidget("Y"));
-            y.MinValue = float.MinValue;
-            y.MaxValue = float.MaxValue;
-            y.AllowFloat = true;
-            y.FloatValue = value.y;
+            y = new SingleNumericEdit((EditBox)widget.findWidget("Y"));
+            y.Value = value.y;
             y.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
 
-            z = new NumericEdit((EditBox)widget.findWidget("Z"));
-            z.MinValue = float.MinValue;
-            z.MaxValue = float.MaxValue;
-            z.AllowFloat = true;
-            z.FloatValue = value.z;
+            z = new SingleNumericEdit((EditBox)widget.findWidget("Z"));
+            z.Value = value.z;
             z.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
         }
 
@@ -61,7 +52,7 @@ namespace Medical.GUI
             {
                 allowValueChanges = false;
 
-                Vector3 euler = new Vector3(x.FloatValue, y.FloatValue, z.FloatValue);
+                Vector3 euler = new Vector3(x.Value, y.Value, z.Value);
                 euler *= 0.0174532925f;
                 Property.setValue(1, new Quaternion(euler.x, euler.y, euler.z));
                 allowValueChanges = true;

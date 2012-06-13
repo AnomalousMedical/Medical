@@ -148,6 +148,14 @@ namespace Medical.GUI
             {
                 return new PropertiesFormEulerQuat(property, scrollView);
             }
+            else if (propertyType == typeof(IntVector2))
+            {
+                return new PropertiesFormIntVector2(property, scrollView);
+            }
+            else if (propertyType == typeof(Vector2))
+            {
+                return new PropertiesFormVector2(property, scrollView);
+            }
 
             //No match, create an appropriate text box
             else if (property.hasBrowser(1))
