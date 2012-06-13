@@ -44,6 +44,7 @@ namespace Medical
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.Models.add(new EditMenuManager());
+            mvcContext.Models.add(new EditInterfaceHandler());
             
             mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
             

@@ -9,10 +9,11 @@ using System.Xml;
 using System.IO;
 using Engine.Saving;
 using Medical.GUI.AnomalousMvc;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class GenericEditorComponent : LayoutComponent
+    public class GenericEditorComponent : LayoutComponent, EditInterfaceConsumer
     {
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
@@ -44,10 +45,21 @@ namespace Medical.GUI
             objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
 
             //this.Resized += new EventHandler(GenericEditor_Resized);
+
+            EditInterfaceHandler editInterfaceHandler = viewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
+            if (editInterfaceHandler != null)
+            {
+                editInterfaceHandler.setEditInterfaceConsumer(this);
+            }
         }
 
         public override void Dispose()
         {
+            EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
+            if (editInterfaceHandler != null)
+            {
+                editInterfaceHandler.setEditInterfaceConsumer(null);
+            }
             objectEditor.Dispose();
             propTable.Dispose();
             table.Dispose();

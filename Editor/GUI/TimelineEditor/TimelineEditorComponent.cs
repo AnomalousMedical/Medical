@@ -72,6 +72,7 @@ namespace Medical.GUI
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
             timelineView.ActiveDataChanging += new EventHandler<CancelEventArgs>(timelineView_ActiveDataChanging);
             timelineView.MarkerMoved += new EventDelegate<TimelineView, float>(timelineView_MarkerMoved);
+            timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
 
             //Properties
             ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -298,6 +299,23 @@ namespace Medical.GUI
         void timelineView_MarkerMoved(TimelineView source, float arg)
         {
             propEditController.MarkerPosition = arg;
+        }
+
+        void timelineView_ActiveDataChanged(object sender, EventArgs e)
+        {
+            EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
+            if (editInterfaceHandler != null)
+            {
+                TimelineActionData actionData = (TimelineActionData)timelineView.CurrentData;
+                if (actionData != null)
+                {
+                    editInterfaceHandler.changeEditInterface(actionData.Action.getEditInterface());
+                }
+                else if(currentTimeline != null)
+                {
+                    editInterfaceHandler.changeEditInterface(currentTimeline.getEditInterface());
+                }
+            }
         }
 
         void rewindButton_MouseButtonClick(Widget source, EventArgs e)

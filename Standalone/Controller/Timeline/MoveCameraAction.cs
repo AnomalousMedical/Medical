@@ -7,6 +7,7 @@ using Engine;
 using Engine.Saving;
 using Medical.Controller;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -49,7 +50,7 @@ namespace Medical
                 SceneViewWindow sceneViewWindow = TimelineController.SceneViewController.ActiveWindow;
                 if (sceneViewWindow != null)
                 {
-                    sceneViewWindow.setPosition(computeTranslationWithIncludePoint(window), LookAt, Duration);
+                    sceneViewWindow.setPosition(computeTranslationWithIncludePoint(sceneViewWindow), LookAt, Duration);
                 }
             }
         }
@@ -142,14 +143,19 @@ namespace Medical
             
         }
 
+        [Editable]
         public Vector3 Translation { get; set; }
 
+        [Editable]
         public Vector3 LookAt { get; set; }
 
+        [Editable]
         public String CameraName { get; set; }
 
+        [Editable]
         public Vector3 IncludePoint { get; set; }
 
+        [Editable]
         public bool UseSystemCameraTransitionTime { get; set; }
 
         public override float Duration
@@ -188,6 +194,15 @@ namespace Medical
             }
 
             return Translation;
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
+            {
+                capture();
+            }));
         }
 
         #region Saveable

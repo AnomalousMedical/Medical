@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
-    public abstract class TimelineAction : ActionSequencerAction, Saveable
+    public abstract partial class TimelineAction : ActionSequencerAction, Saveable
     {
         private Timeline timeline;
 
@@ -56,8 +57,10 @@ namespace Medical
             
         }
 
+        [Editable]
         public virtual float StartTime { get; set; }
 
+        [Editable]
         public virtual float Duration { get; set; }
 
         public float EndTime
@@ -112,5 +115,40 @@ namespace Medical
         }
 
         #endregion
+    }
+
+    partial class TimelineAction
+    {
+        private EditInterface editInterface;
+
+        public EditInterface getEditInterface()
+        {
+            if (editInterface == null)
+            {
+                editInterface = createEditInterface();
+            }
+            return editInterface;
+        }
+
+        protected virtual EditInterface createEditInterface()
+        {
+            EditInterface editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, TypeName, null);
+            addRemoveCommand(editInterface);
+            customizeEditInterface(editInterface);
+            return editInterface;
+        }
+
+        protected virtual void customizeEditInterface(EditInterface editInterface)
+        {
+
+        }
+
+        protected void addRemoveCommand(EditInterface editInterface)
+        {
+            editInterface.addCommand(new EditInterfaceCommand("Remove", (callback, caller) =>
+                {
+                    timeline.removeAction(this);
+                }));
+        }
     }
 }
