@@ -144,8 +144,12 @@ namespace Medical.GUI
             {
                 return new PropertiesFormVector3(property, scrollView);
             }
+            else if (propertyType == typeof(Quaternion))
+            {
+                return new PropertiesFormEulerQuat(property, scrollView);
+            }
 
-
+            //No match, create an appropriate text box
             else if (property.hasBrowser(1))
             {
                 return new PropertiesFormTextBoxBrowser(property, scrollView, uiCallback);

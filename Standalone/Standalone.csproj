@@ -144,6 +144,7 @@
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
     <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormEulerQuat.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormTextBoxBrowser.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesForm.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormCheckBox.cs" />
