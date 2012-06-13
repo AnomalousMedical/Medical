@@ -6,6 +6,8 @@ using Engine.Platform;
 using Engine.Saving;
 using Engine;
 using Medical.Controller;
+using Medical.Editor;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -112,6 +114,7 @@ namespace Medical
             }
         }
 
+        [EditableFile("*.png", "Choose Image File")]
         public String ImageFile
         {
             get
@@ -120,10 +123,13 @@ namespace Medical
             }
             set
             {
+                editingCompleted();
                 imageFile = value;
+                editing();
             }
         }
 
+        [Editable]
         public Vector2 Position
         {
             get
@@ -140,6 +146,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public Size2 Size
         {
             get
@@ -156,6 +163,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public bool KeepAspectRatio
         {
             get
@@ -172,6 +180,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public ImageAlignment Alignment
         {
             get
@@ -188,6 +197,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public String CameraName { get; set; }
 
         private void setupImageDisplay()
