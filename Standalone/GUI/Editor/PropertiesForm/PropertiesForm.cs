@@ -156,6 +156,10 @@ namespace Medical.GUI
             {
                 return new PropertiesFormVector2(property, scrollView);
             }
+            else if (propertyType == typeof(Size2))
+            {
+                return new PropertiesFormSize2(property, scrollView);
+            }
 
             //No match, create an appropriate text box
             else if (property.hasBrowser(1))

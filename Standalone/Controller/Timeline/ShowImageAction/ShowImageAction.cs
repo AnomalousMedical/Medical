@@ -146,7 +146,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, 1, 0.1f)]
         public Size2 Size
         {
             get
