@@ -144,6 +144,12 @@ namespace Medical.GUI
             {
                 return new PropertiesFormVector3(property, scrollView);
             }
+
+
+            else if (property.hasBrowser(1))
+            {
+                return new PropertiesFormTextBoxBrowser(property, scrollView, uiCallback);
+            }
             return new PropertiesFormTextBox(property, scrollView);
         }
 
