@@ -32,6 +32,7 @@ namespace Medical.GUI
         private Button playButton;
         private Button rewindButton;
         private Button fastForwardButton;
+        private bool blockSelectionChanges = false;
 
         public TimelineEditorComponent(MyGUIViewHost viewHost, TimelineController timelineController, EditorController editorController, SaveableClipboard clipboard, EditorPlugin editorPlugin)
             :base("Medical.GUI.TimelineEditor.TimelineEditorComponent.layout", viewHost)
@@ -209,6 +210,7 @@ namespace Medical.GUI
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
+            blockSelectionChanges = false;
             playButton.Caption = "Play";
             playButton.ImageBox.setItemResource("Timeline/PlayIcon");
             rewindButton.Enabled = true;
@@ -222,11 +224,13 @@ namespace Medical.GUI
 
         void timelineController_TimelinePlaybackStarted(object sender, EventArgs e)
         {
+            editingStoppedLastData = timelineView.CurrentData;
             playButton.Caption = "Stop";
             playButton.ImageBox.setItemResource("Timeline/StopIcon");
             rewindButton.Enabled = false;
             fastForwardButton.Enabled = false;
             timelineView.CurrentData = null;
+            blockSelectionChanges = true;
         }
 
         void timelineController_TimeTicked(float currentTime)
@@ -285,15 +289,13 @@ namespace Medical.GUI
             }
             else if (currentTimeline != null)
             {
-                editingStoppedLastData = timelineView.CurrentData;
-                timelineView.CurrentData = null;
                 timelineController.startPlayback(currentTimeline, startTime, false);
             }
         }
 
         void timelineView_ActiveDataChanging(object sender, CancelEventArgs e)
         {
-            e.Cancel = timelineController.Playing;
+            e.Cancel = blockSelectionChanges;
         }
 
         void timelineView_MarkerMoved(TimelineView source, float arg)

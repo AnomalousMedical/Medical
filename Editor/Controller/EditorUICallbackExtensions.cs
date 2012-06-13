@@ -117,6 +117,18 @@ namespace Medical
                     context.Controllers.add(controller);
                 }
             });
+
+            medicalUICallback.addCustomQuery<Color>(ShowTextAction.CustomQueries.ChooseColor, queryDelegate =>
+                {
+                    using (ColorDialog colorDialog = new ColorDialog())
+                    {
+                        if (colorDialog.showModal() == NativeDialogResult.OK)
+                        {
+                            String errorPrompt = null;
+                            queryDelegate.Invoke(colorDialog.Color, ref errorPrompt);
+                        }
+                    }
+                });
         }
     }
 }

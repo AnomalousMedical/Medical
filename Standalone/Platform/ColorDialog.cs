@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class ColorDialog : IDisposable
+    public class ColorDialog : IDisposable
     {
         private IntPtr colorDialog;
 

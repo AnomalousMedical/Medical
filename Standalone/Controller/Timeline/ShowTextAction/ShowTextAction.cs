@@ -7,6 +7,7 @@ using Engine.Saving;
 using Engine;
 using Medical.Controller;
 using MyGUIPlugin;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -136,6 +137,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public String Text
         {
             get
@@ -152,6 +154,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public Vector2 Position
         {
             get
@@ -168,6 +171,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public Size2 Size
         {
             get
@@ -184,6 +188,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public String FontName
         {
             get
@@ -200,6 +205,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public int FontHeight
         {
             get
@@ -216,6 +222,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public TextualAlignment TextAlign
         {
             get
@@ -232,6 +239,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public Vector3 ScenePoint
         {
             get
@@ -248,6 +256,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public bool PositionOnScenePoint
         {
             get
@@ -269,7 +278,26 @@ namespace Medical
             text = arg;
         }
 
+        [Editable]
         public String CameraName { get; set; }
+
+        public enum CustomQueries
+        {
+            ChooseColor
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Set Color", (callback, caller) =>
+                {
+                    callback.runCustomQuery<Color>(CustomQueries.ChooseColor, delegate(Color color, ref String message)
+                    {
+                        setSelectionColor(color);
+                        return true;
+                    });
+                }));
+        }
 
         #region Saving
 
