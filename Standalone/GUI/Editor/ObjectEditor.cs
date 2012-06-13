@@ -10,12 +10,12 @@ namespace Medical.GUI
     public class ObjectEditor : IDisposable
     {
         private EditInterfaceTreeView treeView;
-        private PropertiesTable propTable;
+        private PropertyEditor propTable;
         private EditInterface parentEditInterface;
         private EditInterface selectedEditInterface;
         private MedicalUICallback uiCallback;
 
-        public ObjectEditor(EditInterfaceTreeView treeView, PropertiesTable propTable, MedicalUICallback uiCallback)
+        public ObjectEditor(EditInterfaceTreeView treeView, PropertyEditor propTable, MedicalUICallback uiCallback)
         {
             this.treeView = treeView;
             treeView.EditInterfaceSelectionChanged += treeView_EditInterfaceSelectionChanged;

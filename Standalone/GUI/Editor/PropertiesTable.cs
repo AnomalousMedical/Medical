@@ -13,7 +13,7 @@ namespace Medical.GUI
     /// <summary>
     /// This will create a MyGUI Table that interfaces with an EditInterface.
     /// </summary>
-    public sealed class PropertiesTable : IDisposable
+    public sealed class PropertiesTable : PropertyEditor, IDisposable
     {
         public event EditablePropertyValueChanged EditablePropertyValueChanged;
 

@@ -144,10 +144,16 @@
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
     <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\PropertiesForm.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormComponent.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormLayoutComponent.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.cs" />
+    <Compile Include="GUI\Editor\PropertyEditor.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
+    <Compile Include="Layout\StretchLayoutContainer.cs" />
     <Compile Include="Layout\FloatingLayoutContainer.cs" />
     <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainer.cs" />
     <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainerDock.cs" />
@@ -602,6 +608,7 @@
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
     <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
+    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />
     <EmbeddedResource Include="Resources\DegenerationImages.png" />

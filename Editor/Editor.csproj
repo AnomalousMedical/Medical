@@ -130,6 +130,8 @@
     <Compile Include="GUI\GenericEditor\GenericEditorComponent.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditorComponentFactory.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditorView.cs" />
+    <Compile Include="GUI\GenericEditor\GenericPropertiesFormComponent.cs" />
+    <Compile Include="GUI\GenericEditor\GenericPropertiesFormView.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />

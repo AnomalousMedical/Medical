@@ -47,8 +47,8 @@ namespace Medical
             mvcContext.Models.add(new EditInterfaceHandler());
             
             mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
-            
-            GenericEditorView genericEditor = new GenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
+
+            GenericPropertiesFormView genericEditor = new GenericPropertiesFormView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
             genericEditor.IsWindow = true;
             mvcContext.Views.add(genericEditor);
             
