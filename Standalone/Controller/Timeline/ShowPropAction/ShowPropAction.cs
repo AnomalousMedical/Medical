@@ -7,6 +7,7 @@ using Engine.ObjectManagement;
 using Engine;
 using Medical.GUI;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -173,6 +174,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public String PropType
         {
             get
@@ -196,6 +198,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public Vector3 Translation
         {
             get
@@ -216,6 +219,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public Quaternion Rotation
         {
             get
@@ -236,6 +240,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public float FadeDuration
         {
             get
