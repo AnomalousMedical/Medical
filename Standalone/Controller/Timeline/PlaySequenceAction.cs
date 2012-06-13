@@ -6,6 +6,7 @@ using Engine.Platform;
 using Medical.Muscles;
 using Engine.Saving;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -108,7 +109,17 @@ namespace Medical
         /// <summary>
         /// If this is true the MovementSequenceController will get a pause command, if false it will get a stop command.
         /// </summary>
+        [Editable]
         public bool PauseOnStop { get; set; }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
+            {
+                capture();
+            }));
+        }
 
         #region Saveable
 

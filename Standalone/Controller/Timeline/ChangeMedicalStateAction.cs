@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -70,6 +71,15 @@ namespace Medical
         }
 
         public MedicalState State { get; set; }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
+            {
+                capture();
+            }));
+        }
 
         #region Saveable
 

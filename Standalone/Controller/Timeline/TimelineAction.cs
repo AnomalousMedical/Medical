@@ -79,6 +79,10 @@ namespace Medical
         {
             get
             {
+                if (timeline == null)
+                {
+                    return null;
+                }
                 return timeline.TimelineController;
             }
         }

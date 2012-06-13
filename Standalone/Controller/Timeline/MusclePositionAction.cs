@@ -6,6 +6,7 @@ using Medical.Muscles;
 using Engine;
 using Engine.Platform;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -90,6 +91,15 @@ namespace Medical
         {
             startState.captureState();
             lastTime = 0.0f;
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
+            {
+                capture();
+            }));
         }
 
         protected MusclePositionAction(LoadInfo info)

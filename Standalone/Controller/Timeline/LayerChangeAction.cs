@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Engine.Saving;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -134,8 +135,10 @@ namespace Medical
 
         public LayerState LayerState { get; set; }
 
+        [Editable]
         public String TransparencyState { get; set; }
 
+        [Editable]
         public bool UseSystemLayerTransitionTime { get; set; }
 
         public override float Duration
@@ -148,6 +151,15 @@ namespace Medical
             {
                 base.Duration = value;
             }
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
+            {
+                capture();
+            }));
         }
 
         #region Saveable

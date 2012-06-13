@@ -5,6 +5,8 @@ using System.Text;
 using Engine.Platform;
 using SoundPlugin;
 using Engine.Saving;
+using Engine.Editing;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -102,6 +104,7 @@ namespace Medical
             }
         }
 
+        [EditableFile("*.ogg", "Choose Sound File")]
         public String SoundFile
         {
             get
@@ -111,6 +114,10 @@ namespace Medical
             set
             {
                 soundFile = value;
+                if (TimelineController != null)
+                {
+                    Duration = (float)TimelineController.getSoundDuration(soundFile);
+                }
             }
         }
 

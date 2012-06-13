@@ -225,9 +225,12 @@ namespace Medical
         {
             try
             {
-                using (Stream soundStream = resourceProvider.openFile(soundFile))
+                if (resourceProvider.exists(soundFile))
                 {
-                    return SoundPluginInterface.Instance.SoundManager.getDuration(soundStream);
+                    using (Stream soundStream = resourceProvider.openFile(soundFile))
+                    {
+                        return SoundPluginInterface.Instance.SoundManager.getDuration(soundStream);
+                    }
                 }
             }
             catch (Exception e)
