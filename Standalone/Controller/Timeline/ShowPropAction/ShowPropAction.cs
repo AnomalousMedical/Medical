@@ -241,7 +241,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, float.MaxValue, 1)]
         public float FadeDuration
         {
             get
