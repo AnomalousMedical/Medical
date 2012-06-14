@@ -20,6 +20,7 @@ using System.IO;
 using System.Diagnostics;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -89,6 +90,8 @@ namespace Medical
             mainWindow.setPointerManager(PointerManager.Instance);
 
             PointerManager.Instance.Visible = false;
+
+            BrowserWindowController.setStandaloneController(this);
         }
 
         public void Dispose()

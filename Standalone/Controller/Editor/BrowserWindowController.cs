@@ -18,6 +18,12 @@ namespace Medical.Editor
 
         private static ResourceProvider resourceProvider;
         private static AnomalousMvcContext currentEditingContext;
+        private static StandaloneController standaloneController;
+
+        public static void setStandaloneController(StandaloneController standaloneController)
+        {
+            BrowserWindowController.standaloneController = standaloneController;
+        }
 
         public static void setResourceProvider(ResourceProvider resourceProvider)
         {
@@ -99,6 +105,16 @@ namespace Medical.Editor
                         browser.addNode("", null, new BrowserNode(model.Name, model.Name));
                     }
                 }
+            }
+            return browser;
+        }
+
+        public static Browser createPropBrowser()
+        {
+            Browser browser = new Browser("Models", "Choose Model");
+            foreach (String propName in standaloneController.TimelineController.PropFactory.PropNames)
+            {
+                browser.addNode("", null, new BrowserNode(propName, propName));
             }
             return browser;
         }

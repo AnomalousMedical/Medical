@@ -123,6 +123,8 @@
     <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationLink.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\NavigationModel.cs" />
+    <Compile Include="Controller\Editor\EditablePropAttribute.cs" />
+    <Compile Include="Controller\Editor\PropBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />

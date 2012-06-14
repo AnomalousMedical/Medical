@@ -10,7 +10,6 @@ namespace Medical.GUI
     class ShowPropProperties : TimelineDataPanel
     {
         private ShowPropAction showProp;
-        private TimelineActionData actionData;
         private bool comboUninitialized = true;
 
         private ComboBox propTypes;
@@ -61,7 +60,7 @@ namespace Medical.GUI
         public override void setCurrentData(TimelineData data)
         {
             unsubscribeActionEvents();
-            actionData = ((TimelineActionData)data);
+            TimelineActionData actionData = ((TimelineActionData)data);
             showProp = (ShowPropAction)actionData.Action;
             if (showProp != null)
             {

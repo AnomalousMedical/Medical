@@ -8,6 +8,7 @@ using Engine;
 using Medical.GUI;
 using Engine.Saving;
 using Engine.Editing;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -175,7 +176,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditablePropAttribute]
         public String PropType
         {
             get
