@@ -16,8 +16,9 @@ namespace Medical.GUI
         public PropertiesFormCheckBox(EditableProperty property, Widget parent)
         {
             this.editableProperty = property;
-            checkButton = new CheckButton((Button)parent.createWidgetT("Button", "CheckBox", 0, 0, 100, 25, Align.Stretch, ""));
+            checkButton = new CheckButton((Button)parent.createWidgetT("Button", "CheckBox", 0, 0, 100, 25, Align.Default, ""));
             checkButton.Button.Caption = property.getValue(0);
+            checkButton.Button.ForwardMouseWheelToParent = true;
             checkButton.Checked = (bool)property.getRealValue(1);
             checkButton.CheckedChanged += new MyGUIEvent(checkButton_CheckedChanged);
             layoutContainer = new MyGUILayoutContainer(checkButton.Button);

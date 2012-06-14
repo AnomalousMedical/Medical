@@ -11,25 +11,16 @@ namespace Medical.GUI
     public class PropertiesForm : PropertyEditor, IDisposable
     {
         private List<PropertiesFormComponent> components = new List<PropertiesFormComponent>();
-        private StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 0, new IntVector2(0, 0));
+        private StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
         private ScrollView scrollView;
         private EditUICallback uiCallback;
         private EditInterface currentEditInterface;
-        private bool allowValidation = true;
         private EditablePropertyInfo currentPropInfo;
 
         public PropertiesForm(ScrollView scrollView, EditUICallback uiCallback)
         {
             this.uiCallback = uiCallback;
             this.scrollView = scrollView;
-            //propertiesTable.CellValidating += new EventHandler<TableCellValidationEventArgs>(propertiesTable_CellValidating);
-            //propertiesTable.CellValueChanged += new EventHandler(propertiesTable_CellValueChanged);
-            //addRemoveButtons = buttons;
-            //if (addRemoveButtons != null)
-            //{
-            //    addRemoveButtons.AddButtonClicked += addRemoveButtons_AddButtonClicked;
-            //    addRemoveButtons.RemoveButtonClicked += addRemoveButtons_RemoveButtonClicked;
-            //}
         }
 
         public void Dispose()
@@ -49,8 +40,11 @@ namespace Medical.GUI
 
         public void layout()
         {
-            int width = scrollView.ViewCoord.width;
+            //Adjust the scrollbar height first to get any scrolbars active
             int height = flowLayout.DesiredSize.Height;
+            scrollView.CanvasSize = new IntSize2(0, height);
+
+            int width = scrollView.ViewCoord.width;
             flowLayout.WorkingSize = new IntSize2(width, height);
             flowLayout.layout();
             scrollView.CanvasSize = flowLayout.WorkingSize;
@@ -64,7 +58,6 @@ namespace Medical.GUI
             }
             set
             {
-                allowValidation = false;
                 if (currentEditInterface != null)
                 {
                     currentEditInterface.OnPropertyAdded -= new PropertyAdded(currentEditInterface_OnPropertyAdded);
@@ -76,11 +69,6 @@ namespace Medical.GUI
                     currentEditInterface = value;
                     currentEditInterface.OnPropertyAdded += new PropertyAdded(currentEditInterface_OnPropertyAdded);
                     currentEditInterface.OnPropertyRemoved += new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
-
-                    //if (addRemoveButtons != null)
-                    //{
-                    //    addRemoveButtons.Visible = currentEditInterface.canAddRemoveProperties();
-                    //}
                     currentPropInfo = value.getPropertyInfo();
                     if (currentPropInfo != null)
                     {
@@ -90,6 +78,12 @@ namespace Medical.GUI
                         //    dgvColumn.ReadOnly = column.ReadOnly;
                         //    propertiesTable.Columns.add(dgvColumn);
                         //}
+                    }
+                    foreach (EditInterfaceCommand command in currentEditInterface.getCommands())
+                    {
+                        PropertiesFormComponent component = new PropertiesFormButton(command, uiCallback, scrollView);
+                        components.Add(component);
+                        flowLayout.addChild(component.Container);
                     }
                     if (value.hasEditableProperties())
                     {
@@ -105,7 +99,6 @@ namespace Medical.GUI
                     currentPropInfo = null;
                     currentEditInterface = null;
                 }
-                allowValidation = true;
             }
         }
 

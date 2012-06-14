@@ -20,6 +20,10 @@ namespace Medical.GUI
             TextBox textBox = (TextBox)widget.findWidget("TextBox");
             textBox.Caption = property.getValue(0);
             textBox.ForwardMouseWheelToParent = true;
+            if (textBox.ClientWidget != null)
+            {
+                textBox.ClientWidget.ForwardMouseWheelToParent = true;
+            }
 
             editBox = (EditBox)widget.findWidget("EditBox");
             editBox.OnlyText = property.getValue(1);
