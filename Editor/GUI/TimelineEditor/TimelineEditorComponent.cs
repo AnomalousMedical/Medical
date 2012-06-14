@@ -20,7 +20,6 @@ namespace Medical.GUI
         private TimelineActionDataManager actionDataManager = new TimelineActionDataManager();
         private EditorController editorController;
         private SaveableClipboard clipboard;
-        private TimelineActionFactory actionFactory;
         private TimelineData editingStoppedLastData;
         private Timeline currentTimeline;
         private PropEditController propEditController;
@@ -48,10 +47,6 @@ namespace Medical.GUI
 
             window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
-            //Remove action button
-            Button removeActionButton = window.findWidget("RemoveAction") as Button;
-            removeActionButton.MouseButtonClick += new MyGUIEvent(removeActionButton_MouseButtonClick);
-
             //Play Button
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
@@ -78,8 +73,8 @@ namespace Medical.GUI
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
             //Add tracks to timeline.
-            actionFactory = new TimelineActionFactory();
-            foreach (TimelineActionFactoryData actionProp in actionFactory.ActionProperties)
+            buildTrackActions();
+            foreach (TimelineActionPrototype actionProp in actionDataManager.Prototypes)
             {
                 timelineView.addTrack(actionProp.TypeName, actionProp.Color);
             }
@@ -93,7 +88,6 @@ namespace Medical.GUI
         {
             actionDataManager.Dispose();
             ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).removeMenuProvider(this);
-            actionFactory.Dispose();
             CurrentTimeline = null;
             timelineController.TimelinePlaybackStarted -= timelineController_TimelinePlaybackStarted;
             timelineController.TimelinePlaybackStopped -= timelineController_TimelinePlaybackStopped;
@@ -163,19 +157,9 @@ namespace Medical.GUI
             }
         }
 
-        void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            TimelineActionData data = (TimelineActionData)timelineView.CurrentData;
-            if (data != null)
-            {
-                stopTimelineIfPlaying();
-                currentTimeline.removeAction(data.Action);
-            }
-        }
-
         void actionFilter_AddTrackItem(string name)
         {
-            TimelineAction action = actionFactory.createAction(name);
+            TimelineAction action = actionDataManager.createAction(name);
             action.StartTime = timelineView.MarkerTime;
             currentTimeline.addAction(action);
             action.capture();
@@ -348,6 +332,20 @@ namespace Medical.GUI
             {
                 ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
             }
+        }
+
+        void buildTrackActions()
+        {
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction), new Color(128 / 255f, 0 / 255f, 255 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction), new Color(247 / 255f, 150 / 255f, 70 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction), new Color(155 / 255f, 187 / 255f, 89 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Move Camera", typeof(MoveCameraAction), new Color(192 / 255f, 80 / 255f, 77 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sequence", typeof(PlaySequenceAction), new Color(31 / 255f, 73 / 255f, 125 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Muscle Position", typeof(MusclePositionAction), new Color(255 / 255f, 0 / 255f, 0 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Image", typeof(ShowImageAction), new Color(31 / 255f, 73 / 255f, 125 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Text", typeof(ShowTextAction), new Color(31 / 255f, 255 / 255f, 125 / 255f)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sound", typeof(PlaySoundAction), new Color(0 / 255f, 0 / 255f, 0 / 255f)));
+            actionDataManager.addPrototype(new ShowPropActionPrototype(new Color(128 / 255f, 0 / 255f, 255 / 255f), propEditController));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Medical.GUI
             action.StartTimeChanged += action_StartTimeChanged; 
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             action.DurationChanged -= action_DurationChanged;
             action.StartTimeChanged -= action_StartTimeChanged; 

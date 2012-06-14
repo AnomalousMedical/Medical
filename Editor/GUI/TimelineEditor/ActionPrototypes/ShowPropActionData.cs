@@ -7,15 +7,16 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ShowPropProperties : TimelineDataPanel
+    class ShowPropActionData : TimelineActionData
     {
         private ShowPropAction showProp;
         private PropEditController propEditController;
 
-        public ShowPropProperties(Widget parentWidget, PropEditController propEditController)
-            :base(parentWidget, "Medical.GUI.TimelineEditor.ActionProperties.ShowPropProperties.layout")
+        public ShowPropActionData(ShowPropAction showPropAction, PropEditController propEditController)
+            :base(showPropAction)
         {
             this.propEditController = propEditController;
+            this.showProp = showPropAction;
         }
 
         public override void Dispose()
@@ -24,28 +25,22 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public override void setCurrentData(TimelineData data)
+        public override void editingStarted()
         {
-            unsubscribeActionEvents();
-            TimelineActionData actionData = ((TimelineActionData)data);
-            showProp = (ShowPropAction)actionData.Action;
-            if (showProp != null)
-            {
-                showProp.DurationChanged += actionData_DurationChanged;
-                showProp.PropTypeChanged += showProp_PropTypeChanged;
-            }
-
+            base.editingStarted();
+            showProp.DurationChanged += showProp_DurationChanged;
+            showProp.PropTypeChanged += showProp_PropTypeChanged;
             propEditController.CurrentShowPropAction = showProp;
         }
 
         public override void editingCompleted()
         {
             unsubscribeActionEvents();
-            showProp = null;
             propEditController.CurrentShowPropAction = null;
+            base.editingCompleted();
         }
 
-        void actionData_DurationChanged(TimelineAction action)
+        void showProp_DurationChanged(TimelineAction action)
         {
             propEditController.Duration = action.Duration;
         }
@@ -57,11 +52,8 @@ namespace Medical.GUI
 
         private void unsubscribeActionEvents()
         {
-            if (showProp != null)
-            {
-                showProp.DurationChanged -= actionData_DurationChanged;
-                showProp.PropTypeChanged -= showProp_PropTypeChanged;
-            }
+            showProp.DurationChanged -= showProp_DurationChanged;
+            showProp.PropTypeChanged -= showProp_PropTypeChanged;
         }
     }
 }

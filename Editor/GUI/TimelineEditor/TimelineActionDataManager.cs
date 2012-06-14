@@ -8,6 +8,8 @@ namespace Medical.GUI
     class TimelineActionDataManager : IDisposable
     {
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
+        private Dictionary<Type, TimelineActionPrototype> actionPrototypesType = new Dictionary<Type, TimelineActionPrototype>();
+        private Dictionary<String, TimelineActionPrototype> actionPrototypesName = new Dictionary<String, TimelineActionPrototype>();
 
         public TimelineActionDataManager()
         {
@@ -16,7 +18,28 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            actionPrototypesName.Clear();
+            actionPrototypesType.Clear();
             clearData();
+        }
+
+        public void addPrototype(TimelineActionPrototype prototype)
+        {
+            actionPrototypesType.Add(prototype.Type, prototype);
+            actionPrototypesName.Add(prototype.TypeName, prototype);
+        }
+
+        public TimelineAction createAction(String typeName)
+        {
+            return actionPrototypesName[typeName].createInstance();
+        }
+
+        public IEnumerable<TimelineActionPrototype> Prototypes
+        {
+            get
+            {
+                return actionPrototypesName.Values;
+            }
         }
 
         public TimelineActionData this[TimelineAction action]
@@ -29,7 +52,7 @@ namespace Medical.GUI
 
         public TimelineActionData createData(TimelineAction action)
         {
-            TimelineActionData actionData = new TimelineActionData(action);
+            TimelineActionData actionData = actionPrototypesType[action.GetType()].createData(action);
             actionDataBindings.Add(action, actionData);
             return actionData;
         }

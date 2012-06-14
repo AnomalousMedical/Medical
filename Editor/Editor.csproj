@@ -157,15 +157,16 @@
     <Compile Include="GUI\TextEditor\TextEditorComponent.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponentFactory.cs" />
     <Compile Include="GUI\TextEditor\TextEditorView.cs" />
+    <Compile Include="GUI\TimelineEditor\ActionPrototypes\ShowPropActionPrototype.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionDataManager.cs" />
+    <Compile Include="GUI\TimelineEditor\ActionPrototypes\TimelineActionPrototype.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditorComponent.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineComponentFactory.cs" />
     <Compile Include="GUI\OpenPropManager\OpenPropManager.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionClipboardContainer.cs" />
-    <Compile Include="GUI\TimelineEditor\TimelineActionFactory.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI\TimelineEditor\ActionProperties\ShowPropProperties.cs" />
+    <Compile Include="GUI\TimelineEditor\ActionPrototypes\ShowPropActionData.cs" />
     <Compile Include="GUI\NewProjectDialog\NewProjectDialog.cs" />
     <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionData.cs" />
@@ -205,7 +206,6 @@
     <EmbeddedResource Include="GUI\TextEditor\TextEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\PropTimeline.layout" />
-    <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ShowPropProperties.layout" />
     <EmbeddedResource Include="GUI\OpenPropManager\OpenPropManager.layout" />
     <EmbeddedResource Include="GUI\SaveTimelineDialog\SaveTimelineDialog.layout" />
   </ItemGroup>
