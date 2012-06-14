@@ -47,6 +47,15 @@ namespace Medical.GUI
             components.Clear();
         }
 
+        public void layout()
+        {
+            int width = scrollView.ViewCoord.width;
+            int height = flowLayout.DesiredSize.Height;
+            flowLayout.WorkingSize = new IntSize2(width, height);
+            flowLayout.layout();
+            scrollView.CanvasSize = flowLayout.WorkingSize;
+        }
+
         public EditInterface EditInterface
         {
             get
@@ -136,31 +145,11 @@ namespace Medical.GUI
         private PropertiesFormComponent createComponenet(EditableProperty property)
         {
             Type propertyType = property.getPropertyType(1);
-            if (propertyType == typeof(bool))
+            //Have to do this because we cannot "out" a method using trygetvalue
+            if (DefaultCreationMethods.ContainsKey(propertyType))
             {
-                return new PropertiesFormCheckBox(property, scrollView);
+                return DefaultCreationMethods[propertyType].Invoke(property, scrollView);
             }
-            else if (propertyType == typeof(Vector3))
-            {
-                return new PropertiesFormVector3(property, scrollView);
-            }
-            else if (propertyType == typeof(Quaternion))
-            {
-                return new PropertiesFormEulerQuat(property, scrollView);
-            }
-            else if (propertyType == typeof(IntVector2))
-            {
-                return new PropertiesFormIntVector2(property, scrollView);
-            }
-            else if (propertyType == typeof(Vector2))
-            {
-                return new PropertiesFormVector2(property, scrollView);
-            }
-            else if (propertyType == typeof(Size2))
-            {
-                return new PropertiesFormSize2(property, scrollView);
-            }
-
             //No match, create an appropriate text box
             else if (property.hasBrowser(1))
             {
@@ -169,13 +158,104 @@ namespace Medical.GUI
             return new PropertiesFormTextBox(property, scrollView);
         }
 
-        public void layout()
+        private delegate PropertiesFormComponent CreateComponent(EditableProperty property, Widget parent);
+        private static Dictionary<Type, CreateComponent> DefaultCreationMethods = new Dictionary<Type, CreateComponent>();
+        static PropertiesForm()
         {
-            int width = scrollView.ViewCoord.width;
-            int height = flowLayout.DesiredSize.Height;
-            flowLayout.WorkingSize = new IntSize2(width, height);
-            flowLayout.layout();
-            scrollView.CanvasSize = flowLayout.WorkingSize;
+            DefaultCreationMethods.Add(typeof(bool), (property, parent) =>
+            {
+                return new PropertiesFormCheckBox(property, parent);
+            });
+
+            DefaultCreationMethods.Add(typeof(Vector3), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormVector3(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Quaternion), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormEulerQuat(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(IntVector2), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormIntVector2(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Vector2), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormVector2(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Size2), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormSize2(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Byte), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormByte(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Decimal), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormDecimal(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Double), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormDouble(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Int16), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormInt16(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Int32), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormInt32(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Int64), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormInt64(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(SByte), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormSByte(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(Single), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormSingle(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(UInt16), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormUInt16(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(UInt32), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormUInt32(property, parent));
+            });
+
+            DefaultCreationMethods.Add(typeof(UInt64), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormUInt64(property, parent));
+            });
+        }
+
+        private static PropertiesFormComponent buildConstrainableForm(EditableProperty property, ConstrainableFormComponent component)
+        {
+            if (property is ReflectedMinMaxEditableProperty)
+            {
+                component.setConstraints((ReflectedMinMaxEditableProperty)property);
+            }
+
+            return component;
         }
     }
 }

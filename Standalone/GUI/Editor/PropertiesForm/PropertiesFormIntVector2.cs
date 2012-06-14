@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PropertiesFormIntVector2 : PropertiesFormLayoutComponent
+    class PropertiesFormIntVector2 : ConstrainableFormComponent
     {
         private Int32NumericEdit x;
         private Int32NumericEdit y;
@@ -32,6 +32,17 @@ namespace Medical.GUI
             y = new Int32NumericEdit((EditBox)widget.findWidget("Y"));
             y.Value = value.y;
             y.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
+        }
+
+        public override void setConstraints(ReflectedMinMaxEditableProperty minMaxProp)
+        {
+            x.MinValue = (int)minMaxProp.MinValue;
+            x.MaxValue = (int)minMaxProp.MaxValue;
+            x.Increment = (int)minMaxProp.Increment;
+
+            y.MinValue = (int)minMaxProp.MinValue;
+            y.MaxValue = (int)minMaxProp.MaxValue;
+            y.Increment = (int)minMaxProp.Increment;
         }
 
         void editBox_ValueChanged(Widget source, EventArgs e)

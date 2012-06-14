@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PropertiesFormSize2 : PropertiesFormLayoutComponent
+    class PropertiesFormSize2 : ConstrainableFormComponent
     {
         private SingleNumericEdit width;
         private SingleNumericEdit height;
@@ -25,31 +25,24 @@ namespace Medical.GUI
 
             Size2 value = (Size2)property.getRealValue(1);
 
-            Single min = Single.MinValue;
-            Single max = Single.MaxValue;
-            Single inc = 1;
-
-            if (property is ReflectedMinMaxEditableProperty)
-            {
-                ReflectedMinMaxEditableProperty minMaxProp = (ReflectedMinMaxEditableProperty)property;
-                min = minMaxProp.MinValue;
-                max = minMaxProp.MaxValue;
-                inc = minMaxProp.Increment;
-            }
-
             width = new SingleNumericEdit((EditBox)widget.findWidget("Width"));
-            width.MinValue = min;
-            width.MaxValue = max;
-            width.Increment = inc;
             width.Value = value.Width;
             width.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
 
             height = new SingleNumericEdit((EditBox)widget.findWidget("Height"));
-            height.MinValue = min;
-            height.MaxValue = max;
-            height.Increment = inc;
             height.Value = value.Height;
             height.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
+        }
+
+        public override void setConstraints(ReflectedMinMaxEditableProperty minMaxProp)
+        {
+            width.MinValue = minMaxProp.MinValue;
+            width.MaxValue = minMaxProp.MaxValue;
+            width.Increment = minMaxProp.Increment;
+
+            height.MinValue = minMaxProp.MinValue;
+            height.MaxValue = minMaxProp.MaxValue;
+            height.Increment = minMaxProp.Increment;
         }
 
         void editBox_ValueChanged(Widget source, EventArgs e)
