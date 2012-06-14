@@ -205,6 +205,14 @@ namespace Medical
             }
         }
 
+        public EditorPlugin EditorPlugin
+        {
+            get
+            {
+                return plugin;
+            }
+        }
+
         public void runEditorContext(AnomalousMvcContext mvcContext)
         {
             mvcContext.setResourceProvider(resourceProvider);

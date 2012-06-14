@@ -160,7 +160,6 @@ namespace Medical.GUI
         void moveToStart_MouseButtonClick(Widget source, EventArgs e)
         {
             showProp.moveToPropStartPosition();
-            showProp._movePreviewProp(showProp.Translation, showProp.Rotation);
         }
 
         void keepOpenButton_MouseButtonClick(Widget source, EventArgs e)

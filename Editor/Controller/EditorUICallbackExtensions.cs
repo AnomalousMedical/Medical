@@ -119,16 +119,28 @@ namespace Medical
             });
 
             medicalUICallback.addCustomQuery<Color>(ShowTextAction.CustomQueries.ChooseColor, queryDelegate =>
+            {
+                using (ColorDialog colorDialog = new ColorDialog())
                 {
-                    using (ColorDialog colorDialog = new ColorDialog())
+                    if (colorDialog.showModal() == NativeDialogResult.OK)
                     {
-                        if (colorDialog.showModal() == NativeDialogResult.OK)
-                        {
-                            String errorPrompt = null;
-                            queryDelegate.Invoke(colorDialog.Color, ref errorPrompt);
-                        }
+                        String errorPrompt = null;
+                        queryDelegate.Invoke(colorDialog.Color, ref errorPrompt);
                     }
-                });
+                }
+            });
+
+            medicalUICallback.addOneWayCustomQuery<ShowPropAction>(ShowPropAction.CustomQueries.KeepOpenToggle, showPropAction =>
+            {
+                if (showPropAction.KeepOpen)
+                {
+                    editorController.EditorPlugin.PropEditController.removeOpenProp(showPropAction);
+                }
+                else
+                {
+                    editorController.EditorPlugin.PropEditController.addOpenProp(showPropAction);
+                }
+            });
         }
     }
 }

@@ -110,6 +110,7 @@ namespace Medical
         public void moveToPropStartPosition()
         {
             TimelineController.PropFactory.getInitialPosition(propType, ref translation, ref rotation);
+            _movePreviewProp(translation, rotation);
         }
 
         public override void findFileReference(TimelineStaticInfo info)
@@ -312,6 +313,24 @@ namespace Medical
                 simObject = null;
                 propFade = null;
             }
+        }
+
+        public enum CustomQueries
+        {
+            KeepOpenToggle
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Keep Open", (callback, caller) =>
+            {
+                callback.runOneWayCustomQuery<ShowPropAction>(CustomQueries.KeepOpenToggle, this);
+            }));
+            editInterface.addCommand(new EditInterfaceCommand("Move to Start Position", (callback, caller) =>
+            {
+                moveToPropStartPosition();
+            }));
         }
 
         #region Saveable
