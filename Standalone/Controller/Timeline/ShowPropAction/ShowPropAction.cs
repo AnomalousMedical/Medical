@@ -186,7 +186,7 @@ namespace Medical
             set
             {
                 propType = value;
-                if (simObject != null)
+                if (currentlyEditing)
                 {
                     bool wasEditing = currentlyEditing;
                     bool wasKeptOpen = keepOpen;
