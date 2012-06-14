@@ -13,9 +13,6 @@ namespace Medical.GUI
 {
     public class TimelineEditorComponent : LayoutComponent, EditMenuProvider
     {
-        private String windowTitle;
-        private const String windowTitleFormat = "{0} - {1}";
-
         private TimelineController timelineController;
         private TrackFilter actionFilter;
         private TimelineView timelineView;
@@ -24,10 +21,10 @@ namespace Medical.GUI
         private EditorController editorController;
         private SaveableClipboard clipboard;
         private TimelineActionFactory actionFactory;
-        private TimelineDataProperties dataProperties;
         private TimelineData editingStoppedLastData;
         private Timeline currentTimeline;
         private PropEditController propEditController;
+        private TimelineActionData currentActionData = null;
 
         private Button playButton;
         private Button rewindButton;
@@ -39,8 +36,6 @@ namespace Medical.GUI
         {
             Widget window = this.widget;
             window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
-
-            //windowTitle = window.Caption;
 
             this.clipboard = clipboard;
             this.editorController = editorController;
@@ -75,11 +70,6 @@ namespace Medical.GUI
             timelineView.MarkerMoved += new EventDelegate<TimelineView, float>(timelineView_MarkerMoved);
             timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
 
-            //Properties
-            ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
-            dataProperties = new TimelineDataProperties(propertiesScrollView, timelineView);
-            dataProperties.Visible = false;
-
             //Track filter
             ScrollView trackFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
             actionFilter = new TrackFilter(trackFilterScrollView, timelineView);
@@ -88,15 +78,10 @@ namespace Medical.GUI
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
             //Add tracks to timeline.
-            actionFactory = new TimelineActionFactory(propertiesScrollView, editorPlugin);
+            actionFactory = new TimelineActionFactory();
             foreach (TimelineActionFactoryData actionProp in actionFactory.ActionProperties)
             {
                 timelineView.addTrack(actionProp.TypeName, actionProp.Color);
-
-                if (actionProp.Panel != null)
-                {
-                    dataProperties.addPanel(actionProp.TypeName, actionProp.Panel);
-                }
             }
 
             //Enabled = false;
@@ -142,18 +127,6 @@ namespace Medical.GUI
         public void selectAll()
         {
             timelineView.selectAll();
-        }
-
-        public void updateFileName(String currentFile)
-        {
-            if (currentFile == null)
-            {
-                //window.Caption = windowTitle;
-            }
-            else
-            {
-                //window.Caption = String.Format(windowTitleFormat, windowTitle, currentFile);
-            }
         }
 
         public Timeline CurrentTimeline
@@ -299,26 +272,35 @@ namespace Medical.GUI
             e.Cancel = blockSelectionChanges;
         }
 
-        void timelineView_MarkerMoved(TimelineView source, float arg)
-        {
-            propEditController.MarkerPosition = arg;
-        }
-
         void timelineView_ActiveDataChanged(object sender, EventArgs e)
         {
+            if (currentActionData != null)
+            {
+                currentActionData.editingCompleted();
+            }
+            currentActionData = (TimelineActionData)timelineView.CurrentData;
+            if (currentActionData != null)
+            {
+                currentActionData.editingStarted();
+            }
+
             EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
             {
-                TimelineActionData actionData = (TimelineActionData)timelineView.CurrentData;
-                if (actionData != null)
+                if (currentActionData != null)
                 {
-                    editInterfaceHandler.changeEditInterface(actionData.Action.getEditInterface());
+                    editInterfaceHandler.changeEditInterface(currentActionData.Action.getEditInterface());
                 }
-                else if(currentTimeline != null)
+                else if (currentTimeline != null)
                 {
                     editInterfaceHandler.changeEditInterface(currentTimeline.getEditInterface());
                 }
             }
+        }
+
+        void timelineView_MarkerMoved(TimelineView source, float arg)
+        {
+            propEditController.MarkerPosition = arg;
         }
 
         void rewindButton_MouseButtonClick(Widget source, EventArgs e)

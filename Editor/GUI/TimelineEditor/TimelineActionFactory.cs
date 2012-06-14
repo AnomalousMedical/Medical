@@ -48,7 +48,7 @@ namespace Medical
     {
         private Dictionary<String, TimelineActionFactoryData> actions = new Dictionary<String, TimelineActionFactoryData>();
 
-        public TimelineActionFactory(Widget parentWidget, EditorPlugin editorGUI)
+        public TimelineActionFactory()
         {
             addType(new TimelineActionFactoryData(typeof(ChangeMedicalStateAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null));
             addType(new TimelineActionFactoryData(typeof(HighlightTeethAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null));
@@ -59,7 +59,7 @@ namespace Medical
             addType(new TimelineActionFactoryData(typeof(ShowImageAction), new Color(31 / 255f, 73 / 255f, 125 / 255f), null));
             addType(new TimelineActionFactoryData(typeof(ShowTextAction), new Color(31 / 255f, 255 / 255f, 125 / 255f), null));
             addType(new TimelineActionFactoryData(typeof(PlaySoundAction), new Color(0 / 255f, 0 / 255f, 0 / 255f), null));
-            addType(new TimelineActionFactoryData(typeof(ShowPropAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new ShowPropProperties(parentWidget, editorGUI.PropEditController)));
+            addType(new TimelineActionFactoryData(typeof(ShowPropAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null));//new ShowPropProperties(parentWidget, editorGUI.PropEditController)));
         }
 
         public void Dispose()
