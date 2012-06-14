@@ -160,7 +160,6 @@
     <Compile Include="GUI\TimelineEditor\TimelineActionDataManager.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditorComponent.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineComponentFactory.cs" />
-    <Compile Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.cs" />
     <Compile Include="GUI\OpenPropManager\OpenPropManager.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionClipboardContainer.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionFactory.cs" />
@@ -205,7 +204,6 @@
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
-    <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ShowTextProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\PropTimeline.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\ActionProperties\ShowPropProperties.layout" />
     <EmbeddedResource Include="GUI\OpenPropManager\OpenPropManager.layout" />
