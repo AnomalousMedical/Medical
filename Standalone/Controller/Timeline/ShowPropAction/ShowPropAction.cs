@@ -20,6 +20,7 @@ namespace Medical
         public event UpdatedDelegate Updated;
         public event Action<ShowPropAction> Translated;
         public event Action<ShowPropAction> Rotated;
+        public event Action<ShowPropAction> PropTypeChanged;
 
         private bool finished;
         private SimObjectBase simObject;
@@ -185,17 +186,24 @@ namespace Medical
             }
             set
             {
-                propType = value;
-                if (currentlyEditing)
+                if (propType != value)
                 {
-                    bool wasEditing = currentlyEditing;
-                    bool wasKeptOpen = keepOpen;
-                    currentlyEditing = false;
-                    keepOpen = false;
-                    destroyProp();
-                    makeProp();
-                    currentlyEditing = wasEditing;
-                    keepOpen = wasKeptOpen;
+                    propType = value;
+                    if (currentlyEditing)
+                    {
+                        bool wasEditing = currentlyEditing;
+                        bool wasKeptOpen = keepOpen;
+                        currentlyEditing = false;
+                        keepOpen = false;
+                        destroyProp();
+                        makeProp();
+                        currentlyEditing = wasEditing;
+                        keepOpen = wasKeptOpen;
+                    }
+                    if (PropTypeChanged != null)
+                    {
+                        PropTypeChanged.Invoke(this);
+                    }
                 }
             }
         }
