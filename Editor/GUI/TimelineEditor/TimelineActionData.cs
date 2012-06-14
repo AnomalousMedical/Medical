@@ -8,15 +8,12 @@ namespace Medical.GUI
 {
     class TimelineActionData : TimelineData
     {
-        public delegate void DurationChangedEvent(float duration);
-
-        public event DurationChangedEvent DurationChanged;
-
         private TimelineAction action;
 
         public TimelineActionData(TimelineAction action)
         {
             this.action = action;
+            
         }
 
         public override void editingStarted()
@@ -59,10 +56,6 @@ namespace Medical.GUI
             set
             {
                 action.Duration = value;
-                if (DurationChanged != null)
-                {
-                    DurationChanged.Invoke(value);
-                }
             }
         }
 

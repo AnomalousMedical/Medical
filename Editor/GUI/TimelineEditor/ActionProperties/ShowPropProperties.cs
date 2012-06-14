@@ -63,12 +63,9 @@ namespace Medical.GUI
             unsubscribeActionEvents();
             actionData = ((TimelineActionData)data);
             showProp = (ShowPropAction)actionData.Action;
-            if(actionData != null)
-            {
-                actionData.DurationChanged += actionData_DurationChanged;
-            }
             if (showProp != null)
             {
+                showProp.DurationChanged += actionData_DurationChanged;
                 showProp.Translated += showProp_Translated;
                 showProp.Rotated += showProp_Rotated;
             }
@@ -152,9 +149,9 @@ namespace Medical.GUI
             showProp.FadeDuration = fadeDurationEdit.FloatValue;
         }
 
-        void actionData_DurationChanged(float duration)
+        void actionData_DurationChanged(TimelineAction action)
         {
-            propEditController.Duration = duration;
+            propEditController.Duration = action.Duration;
         }
 
         void moveToStart_MouseButtonClick(Widget source, EventArgs e)
@@ -197,12 +194,9 @@ namespace Medical.GUI
 
         private void unsubscribeActionEvents()
         {
-            if (actionData != null)
-            {
-                actionData.DurationChanged -= actionData_DurationChanged;
-            }
             if (showProp != null)
             {
+                showProp.DurationChanged -= actionData_DurationChanged;
                 showProp.Translated -= showProp_Translated;
                 showProp.Rotated -= showProp_Rotated;
             }

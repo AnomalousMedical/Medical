@@ -10,7 +10,12 @@ namespace Medical
 {
     public abstract partial class TimelineAction : ActionSequencerAction, Saveable
     {
+        public event Action<TimelineAction> StartTimeChanged;
+        public event Action<TimelineAction> DurationChanged;
+
         private Timeline timeline;
+        private float startTime;
+        private float duration;
 
         protected TimelineAction()
         {
@@ -58,10 +63,44 @@ namespace Medical
         }
 
         [Editable]
-        public virtual float StartTime { get; set; }
+        public virtual float StartTime
+        {
+            get
+            {
+                return startTime;
+            }
+            set
+            {
+                if (startTime != value)
+                {
+                    startTime = value;
+                    if (StartTimeChanged != null)
+                    {
+                        StartTimeChanged.Invoke(this);
+                    }
+                }
+            }
+        }
 
         [Editable]
-        public virtual float Duration { get; set; }
+        public virtual float Duration
+        {
+            get
+            {
+                return duration;
+            }
+            set
+            {
+                if (duration != value)
+                {
+                    duration = value;
+                    if (DurationChanged != null)
+                    {
+                        DurationChanged.Invoke(this);
+                    }
+                }
+            }
+        }
 
         public float EndTime
         {
