@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Engine;
+using Engine.Attributes;
 
 namespace Medical
 {
+    [SingleEnum]
     public enum ImageAlignment
     {
         LeftTop = 0,

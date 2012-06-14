@@ -154,7 +154,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, 1, 0.05f)]
         public Vector2 Position
         {
             get
@@ -171,7 +171,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, 1, 0.05f)]
         public Size2 Size
         {
             get

@@ -5,6 +5,8 @@ using System.Text;
 using Engine;
 using MyGUIPlugin;
 using Engine.Editing;
+using Engine.Attributes;
+using System.Reflection;
 
 namespace Medical.GUI
 {
@@ -143,8 +145,23 @@ namespace Medical.GUI
             {
                 return DefaultCreationMethods[propertyType].Invoke(property, scrollView);
             }
+            else if (propertyType.IsEnum)
+            {
+                if (propertyType.GetCustomAttributes(typeof(SingleEnumAttribute), true).Length > 0)
+                {
+                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, scrollView, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => fieldInfo.Name));
+                    return editorCell;
+                }
+                //else if (propertyType.GetCustomAttributes(typeof(MultiEnumAttribute), true).Length > 0)
+                //{
+                //    MultiEnumEditorCell editorCell = new MultiEnumEditorCell();
+                //    editorCell.EnumType = propType;
+                //    return editorCell;
+                //}
+            }
+            
             //No match, create an appropriate text box
-            else if (property.hasBrowser(1))
+            if (property.hasBrowser(1))
             {
                 return new PropertiesFormTextBoxBrowser(property, scrollView, uiCallback);
             }
