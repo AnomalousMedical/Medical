@@ -205,7 +205,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, 1000, 1)]
         public int FontHeight
         {
             get

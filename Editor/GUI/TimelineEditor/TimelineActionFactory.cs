@@ -50,15 +50,15 @@ namespace Medical
 
         public TimelineActionFactory(Widget parentWidget, EditorPlugin editorGUI)
         {
-            addType(new TimelineActionFactoryData(typeof(ChangeMedicalStateAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new ChangeMedicalStateProperties(parentWidget)));
+            addType(new TimelineActionFactoryData(typeof(ChangeMedicalStateAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null));
             addType(new TimelineActionFactoryData(typeof(HighlightTeethAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null));
-            addType(new TimelineActionFactoryData(typeof(LayerChangeAction), new Color(155 / 255f, 187 / 255f, 89 / 255f), new LayerChangeProperties(parentWidget)));
-            addType(new TimelineActionFactoryData(typeof(MoveCameraAction), new Color(192 / 255f, 80 / 255f, 77 / 255f), new MoveCameraProperties(parentWidget)));
-            addType(new TimelineActionFactoryData(typeof(PlaySequenceAction), new Color(31 / 255f, 73 / 255f, 125 / 255f), new PlaySequenceProperties(parentWidget)));
-            addType(new TimelineActionFactoryData(typeof(MusclePositionAction), new Color(255 / 255f, 0 / 255f, 0 / 255f), new MusclePositionActionProperties(parentWidget)));
-            addType(new TimelineActionFactoryData(typeof(ShowImageAction), new Color(31 / 255f, 73 / 255f, 125 / 255f), new ShowImageProperties(parentWidget, editorGUI.MedicalUICallback)));
+            addType(new TimelineActionFactoryData(typeof(LayerChangeAction), new Color(155 / 255f, 187 / 255f, 89 / 255f), null));
+            addType(new TimelineActionFactoryData(typeof(MoveCameraAction), new Color(192 / 255f, 80 / 255f, 77 / 255f), null));
+            addType(new TimelineActionFactoryData(typeof(PlaySequenceAction), new Color(31 / 255f, 73 / 255f, 125 / 255f), null));
+            addType(new TimelineActionFactoryData(typeof(MusclePositionAction), new Color(255 / 255f, 0 / 255f, 0 / 255f), null));
+            addType(new TimelineActionFactoryData(typeof(ShowImageAction), new Color(31 / 255f, 73 / 255f, 125 / 255f), null));
             addType(new TimelineActionFactoryData(typeof(ShowTextAction), new Color(31 / 255f, 255 / 255f, 125 / 255f), new ShowTextProperties(parentWidget, editorGUI.TimelineController.TextDisplayFactory)));
-            addType(new TimelineActionFactoryData(typeof(PlaySoundAction), new Color(0 / 255f, 0 / 255f, 0 / 255f), new PlaySoundProperties(parentWidget, editorGUI.MedicalUICallback)));
+            addType(new TimelineActionFactoryData(typeof(PlaySoundAction), new Color(0 / 255f, 0 / 255f, 0 / 255f), null));
             addType(new TimelineActionFactoryData(typeof(ShowPropAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new ShowPropProperties(parentWidget, editorGUI.PropEditController)));
         }
 
