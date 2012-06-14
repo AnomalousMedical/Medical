@@ -20,7 +20,7 @@ namespace Medical.GUI
         private TrackFilter actionFilter;
         private TimelineView timelineView;
         private NumberLine numberLine;
-        private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
+        private TimelineActionDataManager actionDataManager = new TimelineActionDataManager();
         private EditorController editorController;
         private SaveableClipboard clipboard;
         private TimelineActionFactory actionFactory;
@@ -106,6 +106,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            actionDataManager.Dispose();
             ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).removeMenuProvider(this);
             actionFactory.Dispose();
             CurrentTimeline = null;
@@ -171,7 +172,7 @@ namespace Medical.GUI
                         currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
                     }
                     timelineView.removeAllData();
-                    actionDataBindings.Clear();
+                    actionDataManager.clearData();
                     currentTimeline = value;
                     //Enabled = currentTimeline != null;
                     if (currentTimeline != null)
@@ -205,7 +206,7 @@ namespace Medical.GUI
             action.StartTime = timelineView.MarkerTime;
             currentTimeline.addAction(action);
             action.capture();
-            timelineView.CurrentData = actionDataBindings[action];
+            timelineView.CurrentData = actionDataManager[action];
         }
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
@@ -349,15 +350,13 @@ namespace Medical.GUI
 
         void removeActionFromTimeline(TimelineAction action)
         {
-            timelineView.removeData(actionDataBindings[action]);
-            actionDataBindings.Remove(action);
+            timelineView.removeData(actionDataManager[action]);
+            actionDataManager.destroyData(action);
         }
 
         void addActionToTimeline(TimelineAction action)
         {
-            TimelineActionData data = new TimelineActionData(action);
-            actionDataBindings.Add(action, data);
-            timelineView.addData(data);
+            timelineView.addData(actionDataManager.createData(action));
         }
 
         void window_RootKeyChangeFocus(Widget source, EventArgs e)

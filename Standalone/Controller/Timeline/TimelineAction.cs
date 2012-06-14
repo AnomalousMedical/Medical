@@ -62,7 +62,7 @@ namespace Medical
             
         }
 
-        [Editable]
+        [EditableMinMax(0, float.MaxValue, 1)]
         public virtual float StartTime
         {
             get
@@ -82,7 +82,7 @@ namespace Medical
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, float.MaxValue, 1)]
         public virtual float Duration
         {
             get
