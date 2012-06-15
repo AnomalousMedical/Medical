@@ -19,7 +19,6 @@ namespace Medical.GUI
         private NumberLine numberLine;
         private ShowPropSubActionFactory actionFactory;
         private ShowPropAction propData;
-        private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
         private SaveableClipboard clipboard;
         private PropEditController propEditController;
@@ -85,7 +84,7 @@ namespace Medical.GUI
                 propData.ActionRemoved -= propData_ActionRemoved;
             }
             timelineView.clearTracks();
-            actionDataBindings.Clear();
+            actionFactory.clearData();
             actionProperties.clearPanels();
             if (showProp != null)
             {
@@ -172,8 +171,8 @@ namespace Medical.GUI
 
         void propData_ActionRemoved(ShowPropAction showProp, ShowPropSubAction subAction)
         {
-            timelineView.removeData(actionDataBindings[subAction]);
-            actionDataBindings.Remove(subAction);
+            timelineView.removeData(actionFactory[subAction]);
+            actionFactory.destroyData(subAction);
         }
 
         void propData_ActionAdded(ShowPropAction showProp, ShowPropSubAction subAction)
@@ -207,9 +206,7 @@ namespace Medical.GUI
 
         internal void addSubActionData(ShowPropSubAction subAction)
         {
-            PropTimelineData timelineData = new PropTimelineData(subAction);
-            timelineView.addData(timelineData);
-            actionDataBindings.Add(subAction, timelineData);
+            timelineView.addData(actionFactory.createData(subAction));
         }
 
         void removeAction_MouseButtonClick(Widget source, EventArgs e)

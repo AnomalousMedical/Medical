@@ -6,13 +6,21 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class PropTimelineData : TimelineData
+    class PropTimelineData : TimelineData, IDisposable
     {
         private ShowPropSubAction action;
 
         public PropTimelineData(ShowPropSubAction action)
         {
             this.action = action;
+            action.StartTimeChanged += action_StartTimeChanged;
+            action.DurationChanged += action_DurationChanged;
+        }
+
+        public void Dispose()
+        {
+            action.StartTimeChanged -= action_StartTimeChanged;
+            action.DurationChanged -= action_DurationChanged;
         }
 
         public override void editingStarted()
@@ -64,6 +72,16 @@ namespace Medical.GUI
             {
                 return action.TypeName;
             }
+        }
+
+        void action_DurationChanged(ShowPropSubAction obj)
+        {
+            Duration = obj.Duration;
+        }
+
+        void action_StartTimeChanged(ShowPropSubAction obj)
+        {
+            StartTime = obj.StartTime;
         }
     }
 }

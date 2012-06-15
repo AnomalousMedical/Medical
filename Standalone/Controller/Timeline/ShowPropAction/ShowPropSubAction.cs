@@ -14,6 +14,11 @@ namespace Medical
     public abstract partial class ShowPropSubAction : ActionSequencerAction, Saveable
     {
         private ShowPropAction showProp;
+        private float startTime;
+        private float duration;
+
+        public event Action<ShowPropSubAction> StartTimeChanged;
+        public event Action<ShowPropSubAction> DurationChanged;
 
         protected ShowPropSubAction()
         {
@@ -59,10 +64,44 @@ namespace Medical
         }
 
         [EditableMinMax(0, float.MaxValue, 1)]
-        public virtual float StartTime { get; set; }
+        public virtual float StartTime
+        {
+            get
+            {
+                return startTime;
+            }
+            set
+            {
+                if (startTime != value)
+                {
+                    startTime = value;
+                    if (StartTimeChanged != null)
+                    {
+                        StartTimeChanged.Invoke(this);
+                    }
+                }
+            }
+        }
 
         [EditableMinMax(0, float.MaxValue, 1)]
-        public virtual float Duration { get; set; }
+        public virtual float Duration
+        {
+            get
+            {
+                return duration;
+            }
+            set
+            {
+                if (duration != value)
+                {
+                    duration = value;
+                    if (DurationChanged != null)
+                    {
+                        DurationChanged.Invoke(this);
+                    }
+                }
+            }
+        }
 
         public float EndTime
         {

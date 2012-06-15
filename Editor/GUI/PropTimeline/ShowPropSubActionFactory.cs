@@ -16,6 +16,8 @@ namespace Medical.GUI
         private PoseableHandProperties leftPoseableHandProperties;
         private PoseableHandProperties rightPoseableHandProperties;
 
+        private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
+
         public ShowPropSubActionFactory(Widget parentWidget, PropEditController propEditController)
         {
             movePropProperties = new MovePropProperties(parentWidget, propEditController);
@@ -143,6 +145,36 @@ namespace Medical.GUI
         public ShowPropSubAction createSubAction(ShowPropAction showProp, String name)
         {
             return trackInfo[showProp.PropType].createSubAction(name);
+        }
+
+        public PropTimelineData createData(ShowPropSubAction subAction)
+        {
+            PropTimelineData timelineData = new PropTimelineData(subAction);
+            actionDataBindings.Add(subAction, timelineData);
+            return timelineData;
+        }
+
+        public void destroyData(ShowPropSubAction subAction)
+        {
+            actionDataBindings[subAction].Dispose();
+            actionDataBindings.Remove(subAction);
+        }
+
+        public void clearData()
+        {
+            foreach (PropTimelineData data in actionDataBindings.Values)
+            {
+                data.Dispose();
+            }
+            actionDataBindings.Clear();
+        }
+
+        public PropTimelineData this[ShowPropSubAction subAction]
+        {
+            get
+            {
+                return actionDataBindings[subAction];
+            }
         }
 
         public MovePropProperties MoveProperties
