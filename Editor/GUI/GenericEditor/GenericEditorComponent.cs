@@ -13,7 +13,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class GenericEditorComponent : LayoutComponent, EditInterfaceConsumer
+    public class GenericEditorComponent : LayoutComponent, EditInterfaceConsumer, EditMenuProvider
     {
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
@@ -30,27 +30,24 @@ namespace Medical.GUI
         public GenericEditorComponent(MyGUIViewHost viewHost, String name, MedicalUICallback uiCallback, EditorController editorController, bool horizontalAlignment = true)
             : base(horizontalAlignment ? "Medical.GUI.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
         {
-            Widget window = this.widget;
-
             this.name = name;
             this.editorController = editorController;
-            //window.Caption = String.Format("{0} Editor", name);
 
-            tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
+            tree = new Tree((ScrollView)widget.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
 
-            table = new ResizingTable((ScrollView)window.findWidget("TableScroller"));
+            table = new ResizingTable((ScrollView)widget.findWidget("TableScroller"));
             propTable = new PropertiesTable(table, uiCallback);
 
             objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
-
-            //this.Resized += new EventHandler(GenericEditor_Resized);
 
             EditInterfaceHandler editInterfaceHandler = viewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
             {
                 editInterfaceHandler.setEditInterfaceConsumer(this);
             }
+
+            widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
         }
 
         public override void Dispose()
@@ -66,18 +63,6 @@ namespace Medical.GUI
             editTreeView.Dispose();
             tree.Dispose();
             base.Dispose();
-        }
-
-        public void changeCaption(String file)
-        {
-            if (file != null)
-            {
-                //window.Caption = String.Format("{0} Editor - {1}", name, file);
-            }
-            else
-            {
-                //window.Caption = String.Format("{0} Editor", name);
-            }
         }
 
         public EditInterface CurrentEditInterface
@@ -97,6 +82,35 @@ namespace Medical.GUI
             base.topLevelResized();
             tree.layout();
             table.layout();
+        }
+
+        public void cut()
+        {
+            
+        }
+
+        public void copy()
+        {
+            
+        }
+
+        public void paste()
+        {
+            
+        }
+
+        public void selectAll()
+        {
+            
+        }
+
+        void widget_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
+            if (rfea.Focus)
+            {
+                ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+            }
         }
     }
 }

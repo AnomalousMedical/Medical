@@ -9,7 +9,7 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class GenericPropertiesFormComponent : LayoutComponent, EditInterfaceConsumer
+    class GenericPropertiesFormComponent : LayoutComponent, EditInterfaceConsumer, EditMenuProvider
     {
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
@@ -29,7 +29,6 @@ namespace Medical.GUI
 
             this.name = name;
             this.editorController = editorController;
-            //window.Caption = String.Format("{0} Editor", name);
 
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
@@ -38,13 +37,13 @@ namespace Medical.GUI
 
             objectEditor = new ObjectEditor(editTreeView, propertiesForm, uiCallback);
 
-            //this.Resized += new EventHandler(GenericEditor_Resized);
-
             EditInterfaceHandler editInterfaceHandler = viewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
             {
                 editInterfaceHandler.setEditInterfaceConsumer(this);
             }
+
+            widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
         }
 
         public override void Dispose()
@@ -59,18 +58,6 @@ namespace Medical.GUI
             editTreeView.Dispose();
             tree.Dispose();
             base.Dispose();
-        }
-
-        public void changeCaption(String file)
-        {
-            if (file != null)
-            {
-                //window.Caption = String.Format("{0} Editor - {1}", name, file);
-            }
-            else
-            {
-                //window.Caption = String.Format("{0} Editor", name);
-            }
         }
 
         public EditInterface CurrentEditInterface
@@ -90,6 +77,35 @@ namespace Medical.GUI
             base.topLevelResized();
             tree.layout();
             propertiesForm.layout();
+        }
+
+        public void cut()
+        {
+
+        }
+
+        public void copy()
+        {
+
+        }
+
+        public void paste()
+        {
+
+        }
+
+        public void selectAll()
+        {
+
+        }
+
+        void widget_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
+            if (rfea.Focus)
+            {
+                ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+            }
         }
     }
 }
