@@ -188,6 +188,7 @@ namespace Medical
             {
                 if (propType != value)
                 {
+                    clearSubActions();
                     propType = value;
                     if (currentlyEditing)
                     {
