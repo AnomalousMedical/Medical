@@ -44,16 +44,12 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (ColorDialog colorDialog = new ColorDialog())
+            ColorMenu.ShowColorMenu(source.AbsoluteLeft, source.AbsoluteTop + source.Height, color =>
             {
-                if (colorDialog.showModal() == NativeDialogResult.OK)
-                {
-                    Color color = colorDialog.Color;
-                    String value = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", (int)(color.a * 0xff), (int)(color.r * 0xff), (int)(color.g * 0xff), (int)(color.b * 0xff));
-                    editBox.OnlyText = value;
-                    setValue();
-                }
-            }
+                String value = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", (int)(color.a * 0xff), (int)(color.r * 0xff), (int)(color.g * 0xff), (int)(color.b * 0xff));
+                editBox.OnlyText = value;
+                setValue();
+            });
         }
 
         void editBox_EventEditSelectAccept(Widget source, EventArgs e)
