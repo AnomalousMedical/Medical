@@ -256,6 +256,11 @@ namespace Medical.GUI
             {
                 return buildConstrainableForm(property, new PropertiesFormUInt64(property, parent));
             });
+
+            DefaultCreationMethods.Add(typeof(Color), (property, parent) =>
+            {
+                return new PropertiesFormColor(property, parent);
+            });
         }
 
         private static PropertiesFormComponent buildConstrainableForm(EditableProperty property, ConstrainableFormComponent component)

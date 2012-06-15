@@ -148,6 +148,7 @@
     <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ConstrainableFormComponent.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormButton.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormColor.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormComboBox.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormUInt64.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormUInt32.cs" />
