@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Logging;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -72,6 +73,7 @@ namespace Medical
             get { return true; }
         }
 
+        [EditableMinMax(0, 1, 0.05f)]
         public float PlungePercentage
         {
             get

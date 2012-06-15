@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Engine;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -79,6 +80,7 @@ namespace Medical
             get { return finished; }
         }
 
+        [Editable]
         public Vector3 Translation
         {
             get
@@ -92,6 +94,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public Quaternion Rotation
         {
             get
