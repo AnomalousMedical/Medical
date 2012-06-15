@@ -140,30 +140,6 @@ namespace Medical.GUI
             }
         }
 
-        public Vector3 Translation
-        {
-            get
-            {
-                return actionFactory.MoveProperties.Translation;
-            }
-            set
-            {
-                actionFactory.MoveProperties.Translation = value;
-            }
-        }
-
-        public Quaternion Rotation
-        {
-            get
-            {
-                return actionFactory.MoveProperties.Rotation;
-            }
-            set
-            {
-                actionFactory.MoveProperties.Rotation = value;
-            }
-        }
-
         void propData_Updated(float time)
         {
             timelineView.MarkerTime = time;
@@ -192,8 +168,9 @@ namespace Medical.GUI
                 MovePropAction moveProp = (MovePropAction)subAction;
                 if (timelineView.CurrentData != null && timelineView.CurrentData.Track == "Move")
                 {
-                    moveProp.Translation = Translation;
-                    moveProp.Rotation = Rotation;
+                    MovePropAction currentMoveProp = (MovePropAction)((PropTimelineData)timelineView.CurrentData).Action;
+                    moveProp.Translation = currentMoveProp.Translation;
+                    moveProp.Rotation = currentMoveProp.Rotation;
                 }
                 else
                 {

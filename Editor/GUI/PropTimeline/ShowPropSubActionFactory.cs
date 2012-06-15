@@ -170,14 +170,6 @@ namespace Medical.GUI
                 return actionDataBindings[subAction];
             }
         }
-
-        public MovePropProperties MoveProperties
-        {
-            get
-            {
-                return movePropProperties;
-            }
-        }
     }
 
     class ShowPropSubActionFactoryData : IDisposable
