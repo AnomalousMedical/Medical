@@ -10,21 +10,21 @@ namespace Medical.GUI
     class ShowPropSubActionFactory : IDisposable
     {
         Dictionary<String, ShowPropSubActionFactoryData> trackInfo = new Dictionary<string, ShowPropSubActionFactoryData>();
-        private MovePropProperties movePropProperties;
         private PoseableHandProperties leftPoseableHandProperties;
         private PoseableHandProperties rightPoseableHandProperties;
+        private PropEditController propEditController;
 
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
         public ShowPropSubActionFactory(Widget parentWidget, PropEditController propEditController)
         {
-            movePropProperties = new MovePropProperties(parentWidget, propEditController);
+            this.propEditController = propEditController;
             leftPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout");
             rightPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableRightHandProperties.layout");
 
             //Arrow
             ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
-            arrowData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            arrowData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             arrowData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             arrowData.addTrack(typeof(ChangeArrowColorAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             arrowData.addTrack(typeof(ChangeArrowShapeAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
@@ -32,47 +32,47 @@ namespace Medical.GUI
 
             //Doppler
             ShowPropSubActionFactoryData dopplerData = new ShowPropSubActionFactoryData();
-            dopplerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            dopplerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             dopplerData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             trackInfo.Add(Doppler.DefinitionName, dopplerData);
 
             //PointingHandLeft
             ShowPropSubActionFactoryData pointingHandLeftData = new ShowPropSubActionFactoryData();
-            pointingHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            pointingHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             pointingHandLeftData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             pointingHandLeftData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             trackInfo.Add(PointingHand.LeftHandName, pointingHandLeftData);
 
             //PointingHandRight
             ShowPropSubActionFactoryData pointingRightHandData = new ShowPropSubActionFactoryData();
-            pointingRightHandData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            pointingRightHandData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             pointingRightHandData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             pointingRightHandData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             trackInfo.Add(PointingHand.RightHandName, pointingRightHandData);
 
             //Ruler
             ShowPropSubActionFactoryData rulerData = new ShowPropSubActionFactoryData();
-            rulerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            rulerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             rulerData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             trackInfo.Add(Ruler.DefinitionName, rulerData);
 
             //Syringe
             ShowPropSubActionFactoryData syringeData = new ShowPropSubActionFactoryData();
-            syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             syringeData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             trackInfo.Add(Syringe.DefinitionName, syringeData);
 
             //Circular Highlight
             ShowPropSubActionFactoryData circularHighlightData = new ShowPropSubActionFactoryData();
-            circularHighlightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            circularHighlightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             circularHighlightData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             circularHighlightData.addTrack(typeof(ChangeCircularHighlightSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             trackInfo.Add(CircularHighlight.DefinitionName, circularHighlightData);
 
             //Poseable Hand Left
             ShowPropSubActionFactoryData poseableHandLeftData = new ShowPropSubActionFactoryData();
-            poseableHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            poseableHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             poseableHandLeftData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             poseableHandLeftData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), leftPoseableHandProperties);
             poseableHandLeftData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
@@ -80,7 +80,7 @@ namespace Medical.GUI
 
             //Poseable Hand Right
             ShowPropSubActionFactoryData poseableHandRightData = new ShowPropSubActionFactoryData();
-            poseableHandRightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            poseableHandRightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             poseableHandRightData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), rightPoseableHandProperties);
             poseableHandRightData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
@@ -88,33 +88,33 @@ namespace Medical.GUI
 
             //Bite Stick
             ShowPropSubActionFactoryData biteStickData = new ShowPropSubActionFactoryData();
-            biteStickData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            biteStickData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             biteStickData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             trackInfo.Add(BiteStick.DefinitionName, biteStickData);
 
             //Range of MotionScale
             ShowPropSubActionFactoryData rangeOfMotionScale = new ShowPropSubActionFactoryData();
-            rangeOfMotionScale.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            rangeOfMotionScale.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             rangeOfMotionScale.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             trackInfo.Add(RangeOfMotionScale.DefinitionName, rangeOfMotionScale);
 
             //Pen
             ShowPropSubActionFactoryData penData = new ShowPropSubActionFactoryData();
-            penData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            penData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             penData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             penData.addTrack(typeof(ClickPenAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             trackInfo.Add(Pen.DefinitionName, penData);
 
             //Caliper
             ShowPropSubActionFactoryData caliperData = new ShowPropSubActionFactoryData();
-            caliperData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            caliperData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             caliperData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             caliperData.addTrack(typeof(SetCaliperMeasurement), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             trackInfo.Add(Caliper.DefinitionName, caliperData);
 
             //Plane
             ShowPropSubActionFactoryData planeData = new ShowPropSubActionFactoryData();
-            planeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            planeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             planeData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
             planeData.addTrack(typeof(ChangePlaneSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             trackInfo.Add(Plane.DefinitionName, planeData);
@@ -122,7 +122,6 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            movePropProperties.Dispose();
             leftPoseableHandProperties.Dispose();
             rightPoseableHandProperties.Dispose();
         }
@@ -144,6 +143,13 @@ namespace Medical.GUI
         public PropTimelineData createData(ShowPropSubAction subAction)
         {
             PropTimelineData timelineData = new PropTimelineData(subAction);
+            //HACK FOR RIGHT NOW
+            if (subAction is MovePropAction)
+            {
+                timelineData.Dispose();
+                timelineData = new MovePropTimelineData((MovePropAction)subAction, propEditController);
+            }
+            //END HACK
             actionDataBindings.Add(subAction, timelineData);
             return timelineData;
         }
