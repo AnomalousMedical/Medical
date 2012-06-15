@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="155 116 211 190" layer="Back">
-        <Widget type="ScrollView" skin="ScrollView" position="0 0 211 190" align="Stretch" name="TableScroll">
-            <Property key="CanvasSize" value="211 190"/>
-            <Property key="CanvasAlign" value="Left Top"/>
-        </Widget>
-    </Widget>
-</MyGUI>
