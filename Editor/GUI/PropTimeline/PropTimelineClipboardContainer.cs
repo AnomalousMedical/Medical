@@ -82,7 +82,6 @@ namespace Medical.GUI
                     }
                 }
                 propData.addSubAction(copiedAction);
-                propTimeline.addSubActionData(copiedAction);
             }
         }
 

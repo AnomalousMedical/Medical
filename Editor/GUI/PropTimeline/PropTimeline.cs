@@ -204,7 +204,7 @@ namespace Medical.GUI
             propData.addSubAction(subAction);
         }
 
-        internal void addSubActionData(ShowPropSubAction subAction)
+        private void addSubActionData(ShowPropSubAction subAction)
         {
             timelineView.addData(actionFactory.createData(subAction));
         }
