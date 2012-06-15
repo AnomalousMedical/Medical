@@ -114,6 +114,7 @@ namespace Medical
         {
             TimelineController.PropFactory.getInitialPosition(propType, ref translation, ref rotation);
             _movePreviewProp(translation, rotation);
+            fireDataNeedsRefresh();
         }
 
         public override void findFileReference(TimelineStaticInfo info)
@@ -236,6 +237,7 @@ namespace Medical
                 {
                     Translated.Invoke(this);
                 }
+                fireDataNeedsRefresh();
             }
         }
 
@@ -257,6 +259,7 @@ namespace Medical
                 {
                     Rotated.Invoke(this);
                 }
+                fireDataNeedsRefresh();
             }
         }
 

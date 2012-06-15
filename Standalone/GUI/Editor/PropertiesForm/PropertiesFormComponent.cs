@@ -8,6 +8,8 @@ namespace Medical.GUI
 {
     interface PropertiesFormComponent : IDisposable
     {
+        void refreshData();
+
         LayoutContainer Container { get; }
 
         EditableProperty Property { get; }

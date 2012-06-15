@@ -34,6 +34,13 @@ namespace Medical.GUI
             height.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
         }
 
+        public override void refreshData()
+        {
+            Size2 value = (Size2)Property.getRealValue(1);
+            width.Value = value.Width;
+            height.Value = value.Height;
+        }
+
         public override void setConstraints(ReflectedMinMaxEditableProperty minMaxProp)
         {
             width.MinValue = minMaxProp.MinValue;

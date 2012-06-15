@@ -8,44 +8,44 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    /// <summary>
-    /// The delegate for EditInterfaceViews.
-    /// </summary>
-    /// <param name="evt">The EditInterfaceViewEvent.</param>
-    public delegate void EditInterfaceEvent(EditInterfaceViewEvent evt);
-
     public class EditInterfaceTreeView : IDisposable
     {
         /// <summary>
+        /// The delegate for EditInterfaceViews.
+        /// </summary>
+        /// <param name="evt">The EditInterfaceViewEvent.</param>
+        public delegate void EditInterfaceTreeViewEvent(EditInterfaceViewEvent evt);
+
+        /// <summary>
         /// Called when the selected EditInterface has changed. Cannot be canceled.
         /// </summary>
-        public event EditInterfaceEvent EditInterfaceSelectionChanged;
+        public event EditInterfaceTreeViewEvent EditInterfaceSelectionChanged;
 
         /// <summary>
         /// Called when the selected EditInterface is about to change. Can be canceled.
         /// </summary>
-        public event EditInterfaceEvent EditInterfaceSelectionChanging;
+        public event EditInterfaceTreeViewEvent EditInterfaceSelectionChanging;
 
         /// <summary>
         /// Called when the interface has requested to further edit an object.
         /// Can be ignored if not applicable.
         /// </summary>
-        public event EditInterfaceEvent EditInterfaceSelectionEdit;
+        public event EditInterfaceTreeViewEvent EditInterfaceSelectionEdit;
 
         /// <summary>
         /// Called when an EditInterface has been chosen in some way.
         /// </summary>
-        public event EditInterfaceEvent EditInterfaceChosen;
+        public event EditInterfaceTreeViewEvent EditInterfaceChosen;
 
         /// <summary>
         /// Called when an EditInterface is added.
         /// </summary>
-        public event EditInterfaceEvent EditInterfaceAdded;
+        public event EditInterfaceTreeViewEvent EditInterfaceAdded;
 
         /// <summary>
         /// Called when an EditInterface is removed.
         /// </summary>
-        public event EditInterfaceEvent EditInterfaceRemoved;
+        public event EditInterfaceTreeViewEvent EditInterfaceRemoved;
 
         private Tree tree;
         private EditInterface mainEditInterface;

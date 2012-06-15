@@ -37,6 +37,11 @@ namespace Medical.GUI
             comboBox.EventComboAccept += new MyGUIEvent(comboBox_EventComboAccept);
         }
 
+        public override void refreshData()
+        {
+            comboBox.SelectedIndex = comboBox.findItemIndexWith(Property.getValue(1));
+        }
+
         void editBox_KeyLostFocus(Widget source, EventArgs e)
         {
             setValue();

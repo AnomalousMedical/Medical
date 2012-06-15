@@ -30,7 +30,7 @@ namespace Medical.GUI
             indexTree = new Tree((ScrollView)window.findWidget("Index"));
             editInterfaceTreeView = new EditInterfaceTreeView(indexTree, null);
             editInterfaceTreeView.EditInterface = examEditInterface;
-            editInterfaceTreeView.EditInterfaceSelectionChanged += new EditInterfaceEvent(editInterfaceTreeView_EditInterfaceSelectionChanged);
+            editInterfaceTreeView.EditInterfaceSelectionChanged += editInterfaceTreeView_EditInterfaceSelectionChanged;
         }
 
         void editInterfaceTreeView_EditInterfaceSelectionChanged(EditInterfaceViewEvent evt)

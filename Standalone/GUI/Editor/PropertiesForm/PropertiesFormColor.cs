@@ -42,6 +42,13 @@ namespace Medical.GUI
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
         }
 
+        public override void refreshData()
+        {
+            Color color = (Color)Property.getRealValue(1);
+            String value = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", (int)(color.r * 0xff), (int)(color.g * 0xff), (int)(color.b * 0xff), (int)(color.a * 0xff));
+            editBox.OnlyText = value;
+        }
+
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
             ColorMenu.ShowColorMenu(source.AbsoluteLeft, source.AbsoluteTop + source.Height, color =>

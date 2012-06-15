@@ -7,7 +7,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class PropertiesFormLayoutComponent : Component, PropertiesFormComponent
+    abstract class PropertiesFormLayoutComponent : Component, PropertiesFormComponent
     {
         private MyGUILayoutContainer layoutContainer;
         private EditableProperty editableProperty;
@@ -19,6 +19,8 @@ namespace Medical.GUI
             layoutContainer = new MyGUILayoutContainer(widget);
             widget.attachToWidget(parent);
         }
+
+        public abstract void refreshData();
 
         public LayoutContainer Container
         {

@@ -64,6 +64,7 @@ namespace Medical.GUI
                 {
                     currentEditInterface.OnPropertyAdded -= new PropertyAdded(currentEditInterface_OnPropertyAdded);
                     currentEditInterface.OnPropertyRemoved -= new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
+                    currentEditInterface.OnDataNeedsRefresh -= new EditInterfaceEvent(currentEditInterface_OnDataNeedsRefresh);
                 }
                 clear();
                 if (value != null)
@@ -71,6 +72,7 @@ namespace Medical.GUI
                     currentEditInterface = value;
                     currentEditInterface.OnPropertyAdded += new PropertyAdded(currentEditInterface_OnPropertyAdded);
                     currentEditInterface.OnPropertyRemoved += new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
+                    currentEditInterface.OnDataNeedsRefresh += new EditInterfaceEvent(currentEditInterface_OnDataNeedsRefresh);
                     currentPropInfo = value.getPropertyInfo();
                     if (currentPropInfo != null)
                     {
@@ -101,6 +103,14 @@ namespace Medical.GUI
                     currentPropInfo = null;
                     currentEditInterface = null;
                 }
+            }
+        }
+
+        void currentEditInterface_OnDataNeedsRefresh(EditInterface editInterface)
+        {
+            foreach (PropertiesFormComponent component in components)
+            {
+                component.refreshData();
             }
         }
 

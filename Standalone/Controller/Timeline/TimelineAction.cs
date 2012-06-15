@@ -78,6 +78,7 @@ namespace Medical
                     {
                         StartTimeChanged.Invoke(this);
                     }
+                    fireDataNeedsRefresh();
                 }
             }
         }
@@ -98,6 +99,7 @@ namespace Medical
                     {
                         DurationChanged.Invoke(this);
                     }
+                    fireDataNeedsRefresh();
                 }
             }
         }
@@ -149,6 +151,11 @@ namespace Medical
     partial class TimelineAction
     {
         private EditInterface editInterface;
+
+        protected void fireDataNeedsRefresh()
+        {
+            editInterface.fireDataNeedsRefresh();
+        }
 
         public EditInterface getEditInterface()
         {

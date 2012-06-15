@@ -25,7 +25,7 @@ namespace Medical.GUI
             tree = new Tree((ScrollView)window.findWidget("TableScroll"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
             editTreeView.EditInterface = scratchAreaController.EditInterface;
-            editTreeView.EditInterfaceSelectionChanged += new EditInterfaceEvent(editTreeView_EditInterfaceSelectionChanged);
+            editTreeView.EditInterfaceSelectionChanged += editTreeView_EditInterfaceSelectionChanged;
 
             this.Resized += new EventHandler(ScratchArea_Resized);
         }

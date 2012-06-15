@@ -29,6 +29,11 @@ namespace Medical.GUI
             Gui.Instance.destroyWidget(checkButton.Button);
         }
 
+        public void refreshData()
+        {
+            checkButton.Checked = (bool)Property.getRealValue(1);
+        }
+
         public LayoutContainer Container
         {
             get

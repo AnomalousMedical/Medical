@@ -123,6 +123,8 @@ namespace Medical
             //Make the include point projected out to the lookat location
             Ray3 camRay = currentWindow.getCameraToViewportRay(1, 0);
             IncludePoint = camRay.Origin + camRay.Direction * (LookAt - Translation).length();
+
+            fireDataNeedsRefresh();
         }
 
         public override void editing()

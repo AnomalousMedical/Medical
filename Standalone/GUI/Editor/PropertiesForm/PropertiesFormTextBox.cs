@@ -32,6 +32,11 @@ namespace Medical.GUI
             editBox.EventEditSelectAccept += new MyGUIEvent(editBox_EventEditSelectAccept);
         }
 
+        public override void refreshData()
+        {
+            editBox.OnlyText = Property.getValue(1);
+        }
+
         void editBox_EventEditSelectAccept(Widget source, EventArgs e)
         {
             setValue();

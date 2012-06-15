@@ -25,14 +25,14 @@ namespace Medical.GUI
             button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
         }
 
-        void button_MouseButtonClick(Widget source, EventArgs e)
-        {
-            command.execute(uiCallback);
-        }
-
         public void Dispose()
         {
             Gui.Instance.destroyWidget(button);
+        }
+
+        public void refreshData()
+        {
+
         }
 
         public LayoutContainer Container
@@ -49,6 +49,11 @@ namespace Medical.GUI
             {
                 return null;
             }
+        }
+
+        void button_MouseButtonClick(Widget source, EventArgs e)
+        {
+            command.execute(uiCallback);
         }
     }
 }

@@ -40,6 +40,11 @@ namespace Medical.GUI
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
         }
 
+        public override void refreshData()
+        {
+            editBox.OnlyText = Property.getValue(1);
+        }
+
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
             Browser browser = Property.getBrowser(1);
