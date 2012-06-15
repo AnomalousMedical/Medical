@@ -9,7 +9,7 @@ using Engine.Editing;
 namespace Medical
 {
     [TimelineActionProperties("Change Arrow Shape")]
-    public class ChangeArrowShapeAction : EditableShowPropSubAction
+    public class ChangeArrowShapeAction : ShowPropSubAction
     {
         private float scale;
         private float tailLength;

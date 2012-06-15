@@ -9,7 +9,7 @@ using Engine.Editing;
 namespace Medical
 {
     [TimelineActionProperties("Set Measurement")]
-    public class SetCaliperMeasurement : EditableShowPropSubAction
+    public class SetCaliperMeasurement : ShowPropSubAction
     {
         private Caliper caliper;
         private float millimeters = 0.0f;

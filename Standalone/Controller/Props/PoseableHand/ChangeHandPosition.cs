@@ -11,7 +11,7 @@ using Engine.Saving;
 namespace Medical
 {
     [TimelineActionProperties("Hand Position")]
-    public class ChangeHandPosition : EditableShowPropSubAction
+    public class ChangeHandPosition : ShowPropSubAction
     {
         private PoseableHand hand;
         private bool finished = false;

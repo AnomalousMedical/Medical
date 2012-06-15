@@ -9,7 +9,7 @@ using Engine.Editing;
 namespace Medical
 {
     [TimelineActionProperties("Attach To Object")]
-    public class DetachableFollowerToggleAction : EditableShowPropSubAction
+    public class DetachableFollowerToggleAction : ShowPropSubAction
     {
         public DetachableFollowerToggleAction()
         {

@@ -70,13 +70,16 @@ namespace Medical
             set
             {
                 currentMovePropAction = value;
-                if (currentMovePropAction != null)
+                if (currentShowPropAction != null)
                 {
-                    currentShowPropAction._movePreviewProp(currentMovePropAction.Translation, currentMovePropAction.Rotation);
-                }
-                else
-                {
-                    currentShowPropAction._movePreviewProp(currentShowPropAction.Translation, currentShowPropAction.Rotation);
+                    if (currentMovePropAction != null)
+                    {
+                        currentShowPropAction._movePreviewProp(currentMovePropAction.Translation, currentMovePropAction.Rotation);
+                    }
+                    else
+                    {
+                        currentShowPropAction._movePreviewProp(currentShowPropAction.Translation, currentShowPropAction.Rotation);
+                    }
                 }
             }
         }

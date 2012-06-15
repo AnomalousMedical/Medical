@@ -10,7 +10,7 @@ using Engine.Attributes;
 namespace Medical
 {
     [TimelineActionProperties("Change Color")]
-    public class ChangeArrowColorAction : EditableShowPropSubAction
+    public class ChangeArrowColorAction : ShowPropSubAction
     {
         private Arrow arrow;
         private Color arrowColor;

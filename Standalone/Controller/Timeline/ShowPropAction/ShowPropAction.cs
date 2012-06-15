@@ -21,6 +21,8 @@ namespace Medical
         public event Action<ShowPropAction> Translated;
         public event Action<ShowPropAction> Rotated;
         public event Action<ShowPropAction> PropTypeChanged;
+        public event Action<ShowPropAction, ShowPropSubAction> ActionAdded;
+        public event Action<ShowPropAction, ShowPropSubAction> ActionRemoved;
 
         private bool finished;
         private SimObjectBase simObject;
@@ -135,12 +137,20 @@ namespace Medical
         {
             subAction._setShowProp(this);
             sequencer.addAction(subAction);
+            if (ActionAdded != null)
+            {
+                ActionAdded.Invoke(this, subAction);
+            }
         }
 
         public void removeSubAction(ShowPropSubAction subAction)
         {
             sequencer.removeAction(subAction);
             subAction._setShowProp(null);
+            if (ActionRemoved != null)
+            {
+                ActionRemoved.Invoke(this, subAction);
+            }
         }
 
         public void clearSubActions()

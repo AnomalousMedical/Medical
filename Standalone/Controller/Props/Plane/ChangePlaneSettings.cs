@@ -10,7 +10,7 @@ using Engine.Platform;
 namespace Medical
 {
     [TimelineActionProperties("Settings")]
-    public class ChangePlaneSettings : EditableShowPropSubAction
+    public class ChangePlaneSettings : ShowPropSubAction
     {
         private Size2 size;
         private Color color;

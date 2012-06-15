@@ -30,7 +30,7 @@ namespace Medical.GUI
         public override void setCurrentData(TimelineData data)
         {
             PropTimelineData propData = (PropTimelineData)data;
-            editInterface = ((EditableShowPropSubAction)propData.Action).EditInterface;
+            editInterface = propData.Action.EditInterface;
             propTable.EditInterface = editInterface;
         }
     }

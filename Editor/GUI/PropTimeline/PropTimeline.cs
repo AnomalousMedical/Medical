@@ -23,6 +23,7 @@ namespace Medical.GUI
 
         private SaveableClipboard clipboard;
         private PropEditController propEditController;
+        private PropTimelineData propTimelineData = null;
 
         public PropTimeline(SaveableClipboard clipboard, PropEditController propEditController, MyGUIViewHost viewHost)
             :base("Medical.GUI.PropTimeline.PropTimeline.layout", viewHost)
@@ -41,6 +42,7 @@ namespace Medical.GUI
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.Duration = 5.0f;
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
+            timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
 
             //Properties
             ScrollView timelinePropertiesScrollView = widget.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -79,6 +81,8 @@ namespace Medical.GUI
             if (propData != null)
             {
                 propData.Updated -= propData_Updated;
+                propData.ActionAdded -= propData_ActionAdded;
+                propData.ActionRemoved -= propData_ActionRemoved;
             }
             timelineView.clearTracks();
             actionDataBindings.Clear();
@@ -100,6 +104,8 @@ namespace Medical.GUI
             if (propData != null)
             {
                 propData.Updated += propData_Updated;
+                propData.ActionAdded += propData_ActionAdded;
+                propData.ActionRemoved += propData_ActionRemoved;
             }
             MarkerTime = propEditController.MarkerPosition;
         }
@@ -164,6 +170,17 @@ namespace Medical.GUI
             timelineView.MarkerTime = time;
         }
 
+        void propData_ActionRemoved(ShowPropAction showProp, ShowPropSubAction subAction)
+        {
+            timelineView.removeData(actionDataBindings[subAction]);
+            actionDataBindings.Remove(subAction);
+        }
+
+        void propData_ActionAdded(ShowPropAction showProp, ShowPropSubAction subAction)
+        {
+            addSubActionData(subAction);
+        }
+
         void trackFilter_AddTrackItem(string name)
         {
             ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
@@ -186,7 +203,6 @@ namespace Medical.GUI
                 }
             }
             propData.addSubAction(subAction);
-            addSubActionData(subAction);
         }
 
         internal void addSubActionData(ShowPropSubAction subAction)
@@ -205,7 +221,6 @@ namespace Medical.GUI
         {
             PropTimelineData propTlData = (PropTimelineData)timelineView.CurrentData;
             propData.removeSubAction(propTlData.Action);
-            timelineView.removeData(propTlData);
         }
 
         private void removeSelectedData()
@@ -213,7 +228,6 @@ namespace Medical.GUI
             foreach (PropTimelineData propTlData in timelineView.SelectedData)
             {
                 propData.removeSubAction(propTlData.Action);
-                timelineView.removeData(propTlData);
             }
         }
 
@@ -287,6 +301,32 @@ namespace Medical.GUI
             if (rfea.Focus)
             {
                 ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+            }
+        }
+
+        void timelineView_ActiveDataChanged(object sender, EventArgs e)
+        {
+            //if (propTimelineData != null)
+            //{
+            //    propTimelineData.editingCompleted();
+            //}
+            propTimelineData = (PropTimelineData)timelineView.CurrentData;
+            //if (propTimelineData != null)
+            //{
+            //    propTimelineData.editingStarted();
+            //}
+
+            EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
+            if (editInterfaceHandler != null)
+            {
+                if (propTimelineData != null)
+                {
+                    editInterfaceHandler.changeEditInterface(propTimelineData.Action.EditInterface);
+                }
+                else if (propData != null)
+                {
+                    editInterfaceHandler.changeEditInterface(propData.getEditInterface());
+                }
             }
         }
     }

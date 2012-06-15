@@ -6,10 +6,12 @@ using Engine.Saving;
 using Engine.Platform;
 using Engine.ObjectManagement;
 using Engine;
+using Engine.Attributes;
+using Engine.Editing;
 
 namespace Medical
 {
-    public abstract class ShowPropSubAction : ActionSequencerAction, Saveable
+    public abstract partial class ShowPropSubAction : ActionSequencerAction, Saveable
     {
         private ShowPropAction showProp;
 
@@ -56,8 +58,10 @@ namespace Medical
             
         }
 
+        [EditableMinMax(0, float.MaxValue, 1)]
         public virtual float StartTime { get; set; }
 
+        [EditableMinMax(0, float.MaxValue, 1)]
         public virtual float Duration { get; set; }
 
         public float EndTime
@@ -120,5 +124,35 @@ namespace Medical
         }
 
         #endregion
+    }
+
+    partial class ShowPropSubAction
+    {
+        [DoNotCopy]
+        [DoNotSave]
+        private EditInterface editInterface;
+
+        [DoNotCopy]
+        public virtual EditInterface EditInterface
+        {
+            get
+            {
+                if (editInterface == null)
+                {
+                    editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, GetType().Name, null);
+                    editInterface.addCommand(new EditInterfaceCommand("Remove", (callback, caller) =>
+                        {
+                            showProp.removeSubAction(this);
+                        }));
+                    customizeEditInterface(editInterface);
+                }
+                return editInterface;
+            }
+        }
+
+        protected virtual void customizeEditInterface(EditInterface editInterface)
+        {
+
+        }
     }
 }

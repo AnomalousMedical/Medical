@@ -10,7 +10,7 @@ using Engine;
 namespace Medical
 {
     [TimelineActionProperties("Settings")]
-    public class ChangeCircularHighlightSettings : EditableShowPropSubAction
+    public class ChangeCircularHighlightSettings : ShowPropSubAction
     {
         private float minorAxis;
         private float majorAxis;

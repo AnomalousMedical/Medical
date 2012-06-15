@@ -8,7 +8,7 @@ using Engine.Saving;
 namespace Medical
 {
     [TimelineActionProperties("Click Pen")]
-    public class ClickPenAction : EditableShowPropSubAction
+    public class ClickPenAction : ShowPropSubAction
     {
         private Pen pen;
 
