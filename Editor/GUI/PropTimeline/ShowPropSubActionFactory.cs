@@ -9,110 +9,110 @@ namespace Medical.GUI
 {
     class ShowPropSubActionFactory : IDisposable
     {
-        Dictionary<String, ShowPropSubActionFactoryData> trackInfo = new Dictionary<string, ShowPropSubActionFactoryData>();
-        private PropEditController propEditController;
+        Dictionary<String, ShowPropTimelineInfo> trackInfo = new Dictionary<string, ShowPropTimelineInfo>();
 
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
         public ShowPropSubActionFactory(PropEditController propEditController)
         {
-            this.propEditController = propEditController;
+            MovePropPrototype movePropPrototype = new MovePropPrototype(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), "Move", propEditController);
+            ShowPropSubActionPrototype transparencyPrototype = new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), "Set Transparency");
 
             //Arrow
-            ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
-            arrowData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            arrowData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            arrowData.addTrack(typeof(ChangeArrowColorAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
-            arrowData.addTrack(typeof(ChangeArrowShapeAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
+            ShowPropTimelineInfo arrowData = new ShowPropTimelineInfo();
+            arrowData.addTrack(movePropPrototype);
+            arrowData.addTrack(transparencyPrototype);
+            arrowData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowColorAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Change Color"));
+            arrowData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowShapeAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), "Change Arrow Shape"));
             trackInfo.Add(Arrow.DefinitionName, arrowData);
 
             //Doppler
-            ShowPropSubActionFactoryData dopplerData = new ShowPropSubActionFactoryData();
-            dopplerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            dopplerData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
+            ShowPropTimelineInfo dopplerData = new ShowPropTimelineInfo();
+            dopplerData.addTrack(movePropPrototype);
+            dopplerData.addTrack(transparencyPrototype);
             trackInfo.Add(Doppler.DefinitionName, dopplerData);
 
             //PointingHandLeft
-            ShowPropSubActionFactoryData pointingHandLeftData = new ShowPropSubActionFactoryData();
-            pointingHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            pointingHandLeftData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            pointingHandLeftData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
+            ShowPropTimelineInfo pointingHandLeftData = new ShowPropTimelineInfo();
+            pointingHandLeftData.addTrack(movePropPrototype);
+            pointingHandLeftData.addTrack(transparencyPrototype);
+            pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Attach To Object"));
             trackInfo.Add(PointingHand.LeftHandName, pointingHandLeftData);
 
             //PointingHandRight
-            ShowPropSubActionFactoryData pointingRightHandData = new ShowPropSubActionFactoryData();
-            pointingRightHandData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            pointingRightHandData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            pointingRightHandData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
+            ShowPropTimelineInfo pointingRightHandData = new ShowPropTimelineInfo();
+            pointingRightHandData.addTrack(movePropPrototype);
+            pointingRightHandData.addTrack(transparencyPrototype);
+            pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Attach To Object"));
             trackInfo.Add(PointingHand.RightHandName, pointingRightHandData);
 
             //Ruler
-            ShowPropSubActionFactoryData rulerData = new ShowPropSubActionFactoryData();
-            rulerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            rulerData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
+            ShowPropTimelineInfo rulerData = new ShowPropTimelineInfo();
+            rulerData.addTrack(movePropPrototype);
+            rulerData.addTrack(transparencyPrototype);
             trackInfo.Add(Ruler.DefinitionName, rulerData);
 
             //Syringe
-            ShowPropSubActionFactoryData syringeData = new ShowPropSubActionFactoryData();
-            syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            syringeData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
+            ShowPropTimelineInfo syringeData = new ShowPropTimelineInfo();
+            syringeData.addTrack(movePropPrototype);
+            syringeData.addTrack(transparencyPrototype);
+            syringeData.addTrack(new ShowPropSubActionPrototype(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Push Plunger"));
             trackInfo.Add(Syringe.DefinitionName, syringeData);
 
             //Circular Highlight
-            ShowPropSubActionFactoryData circularHighlightData = new ShowPropSubActionFactoryData();
-            circularHighlightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            circularHighlightData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            circularHighlightData.addTrack(typeof(ChangeCircularHighlightSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
+            ShowPropTimelineInfo circularHighlightData = new ShowPropTimelineInfo();
+            circularHighlightData.addTrack(movePropPrototype);
+            circularHighlightData.addTrack(transparencyPrototype);
+            circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeCircularHighlightSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Settings"));
             trackInfo.Add(CircularHighlight.DefinitionName, circularHighlightData);
 
             //Poseable Hand Left
-            ShowPropSubActionFactoryData poseableHandLeftData = new ShowPropSubActionFactoryData();
-            poseableHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            poseableHandLeftData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            poseableHandLeftData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
-            poseableHandLeftData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
+            ShowPropTimelineInfo poseableHandLeftData = new ShowPropTimelineInfo();
+            poseableHandLeftData.addTrack(movePropPrototype);
+            poseableHandLeftData.addTrack(transparencyPrototype);
+            poseableHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Hand Position"));
+            poseableHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), "Attach To Object"));
             trackInfo.Add(PoseableHand.LeftDefinitionName, poseableHandLeftData);
 
             //Poseable Hand Right
-            ShowPropSubActionFactoryData poseableHandRightData = new ShowPropSubActionFactoryData();
-            poseableHandRightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            poseableHandRightData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
-            poseableHandRightData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
+            ShowPropTimelineInfo poseableHandRightData = new ShowPropTimelineInfo();
+            poseableHandRightData.addTrack(movePropPrototype);
+            poseableHandRightData.addTrack(transparencyPrototype);
+            poseableHandRightData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Hand Position"));
+            poseableHandRightData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), "Attach To Object"));
             trackInfo.Add(PoseableHand.RightDefinitionName, poseableHandRightData);
 
             //Bite Stick
-            ShowPropSubActionFactoryData biteStickData = new ShowPropSubActionFactoryData();
-            biteStickData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            biteStickData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
+            ShowPropTimelineInfo biteStickData = new ShowPropTimelineInfo();
+            biteStickData.addTrack(movePropPrototype);
+            biteStickData.addTrack(transparencyPrototype);
             trackInfo.Add(BiteStick.DefinitionName, biteStickData);
 
             //Range of MotionScale
-            ShowPropSubActionFactoryData rangeOfMotionScale = new ShowPropSubActionFactoryData();
-            rangeOfMotionScale.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            rangeOfMotionScale.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
+            ShowPropTimelineInfo rangeOfMotionScale = new ShowPropTimelineInfo();
+            rangeOfMotionScale.addTrack(movePropPrototype);
+            rangeOfMotionScale.addTrack(transparencyPrototype);
             trackInfo.Add(RangeOfMotionScale.DefinitionName, rangeOfMotionScale);
 
             //Pen
-            ShowPropSubActionFactoryData penData = new ShowPropSubActionFactoryData();
-            penData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            penData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            penData.addTrack(typeof(ClickPenAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
+            ShowPropTimelineInfo penData = new ShowPropTimelineInfo();
+            penData.addTrack(movePropPrototype);
+            penData.addTrack(transparencyPrototype);
+            penData.addTrack(new ShowPropSubActionPrototype(typeof(ClickPenAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Click Pen"));
             trackInfo.Add(Pen.DefinitionName, penData);
 
             //Caliper
-            ShowPropSubActionFactoryData caliperData = new ShowPropSubActionFactoryData();
-            caliperData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            caliperData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            caliperData.addTrack(typeof(SetCaliperMeasurement), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
+            ShowPropTimelineInfo caliperData = new ShowPropTimelineInfo();
+            caliperData.addTrack(movePropPrototype);
+            caliperData.addTrack(transparencyPrototype);
+            caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetCaliperMeasurement), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Set Measurement"));
             trackInfo.Add(Caliper.DefinitionName, caliperData);
 
             //Plane
-            ShowPropSubActionFactoryData planeData = new ShowPropSubActionFactoryData();
-            planeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
-            planeData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            planeData.addTrack(typeof(ChangePlaneSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
+            ShowPropTimelineInfo planeData = new ShowPropTimelineInfo();
+            planeData.addTrack(movePropPrototype);
+            planeData.addTrack(transparencyPrototype);
+            planeData.addTrack(new ShowPropSubActionPrototype(typeof(ChangePlaneSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), "Settings"));
             trackInfo.Add(Plane.DefinitionName, planeData);
         }
 
@@ -123,7 +123,7 @@ namespace Medical.GUI
 
         public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView)
         {
-            ShowPropSubActionFactoryData track;
+            ShowPropTimelineInfo track;
             if(trackInfo.TryGetValue(showProp.PropType, out track))
             {
                 track.addTracksToTimeline(timelineView);
@@ -135,16 +135,9 @@ namespace Medical.GUI
             return trackInfo[showProp.PropType].createSubAction(name);
         }
 
-        public PropTimelineData createData(ShowPropSubAction subAction)
+        public PropTimelineData createData(ShowPropAction showProp, ShowPropSubAction subAction)
         {
-            PropTimelineData timelineData = new PropTimelineData(subAction);
-            //HACK FOR RIGHT NOW
-            if (subAction is MovePropAction)
-            {
-                timelineData.Dispose();
-                timelineData = new MovePropTimelineData((MovePropAction)subAction, propEditController);
-            }
-            //END HACK
+            PropTimelineData timelineData = trackInfo[showProp.PropType].createData(subAction);
             actionDataBindings.Add(subAction, timelineData);
             return timelineData;
         }
@@ -170,90 +163,6 @@ namespace Medical.GUI
             {
                 return actionDataBindings[subAction];
             }
-        }
-    }
-
-    class ShowPropSubActionFactoryData : IDisposable
-    {
-        private List<TrackData> trackData = new List<TrackData>();
-
-        public ShowPropSubActionFactoryData()
-        {
-
-        }
-
-        public void Dispose()
-        {
-            foreach (TrackData data in trackData)
-            {
-                data.Dispose();
-            }
-        }
-
-        public void addTrack(Type type, Color color, TimelineDataPanel dataPanel)
-        {
-            TrackData data = new TrackData(type, color, dataPanel, getTypeName(type));
-            trackData.Add(data);
-        }
-
-        public void addTracksToTimeline(TimelineView timeline)
-        {
-            foreach (TrackData data in trackData)
-            {
-                timeline.addTrack(data.TypeName, data.Color);
-            }
-        }
-
-        public ShowPropSubAction createSubAction(string name)
-        {
-            foreach (TrackData data in trackData)
-            {
-                if (data.TypeName == name)
-                {
-                    return (ShowPropSubAction)Activator.CreateInstance(data.Type);
-                }
-            }
-            return null;
-        }
-
-        private String getTypeName(Type type)
-        {
-            try
-            {
-                TimelineActionProperties properties = (TimelineActionProperties)(type.GetCustomAttributes(typeof(TimelineActionProperties), false)[0]);
-                return properties.TypeName;
-            }
-            catch (Exception)
-            {
-                throw new Exception("All ShowPropSubAction added to the factory must have a TimelineActionProperties attribute.");
-            }
-        }
-
-        class TrackData : IDisposable
-        {
-            public TrackData(Type type, Color color, TimelineDataPanel dataPanel, String typeName)
-            {
-                this.Color = color;
-                this.Type = type;
-                this.Panel = dataPanel;
-                this.TypeName = typeName;
-            }
-
-            public void Dispose()
-            {
-                if (Panel != null)
-                {
-                    Panel.Dispose();
-                }
-            }
-
-            public Color Color { get; private set; }
-
-            public Type Type { get; private set; }
-
-            public String TypeName { get; private set; }
-
-            public TimelineDataPanel Panel { get; private set; }
         }
     }
 }

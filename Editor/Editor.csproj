@@ -147,6 +147,9 @@
     <Compile Include="GUI\PropTimeline\PropTimelineFactory.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineView.cs" />
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
+    <Compile Include="GUI\PropTimeline\ShowPropSubActionPrototype.cs" />
+    <Compile Include="GUI\PropTimeline\ShowPropTimelineInfo.cs" />
+    <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropPrototype.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />

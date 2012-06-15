@@ -78,7 +78,8 @@ namespace Medical.GUI
             }
             timelineView.clearTracks();
             actionFactory.clearData();
-            if (showProp != null)
+            this.propData = showProp;
+            if (propData != null)
             {
                 actionFactory.addTracksForAction(showProp, timelineView);
                 foreach (ShowPropSubAction action in showProp.SubActions)
@@ -86,17 +87,13 @@ namespace Medical.GUI
                     addSubActionData(action);
                 }
                 timelineView.Duration = showProp.Duration;
+                propData.Updated += propData_Updated;
+                propData.ActionAdded += propData_ActionAdded;
+                propData.ActionRemoved += propData_ActionRemoved;
             }
             else
             {
                 timelineView.Duration = 0.0f;
-            }
-            this.propData = showProp;
-            if (propData != null)
-            {
-                propData.Updated += propData_Updated;
-                propData.ActionAdded += propData_ActionAdded;
-                propData.ActionRemoved += propData_ActionRemoved;
             }
             MarkerTime = propEditController.MarkerPosition;
         }
@@ -175,7 +172,7 @@ namespace Medical.GUI
 
         private void addSubActionData(ShowPropSubAction subAction)
         {
-            timelineView.addData(actionFactory.createData(subAction));
+            timelineView.addData(actionFactory.createData(propData, subAction));
         }
 
         private void removeCurrentData()
