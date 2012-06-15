@@ -57,7 +57,7 @@ namespace Medical
                 syringe = PropSimObject.getElement(Syringe.BehaviorName) as Syringe;
                 if (syringe != null)
                 {
-                    syringe.plunge(PlungePercentage, 0);
+                    syringe.setPlungePosition(PlungePercentage);
                 }
             }
         }
