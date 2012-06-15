@@ -79,6 +79,7 @@ namespace Medical
                     {
                         StartTimeChanged.Invoke(this);
                     }
+                    fireDataNeedsRefresh();
                 }
             }
         }
@@ -99,6 +100,7 @@ namespace Medical
                     {
                         DurationChanged.Invoke(this);
                     }
+                    fireDataNeedsRefresh();
                 }
             }
         }
@@ -156,6 +158,11 @@ namespace Medical
         [DoNotCopy]
         [DoNotSave]
         private EditInterface editInterface;
+
+        protected void fireDataNeedsRefresh()
+        {
+            editInterface.fireDataNeedsRefresh();
+        }
 
         [DoNotCopy]
         public virtual EditInterface EditInterface

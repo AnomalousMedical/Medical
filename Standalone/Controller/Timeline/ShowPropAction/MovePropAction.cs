@@ -90,6 +90,7 @@ namespace Medical
             {
                 endTranslation = value;
                 movePreviewProp(Translation, Rotation);
+                fireDataNeedsRefresh();
             }
         }
 
@@ -104,6 +105,7 @@ namespace Medical
             {
                 endRotation = value;
                 movePreviewProp(Translation, Rotation);
+                fireDataNeedsRefresh();
             }
         }
 
