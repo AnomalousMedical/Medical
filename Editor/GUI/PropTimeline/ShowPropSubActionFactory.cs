@@ -10,17 +10,13 @@ namespace Medical.GUI
     class ShowPropSubActionFactory : IDisposable
     {
         Dictionary<String, ShowPropSubActionFactoryData> trackInfo = new Dictionary<string, ShowPropSubActionFactoryData>();
-        private PoseableHandProperties leftPoseableHandProperties;
-        private PoseableHandProperties rightPoseableHandProperties;
         private PropEditController propEditController;
 
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
-        public ShowPropSubActionFactory(Widget parentWidget, PropEditController propEditController)
+        public ShowPropSubActionFactory(PropEditController propEditController)
         {
             this.propEditController = propEditController;
-            leftPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout");
-            rightPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableRightHandProperties.layout");
 
             //Arrow
             ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
@@ -74,7 +70,7 @@ namespace Medical.GUI
             ShowPropSubActionFactoryData poseableHandLeftData = new ShowPropSubActionFactoryData();
             poseableHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             poseableHandLeftData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            poseableHandLeftData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), leftPoseableHandProperties);
+            poseableHandLeftData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             poseableHandLeftData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
             trackInfo.Add(PoseableHand.LeftDefinitionName, poseableHandLeftData);
 
@@ -82,7 +78,7 @@ namespace Medical.GUI
             ShowPropSubActionFactoryData poseableHandRightData = new ShowPropSubActionFactoryData();
             poseableHandRightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
             poseableHandRightData.addTrack(typeof(SetPropTransparencyAction), new Color(128f / 255f, 200f / 255f, 25f / 255f), null);
-            poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), rightPoseableHandProperties);
+            poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), null);
             poseableHandRightData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), null);
             trackInfo.Add(PoseableHand.RightDefinitionName, poseableHandRightData);
 
@@ -122,16 +118,15 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            leftPoseableHandProperties.Dispose();
-            rightPoseableHandProperties.Dispose();
+            clearData();
         }
 
-        public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView, TimelineDataProperties actionProperties)
+        public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView)
         {
             ShowPropSubActionFactoryData track;
             if(trackInfo.TryGetValue(showProp.PropType, out track))
             {
-                track.addTracksToTimeline(timelineView, actionProperties);
+                track.addTracksToTimeline(timelineView);
             }
         }
 
@@ -201,15 +196,11 @@ namespace Medical.GUI
             trackData.Add(data);
         }
 
-        public void addTracksToTimeline(TimelineView timeline, TimelineDataProperties actionProperties)
+        public void addTracksToTimeline(TimelineView timeline)
         {
             foreach (TrackData data in trackData)
             {
                 timeline.addTrack(data.TypeName, data.Color);
-                if (data.Panel != null)
-                {
-                    actionProperties.addPanel(data.TypeName, data.Panel);
-                }
             }
         }
 

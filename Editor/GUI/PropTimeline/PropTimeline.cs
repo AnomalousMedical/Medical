@@ -13,7 +13,6 @@ namespace Medical.GUI
 {
     public class PropTimeline : LayoutComponent, EditMenuProvider
     {
-        private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
         private TimelineView timelineView;
         private NumberLine numberLine;
@@ -44,10 +43,7 @@ namespace Medical.GUI
             timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
 
             //Properties
-            ScrollView timelinePropertiesScrollView = widget.findWidget("ActionPropertiesScrollView") as ScrollView;
-            actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
-            actionProperties.Visible = false;
-            actionFactory = new ShowPropSubActionFactory(timelinePropertiesScrollView, propEditController);
+            actionFactory = new ShowPropSubActionFactory(propEditController);
 
             //Timeline filter
             ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
@@ -55,9 +51,6 @@ namespace Medical.GUI
             trackFilter.AddTrackItem += new AddTrackItemCallback(trackFilter_AddTrackItem);
 
             numberLine = new NumberLine(widget.findWidget("NumberLine") as ScrollView, timelineView);
-
-            Button removeAction = widget.findWidget("RemoveAction") as Button;
-            removeAction.MouseButtonClick += new MyGUIEvent(removeAction_MouseButtonClick);
 
             setPropData(propEditController.CurrentShowPropAction);
 
@@ -85,10 +78,9 @@ namespace Medical.GUI
             }
             timelineView.clearTracks();
             actionFactory.clearData();
-            actionProperties.clearPanels();
             if (showProp != null)
             {
-                actionFactory.addTracksForAction(showProp, timelineView, actionProperties);
+                actionFactory.addTracksForAction(showProp, timelineView);
                 foreach (ShowPropSubAction action in showProp.SubActions)
                 {
                     addSubActionData(action);
@@ -186,11 +178,6 @@ namespace Medical.GUI
             timelineView.addData(actionFactory.createData(subAction));
         }
 
-        void removeAction_MouseButtonClick(Widget source, EventArgs e)
-        {
-            removeCurrentData();
-        }
-
         private void removeCurrentData()
         {
             PropTimelineData propTlData = (PropTimelineData)timelineView.CurrentData;
@@ -280,15 +267,15 @@ namespace Medical.GUI
 
         void timelineView_ActiveDataChanged(object sender, EventArgs e)
         {
-            //if (propTimelineData != null)
-            //{
-            //    propTimelineData.editingCompleted();
-            //}
+            if (propTimelineData != null)
+            {
+                propTimelineData.editingCompleted();
+            }
             propTimelineData = (PropTimelineData)timelineView.CurrentData;
-            //if (propTimelineData != null)
-            //{
-            //    propTimelineData.editingStarted();
-            //}
+            if (propTimelineData != null)
+            {
+                propTimelineData.editingStarted();
+            }
 
             EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
