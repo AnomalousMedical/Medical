@@ -7,7 +7,6 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Highlight Teeth")]
     public class HighlightTeethAction : TimelineAction
     {
         private bool finished;
@@ -71,6 +70,14 @@ namespace Medical
         public override bool Finished
         {
             get { return finished; }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Highlight Teeth";
+            }
         }
 
         #region Saveable

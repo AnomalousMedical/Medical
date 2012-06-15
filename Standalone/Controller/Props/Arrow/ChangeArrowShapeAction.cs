@@ -8,7 +8,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Arrow Shape")]
     public class ChangeArrowShapeAction : ShowPropSubAction
     {
         private float scale;
@@ -99,6 +98,14 @@ namespace Medical
                 {
                     arrow.TailLength = tailLength;
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Change Arrow Shape";
             }
         }
 

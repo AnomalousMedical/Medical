@@ -8,7 +8,6 @@ using Engine.Platform;
 
 namespace Medical
 {
-    [TimelineActionProperties("Set Transparency")]
     public class SetPropTransparencyAction : ShowPropSubAction
     {
         private float transparency = 1.0f;
@@ -79,6 +78,14 @@ namespace Medical
             set
             {
                 transparency = value;
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Set Transparency";
             }
         }
 

@@ -19,7 +19,7 @@ namespace Medical
 
         protected TimelineAction()
         {
-            discoverProperties();
+            
         }
 
         internal void _setTimeline(Timeline timeline)
@@ -112,7 +112,7 @@ namespace Medical
 
         public abstract bool Finished { get; }
 
-        public String TypeName { get; private set; }
+        public abstract String TypeName { get; }
 
         public TimelineController TimelineController
         {
@@ -126,19 +126,6 @@ namespace Medical
             }
         }
 
-        private void discoverProperties()
-        {
-            try
-            {
-                TimelineActionProperties properties = (TimelineActionProperties)(GetType().GetCustomAttributes(typeof(TimelineActionProperties), false)[0]);
-                TypeName = properties.TypeName;
-            }
-            catch (Exception)
-            {
-                throw new Exception("All TimelineActions added to the factory must have a TimelineActionProperties attribute.");
-            }
-        }
-
         #region Saveable Members
 
         private static readonly String START_TIME = "StartTime";
@@ -146,7 +133,6 @@ namespace Medical
 
         protected TimelineAction(LoadInfo info)
         {
-            discoverProperties();
             StartTime = info.GetSingle(START_TIME, 0.0f);
             Duration = info.GetSingle(DURATION, 0.0f);
         }

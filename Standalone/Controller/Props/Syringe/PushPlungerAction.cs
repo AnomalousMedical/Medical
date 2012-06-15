@@ -9,7 +9,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Push Plunger")]
     public class PushPlungerAction : ShowPropSubAction
     {
         private Syringe syringe;
@@ -87,6 +86,14 @@ namespace Medical
                 {
                     syringe.setPlungePosition(value);
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Push Plunger";
             }
         }
 

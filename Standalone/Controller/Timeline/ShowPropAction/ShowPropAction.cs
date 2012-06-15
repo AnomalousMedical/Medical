@@ -12,7 +12,6 @@ using Medical.Editor;
 
 namespace Medical
 {
-    [TimelineActionProperties("Show Prop")]
     public class ShowPropAction : TimelineAction
     {
         public delegate void UpdatedDelegate(float time);
@@ -351,6 +350,14 @@ namespace Medical
             {
                 moveToPropStartPosition();
             }));
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Show Prop";
+            }
         }
 
         #region Saveable

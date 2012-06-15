@@ -8,7 +8,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Medical State")]
     public class ChangeMedicalStateAction : TimelineAction
     {
         private bool finished = false;
@@ -79,6 +78,14 @@ namespace Medical
             {
                 capture();
             }));
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Change Medical State";
+            }
         }
 
         #region Saveable

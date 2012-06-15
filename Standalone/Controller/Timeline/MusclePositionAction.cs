@@ -10,7 +10,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Muscle Position")]
     public class MusclePositionAction : TimelineAction
     {
         private MusclePosition targetState;
@@ -100,6 +99,14 @@ namespace Medical
             {
                 capture();
             }));
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Muscle Position";
+            }
         }
 
         protected MusclePositionAction(LoadInfo info)

@@ -9,7 +9,6 @@ using Engine;
 
 namespace Medical
 {
-    [TimelineActionProperties("Settings")]
     public class ChangeCircularHighlightSettings : ShowPropSubAction
     {
         private float minorAxis;
@@ -175,6 +174,14 @@ namespace Medical
                     highlight.Thickness = value;
                     highlight.createEllipse();
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Settings";
             }
         }
 

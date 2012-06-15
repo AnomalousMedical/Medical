@@ -11,7 +11,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Show Image")]
     public class ShowImageAction : TimelineAction
     {
         private bool finished = false;
@@ -194,6 +193,14 @@ namespace Medical
                 {
                     imageDisplay.Alignment = alignment;
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Show Image";
             }
         }
 

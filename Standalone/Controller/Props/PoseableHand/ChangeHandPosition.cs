@@ -10,7 +10,6 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Hand Position")]
     public class ChangeHandPosition : ShowPropSubAction
     {
         private PoseableHand hand;
@@ -107,6 +106,14 @@ namespace Medical
             Middle.blend(percentage);
             Ring.blend(percentage);
             Pinky.blend(percentage);
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Hand Position";
+            }
         }
 
         #region Saveable Members

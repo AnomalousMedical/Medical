@@ -486,7 +486,6 @@
     <Compile Include="Controller\Props\Syringe\PushPlungerAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ShowPropAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ShowPropSubAction.cs" />
-    <Compile Include="Controller\Timeline\TimelineActionProperties.cs" />
     <Compile Include="Controller\Timeline\TimelineException.cs" />
     <Compile Include="Controller\Plugin\AtlasPlugin.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />

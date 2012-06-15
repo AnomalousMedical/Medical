@@ -11,7 +11,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Move Camera")]
     public class MoveCameraAction : TimelineAction
     {
         private float lastTime;
@@ -203,6 +202,14 @@ namespace Medical
             {
                 capture();
             }));
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Move Camera";
+            }
         }
 
         #region Saveable

@@ -10,7 +10,6 @@ using Medical.Editor;
 
 namespace Medical
 {
-    [TimelineActionProperties("Play Sound")]
     public class PlaySoundAction : TimelineAction
     {
         private bool finished = false;
@@ -118,6 +117,14 @@ namespace Medical
                 {
                     Duration = (float)TimelineController.getSoundDuration(soundFile);
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Play Sound";
             }
         }
 

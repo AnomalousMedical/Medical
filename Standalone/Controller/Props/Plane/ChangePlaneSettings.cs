@@ -9,7 +9,6 @@ using Engine.Platform;
 
 namespace Medical
 {
-    [TimelineActionProperties("Settings")]
     public class ChangePlaneSettings : ShowPropSubAction
     {
         private Size2 size;
@@ -124,6 +123,14 @@ namespace Medical
                     plane.Color = value;
                     plane.createObject();
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Settings";
             }
         }
 

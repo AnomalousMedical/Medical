@@ -8,7 +8,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Attach To Object")]
     public class DetachableFollowerToggleAction : ShowPropSubAction
     {
         public DetachableFollowerToggleAction()
@@ -80,6 +79,14 @@ namespace Medical
                 {
                     follower.detach();
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Attach To Object";
             }
         }
 

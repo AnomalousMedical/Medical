@@ -11,7 +11,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Show Text")]
     public class ShowTextAction : TimelineAction
     {
         private bool finished = false;
@@ -297,6 +296,14 @@ namespace Medical
                         return true;
                     });
                 }));
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Show Text";
+            }
         }
 
         #region Saving

@@ -9,7 +9,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Move")]
     public class MovePropAction : ShowPropSubAction
     {
         private Vector3 startTranslation;
@@ -105,6 +104,14 @@ namespace Medical
             {
                 endRotation = value;
                 movePreviewProp(Translation, Rotation);
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Move";
             }
         }
 

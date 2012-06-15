@@ -10,7 +10,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Play Sequence")]
     public class PlaySequenceAction : TimelineAction
     {
         private float lastTime;
@@ -119,6 +118,14 @@ namespace Medical
             {
                 capture();
             }));
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Play Sequence";
+            }
         }
 
         #region Saveable

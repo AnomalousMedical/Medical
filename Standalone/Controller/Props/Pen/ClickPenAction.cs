@@ -7,7 +7,6 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Click Pen")]
     public class ClickPenAction : ShowPropSubAction
     {
         private Pen pen;
@@ -49,6 +48,14 @@ namespace Medical
             get
             {
                 return true;
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Click Pen";
             }
         }
 

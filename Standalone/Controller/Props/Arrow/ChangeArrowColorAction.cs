@@ -9,7 +9,6 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Color")]
     public class ChangeArrowColorAction : ShowPropSubAction
     {
         private Arrow arrow;
@@ -78,6 +77,14 @@ namespace Medical
                 {
                     arrow.Color = value;
                 }
+            }
+        }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Change Color";
             }
         }
 

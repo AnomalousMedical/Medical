@@ -8,7 +8,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Set Measurement")]
     public class SetCaliperMeasurement : ShowPropSubAction
     {
         private Caliper caliper;
@@ -75,6 +74,13 @@ namespace Medical
                 {
                     caliper.setMeasurement(millimeters);
                 }
+            }
+        }
+        public override string TypeName
+        {
+            get
+            {
+                return "Set Measurement";
             }
         }
 

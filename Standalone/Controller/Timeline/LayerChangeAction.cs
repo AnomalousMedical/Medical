@@ -9,7 +9,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Layers")]
     public class LayerChangeAction : TimelineAction
     {
         private bool finished = false;
@@ -140,6 +139,14 @@ namespace Medical
 
         [Editable]
         public bool UseSystemLayerTransitionTime { get; set; }
+
+        public override string TypeName
+        {
+            get
+            {
+                return "Change Layers";
+            }
+        }
 
         public override float Duration
         {

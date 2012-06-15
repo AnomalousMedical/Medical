@@ -22,7 +22,7 @@ namespace Medical
 
         protected ShowPropSubAction()
         {
-            discoverProperties();
+            
         }
 
         internal void _setShowProp(ShowPropAction showProp)
@@ -113,7 +113,7 @@ namespace Medical
 
         public abstract bool Finished { get; }
 
-        public String TypeName { get; private set; }
+        public abstract String TypeName { get; }
 
         public SimObject PropSimObject
         {
@@ -131,19 +131,6 @@ namespace Medical
             }
         }
 
-        private void discoverProperties()
-        {
-            try
-            {
-                TimelineActionProperties properties = (TimelineActionProperties)(GetType().GetCustomAttributes(typeof(TimelineActionProperties), false)[0]);
-                TypeName = properties.TypeName;
-            }
-            catch (Exception)
-            {
-                throw new Exception("All TimelineActions added to the factory must have a TimelineActionProperties attribute.");
-            }
-        }
-
         #region Saveable Members
 
         private static readonly String START_TIME = "StartTime";
@@ -151,7 +138,6 @@ namespace Medical
 
         protected ShowPropSubAction(LoadInfo info)
         {
-            discoverProperties();
             StartTime = info.GetSingle(START_TIME, 0.0f);
             Duration = info.GetSingle(DURATION, 0.0f);
         }
