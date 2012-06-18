@@ -48,7 +48,7 @@ namespace Medical
             
             mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
 
-            GenericPropertiesFormView genericEditor = new GenericPropertiesFormView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
+            ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
             genericEditor.IsWindow = true;
             genericEditor.addCustomForm(typeof(ChangeHandPosition), (property, parentWidget) =>
                 {

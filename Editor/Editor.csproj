@@ -126,6 +126,8 @@
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarAction.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
+    <Compile Include="GUI\GenericEditor\ExpandingGenericEditorView.cs" />
+    <Compile Include="GUI\GenericEditor\ExpandingGenericEditor.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditor.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditorComponent.cs" />
     <Compile Include="GUI\GenericEditor\GenericEditorComponentFactory.cs" />
@@ -188,6 +190,7 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
+    <EmbeddedResource Include="GUI\GenericEditor\ExpandingGenericEditor.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVerticalComponent.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorComponent.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVertical.layout" />

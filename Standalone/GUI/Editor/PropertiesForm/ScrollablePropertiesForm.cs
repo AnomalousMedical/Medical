@@ -12,7 +12,7 @@ namespace Medical.GUI
     {
         ScrollView scrollView;
 
-        public ScrollablePropertiesForm(ScrollView scrollView, EditUICallback uiCallback)
+        public ScrollablePropertiesForm(ScrollView scrollView, MedicalUICallback uiCallback)
             :base(scrollView, uiCallback)
         {
             this.scrollView = scrollView;

@@ -18,11 +18,11 @@ namespace Medical.GUI
         private List<PropertiesFormComponent> components = new List<PropertiesFormComponent>();
         protected StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
         private Widget widget;
-        private EditUICallback uiCallback;
+        private MedicalUICallback uiCallback;
         private EditInterface currentEditInterface;
         private EditablePropertyInfo currentPropInfo;
 
-        public PropertiesForm(Widget widget, EditUICallback uiCallback)
+        public PropertiesForm(Widget widget, MedicalUICallback uiCallback)
         {
             this.uiCallback = uiCallback;
             this.widget = widget;
@@ -85,7 +85,7 @@ namespace Medical.GUI
                     currentPropInfo = value.getPropertyInfo();
                     foreach (EditInterfaceCommand command in currentEditInterface.getCommands())
                     {
-                        PropertiesFormComponent component = new PropertiesFormButton(command, uiCallback, widget);
+                        PropertiesFormComponent component = new PropertiesFormButton(currentEditInterface, command, uiCallback, widget);
                         components.Add(component);
                         flowLayout.addChild(component.Container);
                     }
@@ -103,6 +103,14 @@ namespace Medical.GUI
                     currentPropInfo = null;
                     currentEditInterface = null;
                 }
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return flowLayout.WorkingSize.Height;
             }
         }
 

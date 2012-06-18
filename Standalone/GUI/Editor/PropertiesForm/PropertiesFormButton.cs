@@ -12,10 +12,12 @@ namespace Medical.GUI
         private MyGUILayoutContainer layoutContainer;
         private EditInterfaceCommand command;
         private Button button;
-        private EditUICallback uiCallback;
+        private MedicalUICallback uiCallback;
+        private EditInterface editInterface;
 
-        public PropertiesFormButton(EditInterfaceCommand command, EditUICallback uiCallback, Widget parent)
+        public PropertiesFormButton(EditInterface editInterface, EditInterfaceCommand command, MedicalUICallback uiCallback, Widget parent)
         {
+            this.editInterface = editInterface;
             this.uiCallback = uiCallback;
             this.command = command;
             button = (Button)parent.createWidgetT("Button", "Button", 0, 0, 100, 25, Align.Default, "");
@@ -53,6 +55,7 @@ namespace Medical.GUI
 
         void button_MouseButtonClick(Widget source, EventArgs e)
         {
+            uiCallback.SelectedEditInterface = editInterface;
             command.execute(uiCallback);
         }
     }

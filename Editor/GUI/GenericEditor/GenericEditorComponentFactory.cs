@@ -33,6 +33,10 @@ namespace Medical.GUI
                 GenericPropertiesFormComponent component = new GenericPropertiesFormComponent(viewHost, (GenericPropertiesFormView)view, uiCallback, editorController);
                 return component;
             }
+            if (view is ExpandingGenericEditorView)
+            {
+                return new ExpandingGenericEditor(viewHost, (ExpandingGenericEditorView)view, uiCallback, editorController);
+            }
             return null;
         }
 

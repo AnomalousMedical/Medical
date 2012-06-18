@@ -145,6 +145,9 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ScrollingExpandingEditInterfaceViewer.cs" />
+    <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingEditInterfaceViewer.cs" />
+    <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.cs" />
     <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ConstrainableFormComponent.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormButton.cs" />
@@ -630,6 +633,7 @@
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
+    <EmbeddedResource Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.layout" />
     <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormComboBox.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormWidthHeight.layout" />

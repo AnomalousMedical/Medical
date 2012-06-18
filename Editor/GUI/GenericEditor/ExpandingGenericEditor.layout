@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+  <Widget type="Widget" skin="PanelEmpty" position="19 33 348 313" layer="Overlapped">
+        <Widget type="ScrollView" skin="ScrollView" position_real="0 0 1 1" align="VStretch HStretch" name="Scroller">
+            <Property key="CanvasAlign" value="Left Top"/>
+        </Widget>
+    </Widget>
+</MyGUI>
