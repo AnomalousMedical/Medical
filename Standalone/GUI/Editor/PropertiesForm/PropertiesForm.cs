@@ -32,6 +32,12 @@ namespace Medical.GUI
 
         public void clear()
         {
+            if (currentEditInterface != null)
+            {
+                currentEditInterface.OnPropertyAdded -= new PropertyAdded(currentEditInterface_OnPropertyAdded);
+                currentEditInterface.OnPropertyRemoved -= new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
+                currentEditInterface.OnDataNeedsRefresh -= new EditInterfaceEvent(currentEditInterface_OnDataNeedsRefresh);
+            }
             flowLayout.clearChildren();
             foreach (PropertiesFormComponent component in components)
             {
@@ -56,12 +62,6 @@ namespace Medical.GUI
             }
             set
             {
-                if (currentEditInterface != null)
-                {
-                    currentEditInterface.OnPropertyAdded -= new PropertyAdded(currentEditInterface_OnPropertyAdded);
-                    currentEditInterface.OnPropertyRemoved -= new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
-                    currentEditInterface.OnDataNeedsRefresh -= new EditInterfaceEvent(currentEditInterface_OnDataNeedsRefresh);
-                }
                 clear();
                 if (value != null)
                 {

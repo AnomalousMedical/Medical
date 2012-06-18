@@ -11,8 +11,6 @@ namespace Medical.GUI
     {
         public event Action<ExpandingNode> LayoutChanged;
 
-        private bool loadedSubInterfaces = false;
-
         private TextBox caption;
         private CheckButton expandButton;
         private EditInterface editInterface;
@@ -137,14 +135,22 @@ namespace Medical.GUI
 
         void expandButton_CheckedChanged(Widget source, EventArgs e)
         {
-            if (!loadedSubInterfaces)
+            if (Expanded)
             {
                 propertiesForm.EditInterface = editInterface;
-                loadedSubInterfaces = true;
                 foreach (EditInterface subInterface in editInterface.getSubEditInterfaces())
                 {
                     addSubInterface(subInterface);
                 }
+            }
+            else
+            {
+                propertiesForm.EditInterface = null;
+                foreach (ExpandingNode child in children)
+                {
+                    child.Dispose();
+                }
+                children.Clear();
             }
             layout();
         }
@@ -153,6 +159,7 @@ namespace Medical.GUI
         {
             ExpandingNode node = new ExpandingNode(subInterface, childArea, uiCallback, this);
             children.Add(node);
+            node.changeWidth(childArea.Width);
             layout();
             return node;
         }
@@ -173,8 +180,7 @@ namespace Medical.GUI
 
         void editInterface_OnSubInterfaceAdded(EditInterface editInterface)
         {
-            ExpandingNode node = addSubInterface(editInterface);//.Expanded = true;
-            node.changeWidth(childArea.Width);
+            addSubInterface(editInterface);
         }
     }
 }
