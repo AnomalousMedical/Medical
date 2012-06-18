@@ -11,6 +11,7 @@ namespace Medical.GUI
     public class ScrollingExpandingEditInterfaceViewer : ExpandingEditInterfaceViewer
     {
         private ScrollView scrollView;
+        private int lastWidth = 0;
 
         public ScrollingExpandingEditInterfaceViewer(ScrollView scrollView, MedicalUICallback uiCallback)
             : base(scrollView, uiCallback)
@@ -20,8 +21,13 @@ namespace Medical.GUI
 
         public override void layout()
         {
-            rootNode.changeWidth(scrollView.ViewCoord.width);
-            rootNode.layout();
+            int currentWidth = scrollView.ViewCoord.width;
+            if (lastWidth != currentWidth)
+            {
+                rootNode.changeWidth(scrollView.ViewCoord.width);
+                rootNode.layout();
+                lastWidth = currentWidth;
+            }
         }
 
         public override EditInterface EditInterface
