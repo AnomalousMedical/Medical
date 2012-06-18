@@ -30,9 +30,7 @@ namespace Medical.GUI
             }
             if (view is GenericPropertiesFormView)
             {
-                GenericPropertiesFormView genericEditorView = (GenericPropertiesFormView)view;
-                GenericPropertiesFormComponent component = new GenericPropertiesFormComponent(viewHost, view.Name, uiCallback, editorController, genericEditorView.HorizontalAlignment);
-                component.CurrentEditInterface = genericEditorView.EditInterface;
+                GenericPropertiesFormComponent component = new GenericPropertiesFormComponent(viewHost, (GenericPropertiesFormView)view, uiCallback, editorController);
                 return component;
             }
             return null;

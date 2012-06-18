@@ -22,12 +22,12 @@ namespace Medical.GUI
 
         private EditorController editorController;
 
-        public GenericPropertiesFormComponent(MyGUIViewHost viewHost, String name, MedicalUICallback uiCallback, EditorController editorController, bool horizontalAlignment = true)
-            : base(horizontalAlignment ? "Medical.GUI.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
+        public GenericPropertiesFormComponent(MyGUIViewHost viewHost, GenericPropertiesFormView genericEditorView, MedicalUICallback uiCallback, EditorController editorController)
+            : base(genericEditorView.HorizontalAlignment ? "Medical.GUI.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
         {
             Widget window = this.widget;
 
-            this.name = name;
+            this.name = genericEditorView.Name;
             this.editorController = editorController;
 
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
@@ -44,6 +44,13 @@ namespace Medical.GUI
             }
 
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
+
+            foreach(var creationMethod in genericEditorView.CustomCreationMethods)
+            {
+                propertiesForm.addCustomCreationMethod(creationMethod.Item1, creationMethod.Item2);
+            }
+
+            CurrentEditInterface = genericEditorView.EditInterface;
         }
 
         public override void Dispose()

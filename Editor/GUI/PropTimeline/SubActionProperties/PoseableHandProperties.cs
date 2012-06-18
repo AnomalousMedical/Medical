@@ -38,6 +38,8 @@ namespace Medical.GUI
         public PoseableHandProperties(EditableProperty property, Widget parentWidget, String layoutFile = "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout")
             :base(property, parentWidget, layoutFile)
         {
+            widget.ForwardMouseWheelToParent = true;
+
             pinkyMeta = new PoseableFingerSectionControl((EditBox)widget.findWidget("PinkyMetaBottom"), (EditBox)widget.findWidget("PinkyMetaTop"));
             pinkyProx = new PoseableFingerSectionControl((EditBox)widget.findWidget("PinkyProxTop"));
             pinkyInter = new PoseableFingerSectionControl((EditBox)widget.findWidget("PinkyInterTop"));
