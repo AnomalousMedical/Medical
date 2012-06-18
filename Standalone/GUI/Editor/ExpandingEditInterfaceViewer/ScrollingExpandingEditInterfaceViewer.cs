@@ -42,6 +42,7 @@ namespace Medical.GUI
                 {
                     rootNode.LayoutChanged -= rootNode_LayoutChanged;
                 }
+                lastWidth = 0;
                 base.EditInterface = value;
                 if (EditInterface != null)
                 {
