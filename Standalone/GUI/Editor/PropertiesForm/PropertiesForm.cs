@@ -83,15 +83,6 @@ namespace Medical.GUI
                     currentEditInterface.OnPropertyRemoved += new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
                     currentEditInterface.OnDataNeedsRefresh += new EditInterfaceEvent(currentEditInterface_OnDataNeedsRefresh);
                     currentPropInfo = value.getPropertyInfo();
-                    if (currentPropInfo != null)
-                    {
-                        //foreach (EditablePropertyColumn column in currentPropInfo.getColumns())
-                        //{
-                        //    TableColumn dgvColumn = new TableColumn(column.Header);
-                        //    dgvColumn.ReadOnly = column.ReadOnly;
-                        //    propertiesTable.Columns.add(dgvColumn);
-                        //}
-                    }
                     foreach (EditInterfaceCommand command in currentEditInterface.getCommands())
                     {
                         PropertiesFormComponent component = new PropertiesFormButton(command, uiCallback, widget);
