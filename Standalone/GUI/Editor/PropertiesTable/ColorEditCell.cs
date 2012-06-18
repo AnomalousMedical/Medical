@@ -150,6 +150,7 @@ namespace Medical.GUI
                 staticWidget = (TextBox)parentWidget.createWidgetT("Button", "Button", Position.x, Position.y, Size.Width, Size.Height, Align.Default, "");
                 staticWidget.MouseButtonClick += new MyGUIEvent(staticWidget_MouseButtonClick);
                 staticWidget.Caption = value;
+                staticWidget.TextAlign = Align.Left | Align.VCenter;
                 staticWidget.Visible = false;
             }
         }
