@@ -16,19 +16,19 @@ namespace Medical.GUI
 
         private Dictionary<Type, CreateComponent> customCreationMethods = new Dictionary<Type, CreateComponent>();
         private List<PropertiesFormComponent> components = new List<PropertiesFormComponent>();
-        private StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
-        private ScrollView scrollView;
+        protected StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
+        private Widget widget;
         private EditUICallback uiCallback;
         private EditInterface currentEditInterface;
         private EditablePropertyInfo currentPropInfo;
 
-        public PropertiesForm(ScrollView scrollView, EditUICallback uiCallback)
+        public PropertiesForm(Widget widget, EditUICallback uiCallback)
         {
             this.uiCallback = uiCallback;
-            this.scrollView = scrollView;
+            this.widget = widget;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             clear();
         }
@@ -43,16 +43,12 @@ namespace Medical.GUI
             components.Clear();
         }
 
-        public void layout()
+        public virtual void layout()
         {
-            //Adjust the scrollbar height first to get any scrolbars active
             int height = flowLayout.DesiredSize.Height;
-            scrollView.CanvasSize = new IntSize2(0, height);
-
-            int width = scrollView.ViewCoord.width;
+            int width = widget.Width;
             flowLayout.WorkingSize = new IntSize2(width, height);
             flowLayout.layout();
-            scrollView.CanvasSize = flowLayout.WorkingSize;
         }
 
         public void addCustomCreationMethod(Type type, CreateComponent creationMethod)
@@ -98,7 +94,7 @@ namespace Medical.GUI
                     }
                     foreach (EditInterfaceCommand command in currentEditInterface.getCommands())
                     {
-                        PropertiesFormComponent component = new PropertiesFormButton(command, uiCallback, scrollView);
+                        PropertiesFormComponent component = new PropertiesFormButton(command, uiCallback, widget);
                         components.Add(component);
                         flowLayout.addChild(component.Container);
                     }
@@ -166,18 +162,18 @@ namespace Medical.GUI
             //Have to do this because we cannot "out" a method using trygetvalue
             if (customCreationMethods.ContainsKey(propertyType))
             {
-                return customCreationMethods[propertyType].Invoke(property, scrollView);
+                return customCreationMethods[propertyType].Invoke(property, widget);
             }
             //Have to do this because we cannot "out" a method using trygetvalue
             if (DefaultCreationMethods.ContainsKey(propertyType))
             {
-                return DefaultCreationMethods[propertyType].Invoke(property, scrollView);
+                return DefaultCreationMethods[propertyType].Invoke(property, widget);
             }
             else if (propertyType.IsEnum)
             {
                 if (propertyType.GetCustomAttributes(typeof(SingleEnumAttribute), true).Length > 0)
                 {
-                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, scrollView, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => fieldInfo.Name));
+                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, widget, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => fieldInfo.Name));
                     return editorCell;
                 }
                 //else if (propertyType.GetCustomAttributes(typeof(MultiEnumAttribute), true).Length > 0)
@@ -191,9 +187,9 @@ namespace Medical.GUI
             //No match, create an appropriate text box
             if (property.hasBrowser(1))
             {
-                return new PropertiesFormTextBoxBrowser(property, scrollView, uiCallback);
+                return new PropertiesFormTextBoxBrowser(property, widget, uiCallback);
             }
-            return new PropertiesFormTextBox(property, scrollView);
+            return new PropertiesFormTextBox(property, widget);
         }
 
         private static Dictionary<Type, CreateComponent> DefaultCreationMethods = new Dictionary<Type, CreateComponent>();

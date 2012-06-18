@@ -172,6 +172,7 @@
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormLayoutComponent.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormVector3.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\ScrollablePropertiesForm.cs" />
     <Compile Include="GUI\Editor\PropertyEditor.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />

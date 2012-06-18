@@ -33,7 +33,7 @@ namespace Medical.GUI
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
 
-            propertiesForm = new PropertiesForm((ScrollView)window.findWidget("TableScroller"), uiCallback);
+            propertiesForm = new ScrollablePropertiesForm((ScrollView)window.findWidget("TableScroller"), uiCallback);
 
             objectEditor = new ObjectEditor(editTreeView, propertiesForm, uiCallback);
 
