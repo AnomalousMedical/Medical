@@ -12,9 +12,6 @@ namespace Medical.GUI
 {
     public class PropertiesForm : PropertyEditor, IDisposable
     {
-        public delegate PropertiesFormComponent CreateComponent(EditableProperty property, Widget parent);
-
-        private Dictionary<Type, CreateComponent> customCreationMethods = new Dictionary<Type, CreateComponent>();
         private List<PropertiesFormComponent> components = new List<PropertiesFormComponent>();
         protected StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
         private Widget widget;
@@ -49,16 +46,6 @@ namespace Medical.GUI
             int width = widget.Width;
             flowLayout.WorkingSize = new IntSize2(width, height);
             flowLayout.layout();
-        }
-
-        public void addCustomCreationMethod(Type type, CreateComponent creationMethod)
-        {
-            customCreationMethods.Add(type, creationMethod);
-        }
-
-        public void removeCustomCreationMethod(Type type)
-        {
-            customCreationMethods.Remove(type);
         }
 
         public EditInterface EditInterface
@@ -159,14 +146,9 @@ namespace Medical.GUI
         {
             Type propertyType = property.getPropertyType(1);
             //Have to do this because we cannot "out" a method using trygetvalue
-            if (customCreationMethods.ContainsKey(propertyType))
+            if (FormCreationMethods.ContainsKey(propertyType))
             {
-                return customCreationMethods[propertyType].Invoke(property, widget);
-            }
-            //Have to do this because we cannot "out" a method using trygetvalue
-            if (DefaultCreationMethods.ContainsKey(propertyType))
-            {
-                return DefaultCreationMethods[propertyType].Invoke(property, widget);
+                return FormCreationMethods[propertyType].Invoke(property, widget);
             }
             else if (propertyType.IsEnum)
             {
@@ -191,98 +173,104 @@ namespace Medical.GUI
             return new PropertiesFormTextBox(property, widget);
         }
 
-        private static Dictionary<Type, CreateComponent> DefaultCreationMethods = new Dictionary<Type, CreateComponent>();
+        public delegate PropertiesFormComponent CreateComponent(EditableProperty property, Widget parent);
+        private static Dictionary<Type, CreateComponent> FormCreationMethods = new Dictionary<Type, CreateComponent>();
         static PropertiesForm()
         {
-            DefaultCreationMethods.Add(typeof(bool), (property, parent) =>
+            FormCreationMethods.Add(typeof(bool), (property, parent) =>
             {
                 return new PropertiesFormCheckBox(property, parent);
             });
 
-            DefaultCreationMethods.Add(typeof(Vector3), (property, parent) =>
+            FormCreationMethods.Add(typeof(Vector3), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormVector3(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Quaternion), (property, parent) =>
+            FormCreationMethods.Add(typeof(Quaternion), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormEulerQuat(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(IntVector2), (property, parent) =>
+            FormCreationMethods.Add(typeof(IntVector2), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormIntVector2(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Vector2), (property, parent) =>
+            FormCreationMethods.Add(typeof(Vector2), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormVector2(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Size2), (property, parent) =>
+            FormCreationMethods.Add(typeof(Size2), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormSize2(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Byte), (property, parent) =>
+            FormCreationMethods.Add(typeof(Byte), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormByte(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Decimal), (property, parent) =>
+            FormCreationMethods.Add(typeof(Decimal), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormDecimal(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Double), (property, parent) =>
+            FormCreationMethods.Add(typeof(Double), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormDouble(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Int16), (property, parent) =>
+            FormCreationMethods.Add(typeof(Int16), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormInt16(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Int32), (property, parent) =>
+            FormCreationMethods.Add(typeof(Int32), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormInt32(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Int64), (property, parent) =>
+            FormCreationMethods.Add(typeof(Int64), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormInt64(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(SByte), (property, parent) =>
+            FormCreationMethods.Add(typeof(SByte), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormSByte(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Single), (property, parent) =>
+            FormCreationMethods.Add(typeof(Single), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormSingle(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(UInt16), (property, parent) =>
+            FormCreationMethods.Add(typeof(UInt16), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormUInt16(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(UInt32), (property, parent) =>
+            FormCreationMethods.Add(typeof(UInt32), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormUInt32(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(UInt64), (property, parent) =>
+            FormCreationMethods.Add(typeof(UInt64), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormUInt64(property, parent));
             });
 
-            DefaultCreationMethods.Add(typeof(Color), (property, parent) =>
+            FormCreationMethods.Add(typeof(Color), (property, parent) =>
             {
                 return new PropertiesFormColor(property, parent);
             });
+        }
+
+        public static void addFormCreationMethod(Type type, CreateComponent creationMethod)
+        {
+            FormCreationMethods.Add(type, creationMethod);
         }
 
         private static PropertiesFormComponent buildConstrainableForm(EditableProperty property, ConstrainableFormComponent component)

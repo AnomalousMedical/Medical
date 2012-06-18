@@ -50,10 +50,6 @@ namespace Medical
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
             genericEditor.IsWindow = true;
-            genericEditor.addCustomForm(typeof(ChangeHandPosition), (property, parentWidget) =>
-                {
-                    return new PoseableHandProperties(property, parentWidget);
-                });
             mvcContext.Views.add(genericEditor);
             
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline");
@@ -222,6 +218,14 @@ namespace Medical
             {
                 return mvcContext;
             }
+        }
+
+        static TimelineEditorContext()
+        {
+            PropertiesForm.addFormCreationMethod(typeof(ChangeHandPosition), (property, parentWidget) =>
+            {
+                return new PoseableHandProperties(property, parentWidget);
+            });
         }
     }
 }

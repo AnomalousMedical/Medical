@@ -45,11 +45,6 @@ namespace Medical.GUI
 
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
 
-            foreach(var creationMethod in genericEditorView.CustomCreationMethods)
-            {
-                propertiesForm.addCustomCreationMethod(creationMethod.Item1, creationMethod.Item2);
-            }
-
             CurrentEditInterface = genericEditorView.EditInterface;
         }
 

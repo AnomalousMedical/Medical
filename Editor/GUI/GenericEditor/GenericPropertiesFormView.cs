@@ -11,9 +11,6 @@ namespace Medical.GUI
 {
     class GenericPropertiesFormView : MyGUIView
     {
-        [DoNotSave]
-        private List<Tuple<Type, PropertiesForm.CreateComponent>> customCreationMethods = new List<Tuple<Type, PropertiesForm.CreateComponent>>();
-
         public GenericPropertiesFormView(String name, EditInterface editInterface, bool horizontalAlignment = false)
             : base(name)
         {
@@ -22,22 +19,9 @@ namespace Medical.GUI
             this.ViewLocation = Controller.AnomalousMvc.ViewLocations.Right;
         }
 
-        public void addCustomForm(Type type, PropertiesForm.CreateComponent creationMethod)
-        {
-            customCreationMethods.Add(Tuple.Create(type, creationMethod));
-        }
-
         public EditInterface EditInterface { get; set; }
 
         public bool HorizontalAlignment { get; set; }
-
-        public IEnumerable<Tuple<Type, PropertiesForm.CreateComponent>> CustomCreationMethods
-        {
-            get
-            {
-                return customCreationMethods;
-            }
-        }
 
         protected GenericPropertiesFormView(LoadInfo info)
             : base(info)
