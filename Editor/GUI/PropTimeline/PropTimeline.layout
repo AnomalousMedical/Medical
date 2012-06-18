@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="0 3 678 69" layer="Overlapped">
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 487 39" align="Stretch" name="ActionView">
+    <Widget type="Widget" skin="PanelSkin" position="0 3 678 100" layer="Overlapped">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 487 70" align="Stretch" name="ActionView">
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="CanvasSize" value="0 100"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 70" align="Left VStretch" name="ActionFilter">
             <Property key="CanvasSize" value="179 200"/>
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="VisibleVScroll" value="false"/>

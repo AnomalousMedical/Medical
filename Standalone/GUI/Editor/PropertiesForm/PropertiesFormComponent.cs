@@ -6,7 +6,7 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    interface PropertiesFormComponent : IDisposable
+    public interface PropertiesFormComponent : IDisposable
     {
         void refreshData();
 

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class PoseableHandProperties : TimelineDataPanel
+    class PoseableHandProperties : PropertiesFormLayoutComponent
     {
         private ChangeHandPosition handPosition;
 
@@ -34,39 +35,43 @@ namespace Medical.GUI
         private PoseableFingerSectionControl thumbProx;
         private PoseableFingerSectionControl thumbDistal;
 
-        public PoseableHandProperties(Widget parentWidget, String layoutFile)
-            :base(parentWidget, layoutFile)
+        public PoseableHandProperties(EditableProperty property, Widget parentWidget, String layoutFile = "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout")
+            :base(property, parentWidget, layoutFile)
         {
-            pinkyMeta = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("PinkyMetaBottom"), (EditBox)mainWidget.findWidget("PinkyMetaTop"));
-            pinkyProx = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("PinkyProxTop"));
-            pinkyInter = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("PinkyInterTop"));
-            pinkyDistal = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("PinkyDistalTop"));
+            pinkyMeta = new PoseableFingerSectionControl((EditBox)widget.findWidget("PinkyMetaBottom"), (EditBox)widget.findWidget("PinkyMetaTop"));
+            pinkyProx = new PoseableFingerSectionControl((EditBox)widget.findWidget("PinkyProxTop"));
+            pinkyInter = new PoseableFingerSectionControl((EditBox)widget.findWidget("PinkyInterTop"));
+            pinkyDistal = new PoseableFingerSectionControl((EditBox)widget.findWidget("PinkyDistalTop"));
 
-            ringMeta = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("RingMetaBottom"), (EditBox)mainWidget.findWidget("RingMetaTop"));
-            ringProx = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("RingProxTop"));
-            ringInter = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("RingInterTop"));
-            ringDistal = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("RingDistalTop"));
+            ringMeta = new PoseableFingerSectionControl((EditBox)widget.findWidget("RingMetaBottom"), (EditBox)widget.findWidget("RingMetaTop"));
+            ringProx = new PoseableFingerSectionControl((EditBox)widget.findWidget("RingProxTop"));
+            ringInter = new PoseableFingerSectionControl((EditBox)widget.findWidget("RingInterTop"));
+            ringDistal = new PoseableFingerSectionControl((EditBox)widget.findWidget("RingDistalTop"));
 
-            middleMeta = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("MiddleMetaBottom"), (EditBox)mainWidget.findWidget("MiddleMetaTop"));
-            middleProx = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("MiddleProxTop"));
-            middleInter = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("MiddleInterTop"));
-            middleDistal = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("MiddleDistalTop"));
+            middleMeta = new PoseableFingerSectionControl((EditBox)widget.findWidget("MiddleMetaBottom"), (EditBox)widget.findWidget("MiddleMetaTop"));
+            middleProx = new PoseableFingerSectionControl((EditBox)widget.findWidget("MiddleProxTop"));
+            middleInter = new PoseableFingerSectionControl((EditBox)widget.findWidget("MiddleInterTop"));
+            middleDistal = new PoseableFingerSectionControl((EditBox)widget.findWidget("MiddleDistalTop"));
 
-            indexMeta = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("IndexMetaBottom"), (EditBox)mainWidget.findWidget("IndexMetaTop"));
-            indexProx = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("IndexProxTop"));
-            indexInter = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("IndexInterTop"));
-            indexDistal = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("IndexDistalTop"));
+            indexMeta = new PoseableFingerSectionControl((EditBox)widget.findWidget("IndexMetaBottom"), (EditBox)widget.findWidget("IndexMetaTop"));
+            indexProx = new PoseableFingerSectionControl((EditBox)widget.findWidget("IndexProxTop"));
+            indexInter = new PoseableFingerSectionControl((EditBox)widget.findWidget("IndexInterTop"));
+            indexDistal = new PoseableFingerSectionControl((EditBox)widget.findWidget("IndexDistalTop"));
 
-            thumbMeta = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("ThumbMetaBottom"), (EditBox)mainWidget.findWidget("ThumbMetaTop"));
-            thumbProx = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("ThumbProxTop"));
-            thumbDistal = new PoseableFingerSectionControl((EditBox)mainWidget.findWidget("ThumbDistalTop"));
+            thumbMeta = new PoseableFingerSectionControl((EditBox)widget.findWidget("ThumbMetaBottom"), (EditBox)widget.findWidget("ThumbMetaTop"));
+            thumbProx = new PoseableFingerSectionControl((EditBox)widget.findWidget("ThumbProxTop"));
+            thumbDistal = new PoseableFingerSectionControl((EditBox)widget.findWidget("ThumbDistalTop"));
+
+            refreshData();
         }
 
-        public override void setCurrentData(TimelineData data)
+        public override void refreshData()
         {
-            PropTimelineData propData = (PropTimelineData)data;
-            handPosition = (ChangeHandPosition)propData.Action;
+            setCurrentData((ChangeHandPosition)Property.getRealValue(1));
+        }
 
+        public void setCurrentData(ChangeHandPosition handPosition)
+        {
             pinkyMeta.FingerSection = handPosition.Pinky.MetacarpalAnimator;
             pinkyProx.FingerSection = handPosition.Pinky.ProximalAnimator;
             pinkyInter.FingerSection = handPosition.Pinky.IntermediateAnimator;

@@ -12,6 +12,9 @@ namespace Medical.GUI
 {
     public class PropertiesForm : PropertyEditor, IDisposable
     {
+        public delegate PropertiesFormComponent CreateComponent(EditableProperty property, Widget parent);
+
+        private Dictionary<Type, CreateComponent> customCreationMethods = new Dictionary<Type, CreateComponent>();
         private List<PropertiesFormComponent> components = new List<PropertiesFormComponent>();
         private StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
         private ScrollView scrollView;
@@ -50,6 +53,16 @@ namespace Medical.GUI
             flowLayout.WorkingSize = new IntSize2(width, height);
             flowLayout.layout();
             scrollView.CanvasSize = flowLayout.WorkingSize;
+        }
+
+        public void addCustomCreationMethod(Type type, CreateComponent creationMethod)
+        {
+            customCreationMethods.Add(type, creationMethod);
+        }
+
+        public void removeCustomCreationMethod(Type type)
+        {
+            customCreationMethods.Remove(type);
         }
 
         public EditInterface EditInterface
@@ -151,6 +164,11 @@ namespace Medical.GUI
         {
             Type propertyType = property.getPropertyType(1);
             //Have to do this because we cannot "out" a method using trygetvalue
+            if (customCreationMethods.ContainsKey(propertyType))
+            {
+                return customCreationMethods[propertyType].Invoke(property, scrollView);
+            }
+            //Have to do this because we cannot "out" a method using trygetvalue
             if (DefaultCreationMethods.ContainsKey(propertyType))
             {
                 return DefaultCreationMethods[propertyType].Invoke(property, scrollView);
@@ -178,7 +196,6 @@ namespace Medical.GUI
             return new PropertiesFormTextBox(property, scrollView);
         }
 
-        private delegate PropertiesFormComponent CreateComponent(EditableProperty property, Widget parent);
         private static Dictionary<Type, CreateComponent> DefaultCreationMethods = new Dictionary<Type, CreateComponent>();
         static PropertiesForm()
         {

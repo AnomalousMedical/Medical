@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="ImageBox" skin="ImageBox" position="129 113 210 311" layer="Back">
+  <Widget type="Widget" skin="PanelEmpty" position="129 113 210 311" layer="Back">
+    <Widget type="ImageBox" skin="ImageBox" position="0 0 210 311">
         <Property key="ImageResource" value="LeftHandOutline"/>
         <Widget type="EditBox" skin="EditBox" position="22 225 34 19" name="PinkyMetaTop">
             <Property key="Alpha" value="0.7"/>
@@ -75,4 +76,5 @@
             <Property key="Alpha" value="0.7"/>
         </Widget>
     </Widget>
+  </Widget>
 </MyGUI>

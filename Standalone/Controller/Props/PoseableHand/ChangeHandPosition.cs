@@ -7,6 +7,7 @@ using Engine.Editing;
 using Engine;
 using Engine.Attributes;
 using Engine.Saving;
+using Engine.Reflection;
 
 namespace Medical
 {
@@ -114,6 +115,12 @@ namespace Medical
             {
                 return "Hand Position";
             }
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            editInterface.addEditableProperty(new GenericEditableProperty<ChangeHandPosition>("Hand Position", this));
+            base.customizeEditInterface(editInterface);
         }
 
         #region Saveable Members
