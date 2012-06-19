@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="247 241 353 66" layer="Overlapped">
-        <Widget type="Button" skin="ButtonXBig" position="324 4 24 20" align="Right Top" name="CloseButton"/>
-        <Widget type="TextBox" skin="TextBox" position="3 1 315 16" align="HStretch Top" name="CaptionText"/>
+
     </Widget>
 </MyGUI>

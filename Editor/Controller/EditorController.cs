@@ -39,6 +39,8 @@ namespace Medical
         public event EditorControllerEvent ProjectChanged;
         public event EditorControllerEvent ExtensionActionsChanged;
 
+        private List<String> openFiles = new List<String>();
+
         public EditorController(EditorPlugin plugin, StandaloneController standaloneController)
         {
             this.plugin = plugin;
@@ -101,6 +103,7 @@ namespace Medical
         {
             if (resourceProvider != null)
             {
+                closeAllFiles();
                 resourceProvider.Dispose();
                 resourceProvider = null;
             }
@@ -124,12 +127,26 @@ namespace Medical
             EditorTypeController typeController;
             if (typeControllers.TryGetValue(extension, out typeController))
             {
+                if (!openFiles.Contains(file))
+                {
+                    openFiles.Insert(0, file);
+                }
                 typeController.openFile(file);
             }
             else
             {
                 OtherProcessManager.openLocalURL(ResourceProvider.getFullFilePath(file));
             }
+        }
+
+        public void closeFile(String file)
+        {
+            openFiles.Remove(file);
+        }
+
+        public void closeAllFiles()
+        {
+            openFiles.Clear();
         }
 
         public void stopPlayingTimelines()
@@ -210,6 +227,22 @@ namespace Medical
             get
             {
                 return plugin;
+            }
+        }
+
+        public IEnumerable<String> OpenFiles
+        {
+            get
+            {
+                return openFiles;
+            }
+        }
+
+        public int OpenFileCount
+        {
+            get
+            {
+                return openFiles.Count;
             }
         }
 

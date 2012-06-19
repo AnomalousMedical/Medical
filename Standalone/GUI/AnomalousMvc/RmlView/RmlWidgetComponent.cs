@@ -26,17 +26,20 @@ namespace Medical.GUI.AnomalousMvc
             rocketWidget = new RocketWidget(rmlImage);
             imageHeight = rmlImage.Height;
 
-            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
-            using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(view.RmlFile)))
+            if (view.RmlFile != null)
             {
-                if (document != null)
+                RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+                using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(view.RmlFile)))
                 {
-                    document.Show();
-                    rocketWidget.removeFocus();
-                    rocketWidget.renderOnNextFrame();
+                    if (document != null)
+                    {
+                        document.Show();
+                        rocketWidget.removeFocus();
+                        rocketWidget.renderOnNextFrame();
+                    }
                 }
+                RocketEventListenerInstancer.resetEventController();
             }
-            RocketEventListenerInstancer.resetEventController();
 
             view._fireComponentCreated(this);
         }
@@ -62,19 +65,23 @@ namespace Medical.GUI.AnomalousMvc
         {
             RocketOgreTextureManager.refreshTextures();
 
-            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
             Factory.ClearStyleSheetCache();
             rocketWidget.Context.UnloadAllDocuments();
-            using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(documentName)))
+
+            if (documentName != null)
             {
-                if (document != null)
+                RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+                using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(documentName)))
                 {
-                    document.Show();
-                    rocketWidget.removeFocus();
-                    rocketWidget.renderOnNextFrame();
+                    if (document != null)
+                    {
+                        document.Show();
+                        rocketWidget.removeFocus();
+                        rocketWidget.renderOnNextFrame();
+                    }
                 }
+                RocketEventListenerInstancer.resetEventController();
             }
-            RocketEventListenerInstancer.resetEventController();
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Medical
             propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
             mvcContext.Views.add(propManagerView);
 
-            EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
+            EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", currentFile, "TimelineEditor/Close");
             //taskbar.addTask(new RunMvcContextActionTask("CloseTimeline", "Close Timeline","", "", "TimelineEditor/CloseTimeline"));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Timeline", "FileToolstrip/Save", "", "TimelineEditor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "NoIcon", "", "TimelineEditor/Cut", mvcContext));

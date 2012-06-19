@@ -10,11 +10,18 @@ namespace Medical.GUI
 {
     class EditorTaskbarFactory : ViewHostComponentFactory
     {
+        private EditorController editorController;
+
+        public EditorTaskbarFactory(EditorController editorController)
+        {
+            this.editorController = editorController;
+        }
+
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             if (view is EditorTaskbarView)
             {
-                return new EditorTaskbar((EditorTaskbarView)view, viewHost);
+                return new EditorTaskbar((EditorTaskbarView)view, viewHost, editorController);
             }
             return null;
         }

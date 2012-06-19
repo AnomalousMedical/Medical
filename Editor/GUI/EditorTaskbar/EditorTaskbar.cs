@@ -10,21 +10,19 @@ namespace Medical.GUI
     class EditorTaskbar : LayoutComponent
     {
         private String closeAction;
+        private List<EditorTaskbarFileButton> fileButtons = new List<EditorTaskbarFileButton>();
+        private EditorController editorController;
 
-        public EditorTaskbar(EditorTaskbarView view, MyGUIViewHost viewHost)
+        public EditorTaskbar(EditorTaskbarView view, MyGUIViewHost viewHost, EditorController editorController)
             :base("Medical.GUI.EditorTaskbar.EditorTaskbar.layout", viewHost)
         {
-            TextBox captionText = (TextBox)widget.findWidget("CaptionText");
-            captionText.Caption = view.Caption;
-
-            Button closeButton = (Button)widget.findWidget("CloseButton");
-            closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
             closeAction = view.CloseAction;
+            this.editorController = editorController;
 
             int left = 0;
             foreach (Task task in view.Tasks)
             {
-                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, captionText.Bottom, 48, 48, Align.Left | Align.Top, task.UniqueName);
+                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, 20, 48, 48, Align.Left | Align.Top, task.UniqueName);
                 taskButton.UserObject = task;
                 taskButton.NeedToolTip = true;
                 taskButton.ImageBox.setItemResource(task.IconName);
@@ -32,6 +30,31 @@ namespace Medical.GUI
                 taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
                 left += taskButton.Width + 2;
             }
+
+            left = 0;
+            foreach (String file in editorController.OpenFiles)
+            {
+                EditorTaskbarFileButton fileButton = new EditorTaskbarFileButton(widget, file, left);
+                fileButton.CurrentFile = view.File == file;
+                fileButton.ChangeFile += new Action<EditorTaskbarFileButton>(fileButton_ChangeFile);
+                fileButton.Closed += new Action<EditorTaskbarFileButton>(fileButton_Closed);
+                fileButtons.Add(fileButton);
+                left += fileButton.Width;
+                if (left > MainWindow.Instance.WindowWidth)
+                {
+                    break;
+                }
+            }
+        }
+
+        public override void Dispose()
+        {
+            foreach (EditorTaskbarFileButton fileButton in fileButtons)
+            {
+                fileButton.Dispose();
+            }
+            fileButtons.Clear();
+            base.Dispose();
         }
 
         void taskButton_EventToolTip(Widget source, EventArgs e)
@@ -47,6 +70,27 @@ namespace Medical.GUI
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
             ViewHost.Context.runAction(closeAction, ViewHost);
+        }
+
+        void fileButton_Closed(EditorTaskbarFileButton obj)
+        {
+            editorController.closeFile(obj.File);
+            if (obj.CurrentFile)
+            {
+                if (editorController.OpenFileCount == 0)
+                {
+                    ViewHost.Context.runAction(closeAction, ViewHost);
+                }
+                else
+                {
+                    editorController.openFile(editorController.OpenFiles.First());
+                }
+            }
+        }
+
+        void fileButton_ChangeFile(EditorTaskbarFileButton obj)
+        {
+            editorController.openFile(obj.File);
         }
     }
 }

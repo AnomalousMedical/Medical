@@ -128,6 +128,7 @@
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarAction.cs" />
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarFactory.cs" />
     <Compile Include="GUI\EditorTaskbar\EditorTaskbar.cs" />
+    <Compile Include="GUI\EditorTaskbar\EditorTaskbarFileButton.cs" />
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarView.cs" />
     <Compile Include="GUI\EditorTaskbar\RunMvcContextActionTask.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
@@ -196,6 +197,7 @@
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout" />
+    <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbarFileButton.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\ExpandingGenericEditor.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVerticalComponent.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorComponent.layout" />

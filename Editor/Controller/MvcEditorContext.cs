@@ -40,7 +40,7 @@ namespace Medical
             genericPropertiesView.IsWindow = true;
             mvcContext.Views.add(genericPropertiesView);
 
-            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", String.Format("{0} - Mvc", currentFile), "Editor/Close");
+            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
             //taskbar.addTask(new RunMvcContextActionTask("Close", "Close Rml File", "NoIcon", "File", "Editor/CloseCurrentFile", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "NoIcon", "Edit", "Editor/Cut", mvcContext));

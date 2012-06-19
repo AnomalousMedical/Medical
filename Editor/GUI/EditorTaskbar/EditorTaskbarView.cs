@@ -12,10 +12,10 @@ namespace Medical.GUI
     {
         private List<Task> tasks = new List<Task>();
 
-        public EditorTaskbarView(String name, String caption, String closeAction = null)
+        public EditorTaskbarView(String name, String file, String closeAction = null)
             :base(name)
         {
-            this.Caption = caption;
+            this.File = file;
             this.ViewLocation = ViewLocations.Top;
             this.CloseAction = closeAction;
         }
@@ -33,7 +33,7 @@ namespace Medical.GUI
             }
         }
 
-        public String Caption { get; set; }
+        public String File { get; set; }
 
         public String CloseAction { get; set; }
 
