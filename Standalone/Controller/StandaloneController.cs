@@ -257,6 +257,8 @@ namespace Medical
             //Wizards
             ResourceManager.Instance.load("Medical.Resources.WizardImagesets.xml");
 
+            ResourceManager.Instance.load("Medical.Resources.StandaloneIcons.xml");
+
             Taskbar taskbar = GUIManager.Taskbar;
             TaskMenu taskMenu = GUIManager.TaskMenu;
             taskbar.SuppressLayout = true;

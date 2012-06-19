@@ -9,7 +9,7 @@ namespace Medical.GUI
     public class VolumeControlTask : Task
     {
         public VolumeControlTask()
-            : base("Medical.VolumeControl", "Volume", "RenderIcon", TaskMenuCategories.System)
+            : base("Medical.VolumeControl", "Volume", "StandaloneIcons/VolumeControl", TaskMenuCategories.System)
         {
             this.ShowOnTimelineTaskbar = true;
         }

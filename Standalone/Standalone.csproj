@@ -660,6 +660,8 @@
     <EmbeddedResource Include="Resources\TeethButtons.png" />
     <EmbeddedResource Include="Resources\TeethButtons.xml" />
     <EmbeddedResource Include="Resources\TeethMovementIcons.png" />
+    <EmbeddedResource Include="Resources\StandaloneIcons.png" />
+    <EmbeddedResource Include="Resources\StandaloneIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
