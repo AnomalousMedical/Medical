@@ -41,6 +41,8 @@ namespace Medical
             editorContext = new RmlEditorContext(rmlText, file, this);
             editorContext.Shutdown += new Action<RmlEditorContext>(editorContext_Shutdown);
             editorController.runEditorContext(editorContext.MvcContext);
+
+            LastRmlFile = file;
         }
 
         public void saveFile(String rml, String file)
@@ -51,6 +53,8 @@ namespace Medical
             }
             editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
+
+        public String LastRmlFile { get; private set; }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
         {

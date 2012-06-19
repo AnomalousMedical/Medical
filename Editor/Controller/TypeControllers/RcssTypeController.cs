@@ -11,99 +11,45 @@ namespace Medical
 {
     class RcssTypeController : EditorTypeController
     {
-        public const String WILDCARD = "RCSS Files (*.rcss)|*.rcss";
-
         private EditorController editorController;
         private GUIManager guiManager;
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
-        private TextEditor currentEditor;
+        public const String Icon = "RmlEditorIcon";
+        private RcssEditorContext rcssContext;
+        private RmlTypeController rmlTypeController;
 
-        public RcssTypeController(EditorController editorController, GUIManager guiManager)
+        public RcssTypeController(EditorController editorController, GUIManager guiManager, RmlTypeController rmlTypeController)
             : base(".rcss")
         {
-            //this.editor = editor;
             this.editorController = editorController;
             this.guiManager = guiManager;
-
-            extensionActions.Add(new ExtensionAction("Close RCSS File", "File", close));
-            extensionActions.Add(new ExtensionAction("Save RCSS File", "File", save));
-            extensionActions.Add(new ExtensionAction("Save RCSS File As", "File", saveAs));
+            this.rmlTypeController = rmlTypeController;
         }
 
         public override void openFile(string file)
         {
+            if (!editorController.ResourceProvider.exists(file))
+            {
+                createNewRcssFile(file);
+            }
+
             String rmlText = null;
             using (StreamReader streamReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
             {
                 rmlText = streamReader.ReadToEnd();
             }
-            TextEditor textEditor = TextEditor.openTextEditor(guiManager);
-            textEditor.Caption = String.Format("{0} - Rcss Text Editor", file);
-            textEditor.WordWrap = false;
-            textEditor.Text = rmlText;
-            textEditor.CurrentFile = file;
-            textEditor.GotFocus += new EventHandler(textEditor_GotFocus);
-            textEditor.Closing += new EventHandler<DialogCancelEventArgs>(textEditor_Closing);
-            focusEditor(textEditor);
+            rcssContext = new RcssEditorContext(rmlText, file, rmlTypeController.LastRmlFile, this);
+            rcssContext.Shutdown += new Action<RcssEditorContext>(rcssContext_Shutdown);
+            editorController.runEditorContext(rcssContext.MvcContext);
         }
 
-        public void save()
+        public void saveFile(String rcss, String file)
         {
-            if (currentEditor != null)
+            using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(file)))
             {
-                using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(currentEditor.CurrentFile)))
-                {
-                    streamWriter.Write(currentEditor.Text);
-                }
-                Factory.ClearStyleSheetCache();
+                streamWriter.Write(rcss);
             }
-            else
-            {
-                saveAs();
-            }
-        }
-
-        public void saveAs()
-        {
-            if (currentEditor != null)
-            {
-                using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a Rcss File", "", "", WILDCARD))
-                {
-                    if (fileDialog.showModal() == NativeDialogResult.OK)
-                    {
-                        try
-                        {
-                            using (StreamWriter streamWriter = new StreamWriter(fileDialog.Path))
-                            {
-                                streamWriter.Write(currentEditor.Text);
-                            }
-                            currentEditor.CurrentFile = fileDialog.Path;
-                            currentEditor.Caption = String.Format("{0} - Rcss Text Editor", currentEditor.CurrentFile);
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.show("Save error", String.Format("Exception saving Rcss File to {0}:\n{1}.", fileDialog.Path, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                        }
-                    }
-                }
-            }
-        }
-
-        void textEditor_GotFocus(object sender, EventArgs e)
-        {
-            focusEditor((TextEditor)sender);
-        }
-
-        void textEditor_Closing(object sender, DialogCancelEventArgs e)
-        {
-            if (currentEditor == (TextEditor)sender)
-            {
-                currentEditor = null;
-                if (editorController.ExtensionActions == extensionActions)
-                {
-                    editorController.ExtensionActions = null;
-                }
-            }
+            Factory.ClearStyleSheetCache();
+            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -133,20 +79,6 @@ namespace Medical
             }));
         }
 
-        private void focusEditor(TextEditor sender)
-        {
-            currentEditor = sender;
-            editorController.ExtensionActions = extensionActions;
-        }
-
-        private void close()
-        {
-            if (currentEditor != null)
-            {
-                currentEditor.Visible = false;
-            }
-        }
-
         void createNewRcssFile(String filePath)
         {
             Timeline timeline = new Timeline();
@@ -155,6 +87,14 @@ namespace Medical
                 sw.Write(defaultRcss);
             }
             openFile(filePath);
+        }
+
+        void rcssContext_Shutdown(RcssEditorContext obj)
+        {
+            if (rcssContext == obj)
+            {
+                rcssContext = null;
+            }
         }
 
         private const String defaultRcss = "";

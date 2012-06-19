@@ -101,8 +101,9 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
 
-            editorController.addTypeController(new RmlTypeController(editorController, guiManager));
-            editorController.addTypeController(new RcssTypeController(editorController, guiManager));
+            RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager);
+            editorController.addTypeController(rmlTypeController);
+            editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
             editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
