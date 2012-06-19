@@ -59,19 +59,6 @@ namespace Medical
             OpenPropManagerView propManagerView = new OpenPropManagerView("PropManager");
             propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
             mvcContext.Views.add(propManagerView);
-            
-            //EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
-            //infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
-            //infoBar.addAction(new EditorInfoBarAction("Save Timeline", "File", "TimelineEditor/Save"));
-            //infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "TimelineEditor/Cut"));
-            //infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "TimelineEditor/Copy"));
-            //infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "TimelineEditor/Paste"));
-            //infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
-            //infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
-            //infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
-            //infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/ShowIfNotOpen"));
-            //infoBar.addAction(new EditorInfoBarAction("Open Prop Manager", "Props", "PropManager/ShowIfNotOpen"));
-            //mvcContext.Views.add(infoBar);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
             //taskbar.addTask(new RunMvcContextActionTask("CloseTimeline", "Close Timeline","", "", "TimelineEditor/CloseTimeline"));

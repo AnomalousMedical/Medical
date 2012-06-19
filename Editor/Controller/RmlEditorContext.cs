@@ -51,14 +51,16 @@ namespace Medical
                 rmlComponent = component;
             };
             mvcContext.Views.add(rmlView);
-            EditorInfoBarView infoBar = new EditorInfoBarView("InfoBar", String.Format("{0} - Rml", file), "Editor/Close");
-            infoBar.addAction(new EditorInfoBarAction("Close Rml File", "File", "Editor/CloseCurrentFile"));
-            infoBar.addAction(new EditorInfoBarAction("Save Rml File", "File", "Editor/Save"));
-            infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "Editor/Cut"));
-            infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "Editor/Copy"));
-            infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "Editor/Paste"));
-            infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "Editor/SelectAll"));
-            mvcContext.Views.add(infoBar);
+
+            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", String.Format("{0} - Rml", currentFile), "Editor/Close");
+            //taskbar.addTask(new RunMvcContextActionTask("Close", "Close Rml File", "NoIcon", "File", "Editor/CloseCurrentFile", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "NoIcon", "Edit", "Editor/Cut", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "NoIcon", "Edit", "Editor/Copy", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "NoIcon", "Edit", "Editor/Paste", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "NoIcon", "Edit", "Editor/SelectAll", mvcContext));
+            mvcContext.Views.add(taskbar);
+
             MvcController timelineEditorController = new MvcController("Editor");
             RunCommandsAction showAction = new RunCommandsAction("Show");
             showAction.addCommand(new ShowViewCommand("RmlEditor"));
