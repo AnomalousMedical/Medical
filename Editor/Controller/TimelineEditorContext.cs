@@ -60,18 +60,31 @@ namespace Medical
             propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
             mvcContext.Views.add(propManagerView);
             
-            EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
-            infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
-            infoBar.addAction(new EditorInfoBarAction("Save Timeline", "File", "TimelineEditor/Save"));
-            infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "TimelineEditor/Cut"));
-            infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "TimelineEditor/Copy"));
-            infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "TimelineEditor/Paste"));
-            infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
-            infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
-            infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
-            infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/ShowIfNotOpen"));
-            infoBar.addAction(new EditorInfoBarAction("Open Prop Manager", "Props", "PropManager/ShowIfNotOpen"));
-            mvcContext.Views.add(infoBar);
+            //EditorInfoBarView infoBar = new EditorInfoBarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
+            //infoBar.addAction(new EditorInfoBarAction("Close Timeline", "File", "TimelineEditor/CloseTimeline"));
+            //infoBar.addAction(new EditorInfoBarAction("Save Timeline", "File", "TimelineEditor/Save"));
+            //infoBar.addAction(new EditorInfoBarAction("Cut", "Edit", "TimelineEditor/Cut"));
+            //infoBar.addAction(new EditorInfoBarAction("Copy", "Edit", "TimelineEditor/Copy"));
+            //infoBar.addAction(new EditorInfoBarAction("Paste", "Edit", "TimelineEditor/Paste"));
+            //infoBar.addAction(new EditorInfoBarAction("Select All", "Edit", "TimelineEditor/SelectAll"));
+            //infoBar.addAction(new EditorInfoBarAction("Translation", "Tools", "TimelineEditor/Translation"));
+            //infoBar.addAction(new EditorInfoBarAction("Rotation", "Tools", "TimelineEditor/Rotation"));
+            //infoBar.addAction(new EditorInfoBarAction("Prop Timeline Editor", "Props", "PropTimeline/ShowIfNotOpen"));
+            //infoBar.addAction(new EditorInfoBarAction("Open Prop Manager", "Props", "PropManager/ShowIfNotOpen"));
+            //mvcContext.Views.add(infoBar);
+
+            EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", String.Format("{0} - Timeline", currentFile), "TimelineEditor/Close");
+            //taskbar.addTask(new RunMvcContextActionTask("CloseTimeline", "Close Timeline","", "", "TimelineEditor/CloseTimeline"));
+            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Timeline", "FileToolstrip/Save", "", "TimelineEditor/Save", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "", "", "TimelineEditor/Cut", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "", "", "TimelineEditor/Copy", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "", "", "TimelineEditor/Paste", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "", "", "TimelineEditor/SelectAll", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Translation", "Translation", "", "", "TimelineEditor/Translation", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Rotation", "Rotation", "", "", "TimelineEditor/Rotation", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("PropTimeline", "Prop Timeline Editor", "PropEditorIcon", "", "PropTimeline/ShowIfNotOpen", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("PropManager", "Open Prop Manager", "PropManagerIcon", "", "PropManager/ShowIfNotOpen", mvcContext));
+            mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("TimelineEditor",
                 new RunCommandsAction("Show",
