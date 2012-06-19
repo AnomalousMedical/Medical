@@ -18,6 +18,8 @@ namespace Medical
 
         public abstract void openFile(String file);
 
+        public abstract void closeFile(String file);
+
         public virtual void fileChanged(FileSystemEventArgs e, String extension)
         {
 

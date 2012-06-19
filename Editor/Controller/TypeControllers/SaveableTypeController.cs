@@ -23,6 +23,11 @@ namespace Medical
             this.editorController = editorController;
         }
 
+        public override void closeFile(string file)
+        {
+            editorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
+        }
+
         public Saveable loadObject(String filename)
         {
             //Check the cahce

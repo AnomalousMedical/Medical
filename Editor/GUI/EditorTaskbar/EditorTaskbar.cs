@@ -12,12 +12,14 @@ namespace Medical.GUI
         private String closeAction;
         private List<EditorTaskbarFileButton> fileButtons = new List<EditorTaskbarFileButton>();
         private EditorController editorController;
+        private String currentFile;
 
         public EditorTaskbar(EditorTaskbarView view, MyGUIViewHost viewHost, EditorController editorController)
             :base("Medical.GUI.EditorTaskbar.EditorTaskbar.layout", viewHost)
         {
             closeAction = view.CloseAction;
             this.editorController = editorController;
+            this.currentFile = view.File;
 
             int left = 0;
             foreach (Task task in view.Tasks)
@@ -30,30 +32,11 @@ namespace Medical.GUI
                 taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
                 left += taskButton.Width + 2;
             }
-
-            left = 0;
-            foreach (String file in editorController.OpenFiles)
-            {
-                EditorTaskbarFileButton fileButton = new EditorTaskbarFileButton(widget, file, left);
-                fileButton.CurrentFile = view.File == file;
-                fileButton.ChangeFile += new Action<EditorTaskbarFileButton>(fileButton_ChangeFile);
-                fileButton.Closed += new Action<EditorTaskbarFileButton>(fileButton_Closed);
-                fileButtons.Add(fileButton);
-                left += fileButton.Width;
-                if (left > MainWindow.Instance.WindowWidth)
-                {
-                    break;
-                }
-            }
         }
 
         public override void Dispose()
         {
-            foreach (EditorTaskbarFileButton fileButton in fileButtons)
-            {
-                fileButton.Dispose();
-            }
-            fileButtons.Clear();
+            clearFileTabs();
             base.Dispose();
         }
 
@@ -86,11 +69,50 @@ namespace Medical.GUI
                     editorController.openFile(editorController.OpenFiles.First());
                 }
             }
+            else
+            {
+                refreshFileTabs();
+            }
         }
 
         void fileButton_ChangeFile(EditorTaskbarFileButton obj)
         {
             editorController.openFile(obj.File);
+        }
+
+        public override void topLevelResized()
+        {
+            refreshFileTabs();
+            base.topLevelResized();
+        }
+
+        private int refreshFileTabs()
+        {
+            clearFileTabs();
+            int left = 0;
+            foreach (String file in editorController.OpenFiles)
+            {
+                EditorTaskbarFileButton fileButton = new EditorTaskbarFileButton(widget, file, left);
+                fileButton.CurrentFile = currentFile == file;
+                fileButton.ChangeFile += new Action<EditorTaskbarFileButton>(fileButton_ChangeFile);
+                fileButton.Closed += new Action<EditorTaskbarFileButton>(fileButton_Closed);
+                fileButtons.Add(fileButton);
+                left += fileButton.Width;
+                if (left > widget.Width)
+                {
+                    break;
+                }
+            }
+            return left;
+        }
+
+        private void clearFileTabs()
+        {
+            foreach (EditorTaskbarFileButton fileButton in fileButtons)
+            {
+                fileButton.Dispose();
+            }
+            fileButtons.Clear();
         }
     }
 }

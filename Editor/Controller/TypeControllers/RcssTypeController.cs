@@ -43,6 +43,11 @@ namespace Medical
             editorController.runEditorContext(rcssContext.MvcContext);
         }
 
+        public override void closeFile(string file)
+        {
+            //does nothing for now cause these are not cached
+        }
+
         public void saveFile(String rcss, String file)
         {
             using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(file)))

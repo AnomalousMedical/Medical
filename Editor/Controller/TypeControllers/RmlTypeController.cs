@@ -45,6 +45,11 @@ namespace Medical
             LastRmlFile = file;
         }
 
+        public override void closeFile(string file)
+        {
+            //does nothing for now cause these are not cached
+        }
+
         public void saveFile(String rml, String file)
         {
             using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(file)))
