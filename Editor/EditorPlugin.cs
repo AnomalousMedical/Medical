@@ -23,7 +23,6 @@ namespace Medical
         private ScratchAreaController scratchAreaController;
 
         private AspectRatioTask aspectRatioTask;
-        private GenericEditor mvcEditor;
         private ProjectExplorer projectExplorer;
         private DDAtlasPluginEditor pluginEditor;
 
@@ -40,7 +39,6 @@ namespace Medical
         {
             pluginEditor.Dispose();
             projectExplorer.Dispose();
-            mvcEditor.Dispose();
             movementSequenceEditor.Dispose();
             scratchArea.Dispose();
             aspectRatioTask.Dispose();
@@ -83,9 +81,6 @@ namespace Medical
             scratchArea = new ScratchArea(scratchAreaController, medicalUICallback);
             guiManager.addManagedDialog(scratchArea);
 
-            mvcEditor = new GenericEditor("Medical.GUI.MvcEditor", "MVC Context", medicalUICallback, editorController, false);
-            guiManager.addManagedDialog(mvcEditor);
-
             projectExplorer = new ProjectExplorer(editorController);
             guiManager.addManagedDialog(projectExplorer);
 
@@ -97,14 +92,13 @@ namespace Medical
 
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(mvcEditor, "Medical.MvcEditor", "MVC Editor", "PropManagerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
 
             RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager);
             editorController.addTypeController(rmlTypeController);
             editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
-            editorController.addTypeController(new MvcTypeController(mvcEditor, editorController));
+            editorController.addTypeController(new MvcTypeController(editorController));
             editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
             TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propEditController);
@@ -195,14 +189,6 @@ namespace Medical
             get
             {
                 return GetType().Assembly.GetName().Version;
-            }
-        }
-
-        public GenericEditor MvcEditor
-        {
-            get
-            {
-                return mvcEditor;
             }
         }
 

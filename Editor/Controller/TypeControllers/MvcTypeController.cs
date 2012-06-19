@@ -12,79 +12,33 @@ namespace Medical
 {
     class MvcTypeController : SaveableTypeController
     {
-        public const String WILDCARD = "MVC Contexts (*.mvc)|*.mvc";
-
-        private GenericEditor editor;
         private EditorController editorController;
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
-        private String currentFile;
-        private AnomalousMvcContext context;
+        private MvcEditorContext editorContext;
+        public const String Icon = "RmlEditorIcon";
 
-        public MvcTypeController(GenericEditor editor, EditorController editorController)
+        public MvcTypeController(EditorController editorController)
             :base(".mvc", editorController)
         {
-            this.editor = editor;
-            editor.GotFocus += new EventHandler(editor_GotFocus);
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-
-            extensionActions.Add(new ExtensionAction("Close MVC Context", "File", close));
-            extensionActions.Add(new ExtensionAction("Save MVC Context", "File", save));
-            extensionActions.Add(new ExtensionAction("Save MVC Context As", "File", saveAs));
         }
 
         public override void openFile(string file)
         {
-            context = (AnomalousMvcContext)loadObject(file);
+            AnomalousMvcContext context = (AnomalousMvcContext)loadObject(file);
             BrowserWindowController.setCurrentEditingMvcContext(context);
-            currentFile = file;
-            editor.CurrentEditInterface = context.getEditInterface();
-            editor.changeCaption(currentFile);
-            if (!editor.Visible)
-            {
-                editor.Visible = true;
-            }
-            editorController.ExtensionActions = extensionActions;
-            editor.bringToFront();
+
+            editorContext = new MvcEditorContext(context, file, this);
+            editorContext.Shutdown += new Action<MvcEditorContext>(editorContext_Shutdown);
+            editorController.runEditorContext(editorContext.MvcContext);
         }
 
-        void editor_GotFocus(object sender, EventArgs e)
+        public void saveFile(AnomalousMvcContext context, string file)
         {
-            editorController.ExtensionActions = extensionActions;
+            saveObject(file, context);
+            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
-
-        public void save()
-        {
-            if (currentFile != null)
-            {
-                saveObject(currentFile, context);
-            }
-            else
-            {
-                saveAs();
-            }
-        }
-
-        public void saveAs()
-        {
-            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a MVC Context", "", "", WILDCARD))
-            {
-                if (fileDialog.showModal() == NativeDialogResult.OK)
-                {
-                    try
-                    {
-                        currentFile = fileDialog.Path;
-                        saveObject(currentFile, context);
-                        editor.changeCaption(currentFile);
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.show("Save error", String.Format("Exception saving MVC Context to {0}:\n{1}.", currentFile, e.Message), MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                    }
-                }
-            }
-        }
-
+        
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
         {
             contextMenu.add(new ContextMenuItem("Create MVC Context", path, delegate(ContextMenuItem item)
@@ -127,9 +81,19 @@ namespace Medical
 
         private void close()
         {
-            editor.CurrentEditInterface = null;
-            editor.changeCaption(null);
+            if (editorContext != null)
+            {
+                editorContext.close();
+            }
             closeCurrentCachedResource();
+        }
+
+        void editorContext_Shutdown(MvcEditorContext obj)
+        {
+            if (editorContext == obj)
+            {
+                editorContext = null;
+            }
         }
     }
 }

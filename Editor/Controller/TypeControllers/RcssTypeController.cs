@@ -21,6 +21,7 @@ namespace Medical
             : base(".rcss")
         {
             this.editorController = editorController;
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             this.guiManager = guiManager;
             this.rmlTypeController = rmlTypeController;
         }
@@ -94,6 +95,14 @@ namespace Medical
             if (rcssContext == obj)
             {
                 rcssContext = null;
+            }
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            if (rcssContext != null)
+            {
+                rcssContext.close();
             }
         }
 
