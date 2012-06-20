@@ -13,6 +13,7 @@ namespace Medical.GUI
         private List<EditorTaskbarFileButton> fileButtons = new List<EditorTaskbarFileButton>();
         private EditorController editorController;
         private String currentFile;
+        private Button fileListButton;
 
         public EditorTaskbar(EditorTaskbarView view, MyGUIViewHost viewHost, EditorController editorController)
             :base("Medical.GUI.EditorTaskbar.EditorTaskbar.layout", viewHost)
@@ -20,6 +21,9 @@ namespace Medical.GUI
             closeAction = view.CloseAction;
             this.editorController = editorController;
             this.currentFile = view.File;
+
+            fileListButton = (Button)widget.findWidget("FileListButton");
+            fileListButton.MouseButtonClick += new MyGUIEvent(fileListButton_MouseButtonClick);
 
             int left = 0;
             foreach (Task task in view.Tasks)
@@ -96,11 +100,15 @@ namespace Medical.GUI
                 fileButton.CurrentFile = currentFile == file;
                 fileButton.ChangeFile += new Action<EditorTaskbarFileButton>(fileButton_ChangeFile);
                 fileButton.Closed += new Action<EditorTaskbarFileButton>(fileButton_Closed);
-                fileButtons.Add(fileButton);
                 left += fileButton.Width;
-                if (left > widget.Width)
+                if (left > fileListButton.Left)
                 {
+                    fileButton.Dispose();
                     break;
+                }
+                else
+                {
+                    fileButtons.Add(fileButton);
                 }
             }
             return left;
@@ -113,6 +121,30 @@ namespace Medical.GUI
                 fileButton.Dispose();
             }
             fileButtons.Clear();
+        }
+
+        void fileListButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            PopupMenu popupMenu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", source.AbsoluteLeft, source.AbsoluteTop + source.Height, 1, 1, Align.Default, "Overlapped", "");
+            popupMenu.Visible = false;
+            popupMenu.ItemAccept += (menu, evt) =>
+            {
+                MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)evt;
+                editorController.openFile(mcae.Item.ItemName);
+            };
+            popupMenu.Closed += (menu, evt) =>
+            {
+                Gui.Instance.destroyWidget(menu);
+            };
+
+            foreach (String file in editorController.OpenFiles)
+            {
+                MenuItem menuItem = popupMenu.addItem(file, MenuItemType.Normal, file);
+            }
+
+            LayerManager.Instance.upLayerItem(popupMenu);
+            popupMenu.ensureVisible();
+            popupMenu.setVisibleSmooth(true);
         }
     }
 }

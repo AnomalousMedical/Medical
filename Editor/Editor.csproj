@@ -196,7 +196,9 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
-    <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout" />
+    <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbarFileButton.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\ExpandingGenericEditor.layout" />
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVerticalComponent.layout" />
