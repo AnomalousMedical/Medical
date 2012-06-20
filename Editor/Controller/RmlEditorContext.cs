@@ -9,6 +9,7 @@ using System.IO;
 using MyGUIPlugin;
 using Medical.Platform;
 using Engine.Platform;
+using Medical.Editor;
 
 namespace Medical
 {
@@ -59,6 +60,10 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Paragraph", "Paragraph", "NoIcon", "Edit", "Editor/Paragraph", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Header", "Header", "NoIcon", "Edit", "Editor/Header", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "NoIcon", "Edit", "Editor/ActionLink", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "NoIcon", "Edit", "Editor/Button", mvcContext));
             mvcContext.Views.add(taskbar);
 
             MvcController timelineEditorController = new MvcController("Editor");
@@ -95,6 +100,31 @@ namespace Medical
             {
                 textEditorComponent.selectAll();
             }));
+            timelineEditorController.Actions.add(new CallbackAction("Paragraph", context =>
+            {
+                textEditorComponent.insertText("<p>\n\n</p>");
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Header", context =>
+            {
+                textEditorComponent.insertText("<h1></h1>\n");
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("ActionLink", context =>
+            {
+                BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+                {
+                    textEditorComponent.insertText(String.Format("<a onclick=\"{0}\"></a>", result));
+                    return true;
+                });
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Button", context =>
+            {
+                BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+                {
+                    textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\"></input>", result));
+                    return true;
+                });
+            }));
+
             mvcContext.Controllers.add(timelineEditorController);
             MvcController common = new MvcController("Common");
             RunCommandsAction startup = new RunCommandsAction("Start");

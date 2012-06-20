@@ -41,6 +41,11 @@ namespace Medical.GUI
             text.setTextSelection(0, uint.MaxValue);
         }
 
+        internal void insertText(String insert)
+        {
+            text.insertText(insert, text.TextCursor);
+        }
+
         public String Text
         {
             get
