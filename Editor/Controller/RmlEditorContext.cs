@@ -60,10 +60,10 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Paragraph", "Paragraph", "NoIcon", "Edit", "Editor/Paragraph", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Header", "Header", "NoIcon", "Edit", "Editor/Header", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "NoIcon", "Edit", "Editor/ActionLink", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "NoIcon", "Edit", "Editor/Button", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Paragraph", "Paragraph", "Editor/ParagraphsIcon", "Edit", "Editor/Paragraph", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Header", "Header", "Editor/HeaderIcon", "Edit", "Editor/Header", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "Editor/LinksIcon", "Edit", "Editor/ActionLink", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Button", "Button", "Editor/AddButtonIcon", "Edit", "Editor/Button", mvcContext));
             mvcContext.Views.add(taskbar);
 
             MvcController timelineEditorController = new MvcController("Editor");
