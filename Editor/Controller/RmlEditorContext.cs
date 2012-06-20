@@ -55,10 +55,10 @@ namespace Medical
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
             //taskbar.addTask(new RunMvcContextActionTask("Close", "Close Rml File", "NoIcon", "File", "Editor/CloseCurrentFile", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "NoIcon", "Edit", "Editor/Cut", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "NoIcon", "Edit", "Editor/Copy", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "NoIcon", "Edit", "Editor/Paste", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "NoIcon", "Edit", "Editor/SelectAll", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
             mvcContext.Views.add(taskbar);
 
             MvcController timelineEditorController = new MvcController("Editor");
