@@ -117,6 +117,7 @@ namespace Medical
                 {
                     resource.save();
                 }
+                NotificationManager.showNotification("All files saved", "Editor/SaveAllIcon", 2);
             }
         }
 

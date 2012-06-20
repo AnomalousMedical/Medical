@@ -33,11 +33,15 @@ namespace Medical
 
         }
 
-        public CallbackTask(String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar)
+        public CallbackTask(String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar, ClickedCallback callback = null)
             : base(uniqueName, name, iconName, category)
         {
             this.Weight = weight;
             this.ShowOnTaskbar = showOnTaskbar;
+            if (callback != null)
+            {
+                this.OnClicked += callback;
+            }
         }
 
         public override void clicked(TaskPositioner positioner)
