@@ -10,7 +10,7 @@ using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
-    class RmlTypeController : EditorTypeController
+    class RmlTypeController : TextTypeController
     {
         private EditorController editorController;
         private GUIManager guiManager;
@@ -18,7 +18,7 @@ namespace Medical
         private RmlEditorContext editorContext;
 
         public RmlTypeController(EditorController editorController, GUIManager guiManager)
-            :base(".rml")
+            :base(".rml", editorController)
         {
             this.editorController = editorController;
             this.guiManager = guiManager;
@@ -32,11 +32,7 @@ namespace Medical
                 createNewRmlFile(file);
             }
 
-            String rmlText = null;
-            using (StreamReader streamReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
-            {
-                rmlText = streamReader.ReadToEnd();
-            }
+            String rmlText = loadText(file);
 
             editorContext = new RmlEditorContext(rmlText, file, this);
             editorContext.Shutdown += new Action<RmlEditorContext>(editorContext_Shutdown);
@@ -45,17 +41,9 @@ namespace Medical
             LastRmlFile = file;
         }
 
-        public override void closeFile(string file)
-        {
-            //does nothing for now cause these are not cached
-        }
-
         public void saveFile(String rml, String file)
         {
-            using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(file)))
-            {
-                streamWriter.Write(rml);
-            }
+            saveText(file, rml);
             editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
@@ -90,6 +78,7 @@ namespace Medical
 
         void editorContext_Shutdown(RmlEditorContext obj)
         {
+            updateCachedText(obj.CurrentFile, obj.CurrentText);
             if (editorContext == obj)
             {
                 editorContext = null;
@@ -98,6 +87,7 @@ namespace Medical
 
         void editorController_ProjectChanged(EditorController editorController)
         {
+            closeCurrentCachedResource();
             if (editorContext != null)
             {
                 editorContext.close();
@@ -107,10 +97,8 @@ namespace Medical
         void createNewRmlFile(String filePath)
         {
             Timeline timeline = new Timeline();
-            using (StreamWriter sw = new StreamWriter(editorController.ResourceProvider.openWriteStream(filePath)))
-            {
-                sw.Write(defaultRml);
-            }
+            creatingNewFile(filePath);
+            saveText(filePath, defaultRml);
             openFile(filePath);
         }
 

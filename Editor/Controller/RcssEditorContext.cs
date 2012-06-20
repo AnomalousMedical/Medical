@@ -142,6 +142,22 @@ namespace Medical
             }
         }
 
+        public string CurrentText
+        {
+            get
+            {
+                return textEditorComponent.Text;
+            }
+        }
+
+        public string CurrentFile
+        {
+            get
+            {
+                return currentFile;
+            }
+        }
+
         private void save()
         {
             if (textEditorComponent != null)

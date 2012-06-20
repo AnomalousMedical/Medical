@@ -9,7 +9,7 @@ using libRocketPlugin;
 
 namespace Medical
 {
-    class RcssTypeController : EditorTypeController
+    class RcssTypeController : TextTypeController
     {
         private EditorController editorController;
         private GUIManager guiManager;
@@ -18,7 +18,7 @@ namespace Medical
         private RmlTypeController rmlTypeController;
 
         public RcssTypeController(EditorController editorController, GUIManager guiManager, RmlTypeController rmlTypeController)
-            : base(".rcss")
+            : base(".rcss", editorController)
         {
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
@@ -33,27 +33,16 @@ namespace Medical
                 createNewRcssFile(file);
             }
 
-            String rmlText = null;
-            using (StreamReader streamReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
-            {
-                rmlText = streamReader.ReadToEnd();
-            }
+            String rmlText = loadText(file);
+
             rcssContext = new RcssEditorContext(rmlText, file, rmlTypeController.LastRmlFile, this);
             rcssContext.Shutdown += new Action<RcssEditorContext>(rcssContext_Shutdown);
             editorController.runEditorContext(rcssContext.MvcContext);
         }
 
-        public override void closeFile(string file)
-        {
-            //does nothing for now cause these are not cached
-        }
-
         public void saveFile(String rcss, String file)
         {
-            using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(file)))
-            {
-                streamWriter.Write(rcss);
-            }
+            saveText(file, rcss);
             Factory.ClearStyleSheetCache();
             editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
@@ -87,16 +76,14 @@ namespace Medical
 
         void createNewRcssFile(String filePath)
         {
-            Timeline timeline = new Timeline();
-            using (StreamWriter sw = new StreamWriter(editorController.ResourceProvider.openWriteStream(filePath)))
-            {
-                sw.Write(defaultRcss);
-            }
+            creatingNewFile(filePath);
+            saveText(filePath, defaultRcss);
             openFile(filePath);
         }
 
         void rcssContext_Shutdown(RcssEditorContext obj)
         {
+            updateCachedText(obj.CurrentFile, obj.CurrentText);
             if (rcssContext == obj)
             {
                 rcssContext = null;
@@ -105,6 +92,7 @@ namespace Medical
 
         void editorController_ProjectChanged(EditorController editorController)
         {
+            closeCurrentCachedResource();
             if (rcssContext != null)
             {
                 rcssContext.close();
