@@ -54,17 +54,10 @@ namespace Medical
         public void updateCachedText(String file, String text)
         {
             //Update the cached string
-            if (currentCachedResource.isSameFile(file))
+            TextCachedResource cachedResource = editorController.ResourceProvider.ResourceCache[file] as TextCachedResource;
+            if (cachedResource != null)
             {
-                currentCachedResource.CachedString = text;
-            }
-            else
-            {
-                TextCachedResource cachedResource = editorController.ResourceProvider.ResourceCache[file] as TextCachedResource;
-                if (cachedResource != null)
-                {
-                    cachedResource.CachedString = text;
-                }
+                cachedResource.CachedString = text;
             }
         }
 
