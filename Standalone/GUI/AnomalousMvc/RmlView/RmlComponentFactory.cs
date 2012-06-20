@@ -25,6 +25,14 @@ namespace Medical.GUI.AnomalousMvc
                 return new RmlView(name);
             });
             browser.addNode("", null, rmlNode);
+
+            rmlNode = new GenericBrowserNode<ViewCollection.CreateView>("Closing Rml View", name =>
+            {
+                RmlView rmlView = new RmlView(name);
+                rmlView.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
+                return rmlView;
+            });
+            browser.addNode("", null, rmlNode);
             browser.DefaultSelection = rmlNode;
         }
     }
