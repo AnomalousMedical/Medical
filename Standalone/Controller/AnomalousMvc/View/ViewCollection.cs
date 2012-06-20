@@ -13,6 +13,8 @@ namespace Medical.Controller.AnomalousMvc
 {
     public class ViewCollection : SaveableEditableItemCollection<View>
     {
+        public delegate View CreateView(String name);
+
         private static readonly Type[] constructorArgs = { typeof(String) };
 
         public ViewCollection()
@@ -26,11 +28,11 @@ namespace Medical.Controller.AnomalousMvc
             {
                 callback.runCustomQuery(CustomQueries.CreateViewBrowser, delegate(Browser browser, ref string errorPrompt)
                 {
-                    callback.showInputBrowser(browser, delegate(Type returnedTypeInfo, String name, ref string err)
+                    callback.showInputBrowser(browser, delegate(CreateView createView, String name, ref string err)
                     {
                         if (!hasItem(name))
                         {
-                            add((View)Activator.CreateInstance(returnedTypeInfo, name));
+                            add(createView(name));
                             return true;
                         }
                         err = String.Format("A view named {0} already exists. Please input another name.", name);

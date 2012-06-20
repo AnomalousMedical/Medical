@@ -20,7 +20,10 @@ namespace Medical.GUI.AnomalousMvc
 
         public void createViewBrowser(Browser browser)
         {
-            browser.addNode("", null, new BrowserNode("Navigation View", typeof(NavigationView)));
+            browser.addNode("", null, new GenericBrowserNode<ViewCollection.CreateView>("Navigation View", name =>
+            {
+                return new NavigationView(name);
+            }));
         }
     }
 }
