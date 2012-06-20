@@ -10,38 +10,30 @@ namespace Medical
 {
     class PluginTypeController : SaveableTypeController
     {
-        public const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
-
-        private DDAtlasPluginEditor editor;
         private EditorController editorController;
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
-        private String currentFile;
+        private PluginEditorContext editorContext;
+        private const String Icon = "PlugInEditorIcon";
 
-        public PluginTypeController(DDAtlasPluginEditor editor, EditorController editorController)
+        public PluginTypeController(EditorController editorController)
             :base(".ddp", editorController)
         {
-            this.editor = editor;
-            editor.GotFocus += new EventHandler(editor_GotFocus);
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-
-            extensionActions.Add(new ExtensionAction("Close Plugin", "File", close));
-            extensionActions.Add(new ExtensionAction("Save Plugin", "File", savePlugin));
-            extensionActions.Add(new ExtensionAction("Save Plugin As", "File", savePluginAs));
         }
 
         public override void openFile(string file)
         {
-            currentFile = file;
             DDAtlasPlugin plugin = (DDAtlasPlugin)loadObject(file);
-            editor.CurrentPlugin = plugin;
-            editor.updateCaption(file);
-            if (!editor.Visible)
-            {
-                editor.Visible = true;
-            }
-            editorController.ExtensionActions = extensionActions;
-            editor.bringToFront();
+
+            editorContext = new PluginEditorContext(plugin, file, this);
+            editorContext.Shutdown += new Action<PluginEditorContext>(editorContext_Shutdown);
+            editorController.runEditorContext(editorContext.MvcContext);
+        }
+
+        public void saveFile(DDAtlasPlugin plugin, string file)
+        {
+            saveObject(file, plugin);
+            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -72,45 +64,9 @@ namespace Medical
         private void createNewPlugin(String filePath)
         {
             DDAtlasPlugin newPlugin = new DDAtlasPlugin();
+            creatingNewFile(filePath);
             saveObject(filePath, newPlugin);
             openFile(filePath);
-        }
-
-        void editor_GotFocus(object sender, EventArgs e)
-        {
-            editorController.ExtensionActions = extensionActions;
-        }
-
-        private void savePlugin()
-        {
-            if (currentFile != null)
-            {
-                saveObject(currentFile, editor.CurrentPlugin);
-            }
-            else
-            {
-                savePluginAs();
-            }
-        }
-
-        private void savePluginAs()
-        {
-            using (FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, "Save a plugin definition", "", "", PLUGIN_WILDCARD))
-            {
-                if (fileDialog.showModal() == NativeDialogResult.OK)
-                {
-                    try
-                    {
-                        currentFile = fileDialog.Path;
-                        saveObject(currentFile, editor.CurrentPlugin);
-                        editor.updateCaption(currentFile);
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.show("Save error", "Exception saving plugin:\n." + e.Message, MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                    }
-                }
-            }
         }
 
         void editorController_ProjectChanged(EditorController editorController)
@@ -120,9 +76,19 @@ namespace Medical
 
         private void close()
         {
-            editor.CurrentPlugin = null;
-            editor.updateCaption(null);
+            if (editorContext != null)
+            {
+                editorContext.close();
+            }
             closeCurrentCachedResource();
+        }
+
+        void editorContext_Shutdown(PluginEditorContext obj)
+        {
+            if (editorContext == obj)
+            {
+                editorContext = null;
+            }
         }
     }
 }

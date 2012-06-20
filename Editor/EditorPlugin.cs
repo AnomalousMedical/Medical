@@ -24,7 +24,6 @@ namespace Medical
 
         private AspectRatioTask aspectRatioTask;
         private ProjectExplorer projectExplorer;
-        private DDAtlasPluginEditor pluginEditor;
 
         private EditorController editorController;
         private MedicalUICallback medicalUICallback;
@@ -37,7 +36,6 @@ namespace Medical
 
         public void Dispose()
         {
-            pluginEditor.Dispose();
             projectExplorer.Dispose();
             movementSequenceEditor.Dispose();
             scratchArea.Dispose();
@@ -84,22 +82,18 @@ namespace Medical
             projectExplorer = new ProjectExplorer(editorController);
             guiManager.addManagedDialog(projectExplorer);
 
-            pluginEditor = new DDAtlasPluginEditor(medicalUICallback, standaloneController.AtlasPluginManager, editorController);
-            guiManager.addManagedDialog(pluginEditor);
-
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "ScratchAreaIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(pluginEditor, "Medical.DDPluginEditor", "Plugin Editor", "PlugInEditorIcon", TaskMenuCategories.Editor));
 
             RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager);
             editorController.addTypeController(rmlTypeController);
             editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
             editorController.addTypeController(new MvcTypeController(editorController));
-            editorController.addTypeController(new PluginTypeController(pluginEditor, editorController));
+            editorController.addTypeController(new PluginTypeController(editorController));
             editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
             TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propEditController);
             timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
@@ -189,14 +183,6 @@ namespace Medical
             get
             {
                 return GetType().Assembly.GetName().Version;
-            }
-        }
-
-        public DDAtlasPluginEditor AtlasPluginEditor
-        {
-            get
-            {
-                return pluginEditor;
             }
         }
 

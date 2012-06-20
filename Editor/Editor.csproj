@@ -77,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PluginEditorContext.cs" />
     <Compile Include="Controller\EditorResourceProvider\TextCachedResource.cs" />
     <Compile Include="Controller\MvcEditorContext.cs" />
     <Compile Include="Controller\RcssEditorContext.cs" />
