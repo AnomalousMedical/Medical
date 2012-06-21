@@ -282,9 +282,25 @@ namespace Medical
             resourceProvider = new EditorResourceProvider(projectPath);
             plugin.TimelineController.setResourceProvider(ResourceProvider);
             BrowserWindowController.setResourceProvider(ResourceProvider);
+
             if (ProjectChanged != null)
             {
                 ProjectChanged.Invoke(this);
+            }
+
+            //Try to open a default mvc context
+            String mvcFile = "MvcContext.mvc";
+            if (resourceProvider.exists(mvcFile))
+            {
+                openFile(mvcFile);
+            }
+            else
+            {
+                String[] files = resourceProvider.listFiles("*.mvc", "", true);
+                if (files.Length > 0)
+                {
+                    openFile(files[0]);
+                }
             }
         }
     }
