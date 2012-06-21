@@ -91,17 +91,33 @@ namespace Medical.GUI
             get
             {
                 Element document = rocketWidget.Context.GetDocument(0);
-                Element parent = document;
-                if (parent != null)
+                if (document != null)
                 {
-                    while (parent.ParentNode != null)
+                    Variant templateName = document.GetAttribute("template");
+                    if (templateName == null)
                     {
-                        parent = parent.ParentNode;
+                        return document.InnerRml;
                     }
-                }
-                if (parent != null)
-                {
-                    return document.InnerRml;
+                    else
+                    {
+                        Template template = TemplateCache.GetTemplate(templateName.StringValue);
+                        if (template != null)
+                        {
+                            Element contentDocument = document.GetElementById(template.Content);
+                            if (contentDocument != null)
+                            {
+                                return contentDocument.InnerRml;
+                            }
+                            else
+                            {
+                                return document.InnerRml;
+                            }
+                        }
+                        else
+                        {
+                            return document.InnerRml;
+                        }
+                    }
                 }
                 else
                 {
