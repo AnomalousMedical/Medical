@@ -39,6 +39,12 @@ namespace Medical.GUI
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
             propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
 
+            Button applyButton = (Button)widget.findWidget("ApplyButton");
+            applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
+
+            Button cancelButton = (Button)widget.findWidget("CancelButton");
+            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
             //Build edit interface
             EditInterface editInterface = new EditInterface(element.TagName);
             int index = 0;
@@ -60,6 +66,7 @@ namespace Medical.GUI
                 }
             }
             EditInterface = editInterface;
+            ApplyChanges = true;
         }
 
         public override void Dispose()
@@ -114,6 +121,19 @@ namespace Medical.GUI
             {
                 text.EditWordWrap = value;
             }
+        }
+
+        public bool ApplyChanges { get; set; }
+
+        void applyButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            this.hide();
+        }
+
+        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            ApplyChanges = false;
+            this.hide();
         }
     }
 }

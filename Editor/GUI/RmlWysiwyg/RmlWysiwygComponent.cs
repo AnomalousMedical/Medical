@@ -227,7 +227,7 @@ namespace Medical.GUI
             RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, element, (int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
             editor.Hiding += (src, evt) =>
             {
-                if (!disposed)
+                if (editor.ApplyChanges && !disposed)
                 {
                     element.InnerRml = currentEditor.Text;
                     rocketWidget.renderOnNextFrame();

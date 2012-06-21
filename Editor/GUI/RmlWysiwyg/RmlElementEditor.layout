@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="96 60 352 343" layer="Popup">
+    <Widget type="Widget" skin="PanelSkin" position="96 60 352 368" layer="Popup">
         <Widget type="EditBox" skin="WordWrapWhite" position="7 6 337 207" align="Stretch" name="Text">
             <Property key="MultiLine" value="true"/>
             <Property key="WordWrap" value="true"/>
@@ -10,6 +10,12 @@
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="7 213 121 15" align="Left Bottom">
             <Property key="Caption" value="Attributes"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="7 337 83 25" name="ApplyButton">
+            <Property key="Caption" value="Apply"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="94 337 83 25" name="CancelButton">
+            <Property key="Caption" value="Cancel"/>
         </Widget>
     </Widget>
 </MyGUI>
