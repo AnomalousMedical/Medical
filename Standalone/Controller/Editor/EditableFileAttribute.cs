@@ -7,7 +7,7 @@ using Engine.Reflection;
 
 namespace Medical.Editor
 {
-    class EditableFileAttribute : EditableAttribute
+    public class EditableFileAttribute : EditableAttribute
     {
         private String fileSearchPattern;
         private String prompt;

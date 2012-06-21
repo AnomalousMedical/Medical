@@ -23,7 +23,7 @@ namespace Medical
         }
 
         private TextEditorComponent textEditorComponent;
-        private RmlWidgetComponent rmlComponent;
+        private RmlWysiwygComponent rmlComponent;
         private String currentFile;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
@@ -43,7 +43,7 @@ namespace Medical
                 textEditorComponent = component;
             };
             mvcContext.Views.add(textEditorView);
-            RmlView rmlView = new RmlView("RmlView");
+            RmlWysiwygView rmlView = new RmlWysiwygView("RmlView");
             rmlView.ViewLocation = ViewLocations.Right;
             rmlView.IsWindow = true;
             rmlView.RmlFile = file;
