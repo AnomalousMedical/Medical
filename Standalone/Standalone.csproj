@@ -128,6 +128,8 @@
     <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
+    <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
+    <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />
     <Compile Include="Controller\Resources\ResourceProviderRocketFSExtension.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />

@@ -17,6 +17,7 @@ namespace Medical.GUI
             TextureDatabase.ReleaseTextures();
             OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", RocketImageOgreGroup);
             OgreResourceGroupManager.getInstance().destroyResourceGroup(RocketImageOgreGroup);
+            OgreArchiveManager.getInstance().unload("__RmlViewerFilesystem__");
             OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", RocketRawOgreFilesystemArchive.ArchiveName, RocketImageOgreGroup, false);
         }
 

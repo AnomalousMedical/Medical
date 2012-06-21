@@ -17,6 +17,7 @@ namespace Medical.GUI
         private EventListenerInstancer eventListenerInstancer;
         private static RocketRawOgreFilesystemArchiveFactory rawFilesystemArchives = new RocketRawOgreFilesystemArchiveFactory();
         private static RocketRenderSystemListener rocketRenderSystemListener;
+        private static OgreResourceProviderArchiveFactory resourceProviderArchiveFactory = new OgreResourceProviderArchiveFactory();
 
         public RocketGuiManager()
         {
@@ -37,6 +38,11 @@ namespace Medical.GUI
         /// </summary>
         public void destroyOgreCustomArchive()
         {
+            if (resourceProviderArchiveFactory != null)
+            {
+                resourceProviderArchiveFactory.Dispose();
+                resourceProviderArchiveFactory = null;
+            }
             if (rawFilesystemArchives != null)
             {
                 rawFilesystemArchives.Dispose();
@@ -52,6 +58,7 @@ namespace Medical.GUI
         {
             //Create a rocket group in ogre
             Root.getSingleton().addArchiveFactory(rawFilesystemArchives);
+            Root.getSingleton().addArchiveFactory(resourceProviderArchiveFactory);
 
             rocketRenderSystemListener = new RocketRenderSystemListener();
             Root.getSingleton().getRenderSystem().addListener(rocketRenderSystemListener);
