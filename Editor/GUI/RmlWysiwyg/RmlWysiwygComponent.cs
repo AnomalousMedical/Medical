@@ -8,6 +8,7 @@ using libRocketPlugin;
 using Medical.GUI.AnomalousMvc;
 using System.Xml;
 using System.IO;
+using Engine.Editing;
 
 namespace Medical.GUI
 {
@@ -22,13 +23,15 @@ namespace Medical.GUI
         private String documentStart = "<body>";
         private String documentEnd = "</body>";
         private bool disposed = false;
+        private MedicalUICallback uiCallback;
 
         private AnomalousMvcContext context;
 
-        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost, MedicalUICallback uiCallback)
             : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
             this.context = context;
+            this.uiCallback = uiCallback;
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
@@ -212,8 +215,7 @@ namespace Medical.GUI
 
         private void showRmlElementEditor(Element element)
         {
-            RmlElementEditor editor = RmlElementEditor.openTextEditor((int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
-            editor.Text = element.InnerRml;
+            RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, element, (int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
             editor.Hiding += (src, evt) =>
             {
                 if (!disposed)

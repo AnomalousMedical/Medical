@@ -10,11 +10,18 @@ namespace Medical.GUI
 {
     class RmlWysiwygComponentFactory : ViewHostComponentFactory
     {
+        private MedicalUICallback uiCallback;
+
+        public RmlWysiwygComponentFactory(MedicalUICallback uiCallback)
+        {
+            this.uiCallback = uiCallback;
+        }
+
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             if (view is RmlWysiwygView)
             {
-                return new RmlWysiwygComponent((RmlWysiwygView)view, context, viewHost);
+                return new RmlWysiwygComponent((RmlWysiwygView)view, context, viewHost, uiCallback);
             }
             return null;
         }

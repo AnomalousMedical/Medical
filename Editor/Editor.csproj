@@ -165,6 +165,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RmlEditableProperty.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlElementEditor.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
