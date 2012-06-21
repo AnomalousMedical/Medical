@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelSkin" position="85 60 257 170" layer="Popup">
+        <Widget type="EditBox" skin="WordWrapWhite" position="7 6 242 155" name="Text">
+            <Property key="MultiLine" value="true"/>
+            <Property key="WordWrap" value="true"/>
+        </Widget>
+    </Widget>
+</MyGUI>

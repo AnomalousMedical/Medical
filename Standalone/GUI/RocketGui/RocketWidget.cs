@@ -258,6 +258,34 @@ namespace Medical.GUI
             }
         }
 
+        public event MyGUIEvent MouseButtonClick
+        {
+            add
+            {
+                imageBox.MouseButtonClick += value;
+            }
+            remove
+            {
+                imageBox.MouseButtonClick -= value;
+            }
+        }
+
+        public int AbsoluteLeft
+        {
+            get
+            {
+                return imageBox.AbsoluteLeft;
+            }
+        }
+
+        public int AbsoluteTop
+        {
+            get
+            {
+                return imageBox.AbsoluteTop;
+            }
+        }
+
         void imageBox_MouseMove(Widget source, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;

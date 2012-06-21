@@ -25,6 +25,7 @@ namespace Medical.GUI
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
+            rocketWidget.MouseButtonClick += new MyGUIEvent(rocketWidget_MouseButtonClick);
             imageHeight = rmlImage.Height;
 
             if (view.RmlFile != null)
@@ -83,6 +84,37 @@ namespace Medical.GUI
                 }
                 //RocketEventListenerInstancer.resetEventController();
             }
+        }
+
+        void rocketWidget_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Element element = rocketWidget.Context.GetFocusElement();
+            if (element != null)
+            {
+                //MouseEventArgs me = ((MouseEventArgs)e);
+                RmlElementEditor editor = RmlElementEditor.openTextEditor((int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
+                editor.Text = element.InnerRml;
+                editor.Hiding += (src, evt) =>
+                {
+                    element.InnerRml = editor.Text;
+                    rocketWidget.renderOnNextFrame();
+                };
+
+                //Logging.Log.Debug(element.TagName);
+                //Logging.Log.Debug(element.InnerRml);
+
+                //int index = 0;
+                //String name = null;
+                //String value = null;
+                //while (element.IterateAttributes(ref index, ref name, ref value))
+                //{
+                //    Logging.Log.Debug("Attr: {0} - {1}", name, value);
+                //}
+            }
+
+            //Element rootElement = rocketWidget.Context.GetRootElement();
+            //Logging.Log.Debug(rootElement.TagName);
+            //Logging.Log.Debug(rootElement.InnerRml);
         }
     }
 }
