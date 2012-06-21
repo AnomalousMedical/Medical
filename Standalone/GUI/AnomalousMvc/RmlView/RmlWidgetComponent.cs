@@ -29,7 +29,7 @@ namespace Medical.GUI.AnomalousMvc
             if (view.RmlFile != null)
             {
                 RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
-                using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(view.RmlFile)))
+                using (ElementDocument document = rocketWidget.Context.LoadDocument(view.RmlFile))
                 {
                     if (document != null)
                     {
@@ -71,7 +71,7 @@ namespace Medical.GUI.AnomalousMvc
             if (documentName != null)
             {
                 RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
-                using (ElementDocument document = rocketWidget.Context.LoadDocument(context.getFullPath(documentName)))
+                using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
                 {
                     if (document != null)
                     {

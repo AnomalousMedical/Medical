@@ -77,11 +77,6 @@ namespace Medical.Controller.AnomalousMvc
             queuedActions.Enqueue(address);
         }
 
-        public string getFullPath(string file)
-        {
-            return resourceProvider.getFullFilePath(file);
-        }
-
         public void queueTimeline(string timeline)
         {
             queuedTimeline = timeline;
