@@ -196,6 +196,7 @@ namespace Medical.Controller.AnomalousMvc
             }
             currentContext = context;
             timelineController.MvcContext = context;
+            RocketGuiManager.clearAllCaches();
             currentFSExtension = new ResourceProviderRocketFSExtension(context.ResourceProvider);
             RocketInterface.Instance.FileInterface.addExtension(currentFSExtension);
             context.starting(this);

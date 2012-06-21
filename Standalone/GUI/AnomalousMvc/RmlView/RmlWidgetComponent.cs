@@ -63,10 +63,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public void reloadDocument(String documentName)
         {
-            RocketOgreTextureManager.refreshTextures();
-
-            Factory.ClearStyleSheetCache();
-            rocketWidget.Context.UnloadAllDocuments();
+            RocketGuiManager.clearAllCaches();
 
             if (documentName != null)
             {

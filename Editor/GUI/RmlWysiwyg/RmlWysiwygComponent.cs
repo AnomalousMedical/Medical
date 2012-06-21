@@ -67,10 +67,7 @@ namespace Medical.GUI
 
         public void reloadDocument(String documentName)
         {
-            RocketOgreTextureManager.refreshTextures();
-
-            Factory.ClearStyleSheetCache();
-            TemplateCache.ClearTemplateCache();
+            RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
 
             if (documentName != null)
