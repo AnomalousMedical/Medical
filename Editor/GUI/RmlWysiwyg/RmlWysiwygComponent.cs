@@ -6,6 +6,8 @@ using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
 using libRocketPlugin;
 using Medical.GUI.AnomalousMvc;
+using System.Xml;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -17,6 +19,9 @@ namespace Medical.GUI
         private ImageBox rmlImage;
         private int imageHeight;
         private int imageWidth;
+        private String documentStart = "<body>";
+        private String documentEnd = "</body>";
+        private bool disposed = false;
 
         private AnomalousMvcContext context;
 
@@ -37,6 +42,7 @@ namespace Medical.GUI
                 {
                     if (document != null)
                     {
+                        saveDocumentStartAndEnd(view.RmlFile);
                         document.Show();
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
@@ -50,6 +56,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            disposed = true;
             rocketWidget.Dispose();
             base.Dispose();
         }
@@ -77,6 +84,7 @@ namespace Medical.GUI
                 {
                     if (document != null)
                     {
+                        saveDocumentStartAndEnd(documentName);
                         document.Show();
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
@@ -96,7 +104,7 @@ namespace Medical.GUI
                     Variant templateName = document.GetAttribute("template");
                     if (templateName == null)
                     {
-                        return document.InnerRml;
+                        return formatRml(document.InnerRml);
                     }
                     else
                     {
@@ -106,16 +114,16 @@ namespace Medical.GUI
                             Element contentDocument = document.GetElementById(template.Content);
                             if (contentDocument != null)
                             {
-                                return contentDocument.InnerRml;
+                                return formatRml(contentDocument.InnerRml);
                             }
                             else
                             {
-                                return document.InnerRml;
+                                return formatRml(document.InnerRml);
                             }
                         }
                         else
                         {
-                            return document.InnerRml;
+                            return formatRml(document.InnerRml);
                         }
                     }
                 }
@@ -124,6 +132,40 @@ namespace Medical.GUI
                     return null;
                 }
             }
+        }
+
+        private String formatRml(String inputRml)
+        {
+            inputRml = inputRml.Insert(0, documentStart);
+            inputRml += documentEnd;
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(inputRml);
+            StringBuilder sb = new StringBuilder();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+            settings.NewLineChars = "\n";
+            settings.NewLineHandling = NewLineHandling.Replace;
+            using (XmlWriter xmlWriter = XmlWriter.Create(sb, settings))
+            {
+                xmlDoc.Save(xmlWriter);
+            }
+            return sb.ToString();
+        }
+
+        private void saveDocumentStartAndEnd(String file)
+        {
+            String inputRml;
+            using (StreamReader sr = new StreamReader(context.ResourceProvider.openFile(file)))
+            {
+                inputRml = sr.ReadToEnd();
+            }
+            int bodyStart = inputRml.IndexOf("<body", StringComparison.InvariantCultureIgnoreCase);
+            bodyStart = inputRml.IndexOf(">", bodyStart, StringComparison.InvariantCultureIgnoreCase) + 1;
+            documentStart = inputRml.Substring(0, bodyStart);
+
+            int closeBodyStart = inputRml.IndexOf("</body", bodyStart, StringComparison.InvariantCultureIgnoreCase);
+            documentEnd = inputRml.Substring(closeBodyStart);
         }
 
         void rocketWidget_MouseButtonClick(Widget source, EventArgs e)
@@ -166,11 +208,14 @@ namespace Medical.GUI
             editor.Text = element.InnerRml;
             editor.Hiding += (src, evt) =>
             {
-                element.InnerRml = editor.Text;
-                rocketWidget.renderOnNextFrame();
-                if (RmlEdited != null)
+                if (!disposed)
                 {
-                    RmlEdited.Invoke(this);
+                    element.InnerRml = editor.Text;
+                    rocketWidget.renderOnNextFrame();
+                    if (RmlEdited != null)
+                    {
+                        RmlEdited.Invoke(this);
+                    }
                 }
             };
         }
