@@ -50,6 +50,10 @@ namespace Medical
             rmlView.ComponentCreated += (view, component) =>
             {
                 rmlComponent = component;
+                rmlComponent.RmlEdited += rmlEditor =>
+                {
+                    textEditorComponent.Text = rmlEditor.CurrentRml;
+                };
             };
             mvcContext.Views.add(rmlView);
 

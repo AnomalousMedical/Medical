@@ -11,6 +11,8 @@ namespace Medical.GUI
 {
     public class RmlWysiwygComponent : LayoutComponent
     {
+        public event Action<RmlWysiwygComponent> RmlEdited;
+
         private RocketWidget rocketWidget;
         private ImageBox rmlImage;
         private int imageHeight;
@@ -68,6 +70,7 @@ namespace Medical.GUI
             RocketOgreTextureManager.refreshTextures();
 
             Factory.ClearStyleSheetCache();
+            TemplateCache.ClearTemplateCache();
             rocketWidget.Context.UnloadAllDocuments();
 
             if (documentName != null)
@@ -86,19 +89,50 @@ namespace Medical.GUI
             }
         }
 
+        public String CurrentRml
+        {
+            get
+            {
+                Element document = rocketWidget.Context.GetDocument(0);
+                Element parent = document;
+                if (parent != null)
+                {
+                    while (parent.ParentNode != null)
+                    {
+                        parent = parent.ParentNode;
+                    }
+                }
+                if (parent != null)
+                {
+                    return document.InnerRml;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         void rocketWidget_MouseButtonClick(Widget source, EventArgs e)
         {
             Element element = rocketWidget.Context.GetFocusElement();
             if (element != null)
             {
-                //MouseEventArgs me = ((MouseEventArgs)e);
-                RmlElementEditor editor = RmlElementEditor.openTextEditor((int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
-                editor.Text = element.InnerRml;
-                editor.Hiding += (src, evt) =>
+                switch (element.TagName)
                 {
-                    element.InnerRml = editor.Text;
-                    rocketWidget.renderOnNextFrame();
-                };
+                    case "h1":
+                        showRmlElementEditor(element);
+                        break;
+                    case "p":
+                        showRmlElementEditor(element);
+                        break;
+                    case "a":
+                        showRmlElementEditor(element);
+                        break;
+                    case "input":
+                        showRmlElementEditor(element);
+                        break;
+                }
 
                 //Logging.Log.Debug(element.TagName);
                 //Logging.Log.Debug(element.InnerRml);
@@ -111,10 +145,21 @@ namespace Medical.GUI
                 //    Logging.Log.Debug("Attr: {0} - {1}", name, value);
                 //}
             }
+        }
 
-            //Element rootElement = rocketWidget.Context.GetRootElement();
-            //Logging.Log.Debug(rootElement.TagName);
-            //Logging.Log.Debug(rootElement.InnerRml);
+        private void showRmlElementEditor(Element element)
+        {
+            RmlElementEditor editor = RmlElementEditor.openTextEditor((int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
+            editor.Text = element.InnerRml;
+            editor.Hiding += (src, evt) =>
+            {
+                element.InnerRml = editor.Text;
+                rocketWidget.renderOnNextFrame();
+                if (RmlEdited != null)
+                {
+                    RmlEdited.Invoke(this);
+                }
+            };
         }
     }
 }

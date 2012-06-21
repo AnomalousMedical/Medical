@@ -9,6 +9,7 @@ using Engine.Saving.XMLSaver;
 using System.Xml;
 using System.IO;
 using Medical.Model;
+using libRocketPlugin;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -24,6 +25,7 @@ namespace Medical.Controller.AnomalousMvc
         private GUIManager guiManager;
         private StandaloneController standaloneController;
         private AnomalousMvcContext currentContext = null;
+        private ResourceProviderRocketFSExtension currentFSExtension = null;
 
         private XmlSaver xmlSaver = new XmlSaver();
 
@@ -194,6 +196,8 @@ namespace Medical.Controller.AnomalousMvc
             }
             currentContext = context;
             timelineController.MvcContext = context;
+            currentFSExtension = new ResourceProviderRocketFSExtension(context.ResourceProvider);
+            RocketInterface.Instance.FileInterface.addExtension(currentFSExtension);
             context.starting(this);
             context.runAction(context.StartupAction);
         }
@@ -210,6 +214,8 @@ namespace Medical.Controller.AnomalousMvc
 
         public void shutdownContext(AnomalousMvcContext context)
         {
+            RocketInterface.Instance.FileInterface.removeExtension(currentFSExtension);
+            currentFSExtension = null;
             currentContext = null;
             timelineController.stopPlayback(false);
             context.runFinalAction(context.ShutdownAction);
