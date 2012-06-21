@@ -24,6 +24,7 @@ namespace Medical.GUI
         private String documentEnd = "</body>";
         private bool disposed = false;
         private MedicalUICallback uiCallback;
+        RmlElementEditor currentEditor = null;
 
         private AnomalousMvcContext context;
 
@@ -73,6 +74,14 @@ namespace Medical.GUI
                 imageWidth = widget.Width;
             }
             base.topLevelResized();
+        }
+
+        public void aboutToSaveRml()
+        {
+            if (currentEditor != null)
+            {
+                currentEditor.hide();
+            }
         }
 
         public void reloadDocument(String documentName)
@@ -220,14 +229,19 @@ namespace Medical.GUI
             {
                 if (!disposed)
                 {
-                    element.InnerRml = editor.Text;
+                    element.InnerRml = currentEditor.Text;
                     rocketWidget.renderOnNextFrame();
                     if (RmlEdited != null)
                     {
                         RmlEdited.Invoke(this);
                     }
                 }
+                if (currentEditor == editor)
+                {
+                    currentEditor = null;
+                }
             };
+            currentEditor = editor;
         }
     }
 }

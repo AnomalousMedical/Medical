@@ -106,17 +106,17 @@ namespace Medical
             }));
             timelineEditorController.Actions.add(new CallbackAction("Paragraph", context =>
             {
-                textEditorComponent.insertText("<p>\n\n</p>");
+                textEditorComponent.insertText("<p>Empty Paragraph</p>");
             }));
             timelineEditorController.Actions.add(new CallbackAction("Header", context =>
             {
-                textEditorComponent.insertText("<h1></h1>\n");
+                textEditorComponent.insertText("<h1>Empty Header</h1>\n");
             }));
             timelineEditorController.Actions.add(new CallbackAction("ActionLink", context =>
             {
                 BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
                 {
-                    textEditorComponent.insertText(String.Format("<a onclick=\"{0}\"></a>", result));
+                    textEditorComponent.insertText(String.Format("<a onclick=\"{0}\">Empty Link</a>", result));
                     return true;
                 });
             }));
@@ -124,7 +124,7 @@ namespace Medical
             {
                 BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
                 {
-                    textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\"></input>", result));
+                    textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
                     return true;
                 });
             }));
@@ -191,6 +191,10 @@ namespace Medical
 
         private void save()
         {
+            if (rmlComponent != null)
+            {
+                rmlComponent.aboutToSaveRml();
+            }
             if (textEditorComponent != null)
             {
                 rmlTypeController.saveFile(textEditorComponent.Text, currentFile);
