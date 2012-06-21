@@ -138,19 +138,27 @@ namespace Medical.GUI
         {
             inputRml = inputRml.Insert(0, documentStart);
             inputRml += documentEnd;
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(inputRml);
-            StringBuilder sb = new StringBuilder();
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = "\t";
-            settings.NewLineChars = "\n";
-            settings.NewLineHandling = NewLineHandling.Replace;
-            using (XmlWriter xmlWriter = XmlWriter.Create(sb, settings))
+            try
             {
-                xmlDoc.Save(xmlWriter);
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(inputRml);
+                StringBuilder sb = new StringBuilder();
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = "\t";
+                settings.NewLineChars = "\n";
+                settings.NewLineHandling = NewLineHandling.Replace;
+                using (XmlWriter xmlWriter = XmlWriter.Create(sb, settings))
+                {
+                    xmlDoc.Save(xmlWriter);
+                }
+                return sb.ToString();
             }
-            return sb.ToString();
+            catch (Exception ex)
+            {
+                MessageBox.show("There was an error parsing your RML back into a nice format.\nYou will want to correct it as it means your XML is malformed.\nThe error was:\n" + ex.Message, "RML Format Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                return inputRml;
+            }
         }
 
         private void saveDocumentStartAndEnd(String file)
