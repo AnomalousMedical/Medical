@@ -35,6 +35,8 @@ namespace Medical.GUI
         {
             text = (EditBox)widget.findWidget("Text");
             Text = element.InnerRml;
+            text.KeyButtonReleased += new MyGUIEvent(text_KeyButtonReleased);
+            InputManager.Instance.setKeyFocusWidget(text);
 
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
             propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
@@ -147,6 +149,15 @@ namespace Medical.GUI
         {
             ApplyChanges = false;
             this.hide();
+        }
+
+        void text_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_RETURN && InputManager.Instance.isControlPressed())
+            {
+                this.hide();
+            }
         }
     }
 }

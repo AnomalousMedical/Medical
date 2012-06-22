@@ -173,7 +173,6 @@
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponent.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
-    <Compile Include="GUI\TextEditor\TextEditor.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponent.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponentFactory.cs" />
     <Compile Include="GUI\TextEditor\TextEditorView.cs" />
@@ -225,7 +224,6 @@
     <EmbeddedResource Include="GUI\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />
-    <EmbeddedResource Include="GUI\TextEditor\TextEditor.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\PropTimeline.layout" />
     <EmbeddedResource Include="GUI\OpenPropManager\OpenPropManager.layout" />
