@@ -68,6 +68,7 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("Header", "Header", "Editor/HeaderIcon", "Edit", "Editor/Header", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "Editor/LinksIcon", "Edit", "Editor/ActionLink", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Button", "Button", "Editor/AddButtonIcon", "Edit", "Editor/Button", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Image", "Image", "Editor/ImageIcon", "Edit", "Editor/Image", mvcContext));
             mvcContext.Views.add(taskbar);
 
             MvcController timelineEditorController = new MvcController("Editor");
@@ -130,6 +131,15 @@ namespace Medical
                 {
                     //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
                     rmlComponent.insertButton(result);
+                    return true;
+                });
+            }));
+            timelineEditorController.Actions.add(new CallbackAction("Image", context =>
+            {
+                BrowserWindow<String>.GetInput(BrowserWindowController.createFileBrowser("*.png", "Image Files"), true, delegate(String result, ref string errorPrompt)
+                {
+                    //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
+                    rmlComponent.insertImage(result);
                     return true;
                 });
             }));

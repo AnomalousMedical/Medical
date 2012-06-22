@@ -12,7 +12,7 @@
   <Resource type="ResourceImageSet" name="Editor/CopyIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="32 0"/>
+        <Frame point="0 32"/>
       </Index>
     </Group>
   </Resource>
@@ -20,12 +20,36 @@
   <Resource type="ResourceImageSet" name="Editor/CutIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="64 0"/>
+        <Frame point="32 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Editor/FolderIcon">
+    <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 32"/>
       </Index>
     </Group>
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/HeaderIcon">
+    <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Editor/ImageIcon">
+    <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Editor/IndividualViewIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="96 0"/>
@@ -36,7 +60,7 @@
   <Resource type="ResourceImageSet" name="Editor/LinksIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="128 0"/>
+        <Frame point="96 32"/>
       </Index>
     </Group>
   </Resource>
@@ -44,7 +68,15 @@
   <Resource type="ResourceImageSet" name="Editor/MvcIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="160 0"/>
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Editor/OverallViewIcon">
+    <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 32"/>
       </Index>
     </Group>
   </Resource>
@@ -52,7 +84,7 @@
   <Resource type="ResourceImageSet" name="Editor/ParagraphsIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="192 0"/>
+        <Frame point="160 0"/>
       </Index>
     </Group>
   </Resource>
@@ -60,7 +92,7 @@
   <Resource type="ResourceImageSet" name="Editor/PasteIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="224 0"/>
+        <Frame point="160 32"/>
       </Index>
     </Group>
   </Resource>
@@ -68,7 +100,15 @@
   <Resource type="ResourceImageSet" name="Editor/ProjectExplorerIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="256 0"/>
+        <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Editor/RCSSIcon">
+    <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="192 32"/>
       </Index>
     </Group>
   </Resource>
@@ -76,7 +116,7 @@
   <Resource type="ResourceImageSet" name="Editor/RmlIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="288 0"/>
+        <Frame point="224 0"/>
       </Index>
     </Group>
   </Resource>
@@ -84,7 +124,7 @@
   <Resource type="ResourceImageSet" name="Editor/RotateIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="320 0"/>
+        <Frame point="224 32"/>
       </Index>
     </Group>
   </Resource>
@@ -92,7 +132,7 @@
   <Resource type="ResourceImageSet" name="Editor/SaveAllIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="352 0"/>
+        <Frame point="256 0"/>
       </Index>
     </Group>
   </Resource>
@@ -100,7 +140,15 @@
   <Resource type="ResourceImageSet" name="Editor/SelectAllIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="384 0"/>
+        <Frame point="288 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Editor/SoundIcon">
+    <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="256 32"/>
       </Index>
     </Group>
   </Resource>
@@ -108,7 +156,7 @@
   <Resource type="ResourceImageSet" name="Editor/TranslateIcon">
     <Group name="Icons" texture="Medical.Resources.MoreEditorIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="416 0"/>
+        <Frame point="288 32"/>
       </Index>
     </Group>
   </Resource>

@@ -168,6 +168,20 @@ namespace Medical.GUI
             }
         }
 
+        public void insertImage(string image)
+        {
+            if (lastEditedElement != null)
+            {
+                ElementDocument document = lastEditedElement.OwnerDocument;
+                using (Element img = document.CreateElement("img"))
+                {
+                    img.SetAttribute("src", image);
+                    insertElementIntoParent(img, lastEditedElement);
+                }
+                rmlModified();
+            }
+        }
+
         public String CurrentRml
         {
             get
