@@ -207,6 +207,9 @@ namespace Medical.GUI
                     case "input":
                         showRmlElementEditor(element);
                         break;
+                    case "img":
+                        showRmlElementEditor(element);
+                        break;
                 }
 
                 //Logging.Log.Debug(element.TagName);

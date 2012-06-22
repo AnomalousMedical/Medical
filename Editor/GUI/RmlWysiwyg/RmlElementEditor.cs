@@ -60,6 +60,19 @@ namespace Medical.GUI
                                 return BrowserWindowController.createActionBrowser();
                             }));
                         break;
+                    case "src":
+                        if (element.TagName == "img")
+                        {
+                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, () =>
+                            {
+                                return BrowserWindowController.createFileBrowser("*.png", "Images");
+                            }));
+                        }
+                        else
+                        {
+                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element));
+                        }
+                        break;
                     default:
                         editInterface.addEditableProperty(new RmlEditableProperty(name, value, element));
                         break;
