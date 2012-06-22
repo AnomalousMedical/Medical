@@ -103,16 +103,13 @@ namespace Medical
         }
 
         private const String defaultRml = @"<rml>
-  <head>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
-  </head>
-  <body>
-    <div class=""ScrollArea"">
-      <h1>Empty Rml View</h1>
-      <p>You can start creating your Rml View here. You can erase this text to start.</p>
-    </div>
-  </body>
+	<head>
+		<link type=""text/template"" href=""/MasterTemplate.trml"" />
+	</head>
+	<body template=""MasterTemplate"">
+        <h1>Empty Rml View</h1>
+        <p>You can start creating your Rml View here. You can erase this text to start.</p>
+    </body>
 </rml>
 ";
     }

@@ -33,6 +33,11 @@ namespace Medical
             resourceProvider.createDirectory("", "Timeline");
             resourceProvider.createDirectory("", "Resources");
 
+            using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("MasterTemplate.trml")))
+            {
+                streamWriter.Write(TRmlTypeController.DefaultMasterPage);
+            }
+
             using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("Index.rml")))
             {
                 streamWriter.Write(indexRml, projectName);
@@ -49,17 +54,13 @@ namespace Medical
         }
 
         private static String indexRml = @"<rml>
-  <head>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
-  </head>
-  <body>
-    <div class=""ScrollArea"">
-      <h1>{0}</h1>
-      <p>This is the first view for the {0} app. You can modify this file as much as you want to create your view.</p>
-    </div>
-  </body>
-</rml>
-";
+	<head>
+	    <link type=""text/template"" href=""/MasterTemplate.trml"" />
+	</head>
+	<body template=""MasterTemplate"">
+        <h1>{0}</h1>
+        <p>This is the first view for the {0} app. You can modify this file as much as you want to create your view.</p>
+    </body>
+</rml>";
     }
 }

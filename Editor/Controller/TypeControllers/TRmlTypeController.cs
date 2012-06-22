@@ -49,12 +49,12 @@ namespace Medical
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
         {
-            contextMenu.add(new ContextMenuItem("Create Rcss File", path, delegate(ContextMenuItem item)
+            contextMenu.add(new ContextMenuItem("Create Template RML File", path, delegate(ContextMenuItem item)
             {
-                InputBox.GetInput("Rcss File Name", "Enter a name for the rcss file.", true, delegate(String result, ref String errorMessage)
+                InputBox.GetInput("Template RML File Name", "Enter a name for the Template RML file.", true, delegate(String result, ref String errorMessage)
                 {
                     String filePath = Path.Combine(path, result);
-                    filePath = Path.ChangeExtension(filePath, ".rcss");
+                    filePath = Path.ChangeExtension(filePath, ".trml");
                     if (editorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
@@ -77,7 +77,7 @@ namespace Medical
         void createNewRcssFile(String filePath)
         {
             creatingNewFile(filePath);
-            saveText(filePath, defaultRcss);
+            saveText(filePath, DefaultMasterPage);
             openFile(filePath);
         }
 
@@ -99,6 +99,15 @@ namespace Medical
             }
         }
 
-        private const String defaultRcss = "";
+        public const String DefaultMasterPage = @"<template name=""MasterTemplate"" content=""Content"">
+  <head>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
+    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
+  </head>
+  <body>
+    <div id=""Content"" class=""ScrollArea"">
+    </div>
+  </body>
+</template>";
     }
 }
