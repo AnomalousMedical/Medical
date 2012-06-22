@@ -112,13 +112,15 @@ namespace Medical
             }));
             timelineEditorController.Actions.add(new CallbackAction("Header", context =>
             {
-                textEditorComponent.insertText("<h1>Empty Header</h1>\n");
+                //textEditorComponent.insertText("<h1>Empty Header</h1>\n");
+                rmlComponent.insertHeader1();
             }));
             timelineEditorController.Actions.add(new CallbackAction("ActionLink", context =>
             {
                 BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
                 {
-                    textEditorComponent.insertText(String.Format("<a onclick=\"{0}\">Empty Link</a>", result));
+                    rmlComponent.insertLink(result);
+                    //textEditorComponent.insertText(String.Format("<a onclick=\"{0}\">Empty Link</a>", result));
                     return true;
                 });
             }));
@@ -126,7 +128,8 @@ namespace Medical
             {
                 BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
                 {
-                    textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
+                    //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
+                    rmlComponent.insertButton(result);
                     return true;
                 });
             }));

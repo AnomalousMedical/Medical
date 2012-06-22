@@ -111,32 +111,60 @@ namespace Medical.GUI
 
         public void insertParagraph()
         {
-            Element currentElement = lastEditedElement;
-            if (currentElement != null)
+            if (lastEditedElement != null)
             {
-                Element parent = currentElement.ParentNode;
-                if (parent != null)
+                ElementDocument document = lastEditedElement.OwnerDocument;
+                using (Element paragraph = document.CreateElement("p"))
                 {
-                    ElementDocument document = currentElement.OwnerDocument;
-                    using (Element paragraph = document.CreateElement("p"))
-                    {
-                        paragraph.InnerRml = "Add paragraph text here.";
-                        Element nextSibling = currentElement.NextSibling;
-                        if (nextSibling == null)
-                        {
-                            parent.AppendChild(paragraph);
-                        }
-                        else
-                        {
-                            parent.InsertBefore(paragraph, nextSibling);
-                        }
-                    }
-                    if (RmlEdited != null)
-                    {
-                        RmlEdited.Invoke(this);
-                    }
-                    rocketWidget.renderOnNextFrame();
+                    paragraph.InnerRml = "Add paragraph text here.";
+                    insertElementIntoParent(paragraph, lastEditedElement);
                 }
+                rmlModified();
+            }
+        }
+
+        public void insertHeader1()
+        {
+            if (lastEditedElement != null)
+            {
+                ElementDocument document = lastEditedElement.OwnerDocument;
+                using (Element heading = document.CreateElement("h1"))
+                {
+                    heading.InnerRml = "Heading";
+                    insertElementIntoParent(heading, lastEditedElement);
+                }
+                rmlModified();
+            }
+        }
+
+        public void insertLink(String action)
+        {
+            if (lastEditedElement != null)
+            {
+                ElementDocument document = lastEditedElement.OwnerDocument;
+                using (Element link = document.CreateElement("a"))
+                {
+                    link.SetAttribute("onclick", action);
+                    link.InnerRml = action;
+                    lastEditedElement.AppendChild(link);
+                }
+                rmlModified();
+            }
+        }
+
+        public void insertButton(String action)
+        {
+            if (lastEditedElement != null)
+            {
+                ElementDocument document = lastEditedElement.OwnerDocument;
+                using (Element button = document.CreateElement("input"))
+                {
+                    button.SetAttribute("type", "submit");
+                    button.SetAttribute("onclick", action);
+                    button.InnerRml = action;
+                    insertElementIntoParent(button, lastEditedElement);
+                }
+                rmlModified();
             }
         }
 
@@ -306,11 +334,7 @@ namespace Medical.GUI
                     {
                         element.InnerRml = editor.Text;
                     }
-                    rocketWidget.renderOnNextFrame();
-                    if (RmlEdited != null)
-                    {
-                        RmlEdited.Invoke(this);
-                    }
+                    rmlModified();
                 }
                 if (currentEditor == editor)
                 {
@@ -328,6 +352,32 @@ namespace Medical.GUI
                 return false;
             }
             return true;
+        }
+
+        private void rmlModified()
+        {
+            if (RmlEdited != null)
+            {
+                RmlEdited.Invoke(this);
+            }
+            rocketWidget.renderOnNextFrame();
+        }
+
+        private static void insertElementIntoParent(Element newElement, Element sibling)
+        {
+            Element parent = sibling.ParentNode;
+            if (parent != null)
+            {
+                Element nextSibling = sibling.NextSibling;
+                if (nextSibling == null)
+                {
+                    parent.AppendChild(newElement);
+                }
+                else
+                {
+                    parent.InsertBefore(newElement, nextSibling);
+                }
+            }
         }
     }
 }
