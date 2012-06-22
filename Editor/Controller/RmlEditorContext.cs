@@ -106,7 +106,9 @@ namespace Medical
             }));
             timelineEditorController.Actions.add(new CallbackAction("Paragraph", context =>
             {
-                textEditorComponent.insertText("<p>Empty Paragraph</p>");
+                //textEditorComponent.insertText("<p>Empty Paragraph</p>");
+                rmlComponent.insertParagraph();
+
             }));
             timelineEditorController.Actions.add(new CallbackAction("Header", context =>
             {

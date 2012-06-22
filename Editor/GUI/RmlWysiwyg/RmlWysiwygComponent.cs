@@ -26,6 +26,7 @@ namespace Medical.GUI
         private MedicalUICallback uiCallback;
         RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
+        private Element lastEditedElement;
 
         private AnomalousMvcContext context;
 
@@ -89,6 +90,7 @@ namespace Medical.GUI
         {
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
+            lastEditedElement = null;
 
             if (documentName != null)
             {
@@ -104,6 +106,37 @@ namespace Medical.GUI
                     }
                 }
                 //RocketEventListenerInstancer.resetEventController();
+            }
+        }
+
+        public void insertParagraph()
+        {
+            Element currentElement = lastEditedElement;
+            if (currentElement != null)
+            {
+                Element parent = currentElement.ParentNode;
+                if (parent != null)
+                {
+                    ElementDocument document = currentElement.OwnerDocument;
+                    using (Element paragraph = document.CreateElement("p"))
+                    {
+                        paragraph.InnerRml = "Add paragraph text here.";
+                        Element nextSibling = currentElement.NextSibling;
+                        if (nextSibling == null)
+                        {
+                            parent.AppendChild(paragraph);
+                        }
+                        else
+                        {
+                            parent.InsertBefore(paragraph, nextSibling);
+                        }
+                    }
+                    if (RmlEdited != null)
+                    {
+                        RmlEdited.Invoke(this);
+                    }
+                    rocketWidget.renderOnNextFrame();
+                }
             }
         }
 
@@ -262,12 +295,29 @@ namespace Medical.GUI
 
         private void showRmlElementEditor(Element element)
         {
+            lastEditedElement = element;
             RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, element, (int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
             editor.Hiding += (src, evt) =>
             {
                 if (editor.ApplyChanges && !disposed)
                 {
-                    element.InnerRml = currentEditor.Text;
+                    String text = currentEditor.Text;
+                    if (isTextElement(element) && String.IsNullOrEmpty(text))
+                    {
+                        Element parent = element.ParentNode;
+                        if (parent != null)
+                        {
+                            parent.RemoveChild(element);
+                            if (element == lastEditedElement)
+                            {
+                                lastEditedElement = null;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        element.InnerRml = currentEditor.Text;
+                    }
                     rocketWidget.renderOnNextFrame();
                     if (RmlEdited != null)
                     {
@@ -280,6 +330,15 @@ namespace Medical.GUI
                 }
             };
             currentEditor = editor;
+        }
+
+        private bool isTextElement(Element element)
+        {
+            if (element.TagName == "img")
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
