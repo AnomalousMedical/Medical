@@ -12,7 +12,7 @@ namespace Medical
     {
         private EditorController editorController;
         private PluginEditorContext editorContext;
-        private const String Icon = "PlugInEditorIcon";
+        private const String Icon = "EditorFileIcon/.ddp";
 
         public PluginTypeController(EditorController editorController)
             :base(".ddp", editorController)

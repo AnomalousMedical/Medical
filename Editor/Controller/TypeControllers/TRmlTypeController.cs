@@ -13,7 +13,7 @@ namespace Medical
     {
         private EditorController editorController;
         private GUIManager guiManager;
-        public const String Icon = "Editor/RmlIcon";
+        public const String Icon = "EditorFileIcon/.trml";
         private TRmlEditorContext trmlContext;
         private RmlTypeController rmlTypeController;
 

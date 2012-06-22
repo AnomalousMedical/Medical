@@ -14,7 +14,7 @@ namespace Medical
     {
         private EditorController editorController;
         private MvcEditorContext editorContext;
-        public const String Icon = "Editor/MvcIcon";
+        public const String Icon = "EditorFileIcon/.mvc";
 
         public MvcTypeController(EditorController editorController)
             :base(".mvc", editorController)

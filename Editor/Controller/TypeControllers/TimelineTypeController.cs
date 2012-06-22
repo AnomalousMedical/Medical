@@ -17,7 +17,7 @@ namespace Medical
 
     class TimelineTypeController : SaveableTypeController
     {
-        public const String Icon = "TimelineEditorIcon";
+        public const String Icon = "EditorFileIcon/.tl";
 
         public event TimelineTypeEvent TimelineChanged;
 
