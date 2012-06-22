@@ -65,6 +65,8 @@ namespace Medical.GUI.AnomalousMvc
         {
             RocketGuiManager.clearAllCaches();
 
+            rocketWidget.Context.UnloadAllDocuments();
+
             if (documentName != null)
             {
                 RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
