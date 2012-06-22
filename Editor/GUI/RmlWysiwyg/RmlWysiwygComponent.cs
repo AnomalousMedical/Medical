@@ -25,6 +25,7 @@ namespace Medical.GUI
         private bool disposed = false;
         private MedicalUICallback uiCallback;
         RmlElementEditor currentEditor = null;
+        private bool allowEdit = true;
 
         private AnomalousMvcContext context;
 
@@ -181,15 +182,49 @@ namespace Medical.GUI
                 inputRml = sr.ReadToEnd();
             }
             int bodyStart = inputRml.IndexOf("<body", StringComparison.InvariantCultureIgnoreCase);
-            bodyStart = inputRml.IndexOf(">", bodyStart, StringComparison.InvariantCultureIgnoreCase) + 1;
-            documentStart = inputRml.Substring(0, bodyStart);
+            if (bodyStart > -1)
+            {
+                bodyStart = inputRml.IndexOf(">", bodyStart, StringComparison.InvariantCultureIgnoreCase) + 1;
+                if (bodyStart > -1)
+                {
+                    documentStart = inputRml.Substring(0, bodyStart);
 
-            int closeBodyStart = inputRml.IndexOf("</body", bodyStart, StringComparison.InvariantCultureIgnoreCase);
-            documentEnd = inputRml.Substring(closeBodyStart);
+                    int closeBodyStart = inputRml.IndexOf("</body", bodyStart, StringComparison.InvariantCultureIgnoreCase);
+                    if (closeBodyStart > -1)
+                    {
+                        documentEnd = inputRml.Substring(closeBodyStart);
+                        allowEdit = true;
+                    }
+                    else
+                    {
+                        allowEdit = false;
+                        MessageBox.show("Cannot find an closing body tag.\nPlease ensure that your source has a closing </body> element.\nYou will not be able to edit elements in the document until this is fixed.", "RML Format Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                        bodyStart = 0;
+                    }
+                }
+                else
+                {
+                    allowEdit = false;
+                    MessageBox.show("Cannot find an opening body tag.\nPlease ensure that your source has an opening <body> element.\nYou will not be able to edit elements in the document until this is fixed.", "RML Format Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                    bodyStart = 0;
+                }
+            }
+            else
+            {
+                allowEdit = false;
+                MessageBox.show("Cannot find an opening body tag.\nPlease ensure that your source has an opening <body> element.\nYou will not be able to edit elements in the document until this is fixed.", "RML Format Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                bodyStart = 0;
+            }
         }
 
         void rocketWidget_MouseButtonClick(Widget source, EventArgs e)
         {
+            if (!allowEdit)
+            {
+                //Break if they cannot edit
+                return;
+            }
+
             Element element = rocketWidget.Context.GetFocusElement();
             if (element != null)
             {
