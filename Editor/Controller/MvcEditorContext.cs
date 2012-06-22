@@ -36,7 +36,7 @@ namespace Medical
             mvcContext.Models.add(new EditMenuManager());
 
             GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", editingContext.getEditInterface(), true);
-            genericPropertiesView.ViewLocation = ViewLocations.Right;
+            genericPropertiesView.ViewLocation = ViewLocations.Left;
             genericPropertiesView.IsWindow = true;
             mvcContext.Views.add(genericPropertiesView);
 

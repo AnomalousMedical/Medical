@@ -50,6 +50,7 @@ namespace Medical
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface());
             genericEditor.IsWindow = true;
+            genericEditor.ViewLocation = ViewLocations.Left;
             mvcContext.Views.add(genericEditor);
             
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline");
