@@ -279,29 +279,17 @@ namespace Medical.GUI
                         showRmlElementEditor(element);
                         break;
                 }
-
-                //Logging.Log.Debug(element.TagName);
-                //Logging.Log.Debug(element.InnerRml);
-
-                //int index = 0;
-                //String name = null;
-                //String value = null;
-                //while (element.IterateAttributes(ref index, ref name, ref value))
-                //{
-                //    Logging.Log.Debug("Attr: {0} - {1}", name, value);
-                //}
             }
         }
 
         private void showRmlElementEditor(Element element)
         {
-            lastEditedElement = element;
             RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, element, (int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
             editor.Hiding += (src, evt) =>
             {
                 if (editor.ApplyChanges && !disposed)
                 {
-                    String text = currentEditor.Text;
+                    String text = editor.Text;
                     if (isTextElement(element) && String.IsNullOrEmpty(text))
                     {
                         Element parent = element.ParentNode;
@@ -316,7 +304,7 @@ namespace Medical.GUI
                     }
                     else
                     {
-                        element.InnerRml = currentEditor.Text;
+                        element.InnerRml = editor.Text;
                     }
                     rocketWidget.renderOnNextFrame();
                     if (RmlEdited != null)
@@ -330,6 +318,7 @@ namespace Medical.GUI
                 }
             };
             currentEditor = editor;
+            lastEditedElement = element;
         }
 
         private bool isTextElement(Element element)
