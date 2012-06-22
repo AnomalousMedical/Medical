@@ -253,6 +253,10 @@
     <EmbeddedResource Include="Resources\MoreEditorIcons.png" />
     <EmbeddedResource Include="Resources\MoreEditorIcons.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EditorFileIcons.png" />
+    <EmbeddedResource Include="Resources\EditorFileIcons.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

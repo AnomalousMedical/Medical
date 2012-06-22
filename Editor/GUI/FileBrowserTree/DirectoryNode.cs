@@ -14,6 +14,7 @@ namespace Medical.GUI
         public DirectoryNode(String directory, FileBrowserTree projectExplorer)
         {
             this.projectExplorer = projectExplorer;
+            this.ImageResource = "EditorFileIcon/FolderIcon";
             ListedChildren = false;
             changePath(directory);
         }
