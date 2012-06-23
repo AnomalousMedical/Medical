@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Medical
 {
-    class PluginTypeController : SaveableTypeController
+    class PluginTypeController : SaveableTypeController<DDAtlasPlugin>
     {
         private EditorController editorController;
         private PluginEditorContext editorContext;

@@ -12,10 +12,11 @@ namespace Medical
     /// work with TypeControllers that only open one editor, want their objects
     /// cached and want the objects kept open until a new one is loaded.
     /// </summary>
-    public abstract class SaveableTypeController : EditorTypeController
+    public abstract class SaveableTypeController<T> : EditorTypeController
+        where T : Saveable
     {
         private EditorController editorController;
-        protected SaveableCachedResource currentCachedResource;
+        protected SaveableCachedResource<T> currentCachedResource;
 
         public SaveableTypeController(String extension, EditorController editorController)
             :base(extension)
@@ -28,16 +29,16 @@ namespace Medical
             editorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
         }
 
-        public Saveable loadObject(String filename)
+        public T loadObject(String filename)
         {
             //Check the cahce
-            SaveableCachedResource cachedResource = editorController.ResourceProvider.ResourceCache[filename] as SaveableCachedResource;
+            SaveableCachedResource<T> cachedResource = editorController.ResourceProvider.ResourceCache[filename] as SaveableCachedResource<T>;
             if (cachedResource == null)
             {
                 //Missed open real file
                 using (XmlTextReader xmlReader = new XmlTextReader(editorController.ResourceProvider.openFile(filename)))
                 {
-                    cachedResource = new SaveableTypeControllerCachedResource(filename, (Saveable)EditorController.XmlSaver.restoreObject(xmlReader), this);
+                    cachedResource = new SaveableTypeControllerCachedResource<T>(filename, (T)EditorController.XmlSaver.restoreObject(xmlReader), this);
                     editorController.ResourceProvider.ResourceCache.add(cachedResource);
                 }
             }
@@ -45,7 +46,7 @@ namespace Medical
             return cachedResource.Saveable;
         }
 
-        public void saveObject(String filename, Saveable saveable)
+        public void saveObject(String filename, T saveable)
         {
             using (XmlTextWriter writer = new XmlTextWriter(editorController.ResourceProvider.openWriteStream(filename), Encoding.Default))
             {
@@ -53,6 +54,30 @@ namespace Medical
                 EditorController.XmlSaver.saveObject(saveable, writer);
             }
             editorController.ResourceProvider.ResourceCache.closeResource(filename);
+        }
+
+        public T CurrentObject
+        {
+            get
+            {
+                if (currentCachedResource != null)
+                {
+                    return currentCachedResource.Saveable;
+                }
+                return default(T);
+            }
+        }
+
+        public String CurrentFile
+        {
+            get
+            {
+                if (currentCachedResource != null)
+                {
+                    return currentCachedResource.File;
+                }
+                return null;
+            }
         }
 
         protected void creatingNewFile(String filePath)
@@ -73,7 +98,7 @@ namespace Medical
             }
         }
 
-        private void changeCachedResource(SaveableCachedResource newCachedResource)
+        private void changeCachedResource(SaveableCachedResource<T> newCachedResource)
         {
             if (currentCachedResource != null)
             {

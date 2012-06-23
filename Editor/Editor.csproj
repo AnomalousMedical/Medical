@@ -123,6 +123,7 @@
     <Compile Include="Controller\TypeControllers\TextTypeController.cs" />
     <Compile Include="Controller\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\TypeControllers\TimelineTypeController.cs" />
+    <Compile Include="Controller\TypeControllers\TypeControllerManager.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenu.cs" />

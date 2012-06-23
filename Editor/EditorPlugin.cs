@@ -28,6 +28,7 @@ namespace Medical
         private EditorController editorController;
         private MedicalUICallback medicalUICallback;
         private PropEditController propEditController;
+        private TypeControllerManager typeControllerManager;
 
         public EditorPlugin()
         {
@@ -89,16 +90,7 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "Editor/ProjectExplorerIcon", TaskMenuCategories.Editor));
 
-            RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager);
-            editorController.addTypeController(rmlTypeController);
-            editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
-            editorController.addTypeController(new MvcTypeController(editorController));
-            editorController.addTypeController(new PluginTypeController(editorController));
-            editorController.addTypeController(new MovementSequenceTypeController(movementSequenceEditor, editorController));
-            editorController.addTypeController(new TRmlTypeController(editorController, guiManager, rmlTypeController));
-            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propEditController);
-            timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
-            editorController.addTypeController(timelineTypeController);
+            typeControllerManager = new TypeControllerManager(standaloneController, this);
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
@@ -220,6 +212,14 @@ namespace Medical
             }
         }
 
+        public EditorController EditorController
+        {
+            get
+            {
+                return editorController;
+            }
+        }
+
         public void sceneRevealed()
         {
 
@@ -233,11 +233,6 @@ namespace Medical
         void guiManager_MainGUIShown()
         {
             propEditController.showOpenProps();
-        }
-
-        void timelineTypeController_TimelineChanged(TimelineTypeController typeController, Timeline timeline)
-        {
-            propEditController.removeAllOpenProps();
         }
     }
 }

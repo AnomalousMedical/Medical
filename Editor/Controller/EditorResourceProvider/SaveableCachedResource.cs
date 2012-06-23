@@ -11,15 +11,16 @@ namespace Medical
     /// <summary>
     /// A class that can easily cache objects that extend saveable.
     /// </summary>
-    public abstract class SaveableCachedResource : CachedResource
+    public abstract class SaveableCachedResource<T> : CachedResource
+        where T : Saveable
     {
-        public SaveableCachedResource(String file, Saveable saveable)
+        public SaveableCachedResource(String file, T saveable)
             :base(file)
         {
             this.Saveable = saveable;
         }
 
-        public Saveable Saveable { get; private set; }
+        public T Saveable { get; private set; }
 
         public override Stream openStream()
         {

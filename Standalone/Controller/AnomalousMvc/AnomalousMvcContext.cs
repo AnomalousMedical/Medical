@@ -365,7 +365,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (address != null)
             {
-                int slashLoc = address.IndexOf('/');
+                int slashLoc = address.LastIndexOf('/');
                 if (slashLoc != -1)
                 {
                     try

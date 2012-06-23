@@ -12,6 +12,8 @@ namespace Medical
 {
     class RmlTypeController : TextTypeController
     {
+        public event Action<RmlTypeController, String> FileCreated;
+
         private EditorController editorController;
         private GUIManager guiManager;
         public const String Icon = "EditorFileIcon/.rml";
@@ -100,6 +102,10 @@ namespace Medical
             creatingNewFile(filePath);
             saveText(filePath, defaultRml);
             openFile(filePath);
+            if (FileCreated != null)
+            {
+                FileCreated.Invoke(this, filePath);
+            }
         }
 
         private const String defaultRml = @"<rml>

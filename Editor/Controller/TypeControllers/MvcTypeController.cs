@@ -10,7 +10,7 @@ using Medical.Editor;
 
 namespace Medical
 {
-    class MvcTypeController : SaveableTypeController
+    class MvcTypeController : SaveableTypeController<AnomalousMvcContext>
     {
         private EditorController editorController;
         private MvcEditorContext editorContext;

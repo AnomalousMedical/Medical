@@ -15,7 +15,7 @@ namespace Medical
 {
     delegate void TimelineTypeEvent(TimelineTypeController typeController, Timeline timeline);
 
-    class TimelineTypeController : SaveableTypeController
+    class TimelineTypeController : SaveableTypeController<Timeline>
     {
         public const String Icon = "EditorFileIcon/.tl";
 

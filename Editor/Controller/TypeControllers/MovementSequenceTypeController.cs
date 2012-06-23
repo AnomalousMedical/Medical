@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Medical
 {
-    class MovementSequenceTypeController : SaveableTypeController
+    class MovementSequenceTypeController : SaveableTypeController<MovementSequence>
     {
         private MovementSequenceEditor editor;
         private EditorController editorController;

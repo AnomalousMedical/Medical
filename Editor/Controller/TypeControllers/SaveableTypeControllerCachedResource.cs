@@ -6,11 +6,12 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class SaveableTypeControllerCachedResource : SaveableCachedResource
+    class SaveableTypeControllerCachedResource<T> : SaveableCachedResource<T>
+        where T : Saveable
     {
-        SaveableTypeController typeController;
+        SaveableTypeController<T> typeController;
 
-        public SaveableTypeControllerCachedResource(String file, Saveable saveable, SaveableTypeController typeController)
+        public SaveableTypeControllerCachedResource(String file, T saveable, SaveableTypeController<T> typeController)
             :base(file, saveable)
         {
             this.typeController = typeController;
