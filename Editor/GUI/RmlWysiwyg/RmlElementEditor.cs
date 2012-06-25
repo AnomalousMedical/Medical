@@ -26,13 +26,20 @@ namespace Medical.GUI
             return textEditor;
         }
 
+        public event Action<Element> MoveElementUp;
+        public event Action<Element> MoveElementDown;
+        public event Action<Element> DeleteElement;
+
         private EditBox text;
         private ScrollView propertiesScroll;
         private ScrollablePropertiesForm propertiesForm;
+        private Element element;
 
         protected RmlElementEditor(MedicalUICallback uiCallback, Element element)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
+            this.element = element;
+
             text = (EditBox)widget.findWidget("Text");
             Text = element.InnerRml;
             text.KeyButtonReleased += new MyGUIEvent(text_KeyButtonReleased);
@@ -46,6 +53,15 @@ namespace Medical.GUI
 
             Button cancelButton = (Button)widget.findWidget("CancelButton");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            Button up = (Button)widget.findWidget("Up");
+            up.MouseButtonClick += new MyGUIEvent(up_MouseButtonClick);
+
+            Button down = (Button)widget.findWidget("Down");
+            down.MouseButtonClick += new MyGUIEvent(down_MouseButtonClick);
+
+            Button delete = (Button)widget.findWidget("Delete");
+            delete.MouseButtonClick += new MyGUIEvent(delete_MouseButtonClick);
 
             //Build edit interface
             EditInterface editInterface = new EditInterface(element.TagName);
@@ -157,6 +173,31 @@ namespace Medical.GUI
             if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_RETURN && InputManager.Instance.isControlPressed())
             {
                 this.hide();
+            }
+        }
+
+        void delete_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (DeleteElement != null)
+            {
+                DeleteElement.Invoke(element);
+            }
+            hide();
+        }
+
+        void down_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (MoveElementDown != null)
+            {
+                MoveElementDown.Invoke(element);
+            }
+        }
+
+        void up_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (MoveElementUp != null)
+            {
+                MoveElementUp.Invoke(element);
             }
         }
     }

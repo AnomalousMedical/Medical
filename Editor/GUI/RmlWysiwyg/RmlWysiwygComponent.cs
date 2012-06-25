@@ -426,6 +426,70 @@ namespace Medical.GUI
                     currentEditor = null;
                 }
             };
+            editor.MoveElementUp += upElement =>
+            {
+                Element previousSibling = upElement.PreviousSibling;
+                if (previousSibling != null)
+                {
+                    Element parent = upElement.ParentNode;
+                    if (parent != null)
+                    {
+                        upElement.addReference();
+                        parent.RemoveChild(upElement);
+                        parent.InsertBefore(upElement, previousSibling);
+                        upElement.removeReference();
+                        rmlModified();
+                    }
+                }
+            };
+            editor.MoveElementDown += downElement =>
+            {
+                Element parent = downElement.ParentNode;
+                if (parent != null)
+                {
+                    Element nextSibling = downElement.NextSibling;
+                    if (nextSibling != null)
+                    {
+                        downElement.addReference();
+                        parent.RemoveChild(downElement);
+                        nextSibling = nextSibling.NextSibling;
+                        if (nextSibling != null)
+                        {
+                            parent.InsertBefore(downElement, nextSibling);
+                        }
+                        else
+                        {
+                            parent.AppendChild(downElement);
+                        }
+                        downElement.removeReference();
+                    }
+                    rmlModified();
+                }
+            };
+            editor.DeleteElement += deleteElement =>
+            {
+                Element parent = deleteElement.ParentNode;
+                if (parent != null)
+                {
+                    Element nextSelectionElement = deleteElement.NextSibling;
+                    if (nextSelectionElement == null)
+                    {
+                        nextSelectionElement = deleteElement.PreviousSibling;
+                    }
+
+                    parent.RemoveChild(deleteElement);
+                    rmlModified();
+
+                    if (nextSelectionElement != null)
+                    {
+                        showRmlElementEditor(nextSelectionElement);
+                    }
+                    else
+                    {
+                        selectedElementManager.clearSelectedElement();
+                    }
+                }
+            };
             currentEditor = editor;
             selectedElementManager.SelectedElement = element;
         }
