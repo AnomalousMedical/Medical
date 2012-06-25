@@ -373,6 +373,9 @@ namespace Medical.GUI
                     case "img":
                         showRmlElementEditor(element);
                         break;
+                    default:
+                        selectedElementManager.clearSelectedElement();
+                        break;
                 }
             }
         }
