@@ -147,6 +147,11 @@ namespace Medical
             return directories;
         }
 
+        public bool directoryHasEntries(String path)
+        {
+            return Directory.EnumerateFileSystemEntries(Path.Combine(parentPath, path), "*", SearchOption.AllDirectories).Any();
+        }
+
         public bool exists(string path)
         {
             if (!path.StartsWith(parentPath))

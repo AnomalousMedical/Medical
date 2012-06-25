@@ -108,6 +108,11 @@ namespace Medical
             return new String[0];
         }
 
+        public bool directoryHasEntries(String path)
+        {
+            return listFiles("*", path, true).Length > 0 || listDirectories("*", path, true).Length > 0;
+        }
+
         public bool exists(String path)
         {
             return zipFile.exists(path);

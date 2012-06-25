@@ -98,6 +98,11 @@ namespace Medical
             return new String[0];
         }
 
+        public bool directoryHasEntries(String path)
+        {
+            return listFiles("*", path, true).Length > 0;
+        }
+
         public bool exists(string path)
         {
             return fileList.Contains(convertToNamespacePath(path));

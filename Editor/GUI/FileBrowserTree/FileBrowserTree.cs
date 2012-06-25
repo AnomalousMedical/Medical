@@ -74,25 +74,30 @@ namespace Medical.GUI
                 {
                     baseNode.addFileNode(new FileNode(path));
                 }
+                baseNode.alertHasChildrenChanged();
                 fileTree.SuppressLayout = false;
                 fileTree.layout();
             }
             else
             {
                 DirectoryNode node = findNodeForPath(parentPath) as DirectoryNode;
-                if (node != null && node.ListedChildren)
+                if (node != null)
                 {
-                    fileTree.SuppressLayout = true;
-                    if (isDirectory)
+                    node.alertHasChildrenChanged();
+                    if (node.ListedChildren)
                     {
-                        node.addDirectoryNode(new DirectoryNode(path, this));
+                        fileTree.SuppressLayout = true;
+                        if (isDirectory)
+                        {
+                            node.addDirectoryNode(new DirectoryNode(path, this));
+                        }
+                        else
+                        {
+                            node.addFileNode(new FileNode(path));
+                        }
+                        fileTree.SuppressLayout = false;
+                        fileTree.layout();
                     }
-                    else
-                    {
-                        node.addFileNode(new FileNode(path));
-                    }
-                    fileTree.SuppressLayout = false;
-                    fileTree.layout();
                 }
             }
         }
@@ -127,6 +132,7 @@ namespace Medical.GUI
                 {
                     node.Parent.Children.remove(node);
                 }
+                node.alertHasChildrenChanged();
                 fileTree.SuppressLayout = false;
                 fileTree.layout();
             }
@@ -149,6 +155,15 @@ namespace Medical.GUI
                 }
                 fileTree.SuppressLayout = false;
             }
+        }
+
+        internal bool checkAnyFilesInDirectory(String path)
+        {
+            if (resourceProvider != null)
+            {
+                return resourceProvider.directoryHasEntries(path);
+            }
+            return false;
         }
 
         void fileTree_NodeMouseDoubleClick(object sender, TreeEventArgs e)

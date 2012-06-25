@@ -33,7 +33,7 @@ namespace Medical.GUI
         {
             get
             {
-                return true;
+                return Children.Count > 0 || projectExplorer.checkAnyFilesInDirectory(DirectoryPath);
             }
         }
 

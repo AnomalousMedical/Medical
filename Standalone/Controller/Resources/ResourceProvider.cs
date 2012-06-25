@@ -22,6 +22,8 @@ namespace Medical
 
         String[] listDirectories(String pattern, String directory, bool recursive);
 
+        bool directoryHasEntries(String path);
+
         bool exists(String path);
 
         String getFullFilePath(String filename);
