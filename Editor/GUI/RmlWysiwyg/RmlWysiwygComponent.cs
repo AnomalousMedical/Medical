@@ -121,6 +121,7 @@ namespace Medical.GUI
                 ElementDocument document = rocketWidget.Context.GetDocument(0);
                 using (Element paragraph = document.CreateElement("p"))
                 {
+                    paragraph.SetAttribute("style", "white-space: pre-wrap;");
                     paragraph.InnerRml = "Add paragraph text here.";
                     if (selectedElementManager.HasSelection)
                     {
