@@ -1,4 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-        <Widget type="ImageBox" skin="ImageBox" position="0 0 349 255" align="Left VStretch" name="RmlImage" layer="Back"/>
+    <Widget type="ImageBox" skin="ImageBox" position="0 0 349 255" align="Left VStretch" layer="Back" name="RmlImage">
+        <Widget type="Widget" skin="MDILocationPreview" position="99 77 118 72" name="SelectionWidget">
+            <Property key="Visible" value="false"/>
+            <Property key="NeedMouse" value="false"/>
+            <Property key="NeedKey" value="false"/>
+            <Property key="Alpha" value="0.7"/>
+        </Widget>
+    </Widget>
 </MyGUI>

@@ -173,6 +173,7 @@
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponent.cs" />
+    <Compile Include="GUI\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponent.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponentFactory.cs" />

@@ -26,7 +26,7 @@ namespace Medical.GUI
         private MedicalUICallback uiCallback;
         RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
-        private Element lastEditedElement;
+        private SelectedElementManager selectedElementManager;
 
         private AnomalousMvcContext context;
 
@@ -38,8 +38,13 @@ namespace Medical.GUI
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
-            rocketWidget.MouseButtonClick += new MyGUIEvent(rocketWidget_MouseButtonClick);
+            rmlImage.MouseButtonClick += new MyGUIEvent(rmlImage_MouseButtonClick);
+            rmlImage.MouseDrag += new MyGUIEvent(rmlImage_MouseDrag);
+            rmlImage.MouseWheel += new MyGUIEvent(rmlImage_MouseWheel);
+            rmlImage.EventScrollGesture += new MyGUIEvent(rmlImage_EventScrollGesture);
             imageHeight = rmlImage.Height;
+
+            selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
 
             if (view.RmlFile != null)
             {
@@ -90,7 +95,7 @@ namespace Medical.GUI
         {
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
-            lastEditedElement = null;
+            selectedElementManager.clearSelectedElement();
 
             if (documentName != null)
             {
@@ -111,13 +116,13 @@ namespace Medical.GUI
 
         public void insertParagraph()
         {
-            if (lastEditedElement != null)
+            if (selectedElementManager.HasSelection)
             {
-                ElementDocument document = lastEditedElement.OwnerDocument;
+                ElementDocument document = selectedElementManager.SelectedElement.OwnerDocument;
                 using (Element paragraph = document.CreateElement("p"))
                 {
                     paragraph.InnerRml = "Add paragraph text here.";
-                    insertElementIntoParent(paragraph, lastEditedElement);
+                    insertElementIntoParent(paragraph, selectedElementManager.SelectedElement);
                 }
                 rmlModified();
             }
@@ -125,13 +130,13 @@ namespace Medical.GUI
 
         public void insertHeader1()
         {
-            if (lastEditedElement != null)
+            if (selectedElementManager.HasSelection)
             {
-                ElementDocument document = lastEditedElement.OwnerDocument;
+                ElementDocument document = selectedElementManager.SelectedElement.OwnerDocument;
                 using (Element heading = document.CreateElement("h1"))
                 {
                     heading.InnerRml = "Heading";
-                    insertElementIntoParent(heading, lastEditedElement);
+                    insertElementIntoParent(heading, selectedElementManager.SelectedElement);
                 }
                 rmlModified();
             }
@@ -139,14 +144,14 @@ namespace Medical.GUI
 
         public void insertLink(String action)
         {
-            if (lastEditedElement != null)
+            if (selectedElementManager.HasSelection)
             {
-                ElementDocument document = lastEditedElement.OwnerDocument;
+                ElementDocument document = selectedElementManager.SelectedElement.OwnerDocument;
                 using (Element link = document.CreateElement("a"))
                 {
                     link.SetAttribute("onclick", action);
                     link.InnerRml = action;
-                    lastEditedElement.AppendChild(link);
+                    selectedElementManager.SelectedElement.AppendChild(link);
                 }
                 rmlModified();
             }
@@ -154,15 +159,15 @@ namespace Medical.GUI
 
         public void insertButton(String action)
         {
-            if (lastEditedElement != null)
+            if (selectedElementManager.HasSelection)
             {
-                ElementDocument document = lastEditedElement.OwnerDocument;
+                ElementDocument document = selectedElementManager.SelectedElement.OwnerDocument;
                 using (Element button = document.CreateElement("input"))
                 {
                     button.SetAttribute("type", "submit");
                     button.SetAttribute("onclick", action);
                     button.InnerRml = action;
-                    insertElementIntoParent(button, lastEditedElement);
+                    insertElementIntoParent(button, selectedElementManager.SelectedElement);
                 }
                 rmlModified();
             }
@@ -170,13 +175,13 @@ namespace Medical.GUI
 
         public void insertImage(string image)
         {
-            if (lastEditedElement != null)
+            if (selectedElementManager.HasSelection)
             {
-                ElementDocument document = lastEditedElement.OwnerDocument;
+                ElementDocument document = selectedElementManager.SelectedElement.OwnerDocument;
                 using (Element img = document.CreateElement("img"))
                 {
                     img.SetAttribute("src", image);
-                    insertElementIntoParent(img, lastEditedElement);
+                    insertElementIntoParent(img, selectedElementManager.SelectedElement);
                 }
                 rmlModified();
             }
@@ -292,7 +297,7 @@ namespace Medical.GUI
             }
         }
 
-        void rocketWidget_MouseButtonClick(Widget source, EventArgs e)
+        void rmlImage_MouseButtonClick(Widget source, EventArgs e)
         {
             if (!allowEdit)
             {
@@ -324,6 +329,21 @@ namespace Medical.GUI
             }
         }
 
+        void rmlImage_EventScrollGesture(Widget source, EventArgs e)
+        {
+            selectedElementManager.updateSelectionPosition();
+        }
+
+        void rmlImage_MouseWheel(Widget source, EventArgs e)
+        {
+            selectedElementManager.updateSelectionPosition();
+        }
+
+        void rmlImage_MouseDrag(Widget source, EventArgs e)
+        {
+            selectedElementManager.updateSelectionPosition();
+        }
+
         private void showRmlElementEditor(Element element)
         {
             RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, element, (int)element.AbsoluteLeft + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
@@ -338,9 +358,9 @@ namespace Medical.GUI
                         if (parent != null)
                         {
                             parent.RemoveChild(element);
-                            if (element == lastEditedElement)
+                            if (element == selectedElementManager.SelectedElement)
                             {
-                                lastEditedElement = null;
+                                selectedElementManager.clearSelectedElement();
                             }
                         }
                     }
@@ -356,7 +376,7 @@ namespace Medical.GUI
                 }
             };
             currentEditor = editor;
-            lastEditedElement = element;
+            selectedElementManager.SelectedElement = element;
         }
 
         private bool isTextElement(Element element)
@@ -374,6 +394,7 @@ namespace Medical.GUI
             {
                 RmlEdited.Invoke(this);
             }
+            selectedElementManager.updateSelectionPosition();
             rocketWidget.renderOnNextFrame();
         }
 

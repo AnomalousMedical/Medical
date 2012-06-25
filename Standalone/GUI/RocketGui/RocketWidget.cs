@@ -270,18 +270,6 @@ namespace Medical.GUI
             }
         }
 
-        public event MyGUIEvent MouseButtonClick
-        {
-            add
-            {
-                imageBox.MouseButtonClick += value;
-            }
-            remove
-            {
-                imageBox.MouseButtonClick -= value;
-            }
-        }
-
         public int AbsoluteLeft
         {
             get
