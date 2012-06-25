@@ -92,6 +92,17 @@ namespace Medical
             }
         }
 
+        public IEnumerable<String> OpenFiles
+        {
+            get
+            {
+                return cachedResources.Values.Select(cachedResource => 
+                {
+                    return cachedResource.File;
+                });
+            }
+        }
+
         public int Count
         {
             get
