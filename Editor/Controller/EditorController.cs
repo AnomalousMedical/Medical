@@ -68,7 +68,7 @@ namespace Medical
                 if (deleteOld)
                 {
                     //Make sure the old project is closed first, this prevents problems deleting the currently open project.
-                    closeProject();
+                    closeResourceProvider();
                     Directory.Delete(filename, true);
                 }
                 if (!Directory.Exists(filename))
@@ -99,10 +99,13 @@ namespace Medical
 
         public void closeProject()
         {
-            if (resourceProvider != null)
+            closeResourceProvider();
+            plugin.TimelineController.setResourceProvider(null);
+            BrowserWindowController.setResourceProvider(null);
+
+            if (ProjectChanged != null)
             {
-                resourceProvider.Dispose();
-                resourceProvider = null;
+                ProjectChanged.Invoke(this);
             }
         }
 
@@ -229,7 +232,11 @@ namespace Medical
         {
             get
             {
-                return resourceProvider.ResourceCache.OpenFiles;
+                if (resourceProvider != null)
+                {
+                    return resourceProvider.ResourceCache.OpenFiles;
+                }
+                return new String[0];
             }
         }
 
@@ -237,7 +244,11 @@ namespace Medical
         {
             get
             {
-                return resourceProvider.ResourceCache.Count;
+                if (resourceProvider != null)
+                {
+                    return resourceProvider.ResourceCache.Count;
+                }
+                return 0;
             }
         }
 
@@ -265,7 +276,7 @@ namespace Medical
 
         private void projectChanged(String projectPath)
         {
-            closeProject();
+            closeResourceProvider();
             resourceProvider = new EditorResourceProvider(projectPath);
             plugin.TimelineController.setResourceProvider(ResourceProvider);
             BrowserWindowController.setResourceProvider(ResourceProvider);
@@ -288,6 +299,15 @@ namespace Medical
                 {
                     openFile(files[0]);
                 }
+            }
+        }
+
+        private void closeResourceProvider()
+        {
+            if (resourceProvider != null)
+            {
+                resourceProvider.Dispose();
+                resourceProvider = null;
             }
         }
     }

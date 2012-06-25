@@ -18,6 +18,7 @@ namespace Medical.GUI
         MenuBar menuBar;
         MenuItem newProject;
         MenuItem openProject;
+        MenuItem closeProject;
         MenuItem saveAll;
         ExtensionActionCollection currentExtensionActions = null;
 
@@ -153,6 +154,7 @@ namespace Medical.GUI
             fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
             newProject = fileMenu.addItem("New Project");
             openProject = fileMenu.addItem("Open Project");
+            closeProject = fileMenu.addItem("Close Project");
 
             if (currentExtensionActions != null)
             {
@@ -191,6 +193,10 @@ namespace Medical.GUI
             else if (menuEventArgs.Item == saveAll)
             {
                 editorController.saveAllCachedResources();
+            }
+            else if (menuEventArgs.Item == closeProject)
+            {
+                editorController.closeProject();
             }
             else
             {

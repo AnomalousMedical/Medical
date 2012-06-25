@@ -103,7 +103,7 @@ namespace Medical.GUI
             base.topLevelResized();
         }
 
-        private int refreshFileTabs()
+        private void refreshFileTabs()
         {
             clearFileTabs();
             int left = 0;
@@ -124,7 +124,6 @@ namespace Medical.GUI
                     fileButtons.Add(fileButton);
                 }
             }
-            return left;
         }
 
         private void clearFileTabs()

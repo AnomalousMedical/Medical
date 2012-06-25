@@ -90,7 +90,7 @@ namespace Medical
 
         protected void closeCurrentCachedResource()
         {
-            if(currentCachedResource != null)
+            if(currentCachedResource != null && editorController.ResourceProvider != null)
             {
                 currentCachedResource.AllowClose = true;
                 editorController.ResourceProvider.ResourceCache.closeResource(currentCachedResource.File);
