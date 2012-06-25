@@ -44,6 +44,12 @@ namespace Medical.GUI.AnomalousMvc
             view._fireComponentCreated(this);
         }
 
+        public override void closing()
+        {
+            rocketWidget.InputEnabled = false;
+            base.closing();
+        }
+
         public override void Dispose()
         {
             rocketWidget.Dispose();

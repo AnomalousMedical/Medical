@@ -228,12 +228,24 @@ namespace Medical.GUI
             }
         }
 
+        public bool InputEnabled
+        {
+            get
+            {
+                return imageBox.Enabled;
+            }
+            set
+            {
+                imageBox.Enabled = value;
+            }
+        }
+
         /// <summary>
         /// This is the master switch to enable / disable rendering. If this is
         /// false the widget will never render. If it is true if will render
         /// depending on the other conditions.
         /// </summary>
-        public bool Enabled
+        public bool RenderingEnabled
         {
             get
             {
