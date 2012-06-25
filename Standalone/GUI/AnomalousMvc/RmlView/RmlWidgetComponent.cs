@@ -46,6 +46,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void closing()
         {
+            rocketWidget.RenderingEnabled = false;
             rocketWidget.InputEnabled = false;
             base.closing();
         }
