@@ -269,6 +269,11 @@ namespace Medical.GUI
                         }
                     }
                 }));
+
+                contextMenu.add(new ContextMenuItem("Explore To", path, item =>
+                    {
+                        OtherProcessManager.openLocalURL(editorController.ResourceProvider.getFullFilePath(item.UserObject.ToString()));
+                    }));
             }
             if (!isTopLevel)
             {
