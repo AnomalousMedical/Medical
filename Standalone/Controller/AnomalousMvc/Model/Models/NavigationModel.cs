@@ -90,6 +90,19 @@ namespace Medical.Controller.AnomalousMvc
             return null;
         }
 
+        public NavigationLink getNamed(String name)
+        {
+            for (int i = 0; i < links.Count; ++i)
+            {
+                if (links[i].Name == name)
+                {
+                    CurrentIndex = i;
+                    return links[i];
+                }
+            }
+            return null;
+        }
+
         public bool HasNext
         {
             get
@@ -158,6 +171,7 @@ namespace Medical.Controller.AnomalousMvc
             linkEdits.addCommand(new EditInterfaceCommand("Remove", removeLink));
             linkEdits.addCommand(new EditInterfaceCommand("Move Up", moveUp));
             linkEdits.addCommand(new EditInterfaceCommand("Move Down", moveDown));
+            linkEdits.addCommand(new EditInterfaceCommand("Insert", insert));
 
             foreach (NavigationLink link in links)
             {
@@ -195,6 +209,16 @@ namespace Medical.Controller.AnomalousMvc
             {
                 removeNavigationLink(link);
                 insertNavigationLink(index, link);
+            }
+        }
+
+        private void insert(EditUICallback callback, EditInterfaceCommand command)
+        {
+            NavigationLink link = linkEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            int index = links.IndexOf(link);
+            if (index < links.Count)
+            {
+                insertNavigationLink(index, new NavigationLink());
             }
         }
 

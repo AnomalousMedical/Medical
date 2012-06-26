@@ -10,6 +10,8 @@ namespace Medical.Controller.AnomalousMvc
 {
     public partial class NavigationLink : Saveable
     {
+        private String action;
+
         public NavigationLink()
         {
 
@@ -21,10 +23,27 @@ namespace Medical.Controller.AnomalousMvc
         }
 
         [Editable]
+        public String Name { get; set; }
+
+        [Editable]
         public String Text { get; set; }
 
         [EditableAction]
-        public String Action { get; set; }
+        public String Action
+        {
+            get
+            {
+                return action;
+            }
+            set
+            {
+                action = value;
+                if (editInterface != null)
+                {
+                    editInterface.setName(String.Format("{0} - Navigation Link", Action));
+                }
+            }
+        }
 
         [Editable]
         public String Image { get; set; }
@@ -34,6 +53,7 @@ namespace Medical.Controller.AnomalousMvc
             Text = info.GetString("Text");
             Action = info.GetString("Action");
             Image = info.GetString("Image");
+            Name = info.GetString("Name", null);
         }
 
         public void getInfo(SaveInfo info)
@@ -41,6 +61,7 @@ namespace Medical.Controller.AnomalousMvc
             info.AddValue("Text", Text);
             info.AddValue("Action", Action);
             info.AddValue("Image", Image);
+            info.AddValue("Name", Name);
         }
     }
 
@@ -52,7 +73,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (editInterface == null)
             {
-                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "Navigation Link", null);
+                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, String.Format("{0} - Navigation Link", Action), null);
             }
             return editInterface;
         }

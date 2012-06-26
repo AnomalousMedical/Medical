@@ -164,6 +164,7 @@ namespace Medical.Controller.AnomalousMvc
             BrowserNode navigationCommands = new BrowserNode("Navigation", null);
             navigationCommands.addChild(new BrowserNode("Navigate Previous", typeof(NavigatePreviousCommand)));
             navigationCommands.addChild(new BrowserNode("Navigate Next", typeof(NavigateNextCommand)));
+            navigationCommands.addChild(new BrowserNode("Navigate To", typeof(NavigateToCommand)));
             rootNode.addChild(navigationCommands);
 
             //Mvc Actions

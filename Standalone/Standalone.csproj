@@ -83,6 +83,7 @@
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTree.cs" />
     <Compile Include="Controller\Anatomy\NullTransparencyChanger.cs" />
+    <Compile Include="Controller\AnomalousMvc\ActiveContextManager.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcContext.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\CallbackAction.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\RestoreMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SaveMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\CallbackCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateToCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseAllViewsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseViewCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\CreateMedicalStateCommand.cs" />
