@@ -12,6 +12,7 @@ using Medical.Model;
 using Medical.GUI;
 using Engine;
 using Medical.Editor;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -20,6 +21,7 @@ namespace Medical
         private MedicalUICallback medicalUICallback;
         private StandaloneController standaloneController;
         private EditorController editorController;
+        private CopySaver copySaver = new CopySaver();
 
         public EditorUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, EditorController editorController)
         {
@@ -63,9 +65,11 @@ namespace Medical
             {
                 if (editorController.ResourceProvider != null)
                 {
+                    AnomalousMvcContext copiedContext = copySaver.copy<AnomalousMvcContext>(context);
                     standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
-                    context.setResourceProvider(editorController.ResourceProvider);
-                    standaloneController.MvcCore.startRunningContext(context);
+                    copiedContext.setResourceProvider(editorController.ResourceProvider);
+                    copiedContext.RuntimeName = "Editor.PreviewMvcContext";
+                    standaloneController.MvcCore.startRunningContext(copiedContext);
                 }
                 else
                 {

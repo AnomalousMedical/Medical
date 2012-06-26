@@ -29,6 +29,7 @@ namespace Medical
                 {
                     context = Plugin.MvcCore.loadContext(stream);
                 }
+                context.RuntimeName = UniqueName;
                 context.setResourceProvider(resourceProvider);
                 Plugin.TimelineController.setResourceProvider(resourceProvider);
                 Plugin.MvcCore.startRunningContext(context);

@@ -41,6 +41,7 @@ namespace Medical
 
             //Load and run the mvc context
             context = mvcCore.loadContext(embeddedResourceProvider.openFile(mvcContextName));
+            context.RuntimeName = UniqueName;
             context.setResourceProvider(embeddedResourceProvider);
             mvcCore.startRunningContext(context);
         }

@@ -216,6 +216,13 @@ namespace Medical.Controller.AnomalousMvc
         [EditableAction]
         public String ShutdownAction { get; set; }
 
+        /// <summary>
+        /// This is the unique name of the context. If another context is
+        /// running with the same name it will be removed from the context
+        /// manager when this context starts.
+        /// </summary>
+        public String RuntimeName { get; set; }
+
         public ControllerCollection Controllers
         {
             get
@@ -355,7 +362,7 @@ namespace Medical.Controller.AnomalousMvc
                     else
                     {
                         //Not timelines playing and no views showing, shutdown
-                        core.shutdownContext(this);
+                        core.shutdownContext(this, true, true); //true, true
                     }
                 }
             }

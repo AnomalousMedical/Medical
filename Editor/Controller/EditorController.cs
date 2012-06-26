@@ -255,6 +255,7 @@ namespace Medical
         public void runEditorContext(AnomalousMvcContext mvcContext)
         {
             mvcContext.setResourceProvider(resourceProvider);
+            mvcContext.RuntimeName = "Editor.CurrentEditor";
             standaloneController.MvcCore.startRunningContext(mvcContext);
         }
 
