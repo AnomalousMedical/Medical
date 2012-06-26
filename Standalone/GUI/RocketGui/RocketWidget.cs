@@ -34,7 +34,7 @@ namespace Medical.GUI
         private ImageBox imageBox;
 
         //Conditions to turn on rendering
-        bool enabled = true; //This one has to be true to use the others
+        bool renderingEnabled = true; //This one has to be true to use the others
 
         //Any one (or combo) of these has to be on
         bool hasKeyFocus = false;
@@ -141,49 +141,53 @@ namespace Medical.GUI
 
         public void resized()
         {
-            //Compute texture size
-            int textureWidth = computeSize(imageBox.Width);
-            int textureHeight = computeSize(imageBox.Height);
-
-            if (textureWidth != currentTextureWidth || textureHeight != currentTextureHeight)
+            //Only resize if enabled.
+            if (renderingEnabled)
             {
-                currentTextureWidth = textureWidth;
-                currentTextureHeight = textureHeight;
+                //Compute texture size
+                int textureWidth = computeSize(imageBox.Width);
+                int textureHeight = computeSize(imageBox.Height);
 
-                //Destroy old render target
-                renderTexture.destroyViewport(vp);
-                pixelBuffer.Dispose();
-                texture.Dispose();
-                RenderManager.Instance.destroyTexture(textureName);
+                if (textureWidth != currentTextureWidth || textureHeight != currentTextureHeight)
+                {
+                    currentTextureWidth = textureWidth;
+                    currentTextureHeight = textureHeight;
 
-                generateTextureName();
+                    //Destroy old render target
+                    renderTexture.destroyViewport(vp);
+                    pixelBuffer.Dispose();
+                    texture.Dispose();
+                    RenderManager.Instance.destroyTexture(textureName);
 
-                texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                    generateTextureName();
 
-                pixelBuffer = texture.Value.getBuffer();
-                renderTexture = pixelBuffer.Value.getRenderTarget();
-                vp = renderTexture.addViewport(camera);
-                vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
-                vp.setOverlaysEnabled(false);
-                vp.clear();
+                    texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
 
-                renderQueueListener.RenderDimensions = new IntSize2(textureWidth, textureHeight);
+                    pixelBuffer = texture.Value.getBuffer();
+                    renderTexture = pixelBuffer.Value.getRenderTarget();
+                    vp = renderTexture.addViewport(camera);
+                    vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+                    vp.setOverlaysEnabled(false);
+                    vp.clear();
+
+                    renderQueueListener.RenderDimensions = new IntSize2(textureWidth, textureHeight);
+                }
+
+                int imageWidth = imageBox.Width;
+                if (imageWidth < 0)
+                {
+                    imageWidth = 0;
+                }
+                int imageHeight = imageBox.Height;
+                if (imageHeight < 0)
+                {
+                    imageHeight = 0;
+                }
+                context.Dimensions = new Vector2i(imageWidth, imageHeight);
+                imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageWidth, imageHeight), new IntSize2(imageWidth, imageHeight));
+                renderOneFrame = true;
+                determineRenderingActive();
             }
-
-            int imageWidth = imageBox.Width;
-            if (imageWidth < 0)
-            {
-                imageWidth = 0;
-            }
-            int imageHeight = imageBox.Height;
-            if (imageHeight < 0)
-            {
-                imageHeight = 0;
-            }
-            context.Dimensions = new Vector2i(imageWidth, imageHeight);
-            imageBox.setImageInfo(textureName, new IntCoord(0, 0, imageWidth, imageHeight), new IntSize2(imageWidth, imageHeight));
-            renderOneFrame = true;
-            determineRenderingActive();
         }
 
         public void removeFocus()
@@ -249,12 +253,12 @@ namespace Medical.GUI
         {
             get
             {
-                return enabled;
+                return renderingEnabled;
             }
             set
             {
-                enabled = value;
-                if (enabled)
+                renderingEnabled = value;
+                if (renderingEnabled)
                 {
                     renderOneFrame = true;
                 }
@@ -443,7 +447,7 @@ namespace Medical.GUI
 
         void determineRenderingActive()
         {
-            renderTexture.setAutoUpdated(enabled && (alwaysRender || hasKeyFocus || mouseOver || renderOneFrame));
+            renderTexture.setAutoUpdated(renderingEnabled && (alwaysRender || hasKeyFocus || mouseOver || renderOneFrame));
         }
     }
 }
