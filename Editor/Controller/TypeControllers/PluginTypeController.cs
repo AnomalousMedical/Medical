@@ -26,7 +26,8 @@ namespace Medical
             DDAtlasPlugin plugin = (DDAtlasPlugin)loadObject(file);
 
             editorContext = new PluginEditorContext(plugin, file, this);
-            editorContext.Shutdown += new Action<PluginEditorContext>(editorContext_Shutdown);
+            editorContext.Focus += new Action<PluginEditorContext>(editorContext_Focus);
+            editorContext.Blur += new Action<PluginEditorContext>(editorContext_Blur);
             editorController.runEditorContext(editorContext.MvcContext);
         }
 
@@ -83,7 +84,12 @@ namespace Medical
             closeCurrentCachedResource();
         }
 
-        void editorContext_Shutdown(PluginEditorContext obj)
+        void editorContext_Focus(PluginEditorContext obj)
+        {
+            editorContext = obj;
+        }
+
+        void editorContext_Blur(PluginEditorContext obj)
         {
             if (editorContext == obj)
             {
