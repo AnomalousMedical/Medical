@@ -41,7 +41,8 @@ namespace Medical
                 TimelineChanged.Invoke(this, timeline);
             }
             timelineEditorContext = new TimelineEditorContext(timeline, path, this, propEditController);
-            timelineEditorContext.Shutdown += new Action<TimelineEditorContext>(timelineEditorContext_Shutdown);
+            timelineEditorContext.Focus += new Action<TimelineEditorContext>(timelineEditorContext_Focus);
+            timelineEditorContext.Blur += new Action<TimelineEditorContext>(timelineEditorContext_Blur);
 
             editorController.runEditorContext(timelineEditorContext.MvcContext);
         }
@@ -109,7 +110,12 @@ namespace Medical
             closeCurrentCachedResource();
         }
 
-        void timelineEditorContext_Shutdown(TimelineEditorContext obj)
+        void timelineEditorContext_Focus(TimelineEditorContext obj)
+        {
+            timelineEditorContext = obj;
+        }
+
+        void timelineEditorContext_Blur(TimelineEditorContext obj)
         {
             if (obj == timelineEditorContext)
             {

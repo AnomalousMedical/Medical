@@ -25,7 +25,8 @@ namespace Medical
             PropTimeline
         }
 
-        public event Action<TimelineEditorContext> Shutdown;
+        public event Action<TimelineEditorContext> Focus;
+        public event Action<TimelineEditorContext> Blur;
 
         private String currentFile;
         private Timeline currentTimeline;
@@ -44,7 +45,11 @@ namespace Medical
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
-            mvcContext.ShutdownAction = "Common/Shutdown";
+            mvcContext.FocusAction = "Common/Focus";
+            mvcContext.BlurAction = "Common/Blur";
+            mvcContext.SuspendAction = "Common/Suspended";
+            mvcContext.ResumeAction = "Common/Resumed";
+
             mvcContext.Models.add(new EditMenuManager());
             mvcContext.Models.add(new EditInterfaceHandler());
             
@@ -121,21 +126,26 @@ namespace Medical
                     new CloseViewCommand())));
 
             mvcContext.Controllers.add(new MvcController("Common",
-                new RunCommandsAction("Start",
-                    new RunActionCommand("TimelineEditor/Show"),
-                    new CallbackCommand(context =>
+                new RunCommandsAction("Start", new RunActionCommand("TimelineEditor/Show")),
+                new CallbackAction("Focus", context =>
+                    {
+                        GlobalContextEventHandler.setEventContext(eventContext);
+                        if (Focus != null)
                         {
-                            GlobalContextEventHandler.setEventContext(eventContext);
-                        })),
-                new CallbackAction("Shutdown", context =>
+                            Focus.Invoke(this);
+                        }
+                    }),
+                new CallbackAction("Blur", context =>
                     {
                         GlobalContextEventHandler.disableEventContext(eventContext);
                         propEditController.removeAllOpenProps();
-                        if (Shutdown != null)
+                        if (Blur != null)
                         {
-                            Shutdown.Invoke(this);
+                            Blur.Invoke(this);
                         }
-                    })));
+                    }),
+                new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),
+                new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
 
