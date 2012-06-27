@@ -34,9 +34,7 @@ namespace Medical
                 createNewRmlFile(file);
             }
 
-            String rmlText = loadText(file);
-
-            editorContext = new RmlEditorContext(rmlText, file, this);
+            editorContext = new RmlEditorContext(file, this);
             editorContext.Focus += new Action<RmlEditorContext>(editorContext_Focus);
             editorContext.Blur += new Action<RmlEditorContext>(editorContext_Blur);
             editorController.runEditorContext(editorContext.MvcContext);

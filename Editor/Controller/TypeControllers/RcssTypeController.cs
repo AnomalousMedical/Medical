@@ -33,9 +33,7 @@ namespace Medical
                 createNewRcssFile(file);
             }
 
-            String rmlText = loadText(file);
-
-            rcssContext = new RcssEditorContext(rmlText, file, rmlTypeController.LastRmlFile, this);
+            rcssContext = new RcssEditorContext(file, rmlTypeController.LastRmlFile, this);
             rcssContext.Focus += new Action<RcssEditorContext>(rcssContext_Focus);
             rcssContext.Blur += new Action<RcssEditorContext>(rcssContext_Blur);
             editorController.runEditorContext(rcssContext.MvcContext);

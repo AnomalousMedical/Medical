@@ -30,9 +30,9 @@ namespace Medical
         private TRmlTypeController trmlTypeController;
         private String rmlPreviewFile;
 
-        public TRmlEditorContext(String rcssText, String file, String rmlPreviewFile, TRmlTypeController rcssTypeController)
+        public TRmlEditorContext(String file, String rmlPreviewFile, TRmlTypeController trmlTypeController)
         {
-            this.trmlTypeController = rcssTypeController;
+            this.trmlTypeController = trmlTypeController;
             this.currentFile = file;
             this.rmlPreviewFile = rmlPreviewFile;
 
@@ -43,7 +43,7 @@ namespace Medical
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
 
-            TextEditorView textEditorView = new TextEditorView("RmlEditor", rcssText, wordWrap: false);
+            TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.trmlTypeController.loadText(currentFile), wordWrap: false);
             textEditorView.ViewLocation = ViewLocations.Floating;
             textEditorView.IsWindow = true;
             textEditorView.ComponentCreated += (view, component) =>

@@ -30,7 +30,7 @@ namespace Medical
         private EventContext eventContext;
         private RmlTypeController rmlTypeController;
 
-        public RmlEditorContext(String rmlText, String file, RmlTypeController rmlTypeController)
+        public RmlEditorContext(String file, RmlTypeController rmlTypeController)
         {
             this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
@@ -42,7 +42,7 @@ namespace Medical
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
 
-            TextEditorView textEditorView = new TextEditorView("RmlEditor", rmlText, wordWrap: false);
+            TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.rmlTypeController.loadText(currentFile), wordWrap: false);
             textEditorView.ViewLocation = ViewLocations.Floating;
             textEditorView.IsWindow = true;
             textEditorView.ComponentCreated += (view, component) =>

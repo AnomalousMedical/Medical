@@ -10,16 +10,24 @@ namespace Medical.GUI
     class TextEditorView : MyGUIView
     {
         public event Action<TextEditorView, TextEditorComponent> ComponentCreated;
+        public delegate String TextProviderDelegate();
+        private TextProviderDelegate textProvider;
 
-        public TextEditorView(String name, String text = "", uint maxLength = 100000, bool wordWrap = false)
+        public TextEditorView(String name, TextProviderDelegate textProvider, uint maxLength = 100000, bool wordWrap = false)
             :base(name)
         {
-            this.Text = text;
+            this.textProvider = textProvider;
             this.MaxLength = maxLength;
             this.WordWrap = wordWrap;
         }
 
-        public String Text { get; set; }
+        public String Text
+        {
+            get
+            {
+                return textProvider();
+            }
+        }
 
         public uint MaxLength { get; set; }
 
