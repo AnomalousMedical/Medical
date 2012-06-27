@@ -15,7 +15,8 @@ namespace Medical
 {
     class RmlEditorContext
     {
-        public event Action<RmlEditorContext> Shutdown;
+        public event Action<RmlEditorContext> Focus;
+        public event Action<RmlEditorContext> Blur;
 
         enum Events
         {
@@ -36,7 +37,10 @@ namespace Medical
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
-            mvcContext.ShutdownAction = "Common/Shutdown";
+            mvcContext.FocusAction = "Common/Focus";
+            mvcContext.BlurAction = "Common/Blur";
+            mvcContext.SuspendAction = "Common/Suspended";
+            mvcContext.ResumeAction = "Common/Resumed";
 
             TextEditorView textEditorView = new TextEditorView("RmlEditor", rmlText, wordWrap: false);
             textEditorView.ViewLocation = ViewLocations.Floating;
@@ -61,7 +65,6 @@ namespace Medical
             mvcContext.Views.add(rmlView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
-            //taskbar.addTask(new RunMvcContextActionTask("Close", "Close Rml File", "NoIcon", "File", "Editor/CloseCurrentFile", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
@@ -74,98 +77,87 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("Image", "Image", "Editor/ImageIcon", "Edit", "Editor/Image", mvcContext));
             mvcContext.Views.add(taskbar);
 
-            MvcController timelineEditorController = new MvcController("Editor");
-            RunCommandsAction showAction = new RunCommandsAction("Show");
-            showAction.addCommand(new ShowViewCommand("RmlEditor"));
-            showAction.addCommand(new ShowViewCommand("RmlView"));
-            showAction.addCommand(new ShowViewCommand("InfoBar"));
-            timelineEditorController.Actions.add(showAction);
-            RunCommandsAction closeAction = new RunCommandsAction("Close");
-            closeAction.addCommand(new CloseAllViewsCommand());
-            timelineEditorController.Actions.add(closeAction);
-            timelineEditorController.Actions.add(new CallbackAction("CloseCurrentFile", context =>
-            {
-                close();
-                context.runAction("Editor/Close");
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Save", context =>
-            {
-                save();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Cut", context =>
-            {
-                textEditorComponent.cut();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Copy", context =>
-            {
-                textEditorComponent.copy();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Paste", context =>
-            {
-                textEditorComponent.paste();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("SelectAll", context =>
-            {
-                textEditorComponent.selectAll();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Paragraph", context =>
-            {
-                //textEditorComponent.insertText("<p>Empty Paragraph</p>");
-                rmlComponent.insertParagraph();
+            mvcContext.Controllers.add(new MvcController("Editor",
+                new RunCommandsAction("Show", 
+                    new ShowViewCommand("RmlEditor"),
+                    new ShowViewCommand("RmlView"),
+                    new ShowViewCommand("InfoBar")),
+                new RunCommandsAction("Close", new CloseAllViewsCommand()),
+                new CallbackAction("Save", context =>
+                    {
+                        save();
+                    }),
+                new CallbackAction("Cut", context =>
+                    {
+                        textEditorComponent.cut();
+                    }),
+                new CallbackAction("Copy", context =>
+                    {
+                        textEditorComponent.copy();
+                    }),
+                new CallbackAction("Paste", context =>
+                    {
+                        textEditorComponent.paste();
+                    }),
+                new CallbackAction("SelectAll", context =>
+                    {
+                        textEditorComponent.selectAll();
+                    }),
+                new CallbackAction("Paragraph", context =>
+                    {
+                        rmlComponent.insertParagraph();
+                    }),
+                new CallbackAction("Header", context =>
+                    {
+                        rmlComponent.insertHeader1();
+                    }),
+                new CallbackAction("ActionLink", context =>
+                    {
+                        BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+                        {
+                            rmlComponent.insertLink(result);
+                            return true;
+                        });
+                    }),
+                new CallbackAction("Button", context =>
+                    {
+                        BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+                        {
+                            //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
+                            rmlComponent.insertButton(result);
+                            return true;
+                        });
+                    }),
+                new CallbackAction("Image", context =>
+                    {
+                        BrowserWindow<String>.GetInput(BrowserWindowController.createFileBrowser("*.png", "Image Files"), true, delegate(String result, ref string errorPrompt)
+                        {
+                            //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
+                            rmlComponent.insertImage(result);
+                            return true;
+                        });
+                    })));
 
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Header", context =>
-            {
-                //textEditorComponent.insertText("<h1>Empty Header</h1>\n");
-                rmlComponent.insertHeader1();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("ActionLink", context =>
-            {
-                BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+            mvcContext.Controllers.add(new MvcController("Common",
+                new RunCommandsAction("Start", new RunActionCommand("Editor/Show")),
+                new CallbackAction("Focus", context =>
                 {
-                    rmlComponent.insertLink(result);
-                    //textEditorComponent.insertText(String.Format("<a onclick=\"{0}\">Empty Link</a>", result));
-                    return true;
-                });
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Button", context =>
-            {
-                BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+                    GlobalContextEventHandler.setEventContext(eventContext);
+                    if (Focus != null)
+                    {
+                        Focus.Invoke(this);
+                    }
+                }),
+                new CallbackAction("Blur", context =>
                 {
-                    //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
-                    rmlComponent.insertButton(result);
-                    return true;
-                });
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Image", context =>
-            {
-                BrowserWindow<String>.GetInput(BrowserWindowController.createFileBrowser("*.png", "Image Files"), true, delegate(String result, ref string errorPrompt)
-                {
-                    //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
-                    rmlComponent.insertImage(result);
-                    return true;
-                });
-            }));
-
-            mvcContext.Controllers.add(timelineEditorController);
-            MvcController common = new MvcController("Common");
-            RunCommandsAction startup = new RunCommandsAction("Start");
-            startup.addCommand(new RunActionCommand("Editor/Show"));
-            startup.addCommand(new CallbackCommand(context =>
-            {
-                GlobalContextEventHandler.setEventContext(eventContext);
-            }));
-            common.Actions.add(startup);
-            CallbackAction shutdown = new CallbackAction("Shutdown", context =>
-            {
-                GlobalContextEventHandler.disableEventContext(eventContext);
-                if (Shutdown != null)
-                {
-                    Shutdown.Invoke(this);
-                }
-            });
-            common.Actions.add(shutdown);
-            mvcContext.Controllers.add(common);
+                    GlobalContextEventHandler.disableEventContext(eventContext);
+                    if (Blur != null)
+                    {
+                        Blur.Invoke(this);
+                    }
+                }),
+                new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),
+                new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
             MessageEvent saveEvent = new MessageEvent(Events.Save);
