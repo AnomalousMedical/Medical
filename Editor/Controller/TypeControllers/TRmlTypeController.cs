@@ -36,7 +36,8 @@ namespace Medical
             String rmlText = loadText(file);
 
             trmlContext = new TRmlEditorContext(rmlText, file, rmlTypeController.LastRmlFile, this);
-            trmlContext.Shutdown += new Action<TRmlEditorContext>(rcssContext_Shutdown);
+            trmlContext.Focus += new Action<TRmlEditorContext>(trmlContext_Focus);
+            trmlContext.Blur += new Action<TRmlEditorContext>(rcssContext_Blur);
             editorController.runEditorContext(trmlContext.MvcContext);
         }
 
@@ -81,7 +82,12 @@ namespace Medical
             openFile(filePath);
         }
 
-        void rcssContext_Shutdown(TRmlEditorContext obj)
+        void trmlContext_Focus(TRmlEditorContext obj)
+        {
+            trmlContext = obj;
+        }
+
+        void rcssContext_Blur(TRmlEditorContext obj)
         {
             updateCachedText(obj.CurrentFile, obj.CurrentText);
             if (trmlContext == obj)
