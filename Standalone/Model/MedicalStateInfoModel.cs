@@ -20,14 +20,7 @@ namespace Medical.Model
             DefaultStateName = "Custom Distortion";
             DefaultNotes = "";
             ThumbInfo = null;
-        }
-
-        public override void reset()
-        {
-            procedureDate = DateTime.Now;
-            Notes = DefaultNotes;
-            StateName = DefaultStateName;
-            ThumbInfo = null;
+            setup();
         }
 
         [DoNotSave]
@@ -95,10 +88,18 @@ namespace Medical.Model
             }
         }
 
+        private void setup()
+        {
+            procedureDate = DateTime.Now;
+            Notes = DefaultNotes;
+            StateName = DefaultStateName;
+            ThumbInfo = null;
+        }
+
         protected MedicalStateInfoModel(LoadInfo info)
             :base(info)
         {
-
+            setup();
         }
     }
 }

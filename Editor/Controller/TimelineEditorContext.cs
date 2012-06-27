@@ -43,6 +43,8 @@ namespace Medical
             this.propEditController = propEditController;
 
             mvcContext = new AnomalousMvcContext();
+            mvcContext.StartupAction = "Common/Start";
+            mvcContext.ShutdownAction = "Common/Shutdown";
             mvcContext.Models.add(new EditMenuManager());
             mvcContext.Models.add(new EditInterfaceHandler());
             

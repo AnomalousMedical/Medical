@@ -285,6 +285,56 @@ namespace Medical.Controller.AnomalousMvc
             return false;
         }
 
+        public StoredViewCollection generateSavedViewLayout()
+        {
+            StoredViewCollection storedViews = new StoredViewCollection();
+            if (currentLeft != null)
+            {
+                storedViews.Left = currentLeft.View;
+            }
+            if (currentRight != null)
+            {
+                storedViews.Right = currentRight.View;
+            }
+            if (currentTop != null)
+            {
+                storedViews.Top = currentTop.View;
+            }
+            if (currentBottom != null)
+            {
+                storedViews.Bottom = currentBottom.View;
+            }
+            foreach (ViewHost viewHost in openFloatingViews)
+            {
+                storedViews.addFloatingView(viewHost.View);
+            }
+            return storedViews;
+        }
+
+        public void restoreSavedViewLayout(StoredViewCollection storedViews, AnomalousMvcContext context)
+        {
+            if (storedViews.Left != null)
+            {
+                requestOpen(storedViews.Left, context);
+            }
+            if (storedViews.Right != null)
+            {
+                requestOpen(storedViews.Right, context);
+            }
+            if (storedViews.Top != null)
+            {
+                requestOpen(storedViews.Top, context);
+            }
+            if (storedViews.Bottom != null)
+            {
+                requestOpen(storedViews.Bottom, context);
+            }
+            foreach (View view in storedViews.FloatingViews)
+            {
+                requestOpen(view, context);
+            }
+        }
+
         public bool HasOpenViews
         {
             get

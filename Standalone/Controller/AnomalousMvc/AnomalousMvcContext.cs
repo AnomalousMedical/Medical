@@ -12,7 +12,7 @@ using Medical.Model;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public partial class AnomalousMvcContext : Saveable
+    public partial class AnomalousMvcContext : Saveable, IDisposable
     {
         private ControllerCollection controllers;
         private ViewCollection views;
@@ -34,8 +34,102 @@ namespace Medical.Controller.AnomalousMvc
             controllers = new ControllerCollection();
             views = new ViewCollection();
             models = new ModelCollection();
-            StartupAction = "Common/Start";
-            ShutdownAction = "Common/Shutdown";
+        }
+
+        /// <summary>
+        /// Called at the end of the context's lifecycle when it will no longer
+        /// be used again ever. This is always called when a context is done
+        /// compared to shutdown, which is only called if the context shuts down
+        /// naturally.
+        /// </summary>
+        public void Dispose()
+        {
+            if (!String.IsNullOrEmpty(DisposeAction))
+            {
+                runFinalAction(DisposeAction);
+            }
+        }
+
+        /// <summary>
+        /// Called when the context starts running for the first time.
+        /// </summary>
+        public void startup()
+        {
+            foreach (MvcModel model in models)
+            {
+                modelMemory.add(model.Name, model);
+            }
+            if (!String.IsNullOrEmpty(StartupAction))
+            {
+                runAction(StartupAction);
+            }
+        }
+
+        /// <summary>
+        /// Called when the context finishes running normally. This means that
+        /// it was closed down naturally and has been removed from the stack.
+        /// This will not be called if another context with the same RuntimeName
+        /// was added to the stack, but dispose will be called in that case.
+        /// </summary>
+        public void shutdown()
+        {
+            if (!String.IsNullOrEmpty(ShutdownAction))
+            {
+                runFinalAction(ShutdownAction);
+            }
+        }
+
+        /// <summary>
+        /// Called when coming back out of suspend mode.
+        /// </summary>
+        public void resume()
+        {
+            if (!String.IsNullOrEmpty(ResumeAction))
+            {
+                runAction(ResumeAction);
+            }
+        }
+
+        /// <summary>
+        /// Called when the context is being suspended. Suspended means that the
+        /// context can still be brought back to life and has just been pushed
+        /// onto the stack and closed down temporarily until the higher level
+        /// contexts close. It is possible to go from suspend to dispose without
+        /// going through shutdown if another context with the same RuntimeName
+        /// is added to the stack.
+        /// </summary>
+        public void suspend()
+        {
+            if (!String.IsNullOrEmpty(SuspendAction))
+            {
+                runFinalAction(SuspendAction);
+            }
+        }
+
+        /// <summary>
+        /// Called when the context becomes focused or active. This will be
+        /// called after startup and after resume and means that the context is
+        /// open and ready to recieve input.
+        /// </summary>
+        public void focus()
+        {
+            if (!String.IsNullOrEmpty(FocusAction))
+            {
+                runFinalAction(FocusAction);
+            }
+        }
+
+        /// <summary>
+        /// Called when the context is shutting down or suspending. It will be
+        /// called before those events and means the context is becoming
+        /// inactive.
+        /// </summary>
+        public void blur()
+        {
+            if (!String.IsNullOrEmpty(BlurAction))
+            {
+                runFinalAction(BlurAction);
+            }
         }
 
         public void stopPlayingTimeline()
@@ -199,6 +293,25 @@ namespace Medical.Controller.AnomalousMvc
             core.createMedicalState(stateInfo);
         }
 
+        public void saveViewLayout(String name)
+        {
+            StoredViewCollection storedViews = core.generateSavedViewLayout();
+            modelMemory.add(name, storedViews);
+        }
+
+        public void restoreViewLayout(String name)
+        {
+            StoredViewCollection storedViews = modelMemory.get<StoredViewCollection>(name);
+            if (storedViews != null)
+            {
+                core.restoreSavedViewLayout(storedViews, this);
+            }
+            else
+            {
+                Log.Warning("Could not restore a StoredViewModel named {0}. It cannot be found.", name);
+            }
+        }
+
         public void addModel(String name, Object model)
         {
             modelMemory.add(name, model);
@@ -215,6 +328,21 @@ namespace Medical.Controller.AnomalousMvc
 
         [EditableAction]
         public String ShutdownAction { get; set; }
+
+        [EditableAction]
+        public String SuspendAction { get; set; }
+
+        [EditableAction]
+        public String ResumeAction { get; set; }
+
+        [EditableAction]
+        public String DisposeAction { get; set; }
+
+        [EditableAction]
+        public String FocusAction { get; set; }
+
+        [EditableAction]
+        public String BlurAction { get; set; }
 
         /// <summary>
         /// This is the unique name of the context. If another context is
@@ -247,13 +375,15 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        internal void starting(AnomalousMvcCore core)
+        internal AnomalousMvcCore Core
         {
-            this.core = core;
-            foreach (MvcModel model in models)
+            get
             {
-                model.reset();
-                modelMemory.add(model.Name, model);
+                return core;
+            }
+            set
+            {
+                this.core = value;
             }
         }
 
@@ -261,6 +391,11 @@ namespace Medical.Controller.AnomalousMvc
         {
             StartupAction = info.GetString("StartupAction");
             ShutdownAction = info.GetString("ShutdownAction");
+            ResumeAction = info.GetString("ResumeAction", null);
+            SuspendAction = info.GetString("SuspendAction", null);
+            DisposeAction = info.GetString("DisposeAction", null);
+            FocusAction = info.GetString("FocusAction", null);
+            BlurAction = info.GetString("BlurAction", null);
             controllers = info.GetValue<ControllerCollection>("Controllers");
             views = info.GetValue<ViewCollection>("Views");
             models = info.GetValue<ModelCollection>("Models", null);
@@ -270,7 +405,12 @@ namespace Medical.Controller.AnomalousMvc
         {
             info.AddValue("StartupAction", StartupAction);
             info.AddValue("ShutdownAction", ShutdownAction);
-            info.AddValue("Controllers", controllers);
+            info.AddValue("ResumeAction", ResumeAction);
+            info.AddValue("SuspendAction", SuspendAction);
+            info.AddValue("DisposeAction", DisposeAction);
+            info.AddValue("FocusAction", FocusAction);
+            info.AddValue("BlurAction", BlurAction);
+            info.AddValue("Controllers", Controllers);
             info.AddValue("Views", views);
             info.AddValue("Models", models);
         }

@@ -29,7 +29,8 @@ namespace Medical
             BrowserWindowController.setCurrentEditingMvcContext(context);
 
             editorContext = new MvcEditorContext(context, file, this);
-            editorContext.Shutdown += new Action<MvcEditorContext>(editorContext_Shutdown);
+            editorContext.Focused += new Action<MvcEditorContext>(editorContext_Focused);
+            editorContext.Blured += new Action<MvcEditorContext>(editorContext_Blured);
             editorController.runEditorContext(editorContext.MvcContext);
         }
 
@@ -88,7 +89,12 @@ namespace Medical
             closeCurrentCachedResource();
         }
 
-        void editorContext_Shutdown(MvcEditorContext obj)
+        void editorContext_Focused(MvcEditorContext obj)
+        {
+            editorContext = obj;
+        }
+
+        void editorContext_Blured(MvcEditorContext obj)
         {
             if (editorContext == obj)
             {

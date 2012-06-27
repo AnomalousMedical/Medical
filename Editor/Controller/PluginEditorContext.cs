@@ -32,6 +32,8 @@ namespace Medical
             this.plugin = plugin;
 
             mvcContext = new AnomalousMvcContext();
+            mvcContext.StartupAction = "Common/Start";
+            mvcContext.ShutdownAction = "Common/Shutdown";
 
             mvcContext.Models.add(new EditMenuManager());
 

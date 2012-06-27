@@ -35,6 +35,9 @@ namespace Medical
             this.currentFile = file;
 
             mvcContext = new AnomalousMvcContext();
+            mvcContext.StartupAction = "Common/Start";
+            mvcContext.ShutdownAction = "Common/Shutdown";
+
             TextEditorView textEditorView = new TextEditorView("RmlEditor", rmlText, wordWrap: false);
             textEditorView.ViewLocation = ViewLocations.Floating;
             textEditorView.IsWindow = true;

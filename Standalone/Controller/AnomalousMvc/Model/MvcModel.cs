@@ -15,11 +15,6 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
-        public virtual void reset()
-        {
-
-        }
-
         protected MvcModel(LoadInfo info)
             : base(info)
         {

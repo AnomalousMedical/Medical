@@ -198,13 +198,16 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (contextManager.CurrentContext != null)
             {
+                contextManager.CurrentContext.blur();
+                contextManager.CurrentContext.suspend();
                 contextManager.CurrentContext.queueShutdown();
                 this.processViewChanges();
                 this.shutdownContext(contextManager.CurrentContext, false, false); //false, false
             }
             contextManager.pushContext(context);
             setupContextToRun(context);
-            context.runAction(context.StartupAction);
+            context.startup();
+            context.focus();
         }
 
         public void shutdownContext(AnomalousMvcContext context, bool removeContext, bool resumePreviousContext)
@@ -217,12 +220,13 @@ namespace Medical.Controller.AnomalousMvc
             OgreResourceGroupManager.getInstance().destroyResourceGroup("RocketMvc");
             OgreArchiveManager.getInstance().unload(context.ResourceProvider.BackingLocation);
 
+            timelineController.stopPlayback(false);
             if (removeContext)
             {
+                context.blur();
+                context.shutdown();
                 contextManager.removeContext(context);
             }
-            timelineController.stopPlayback(false);
-            context.runFinalAction(context.ShutdownAction);
 
             if (resumePreviousContext)
             {
@@ -230,7 +234,8 @@ namespace Medical.Controller.AnomalousMvc
                 if (nextContext != null)
                 {
                     setupContextToRun(nextContext);
-                    nextContext.runAction(nextContext.StartupAction);
+                    nextContext.resume();
+                    context.focus();
                 }
             }
         }
@@ -243,6 +248,17 @@ namespace Medical.Controller.AnomalousMvc
         public void showMainInterface()
         {
             guiManager.setMainInterfaceEnabled(true, false);
+        }
+
+        internal StoredViewCollection generateSavedViewLayout()
+        {
+            return viewHostManager.generateSavedViewLayout();
+        }
+
+        internal void restoreSavedViewLayout(StoredViewCollection storedViews, AnomalousMvcContext context)
+        {
+            viewHostManager.restoreSavedViewLayout(storedViews, context);
+            processViewChanges();
         }
 
         public ViewHostFactory ViewHostFactory
@@ -296,7 +312,7 @@ namespace Medical.Controller.AnomalousMvc
             OgreResourceGroupManager.getInstance().addResourceLocation(context.ResourceProvider.BackingLocation, OgreResourceProviderArchiveFactory.Name, "RocketMvc", false);
             //OgreResourceGroupManager.getInstance().initializeResourceGroup("RocketMvc");
 
-            context.starting(this);
+            context.Core = this;
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Medical.Controller.AnomalousMvc
             refreshLinkDefinitions();
         }
 
-        public override void reset()
+        public void reset()
         {
             if (StartIndex < links.Count)
             {

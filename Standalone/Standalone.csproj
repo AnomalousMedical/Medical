@@ -108,6 +108,8 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\RestoreMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SetMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\ShutdownCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\RestoreViewLayoutCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\SaveViewLayoutCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\ShowViewIfNotOpenCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\RunCommandsAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MainInterface\ShowMainInterfaceCommand.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Timeline\StopTimelineCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\MvcController.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
+    <Compile Include="Controller\AnomalousMvc\View\StoredViewCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\MvcModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ModelCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />

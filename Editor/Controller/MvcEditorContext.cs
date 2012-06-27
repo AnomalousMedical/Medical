@@ -11,7 +11,8 @@ namespace Medical
 {
     class MvcEditorContext
     {
-        public event Action<MvcEditorContext> Shutdown;
+        public event Action<MvcEditorContext> Focused;
+        public event Action<MvcEditorContext> Blured;
 
         enum Events
         {
@@ -32,6 +33,11 @@ namespace Medical
             this.editingContext = editingContext;
 
             mvcContext = new AnomalousMvcContext();
+            mvcContext.StartupAction = "Common/Start";
+            mvcContext.FocusAction = "Common/Focus";
+            mvcContext.BlurAction = "Common/Blur";
+            mvcContext.SuspendAction = "Common/Suspended";
+            mvcContext.ResumeAction = "Common/Resumed";
 
             mvcContext.Models.add(new EditMenuManager());
 
@@ -83,23 +89,28 @@ namespace Medical
                 //textEditorComponent.selectAll();
             }));
             mvcContext.Controllers.add(timelineEditorController);
+
             MvcController common = new MvcController("Common");
-            RunCommandsAction startup = new RunCommandsAction("Start");
-            startup.addCommand(new RunActionCommand("Editor/Show"));
-            startup.addCommand(new CallbackCommand(context =>
+            common.Actions.add(new RunCommandsAction("Start", new RunActionCommand("Editor/Show")));
+            common.Actions.add(new CallbackAction("Focus", context =>
             {
                 GlobalContextEventHandler.setEventContext(eventContext);
+                if (Focused != null)
+                {
+                    Focused.Invoke(this);
+                }
             }));
-            common.Actions.add(startup);
-            CallbackAction shutdown = new CallbackAction("Shutdown", context =>
+            common.Actions.add(new CallbackAction("Blur", context =>
             {
                 GlobalContextEventHandler.disableEventContext(eventContext);
-                if (Shutdown != null)
+                if (Blured != null)
                 {
-                    Shutdown.Invoke(this);
+                    Blured.Invoke(this);
                 }
-            });
-            common.Actions.add(shutdown);
+            }));
+            common.Actions.add(new RunCommandsAction("Suspended", new SaveViewLayoutCommand()));
+            common.Actions.add(new RunCommandsAction("Resumed", new RestoreViewLayoutCommand()));
+
             mvcContext.Controllers.add(common);
 
             eventContext = new EventContext();

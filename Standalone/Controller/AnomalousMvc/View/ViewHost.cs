@@ -18,5 +18,7 @@ namespace Medical.Controller.AnomalousMvc
         void _animationCallback(LayoutContainer oldChild);
 
         String Name { get; }
+
+        View View { get; }
     }
 }
