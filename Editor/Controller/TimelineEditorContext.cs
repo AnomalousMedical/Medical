@@ -69,7 +69,6 @@ namespace Medical
             mvcContext.Views.add(propManagerView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", currentFile, "TimelineEditor/Close");
-            //taskbar.addTask(new RunMvcContextActionTask("CloseTimeline", "Close Timeline","", "", "TimelineEditor/CloseTimeline"));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Timeline", "FileToolstrip/Save", "", "TimelineEditor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "", "TimelineEditor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "", "TimelineEditor/Copy", mvcContext));
@@ -89,11 +88,6 @@ namespace Medical
                 ),
                 new RunCommandsAction("Close",
                     new CloseAllViewsCommand()),
-                new CallbackAction("CloseTimeline", context =>
-                    {
-                        timelineTypeController.closeTimeline();
-                        context.runAction("TimelineEditor/Close");
-                    }),
                 new CallbackAction("Save", context =>
                     {
                         timelineTypeController.saveTimeline(currentTimeline, currentFile);
