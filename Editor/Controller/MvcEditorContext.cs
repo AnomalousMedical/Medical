@@ -47,71 +47,40 @@ namespace Medical
             mvcContext.Views.add(genericPropertiesView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
-            //taskbar.addTask(new RunMvcContextActionTask("Close", "Close Rml File", "NoIcon", "File", "Editor/CloseCurrentFile", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
             mvcContext.Views.add(taskbar);
 
-            MvcController timelineEditorController = new MvcController("Editor");
-            RunCommandsAction showAction = new RunCommandsAction("Show");
-            showAction.addCommand(new ShowViewCommand("MvcContext"));
-            showAction.addCommand(new ShowViewCommand("InfoBar"));
-            timelineEditorController.Actions.add(showAction);
-            RunCommandsAction closeAction = new RunCommandsAction("Close");
-            closeAction.addCommand(new CloseAllViewsCommand());
-            timelineEditorController.Actions.add(closeAction);
-            timelineEditorController.Actions.add(new CallbackAction("CloseCurrentFile", context =>
-            {
-                close();
-                context.runAction("Editor/Close");
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Save", context =>
-            {
-                save();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Cut", context =>
-            {
-                //textEditorComponent.cut();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Copy", context =>
-            {
-                //textEditorComponent.copy();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("Paste", context =>
-            {
-                //textEditorComponent.paste();
-            }));
-            timelineEditorController.Actions.add(new CallbackAction("SelectAll", context =>
-            {
-                //textEditorComponent.selectAll();
-            }));
-            mvcContext.Controllers.add(timelineEditorController);
-
-            MvcController common = new MvcController("Common");
-            common.Actions.add(new RunCommandsAction("Start", new RunActionCommand("Editor/Show")));
-            common.Actions.add(new CallbackAction("Focus", context =>
-            {
-                GlobalContextEventHandler.setEventContext(eventContext);
-                if (Focused != null)
+            mvcContext.Controllers.add(new MvcController("Editor", 
+                new RunCommandsAction("Show", 
+                    new ShowViewCommand("MvcContext"),
+                    new ShowViewCommand("InfoBar")),
+                new RunCommandsAction("Close", 
+                    new CloseAllViewsCommand()),
+                new CallbackAction("Save", context =>
                 {
-                    Focused.Invoke(this);
-                }
-            }));
-            common.Actions.add(new CallbackAction("Blur", context =>
-            {
-                GlobalContextEventHandler.disableEventContext(eventContext);
-                if (Blured != null)
-                {
-                    Blured.Invoke(this);
-                }
-            }));
-            common.Actions.add(new RunCommandsAction("Suspended", new SaveViewLayoutCommand()));
-            common.Actions.add(new RunCommandsAction("Resumed", new RestoreViewLayoutCommand()));
+                    save();
+                })));
 
-            mvcContext.Controllers.add(common);
+            mvcContext.Controllers.add(new MvcController("Common", 
+                new RunCommandsAction("Start", new RunActionCommand("Editor/Show")),
+                new CallbackAction("Focus", context =>
+                {
+                    GlobalContextEventHandler.setEventContext(eventContext);
+                    if (Focused != null)
+                    {
+                        Focused.Invoke(this);
+                    }
+                }),
+                new CallbackAction("Blur", context =>
+                {
+                    GlobalContextEventHandler.disableEventContext(eventContext);
+                    if (Blured != null)
+                    {
+                        Blured.Invoke(this);
+                    }
+                }),
+                new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),
+                new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
             MessageEvent saveEvent = new MessageEvent(Events.Save);

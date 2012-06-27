@@ -63,6 +63,7 @@ namespace Medical.Controller.AnomalousMvc
             {
                 runAction(StartupAction);
             }
+            focus();
         }
 
         /// <summary>
@@ -73,6 +74,7 @@ namespace Medical.Controller.AnomalousMvc
         /// </summary>
         public void shutdown()
         {
+            blur();
             if (!String.IsNullOrEmpty(ShutdownAction))
             {
                 runFinalAction(ShutdownAction);
@@ -88,6 +90,7 @@ namespace Medical.Controller.AnomalousMvc
             {
                 runAction(ResumeAction);
             }
+            focus();
         }
 
         /// <summary>
@@ -100,6 +103,7 @@ namespace Medical.Controller.AnomalousMvc
         /// </summary>
         public void suspend()
         {
+            blur();
             if (!String.IsNullOrEmpty(SuspendAction))
             {
                 runFinalAction(SuspendAction);
@@ -111,7 +115,7 @@ namespace Medical.Controller.AnomalousMvc
         /// called after startup and after resume and means that the context is
         /// open and ready to recieve input.
         /// </summary>
-        public void focus()
+        private void focus()
         {
             if (!String.IsNullOrEmpty(FocusAction))
             {
@@ -124,7 +128,7 @@ namespace Medical.Controller.AnomalousMvc
         /// called before those events and means the context is becoming
         /// inactive.
         /// </summary>
-        public void blur()
+        private void blur()
         {
             if (!String.IsNullOrEmpty(BlurAction))
             {

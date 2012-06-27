@@ -198,7 +198,6 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (contextManager.CurrentContext != null)
             {
-                contextManager.CurrentContext.blur();
                 contextManager.CurrentContext.suspend();
                 contextManager.CurrentContext.queueShutdown();
                 this.processViewChanges();
@@ -207,7 +206,6 @@ namespace Medical.Controller.AnomalousMvc
             contextManager.pushContext(context);
             setupContextToRun(context);
             context.startup();
-            context.focus();
         }
 
         public void shutdownContext(AnomalousMvcContext context, bool removeContext, bool resumePreviousContext)
@@ -223,7 +221,6 @@ namespace Medical.Controller.AnomalousMvc
             timelineController.stopPlayback(false);
             if (removeContext)
             {
-                context.blur();
                 context.shutdown();
                 contextManager.removeContext(context);
             }
@@ -235,7 +232,6 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     setupContextToRun(nextContext);
                     nextContext.resume();
-                    context.focus();
                 }
             }
         }
