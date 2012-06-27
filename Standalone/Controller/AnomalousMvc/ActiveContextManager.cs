@@ -29,7 +29,7 @@ namespace Medical.Controller.AnomalousMvc
             {
                 if (activeContexts[i].RuntimeName == context.RuntimeName)
                 {
-                    activeContexts[i].Dispose();
+                    activeContexts[i].removedFromStack();
                     activeContexts.RemoveAt(i--);
                 }
             }
@@ -38,7 +38,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void removeContext(AnomalousMvcContext context)
         {
-            context.Dispose();
+            context.removedFromStack();
             activeContexts.Remove(context);
         }
 

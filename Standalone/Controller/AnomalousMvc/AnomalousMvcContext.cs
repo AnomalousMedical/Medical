@@ -12,7 +12,7 @@ using Medical.Model;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public partial class AnomalousMvcContext : Saveable, IDisposable
+    public partial class AnomalousMvcContext : Saveable
     {
         private ControllerCollection controllers;
         private ViewCollection views;
@@ -37,16 +37,16 @@ namespace Medical.Controller.AnomalousMvc
         }
 
         /// <summary>
-        /// Called at the end of the context's lifecycle when it will no longer
-        /// be used again ever. This is always called when a context is done
-        /// compared to shutdown, which is only called if the context shuts down
-        /// naturally.
+        /// Called at the end of the context's lifecycle when it is removed from
+        /// the context stack. You can reuse it again from there, but it won't
+        /// be a part of the stack anymore. This, unlike shutdown, is called every
+        /// time the context is done being used.
         /// </summary>
-        public void Dispose()
+        public void removedFromStack()
         {
-            if (!String.IsNullOrEmpty(DisposeAction))
+            if (!String.IsNullOrEmpty(RemovedFromStackAction))
             {
-                runFinalAction(DisposeAction);
+                runFinalAction(RemovedFromStackAction);
             }
         }
 
@@ -68,9 +68,9 @@ namespace Medical.Controller.AnomalousMvc
 
         /// <summary>
         /// Called when the context finishes running normally. This means that
-        /// it was closed down naturally and has been removed from the stack.
-        /// This will not be called if another context with the same RuntimeName
-        /// was added to the stack, but dispose will be called in that case.
+        /// it was closed down naturally. This will not be called if another
+        /// context with the same RuntimeName was added to the stack, but
+        /// removedFromStack will be called in that case.
         /// </summary>
         public void shutdown()
         {
@@ -97,9 +97,9 @@ namespace Medical.Controller.AnomalousMvc
         /// Called when the context is being suspended. Suspended means that the
         /// context can still be brought back to life and has just been pushed
         /// onto the stack and closed down temporarily until the higher level
-        /// contexts close. It is possible to go from suspend to dispose without
-        /// going through shutdown if another context with the same RuntimeName
-        /// is added to the stack.
+        /// contexts close. It is possible to go from suspend to
+        /// removedFromStack without going through shutdown if another context
+        /// with the same RuntimeName is added to the stack.
         /// </summary>
         public void suspend()
         {
@@ -340,7 +340,7 @@ namespace Medical.Controller.AnomalousMvc
         public String ResumeAction { get; set; }
 
         [EditableAction]
-        public String DisposeAction { get; set; }
+        public String RemovedFromStackAction { get; set; }
 
         [EditableAction]
         public String FocusAction { get; set; }
@@ -397,7 +397,7 @@ namespace Medical.Controller.AnomalousMvc
             ShutdownAction = info.GetString("ShutdownAction");
             ResumeAction = info.GetString("ResumeAction", null);
             SuspendAction = info.GetString("SuspendAction", null);
-            DisposeAction = info.GetString("DisposeAction", null);
+            RemovedFromStackAction = info.GetString("RemovedFromStackAction", null);
             FocusAction = info.GetString("FocusAction", null);
             BlurAction = info.GetString("BlurAction", null);
             controllers = info.GetValue<ControllerCollection>("Controllers");
@@ -411,7 +411,7 @@ namespace Medical.Controller.AnomalousMvc
             info.AddValue("ShutdownAction", ShutdownAction);
             info.AddValue("ResumeAction", ResumeAction);
             info.AddValue("SuspendAction", SuspendAction);
-            info.AddValue("DisposeAction", DisposeAction);
+            info.AddValue("RemovedFromStackAction", RemovedFromStackAction);
             info.AddValue("FocusAction", FocusAction);
             info.AddValue("BlurAction", BlurAction);
             info.AddValue("Controllers", Controllers);
