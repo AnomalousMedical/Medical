@@ -83,14 +83,12 @@ namespace Medical
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
-            MessageEvent saveEvent = new MessageEvent(Events.Save);
-            saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
-            saveEvent.addButton(KeyboardButtonCode.KC_S);
-            saveEvent.FirstFrameUpEvent += eventManager =>
-            {
-                save();
-            };
-            eventContext.addEvent(saveEvent);
+            eventContext.addEvent(new MessageEvent(Events.Save, 
+                frameUp: eventManager =>
+                {
+                    save();
+                }, 
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_S }));
         }
 
         public void close()

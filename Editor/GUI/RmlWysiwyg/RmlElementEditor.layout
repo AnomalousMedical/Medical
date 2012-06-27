@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="96 60 385 368" layer="Popup">
+    <Widget type="Widget" skin="PanelSkin" position="96 60 385 368" layer="Overlapped">
         <Widget type="Button" skin="Button" position="2 2 27 23" name="Up">
             <Property key="Caption" value="Up"/>
         </Widget>
