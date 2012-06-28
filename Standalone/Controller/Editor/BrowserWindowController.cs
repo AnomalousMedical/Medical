@@ -25,16 +25,6 @@ namespace Medical.Editor
             BrowserWindowController.standaloneController = standaloneController;
         }
 
-        public static void setResourceProvider(ResourceProvider resourceProvider)
-        {
-            BrowserWindowController.resourceProvider = resourceProvider;
-        }
-
-        public static ResourceProvider getResourceProvider()
-        {
-            return resourceProvider;
-        }
-
         public static void setCurrentEditingMvcContext(AnomalousMvcContext context)
         {
             currentEditingContext = context;
@@ -88,16 +78,6 @@ namespace Medical.Editor
                         browser.addNode("", null, new BrowserNode(model.Name, model.Name));
                     }
                 }
-            }
-            return browser;
-        }
-
-        public static Browser createPropBrowser()
-        {
-            Browser browser = new Browser("Models", "Choose Model");
-            foreach (String propName in standaloneController.TimelineController.PropFactory.PropNames)
-            {
-                browser.addNode("", null, new BrowserNode(propName, propName));
             }
             return browser;
         }

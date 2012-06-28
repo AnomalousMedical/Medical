@@ -151,6 +151,16 @@ namespace Medical
             {
                 return createFileBrowser(searchPattern, prompt);
             });
+
+            this.addSyncCustomQuery<Browser>(PropBrowserEditableProperty.CustomQueries.BuildBrowser, () =>
+            {
+                Browser browser = new Browser("Models", "Choose Model");
+                foreach (String propName in standaloneController.TimelineController.PropFactory.PropNames)
+                {
+                    browser.addNode("", null, new BrowserNode(propName, propName));
+                }
+                return browser;
+            });
         }
 
         public Browser createFileBrowser(String searchPattern, String prompt)

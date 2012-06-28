@@ -92,7 +92,6 @@ namespace Medical
         {
             closeResourceProvider();
             timelineController.setResourceProvider(null);
-            BrowserWindowController.setResourceProvider(null);
 
             if (ProjectChanged != null)
             {
@@ -244,7 +243,6 @@ namespace Medical
             closeResourceProvider();
             resourceProvider = new EditorResourceProvider(projectPath);
             timelineController.setResourceProvider(ResourceProvider);
-            BrowserWindowController.setResourceProvider(ResourceProvider);
 
             if (ProjectChanged != null)
             {
