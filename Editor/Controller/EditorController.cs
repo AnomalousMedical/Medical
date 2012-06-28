@@ -29,23 +29,20 @@ namespace Medical
             }
         }
 
-        private EditorPlugin plugin;
         private StandaloneController standaloneController;
-        private EditorUICallbackExtensions uiCallbackExtensions;
         private ExtensionActionCollection extensionActions;
         private Dictionary<String, EditorTypeController> typeControllers = new Dictionary<String, EditorTypeController>();
         private EditorResourceProvider resourceProvider;
+        private TimelineController timelineController;
 
         public event EditorControllerEvent ProjectChanged;
         public event EditorControllerEvent ExtensionActionsChanged;
 
-        public EditorController(EditorPlugin plugin, StandaloneController standaloneController)
+        public EditorController(StandaloneController standaloneController, TimelineController timelineController)
         {
-            this.plugin = plugin;
+            this.timelineController = timelineController;
             this.standaloneController = standaloneController;
             standaloneController.DocumentController.addDocumentHandler(new ProjectDocumentHandler(this));
-
-            uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, plugin.MedicalUICallback, this);
         }
 
         public void Dispose()
@@ -91,16 +88,12 @@ namespace Medical
         {
             projectChanged(projectPath);
             standaloneController.DocumentController.addToRecentDocuments(projectPath);
-            if (!plugin.ProjectExplorer.Visible)
-            {
-                plugin.ProjectExplorer.Visible = true;
-            }
         }
 
         public void closeProject()
         {
             closeResourceProvider();
-            plugin.TimelineController.setResourceProvider(null);
+            timelineController.setResourceProvider(null);
             BrowserWindowController.setResourceProvider(null);
 
             if (ProjectChanged != null)
@@ -149,9 +142,9 @@ namespace Medical
 
         public void stopPlayingTimelines()
         {
-            if (plugin.TimelineController.Playing)
+            if (timelineController.Playing)
             {
-                plugin.TimelineController.stopPlayback();
+                timelineController.stopPlayback();
             }
         }
 
@@ -220,14 +213,6 @@ namespace Medical
             }
         }
 
-        public EditorPlugin EditorPlugin
-        {
-            get
-            {
-                return plugin;
-            }
-        }
-
         public IEnumerable<String> OpenFiles
         {
             get
@@ -279,27 +264,12 @@ namespace Medical
         {
             closeResourceProvider();
             resourceProvider = new EditorResourceProvider(projectPath);
-            plugin.TimelineController.setResourceProvider(ResourceProvider);
+            timelineController.setResourceProvider(ResourceProvider);
             BrowserWindowController.setResourceProvider(ResourceProvider);
 
             if (ProjectChanged != null)
             {
                 ProjectChanged.Invoke(this);
-            }
-
-            //Try to open a default mvc context
-            String mvcFile = "MvcContext.mvc";
-            if (resourceProvider.exists(mvcFile))
-            {
-                openFile(mvcFile);
-            }
-            else
-            {
-                String[] files = resourceProvider.listFiles("*.mvc", "", true);
-                if (files.Length > 0)
-                {
-                    openFile(files[0]);
-                }
             }
         }
 

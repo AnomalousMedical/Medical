@@ -22,12 +22,14 @@ namespace Medical
         private StandaloneController standaloneController;
         private EditorController editorController;
         private CopySaver copySaver = new CopySaver();
+        private PropEditController propEditController;
 
-        public EditorUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, EditorController editorController)
+        public EditorUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, EditorController editorController, PropEditController propEditController)
         {
             this.medicalUICallback = medicalUICallback;
             this.editorController = editorController;
             this.standaloneController = standaloneController;
+            this.propEditController = propEditController;
 
             medicalUICallback.addOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, delegate(CameraPosition camPos)
             {
@@ -138,11 +140,11 @@ namespace Medical
             {
                 if (showPropAction.KeepOpen)
                 {
-                    editorController.EditorPlugin.PropEditController.removeOpenProp(showPropAction);
+                    propEditController.removeOpenProp(showPropAction);
                 }
                 else
                 {
-                    editorController.EditorPlugin.PropEditController.addOpenProp(showPropAction);
+                    propEditController.addOpenProp(showPropAction);
                 }
             });
         }

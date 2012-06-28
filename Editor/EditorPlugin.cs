@@ -29,6 +29,7 @@ namespace Medical
         private MedicalUICallback medicalUICallback;
         private PropEditController propEditController;
         private TypeControllerManager typeControllerManager;
+        private EditorUICallbackExtensions uiCallbackExtensions;
 
         public EditorPlugin()
         {
@@ -70,8 +71,9 @@ namespace Medical
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
             //Controller
-            editorController = new EditorController(this, standaloneController);
+            editorController = new EditorController(standaloneController, editorTimelineController);
             propEditController = new PropEditController(propMover);
+            uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, medicalUICallback, editorController, propEditController);
 
             //Dialogs
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard, editorController);
@@ -102,6 +104,34 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard, propEditController));
             standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
             standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory(medicalUICallback));
+
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            if (editorController.ResourceProvider != null)
+            {
+                if (!projectExplorer.Visible)
+                {
+                    projectExplorer.Visible = true;
+                }
+
+                //Try to open a default mvc context
+                String mvcFile = "MvcContext.mvc";
+                if (editorController.ResourceProvider.exists(mvcFile))
+                {
+                    editorController.openFile(mvcFile);
+                }
+                else
+                {
+                    String[] files = editorController.ResourceProvider.listFiles("*.mvc", "", true);
+                    if (files.Length > 0)
+                    {
+                        editorController.openFile(files[0]);
+                    }
+                }
+            }
         }
 
         public void sceneLoaded(SimScene scene)
