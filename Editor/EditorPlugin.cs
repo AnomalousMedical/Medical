@@ -15,7 +15,6 @@ namespace Medical
     {
         private StandaloneController standaloneController;
 
-        private MovementSequenceEditor movementSequenceEditor;
         private ScratchArea scratchArea;
 
         private TimelineController editorTimelineController;
@@ -39,7 +38,6 @@ namespace Medical
         public void Dispose()
         {
             projectExplorer.Dispose();
-            movementSequenceEditor.Dispose();
             scratchArea.Dispose();
             aspectRatioTask.Dispose();
             editorController.Dispose();
@@ -76,9 +74,6 @@ namespace Medical
             uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, medicalUICallback, editorController, propEditController);
 
             //Dialogs
-            movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController, standaloneController.Clipboard, editorController);
-            guiManager.addManagedDialog(movementSequenceEditor);
-
             scratchArea = new ScratchArea(scratchAreaController, medicalUICallback);
             guiManager.addManagedDialog(scratchArea);
 
@@ -88,7 +83,6 @@ namespace Medical
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
-            taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "Editor/ProjectExplorerIcon", TaskMenuCategories.Editor));
 
@@ -104,6 +98,7 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard, propEditController));
             standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
             standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory(medicalUICallback));
+            standaloneController.ViewHostFactory.addFactory(new MovementSequenceEditorFactory(standaloneController.MovementSequenceController, editorController, standaloneController.Clipboard));
 
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
@@ -207,14 +202,6 @@ namespace Medical
             get
             {
                 return GetType().Assembly.GetName().Version;
-            }
-        }
-
-        public MovementSequenceEditor MovementSequenceEditor
-        {
-            get
-            {
-                return movementSequenceEditor;
             }
         }
 

@@ -12,27 +12,15 @@ namespace Medical
 {
     class MovementSequenceTypeController : SaveableTypeController<MovementSequence>
     {
-        private MovementSequenceEditor editor;
         private EditorController editorController;
-        private ExtensionActionCollection extensionActions = new ExtensionActionCollection();
-        private String currentSequenceFile = null;
+        private MovementSequenceEditorContext editorContext;
+        private const String Icon = "MovementSequenceEditorIcon";
 
-        public MovementSequenceTypeController(MovementSequenceEditor editor, EditorController editorController)
+        public MovementSequenceTypeController(EditorController editorController)
             :base(".seq", editorController)
         {
-            this.editor = editor;
-            editor.GotFocus += new EventHandler(editor_GotFocus);
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-
-            extensionActions.Add(new ExtensionAction("Close Movement Sequence", "File", close));
-            extensionActions.Add(new ExtensionAction("Save Movement Sequence", "File", saveSequence));
-            extensionActions.Add(new ExtensionAction("Save Movement Sequence As", "File", saveSequenceAs));
-            extensionActions.Add(new ExtensionAction("Cut", "Edit", editor.cut));
-            extensionActions.Add(new ExtensionAction("Copy", "Edit", editor.copy));
-            extensionActions.Add(new ExtensionAction("Paste", "Edit", editor.paste));
-            extensionActions.Add(new ExtensionAction("Select All", "Edit", editor.selectAll));
-            extensionActions.Add(new ExtensionAction("Reverse Sides", "Sequence", editor.reverseSides));
         }
 
         public override void openFile(string file)
@@ -40,20 +28,22 @@ namespace Medical
             try
             {
                 MovementSequence movementSequence = (MovementSequence)loadObject(file);
-                editor.CurrentSequence = movementSequence;
-                currentSequenceFile = file;
-                editor.updateTitle(currentSequenceFile);
-                if (!editor.Visible)
-                {
-                    editor.Visible = false;
-                }
-                editorController.ExtensionActions = extensionActions;
-                editor.bringToFront();
+
+                editorContext = new MovementSequenceEditorContext(movementSequence, file, this);
+                editorContext.Focus += new Action<MovementSequenceEditorContext>(editorContext_Focus);
+                editorContext.Blur += new Action<MovementSequenceEditorContext>(editorContext_Blur);
+                editorController.runEditorContext(editorContext.MvcContext);
             }
             catch (Exception ex)
             {
                 MessageBox.show(String.Format("Error loading movement sequence {0}.\nReason: {1}", file, ex.Message), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
+        }
+
+        public void saveFile(MovementSequence movementSequence, String file)
+        {
+            saveObject(file, movementSequence);
+            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -92,37 +82,6 @@ namespace Medical
             openFile(filePath);
         }
 
-        void editor_GotFocus(object sender, EventArgs e)
-        {
-            editorController.ExtensionActions = extensionActions;
-        }
-
-        void saveSequenceAs()
-        {
-            using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Save a sequence."))
-            {
-                saveDialog.Wildcard = "Sequence files (*.seq)|*.seq";
-                if (saveDialog.showModal() == NativeDialogResult.OK)
-                {
-                    currentSequenceFile = saveDialog.Path;
-                    saveObject(currentSequenceFile, editor.CurrentSequence);
-                    editor.updateTitle(currentSequenceFile);
-                }
-            }
-        }
-
-        void saveSequence()
-        {
-            if (currentSequenceFile != null)
-            {
-                saveObject(currentSequenceFile, editor.CurrentSequence);
-            }
-            else
-            {
-                saveSequenceAs();
-            }
-        }
-
         void editorController_ProjectChanged(EditorController editorController)
         {
             close();
@@ -130,9 +89,24 @@ namespace Medical
 
         private void close()
         {
-            editor.CurrentSequence = null;
-            editor.updateTitle(null);
+            if (editorContext != null)
+            {
+                editorContext.close();
+            }
             closeCurrentCachedResource();
+        }
+
+        void editorContext_Focus(MovementSequenceEditorContext obj)
+        {
+            editorContext = obj;
+        }
+
+        void editorContext_Blur(MovementSequenceEditorContext obj)
+        {
+            if (editorContext == obj)
+            {
+                editorContext = null;
+            }
         }
     }
 }

@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Controller\ExtensionAction.cs" />
     <Compile Include="Controller\ExtensionActionCollection.cs" />
+    <Compile Include="Controller\MovementSequenceEditorContext.cs" />
     <Compile Include="Controller\TRmlEditorContext.cs" />
     <Compile Include="Controller\PluginEditorContext.cs" />
     <Compile Include="Controller\EditorResourceProvider\TextCachedResource.cs" />
@@ -151,6 +152,8 @@
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
+    <Compile Include="GUI\MovementSequence\MovementSequenceEditorFactory.cs" />
+    <Compile Include="GUI\MovementSequence\MovementSequenceEditorView.cs" />
     <Compile Include="GUI\OpenPropManager\OpenPropManagerView.cs" />
     <Compile Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />

@@ -17,9 +17,12 @@ namespace Medical.Controller.AnomalousMvc
 
         }
 
-        public NavigationLink(String text, String action, String image)
+        public NavigationLink(String name = null, String text = null, String action = null, String image = null)
         {
-
+            this.Name = name;
+            this.Text = text;
+            this.Action = action;
+            this.Image = image;
         }
 
         [Editable]

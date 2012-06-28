@@ -133,6 +133,10 @@
     <Compile Include="Controller\Editor\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\ModelBrowserEditableProperty.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
+    <Compile Include="Controller\Presentation\PresentationEntry.cs" />
+    <Compile Include="Controller\Presentation\PresentationIndex.cs" />
+    <Compile Include="Controller\Presentation\TimelineEntry.cs" />
+    <Compile Include="Controller\Presentation\SlideEntry.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />
     <Compile Include="Controller\Resources\ResourceProviderRocketFSExtension.cs" />

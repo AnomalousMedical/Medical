@@ -25,7 +25,7 @@ namespace Medical
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
             editorController.addTypeController(mvcTypeController);
             editorController.addTypeController(new PluginTypeController(editorController));
-            editorController.addTypeController(new MovementSequenceTypeController(plugin.MovementSequenceEditor, editorController));
+            editorController.addTypeController(new MovementSequenceTypeController(editorController));
             editorController.addTypeController(new TRmlTypeController(editorController, guiManager, rmlTypeController));
             TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propEditController);
             timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);

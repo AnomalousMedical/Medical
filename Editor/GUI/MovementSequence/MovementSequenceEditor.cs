@@ -7,10 +7,12 @@ using Engine;
 using Medical.Controller;
 using Medical.Muscles;
 using Engine.Platform;
+using Medical.GUI.AnomalousMvc;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    public class MovementSequenceEditor : MDIDialog
+    public class MovementSequenceEditor : LayoutComponent, EditMenuProvider
     {
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
@@ -25,63 +27,73 @@ namespace Medical.GUI
         private MovementSequenceController movementSequenceController;
         private MovementSequence movementSequence;
 
-        public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard, EditorController editorController)
-            : base("Medical.GUI.MovementSequence.MovementSequenceEditor.layout")
+        public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard, EditorController editorController, MyGUIViewHost viewHost, MovementSequenceEditorView view)
+            : base("Medical.GUI.MovementSequence.MovementSequenceEditor.layout", viewHost)
         {
             this.clipboard = clipboard;
             this.editorController = editorController;
 
-            window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+            widget.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+            widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
 
             this.movementSequenceController = movementSequenceController;
-            movementSequenceController.PlaybackStarted += new MovementSequenceEvent(movementSequenceController_PlaybackStarted);
-            movementSequenceController.PlaybackStopped += new MovementSequenceEvent(movementSequenceController_PlaybackStopped);
-            movementSequenceController.PlaybackUpdate += new MovementSequenceEvent(movementSequenceController_PlaybackUpdate);
-            movementSequenceController.CurrentSequenceChanged += new MovementSequenceEvent(movementSequenceController_CurrentSequenceChanged);
+            movementSequenceController.PlaybackStarted += movementSequenceController_PlaybackStarted;
+            movementSequenceController.PlaybackStopped += movementSequenceController_PlaybackStopped;
+            movementSequenceController.PlaybackUpdate +=  movementSequenceController_PlaybackUpdate;
+            if (view.ListenForSequenceChanges)
+            {
+                movementSequenceController.CurrentSequenceChanged += movementSequenceController_CurrentSequenceChanged;
+            }
 
             //Remove button
-            Button removeButton = window.findWidget("RemoveAction") as Button;
+            Button removeButton = widget.findWidget("RemoveAction") as Button;
             removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
             
             //Duration Edit
-            durationEdit = new NumericEdit(window.findWidget("SequenceDuration") as EditBox);
+            durationEdit = new NumericEdit(widget.findWidget("SequenceDuration") as EditBox);
             durationEdit.AllowFloat = true;
             durationEdit.ValueChanged += new MyGUIEvent(durationEdit_ValueChanged);
             durationEdit.MinValue = 0.0f;
             durationEdit.MaxValue = 600;
 
             //Play Button
-            playButton = window.findWidget("PlayButton") as Button;
+            playButton = widget.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
 
             //Timeline view
-            ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
+            ScrollView timelineViewScrollView = widget.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.DurationChanged += new EventHandler(timelineView_DurationChanged);
             timelineView.Duration = 5.0f;
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
 
             //Properties
-            ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
+            ScrollView timelinePropertiesScrollView = widget.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
             actionProperties.addPanel("Muscle Position", new MovementKeyframeProperties(timelinePropertiesScrollView));
 
             //Timeline filter
-            ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
+            ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
             trackFilter = new TrackFilter(timelineFilterScrollView, timelineView);
             trackFilter.AddTrackItem += new AddTrackItemCallback(trackFilter_AddTrackItem);
 
-            numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
+            numberLine = new NumberLine(widget.findWidget("NumberLine") as ScrollView, timelineView);
 
             //Add tracks to timeline.
             timelineView.addTrack("Muscle Position", Color.Red);
 
-            Enabled = false;
+            CurrentSequence = view.Sequence;
+
+            ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
         }
 
         public override void Dispose()
         {
+            movementSequenceController.PlaybackStarted -= movementSequenceController_PlaybackStarted;
+            movementSequenceController.PlaybackStopped -= movementSequenceController_PlaybackStopped;
+            movementSequenceController.PlaybackUpdate -= movementSequenceController_PlaybackUpdate;
+            movementSequenceController.CurrentSequenceChanged -= movementSequenceController_CurrentSequenceChanged;
             base.Dispose();
         }
 
@@ -122,18 +134,6 @@ namespace Medical.GUI
             timelineView.selectAll();
         }
 
-        public void updateTitle(String file)
-        {
-            if (file != null)
-            {
-                window.Caption = String.Format("Movement Sequence - {0}", file);
-            }
-            else
-            {
-                window.Caption = "Movement Sequence";
-            }
-        }
-
         public MovementSequence CurrentSequence
         {
             get
@@ -144,7 +144,6 @@ namespace Medical.GUI
             {
                 movementSequence = value;
                 timelineView.removeAllData();
-                Enabled = movementSequence != null;
                 if (movementSequence != null)
                 {
                     timelineView.Duration = movementSequence.Duration;
@@ -231,11 +230,6 @@ namespace Medical.GUI
             timelineView.MarkerTime = controller.CurrentTime;
         }
 
-        void movementSequenceController_CurrentSequenceChanged(MovementSequenceController controller)
-        {
-            CurrentSequence = controller.CurrentSequence;
-        }
-
         void trackFilter_AddTrackItem(string name)
         {
             MovementSequenceState state = new MovementSequenceState();
@@ -274,6 +268,20 @@ namespace Medical.GUI
         void durationEdit_ValueChanged(Widget source, EventArgs e)
         {
             synchronizeDuration(durationEdit, durationEdit.FloatValue);
+        }
+
+        void movementSequenceController_CurrentSequenceChanged(MovementSequenceController controller)
+        {
+            CurrentSequence = controller.CurrentSequence;
+        }
+
+        void widget_RootKeyChangeFocus(Widget source, EventArgs e)
+        {
+            RootFocusEventArgs rfea = (RootFocusEventArgs)e;
+            if (rfea.Focus)
+            {
+                ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+            }
         }
     }
 }
