@@ -68,6 +68,11 @@ namespace Medical
             propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
             mvcContext.Views.add(propManagerView);
 
+            MovementSequenceEditorView movementSequenceEditor = new MovementSequenceEditorView("MovementSequenceEditor", listenForSequenceChanges: true);
+            movementSequenceEditor.Buttons.add(new CloseButtonDefinition("Close", "MovementSequenceEditor/Close"));
+            movementSequenceEditor.ViewLocation = ViewLocations.Top;
+            mvcContext.Views.add(movementSequenceEditor);
+
             EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", currentFile, "TimelineEditor/Close");
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Timeline", "FileToolstrip/Save", "", "TimelineEditor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "", "TimelineEditor/Cut", mvcContext));
@@ -78,6 +83,7 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("Rotation", "Rotation", "Editor/RotateIcon", "", "TimelineEditor/Rotation", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("PropTimeline", "Prop Timeline Editor", "PropEditorIcon", "", "PropTimeline/ShowIfNotOpen", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("PropManager", "Open Prop Manager", "PropManagerIcon", "", "PropManager/ShowIfNotOpen", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", "", "MovementSequenceEditor/ShowIfNotOpen", mvcContext));
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("TimelineEditor",
@@ -116,6 +122,13 @@ namespace Medical
             mvcContext.Controllers.add(new MvcController("PropManager",
                 new RunCommandsAction("ShowIfNotOpen",
                     new ShowViewIfNotOpenCommand("PropManager")),
+                new RunCommandsAction("Close",
+                    new CloseViewCommand())));
+
+            mvcContext.Controllers.add(new MvcController("MovementSequenceEditor",
+                new RunCommandsAction("ShowIfNotOpen",
+                    new ShowViewIfNotOpenCommand("MovementSequenceEditor")
+                ),
                 new RunCommandsAction("Close",
                     new CloseViewCommand())));
 
