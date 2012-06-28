@@ -30,13 +30,11 @@ namespace Medical
         }
 
         private StandaloneController standaloneController;
-        private ExtensionActionCollection extensionActions;
         private Dictionary<String, EditorTypeController> typeControllers = new Dictionary<String, EditorTypeController>();
         private EditorResourceProvider resourceProvider;
         private TimelineController timelineController;
 
         public event EditorControllerEvent ProjectChanged;
-        public event EditorControllerEvent ExtensionActionsChanged;
 
         public EditorController(StandaloneController standaloneController, TimelineController timelineController)
         {
@@ -183,25 +181,6 @@ namespace Medical
             get
             {
                 return typeControllers.Values;
-            }
-        }
-
-        public ExtensionActionCollection ExtensionActions
-        {
-            get
-            {
-                return extensionActions;
-            }
-            set
-            {
-                if (this.extensionActions != value)
-                {
-                    this.extensionActions = value;
-                    if (ExtensionActionsChanged != null)
-                    {
-                        ExtensionActionsChanged.Invoke(this);
-                    }
-                }
             }
         }
 

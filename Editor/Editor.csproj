@@ -77,8 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ExtensionAction.cs" />
-    <Compile Include="Controller\ExtensionActionCollection.cs" />
     <Compile Include="Controller\MovementSequenceEditorContext.cs" />
     <Compile Include="Controller\TRmlEditorContext.cs" />
     <Compile Include="Controller\PluginEditorContext.cs" />

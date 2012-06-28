@@ -20,7 +20,6 @@ namespace Medical.GUI
         MenuItem openProject;
         MenuItem closeProject;
         MenuItem saveAll;
-        ExtensionActionCollection currentExtensionActions = null;
 
         private FileBrowserTree fileBrowser;
 
@@ -32,7 +31,6 @@ namespace Medical.GUI
         {
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-            editorController.ExtensionActionsChanged += new EditorControllerEvent(editorController_ExtensionActionsChanged);
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -41,7 +39,14 @@ namespace Medical.GUI
             fileBrowser.FileSelected += new FileBrowserEvent(fileBrowser_FileSelected);
             fileBrowser.NodeContextEvent += new FileBrowserNodeContextEvent(fileBrowser_NodeContextEvent);
 
-            rebuildMenus();
+            //File Menu
+            MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
+            MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
+            fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
+            newProject = fileMenu.addItem("New Project");
+            openProject = fileMenu.addItem("Open Project");
+            closeProject = fileMenu.addItem("Close Project");
+            saveAll = fileMenu.addItem("Save All");
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
         }
@@ -145,40 +150,6 @@ namespace Medical.GUI
             fileBrowser.layout();
         }
 
-        private void rebuildMenus()
-        {
-            menuBar.removeAllItems();
-            //File Menu
-            MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
-            MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
-            fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
-            newProject = fileMenu.addItem("New Project");
-            openProject = fileMenu.addItem("Open Project");
-            closeProject = fileMenu.addItem("Close Project");
-
-            if (currentExtensionActions != null)
-            {
-                Dictionary<String, MenuControl> menus = new Dictionary<string, MenuControl>();
-                menus.Add("File", fileMenu);
-
-                foreach (ExtensionAction action in currentExtensionActions)
-                {
-                    MenuControl menu;
-                    if (!menus.TryGetValue(action.Category, out menu))
-                    {
-                        MenuItem menuItem = menuBar.addItem(action.Category, MenuItemType.Popup);
-                        menu = menuBar.createItemPopupMenuChild(menuItem);
-                        menu.ItemAccept += new MyGUIEvent(menu_ItemAccept);
-                        menus.Add(action.Category, menu);
-                    }
-                    MenuItem item = menu.addItem(action.Name);
-                    item.UserObject = action;
-                }
-            }
-
-            saveAll = fileMenu.addItem("Save All");
-        }
-
         void fileMenu_ItemAccept(Widget source, EventArgs e)
         {
             MenuCtrlAcceptEventArgs menuEventArgs = (MenuCtrlAcceptEventArgs)e;
@@ -198,26 +169,6 @@ namespace Medical.GUI
             {
                 editorController.closeProject();
             }
-            else
-            {
-                menu_ItemAccept(source, e);
-            }
-        }
-
-        void menu_ItemAccept(Widget source, EventArgs e)
-        {
-            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
-            ExtensionAction action = mcae.Item.UserObject as ExtensionAction;
-            if (action != null)
-            {
-                action.execute();
-            }
-        }
-
-        void editorController_ExtensionActionsChanged(EditorController editorController)
-        {
-            currentExtensionActions = editorController.ExtensionActions;
-            rebuildMenus();
         }
 
         void ResourceProvider_FileCreated(string path, bool isDirectory)
