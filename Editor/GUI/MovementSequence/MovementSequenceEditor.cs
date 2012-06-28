@@ -37,6 +37,7 @@ namespace Medical.GUI
             movementSequenceController.PlaybackStarted += new MovementSequenceEvent(movementSequenceController_PlaybackStarted);
             movementSequenceController.PlaybackStopped += new MovementSequenceEvent(movementSequenceController_PlaybackStopped);
             movementSequenceController.PlaybackUpdate += new MovementSequenceEvent(movementSequenceController_PlaybackUpdate);
+            movementSequenceController.CurrentSequenceChanged += new MovementSequenceEvent(movementSequenceController_CurrentSequenceChanged);
 
             //Remove button
             Button removeButton = window.findWidget("RemoveAction") as Button;
@@ -228,6 +229,11 @@ namespace Medical.GUI
         void movementSequenceController_PlaybackUpdate(MovementSequenceController controller)
         {
             timelineView.MarkerTime = controller.CurrentTime;
+        }
+
+        void movementSequenceController_CurrentSequenceChanged(MovementSequenceController controller)
+        {
+            CurrentSequence = controller.CurrentSequence;
         }
 
         void trackFilter_AddTrackItem(string name)
