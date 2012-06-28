@@ -29,11 +29,13 @@ namespace Medical
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
         private RmlTypeController rmlTypeController;
+        private EditorUICallback uiCallback;
 
-        public RmlEditorContext(String file, RmlTypeController rmlTypeController)
+        public RmlEditorContext(String file, RmlTypeController rmlTypeController, EditorUICallback uiCallback)
         {
             this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
+            this.uiCallback = uiCallback;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -130,7 +132,7 @@ namespace Medical
                     }),
                 new CallbackAction("Image", context =>
                     {
-                        BrowserWindow<String>.GetInput(BrowserWindowController.createFileBrowser("*.png", "Image Files"), true, delegate(String result, ref string errorPrompt)
+                        BrowserWindow<String>.GetInput(uiCallback.createFileBrowser("*.png", "Image Files"), true, delegate(String result, ref string errorPrompt)
                         {
                             //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
                             rmlComponent.insertImage(result);

@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     class RmlEditableProperty : EditableProperty
     {
-        public delegate Browser CreateBrowser();
+        public delegate Browser CreateBrowser(EditUICallback uiCallback);
 
         private String name;
         private String value;
@@ -30,14 +30,14 @@ namespace Medical.GUI
             return true;
         }
 
-        public Browser getBrowser(int column)
+        public Browser getBrowser(int column, EditUICallback uiCallback)
         {
             switch (column)
             {
                 case 0:
                     return null;
                 case 1:
-                    return browserBuildCallback();
+                    return browserBuildCallback(uiCallback);
             }
             return null;
         }

@@ -7,8 +7,13 @@ using Engine.Reflection;
 
 namespace Medical.Editor
 {
-    class FileBrowserEditableProperty : BrowseableEditableProperty
+    public class FileBrowserEditableProperty : BrowseableEditableProperty
     {
+        public enum CustomQueries
+        {
+            BuildBrowser
+        }
+
         private String browserSearchPattern;
         private String prompt;
 
@@ -19,9 +24,9 @@ namespace Medical.Editor
             this.prompt = prompt;
         }
 
-        protected override Browser buildBrowser()
+        protected override Browser buildBrowser(EditUICallback uiCallback)
         {
-            return BrowserWindowController.createFileBrowser(browserSearchPattern, prompt);
+            return uiCallback.runSyncCustomQuery<Browser, String, String>(CustomQueries.BuildBrowser, browserSearchPattern, prompt);
         }
     }
 }

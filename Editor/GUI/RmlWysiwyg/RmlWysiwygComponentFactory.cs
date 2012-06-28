@@ -10,9 +10,9 @@ namespace Medical.GUI
 {
     class RmlWysiwygComponentFactory : ViewHostComponentFactory
     {
-        private MedicalUICallback uiCallback;
+        private EditorUICallback uiCallback;
 
-        public RmlWysiwygComponentFactory(MedicalUICallback uiCallback)
+        public RmlWysiwygComponentFactory(EditorUICallback uiCallback)
         {
             this.uiCallback = uiCallback;
         }

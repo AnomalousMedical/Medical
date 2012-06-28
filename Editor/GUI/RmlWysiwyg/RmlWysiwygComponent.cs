@@ -23,14 +23,14 @@ namespace Medical.GUI
         private String documentStart = "<body>";
         private String documentEnd = "</body>";
         private bool disposed = false;
-        private MedicalUICallback uiCallback;
+        private EditorUICallback uiCallback;
         RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
 
         private AnomalousMvcContext context;
 
-        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost, MedicalUICallback uiCallback)
+        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost, EditorUICallback uiCallback)
             : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
             this.context = context;

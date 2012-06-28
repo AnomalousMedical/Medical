@@ -45,23 +45,6 @@ namespace Medical.Editor
             return currentEditingContext;
         }
 
-        public static Browser createFileBrowser(String searchPattern, String prompt)
-        {
-            Browser browser = new Browser("Files", prompt);
-            if (resourceProvider != null)
-            {
-                foreach (String timeline in resourceProvider.listFiles(searchPattern, "", true))
-                {
-                    browser.addNode("", null, new BrowserNode(timeline, timeline));
-                }
-            }
-            else
-            {
-                Log.Warning("No TimelineController registered with the TimelineBrowserController");
-            }
-            return browser;
-        }
-
         public static Browser createViewBrowser()
         {
             Browser browser = new Browser("Views", "Choose View");

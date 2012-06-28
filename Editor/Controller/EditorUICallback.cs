@@ -13,25 +13,24 @@ using Medical.GUI;
 using Engine;
 using Medical.Editor;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
-    class EditorUICallbackExtensions
+    public class EditorUICallback : MedicalUICallback
     {
-        private MedicalUICallback medicalUICallback;
         private StandaloneController standaloneController;
         private EditorController editorController;
         private CopySaver copySaver = new CopySaver();
         private PropEditController propEditController;
 
-        public EditorUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, EditorController editorController, PropEditController propEditController)
+        public EditorUICallback(StandaloneController standaloneController, EditorController editorController, PropEditController propEditController)
         {
-            this.medicalUICallback = medicalUICallback;
             this.editorController = editorController;
             this.standaloneController = standaloneController;
             this.propEditController = propEditController;
 
-            medicalUICallback.addOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, delegate(CameraPosition camPos)
+            this.addOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, delegate(CameraPosition camPos)
             {
                 SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
                 if (activeWindow != null)
@@ -42,7 +41,7 @@ namespace Medical
                 }
             });
 
-            medicalUICallback.addOneWayCustomQuery(CameraPosition.CustomEditQueries.PreviewCameraPosition, delegate(CameraPosition camPos)
+            this.addOneWayCustomQuery(CameraPosition.CustomEditQueries.PreviewCameraPosition, delegate(CameraPosition camPos)
             {
                 SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
                 if (activeWindow != null)
@@ -51,19 +50,19 @@ namespace Medical
                 }
             });
 
-            medicalUICallback.addCustomQuery<CompoundPresetState>(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, delegate(SendResult<CompoundPresetState> resultCallback)
+            this.addCustomQuery<CompoundPresetState>(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, delegate(SendResult<CompoundPresetState> resultCallback)
             {
                 PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
                 stateCaptureDialog.SmoothShow = true;
                 stateCaptureDialog.open(true);
             });
 
-            medicalUICallback.addOneWayCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, delegate(String file)
+            this.addOneWayCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, delegate(String file)
             {
                 editorController.openFile(file);
             });
 
-            medicalUICallback.addOneWayCustomQuery(AnomalousMvcContext.CustomQueries.Preview, delegate(AnomalousMvcContext context)
+            this.addOneWayCustomQuery(AnomalousMvcContext.CustomQueries.Preview, delegate(AnomalousMvcContext context)
             {
                 if (editorController.ResourceProvider != null)
                 {
@@ -79,7 +78,7 @@ namespace Medical
                 }
             });
 
-            medicalUICallback.addCustomQuery<Browser>(ViewCollection.CustomQueries.CreateViewBrowser, delegate(SendResult<Browser> resultCallback)
+            this.addCustomQuery<Browser>(ViewCollection.CustomQueries.CreateViewBrowser, delegate(SendResult<Browser> resultCallback)
             {
                 Browser browser = new Browser("Views", "Choose View Type");
                 standaloneController.MvcCore.ViewHostFactory.createViewBrowser(browser);
@@ -87,7 +86,7 @@ namespace Medical
                 resultCallback(browser, ref errorPrompt);
             });
 
-            medicalUICallback.addCustomQuery<Browser>(ModelCollection.CustomQueries.CreateModelBrowser, delegate(SendResult<Browser> resultCallback)
+            this.addCustomQuery<Browser>(ModelCollection.CustomQueries.CreateModelBrowser, delegate(SendResult<Browser> resultCallback)
             {
                 Browser browser = new Browser("Models", "Choose Model Type");
 
@@ -96,13 +95,13 @@ namespace Medical
                 String error = null;
                 resultCallback(browser, ref error);
             });
-            
-            medicalUICallback.addCustomQuery<Type>(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Type> resultCallback)
+
+            this.addCustomQuery<Type>(RunCommandsAction.CustomQueries.ShowCommandBrowser, delegate(SendResult<Type> resultCallback)
             {
-                medicalUICallback.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
+                this.showBrowser(RunCommandsAction.CreateCommandBrowser(), resultCallback);
             });
 
-            medicalUICallback.addOneWayCustomQuery(View.CustomQueries.AddControllerForView, delegate(View view)
+            this.addOneWayCustomQuery(View.CustomQueries.AddControllerForView, delegate(View view)
             {
                 AnomalousMvcContext context = BrowserWindowController.getCurrentEditingMvcContext();
                 String controllerName = view.Name;
@@ -124,7 +123,7 @@ namespace Medical
                 }
             });
 
-            medicalUICallback.addCustomQuery<Color>(ShowTextAction.CustomQueries.ChooseColor, queryDelegate =>
+            this.addCustomQuery<Color>(ShowTextAction.CustomQueries.ChooseColor, queryDelegate =>
             {
                 using (ColorDialog colorDialog = new ColorDialog())
                 {
@@ -136,7 +135,7 @@ namespace Medical
                 }
             });
 
-            medicalUICallback.addOneWayCustomQuery<ShowPropAction>(ShowPropAction.CustomQueries.KeepOpenToggle, showPropAction =>
+            this.addOneWayCustomQuery<ShowPropAction>(ShowPropAction.CustomQueries.KeepOpenToggle, showPropAction =>
             {
                 if (showPropAction.KeepOpen)
                 {
@@ -147,6 +146,28 @@ namespace Medical
                     propEditController.addOpenProp(showPropAction);
                 }
             });
+
+            this.addSyncCustomQuery<Browser, String, String>(FileBrowserEditableProperty.CustomQueries.BuildBrowser, (searchPattern, prompt) =>
+            {
+                return createFileBrowser(searchPattern, prompt);
+            });
+        }
+
+        public Browser createFileBrowser(String searchPattern, String prompt)
+        {
+            Browser browser = new Browser("Files", prompt);
+            if (editorController.ResourceProvider != null)
+            {
+                foreach (String timeline in editorController.ResourceProvider.listFiles(searchPattern, "", true))
+                {
+                    browser.addNode("", null, new BrowserNode(timeline, timeline));
+                }
+            }
+            else
+            {
+                Log.Warning("No resources loaded.");
+            }
+            return browser;
         }
     }
 }

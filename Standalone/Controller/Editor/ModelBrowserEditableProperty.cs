@@ -17,7 +17,7 @@ namespace Medical.Editor
             this.assignableFromType = assignableFromType;
         }
 
-        protected override Browser buildBrowser()
+        protected override Browser buildBrowser(EditUICallback uiCallback)
         {
             return BrowserWindowController.createModelBrowser(assignableFromType);
         }

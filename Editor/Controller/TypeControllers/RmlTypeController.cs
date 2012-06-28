@@ -18,12 +18,14 @@ namespace Medical
         private GUIManager guiManager;
         public const String Icon = "EditorFileIcon/.rml";
         private RmlEditorContext editorContext;
+        private EditorUICallback uiCallback;
 
-        public RmlTypeController(EditorController editorController, GUIManager guiManager)
+        public RmlTypeController(EditorController editorController, GUIManager guiManager, EditorUICallback uiCallback)
             :base(".rml", editorController)
         {
             this.editorController = editorController;
             this.guiManager = guiManager;
+            this.uiCallback = uiCallback;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
 
@@ -34,7 +36,7 @@ namespace Medical
                 createNewRmlFile(file);
             }
 
-            editorContext = new RmlEditorContext(file, this);
+            editorContext = new RmlEditorContext(file, this, uiCallback);
             editorContext.Focus += new Action<RmlEditorContext>(editorContext_Focus);
             editorContext.Blur += new Action<RmlEditorContext>(editorContext_Blur);
             editorController.runEditorContext(editorContext.MvcContext);

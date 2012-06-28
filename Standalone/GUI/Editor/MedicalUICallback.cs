@@ -167,6 +167,68 @@ namespace Medical.GUI
                 Log.Warning("Could not find custom object query {0}. No query run.", queryKey.ToString());
             }
         }
+        
+        /// <summary>
+        /// This method allows the interface to run a custom query on the
+        /// UICallback. This can do anything and is not defined here.
+        /// </summary>
+        /// <param name="queryKey">The key for the query to run.</param>
+        /// <param name="resultCallback">The callback with the results.</param>
+        public Ret runSyncCustomQuery<Ret>(Object queryKey)
+        {
+            Delegate queryDelegate;
+            if (customQueries.TryGetValue(queryKey, out queryDelegate))
+            {
+                return ((Func<Ret>)queryDelegate).Invoke();
+            }
+            else
+            {
+                Log.Warning("Could not find custom object query {0}. No query run.", queryKey.ToString());
+                return default(Ret);
+            }
+        }
+
+        public Ret runSyncCustomQuery<Ret, Arg1>(Object queryKey, Arg1 arg1)
+        {
+            Delegate queryDelegate;
+            if (customQueries.TryGetValue(queryKey, out queryDelegate))
+            {
+                return ((Func<Arg1, Ret>)queryDelegate).Invoke(arg1);
+            }
+            else
+            {
+                Log.Warning("Could not find custom object query {0}. No query run.", queryKey.ToString());
+                return default(Ret);
+            }
+        }
+
+        public Ret runSyncCustomQuery<Ret, Arg1, Arg2>(Object queryKey, Arg1 arg1, Arg2 arg2)
+        {
+            Delegate queryDelegate;
+            if (customQueries.TryGetValue(queryKey, out queryDelegate))
+            {
+                return ((Func<Arg1, Arg2, Ret>)queryDelegate).Invoke(arg1, arg2);
+            }
+            else
+            {
+                Log.Warning("Could not find custom object query {0}. No query run.", queryKey.ToString());
+                return default(Ret);
+            }
+        }
+
+        public Ret runSyncCustomQuery<Ret, Arg1, Arg2, Arg3>(Object queryKey, Arg1 arg1, Arg2 arg2, Arg3 arg3)
+        {
+            Delegate queryDelegate;
+            if (customQueries.TryGetValue(queryKey, out queryDelegate))
+            {
+                return ((Func<Arg1, Arg2, Arg3, Ret>)queryDelegate).Invoke(arg1, arg2, arg3);
+            }
+            else
+            {
+                Log.Warning("Could not find custom object query {0}. No query run.", queryKey.ToString());
+                return default(Ret);
+            }
+        }
 
         public void addCustomQuery<Ret>(Object queryKey, Action<SendResult<Ret>> queryDelegate)
         {
@@ -204,6 +266,26 @@ namespace Medical.GUI
         }
 
         public void addOneWayCustomQuery<Arg1, Arg2, Arg3>(Object queryKey, Action<Arg1, Arg2, Arg3> queryDelegate)
+        {
+            customQueries.Add(queryKey, queryDelegate);
+        }
+
+        public void addSyncCustomQuery<Ret>(Object queryKey, Func<Ret> queryDelegate)
+        {
+            customQueries.Add(queryKey, queryDelegate);
+        }
+
+        public void addSyncCustomQuery<Ret, Arg1>(Object queryKey, Func<Arg1, Ret> queryDelegate)
+        {
+            customQueries.Add(queryKey, queryDelegate);
+        }
+
+        public void addSyncCustomQuery<Ret, Arg1, Arg2>(Object queryKey, Func<Arg1, Arg2, Ret> queryDelegate)
+        {
+            customQueries.Add(queryKey, queryDelegate);
+        }
+
+        public void addSyncCustomQuery<Ret, Arg1, Arg2, Arg3>(Object queryKey, Func<Arg1, Arg2, Arg3, Ret> queryDelegate)
         {
             customQueries.Add(queryKey, queryDelegate);
         }

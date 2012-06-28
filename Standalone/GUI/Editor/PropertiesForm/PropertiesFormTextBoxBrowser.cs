@@ -47,7 +47,7 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            Browser browser = Property.getBrowser(1);
+            Browser browser = Property.getBrowser(1, uiCallback);
             if (browser != null)
             {
                 uiCallback.showBrowser(browser, delegate(Object result, ref string errorPrompt)

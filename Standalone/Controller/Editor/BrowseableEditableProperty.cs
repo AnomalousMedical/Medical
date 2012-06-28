@@ -10,7 +10,7 @@ namespace Medical.Editor
     /// <summary>
     /// An editable property for timelines to be used with the standard two column edit table layout.
     /// </summary>
-    abstract class BrowseableEditableProperty : EditableProperty
+    public abstract class BrowseableEditableProperty : EditableProperty
     {
         private MemberWrapper propertyInfo;
         private Object instance;
@@ -29,20 +29,20 @@ namespace Medical.Editor
             return true;
         }
 
-        public Browser getBrowser(int column)
+        public Browser getBrowser(int column, EditUICallback uiCallback)
         {
             switch(column)
             {
                 case 0:
                     return null;
                 case 1:
-                    return buildBrowser();
+                    return buildBrowser(uiCallback);
                 default:
                     return null;
             }
         }
 
-        protected abstract Browser buildBrowser();
+        protected abstract Browser buildBrowser(EditUICallback uiCallback);
 
         public Type getPropertyType(int column)
         {

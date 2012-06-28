@@ -25,10 +25,9 @@ namespace Medical
         private ProjectExplorer projectExplorer;
 
         private EditorController editorController;
-        private MedicalUICallback medicalUICallback;
+        private EditorUICallback editorUICallback;
         private PropEditController propEditController;
         private TypeControllerManager typeControllerManager;
-        private EditorUICallbackExtensions uiCallbackExtensions;
 
         public EditorPlugin()
         {
@@ -63,18 +62,17 @@ namespace Medical
             editorTimelineController = new TimelineController(standaloneController);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
 
-            //UI Helpers
-            medicalUICallback = new MedicalUICallback();
-
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 
             //Controller
             editorController = new EditorController(standaloneController, editorTimelineController);
             propEditController = new PropEditController(propMover);
-            uiCallbackExtensions = new EditorUICallbackExtensions(standaloneController, medicalUICallback, editorController, propEditController);
+
+            //UI Helpers
+            editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
             //Dialogs
-            scratchArea = new ScratchArea(scratchAreaController, medicalUICallback);
+            scratchArea = new ScratchArea(scratchAreaController, editorUICallback);
             guiManager.addManagedDialog(scratchArea);
 
             projectExplorer = new ProjectExplorer(editorController);
@@ -92,12 +90,12 @@ namespace Medical
             taskController.addTask(aspectRatioTask);
 
             standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(editorTimelineController, editorController, standaloneController.Clipboard, this));
-            standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(medicalUICallback, editorController));
+            standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(editorUICallback, editorController));
             standaloneController.ViewHostFactory.addFactory(new EditorInfoBarFactory());
             standaloneController.ViewHostFactory.addFactory(new TextEditorComponentFactory());
             standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard, propEditController));
             standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
-            standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory(medicalUICallback));
+            standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory(editorUICallback));
             standaloneController.ViewHostFactory.addFactory(new MovementSequenceEditorFactory(standaloneController.MovementSequenceController, editorController, standaloneController.Clipboard));
 
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
@@ -213,11 +211,11 @@ namespace Medical
             }
         }
 
-        public MedicalUICallback MedicalUICallback
+        public EditorUICallback UICallback
         {
             get
             {
-                return medicalUICallback;
+                return editorUICallback;
             }
         }
 

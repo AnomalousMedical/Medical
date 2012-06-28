@@ -19,7 +19,7 @@ namespace Medical
             EditorController editorController = plugin.EditorController;
             GUIManager guiManager = standaloneController.GUIManager;
 
-            RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager);
+            RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager, plugin.UICallback);
             editorController.addTypeController(rmlTypeController);
             editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);

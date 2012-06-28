@@ -15,7 +15,7 @@ namespace Medical.GUI
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static RmlElementEditor openTextEditor(MedicalUICallback uiCallback, Element element, int left, int top)
+        public static RmlElementEditor openTextEditor(EditorUICallback uiCallback, Element element, int left, int top)
         {
             RmlElementEditor textEditor = new RmlElementEditor(uiCallback, element);
             textEditor.show(left, top);
@@ -35,7 +35,7 @@ namespace Medical.GUI
         private ScrollablePropertiesForm propertiesForm;
         private Element element;
 
-        protected RmlElementEditor(MedicalUICallback uiCallback, Element element)
+        protected RmlElementEditor(EditorUICallback uiCallback, Element element)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
@@ -73,7 +73,7 @@ namespace Medical.GUI
                 switch (name.ToLowerInvariant())
                 {
                     case "onclick":
-                        editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, () =>
+                        editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
                                 return BrowserWindowController.createActionBrowser();
                             }));
@@ -81,9 +81,9 @@ namespace Medical.GUI
                     case "src":
                         if (element.TagName == "img")
                         {
-                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, () =>
+                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
-                                return BrowserWindowController.createFileBrowser("*.png", "Images");
+                                return uiCallback.createFileBrowser("*.png", "Images");
                             }));
                         }
                         else

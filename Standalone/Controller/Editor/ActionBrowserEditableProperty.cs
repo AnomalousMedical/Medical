@@ -15,7 +15,7 @@ namespace Medical.Editor
 
         }
 
-        protected override Browser buildBrowser()
+        protected override Browser buildBrowser(EditUICallback uiCallback)
         {
             return BrowserWindowController.createActionBrowser();
         }
