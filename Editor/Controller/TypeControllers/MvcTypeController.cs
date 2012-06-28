@@ -15,10 +15,12 @@ namespace Medical
         private EditorController editorController;
         private MvcEditorContext editorContext;
         public const String Icon = "EditorFileIcon/.mvc";
+        private EditorUICallback uiCallback;
 
-        public MvcTypeController(EditorController editorController)
+        public MvcTypeController(EditorController editorController, EditorUICallback uiCallback)
             :base(".mvc", editorController)
         {
+            this.uiCallback = uiCallback;
             this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
@@ -26,7 +28,7 @@ namespace Medical
         public override void openFile(string file)
         {
             AnomalousMvcContext context = (AnomalousMvcContext)loadObject(file);
-            BrowserWindowController.setCurrentEditingMvcContext(context);
+            uiCallback.CurrentEditingMvcContext = context;
 
             editorContext = new MvcEditorContext(context, file, this);
             editorContext.Focused += new Action<MvcEditorContext>(editorContext_Focused);

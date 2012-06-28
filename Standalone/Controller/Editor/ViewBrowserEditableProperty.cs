@@ -7,8 +7,13 @@ using Engine.Reflection;
 
 namespace Medical.Editor
 {
-    class ViewBrowserEditableProperty : BrowseableEditableProperty
+    public class ViewBrowserEditableProperty : BrowseableEditableProperty
     {
+        public enum CustomQueries
+        {
+            BuildBrowser
+        }
+
         public ViewBrowserEditableProperty(String name, MemberWrapper propertyInfo, Object instance)
             :base(name, propertyInfo, instance)
         {
@@ -17,7 +22,7 @@ namespace Medical.Editor
 
         protected override Browser buildBrowser(EditUICallback uiCallback)
         {
-            return BrowserWindowController.createViewBrowser();
+            return uiCallback.runSyncCustomQuery<Browser>(CustomQueries.BuildBrowser);
         }
     }
 }

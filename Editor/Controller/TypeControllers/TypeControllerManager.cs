@@ -22,7 +22,7 @@ namespace Medical
             RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager, plugin.UICallback);
             editorController.addTypeController(rmlTypeController);
             editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
-            MvcTypeController mvcTypeController = new MvcTypeController(editorController);
+            MvcTypeController mvcTypeController = new MvcTypeController(editorController, plugin.UICallback);
             editorController.addTypeController(mvcTypeController);
             editorController.addTypeController(new PluginTypeController(editorController));
             editorController.addTypeController(new MovementSequenceTypeController(editorController));

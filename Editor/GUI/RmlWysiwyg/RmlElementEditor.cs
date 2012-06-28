@@ -75,7 +75,7 @@ namespace Medical.GUI
                     case "onclick":
                         editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
-                                return BrowserWindowController.createActionBrowser();
+                                return uiCallback.createActionBrowser();
                             }));
                         break;
                     case "src":

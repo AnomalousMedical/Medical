@@ -115,7 +115,7 @@ namespace Medical
                     }),
                 new CallbackAction("ActionLink", context =>
                     {
-                        BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+                        BrowserWindow<String>.GetInput(uiCallback.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
                         {
                             rmlComponent.insertLink(result);
                             return true;
@@ -123,7 +123,7 @@ namespace Medical
                     }),
                 new CallbackAction("Button", context =>
                     {
-                        BrowserWindow<String>.GetInput(BrowserWindowController.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
+                        BrowserWindow<String>.GetInput(uiCallback.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
                         {
                             //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
                             rmlComponent.insertButton(result);

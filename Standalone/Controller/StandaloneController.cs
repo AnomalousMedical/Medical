@@ -90,8 +90,6 @@ namespace Medical
             mainWindow.setPointerManager(PointerManager.Instance);
 
             PointerManager.Instance.Visible = false;
-
-            BrowserWindowController.setStandaloneController(this);
         }
 
         public void Dispose()

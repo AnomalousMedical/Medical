@@ -103,7 +103,7 @@ namespace Medical
 
             this.addOneWayCustomQuery(View.CustomQueries.AddControllerForView, delegate(View view)
             {
-                AnomalousMvcContext context = BrowserWindowController.getCurrentEditingMvcContext();
+                AnomalousMvcContext context = CurrentEditingMvcContext;
                 String controllerName = view.Name;
                 if (context.Controllers.hasItem(controllerName))
                 {
@@ -161,6 +161,58 @@ namespace Medical
                 }
                 return browser;
             });
+
+            this.addSyncCustomQuery<Browser>(ViewBrowserEditableProperty.CustomQueries.BuildBrowser, () =>
+            {
+                Browser browser = new Browser("Views", "Choose View");
+                if (CurrentEditingMvcContext != null)
+                {
+                    foreach (View view in CurrentEditingMvcContext.Views)
+                    {
+                        browser.addNode("", null, new BrowserNode(view.Name, view.Name));
+                    }
+                }
+                return browser;
+            });
+
+            this.addSyncCustomQuery<Browser>(ActionBrowserEditableProperty.CustomQueries.BuildBrowser, () =>
+            {
+                return createActionBrowser();
+            });
+
+            this.addSyncCustomQuery<Browser, Type>(ModelBrowserEditableProperty.CustomQueries.BuildBrowser, (assignableFromType) =>
+            {
+                Browser browser = new Browser("Models", "Choose Model");
+                if (CurrentEditingMvcContext != null)
+                {
+                    foreach (MvcModel model in CurrentEditingMvcContext.Models)
+                    {
+                        if (assignableFromType.IsAssignableFrom(model.GetType()))
+                        {
+                            browser.addNode("", null, new BrowserNode(model.Name, model.Name));
+                        }
+                    }
+                }
+                return browser;
+            });
+        }
+
+        public Browser createActionBrowser()
+        {
+            Browser browser = new Browser("Action", "Choose Action");
+            if (CurrentEditingMvcContext != null)
+            {
+                foreach (MvcController controller in CurrentEditingMvcContext.Controllers)
+                {
+                    BrowserNode controllerNode = new BrowserNode(controller.Name, null);
+                    foreach (ControllerAction action in controller.Actions)
+                    {
+                        controllerNode.addChild(new BrowserNode(action.Name, String.Format("{0}/{1}", controller.Name, action.Name)));
+                    }
+                    browser.addNode("", null, controllerNode);
+                }
+            }
+            return browser;
         }
 
         public Browser createFileBrowser(String searchPattern, String prompt)
@@ -179,5 +231,7 @@ namespace Medical
             }
             return browser;
         }
+
+        public AnomalousMvcContext CurrentEditingMvcContext { get; set; }
     }
 }

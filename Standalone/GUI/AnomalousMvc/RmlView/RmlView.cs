@@ -20,7 +20,7 @@ namespace Medical.GUI.AnomalousMvc
             RmlFile = name + ".rml";
         }
 
-        [EditableFile(BrowserWindowController.RmlSearchPattern, "Rml Files")]
+        [EditableFile("*.rml", "Rml Files")]
         public String RmlFile { get; set; }
 
         protected override void customizeEditInterface(EditInterface editInterface)
