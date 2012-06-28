@@ -28,6 +28,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "NoIcon";
+            }
+        }
+
         protected CallbackCommand(LoadInfo info)
             : base(info)
         {

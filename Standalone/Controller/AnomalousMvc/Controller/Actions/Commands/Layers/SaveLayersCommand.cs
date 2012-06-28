@@ -38,6 +38,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/LayersSaveIcon";
+            }
+        }
+
         protected SaveLayersCommand(LoadInfo info)
             : base(info)
         {

@@ -26,6 +26,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/TimelineStopIcon";
+            }
+        }
+
         protected StopTimelineCommand(LoadInfo info)
             :base(info)
         {

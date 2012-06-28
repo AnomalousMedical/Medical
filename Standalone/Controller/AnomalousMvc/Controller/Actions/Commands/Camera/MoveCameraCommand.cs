@@ -37,6 +37,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/CameraMoveIcon";
+            }
+        }
+
         protected MoveCameraCommand(LoadInfo info)
             :base(info)
         {

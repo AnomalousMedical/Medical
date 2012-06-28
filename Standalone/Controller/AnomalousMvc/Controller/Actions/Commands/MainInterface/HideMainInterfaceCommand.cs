@@ -30,6 +30,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/MainInterfaceHideIcon";
+            }
+        }
+
         protected HideMainInterfaceCommand(LoadInfo info)
             :base(info)
         {

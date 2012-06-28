@@ -49,6 +49,7 @@ namespace Medical.GUI
         private TreeNode addNodes(BrowserNode node, BrowserNode defaultNode)
         {
             TreeNode treeNode = new TreeNode(node.Text);
+            treeNode.ImageResource = node.IconName;
             treeNode.UserData = node;
             if (node == defaultNode)
             {

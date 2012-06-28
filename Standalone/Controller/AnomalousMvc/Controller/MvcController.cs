@@ -40,7 +40,9 @@ namespace Medical.Controller.AnomalousMvc
 
         protected override EditInterface createEditInterface()
         {
-            return actionCollection.getEditInterface(Name);
+            EditInterface editInterface = actionCollection.getEditInterface(Name);
+            editInterface.IconReferenceTag = "MvcContextEditor/ControllerIcon";
+            return editInterface;
         }
 
         protected MvcController(LoadInfo info)

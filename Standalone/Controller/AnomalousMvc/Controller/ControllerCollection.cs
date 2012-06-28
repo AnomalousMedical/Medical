@@ -17,6 +17,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public override void customizeEditInterface(EditInterface editInterface, EditInterfaceManager<MvcController> itemEdits)
         {
+            editInterface.IconReferenceTag = "MvcContextEditor/ControllerIcon";
             addItemCreation("Add Controller", delegate(String name)
             {
                 return new MvcController(name);

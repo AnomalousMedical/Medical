@@ -30,6 +30,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/CameraSavePositionIcon";
+            }
+        }
+
         protected SaveViewLayoutCommand(LoadInfo info)
             :base(info)
         {

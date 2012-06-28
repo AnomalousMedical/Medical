@@ -55,6 +55,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "NoIcon";
+            }
+        }
+
         [EditableModel(typeof(NavigationModel))]
         public String NavigationModelName { get; set; }
 

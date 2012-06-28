@@ -41,6 +41,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/NavigateNextIcon";
+            }
+        }
+
         [EditableModel(typeof(NavigationModel))]
         public String NavigationModelName { get; set; }
 

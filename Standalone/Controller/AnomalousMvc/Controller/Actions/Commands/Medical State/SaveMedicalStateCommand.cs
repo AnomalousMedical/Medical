@@ -38,6 +38,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/MedicalStateSaveIcon";
+            }
+        }
+
         protected SaveMedicalStateCommand(LoadInfo info)
             : base(info)
         {

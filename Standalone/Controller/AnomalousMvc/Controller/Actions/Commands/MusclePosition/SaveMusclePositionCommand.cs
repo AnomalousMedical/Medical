@@ -40,6 +40,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/MusclePositionSaveIcon";
+            }
+        }
+
         protected SaveMusclePositionCommand(LoadInfo info)
             : base(info)
         {

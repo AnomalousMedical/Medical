@@ -20,6 +20,8 @@ namespace Medical.Controller.AnomalousMvc
 
         public abstract String Type { get; }
 
+        public abstract String Icon { get; }
+
         protected ActionCommand(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, BehaviorSaveMemberScanner.Scanner);
@@ -51,6 +53,7 @@ namespace Medical.Controller.AnomalousMvc
         protected virtual void createEditInterface()
         {
             editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, Type, null);
+            editInterface.IconReferenceTag = Icon;
             customizeEditInterface(editInterface);
         }
 

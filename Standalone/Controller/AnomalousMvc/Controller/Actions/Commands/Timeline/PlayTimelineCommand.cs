@@ -38,6 +38,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/TimelinePlayIcon";
+            }
+        }
+
         protected PlayTimelineCommand(LoadInfo info)
             :base(info)
         {

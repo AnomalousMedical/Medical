@@ -34,6 +34,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/LayersChangeIcon";
+            }
+        }
+
         protected ChangeLayersCommand(LoadInfo info)
             :base(info)
         {

@@ -26,6 +26,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/ViewCloseAllIcon";
+            }
+        }
+
         protected CloseAllViewsCommand(LoadInfo info)
             :base(info)
         {

@@ -36,6 +36,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/ViewShowIcon";
+            }
+        }
+
         protected ShowViewCommand(LoadInfo info)
             :base(info)
         {

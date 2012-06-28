@@ -39,6 +39,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/ViewShowIfNotOpen";
+            }
+        }
+
         protected ShowViewIfNotOpenCommand(LoadInfo info)
             : base(info)
         {

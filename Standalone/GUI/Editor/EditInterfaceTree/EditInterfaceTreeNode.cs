@@ -16,6 +16,11 @@ namespace Medical.GUI
         public EditInterfaceTreeNode(EditInterface editInterface, EditInterfaceTreeView editInterfaceTreeView)
             :base(editInterface.getName())
         {
+            if (editInterface.IconReferenceTag != null)
+            {
+                this.ImageResource = editInterface.IconReferenceTag.ToString();
+            }
+
             this.editInterfaceTreeView = editInterfaceTreeView;
 
             this.editInterface = editInterface;

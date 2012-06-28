@@ -50,6 +50,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/MedicalStateChangeIcon";
+            }
+        }
+
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.addCommand(new EditInterfaceCommand("Capture State", captureState));

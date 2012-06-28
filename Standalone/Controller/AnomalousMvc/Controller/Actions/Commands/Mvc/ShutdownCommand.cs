@@ -26,6 +26,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public override string Icon
+        {
+            get
+            {
+                return "MvcContextEditor/MVCShutdownIcon";
+            }
+        }
+
         protected ShutdownCommand(LoadInfo info)
             :base(info)
         {
