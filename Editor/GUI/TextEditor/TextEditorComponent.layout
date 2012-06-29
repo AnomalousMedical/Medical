@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="400 150 639 468" layer="Overlapped">
-        <Widget type="EditBox" skin="WordWrapWhite" position="0 0 638 467" align="Stretch" name="Text">
+    <Widget type="Widget" skin="PanelEmpty" position="81 46 479 468" layer="Overlapped">
+        <Widget type="EditBox" skin="WordWrapWhite" position="0 0 478 467" align="Stretch" name="Text">
             <Property key="TabPrinting" value="true"/>
             <Property key="MultiLine" value="true"/>
             <Property key="MaxTextLength" value="100000"/>

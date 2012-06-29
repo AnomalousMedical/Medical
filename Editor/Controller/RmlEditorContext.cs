@@ -45,7 +45,7 @@ namespace Medical
             mvcContext.ResumeAction = "Common/Resumed";
 
             TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.rmlTypeController.loadText(currentFile), wordWrap: false);
-            textEditorView.ViewLocation = ViewLocations.Floating;
+            textEditorView.ViewLocation = ViewLocations.Left;
             textEditorView.IsWindow = true;
             textEditorView.ComponentCreated += (view, component) =>
             {
@@ -80,9 +80,9 @@ namespace Medical
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("Editor",
-                new RunCommandsAction("Show", 
-                    new ShowViewCommand("RmlEditor"),
+                new RunCommandsAction("Show",
                     new ShowViewCommand("RmlView"),
+                    new ShowViewCommand("RmlEditor"),
                     new ShowViewCommand("InfoBar")),
                 new RunCommandsAction("Close", new CloseAllViewsCommand()),
                 new CallbackAction("Save", context =>
