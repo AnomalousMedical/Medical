@@ -233,7 +233,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="MvcContextEditor/OverallViewIcon">
+  <Resource type="ResourceImageSet" name="MvcContextEditor/NavigateToIcon">
     <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="448 32"/>
@@ -241,7 +241,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="MvcContextEditor/TimelineIcon">
+  <Resource type="ResourceImageSet" name="MvcContextEditor/OverallViewIcon">
     <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="480 0"/>
@@ -249,7 +249,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="MvcContextEditor/TimelinePlayIcon">
+  <Resource type="ResourceImageSet" name="MvcContextEditor/TimelineIcon">
     <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="480 32"/>
@@ -257,7 +257,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="MvcContextEditor/TimelineStopIcon">
+  <Resource type="ResourceImageSet" name="MvcContextEditor/TimelinePlayIcon">
     <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="512 0"/>
@@ -265,7 +265,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="MvcContextEditor/ViewCloseAllIcon">
+  <Resource type="ResourceImageSet" name="MvcContextEditor/TimelineStopIcon">
     <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="512 32"/>
@@ -273,10 +273,18 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="MvcContextEditor/ViewCloseIcon">
+  <Resource type="ResourceImageSet" name="MvcContextEditor/ViewCloseAllIcon">
     <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="544 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="MvcContextEditor/ViewCloseIcon">
+    <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="544 32"/>
       </Index>
     </Group>
   </Resource>
@@ -292,7 +300,7 @@
   <Resource type="ResourceImageSet" name="MvcContextEditor/ViewShowIfNotOpen">
     <Group name="Icons" texture="Medical.Resources.MvcContextIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="544 32"/>
+        <Frame point="608 0"/>
       </Index>
     </Group>
   </Resource>
