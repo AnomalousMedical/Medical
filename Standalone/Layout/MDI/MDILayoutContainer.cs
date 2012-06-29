@@ -12,7 +12,7 @@ namespace Medical.Controller
     /// This class acts as a container inside of a MDI Layout. It will make the
     /// windows nest and do what they need to do to layout logically.
     /// </summary>
-    public class MDILayoutContainer : MDIChildContainerBase, IDisposable
+    public abstract class MDILayoutContainer : MDIChildContainerBase, IDisposable
     {
         public enum LayoutType
         {
@@ -36,15 +36,11 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="layoutType">The alignment of the container.</param>
         /// <param name="padding">The amount of padding between elements.</param>
-        public MDILayoutContainer(LayoutType layoutType, int padding, DockLocation dockLocation, bool autoCreateSeparatorManager = true)
+        public MDILayoutContainer(LayoutType layoutType, int padding, DockLocation dockLocation)
             :base(dockLocation)
         {
             this.layoutType = layoutType;
             this.padding = padding;
-            if (autoCreateSeparatorManager)
-            {
-                separatorWidgetManager = new SeparatorWidgetManagerScale(this);
-            }
         }
 
         /// <summary>
@@ -94,7 +90,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding, CurrentDockLocation);
+                        MDILayoutContainer newContainer = new MDILayoutContainerScale(MDILayoutContainer.LayoutType.Horizontal, Padding, CurrentDockLocation);
                         MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(child);
@@ -110,7 +106,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding, CurrentDockLocation);
+                        MDILayoutContainer newContainer = new MDILayoutContainerScale(MDILayoutContainer.LayoutType.Horizontal, Padding, CurrentDockLocation);
                         MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(previous);
@@ -126,7 +122,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding, CurrentDockLocation);
+                        MDILayoutContainer newContainer = new MDILayoutContainerScale(MDILayoutContainer.LayoutType.Vertical, Padding, CurrentDockLocation);
                         MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(child);
@@ -142,7 +138,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding, CurrentDockLocation);
+                        MDILayoutContainer newContainer = new MDILayoutContainerScale(MDILayoutContainer.LayoutType.Vertical, Padding, CurrentDockLocation);
                         MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(previous);
@@ -204,51 +200,7 @@ namespace Medical.Controller
             }
         }
 
-        /// <summary>
-        /// LayoutContainer function
-        /// </summary>
-        public override void layout()
-        {
-            IntVector2 currentLocation = Location;
-            int i = 0;
-            int childCount = children.Count - 1;
-            if (layoutType == LayoutType.Horizontal)
-            {
-                float sizeWithoutPadding = WorkingSize.Width - padding * childCount;
-                foreach (MDIContainerBase child in children)
-                {
-                    IntSize2 actualSize = new IntSize2((int)(sizeWithoutPadding * (child.Scale / totalScale)), WorkingSize.Height);
-                    if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
-                    {
-                        actualSize.Width = WorkingSize.Width + Location.x - currentLocation.x;
-                    }
-                    child.WorkingSize = actualSize;
-                    child.Location = currentLocation;
-                    child.layout();
-                    currentLocation.x += actualSize.Width;
-                    separatorWidgetManager.setSeparatorCoord(i++, (int)currentLocation.x, (int)currentLocation.y, padding, (int)actualSize.Height);
-                    currentLocation.x += padding;
-                }
-            }
-            else
-            {
-                float sizeWithoutPadding = WorkingSize.Height - padding * childCount;
-                foreach (MDIContainerBase child in children)
-                {
-                    IntSize2 actualSize = new IntSize2(WorkingSize.Width, (int)(sizeWithoutPadding * (child.Scale / totalScale)));
-                    if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
-                    {
-                        actualSize.Height = WorkingSize.Height + Location.y - currentLocation.y;
-                    }
-                    child.WorkingSize = actualSize;
-                    child.Location = currentLocation;
-                    child.layout();
-                    currentLocation.y += actualSize.Height;
-                    separatorWidgetManager.setSeparatorCoord(i++, (int)currentLocation.x, (int)currentLocation.y, (int)actualSize.Width, padding);
-                    currentLocation.y += padding;
-                }
-            }
-        }
+        
 
         public override MDIWindow findWindowAtPosition(float mouseX, float mouseY)
         {

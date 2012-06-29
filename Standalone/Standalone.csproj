@@ -193,6 +193,7 @@
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
+    <Compile Include="Layout\MDI\MDILayoutContainerScale.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManagerScale.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManagerAbsolute.cs" />
     <Compile Include="Layout\MDI\MDILayoutContainerAbsolute.cs" />

@@ -62,7 +62,7 @@ namespace Medical.Controller
             bottomContainerWidget.Visible = false;
 
             
-            center = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
+            center = new MDILayoutContainerScale(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
             center._setParent(this);
 
             floating = new FloatingWindowContainer();

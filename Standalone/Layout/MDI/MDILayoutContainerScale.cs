@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Medical.Controller;
 using Engine;
 
 namespace Medical.Controller
 {
-    class MDILayoutContainerAbsolute : MDILayoutContainer
+    class MDILayoutContainerScale : MDILayoutContainer
     {
-        public MDILayoutContainerAbsolute(LayoutType layoutType, int padding, DockLocation dockLocation)
+        public MDILayoutContainerScale(LayoutType layoutType, int padding, DockLocation dockLocation)
             :base(layoutType, padding, dockLocation)
         {
-            setSeparatorWidgetManager(new SeparatorWidgetManagerAbsolute(this));
+            setSeparatorWidgetManager(new SeparatorWidgetManagerScale(this));
         }
 
+        /// <summary>
+        /// LayoutContainer function
+        /// </summary>
         public override void layout()
         {
             IntVector2 currentLocation = Location;
@@ -24,8 +28,11 @@ namespace Medical.Controller
                 float sizeWithoutPadding = WorkingSize.Width - Padding * childCount;
                 foreach (MDIContainerBase child in children)
                 {
-                    IntSize2 actualSize = child.DesiredSize;
-                    actualSize.Height = WorkingSize.Height;
+                    IntSize2 actualSize = new IntSize2((int)(sizeWithoutPadding * (child.Scale / totalScale)), WorkingSize.Height);
+                    if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
+                    {
+                        actualSize.Width = WorkingSize.Width + Location.x - currentLocation.x;
+                    }
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();
@@ -39,8 +46,11 @@ namespace Medical.Controller
                 float sizeWithoutPadding = WorkingSize.Height - Padding * childCount;
                 foreach (MDIContainerBase child in children)
                 {
-                    IntSize2 actualSize = child.DesiredSize;
-                    actualSize.Width = WorkingSize.Width;
+                    IntSize2 actualSize = new IntSize2(WorkingSize.Width, (int)(sizeWithoutPadding * (child.Scale / totalScale)));
+                    if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
+                    {
+                        actualSize.Height = WorkingSize.Height + Location.y - currentLocation.y;
+                    }
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();
