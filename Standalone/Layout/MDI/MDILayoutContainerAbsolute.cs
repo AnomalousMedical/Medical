@@ -9,9 +9,9 @@ namespace Medical.Controller
     class MDILayoutContainerAbsolute : MDILayoutContainer
     {
         public MDILayoutContainerAbsolute(LayoutType layoutType, int padding, DockLocation dockLocation)
-            :base(layoutType, padding, dockLocation)
+            :base(layoutType, padding, dockLocation, false)
         {
-
+            setSeparatorWidgetManager(new SeparatorWidgetManagerAbsolute(this));
         }
 
         public override void layout()

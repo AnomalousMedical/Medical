@@ -36,12 +36,15 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="layoutType">The alignment of the container.</param>
         /// <param name="padding">The amount of padding between elements.</param>
-        public MDILayoutContainer(LayoutType layoutType, int padding, DockLocation dockLocation)
+        public MDILayoutContainer(LayoutType layoutType, int padding, DockLocation dockLocation, bool autoCreateSeparatorManager = true)
             :base(dockLocation)
         {
             this.layoutType = layoutType;
             this.padding = padding;
-            separatorWidgetManager = new SeparatorWidgetManager(this);
+            if (autoCreateSeparatorManager)
+            {
+                separatorWidgetManager = new SeparatorWidgetManagerScale(this);
+            }
         }
 
         /// <summary>
@@ -50,6 +53,11 @@ namespace Medical.Controller
         public void Dispose()
         {
             separatorWidgetManager.Dispose();
+        }
+
+        protected void setSeparatorWidgetManager(SeparatorWidgetManager separatorWidgetManager)
+        {
+            this.separatorWidgetManager = separatorWidgetManager;
         }
 
         /// <summary>
