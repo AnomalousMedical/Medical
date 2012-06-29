@@ -16,53 +16,64 @@ namespace Medical.Controller
             
         }
 
-        private IntVector2 dragStartPosition;
+        private IntVector2 dragLastPosition;
         private MDIContainerBase dragLowChild;
-
         private MDIContainerBase dragHighChild;
+        private IntSize2 dragTotalSize;
 
         protected override void separator_MouseDrag(Widget source, EventArgs e)
         {
             if (dragLowChild != null)
             {
                 MouseEventArgs me = e as MouseEventArgs;
-                IntVector2 offset = me.Position - dragStartPosition;// -parentContainer.Location;
-                IntSize2 actualSize;
+                IntVector2 offset = me.Position - dragLastPosition;
 
                 if (parentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
                 {
-                    actualSize = dragLowChild.ActualSize;
-                    actualSize.Width += offset.x;
-                    dragLowChild.ActualSize = actualSize;
+                    IntSize2 lowSize = dragLowChild.ActualSize;
+                    lowSize.Width += offset.x;
 
-                    actualSize = dragHighChild.ActualSize;
-                    actualSize.Width -= offset.x;
-                    dragHighChild.ActualSize = actualSize;
+                    IntSize2 highSize = dragHighChild.ActualSize;
+                    highSize.Width -= offset.x;
+
+                    if (lowSize.Width < 0)
+                    {
+                        lowSize.Width = 0;
+                        highSize.Width = dragTotalSize.Width;
+                    }
+                    else if (highSize.Width < 0)
+                    {
+                        highSize.Width = 0;
+                        lowSize.Width = dragTotalSize.Width;
+                    }
+
+                    dragLowChild.ActualSize = lowSize;
+                    dragHighChild.ActualSize = highSize;
                 }
                 else
                 {
-                    actualSize = dragLowChild.ActualSize;
-                    actualSize.Height += offset.y;
-                    dragLowChild.ActualSize = actualSize;
+                    IntSize2 lowSize = dragLowChild.ActualSize;
+                    lowSize.Height += offset.y;
 
-                    actualSize = dragHighChild.ActualSize;
-                    actualSize.Height -= offset.y;
-                    dragHighChild.ActualSize = actualSize;
+                    IntSize2 highSize = dragHighChild.ActualSize;
+                    highSize.Height -= offset.y;
+
+                    if (lowSize.Height < 0)
+                    {
+                        lowSize.Height = 0;
+                        highSize.Height = dragTotalSize.Height;
+                    }
+                    else if (highSize.Height < 0)
+                    {
+                        highSize.Height = 0;
+                        lowSize.Height = dragTotalSize.Height;
+                    }
+
+                    dragLowChild.ActualSize = lowSize;
+                    dragHighChild.ActualSize = highSize;
                 }
 
-                //Bounds checking
-                //if (dragLowChild.Scale < 0)
-                //{
-                //    dragLowChild.Scale = 0.0f;
-                //    dragHighChild.Scale = dragTotalScale;
-                //}
-                //else if (dragHighChild.Scale < 0)
-                //{
-                //    dragLowChild.Scale = dragTotalScale;
-                //    dragHighChild.Scale = 0.0f;
-                //}
-
-                dragStartPosition = me.Position;
+                dragLastPosition = me.Position;
 
                 parentContainer.invalidate();
             }
@@ -74,9 +85,10 @@ namespace Medical.Controller
             //ignore the last separator and do not allow the drag to happen if it is clicked.
             if (sepIndex != separatorWidgets.Count - 1)
             {
-                dragStartPosition = ((MouseEventArgs)e).Position;// -parentContainer.Location;
+                dragLastPosition = ((MouseEventArgs)e).Position;
                 dragLowChild = parentContainer.getChild(sepIndex);
                 dragHighChild = parentContainer.getChild(sepIndex + 1);
+                dragTotalSize = dragLowChild.ActualSize + dragHighChild.ActualSize;
             }
         }
 
