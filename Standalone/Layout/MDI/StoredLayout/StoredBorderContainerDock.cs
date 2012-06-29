@@ -8,12 +8,10 @@ namespace Medical.Controller
 {
     class StoredBorderContainerDock
     {
-        public StoredBorderContainerDock(IntSize2 size)
+        public StoredBorderContainerDock()
         {
-            this.Size = size;
+            
         }
-
-        public IntSize2 Size { get; set; }
 
         public StoredMDILayoutContainer MDILayoutContainer { get; set; }
     }

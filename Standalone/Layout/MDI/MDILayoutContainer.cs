@@ -25,11 +25,11 @@ namespace Medical.Controller
         private LayoutType layoutType;
         private int padding;
 
-        private List<MDIContainerBase> children = new List<MDIContainerBase>();
-        private SeparatorWidgetManager separatorWidgetManager;
+        protected List<MDIContainerBase> children = new List<MDIContainerBase>();
+        protected SeparatorWidgetManager separatorWidgetManager;
 
         private Gui gui = Gui.Instance;
-        private float totalScale = 0.0f;
+        protected float totalScale = 0.0f;
 
         /// <summary>
         /// Constructor.
@@ -209,7 +209,6 @@ namespace Medical.Controller
                 float sizeWithoutPadding = WorkingSize.Width - padding * childCount;
                 foreach (MDIContainerBase child in children)
                 {
-                    IntSize2 childSize = child.DesiredSize;
                     IntSize2 actualSize = new IntSize2((int)(sizeWithoutPadding * (child.Scale / totalScale)), WorkingSize.Height);
                     if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
                     {
@@ -228,7 +227,6 @@ namespace Medical.Controller
                 float sizeWithoutPadding = WorkingSize.Height - padding * childCount;
                 foreach (MDIContainerBase child in children)
                 {
-                    IntSize2 childSize = child.DesiredSize;
                     IntSize2 actualSize = new IntSize2(WorkingSize.Width, (int)(sizeWithoutPadding * (child.Scale / totalScale)));
                     if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
                     {
@@ -401,6 +399,31 @@ namespace Medical.Controller
             }
         }
 
+        public override IntSize2 ActualSize
+        {
+            get
+            {
+                return DesiredSize;
+            }
+            set
+            {
+                if (layoutType == LayoutType.Horizontal)
+                {
+                    foreach (MDIContainerBase child in children)
+                    {
+                        child.ActualSize = new IntSize2(child.ActualSize.Width, value.Height);
+                    }
+                }
+                else
+                {
+                    foreach (MDIContainerBase child in children)
+                    {
+                        child.ActualSize = new IntSize2(value.Width, child.ActualSize.Height);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// The LayoutType of this container.
         /// </summary>
@@ -425,6 +448,14 @@ namespace Medical.Controller
             get
             {
                 return children.Count > 0;
+            }
+        }
+
+        public int ChildCount
+        {
+            get
+            {
+                return children.Count;
             }
         }
 

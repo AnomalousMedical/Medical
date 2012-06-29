@@ -398,6 +398,18 @@ namespace Medical.GUI
             }
         }
 
+        public override IntSize2 ActualSize
+        {
+            get
+            {
+                return Size;
+            }
+            set
+            {
+                window.setSize(value.Width, value.Height);
+            }
+        }
+
         protected String PersistName
         {
             get

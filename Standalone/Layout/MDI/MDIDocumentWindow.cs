@@ -225,6 +225,19 @@ namespace Medical.Controller
             }
         }
 
+        public override IntSize2 ActualSize
+        {
+            get
+            {
+                //These will not be used for now, so don't worry about them
+                return new IntSize2();
+            }
+            set
+            {
+                //These will not be used for now, so don't worry about them
+            }
+        }
+
         protected void fireClosed()
         {
             if (Closed != null)

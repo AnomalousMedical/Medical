@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 
 namespace Medical.Controller
 {
@@ -25,6 +26,8 @@ namespace Medical.Controller
         /// is of the whole row.
         /// </summary>
         public float Scale { get; set; }
+
+        public abstract IntSize2 ActualSize { get; set; }
 
         /// <summary>
         /// The container this window is currently inside of.

@@ -8,7 +8,7 @@ using Medical.GUI;
 
 namespace Medical.Controller
 {
-    class SeparatorWidgetManager : IDisposable
+    public class SeparatorWidgetManager : IDisposable
     {
         private List<Widget> separatorWidgets = new List<Widget>();
         private Gui gui = Gui.Instance;

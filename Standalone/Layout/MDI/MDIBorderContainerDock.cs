@@ -12,12 +12,11 @@ namespace Medical.Controller
     {
         private const int MIN_PIXEL_SIZE = 35;
 
-        private MDILayoutContainer layoutContainer;
+        private MDILayoutContainerAbsolute layoutContainer;
         private Widget separator;
         private int separatorSecondSize = 5;
-        private IntSize2 size = new IntSize2();
 
-        public MDIBorderContainerDock(MDILayoutContainer layoutContainer)
+        public MDIBorderContainerDock(MDILayoutContainerAbsolute layoutContainer)
             :base(layoutContainer.CurrentDockLocation)
         {
             this.layoutContainer = layoutContainer;
@@ -88,7 +87,29 @@ namespace Medical.Controller
         {
             get
             {
-                return layoutContainer.HasChildren ? size : new IntSize2();
+                if (layoutContainer.HasChildren)
+                {
+                    //for (int i = 0; i < layoutContainer.ChildCount; ++i)
+                    //{
+                    //    size += layoutContainer.getChild(i).DesiredSize;
+                    //}
+                    IntSize2 size = layoutContainer.DesiredSize;// +new IntSize2(separatorSecondSize, separatorSecondSize);
+                    return size;
+                }
+                return new IntSize2();
+            }
+        }
+
+        public override IntSize2 ActualSize
+        {
+            get
+            {
+                //These will not be used for now, so don't worry about them
+                return new IntSize2();
+            }
+            set
+            {
+                //These will not be used for now, so don't worry about them
             }
         }
 
@@ -121,13 +142,11 @@ namespace Medical.Controller
 
         public override void addChild(MDIWindow window)
         {
-            setFirstWindowSize(window);
             layoutContainer.addChild(window);
         }
 
         public override void addChild(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
         {
-            setFirstWindowSize(window);
             layoutContainer.addChild(window, previous, alignment);
         }
 
@@ -138,7 +157,7 @@ namespace Medical.Controller
 
         internal StoredBorderContainerDock storeCurrentLayout()
         {
-            StoredBorderContainerDock storedDock = new StoredBorderContainerDock(size);
+            StoredBorderContainerDock storedDock = new StoredBorderContainerDock();
             storedDock.MDILayoutContainer = layoutContainer.storeCurrentLayout();
             return storedDock;
         }
@@ -146,7 +165,6 @@ namespace Medical.Controller
         internal void restoreLayout(StoredBorderContainerDock storedDock)
         {
             layoutContainer.restoreLayout(storedDock.MDILayoutContainer);
-            this.size = storedDock.Size;
         }
 
         internal override MDILayoutContainer.LayoutType Layout
@@ -159,7 +177,6 @@ namespace Medical.Controller
 
         internal override void insertChild(MDIWindow child, MDIWindow previous, bool after)
         {
-            setFirstWindowSize(child);
             layoutContainer.insertChild(child, previous, after);
         }
 
@@ -179,35 +196,23 @@ namespace Medical.Controller
             switch (CurrentDockLocation)
             {
                 case DockLocation.Left:
-                    size = new IntSize2(me.Position.x - (int)Location.x, MIN_PIXEL_SIZE);
+                    MDIContainerBase child = layoutContainer.getChild(layoutContainer.ChildCount - 1);
+                    IntSize2 actualSize = child.ActualSize;
+                    actualSize.Width = me.Position.x - child.Location.x;
+                    child.ActualSize = actualSize;
+                    //size = new IntSize2(me.Position.x - (int)Location.x, MIN_PIXEL_SIZE);
                     break;
                 case DockLocation.Right:
-                    size = new IntSize2((int)(Location.x + WorkingSize.Width) - me.Position.x, MIN_PIXEL_SIZE);
+                    //size = new IntSize2((int)(Location.x + WorkingSize.Width) - me.Position.x, MIN_PIXEL_SIZE);
                     break;
                 case DockLocation.Top:
-                    size = new IntSize2(MIN_PIXEL_SIZE, me.Position.y - (int)Location.y);
+                    //size = new IntSize2(MIN_PIXEL_SIZE, me.Position.y - (int)Location.y);
                     break;
                 case DockLocation.Bottom:
-                    size = new IntSize2(MIN_PIXEL_SIZE, (int)(Location.y + WorkingSize.Height) - me.Position.y);
+                    //size = new IntSize2(MIN_PIXEL_SIZE, (int)(Location.y + WorkingSize.Height) - me.Position.y);
                     break;
             }
-            if (size.Width < MIN_PIXEL_SIZE)
-            {
-                size.Width = MIN_PIXEL_SIZE;
-            }
-            if (size.Height < MIN_PIXEL_SIZE)
-            {
-                size.Height = MIN_PIXEL_SIZE;
-            }
             invalidate();
-        }
-
-        private void setFirstWindowSize(MDIWindow child)
-        {
-            if (!layoutContainer.HasChildren)
-            {
-                size = child.DesiredSize + new IntSize2(separatorSecondSize, separatorSecondSize);
-            }
         }
     }
 }
