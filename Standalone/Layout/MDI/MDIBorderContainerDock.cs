@@ -200,16 +200,24 @@ namespace Medical.Controller
                     IntSize2 actualSize = child.ActualSize;
                     actualSize.Width = me.Position.x - child.Location.x;
                     child.ActualSize = actualSize;
-                    //size = new IntSize2(me.Position.x - (int)Location.x, MIN_PIXEL_SIZE);
                     break;
                 case DockLocation.Right:
-                    //size = new IntSize2((int)(Location.x + WorkingSize.Width) - me.Position.x, MIN_PIXEL_SIZE);
+                    child = layoutContainer.getChild(0);
+                    actualSize = child.ActualSize;
+                    actualSize.Width = (child.Location.x + actualSize.Width) - me.Position.x;
+                    child.ActualSize = actualSize;
                     break;
                 case DockLocation.Top:
-                    //size = new IntSize2(MIN_PIXEL_SIZE, me.Position.y - (int)Location.y);
+                    child = layoutContainer.getChild(layoutContainer.ChildCount - 1);
+                    actualSize = child.ActualSize;
+                    actualSize.Height = me.Position.y - child.Location.y;
+                    child.ActualSize = actualSize;
                     break;
                 case DockLocation.Bottom:
-                    //size = new IntSize2(MIN_PIXEL_SIZE, (int)(Location.y + WorkingSize.Height) - me.Position.y);
+                    child = layoutContainer.getChild(0);
+                    actualSize = child.ActualSize;
+                    actualSize.Height = (child.Location.y + actualSize.Height) - me.Position.y;
+                    child.ActualSize = actualSize;
                     break;
             }
             invalidate();
