@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using SoundPlugin;
 
 namespace Medical.GUI
 {
     public class VolumeControlTask : Task
     {
         public VolumeControlTask()
-            : base("Medical.VolumeControl", "Volume", "StandaloneIcons/VolumeControl", TaskMenuCategories.System)
+            : base("Medical.VolumeControl", "Volume", SoundConfig.MasterVolume > 0.0f ? "StandaloneIcons/VolumeControl" : "StandaloneIcons/VolumeControlOff", TaskMenuCategories.System)
         {
             this.ShowOnTimelineTaskbar = true;
+            SoundConfig.MasterVolumeChanged += new EventHandler(SoundConfig_MasterVolumeChanged);
         }
 
         public override void clicked(TaskPositioner positioner)
@@ -31,6 +33,26 @@ namespace Medical.GUI
         public override bool Active
         {
             get { return false; }
+        }
+
+        void SoundConfig_MasterVolumeChanged(object sender, EventArgs e)
+        {
+            if (SoundConfig.MasterVolume > 0.0f)
+            {
+                if (IconName != "StandaloneIcons/VolumeControl")
+                {
+                    IconName = "StandaloneIcons/VolumeControl";
+                    fireIconChanged();
+                }
+            }
+            else
+            {
+                if (IconName != "StandaloneIcons/VolumeControlOff")
+                {
+                    IconName = "StandaloneIcons/VolumeControlOff";
+                    fireIconChanged();
+                }
+            }
         }
     }
 }

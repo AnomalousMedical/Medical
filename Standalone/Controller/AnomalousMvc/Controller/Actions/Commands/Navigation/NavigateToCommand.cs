@@ -59,7 +59,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return "NoIcon";
+                return "StandaloneIcons/NoIcon";
             }
         }
 
