@@ -59,7 +59,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return "StandaloneIcons/NoIcon";
+                return "MvcContextEditor/NavigateToIcon";
             }
         }
 
