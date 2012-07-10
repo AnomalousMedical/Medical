@@ -50,10 +50,13 @@ namespace Medical.GUI
                 taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
                 left += taskButton.Width + 2;
             }
+
+            editorController.ResourceProvider.ResourceCache.CachedResourceAdded += ResourceCache_CachedResourceAdded;
         }
 
         public override void Dispose()
         {
+            editorController.ResourceProvider.ResourceCache.CachedResourceAdded -= ResourceCache_CachedResourceAdded;
             clearFileTabs();
             base.Dispose();
         }
@@ -107,6 +110,11 @@ namespace Medical.GUI
         public override void topLevelResized()
         {
             base.topLevelResized();
+            refreshFileTabs();
+        }
+
+        void ResourceCache_CachedResourceAdded(ResourceCache resourceCache, CachedResource resource)
+        {
             refreshFileTabs();
         }
 

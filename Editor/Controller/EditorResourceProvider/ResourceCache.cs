@@ -9,6 +9,11 @@ namespace Medical
     {
         private Dictionary<String, CachedResource> cachedResources = new Dictionary<string, CachedResource>();
 
+        public delegate void ResourceCacheEvent(ResourceCache resourceCache, CachedResource resource);
+
+        public event ResourceCacheEvent CachedResourceAdded;
+        public event ResourceCacheEvent CachedResourceRemoved;
+
         public ResourceCache()
         {
 
@@ -25,6 +30,10 @@ namespace Medical
             {
                 cachedResources[file] = resource;
             }
+            if (CachedResourceAdded != null)
+            {
+                CachedResourceAdded.Invoke(this, resource);
+            }
         }
 
         public void closeResource(String filename)
@@ -34,6 +43,10 @@ namespace Medical
             if (cachedResources.TryGetValue(filename, out resource) && resource.AllowClose)
             {
                 cachedResources.Remove(filename);
+            }
+            if (CachedResourceRemoved != null)
+            {
+                CachedResourceRemoved.Invoke(this, resource);
             }
         }
 
