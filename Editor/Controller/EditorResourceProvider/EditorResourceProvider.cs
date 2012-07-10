@@ -21,6 +21,7 @@ namespace Medical
         private String parentPath;
         private int parentPathLength;
         private FileSystemWatcher fileWatcher;
+        private FileSystemWatcher directoryWatcher;
 
         public event ResourceProviderFileEvent FileCreated;
         public event ResourceProviderFileEvent FileChanged;
@@ -40,17 +41,28 @@ namespace Medical
             {
                 fileWatcher = new FileSystemWatcher(parentPath);
                 fileWatcher.IncludeSubdirectories = true;
+                fileWatcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite;
                 fileWatcher.Created += new FileSystemEventHandler(fileWatcher_Created);
                 fileWatcher.Deleted += new FileSystemEventHandler(fileWatcher_Deleted);
                 fileWatcher.Changed += new FileSystemEventHandler(fileWatcher_Changed);
                 fileWatcher.Renamed += new RenamedEventHandler(fileWatcher_Renamed);
                 fileWatcher.EnableRaisingEvents = true;
+
+                directoryWatcher = new FileSystemWatcher(parentPath);
+                directoryWatcher.IncludeSubdirectories = true;
+                directoryWatcher.NotifyFilter = NotifyFilters.DirectoryName | NotifyFilters.LastWrite;
+                directoryWatcher.Created += new FileSystemEventHandler(directoryWatcher_Created);
+                directoryWatcher.Deleted += new FileSystemEventHandler(directoryWatcher_Deleted);
+                directoryWatcher.Changed += new FileSystemEventHandler(directoryWatcher_Changed);
+                directoryWatcher.Renamed += new RenamedEventHandler(directoryWatcher_Renamed);
+                directoryWatcher.EnableRaisingEvents = true;
             }
         }
 
         public void Dispose()
         {
             fileWatcher.Dispose();
+            directoryWatcher.Dispose();
         }
 
         public Stream openFile(string filename)
@@ -183,14 +195,10 @@ namespace Medical
 
         void fileWatcher_Renamed(object sender, RenamedEventArgs e)
         {
+            ResourceCache.forceCloseResourceFile(e.OldName);
             if (FileRenamed != null)
             {
-                try
-                {
-                    FileAttributes attr = File.GetAttributes(e.FullPath);
-                    FileRenamed.Invoke(e.Name, e.OldName, (attr & FileAttributes.Directory) == FileAttributes.Directory);
-                }
-                catch (Exception) { }
+                FileRenamed.Invoke(e.Name, e.OldName, false);
             }
         }
 
@@ -198,24 +206,16 @@ namespace Medical
         {
             if (FileChanged != null)
             {
-                try
-                {
-                    FileAttributes attr = File.GetAttributes(e.FullPath);
-                    FileChanged.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
-                }
-                catch (Exception) { }
+                FileChanged.Invoke(e.Name, false);
             }
         }
 
         void fileWatcher_Deleted(object sender, FileSystemEventArgs e)
         {
+            ResourceCache.forceCloseResourceFile(e.FullPath);
             if (FileDeleted != null)
             {
-                try
-                {
-                    FileDeleted.Invoke(e.Name);
-                }
-                catch (Exception) { }
+                FileDeleted.Invoke(e.Name);
             }
         }
 
@@ -223,12 +223,41 @@ namespace Medical
         {
             if (FileCreated != null)
             {
-                try
-                {
-                    FileAttributes attr = File.GetAttributes(e.FullPath);
-                    FileCreated.Invoke(e.Name, (attr & FileAttributes.Directory) == FileAttributes.Directory);
-                }
-                catch (Exception) { }
+                FileCreated.Invoke(e.Name, false);
+            }
+        }
+
+        void directoryWatcher_Renamed(object sender, RenamedEventArgs e)
+        {
+            ResourceCache.forceCloseResourcesInDirectroy(e.OldName);
+            if (FileRenamed != null)
+            {
+                FileRenamed.Invoke(e.Name, e.OldName, true);
+            }
+        }
+
+        void directoryWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (FileChanged != null)
+            {
+                FileChanged.Invoke(e.Name, true);
+            }
+        }
+
+        void directoryWatcher_Deleted(object sender, FileSystemEventArgs e)
+        {
+            ResourceCache.forceCloseResourcesInDirectroy(e.FullPath);
+            if (FileDeleted != null)
+            {
+                FileDeleted.Invoke(e.Name);
+            }
+        }
+
+        void directoryWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            if (FileCreated != null)
+            {
+                FileCreated.Invoke(e.Name, true);
             }
         }
     }
