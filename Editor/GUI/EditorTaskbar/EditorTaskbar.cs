@@ -99,8 +99,8 @@ namespace Medical.GUI
 
         public override void topLevelResized()
         {
-            refreshFileTabs();
             base.topLevelResized();
+            refreshFileTabs();
         }
 
         private void refreshFileTabs()
