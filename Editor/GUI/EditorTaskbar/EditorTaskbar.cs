@@ -14,6 +14,7 @@ namespace Medical.GUI
         private EditorController editorController;
         private String currentFile;
         private Button fileListButton;
+        private bool allowFileRefresh = true;
 
         public EditorTaskbar(EditorTaskbarView view, MyGUIViewHost viewHost, EditorController editorController)
             :base("Medical.GUI.EditorTaskbar.EditorTaskbar.layout", viewHost)
@@ -55,6 +56,12 @@ namespace Medical.GUI
         {
             clearFileTabs();
             base.Dispose();
+        }
+
+        public override void closing()
+        {
+            base.closing();
+            allowFileRefresh = false;
         }
 
         void taskButton_EventToolTip(Widget source, EventArgs e)
@@ -105,23 +112,26 @@ namespace Medical.GUI
 
         private void refreshFileTabs()
         {
-            clearFileTabs();
-            int left = 0;
-            foreach (String file in editorController.OpenFiles)
+            if (allowFileRefresh)
             {
-                EditorTaskbarFileButton fileButton = new EditorTaskbarFileButton(widget, file, left);
-                fileButton.CurrentFile = currentFile == file;
-                fileButton.ChangeFile += new Action<EditorTaskbarFileButton>(fileButton_ChangeFile);
-                fileButton.Closed += new Action<EditorTaskbarFileButton>(fileButton_Closed);
-                left += fileButton.Width;
-                if (left > fileListButton.Left)
+                clearFileTabs();
+                int left = 0;
+                foreach (String file in editorController.OpenFiles)
                 {
-                    fileButton.Dispose();
-                    break;
-                }
-                else
-                {
-                    fileButtons.Add(fileButton);
+                    EditorTaskbarFileButton fileButton = new EditorTaskbarFileButton(widget, file, left);
+                    fileButton.CurrentFile = currentFile == file;
+                    fileButton.ChangeFile += new Action<EditorTaskbarFileButton>(fileButton_ChangeFile);
+                    fileButton.Closed += new Action<EditorTaskbarFileButton>(fileButton_Closed);
+                    left += fileButton.Width;
+                    if (left > fileListButton.Left)
+                    {
+                        fileButton.Dispose();
+                        break;
+                    }
+                    else
+                    {
+                        fileButtons.Add(fileButton);
+                    }
                 }
             }
         }
