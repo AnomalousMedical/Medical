@@ -52,11 +52,15 @@ namespace Medical.GUI
             }
 
             editorController.ResourceProvider.ResourceCache.CachedResourceAdded += ResourceCache_CachedResourceAdded;
+            editorController.ResourceProvider.FileRenamed += ResourceProvider_FileRenamed;
+            editorController.ResourceProvider.FileDeleted += ResourceProvider_FileDeleted;
         }
 
         public override void Dispose()
         {
             editorController.ResourceProvider.ResourceCache.CachedResourceAdded -= ResourceCache_CachedResourceAdded;
+            editorController.ResourceProvider.FileRenamed -= ResourceProvider_FileRenamed;
+            editorController.ResourceProvider.FileDeleted -= ResourceProvider_FileDeleted;
             clearFileTabs();
             base.Dispose();
         }
@@ -111,6 +115,30 @@ namespace Medical.GUI
         {
             base.topLevelResized();
             refreshFileTabs();
+        }
+
+        void ResourceProvider_FileRenamed(string path, string oldPath, bool isDirectory)
+        {
+            if (currentFile == System.IO.Path.GetFileName(oldPath))
+            {
+                ViewHost.Context.runAction(closeAction, ViewHost);
+            }
+            else
+            {
+                refreshFileTabs();
+            }
+        }
+
+        void ResourceProvider_FileDeleted(string path)
+        {
+            if (currentFile == System.IO.Path.GetFileName(path))
+            {
+                ViewHost.Context.runAction(closeAction, ViewHost);
+            }
+            else
+            {
+                refreshFileTabs();
+            }
         }
 
         void ResourceCache_CachedResourceAdded(ResourceCache resourceCache, CachedResource resource)
