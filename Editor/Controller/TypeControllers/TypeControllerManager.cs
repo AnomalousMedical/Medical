@@ -14,6 +14,7 @@ namespace Medical
         //Editor contexts
         private MvcEditorContext mvcEditorContext;
         private MovementSequenceEditorContext movementSequenceEditorContext;
+        private PluginEditorContext pluginEditorContext;
 
 
         private PropEditController propEditController;
@@ -50,7 +51,25 @@ namespace Medical
                 };
             editorController.addTypeController(mvcTypeController);
             
-            editorController.addTypeController(new PluginTypeController(editorController));
+            //Plugin type controller
+            PluginTypeController pluginTypeController = new PluginTypeController(editorController);
+            pluginTypeController.ItemOpened += (file, ddPlugin) =>
+                {
+                    pluginEditorContext = new PluginEditorContext(ddPlugin, file, pluginTypeController);
+                    pluginEditorContext.Focus += obj =>
+                        {
+                            pluginEditorContext = obj;
+                        };
+                    pluginEditorContext.Blur += obj =>
+                        {
+                            if (pluginEditorContext == obj)
+                            {
+                                pluginEditorContext = null;
+                            }
+                        };
+                    editorController.runEditorContext(pluginEditorContext.MvcContext);
+                };
+            editorController.addTypeController(pluginTypeController);
 
             //Movement Sequence type controller
             MovementSequenceTypeController movementSequenceTypeController = new MovementSequenceTypeController(editorController);
@@ -113,6 +132,10 @@ namespace Medical
             if (movementSequenceEditorContext != null)
             {
                 movementSequenceEditorContext.close();
+            }
+            if (pluginEditorContext != null)
+            {
+                pluginEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)

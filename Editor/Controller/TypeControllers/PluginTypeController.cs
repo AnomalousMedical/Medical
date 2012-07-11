@@ -10,23 +10,17 @@ namespace Medical
 {
     class PluginTypeController : SaveableTypeController<DDAtlasPlugin>
     {
-        private PluginEditorContext editorContext;
         private const String Icon = "EditorFileIcon/.ddp";
 
         public PluginTypeController(EditorController editorController)
             :base(".ddp", editorController)
         {
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            
         }
 
         public override void openFile(string file)
         {
-            DDAtlasPlugin plugin = (DDAtlasPlugin)loadObject(file);
-
-            editorContext = new PluginEditorContext(plugin, file, this);
-            editorContext.Focus += new Action<PluginEditorContext>(editorContext_Focus);
-            editorContext.Blur += new Action<PluginEditorContext>(editorContext_Blur);
-            EditorController.runEditorContext(editorContext.MvcContext);
+            DDAtlasPlugin ddPlugin = (DDAtlasPlugin)loadObject(file);
         }
 
         public void saveFile(DDAtlasPlugin plugin, string file)
@@ -66,33 +60,6 @@ namespace Medical
             creatingNewFile(filePath);
             saveObject(filePath, newPlugin);
             openFile(filePath);
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            close();
-        }
-
-        private void close()
-        {
-            if (editorContext != null)
-            {
-                editorContext.close();
-            }
-            closeCurrentCachedResource();
-        }
-
-        void editorContext_Focus(PluginEditorContext obj)
-        {
-            editorContext = obj;
-        }
-
-        void editorContext_Blur(PluginEditorContext obj)
-        {
-            if (editorContext == obj)
-            {
-                editorContext = null;
-            }
         }
     }
 }
