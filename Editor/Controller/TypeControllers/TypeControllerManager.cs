@@ -15,6 +15,7 @@ namespace Medical
         private MvcEditorContext mvcEditorContext;
         private MovementSequenceEditorContext movementSequenceEditorContext;
         private PluginEditorContext pluginEditorContext;
+        private PresentationEditorContext presentationEditorContext;
 
 
         private PropEditController propEditController;
@@ -120,7 +121,26 @@ namespace Medical
                     }
                 }
             };
-            editorController.addTypeController(new PresentationTypeController(editorController, standaloneController));
+
+            //Presentation type controller
+            PresentationTypeController presentationTypeController = new PresentationTypeController(editorController, standaloneController);
+            presentationTypeController.ItemOpened += (file, presentation) =>
+            {
+                presentationEditorContext = new PresentationEditorContext(presentation, file, presentationTypeController);
+                presentationEditorContext.Focused += obj =>
+                    {
+                        presentationEditorContext = obj;
+                    };
+                presentationEditorContext.Blured += obj =>
+                    {
+                        if (presentationEditorContext == obj)
+                        {
+                            presentationEditorContext = null;
+                        }
+                    };
+                editorController.runEditorContext(presentationEditorContext.MvcContext);
+            };
+            editorController.addTypeController(presentationTypeController);
         }
 
         void editorController_ProjectChanged(EditorController editorController)
@@ -136,6 +156,10 @@ namespace Medical
             if (pluginEditorContext != null)
             {
                 pluginEditorContext.close();
+            }
+            if (presentationEditorContext != null)
+            {
+                presentationEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)

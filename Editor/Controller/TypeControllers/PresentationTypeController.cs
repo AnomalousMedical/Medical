@@ -12,14 +12,12 @@ namespace Medical
 {
     class PresentationTypeController : SaveableTypeController<PresentationIndex>
     {
-        private PresentationEditorContext editorContext;
         private StandaloneController standaloneController;
         private const String Icon = "EditorFileIcon/.amp";
 
         public PresentationTypeController(EditorController editorController, StandaloneController standaloneController)
             :base(".amp", editorController)
         {
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             this.standaloneController = standaloneController;
         }
 
@@ -35,11 +33,6 @@ namespace Medical
         public override void openFile(string file)
         {
             PresentationIndex presentation = loadObject(file);
-
-            editorContext = new PresentationEditorContext(presentation, file, this);
-            editorContext.Focused += new Action<PresentationEditorContext>(editorContext_Focus);
-            editorContext.Blured += new Action<PresentationEditorContext>(editorContext_Blur);
-            EditorController.runEditorContext(editorContext.MvcContext);
         }
 
         public void saveFile(PresentationIndex presentation, string file)
@@ -81,33 +74,6 @@ namespace Medical
             creatingNewFile(filePath);
             saveObject(filePath, newPresentation);
             openFile(filePath);
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            close();
-        }
-
-        private void close()
-        {
-            if (editorContext != null)
-            {
-                editorContext.close();
-            }
-            closeCurrentCachedResource();
-        }
-
-        void editorContext_Focus(PresentationEditorContext obj)
-        {
-            editorContext = obj;
-        }
-
-        void editorContext_Blur(PresentationEditorContext obj)
-        {
-            if (editorContext == obj)
-            {
-                editorContext = null;
-            }
         }
     }
 }
