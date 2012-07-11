@@ -15,6 +15,8 @@ namespace Medical
     public abstract class SaveableTypeController<T> : EditorTypeController
         where T : Saveable
     {
+        public event Action<String, T> ItemOpened;
+
         protected SaveableCachedResource<T> currentCachedResource;
 
         public SaveableTypeController(String extension, EditorController editorController)
@@ -42,6 +44,10 @@ namespace Medical
                 }
             }
             changeCachedResource(cachedResource);
+            if (ItemOpened != null)
+            {
+                ItemOpened.Invoke(filename, cachedResource.Saveable);
+            }
             return cachedResource.Saveable;
         }
 

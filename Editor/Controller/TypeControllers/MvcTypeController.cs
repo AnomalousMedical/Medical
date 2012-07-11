@@ -12,26 +12,18 @@ namespace Medical
 {
     class MvcTypeController : SaveableTypeController<AnomalousMvcContext>
     {
-        private MvcEditorContext editorContext;
         public const String Icon = "EditorFileIcon/.mvc";
-        private EditorUICallback uiCallback;
 
-        public MvcTypeController(EditorController editorController, EditorUICallback uiCallback)
+        public MvcTypeController(EditorController editorController)
             :base(".mvc", editorController)
         {
-            this.uiCallback = uiCallback;
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            
         }
 
         public override void openFile(string file)
         {
-            AnomalousMvcContext context = (AnomalousMvcContext)loadObject(file);
-            uiCallback.CurrentEditingMvcContext = context;
-
-            editorContext = new MvcEditorContext(context, file, this);
-            editorContext.Focused += new Action<MvcEditorContext>(editorContext_Focused);
-            editorContext.Blured += new Action<MvcEditorContext>(editorContext_Blured);
-            EditorController.runEditorContext(editorContext.MvcContext);
+            //This can be removed and moved into the superclass when everything is converted.
+            loadObject(file);
         }
 
         public void saveFile(AnomalousMvcContext context, string file)
@@ -73,33 +65,6 @@ namespace Medical
             creatingNewFile(filePath);
             saveObject(filePath, mvcContext);
             openFile(filePath);
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            close();
-        }
-
-        private void close()
-        {
-            if (editorContext != null)
-            {
-                editorContext.close();
-            }
-            closeCurrentCachedResource();
-        }
-
-        void editorContext_Focused(MvcEditorContext obj)
-        {
-            editorContext = obj;
-        }
-
-        void editorContext_Blured(MvcEditorContext obj)
-        {
-            if (editorContext == obj)
-            {
-                editorContext = null;
-            }
         }
     }
 }

@@ -110,21 +110,6 @@ namespace Medical
                 {
                     projectExplorer.Visible = true;
                 }
-
-                //Try to open a default mvc context
-                String mvcFile = "MvcContext.mvc";
-                if (editorController.ResourceProvider.exists(mvcFile))
-                {
-                    editorController.openFile(mvcFile);
-                }
-                else
-                {
-                    String[] files = editorController.ResourceProvider.listFiles("*.mvc", "", true);
-                    if (files.Length > 0)
-                    {
-                        editorController.openFile(files[0]);
-                    }
-                }
             }
         }
 

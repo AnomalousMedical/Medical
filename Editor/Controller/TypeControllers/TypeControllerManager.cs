@@ -11,19 +11,43 @@ namespace Medical
 {
     class TypeControllerManager
     {
+        //Editor contexts
+        private MvcEditorContext mvcEditorContext;
+
+
         private PropEditController propEditController;
 
         public TypeControllerManager(StandaloneController standaloneController, EditorPlugin plugin)
         {
             propEditController = plugin.PropEditController;
             EditorController editorController = plugin.EditorController;
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             GUIManager guiManager = standaloneController.GUIManager;
 
             RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager, plugin.UICallback);
             editorController.addTypeController(rmlTypeController);
             editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
-            MvcTypeController mvcTypeController = new MvcTypeController(editorController, plugin.UICallback);
+
+            MvcTypeController mvcTypeController = new MvcTypeController(editorController);
+            mvcTypeController.ItemOpened += (file, editingMvcContex) =>
+                {
+                    mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController);
+                    plugin.UICallback.CurrentEditingMvcContext = editingMvcContex;
+                    mvcEditorContext.Focused += (obj) =>
+                        {
+                            mvcEditorContext = obj;
+                        };
+                    mvcEditorContext.Blured += (obj) =>
+                        {
+                            if (mvcEditorContext == obj)
+                            {
+                                mvcEditorContext = null;
+                            }
+                        };
+                    editorController.runEditorContext(mvcEditorContext.MvcContext);
+                };
             editorController.addTypeController(mvcTypeController);
+            
             editorController.addTypeController(new PluginTypeController(editorController));
             editorController.addTypeController(new MovementSequenceTypeController(editorController));
             editorController.addTypeController(new TRmlTypeController(editorController, guiManager, rmlTypeController));
@@ -56,6 +80,32 @@ namespace Medical
                 }
             };
             editorController.addTypeController(new PresentationTypeController(editorController, standaloneController));
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            if (mvcEditorContext != null)
+            {
+                mvcEditorContext.close();
+            }
+
+            if (editorController.ResourceProvider != null)
+            {
+                //Try to open a default mvc context
+                String mvcFile = "MvcContext.mvc";
+                if (editorController.ResourceProvider.exists(mvcFile))
+                {
+                    editorController.openFile(mvcFile);
+                }
+                else
+                {
+                    String[] files = editorController.ResourceProvider.listFiles("*.mvc", "", true);
+                    if (files.Length > 0)
+                    {
+                        editorController.openFile(files[0]);
+                    }
+                }
+            }
         }
 
         void timelineTypeController_TimelineChanged(TimelineTypeController typeController, Timeline timeline)
