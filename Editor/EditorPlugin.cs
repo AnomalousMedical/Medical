@@ -97,6 +97,7 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
             standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory(editorUICallback));
             standaloneController.ViewHostFactory.addFactory(new MovementSequenceEditorFactory(standaloneController.MovementSequenceController, editorController, standaloneController.Clipboard));
+            standaloneController.ViewHostFactory.addFactory(new SlideIndexComponentFactory());
 
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }

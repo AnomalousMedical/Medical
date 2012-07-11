@@ -9,12 +9,15 @@ namespace Medical
 {
     public abstract class EditorTypeController
     {
-        public EditorTypeController(String extension)
+        public EditorTypeController(String extension, EditorController editorController)
         {
             this.Extension = extension;
+            this.EditorController = editorController;
         }
 
         public String Extension { get; private set; }
+
+        public EditorController EditorController { get; private set; }
 
         public abstract void openFile(String file);
 

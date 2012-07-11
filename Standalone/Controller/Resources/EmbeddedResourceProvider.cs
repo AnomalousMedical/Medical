@@ -113,6 +113,11 @@ namespace Medical
             return convertToDirectoryStyleFileName(baseResourceString + filename);
         }
 
+        public void createDirectory(string path, string directoryName)
+        {
+            throw new NotImplementedException("Cannot create directories in the EmbeddedResourceProvider");
+        }
+
         public string BackingLocation
         {
             get

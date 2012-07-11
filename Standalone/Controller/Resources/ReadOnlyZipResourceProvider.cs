@@ -123,6 +123,11 @@ namespace Medical
             return Path.Combine(resourceLocation, filename);
         }
 
+        public void createDirectory(string path, string directoryName)
+        {
+            throw new NotImplementedException("Cannot create directories in the ReadOnlyZipResourceProvider");
+        }
+
         public String BackingLocation
         {
             get

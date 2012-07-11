@@ -10,14 +10,12 @@ namespace Medical
 {
     class PluginTypeController : SaveableTypeController<DDAtlasPlugin>
     {
-        private EditorController editorController;
         private PluginEditorContext editorContext;
         private const String Icon = "EditorFileIcon/.ddp";
 
         public PluginTypeController(EditorController editorController)
             :base(".ddp", editorController)
         {
-            this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
 
@@ -28,13 +26,13 @@ namespace Medical
             editorContext = new PluginEditorContext(plugin, file, this);
             editorContext.Focus += new Action<PluginEditorContext>(editorContext_Focus);
             editorContext.Blur += new Action<PluginEditorContext>(editorContext_Blur);
-            editorController.runEditorContext(editorContext.MvcContext);
+            EditorController.runEditorContext(editorContext.MvcContext);
         }
 
         public void saveFile(DDAtlasPlugin plugin, string file)
         {
             saveObject(file, plugin);
-            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
+            EditorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -44,7 +42,7 @@ namespace Medical
                 contextMenu.add(new ContextMenuItem("Create Plugin Definition", path, delegate(ContextMenuItem item)
                 {
                     String filePath = Path.Combine(item.UserObject.ToString(), "Plugin.ddp");
-                    if (editorController.ResourceProvider.exists(filePath))
+                    if (EditorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
                         {

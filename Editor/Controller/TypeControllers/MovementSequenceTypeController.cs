@@ -12,14 +12,12 @@ namespace Medical
 {
     class MovementSequenceTypeController : SaveableTypeController<MovementSequence>
     {
-        private EditorController editorController;
         private MovementSequenceEditorContext editorContext;
         private const String Icon = "MovementSequenceEditorIcon";
 
         public MovementSequenceTypeController(EditorController editorController)
             :base(".seq", editorController)
         {
-            this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
 
@@ -32,7 +30,7 @@ namespace Medical
                 editorContext = new MovementSequenceEditorContext(movementSequence, file, this);
                 editorContext.Focus += new Action<MovementSequenceEditorContext>(editorContext_Focus);
                 editorContext.Blur += new Action<MovementSequenceEditorContext>(editorContext_Blur);
-                editorController.runEditorContext(editorContext.MvcContext);
+                EditorController.runEditorContext(editorContext.MvcContext);
             }
             catch (Exception ex)
             {
@@ -43,7 +41,7 @@ namespace Medical
         public void saveFile(MovementSequence movementSequence, String file)
         {
             saveObject(file, movementSequence);
-            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
+            EditorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -54,7 +52,7 @@ namespace Medical
                 {
                     String filePath = Path.Combine(path, result);
                     filePath = Path.ChangeExtension(filePath, ".seq");
-                    if (editorController.ResourceProvider.exists(filePath))
+                    if (EditorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
                         {

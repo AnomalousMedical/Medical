@@ -21,14 +21,12 @@ namespace Medical
 
         public event TimelineTypeEvent TimelineChanged;
 
-        private EditorController editorController;
         private TimelineEditorContext timelineEditorContext;
         private PropEditController propEditController;
 
         public TimelineTypeController(EditorController editorController, PropEditController propEditController)
             :base(".tl", editorController)
         {
-            this.editorController = editorController;
             this.propEditController = propEditController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
@@ -44,7 +42,7 @@ namespace Medical
             timelineEditorContext.Focus += new Action<TimelineEditorContext>(timelineEditorContext_Focus);
             timelineEditorContext.Blur += new Action<TimelineEditorContext>(timelineEditorContext_Blur);
 
-            editorController.runEditorContext(timelineEditorContext.MvcContext);
+            EditorController.runEditorContext(timelineEditorContext.MvcContext);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -55,7 +53,7 @@ namespace Medical
                 {
                     String filePath = Path.Combine(path, result);
                     filePath = Path.ChangeExtension(filePath, ".tl");
-                    if (editorController.ResourceProvider.exists(filePath))
+                    if (EditorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
                         {
@@ -87,7 +85,7 @@ namespace Medical
             try
             {
                 saveObject(filename, timeline);
-                editorController.NotificationManager.showNotification(String.Format("{0} saved.", filename), Icon, 2);
+                EditorController.NotificationManager.showNotification(String.Format("{0} saved.", filename), Icon, 2);
             }
             catch (Exception ex)
             {

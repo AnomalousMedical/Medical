@@ -55,6 +55,7 @@ namespace Medical
                     }
                 }
             };
+            editorController.addTypeController(new PresentationTypeController(editorController, standaloneController));
         }
 
         void timelineTypeController_TimelineChanged(TimelineTypeController typeController, Timeline timeline)

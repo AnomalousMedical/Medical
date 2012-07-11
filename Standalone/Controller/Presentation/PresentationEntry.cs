@@ -3,18 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.Controller.AnomalousMvc;
+using Engine.Saving;
 
 namespace Medical.Presentation
 {
-    public abstract class PresentationEntry
+    public abstract class PresentationEntry : Saveable
     {
-        public PresentationEntry(String name)
+        public PresentationEntry()
         {
-            this.Name = name;
+            
         }
 
         public abstract void addToContext(AnomalousMvcContext mvcContex, NavigationModel navModel);
 
-        public String Name { get; set; }
+        public String UniqueName { get; internal set; }
+
+        public virtual void getInfo(SaveInfo info)
+        {
+            info.AddValue("UniqueName", UniqueName);
+        }
+
+        public PresentationEntry(LoadInfo info)
+        {
+            UniqueName = info.GetString("UniqueName");
+        }
     }
 }

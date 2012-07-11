@@ -12,7 +12,6 @@ namespace Medical
 {
     class MvcTypeController : SaveableTypeController<AnomalousMvcContext>
     {
-        private EditorController editorController;
         private MvcEditorContext editorContext;
         public const String Icon = "EditorFileIcon/.mvc";
         private EditorUICallback uiCallback;
@@ -21,7 +20,6 @@ namespace Medical
             :base(".mvc", editorController)
         {
             this.uiCallback = uiCallback;
-            this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
         }
 
@@ -33,13 +31,13 @@ namespace Medical
             editorContext = new MvcEditorContext(context, file, this);
             editorContext.Focused += new Action<MvcEditorContext>(editorContext_Focused);
             editorContext.Blured += new Action<MvcEditorContext>(editorContext_Blured);
-            editorController.runEditorContext(editorContext.MvcContext);
+            EditorController.runEditorContext(editorContext.MvcContext);
         }
 
         public void saveFile(AnomalousMvcContext context, string file)
         {
             saveObject(file, context);
-            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
+            EditorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
         
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -50,7 +48,7 @@ namespace Medical
                 {
                     String filePath = Path.Combine(path, result);
                     filePath = Path.ChangeExtension(filePath, ".mvc");
-                    if (editorController.ResourceProvider.exists(filePath))
+                    if (EditorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
                         {

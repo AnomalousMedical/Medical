@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.Controller.AnomalousMvc;
+using Engine.Saving;
+using Engine;
 
 namespace Medical.Presentation
 {
-    class PresentationIndex
+    public class PresentationIndex : Saveable
     {
         private List<PresentationEntry> entries = new List<PresentationEntry>();
+        private ulong uniqueNameIndex = 0;
 
         public event Action<PresentationEntry> EntryAdded;
         public event Action<PresentationEntry> EntryRemoved;
 
+        public PresentationIndex()
+        {
+
+        }
+
         public void addEntry(PresentationEntry entry)
         {
+            entry.UniqueName = "Entry" + uniqueNameIndex++;
+
             entries.Add(entry);
             if (EntryAdded != null)
             {
@@ -39,7 +49,7 @@ namespace Medical.Presentation
                 NavigationModel navModel = new NavigationModel(NavigationModel.DefaultName);
                 mvcContex.Controllers.add(new MvcController("__PresentationReserved_Common",
                     new RunCommandsAction("Startup",
-                        new ShowViewCommand(entries[0].Name),
+                        new ShowViewCommand(entries[0].UniqueName),
                         new HideMainInterfaceCommand(),
                         new SaveCameraPositionCommand(),
                         new SaveMedicalStateCommand(),
@@ -59,8 +69,31 @@ namespace Medical.Presentation
                 {
                     entry.addToContext(mvcContex, navModel);
                 }
+                mvcContex.addModel(NavigationModel.DefaultName, navModel);
+                mvcContex.StartupAction = "__PresentationReserved_Common/Startup";
+                mvcContex.ShutdownAction = "__PresentationReserved_Common/Shutdown";
             }
             return mvcContex;
+        }
+
+        public IEnumerable<PresentationEntry> Entries
+        {
+            get
+            {
+                return entries;
+            }
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.AddValue("UniqueNameIndex", uniqueNameIndex);
+            info.ExtractList<PresentationEntry>("Entry", entries);
+        }
+
+        protected PresentationIndex(LoadInfo info)
+        {
+            uniqueNameIndex = info.GetUInt64("UniqueNameIndex");
+            info.RebuildList<PresentationEntry>("Entry", entries);
         }
     }
 }

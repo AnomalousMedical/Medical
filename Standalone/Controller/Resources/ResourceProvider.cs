@@ -28,6 +28,8 @@ namespace Medical
 
         String getFullFilePath(String filename);
 
+        void createDirectory(string path, string directoryName);
+
         String BackingLocation { get; }
     }
 }

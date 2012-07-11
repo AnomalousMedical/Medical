@@ -15,31 +15,30 @@ namespace Medical
     public abstract class SaveableTypeController<T> : EditorTypeController
         where T : Saveable
     {
-        private EditorController editorController;
         protected SaveableCachedResource<T> currentCachedResource;
 
         public SaveableTypeController(String extension, EditorController editorController)
-            :base(extension)
+            :base(extension, editorController)
         {
-            this.editorController = editorController;
+            
         }
 
         public override void closeFile(string file)
         {
-            editorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
+            EditorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
         }
 
         public T loadObject(String filename)
         {
             //Check the cahce
-            SaveableCachedResource<T> cachedResource = editorController.ResourceProvider.ResourceCache[filename] as SaveableCachedResource<T>;
+            SaveableCachedResource<T> cachedResource = EditorController.ResourceProvider.ResourceCache[filename] as SaveableCachedResource<T>;
             if (cachedResource == null)
             {
                 //Missed open real file
-                using (XmlTextReader xmlReader = new XmlTextReader(editorController.ResourceProvider.openFile(filename)))
+                using (XmlTextReader xmlReader = new XmlTextReader(EditorController.ResourceProvider.openFile(filename)))
                 {
                     cachedResource = new SaveableTypeControllerCachedResource<T>(filename, (T)EditorController.XmlSaver.restoreObject(xmlReader), this);
-                    editorController.ResourceProvider.ResourceCache.add(cachedResource);
+                    EditorController.ResourceProvider.ResourceCache.add(cachedResource);
                 }
             }
             changeCachedResource(cachedResource);
@@ -48,12 +47,12 @@ namespace Medical
 
         public void saveObject(String filename, T saveable)
         {
-            using (XmlTextWriter writer = new XmlTextWriter(editorController.ResourceProvider.openWriteStream(filename), Encoding.Default))
+            using (XmlTextWriter writer = new XmlTextWriter(EditorController.ResourceProvider.openWriteStream(filename), Encoding.Default))
             {
                 writer.Formatting = Formatting.Indented;
                 EditorController.XmlSaver.saveObject(saveable, writer);
             }
-            editorController.ResourceProvider.ResourceCache.closeResource(filename);
+            EditorController.ResourceProvider.ResourceCache.closeResource(filename);
         }
 
         public T CurrentObject
@@ -90,10 +89,10 @@ namespace Medical
 
         protected void closeCurrentCachedResource()
         {
-            if(currentCachedResource != null && editorController.ResourceProvider != null)
+            if(currentCachedResource != null && EditorController.ResourceProvider != null)
             {
                 currentCachedResource.AllowClose = true;
-                editorController.ResourceProvider.ResourceCache.closeResource(currentCachedResource.File);
+                EditorController.ResourceProvider.ResourceCache.closeResource(currentCachedResource.File);
                 changeCachedResource(null);
             }
         }

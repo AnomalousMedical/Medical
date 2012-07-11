@@ -11,7 +11,6 @@ namespace Medical
 {
     class TRmlTypeController : TextTypeController
     {
-        private EditorController editorController;
         private GUIManager guiManager;
         public const String Icon = "EditorFileIcon/.trml";
         private TRmlEditorContext trmlContext;
@@ -20,7 +19,6 @@ namespace Medical
         public TRmlTypeController(EditorController editorController, GUIManager guiManager, RmlTypeController rmlTypeController)
             : base(".trml", editorController)
         {
-            this.editorController = editorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             this.guiManager = guiManager;
             this.rmlTypeController = rmlTypeController;
@@ -28,7 +26,7 @@ namespace Medical
 
         public override void openFile(string file)
         {
-            if (!editorController.ResourceProvider.exists(file))
+            if (!EditorController.ResourceProvider.exists(file))
             {
                 createNewRcssFile(file);
             }
@@ -36,14 +34,14 @@ namespace Medical
             trmlContext = new TRmlEditorContext(file, rmlTypeController.LastRmlFile, this);
             trmlContext.Focus += new Action<TRmlEditorContext>(trmlContext_Focus);
             trmlContext.Blur += new Action<TRmlEditorContext>(rcssContext_Blur);
-            editorController.runEditorContext(trmlContext.MvcContext);
+            EditorController.runEditorContext(trmlContext.MvcContext);
         }
 
         public void saveFile(String rcss, String file)
         {
             saveText(file, rcss);
             Factory.ClearStyleSheetCache();
-            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
+            EditorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -54,7 +52,7 @@ namespace Medical
                 {
                     String filePath = Path.Combine(path, result);
                     filePath = Path.ChangeExtension(filePath, ".trml");
-                    if (editorController.ResourceProvider.exists(filePath))
+                    if (EditorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
                         {

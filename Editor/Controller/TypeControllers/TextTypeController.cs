@@ -8,31 +8,30 @@ namespace Medical
 {
     abstract class TextTypeController : EditorTypeController
     {
-        private EditorController editorController;
         protected TextCachedResource currentCachedResource;
 
         public TextTypeController(String extension, EditorController editorController)
-            :base(extension)
+            :base(extension, editorController)
         {
-            this.editorController = editorController;
+            
         }
 
         public override void closeFile(string file)
         {
-            editorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
+            EditorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
         }
 
         public String loadText(String filename)
         {
             //Check the cahce
-            TextCachedResource cachedResource = editorController.ResourceProvider.ResourceCache[filename] as TextCachedResource;
+            TextCachedResource cachedResource = EditorController.ResourceProvider.ResourceCache[filename] as TextCachedResource;
             if (cachedResource == null)
             {
                 //Missed open real file
-                using (StreamReader stringReader = new StreamReader(editorController.ResourceProvider.openFile(filename)))
+                using (StreamReader stringReader = new StreamReader(EditorController.ResourceProvider.openFile(filename)))
                 {
                     cachedResource = new TextTypeControllerCachedResource(filename, stringReader.ReadToEnd(), this);
-                    editorController.ResourceProvider.ResourceCache.add(cachedResource);
+                    EditorController.ResourceProvider.ResourceCache.add(cachedResource);
                 }
             }
             changeCachedResource(cachedResource);
@@ -44,19 +43,19 @@ namespace Medical
             updateCachedText(file, text);
 
             //Save the file
-            using (StreamWriter streamWriter = new StreamWriter(editorController.ResourceProvider.openWriteStream(file)))
+            using (StreamWriter streamWriter = new StreamWriter(EditorController.ResourceProvider.openWriteStream(file)))
             {
                 streamWriter.Write(text);
             }
-            editorController.ResourceProvider.ResourceCache.closeResource(file);
+            EditorController.ResourceProvider.ResourceCache.closeResource(file);
         }
 
         public void updateCachedText(String file, String text)
         {
-            if (editorController.ResourceProvider != null)
+            if (EditorController.ResourceProvider != null)
             {
                 //Update the cached string
-                TextCachedResource cachedResource = editorController.ResourceProvider.ResourceCache[file] as TextCachedResource;
+                TextCachedResource cachedResource = EditorController.ResourceProvider.ResourceCache[file] as TextCachedResource;
                 if (cachedResource != null)
                 {
                     cachedResource.CachedString = text;
@@ -74,10 +73,10 @@ namespace Medical
 
         protected void closeCurrentCachedResource()
         {
-            if(currentCachedResource != null && editorController.ResourceProvider != null)
+            if(currentCachedResource != null && EditorController.ResourceProvider != null)
             {
                 currentCachedResource.AllowClose = true;
-                editorController.ResourceProvider.ResourceCache.closeResource(currentCachedResource.File);
+                EditorController.ResourceProvider.ResourceCache.closeResource(currentCachedResource.File);
                 changeCachedResource(null);
             }
         }

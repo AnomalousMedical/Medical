@@ -14,7 +14,6 @@ namespace Medical
     {
         public event Action<RmlTypeController, String> FileCreated;
 
-        private EditorController editorController;
         private GUIManager guiManager;
         public const String Icon = "EditorFileIcon/.rml";
         private RmlEditorContext editorContext;
@@ -23,7 +22,6 @@ namespace Medical
         public RmlTypeController(EditorController editorController, GUIManager guiManager, EditorUICallback uiCallback)
             :base(".rml", editorController)
         {
-            this.editorController = editorController;
             this.guiManager = guiManager;
             this.uiCallback = uiCallback;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
@@ -31,7 +29,7 @@ namespace Medical
 
         public override void openFile(string file)
         {
-            if (!editorController.ResourceProvider.exists(file))
+            if (!EditorController.ResourceProvider.exists(file))
             {
                 createNewRmlFile(file);
             }
@@ -39,7 +37,7 @@ namespace Medical
             editorContext = new RmlEditorContext(file, this, uiCallback);
             editorContext.Focus += new Action<RmlEditorContext>(editorContext_Focus);
             editorContext.Blur += new Action<RmlEditorContext>(editorContext_Blur);
-            editorController.runEditorContext(editorContext.MvcContext);
+            EditorController.runEditorContext(editorContext.MvcContext);
 
             LastRmlFile = file;
         }
@@ -47,7 +45,7 @@ namespace Medical
         public void saveFile(String rml, String file)
         {
             saveText(file, rml);
-            editorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
+            EditorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
         public String LastRmlFile { get; private set; }
@@ -60,7 +58,7 @@ namespace Medical
                 {
                     String filePath = Path.Combine(path, result);
                     filePath = Path.ChangeExtension(filePath, ".rml");
-                    if (editorController.ResourceProvider.exists(filePath))
+                    if (EditorController.ResourceProvider.exists(filePath))
                     {
                         MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
                         {
