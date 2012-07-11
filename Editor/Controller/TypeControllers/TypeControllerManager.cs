@@ -16,6 +16,7 @@ namespace Medical
         private MovementSequenceEditorContext movementSequenceEditorContext;
         private PluginEditorContext pluginEditorContext;
         private PresentationEditorContext presentationEditorContext;
+        private TimelineEditorContext timelineEditorContext;
 
 
         private PropEditController propEditController;
@@ -93,9 +94,28 @@ namespace Medical
             editorController.addTypeController(movementSequenceTypeController);
 
             editorController.addTypeController(new TRmlTypeController(editorController, guiManager, rmlTypeController));
-            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propEditController);
-            timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
+
+            //Timeline type controller
+            TimelineTypeController timelineTypeController = new TimelineTypeController(editorController);
+            timelineTypeController.ItemOpened += (file, timeline) =>
+                {
+                    propEditController.removeAllOpenProps();
+                    timelineEditorContext = new TimelineEditorContext(timeline, file, timelineTypeController, propEditController);
+                    timelineEditorContext.Focus += obj =>
+                        {
+                            timelineEditorContext = obj;
+                        };
+                    timelineEditorContext.Blur += obj =>
+                        {
+                            if (obj == timelineEditorContext)
+                            {
+                                timelineEditorContext = null;
+                            }
+                        };
+                    editorController.runEditorContext(timelineEditorContext.MvcContext);
+                };
             editorController.addTypeController(timelineTypeController);
+
             rmlTypeController.FileCreated += (rmlCtrl, file) =>
             {
                 AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
@@ -160,6 +180,10 @@ namespace Medical
             if (presentationEditorContext != null)
             {
                 presentationEditorContext.close();
+            } 
+            if (timelineEditorContext != null)
+            {
+                timelineEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)
@@ -179,11 +203,6 @@ namespace Medical
                     }
                 }
             }
-        }
-
-        void timelineTypeController_TimelineChanged(TimelineTypeController typeController, Timeline timeline)
-        {
-            propEditController.removeAllOpenProps();
         }
     }
 }

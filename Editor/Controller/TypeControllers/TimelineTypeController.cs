@@ -21,14 +21,10 @@ namespace Medical
 
         public event TimelineTypeEvent TimelineChanged;
 
-        private TimelineEditorContext timelineEditorContext;
-        private PropEditController propEditController;
-
-        public TimelineTypeController(EditorController editorController, PropEditController propEditController)
+        public TimelineTypeController(EditorController editorController)
             :base(".tl", editorController)
         {
-            this.propEditController = propEditController;
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            
         }
 
         public override void openFile(string path)
@@ -38,11 +34,6 @@ namespace Medical
             {
                 TimelineChanged.Invoke(this, timeline);
             }
-            timelineEditorContext = new TimelineEditorContext(timeline, path, this, propEditController);
-            timelineEditorContext.Focus += new Action<TimelineEditorContext>(timelineEditorContext_Focus);
-            timelineEditorContext.Blur += new Action<TimelineEditorContext>(timelineEditorContext_Blur);
-
-            EditorController.runEditorContext(timelineEditorContext.MvcContext);
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
@@ -91,33 +82,6 @@ namespace Medical
             {
                 MessageBox.show(String.Format("There was an error saving your timeline to\n'{0}'\nPlease make sure that destination is valid.", filename), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                 Log.Error("Could not save timeline. {0}", ex.Message);
-            }
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            closeTimeline();
-        }
-
-        public void closeTimeline()
-        {
-            if (timelineEditorContext != null)
-            {
-                timelineEditorContext.close();
-            }
-            closeCurrentCachedResource();
-        }
-
-        void timelineEditorContext_Focus(TimelineEditorContext obj)
-        {
-            timelineEditorContext = obj;
-        }
-
-        void timelineEditorContext_Blur(TimelineEditorContext obj)
-        {
-            if (obj == timelineEditorContext)
-            {
-                timelineEditorContext = null;
             }
         }
     }
