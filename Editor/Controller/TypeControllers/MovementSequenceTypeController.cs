@@ -12,13 +12,12 @@ namespace Medical
 {
     class MovementSequenceTypeController : SaveableTypeController<MovementSequence>
     {
-        private MovementSequenceEditorContext editorContext;
         private const String Icon = "MovementSequenceEditorIcon";
 
         public MovementSequenceTypeController(EditorController editorController)
             :base(".seq", editorController)
         {
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            
         }
 
         public override void openFile(string file)
@@ -26,11 +25,6 @@ namespace Medical
             try
             {
                 MovementSequence movementSequence = (MovementSequence)loadObject(file);
-
-                editorContext = new MovementSequenceEditorContext(movementSequence, file, this);
-                editorContext.Focus += new Action<MovementSequenceEditorContext>(editorContext_Focus);
-                editorContext.Blur += new Action<MovementSequenceEditorContext>(editorContext_Blur);
-                EditorController.runEditorContext(editorContext.MvcContext);
             }
             catch (Exception ex)
             {
@@ -78,33 +72,6 @@ namespace Medical
             creatingNewFile(filePath);
             saveObject(filePath, movementSequence);
             openFile(filePath);
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            close();
-        }
-
-        private void close()
-        {
-            if (editorContext != null)
-            {
-                editorContext.close();
-            }
-            closeCurrentCachedResource();
-        }
-
-        void editorContext_Focus(MovementSequenceEditorContext obj)
-        {
-            editorContext = obj;
-        }
-
-        void editorContext_Blur(MovementSequenceEditorContext obj)
-        {
-            if (editorContext == obj)
-            {
-                editorContext = null;
-            }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Medical
     {
         //Editor contexts
         private MvcEditorContext mvcEditorContext;
+        private MovementSequenceEditorContext movementSequenceEditorContext;
 
 
         private PropEditController propEditController;
@@ -28,6 +29,7 @@ namespace Medical
             editorController.addTypeController(rmlTypeController);
             editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
 
+            //MVC Type Controller
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
             mvcTypeController.ItemOpened += (file, editingMvcContex) =>
                 {
@@ -49,7 +51,27 @@ namespace Medical
             editorController.addTypeController(mvcTypeController);
             
             editorController.addTypeController(new PluginTypeController(editorController));
-            editorController.addTypeController(new MovementSequenceTypeController(editorController));
+
+            //Movement Sequence type controller
+            MovementSequenceTypeController movementSequenceTypeController = new MovementSequenceTypeController(editorController);
+            movementSequenceTypeController.ItemOpened += (file, movementSequence) =>
+                {
+                    movementSequenceEditorContext = new MovementSequenceEditorContext(movementSequence, file, movementSequenceTypeController);
+                    movementSequenceEditorContext.Focus += obj =>
+                        {
+                            movementSequenceEditorContext = obj;
+                        };
+                    movementSequenceEditorContext.Blur += obj =>
+                        {
+                            if (movementSequenceEditorContext == obj)
+                            {
+                                movementSequenceEditorContext = null;
+                            }
+                        };
+                    editorController.runEditorContext(movementSequenceEditorContext.MvcContext);
+                };
+            editorController.addTypeController(movementSequenceTypeController);
+
             editorController.addTypeController(new TRmlTypeController(editorController, guiManager, rmlTypeController));
             TimelineTypeController timelineTypeController = new TimelineTypeController(editorController, propEditController);
             timelineTypeController.TimelineChanged += new TimelineTypeEvent(timelineTypeController_TimelineChanged);
@@ -87,6 +109,10 @@ namespace Medical
             if (mvcEditorContext != null)
             {
                 mvcEditorContext.close();
+            }
+            if (movementSequenceEditorContext != null)
+            {
+                movementSequenceEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)
