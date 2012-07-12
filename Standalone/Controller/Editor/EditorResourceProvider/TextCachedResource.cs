@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Medical
 {
-    abstract class TextCachedResource : CachedResource
+    public abstract class TextCachedResource : CachedResource
     {
         public TextCachedResource(String file, String cachedString = null)
             :base(file)

@@ -81,16 +81,10 @@
     <Compile Include="Controller\PresentationEditorContext.cs" />
     <Compile Include="Controller\TRmlEditorContext.cs" />
     <Compile Include="Controller\PluginEditorContext.cs" />
-    <Compile Include="Controller\EditorResourceProvider\TextCachedResource.cs" />
     <Compile Include="Controller\MvcEditorContext.cs" />
     <Compile Include="Controller\RcssEditorContext.cs" />
     <Compile Include="Controller\Documents\ProjectDocumentHandler.cs" />
-    <Compile Include="Controller\EditorResourceProvider\CachedResource.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
-    <Compile Include="Controller\EditorController.cs" />
-    <Compile Include="Controller\EditorResourceProvider\EditorResourceProvider.cs" />
-    <Compile Include="Controller\EditorResourceProvider\ResourceCache.cs" />
-    <Compile Include="Controller\EditorTypeController.cs" />
     <Compile Include="Controller\Mvc\EditInterface\EditInterfaceConsumer.cs" />
     <Compile Include="Controller\Mvc\EditInterface\EditInterfaceHandler.cs" />
     <Compile Include="Controller\Mvc\EditMenu\SelectAllAction.cs" />
@@ -101,7 +95,6 @@
     <Compile Include="Controller\Mvc\EditMenu\EditMenuProvider.cs" />
     <Compile Include="Controller\Project\AppProjectTemplate.cs" />
     <Compile Include="Controller\Project\EmptyProjectTemplate.cs" />
-    <Compile Include="Controller\Project\ProjectTemplate.cs" />
     <Compile Include="Controller\PropEditController.cs" />
     <Compile Include="Controller\RmlEditorContext.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
@@ -117,8 +110,6 @@
     <Compile Include="Controller\TypeControllers\RcssTypeController.cs" />
     <Compile Include="Controller\TypeControllers\RmlTypeController.cs" />
     <Compile Include="Controller\TypeControllers\MovementSequenceTypeController.cs" />
-    <Compile Include="Controller\EditorResourceProvider\SaveableObjectStream.cs" />
-    <Compile Include="Controller\EditorResourceProvider\SaveableCachedResource.cs" />
     <Compile Include="Controller\TypeControllers\SaveableTypeController.cs" />
     <Compile Include="Controller\TypeControllers\SaveableTypeControllerCachedResource.cs" />
     <Compile Include="Controller\TypeControllers\TextTypeController.cs" />
@@ -127,8 +118,6 @@
     <Compile Include="Controller\TypeControllerManager.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
-    <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
