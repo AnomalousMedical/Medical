@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\SlideIndex\SlideIndex.cs" />
     <Compile Include="PresentationEditorAtlasPluginEntryPoint.cs" />
     <Compile Include="PresentationEditorPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,10 +72,14 @@
     <EmbeddedResource Include="Resources\PresentationEditorBrandingIcon.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\SlideIndex\SlideIndex.layout" />
     <EmbeddedResource Include="Resources\PresentationEditorImagesets.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\PresentationEditorBrandingIcon.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

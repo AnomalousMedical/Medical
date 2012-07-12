@@ -9,12 +9,19 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Medical.Editor;
 using Medical;
+using PresentationEditor.GUI;
 
 namespace PresentationEditor
 {
     public class PresentationEditorPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
+
+        private EditorController editorController;
+        private TimelineController editorTimelineController;
+
+        //Guis
+        private SlideIndex slideIndex;
 
         public PresentationEditorPlugin()
         {
@@ -23,7 +30,8 @@ namespace PresentationEditor
 
         public void Dispose()
         {
-            
+            slideIndex.Dispose();
+            editorController.Dispose();
         }
 
         public void loadGUIResources()
@@ -34,6 +42,31 @@ namespace PresentationEditor
         public void initialize(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
+
+            editorTimelineController = new TimelineController(standaloneController);
+            editorController = new EditorController(standaloneController, editorTimelineController);
+
+            GUIManager guiManager = standaloneController.GUIManager;
+
+            slideIndex = new SlideIndex(editorController);
+            guiManager.addManagedDialog(slideIndex);
+
+            //Tasks
+            TaskController taskController = standaloneController.TaskController;
+            taskController.addTask(new MDIDialogOpenTask(slideIndex, "PresentationEditor.SlideIndex", "Presentation Editor", "StandaloneIcons/NoIcon", TaskMenuCategories.Editor));
+
+            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+        }
+
+        void editorController_ProjectChanged(EditorController editorController)
+        {
+            if (editorController.ResourceProvider != null)
+            {
+                if (!slideIndex.Visible)
+                {
+                    slideIndex.Visible = true;
+                }
+            }
         }
 
         public void sceneLoaded(SimScene scene)
