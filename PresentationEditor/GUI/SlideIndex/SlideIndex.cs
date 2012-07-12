@@ -40,6 +40,7 @@ namespace PresentationEditor.GUI
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             buttonGrid = new ButtonGrid((ScrollView)window.findWidget("FileTableScroll"), new ButtonGridListLayout());
+            buttonGrid.SelectedValueChanged += new EventHandler(buttonGrid_SelectedValueChanged);
 
             //File Menu
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -203,6 +204,10 @@ namespace PresentationEditor.GUI
         {
             ButtonGridItem item = buttonGrid.addItem("", entry.UniqueName);
             item.UserObject = entry;
+            if (buttonGrid.Count == 1)
+            {
+                buttonGrid.SelectedItem = item;
+            }
         }
 
         private void removeEntryFromButtonGrid(PresentationEntry entry)
@@ -219,6 +224,15 @@ namespace PresentationEditor.GUI
                 lastWidth = window.Width;
                 lastHeight = window.Height;
                 buttonGrid.layout();
+            }
+        }
+
+        void buttonGrid_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (buttonGrid.SelectedItem != null)
+            {
+                PresentationEntry entry = (PresentationEntry)buttonGrid.SelectedItem.UserObject;
+                editorController.openEditor(entry.File);
             }
         }
     }

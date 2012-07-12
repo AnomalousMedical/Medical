@@ -18,6 +18,8 @@ namespace Medical.Presentation
 
         public String UniqueName { get; internal set; }
 
+        public abstract String File { get; }
+
         public virtual void getInfo(SaveInfo info)
         {
             info.AddValue("UniqueName", UniqueName);

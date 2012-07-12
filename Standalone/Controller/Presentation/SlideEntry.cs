@@ -22,7 +22,7 @@ namespace Medical.Presentation
             {
                 resourceProvider.createDirectory("", UniqueName);
             }
-            using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream(String.Format("{0}/{0}.rml", UniqueName))))
+            using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream(File)))
             {
                 streamWriter.Write(defaultRml);
             }
@@ -31,7 +31,7 @@ namespace Medical.Presentation
         public override void addToContext(AnomalousMvcContext mvcContex, NavigationModel navModel)
         {
             RmlView view = new RmlView(UniqueName);
-            view.RmlFile = String.Format("{0}/{0}.rml", UniqueName);
+            view.RmlFile = File;
             view.IsWindow = false;
             view.ViewLocation = ViewLocations.Left;
             view.Buttons.add(new CloseButtonDefinition("Close", "__PresentationReserved_Common/Close"));
@@ -43,6 +43,14 @@ namespace Medical.Presentation
                 new ShowViewCommand(view.Name))));
 
             navModel.addNavigationLink(new NavigationLink(name: UniqueName, action: String.Format("{0}/Show", UniqueName)));
+        }
+
+        public override string File
+        {
+            get
+            {
+                return String.Format("{0}/{0}.rml", UniqueName);
+            }
         }
 
         public override void getInfo(SaveInfo info)

@@ -58,6 +58,14 @@ namespace PresentationEditor
 
             editorController.ProjectChanged += editorController_ProjectChanged;
             editorController.addTypeController(new PresentationTypeController(editorController, standaloneController));
+
+            //Rml Type Controller
+            RmlTypeController rmlTypeController = new RmlTypeController(editorController);
+            rmlTypeController.OpenEditor += file =>
+                {
+
+                };
+            editorController.addTypeController(rmlTypeController);
         }
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
