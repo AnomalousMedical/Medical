@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LectureBuilder", "LectureBu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPlugin", "UnitTestPlugin\UnitTestPlugin.csproj", "{E4043002-4F98-42B0-BA3E-6C34510E16BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationEditor", "PresentationEditor\PresentationEditor.csproj", "{9FEC141B-5493-49C2-B611-058ADF25495B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +275,24 @@ Global
 		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Win32.ActiveCfg = Release|Any CPU
 		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|x86.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.PublicRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.PublicRelease|Win32.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.PublicRelease|x86.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Release|Win32.ActiveCfg = Release|Any CPU
+		{9FEC141B-5493-49C2-B611-058ADF25495B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
