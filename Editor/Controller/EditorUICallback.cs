@@ -17,7 +17,7 @@ using Logging;
 
 namespace Medical
 {
-    public class EditorUICallback : MedicalUICallback
+    public class EditorUICallback : MedicalUICallback, RmlWysiwygBrowserProvider
     {
         private StandaloneController standaloneController;
         private EditorController editorController;

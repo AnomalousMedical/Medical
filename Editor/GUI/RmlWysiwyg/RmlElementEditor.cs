@@ -15,9 +15,9 @@ namespace Medical.GUI
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static RmlElementEditor openTextEditor(EditorUICallback uiCallback, Element element, int left, int top)
+        public static RmlElementEditor openTextEditor(MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, Element element, int left, int top)
         {
-            RmlElementEditor textEditor = new RmlElementEditor(uiCallback, element);
+            RmlElementEditor textEditor = new RmlElementEditor(uiCallback, browserProvider, element);
             textEditor.show(left, top);
             textEditor.Hidden += (source, e) =>
             {
@@ -35,7 +35,7 @@ namespace Medical.GUI
         private ScrollablePropertiesForm propertiesForm;
         private Element element;
 
-        protected RmlElementEditor(EditorUICallback uiCallback, Element element)
+        protected RmlElementEditor(MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, Element element)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
@@ -75,7 +75,7 @@ namespace Medical.GUI
                     case "onclick":
                         editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
-                                return uiCallback.createActionBrowser();
+                                return browserProvider.createActionBrowser();
                             }));
                         break;
                     case "src":
@@ -83,7 +83,7 @@ namespace Medical.GUI
                         {
                             editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
-                                return uiCallback.createFileBrowser("*.png", "Images");
+                                return browserProvider.createFileBrowser("*.png", "Images");
                             }));
                         }
                         else

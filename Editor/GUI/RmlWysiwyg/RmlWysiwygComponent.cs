@@ -23,18 +23,20 @@ namespace Medical.GUI
         private String documentStart = "<body>";
         private String documentEnd = "</body>";
         private bool disposed = false;
-        private EditorUICallback uiCallback;
+        private MedicalUICallback uiCallback;
+        private RmlWysiwygBrowserProvider browserProvider;
         RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
 
         private AnomalousMvcContext context;
 
-        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost, EditorUICallback uiCallback)
+        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
             : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
             this.context = context;
-            this.uiCallback = uiCallback;
+            this.uiCallback = view.UICallback;
+            this.browserProvider = view.BrowserProvider;
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
@@ -398,7 +400,7 @@ namespace Medical.GUI
 
         private void showRmlElementEditor(Element element)
         {
-            RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, element, (int)(element.AbsoluteLeft + element.ClientWidth) + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
+            RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, browserProvider, element, (int)(element.AbsoluteLeft + element.ClientWidth) + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
             editor.Hiding += (src, evt) =>
             {
                 if (editor.ApplyChanges && !disposed)

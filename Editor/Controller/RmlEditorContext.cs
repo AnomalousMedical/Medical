@@ -52,7 +52,7 @@ namespace Medical
                 textEditorComponent = component;
             };
             mvcContext.Views.add(textEditorView);
-            RmlWysiwygView rmlView = new RmlWysiwygView("RmlView");
+            RmlWysiwygView rmlView = new RmlWysiwygView("RmlView", uiCallback, uiCallback);
             rmlView.ViewLocation = ViewLocations.Left;
             rmlView.IsWindow = true;
             rmlView.RmlFile = file;
