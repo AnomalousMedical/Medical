@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Medical;
 
-namespace Medical
+namespace PresentationEditor
 {
-    class EditorConfig
+    class PresentationEditorConfig
     {
-        static EditorConfig()
+        static PresentationEditorConfig()
         {
             
         }
@@ -17,7 +18,7 @@ namespace Medical
         {
             get
             {
-                return MedicalConfig.UserDocRoot + "/Editor Projects";
+                return MedicalConfig.UserDocRoot + "/Presentations";
             }
         }
     }

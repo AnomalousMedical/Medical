@@ -16,7 +16,7 @@ namespace Medical.Presentation
             
         }
 
-        public void createFile(String defaultRml, ResourceProvider resourceProvider)
+        public void createFile(ResourceProvider resourceProvider, String defaultRml = SlideEntry.DefaultRml)
         {
             if (!resourceProvider.exists(UniqueName))
             {
@@ -63,5 +63,16 @@ namespace Medical.Presentation
         {
 
         }
+
+        private const String DefaultRml = @"<rml>
+	<head>
+		<link type=""text/template"" href=""/MasterTemplate.trml"" />
+	</head>
+	<body template=""MasterTemplate"">
+        <h1>Click here to add title</h1>
+        <p style=""white-space: pre-wrap;"">Click here to add text</p>
+    </body>
+</rml>
+";
     }
 }

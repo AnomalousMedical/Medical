@@ -52,8 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PresentationProjectTemplate.cs" />
+    <Compile Include="Controller\PresentationEditorConfig.cs" />
     <Compile Include="Controller\PresentationDocumentHandler.cs" />
     <Compile Include="Controller\RmlSlideEditorContext.cs" />
+    <Compile Include="GUI\NewPresentationDialog\NewPresentationDialog.cs" />
     <Compile Include="GUI\SlideIndex\SlideIndex.cs" />
     <Compile Include="PresentationEditorAtlasPluginEntryPoint.cs" />
     <Compile Include="PresentationEditorPlugin.cs" />
@@ -74,6 +77,7 @@
     <EmbeddedResource Include="Resources\PresentationEditorBrandingIcon.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\NewPresentationDialog\NewPresentationDialog.layout" />
     <EmbeddedResource Include="GUI\SlideIndex\SlideIndex.layout" />
     <EmbeddedResource Include="Resources\PresentationEditorImagesets.xml" />
   </ItemGroup>

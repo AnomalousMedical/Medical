@@ -6,26 +6,21 @@ using MyGUIPlugin;
 using System.IO;
 using Logging;
 using Engine.Editing;
+using Medical;
+using Medical.GUI;
 
-namespace Medical.GUI
+namespace PresentationEditor.GUI
 {
-    class NewProjectDialog : InputBrowserWindow<ProjectTemplate>
+    class NewPresentationDialog : InputWindow
     {
-        public static void ShowDialog(Action<ProjectTemplate, String> resultCallback)
+        public static void ShowDialog(Action<String> resultCallback)
         {
-            Browser browse = new Browser("Project Templates", "Create Project");
-            BrowserNode appNode = new BrowserNode("App", new AppProjectTemplate());
-            browse.addNode("", null, appNode);
-            browse.DefaultSelection = appNode;
-            browse.addNode("", null, new BrowserNode("Empty", new EmptyProjectTemplate()));
-
-            NewProjectDialog projectDialog = new NewProjectDialog();
-            projectDialog.setBrowser(browse);
+            NewPresentationDialog projectDialog = new NewPresentationDialog();
             projectDialog.Closing += (sender, e) =>
             {
                 if (projectDialog.Accepted)
                 {
-                    resultCallback(projectDialog.SelectedValue, projectDialog.FullProjectName);
+                    resultCallback(projectDialog.FullProjectName);
                 }
             };
 
@@ -41,11 +36,11 @@ namespace Medical.GUI
 
         private EditBox projectLocation;
 
-        protected NewProjectDialog()
-            :base("Create Project", "", "Medical.GUI.NewProjectDialog.NewProjectDialog.layout")
+        protected NewPresentationDialog()
+            : base("Enter a name for the presentation", "", "PresentationEditor.GUI.NewPresentationDialog.NewPresentationDialog.layout")
         {
             projectLocation = window.findWidget("ProjectLocation") as EditBox;
-            projectLocation.Caption = EditorConfig.ProjectDirectory;
+            projectLocation.Caption = PresentationEditorConfig.ProjectDirectory;
             if (!Directory.Exists(projectLocation.Caption))
             {
                 try

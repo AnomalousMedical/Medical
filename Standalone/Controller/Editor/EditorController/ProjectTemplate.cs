@@ -9,5 +9,7 @@ namespace Medical
     public interface ProjectTemplate
     {
         void createProject(EditorResourceProvider resourceProvider, String projectName);
+
+        String getDefaultFileName(String projectName);
     }
 }

@@ -56,7 +56,7 @@ namespace Medical
             typeControllers.Add(typeController.Extension, typeController);
         }
 
-        public void createNewProject(String filename, bool deleteOld, ProjectTemplate projectTemplate)
+        public void createNewProject(String projectDirectory, bool deleteOld, ProjectTemplate projectTemplate)
         {
             try
             {
@@ -64,15 +64,27 @@ namespace Medical
                 {
                     //Make sure the old project is closed first, this prevents problems deleting the currently open project.
                     closeResourceProvider();
-                    Directory.Delete(filename, true);
+                    Directory.Delete(projectDirectory, true);
                 }
-                if (!Directory.Exists(filename))
+                if (!Directory.Exists(projectDirectory))
                 {
-                    Directory.CreateDirectory(filename);
+                    Directory.CreateDirectory(projectDirectory);
                 }
-                projectChanged(filename, filename);
-                projectTemplate.createProject(ResourceProvider, Path.GetFileName(filename));
-                standaloneController.DocumentController.addToRecentDocuments(filename);
+                String projectName = Path.GetFileName(projectDirectory);
+                closeResourceProvider();
+                openResourceProvider(projectDirectory);
+                projectTemplate.createProject(ResourceProvider, projectName);
+                String fullProjectName = projectTemplate.getDefaultFileName(projectName);
+                if (fullProjectName != null)
+                {
+                    fullProjectName = Path.Combine(projectDirectory, fullProjectName);
+                }
+                else
+                {
+                    fullProjectName = projectDirectory;
+                }
+                projectChanged(fullProjectName);
+                standaloneController.DocumentController.addToRecentDocuments(fullProjectName);
             }
             catch (Exception ex)
             {
@@ -84,7 +96,9 @@ namespace Medical
 
         public void openProject(String projectPath, String fullFilePath)
         {
-            projectChanged(projectPath, fullFilePath);
+            closeResourceProvider();
+            openResourceProvider(projectPath);
+            projectChanged(fullFilePath);
             standaloneController.DocumentController.addToRecentDocuments(fullFilePath);
         }
 
@@ -251,16 +265,18 @@ namespace Medical
             }
         }
 
-        private void projectChanged(String projectPath, String fullFilePath)
+        private void projectChanged(String fullFilePath)
         {
-            closeResourceProvider();
-            resourceProvider = new EditorResourceProvider(projectPath);
-            timelineController.setResourceProvider(ResourceProvider);
-
             if (ProjectChanged != null)
             {
                 ProjectChanged.Invoke(this, fullFilePath);
             }
+        }
+
+        private void openResourceProvider(String projectPath)
+        {
+            resourceProvider = new EditorResourceProvider(projectPath);
+            timelineController.setResourceProvider(ResourceProvider);
         }
 
         private void closeResourceProvider()

@@ -67,7 +67,7 @@ namespace Medical
                 {
                     SlideEntry slideEntry = new SlideEntry();
                     presentation.addEntry(slideEntry);
-                    slideEntry.createFile(defaultRml, presentationTypeController.EditorController.ResourceProvider);
+                    slideEntry.createFile(presentationTypeController.EditorController.ResourceProvider);
                 }),
                 new CallbackAction("Preview", context =>
                 {
@@ -122,16 +122,5 @@ namespace Medical
         {
             presentationTypeController.saveFile(presentation, currentFile);
         }
-
-        private const String defaultRml = @"<rml>
-	<head>
-		<link type=""text/template"" href=""/MasterTemplate.trml"" />
-	</head>
-	<body template=""MasterTemplate"">
-        <h1>Click here to add title</h1>
-        <p style=""white-space: pre-wrap;"">Click here to add text</p>
-    </body>
-</rml>
-";
     }
 }

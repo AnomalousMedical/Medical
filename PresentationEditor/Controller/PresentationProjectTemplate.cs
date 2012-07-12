@@ -5,48 +5,40 @@ using System.Text;
 using Engine.Saving;
 using System.Xml;
 using System.IO;
+using Medical.Presentation;
+using Medical;
 
-namespace Medical
+namespace PresentationEditor
 {
-    class AppProjectTemplate : ProjectTemplate
+    class PresentationProjectTemplate : ProjectTemplate
     {
-        private const String MvcContextName = "MvcContext.mvc";
-
         public void createProject(EditorResourceProvider resourceProvider, string projectName)
         {
-            using (Stream writeStream = resourceProvider.openWriteStream(MvcContextName))
-            {
-                using (Stream resourceStream = GetType().Assembly.GetManifestResourceStream("Medical.Controller.Project.SimpleMvcContext.mvc"))
-                {
-                    resourceStream.CopyTo(writeStream, 4096);
-                }
-            }
+            String mvcContextName = "MvcContext.mvc";
 
             DDAtlasPlugin ddPlugin = new DDAtlasPlugin();
             ddPlugin.PluginName = projectName;
             ddPlugin.PluginNamespace = projectName;
             StartAnomalousMvcTask mvcTask = new StartAnomalousMvcTask("Task", projectName, "", "Apps");
-            mvcTask.ContextFile = MvcContextName;
+            mvcTask.ContextFile = mvcContextName;
             ddPlugin.addTask(mvcTask);
             saveObject(ddPlugin, resourceProvider, "Plugin.ddp");
-
-            resourceProvider.createDirectory("", "Timeline");
-            resourceProvider.createDirectory("", "Resources");
 
             using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("MasterTemplate.trml")))
             {
                 streamWriter.Write(TRmlTypeController.DefaultMasterPage);
             }
 
-            using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("Index.rml")))
-            {
-                streamWriter.Write(indexRml, projectName);
-            }
+            PresentationIndex presentationIndex = new PresentationIndex();
+            SlideEntry slide = new SlideEntry();
+            presentationIndex.addEntry(slide);
+            slide.createFile(resourceProvider);
+            saveObject(presentationIndex, resourceProvider, getDefaultFileName(projectName));
         }
 
         public String getDefaultFileName(String projectName)
         {
-            return null;
+            return projectName + ".amp";
         }
 
         private void saveObject(Saveable saveable, EditorResourceProvider resourceProvider, String filename)
@@ -57,15 +49,5 @@ namespace Medical
                 EditorController.XmlSaver.saveObject(saveable, writer);
             }
         }
-
-        private static String indexRml = @"<rml>
-	<head>
-	    <link type=""text/template"" href=""/MasterTemplate.trml"" />
-	</head>
-	<body template=""MasterTemplate"">
-        <h1>{0}</h1>
-        <p style=""white-space: pre-wrap;"">This is the first view for the {0} app. You can modify this file as much as you want to create your view.</p>
-    </body>
-</rml>";
     }
 }

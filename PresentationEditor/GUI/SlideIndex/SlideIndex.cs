@@ -15,6 +15,7 @@ namespace PresentationEditor.GUI
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
         private const String Wildcard = "Anomalous Medical Presentation (*" + PresentationTypeController.PresentationExtension + ")|*" + PresentationTypeController.PresentationExtension + ";";
+        private static readonly PresentationProjectTemplate template = new PresentationProjectTemplate();
 
         //File Menu
         MenuBar menuBar;
@@ -61,43 +62,43 @@ namespace PresentationEditor.GUI
 
         void createNewProjectClicked(Widget source, EventArgs e)
         {
-            //if (editorController.ResourceProvider == null || editorController.ResourceProvider.ResourceCache.Count == 0)
-            //{
-            //    showNewProjectDialog();
-            //}
-            //else
-            //{
-            //    MessageBox.show("You have open files, would you like to save them before creating a new project?", "Save", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
-            //    {
-            //        if (result == MessageBoxStyle.Ok)
-            //        {
-            //            editorController.saveAllCachedResources();
-            //        }
-            //        showNewProjectDialog();
-            //    });
-            //}
+            if (editorController.ResourceProvider == null || editorController.ResourceProvider.ResourceCache.Count == 0)
+            {
+                showNewProjectDialog();
+            }
+            else
+            {
+                MessageBox.show("You have open files, would you like to save them before creating a new project?", "Save", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+                {
+                    if (result == MessageBoxStyle.Ok)
+                    {
+                        editorController.saveAllCachedResources();
+                    }
+                    showNewProjectDialog();
+                });
+            }
         }
 
         void showNewProjectDialog()
         {
-            //editorController.stopPlayingTimelines();
-            //NewProjectDialog.ShowDialog((template, fullProjectName) =>
-            //{
-            //    if (Directory.Exists(fullProjectName))
-            //    {
-            //        MessageBox.show(String.Format("The project {0} already exists. Would you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
-            //        {
-            //            if (result == MessageBoxStyle.Yes)
-            //            {
-            //                editorController.createNewProject(fullProjectName, true, template);
-            //            }
-            //        });
-            //    }
-            //    else
-            //    {
-            //        editorController.createNewProject(fullProjectName, false, template);
-            //    }
-            //});
+            editorController.stopPlayingTimelines();
+            NewPresentationDialog.ShowDialog((fullProjectName) =>
+            {
+                if (Directory.Exists(fullProjectName))
+                {
+                    MessageBox.show(String.Format("The presentation {0} already exists. Would you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                    {
+                        if (result == MessageBoxStyle.Yes)
+                        {
+                            editorController.createNewProject(fullProjectName, true, template);
+                        }
+                    });
+                }
+                else
+                {
+                    editorController.createNewProject(fullProjectName, false, template);
+                }
+            });
         }
 
         void openProjectClicked(Widget source, EventArgs e)

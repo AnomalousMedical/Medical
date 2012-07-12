@@ -185,6 +185,7 @@
     <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingEditInterfaceViewer.cs" />
     <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.cs" />
     <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
+    <Compile Include="GUI\Editor\InputWindow.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ConstrainableFormComponent.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormButton.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormColor.cs" />

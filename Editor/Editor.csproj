@@ -77,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\MovementSequenceEditorContext.cs" />
     <Compile Include="Controller\PresentationEditorContext.cs" />
     <Compile Include="Controller\TRmlEditorContext.cs" />
@@ -84,7 +85,6 @@
     <Compile Include="Controller\MvcEditorContext.cs" />
     <Compile Include="Controller\RcssEditorContext.cs" />
     <Compile Include="Controller\Documents\ProjectDocumentHandler.cs" />
-    <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\Mvc\EditInterface\EditInterfaceConsumer.cs" />
     <Compile Include="Controller\Mvc\EditInterface\EditInterfaceHandler.cs" />
     <Compile Include="Controller\Mvc\EditMenu\SelectAllAction.cs" />

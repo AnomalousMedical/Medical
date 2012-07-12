@@ -11,5 +11,10 @@ namespace Medical
         {
             
         }
+
+        public String getDefaultFileName(String projectName)
+        {
+            return null;
+        }
     }
 }
