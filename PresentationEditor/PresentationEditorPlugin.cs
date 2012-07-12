@@ -19,6 +19,10 @@ namespace PresentationEditor
 
         private EditorController editorController;
         private TimelineController editorTimelineController;
+        private MedicalUICallback medicalUICallback;
+
+        //Editor Contexts
+        RmlSlideEditorContext rmlSlideEditorContext;
 
         //Guis
         private SlideIndex slideIndex;
@@ -47,6 +51,8 @@ namespace PresentationEditor
             editorController = new EditorController(standaloneController, editorTimelineController);
             standaloneController.DocumentController.addDocumentHandler(new PresentationDocumentHandler(editorController));
 
+            medicalUICallback = new MedicalUICallback();
+
             GUIManager guiManager = standaloneController.GUIManager;
 
             slideIndex = new SlideIndex(editorController);
@@ -65,13 +71,31 @@ namespace PresentationEditor
             RmlTypeController rmlTypeController = new RmlTypeController(editorController);
             rmlTypeController.OpenEditor += file =>
                 {
-
+                    rmlSlideEditorContext = new RmlSlideEditorContext(file, rmlTypeController, medicalUICallback);
+                    rmlSlideEditorContext.Focus += obj =>
+                        {
+                            rmlSlideEditorContext = obj;
+                        };
+                    rmlSlideEditorContext.Blur += obj =>
+                        {
+                            rmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                            if (obj == rmlSlideEditorContext)
+                            {
+                                rmlSlideEditorContext = null;
+                            }
+                        };
+                    editorController.runEditorContext(rmlSlideEditorContext.MvcContext);
                 };
             editorController.addTypeController(rmlTypeController);
         }
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
+            if (rmlSlideEditorContext != null)
+            {
+                rmlSlideEditorContext.close();
+            }
+
             if (editorController.ResourceProvider != null)
             {
                 if (!slideIndex.Visible)

@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\PresentationDocumentHandler.cs" />
+    <Compile Include="Controller\RmlSlideEditorContext.cs" />
     <Compile Include="GUI\SlideIndex\SlideIndex.cs" />
     <Compile Include="PresentationEditorAtlasPluginEntryPoint.cs" />
     <Compile Include="PresentationEditorPlugin.cs" />
