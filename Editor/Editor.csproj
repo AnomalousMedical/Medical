@@ -148,13 +148,6 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlEditableProperty.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlElementEditor.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygBrowserProvider.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponent.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
-    <Compile Include="GUI\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
     <Compile Include="GUI\SlideIndex\SlideIndex.cs" />
     <Compile Include="GUI\SlideIndex\SlideIndexComponentFactory.cs" />
@@ -206,8 +199,6 @@
     <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
-    <EmbeddedResource Include="GUI\RmlWysiwyg\RmlElementEditor.layout" />
-    <EmbeddedResource Include="GUI\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\SlideIndex\SlideIndex.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />

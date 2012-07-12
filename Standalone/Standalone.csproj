@@ -145,6 +145,7 @@
     <Compile Include="Controller\Editor\EditorController\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\Editor\EditorController\TypeControllers\TimelineTypeController.cs" />
     <Compile Include="Controller\Editor\EditorController\TypeControllers\TRmlTypeController.cs" />
+    <Compile Include="Controller\Editor\EditorCore.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\CachedResource.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\EditorResourceProvider.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\ResourceCache.cs" />
@@ -212,6 +213,13 @@
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormVector3.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ScrollablePropertiesForm.cs" />
     <Compile Include="GUI\Editor\PropertyEditor.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\RmlEditableProperty.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygBrowserProvider.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygView.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
@@ -679,6 +687,8 @@
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBoxBrowser.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormXYZ.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.layout" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.layout" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />
     <EmbeddedResource Include="Resources\DegenerationImages.png" />

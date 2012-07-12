@@ -32,7 +32,7 @@ namespace Medical.GUI
         private AnomalousMvcContext context;
 
         public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
+            : base("Medical.GUI.Editor.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
             this.context = context;
             this.uiCallback = view.UICallback;
