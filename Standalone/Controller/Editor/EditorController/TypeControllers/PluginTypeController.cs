@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Medical
 {
-    class PluginTypeController : SaveableTypeController<DDAtlasPlugin>
+    public class PluginTypeController : SaveableTypeController<DDAtlasPlugin>
     {
         private const String Icon = "EditorFileIcon/.ddp";
 

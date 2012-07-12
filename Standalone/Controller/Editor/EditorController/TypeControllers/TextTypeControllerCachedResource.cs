@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Medical
 {
-    class TextTypeControllerCachedResource : TextCachedResource
+    public class TextTypeControllerCachedResource : TextCachedResource
     {
         TextTypeController typeController;
 

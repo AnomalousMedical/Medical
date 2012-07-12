@@ -10,7 +10,7 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical
 {
-    class PresentationTypeController : SaveableTypeController<PresentationIndex>
+    public class PresentationTypeController : SaveableTypeController<PresentationIndex>
     {
         private StandaloneController standaloneController;
         private const String Icon = "EditorFileIcon/.amp";

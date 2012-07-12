@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class SaveableTypeControllerCachedResource<T> : SaveableCachedResource<T>
+    public class SaveableTypeControllerCachedResource<T> : SaveableCachedResource<T>
         where T : Saveable
     {
         SaveableTypeController<T> typeController;

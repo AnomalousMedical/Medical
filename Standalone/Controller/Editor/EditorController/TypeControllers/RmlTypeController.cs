@@ -10,7 +10,7 @@ using Medical.GUI.AnomalousMvc;
 
 namespace Medical
 {
-    class RmlTypeController : TextTypeController
+    public class RmlTypeController : TextTypeController
     {
         public event Action<RmlTypeController, String> FileCreated;
 

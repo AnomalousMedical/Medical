@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Medical
 {
-    abstract class TextTypeController : EditorTypeController
+    public abstract class TextTypeController : EditorTypeController
     {
         protected TextCachedResource currentCachedResource;
 

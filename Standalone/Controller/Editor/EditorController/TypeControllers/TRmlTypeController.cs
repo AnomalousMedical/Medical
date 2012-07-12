@@ -9,7 +9,7 @@ using libRocketPlugin;
 
 namespace Medical
 {
-    class TRmlTypeController : TextTypeController
+    public class TRmlTypeController : TextTypeController
     {
         public const String Icon = "EditorFileIcon/.trml";
 

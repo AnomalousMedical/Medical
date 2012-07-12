@@ -10,7 +10,7 @@ using Medical.Editor;
 
 namespace Medical
 {
-    class MvcTypeController : SaveableTypeController<AnomalousMvcContext>
+    public class MvcTypeController : SaveableTypeController<AnomalousMvcContext>
     {
         public const String Icon = "EditorFileIcon/.mvc";
 

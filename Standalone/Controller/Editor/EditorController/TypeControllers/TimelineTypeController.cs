@@ -13,9 +13,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    delegate void TimelineTypeEvent(TimelineTypeController typeController, Timeline timeline);
-
-    class TimelineTypeController : SaveableTypeController<Timeline>
+    public class TimelineTypeController : SaveableTypeController<Timeline>
     {
         public const String Icon = "EditorFileIcon/.tl";
 
