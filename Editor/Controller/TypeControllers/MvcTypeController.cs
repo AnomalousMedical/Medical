@@ -20,12 +20,6 @@ namespace Medical
             
         }
 
-        public override void openFile(string file)
-        {
-            //This can be removed and moved into the superclass when everything is converted.
-            loadObject(file);
-        }
-
         public void saveFile(AnomalousMvcContext context, string file)
         {
             saveObject(file, context);

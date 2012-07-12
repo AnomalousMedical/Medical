@@ -30,6 +30,14 @@ namespace Medical
             EditorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
         }
 
+        public override void openFile(string file)
+        {
+            if (ItemOpened != null)
+            {
+                ItemOpened.Invoke(file, loadObject(file));
+            }
+        }
+
         public T loadObject(String filename)
         {
             //Check the cahce
@@ -44,10 +52,6 @@ namespace Medical
                 }
             }
             changeCachedResource(cachedResource);
-            if (ItemOpened != null)
-            {
-                ItemOpened.Invoke(filename, cachedResource.Saveable);
-            }
             return cachedResource.Saveable;
         }
 

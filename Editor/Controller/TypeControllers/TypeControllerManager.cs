@@ -17,6 +17,7 @@ namespace Medical
         private PluginEditorContext pluginEditorContext;
         private PresentationEditorContext presentationEditorContext;
         private TimelineEditorContext timelineEditorContext;
+        private RmlEditorContext editorContext;
 
 
         private PropEditController propEditController;
@@ -28,30 +29,75 @@ namespace Medical
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
             GUIManager guiManager = standaloneController.GUIManager;
 
-            RmlTypeController rmlTypeController = new RmlTypeController(editorController, guiManager, plugin.UICallback);
-            editorController.addTypeController(rmlTypeController);
-            editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
-
             //MVC Type Controller
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
             mvcTypeController.ItemOpened += (file, editingMvcContex) =>
+            {
+                mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController);
+                plugin.UICallback.CurrentEditingMvcContext = editingMvcContex;
+                mvcEditorContext.Focused += (obj) =>
                 {
-                    mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController);
-                    plugin.UICallback.CurrentEditingMvcContext = editingMvcContex;
-                    mvcEditorContext.Focused += (obj) =>
+                    mvcEditorContext = obj;
+                };
+                mvcEditorContext.Blured += (obj) =>
+                {
+                    if (mvcEditorContext == obj)
+                    {
+                        mvcEditorContext = null;
+                    }
+                };
+                editorController.runEditorContext(mvcEditorContext.MvcContext);
+            };
+            editorController.addTypeController(mvcTypeController);
+
+            //Rml type controller
+            RmlTypeController rmlTypeController = new RmlTypeController(editorController);
+            rmlTypeController.ItemOpened += (file) =>
+                {
+                    editorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback);
+                    editorContext.Focus += (obj) =>
                         {
-                            mvcEditorContext = obj;
+                            editorContext = obj;
                         };
-                    mvcEditorContext.Blured += (obj) =>
+                    editorContext.Blur += obj =>
                         {
-                            if (mvcEditorContext == obj)
+                            rmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                            if (editorContext == obj)
                             {
-                                mvcEditorContext = null;
+                                editorContext = null;
                             }
                         };
-                    editorController.runEditorContext(mvcEditorContext.MvcContext);
+                    editorController.runEditorContext(editorContext.MvcContext);
                 };
-            editorController.addTypeController(mvcTypeController);
+            rmlTypeController.FileCreated += (rmlCtrl, file) =>
+            {
+                AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
+                if (mvcContext != null)
+                {
+                    String name = file.Replace(Path.GetExtension(file), "");
+                    if (!mvcContext.Views.hasItem(name))
+                    {
+                        RmlView view = new RmlView(name);
+                        view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
+                        mvcContext.Views.add(view);
+                    }
+                    if (!mvcContext.Controllers.hasItem(name))
+                    {
+                        MvcController controller = new MvcController(name);
+                        RunCommandsAction show = new RunCommandsAction("Show");
+                        show.addCommand(new ShowViewCommand(name));
+                        controller.Actions.add(show);
+                        RunCommandsAction close = new RunCommandsAction("Close");
+                        close.addCommand(new CloseViewCommand());
+                        controller.Actions.add(close);
+                        mvcContext.Controllers.add(controller);
+                    }
+                }
+            };
+            editorController.addTypeController(rmlTypeController);
+
+            //Rcss Type Controller
+            editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
             
             //Plugin type controller
             PluginTypeController pluginTypeController = new PluginTypeController(editorController);
@@ -116,32 +162,6 @@ namespace Medical
                 };
             editorController.addTypeController(timelineTypeController);
 
-            rmlTypeController.FileCreated += (rmlCtrl, file) =>
-            {
-                AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
-                if (mvcContext != null)
-                {
-                    String name = file.Replace(Path.GetExtension(file), "");
-                    if (!mvcContext.Views.hasItem(name))
-                    {
-                        RmlView view = new RmlView(name);
-                        view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
-                        mvcContext.Views.add(view);
-                    }
-                    if (!mvcContext.Controllers.hasItem(name))
-                    {
-                        MvcController controller = new MvcController(name);
-                        RunCommandsAction show = new RunCommandsAction("Show");
-                        show.addCommand(new ShowViewCommand(name));
-                        controller.Actions.add(show);
-                        RunCommandsAction close = new RunCommandsAction("Close");
-                        close.addCommand(new CloseViewCommand());
-                        controller.Actions.add(close);
-                        mvcContext.Controllers.add(controller);
-                    }
-                }
-            };
-
             //Presentation type controller
             PresentationTypeController presentationTypeController = new PresentationTypeController(editorController, standaloneController);
             presentationTypeController.ItemOpened += (file, presentation) =>
@@ -184,6 +204,10 @@ namespace Medical
             if (timelineEditorContext != null)
             {
                 timelineEditorContext.close();
+            }
+            if (editorContext != null)
+            {
+                editorContext.close();
             }
 
             if (editorController.ResourceProvider != null)

@@ -20,18 +20,6 @@ namespace Medical
             
         }
 
-        public override void openFile(string file)
-        {
-            try
-            {
-                MovementSequence movementSequence = (MovementSequence)loadObject(file);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.show(String.Format("Error loading movement sequence {0}.\nReason: {1}", file, ex.Message), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            }
-        }
-
         public void saveFile(MovementSequence movementSequence, String file)
         {
             saveObject(file, movementSequence);

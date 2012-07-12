@@ -30,11 +30,6 @@ namespace Medical
             standaloneController.MvcCore.startRunningContext(presentationContext);
         }
 
-        public override void openFile(string file)
-        {
-            PresentationIndex presentation = loadObject(file);
-        }
-
         public void saveFile(PresentationIndex presentation, string file)
         {
             saveObject(file, presentation);

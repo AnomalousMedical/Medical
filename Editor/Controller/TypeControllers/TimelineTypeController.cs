@@ -19,21 +19,10 @@ namespace Medical
     {
         public const String Icon = "EditorFileIcon/.tl";
 
-        public event TimelineTypeEvent TimelineChanged;
-
         public TimelineTypeController(EditorController editorController)
             :base(".tl", editorController)
         {
             
-        }
-
-        public override void openFile(string path)
-        {
-            Timeline timeline = (Timeline)loadObject(path);
-            if (TimelineChanged != null)
-            {
-                TimelineChanged.Invoke(this, timeline);
-            }
         }
 
         public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)

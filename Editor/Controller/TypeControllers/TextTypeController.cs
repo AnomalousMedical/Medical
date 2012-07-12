@@ -10,6 +10,8 @@ namespace Medical
     {
         protected TextCachedResource currentCachedResource;
 
+        public event Action<String> ItemOpened;
+
         public TextTypeController(String extension, EditorController editorController)
             :base(extension, editorController)
         {
@@ -19,6 +21,14 @@ namespace Medical
         public override void closeFile(string file)
         {
             EditorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
+        }
+
+        public override void openFile(string file)
+        {
+            if (ItemOpened != null)
+            {
+                ItemOpened.Invoke(file);
+            }
         }
 
         public String loadText(String filename)

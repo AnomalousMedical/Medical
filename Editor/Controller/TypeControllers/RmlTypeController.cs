@@ -14,17 +14,12 @@ namespace Medical
     {
         public event Action<RmlTypeController, String> FileCreated;
 
-        private GUIManager guiManager;
         public const String Icon = "EditorFileIcon/.rml";
-        private RmlEditorContext editorContext;
-        private EditorUICallback uiCallback;
 
-        public RmlTypeController(EditorController editorController, GUIManager guiManager, EditorUICallback uiCallback)
+        public RmlTypeController(EditorController editorController)
             :base(".rml", editorController)
         {
-            this.guiManager = guiManager;
-            this.uiCallback = uiCallback;
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            
         }
 
         public override void openFile(string file)
@@ -34,10 +29,7 @@ namespace Medical
                 createNewRmlFile(file);
             }
 
-            editorContext = new RmlEditorContext(file, this, uiCallback);
-            editorContext.Focus += new Action<RmlEditorContext>(editorContext_Focus);
-            editorContext.Blur += new Action<RmlEditorContext>(editorContext_Blur);
-            EditorController.runEditorContext(editorContext.MvcContext);
+            base.openFile(file);
 
             LastRmlFile = file;
         }
@@ -75,29 +67,6 @@ namespace Medical
                     return true;
                 });
             }));
-        }
-
-        void editorContext_Focus(RmlEditorContext obj)
-        {
-            editorContext = obj;
-        }
-
-        void editorContext_Blur(RmlEditorContext obj)
-        {
-            updateCachedText(obj.CurrentFile, obj.CurrentText);
-            if (editorContext == obj)
-            {
-                editorContext = null;
-            }
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            closeCurrentCachedResource();
-            if (editorContext != null)
-            {
-                editorContext.close();
-            }
         }
 
         void createNewRmlFile(String filePath)

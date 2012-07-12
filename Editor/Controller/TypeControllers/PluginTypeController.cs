@@ -18,11 +18,6 @@ namespace Medical
             
         }
 
-        public override void openFile(string file)
-        {
-            DDAtlasPlugin ddPlugin = (DDAtlasPlugin)loadObject(file);
-        }
-
         public void saveFile(DDAtlasPlugin plugin, string file)
         {
             saveObject(file, plugin);
