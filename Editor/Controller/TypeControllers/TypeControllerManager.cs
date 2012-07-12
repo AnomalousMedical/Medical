@@ -17,7 +17,8 @@ namespace Medical
         private PluginEditorContext pluginEditorContext;
         private PresentationEditorContext presentationEditorContext;
         private TimelineEditorContext timelineEditorContext;
-        private RmlEditorContext editorContext;
+        private RmlEditorContext rmlEditorContext;
+        private RcssEditorContext rcssEditorContext;
 
 
         private PropEditController propEditController;
@@ -54,20 +55,20 @@ namespace Medical
             RmlTypeController rmlTypeController = new RmlTypeController(editorController);
             rmlTypeController.ItemOpened += (file) =>
                 {
-                    editorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback);
-                    editorContext.Focus += (obj) =>
+                    rmlEditorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback);
+                    rmlEditorContext.Focus += (obj) =>
                         {
-                            editorContext = obj;
+                            rmlEditorContext = obj;
                         };
-                    editorContext.Blur += obj =>
+                    rmlEditorContext.Blur += obj =>
                         {
                             rmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
-                            if (editorContext == obj)
+                            if (rmlEditorContext == obj)
                             {
-                                editorContext = null;
+                                rmlEditorContext = null;
                             }
                         };
-                    editorController.runEditorContext(editorContext.MvcContext);
+                    editorController.runEditorContext(rmlEditorContext.MvcContext);
                 };
             rmlTypeController.FileCreated += (rmlCtrl, file) =>
             {
@@ -97,7 +98,25 @@ namespace Medical
             editorController.addTypeController(rmlTypeController);
 
             //Rcss Type Controller
-            editorController.addTypeController(new RcssTypeController(editorController, guiManager, rmlTypeController));
+            RcssTypeController rcssTypeController = new RcssTypeController(editorController);
+            rcssTypeController.ItemOpened += (file) =>
+                {
+                    rcssEditorContext = new RcssEditorContext(file, rmlTypeController.LastRmlFile, rcssTypeController);
+                    rcssEditorContext.Focus += (obj) =>
+                        {
+                            rcssEditorContext = obj;
+                        };
+                    rcssEditorContext.Blur += (obj) =>
+                        {
+                            rcssTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                            if (rcssEditorContext == obj)
+                            {
+                                rcssEditorContext = null;
+                            }
+                        };
+                    editorController.runEditorContext(rcssEditorContext.MvcContext);
+                };
+            editorController.addTypeController(rcssTypeController);
             
             //Plugin type controller
             PluginTypeController pluginTypeController = new PluginTypeController(editorController);
@@ -205,9 +224,13 @@ namespace Medical
             {
                 timelineEditorContext.close();
             }
-            if (editorContext != null)
+            if (rmlEditorContext != null)
             {
-                editorContext.close();
+                rmlEditorContext.close();
+            }
+            if (rcssEditorContext != null)
+            {
+                rcssEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)

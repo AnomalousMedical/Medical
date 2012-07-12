@@ -11,17 +11,12 @@ namespace Medical
 {
     class RcssTypeController : TextTypeController
     {
-        private GUIManager guiManager;
         public const String Icon = "EditorFileIcon/.rcss";
-        private RcssEditorContext rcssContext;
-        private RmlTypeController rmlTypeController;
 
-        public RcssTypeController(EditorController editorController, GUIManager guiManager, RmlTypeController rmlTypeController)
+        public RcssTypeController(EditorController editorController)
             : base(".rcss", editorController)
         {
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-            this.guiManager = guiManager;
-            this.rmlTypeController = rmlTypeController;
+
         }
 
         public override void openFile(string file)
@@ -31,10 +26,7 @@ namespace Medical
                 createNewRcssFile(file);
             }
 
-            rcssContext = new RcssEditorContext(file, rmlTypeController.LastRmlFile, this);
-            rcssContext.Focus += new Action<RcssEditorContext>(rcssContext_Focus);
-            rcssContext.Blur += new Action<RcssEditorContext>(rcssContext_Blur);
-            EditorController.runEditorContext(rcssContext.MvcContext);
+            base.openFile(file);
         }
 
         public void saveFile(String rcss, String file)
@@ -76,29 +68,6 @@ namespace Medical
             creatingNewFile(filePath);
             saveText(filePath, defaultRcss);
             openFile(filePath);
-        }
-
-        void rcssContext_Focus(RcssEditorContext obj)
-        {
-            rcssContext = obj;
-        }
-
-        void rcssContext_Blur(RcssEditorContext obj)
-        {
-            updateCachedText(obj.CurrentFile, obj.CurrentText);
-            if (rcssContext == obj)
-            {
-                rcssContext = null;
-            }
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            closeCurrentCachedResource();
-            if (rcssContext != null)
-            {
-                rcssContext.close();
-            }
         }
 
         private const String defaultRcss = "";
