@@ -66,6 +66,7 @@ namespace Medical
 
             //Controller
             editorController = new EditorController(standaloneController, editorTimelineController);
+            standaloneController.DocumentController.addDocumentHandler(new ProjectDocumentHandler(editorController));
             propEditController = new PropEditController(propMover);
 
             //UI Helpers

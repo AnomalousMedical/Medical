@@ -40,7 +40,6 @@ namespace Medical
         {
             this.timelineController = timelineController;
             this.standaloneController = standaloneController;
-            standaloneController.DocumentController.addDocumentHandler(new ProjectDocumentHandler(this));
         }
 
         public void Dispose()
