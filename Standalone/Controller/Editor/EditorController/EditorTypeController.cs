@@ -19,7 +19,7 @@ namespace Medical
 
         public EditorController EditorController { get; private set; }
 
-        public abstract void openFile(String file);
+        public abstract void openEditor(String file);
 
         public abstract void closeFile(String file);
 

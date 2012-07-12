@@ -10,7 +10,7 @@ namespace Medical
     {
         protected TextCachedResource currentCachedResource;
 
-        public event Action<String> ItemOpened;
+        public event Action<String> OpenEditor;
 
         public TextTypeController(String extension, EditorController editorController)
             :base(extension, editorController)
@@ -23,11 +23,11 @@ namespace Medical
             EditorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
         }
 
-        public override void openFile(string file)
+        public override void openEditor(string file)
         {
-            if (ItemOpened != null)
+            if (OpenEditor != null)
             {
-                ItemOpened.Invoke(file);
+                OpenEditor.Invoke(file);
             }
         }
 

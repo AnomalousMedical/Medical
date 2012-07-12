@@ -110,14 +110,14 @@ namespace Medical
             }
         }
 
-        public void openFile(String file)
+        public void openEditor(String file)
         {
             String extension = Path.GetExtension(file).ToLowerInvariant();
 
             EditorTypeController typeController;
             if (typeControllers.TryGetValue(extension, out typeController))
             {
-                typeController.openFile(file);
+                typeController.openEditor(file);
             }
             else
             {

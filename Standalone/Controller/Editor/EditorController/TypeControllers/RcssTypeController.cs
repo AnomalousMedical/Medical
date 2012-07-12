@@ -19,14 +19,14 @@ namespace Medical
 
         }
 
-        public override void openFile(string file)
+        public override void openEditor(string file)
         {
             if (!EditorController.ResourceProvider.exists(file))
             {
                 createNewRcssFile(file);
             }
 
-            base.openFile(file);
+            base.openEditor(file);
         }
 
         public void saveFile(String rcss, String file)
@@ -67,7 +67,7 @@ namespace Medical
         {
             creatingNewFile(filePath);
             saveText(filePath, defaultRcss);
-            openFile(filePath);
+            openEditor(filePath);
         }
 
         private const String defaultRcss = "";

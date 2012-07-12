@@ -15,7 +15,7 @@ namespace Medical
     public abstract class SaveableTypeController<T> : EditorTypeController
         where T : Saveable
     {
-        public event Action<String, T> ItemOpened;
+        public event Action<String, T> OpenEditor;
 
         protected SaveableCachedResource<T> currentCachedResource;
 
@@ -30,11 +30,11 @@ namespace Medical
             EditorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
         }
 
-        public override void openFile(string file)
+        public override void openEditor(string file)
         {
-            if (ItemOpened != null)
+            if (OpenEditor != null)
             {
-                ItemOpened.Invoke(file, loadObject(file));
+                OpenEditor.Invoke(file, loadObject(file));
             }
         }
 

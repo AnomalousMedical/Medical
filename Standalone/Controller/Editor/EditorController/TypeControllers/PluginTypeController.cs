@@ -54,7 +54,7 @@ namespace Medical
             DDAtlasPlugin newPlugin = new DDAtlasPlugin();
             creatingNewFile(filePath);
             saveObject(filePath, newPlugin);
-            openFile(filePath);
+            openEditor(filePath);
         }
     }
 }

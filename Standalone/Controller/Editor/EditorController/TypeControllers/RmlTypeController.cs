@@ -22,14 +22,14 @@ namespace Medical
             
         }
 
-        public override void openFile(string file)
+        public override void openEditor(string file)
         {
             if (!EditorController.ResourceProvider.exists(file))
             {
                 createNewRmlFile(file);
             }
 
-            base.openFile(file);
+            base.openEditor(file);
 
             LastRmlFile = file;
         }
@@ -74,7 +74,7 @@ namespace Medical
             Timeline timeline = new Timeline();
             creatingNewFile(filePath);
             saveText(filePath, defaultRml);
-            openFile(filePath);
+            openEditor(filePath);
             if (FileCreated != null)
             {
                 FileCreated.Invoke(this, filePath);

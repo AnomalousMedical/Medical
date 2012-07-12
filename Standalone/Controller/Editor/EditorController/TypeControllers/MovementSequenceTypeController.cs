@@ -59,7 +59,7 @@ namespace Medical
             movementSequence.Duration = 5.0f;
             creatingNewFile(filePath);
             saveObject(filePath, movementSequence);
-            openFile(filePath);
+            openEditor(filePath);
         }
     }
 }

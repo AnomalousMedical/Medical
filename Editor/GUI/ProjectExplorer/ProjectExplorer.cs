@@ -188,7 +188,7 @@ namespace Medical.GUI
 
         void fileBrowser_FileSelected(FileBrowserTree tree, string path)
         {
-            editorController.openFile(path);
+            editorController.openEditor(path);
         }
 
         void fileBrowser_NodeContextEvent(FileBrowserTree tree, string path, bool isDirectory, bool isTopLevel)

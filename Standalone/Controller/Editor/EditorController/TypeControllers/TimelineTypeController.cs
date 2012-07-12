@@ -55,7 +55,7 @@ namespace Medical
             Timeline timeline = new Timeline();
             creatingNewFile(filePath);
             saveObject(filePath, timeline);
-            openFile(filePath);
+            openEditor(filePath);
         }
 
         public void saveTimeline(Timeline timeline, String filename)

@@ -97,7 +97,7 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    editorController.openFile(editorController.OpenFiles.First());
+                    editorController.openEditor(editorController.OpenFiles.First());
                 }
             }
             else
@@ -108,7 +108,7 @@ namespace Medical.GUI
 
         void fileButton_ChangeFile(EditorTaskbarFileButton obj)
         {
-            editorController.openFile(obj.File);
+            editorController.openEditor(obj.File);
         }
 
         public override void topLevelResized()
@@ -188,7 +188,7 @@ namespace Medical.GUI
             popupMenu.ItemAccept += (menu, evt) =>
             {
                 MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)evt;
-                editorController.openFile(mcae.Item.ItemName);
+                editorController.openEditor(mcae.Item.ItemName);
             };
             popupMenu.Closed += (menu, evt) =>
             {

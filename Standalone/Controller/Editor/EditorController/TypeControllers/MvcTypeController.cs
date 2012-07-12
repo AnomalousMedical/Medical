@@ -58,7 +58,7 @@ namespace Medical
             AnomalousMvcContext mvcContext = new AnomalousMvcContext();
             creatingNewFile(filePath);
             saveObject(filePath, mvcContext);
-            openFile(filePath);
+            openEditor(filePath);
         }
     }
 }

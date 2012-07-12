@@ -59,7 +59,7 @@ namespace Medical
 
             this.addOneWayCustomQuery(RmlView.CustomQueries.OpenFileInRmlViewer, delegate(String file)
             {
-                editorController.openFile(file);
+                editorController.openEditor(file);
             });
 
             this.addOneWayCustomQuery(AnomalousMvcContext.CustomQueries.Preview, delegate(AnomalousMvcContext context)

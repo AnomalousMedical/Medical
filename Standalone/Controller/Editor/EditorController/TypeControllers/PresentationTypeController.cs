@@ -68,7 +68,7 @@ namespace Medical
             PresentationIndex newPresentation = new PresentationIndex();
             creatingNewFile(filePath);
             saveObject(filePath, newPresentation);
-            openFile(filePath);
+            openEditor(filePath);
         }
     }
 }

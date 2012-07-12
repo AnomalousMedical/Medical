@@ -31,7 +31,7 @@ namespace Medical
 
             //MVC Type Controller
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
-            mvcTypeController.ItemOpened += (file, editingMvcContex) =>
+            mvcTypeController.OpenEditor += (file, editingMvcContex) =>
             {
                 mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController);
                 plugin.UICallback.CurrentEditingMvcContext = editingMvcContex;
@@ -52,7 +52,7 @@ namespace Medical
 
             //Rml type controller
             RmlTypeController rmlTypeController = new RmlTypeController(editorController);
-            rmlTypeController.ItemOpened += (file) =>
+            rmlTypeController.OpenEditor += (file) =>
                 {
                     rmlEditorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback);
                     rmlEditorContext.Focus += (obj) =>
@@ -98,7 +98,7 @@ namespace Medical
 
             //Rcss Type Controller
             RcssTypeController rcssTypeController = new RcssTypeController(editorController);
-            rcssTypeController.ItemOpened += (file) =>
+            rcssTypeController.OpenEditor += (file) =>
                 {
                     rcssEditorContext = new RcssEditorContext(file, rmlTypeController.LastRmlFile, rcssTypeController);
                     rcssEditorContext.Focus += (obj) =>
@@ -119,7 +119,7 @@ namespace Medical
             
             //Plugin type controller
             PluginTypeController pluginTypeController = new PluginTypeController(editorController);
-            pluginTypeController.ItemOpened += (file, ddPlugin) =>
+            pluginTypeController.OpenEditor += (file, ddPlugin) =>
                 {
                     pluginEditorContext = new PluginEditorContext(ddPlugin, file, pluginTypeController);
                     pluginEditorContext.Focus += obj =>
@@ -139,7 +139,7 @@ namespace Medical
 
             //Movement Sequence type controller
             MovementSequenceTypeController movementSequenceTypeController = new MovementSequenceTypeController(editorController);
-            movementSequenceTypeController.ItemOpened += (file, movementSequence) =>
+            movementSequenceTypeController.OpenEditor += (file, movementSequence) =>
                 {
                     movementSequenceEditorContext = new MovementSequenceEditorContext(movementSequence, file, movementSequenceTypeController);
                     movementSequenceEditorContext.Focus += obj =>
@@ -159,7 +159,7 @@ namespace Medical
 
             //TRML Type controller
             TRmlTypeController trmlTypeController = new TRmlTypeController(editorController);
-            trmlTypeController.ItemOpened += (file) =>
+            trmlTypeController.OpenEditor += (file) =>
             {
                 trmlEditorContext = new TRmlEditorContext(file, rmlTypeController.LastRmlFile, trmlTypeController);
                 trmlEditorContext.Focus += obj =>
@@ -180,7 +180,7 @@ namespace Medical
 
             //Timeline type controller
             TimelineTypeController timelineTypeController = new TimelineTypeController(editorController);
-            timelineTypeController.ItemOpened += (file, timeline) =>
+            timelineTypeController.OpenEditor += (file, timeline) =>
                 {
                     propEditController.removeAllOpenProps();
                     timelineEditorContext = new TimelineEditorContext(timeline, file, timelineTypeController, propEditController);
@@ -201,7 +201,7 @@ namespace Medical
 
             //Presentation type controller
             PresentationTypeController presentationTypeController = new PresentationTypeController(editorController, standaloneController);
-            presentationTypeController.ItemOpened += (file, presentation) =>
+            presentationTypeController.OpenEditor += (file, presentation) =>
             {
                 presentationEditorContext = new PresentationEditorContext(presentation, file, presentationTypeController);
                 presentationEditorContext.Focused += obj =>
@@ -261,14 +261,14 @@ namespace Medical
                 String mvcFile = "MvcContext.mvc";
                 if (editorController.ResourceProvider.exists(mvcFile))
                 {
-                    editorController.openFile(mvcFile);
+                    editorController.openEditor(mvcFile);
                 }
                 else
                 {
                     String[] files = editorController.ResourceProvider.listFiles("*.mvc", "", true);
                     if (files.Length > 0)
                     {
-                        editorController.openFile(files[0]);
+                        editorController.openEditor(files[0]);
                     }
                 }
             }
