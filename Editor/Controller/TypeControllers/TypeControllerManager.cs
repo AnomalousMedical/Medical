@@ -19,7 +19,7 @@ namespace Medical
         private TimelineEditorContext timelineEditorContext;
         private RmlEditorContext rmlEditorContext;
         private RcssEditorContext rcssEditorContext;
-
+        private TRmlEditorContext trmlEditorContext;
 
         private PropEditController propEditController;
 
@@ -28,7 +28,6 @@ namespace Medical
             propEditController = plugin.PropEditController;
             EditorController editorController = plugin.EditorController;
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-            GUIManager guiManager = standaloneController.GUIManager;
 
             //MVC Type Controller
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
@@ -158,7 +157,26 @@ namespace Medical
                 };
             editorController.addTypeController(movementSequenceTypeController);
 
-            editorController.addTypeController(new TRmlTypeController(editorController, guiManager, rmlTypeController));
+            //TRML Type controller
+            TRmlTypeController trmlTypeController = new TRmlTypeController(editorController);
+            trmlTypeController.ItemOpened += (file) =>
+            {
+                trmlEditorContext = new TRmlEditorContext(file, rmlTypeController.LastRmlFile, trmlTypeController);
+                trmlEditorContext.Focus += obj =>
+                    {
+                        trmlEditorContext = obj;
+                    };
+                trmlEditorContext.Blur += obj =>
+                    {
+                        trmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                        if (trmlEditorContext == obj)
+                        {
+                            trmlEditorContext = null;
+                        }
+                    };
+                editorController.runEditorContext(trmlEditorContext.MvcContext);
+            };
+            editorController.addTypeController(trmlTypeController);
 
             //Timeline type controller
             TimelineTypeController timelineTypeController = new TimelineTypeController(editorController);
@@ -231,6 +249,10 @@ namespace Medical
             if (rcssEditorContext != null)
             {
                 rcssEditorContext.close();
+            } 
+            if (trmlEditorContext != null)
+            {
+                trmlEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)

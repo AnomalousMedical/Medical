@@ -11,17 +11,12 @@ namespace Medical
 {
     class TRmlTypeController : TextTypeController
     {
-        private GUIManager guiManager;
         public const String Icon = "EditorFileIcon/.trml";
-        private TRmlEditorContext trmlContext;
-        private RmlTypeController rmlTypeController;
 
-        public TRmlTypeController(EditorController editorController, GUIManager guiManager, RmlTypeController rmlTypeController)
+        public TRmlTypeController(EditorController editorController)
             : base(".trml", editorController)
         {
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
-            this.guiManager = guiManager;
-            this.rmlTypeController = rmlTypeController;
+
         }
 
         public override void openFile(string file)
@@ -31,10 +26,7 @@ namespace Medical
                 createNewRcssFile(file);
             }
 
-            trmlContext = new TRmlEditorContext(file, rmlTypeController.LastRmlFile, this);
-            trmlContext.Focus += new Action<TRmlEditorContext>(trmlContext_Focus);
-            trmlContext.Blur += new Action<TRmlEditorContext>(rcssContext_Blur);
-            EditorController.runEditorContext(trmlContext.MvcContext);
+            base.openFile(file);
         }
 
         public void saveFile(String rcss, String file)
@@ -76,29 +68,6 @@ namespace Medical
             creatingNewFile(filePath);
             saveText(filePath, DefaultMasterPage);
             openFile(filePath);
-        }
-
-        void trmlContext_Focus(TRmlEditorContext obj)
-        {
-            trmlContext = obj;
-        }
-
-        void rcssContext_Blur(TRmlEditorContext obj)
-        {
-            updateCachedText(obj.CurrentFile, obj.CurrentText);
-            if (trmlContext == obj)
-            {
-                trmlContext = null;
-            }
-        }
-
-        void editorController_ProjectChanged(EditorController editorController)
-        {
-            closeCurrentCachedResource();
-            if (trmlContext != null)
-            {
-                trmlContext.close();
-            }
         }
 
         public const String DefaultMasterPage = @"<template name=""MasterTemplate"" content=""Content"">
