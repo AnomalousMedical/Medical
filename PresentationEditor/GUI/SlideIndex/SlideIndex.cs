@@ -6,6 +6,7 @@ using Medical.GUI;
 using Medical;
 using MyGUIPlugin;
 using System.IO;
+using Medical.Presentation;
 
 namespace PresentationEditor.GUI
 {
@@ -13,7 +14,7 @@ namespace PresentationEditor.GUI
     {
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
-        private const String Wildcard = "Anomalous Medical Presentation (*.amp)|*.amp;";
+        private const String Wildcard = "Anomalous Medical Presentation (*" + PresentationTypeController.PresentationExtension + ")|*" + PresentationTypeController.PresentationExtension + ";";
 
         //File Menu
         MenuBar menuBar;
@@ -23,8 +24,11 @@ namespace PresentationEditor.GUI
         MenuItem saveAll;
 
         private ButtonGrid buttonGrid;
+        private int lastWidth = -1;
+        private int lastHeight = -1;
 
         private EditorController editorController;
+        private PresentationIndex currentPresentation;
 
         public SlideIndex(EditorController editorController)
             :base("PresentationEditor.GUI.SlideIndex.SlideIndex.layout")
@@ -33,6 +37,7 @@ namespace PresentationEditor.GUI
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
 
             windowTitle = window.Caption;
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             buttonGrid = new ButtonGrid((ScrollView)window.findWidget("FileTableScroll"), new ButtonGridListLayout());
 
@@ -121,6 +126,7 @@ namespace PresentationEditor.GUI
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
                     editorController.openProject(Path.GetDirectoryName(fileDialog.Path));
+                    presentationIndexChanged(editorController.loadFile<PresentationIndex>(Path.GetFileName(fileDialog.Path)));
                 }
             }
         }
@@ -155,6 +161,63 @@ namespace PresentationEditor.GUI
             else
             {
                 window.Caption = windowTitle;
+            }
+        }
+
+        void presentationIndexChanged(PresentationIndex presentation)
+        {
+            if (currentPresentation != null)
+            {
+                currentPresentation.EntryAdded -= presentation_EntryAdded;
+                currentPresentation.EntryRemoved -= presentation_EntryRemoved;
+            }
+            buttonGrid.clear();
+            this.currentPresentation = presentation;
+            if (presentation != null)
+            {
+                presentation.EntryAdded += presentation_EntryAdded;
+                presentation.EntryRemoved += presentation_EntryRemoved;
+
+                buttonGrid.SuppressLayout = true;
+                foreach (PresentationEntry entry in presentation.Entries)
+                {
+                    addEntryToButtonGrid(entry);
+                }
+                buttonGrid.SuppressLayout = false;
+                buttonGrid.layout();
+            }
+        }
+
+        void presentation_EntryAdded(PresentationEntry obj)
+        {
+            addEntryToButtonGrid(obj);
+        }
+
+        void presentation_EntryRemoved(PresentationEntry obj)
+        {
+            removeEntryFromButtonGrid(obj);
+        }
+
+        private void addEntryToButtonGrid(PresentationEntry entry)
+        {
+            ButtonGridItem item = buttonGrid.addItem("", entry.UniqueName);
+            item.UserObject = entry;
+        }
+
+        private void removeEntryFromButtonGrid(PresentationEntry entry)
+        {
+            ButtonGridItem item = buttonGrid.findItemByUserObject(entry);
+            buttonGrid.removeItem(item);
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            //Layout only if size changes
+            if (window.Width != lastWidth || window.Height != lastHeight)
+            {
+                lastWidth = window.Width;
+                lastHeight = window.Height;
+                buttonGrid.layout();
             }
         }
     }

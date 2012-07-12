@@ -56,6 +56,7 @@ namespace PresentationEditor
             taskController.addTask(new MDIDialogOpenTask(slideIndex, "PresentationEditor.SlideIndex", "Presentation Editor", "StandaloneIcons/NoIcon", TaskMenuCategories.Editor));
 
             editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            editorController.addTypeController(new PresentationTypeController(editorController, standaloneController));
         }
 
         void editorController_ProjectChanged(EditorController editorController)

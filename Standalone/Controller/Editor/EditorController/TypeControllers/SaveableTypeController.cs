@@ -38,6 +38,11 @@ namespace Medical
             }
         }
 
+        public override Ret loadFile<Ret>(String filename)
+        {
+            return loadObject(filename) as Ret;
+        }
+
         public T loadObject(String filename)
         {
             //Check the cahce

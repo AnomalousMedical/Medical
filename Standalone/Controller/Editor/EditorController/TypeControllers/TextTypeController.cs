@@ -31,6 +31,11 @@ namespace Medical
             }
         }
 
+        public override T loadFile<T>(string file)
+        {
+            return loadText(file) as T;
+        }
+
         public String loadText(String filename)
         {
             //Check the cahce

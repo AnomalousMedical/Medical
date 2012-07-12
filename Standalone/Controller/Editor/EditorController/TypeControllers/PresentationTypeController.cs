@@ -12,11 +12,13 @@ namespace Medical
 {
     public class PresentationTypeController : SaveableTypeController<PresentationIndex>
     {
+        public const String PresentationExtension = ".amp";
+        private const String Icon = "EditorFileIcon/" + PresentationExtension;
+
         private StandaloneController standaloneController;
-        private const String Icon = "EditorFileIcon/.amp";
 
         public PresentationTypeController(EditorController editorController, StandaloneController standaloneController)
-            :base(".amp", editorController)
+            : base(PresentationExtension, editorController)
         {
             this.standaloneController = standaloneController;
         }

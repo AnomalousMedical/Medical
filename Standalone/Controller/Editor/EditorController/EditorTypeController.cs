@@ -21,6 +21,8 @@ namespace Medical
 
         public abstract void openEditor(String file);
 
+        public abstract T loadFile<T>(String file) where T : class;
+
         public abstract void closeFile(String file);
 
         public virtual void fileChanged(FileSystemEventArgs e, String extension)

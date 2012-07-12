@@ -125,6 +125,19 @@ namespace Medical
             }
         }
 
+        public T loadFile<T>(String file)
+            where T : class
+        {
+            String extension = Path.GetExtension(file).ToLowerInvariant();
+
+            EditorTypeController typeController;
+            if (typeControllers.TryGetValue(extension, out typeController))
+            {
+                return typeController.loadFile<T>(file);
+            }
+            return null;
+        }
+
         public void closeFile(String file)
         {
             String extension = Path.GetExtension(file).ToLowerInvariant();
