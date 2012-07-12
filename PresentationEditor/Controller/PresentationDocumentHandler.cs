@@ -3,37 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Medical;
 
-namespace Medical
+namespace PresentationEditor
 {
-    class ProjectDocumentHandler : DocumentHandler
+    class PresentationDocumentHandler : DocumentHandler
     {
         private EditorController editorController;
 
-        public ProjectDocumentHandler(EditorController editorController)
+        public PresentationDocumentHandler(EditorController editorController)
         {
             this.editorController = editorController;
         }
 
         public bool canReadFile(string filename)
         {
-            return Directory.Exists(filename);
+            return File.Exists(filename);
         }
 
         public bool processFile(string filename)
         {
-            editorController.openProject(filename, filename);
+            editorController.openProject(Path.GetDirectoryName(filename), filename);
             return true;
         }
 
         public string getPrettyName(string filename)
         {
-            return "Editor Project";
+            return "Presentation";
         }
 
         public string getIcon(string filename)
         {
-            return "TimelineEditorIcon";
+            return "StandaloneIcons/NoIcon";
         }
     }
 }

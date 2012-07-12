@@ -45,6 +45,7 @@ namespace PresentationEditor
 
             editorTimelineController = new TimelineController(standaloneController);
             editorController = new EditorController(standaloneController, editorTimelineController);
+            standaloneController.DocumentController.addDocumentHandler(new PresentationDocumentHandler(editorController));
 
             GUIManager guiManager = standaloneController.GUIManager;
 
@@ -55,11 +56,11 @@ namespace PresentationEditor
             TaskController taskController = standaloneController.TaskController;
             taskController.addTask(new MDIDialogOpenTask(slideIndex, "PresentationEditor.SlideIndex", "Presentation Editor", "StandaloneIcons/NoIcon", TaskMenuCategories.Editor));
 
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            editorController.ProjectChanged += editorController_ProjectChanged;
             editorController.addTypeController(new PresentationTypeController(editorController, standaloneController));
         }
 
-        void editorController_ProjectChanged(EditorController editorController)
+        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
             if (editorController.ResourceProvider != null)
             {

@@ -27,7 +27,7 @@ namespace Medical
         {
             propEditController = plugin.PropEditController;
             EditorController editorController = plugin.EditorController;
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            editorController.ProjectChanged += editorController_ProjectChanged;
 
             //MVC Type Controller
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
@@ -220,7 +220,7 @@ namespace Medical
             editorController.addTypeController(presentationTypeController);
         }
 
-        void editorController_ProjectChanged(EditorController editorController)
+        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
             if (mvcEditorContext != null)
             {

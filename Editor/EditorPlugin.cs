@@ -100,10 +100,10 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new MovementSequenceEditorFactory(standaloneController.MovementSequenceController, editorController, standaloneController.Clipboard));
             standaloneController.ViewHostFactory.addFactory(new SlideIndexComponentFactory());
 
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            editorController.ProjectChanged += editorController_ProjectChanged;
         }
 
-        void editorController_ProjectChanged(EditorController editorController)
+        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
             if (editorController.ResourceProvider != null)
             {

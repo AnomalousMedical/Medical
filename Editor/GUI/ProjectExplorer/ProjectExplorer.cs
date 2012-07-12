@@ -30,7 +30,7 @@ namespace Medical.GUI
             :base("Medical.GUI.ProjectExplorer.ProjectExplorer.layout")
         {
             this.editorController = editorController;
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            editorController.ProjectChanged += editorController_ProjectChanged;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -124,12 +124,12 @@ namespace Medical.GUI
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    editorController.openProject(Path.GetDirectoryName(fileDialog.Path));
+                    editorController.openProject(Path.GetDirectoryName(fileDialog.Path), fileDialog.Path);
                 }
             }
         }
 
-        void editorController_ProjectChanged(EditorController editorController)
+        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
             fileBrowser.setResourceProvider(editorController.ResourceProvider);
             if (editorController.ResourceProvider != null)

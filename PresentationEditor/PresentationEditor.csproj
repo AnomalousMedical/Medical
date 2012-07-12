@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PresentationDocumentHandler.cs" />
     <Compile Include="GUI\SlideIndex\SlideIndex.cs" />
     <Compile Include="PresentationEditorAtlasPluginEntryPoint.cs" />
     <Compile Include="PresentationEditorPlugin.cs" />
@@ -78,9 +79,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\PresentationEditorBrandingIcon.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

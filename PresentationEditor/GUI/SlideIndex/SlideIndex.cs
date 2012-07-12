@@ -34,7 +34,7 @@ namespace PresentationEditor.GUI
             :base("PresentationEditor.GUI.SlideIndex.SlideIndex.layout")
         {
             this.editorController = editorController;
-            editorController.ProjectChanged += new EditorControllerEvent(editorController_ProjectChanged);
+            editorController.ProjectChanged += editorController_ProjectChanged;
 
             windowTitle = window.Caption;
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
@@ -125,8 +125,7 @@ namespace PresentationEditor.GUI
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    editorController.openProject(Path.GetDirectoryName(fileDialog.Path));
-                    presentationIndexChanged(editorController.loadFile<PresentationIndex>(Path.GetFileName(fileDialog.Path)));
+                    editorController.openProject(Path.GetDirectoryName(fileDialog.Path), fileDialog.Path);
                 }
             }
         }
@@ -152,14 +151,16 @@ namespace PresentationEditor.GUI
             }
         }
 
-        void editorController_ProjectChanged(EditorController editorController)
+        void editorController_ProjectChanged(EditorController editorController, String fullFilePath)
         {
             if (editorController.ResourceProvider != null)
             {
                 window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
+                presentationIndexChanged(editorController.loadFile<PresentationIndex>(Path.GetFileName(fullFilePath)));
             }
             else
             {
+                presentationIndexChanged(null);
                 window.Caption = windowTitle;
             }
         }

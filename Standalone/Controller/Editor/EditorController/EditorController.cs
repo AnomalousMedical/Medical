@@ -15,8 +15,6 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical
 {
-    public delegate void EditorControllerEvent(EditorController editorController);
-
     public class EditorController : IDisposable
     {
         private static XmlSaver xmlSaver = new XmlSaver();
@@ -34,7 +32,10 @@ namespace Medical
         private EditorResourceProvider resourceProvider;
         private TimelineController timelineController;
 
-        public event EditorControllerEvent ProjectChanged;
+        /// <summary>
+        /// Called when the project changes. Will supply the full file path of the project (if one is loaded) in the second argument.
+        /// </summary>
+        public event Action<EditorController, String> ProjectChanged;
 
         public EditorController(StandaloneController standaloneController, TimelineController timelineController)
         {
@@ -69,7 +70,7 @@ namespace Medical
                 {
                     Directory.CreateDirectory(filename);
                 }
-                projectChanged(filename);
+                projectChanged(filename, filename);
                 projectTemplate.createProject(ResourceProvider, Path.GetFileName(filename));
                 standaloneController.DocumentController.addToRecentDocuments(filename);
             }
@@ -81,10 +82,10 @@ namespace Medical
             }
         }
 
-        public void openProject(String projectPath)
+        public void openProject(String projectPath, String fullFilePath)
         {
-            projectChanged(projectPath);
-            standaloneController.DocumentController.addToRecentDocuments(projectPath);
+            projectChanged(projectPath, fullFilePath);
+            standaloneController.DocumentController.addToRecentDocuments(fullFilePath);
         }
 
         public void closeProject()
@@ -94,7 +95,7 @@ namespace Medical
 
             if (ProjectChanged != null)
             {
-                ProjectChanged.Invoke(this);
+                ProjectChanged.Invoke(this, null);
             }
         }
 
@@ -250,7 +251,7 @@ namespace Medical
             }
         }
 
-        private void projectChanged(String projectPath)
+        private void projectChanged(String projectPath, String fullFilePath)
         {
             closeResourceProvider();
             resourceProvider = new EditorResourceProvider(projectPath);
@@ -258,7 +259,7 @@ namespace Medical
 
             if (ProjectChanged != null)
             {
-                ProjectChanged.Invoke(this);
+                ProjectChanged.Invoke(this, fullFilePath);
             }
         }
 
