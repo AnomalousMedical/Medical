@@ -15,21 +15,11 @@ namespace Medical
         public const String PresentationExtension = ".amp";
         private const String Icon = "EditorFileIcon/" + PresentationExtension;
 
-        private StandaloneController standaloneController;
 
-        public PresentationTypeController(EditorController editorController, StandaloneController standaloneController)
+        public PresentationTypeController(EditorController editorController)
             : base(PresentationExtension, editorController)
         {
-            this.standaloneController = standaloneController;
-        }
-
-        public void previewPresentation(PresentationIndex presentation)
-        {
-            AnomalousMvcContext presentationContext = presentation.buildMvcContext();
-            standaloneController.TimelineController.setResourceProvider(EditorController.ResourceProvider);
-            presentationContext.setResourceProvider(EditorController.ResourceProvider);
-            presentationContext.RuntimeName = "Editor.PreviewMvcContext";
-            standaloneController.MvcCore.startRunningContext(presentationContext);
+            
         }
 
         public void saveFile(PresentationIndex presentation, string file)

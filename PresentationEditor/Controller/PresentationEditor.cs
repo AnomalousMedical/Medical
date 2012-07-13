@@ -5,6 +5,7 @@ using System.Text;
 using Medical;
 using Medical.Presentation;
 using System.IO;
+using Medical.Controller.AnomalousMvc;
 
 namespace PresentationEditor
 {
@@ -18,14 +19,15 @@ namespace PresentationEditor
         private EditorController editorController;
         private PresentationIndex currentPresentation;
         private PresentationEntry selectedEntry;
-        private String presentationIndexFile;
+        private StandaloneController standaloneController;
 
         public event Action<PresentationEditor> CurrentPresentationChanged;
         public event Action<PresentationEditor> SelectedEntryChanged;
 
-        public PresentationEditor(EditorController editorController)
+        public PresentationEditor(EditorController editorController, StandaloneController standaloneController)
         {
             this.editorController = editorController;
+            this.standaloneController = standaloneController;
             editorController.ProjectChanged += editorController_ProjectChanged;
         }
 
@@ -175,7 +177,14 @@ namespace PresentationEditor
             return slide;            
         }
 
-
+        public void preview()
+        {
+            AnomalousMvcContext presentationContext = currentPresentation.buildMvcContext();
+            standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
+            presentationContext.setResourceProvider(editorController.ResourceProvider);
+            presentationContext.RuntimeName = "Editor.PreviewMvcContext";
+            standaloneController.MvcCore.startRunningContext(presentationContext);
+        }
 
         private const String DefaultRml = @"<rml>
 	<head>

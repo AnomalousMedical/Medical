@@ -75,6 +75,7 @@ namespace PresentationEditor
             //taskbar.addTask(new RunMvcContextActionTask("Image", "Image", "Editor/ImageIcon", "Edit", "Editor/Image", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("AddSlide", "Add Slide", "StandaloneIcons/NoIcon", "Edit", "Editor/AddSlide", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("RemoveSlide", "Remove Slide", "StandaloneIcons/NoIcon", "Edit", "Editor/RemoveSlide", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Preview", "Preview", "StandaloneIcons/NoIcon", "Edit", "Editor/Preview", mvcContext));
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("Editor",
@@ -145,6 +146,10 @@ namespace PresentationEditor
                     new CallbackAction("RemoveSlide", context =>
                     {
                         presentationEditor.removeSelectedEntry();
+                    }),
+                    new CallbackAction("Preview", context =>
+                    {
+                        presentationEditor.preview();
                     })
                 ));
 

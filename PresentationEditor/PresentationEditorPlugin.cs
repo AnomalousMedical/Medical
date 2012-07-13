@@ -52,7 +52,7 @@ namespace PresentationEditor
             editorController = new EditorController(standaloneController, editorTimelineController);
             standaloneController.DocumentController.addDocumentHandler(new PresentationDocumentHandler(editorController));
             editorController.ProjectChanged += editorController_ProjectChanged;
-            presentationController = new PresentationEditor(editorController);
+            presentationController = new PresentationEditor(editorController, standaloneController);
 
             medicalUICallback = new MedicalUICallback();
 
@@ -65,7 +65,7 @@ namespace PresentationEditor
             TaskController taskController = standaloneController.TaskController;
             taskController.addTask(new MDIDialogOpenTask(slideIndex, "PresentationEditor.SlideIndex", "Presentation Editor", "StandaloneIcons/NoIcon", TaskMenuCategories.Editor));
 
-            editorController.addTypeController(new PresentationTypeController(editorController, standaloneController));
+            editorController.addTypeController(new PresentationTypeController(editorController));
 
             standaloneController.initializeEditorCore();
 
