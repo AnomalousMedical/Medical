@@ -30,7 +30,7 @@ namespace PresentationEditor
             }
 
             PresentationIndex presentationIndex = new PresentationIndex();
-            PresentationController.AddSlide(presentationIndex, resourceProvider);
+            PresentationEditor.AddSlide(presentationIndex, resourceProvider);
             saveObject(presentationIndex, resourceProvider, getDefaultFileName(projectName));
         }
 

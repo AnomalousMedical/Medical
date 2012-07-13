@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\PresentationController.cs" />
+    <Compile Include="Controller\PresentationEditor.cs" />
     <Compile Include="Controller\PresentationProjectTemplate.cs" />
     <Compile Include="Controller\PresentationEditorConfig.cs" />
     <Compile Include="Controller\PresentationDocumentHandler.cs" />

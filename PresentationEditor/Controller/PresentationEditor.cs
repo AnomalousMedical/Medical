@@ -8,7 +8,7 @@ using System.IO;
 
 namespace PresentationEditor
 {
-    class PresentationController
+    class PresentationEditor
     {
         public event Action<PresentationEntry> SlideAdded;
         public event Action<PresentationEntry> SlideRemoved;
@@ -19,10 +19,10 @@ namespace PresentationEditor
         private PresentationIndex currentPresentation;
         private PresentationEntry selectedEntry;
 
-        public event Action<PresentationController> CurrentPresentationChanged;
-        public event Action<PresentationController> SelectedEntryChanged;
+        public event Action<PresentationEditor> CurrentPresentationChanged;
+        public event Action<PresentationEditor> SelectedEntryChanged;
 
-        public PresentationController(EditorController editorController)
+        public PresentationEditor(EditorController editorController)
         {
             this.editorController = editorController;
             editorController.ProjectChanged += editorController_ProjectChanged;

@@ -20,7 +20,7 @@ namespace PresentationEditor
         private EditorController editorController;
         private TimelineController editorTimelineController;
         private MedicalUICallback medicalUICallback;
-        private PresentationController presentationController;
+        private PresentationEditor presentationController;
 
         //Editor Contexts
         RmlSlideEditorContext rmlSlideEditorContext;
@@ -52,7 +52,7 @@ namespace PresentationEditor
             editorController = new EditorController(standaloneController, editorTimelineController);
             standaloneController.DocumentController.addDocumentHandler(new PresentationDocumentHandler(editorController));
             editorController.ProjectChanged += editorController_ProjectChanged;
-            presentationController = new PresentationController(editorController);
+            presentationController = new PresentationEditor(editorController);
 
             medicalUICallback = new MedicalUICallback();
 

@@ -33,7 +33,7 @@ namespace PresentationEditor
         private RmlTypeController rmlTypeController;
         private MedicalUICallback uiCallback;
 
-        public RmlSlideEditorContext(String file, PresentationController presentationController, RmlTypeController rmlTypeController, MedicalUICallback uiCallback)
+        public RmlSlideEditorContext(String file, PresentationEditor presentationEditor, RmlTypeController rmlTypeController, MedicalUICallback uiCallback)
         {
             this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
@@ -139,7 +139,7 @@ namespace PresentationEditor
                     }),
                     new CallbackAction("AddSlide", context =>
                     {
-                        presentationController.addSlide();
+                        presentationEditor.addSlide();
                     })
                 ));
 

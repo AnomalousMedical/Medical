@@ -27,15 +27,15 @@ namespace PresentationEditor.GUI
         private int lastWidth = -1;
         private int lastHeight = -1;
 
-        private PresentationController presentationController;
+        private PresentationEditor presentationEditor;
 
-        public SlideIndex(PresentationController presentationController)
+        public SlideIndex(PresentationEditor presentationEditor)
             :base("PresentationEditor.GUI.SlideIndex.SlideIndex.layout")
         {
-            this.presentationController = presentationController;
-            presentationController.CurrentPresentationChanged += new Action<PresentationController>(presentationController_CurrentPresentationChanged);
-            presentationController.SlideAdded += new Action<PresentationEntry>(presentationController_SlideAdded);
-            presentationController.SlideRemoved += new Action<PresentationEntry>(presentationController_SlideRemoved);
+            this.presentationEditor = presentationEditor;
+            presentationEditor.CurrentPresentationChanged += new Action<PresentationEditor>(presentationEditor_CurrentPresentationChanged);
+            presentationEditor.SlideAdded += new Action<PresentationEntry>(presentationEditor_SlideAdded);
+            presentationEditor.SlideRemoved += new Action<PresentationEntry>(presentationEditor_SlideRemoved);
 
             windowTitle = window.Caption;
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
@@ -62,7 +62,7 @@ namespace PresentationEditor.GUI
 
         void createNewProjectClicked(Widget source, EventArgs e)
         {
-            if (presentationController.ResourceProvider == null || presentationController.ResourceProvider.ResourceCache.Count == 0)
+            if (presentationEditor.ResourceProvider == null || presentationEditor.ResourceProvider.ResourceCache.Count == 0)
             {
                 showNewProjectDialog();
             }
@@ -72,7 +72,7 @@ namespace PresentationEditor.GUI
                 {
                     if (result == MessageBoxStyle.Ok)
                     {
-                        presentationController.saveAllCachedResources();
+                        presentationEditor.saveAllCachedResources();
                     }
                     showNewProjectDialog();
                 });
@@ -81,7 +81,7 @@ namespace PresentationEditor.GUI
 
         void showNewProjectDialog()
         {
-            presentationController.stopPlayingTimelines();
+            presentationEditor.stopPlayingTimelines();
             NewPresentationDialog.ShowDialog((fullProjectName) =>
             {
                 if (Directory.Exists(fullProjectName))
@@ -90,20 +90,20 @@ namespace PresentationEditor.GUI
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
-                            presentationController.createNewProject(fullProjectName, true);
+                            presentationEditor.createNewProject(fullProjectName, true);
                         }
                     });
                 }
                 else
                 {
-                    presentationController.createNewProject(fullProjectName, false);
+                    presentationEditor.createNewProject(fullProjectName, false);
                 }
             });
         }
 
         void openProjectClicked(Widget source, EventArgs e)
         {
-            if (presentationController.ResourceProvider == null || presentationController.ResourceProvider.ResourceCache.Count == 0)
+            if (presentationEditor.ResourceProvider == null || presentationEditor.ResourceProvider.ResourceCache.Count == 0)
             {
                 showOpenProjectDialog();
             }
@@ -113,7 +113,7 @@ namespace PresentationEditor.GUI
                 {
                     if (result == MessageBoxStyle.Ok)
                     {
-                        presentationController.saveAllCachedResources();
+                        presentationEditor.saveAllCachedResources();
                     }
                     showOpenProjectDialog();
                 });
@@ -122,12 +122,12 @@ namespace PresentationEditor.GUI
 
         void showOpenProjectDialog()
         {
-            presentationController.stopPlayingTimelines();
+            presentationEditor.stopPlayingTimelines();
             using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", Wildcard, false))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    presentationController.openProject(Path.GetDirectoryName(fileDialog.Path), fileDialog.Path);
+                    presentationEditor.openProject(Path.GetDirectoryName(fileDialog.Path), fileDialog.Path);
                 }
             }
         }
@@ -145,27 +145,27 @@ namespace PresentationEditor.GUI
             }
             else if (menuEventArgs.Item == saveAll)
             {
-                presentationController.saveAllCachedResources();
+                presentationEditor.saveAllCachedResources();
             }
             else if (menuEventArgs.Item == closeProject)
             {
-                presentationController.closeProject();
+                presentationEditor.closeProject();
             }
         }
 
-        void presentationController_CurrentPresentationChanged(PresentationController presentationController)
+        void presentationEditor_CurrentPresentationChanged(PresentationEditor presentationEditor)
         {
             buttonGrid.clear();
             buttonGrid.SuppressLayout = true;
-            foreach (PresentationEntry entry in presentationController.Entries)
+            foreach (PresentationEntry entry in presentationEditor.Entries)
             {
                 addEntryToButtonGrid(entry);
             }
             buttonGrid.SuppressLayout = false;
             buttonGrid.layout();
-            if (presentationController.ResourceProvider != null)
+            if (presentationEditor.ResourceProvider != null)
             {
-                window.Caption = String.Format(windowTitleFormat, windowTitle, presentationController.ResourceProvider.BackingLocation);
+                window.Caption = String.Format(windowTitleFormat, windowTitle, presentationEditor.ResourceProvider.BackingLocation);
             }
             else
             {
@@ -173,12 +173,12 @@ namespace PresentationEditor.GUI
             }
         }
 
-        void presentationController_SlideRemoved(PresentationEntry obj)
+        void presentationEditor_SlideRemoved(PresentationEntry obj)
         {
             removeEntryFromButtonGrid(obj);
         }
 
-        void presentationController_SlideAdded(PresentationEntry obj)
+        void presentationEditor_SlideAdded(PresentationEntry obj)
         {
             addEntryToButtonGrid(obj);
         }
@@ -215,11 +215,11 @@ namespace PresentationEditor.GUI
             if (buttonGrid.SelectedItem != null)
             {
                 PresentationEntry entry = (PresentationEntry)buttonGrid.SelectedItem.UserObject;
-                presentationController.SelectedEntry = entry;
+                presentationEditor.SelectedEntry = entry;
             }
             else
             {
-                presentationController.SelectedEntry = null;
+                presentationEditor.SelectedEntry = null;
             }
         }
     }
