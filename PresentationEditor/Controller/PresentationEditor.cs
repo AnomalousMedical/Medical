@@ -99,7 +99,7 @@ namespace PresentationEditor
                 CurrentPresentationChanged.Invoke(this);
             }
 
-            if (currentPresentation.Count > 0)
+            if (currentPresentation != null && currentPresentation.Count > 0)
             {
                 SelectedEntry = currentPresentation[0];
             }
