@@ -96,6 +96,11 @@ namespace PresentationEditor
             {
                 CurrentPresentationChanged.Invoke(this);
             }
+
+            if (currentPresentation.Count > 0)
+            {
+                SelectedEntry = currentPresentation[0];
+            }
         }
 
         public void stopPlayingTimelines()

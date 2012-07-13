@@ -36,6 +36,7 @@ namespace PresentationEditor.GUI
             presentationEditor.CurrentPresentationChanged += new Action<PresentationEditor>(presentationEditor_CurrentPresentationChanged);
             presentationEditor.SlideAdded += new Action<PresentationEntry>(presentationEditor_SlideAdded);
             presentationEditor.EntryRemoved += new Action<PresentationEntry>(presentationEditor_SlideRemoved);
+            presentationEditor.SelectedEntryChanged += new Action<PresentationEditor>(presentationEditor_SelectedEntryChanged);
 
             windowTitle = window.Caption;
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
@@ -187,10 +188,6 @@ namespace PresentationEditor.GUI
         {
             ButtonGridItem item = buttonGrid.addItem("", entry.UniqueName);
             item.UserObject = entry;
-            if (buttonGrid.Count == 1)
-            {
-                buttonGrid.SelectedItem = item;
-            }
         }
 
         private void removeEntryFromButtonGrid(PresentationEntry entry)
@@ -210,16 +207,36 @@ namespace PresentationEditor.GUI
             }
         }
 
+        bool allowSynchronization = true;
         void buttonGrid_SelectedValueChanged(object sender, EventArgs e)
         {
+            PresentationEntry entry = null;
             if (buttonGrid.SelectedItem != null)
             {
-                PresentationEntry entry = (PresentationEntry)buttonGrid.SelectedItem.UserObject;
-                presentationEditor.SelectedEntry = entry;
+                entry = (PresentationEntry)buttonGrid.SelectedItem.UserObject;
             }
-            else
+            synchronizeSelectedSlide(entry, buttonGrid);
+        }
+
+        void presentationEditor_SelectedEntryChanged(PresentationEditor obj)
+        {
+            synchronizeSelectedSlide(obj.SelectedEntry, obj);
+        }
+
+        private void synchronizeSelectedSlide(PresentationEntry entry, object sender)
+        {
+            if (allowSynchronization)
             {
-                presentationEditor.SelectedEntry = null;
+                allowSynchronization = false;
+                if (sender != presentationEditor)
+                {
+                    presentationEditor.SelectedEntry = entry;
+                }
+                if (sender != buttonGrid)
+                {
+                    buttonGrid.SelectedItem = buttonGrid.findItemByUserObject(entry);
+                }
+                allowSynchronization = true;
             }
         }
     }
