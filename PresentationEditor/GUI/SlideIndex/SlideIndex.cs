@@ -35,7 +35,7 @@ namespace PresentationEditor.GUI
             this.presentationEditor = presentationEditor;
             presentationEditor.CurrentPresentationChanged += new Action<PresentationEditor>(presentationEditor_CurrentPresentationChanged);
             presentationEditor.SlideAdded += new Action<PresentationEntry>(presentationEditor_SlideAdded);
-            presentationEditor.SlideRemoved += new Action<PresentationEntry>(presentationEditor_SlideRemoved);
+            presentationEditor.EntryRemoved += new Action<PresentationEntry>(presentationEditor_SlideRemoved);
 
             windowTitle = window.Caption;
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);

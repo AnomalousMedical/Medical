@@ -29,6 +29,11 @@ namespace Medical.Presentation
             entries.Remove(entry);
         }
 
+        public int indexOf(PresentationEntry entry)
+        {
+            return entries.IndexOf(entry);
+        }
+
         public AnomalousMvcContext buildMvcContext()
         {
             AnomalousMvcContext mvcContex = new AnomalousMvcContext();
@@ -69,6 +74,22 @@ namespace Medical.Presentation
             get
             {
                 return entries;
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                return entries.Count;
+            }
+        }
+
+        public PresentationEntry this[int index]
+        {
+            get
+            {
+                return entries[index];
             }
         }
 
