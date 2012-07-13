@@ -15,7 +15,6 @@ namespace Medical
         private MvcEditorContext mvcEditorContext;
         private MovementSequenceEditorContext movementSequenceEditorContext;
         private PluginEditorContext pluginEditorContext;
-        private PresentationEditorContext presentationEditorContext;
         private TimelineEditorContext timelineEditorContext;
         private RmlEditorContext rmlEditorContext;
         private RcssEditorContext rcssEditorContext;
@@ -198,26 +197,6 @@ namespace Medical
                     editorController.runEditorContext(timelineEditorContext.MvcContext);
                 };
             editorController.addTypeController(timelineTypeController);
-
-            //Presentation type controller
-            PresentationTypeController presentationTypeController = new PresentationTypeController(editorController, standaloneController);
-            presentationTypeController.OpenEditor += (file, presentation) =>
-            {
-                presentationEditorContext = new PresentationEditorContext(presentation, file, presentationTypeController);
-                presentationEditorContext.Focused += obj =>
-                    {
-                        presentationEditorContext = obj;
-                    };
-                presentationEditorContext.Blured += obj =>
-                    {
-                        if (presentationEditorContext == obj)
-                        {
-                            presentationEditorContext = null;
-                        }
-                    };
-                editorController.runEditorContext(presentationEditorContext.MvcContext);
-            };
-            editorController.addTypeController(presentationTypeController);
         }
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
@@ -234,10 +213,6 @@ namespace Medical
             {
                 pluginEditorContext.close();
             }
-            if (presentationEditorContext != null)
-            {
-                presentationEditorContext.close();
-            } 
             if (timelineEditorContext != null)
             {
                 timelineEditorContext.close();

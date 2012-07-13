@@ -639,6 +639,7 @@
     </Compile>
     <Compile Include="Utility\DocumentBuilder.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
+    <Compile Include="Utility\EmptyIterator.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
   </ItemGroup>
   <ItemGroup>

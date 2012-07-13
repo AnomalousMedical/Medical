@@ -30,9 +30,7 @@ namespace PresentationEditor
             }
 
             PresentationIndex presentationIndex = new PresentationIndex();
-            SlideEntry slide = new SlideEntry();
-            presentationIndex.addEntry(slide);
-            slide.createFile(resourceProvider);
+            PresentationController.AddSlide(presentationIndex, resourceProvider);
             saveObject(presentationIndex, resourceProvider, getDefaultFileName(projectName));
         }
 

@@ -79,7 +79,6 @@
   <ItemGroup>
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\MovementSequenceEditorContext.cs" />
-    <Compile Include="Controller\PresentationEditorContext.cs" />
     <Compile Include="Controller\TRmlEditorContext.cs" />
     <Compile Include="Controller\PluginEditorContext.cs" />
     <Compile Include="Controller\MvcEditorContext.cs" />
@@ -149,9 +148,6 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
-    <Compile Include="GUI\SlideIndex\SlideIndex.cs" />
-    <Compile Include="GUI\SlideIndex\SlideIndexComponentFactory.cs" />
-    <Compile Include="GUI\SlideIndex\SlideIndexView.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponent.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponentFactory.cs" />
     <Compile Include="GUI\TextEditor\TextEditorView.cs" />
@@ -200,7 +196,6 @@
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
-    <EmbeddedResource Include="GUI\SlideIndex\SlideIndex.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\PropTimeline.layout" />

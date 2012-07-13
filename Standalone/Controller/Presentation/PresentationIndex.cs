@@ -13,9 +13,6 @@ namespace Medical.Presentation
         private List<PresentationEntry> entries = new List<PresentationEntry>();
         private ulong uniqueNameIndex = 0;
 
-        public event Action<PresentationEntry> EntryAdded;
-        public event Action<PresentationEntry> EntryRemoved;
-
         public PresentationIndex()
         {
 
@@ -24,20 +21,11 @@ namespace Medical.Presentation
         public void addEntry(PresentationEntry entry)
         {
             entry.UniqueName = "Entry" + uniqueNameIndex++;
-
             entries.Add(entry);
-            if (EntryAdded != null)
-            {
-                EntryAdded.Invoke(entry);
-            }
         }
 
         public void removeEntry(PresentationEntry entry)
         {
-            if (EntryRemoved != null)
-            {
-                EntryRemoved.Invoke(entry);
-            }
             entries.Remove(entry);
         }
 

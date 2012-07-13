@@ -11,6 +11,8 @@ using Medical.Platform;
 using Engine.Platform;
 using Medical.Editor;
 using Medical;
+using PresentationEditor.GUI;
+using Medical.Presentation;
 
 namespace PresentationEditor
 {
@@ -31,7 +33,7 @@ namespace PresentationEditor
         private RmlTypeController rmlTypeController;
         private MedicalUICallback uiCallback;
 
-        public RmlSlideEditorContext(String file, RmlTypeController rmlTypeController, MedicalUICallback uiCallback)
+        public RmlSlideEditorContext(String file, PresentationController presentationController, RmlTypeController rmlTypeController, MedicalUICallback uiCallback)
         {
             this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
@@ -60,24 +62,25 @@ namespace PresentationEditor
             };
             mvcContext.Views.add(rmlView);
 
-            //EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
-            //taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
+            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
+            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Paragraph", "Paragraph", "Editor/ParagraphsIcon", "Edit", "Editor/Paragraph", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Header", "Header", "Editor/HeaderIcon", "Edit", "Editor/Header", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Paragraph", "Paragraph", "Editor/ParagraphsIcon", "Edit", "Editor/Paragraph", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Header", "Header", "Editor/HeaderIcon", "Edit", "Editor/Header", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "Editor/LinksIcon", "Edit", "Editor/ActionLink", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("Button", "Button", "Editor/AddButtonIcon", "Edit", "Editor/Button", mvcContext));
             //taskbar.addTask(new RunMvcContextActionTask("Image", "Image", "Editor/ImageIcon", "Edit", "Editor/Image", mvcContext));
-            //mvcContext.Views.add(taskbar);
+            taskbar.addTask(new RunMvcContextActionTask("AddSlide", "Add Slide", "StandaloneIcons/NoIcon", "Edit", "Editor/AddSlide", mvcContext));
+            mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("Editor",
                 new RunCommandsAction("Show",
-                    new ShowViewCommand("RmlView")
+                    new ShowViewCommand("RmlView"),
                     //new ShowViewCommand("RmlEditor"),
-                    //new ShowViewCommand("InfoBar")
+                    new ShowViewCommand("InfoBar")
                     ),
                 new RunCommandsAction("Close", new CloseAllViewsCommand()),
                 new CallbackAction("Save", context =>
@@ -133,7 +136,12 @@ namespace PresentationEditor
                         //    rmlComponent.insertImage(result);
                         //    return true;
                         //});
-                    })));
+                    }),
+                    new CallbackAction("AddSlide", context =>
+                    {
+                        presentationController.addSlide();
+                    })
+                ));
 
             mvcContext.Controllers.add(new MvcController("Common",
                 new RunCommandsAction("Start", new RunActionCommand("Editor/Show")),
@@ -202,14 +210,8 @@ namespace PresentationEditor
             {
                 rmlComponent.aboutToSaveRml();
             }
-            if (rmlComponent != null)
-            {
-                rmlTypeController.saveFile(rmlComponent.CurrentRml, currentFile);
-                if (rmlComponent != null)
-                {
-                    rmlComponent.reloadDocument(currentFile);
-                }
-            }
+            rmlTypeController.updateCachedText(currentFile, rmlComponent.CurrentRml);
+            rmlTypeController.EditorController.saveAllCachedResources();
         }
     }
 }

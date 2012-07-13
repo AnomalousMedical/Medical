@@ -5,26 +5,31 @@ using System.Text;
 using Medical.GUI.AnomalousMvc;
 using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
+using Medical;
 
-namespace Medical.GUI
+namespace PresentationEditor.GUI
 {
-    class SlideIndexComponentFactory : ViewHostComponentFactory
+    class EditorTaskbarFactory : ViewHostComponentFactory
     {
+        private EditorController editorController;
+
+        public EditorTaskbarFactory(EditorController editorController)
+        {
+            this.editorController = editorController;
+        }
+
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            if (view is SlideIndexView)
+            if (view is EditorTaskbarView)
             {
-                SlideIndexView slideIndexView = (SlideIndexView)view;
-                SlideIndex component = new SlideIndex(viewHost, slideIndexView);
-                slideIndexView._fireComponentCreated(component);
-                return component;
+                return new EditorTaskbar((EditorTaskbarView)view, viewHost, editorController);
             }
             return null;
         }
 
         public void createViewBrowser(Browser browser)
         {
-
+            
         }
     }
 }

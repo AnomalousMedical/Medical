@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout" version="3.2.0">
-    <Widget type="ScrollView" skin="ScrollView" position="180 84 200 267" layer="Back">
-        <Property key="CanvasAlign" value="Left Top"/>
-    </Widget>
-</MyGUI>

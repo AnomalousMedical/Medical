@@ -32,10 +32,12 @@ namespace Medical
         private EditorResourceProvider resourceProvider;
         private TimelineController timelineController;
 
+        public delegate void ProjectChangedEvent(EditorController editorController, String fullFilePath);
+
         /// <summary>
         /// Called when the project changes. Will supply the full file path of the project (if one is loaded) in the second argument.
         /// </summary>
-        public event Action<EditorController, String> ProjectChanged;
+        public event ProjectChangedEvent ProjectChanged;
 
         public EditorController(StandaloneController standaloneController, TimelineController timelineController)
         {

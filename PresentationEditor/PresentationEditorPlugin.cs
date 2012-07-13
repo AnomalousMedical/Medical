@@ -20,6 +20,7 @@ namespace PresentationEditor
         private EditorController editorController;
         private TimelineController editorTimelineController;
         private MedicalUICallback medicalUICallback;
+        private PresentationController presentationController;
 
         //Editor Contexts
         RmlSlideEditorContext rmlSlideEditorContext;
@@ -51,12 +52,13 @@ namespace PresentationEditor
             editorController = new EditorController(standaloneController, editorTimelineController);
             standaloneController.DocumentController.addDocumentHandler(new PresentationDocumentHandler(editorController));
             editorController.ProjectChanged += editorController_ProjectChanged;
+            presentationController = new PresentationController(editorController);
 
             medicalUICallback = new MedicalUICallback();
 
             GUIManager guiManager = standaloneController.GUIManager;
 
-            slideIndex = new SlideIndex(editorController);
+            slideIndex = new SlideIndex(presentationController);
             guiManager.addManagedDialog(slideIndex);
 
             //Tasks
@@ -71,7 +73,7 @@ namespace PresentationEditor
             RmlTypeController rmlTypeController = new RmlTypeController(editorController);
             rmlTypeController.OpenEditor += file =>
                 {
-                    rmlSlideEditorContext = new RmlSlideEditorContext(file, rmlTypeController, medicalUICallback);
+                    rmlSlideEditorContext = new RmlSlideEditorContext(file, presentationController, rmlTypeController, medicalUICallback);
                     rmlSlideEditorContext.Focus += obj =>
                         {
                             rmlSlideEditorContext = obj;
@@ -87,6 +89,9 @@ namespace PresentationEditor
                     editorController.runEditorContext(rmlSlideEditorContext.MvcContext);
                 };
             editorController.addTypeController(rmlTypeController);
+
+            //TEMP
+            standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
         }
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
