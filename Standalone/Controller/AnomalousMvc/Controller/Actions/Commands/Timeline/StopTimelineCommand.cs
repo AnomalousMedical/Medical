@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class StopTimelineCommand : ActionCommand
+    public class StopTimelineCommand : ActionCommand
     {
         public StopTimelineCommand()
         {

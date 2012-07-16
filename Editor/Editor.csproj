@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\MovementSequenceEditorContext.cs" />
+    <Compile Include="Controller\Project\QuestionAppProjectTemplate.cs" />
     <Compile Include="Controller\TRmlEditorContext.cs" />
     <Compile Include="Controller\PluginEditorContext.cs" />
     <Compile Include="Controller\MvcEditorContext.cs" />

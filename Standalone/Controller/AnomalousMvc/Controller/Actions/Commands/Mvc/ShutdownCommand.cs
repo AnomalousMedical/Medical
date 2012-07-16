@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ShutdownCommand : ActionCommand
+    public class ShutdownCommand : ActionCommand
     {
         public ShutdownCommand()
         {
