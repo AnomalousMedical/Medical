@@ -57,6 +57,11 @@ namespace Medical
             }
         }
 
+        public void addAdditionalPluginFile(String file)
+        {
+            plugins.Add(file);
+        }
+
         public IEnumerable<String> Plugins
         {
             get

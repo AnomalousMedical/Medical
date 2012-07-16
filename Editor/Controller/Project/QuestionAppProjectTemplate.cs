@@ -17,14 +17,6 @@ namespace Medical
 
         public void createProject(EditorResourceProvider resourceProvider, string projectName)
         {
-            //using (Stream writeStream = resourceProvider.openWriteStream(MvcContextName))
-            //{
-            //    using (Stream resourceStream = GetType().Assembly.GetManifestResourceStream("Medical.Controller.Project.SimpleMvcContext.mvc"))
-            //    {
-            //        resourceStream.CopyTo(writeStream, 4096);
-            //    }
-            //}
-
             AnomalousMvcContext mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Startup";
             mvcContext.ShutdownAction = "Common/Shutdown";

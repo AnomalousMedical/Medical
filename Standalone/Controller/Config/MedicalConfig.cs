@@ -236,6 +236,18 @@ namespace Medical
             }
         }
 
+        public static bool FirstRun
+        {
+            get
+            {
+                return program.getValue("FirstRun", true);
+            }
+            set
+            {
+                program.setValue("FirstRun", value);
+            }
+        }
+
         public static String LicenseServerURL { get; private set; }
 
         public static String HelpURL { get; private set; }

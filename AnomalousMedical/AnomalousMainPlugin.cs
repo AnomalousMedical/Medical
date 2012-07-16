@@ -175,6 +175,16 @@ namespace Medical.GUI
         public void sceneRevealed()
         {
             UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.App.LicenseManager);
+
+            if (MedicalConfig.FirstRun)
+            {
+                MedicalConfig.FirstRun = false;
+                Task introTask = standaloneController.TaskController.getTask("DDPlugin.IntroductionTutorial.Task");
+                if (introTask != null)
+                {
+                    introTask.clicked(null);
+                }
+            }
         }
 
         public long PluginId

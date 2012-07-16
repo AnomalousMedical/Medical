@@ -217,6 +217,7 @@ namespace Medical
 
         private void addPlugins()
         {
+            MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
             controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(LicenseManager, this));
             MedicalConfig.PluginConfig.findRegularPlugins();
             foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
