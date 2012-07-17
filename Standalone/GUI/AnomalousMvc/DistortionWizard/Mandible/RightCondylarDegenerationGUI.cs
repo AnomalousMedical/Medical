@@ -23,7 +23,7 @@ namespace Medical.GUI.AnomalousMvc
         GridPropertiesControl gridPropertiesControl;
 
         public RightCondylarDegenerationGUI(RightCondylarDegenerationView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.DistortionWizards.Mandible.RightCondylarDegenerationGUI.layout", wizardView, context, viewHost)
+            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Mandible.RightCondylarDegenerationGUI.layout", wizardView, context, viewHost)
         {
             rightCondyleDegenerationSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleDegen/CondyleSlider") as ScrollBar);
             rightLateralPoleSlider = new BoneManipulatorSlider(widget.findWidget("RightCondyleDegen/LateralPoleSlider") as ScrollBar);
