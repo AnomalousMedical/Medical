@@ -58,9 +58,12 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            editorController.ResourceProvider.ResourceCache.CachedResourceAdded -= ResourceCache_CachedResourceAdded;
-            editorController.ResourceProvider.FileRenamed -= ResourceProvider_FileRenamed;
-            editorController.ResourceProvider.FileDeleted -= ResourceProvider_FileDeleted;
+            if (editorController.ResourceProvider != null)
+            {
+                editorController.ResourceProvider.ResourceCache.CachedResourceAdded -= ResourceCache_CachedResourceAdded;
+                editorController.ResourceProvider.FileRenamed -= ResourceProvider_FileRenamed;
+                editorController.ResourceProvider.FileDeleted -= ResourceProvider_FileDeleted;
+            }
             clearFileTabs();
             base.Dispose();
         }

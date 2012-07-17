@@ -88,6 +88,7 @@ namespace PresentationEditor
             if (editorController.ResourceProvider != null)
             {
                 this.currentPresentation = editorController.loadFile<PresentationIndex>(Path.GetFileName(fullFilePath));
+                standaloneController.DocumentController.addToRecentDocuments(fullFilePath);
             }
             else
             {

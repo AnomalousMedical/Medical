@@ -101,7 +101,6 @@ namespace Medical
             closeResourceProvider();
             openResourceProvider(projectPath);
             projectChanged(fullFilePath);
-            standaloneController.DocumentController.addToRecentDocuments(fullFilePath);
         }
 
         public void closeProject()

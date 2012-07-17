@@ -21,9 +21,11 @@ namespace Medical
         private TRmlEditorContext trmlEditorContext;
 
         private PropEditController propEditController;
+        private StandaloneController standaloneController;
 
         public TypeControllerManager(StandaloneController standaloneController, EditorPlugin plugin)
         {
+            this.standaloneController = standaloneController;
             propEditController = plugin.PropEditController;
             EditorController editorController = plugin.EditorController;
             editorController.ProjectChanged += editorController_ProjectChanged;
@@ -232,6 +234,7 @@ namespace Medical
 
             if (editorController.ResourceProvider != null)
             {
+                standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.BackingLocation);
                 //Try to open a default mvc context
                 String mvcFile = "MvcContext.mvc";
                 if (editorController.ResourceProvider.exists(mvcFile))
