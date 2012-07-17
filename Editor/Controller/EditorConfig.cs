@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    class EditorConfig
+    static class EditorConfig
     {
         static EditorConfig()
         {

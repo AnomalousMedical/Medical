@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\DeveloperConfig.cs" />
     <Compile Include="Controller\PluginPublishController.cs" />
     <Compile Include="Controller\ZipStatusTextWriter.cs" />
     <Compile Include="DeveloperAtlasPlugin.cs" />

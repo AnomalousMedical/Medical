@@ -27,7 +27,9 @@ namespace Developer.GUI
 
             pluginFileEdit = (EditBox)window.findWidget("PluginFileEdit");
             signatureFileEdit = (EditBox)window.findWidget("SignatureFileEdit");
+            signatureFileEdit.Caption = DeveloperConfig.LastPluginKey;
             outDirEdit = (EditBox)window.findWidget("OutDirEdit");
+            outDirEdit.Caption = DeveloperConfig.LastPluginExportDirectory;
 
             Button pluginFileBrowser = (Button)window.findWidget("PluginFileBrowser");
             pluginFileBrowser.MouseButtonClick += new MyGUIEvent(pluginFileBrowser_MouseButtonClick);
@@ -45,6 +47,8 @@ namespace Developer.GUI
         void publishButton_MouseButtonClick(Widget source, EventArgs e)
         {
             pluginPublishController.publishPlugin(pluginFileEdit.OnlyText, signatureFileEdit.OnlyText, outDirEdit.OnlyText);
+            DeveloperConfig.LastPluginExportDirectory = outDirEdit.OnlyText;
+            DeveloperConfig.LastPluginKey = signatureFileEdit.OnlyText;
         }
 
         void outDirBrowser_MouseButtonClick(Widget source, EventArgs e)
