@@ -59,6 +59,7 @@ Source: S:\Medical\Release\WinMTDriver.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Zip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
 
 Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ; DirectX 9.0
