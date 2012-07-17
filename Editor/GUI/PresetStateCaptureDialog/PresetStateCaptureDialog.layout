@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Window" skin="Window" position="266 113 210 222" layer="Overlapped">
-        <Property key="Widget_Caption" value="Preset Medical State Editor"/>
+        <Property key="Caption" value="Preset Medical State Editor"/>
         <Widget type="Button" skin="CheckBox" position="3 29 100 21" name="LeftDisc">
-            <Property key="Widget_Caption" value="Left Disc"/>
+            <Property key="Caption" value="Left Disc"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 0 197 28">
-            <Property key="Widget_Caption" value="Capture the selected objects\nInto a Medical State Preset."/>
+            <Property key="Caption" value="Capture the selected objects\nInto a Medical State Preset."/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="3 52 100 21" name="RightDisc">
-            <Property key="Widget_Caption" value="Right Disc"/>
+            <Property key="Caption" value="Right Disc"/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="3 73 100 21" name="LeftFossa">
-            <Property key="Widget_Caption" value="Left Fossa"/>
+            <Property key="Caption" value="Left Fossa"/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="3 94 100 21" name="RightFossa">
-            <Property key="Widget_Caption" value="Right Fossa"/>
+            <Property key="Caption" value="Right Fossa"/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="3 115 100 21" name="Mandible">
-            <Property key="Widget_Caption" value="Mandible"/>
+            <Property key="Caption" value="Mandible"/>
         </Widget>
         <Widget type="Button" skin="CheckBox" position="3 136 100 21" name="Teeth">
-            <Property key="Widget_Caption" value="Teeth"/>
+            <Property key="Caption" value="Teeth"/>
         </Widget>
         <Widget type="Button" skin="Button" position="1 158 73 26" name="Capture">
-            <Property key="Widget_Caption" value="Capture"/>
+            <Property key="Caption" value="Capture"/>
         </Widget>
         <Widget type="Button" skin="Button" position="124 158 73 26" name="Cancel">
-            <Property key="Widget_Caption" value="Cancel"/>
+            <Property key="Caption" value="Cancel"/>
         </Widget>
     </Widget>
 </MyGUI>

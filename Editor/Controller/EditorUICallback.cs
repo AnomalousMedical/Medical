@@ -50,7 +50,7 @@ namespace Medical
                 }
             });
 
-            this.addCustomQuery<CompoundPresetState>(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, delegate(SendResult<CompoundPresetState> resultCallback)
+            this.addCustomQuery<PresetState>(ChangeMedicalStateCommand.CustomEditQueries.CapturePresetState, delegate(SendResult<PresetState> resultCallback)
             {
                 PresetStateCaptureDialog stateCaptureDialog = new PresetStateCaptureDialog(resultCallback);
                 stateCaptureDialog.SmoothShow = true;

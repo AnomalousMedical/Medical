@@ -16,9 +16,9 @@ namespace Medical.GUI
         private CheckButton mandible;
         private CheckButton teeth;
 
-        private SendResult<CompoundPresetState> resultCallback;
+        private SendResult<PresetState> resultCallback;
 
-        public PresetStateCaptureDialog(SendResult<CompoundPresetState> resultCallback)
+        public PresetStateCaptureDialog(SendResult<PresetState> resultCallback)
             :base("Medical.GUI.PresetStateCaptureDialog.PresetStateCaptureDialog.layout")
         {
             this.resultCallback = resultCallback;
@@ -29,6 +29,13 @@ namespace Medical.GUI
             rightFossa = new CheckButton((Button)window.findWidget("RightFossa"));
             mandible = new CheckButton((Button)window.findWidget("Mandible"));
             teeth = new CheckButton((Button)window.findWidget("Teeth"));
+
+            leftDisc.Checked = true;
+            rightDisc.Checked = true;
+            leftFossa.Checked = true; 
+            rightFossa.Checked = true;
+            mandible.Checked = true;
+            teeth.Checked = true;
 
             Button captureButton = (Button)window.findWidget("Capture");
             captureButton.MouseButtonClick += new MyGUIEvent(captureButton_MouseButtonClick);
