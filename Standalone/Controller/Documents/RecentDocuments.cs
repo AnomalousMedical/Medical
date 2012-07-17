@@ -12,7 +12,7 @@ namespace Medical
 
     public class RecentDocuments : IEnumerable<String>
     {
-        private const int MAX_DOCUMENTS = 9;
+        private const int MAX_DOCUMENTS = 50;
 
         public event RecentDocumentEvent DocumentAdded;
         public event RecentDocumentEvent DocumentRemoved;
@@ -82,9 +82,10 @@ namespace Medical
 
         public void addDocument(String file)
         {
-            if (recentDocumentList.Contains(file))
+            int index = recentDocumentList.IndexOf(file);
+            if (index != -1)
             {
-                recentDocumentList.Remove(file);
+                recentDocumentList.RemoveAt(index);
                 recentDocumentList.Insert(0, file);
                 if (DocumentReaccessed != null)
                 {
