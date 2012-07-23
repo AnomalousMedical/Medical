@@ -207,7 +207,7 @@ namespace Medical.GUI
 
                 contextMenu.add(new ContextMenuItem("Add Item", path, delegate(ContextMenuItem item)
                 {
-                    AddItemDialog.AddItem(path, editorController, null);
+                    AddItemDialog.AddItem(path, editorController);
                 }));
 
                 contextMenu.add(new ContextMenuItem("Import Files", path, delegate(ContextMenuItem item)

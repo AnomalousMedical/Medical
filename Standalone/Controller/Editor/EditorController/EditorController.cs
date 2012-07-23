@@ -32,6 +32,8 @@ namespace Medical
         private EditorResourceProvider resourceProvider;
         private TimelineController timelineController;
 
+        private List<ProjectItemTemplate> itemTemplates = new List<ProjectItemTemplate>();
+
         public delegate void ProjectChangedEvent(EditorController editorController, String fullFilePath);
 
         /// <summary>
@@ -53,9 +55,19 @@ namespace Medical
             }
         }
 
+        public void addItemTemplate(ProjectItemTemplate itemTemplate)
+        {
+            itemTemplates.Add(itemTemplate);
+        }
+
         public void addTypeController(EditorTypeController typeController)
         {
             typeControllers.Add(typeController.Extension, typeController);
+            ProjectItemTemplate itemTemplate = typeController.createItemTemplate();
+            if (itemTemplate != null)
+            {
+                addItemTemplate(itemTemplate);
+            }
         }
 
         public void createNewProject(String projectDirectory, bool deleteOld, ProjectTemplate projectTemplate)
@@ -195,19 +207,19 @@ namespace Medical
             importConflictedFiles(conflictedFiles, targetPath);
         }
 
+        public IEnumerable<ProjectItemTemplate> ItemTemplates
+        {
+            get
+            {
+                return itemTemplates;
+            }
+        }
+
         public EditorResourceProvider ResourceProvider
         {
             get
             {
                 return resourceProvider;
-            }
-        }
-
-        public IEnumerable<EditorTypeController> TypeControllers
-        {
-            get
-            {
-                return typeControllers.Values;
             }
         }
 

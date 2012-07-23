@@ -45,25 +45,31 @@ namespace Medical
             return new ProjectItemTemplateDelegate("Rml File", Icon, "File", delegate(String path, String fileName, EditorController editorController)
             {
                 String filePath = Path.Combine(path, fileName);
-                filePath = Path.ChangeExtension(filePath, ".rml");
-                if (EditorController.ResourceProvider.exists(filePath))
-                {
-                    MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
-                    {
-                        if (overrideResult == MessageBoxStyle.Yes)
-                        {
-                            createNewRmlFile(filePath);
-                        }
-                    });
-                }
-                else
-                {
-                    createNewRmlFile(filePath);
-                }
+                createRmlFileSafely(filePath);
             });
         }
 
-        void createNewRmlFile(String filePath)
+        public String createRmlFileSafely(String filePath)
+        {
+            filePath = Path.ChangeExtension(filePath, ".rml");
+            if (EditorController.ResourceProvider.exists(filePath))
+            {
+                MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
+                {
+                    if (overrideResult == MessageBoxStyle.Yes)
+                    {
+                        createNewRmlFile(filePath);
+                    }
+                });
+            }
+            else
+            {
+                createNewRmlFile(filePath);
+            }
+            return filePath;
+        }
+
+        private void createNewRmlFile(String filePath)
         {
             creatingNewFile(filePath);
             saveText(filePath, defaultRml);

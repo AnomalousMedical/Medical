@@ -8,17 +8,13 @@ namespace Medical.GUI
 {
     class AddItemDialog : Dialog
     {
-        public static void AddItem(String path, EditorController editorController, MedicalUICallback uiCallback)
+        public static void AddItem(String path, EditorController editorController)
         {
-            AddItemDialog addItemDialog = new AddItemDialog(uiCallback);
+            AddItemDialog addItemDialog = new AddItemDialog();
 
-            foreach (EditorTypeController typeController in editorController.TypeControllers)
+            foreach (ProjectItemTemplate itemTemplate in editorController.ItemTemplates)
             {
-                ProjectItemTemplate itemTemplate = typeController.createItemTemplate();
-                if (itemTemplate != null)
-                {
-                    addItemDialog.addItemTemplate(itemTemplate);
-                }
+                addItemDialog.addItemTemplate(itemTemplate);
             }
 
             addItemDialog.CreateItem += (itemTemplate) =>
@@ -40,13 +36,13 @@ namespace Medical.GUI
         private ButtonGrid itemGrid;
         public event Action<ProjectItemTemplate> CreateItem;
 
-        protected AddItemDialog(MedicalUICallback uiCallback)
+        protected AddItemDialog()
             :base("Medical.GUI.AddItemDialog.AddItemDialog.layout")
         {
             itemGrid = new ButtonGrid((ScrollView)window.findWidget("ItemList"), new ButtonGridListLayout());
             itemGrid.SelectedValueChanged += new EventHandler(itemGrid_SelectedValueChanged);
 
-            expandingView = new ScrollingExpandingEditInterfaceViewer((ScrollView)window.findWidget("ItemProperties"), uiCallback);
+            expandingView = new ScrollingExpandingEditInterfaceViewer((ScrollView)window.findWidget("ItemProperties"), null);
 
             Button add = (Button)window.findWidget("Add");
             add.MouseButtonClick += new MyGUIEvent(add_MouseButtonClick);

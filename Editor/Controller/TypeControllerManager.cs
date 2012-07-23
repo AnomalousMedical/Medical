@@ -20,6 +20,10 @@ namespace Medical
         private RcssEditorContext rcssEditorContext;
         private TRmlEditorContext trmlEditorContext;
 
+        //Type controllers
+        private RmlTypeController rmlTypeController;
+        private MvcTypeController mvcTypeController;
+
         private PropEditController propEditController;
         private StandaloneController standaloneController;
 
@@ -30,8 +34,41 @@ namespace Medical
             EditorController editorController = plugin.EditorController;
             editorController.ProjectChanged += editorController_ProjectChanged;
 
+            editorController.addItemTemplate(new ProjectItemTemplateDelegate("Empty View", "", "Templates", delegate(String path, String fileName, EditorController editCtrl)
+            {
+                String fullPath = Path.Combine(path, fileName);
+                rmlTypeController.createRmlFileSafely(fullPath);
+                AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
+                if (mvcContext != null)
+                {
+                    String extension = Path.GetExtension(fileName);
+                    String name= fileName;
+                    if (!String.IsNullOrEmpty(extension))
+                    {
+                        name = name.Replace(extension, "");
+                    }
+                    if (!mvcContext.Views.hasItem(name))
+                    {
+                        RmlView view = new RmlView(name);
+                        view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
+                        mvcContext.Views.add(view);
+                    }
+                    if (!mvcContext.Controllers.hasItem(name))
+                    {
+                        MvcController controller = new MvcController(name);
+                        RunCommandsAction show = new RunCommandsAction("Show");
+                        show.addCommand(new ShowViewCommand(name));
+                        controller.Actions.add(show);
+                        RunCommandsAction close = new RunCommandsAction("Close");
+                        close.addCommand(new CloseViewCommand());
+                        controller.Actions.add(close);
+                        mvcContext.Controllers.add(controller);
+                    }
+                }
+            }));
+
             //MVC Type Controller
-            MvcTypeController mvcTypeController = new MvcTypeController(editorController);
+            mvcTypeController = new MvcTypeController(editorController);
             mvcTypeController.OpenEditor += (file, editingMvcContex) =>
             {
                 mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController);
@@ -52,7 +89,7 @@ namespace Medical
             editorController.addTypeController(mvcTypeController);
 
             //Rml type controller
-            RmlTypeController rmlTypeController = new RmlTypeController(editorController);
+            rmlTypeController = new RmlTypeController(editorController);
             rmlTypeController.OpenEditor += (file) =>
                 {
                     rmlEditorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback);
