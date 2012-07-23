@@ -20,10 +20,6 @@ namespace Medical
         private RcssEditorContext rcssEditorContext;
         private TRmlEditorContext trmlEditorContext;
 
-        //Type controllers
-        private RmlTypeController rmlTypeController;
-        private MvcTypeController mvcTypeController;
-
         private PropEditController propEditController;
         private StandaloneController standaloneController;
 
@@ -34,41 +30,8 @@ namespace Medical
             EditorController editorController = plugin.EditorController;
             editorController.ProjectChanged += editorController_ProjectChanged;
 
-            editorController.addItemTemplate(new ProjectItemTemplateDelegate("Empty View", "", "Templates", delegate(String path, String fileName, EditorController editCtrl)
-            {
-                String fullPath = Path.Combine(path, fileName);
-                rmlTypeController.createRmlFileSafely(fullPath);
-                AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
-                if (mvcContext != null)
-                {
-                    String extension = Path.GetExtension(fileName);
-                    String name= fileName;
-                    if (!String.IsNullOrEmpty(extension))
-                    {
-                        name = name.Replace(extension, "");
-                    }
-                    if (!mvcContext.Views.hasItem(name))
-                    {
-                        RmlView view = new RmlView(name);
-                        view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
-                        mvcContext.Views.add(view);
-                    }
-                    if (!mvcContext.Controllers.hasItem(name))
-                    {
-                        MvcController controller = new MvcController(name);
-                        RunCommandsAction show = new RunCommandsAction("Show");
-                        show.addCommand(new ShowViewCommand(name));
-                        controller.Actions.add(show);
-                        RunCommandsAction close = new RunCommandsAction("Close");
-                        close.addCommand(new CloseViewCommand());
-                        controller.Actions.add(close);
-                        mvcContext.Controllers.add(controller);
-                    }
-                }
-            }));
-
             //MVC Type Controller
-            mvcTypeController = new MvcTypeController(editorController);
+            MvcTypeController mvcTypeController = new MvcTypeController(editorController);
             mvcTypeController.OpenEditor += (file, editingMvcContex) =>
             {
                 mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController);
@@ -86,10 +49,9 @@ namespace Medical
                 };
                 editorController.runEditorContext(mvcEditorContext.MvcContext);
             };
-            editorController.addTypeController(mvcTypeController);
 
             //Rml type controller
-            rmlTypeController = new RmlTypeController(editorController);
+            RmlTypeController rmlTypeController = new RmlTypeController(editorController);
             rmlTypeController.OpenEditor += (file) =>
                 {
                     rmlEditorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback);
@@ -107,7 +69,6 @@ namespace Medical
                         };
                     editorController.runEditorContext(rmlEditorContext.MvcContext);
                 };
-            editorController.addTypeController(rmlTypeController);
 
             //Rcss Type Controller
             RcssTypeController rcssTypeController = new RcssTypeController(editorController);
@@ -128,7 +89,6 @@ namespace Medical
                         };
                     editorController.runEditorContext(rcssEditorContext.MvcContext);
                 };
-            editorController.addTypeController(rcssTypeController);
             
             //Plugin type controller
             PluginTypeController pluginTypeController = new PluginTypeController(editorController);
@@ -148,7 +108,6 @@ namespace Medical
                         };
                     editorController.runEditorContext(pluginEditorContext.MvcContext);
                 };
-            editorController.addTypeController(pluginTypeController);
 
             //Movement Sequence type controller
             MovementSequenceTypeController movementSequenceTypeController = new MovementSequenceTypeController(editorController);
@@ -168,7 +127,6 @@ namespace Medical
                         };
                     editorController.runEditorContext(movementSequenceEditorContext.MvcContext);
                 };
-            editorController.addTypeController(movementSequenceTypeController);
 
             //TRML Type controller
             TRmlTypeController trmlTypeController = new TRmlTypeController(editorController);
@@ -189,7 +147,6 @@ namespace Medical
                     };
                 editorController.runEditorContext(trmlEditorContext.MvcContext);
             };
-            editorController.addTypeController(trmlTypeController);
 
             //Timeline type controller
             TimelineTypeController timelineTypeController = new TimelineTypeController(editorController);
@@ -210,7 +167,18 @@ namespace Medical
                         };
                     editorController.runEditorContext(timelineEditorContext.MvcContext);
                 };
+
+            //Add item templates
+            editorController.addItemTemplate(new EmptyViewItemTemplate(rmlTypeController, mvcTypeController));
+
+            //Add type controllers to editor controller
             editorController.addTypeController(timelineTypeController);
+            editorController.addTypeController(movementSequenceTypeController);
+            editorController.addTypeController(rmlTypeController);
+            editorController.addTypeController(trmlTypeController);
+            editorController.addTypeController(rcssTypeController);
+            editorController.addTypeController(mvcTypeController);
+            editorController.addTypeController(pluginTypeController);
         }
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)

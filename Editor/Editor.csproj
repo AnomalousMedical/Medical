@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\EditorConfig.cs" />
+    <Compile Include="Controller\ItemTemplates\EmptyViewItemTemplate.cs" />
     <Compile Include="Controller\MovementSequenceEditorContext.cs" />
     <Compile Include="Controller\Project\QuestionAppProjectTemplate.cs" />
     <Compile Include="Controller\TRmlEditorContext.cs" />
