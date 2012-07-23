@@ -106,6 +106,7 @@
     <Compile Include="Controller\TypeControllerManager.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
+    <Compile Include="GUI\AddItemDialog\AddItemDialog.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
@@ -180,6 +181,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\AddItemDialog\AddItemDialog.layout" />
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout">

@@ -22,7 +22,7 @@ namespace Medical.GUI
         public override void layout()
         {
             int currentWidth = scrollView.ViewCoord.width;
-            if (lastWidth != currentWidth)
+            if (lastWidth != currentWidth && rootNode != null)
             {
                 rootNode.changeWidth(scrollView.ViewCoord.width);
                 rootNode.layout();

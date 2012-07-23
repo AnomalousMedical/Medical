@@ -205,10 +205,10 @@ namespace Medical.GUI
                     });
                 }));
 
-                foreach (EditorTypeController typeController in editorController.TypeControllers)
+                contextMenu.add(new ContextMenuItem("Add Item", path, delegate(ContextMenuItem item)
                 {
-                    typeController.addCreationMethod(contextMenu, path, isDirectory, isTopLevel);
-                }
+                    AddItemDialog.AddItem(path, editorController, null);
+                }));
 
                 contextMenu.add(new ContextMenuItem("Import Files", path, delegate(ContextMenuItem item)
                 {

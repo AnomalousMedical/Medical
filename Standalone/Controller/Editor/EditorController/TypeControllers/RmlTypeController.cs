@@ -12,8 +12,6 @@ namespace Medical
 {
     public class RmlTypeController : TextTypeController
     {
-        public event Action<RmlTypeController, String> FileCreated;
-
         public const String Icon = "EditorFileIcon/.rml";
 
         public RmlTypeController(EditorController editorController)
@@ -42,43 +40,34 @@ namespace Medical
 
         public String LastRmlFile { get; private set; }
 
-        public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        public override ProjectItemTemplate createItemTemplate()
         {
-            contextMenu.add(new ContextMenuItem("Create Rml File", path, delegate(ContextMenuItem item)
+            return new ProjectItemTemplateDelegate("Rml File", Icon, delegate(String path, String fileName, EditorController editorController)
             {
-                InputBox.GetInput("Rml File Name", "Enter a name for the rml file.", true, delegate(String result, ref String errorMessage)
+                String filePath = Path.Combine(path, fileName);
+                filePath = Path.ChangeExtension(filePath, ".rml");
+                if (EditorController.ResourceProvider.exists(filePath))
                 {
-                    String filePath = Path.Combine(path, result);
-                    filePath = Path.ChangeExtension(filePath, ".rml");
-                    if (EditorController.ResourceProvider.exists(filePath))
+                    MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
                     {
-                        MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
+                        if (overrideResult == MessageBoxStyle.Yes)
                         {
-                            if (overrideResult == MessageBoxStyle.Yes)
-                            {
-                                createNewRmlFile(filePath);
-                            }
-                        });
-                    }
-                    else
-                    {
-                        createNewRmlFile(filePath);
-                    }
-                    return true;
-                });
-            }));
+                            createNewRmlFile(filePath);
+                        }
+                    });
+                }
+                else
+                {
+                    createNewRmlFile(filePath);
+                }
+            });
         }
 
         void createNewRmlFile(String filePath)
         {
-            Timeline timeline = new Timeline();
             creatingNewFile(filePath);
             saveText(filePath, defaultRml);
             openEditor(filePath);
-            if (FileCreated != null)
-            {
-                FileCreated.Invoke(this, filePath);
-            }
         }
 
         private const String defaultRml = @"<rml>

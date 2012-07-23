@@ -132,7 +132,10 @@
     <Compile Include="Controller\Editor\BrowserAttributes\PropBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\ModelBrowserEditableProperty.cs" />
+    <Compile Include="Controller\Editor\EditorController\ProjectItemTemplateFixedNameDelegate.cs" />
     <Compile Include="Controller\Editor\EditorController\EditorController.cs" />
+    <Compile Include="Controller\Editor\EditorController\ProjectItemTemplate.cs" />
+    <Compile Include="Controller\Editor\EditorController\ProjectItemTemplateDelegate.cs" />
     <Compile Include="Controller\Editor\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
     <Compile Include="Controller\Editor\EditorController\TypeControllers\MvcTypeController.cs" />
     <Compile Include="Controller\Editor\EditorController\TypeControllers\PluginTypeController.cs" />

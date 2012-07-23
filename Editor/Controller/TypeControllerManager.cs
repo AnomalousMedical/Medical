@@ -70,31 +70,31 @@ namespace Medical
                         };
                     editorController.runEditorContext(rmlEditorContext.MvcContext);
                 };
-            rmlTypeController.FileCreated += (rmlCtrl, file) =>
-            {
-                AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
-                if (mvcContext != null)
-                {
-                    String name = file.Replace(Path.GetExtension(file), "");
-                    if (!mvcContext.Views.hasItem(name))
-                    {
-                        RmlView view = new RmlView(name);
-                        view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
-                        mvcContext.Views.add(view);
-                    }
-                    if (!mvcContext.Controllers.hasItem(name))
-                    {
-                        MvcController controller = new MvcController(name);
-                        RunCommandsAction show = new RunCommandsAction("Show");
-                        show.addCommand(new ShowViewCommand(name));
-                        controller.Actions.add(show);
-                        RunCommandsAction close = new RunCommandsAction("Close");
-                        close.addCommand(new CloseViewCommand());
-                        controller.Actions.add(close);
-                        mvcContext.Controllers.add(controller);
-                    }
-                }
-            };
+            //rmlTypeController.FileCreated += (rmlCtrl, file) =>
+            //{
+            //    AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
+            //    if (mvcContext != null)
+            //    {
+            //        String name = file.Replace(Path.GetExtension(file), "");
+            //        if (!mvcContext.Views.hasItem(name))
+            //        {
+            //            RmlView view = new RmlView(name);
+            //            view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
+            //            mvcContext.Views.add(view);
+            //        }
+            //        if (!mvcContext.Controllers.hasItem(name))
+            //        {
+            //            MvcController controller = new MvcController(name);
+            //            RunCommandsAction show = new RunCommandsAction("Show");
+            //            show.addCommand(new ShowViewCommand(name));
+            //            controller.Actions.add(show);
+            //            RunCommandsAction close = new RunCommandsAction("Close");
+            //            close.addCommand(new CloseViewCommand());
+            //            controller.Actions.add(close);
+            //            mvcContext.Controllers.add(controller);
+            //        }
+            //    }
+            //};
             editorController.addTypeController(rmlTypeController);
 
             //Rcss Type Controller

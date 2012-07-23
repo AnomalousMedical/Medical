@@ -24,29 +24,26 @@ namespace Medical
             EditorController.NotificationManager.showNotification(String.Format("{0} saved.", file), Icon, 2);
         }
 
-        public override void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        public override ProjectItemTemplate createItemTemplate()
         {
-            if (isTopLevel)
+            return new ProjectItemTemplateFixedNameDelegate("Plugin Definition", Icon, delegate(String path, EditorController editorController)
             {
-                contextMenu.add(new ContextMenuItem("Create Plugin Definition", path, delegate(ContextMenuItem item)
+                String filePath = Path.Combine(path, "Plugin.ddp");
+                if (EditorController.ResourceProvider.exists(filePath))
                 {
-                    String filePath = Path.Combine(item.UserObject.ToString(), "Plugin.ddp");
-                    if (EditorController.ResourceProvider.exists(filePath))
+                    MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
                     {
-                        MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
+                        if (result == MessageBoxStyle.Yes)
                         {
-                            if (result == MessageBoxStyle.Yes)
-                            {
-                                createNewPlugin(filePath);
-                            }
-                        });
-                    }
-                    else
-                    {
-                        createNewPlugin(filePath);
-                    }
-                }));
-            }
+                            createNewPlugin(filePath);
+                        }
+                    });
+                }
+                else
+                {
+                    createNewPlugin(filePath);
+                }
+            });
         }
 
         private void createNewPlugin(String filePath)

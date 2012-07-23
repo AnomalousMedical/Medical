@@ -30,9 +30,9 @@ namespace Medical
 
         }
 
-        public virtual void addCreationMethod(ContextMenu contextMenu, string path, bool isDirectory, bool isTopLevel)
+        public virtual ProjectItemTemplate createItemTemplate()
         {
-            
+            return null;
         }
     }
 }
