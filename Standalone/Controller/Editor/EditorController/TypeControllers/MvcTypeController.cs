@@ -28,7 +28,7 @@ namespace Medical
 
         public override ProjectItemTemplate createItemTemplate()
         {
-            return new ProjectItemTemplateDelegate("MVC Context", Icon, delegate(String path, String fileName, EditorController editorController)
+            return new ProjectItemTemplateDelegate("MVC Context", Icon, "File", delegate(String path, String fileName, EditorController editorController)
             {
                 String filePath = Path.Combine(path, fileName);
                 filePath = Path.ChangeExtension(filePath, ".mvc");

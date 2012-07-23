@@ -12,7 +12,11 @@ namespace Medical
 
         String ImageName { get; }
 
+        String Group { get; }
+
         void createItem(String path, EditorController editorController);
+
+        bool isValid(out String errorMessage);
 
         EditInterface EditInterface { get; }
     }

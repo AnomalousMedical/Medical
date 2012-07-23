@@ -12,16 +12,33 @@ namespace Medical
 
         private CreateItem createItemCallback;
 
-        public ProjectItemTemplateDelegate(String typeName, String imageName, CreateItem createItemCallback)
+        public ProjectItemTemplateDelegate(String typeName, String imageName, String group, CreateItem createItemCallback)
         {
             this.TypeName = typeName;
             this.ImageName = imageName;
+            this.Group = group;
             this.createItemCallback = createItemCallback;
         }
 
         public string TypeName { get; private set; }
 
         public string ImageName { get; private set; }
+
+        public string Group { get; private set; }
+
+        public bool isValid(out String errorMessage)
+        {
+            if (String.IsNullOrEmpty(Name))
+            {
+                errorMessage = "Please enter a name.";
+                return false;
+            }
+            else
+            {
+                errorMessage = null;
+                return true;
+            }
+        }
 
         [Editable]
         public String Name { get; set; }

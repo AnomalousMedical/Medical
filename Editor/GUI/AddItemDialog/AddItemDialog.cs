@@ -63,7 +63,7 @@ namespace Medical.GUI
 
         public void addItemTemplate(ProjectItemTemplate itemTemplate)
         {
-            ButtonGridItem item = itemGrid.addItem("", itemTemplate.TypeName, itemTemplate.ImageName);
+            ButtonGridItem item = itemGrid.addItem(itemTemplate.Group, itemTemplate.TypeName, itemTemplate.ImageName);
             item.UserObject = itemTemplate;
             if (itemGrid.SelectedItem == null)
             {
@@ -79,11 +79,20 @@ namespace Medical.GUI
 
         void add_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (CreateItem != null)
+            ProjectItemTemplate itemTemplate = (ProjectItemTemplate)itemGrid.SelectedItem.UserObject;
+            String error;
+            if (itemTemplate.isValid(out error))
             {
-                CreateItem.Invoke((ProjectItemTemplate)itemGrid.SelectedItem.UserObject);
+                if (CreateItem != null)
+                {
+                    CreateItem.Invoke(itemTemplate);
+                }
+                this.close();
             }
-            this.close();
+            else
+            {
+                MessageBox.show(error, "Add Item Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         void cancel_MouseButtonClick(Widget source, EventArgs e)

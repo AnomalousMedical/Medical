@@ -26,7 +26,7 @@ namespace Medical
 
         public override ProjectItemTemplate createItemTemplate()
         {
-            return new ProjectItemTemplateFixedNameDelegate("Plugin Definition", Icon, delegate(String path, EditorController editorController)
+            return new ProjectItemTemplateFixedNameDelegate("Plugin Definition", Icon, "File", delegate(String path, EditorController editorController)
             {
                 String filePath = Path.Combine(path, "Plugin.ddp");
                 if (EditorController.ResourceProvider.exists(filePath))

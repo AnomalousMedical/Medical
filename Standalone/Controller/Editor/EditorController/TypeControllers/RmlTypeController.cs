@@ -42,7 +42,7 @@ namespace Medical
 
         public override ProjectItemTemplate createItemTemplate()
         {
-            return new ProjectItemTemplateDelegate("Rml File", Icon, delegate(String path, String fileName, EditorController editorController)
+            return new ProjectItemTemplateDelegate("Rml File", Icon, "File", delegate(String path, String fileName, EditorController editorController)
             {
                 String filePath = Path.Combine(path, fileName);
                 filePath = Path.ChangeExtension(filePath, ".rml");
