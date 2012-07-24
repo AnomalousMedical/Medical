@@ -142,9 +142,10 @@ namespace Medical.GUI
             {
                 clearFileTabs();
                 int left = 0;
+                int top = fileListButton.Top;
                 foreach (String file in editorController.OpenFiles)
                 {
-                    EditorTaskbarFileButton fileButton = new EditorTaskbarFileButton(widget, file, left);
+                    EditorTaskbarFileButton fileButton = new EditorTaskbarFileButton(widget, file, left, top);
                     fileButton.CurrentFile = currentFile == file;
                     fileButton.ChangeFile += new Action<EditorTaskbarFileButton>(fileButton_ChangeFile);
                     fileButton.Closed += new Action<EditorTaskbarFileButton>(fileButton_Closed);

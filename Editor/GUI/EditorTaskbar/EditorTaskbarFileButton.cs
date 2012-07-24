@@ -13,7 +13,7 @@ namespace Medical.GUI
         public event Action<EditorTaskbarFileButton> Closed;
         public event Action<EditorTaskbarFileButton> ChangeFile;
 
-        public EditorTaskbarFileButton(Widget parentWidget, String file, int left)
+        public EditorTaskbarFileButton(Widget parentWidget, String file, int left, int top)
             :base("Medical.GUI.EditorTaskbar.EditorTaskbarFileButton.layout")
         {
             widget.attachToWidget(parentWidget);
@@ -27,7 +27,7 @@ namespace Medical.GUI
 
             int textWidth = fileButton.getTextSize().Width;
             widget.setSize(textWidth + widget.Width, widget.Height);
-            widget.setPosition(left, 0);
+            widget.setPosition(left, top);
         }
 
         public String File { get; private set; }
