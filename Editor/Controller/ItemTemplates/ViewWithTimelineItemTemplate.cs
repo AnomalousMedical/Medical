@@ -87,6 +87,7 @@ namespace Medical
                 {
                     createController(mvcContext, name, timelineName);
                 }
+                editorController.saveAllCachedResources();
             }
         }
 

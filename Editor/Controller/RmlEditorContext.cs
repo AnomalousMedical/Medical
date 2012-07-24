@@ -194,12 +194,13 @@ namespace Medical
 
             if (editingMvcContext != null)
             {
-                try
+                String controllerName = PathExtensions.RemoveExtension(file);
+                if(editingMvcContext.Controllers.hasItem(controllerName))
                 {
-                    MvcController viewController = editingMvcContext.Controllers[PathExtensions.RemoveExtension(file)];
+                    MvcController viewController = editingMvcContext.Controllers[controllerName];
 
                     GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", viewController.getEditInterface(), true);
-                    genericPropertiesView.ViewLocation = ViewLocations.Right;
+                    genericPropertiesView.ViewLocation = ViewLocations.Left;
                     genericPropertiesView.IsWindow = true;
                     genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcEditor/Close"));
                     mvcContext.Views.add(genericPropertiesView);
@@ -213,7 +214,6 @@ namespace Medical
                         new CloseViewCommand())
                     ));
                 }
-                catch (KeyNotFoundException) { }
             }
         }
 
@@ -280,14 +280,6 @@ namespace Medical
             {
                 rmlComponent.reloadDocument(currentFile);
             }
-            //if (textEditorComponent != null)
-            //{
-            //    rmlTypeController.saveFile(textEditorComponent.Text, currentFile);
-            //    if (rmlComponent != null)
-            //    {
-            //        rmlComponent.reloadDocument(currentFile);
-            //    }
-            //}
         }
     }
 }
