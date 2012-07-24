@@ -180,6 +180,8 @@ namespace Medical
             editorController.addTypeController(rcssTypeController);
             editorController.addTypeController(mvcTypeController);
             editorController.addTypeController(pluginTypeController);
+
+            editorController.addItemTemplate(new PluginBrandingResourceItemTemplate());
         }
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)

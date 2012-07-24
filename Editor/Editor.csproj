@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\EditorConfig.cs" />
+    <Compile Include="Controller\ItemTemplates\PluginBrandingResourceItemTemplate.cs" />
     <Compile Include="Controller\ItemTemplates\ViewWithTimelineItemTemplate.cs" />
     <Compile Include="Controller\ItemTemplates\EmptyViewItemTemplate.cs" />
     <Compile Include="Controller\MovementSequenceEditorContext.cs" />

@@ -121,11 +121,17 @@ namespace Medical
             }
         }
 
+        private EditInterface editInterface;
+
         public EditInterface EditInterface
         {
             get
             {
-                return ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, TypeName, null);
+                if (editInterface == null)
+                {
+                    editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, TypeName, null);
+                }
+                return editInterface;
             }
         }
     }
