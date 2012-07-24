@@ -106,7 +106,11 @@ namespace Medical.GUI
             RootFocusEventArgs rfea = (RootFocusEventArgs)e;
             if (rfea.Focus)
             {
-                ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+                EditMenuManager editMenuManager = ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName);
+                if (editMenuManager != null)
+                {
+                    editMenuManager.setMenuProvider(this);
+                }
             }
         }
     }

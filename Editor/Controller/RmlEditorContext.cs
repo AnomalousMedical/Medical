@@ -31,7 +31,7 @@ namespace Medical
         private RmlTypeController rmlTypeController;
         private EditorUICallback uiCallback;
 
-        public RmlEditorContext(String file, RmlTypeController rmlTypeController, EditorUICallback uiCallback)
+        public RmlEditorContext(String file, RmlTypeController rmlTypeController, EditorUICallback uiCallback, AnomalousMvcContext editingMvcContext)
         {
             this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
@@ -170,6 +170,30 @@ namespace Medical
                 save();
             };
             eventContext.addEvent(saveEvent);
+
+            if (editingMvcContext != null)
+            {
+                try
+                {
+                    MvcController viewController = editingMvcContext.Controllers[PathExtensions.RemoveExtension(file)];
+
+                    GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", viewController.getEditInterface(), true);
+                    genericPropertiesView.ViewLocation = ViewLocations.Right;
+                    genericPropertiesView.IsWindow = true;
+                    genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcEditor/Close"));
+                    mvcContext.Views.add(genericPropertiesView);
+
+                    taskbar.addTask(new RunMvcContextActionTask("EditActions", "Edit Actions", "MvcContextEditor/ControllerIcon", "Edit", "MvcEditor/Show", mvcContext));
+
+                    mvcContext.Controllers.add(new MvcController("MvcEditor",
+                    new RunCommandsAction("Show",
+                        new ShowViewCommand("MvcContext")),
+                    new RunCommandsAction("Close",
+                        new CloseViewCommand())
+                    ));
+                }
+                catch (KeyNotFoundException) { }
+            }
         }
 
         public void close()

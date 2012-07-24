@@ -33,7 +33,7 @@ namespace Medical
         {
             get
             {
-                return "";
+                return "StandaloneIcons/NoIcon";
             }
         }
 
@@ -55,12 +55,7 @@ namespace Medical
             AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
             if (mvcContext != null)
             {
-                String extension = Path.GetExtension(fullPath);
-                String name = fullPath;
-                if (!String.IsNullOrEmpty(extension))
-                {
-                    name = name.Replace(extension, "");
-                }
+                String name = PathExtensions.RemoveExtension(fullPath);
                 if (mvcContext.Views.hasItem(name))
                 {
                     MessageBox.show(String.Format("A view named '{0}' already exists. Would you like to overwrite it?", name), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>

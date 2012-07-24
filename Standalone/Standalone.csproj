@@ -644,6 +644,7 @@
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
     <Compile Include="Utility\EmptyIterator.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
+    <Compile Include="Utility\PathExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

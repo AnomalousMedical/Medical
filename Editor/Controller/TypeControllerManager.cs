@@ -54,7 +54,7 @@ namespace Medical
             RmlTypeController rmlTypeController = new RmlTypeController(editorController);
             rmlTypeController.OpenEditor += (file) =>
                 {
-                    rmlEditorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback);
+                    rmlEditorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback, mvcTypeController.CurrentObject);
                     rmlEditorContext.Focus += (obj) =>
                         {
                             rmlEditorContext = obj;
