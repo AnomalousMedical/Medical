@@ -100,8 +100,10 @@ namespace Medical
             controller.Actions.add(show);
             RunCommandsAction close = new RunCommandsAction("Close");
             close.addCommand(new CloseViewCommand());
-            close.addCommand(new StopTimelineCommand());
             controller.Actions.add(close);
+            RunCommandsAction closing = new RunCommandsAction("Closing");
+            closing.addCommand(new StopTimelineCommand());
+            controller.Actions.add(closing);
             mvcContext.Controllers.add(controller);
         }
 
@@ -109,6 +111,7 @@ namespace Medical
         {
             RmlView view = new RmlView(name);
             view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
+            view.ClosingAction = name + "/Closing";
             mvcContext.Views.add(view);
         }
 

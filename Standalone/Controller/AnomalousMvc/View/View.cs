@@ -24,6 +24,9 @@ namespace Medical.Controller.AnomalousMvc
         [Editable]
         public bool IsWindow { get; set; }
 
+        [Editable]
+        public String ClosingAction { get; set; }
+
         protected View(LoadInfo info)
             :base (info)
         {

@@ -39,6 +39,10 @@ namespace Medical.GUI.AnomalousMvc
 
         public void closing()
         {
+            if (!String.IsNullOrEmpty(View.ClosingAction))
+            {
+                context.queueRunAction(View.ClosingAction);
+            }
             component.closing();
         }
 
