@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="0 0 41 19" layer="Overlapped">
-        <Widget type="Button" skin="FileTabButton" position="0 0 42 20" align="Stretch" name="FileButton">
-            <Widget type="Button" skin="ButtonXBig" position="17 1 17 17" align="Right Top" name="CloseButton"/>
+        <Widget type="Button" skin="FileTabButton" position="0 0 37 20" align="Stretch" name="FileButton" layer="Overlapped">
+            <Widget type="Button" skin="ButtonXBig" position="16 1 17 17" align="Right Top" name="CloseButton"/>
         </Widget>
-    </Widget>
 </MyGUI>

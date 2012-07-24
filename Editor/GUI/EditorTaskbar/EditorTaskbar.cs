@@ -26,7 +26,7 @@ namespace Medical.GUI
             fileListButton = (Button)widget.findWidget("FileListButton");
             fileListButton.MouseButtonClick += new MyGUIEvent(fileListButton_MouseButtonClick);
 
-            int left = 0;
+            int left = 1;
             foreach (Task task in view.Tasks)
             {
                 Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, 20, 48, 48, Align.Left | Align.Top, task.UniqueName);
