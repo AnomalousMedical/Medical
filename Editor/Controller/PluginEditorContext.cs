@@ -47,6 +47,10 @@ namespace Medical
             mvcContext.Views.add(genericPropertiesView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
+            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
+            {
+                saveAll();
+            }));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
             mvcContext.Views.add(taskbar);
 
@@ -103,6 +107,11 @@ namespace Medical
             {
                 return mvcContext;
             }
+        }
+
+        private void saveAll()
+        {
+            pluginTypeController.EditorController.saveAllCachedResources();
         }
 
         private void save()

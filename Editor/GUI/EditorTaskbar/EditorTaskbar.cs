@@ -26,23 +26,10 @@ namespace Medical.GUI
             fileListButton = (Button)widget.findWidget("FileListButton");
             fileListButton.MouseButtonClick += new MyGUIEvent(fileListButton_MouseButtonClick);
 
-            //Always have a save all button
             int left = 0;
-            CallbackTask saveAll = new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
-            {
-                editorController.saveAllCachedResources();
-            });
-            Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, 20, 48, 48, Align.Left | Align.Top, saveAll.UniqueName);
-            taskButton.UserObject = saveAll;
-            taskButton.NeedToolTip = true;
-            taskButton.ImageBox.setItemResource(saveAll.IconName);
-            taskButton.MouseButtonClick += new MyGUIEvent(taskButton_MouseButtonClick);
-            taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
-            left += taskButton.Width + 2;
-
             foreach (Task task in view.Tasks)
             {
-                taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, 20, 48, 48, Align.Left | Align.Top, task.UniqueName);
+                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, 20, 48, 48, Align.Left | Align.Top, task.UniqueName);
                 taskButton.UserObject = task;
                 taskButton.NeedToolTip = true;
                 taskButton.ImageBox.setItemResource(task.IconName);

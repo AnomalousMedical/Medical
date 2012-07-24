@@ -51,6 +51,10 @@ namespace Medical
             mvcContext.Views.add(movementSequenceView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
+            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
+            {
+                saveAll();
+            }));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Movement Sequence File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "", "Editor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "", "Editor/Copy", mvcContext));
@@ -143,6 +147,11 @@ namespace Medical
             {
                 return mvcContext;
             }
+        }
+
+        private void saveAll()
+        {
+            movementSequenceTypeController.EditorController.saveAllCachedResources();
         }
 
         private void save()

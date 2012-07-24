@@ -74,6 +74,10 @@ namespace Medical
             mvcContext.Views.add(movementSequenceEditor);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", currentFile, "TimelineEditor/Close");
+            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
+            {
+                saveAll();
+            }));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Timeline", "FileToolstrip/Save", "", "TimelineEditor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "", "TimelineEditor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "", "TimelineEditor/Copy", mvcContext));
@@ -238,6 +242,11 @@ namespace Medical
             {
                 return mvcContext;
             }
+        }
+
+        private void saveAll()
+        {
+            timelineTypeController.EditorController.saveAllCachedResources();
         }
 
         static TimelineEditorContext()

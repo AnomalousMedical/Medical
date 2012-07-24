@@ -63,6 +63,10 @@ namespace Medical
             mvcContext.Views.add(rmlView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
+            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
+            {
+                saveAll();
+            }));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
@@ -155,6 +159,16 @@ namespace Medical
             get
             {
                 return currentFile;
+            }
+        }
+
+        private void saveAll()
+        {
+            rcssTypeController.updateCachedText(currentFile, CurrentText);
+            rcssTypeController.EditorController.saveAllCachedResources();
+            if (rmlComponent != null)
+            {
+                rmlComponent.reloadDocument(rmlPreviewFile);
             }
         }
 

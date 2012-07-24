@@ -37,6 +37,8 @@ namespace Medical
             this.currentFile = file;
             this.uiCallback = uiCallback;
 
+            rmlTypeController.loadText(currentFile);
+
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
             mvcContext.FocusAction = "Common/Focus";
@@ -44,9 +46,10 @@ namespace Medical
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
 
-            TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.rmlTypeController.loadText(currentFile), wordWrap: false);
+            TextEditorView textEditorView = new TextEditorView("RmlEditor", () => rmlComponent.CurrentRml, wordWrap: false);
             textEditorView.ViewLocation = ViewLocations.Left;
             textEditorView.IsWindow = true;
+            textEditorView.Buttons.add(new CloseButtonDefinition("Close", "RmlTextEditor/Close"));
             textEditorView.ComponentCreated += (view, component) =>
             {
                 textEditorComponent = component;
@@ -61,12 +64,19 @@ namespace Medical
                 rmlComponent = component;
                 rmlComponent.RmlEdited += rmlEditor =>
                 {
-                    textEditorComponent.Text = rmlEditor.CurrentRml;
+                    if (textEditorComponent != null)
+                    {
+                        textEditorComponent.Text = rmlEditor.CurrentRml;
+                    }
                 };
             };
             mvcContext.Views.add(rmlView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
+            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
+            {
+                saveAll();
+            }));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
@@ -77,12 +87,23 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "Editor/LinksIcon", "Edit", "Editor/ActionLink", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Button", "Button", "Editor/AddButtonIcon", "Edit", "Editor/Button", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Image", "Image", "Editor/ImageIcon", "Edit", "Editor/Image", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("RmlEditor", "Edit Rml", RmlTypeController.Icon, "Edit", "RmlTextEditor/Show", mvcContext));
             mvcContext.Views.add(taskbar);
+
+            mvcContext.Controllers.add(new MvcController("RmlTextEditor",
+                new RunCommandsAction("Show",
+                    new ShowViewIfNotOpenCommand("RmlEditor")),
+                new RunCommandsAction("Close",
+                    new CloseViewCommand(),
+                    new CallbackCommand(context =>
+                        {
+                            textEditorComponent = null;
+                        }))
+                    ));
 
             mvcContext.Controllers.add(new MvcController("Editor",
                 new RunCommandsAction("Show",
                     new ShowViewCommand("RmlView"),
-                    new ShowViewCommand("RmlEditor"),
                     new ShowViewCommand("InfoBar")),
                 new RunCommandsAction("Close", new CloseAllViewsCommand()),
                 new CallbackAction("Save", context =>
@@ -187,7 +208,7 @@ namespace Medical
 
                     mvcContext.Controllers.add(new MvcController("MvcEditor",
                     new RunCommandsAction("Show",
-                        new ShowViewCommand("MvcContext")),
+                        new ShowViewIfNotOpenCommand("MvcContext")),
                     new RunCommandsAction("Close",
                         new CloseViewCommand())
                     ));
@@ -213,7 +234,16 @@ namespace Medical
         {
             get
             {
-                return textEditorComponent.Text;
+                //If the text editor is open it is the master, if it is not then
+                //use the rml wysiwyg
+                if (textEditorComponent != null)
+                {
+                    return textEditorComponent.Text;
+                }
+                else
+                {
+                    return rmlComponent.CurrentRml;
+                }
             }
         }
 
@@ -225,20 +255,39 @@ namespace Medical
             }
         }
 
+        private void saveAll()
+        {
+            if (rmlComponent != null)
+            {
+                rmlComponent.aboutToSaveRml();
+            }
+            rmlTypeController.updateCachedText(currentFile, CurrentText);
+            rmlTypeController.EditorController.saveAllCachedResources();
+            if (rmlComponent != null)
+            {
+                rmlComponent.reloadDocument(currentFile);
+            }
+        }
+
         private void save()
         {
             if (rmlComponent != null)
             {
                 rmlComponent.aboutToSaveRml();
             }
-            if (textEditorComponent != null)
+            rmlTypeController.saveFile(CurrentText, currentFile);
+            if (rmlComponent != null)
             {
-                rmlTypeController.saveFile(textEditorComponent.Text, currentFile);
-                if (rmlComponent != null)
-                {
-                    rmlComponent.reloadDocument(currentFile);
-                }
+                rmlComponent.reloadDocument(currentFile);
             }
+            //if (textEditorComponent != null)
+            //{
+            //    rmlTypeController.saveFile(textEditorComponent.Text, currentFile);
+            //    if (rmlComponent != null)
+            //    {
+            //        rmlComponent.reloadDocument(currentFile);
+            //    }
+            //}
         }
     }
 }
