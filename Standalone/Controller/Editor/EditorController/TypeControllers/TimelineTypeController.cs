@@ -28,22 +28,28 @@ namespace Medical
             return new ProjectItemTemplateDelegate("Timeline", Icon, "File", delegate(String path, String fileName, EditorController editorController)
             {
                 String filePath = Path.Combine(path, fileName);
-                filePath = Path.ChangeExtension(filePath, ".tl");
-                if (EditorController.ResourceProvider.exists(filePath))
-                {
-                    MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
-                    {
-                        if (overrideResult == MessageBoxStyle.Yes)
-                        {
-                            createNewTimeline(filePath);
-                        }
-                    });
-                }
-                else
-                {
-                    createNewTimeline(filePath);
-                }
+                createTimelineFileSafely(filePath);
             });
+        }
+
+        public String createTimelineFileSafely(String filePath)
+        {
+            filePath = Path.ChangeExtension(filePath, ".tl");
+            if (EditorController.ResourceProvider.exists(filePath))
+            {
+                MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
+                {
+                    if (overrideResult == MessageBoxStyle.Yes)
+                    {
+                        createNewTimeline(filePath);
+                    }
+                });
+            }
+            else
+            {
+                createNewTimeline(filePath);
+            }
+            return filePath;
         }
 
         void createNewTimeline(String filePath)

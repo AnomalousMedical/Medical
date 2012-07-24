@@ -10,22 +10,24 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    class EmptyViewItemTemplate : ProjectItemTemplate
+    class ViewWithTimelineItemTemplate : ProjectItemTemplate
     {
         private RmlTypeController rmlTypeController;
         private MvcTypeController mvcTypeController;
+        private TimelineTypeController timelineTypeController;
 
-        public EmptyViewItemTemplate(RmlTypeController rmlTypeController, MvcTypeController mvcTypeController)
+        public ViewWithTimelineItemTemplate(RmlTypeController rmlTypeController, MvcTypeController mvcTypeController, TimelineTypeController timelineTypeController)
         {
             this.rmlTypeController = rmlTypeController;
             this.mvcTypeController = mvcTypeController;
+            this.timelineTypeController = timelineTypeController;
         }
 
         public string TypeName
         {
             get
             {
-                return "Empty View";
+                return "View with Timeline";
             }
         }
 
@@ -52,6 +54,7 @@ namespace Medical
         {
             String fullPath = Path.Combine(path, Name);
             rmlTypeController.createRmlFileSafely(fullPath);
+            String timelineName = timelineTypeController.createTimelineFileSafely(fullPath);
             AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
             if (mvcContext != null)
             {
@@ -81,25 +84,27 @@ namespace Medical
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
-                            createController(mvcContext, name);
+                            createController(mvcContext, name, timelineName);
                         }
                     });
                 }
                 else
                 {
-                    createController(mvcContext, name);
+                    createController(mvcContext, name, timelineName);
                 }
             }
         }
 
-        private static void createController(AnomalousMvcContext mvcContext, String name)
+        private static void createController(AnomalousMvcContext mvcContext, String name, String timelineName)
         {
             MvcController controller = new MvcController(name);
             RunCommandsAction show = new RunCommandsAction("Show");
             show.addCommand(new ShowViewCommand(name));
+            show.addCommand(new PlayTimelineCommand(timelineName));
             controller.Actions.add(show);
             RunCommandsAction close = new RunCommandsAction("Close");
             close.addCommand(new CloseViewCommand());
+            close.addCommand(new StopTimelineCommand());
             controller.Actions.add(close);
             mvcContext.Controllers.add(controller);
         }

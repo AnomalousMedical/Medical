@@ -170,6 +170,7 @@ namespace Medical
 
             //Add item templates
             editorController.addItemTemplate(new EmptyViewItemTemplate(rmlTypeController, mvcTypeController));
+            editorController.addItemTemplate(new ViewWithTimelineItemTemplate(rmlTypeController, mvcTypeController, timelineTypeController));
 
             //Add type controllers to editor controller
             editorController.addTypeController(timelineTypeController);
