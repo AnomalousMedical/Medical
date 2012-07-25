@@ -112,19 +112,31 @@ namespace Medical
                     }),
                 new CallbackAction("Cut", context =>
                     {
-                        textEditorComponent.cut();
+                        if (textEditorComponent != null)
+                        {
+                            textEditorComponent.cut();
+                        }
                     }),
                 new CallbackAction("Copy", context =>
                     {
-                        textEditorComponent.copy();
+                        if (textEditorComponent != null)
+                        {
+                            textEditorComponent.copy();
+                        }
                     }),
                 new CallbackAction("Paste", context =>
                     {
-                        textEditorComponent.paste();
+                        if (textEditorComponent != null)
+                        {
+                            textEditorComponent.paste();
+                        }
                     }),
                 new CallbackAction("SelectAll", context =>
                     {
-                        textEditorComponent.selectAll();
+                        if (textEditorComponent != null)
+                        {
+                            textEditorComponent.selectAll();
+                        }
                     }),
                 new CallbackAction("Paragraph", context =>
                     {
