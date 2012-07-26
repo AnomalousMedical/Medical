@@ -71,6 +71,7 @@ namespace Medical.GUI.AnomalousMvc
         public void _animationCallback(LayoutContainer oldChild)
         {
             Dispose();
+            InputManager.Instance.refreshMouseWidget();
         }
 
         void layoutContainer_LayoutChanged()
