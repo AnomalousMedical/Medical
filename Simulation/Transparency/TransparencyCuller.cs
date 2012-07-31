@@ -22,6 +22,9 @@ namespace Medical
         [Editable]
         private String cullTransparencyInterfaceName = "Alpha";
 
+        [Editable]
+        private float hiddenMinValue = 0.9f;
+
 #if ENABLE_TRANSPARENCY_CULLER
         TransparencyInterface cullInterface;
 
@@ -42,7 +45,7 @@ namespace Medical
 
         internal override void setAlpha(float alpha)
         {
-            if (alpha == 1.0f)
+            if (alpha > hiddenMinValue)
             {
                 cullInterface.OverrideAlpha = 0.0f;
             }
