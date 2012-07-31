@@ -43,6 +43,12 @@ namespace Medical
             }
         }
 
+        protected override void link()
+        {
+            base.link();
+            setAlpha(parentInterface.CurrentAlpha);
+        }
+
         internal override void setAlpha(float alpha)
         {
             if (alpha > hiddenMinValue)
