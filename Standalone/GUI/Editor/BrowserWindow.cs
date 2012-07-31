@@ -91,8 +91,11 @@ namespace Medical.GUI
 
         void selectButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            Accepted = true;
-            close();
+            if (SelectedValue != null)
+            {
+                Accepted = true;
+                close();
+            }
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
