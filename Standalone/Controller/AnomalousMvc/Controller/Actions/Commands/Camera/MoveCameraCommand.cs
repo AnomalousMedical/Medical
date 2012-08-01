@@ -25,6 +25,7 @@ namespace Medical.Controller.AnomalousMvc
         protected override void createEditInterface()
         {
             editInterface = CameraPosition.getEditInterface(Type, ReflectedEditInterface.DefaultScanner);
+            editInterface.IconReferenceTag = Icon;
         }
 
         public CameraPosition CameraPosition { get; set; }

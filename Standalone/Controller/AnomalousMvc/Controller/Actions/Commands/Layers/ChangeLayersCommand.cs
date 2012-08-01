@@ -22,6 +22,7 @@ namespace Medical.Controller.AnomalousMvc
         protected override void createEditInterface()
         {
             editInterface = Layers.getEditInterface(Type, ReflectedEditInterface.DefaultScanner);
+            editInterface.IconReferenceTag = Icon;
         }
 
         public EditableLayerState Layers { get; set; }

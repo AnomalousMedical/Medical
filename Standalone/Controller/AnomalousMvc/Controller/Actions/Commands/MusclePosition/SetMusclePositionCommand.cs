@@ -22,6 +22,7 @@ namespace Medical.Controller.AnomalousMvc
         protected override void createEditInterface()
         {
             editInterface = MusclePosition.getEditInterface(Type);
+            editInterface.IconReferenceTag = Icon;
         }
 
         public MusclePosition MusclePosition { get; set; }
