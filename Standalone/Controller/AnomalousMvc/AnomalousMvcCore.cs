@@ -236,14 +236,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public void hideMainInterface(bool showSharedInterface)
+        public void hideMainInterface()
         {
-            guiManager.setMainInterfaceEnabled(false, showSharedInterface);
+            guiManager.setMainInterfaceEnabled(false);
         }
 
         public void showMainInterface()
         {
-            guiManager.setMainInterfaceEnabled(true, false);
+            guiManager.setMainInterfaceEnabled(true);
         }
 
         internal StoredViewCollection generateSavedViewLayout()

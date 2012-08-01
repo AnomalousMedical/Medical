@@ -75,7 +75,7 @@ namespace Medical
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
             controller.createGUI();
-            controller.GUIManager.setMainInterfaceEnabled(false, false);
+            controller.GUIManager.setMainInterfaceEnabled(false);
 
             //Scene Load
             splashScreen.updateStatus(30, "Loading Scene");
@@ -242,7 +242,7 @@ namespace Medical
 
             MedicalConfig.setUser(LicenseManager.User);
 
-            controller.GUIManager.setMainInterfaceEnabled(true, false);
+            controller.GUIManager.setMainInterfaceEnabled(true);
             controller.setWatermarkText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
             addPlugins();
             controller.initializePlugins();

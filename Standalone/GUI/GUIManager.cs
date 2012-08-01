@@ -196,7 +196,7 @@ namespace Medical.GUI
             bottomAnimatedContainer.changePanel(bottomContainer, 0.25f, animationCompleted);
         }
 
-        public void setMainInterfaceEnabled(bool enabled, bool enableSharedInterface)
+        public void setMainInterfaceEnabled(bool enabled)
         {
             if (mainGuiShowing != enabled)
             {
@@ -217,19 +217,12 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    if (enableSharedInterface)
+                    taskbar.Visible = false;
+                    dialogManager.closeMainGUIDialogs();
+                    notificationManager.hideAllNotifications();
+                    if (MainGUIHidden != null)
                     {
-
-                    }
-                    else
-                    {
-                        taskbar.Visible = false;
-                        dialogManager.closeMainGUIDialogs();
-                        notificationManager.hideAllNotifications();
-                        if (MainGUIHidden != null)
-                        {
-                            MainGUIHidden.Invoke();
-                        }
+                        MainGUIHidden.Invoke();
                     }
                 }
                 mainGuiShowing = enabled;

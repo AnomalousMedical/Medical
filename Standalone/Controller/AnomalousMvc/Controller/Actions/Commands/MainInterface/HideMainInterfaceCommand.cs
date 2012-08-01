@@ -16,11 +16,8 @@ namespace Medical.Controller.AnomalousMvc
 
         public override void execute(AnomalousMvcContext context)
         {
-            context.hideMainInterface(ShowSharedGui);
+            context.hideMainInterface();
         }
-
-        [Editable]
-        public bool ShowSharedGui { get; set; }
 
         public override string Type
         {

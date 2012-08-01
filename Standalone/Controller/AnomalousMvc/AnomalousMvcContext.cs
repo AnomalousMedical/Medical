@@ -419,9 +419,9 @@ namespace Medical.Controller.AnomalousMvc
             info.AddValue("Models", models);
         }
 
-        public void hideMainInterface(bool showSharedGui)
+        public void hideMainInterface()
         {
-            core.hideMainInterface(showSharedGui);
+            core.hideMainInterface();
         }
 
         public void showMainInterface()
