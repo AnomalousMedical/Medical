@@ -77,6 +77,8 @@ namespace Medical
 
         public long TotalRead { get; set; }
 
+        public String StatusString { get; set; }
+
         public String FileName { get; set; }
 
         public bool Successful { get; private set; }

@@ -68,6 +68,9 @@ namespace Medical.GUI
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
+            Button downloadAll = (Button)widget.findWidget("DownloadAll");
+            downloadAll.MouseButtonClick += new MyGUIEvent(downloadAll_MouseButtonClick);
+
             readingInfo = widget.findWidget("ReadingInfo");
             readingInfo.Visible = false;
 
@@ -245,6 +248,25 @@ namespace Medical.GUI
             if (pluginInfo != null && (pluginInfo.Status == ServerDownloadStatus.NotInstalled || pluginInfo.Status == ServerDownloadStatus.Update))
             {
                 downloadItem(selectedItem, pluginInfo);
+            }
+        }
+
+        void downloadAll_MouseButtonClick(Widget source, EventArgs e)
+        {
+            //Quite possibly the worst way to implement this, read the stuff that can be downloaded out of the button grid.
+            List<ServerDownloadInfo> pendingDownloads = new List<ServerDownloadInfo>();
+            int itemCount = pluginGrid.Count;
+            for (int i = 0; i < pluginGrid.Count; ++i)
+            {
+                ServerDownloadInfo downloadInfo = pluginGrid.getItem(i).UserObject as ServerDownloadInfo;
+                if (downloadInfo != null && (downloadInfo.Status == ServerDownloadStatus.NotInstalled || downloadInfo.Status == ServerDownloadStatus.Update))
+                {
+                    pendingDownloads.Add(downloadInfo);
+                }
+            }
+            foreach (ServerDownloadInfo dlInfo in pendingDownloads)
+            {
+                downloadItem(dlInfo.GUIItem, dlInfo);
             }
         }
 

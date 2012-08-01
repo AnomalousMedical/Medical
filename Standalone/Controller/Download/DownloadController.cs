@@ -19,10 +19,16 @@ namespace Medical
         private AtlasPluginManager pluginManager;
         private List<Download> activeDownloads = new List<Download>();
 
+        private ManualResetEvent pauseEvent = new ManualResetEvent(false);
+
         public DownloadController(LicenseManager licenseManager, AtlasPluginManager pluginManager)
         {
             this.licenseManager = licenseManager;
             this.pluginManager = pluginManager;
+
+            Thread t = new Thread(singleSimultaneousDownloadThread);
+            t.IsBackground = true;
+            t.Start();
         }
 
         public void Dispose()
@@ -92,17 +98,44 @@ namespace Medical
 
         private void startDownload(Download download)
         {
+            download.StatusString = "Pending";
+            download.updateStatus();
             lock (activeDownloads)
             {
                 activeDownloads.Add(download);
+                pauseEvent.Set();
             }
-            Thread t = new Thread(genericBackgroundDownload);
-            t.Start(download);
         }
 
-        private void genericBackgroundDownload(Object downloadObject)
+        private void singleSimultaneousDownloadThread()
         {
-            Download download = (Download)downloadObject;
+            while (true)
+            {
+                pauseEvent.WaitOne(Timeout.Infinite);
+
+                Download nextDownload = null;
+                lock (activeDownloads)
+                {
+                    if (activeDownloads.Count > 0)
+                    {
+                        nextDownload = activeDownloads[0];
+                    }
+                    else
+                    {
+                        pauseEvent.Reset();
+                    }
+                }
+                if (nextDownload != null)
+                {
+                    genericBackgroundDownload(nextDownload);
+                }
+            }
+        }
+
+        private void genericBackgroundDownload(Download download)
+        {
+            download.StatusString = "Starting";
+            download.updateStatus();
             bool success = false;
             try
             {
@@ -174,6 +207,7 @@ namespace Medical
         {
             using (Stream localDataStream = new FileStream(pluginFileLocation, FileMode.Create, FileAccess.Write, FileShare.None))
             {
+                download.StatusString = "Downloading";
                 byte[] buffer = new byte[8 * 1024];
                 int len;
                 download.TotalRead = 0;

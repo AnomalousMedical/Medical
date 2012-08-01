@@ -68,7 +68,14 @@ namespace Medical.GUI
         {
             if (UpdateStatus != null)
             {
-                StatusString = String.Format("{0} - {1}%\n{2} of {3} (MB)", Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"));
+                if (download.TotalSize > 0)
+                {
+                    StatusString = String.Format("{0}\n{4} - {1}%\n{2} of {3} (MB)", Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"), download.StatusString);
+                }
+                else
+                {
+                    StatusString = String.Format("{0}\n{1}", Name, download.StatusString);
+                }
                 UpdateStatus.Invoke(this, StatusString);
             }
         }
