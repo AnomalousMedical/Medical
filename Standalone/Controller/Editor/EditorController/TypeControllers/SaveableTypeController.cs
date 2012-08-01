@@ -28,6 +28,10 @@ namespace Medical
         public override void closeFile(string file)
         {
             EditorController.ResourceProvider.ResourceCache.forceCloseResourceFile(file);
+            if (currentCachedResource != null && currentCachedResource.isSameFile(file))
+            {
+                changeCachedResource(null);
+            }
         }
 
         public override void openEditor(string file)
