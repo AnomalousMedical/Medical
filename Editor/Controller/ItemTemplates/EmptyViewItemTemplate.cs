@@ -33,7 +33,7 @@ namespace Medical
         {
             get
             {
-                return "StandaloneIcons/NoIcon";
+                return "Editor/EmptyViewIcon";
             }
         }
 

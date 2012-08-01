@@ -72,6 +72,7 @@ namespace Medical.Controller.AnomalousMvc
         protected override EditInterface createEditInterface()
         {
             EditInterface editInterface = new EditInterface(Name, null);
+            editInterface.IconReferenceTag = "MvcContextEditor/RunCommandsIcon";
 
             editInterface.addCommand(new EditInterfaceCommand("Add Command", delegate(EditUICallback callback, EditInterfaceCommand command)
             {
