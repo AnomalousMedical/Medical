@@ -693,7 +693,9 @@
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBoxBrowser.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormXYZ.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.layout" />
-    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.layout" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />

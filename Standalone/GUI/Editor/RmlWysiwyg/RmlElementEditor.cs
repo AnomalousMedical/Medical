@@ -81,6 +81,8 @@ namespace Medical.GUI
                     case "src":
                         if (element.TagName == "img")
                         {
+                            TabControl tabs = (TabControl)widget.findWidget("Tabs");
+                            tabs.IndexSelected = 1;
                             editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
                                 return browserProvider.createFileBrowser(new String[]{ "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp"}, "Images");

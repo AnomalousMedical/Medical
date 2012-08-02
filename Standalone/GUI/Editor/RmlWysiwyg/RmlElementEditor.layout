@@ -10,7 +10,7 @@
         <Widget type="Button" skin="Button" position="58 2 27 23" name="Delete">
             <Property key="Caption" value="Del"/>
         </Widget>
-        <Widget type="TabControl" skin="TabControl" position="0 27 385 308" align="Stretch">
+        <Widget type="TabControl" skin="TabControl" position="0 27 385 308" align="Stretch" name="Tabs">
             <Widget type="TabItem" skin="" position="4 26 376 276">
                 <Property key="Caption" value="Text"/>
                 <Widget type="EditBox" skin="WordWrapWhite" position_real="0 0 1 1" align="Stretch" name="Text">
