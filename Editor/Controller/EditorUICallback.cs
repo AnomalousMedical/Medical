@@ -232,6 +232,26 @@ namespace Medical
             return browser;
         }
 
+        public Browser createFileBrowser(IEnumerable<string> searchPatterns, string prompt)
+        {
+            Browser browser = new Browser("Files", prompt);
+            if (editorController.ResourceProvider != null)
+            {
+                foreach (String searchPattern in searchPatterns)
+                {
+                    foreach (String timeline in editorController.ResourceProvider.listFiles(searchPattern, "", true))
+                    {
+                        browser.addNode("", null, new BrowserNode(timeline, timeline));
+                    }
+                }
+            }
+            else
+            {
+                Log.Warning("No resources loaded.");
+            }
+            return browser;
+        }
+
         public AnomalousMvcContext CurrentEditingMvcContext { get; set; }
     }
 }

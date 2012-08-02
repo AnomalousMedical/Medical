@@ -83,7 +83,7 @@ namespace Medical.GUI
                         {
                             editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
-                                return browserProvider.createFileBrowser("*.png", "Images");
+                                return browserProvider.createFileBrowser(new String[]{ "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp"}, "Images");
                             }));
                         }
                         else

@@ -11,5 +11,7 @@ namespace Medical.GUI
         Browser createActionBrowser();
 
         Browser createFileBrowser(string searchPattern, string prompt);
+
+        Browser createFileBrowser(IEnumerable<string> searchPatterns, string prompt);
     }
 }

@@ -158,16 +158,14 @@ namespace Medical
                     {
                         BrowserWindow<String>.GetInput(uiCallback.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
                         {
-                            //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
                             rmlComponent.insertButton(result);
                             return true;
                         });
                     }),
                 new CallbackAction("Image", context =>
                     {
-                        BrowserWindow<String>.GetInput(uiCallback.createFileBrowser("*.png", "Image Files"), true, delegate(String result, ref string errorPrompt)
+                        BrowserWindow<String>.GetInput(uiCallback.createFileBrowser(new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Image Files"), true, delegate(String result, ref string errorPrompt)
                         {
-                            //textEditorComponent.insertText(String.Format("<input type=\"submit\" onclick=\"{0}\">Empty Button</input>", result));
                             rmlComponent.insertImage(result);
                             return true;
                         });
