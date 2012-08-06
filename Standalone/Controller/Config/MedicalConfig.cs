@@ -216,7 +216,7 @@ namespace Medical
         {
             get
             {
-                return program.getValue("EnableMultitouch", true);
+                return program.getValue("EnableMultitouch", PlatformConfig.DefaultEnableMultitouch);
             }
             set
             {

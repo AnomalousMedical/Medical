@@ -154,6 +154,14 @@ namespace Medical
 
         public static OperatingSystem OsId { get; private set; }
 
+        public static bool DefaultEnableMultitouch
+        {
+            get
+            {
+                return currentConfig.DefaultEnableMultitouchImpl;
+            }
+        }
+
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
 
@@ -188,6 +196,8 @@ namespace Medical
         protected abstract String OverrideFileLocationImpl { get; }
 
         protected abstract ProcessStartInfo RestartProcInfoImpl { get; }
+
+        protected abstract bool DefaultEnableMultitouchImpl { get; }
 
         #region PInvoke
 

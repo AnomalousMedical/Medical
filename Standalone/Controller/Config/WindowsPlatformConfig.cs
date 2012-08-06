@@ -144,5 +144,13 @@ namespace Medical
                 return new ProcessStartInfo(args[0]);
             }
         }
+
+        protected override bool DefaultEnableMultitouchImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

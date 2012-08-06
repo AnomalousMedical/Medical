@@ -161,5 +161,13 @@ namespace Medical
                 return startInfo;
             }
         }
+
+        protected override bool DefaultEnableMultitouchImpl
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }
