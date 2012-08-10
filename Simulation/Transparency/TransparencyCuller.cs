@@ -8,63 +8,55 @@ using Engine;
 using Engine.Platform;
 using OgrePlugin;
 using Engine.ObjectManagement;
+using Engine.Attributes;
 
 namespace Medical
 {
     /// <summary>
     /// This class will hide an object based on the transparency of another object.
     /// </summary>
-    class TransparencyCuller : TransparencySubInterface
+    class TransparencyCuller : TransparencyOverrider
     {
         [Editable]
-        private String cullSimObjectName = "this";
+        String watchingInterfaceName;
 
-        [Editable]
-        private String cullTransparencyInterfaceName = "Alpha";
+        [DoNotCopy]
+        [DoNotSave]
+        protected TransparencyInterface watchingInterface;
 
         [Editable]
         private float hiddenMinValue = 0.9f;
 
-#if ENABLE_TRANSPARENCY_CULLER
-        TransparencyInterface cullInterface;
-
-        protected override void constructed()
+        protected override void customLoad(Engine.Saving.LoadInfo info)
         {
-            SimObject cullSimObject = Owner.getOtherSimObject(cullSimObjectName);
-            if (cullSimObject == null)
+            base.customLoad(info);
+            if (watchingInterfaceName == null)
             {
-                blacklist("Could not find cull SimObject {0}.", cullSimObjectName);
-            }
-
-            cullInterface = cullSimObject.getElement(cullTransparencyInterfaceName) as TransparencyInterface;
-            if (cullInterface == null)
-            {
-                blacklist("Could not find cull transparency interface {0} in SimObject {1}.", cullTransparencyInterfaceName, cullSimObject);
+                //legacy support for transparency culler definitions that used parentInterfaceName
+                watchingInterfaceName = info.GetString("parentInterfaceName", watchingInterfaceName);
             }
         }
 
         protected override void link()
         {
             base.link();
-            setAlpha(parentInterface.CurrentAlpha);
+            watchingInterface = TransparencyController.getTransparencyObject(watchingInterfaceName);
+            if (watchingInterface == null)
+            {
+                blacklist("Cannot find watching interface \"{0}\".", watchingInterfaceName);
+            }
         }
 
-        internal override void setAlpha(float alpha)
+        public override float getOverrideTransparency(float workingAlpha, int transparencyState)
         {
-            if (alpha > hiddenMinValue)
+            if (watchingInterface.getCurrentTransparency(transparencyState) > hiddenMinValue)
             {
-                cullInterface.OverrideAlpha = 0.0f;
+                return 0.0f;
             }
             else
             {
-                cullInterface.clearOverrideAlpha();
+                return workingAlpha;
             }
         }
-#else
-        internal override void setAlpha(float alpha)
-        {
-            
-        }
-#endif
     }
 }

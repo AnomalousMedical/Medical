@@ -18,7 +18,6 @@ namespace Medical
         private float targetOpacity = 1.0f;
         private bool changingOpacity = false;
         private float opacityChangeMultiplier = 1.0f;
-        private float overrideAlpha = -1.0f;
 
         public void smoothBlend(float targetOpacity, float changeMultiplier)
         {
@@ -77,23 +76,6 @@ namespace Medical
             }
         }
 
-        public float OverrideAlpha
-        {
-            get
-            {
-                return overrideAlpha;
-            }
-            set
-            {
-                overrideAlpha = value;
-            }
-        }
-
-        public void clearOverrideAlpha()
-        {
-            overrideAlpha = -1.0f;
-        }
-
         /// <summary>
         /// Get the value that this state wants the alpha to be. This might be
         /// overwritten by overrideAlpha.
@@ -102,10 +84,6 @@ namespace Medical
         {
             get
             {
-                if (overrideAlpha >= 0.0f)
-                {
-                    return overrideAlpha;
-                }
                 return workingAlpha;
             }
         }

@@ -71,6 +71,10 @@ namespace Medical
         [DoNotSave]
         private String finalAlphaMaterialName;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private TransparencyOverrider transparencyOverrider;
+
         public TransparencyInterface()
         {
             ObjectName = "";
@@ -123,10 +127,30 @@ namespace Medical
 
         internal void applyTransparencyState(int index)
         {
-            float workingAlpha = transparencyStates[index].WorkingAlpha;
+            float workingAlpha = getCurrentTransparency(index);
             if (workingAlpha != alphaQuat.w)
             {
                 applyAlphaToMaterial(workingAlpha);
+            }
+        }
+
+        internal void setTransparencyOverrider(TransparencyOverrider overrider)
+        {
+            if (transparencyOverrider == null)
+            {
+                transparencyOverrider = overrider;
+            }
+            else
+            {
+                throw new Exception(String.Format("{0} already has a transparency overrider.", Name));
+            }
+        }
+
+        internal void clearTransparencyOverrider(TransparencyOverrider overrider)
+        {
+            if (transparencyOverrider == overrider)
+            {
+                transparencyOverrider = null;
             }
         }
 
@@ -185,7 +209,7 @@ namespace Medical
             }
             TransparencyController.addTransparencyObject(this);
 
-            applyAlphaToMaterial(transparencyStates[activeTransparencyState].WorkingAlpha);
+            applyAlphaToMaterial(getCurrentTransparency(activeTransparencyState));
         }
 
         protected override void destroy()
@@ -216,27 +240,6 @@ namespace Medical
             {
                 transparencyStates[activeTransparencyState].CurrentAlpha = value;
             }
-        }
-
-        /// <summary>
-        /// This will override the working alpha for the active transparency state.
-        /// </summary>
-        [DoNotCopy]
-        public float OverrideAlpha
-        {
-            get
-            {
-                return transparencyStates[activeTransparencyState].OverrideAlpha;
-            }
-            set
-            {
-                transparencyStates[activeTransparencyState].OverrideAlpha = value;
-            }
-        }
-
-        public void clearOverrideAlpha()
-        {
-            transparencyStates[activeTransparencyState].clearOverrideAlpha();
         }
 
         public bool DisableOnHidden
@@ -270,6 +273,16 @@ namespace Medical
             {
                 state.update(clock);
             }
+        }
+
+        public float getCurrentTransparency(int transparencyStateIndex)
+        {
+            float workingAlpha = transparencyStates[transparencyStateIndex].WorkingAlpha;
+            if (transparencyOverrider != null)
+            {
+                return transparencyOverrider.getOverrideTransparency(workingAlpha, transparencyStateIndex);
+            }
+            return workingAlpha;
         }
 
         private void applyAlphaToMaterial(float alpha)
