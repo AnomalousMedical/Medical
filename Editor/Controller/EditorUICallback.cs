@@ -90,6 +90,7 @@ namespace Medical
             {
                 Browser browser = new Browser("Models", "Choose Model Type");
 
+                browser.addNode("", null, new BrowserNode("DataModel", typeof(DataModel), DataModel.DefaultName));
                 browser.addNode("", null, new BrowserNode("Navigation", typeof(NavigationModel), NavigationModel.DefaultName));
                 browser.addNode("", null, new BrowserNode("MedicalStateInfo", typeof(MedicalStateInfoModel), MedicalStateInfoModel.DefaultName));
                 String error = null;
