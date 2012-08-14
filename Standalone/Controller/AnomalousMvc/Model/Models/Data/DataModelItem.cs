@@ -21,6 +21,8 @@ namespace Medical.Controller.AnomalousMvc
 
         public String Name { get; set; }
 
+        public abstract String StringValue { get; set; }
+
         protected DataModelItem(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);

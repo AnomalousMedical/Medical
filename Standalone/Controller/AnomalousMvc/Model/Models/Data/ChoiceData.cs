@@ -18,6 +18,18 @@ namespace Medical.Controller.AnomalousMvc
         [Editable]
         public String Value { get; set; }
 
+        public override string StringValue
+        {
+            get
+            {
+                return Value;
+            }
+            set
+            {
+                Value = value;
+            }
+        }
+
         protected ChoiceData(LoadInfo info)
             :base(info)
         {

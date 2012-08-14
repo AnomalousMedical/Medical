@@ -28,6 +28,7 @@ namespace Medical.Controller.AnomalousMvc
         private bool allowShutdown = true;
         private Queue<String> queuedActions = new Queue<string>();
         private ViewHost runningActionViewHost;
+        private IActionArgumentProvider runningActionArgumentProvider;
 
         public AnomalousMvcContext()
         {
@@ -146,10 +147,11 @@ namespace Medical.Controller.AnomalousMvc
             core.playTimeline(timelineName);
         }
 
-        public void runAction(string address, ViewHost viewHost = null)
+        public void runAction(string address, ViewHost viewHost = null, IActionArgumentProvider argumentProvider = null)
         {
             runningActionViewHost = viewHost;
             queuedTimeline = null;
+            runningActionArgumentProvider = argumentProvider;
 
             doRunAction(address);
 
@@ -167,6 +169,42 @@ namespace Medical.Controller.AnomalousMvc
             else
             {
                 checkShutdownConditions();
+            }
+        }
+
+        public String getActionArgument(String name)
+        {
+            if (runningActionArgumentProvider != null)
+            {
+                return runningActionArgumentProvider.getValue(name);
+            }
+            return null;
+        }
+
+        public bool tryGetActionArgument(String name, out String value)
+        {
+            if (runningActionArgumentProvider != null)
+            {
+                return runningActionArgumentProvider.tryGetValue(name, out value);
+            }
+            value = null;
+            return false;
+        }
+
+        public bool hasActionArgument<T>(String name)
+        {
+            if (runningActionArgumentProvider != null)
+            {
+                return runningActionArgumentProvider.hasValue(name);
+            }
+            return false;
+        }
+
+        public IEnumerable<Tuple<String, String>> ActionArguments
+        {
+            get
+            {
+                return runningActionArgumentProvider.Iterator;
             }
         }
 

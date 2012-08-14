@@ -38,9 +38,22 @@ namespace Medical.Controller.AnomalousMvc
             return items.ContainsKey(name);
         }
 
-        public void reset()
+        public DataModelItem this[String key]
         {
-            
+            get
+            {
+                return items[key];
+            }
+        }
+
+        public bool trySetValue(String key, String value)
+        {
+            DataModelItem item;
+            if(items.TryGetValue(key, out item))
+            {
+                item.StringValue = value;
+            }
+            return false;
         }
         
         protected DataModel(LoadInfo info)

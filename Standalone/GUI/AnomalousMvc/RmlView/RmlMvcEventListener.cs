@@ -8,11 +8,12 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RmlMvcEventListener : EventListener
+    class RmlMvcEventListener : EventListener, IActionArgumentProvider
     {
         private AnomalousMvcContext mvcContext;
         private String name;
         private ViewHost viewHost;
+        private Event argumentEvent;
 
         public RmlMvcEventListener(String name, AnomalousMvcContext mvcContext, ViewHost viewHost)
         {
@@ -25,11 +26,45 @@ namespace Medical.GUI.AnomalousMvc
         {
             try
             {
-                mvcContext.runAction(name, viewHost);
+                argumentEvent = evt;
+                mvcContext.runAction(name, viewHost, this);
+                argumentEvent = null;
             }
             catch (Exception ex)
             {
                 MessageBox.show(String.Format("An error occured running event '{0}'\n{1}", name, ex.Message), "An error has occured", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
+        }
+
+        public String getValue(String name)
+        {
+            return argumentEvent.Parameters[name].StringValue;
+        }
+
+        public bool tryGetValue(String name, out String value)
+        {
+            if (hasValue(name))
+            {
+                value = getValue(name);
+                return true;
+            }
+            value = null;
+            return false;
+        }
+
+        public bool hasValue(String name)
+        {
+            return argumentEvent.Parameters.HasValue(name);
+        }
+
+        public IEnumerable<Tuple<String, String>> Iterator
+        {
+            get
+            {
+                foreach (RktEntry param in argumentEvent.Parameters)
+                {
+                    yield return Tuple.Create(param.Key, param.Value.StringValue);
+                }
             }
         }
     }

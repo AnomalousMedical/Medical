@@ -18,6 +18,22 @@ namespace Medical.Controller.AnomalousMvc
         [Editable]
         public bool Value { get; set; }
 
+        public override string StringValue
+        {
+            get
+            {
+                return Value.ToString();
+            }
+            set
+            {
+                bool result;
+                if (bool.TryParse(value, out result))
+                {
+                    Value = result;
+                }
+            }
+        }
+
         protected TrueFalseData(LoadInfo info)
             :base(info)
         {

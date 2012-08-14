@@ -174,6 +174,11 @@ namespace Medical.Controller.AnomalousMvc
             mvcActions.addChild(new BrowserNode("Shutdown", typeof(ShutdownCommand), iconName: "MvcContextEditor/MVCShutdownIcon"));
             rootNode.addChild(mvcActions);
 
+            //Data Collection
+            BrowserNode dataCollection = new BrowserNode("Data", null, iconName: CommonResources.NoIcon);
+            dataCollection.addChild(new BrowserNode("Collect Form Data", typeof(CollectFormData), iconName: CommonResources.NoIcon));
+            rootNode.addChild(dataCollection);
+
             //Muscle Position
             BrowserNode musclePosition = new BrowserNode("Muscle Position", null, iconName: "MvcContextEditor/MusclePositionIcon");
             musclePosition.addChild(new BrowserNode("Change Muscle Position", typeof(SetMusclePositionCommand), iconName: "MvcContextEditor/MusclePositionChangeIcon"));

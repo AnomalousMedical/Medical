@@ -87,6 +87,7 @@
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcContext.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\CallbackAction.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\CollectFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\ChangeLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\ChangeMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\RestoreMusclePositionCommand.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Timeline\StopTimelineCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\MvcController.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
+    <Compile Include="Controller\AnomalousMvc\IActionArgumentProvider.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\ChoiceData.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModelItem.cs" />
@@ -646,6 +648,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utility\CommonResources.cs" />
     <Compile Include="Utility\DocumentBuilder.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
     <Compile Include="Utility\EmptyIterator.cs" />
