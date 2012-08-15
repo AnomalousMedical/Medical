@@ -33,27 +33,32 @@ namespace Medical.Controller.AnomalousMvc
             removeItemDefinition(item);
         }
 
-        public bool hasItem(String name)
+        public bool hasItem(string name)
         {
             return items.ContainsKey(name);
         }
 
-        public DataModelItem this[String key]
+        public string getValue(string name)
         {
-            get
+            if (hasItem(name))
             {
-                return items[key];
+                return items[name].Value;
             }
+            return null;
         }
 
-        public bool trySetValue(String key, String value)
+        public void setValue(String name, String value)
         {
-            DataModelItem item;
-            if(items.TryGetValue(key, out item))
+            if (hasItem(name))
             {
-                item.StringValue = value;
+                items[name].Value = value;
             }
-            return false;
+            else
+            {
+                DataModelItem item = new DataModelItem(name);
+                item.Value = value;
+                items.Add(name, item);
+            }
         }
         
         protected DataModel(LoadInfo info)
@@ -68,34 +73,13 @@ namespace Medical.Controller.AnomalousMvc
             info.ExtractDictionary<String, DataModelItem>("Item", items);
         }
 
-        public string getValue(string name)
-        {
-            return items[name].StringValue;
-        }
-
-        public bool tryGetValue(string name, out string value)
-        {
-            if (hasItem(name))
-            {
-                value = getValue(name);
-                return true;
-            }
-            value = null;
-            return false;
-        }
-
-        public bool hasValue(string name)
-        {
-            return items.ContainsKey(name);
-        }
-
         public IEnumerable<Tuple<string, string>> Iterator
         {
             get
             {
                 foreach (DataModelItem item in items.Values)
                 {
-                    yield return Tuple.Create(item.Name, item.StringValue);
+                    yield return Tuple.Create(item.Name, item.Value);
                 }
             }
         }
@@ -107,10 +91,7 @@ namespace Medical.Controller.AnomalousMvc
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addCommand(new EditInterfaceCommand("Add Numeric Data", addNumberData));
-            editInterface.addCommand(new EditInterfaceCommand("Add Text Data", addTextData));
-            editInterface.addCommand(new EditInterfaceCommand("Add True False Data", addTrueFalseData));
-            editInterface.addCommand(new EditInterfaceCommand("Add Choice Data", addChoiceData));
+            editInterface.addCommand(new EditInterfaceCommand("Add Data", addData));
 
             itemEdits = new EditInterfaceManager<DataModelItem>(editInterface);
             itemEdits.addCommand(new EditInterfaceCommand("Remove", removeItem));
@@ -121,7 +102,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        private void addNumberData(EditUICallback callback, EditInterfaceCommand command)
+        private void addData(EditUICallback callback, EditInterfaceCommand command)
         {
             callback.getInputString("Enter a name for this data item", delegate(String result, ref String errorMessage)
             {
@@ -132,58 +113,7 @@ namespace Medical.Controller.AnomalousMvc
                 }
                 else
                 {
-                    addItem(new NumberData(result));
-                    return true;
-                }
-            });
-        }
-
-        private void addTextData(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name for this data item", delegate(String result, ref String errorMessage)
-            {
-                if (hasItem(result))
-                {
-                    errorMessage = String.Format("An item named {0} already exists. Please enter another.", result);
-                    return false;
-                }
-                else
-                {
-                    addItem(new TextData(result));
-                    return true;
-                }
-            });
-        }
-
-        private void addChoiceData(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name for this data item", delegate(String result, ref String errorMessage)
-            {
-                if (hasItem(result))
-                {
-                    errorMessage = String.Format("An item named {0} already exists. Please enter another.", result);
-                    return false;
-                }
-                else
-                {
-                    addItem(new ChoiceData(result));
-                    return true;
-                }
-            });
-        }
-
-        private void addTrueFalseData(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name for this data item", delegate(String result, ref String errorMessage)
-            {
-                if (hasItem(result))
-                {
-                    errorMessage = String.Format("An item named {0} already exists. Please enter another.", result);
-                    return false;
-                }
-                else
-                {
-                    addItem(new TrueFalseData(result));
+                    addItem(new DataModelItem(result));
                     return true;
                 }
             });

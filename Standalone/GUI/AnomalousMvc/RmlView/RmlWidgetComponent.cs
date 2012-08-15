@@ -66,9 +66,10 @@ namespace Medical.GUI.AnomalousMvc
                 foreach (Element input in form.GetElementsByTagName("input"))
                 {
                     String name = input.GetAttributeString("name");
-                    if (dataProvider.hasValue(name))
+                    String value = dataProvider.getValue(name);
+                    if (value != null)
                     {
-                        input.SetAttribute("value", dataProvider.getValue(name));
+                        input.SetAttribute("value", value);
                     }
                 }
             }

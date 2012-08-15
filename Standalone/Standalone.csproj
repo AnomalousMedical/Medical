@@ -125,12 +125,8 @@
     <Compile Include="Controller\AnomalousMvc\Controller\MvcController.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\IDataProvider.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Data\ChoiceData.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModelItem.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Data\NumberData.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Data\TextData.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Data\TrueFalseData.cs" />
     <Compile Include="Controller\AnomalousMvc\QueuedAction.cs" />
     <Compile Include="Controller\AnomalousMvc\View\StoredViewCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\MvcModel.cs" />

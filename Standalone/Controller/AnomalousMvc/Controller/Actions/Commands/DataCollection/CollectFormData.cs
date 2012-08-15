@@ -22,7 +22,7 @@ namespace Medical.Controller.AnomalousMvc
             {
                 foreach (var param in context.ActionArguments)
                 {
-                    dataModel.trySetValue(param.Item1, param.Item2);
+                    dataModel.setValue(param.Item1, param.Item2);
                 }
             }
             else

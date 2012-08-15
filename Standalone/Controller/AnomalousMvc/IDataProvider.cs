@@ -9,10 +9,6 @@ namespace Medical.Controller.AnomalousMvc
     {
         String getValue(String name);
 
-        bool tryGetValue(String name, out String value);
-
-        bool hasValue(String name);
-
         IEnumerable<Tuple<String, String>> Iterator
         {
             get;

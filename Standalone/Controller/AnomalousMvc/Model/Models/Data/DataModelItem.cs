@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public abstract class DataModelItem : Saveable
+    public class DataModelItem : Saveable
     {
         public DataModelItem(String name)
         {
@@ -21,7 +21,8 @@ namespace Medical.Controller.AnomalousMvc
 
         public String Name { get; set; }
 
-        public abstract String StringValue { get; set; }
+        [Editable]
+        public String Value { get; set; }
 
         protected DataModelItem(LoadInfo info)
         {

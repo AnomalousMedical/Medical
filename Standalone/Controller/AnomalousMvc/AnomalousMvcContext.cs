@@ -173,34 +173,6 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        public String getActionArgument(String name)
-        {
-            if (runningActionDataProvider != null)
-            {
-                return runningActionDataProvider.getValue(name);
-            }
-            return null;
-        }
-
-        public bool tryGetActionArgument(String name, out String value)
-        {
-            if (runningActionDataProvider != null)
-            {
-                return runningActionDataProvider.tryGetValue(name, out value);
-            }
-            value = null;
-            return false;
-        }
-
-        public bool hasActionArgument<T>(String name)
-        {
-            if (runningActionDataProvider != null)
-            {
-                return runningActionDataProvider.hasValue(name);
-            }
-            return false;
-        }
-
         public IEnumerable<Tuple<String, String>> ActionArguments
         {
             get
