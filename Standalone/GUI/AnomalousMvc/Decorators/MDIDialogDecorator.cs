@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Engine;
 using Medical.Controller;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -74,6 +75,11 @@ namespace Medical.GUI.AnomalousMvc
             fireCloseEvent = false;
             child.closing();
             this.Visible = false;
+        }
+
+        public void populateViewData(IDataProvider dataProvider)
+        {
+            child.populateViewData(dataProvider);
         }
 
         public void topLevelResized()

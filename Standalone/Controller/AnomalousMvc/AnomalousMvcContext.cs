@@ -26,9 +26,9 @@ namespace Medical.Controller.AnomalousMvc
         //Action queue stuff
         private String queuedTimeline = null;
         private bool allowShutdown = true;
-        private Queue<String> queuedActions = new Queue<string>();
+        private Queue<QueuedAction> queuedActions = new Queue<QueuedAction>();
         private ViewHost runningActionViewHost;
-        private IActionArgumentProvider runningActionArgumentProvider;
+        private IDataProvider runningActionDataProvider;
 
         public AnomalousMvcContext()
         {
@@ -147,11 +147,11 @@ namespace Medical.Controller.AnomalousMvc
             core.playTimeline(timelineName);
         }
 
-        public void runAction(string address, ViewHost viewHost = null, IActionArgumentProvider argumentProvider = null)
+        public void runAction(string address, ViewHost viewHost = null, IDataProvider dataProvider = null)
         {
             runningActionViewHost = viewHost;
             queuedTimeline = null;
-            runningActionArgumentProvider = argumentProvider;
+            runningActionDataProvider = dataProvider;
 
             doRunAction(address);
 
@@ -164,7 +164,8 @@ namespace Medical.Controller.AnomalousMvc
 
             if (queuedActions.Count > 0)
             {
-                runAction(queuedActions.Dequeue(), viewHost);
+                QueuedAction action = queuedActions.Dequeue();
+                runAction(action.Address, action.ViewHost, action.DataProvider);
             }
             else
             {
@@ -174,18 +175,18 @@ namespace Medical.Controller.AnomalousMvc
 
         public String getActionArgument(String name)
         {
-            if (runningActionArgumentProvider != null)
+            if (runningActionDataProvider != null)
             {
-                return runningActionArgumentProvider.getValue(name);
+                return runningActionDataProvider.getValue(name);
             }
             return null;
         }
 
         public bool tryGetActionArgument(String name, out String value)
         {
-            if (runningActionArgumentProvider != null)
+            if (runningActionDataProvider != null)
             {
-                return runningActionArgumentProvider.tryGetValue(name, out value);
+                return runningActionDataProvider.tryGetValue(name, out value);
             }
             value = null;
             return false;
@@ -193,9 +194,9 @@ namespace Medical.Controller.AnomalousMvc
 
         public bool hasActionArgument<T>(String name)
         {
-            if (runningActionArgumentProvider != null)
+            if (runningActionDataProvider != null)
             {
-                return runningActionArgumentProvider.hasValue(name);
+                return runningActionDataProvider.hasValue(name);
             }
             return false;
         }
@@ -204,13 +205,21 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return runningActionArgumentProvider.Iterator;
+                return runningActionDataProvider.Iterator;
             }
         }
 
-        public void queueRunAction(String address)
+        internal void populateViewData(IDataProvider dataProvider)
         {
-            queuedActions.Enqueue(address);
+            if (runningActionViewHost != null)
+            {
+                runningActionViewHost.populateViewData(dataProvider);
+            }
+        }
+
+        public void queueRunAction(String address, ViewHost viewHost = null, IDataProvider dataProvider = null)
+        {
+            queuedActions.Enqueue(new QueuedAction(address, viewHost, dataProvider));
         }
 
         public void queueTimeline(string timeline)

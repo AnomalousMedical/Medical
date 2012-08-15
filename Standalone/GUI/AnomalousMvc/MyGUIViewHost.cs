@@ -35,15 +35,24 @@ namespace Medical.GUI.AnomalousMvc
         public void opening()
         {
             component.opening();
+            if (!String.IsNullOrEmpty(View.OpeningAction))
+            {
+                context.queueRunAction(View.OpeningAction, this);
+            }
         }
 
         public void closing()
         {
             if (!String.IsNullOrEmpty(View.ClosingAction))
             {
-                context.queueRunAction(View.ClosingAction);
+                context.queueRunAction(View.ClosingAction, this);
             }
             component.closing();
+        }
+
+        public void populateViewData(IDataProvider dataProvider)
+        {
+            component.populateViewData(dataProvider);
         }
 
         public LayoutContainer Container

@@ -81,6 +81,11 @@ namespace Medical.GUI.AnomalousMvc
             window.setVisibleSmooth(false);
         }
 
+        public void populateViewData(IDataProvider dataProvider)
+        {
+            child.populateViewData(dataProvider);
+        }
+
         public void topLevelResized()
         {
             child.topLevelResized();

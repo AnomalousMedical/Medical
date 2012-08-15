@@ -8,9 +8,9 @@ using Logging;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public class CollectFormData : ActionCommand
+    public class PopulateFormData : ActionCommand
     {
-        public CollectFormData()
+        public PopulateFormData()
         {
             DataModelName = DataModel.DefaultName;
         }
@@ -20,14 +20,11 @@ namespace Medical.Controller.AnomalousMvc
             DataModel dataModel = context.getModel<DataModel>(DataModelName);
             if (dataModel != null)
             {
-                foreach (var param in context.ActionArguments)
-                {
-                    dataModel.trySetValue(param.Item1, param.Item2);
-                }
+                context.populateViewData(dataModel);
             }
             else
             {
-                Log.Error("Could not find a data model named {0}", DataModelName);
+                Log.Error("Could not find data model named {0}", DataModelName);
             }
         }
 
@@ -38,7 +35,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return "Collect Form Data";
+                return "Populate Form Data";
             }
         }
 
@@ -50,7 +47,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        protected CollectFormData(LoadInfo info)
+        protected PopulateFormData(LoadInfo info)
             :base(info)
         {
 

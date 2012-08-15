@@ -20,5 +20,7 @@ namespace Medical.Controller.AnomalousMvc
         String Name { get; }
 
         View View { get; }
+
+        void populateViewData(IDataProvider dataProvider);
     }
 }

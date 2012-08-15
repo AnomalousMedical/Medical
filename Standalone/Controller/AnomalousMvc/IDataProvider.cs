@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public interface IActionArgumentProvider
+    public interface IDataProvider
     {
         String getValue(String name);
 

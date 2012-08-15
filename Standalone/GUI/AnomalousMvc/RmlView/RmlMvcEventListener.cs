@@ -8,7 +8,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RmlMvcEventListener : EventListener, IActionArgumentProvider
+    class RmlMvcEventListener : EventListener, IDataProvider
     {
         private AnomalousMvcContext mvcContext;
         private String name;

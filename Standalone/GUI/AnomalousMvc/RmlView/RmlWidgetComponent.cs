@@ -44,6 +44,12 @@ namespace Medical.GUI.AnomalousMvc
             view._fireComponentCreated(this);
         }
 
+        public override void Dispose()
+        {
+            rocketWidget.Dispose();
+            base.Dispose();
+        }
+
         public override void closing()
         {
             rocketWidget.RenderingEnabled = false;
@@ -51,10 +57,21 @@ namespace Medical.GUI.AnomalousMvc
             base.closing();
         }
 
-        public override void Dispose()
+        public override void populateViewData(IDataProvider dataProvider)
         {
-            rocketWidget.Dispose();
-            base.Dispose();
+            base.populateViewData(dataProvider);
+            ElementDocument document = rocketWidget.Context.GetDocument(0);
+            foreach (Element form in document.GetElementsByTagName("form"))
+            {
+                foreach (Element input in form.GetElementsByTagName("input"))
+                {
+                    String name = input.GetAttributeString("name");
+                    if (dataProvider.hasValue(name))
+                    {
+                        input.SetAttribute("value", dataProvider.getValue(name));
+                    }
+                }
+            }
         }
 
         public override void topLevelResized()

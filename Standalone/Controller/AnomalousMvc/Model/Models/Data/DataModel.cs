@@ -8,7 +8,7 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    public partial class DataModel : MvcModel
+    public partial class DataModel : MvcModel, IDataProvider
     {
         public const String DefaultName = "DataModel";
 
@@ -66,6 +66,38 @@ namespace Medical.Controller.AnomalousMvc
         {
             base.getInfo(info);
             info.ExtractDictionary<String, DataModelItem>("Item", items);
+        }
+
+        public string getValue(string name)
+        {
+            return items[name].StringValue;
+        }
+
+        public bool tryGetValue(string name, out string value)
+        {
+            if (hasItem(name))
+            {
+                value = getValue(name);
+                return true;
+            }
+            value = null;
+            return false;
+        }
+
+        public bool hasValue(string name)
+        {
+            return items.ContainsKey(name);
+        }
+
+        public IEnumerable<Tuple<string, string>> Iterator
+        {
+            get
+            {
+                foreach (DataModelItem item in items.Values)
+                {
+                    yield return Tuple.Create(item.Name, item.StringValue);
+                }
+            }
         }
     }
 

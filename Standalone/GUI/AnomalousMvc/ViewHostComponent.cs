@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -13,6 +14,8 @@ namespace Medical.GUI.AnomalousMvc
         void opening();
 
         void closing();
+
+        void populateViewData(IDataProvider dataProvider);
 
         MyGUIViewHost ViewHost { get; }
 
