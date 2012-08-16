@@ -22,5 +22,7 @@ namespace Medical.Controller.AnomalousMvc
         View View { get; }
 
         void populateViewData(IDataProvider dataProvider);
+
+        void analyzeViewData(IDataProvider dataProvider);
     }
 }

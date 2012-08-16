@@ -88,6 +88,7 @@
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\CallbackAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\CollectFormData.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\AnalyzeFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\PopulateFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\ChangeLayersCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\ChangeMedicalStateCommand.cs" />

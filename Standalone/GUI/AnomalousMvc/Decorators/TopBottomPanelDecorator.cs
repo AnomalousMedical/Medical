@@ -59,6 +59,11 @@ namespace Medical.GUI.AnomalousMvc
             child.populateViewData(dataProvider);
         }
 
+        public void analyzeViewData(IDataProvider dataProvider)
+        {
+            child.analyzeViewData(dataProvider);
+        }
+
         public MyGUIViewHost ViewHost
         {
             get

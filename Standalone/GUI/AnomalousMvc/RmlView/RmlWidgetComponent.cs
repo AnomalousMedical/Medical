@@ -67,10 +67,142 @@ namespace Medical.GUI.AnomalousMvc
                 {
                     String name = input.GetAttributeString("name");
                     String value = dataProvider.getValue(name);
+                    String type = input.GetAttributeString("type").ToLowerInvariant();
                     if (value != null)
                     {
-                        input.SetAttribute("value", value);
+                        switch(type)
+                        {
+                            case "text":
+                                input.SetAttribute("value", value);
+                                break;
+                            case "password":
+                                input.SetAttribute("value", value);
+                                break;
+                            case "radio":
+                                if (input.GetAttributeString("value") == value)
+                                {
+                                    input.SetAttribute("checked", "true");
+                                }
+                                break;
+                            case "checkbox":
+                                bool check;
+                                if (bool.TryParse(value, out check) && check)
+                                {
+                                    input.SetAttribute("checked", "true");
+                                }
+                                break;
+                        }
                     }
+                }
+                foreach (Element textArea in form.GetElementsByTagName("textarea"))
+                {
+                    String name = textArea.GetAttributeString("name");
+                    String value = dataProvider.getValue(name);
+                    if (value != null)
+                    {
+                        textArea.InnerRml = value;
+                    }
+                }
+                //foreach (Element select in form.GetElementsByTagName("select"))
+                //{
+                //    String name = select.GetAttributeString("name");
+                //    String value = dataProvider.getValue(name);
+                //}
+            }
+        }
+
+        public override void analyzeViewData(IDataProvider dataProvider)
+        {
+            base.analyzeViewData(dataProvider);
+            ElementDocument document = rocketWidget.Context.GetDocument(0);
+            List<Element> removeElements = new List<Element>();
+            //If statements
+            foreach (Element ifStatement in document.GetElementsByTagName("if"))
+            {
+                String left = ifStatement.GetAttributeString("l");
+                String right = ifStatement.GetAttributeString("r");
+                String op = ifStatement.GetAttributeString("c");
+
+                if (!String.IsNullOrEmpty(op) && !String.IsNullOrEmpty(left) && !String.IsNullOrEmpty(right))
+                {
+                    if (left[0] == '%')
+                    {
+                        left = dataProvider.getValue(left.Substring(1, left.Length - 1));
+                    }
+                    if (right[0] == '%')
+                    {
+                        right = dataProvider.getValue(right.Substring(1, right.Length - 1));
+                    }
+                    if (!String.IsNullOrEmpty(left) && !String.IsNullOrEmpty(right))
+                    {
+                        bool success = false;
+                        switch (op)
+                        {
+                            case "equal":
+                                success = left == right;
+                                break;
+                            case "notequal":
+                                success = left != right;
+                                break;
+                            case "greaterequal":
+                                decimal leftNum, rightNum;
+                                if (decimal.TryParse(left, out leftNum) && decimal.TryParse(right, out rightNum))
+                                {
+                                    success = leftNum >= rightNum;
+                                }
+                                break;
+                            case "lessequal":
+                                if (decimal.TryParse(left, out leftNum) && decimal.TryParse(right, out rightNum))
+                                {
+                                    success = leftNum <= rightNum;
+                                }
+                                break;
+                            case "greater":
+                                if (decimal.TryParse(left, out leftNum) && decimal.TryParse(right, out rightNum))
+                                {
+                                    success = leftNum > rightNum;
+                                }
+                                break;
+                            case "less":
+                                if (decimal.TryParse(left, out leftNum) && decimal.TryParse(right, out rightNum))
+                                {
+                                    success = leftNum < rightNum;
+                                }
+                                break;
+                        }
+                        if (success)
+                        {
+                            Element elseStatement = ifStatement.NextSibling;
+                            if (elseStatement != null && elseStatement.TagName == "else")
+                            {
+                                removeElements.Add(elseStatement);
+                            }
+                        }
+                        else
+                        {
+                            removeElements.Add(ifStatement);
+                        }
+                    }
+                }
+            }
+
+            foreach (Element remove in removeElements)
+            {
+                Element parent = remove.ParentNode;
+                if (parent != null)
+                {
+                    parent.RemoveChild(remove);
+                }
+            }
+
+            //Print statements
+            foreach (Element print in document.GetElementsByTagName("print"))
+            {
+                String name = print.GetAttributeString("name");
+                String value = dataProvider.getValue(name);
+                if (value != null)
+                {
+                    print.InnerRml = value;
                 }
             }
         }

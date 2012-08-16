@@ -26,6 +26,12 @@ namespace Medical.GUI.AnomalousMvc
         {
             try
             {
+                //Logging.Log.Debug("--------- {0} | type {1} ----------", name, evt.Type);
+                //foreach (RktEntry param in evt.Parameters)
+                //{
+                //    Logging.Log.Debug("key {0} | type {1} | value {2}", param.Key, param.Value.VariantType, param.Value.StringValue);
+                //}
+                //Logging.Log.Debug("-----------------------------------");
                 argumentEvent = evt;
                 mvcContext.runAction(name, viewHost, this);
                 argumentEvent = null;
@@ -64,6 +70,18 @@ namespace Medical.GUI.AnomalousMvc
                 foreach (RktEntry param in argumentEvent.Parameters)
                 {
                     yield return Tuple.Create(param.Key, param.Value.StringValue);
+                }
+                if (argumentEvent.Type == "submit")
+                {
+                    //Submit events will not include any check boxes that are not checked, but the data side expects all fields
+                    //to come through, so we have to manually find any unchecked check boxes
+                    foreach (Element element in argumentEvent.CurrentElement.GetElementsByTagName("input"))
+                    {
+                        if (element.GetAttributeString("type") == "checkbox" && !element.HasAttribute("checked"))
+                        {
+                            yield return Tuple.Create(element.GetAttributeString("name"), "false");
+                        }
+                    }
                 }
             }
         }

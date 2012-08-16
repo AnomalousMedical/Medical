@@ -189,6 +189,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        internal void analyzeViewData(IDataProvider dataProvider)
+        {
+            if (runningActionViewHost != null)
+            {
+                runningActionViewHost.analyzeViewData(dataProvider);
+            }
+        }
+
         public void queueRunAction(String address, ViewHost viewHost = null, IDataProvider dataProvider = null)
         {
             queuedActions.Enqueue(new QueuedAction(address, viewHost, dataProvider));

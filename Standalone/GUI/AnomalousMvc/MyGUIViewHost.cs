@@ -55,6 +55,11 @@ namespace Medical.GUI.AnomalousMvc
             component.populateViewData(dataProvider);
         }
 
+        public void analyzeViewData(IDataProvider dataProvider)
+        {
+            component.analyzeViewData(dataProvider);
+        }
+
         public LayoutContainer Container
         {
             get

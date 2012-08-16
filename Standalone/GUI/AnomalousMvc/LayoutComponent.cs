@@ -44,6 +44,11 @@ namespace Medical.GUI.AnomalousMvc
 
         }
 
+        public virtual void analyzeViewData(IDataProvider dataProvider)
+        {
+            
+        }
+
         public Widget Widget
         {
             get

@@ -17,6 +17,8 @@ namespace Medical.GUI.AnomalousMvc
 
         void populateViewData(IDataProvider dataProvider);
 
+        void analyzeViewData(IDataProvider dataProvider);
+
         MyGUIViewHost ViewHost { get; }
 
         Widget Widget { get; }

@@ -178,6 +178,7 @@ namespace Medical.Controller.AnomalousMvc
             BrowserNode dataCollection = new BrowserNode("Data", null, iconName: CommonResources.NoIcon);
             dataCollection.addChild(new BrowserNode("Collect Form Data", typeof(CollectFormData), iconName: CommonResources.NoIcon));
             dataCollection.addChild(new BrowserNode("Populate Form Data", typeof(PopulateFormData), iconName: CommonResources.NoIcon));
+            dataCollection.addChild(new BrowserNode("Analyze Form Data", typeof(AnalyzeFormData), iconName: CommonResources.NoIcon));
             rootNode.addChild(dataCollection);
 
             //Muscle Position
