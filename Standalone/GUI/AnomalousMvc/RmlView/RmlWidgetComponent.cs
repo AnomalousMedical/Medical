@@ -91,6 +91,9 @@ namespace Medical.GUI.AnomalousMvc
                                     input.SetAttribute("checked", "true");
                                 }
                                 break;
+                            case "range":
+                                input.SetAttribute("value", value);
+                                break;
                         }
                     }
                 }
@@ -100,14 +103,18 @@ namespace Medical.GUI.AnomalousMvc
                     String value = dataProvider.getValue(name);
                     if (value != null)
                     {
-                        textArea.InnerRml = value;
+                        textArea.SetAttribute("value", value);
                     }
                 }
-                //foreach (Element select in form.GetElementsByTagName("select"))
-                //{
-                //    String name = select.GetAttributeString("name");
-                //    String value = dataProvider.getValue(name);
-                //}
+                foreach (ElementFormControl select in form.GetElementsByTagName("select"))
+                {
+                    String name = select.GetAttributeString("name");
+                    String value = dataProvider.getValue(name);
+                    if (value != null)
+                    {
+                        select.Value = value;
+                    }
+                }
             }
         }
 

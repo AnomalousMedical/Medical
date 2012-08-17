@@ -177,7 +177,14 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return runningActionDataProvider.Iterator;
+                if (runningActionDataProvider != null)
+                {
+                    return runningActionDataProvider.Iterator;
+                }
+                else
+                {
+                    return IEnumerableUtil<Tuple<String, String>>.EmptyIterator;
+                }
             }
         }
 

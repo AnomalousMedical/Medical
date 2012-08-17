@@ -651,6 +651,7 @@
     <Compile Include="Utility\DocumentBuilder.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
     <Compile Include="Utility\EmptyIterator.cs" />
+    <Compile Include="Utility\IEnumerableUtil.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
   </ItemGroup>
