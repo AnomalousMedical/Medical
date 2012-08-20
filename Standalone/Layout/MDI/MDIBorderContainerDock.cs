@@ -38,7 +38,6 @@ namespace Medical.Controller
                     separator.Pointer = MainWindow.SIZE_VERT;
                     break;
             }
-            //separator.Visible = false;
         }
 
         public void Dispose()
@@ -192,35 +191,38 @@ namespace Medical.Controller
 
         void separator_MouseDrag(Widget source, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            switch (CurrentDockLocation)
+            if (layoutContainer.ChildCount > 0)
             {
-                case DockLocation.Left:
-                    MDIContainerBase child = layoutContainer.getChild(layoutContainer.ChildCount - 1);
-                    IntSize2 actualSize = child.ActualSize;
-                    actualSize.Width = me.Position.x - child.Location.x;
-                    child.ActualSize = actualSize;
-                    break;
-                case DockLocation.Right:
-                    child = layoutContainer.getChild(0);
-                    actualSize = child.ActualSize;
-                    actualSize.Width = (child.Location.x + actualSize.Width) - me.Position.x;
-                    child.ActualSize = actualSize;
-                    break;
-                case DockLocation.Top:
-                    child = layoutContainer.getChild(layoutContainer.ChildCount - 1);
-                    actualSize = child.ActualSize;
-                    actualSize.Height = me.Position.y - child.Location.y;
-                    child.ActualSize = actualSize;
-                    break;
-                case DockLocation.Bottom:
-                    child = layoutContainer.getChild(0);
-                    actualSize = child.ActualSize;
-                    actualSize.Height = (child.Location.y + actualSize.Height) - me.Position.y;
-                    child.ActualSize = actualSize;
-                    break;
+                MouseEventArgs me = (MouseEventArgs)e;
+                switch (CurrentDockLocation)
+                {
+                    case DockLocation.Left:
+                        MDIContainerBase child = layoutContainer.getChild(layoutContainer.ChildCount - 1);
+                        IntSize2 actualSize = child.ActualSize;
+                        actualSize.Width = me.Position.x - child.Location.x;
+                        child.ActualSize = actualSize;
+                        break;
+                    case DockLocation.Right:
+                        child = layoutContainer.getChild(0);
+                        actualSize = child.ActualSize;
+                        actualSize.Width = (child.Location.x + actualSize.Width) - me.Position.x;
+                        child.ActualSize = actualSize;
+                        break;
+                    case DockLocation.Top:
+                        child = layoutContainer.getChild(layoutContainer.ChildCount - 1);
+                        actualSize = child.ActualSize;
+                        actualSize.Height = me.Position.y - child.Location.y;
+                        child.ActualSize = actualSize;
+                        break;
+                    case DockLocation.Bottom:
+                        child = layoutContainer.getChild(0);
+                        actualSize = child.ActualSize;
+                        actualSize.Height = (child.Location.y + actualSize.Height) - me.Position.y;
+                        child.ActualSize = actualSize;
+                        break;
+                }
+                invalidate();
             }
-            invalidate();
         }
     }
 }
