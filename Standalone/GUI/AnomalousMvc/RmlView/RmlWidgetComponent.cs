@@ -6,6 +6,7 @@ using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
 using libRocketPlugin;
 using System.Text.RegularExpressions;
+using Logging;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -202,6 +203,14 @@ namespace Medical.GUI.AnomalousMvc
                             }
                         }
                     }
+                    else
+                    {
+                        Log.Warning("Invalid condition statement on element '{0}' statement: {1}", element.TagName, statement);
+                    }
+                }
+                else
+                {
+                    Log.Warning("Invalid operator on condition statement on element '{0}' statement: {1}", element.TagName, statement);
                 }
 
                 if (!success)
