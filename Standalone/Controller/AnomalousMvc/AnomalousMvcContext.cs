@@ -361,6 +361,34 @@ namespace Medical.Controller.AnomalousMvc
             return modelMemory.get<TypeName>(name);
         }
 
+        public ControllerAction findAction(String address)
+        {
+            if (address != null)
+            {
+                int slashLoc = address.LastIndexOf('/');
+                if (slashLoc != -1)
+                {
+                    String controllerName = address.Substring(0, slashLoc);
+                    ++slashLoc;
+                    String actionName = address.Substring(slashLoc, address.Length - slashLoc);
+                    MvcController controller;
+                    if(controllers.tryGetValue(controllerName, out controller))
+                    {
+                        ControllerAction action;
+                        if (controller.Actions.tryGetValue(actionName, out action))
+                        {
+                            return action;
+                        }
+                    }
+                }
+                else
+                {
+                    Log.Error("Malformed action address '{0}' the format must be 'Controller/Action' cannot run action", address);
+                }
+            }
+            return null;
+        }
+
         [EditableAction]
         public String StartupAction { get; set; }
 
@@ -548,32 +576,14 @@ namespace Medical.Controller.AnomalousMvc
 
         private void doRunAction(string address)
         {
-            if (address != null)
+            ControllerAction action = findAction(address);
+            if (action != null)
             {
-                int slashLoc = address.LastIndexOf('/');
-                if (slashLoc != -1)
-                {
-                    try
-                    {
-                        String controllerName = address.Substring(0, slashLoc);
-                        ++slashLoc;
-                        String actionName = address.Substring(slashLoc, address.Length - slashLoc);
-                        MvcController controller = controllers[controllerName];
-                        controller.runAction(actionName, this);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error("Cannot run action {0}. Reason {1}", address, ex.Message);
-                    }
-                }
-                else
-                {
-                    Log.Error("Malformed action address '{0}' the format must be 'Controller/Action' cannot run action", address);
-                }
+                action.execute(this);
             }
             else
             {
-                Log.Error("Address was null, cannot run action.", address);
+                Log.Error("Action '{0}' cannot be found.", address);
             }
         }
 

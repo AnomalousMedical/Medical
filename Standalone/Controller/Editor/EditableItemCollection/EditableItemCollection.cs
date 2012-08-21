@@ -68,6 +68,20 @@ namespace Medical.Editor
             }
         }
 
+        public bool tryGetValue(String name, out ItemType value)
+        {
+            foreach (ItemType item in items)
+            {
+                if (item.Name == name)
+                {
+                    value = item;
+                    return true;
+                }
+            }
+            value = null;
+            return false;
+        }
+
         public IEnumerator<ItemType> GetEnumerator()
         {
             return items.GetEnumerator();

@@ -24,12 +24,6 @@ namespace Medical.Controller.AnomalousMvc
             actionCollection.addRange(actions);
         }
 
-        public void runAction(String actionName, AnomalousMvcContext context)
-        {
-            ControllerAction action = actionCollection[actionName];
-            action.execute(context);
-        }
-
         public ControllerActionCollection Actions
         {
             get
