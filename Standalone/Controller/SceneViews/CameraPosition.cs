@@ -101,6 +101,7 @@ namespace Medical
         private void captureCameraPosition(EditUICallback callback, EditInterfaceCommand caller)
         {
             callback.runOneWayCustomQuery(CustomEditQueries.CaptureCameraPosition, this);
+            editInterface.fireDataNeedsRefresh();
         }
 
         #region Saveable Members
