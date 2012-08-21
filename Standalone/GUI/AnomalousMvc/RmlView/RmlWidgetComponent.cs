@@ -145,7 +145,8 @@ namespace Medical.GUI.AnomalousMvc
             List<Element> removeElements = new List<Element>();
             foreach (Element element in document.GetElementsWithAttribute("condition"))
             {
-                String statement = element.GetAttributeString("condition");
+                bool success = false;
+                String statement = element.GetAttributeString("condition").Replace("&lt;", "<").Replace("&gt;", ">");
                 Match match = Regex.Match(statement, ifRegex);
                 if (match.Success)
                 {
@@ -165,7 +166,6 @@ namespace Medical.GUI.AnomalousMvc
                         }
                         if (!String.IsNullOrEmpty(left) && !String.IsNullOrEmpty(right))
                         {
-                            bool success = false;
                             switch (op)
                             {
                                 case "==":
@@ -200,21 +200,22 @@ namespace Medical.GUI.AnomalousMvc
                                     }
                                     break;
                             }
-                            if (!success)
-                            {
-                                removeElements.Add(element);
-                            }
                         }
                     }
                 }
 
-                foreach (Element remove in removeElements)
+                if (!success)
                 {
-                    Element parent = remove.ParentNode;
-                    if (parent != null)
-                    {
-                        parent.RemoveChild(remove);
-                    }
+                    removeElements.Add(element);
+                }
+            }
+
+            foreach (Element remove in removeElements)
+            {
+                Element parent = remove.ParentNode;
+                if (parent != null)
+                {
+                    parent.RemoveChild(remove);
                 }
             }
         }
