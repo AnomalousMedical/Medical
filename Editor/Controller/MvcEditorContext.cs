@@ -90,7 +90,7 @@ namespace Medical
             eventContext.addEvent(new MessageEvent(Events.Save, 
                 frameUp: eventManager =>
                 {
-                    save();
+                    saveAll();
                 }, 
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_S }));
         }

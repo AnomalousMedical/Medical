@@ -166,6 +166,9 @@
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
+    <Compile Include="GUI\Editor\AddItemDialog\AddItemDialog.cs" />
+    <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplate.cs" />
+    <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplateAdapter.cs" />
     <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ScrollingExpandingEditInterfaceViewer.cs" />
     <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingEditInterfaceViewer.cs" />
     <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.cs" />
@@ -662,6 +665,7 @@
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
+    <EmbeddedResource Include="GUI\Editor\AddItemDialog\AddItemDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.layout" />
     <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormComboBox.layout" />

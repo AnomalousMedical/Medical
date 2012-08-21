@@ -103,7 +103,7 @@ namespace Medical
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>
             {
-                save();
+                saveAll();
             };
             eventContext.addEvent(saveEvent);
 

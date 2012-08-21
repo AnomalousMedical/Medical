@@ -79,6 +79,11 @@ namespace Medical
             return errorMessage == null;
         }
 
+        public void reset()
+        {
+            
+        }
+
         private EditInterface editInterface;
 
         public EditInterface EditInterface

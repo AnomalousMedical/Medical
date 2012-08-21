@@ -6,18 +6,13 @@ using Engine.Editing;
 
 namespace Medical
 {
-    public class ProjectItemTemplateFixedNameDelegate : ProjectItemTemplate
+    public class AddItemTemplateAdapter : AddItemTemplate
     {
-        public delegate void CreateItem(String path, EditorController editorController);
-
-        private CreateItem createItemCallback;
-
-        public ProjectItemTemplateFixedNameDelegate(String typeName, String imageName, String group, CreateItem createItemCallback)
+        public AddItemTemplateAdapter(String typeName, String imageName, String group)
         {
             this.TypeName = typeName;
             this.ImageName = imageName;
             this.Group = group;
-            this.createItemCallback = createItemCallback;
         }
 
         public string TypeName { get; private set; }
@@ -26,21 +21,27 @@ namespace Medical
 
         public string Group { get; private set; }
 
-        public bool isValid(out String errorMessage)
+        public virtual bool isValid(out String errorMessage)
         {
-            errorMessage = null;
-            return true;
+            if (String.IsNullOrEmpty(Name))
+            {
+                errorMessage = "Please enter a name.";
+                return false;
+            }
+            else
+            {
+                errorMessage = null;
+                return true;
+            }
         }
 
         public virtual void reset()
         {
-            
+            Name = null;
         }
 
-        public void createItem(string path, EditorController editorController)
-        {
-            createItemCallback(path, editorController);
-        }
+        [Editable]
+        public String Name { get; set; }
 
         public EditInterface EditInterface
         {

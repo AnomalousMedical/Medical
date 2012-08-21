@@ -163,7 +163,7 @@ namespace Medical
             eventContext.addEvent(new MessageEvent(Events.Save,
                 frameUp: eventManager =>
                 {
-                    timelineTypeController.saveTimeline(currentTimeline, currentFile);
+                    saveAll();
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_S }));
 

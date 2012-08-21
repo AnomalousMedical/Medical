@@ -88,6 +88,11 @@ namespace Medical
             }
         }
 
+        public virtual void reset()
+        {
+            Name = null;
+        }
+
         private static void createController(AnomalousMvcContext mvcContext, String name)
         {
             MvcController controller = new MvcController(name);

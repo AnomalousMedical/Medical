@@ -6,20 +6,20 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class AddItemDialog : Dialog
+    public class AddItemDialog : Dialog
     {
-        public static void AddItem(String path, EditorController editorController)
+        public static void AddItem(IEnumerable<AddItemTemplate> itemTemplates, Action<AddItemTemplate> createItemCallback)
         {
             AddItemDialog addItemDialog = new AddItemDialog();
 
-            foreach (ProjectItemTemplate itemTemplate in editorController.ItemTemplates)
+            foreach (AddItemTemplate itemTemplate in itemTemplates)
             {
                 addItemDialog.addItemTemplate(itemTemplate);
             }
 
             addItemDialog.CreateItem += (itemTemplate) =>
             {
-                itemTemplate.createItem(path, editorController);
+                createItemCallback(itemTemplate);
             };
 
             addItemDialog.Closed += (sender, e) =>
@@ -34,10 +34,10 @@ namespace Medical.GUI
 
         private ScrollingExpandingEditInterfaceViewer expandingView;
         private ButtonGrid itemGrid;
-        public event Action<ProjectItemTemplate> CreateItem;
+        public event Action<AddItemTemplate> CreateItem;
 
         protected AddItemDialog()
-            :base("Medical.GUI.AddItemDialog.AddItemDialog.layout")
+            :base("Medical.GUI.Editor.AddItemDialog.AddItemDialog.layout")
         {
             itemGrid = new ButtonGrid((ScrollView)window.findWidget("ItemList"), new ButtonGridListLayout());
             itemGrid.SelectedValueChanged += new EventHandler(itemGrid_SelectedValueChanged);
@@ -57,8 +57,9 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void addItemTemplate(ProjectItemTemplate itemTemplate)
+        public void addItemTemplate(AddItemTemplate itemTemplate)
         {
+            itemTemplate.reset();
             ButtonGridItem item = itemGrid.addItem(itemTemplate.Group, itemTemplate.TypeName, itemTemplate.ImageName);
             item.UserObject = itemTemplate;
             if (itemGrid.SelectedItem == null)
@@ -69,13 +70,13 @@ namespace Medical.GUI
 
         void itemGrid_SelectedValueChanged(object sender, EventArgs e)
         {
-            expandingView.EditInterface = ((ProjectItemTemplate)itemGrid.SelectedItem.UserObject).EditInterface;
+            expandingView.EditInterface = ((AddItemTemplate)itemGrid.SelectedItem.UserObject).EditInterface;
             expandingView.layout();
         }
 
         void add_MouseButtonClick(Widget source, EventArgs e)
         {
-            ProjectItemTemplate itemTemplate = (ProjectItemTemplate)itemGrid.SelectedItem.UserObject;
+            AddItemTemplate itemTemplate = (AddItemTemplate)itemGrid.SelectedItem.UserObject;
             String error;
             if (itemTemplate.isValid(out error))
             {

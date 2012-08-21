@@ -6,18 +6,8 @@ using Engine.Editing;
 
 namespace Medical
 {
-    public interface ProjectItemTemplate
+    public interface ProjectItemTemplate : AddItemTemplate
     {
-        String TypeName { get; }
-
-        String ImageName { get; }
-
-        String Group { get; }
-
         void createItem(String path, EditorController editorController);
-
-        bool isValid(out String errorMessage);
-
-        EditInterface EditInterface { get; }
     }
 }

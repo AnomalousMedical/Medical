@@ -40,6 +40,11 @@ namespace Medical
             }
         }
 
+        public virtual void reset()
+        {
+            Name = null;
+        }
+
         [Editable]
         public String Name { get; set; }
 
