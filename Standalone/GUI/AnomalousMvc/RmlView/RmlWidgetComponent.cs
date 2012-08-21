@@ -5,6 +5,7 @@ using System.Text;
 using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
 using libRocketPlugin;
+using System.Text.RegularExpressions;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -137,17 +138,20 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
+        const String ifRegex = "(==)|(!=)|(>=)|(<=)|>|<";
+
         private void runIfAnalysis(IDataProvider dataProvider, ElementDocument document)
         {
             List<Element> removeElements = new List<Element>();
             foreach (Element element in document.GetElementsWithAttribute("condition"))
             {
-                String[] statement = element.GetAttributeString("condition").Split(null);
-                if (statement.Length == 3)
+                String statement = element.GetAttributeString("condition");
+                Match match = Regex.Match(statement, ifRegex);
+                if (match.Success)
                 {
-                    String left = statement[0];
-                    String right = statement[2];
-                    String op = statement[1];
+                    String left = statement.Substring(0, match.Index).Trim();
+                    String right = statement.Substring(match.Index + match.Length).Trim();
+                    String op = match.Value;
 
                     if (!String.IsNullOrEmpty(op) && !String.IsNullOrEmpty(left) && !String.IsNullOrEmpty(right))
                     {
