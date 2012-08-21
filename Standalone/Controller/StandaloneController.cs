@@ -51,7 +51,6 @@ namespace Medical
         private AnatomyController anatomyController;
         private DownloadController downloadController;
         private PatientDataController patientDataController;
-        private EditorCore editorCore = null;
 
         //GUI
         private GUIManager guiManager;
@@ -363,14 +362,6 @@ namespace Medical
         public void setWatermarkText(String text)
         {
             ((SideLogoWatermark)watermark).addText(text);
-        }
-
-        public void initializeEditorCore()
-        {
-            if (editorCore == null)
-            {
-                editorCore = new EditorCore(ViewHostFactory);
-            }
         }
 
         public MedicalController MedicalController

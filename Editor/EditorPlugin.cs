@@ -90,7 +90,7 @@ namespace Medical
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
 
-            standaloneController.initializeEditorCore();
+            standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory());
 
             standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(editorTimelineController, editorController, standaloneController.Clipboard, this));
             standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(editorUICallback, editorController));

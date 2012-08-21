@@ -36,7 +36,7 @@ namespace Medical.GUI
         private Element element;
 
         protected RmlElementEditor(MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, Element element)
-            :base("Medical.GUI.Editor.RmlWysiwyg.RmlElementEditor.layout")
+            :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
 

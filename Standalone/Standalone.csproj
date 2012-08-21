@@ -139,31 +139,6 @@
     <Compile Include="Controller\Editor\BrowserAttributes\PropBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\ModelBrowserEditableProperty.cs" />
-    <Compile Include="Controller\Editor\EditorController\ProjectItemTemplateFixedNameDelegate.cs" />
-    <Compile Include="Controller\Editor\EditorController\EditorController.cs" />
-    <Compile Include="Controller\Editor\EditorController\ProjectItemTemplate.cs" />
-    <Compile Include="Controller\Editor\EditorController\ProjectItemTemplateDelegate.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\MvcTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\PluginTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\PresentationTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\RcssTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\RmlTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\SaveableTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\SaveableTypeControllerCachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\TextTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\TextTypeControllerCachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\TimelineTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\TypeControllers\TRmlTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorCore.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\CachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\EditorResourceProvider.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\ResourceCache.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\SaveableCachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\SaveableObjectStream.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\TextCachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorController\EditorTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorController\ProjectTemplate.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\Presentation\PresentationEntry.cs" />
     <Compile Include="Controller\Presentation\PresentationIndex.cs" />
@@ -224,13 +199,6 @@
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormVector3.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ScrollablePropertiesForm.cs" />
     <Compile Include="GUI\Editor\PropertyEditor.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlEditableProperty.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygBrowserProvider.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygView.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
@@ -702,10 +670,6 @@
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBoxBrowser.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormXYZ.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.layout" />
-    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />
     <EmbeddedResource Include="Resources\DegenerationImages.png" />

@@ -78,6 +78,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\EditorConfig.cs" />
+    <Compile Include="Controller\EditorController\EditorController.cs" />
+    <Compile Include="Controller\EditorController\EditorTypeController.cs" />
+    <Compile Include="Controller\EditorController\ProjectItemTemplate.cs" />
+    <Compile Include="Controller\EditorController\ProjectItemTemplateDelegate.cs" />
+    <Compile Include="Controller\EditorController\ProjectItemTemplateFixedNameDelegate.cs" />
+    <Compile Include="Controller\EditorController\ProjectTemplate.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\MvcTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\PluginTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\PresentationTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\RcssTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\RmlTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\SaveableTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\SaveableTypeControllerCachedResource.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\TextTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\TextTypeControllerCachedResource.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\TimelineTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\TRmlTypeController.cs" />
+    <Compile Include="Controller\EditorResourceProvider\CachedResource.cs" />
+    <Compile Include="Controller\EditorResourceProvider\EditorResourceProvider.cs" />
+    <Compile Include="Controller\EditorResourceProvider\ResourceCache.cs" />
+    <Compile Include="Controller\EditorResourceProvider\SaveableCachedResource.cs" />
+    <Compile Include="Controller\EditorResourceProvider\SaveableObjectStream.cs" />
+    <Compile Include="Controller\EditorResourceProvider\TextCachedResource.cs" />
     <Compile Include="Controller\ItemTemplates\PluginBrandingResourceItemTemplate.cs" />
     <Compile Include="Controller\ItemTemplates\ViewWithTimelineItemTemplate.cs" />
     <Compile Include="Controller\ItemTemplates\EmptyViewItemTemplate.cs" />
@@ -152,6 +176,13 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RmlEditableProperty.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RmlElementEditor.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygBrowserProvider.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponent.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
+    <Compile Include="GUI\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponent.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponentFactory.cs" />
@@ -201,6 +232,10 @@
     <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
+    <EmbeddedResource Include="GUI\RmlWysiwyg\RmlElementEditor.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
