@@ -119,6 +119,8 @@ namespace Medical.GUI
 
         public String AdImageKey { get; set; }
 
+        public String AdImageUrl { get; set; }
+
         public bool ShowAdImage
         {
             get
@@ -147,10 +149,10 @@ namespace Medical.GUI
                 if (ShowAdImage && AdImageKey != null)
                 {
                     firstTimeShown = false;
-                    iconScroller.setPosition(232, iconScroller.Top);
-                    iconScroller.setSize(widget.Width - 230, iconScroller.Height);
+                    iconScroller.setPosition(240, iconScroller.Top);
+                    iconScroller.setSize(widget.Width - 240, iconScroller.Height);
                     iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
-                    adImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", 2, iconScroller.Top, 200, 400, Align.Left | Align.Top, "");
+                    adImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", 2, iconScroller.Top, 230, 460, Align.Left | Align.Top, "");
                     adImage.setItemResource(AdImageKey);
                     adImage.MouseButtonClick += adImage_MouseButtonClick;
                 }
@@ -159,7 +161,7 @@ namespace Medical.GUI
 
         void adImage_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser(String.Format(MedicalConfig.ProductPageBaseURL, "1"));
+            OtherProcessManager.openUrlInBrowser(AdImageUrl);
         }
 
         void taskController_TaskRemoved(Task task)
