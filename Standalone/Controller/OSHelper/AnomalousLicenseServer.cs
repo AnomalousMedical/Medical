@@ -28,13 +28,13 @@ namespace Engine
             this.baseURL = baseURL;
         }
 
-        public byte[] createLicenseFile(String user, String pass, String machineID)
+        public byte[] createLicenseFile(String user, String pass)
         {
             byte[] licenseBytes = null;
             HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(baseURL));
             request.Timeout = 10000;
             request.Method = "POST";
-            String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&machineID={2}", user, pass, machineID);
+            String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}", Uri.EscapeDataString(user), Uri.EscapeDataString(pass));
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
             request.ContentType = "application/x-www-form-urlencoded";
 

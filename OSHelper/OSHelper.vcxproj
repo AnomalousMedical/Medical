@@ -141,7 +141,6 @@
     <ClCompile Include="Src\ImageViewer.cpp" />
     <ClCompile Include="Src\ImageWindow.cpp" />
     <ClCompile Include="Src\MultiTouch.cpp" />
-    <ClCompile Include="Src\LicenseManager.cpp" />
     <ClCompile Include="Src\App.cpp" />
     <ClCompile Include="Src\ColorDialog.cpp" />
     <ClCompile Include="Src\DirDialog.cpp" />

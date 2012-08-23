@@ -51,7 +51,6 @@ namespace Engine
                 {
                     using (StreamReader textReader = new StreamReader(new MemoryStream(realData)))
                     {
-                        MachineID = textReader.ReadLine();
                         LicenseeName = textReader.ReadLine();
                         User = textReader.ReadLine();
                         Pass = textReader.ReadLine();
@@ -87,8 +86,6 @@ namespace Engine
         {
             return features.Contains(featureID);
         }
-
-        public String MachineID { get; private set; }
 
         public String LicenseeName { get; private set; }
 

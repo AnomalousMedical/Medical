@@ -11,9 +11,6 @@
     <Filter Include="MultiTouch">
       <UniqueIdentifier>{761a8e5d-565a-48e1-ae1a-bc1889485541}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CopyProtection">
-      <UniqueIdentifier>{b3472219-2460-46b8-aede-17da66400bcf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="wxPlatform">
       <UniqueIdentifier>{8ffc9668-249c-47af-8ffb-48d2be777205}</UniqueIdentifier>
     </Filter>
@@ -36,9 +33,6 @@
     </ClCompile>
     <ClCompile Include="Src\MultiTouch.cpp">
       <Filter>MultiTouch</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\LicenseManager.cpp">
-      <Filter>CopyProtection</Filter>
     </ClCompile>
     <ClCompile Include="Src\App.cpp">
       <Filter>wxPlatform</Filter>

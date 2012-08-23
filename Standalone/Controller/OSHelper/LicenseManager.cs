@@ -32,10 +32,7 @@ namespace Medical
         /// </summary>
         public event EventHandler KeyDialogShown;
 
-        private delegate void MachineIDCallback(IntPtr value);
         private delegate void CallbackDelegate();
-        private MachineIDCallback idCallback;
-        private String machineID = null;
         private LicenseDialog licenseDialog;
         private String keyFile;
         private String programName;
@@ -50,10 +47,8 @@ namespace Medical
         {
             this.keyFile = keyFile;
             this.programName = programName;
-            idCallback = new MachineIDCallback(getMachineIdCallback);
             keyValidCallback = new CallbackDelegate(fireKeyValid);
             showKeyDialogCallback = new CallbackDelegate(showKeyDialog);
-            getMachineId();
         }
 
         public void getKey()
@@ -93,7 +88,7 @@ namespace Medical
                             try
                             {
                                 AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-                                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID);
+                                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass);
                                 if (licenseBytes != null)
                                 {
                                     storeLicenseFile(licenseBytes);
@@ -165,7 +160,7 @@ namespace Medical
             try
             {
                 AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID);
+                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass);
                 if (licenseBytes != null)
                 {
                     storeLicenseFile(licenseBytes);
@@ -211,7 +206,7 @@ namespace Medical
                     return true;
                 }
 #endif
-                return license != null && license.MachineID == getMachineId();
+                return license != null;
             }
         }
 
@@ -253,7 +248,7 @@ namespace Medical
 
         private void showKeyDialog()
         {
-            licenseDialog = new LicenseDialog(programName, getMachineId(), keyDialogMessage);
+            licenseDialog = new LicenseDialog(programName, keyDialogMessage);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
             licenseDialog.Closed += new EventHandler(licenseDialog_Closed);
@@ -308,22 +303,5 @@ namespace Medical
                 KeyValid.Invoke(this, EventArgs.Empty);
             }
         }
-
-        private String getMachineId()
-        {
-            if (machineID == null)
-            {
-                LicenseManager_getMachineID(idCallback);
-            }
-            return machineID;
-        }
-
-        private void getMachineIdCallback(IntPtr value)
-        {
-            machineID = Marshal.PtrToStringAnsi(value);
-        }
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void LicenseManager_getMachineID(MachineIDCallback callback);
     }
 }
