@@ -37,28 +37,15 @@ namespace Medical
             {
                 bool success = false;
                 bool promptStoreVisit = false;
-                String message = "";
+                String message = "Error reading data from server.";
                 try
                 {
-                    String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&licenseType={2}", licenseManager.User, licenseManager.MachinePassword, (int)type);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.LicenseImageURL));
-                    request.Timeout = 60000;
-                    request.Method = "POST";
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                    request.ContentType = "application/x-www-form-urlencoded";
-
-                    request.ContentLength = byteArray.Length;
-                    using (Stream dataStream = request.GetRequestStream())
-                    {
-                        dataStream.Write(byteArray, 0, byteArray.Length);
-                    }
-
-                    // Get the response.
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    {
-                        if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                    CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.LicenseImageURL, licenseManager.User, licenseManager.MachinePassword);
+                    serverConnection.Timeout = 60000;
+                    serverConnection.addArgument("LicenseType", ((int)type).ToString());
+                    serverConnection.makeRequest(responseStream =>
                         {
-                            using (BinaryReader serverDataStream = new BinaryReader(response.GetResponseStream()))
+                            using (BinaryReader serverDataStream = new BinaryReader(responseStream))
                             {
                                 int signatureLength = serverDataStream.ReadInt32();
                                 byte[] signature = serverDataStream.ReadBytes(signatureLength);
@@ -81,12 +68,7 @@ namespace Medical
                                     message = "Signature mismatch from server. Image not licensed.";
                                 }
                             }
-                        }
-                        else
-                        {
-                            message = "Error reading data from server.";
-                        }
-                    }
+                        });
                 }
                 catch (Exception e)
                 {
