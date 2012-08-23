@@ -148,6 +148,7 @@
     <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />
     <Compile Include="Controller\Resources\ResourceProviderRocketFSExtension.cs" />
     <Compile Include="Controller\Server\CredentialServerConnection.cs" />
+    <Compile Include="Controller\Server\LicenseReadType.cs" />
     <Compile Include="Controller\Server\ServerConnection.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />

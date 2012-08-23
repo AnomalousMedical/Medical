@@ -108,38 +108,21 @@ namespace Medical
             Thread readLicenseThread = new Thread(delegate()
             {
                 bool success = false;
-                String message = "";
+                String message = "Error reading license from server";
                 try
                 {
-                    String postData = String.Format(CultureInfo.InvariantCulture, "ImageLicenseId={0}", (int)licenseType);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.LicenseReaderURL));
-                    request.Timeout = 60000;
-                    request.Method = "POST";
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                    request.ContentType = "application/x-www-form-urlencoded";
-
-                    request.ContentLength = byteArray.Length;
-                    using (Stream dataStream = request.GetRequestStream())
+                    ServerConnection serverConnection = new ServerConnection(MedicalConfig.LicenseReaderURL);
+                    serverConnection.Timeout = 60000;
+                    serverConnection.addArgument("Type", LicenseReadType.Image.ToString());
+                    serverConnection.addArgument("Id", ((int)licenseType).ToString());
+                    serverConnection.makeRequest(responseStream =>
                     {
-                        dataStream.Write(byteArray, 0, byteArray.Length);
-                    }
-
-                    // Get the response.
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    {
-                        if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                        using (StreamReader streamReader = new StreamReader(responseStream))
                         {
-                            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
-                            {
-                                success = true;
-                                message = streamReader.ReadToEnd();
-                            }
+                            success = true;
+                            message = streamReader.ReadToEnd();
                         }
-                        else
-                        {
-                            message = "Error reading license from server";
-                        }
-                    }
+                    });
                 }
                 catch (Exception e)
                 {

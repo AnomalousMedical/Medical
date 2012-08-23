@@ -92,29 +92,19 @@ namespace Medical.GUI
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.LicenseReaderURL));
-                request.Timeout = 60000;
-                request.Method = "POST";
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
+                String license = null;
 
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                // Get the response.
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                ServerConnection serverConnection = new ServerConnection(MedicalConfig.LicenseReaderURL);
+                serverConnection.Timeout = 60000;
+                serverConnection.addArgument("Type", LicenseReadType.Plugin.ToString());
+                serverConnection.makeRequest(responseStream =>
                     {
-                        using (StreamReader serverDataStream = new StreamReader(response.GetResponseStream()))
+                        using (StreamReader serverDataStream = new StreamReader(responseStream))
                         {
-                            return serverDataStream.ReadToEnd();
+                            license = serverDataStream.ReadToEnd();
                         }
-                    }
-                }
+                    });
+                return license;
             }
             catch (Exception e)
             {

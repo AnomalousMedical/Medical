@@ -128,8 +128,8 @@ namespace Medical
             MedicalConfig.LicenseServerURL = String.Format("{0}/DRM2/License", websiteHostUrl);
             MedicalConfig.AnomalousMedicalStoreURL = String.Format("{0}/Store", websiteHostUrl);
             MedicalConfig.ProductPageBaseURL = String.Format("{0}/Product/Plugin/{{0}}", websiteHostUrl);
-            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM/LicenseReader.aspx", websiteHostUrl);
-            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM/LicenseImage.aspx", websiteHostUrl);
+            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM2/LicenseReader", websiteHostUrl);
+            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM2/LicenseImage", websiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
 
             MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM2/Update{1}", websiteHostUrl, buildUrlExtraPath);
