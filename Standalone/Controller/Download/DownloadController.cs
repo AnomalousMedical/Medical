@@ -139,28 +139,17 @@ namespace Medical
             bool success = false;
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginDownloadURL));
-                request.Timeout = 60000;
-                request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&type={2}&version={3}&{4}", licenseManager.User, licenseManager.MachinePassword, download.Type, UpdateController.CurrentVersion, download.AdditionalArgs);
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                // Get the response.
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.PluginDownloadURL, licenseManager.User, licenseManager.MachinePassword);
+                serverConnection.Timeout = 60000;
+                serverConnection.addArgument("Type", download.Type.ToString());
+                serverConnection.addArgument("Version", UpdateController.CurrentVersion.ToString());
+                serverConnection.addArgument(download.IdName, download.Id);
+                serverConnection.makeRequest(webResponse =>
                     {
-                        using (Stream serverDataStream = response.GetResponseStream())
+                        using (Stream serverDataStream = webResponse.GetResponseStream())
                         {
-                            download.FileName = Path.GetFileName(response.ResponseUri.LocalPath);
-                            String sizeStr = response.Headers["Content-Length"];
+                            download.FileName = Path.GetFileName(webResponse.ResponseUri.LocalPath);
+                            String sizeStr = webResponse.Headers["Content-Length"];
                             download.TotalSize = NumberParser.ParseLong(sizeStr);
                             String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);
                             try
@@ -190,8 +179,7 @@ namespace Medical
                                 success = true;
                             }
                         }
-                    }
-                }
+                    });
             }
             catch (Exception e)
             {

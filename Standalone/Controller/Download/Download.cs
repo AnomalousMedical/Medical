@@ -11,6 +11,12 @@ namespace Medical
         DeleteFile
     }
 
+    public enum DownloadType
+    {
+        Plugin,
+        PlatformUpdate
+    }
+
     public abstract class Download
     {
         private DownloadListener listener;
@@ -67,9 +73,11 @@ namespace Medical
             Cancel = true;
         }
 
-        public abstract String Type { get; }
+        public abstract DownloadType Type { get; }
 
-        public abstract String AdditionalArgs { get; }
+        public abstract String IdName { get; }
+
+        public abstract String Id { get; }
 
         public String DestinationFolder { get; set; }
 

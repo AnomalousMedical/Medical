@@ -60,19 +60,27 @@ namespace Medical
             MessageBox.show("There was an problem getting a new license. Please restart the program to use your new plugin.", "License Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
         }
 
-        public override string Type
+        public override DownloadType Type
         {
             get
             {
-                return "Plugin";
+                return DownloadType.Plugin;
             }
         }
 
-        public override string AdditionalArgs
+        public override string IdName
         {
             get
             {
-                return "pluginId=" + PluginId.ToString();
+                return "pluginId";
+            }
+        }
+
+        public override string Id
+        {
+            get
+            {
+                return PluginId.ToString();
             }
         }
     }

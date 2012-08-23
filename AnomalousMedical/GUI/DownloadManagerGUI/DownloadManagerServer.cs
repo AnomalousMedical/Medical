@@ -128,88 +128,62 @@ namespace Medical.GUI
             try
             {
                 Version localVersion = UpdateController.CurrentVersion;
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.PluginInfoURL));
-                request.Timeout = 60000;
-                request.Method = "POST";
-                String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, localVersion, (int)PlatformConfig.OsId, commaSeparatedPluginList);
-                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                request.ContentType = "application/x-www-form-urlencoded";
-
-                request.ContentLength = byteArray.Length;
-                using (Stream dataStream = request.GetRequestStream())
-                {
-                    dataStream.Write(byteArray, 0, byteArray.Length);
-                }
-
-                // Get the response.
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.PluginInfoURL, licenseManager.User, licenseManager.MachinePassword);
+                serverConnection.Timeout = 60000;
+                serverConnection.addArgument("Version", localVersion.ToString());
+                serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
+                serverConnection.addArgument("PluginList", commaSeparatedPluginList);
+                serverConnection.makeRequestDownloadResponse(responseStream =>
                     {
-                        using (Stream serverDataStream = response.GetResponseStream())
+                        using (BinaryReader streamReader = new BinaryReader(responseStream))
                         {
-                            //Download all the data from the server
-                            using (MemoryStream localDataStream = new MemoryStream())
+                            String versionString = streamReader.ReadString();
+                            if (!foundPlatformUpdate)
                             {
-                                byte[] buffer = new byte[8 * 1024];
-                                int len;
-                                while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0)
+                                Version remoteVersion = new Version(versionString);
+                                if (remoteVersion > localVersion && remoteVersion > UpdateController.DownloadedVersion)
                                 {
-                                    localDataStream.Write(buffer, 0, len);
+                                    ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
+                                    {
+                                        if (DownloadFound != null)
+                                        {
+                                            DownloadFound.Invoke(downloadInfo);
+                                        }
+                                    }), new PlatformUpdateDownloadInfo(remoteVersion, this));
+                                    foundPlatformUpdate = true;
                                 }
-                                localDataStream.Seek(0, SeekOrigin.Begin);
-                                using (BinaryReader streamReader = new BinaryReader(localDataStream))
+                            }
+                            while (active && streamReader.PeekChar() != -1)
+                            {
+                                ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(this, streamReader.ReadInt32(), streamReader.ReadString(), (ServerDownloadStatus)streamReader.ReadInt16());
+                                String imageURL = streamReader.ReadString();
+                                if (!alreadyFoundPlugin(pluginInfo.PluginId))
                                 {
-                                    String versionString = streamReader.ReadString();
-                                    if (!foundPlatformUpdate)
+                                    if (!String.IsNullOrEmpty(imageURL))
                                     {
-                                        Version remoteVersion = new Version(versionString);
-                                        if (remoteVersion > localVersion && remoteVersion > UpdateController.DownloadedVersion)
+                                        using (Bitmap image = loadImageFromURL(imageURL))
                                         {
-                                            ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
+                                            if (image != null)
                                             {
-                                                if (DownloadFound != null)
+                                                ThreadManager.invokeAndWait(new Action(delegate()
                                                 {
-                                                    DownloadFound.Invoke(downloadInfo);
-                                                }
-                                            }), new PlatformUpdateDownloadInfo(remoteVersion, this));
-                                            foundPlatformUpdate = true;
-                                        }
-                                    }
-                                    while (active && streamReader.PeekChar() != -1)
-                                    {
-                                        ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(this, streamReader.ReadInt32(), streamReader.ReadString(), (ServerDownloadStatus)streamReader.ReadInt16());
-                                        String imageURL = streamReader.ReadString();
-                                        if (!alreadyFoundPlugin(pluginInfo.PluginId))
-                                        {
-                                            if (!String.IsNullOrEmpty(imageURL))
-                                            {
-                                                using (Bitmap image = loadImageFromURL(imageURL))
-                                                {
-                                                    if (image != null)
-                                                    {
-                                                        ThreadManager.invokeAndWait(new Action(delegate()
-                                                        {
-                                                            pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
-                                                        }));
-                                                    }
-                                                }
+                                                    pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
+                                                }));
                                             }
-                                            ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
-                                            {
-                                                if(DownloadFound != null)
-                                                {
-                                                    DownloadFound.Invoke(downloadInfo);
-                                                }
-                                            }), pluginInfo);
-                                            detectedServerPlugins.Add(pluginInfo);
                                         }
                                     }
+                                    ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
+                                    {
+                                        if (DownloadFound != null)
+                                        {
+                                            DownloadFound.Invoke(downloadInfo);
+                                        }
+                                    }), pluginInfo);
+                                    detectedServerPlugins.Add(pluginInfo);
                                 }
                             }
                         }
-                    }
-                }
+                    });
             }
             catch (Exception e)
             {

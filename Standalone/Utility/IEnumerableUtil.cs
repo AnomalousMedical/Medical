@@ -14,13 +14,15 @@ namespace Medical
         {
             get
             {
-                if (false)
-                {
-                    //A bit hacky, but this will product an empty iterator 
-                    //to avoid having to check for null in instances where 
-                    //it makes sense to return an empty collection.
-                    yield return default(T);
-                }
+                yield break;
+            }
+        }
+
+        public static IEnumerable<T> Iter(params T[] items)
+        {
+            foreach (T item in items)
+            {
+                yield return item;
             }
         }
     }

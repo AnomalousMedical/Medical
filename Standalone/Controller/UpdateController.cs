@@ -86,30 +86,18 @@ namespace Medical
                 try
                 {
                     Version localVersion = CurrentVersion > DownloadedVersion ? CurrentVersion : DownloadedVersion;
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.UpdateCheckURL));
-                    request.Timeout = 60000;
-                    request.Method = "POST";
-                    String postData = String.Format(CultureInfo.InvariantCulture, "user={0}&pass={1}&version={2}&os={3}&list={4}", licenseManager.User, licenseManager.MachinePassword, localVersion, (int)PlatformConfig.OsId, installedPluginsList);
-                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
-                    request.ContentType = "application/x-www-form-urlencoded";
-
-                    request.ContentLength = byteArray.Length;
-                    using (Stream dataStream = request.GetRequestStream())
-                    {
-                        dataStream.Write(byteArray, 0, byteArray.Length);
-                    }
-
-                    // Get the response.
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    {
-                        if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                    CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.UpdateCheckURL, licenseManager.User, licenseManager.MachinePassword);
+                    serverConnection.Timeout = 60000;
+                    serverConnection.addArgument("Version", localVersion.ToString());
+                    serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
+                    serverConnection.addArgument("PluginList", installedPluginsList);
+                    serverConnection.makeRequest(responseStream =>
                         {
-                            using (BinaryReader serverDataStream = new BinaryReader(response.GetResponseStream()))
+                            using (BinaryReader serverDataStream = new BinaryReader(responseStream))
                             {
                                 foundUpdate = serverDataStream.ReadBoolean();
                             }
-                        }
-                    }
+                        });
                 }
                 catch (Exception e)
                 {

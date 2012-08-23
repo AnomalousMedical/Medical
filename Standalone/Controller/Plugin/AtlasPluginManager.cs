@@ -391,6 +391,18 @@ namespace Medical
             }
         }
 
+        public AtlasPlugin getPlugin(int pluginId)
+        {
+            foreach (AtlasPlugin plugin in plugins)
+            {
+                if (plugin.PluginId == pluginId)
+                {
+                    return plugin;
+                }
+            }
+            return null;
+        }
+
         public void initialzePlugins()
         {
             //If we already added the plugins folder to MyGUI, remove it.

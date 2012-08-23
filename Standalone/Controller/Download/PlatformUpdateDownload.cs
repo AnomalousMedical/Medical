@@ -25,19 +25,27 @@ namespace Medical
 
         public Version Version { get; private set; }
 
-        public override string Type
+        public override DownloadType Type
         {
             get
             {
-                return "PlatformUpdate";
+                return DownloadType.PlatformUpdate;
             }
         }
 
-        public override string AdditionalArgs
+        public override string IdName
         {
             get
             {
-                return "osId=" + (int)PlatformConfig.OsId;
+                return "OsId";
+            }
+        }
+
+        public override string Id
+        {
+            get
+            {
+                return ((int)PlatformConfig.OsId).ToString();
             }
         }
     }

@@ -82,7 +82,7 @@ namespace Medical
             String buildUrlExtraPath = "";
             if (!String.IsNullOrEmpty(BuildName))
             {
-                buildUrlExtraPath = BuildName + "/";
+                buildUrlExtraPath = "/" + BuildName;
                 commonAnomalousFolder = Path.Combine(commonAnomalousFolder, BuildName);
             }
 
@@ -132,9 +132,9 @@ namespace Medical
             MedicalConfig.LicenseImageURL = String.Format("{0}/DRM/LicenseImage.aspx", websiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
 
-            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM/{1}UpdateCheck.aspx", websiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM/{1}DownloadInfo.aspx", websiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM/{1}FileDownloader.aspx", websiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM2/Update{1}", websiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM2/DownloadInfo{1}", websiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM2/FileDownload{1}", websiteHostUrl, buildUrlExtraPath);
         }
 
         public static void setUser(String username)
