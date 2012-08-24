@@ -33,6 +33,7 @@ namespace Medical
         public event EventHandler Closed;
         public event EventHandler Activated;
         public event EventHandler Deactivated;
+        public event EventHandler Resized;
         private bool activated = true;
 
         public NativeOSWindow(String title, Point position, Size size)
@@ -209,6 +210,10 @@ namespace Medical
             foreach (OSWindowListener listener in listeners)
             {
                 listener.resized(this);
+            }
+            if (Resized != null)
+            {
+                Resized.Invoke(this, EventArgs.Empty);
             }
         }
 

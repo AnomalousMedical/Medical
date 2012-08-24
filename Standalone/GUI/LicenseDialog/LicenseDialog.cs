@@ -67,6 +67,14 @@ namespace Medical.GUI
 
             Button register = window.findWidget("Register") as Button;
             register.MouseButtonClick += new MyGUIEvent(register_MouseButtonClick);
+
+            MainWindow.Instance.Resized += Instance_Resized;
+        }
+
+        public override void Dispose()
+        {
+            MainWindow.Instance.Resized -= Instance_Resized;
+            base.Dispose();
         }
 
         public String UserName
@@ -220,6 +228,11 @@ namespace Medical.GUI
             {
                 KeyInvalid.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        void Instance_Resized(object sender, EventArgs e)
+        {
+            this.center();
         }
     }
 }
