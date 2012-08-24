@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="59 82 249 336" layer="Overlapped">
+        <Property key="Caption" value="Performance"/>
+        <Widget type="Button" skin="Button" position="1 6 101 34" name="Enabled">
+            <Property key="Caption" value="Enabled"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="0 46 242 260" align="Stretch" name="Text"/>
+    </Widget>
+</MyGUI>

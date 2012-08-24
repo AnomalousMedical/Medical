@@ -88,6 +88,7 @@
     <Compile Include="GUI\DiscEditor\DiscControl.cs" />
     <Compile Include="GUI\DiscEditor\DiscPanel.cs" />
     <Compile Include="GUI\GridPropertiesDialog\GridPropertiesDialog.cs" />
+    <Compile Include="GUI\Performance\PerformanceGui.cs" />
     <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
@@ -99,6 +100,7 @@
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscPanel.layout" />
     <EmbeddedResource Include="GUI\GridPropertiesDialog\GridPropertiesDialog.layout" />
+    <EmbeddedResource Include="GUI\Performance\PerformanceGui.layout" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.png" />
     <EmbeddedResource Include="Resources\DeveloperBrandingIcon.xml" />
     <EmbeddedResource Include="Resources\DeveloperImagesets.xml" />

@@ -20,6 +20,7 @@ namespace Developer
         private DiscControl discControl;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
         private GridPropertiesDialog gridProperties;
+        private PerformanceGui performanceGui;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -34,6 +35,7 @@ namespace Developer
             developerRenderer.Dispose();
             discControl.Dispose();
             gridProperties.Dispose();
+            performanceGui.Dispose();
         }
 
         public void createMenuBar(NativeMenuBar menu)
@@ -71,6 +73,9 @@ namespace Developer
             advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(advancedMandibleMovement);
 
+            performanceGui = new PerformanceGui(standaloneController);
+            guiManager.addManagedDialog(performanceGui);
+
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
 
             //Task Controller
@@ -84,6 +89,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "Developer.DiscEditorIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", CommonResources.NoIcon, TaskMenuCategories.Developer));
         }
 
         public void sceneLoaded(SimScene scene)

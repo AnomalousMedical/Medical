@@ -43,6 +43,9 @@ namespace Medical
         private FixedMedicalUpdate fixedUpdate;
         private FullSpeedMedicalUpdate fullSpeedUpdate;
 
+        //Performance
+        private SystemTimer performanceMetricTimer;
+
         //Controller
         private MedicalSceneController medicalScene;
         private RocketGuiManager rocketGuiManager;
@@ -125,6 +128,9 @@ namespace Medical
                 mainForm = pluginManager.RendererPlugin.PrimaryWindow.Handle;
             }
 
+            performanceMetricTimer = pluginManager.PlatformPlugin.createTimer();
+            PerformanceMonitor.setupEnabledState(performanceMetricTimer);
+
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
@@ -184,6 +190,11 @@ namespace Medical
             if (rocketGuiManager != null)
             {
                 rocketGuiManager.destroyOgreCustomArchive();
+            } 
+            if (performanceMetricTimer != null)
+            {
+                PerformanceMonitor.destroyEnabledState();
+                pluginManager.PlatformPlugin.destroyTimer(performanceMetricTimer);
             }
 
             MedicalConfig.save();

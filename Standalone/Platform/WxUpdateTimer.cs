@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine;
 
 namespace Medical
 {
@@ -70,6 +71,7 @@ namespace Medical
                 lastTime = frameStartTime;
 
                 //cap the framerate if required
+                PerformanceMonitor.start("Idle");
                 totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
                 while (totalFrameTime < framerateCap)
                 {
@@ -77,6 +79,7 @@ namespace Medical
                     System.Threading.Thread.Sleep((int)(sleepTime / 1000));
                     totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
                 }
+                PerformanceMonitor.stop("Idle");
             }
             else
             {
