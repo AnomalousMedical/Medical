@@ -28,7 +28,6 @@
 		01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */; };
 		01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2431357723E0027AC32 /* ImageViewer.cpp */; };
 		01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2441357723E0027AC32 /* ImageWindow.cpp */; };
-		01C7D26F1357723E0027AC32 /* LicenseManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2451357723E0027AC32 /* LicenseManager.cpp */; };
 		01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2461357723E0027AC32 /* MessageDialog.cpp */; };
 		01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2471357723E0027AC32 /* MultiTouch.cpp */; };
 		01C7D2721357723E0027AC32 /* NativeMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2481357723E0027AC32 /* NativeMenu.cpp */; };
@@ -70,7 +69,6 @@
 		01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSaveDialog.cpp; sourceTree = "<group>"; };
 		01C7D2431357723E0027AC32 /* ImageViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewer.cpp; sourceTree = "<group>"; };
 		01C7D2441357723E0027AC32 /* ImageWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageWindow.cpp; sourceTree = "<group>"; };
-		01C7D2451357723E0027AC32 /* LicenseManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LicenseManager.cpp; sourceTree = "<group>"; };
 		01C7D2461357723E0027AC32 /* MessageDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
 		01C7D2471357723E0027AC32 /* MultiTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiTouch.cpp; sourceTree = "<group>"; };
 		01C7D2481357723E0027AC32 /* NativeMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeMenu.cpp; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 				01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */,
 				01C7D2431357723E0027AC32 /* ImageViewer.cpp */,
 				01C7D2441357723E0027AC32 /* ImageWindow.cpp */,
-				01C7D2451357723E0027AC32 /* LicenseManager.cpp */,
 				01C7D2461357723E0027AC32 /* MessageDialog.cpp */,
 				01C7D2471357723E0027AC32 /* MultiTouch.cpp */,
 				01C7D2481357723E0027AC32 /* NativeMenu.cpp */,
@@ -277,7 +274,6 @@
 				01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */,
 				01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */,
 				01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */,
-				01C7D26F1357723E0027AC32 /* LicenseManager.cpp in Sources */,
 				01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */,
 				01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */,
 				01C7D2721357723E0027AC32 /* NativeMenu.cpp in Sources */,
