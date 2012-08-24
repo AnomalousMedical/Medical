@@ -30,6 +30,7 @@ namespace Medical.GUI
         private CheckButton enableMultitouchCheck;
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
+        private NumericEdit maxFPS;
 
         public OptionsDialog(GUIManager guiManager)
             :base("Medical.GUI.Options.OptionsDialog.layout", guiManager)
@@ -85,6 +86,10 @@ namespace Medical.GUI
 
             Button resetWindows = widget.findWidget("ResetWindows") as Button;
             resetWindows.MouseButtonClick += new MyGUIEvent(resetWindows_MouseButtonClick);
+
+            maxFPS = new NumericEdit((EditBox)widget.findWidget("MaxFPS"));
+            maxFPS.MinValue = 0;
+            maxFPS.MaxValue = 1000;
 
             this.Showing += new EventHandler(OptionsDialog_Showing);
         }
@@ -150,6 +155,8 @@ namespace Medical.GUI
             {
                 aaCombo.SelectedIndex = aaIndex;
             }
+
+            maxFPS.IntValue = MedicalConfig.EngineConfig.MaxFPS;
         }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
@@ -199,6 +206,16 @@ namespace Medical.GUI
             {
                 MedicalConfig.EngineConfig.HorizontalRes = horizRes;
                 MedicalConfig.EngineConfig.VerticalRes = vertRes;
+                videoOptionsChanged = true;
+            }
+            int maxFpsValue = maxFPS.IntValue;
+            if (maxFpsValue < 2)
+            {
+                maxFpsValue = 2;
+            }
+            if (MedicalConfig.EngineConfig.MaxFPS != maxFpsValue)
+            {
+                MedicalConfig.EngineConfig.MaxFPS = maxFpsValue;
                 videoOptionsChanged = true;
             }
             if (videoOptionsChanged && VideoOptionsChanged != null)
