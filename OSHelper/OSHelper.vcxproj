@@ -138,8 +138,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\ImageViewer.cpp" />
-    <ClCompile Include="Src\ImageWindow.cpp" />
     <ClCompile Include="Src\MultiTouch.cpp" />
     <ClCompile Include="Src\App.cpp" />
     <ClCompile Include="Src\ColorDialog.cpp" />
@@ -167,8 +165,6 @@
     <ClCompile Include="Src\PlatformConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\ImageViewer.h" />
-    <ClInclude Include="Include\ImageWindow.h" />
     <ClInclude Include="Include\MultiTouch.h" />
     <ClInclude Include="Include\MultiTouchImpl.h" />
     <ClInclude Include="Include\App.h" />

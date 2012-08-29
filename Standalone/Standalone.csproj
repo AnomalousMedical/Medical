@@ -572,7 +572,6 @@
     <Compile Include="Platform\FileOpenDialog.cs" />
     <Compile Include="Platform\FileSaveDialog.cs" />
     <Compile Include="Platform\MainWindow.cs" />
-    <Compile Include="GUI\ImageWindow.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManager.cs" />
     <Compile Include="Platform\App.cs" />
     <Compile Include="Platform\ColorDialog.cs" />

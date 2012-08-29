@@ -160,7 +160,11 @@ namespace Developer.GUI
                 String extension;
                 ImageFormat imageOutputFormat;
                 getImageFormat(out extension, out imageOutputFormat);
-                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, new Bitmap(currentImage), false, extension, imageOutputFormat, true);
+
+                //Save the image as a temporary file and open it with the system file viewer
+                String imageFile = String.Format("{0}/TempImage{1}", MedicalConfig.UserDocRoot, extension);
+                currentImage.Save(imageFile, imageOutputFormat);
+                OtherProcessManager.openLocalURL(imageFile);
             }
         }
 

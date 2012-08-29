@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ImageWindow">
-      <UniqueIdentifier>{e3e4a6bd-965a-4fa7-9f9f-55a208503d81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
@@ -25,12 +22,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\ImageViewer.cpp">
-      <Filter>ImageWindow</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\ImageWindow.cpp">
-      <Filter>ImageWindow</Filter>
-    </ClCompile>
     <ClCompile Include="Src\MultiTouch.cpp">
       <Filter>MultiTouch</Filter>
     </ClCompile>
@@ -96,12 +87,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\ImageViewer.h">
-      <Filter>ImageWindow</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ImageWindow.h">
-      <Filter>ImageWindow</Filter>
-    </ClInclude>
     <ClInclude Include="Include\MultiTouch.h">
       <Filter>MultiTouch</Filter>
     </ClInclude>

@@ -148,19 +148,25 @@ namespace Medical.GUI
         {
             if (currentImage != null)
             {
-                Bitmap bitmap = (Bitmap)currentImage.Clone();
-                writeLicenseToImage(bitmap);
-                imageRenderer.makeSampleImage(bitmap);
-                String windowName = imageName.OnlyText;
-                if (windowName == null)
+                using (Bitmap bitmap = (Bitmap)currentImage.Clone())
                 {
-                    windowName = "";
-                }
+                    writeLicenseToImage(bitmap);
+                    imageRenderer.makeSampleImage(bitmap);
+                    String windowName = imageName.OnlyText;
+                    if (windowName == null)
+                    {
+                        windowName = "";
+                    }
 
-                String extension;
-                ImageFormat imageOutputFormat;
-                getImageFormat(out extension, out imageOutputFormat);
-                ImageWindow window = new ImageWindow(MainWindow.Instance, windowName, bitmap, false, extension, imageOutputFormat, true);
+                    String extension;
+                    ImageFormat imageOutputFormat;
+                    getImageFormat(out extension, out imageOutputFormat);
+
+                    //Save the image as a temporary file and open it with the system file viewer
+                    String imageFile = String.Format("{0}/TempImage{1}", MedicalConfig.UserDocRoot, extension);
+                    bitmap.Save(imageFile, imageOutputFormat);
+                    OtherProcessManager.openLocalURL(imageFile);
+                }
             }
         }
 
