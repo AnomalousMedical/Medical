@@ -2,7 +2,8 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 
-#pragma once
+#ifndef STDAFX_H
+#define STDAFX_H
 
 #ifdef WINDOWS
 #define _AnomalousExport __declspec(dllexport)
@@ -40,3 +41,5 @@ public:
 		return wxColour(r * 255, g * 255, b * 255, a * 255);
 	}
 };
+
+#endif
