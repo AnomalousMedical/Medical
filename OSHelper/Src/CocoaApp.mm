@@ -10,7 +10,7 @@
 
 CocoaApp::CocoaApp()
 {
-    app = [IdleCallbackApplication sharedApplication];
+    app = [CocoaIdleApplication sharedApplication];
     [app setApp:this];
 }
 

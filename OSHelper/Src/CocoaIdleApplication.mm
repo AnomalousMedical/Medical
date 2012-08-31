@@ -7,7 +7,7 @@
 //
 
 #include "StdAfx.h"
-#include "IdleCallbackApplication.h"
+#include "CocoaIdleApplication.h"
 #include "CocoaApp.h"
 
 enum EventSubtypes
@@ -17,7 +17,7 @@ enum EventSubtypes
     IDLE_EVENT_SUBTYPE = 2
 };
 
-@implementation IdleCallbackApplication
+@implementation CocoaIdleApplication
 
 +(id)sharedApplication
 {

@@ -11,7 +11,7 @@
 
 #include <Cocoa/Cocoa.h>
 #include "App.h"
-#import "IdleCallbackApplication.h"
+#import "CocoaIdleApplication.h"
 
 class CocoaApp : public App
 {
@@ -25,7 +25,7 @@ public:
     virtual void exit();
     
 private:
-    IdleCallbackApplication *app;
+    CocoaIdleApplication *app;
 };
 
 #endif /* defined(__TestOpenGL__CocoaApp__) */

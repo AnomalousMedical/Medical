@@ -1,18 +1,10 @@
-//
-//  IdleCallbackApplication.h
-//  OSHelper
-//
-//  Created by AndrewPiper on 8/31/12.
-//
-//
-
 #pragma once
 
 #import <Cocoa/Cocoa.h>
 
 class CocoaApp;
 
-@interface IdleCallbackApplication : NSApplication
+@interface CocoaIdleApplication : NSApplication
 {
     CocoaApp* cocoaApp;
 }
