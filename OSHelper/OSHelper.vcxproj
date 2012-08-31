@@ -82,7 +82,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(WXWIDGETS_HOME)\Windows\src\lib\vc_lib\mswu;$(WXWIDGETS_HOME)\Windows\src\include;$(WXWIDGETS_HOME)\Windows\src\contrib\include;Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE;WINVER=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_WXWIDGETS;WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE;WINVER=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
