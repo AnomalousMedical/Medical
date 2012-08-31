@@ -4,6 +4,8 @@
 #include "NativeString.h"
 #include "NativeStringEnumerator.h"
 
+#ifdef USE_WXWIDGETS
+
 extern "C" _AnomalousExport wxFileDialog* FileOpenDialog_new(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple)
 {
 	int style = wxFD_OPEN | wxFD_FILE_MUST_EXIST;
@@ -48,3 +50,5 @@ extern "C" _AnomalousExport void FileOpenDialog_getPaths(wxFileDialog* fileDialo
 {
 	fileDialog->GetPaths(nativeStringEnumerator->getArrayString());
 }
+
+#endif

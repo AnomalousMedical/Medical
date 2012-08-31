@@ -3,6 +3,8 @@
 #include "Enums.h"
 #include "NativeString.h"
 
+#ifdef USE_WXWIDGETS
+
 extern "C" _AnomalousExport wxFileDialog* FileSaveDialog_new(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard)
 {
 	return new wxFileDialog(parent, message, defaultDir, defaultFile, wildcard, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
@@ -37,3 +39,5 @@ extern "C" _AnomalousExport NativeString* FileSaveDialog_getPath(wxFileDialog* f
 {
 	return new NativeString(fileDialog->GetPath());
 }
+
+#endif

@@ -2,6 +2,8 @@
 #include "NativeString.h"
 #include "NativeOSWindow.h"
 
+#ifdef USE_WXWIDGETS
+
 typedef void (*SelectDelegate)();
 
 struct ManagedFunctor
@@ -75,3 +77,5 @@ extern "C" _AnomalousExport NativeString* NativeMenuItem_getHelp(wxMenuItem* ite
 {
 	return new NativeString(item->GetHelp());
 }
+
+#endif

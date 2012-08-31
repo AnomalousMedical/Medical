@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0171DB1015F1200100093F17 /* CocoaApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0A15F1200000093F17 /* CocoaApp.h */; };
+		0171DB1115F1200100093F17 /* CocoaView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0B15F1200000093F17 /* CocoaView.h */; };
+		0171DB1215F1200100093F17 /* CocoaWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0C15F1200000093F17 /* CocoaWindow.h */; };
+		0171DB1315F1200100093F17 /* CocoaWindowDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0D15F1200000093F17 /* CocoaWindowDelegate.h */; };
+		0171DB1415F1200100093F17 /* KeyboardButtonCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0E15F1200100093F17 /* KeyboardButtonCode.h */; };
+		0171DB1515F1200100093F17 /* MouseButtonCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0F15F1200100093F17 /* MouseButtonCode.h */; };
+		0171DB1A15F1235B00093F17 /* CocoaApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1615F1235A00093F17 /* CocoaApp.mm */; };
+		0171DB1B15F1235B00093F17 /* CocoaView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1715F1235B00093F17 /* CocoaView.mm */; };
+		0171DB1C15F1235B00093F17 /* CocoaWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1815F1235B00093F17 /* CocoaWindow.mm */; };
+		0171DB1D15F1235B00093F17 /* CocoaWindowDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */; };
 		01C7D2571357723E0027AC32 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22C1357723E0027AC32 /* App.h */; };
 		01C7D2581357723E0027AC32 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22D1357723E0027AC32 /* Enums.h */; };
-		01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22F1357723E0027AC32 /* ImageViewer.h */; };
-		01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2301357723E0027AC32 /* ImageWindow.h */; };
 		01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2321357723E0027AC32 /* MultiTouch.h */; };
 		01C7D25E1357723E0027AC32 /* MultiTouchImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2331357723E0027AC32 /* MultiTouchImpl.h */; };
 		01C7D25F1357723E0027AC32 /* NativeOSWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2341357723E0027AC32 /* NativeOSWindow.h */; };
@@ -26,8 +34,6 @@
 		01C7D2691357723E0027AC32 /* Enums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D23F1357723E0027AC32 /* Enums.cpp */; };
 		01C7D26A1357723E0027AC32 /* FileOpenDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */; };
 		01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */; };
-		01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2431357723E0027AC32 /* ImageViewer.cpp */; };
-		01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2441357723E0027AC32 /* ImageWindow.cpp */; };
 		01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2461357723E0027AC32 /* MessageDialog.cpp */; };
 		01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2471357723E0027AC32 /* MultiTouch.cpp */; };
 		01C7D2721357723E0027AC32 /* NativeMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2481357723E0027AC32 /* NativeMenu.cpp */; };
@@ -48,10 +54,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0171DB0A15F1200000093F17 /* CocoaApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaApp.h; sourceTree = "<group>"; };
+		0171DB0B15F1200000093F17 /* CocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaView.h; sourceTree = "<group>"; };
+		0171DB0C15F1200000093F17 /* CocoaWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaWindow.h; sourceTree = "<group>"; };
+		0171DB0D15F1200000093F17 /* CocoaWindowDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaWindowDelegate.h; sourceTree = "<group>"; };
+		0171DB0E15F1200100093F17 /* KeyboardButtonCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardButtonCode.h; sourceTree = "<group>"; };
+		0171DB0F15F1200100093F17 /* MouseButtonCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseButtonCode.h; sourceTree = "<group>"; };
+		0171DB1615F1235A00093F17 /* CocoaApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaApp.mm; sourceTree = "<group>"; };
+		0171DB1715F1235B00093F17 /* CocoaView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaView.mm; sourceTree = "<group>"; };
+		0171DB1815F1235B00093F17 /* CocoaWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaWindow.mm; sourceTree = "<group>"; };
+		0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaWindowDelegate.mm; sourceTree = "<group>"; };
 		01C7D22C1357723E0027AC32 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
 		01C7D22D1357723E0027AC32 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
-		01C7D22F1357723E0027AC32 /* ImageViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewer.h; sourceTree = "<group>"; };
-		01C7D2301357723E0027AC32 /* ImageWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWindow.h; sourceTree = "<group>"; };
 		01C7D2321357723E0027AC32 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouch.h; sourceTree = "<group>"; };
 		01C7D2331357723E0027AC32 /* MultiTouchImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouchImpl.h; sourceTree = "<group>"; };
 		01C7D2341357723E0027AC32 /* NativeOSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeOSWindow.h; sourceTree = "<group>"; };
@@ -67,8 +81,6 @@
 		01C7D23F1357723E0027AC32 /* Enums.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enums.cpp; sourceTree = "<group>"; };
 		01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileOpenDialog.cpp; sourceTree = "<group>"; };
 		01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSaveDialog.cpp; sourceTree = "<group>"; };
-		01C7D2431357723E0027AC32 /* ImageViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewer.cpp; sourceTree = "<group>"; };
-		01C7D2441357723E0027AC32 /* ImageWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageWindow.cpp; sourceTree = "<group>"; };
 		01C7D2461357723E0027AC32 /* MessageDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
 		01C7D2471357723E0027AC32 /* MultiTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiTouch.cpp; sourceTree = "<group>"; };
 		01C7D2481357723E0027AC32 /* NativeMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeMenu.cpp; sourceTree = "<group>"; };
@@ -105,10 +117,14 @@
 		01C7D22B1357723E0027AC32 /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				0171DB0A15F1200000093F17 /* CocoaApp.h */,
+				0171DB0B15F1200000093F17 /* CocoaView.h */,
+				0171DB0C15F1200000093F17 /* CocoaWindow.h */,
+				0171DB0D15F1200000093F17 /* CocoaWindowDelegate.h */,
+				0171DB0E15F1200100093F17 /* KeyboardButtonCode.h */,
+				0171DB0F15F1200100093F17 /* MouseButtonCode.h */,
 				01C7D22C1357723E0027AC32 /* App.h */,
 				01C7D22D1357723E0027AC32 /* Enums.h */,
-				01C7D22F1357723E0027AC32 /* ImageViewer.h */,
-				01C7D2301357723E0027AC32 /* ImageWindow.h */,
 				01C7D2321357723E0027AC32 /* MultiTouch.h */,
 				01C7D2331357723E0027AC32 /* MultiTouchImpl.h */,
 				01C7D2341357723E0027AC32 /* NativeOSWindow.h */,
@@ -126,14 +142,16 @@
 		01C7D23B1357723E0027AC32 /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				0171DB1615F1235A00093F17 /* CocoaApp.mm */,
+				0171DB1715F1235B00093F17 /* CocoaView.mm */,
+				0171DB1815F1235B00093F17 /* CocoaWindow.mm */,
+				0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */,
 				01C7D23C1357723E0027AC32 /* App.cpp */,
 				01C7D23D1357723E0027AC32 /* ColorDialog.cpp */,
 				01C7D23E1357723E0027AC32 /* DirDialog.cpp */,
 				01C7D23F1357723E0027AC32 /* Enums.cpp */,
 				01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */,
 				01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */,
-				01C7D2431357723E0027AC32 /* ImageViewer.cpp */,
-				01C7D2441357723E0027AC32 /* ImageWindow.cpp */,
 				01C7D2461357723E0027AC32 /* MessageDialog.cpp */,
 				01C7D2471357723E0027AC32 /* MultiTouch.cpp */,
 				01C7D2481357723E0027AC32 /* NativeMenu.cpp */,
@@ -201,8 +219,6 @@
 			files = (
 				01C7D2571357723E0027AC32 /* App.h in Headers */,
 				01C7D2581357723E0027AC32 /* Enums.h in Headers */,
-				01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */,
-				01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */,
 				01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */,
 				01C7D25E1357723E0027AC32 /* MultiTouchImpl.h in Headers */,
 				01C7D25F1357723E0027AC32 /* NativeOSWindow.h in Headers */,
@@ -213,6 +229,12 @@
 				01C7D2641357723E0027AC32 /* WxKeyboard.h in Headers */,
 				01C7D2651357723E0027AC32 /* WxMouse.h in Headers */,
 				01C7D2801357723E0027AC32 /* Stdafx.h in Headers */,
+				0171DB1015F1200100093F17 /* CocoaApp.h in Headers */,
+				0171DB1115F1200100093F17 /* CocoaView.h in Headers */,
+				0171DB1215F1200100093F17 /* CocoaWindow.h in Headers */,
+				0171DB1315F1200100093F17 /* CocoaWindowDelegate.h in Headers */,
+				0171DB1415F1200100093F17 /* KeyboardButtonCode.h in Headers */,
+				0171DB1515F1200100093F17 /* MouseButtonCode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,8 +294,6 @@
 				01C7D2691357723E0027AC32 /* Enums.cpp in Sources */,
 				01C7D26A1357723E0027AC32 /* FileOpenDialog.cpp in Sources */,
 				01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */,
-				01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */,
-				01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */,
 				01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */,
 				01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */,
 				01C7D2721357723E0027AC32 /* NativeMenu.cpp in Sources */,
@@ -290,6 +310,10 @@
 				01C7D27D1357723E0027AC32 /* WxKeyboard.cpp in Sources */,
 				01C7D27E1357723E0027AC32 /* WxMouse.cpp in Sources */,
 				01C7D27F1357723E0027AC32 /* Stdafx.cpp in Sources */,
+				0171DB1A15F1235B00093F17 /* CocoaApp.mm in Sources */,
+				0171DB1B15F1235B00093F17 /* CocoaView.mm in Sources */,
+				0171DB1C15F1235B00093F17 /* CocoaWindow.mm in Sources */,
+				0171DB1D15F1235B00093F17 /* CocoaWindowDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,9 +450,10 @@
 					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -447,8 +472,9 @@
 					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
 					/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/include,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;

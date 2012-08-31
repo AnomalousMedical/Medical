@@ -3,6 +3,8 @@
 #include "NativeString.h"
 #include "NativeOSWindow.h"
 
+#ifdef USE_WXWIDGETS
+
 extern "C" _AnomalousExport wxDirDialog* DirDialog_new(NativeOSWindow* parent, String message, String startPath)
 {
 	return new wxDirDialog(parent, wxString::FromAscii(message), wxString::FromAscii(startPath));
@@ -27,3 +29,5 @@ extern "C" _AnomalousExport NativeString* DirDialog_getPath(wxDirDialog* dirDial
 {
 	return new NativeString(dirDialog->GetPath());
 }
+
+#endif

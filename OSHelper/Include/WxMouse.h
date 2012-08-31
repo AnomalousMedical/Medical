@@ -1,19 +1,10 @@
 #pragma once
 
-enum MouseButtonCode
-{
-    MB_BUTTON0 = 0,
-    MB_BUTTON1 = 1,
-    MB_BUTTON2 = 2,
-    MB_BUTTON3 = 3,
-    MB_BUTTON4 = 4,
-    MB_BUTTON5 = 5,
-    MB_BUTTON6 = 6,
-    MB_BUTTON7 = 7,
-    NUM_BUTTONS = 8,
-};
+#include "MouseButtonCode.h"
 
 class NativeOSWindow;
+
+#ifdef USE_WXWIDGETS
 
 class WxMouse
 {
@@ -94,3 +85,29 @@ private:
 	NativeOSWindow* osWindow;
 	wxWindow* window;
 };
+
+#endif
+
+#ifndef USE_WXWIDGETS
+
+class WxMouse
+{
+public:
+	typedef void (*MouseButtonDownDelegate)(MouseButtonCode id);
+	typedef void (*MouseButtonUpDelegate)(MouseButtonCode id);
+	typedef void (*MouseMoveDelegate)(int absX, int absY);
+	typedef void (*MouseWheelDelegate)(int relZ);
+    
+	WxMouse(NativeOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
+    
+	virtual ~WxMouse();
+    
+private:
+	MouseButtonDownDelegate mouseButtonDownCB;
+	MouseButtonUpDelegate mouseButtonUpCB;
+	MouseMoveDelegate mouseMoveCB;
+	MouseWheelDelegate mouseWheelCB;
+	NativeOSWindow* osWindow;
+};
+
+#endif

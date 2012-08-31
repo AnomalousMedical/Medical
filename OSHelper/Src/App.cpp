@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "App.h"
+
+#ifdef USE_WXWIDGETS
 #include <wx/filesys.h>
 
 void emptyAssertHandler(const wxString &file, int line, const wxString &func, const wxString &cond, const wxString &msg)
@@ -123,3 +125,48 @@ extern "C" _AnomalousExport void App_exit(App* app)
 
 DECLARE_APP(App)
 IMPLEMENT_APP(App)
+
+#endif
+
+#ifndef USE_WXWIDGETS
+
+App::App()
+{
+    
+}
+
+App::~App()
+{
+    
+}
+
+void App::registerDelegates(OnInitDelegate onInitCB, OnExitDelegate onExitCB, OnIdleDelegate onIdleCB)
+{
+    this->onInitCB = onInitCB;
+    this->onExitCB = onExitCB;
+    this->onIdleCB = onIdleCB;
+}
+
+//PInvoke
+
+extern "C" _AnomalousExport void App_delete(App* app)
+{
+	delete app;
+}
+
+extern "C" _AnomalousExport void App_registerDelegates(App* app, OnInitDelegate onInitCB, OnExitDelegate onExitCB, OnIdleDelegate onIdleCB)
+{
+	app->registerDelegates(onInitCB, onExitCB, onIdleCB);
+}
+
+extern "C" _AnomalousExport void App_run(App* app, int argc, char* argv[])
+{
+	app->run();
+}
+
+extern "C" _AnomalousExport void App_exit(App* app)
+{
+	app->exit();
+}
+
+#endif
