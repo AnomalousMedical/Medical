@@ -44,7 +44,7 @@ public:
     
     virtual bool getMaximized();
     
-    virtual void setCursor(/*CursorType cursor*/);
+    virtual void setCursor(CursorType cursor);
     
     //createMenu()
     

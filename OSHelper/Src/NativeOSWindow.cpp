@@ -1,18 +1,6 @@
 #include "StdAfx.h"
 #include "NativeOSWindow.h"
 
-enum CursorType
-{
-    Arrow = 0,
-    Beam = 1,
-    SizeLeft = 2,
-    SizeRight = 3,
-    SizeHorz = 4,
-    SizeVert = 5,
-    Hand = 6,
-    Link = 7,
-};
-
 #ifdef USE_WXWIDGETS
 
 wxCursor windowCursors[] = 
@@ -209,7 +197,7 @@ extern "C" _AnomalousExport bool NativeOSWindow_getMaximized(NativeOSWindow* nat
 
 extern "C" _AnomalousExport void NativeOSWindow_setCursor(NativeOSWindow* nativeWindow, CursorType cursor)
 {
-	//nativeWindow->SetCursor(windowCursors[(int)cursor]);
+	nativeWindow->setCursor(cursor);
 }
 
 extern "C" _AnomalousExport void* NativeOSWindow_createMenu(NativeOSWindow* nativeWindow)

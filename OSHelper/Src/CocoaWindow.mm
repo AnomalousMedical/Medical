@@ -116,7 +116,7 @@ bool CocoaWindow::getMaximized()
     return [window isZoomed];
 }
 
-void CocoaWindow::setCursor(/*CursorType cursor*/)
+void CocoaWindow::setCursor(CursorType cursor)
 {
     //NOT IMPLEMENTED
     //will be trickier, but window.mm in wxwidgets has an implementation that should work

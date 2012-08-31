@@ -11,22 +11,7 @@
 
 #include <Cocoa/Cocoa.h>
 #include "App.h"
-
-class CocoaApp;
-
-@interface IdleCallbackApplication : NSApplication
-{
-    CocoaApp* cocoaApp;
-}
-
-+(id)sharedApplication;
-
--(void)setApp: (CocoaApp*)app;
-
--(void)startIdleCallbacks;
-
--(void)doStopApplication;
-@end
+#import "IdleCallbackApplication.h"
 
 class CocoaApp : public App
 {

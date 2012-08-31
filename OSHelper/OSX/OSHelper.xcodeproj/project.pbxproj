@@ -17,6 +17,7 @@
 		0171DB1B15F1235B00093F17 /* CocoaView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1715F1235B00093F17 /* CocoaView.mm */; };
 		0171DB1C15F1235B00093F17 /* CocoaWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1815F1235B00093F17 /* CocoaWindow.mm */; };
 		0171DB1D15F1235B00093F17 /* CocoaWindowDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */; };
+		0171DB2015F1344300093F17 /* IdleCallbackApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1F15F1344200093F17 /* IdleCallbackApplication.mm */; };
 		01C7D2571357723E0027AC32 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22C1357723E0027AC32 /* App.h */; };
 		01C7D2581357723E0027AC32 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22D1357723E0027AC32 /* Enums.h */; };
 		01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2321357723E0027AC32 /* MultiTouch.h */; };
@@ -64,6 +65,8 @@
 		0171DB1715F1235B00093F17 /* CocoaView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaView.mm; sourceTree = "<group>"; };
 		0171DB1815F1235B00093F17 /* CocoaWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaWindow.mm; sourceTree = "<group>"; };
 		0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaWindowDelegate.mm; sourceTree = "<group>"; };
+		0171DB1E15F1341A00093F17 /* IdleCallbackApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdleCallbackApplication.h; sourceTree = "<group>"; };
+		0171DB1F15F1344200093F17 /* IdleCallbackApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IdleCallbackApplication.mm; sourceTree = "<group>"; };
 		01C7D22C1357723E0027AC32 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
 		01C7D22D1357723E0027AC32 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
 		01C7D2321357723E0027AC32 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouch.h; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 				0171DB0B15F1200000093F17 /* CocoaView.h */,
 				0171DB0C15F1200000093F17 /* CocoaWindow.h */,
 				0171DB0D15F1200000093F17 /* CocoaWindowDelegate.h */,
+				0171DB1E15F1341A00093F17 /* IdleCallbackApplication.h */,
 				0171DB0E15F1200100093F17 /* KeyboardButtonCode.h */,
 				0171DB0F15F1200100093F17 /* MouseButtonCode.h */,
 				01C7D22C1357723E0027AC32 /* App.h */,
@@ -146,6 +150,7 @@
 				0171DB1715F1235B00093F17 /* CocoaView.mm */,
 				0171DB1815F1235B00093F17 /* CocoaWindow.mm */,
 				0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */,
+				0171DB1F15F1344200093F17 /* IdleCallbackApplication.mm */,
 				01C7D23C1357723E0027AC32 /* App.cpp */,
 				01C7D23D1357723E0027AC32 /* ColorDialog.cpp */,
 				01C7D23E1357723E0027AC32 /* DirDialog.cpp */,
@@ -314,6 +319,7 @@
 				0171DB1B15F1235B00093F17 /* CocoaView.mm in Sources */,
 				0171DB1C15F1235B00093F17 /* CocoaWindow.mm in Sources */,
 				0171DB1D15F1235B00093F17 /* CocoaWindowDelegate.mm in Sources */,
+				0171DB2015F1344300093F17 /* IdleCallbackApplication.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
