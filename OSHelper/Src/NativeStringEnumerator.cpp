@@ -2,6 +2,8 @@
 #include "NativeStringEnumerator.h"
 #include "NativeString.h"
 
+#ifdef USE_WXWIDGETS
+
 NativeStringEnumerator::NativeStringEnumerator()
 	:currentIndex(-1)
 {
@@ -59,3 +61,5 @@ extern "C" _AnomalousExport void NativeStringEnumerator_reset(NativeStringEnumer
 {
 	enumerator->reset();
 }
+
+#endif

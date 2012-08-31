@@ -1,4 +1,7 @@
 #pragma once
+
+#ifdef USE_WXWIDGETS
+
 class NativeStringEnumerator
 {
 public:
@@ -18,3 +21,5 @@ private:
 	wxArrayString arrayString;
 	int currentIndex;
 };
+
+#endif

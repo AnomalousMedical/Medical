@@ -1,6 +1,8 @@
 #include "Stdafx.h"
 #include "Enums.h"
 
+#ifdef USE_WXWIDGETS
+
 extern "C" _AnomalousExport wxMenuItem* NativeMenu_append(wxMenu* menu, CommonMenuItems id, String text, String helpText, bool subMenu)
 {
 	wxMenu* mySubMenu = NULL;
@@ -39,3 +41,5 @@ extern "C" _AnomalousExport void NativeMenu_remove(wxMenu* menu, wxMenuItem* men
 {
 	menu->Remove(menuItem);
 }
+
+#endif

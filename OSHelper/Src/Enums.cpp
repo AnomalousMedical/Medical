@@ -1,6 +1,8 @@
 #include "Stdafx.h"
 #include "Enums.h"
 
+#ifdef USE_WXWIDGETS
+
 NativeDialogResult interpretResults(int resultCode)
 {
 	switch(resultCode)
@@ -46,3 +48,5 @@ int convertMenuItemID(CommonMenuItems id)
 		return id;
 	}
 }
+
+#endif

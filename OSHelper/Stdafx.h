@@ -13,12 +13,12 @@
 #define _AnomalousExport __attribute__ ((visibility("default")))
 #endif
 
-//#define ENABLE_HASP_PROTECTION
-
 typedef unsigned int uint;
 typedef unsigned char byte;
 typedef unsigned short ushort;
 typedef const char* String;
+
+#ifdef USE_WXWIDGETS
 
 #include <wx/wx.h>
 
@@ -41,5 +41,7 @@ public:
 		return wxColour(r * 255, g * 255, b * 255, a * 255);
 	}
 };
+
+#endif
 
 #endif

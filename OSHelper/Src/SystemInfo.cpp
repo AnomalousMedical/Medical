@@ -1,4 +1,7 @@
 #include "stdafx.h"
+
+#ifdef USE_WXWIDGETS
+
 #include <wx/display.h>
 
 extern "C" _AnomalousExport uint SystemInfo_getDisplayCount()
@@ -13,3 +16,5 @@ extern "C" _AnomalousExport void SystemInfo_getDisplayLocation(int displayIndex,
 	x = geometry.x;
 	y = geometry.y;
 }
+
+#endif

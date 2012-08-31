@@ -338,16 +338,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../Stdafx.h;
-				OTHER_CFLAGS = (
-					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
-					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
-					"-D_FILE_OFFSET_BITS=64",
-					"-D__WXMAC__",
-					"-D__WXOSX__",
-					"-D__WXOSX_COCOA__\n",
-				);
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
-					"-L/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -355,31 +347,7 @@
 					"-framework",
 					Cocoa,
 					"-framework",
-					AudioToolbox,
-					"-framework",
 					System,
-					"-framework",
-					OpenGL,
-					"-framework",
-					QuickTime,
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_xrc-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_html-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_qa-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_adv-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_core-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_xml-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_net-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu-2.9.a",
-					"-framework",
-					WebKit,
-					"-lexpat",
-					"-lwxregexu-2.9",
-					"-lwxtiff-2.9",
-					"-lwxjpeg-2.9",
-					"-lwxpng-2.9",
-					"-lz",
-					"-lpthread",
-					"-liconv",
 				);
 			};
 			name = Debug;
@@ -393,16 +361,8 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../Stdafx.h;
-				OTHER_CFLAGS = (
-					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
-					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/include",
-					"-D_FILE_OFFSET_BITS=64",
-					"-D__WXMAC__",
-					"-D__WXOSX__",
-					"-D__WXOSX_COCOA__",
-				);
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
-					"-L/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib",
 					"-framework",
 					IOKit,
 					"-framework",
@@ -410,31 +370,7 @@
 					"-framework",
 					Cocoa,
 					"-framework",
-					AudioToolbox,
-					"-framework",
 					System,
-					"-framework",
-					OpenGL,
-					"-framework",
-					QuickTime,
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_osx_cocoau_xrc-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_osx_cocoau_html-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_osx_cocoau_qa-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_osx_cocoau_adv-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_osx_cocoau_core-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_baseu_xml-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_baseu_net-2.9.a",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/libwx_baseu-2.9.a",
-					"-framework",
-					WebKit,
-					"-lexpat",
-					"-lwxregexu-2.9",
-					"-lwxtiff-2.9",
-					"-lwxjpeg-2.9",
-					"-lwxpng-2.9",
-					"-lz",
-					"-lpthread",
-					"-liconv",
 				);
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
@@ -452,14 +388,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = MAC_OSX;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
-				);
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.6;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
@@ -474,13 +407,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = MAC_OSX;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
-					/Users/andrewpiper/Development/Dependencies/wxWidgets/OSX/src/include,
-				);
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.6;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;

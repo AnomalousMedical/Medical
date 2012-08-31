@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WXWIDGETS
+
 #include <string>
 
 class NativeString
@@ -24,3 +26,5 @@ public:
 private:
 	std::string string;
 };
+
+#endif

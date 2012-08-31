@@ -1,4 +1,7 @@
 #include "stdafx.h"
+
+#ifdef USE_WXWIDGETS
+
 #include <wx/colordlg.h>
 #include "Enums.h"
 
@@ -26,3 +29,5 @@ extern "C" _AnomalousExport void ColorDialog_setColor(wxColourDialog* colorDialo
 {
 	colorDialog->GetColourData().SetColour(color.toWx());
 }
+
+#endif
