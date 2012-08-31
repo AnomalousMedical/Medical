@@ -18,6 +18,7 @@
 		0171DB1C15F1235B00093F17 /* CocoaWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1815F1235B00093F17 /* CocoaWindow.mm */; };
 		0171DB1D15F1235B00093F17 /* CocoaWindowDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */; };
 		0171DB2015F1344300093F17 /* CocoaIdleApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB1F15F1344200093F17 /* CocoaIdleApplication.mm */; };
+		0171DB2B15F1447F00093F17 /* SystemInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB2A15F1447F00093F17 /* SystemInfo.mm */; };
 		01C7D2571357723E0027AC32 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22C1357723E0027AC32 /* App.h */; };
 		01C7D2581357723E0027AC32 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22D1357723E0027AC32 /* Enums.h */; };
 		01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2321357723E0027AC32 /* MultiTouch.h */; };
@@ -67,6 +68,7 @@
 		0171DB1915F1235B00093F17 /* CocoaWindowDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaWindowDelegate.mm; sourceTree = "<group>"; };
 		0171DB1E15F1341A00093F17 /* CocoaIdleApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocoaIdleApplication.h; sourceTree = "<group>"; };
 		0171DB1F15F1344200093F17 /* CocoaIdleApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaIdleApplication.mm; sourceTree = "<group>"; };
+		0171DB2A15F1447F00093F17 /* SystemInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SystemInfo.mm; sourceTree = "<group>"; };
 		01C7D22C1357723E0027AC32 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
 		01C7D22D1357723E0027AC32 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
 		01C7D2321357723E0027AC32 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouch.h; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				01C7D24F1357723E0027AC32 /* PerformanceCounter.cpp */,
 				01C7D2501357723E0027AC32 /* PlatformConfig.cpp */,
 				01C7D2511357723E0027AC32 /* SystemInfo.cpp */,
+				0171DB2A15F1447F00093F17 /* SystemInfo.mm */,
 				01C7D2521357723E0027AC32 /* WindowFunctions.cpp */,
 				01C7D2531357723E0027AC32 /* WxKeyboard.cpp */,
 				01C7D2541357723E0027AC32 /* WxMouse.cpp */,
@@ -320,6 +323,7 @@
 				0171DB1C15F1235B00093F17 /* CocoaWindow.mm in Sources */,
 				0171DB1D15F1235B00093F17 /* CocoaWindowDelegate.mm in Sources */,
 				0171DB2015F1344300093F17 /* CocoaIdleApplication.mm in Sources */,
+				0171DB2B15F1447F00093F17 /* SystemInfo.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +386,7 @@
 			baseConfigurationReference = 5073E0C609E734A800EC74B6 /* OSHelperProj.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = ../Stdafx.h;
@@ -402,6 +407,7 @@
 			baseConfigurationReference = 5073E0C609E734A800EC74B6 /* OSHelperProj.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREFIX_HEADER = ../Stdafx.h;
 				GCC_PREPROCESSOR_DEFINITIONS = MAC_OSX;
