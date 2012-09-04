@@ -32,9 +32,6 @@ public:
     virtual void setCursor(CursorType cursor);
     
     //createMenu()
-
-	int downKeyCode;
-	KeyboardButtonCode keyboardButtonCode;
 private:
 	HWND window;
 	WNDCLASSEX wndclass;

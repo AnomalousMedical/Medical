@@ -8,8 +8,7 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
 Win32Window::Win32Window(String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 	:NativeOSWindow(deleteCB, sizedCB, closedCB, activateCB),
-	window(0),
-	downKeyCode(0)
+	window(0)
 {	
 	//Need to limit the wndclass to only be created once
 	wndclass.cbSize			=	sizeof( wndclass );
@@ -141,12 +140,19 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 				break;
 
 			//Keyboard
-			case WM_CHAR:
-				//win->downKeyCode = wParam;
-				//win->fireKeyDown(win->keyboardButtonCode, wParam);
+			case WM_SYSKEYDOWN:
+				if(wParam == VK_MENU)
+				{
+					win->fireKeyDown(KC_LMENU, 0);
+				}
+				break;
+			case WM_SYSKEYUP:
+				if(wParam == VK_MENU)
+				{
+					win->fireKeyUp(KC_LMENU);
+				}
 				break;
 			case WM_KEYDOWN:
-				//win->keyboardButtonCode = (KeyboardButtonCode)wParam;
 				win->fireKeyDown(virtualKeyToKeyboardButtonCode(wParam), keycodeToUTF32((lParam & 0x01FF0000) >> 16));
 				break;
 			case WM_KEYUP:
