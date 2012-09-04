@@ -7,8 +7,6 @@ enum WindowIcons
 
 #ifdef WINDOWS
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 #include "..\Resource.h"
 
 extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(HWND hwnd, WindowIcons icon)

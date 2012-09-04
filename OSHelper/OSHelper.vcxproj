@@ -82,7 +82,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(WXWIDGETS_HOME)\Windows\src\lib\vc_lib\mswu;$(WXWIDGETS_HOME)\Windows\src\include;$(WXWIDGETS_HOME)\Windows\src\contrib\include;Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>USE_WXWIDGETS;WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE;WINVER=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_WXWIDGETS_OFF;WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE;WINVER=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -154,6 +154,8 @@
     <ClCompile Include="Src\NativeStringEnumerator.cpp" />
     <ClCompile Include="Src\PerformanceCounter.cpp" />
     <ClCompile Include="Src\SystemInfo.cpp" />
+    <ClCompile Include="src\Win32App.cpp" />
+    <ClCompile Include="src\Win32Window.cpp" />
     <ClCompile Include="Src\WxKeyboard.cpp" />
     <ClCompile Include="Src\WxMouse.cpp" />
     <ClCompile Include="Src\WindowFunctions.cpp" />
@@ -173,6 +175,8 @@
     <ClInclude Include="Include\NativeString.h" />
     <ClInclude Include="Include\NativeStringEnumerator.h" />
     <ClInclude Include="Include\PerformanceCounter.h" />
+    <ClInclude Include="include\Win32App.h" />
+    <ClInclude Include="include\Win32Window.h" />
     <ClInclude Include="Include\WxKeyboard.h" />
     <ClInclude Include="Include\WxMouse.h" />
     <ClInclude Include="resource.h" />

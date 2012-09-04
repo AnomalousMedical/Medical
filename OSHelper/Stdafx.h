@@ -6,6 +6,11 @@
 #define STDAFX_H
 
 #ifdef WINDOWS
+#ifndef USE_WXWIDGETS
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
+
 #define _AnomalousExport __declspec(dllexport)
 #endif
 

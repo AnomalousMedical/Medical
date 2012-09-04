@@ -20,6 +20,9 @@
     <Filter Include="OS">
       <UniqueIdentifier>{fc86476d-b5fd-4ade-b864-933212189fe9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Win32">
+      <UniqueIdentifier>{9cb6a06f-cda5-413f-8671-13bd7eb96b33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MultiTouch.cpp">
@@ -85,6 +88,12 @@
     <ClCompile Include="Src\PlatformConfig.cpp">
       <Filter>OS</Filter>
     </ClCompile>
+    <ClCompile Include="src\Win32App.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Win32Window.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\MultiTouch.h">
@@ -122,6 +131,12 @@
     </ClInclude>
     <ClInclude Include="Stdafx.h">
       <Filter>DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Win32App.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Win32Window.h">
+      <Filter>Win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
