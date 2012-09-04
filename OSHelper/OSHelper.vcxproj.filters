@@ -138,6 +138,9 @@
     <ClInclude Include="include\Win32Window.h">
       <Filter>Win32</Filter>
     </ClInclude>
+    <ClInclude Include="include\Win32KeyMap.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

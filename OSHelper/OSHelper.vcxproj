@@ -176,6 +176,7 @@
     <ClInclude Include="Include\NativeStringEnumerator.h" />
     <ClInclude Include="Include\PerformanceCounter.h" />
     <ClInclude Include="include\Win32App.h" />
+    <ClInclude Include="include\Win32KeyMap.h" />
     <ClInclude Include="include\Win32Window.h" />
     <ClInclude Include="Include\WxKeyboard.h" />
     <ClInclude Include="Include\WxMouse.h" />
