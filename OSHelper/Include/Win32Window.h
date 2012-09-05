@@ -32,6 +32,11 @@ public:
     virtual bool getMaximized();
     
     virtual void setCursor(CursorType cursor);
+
+	void activateCursor()
+	{
+		SetCursor(hCursor);
+	}
     
     //createMenu()
 
@@ -41,4 +46,5 @@ public:
 private:
 	HWND window;
 	static WNDCLASSEX wndclass;
+	HCURSOR hCursor;
 };

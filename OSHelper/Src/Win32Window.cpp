@@ -9,6 +9,7 @@ Win32Window::Win32Window(HWND parent, String title, int x, int y, int width, int
 {	
 	window = CreateWindow(WIN32_WINDOW_CLASS, title, WS_OVERLAPPEDWINDOW, x, y, width, height, parent, NULL, wndclass.hInstance, NULL);
 	SetWindowLong(window, GWL_USERDATA, (LONG)this);
+	setCursor(Arrow);
 }
     
 Win32Window::~Win32Window()
@@ -91,7 +92,36 @@ bool Win32Window::getMaximized()
     
 void Win32Window::setCursor(CursorType cursor)
 {
-
+	switch(cursor)
+	{
+		case Arrow:
+			hCursor = LoadCursor(NULL, IDC_ARROW);
+			break;
+		case Beam:
+			hCursor = LoadCursor(NULL, IDC_IBEAM);
+			break;
+		case SizeLeft:
+			hCursor = LoadCursor(NULL, IDC_SIZENWSE);
+			break;
+		case SizeRight:
+			hCursor = LoadCursor(NULL, IDC_SIZENESW);
+			break;
+		case SizeHorz:
+			hCursor = LoadCursor(NULL, IDC_SIZEWE);
+			break;
+		case SizeVert:
+			hCursor = LoadCursor(NULL, IDC_SIZENS);
+			break;
+		case Hand:
+			hCursor = LoadCursor(NULL, IDC_HAND);
+			break;
+		case Link:
+			hCursor = LoadCursor(NULL, IDC_ARROW);
+			break;
+		default:
+			hCursor = LoadCursor(NULL, IDC_ARROW);
+			break;
+	}
 }
 
 //PInvoke
@@ -129,6 +159,10 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 				break;
 			case WM_ACTIVATEAPP:
 				win->fireActivate(wParam);
+				break;
+			case WM_SETCURSOR:
+				win->activateCursor();
+				return true;
 				break;
 
 			//Keyboard
