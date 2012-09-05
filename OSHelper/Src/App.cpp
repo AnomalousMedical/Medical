@@ -148,7 +148,6 @@ void App::registerDelegates(OnInitDelegate onInitCB, OnExitDelegate onExitCB, On
 }
 
 //PInvoke
-
 extern "C" _AnomalousExport void App_delete(App* app)
 {
 	delete app;

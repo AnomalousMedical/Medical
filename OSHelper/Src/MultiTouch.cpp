@@ -34,7 +34,7 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 	bool loaded = false;
 	if(mtDriver == NULL)
 	{
-		mtDriver = LoadLibraryEx(L"WinMTDriver.dll", NULL, 0);
+		mtDriver = LoadLibraryEx("WinMTDriver.dll", NULL, 0);
 		if(mtDriver != NULL)
 		{
 			registerWithWindows = (WINDOWS_REGISTRATION_FUNC)GetProcAddress(mtDriver, "registerWithWindows");

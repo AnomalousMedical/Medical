@@ -94,6 +94,9 @@
     <ClCompile Include="src\Win32Window.cpp">
       <Filter>Win32</Filter>
     </ClCompile>
+    <ClCompile Include="src\Win32WindowManager.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\MultiTouch.h">

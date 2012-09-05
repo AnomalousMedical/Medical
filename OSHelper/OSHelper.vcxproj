@@ -28,7 +28,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>false</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
@@ -156,6 +156,7 @@
     <ClCompile Include="Src\SystemInfo.cpp" />
     <ClCompile Include="src\Win32App.cpp" />
     <ClCompile Include="src\Win32Window.cpp" />
+    <ClCompile Include="src\Win32WindowManager.cpp" />
     <ClCompile Include="Src\WxKeyboard.cpp" />
     <ClCompile Include="Src\WxMouse.cpp" />
     <ClCompile Include="Src\WindowFunctions.cpp" />

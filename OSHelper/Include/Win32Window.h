@@ -34,5 +34,4 @@ public:
     //createMenu()
 private:
 	HWND window;
-	WNDCLASSEX wndclass;
 };
