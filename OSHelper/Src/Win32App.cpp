@@ -1,6 +1,4 @@
 #include "StdAfx.h"
-
-#ifndef USE_WXWIDGETS
 #include "Win32App.h"
 
 Win32App::Win32App()
@@ -55,5 +53,3 @@ extern "C" _AnomalousExport void App_pumpMessages()
 		DispatchMessage( &msg );
 	}
 }
-
-#endif

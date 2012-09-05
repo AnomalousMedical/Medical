@@ -1,6 +1,4 @@
 #include "StdAfx.h"
-
-#ifndef USE_WXWIDGETS
 #include "Win32Window.h"
 
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
@@ -345,5 +343,3 @@ void Win32Window::destroyWindowClass()
 {
 	UnregisterClass(WIN32_WINDOW_CLASS, wndclass.hInstance);
 }
-
-#endif
