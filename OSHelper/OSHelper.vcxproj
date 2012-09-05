@@ -159,7 +159,6 @@
     <ClCompile Include="src\Win32DllMain.cpp" />
     <ClCompile Include="Src\WxKeyboard.cpp" />
     <ClCompile Include="Src\WxMouse.cpp" />
-    <ClCompile Include="Src\WindowFunctions.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">Create</PrecompiledHeader>

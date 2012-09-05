@@ -538,7 +538,6 @@
     <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceSet.cs" />
-    <Compile Include="Controller\OSHelper\WindowFunctions.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
     <Compile Include="Controller\SceneViews\SingleViewCloneWindow.cs" />

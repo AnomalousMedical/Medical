@@ -44,3 +44,25 @@ extern "C" _AnomalousExport CocoaApp* App_create()
 {
 	return new CocoaApp();
 }
+
+#include <Carbon/Carbon.h>
+
+extern "C" _AnomalousExport void App_pumpMessages()
+{
+	// OSX Message Pump
+	EventRef event = NULL;
+	EventTargetRef targetWindow;
+	targetWindow = GetEventDispatcherTarget();
+	
+	// If we are unable to get the target then we no longer care about events.
+	if( targetWindow )
+	{
+		// Grab the next event, process it if it is a window event
+		if( ReceiveNextEvent( 0, NULL, kEventDurationNoWait, true, &event ) == noErr )
+		{
+			// Dispatch the event
+			SendEventToEventTarget( event, targetWindow );
+			ReleaseEvent( event );
+		}
+	}
+}

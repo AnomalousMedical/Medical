@@ -11,9 +11,6 @@
     <Filter Include="wxPlatform">
       <UniqueIdentifier>{8ffc9668-249c-47af-8ffb-48d2be777205}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI">
-      <UniqueIdentifier>{c51a27b9-e84a-41ec-b9a3-76cc14edeca9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DLL">
       <UniqueIdentifier>{704cddde-bc93-4733-af8f-b9a6c72aa8eb}</UniqueIdentifier>
     </Filter>
@@ -78,9 +75,6 @@
     </ClCompile>
     <ClCompile Include="Src\WxMouse.cpp">
       <Filter>wxPlatform</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\WindowFunctions.cpp">
-      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Stdafx.cpp">
       <Filter>DLL</Filter>

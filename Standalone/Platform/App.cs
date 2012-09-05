@@ -64,6 +64,11 @@ namespace Medical
 
         public abstract bool OnIdle();
 
+        public static void pumpMessages()
+        {
+            App_pumpMessages();
+        }
+
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr App_create();
 
@@ -78,5 +83,8 @@ namespace Medical
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void App_exit(IntPtr app);
+
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void App_pumpMessages();
     }
 }

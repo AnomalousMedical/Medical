@@ -46,4 +46,14 @@ extern "C" _AnomalousExport Win32App* App_create()
 	return new Win32App();
 }
 
+extern "C" _AnomalousExport void App_pumpMessages()
+{
+	MSG  msg;
+	while( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
+	{
+		TranslateMessage( &msg );
+		DispatchMessage( &msg );
+	}
+}
+
 #endif
