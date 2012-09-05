@@ -221,26 +221,32 @@ NativeDialogResult DirDialog::showModal()
 NativeDialogResult ColorDialog::showModal()
 {
 	// initialize the struct used by Windows
-    CHOOSECOLOR chooseColorStruct;
-    ZeroMemory(&chooseColorStruct, 0, sizeof(CHOOSECOLOR));
-    chooseColorStruct.lStructSize = sizeof(CHOOSECOLOR);
+    CHOOSECOLOR cc;
+    ZeroMemory(&cc, 0, sizeof(cc));
+    cc.lStructSize = sizeof(cc);
 
     if (parent != 0)
 	{
-        chooseColorStruct.hwndOwner = (HWND)parent->getHandle();
+        cc.hwndOwner = (HWND)parent->getHandle();
 	}
 
-    chooseColorStruct.rgbResult = RGB((byte)(255 * color.r), (byte)(255 * color.g), (byte)(255 * color.b));
+    cc.rgbResult = RGB((byte)(255 * color.r), (byte)(255 * color.g), (byte)(255 * color.b));
 
 	/*COLORREF custColors[16];
-	chooseColorStruct.lpCustColors = custColors;*/
 
-    chooseColorStruct.Flags = CC_RGBINIT;
-    if (ChooseColor(&chooseColorStruct))
+	for(int i = 0; i < 16; ++i)
+	{
+		custColors[i] = RGB(0, 0, 0);
+	}
+
+	cc.lpCustColors = custColors;*/
+
+    cc.Flags = CC_RGBINIT;
+    if (ChooseColor(&cc))
     {
-		color.r = GetRValue(chooseColorStruct.rgbResult) / 255.0f;
-		color.g = GetGValue(chooseColorStruct.rgbResult) / 255.0f;
-		color.b = GetBValue(chooseColorStruct.rgbResult) / 255.0f;
+		color.r = GetRValue(cc.rgbResult) / 255.0f;
+		color.g = GetGValue(cc.rgbResult) / 255.0f;
+		color.b = GetBValue(cc.rgbResult) / 255.0f;
         return OK;
     }
 	return CANCEL;
