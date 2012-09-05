@@ -9,7 +9,6 @@
 #ifndef USE_WXWIDGETS
 #define WINVER 0x0500
 #define WIN32_LEAN_AND_MEAN
-#define WINDOW_CLASS_NAME "AnomalousWindowClass"
 #include <windows.h>
 #endif
 

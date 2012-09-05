@@ -2,6 +2,8 @@
 
 #include "NativeOSWindow.h"
 
+#define WIN32_WINDOW_CLASS "Win32WindowClass"
+
 class Win32Window : public NativeOSWindow
 {
 public:
@@ -32,6 +34,11 @@ public:
     virtual void setCursor(CursorType cursor);
     
     //createMenu()
+
+	static void createWindowClass(HANDLE hModule);
+
+	static void destroyWindowClass();
 private:
 	HWND window;
+	static WNDCLASSEX wndclass;
 };
