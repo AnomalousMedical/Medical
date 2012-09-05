@@ -11,8 +11,8 @@ namespace Developer.GUI
 {
     class PluginPublisher : MDIDialog
     {
-        private const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp;";
-        private const String SIGNATURE_WILDCARD = "Signature File (*.xml)|*.xml;";
+        private const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp";
+        private const String SIGNATURE_WILDCARD = "Signature File (*.xml)|*.xml";
 
         private EditBox pluginFileEdit;
         private EditBox signatureFileEdit;

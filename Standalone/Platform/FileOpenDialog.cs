@@ -36,16 +36,11 @@ namespace Medical
             return FileOpenDialog_showModal(fileDialog);
         }
 
-        public bool SelectMultiple { get; set; }
-
         public String Wildcard
         {
             get
             {
-                using (NativeString ns = new NativeString(FileOpenDialog_getWildcard(fileDialog)))
-                {
-                    return ns.ToString();
-                }
+                return Marshal.PtrToStringAnsi(FileOpenDialog_getWildcard(fileDialog));
             }
             set
             {
@@ -57,10 +52,7 @@ namespace Medical
         {
             get
             {
-                using (NativeString ns = new NativeString(FileOpenDialog_getPath(fileDialog)))
-                {
-                    return ns.ToString();
-                }
+                return Marshal.PtrToStringAnsi(FileOpenDialog_getPath(fileDialog));
             }
             set
             {
@@ -73,13 +65,15 @@ namespace Medical
         /// allocate native objects. Either let foreach call dispose or call it
         /// yourself.
         /// </summary>
-        public NativeStringEnumerator Paths
+        public IEnumerable<String> Paths
         {
             get
             {
-                NativeStringEnumerator nse = new NativeStringEnumerator();
-                FileOpenDialog_getPaths(fileDialog, nse._NativePtr);
-                return nse;
+                int numPaths = FileOpenDialog_getNumPaths(fileDialog);
+                for (int i = 0; i < numPaths; ++i)
+                {
+                    yield return Marshal.PtrToStringAnsi(FileOpenDialog_getPathIndex(fileDialog, i));
+                }
             }
         }
 
@@ -106,8 +100,11 @@ namespace Medical
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr FileOpenDialog_getPath(IntPtr fileDialog);
 
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int FileOpenDialog_getNumPaths(IntPtr fileDialog);
+
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void FileOpenDialog_getPaths(IntPtr fileDialog, IntPtr nativeStringEnumerator);
+        private static extern IntPtr FileOpenDialog_getPathIndex(IntPtr fileDialog, int index);
 
         #endregion
     }
