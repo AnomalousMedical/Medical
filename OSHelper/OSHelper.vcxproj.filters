@@ -61,9 +61,6 @@
     <ClCompile Include="Src\NativeString.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\NativeStringEnumerator.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Src\PerformanceCounter.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
@@ -91,7 +88,7 @@
     <ClCompile Include="src\Win32DllMain.cpp">
       <Filter>Win32</Filter>
     </ClCompile>
-    <ClCompile Include="src\Win32FileOpenDialog.cpp">
+    <ClCompile Include="src\Win32Dialogs.cpp">
       <Filter>Win32</Filter>
     </ClCompile>
   </ItemGroup>
@@ -112,9 +109,6 @@
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\NativeString.h">
-      <Filter>wxPlatform</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\NativeStringEnumerator.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\PerformanceCounter.h">
@@ -142,6 +136,9 @@
       <Filter>Win32</Filter>
     </ClInclude>
     <ClInclude Include="include\FileOpenDialog.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileSaveDialog.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
   </ItemGroup>

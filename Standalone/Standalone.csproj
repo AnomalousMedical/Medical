@@ -583,7 +583,6 @@
     <Compile Include="Platform\MessageDialog.cs" />
     <Compile Include="Platform\NativeOSWindow.cs" />
     <Compile Include="Platform\NativeString.cs" />
-    <Compile Include="Platform\NativeStringEnumerator.cs" />
     <Compile Include="Platform\SystemInfo.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />

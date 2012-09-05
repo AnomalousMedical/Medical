@@ -40,10 +40,7 @@ namespace Medical
         {
             get
             {
-                using (NativeString ns = new NativeString(FileSaveDialog_getWildcard(fileDialog)))
-                {
-                    return ns.ToString();
-                }
+                return Marshal.PtrToStringAnsi(FileSaveDialog_getWildcard(fileDialog));
             }
             set
             {
@@ -55,10 +52,7 @@ namespace Medical
         {
             get
             {
-                using (NativeString ns = new NativeString(FileSaveDialog_getPath(fileDialog)))
-                {
-                    return ns.ToString();
-                }
+                return Marshal.PtrToStringAnsi(FileSaveDialog_getPath(fileDialog));
             }
             set
             {

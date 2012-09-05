@@ -151,11 +151,10 @@
     <ClCompile Include="Src\NativeMenuItem.cpp" />
     <ClCompile Include="Src\NativeOSWindow.cpp" />
     <ClCompile Include="Src\NativeString.cpp" />
-    <ClCompile Include="Src\NativeStringEnumerator.cpp" />
     <ClCompile Include="Src\PerformanceCounter.cpp" />
     <ClCompile Include="Src\SystemInfo.cpp" />
     <ClCompile Include="src\Win32App.cpp" />
-    <ClCompile Include="src\Win32FileOpenDialog.cpp" />
+    <ClCompile Include="src\Win32Dialogs.cpp" />
     <ClCompile Include="src\Win32Window.cpp" />
     <ClCompile Include="src\Win32DllMain.cpp" />
     <ClCompile Include="Src\WxKeyboard.cpp" />
@@ -169,13 +168,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\FileOpenDialog.h" />
+    <ClInclude Include="include\FileSaveDialog.h" />
     <ClInclude Include="Include\MultiTouch.h" />
     <ClInclude Include="Include\MultiTouchImpl.h" />
     <ClInclude Include="Include\App.h" />
     <ClInclude Include="Include\Enums.h" />
     <ClInclude Include="Include\NativeOSWindow.h" />
     <ClInclude Include="Include\NativeString.h" />
-    <ClInclude Include="Include\NativeStringEnumerator.h" />
     <ClInclude Include="Include\PerformanceCounter.h" />
     <ClInclude Include="include\Win32App.h" />
     <ClInclude Include="include\Win32KeyMap.h" />
