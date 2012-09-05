@@ -318,6 +318,8 @@ KeyboardButtonCode virtualKeyToKeyboardButtonCode(WPARAM wParam)
 
 WNDCLASSEX Win32Window::wndclass;
 
+#include "..\Resource.h"
+
 void Win32Window::createWindowClass(HANDLE hModule)
 {
 	wndclass.cbSize			=	sizeof( wndclass );
@@ -326,12 +328,12 @@ void Win32Window::createWindowClass(HANDLE hModule)
 	wndclass.cbClsExtra		=	0;
 	wndclass.cbWndExtra		=	0;
 	wndclass.hInstance		=	(HINSTANCE)hModule;
-	wndclass.hIcon			=	LoadIcon( NULL, IDI_APPLICATION );
+	wndclass.hIcon			=	LoadIcon((HINSTANCE)hModule, MAKEINTRESOURCE(IDI_SKULL));
+	wndclass.hIconSm		=	NULL;
 	wndclass.hCursor		=	LoadCursor( NULL, IDC_ARROW );
 	wndclass.hbrBackground	=	( HBRUSH ) ( COLOR_WINDOW );
 	wndclass.lpszMenuName	=	NULL;
 	wndclass.lpszClassName	=	WIN32_WINDOW_CLASS; // Registered class name
-	wndclass.hIconSm		=	LoadIcon( NULL, IDI_APPLICATION );
 	wndclass.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
 
 	if(RegisterClassEx(&wndclass))

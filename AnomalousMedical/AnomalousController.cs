@@ -168,14 +168,6 @@ namespace Medical
             }
         }
 
-        public override WindowIcons Icon
-        {
-            get
-            {
-                return WindowIcons.ICON_SKULL;
-            }
-        }
-
         public override String PrimaryArchive
         {
             get
