@@ -2,8 +2,10 @@
 
 #include "FileOpenDialog.h"
 #include "FileSaveDialog.h"
+#include "DirDialog.h"
 #include "NativeOSWindow.h"
 
+#include <shlobj.h>
 #include "Commdlg.h"
 #define FILE_NAME_BUFFER_SIZE 65534
 
@@ -181,5 +183,36 @@ NativeDialogResult FileSaveDialog::showModal()
 		return OK;
 	}
 
+	return CANCEL;
+}
+
+NativeDialogResult DirDialog::showModal()
+{
+	char path[MAX_PATH] = "";
+
+	LPITEMIDLIST pidl     = NULL;
+	BROWSEINFO   bi       = { 0 };
+	BOOL         bResult  = FALSE;
+
+	if(parent != 0)
+	{
+		bi.hwndOwner = (HWND)parent->getHandle();
+	}
+	bi.pszDisplayName = path;
+	bi.pidlRoot       = NULL;
+	bi.lpszTitle      = message.c_str();
+	bi.ulFlags        = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+
+	if ((pidl = SHBrowseForFolder(&bi)) != NULL)
+	{
+		bResult = SHGetPathFromIDList(pidl, path);
+		this->path = path;
+		CoTaskMemFree(pidl);
+	}
+
+	if(bResult)
+	{
+		return OK;
+	}
 	return CANCEL;
 }

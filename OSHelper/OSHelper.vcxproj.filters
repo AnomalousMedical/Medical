@@ -141,6 +141,9 @@
     <ClInclude Include="include\FileSaveDialog.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
+    <ClInclude Include="include\DirDialog.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

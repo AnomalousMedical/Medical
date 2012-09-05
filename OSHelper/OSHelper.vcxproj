@@ -167,6 +167,7 @@
     <ClCompile Include="Src\PlatformConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\DirDialog.h" />
     <ClInclude Include="include\FileOpenDialog.h" />
     <ClInclude Include="include\FileSaveDialog.h" />
     <ClInclude Include="Include\MultiTouch.h" />

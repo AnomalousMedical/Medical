@@ -44,10 +44,7 @@ namespace Medical
         {
             get
             {
-                using (NativeString nativeString = new NativeString(DirDialog_getPath(dirDialog)))
-                {
-                    return nativeString.ToString();
-                }
+                return Marshal.PtrToStringAnsi(DirDialog_getPath(dirDialog));
             }
             set
             {
