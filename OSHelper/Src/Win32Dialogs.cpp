@@ -232,14 +232,19 @@ NativeDialogResult ColorDialog::showModal()
 
     cc.rgbResult = RGB((byte)(255 * color.r), (byte)(255 * color.g), (byte)(255 * color.b));
 
-	/*COLORREF custColors[16];
+	static COLORREF custColors[16];
+	static bool firstRun = true;
 
-	for(int i = 0; i < 16; ++i)
+	if(firstRun)
 	{
-		custColors[i] = RGB(0, 0, 0);
+		for(int i = 0; i < 16; ++i)
+		{
+			custColors[i] = RGB(0, 0, 0);
+		}
+		firstRun = false;
 	}
 
-	cc.lpCustColors = custColors;*/
+	cc.lpCustColors = custColors;
 
     cc.Flags = CC_RGBINIT;
     if (ChooseColor(&cc))
