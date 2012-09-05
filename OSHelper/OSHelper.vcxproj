@@ -150,7 +150,6 @@
     <ClCompile Include="Src\NativeMenuBar.cpp" />
     <ClCompile Include="Src\NativeMenuItem.cpp" />
     <ClCompile Include="Src\NativeOSWindow.cpp" />
-    <ClCompile Include="Src\NativeString.cpp" />
     <ClCompile Include="Src\PerformanceCounter.cpp" />
     <ClCompile Include="Src\SystemInfo.cpp" />
     <ClCompile Include="src\Win32App.cpp" />
@@ -167,6 +166,7 @@
     <ClCompile Include="Src\PlatformConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\ColorDialog.h" />
     <ClInclude Include="include\DirDialog.h" />
     <ClInclude Include="include\FileOpenDialog.h" />
     <ClInclude Include="include\FileSaveDialog.h" />
@@ -175,7 +175,6 @@
     <ClInclude Include="Include\App.h" />
     <ClInclude Include="Include\Enums.h" />
     <ClInclude Include="Include\NativeOSWindow.h" />
-    <ClInclude Include="Include\NativeString.h" />
     <ClInclude Include="Include\PerformanceCounter.h" />
     <ClInclude Include="include\Win32App.h" />
     <ClInclude Include="include\Win32KeyMap.h" />

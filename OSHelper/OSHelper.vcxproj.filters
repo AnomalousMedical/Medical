@@ -58,9 +58,6 @@
     <ClCompile Include="Src\NativeOSWindow.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\NativeString.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Src\PerformanceCounter.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
@@ -108,9 +105,6 @@
     <ClInclude Include="Include\NativeOSWindow.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
-    <ClInclude Include="Include\NativeString.h">
-      <Filter>wxPlatform</Filter>
-    </ClInclude>
     <ClInclude Include="Include\PerformanceCounter.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
@@ -142,6 +136,9 @@
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="include\DirDialog.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ColorDialog.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
   </ItemGroup>

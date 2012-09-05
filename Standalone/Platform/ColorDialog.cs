@@ -11,9 +11,14 @@ namespace Medical
     {
         private IntPtr colorDialog;
 
-        public ColorDialog()
+        public ColorDialog(NativeOSWindow parent = null)
         {
-            colorDialog = ColorDialog_new();
+            IntPtr parentPtr = IntPtr.Zero;
+            if (parent != null)
+            {
+                parentPtr = parent._NativePtr;
+            }
+            colorDialog = ColorDialog_new(parentPtr);
         }
 
         public void Dispose()
@@ -45,7 +50,7 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr ColorDialog_new();
+        private static extern IntPtr ColorDialog_new(IntPtr nativeOSWindow);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void ColorDialog_delete(IntPtr colorDialog);

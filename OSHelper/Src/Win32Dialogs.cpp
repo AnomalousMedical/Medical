@@ -3,6 +3,7 @@
 #include "FileOpenDialog.h"
 #include "FileSaveDialog.h"
 #include "DirDialog.h"
+#include "ColorDialog.h"
 #include "NativeOSWindow.h"
 
 #include <shlobj.h>
@@ -214,5 +215,33 @@ NativeDialogResult DirDialog::showModal()
 	{
 		return OK;
 	}
+	return CANCEL;
+}
+
+NativeDialogResult ColorDialog::showModal()
+{
+	// initialize the struct used by Windows
+    CHOOSECOLOR chooseColorStruct;
+    ZeroMemory(&chooseColorStruct, 0, sizeof(CHOOSECOLOR));
+    chooseColorStruct.lStructSize = sizeof(CHOOSECOLOR);
+
+    if (parent != 0)
+	{
+        chooseColorStruct.hwndOwner = (HWND)parent->getHandle();
+	}
+
+    chooseColorStruct.rgbResult = RGB((byte)(255 * color.r), (byte)(255 * color.g), (byte)(255 * color.b));
+
+	/*COLORREF custColors[16];
+	chooseColorStruct.lpCustColors = custColors;*/
+
+    chooseColorStruct.Flags = CC_RGBINIT;
+    if (ChooseColor(&chooseColorStruct))
+    {
+		color.r = GetRValue(chooseColorStruct.rgbResult) / 255.0f;
+		color.g = GetGValue(chooseColorStruct.rgbResult) / 255.0f;
+		color.b = GetBValue(chooseColorStruct.rgbResult) / 255.0f;
+        return OK;
+    }
 	return CANCEL;
 }

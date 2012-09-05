@@ -1,8 +1,9 @@
 #include "Stdafx.h"
-#include "NativeString.h"
 #include "NativeOSWindow.h"
 
 #ifdef USE_WXWIDGETS
+
+#include "NativeString.h"
 
 typedef void (*SelectDelegate)();
 

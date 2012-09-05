@@ -1,33 +1,48 @@
-#include "stdafx.h"
+#include "StdAfx.h"
+#include "ColorDialog.h"
 
-#ifdef USE_WXWIDGETS
-
-#include <wx/colordlg.h>
-#include "Enums.h"
-
-extern "C" _AnomalousExport wxColourDialog* ColorDialog_new()
+ColorDialog::ColorDialog(NativeOSWindow* parent)
+	:parent(parent)
 {
-	return new wxColourDialog();
+
 }
 
-extern "C" _AnomalousExport void ColorDialog_delete(wxColourDialog* colorDialog)
+ColorDialog::~ColorDialog()
+{
+
+}
+
+void ColorDialog::setColor(Color color)
+{
+	this->color = color;
+}
+
+Color ColorDialog::getColor()
+{
+	return color;
+}
+
+extern "C" _AnomalousExport ColorDialog* ColorDialog_new(NativeOSWindow* parent)
+{
+	return new ColorDialog(parent);
+}
+
+extern "C" _AnomalousExport void ColorDialog_delete(ColorDialog* colorDialog)
 {
 	delete colorDialog;
 }
 
-extern "C" _AnomalousExport NativeDialogResult ColorDialog_showModal(wxColourDialog* colorDialog)
+extern "C" _AnomalousExport NativeDialogResult ColorDialog_showModal(ColorDialog* colorDialog)
 {
-	return interpretResults(colorDialog->ShowModal());
+	return colorDialog->showModal();
 }
 
-extern "C" _AnomalousExport Color ColorDialog_getColor(wxColourDialog* colorDialog)
+extern "C" _AnomalousExport Color ColorDialog_getColor(ColorDialog* colorDialog)
 {
-	return colorDialog->GetColourData().GetColour();
+	return colorDialog->getColor();
 }
 
-extern "C" _AnomalousExport void ColorDialog_setColor(wxColourDialog* colorDialog, Color color)
+extern "C" _AnomalousExport void ColorDialog_setColor(ColorDialog* colorDialog, Color color)
 {
-	colorDialog->GetColourData().SetColour(color.toWx());
+	colorDialog->setColor(color);
 }
-
-#endif
