@@ -156,7 +156,7 @@
     <ClCompile Include="Src\SystemInfo.cpp" />
     <ClCompile Include="src\Win32App.cpp" />
     <ClCompile Include="src\Win32Window.cpp" />
-    <ClCompile Include="src\Win32WindowManager.cpp" />
+    <ClCompile Include="src\Win32DllMain.cpp" />
     <ClCompile Include="Src\WxKeyboard.cpp" />
     <ClCompile Include="Src\WxMouse.cpp" />
     <ClCompile Include="Src\WindowFunctions.cpp" />

@@ -94,7 +94,7 @@
     <ClCompile Include="src\Win32Window.cpp">
       <Filter>Win32</Filter>
     </ClCompile>
-    <ClCompile Include="src\Win32WindowManager.cpp">
+    <ClCompile Include="src\Win32DllMain.cpp">
       <Filter>Win32</Filter>
     </ClCompile>
   </ItemGroup>

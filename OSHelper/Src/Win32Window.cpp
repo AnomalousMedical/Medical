@@ -5,11 +5,11 @@
 
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
-Win32Window::Win32Window(String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
+Win32Window::Win32Window(HWND parent, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 	:NativeOSWindow(deleteCB, sizedCB, closedCB, activateCB),
 	window(0)
 {	
-	window = CreateWindow(WIN32_WINDOW_CLASS, title, WS_OVERLAPPEDWINDOW, x, y, width, height, NULL, NULL, wndclass.hInstance, NULL);
+	window = CreateWindow(WIN32_WINDOW_CLASS, title, WS_OVERLAPPEDWINDOW, x, y, width, height, parent, NULL, wndclass.hInstance, NULL);
 	SetWindowLong(window, GWL_USERDATA, (LONG)this);
 }
     
@@ -99,7 +99,12 @@ void Win32Window::setCursor(CursorType cursor)
 //PInvoke
 extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB, NativeOSWindow::ActivateDelegate activateCB)
 {
-	return new Win32Window(caption, x, y, width, height, deleteCB, sizedCB, closedCB, activateCB);
+	HWND parentHwnd = NULL;
+	if(parent != 0 && floatOnParent)
+	{
+		parentHwnd = (HWND)parent->getHandle();
+	}
+	return new Win32Window(parentHwnd, caption, x, y, width, height, deleteCB, sizedCB, closedCB, activateCB);
 }
 
 //Windows
@@ -316,22 +321,22 @@ WNDCLASSEX Win32Window::wndclass;
 void Win32Window::createWindowClass(HANDLE hModule)
 {
 	wndclass.cbSize			=	sizeof( wndclass );
-		wndclass.style			=	CS_HREDRAW | CS_VREDRAW | CS_OWNDC;// | CS_DBLCLKS;
-		wndclass.lpfnWndProc	=	&MsgProc;
-		wndclass.cbClsExtra		=	0;
-		wndclass.cbWndExtra		=	0;
-		wndclass.hInstance		=	(HINSTANCE)hModule;
-		wndclass.hIcon			=	LoadIcon( NULL, IDI_APPLICATION );
-		wndclass.hCursor		=	LoadCursor( NULL, IDC_ARROW );
-		wndclass.hbrBackground	=	( HBRUSH ) ( COLOR_WINDOW );
-		wndclass.lpszMenuName	=	NULL;
-		wndclass.lpszClassName	=	WIN32_WINDOW_CLASS; // Registered class name
-		wndclass.hIconSm		=	LoadIcon( NULL, IDI_APPLICATION );
-		wndclass.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
+	wndclass.style			=	CS_OWNDC;// | CS_DBLCLKS;/*CS_HREDRAW | CS_VREDRAW |*/ 
+	wndclass.lpfnWndProc	=	&MsgProc;
+	wndclass.cbClsExtra		=	0;
+	wndclass.cbWndExtra		=	0;
+	wndclass.hInstance		=	(HINSTANCE)hModule;
+	wndclass.hIcon			=	LoadIcon( NULL, IDI_APPLICATION );
+	wndclass.hCursor		=	LoadCursor( NULL, IDC_ARROW );
+	wndclass.hbrBackground	=	( HBRUSH ) ( COLOR_WINDOW );
+	wndclass.lpszMenuName	=	NULL;
+	wndclass.lpszClassName	=	WIN32_WINDOW_CLASS; // Registered class name
+	wndclass.hIconSm		=	LoadIcon( NULL, IDI_APPLICATION );
+	wndclass.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));
 
-		if(RegisterClassEx(&wndclass))
-		{
-		}
+	if(RegisterClassEx(&wndclass))
+	{
+	}
 }
 
 void Win32Window::destroyWindowClass()
