@@ -91,6 +91,9 @@
     <ClCompile Include="src\Win32DllMain.cpp">
       <Filter>Win32</Filter>
     </ClCompile>
+    <ClCompile Include="src\Win32FileOpenDialog.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\MultiTouch.h">
@@ -137,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="include\Win32KeyMap.h">
       <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileOpenDialog.h">
+      <Filter>wxPlatform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

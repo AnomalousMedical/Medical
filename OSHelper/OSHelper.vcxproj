@@ -155,6 +155,7 @@
     <ClCompile Include="Src\PerformanceCounter.cpp" />
     <ClCompile Include="Src\SystemInfo.cpp" />
     <ClCompile Include="src\Win32App.cpp" />
+    <ClCompile Include="src\Win32FileOpenDialog.cpp" />
     <ClCompile Include="src\Win32Window.cpp" />
     <ClCompile Include="src\Win32DllMain.cpp" />
     <ClCompile Include="Src\WxKeyboard.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Src\PlatformConfig.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\FileOpenDialog.h" />
     <ClInclude Include="Include\MultiTouch.h" />
     <ClInclude Include="Include\MultiTouchImpl.h" />
     <ClInclude Include="Include\App.h" />
