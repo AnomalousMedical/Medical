@@ -4,7 +4,7 @@
 #include "NativeOSWindow.h"
 
 #include "Commdlg.h"
-#define FILE_NAME_BUFFER_SIZE 1024
+#define FILE_NAME_BUFFER_SIZE 65534
 
 NativeDialogResult FileOpenDialog::showModal()
 {
@@ -21,6 +21,18 @@ NativeDialogResult FileOpenDialog::showModal()
 	if(parent != 0)
 	{
 		of.hwndOwner = (HWND)parent->getHandle();
+	}
+
+	//Title
+	if(message.length() > 0)
+	{
+		of.lpstrFileTitle = const_cast<char *>(message.c_str());
+	}
+
+	//Default dir
+	if(defaultDir.length() > 0)
+	{
+		of.lpstrInitialDir = defaultDir.c_str();
 	}
 
 	//Wildcard, these are in the format description|extension|description|extension
