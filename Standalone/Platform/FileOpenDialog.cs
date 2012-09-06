@@ -8,64 +8,6 @@ namespace Medical
 {
     public class FileOpenDialog
     {
-        class FileOpenDialogResults : IDisposable
-        {
-            List<String> paths = new List<string>();
-            FileOpenDialogSetPathString setPathStringCb;
-            FileOpenDialogResultCallback resultCb;
-            ResultCallback showModalCallback;
-            GCHandle handle;
-
-            public FileOpenDialogResults(ResultCallback callback)
-            {
-                this.showModalCallback = callback;
-
-                setPathStringCb = (pathPtr) =>
-                {
-                    paths.Add(Marshal.PtrToStringAnsi(pathPtr));
-                };
-
-                resultCb = (result) =>
-                {
-                    try
-                    {
-                        this.showModalCallback(result, paths);
-                    }
-                    finally
-                    {
-                        this.Dispose();
-                    }
-                };
-                handle = GCHandle.Alloc(this, GCHandleType.Normal);
-            }
-
-            public void Dispose()
-            {
-                handle.Free();
-            }
-            
-            public FileOpenDialogSetPathString SetPathStringCb
-            {
-                get
-                {
-                    return setPathStringCb;
-                }
-            }
-
-            public FileOpenDialogResultCallback ResultCb
-            {
-                get
-                {
-                    return resultCb;
-                }
-            }
-        }
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void FileOpenDialogSetPathString(IntPtr path);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void FileOpenDialogResultCallback(NativeDialogResult result);
-
         public delegate void ResultCallback(NativeDialogResult result, IEnumerable<String> files);
 
         public FileOpenDialog(NativeOSWindow parent = null, String message = "", String defaultDir = "", String defaultFile = "", String wildcard = "", bool selectMultiple = false)
@@ -92,8 +34,7 @@ namespace Medical
         public void showModal(ResultCallback callback)
         {
             FileOpenDialogResults results = new FileOpenDialogResults(callback);
-            IntPtr parentPtr = Parent != null ? Parent._NativePtr : IntPtr.Zero;
-            FileOpenDialog_showModal(parentPtr, Message, DefaultDir, DefaultFile, Wildcard, SelectMultiple, results.SetPathStringCb, results.ResultCb);
+            results.showNativeDialogModal(Parent, Message, DefaultDir, DefaultFile, Wildcard, SelectMultiple);
         }
 
         public NativeOSWindow Parent { get; set; }
@@ -108,11 +49,59 @@ namespace Medical
 
         public bool SelectMultiple { get; set; }
 
-        #region PInvoke
+        class FileOpenDialogResults : IDisposable
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            private delegate void FileOpenDialogSetPathString(IntPtr path);
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            private delegate void FileOpenDialogResultCallback(NativeDialogResult result);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void FileOpenDialog_showModal(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple, FileOpenDialogSetPathString setPathString, FileOpenDialogResultCallback resultCallback);
+            List<String> paths = new List<string>();
+            FileOpenDialogSetPathString setPathStringCb;
+            FileOpenDialogResultCallback resultCb;
+            ResultCallback showModalCallback;
+            GCHandle handle;
 
-        #endregion
+            public FileOpenDialogResults(ResultCallback callback)
+            {
+                this.showModalCallback = callback;
+
+                setPathStringCb = (pathPtr) =>
+                {
+                    paths.Add(Marshal.PtrToStringAnsi(pathPtr));
+                };
+
+                resultCb = (result) =>
+                {
+                    try
+                    {
+                        this.showModalCallback(result, paths);
+                    }
+                    finally
+                    {
+                        this.Dispose();
+                    }
+                };
+            }
+
+            public void Dispose()
+            {
+                handle.Free();
+            }
+
+            public void showNativeDialogModal(NativeOSWindow parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple)
+            {
+                handle = GCHandle.Alloc(this, GCHandleType.Normal);
+                IntPtr parentPtr = parent != null ? parent._NativePtr : IntPtr.Zero;
+                FileOpenDialog_showModal(parentPtr, message, defaultDir, defaultFile, wildcard, selectMultiple, setPathStringCb, resultCb);
+            }
+
+            #region PInvoke
+
+            [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+            private static extern void FileOpenDialog_showModal(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple, FileOpenDialogSetPathString setPathString, FileOpenDialogResultCallback resultCallback);
+
+            #endregion
+        }
     }
 }
