@@ -1,5 +1,4 @@
 #include "StdAfx.h"
-#include "FileOpenDialog.h"
 #include "FileSaveDialog.h"
 #include "DirDialog.h"
 #include "ColorDialog.h"
@@ -43,32 +42,60 @@ void convertWildcards(const std::string& wildcard, std::string& filterBuffer)
 	}
 }
 
-NativeDialogResult FileOpenDialog::showModal()
-{
+typedef void (*FileOpenDialogSetPathString)(String path);
+typedef void (*FileOpenDialogResultCallback)(NativeDialogResult result);
+
+extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple, FileOpenDialogSetPathString setPathString, FileOpenDialogResultCallback resultCallback)
+{    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    //NSWindow *keyWindow = [NSApp keyWindow];
     NSOpenPanel *oPanel = [NSOpenPanel openPanel];
     
     [oPanel setAllowsMultipleSelection:selectMultiple];
     [oPanel setCanChooseDirectories: NO];
     [oPanel setCanChooseFiles: YES];
     
+    NSWindow* parentWindow = nil;
     if(parent != 0)
     {
         NSView* view = (NSView*)parent->getHandle();
-        NSWindow* window = [view window];
-        [oPanel setParentWindow: window];
+        parentWindow = [view window];
+        //NSWindow* window = [view window];
+        //[oPanel setParentWindow: window];
     }
     
-    if([oPanel runModal] == NSOKButton)
-    {
-        for(NSURL *url in [oPanel URLs])
-        {
-            NSURL *file = [url filePathURL];
-            NSString* absoluteFile = [file path];
-            paths.push_back([absoluteFile cStringUsingEncoding:NSASCIIStringEncoding]);
-        }
-        return OK;
-    }
-	return CANCEL;
+    [oPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger returnCode)
+     {
+         NativeDialogResult result = CANCEL;
+         if(returnCode == NSOKButton)
+         {
+             for(NSURL *url in [oPanel URLs])
+             {
+                 NSURL *file = [url filePathURL];
+                 NSString* absoluteFile = [file path];
+                 setPathString([absoluteFile cStringUsingEncoding:NSASCIIStringEncoding]);
+             }
+             result = OK;
+         }
+         resultCallback(result);
+     }];
+    //if([oPanel runModal] == NSOKButton)
+    //{
+    //    for(NSURL *url in [oPanel URLs])
+    //    {
+    //        NSURL *file = [url filePathURL];
+    //        NSString* absoluteFile = [file path];
+    //        paths.push_back([absoluteFile cStringUsingEncoding:NSASCIIStringEncoding]);
+    //    }
+    //    result = OK;
+    //}
+    
+    
+    
+    //[keyWindow makeKeyAndOrderFront:nil];
+    
+    [pool release];
 }
 
 NativeDialogResult FileSaveDialog::showModal()
