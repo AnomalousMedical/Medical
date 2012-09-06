@@ -20,8 +20,13 @@ bool convertWildcards(const std::string& wildcard, NSMutableArray* fileTypeVecto
 	pos = wildcard.find('|');
 	if(pos == std::string::npos)
 	{
-		//Consider the whole string the filter
-		[fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.c_str()]];
+        dotPos = wildcard.find('.');
+        pos = wildcard.length();
+        if(dotPos != std::string::npos)
+        {
+            //Consider the whole string the filter, from the . to the end
+            [fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(dotPos, pos - dotPos).c_str()]];
+        }		
 	}
 	else
 	{
