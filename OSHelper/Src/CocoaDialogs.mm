@@ -161,10 +161,32 @@ extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, Str
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    //Use NSOpenPanel with setCanChooseDirectories on and canChooseFiles off=======
-    NativeDialogResult result = CANCEL;
-    std::string path;
-    resultCallback(result, path.c_str());
+    NSOpenPanel *oPanel = [NSOpenPanel openPanel];
+    
+    [oPanel setAllowsMultipleSelection:NO];
+    [oPanel setCanChooseDirectories: YES];
+    [oPanel setCanChooseFiles: NO];
+    
+    NSWindow* parentWindow = nil;
+    if(parent != 0)
+    {
+        NSView* view = (NSView*)parent->getHandle();
+        parentWindow = [view window];
+    }
+    
+    [oPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger returnCode)
+     {
+         std::string resPath;
+         NativeDialogResult result = CANCEL;
+         if(returnCode == NSOKButton)
+         {
+             NSURL *file = [oPanel URL];
+             NSString* absoluteFile = [file path];
+             resPath = [absoluteFile cStringUsingEncoding:NSASCIIStringEncoding];
+             result = OK;
+         }
+         resultCallback(result, resPath.c_str());
+     }];
     
     [pool release];
 }
