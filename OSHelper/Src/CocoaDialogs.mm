@@ -118,10 +118,41 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    //Use NSSavePanel=======
-    NativeDialogResult result = CANCEL;
-    std::string path;
-    resultCallback(result, path.c_str());
+    NSSavePanel *oPanel = [NSSavePanel savePanel];
+    
+    NSWindow* parentWindow = nil;
+    if(parent != 0)
+    {
+        NSView* view = (NSView*)parent->getHandle();
+        parentWindow = [view window];
+    }
+    
+    NSMutableArray* allowedFileTypes = [[NSMutableArray alloc] init];
+    
+    //Allowed file types
+    if(wildcard != 0)
+    {
+        if(convertWildcards(wildcard, allowedFileTypes))
+        {
+            [oPanel setAllowedFileTypes:allowedFileTypes];
+        }
+    }
+    
+    [oPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger returnCode)
+     {
+         std::string resPath;
+         NativeDialogResult result = CANCEL;
+         if(returnCode == NSOKButton)
+         {
+             NSURL *file = [oPanel URL];
+             NSString* absoluteFile = [file path];
+             resPath = [absoluteFile cStringUsingEncoding:NSASCIIStringEncoding];
+             result = OK;
+         }
+         resultCallback(result, resPath.c_str());
+     }];
+    
+    [allowedFileTypes release];
     
     [pool release];
 }
