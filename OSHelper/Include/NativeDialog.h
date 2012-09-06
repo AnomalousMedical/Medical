@@ -10,6 +10,9 @@ enum NativeDialogResult
 
 typedef void (*NativeDialogResultCallback)(NativeDialogResult result);
 
-//File Dialog
+//File Open Dialog
 typedef void (*FileOpenDialogSetPathString)(String path);
 typedef void (*FileOpenDialogResultCallback)(NativeDialogResult result);
+
+//File Save Dialog
+typedef void (*FileSaveDialogResultCallback)(NativeDialogResult result, String file);

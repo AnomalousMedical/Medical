@@ -6,6 +6,7 @@ using Medical;
 using Engine.ObjectManagement;
 using UnitTestPlugin.GUI;
 using Medical.GUI;
+using Logging;
 
 namespace UnitTestPlugin
 {
@@ -34,7 +35,16 @@ namespace UnitTestPlugin
 
             testImageAtlas = new TestImageAtlas();
             guiManager.addManagedDialog(testImageAtlas);
-            testImageAtlas.Visible = true;
+            //testImageAtlas.Visible = true;
+
+            standaloneController.TaskController.addTask(new CallbackTask("UnitTest.SaveFileDialog", "Test Save File", CommonResources.NoIcon, "Unit Test", 0, false, (item) =>
+                {
+                    FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance);
+                    saveDialog.showModal((result, path) =>
+                        {
+                            Log.Debug("Save dialog returned '{0}', path '{1}'", result, path);
+                        });
+                }));
         }
 
         public void sceneLoaded(SimScene scene)

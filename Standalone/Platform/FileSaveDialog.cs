@@ -6,83 +6,90 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    public class FileSaveDialog : IDisposable
+    public class FileSaveDialog
     {
-        private IntPtr fileDialog;
+        public delegate void ResultCallback(NativeDialogResult result, String path);
 
-        public FileSaveDialog(NativeOSWindow parent, String message)
-            :this(parent, message, "", "", "")
+        public FileSaveDialog(NativeOSWindow parent = null, String message = "", String defaultDir = "", String defaultFile = "", String wildcard = "")
         {
-            
-        }
-
-        public FileSaveDialog(NativeOSWindow parent, String message, String defaultDir, String defaultFile, String wildcard)
-        {
-            IntPtr parentPtr = IntPtr.Zero;
-            if (parent != null)
-            {
-                parentPtr = parent._NativePtr;
-            }
-            fileDialog = FileSaveDialog_new(parentPtr, message, defaultDir, defaultFile, wildcard);
+            Parent = parent;
+            Message = message;
+            DefaultDir = defaultDir;
+            DefaultFile = defaultFile;
+            Wildcard = wildcard;
         }
 
         public void Dispose()
         {
-            FileSaveDialog_delete(fileDialog);
+
         }
 
-        public NativeDialogResult showModal()
+        /// <summary>
+        /// May or may not block the main thread depending on os. Assume it does
+        /// not block and handle all results in the callback.
+        /// </summary>
+        /// <param name="callback">Called when the dialog is done showing with the results.</param>
+        /// <returns></returns>
+        public void showModal(ResultCallback callback)
         {
-            return FileSaveDialog_showModal(fileDialog);
+            FileSaveDialogResults results = new FileSaveDialogResults(callback);
+            results.showNativeDialogModal(Parent, Message, DefaultDir, DefaultFile, Wildcard);
         }
 
-        public String Wildcard
+        public NativeOSWindow Parent { get; set; }
+
+        public String Message { get; set; }
+
+        public String DefaultDir { get; set; }
+
+        public String DefaultFile { get; set; }
+
+        public String Wildcard { get; set; }
+
+        class FileSaveDialogResults : IDisposable
         {
-            get
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            private delegate void FileSaveDialogResultCallback(NativeDialogResult result, IntPtr file);
+
+            FileSaveDialogResultCallback resultCb;
+            ResultCallback showModalCallback;
+            GCHandle handle;
+
+            public FileSaveDialogResults(ResultCallback callback)
             {
-                return Marshal.PtrToStringAnsi(FileSaveDialog_getWildcard(fileDialog));
+                this.showModalCallback = callback;
+
+                resultCb = (result, filePtr) =>
+                {
+                    try
+                    {
+                        this.showModalCallback(result, Marshal.PtrToStringAnsi(filePtr));
+                    }
+                    finally
+                    {
+                        this.Dispose();
+                    }
+                };
             }
-            set
+
+            public void Dispose()
             {
-                FileSaveDialog_setWildcard(fileDialog, value);
+                handle.Free();
             }
+
+            public void showNativeDialogModal(NativeOSWindow parent, String message, String defaultDir, String defaultFile, String wildcard)
+            {
+                handle = GCHandle.Alloc(this, GCHandleType.Normal);
+                IntPtr parentPtr = parent != null ? parent._NativePtr : IntPtr.Zero;
+                FileSaveDialog_showModal(parentPtr, message, defaultDir, defaultFile, wildcard, resultCb);
+            }
+
+            #region PInvoke
+
+            [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+            private static extern void FileSaveDialog_showModal(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard, FileSaveDialogResultCallback resultCallback);
+
+            #endregion
         }
-
-        public String Path
-        {
-            get
-            {
-                return Marshal.PtrToStringAnsi(FileSaveDialog_getPath(fileDialog));
-            }
-            set
-            {
-                FileSaveDialog_setPath(fileDialog, value);
-            }
-        }
-
-        #region PInvoke
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr FileSaveDialog_new(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void FileSaveDialog_delete(IntPtr fileDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern NativeDialogResult FileSaveDialog_showModal(IntPtr fileDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void FileSaveDialog_setWildcard(IntPtr fileDialog, String value);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr FileSaveDialog_getWildcard(IntPtr fileDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void FileSaveDialog_setPath(IntPtr fileDialog, String value);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr FileSaveDialog_getPath(IntPtr fileDialog);
-
-        #endregion
     }
 }

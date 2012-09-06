@@ -1,9 +1,9 @@
 #include "StdAfx.h"
 
-#include "FileSaveDialog.h"
 #include "DirDialog.h"
 #include "ColorDialog.h"
 #include "NativeOSWindow.h"
+#include "NativeDialog.h"
 
 #include <shlobj.h>
 #include "Commdlg.h"
@@ -135,7 +135,7 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
 	resultCallback(dlgResult);
 }
 
-NativeDialogResult FileSaveDialog::showModal()
+extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard, FileSaveDialogResultCallback resultCallback)
 {
 	OPENFILENAME of;
 	ZeroMemory(&of, sizeof(of));
@@ -153,20 +153,20 @@ NativeDialogResult FileSaveDialog::showModal()
 	}
 
 	//Title
-	if(message.length() > 0)
+	if(message != 0)
 	{
-		of.lpstrFileTitle = const_cast<char *>(message.c_str());
+		of.lpstrFileTitle = const_cast<char *>(message);
 	}
 
 	//Default dir
-	if(defaultDir.length() > 0)
+	if(defaultDir != 0)
 	{
-		of.lpstrInitialDir = defaultDir.c_str();
+		of.lpstrInitialDir = defaultDir;
 	}
 
 	//Wildcard, these are in the format description|extension|description|extension
 	std::string filterBuffer;
-	if(wildcard.length() > 0)
+	if(wildcard != 0)
 	{
 		convertWildcards(wildcard, filterBuffer);
 		of.lpstrFilter = filterBuffer.c_str();
@@ -176,15 +176,16 @@ NativeDialogResult FileSaveDialog::showModal()
 	DWORD flags = OFN_EXPLORER | OFN_HIDEREADONLY | OFN_PATHMUSTEXIST | OFN_ENABLESIZING;
 	of.Flags = flags;
 
-	path = "";
+	NativeDialogResult result = CANCEL;
+	std::string path;
 	//Show Dialog
 	if(GetSaveFileName(&of))
 	{
 		path = of.lpstrFile;
-		return OK;
+		result = OK;
 	}
 
-	return CANCEL;
+	resultCallback(result, path.c_str());
 }
 
 NativeDialogResult DirDialog::showModal()
