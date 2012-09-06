@@ -6,69 +6,79 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    public class DirDialog : IDisposable
+    public class DirDialog
     {
-        private IntPtr dirDialog = IntPtr.Zero;
+        public delegate void ResultCallback(NativeDialogResult result, String path);
 
-        public DirDialog(String message, String startPath)
-            :this(null, message, startPath)
+        public DirDialog(NativeOSWindow parent = null, String message = "", String startPath = "")
         {
-            
+            Parent = parent;
+            Message = message;
+            StartPath = startPath;
         }
 
-        public DirDialog(NativeOSWindow parent, String message, String startPath)
+        /// <summary>
+        /// May or may not block the main thread depending on os. Assume it does
+        /// not block and handle all results in the callback.
+        /// </summary>
+        /// <param name="callback">Called when the dialog is done showing with the results.</param>
+        /// <returns></returns>
+        public void showModal(ResultCallback callback)
         {
-            IntPtr parentPtr = IntPtr.Zero;
-            if(parent != null)
+            DirDialogResults results = new DirDialogResults(callback);
+            results.showNativeDialogModal(Parent, Message, StartPath);
+        }
+
+        public NativeOSWindow Parent { get; set; }
+
+        public String Message { get; set; }
+
+        public String StartPath { get; set; }
+
+        class DirDialogResults : IDisposable
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            private delegate void DirDialogResultCallback(NativeDialogResult result, IntPtr file);
+
+            DirDialogResultCallback resultCb;
+            ResultCallback showModalCallback;
+            GCHandle handle;
+
+            public DirDialogResults(ResultCallback callback)
             {
-                parentPtr = parent._NativePtr;
-            }
-            dirDialog = DirDialog_new(parentPtr, message, startPath);
-        }
+                this.showModalCallback = callback;
 
-        public void Dispose()
-        {
-            if (dirDialog != IntPtr.Zero)
+                resultCb = (result, filePtr) =>
+                {
+                    try
+                    {
+                        this.showModalCallback(result, Marshal.PtrToStringAnsi(filePtr));
+                    }
+                    finally
+                    {
+                        this.Dispose();
+                    }
+                };
+            }
+
+            public void Dispose()
             {
-                DirDialog_delete(dirDialog);
-                dirDialog = IntPtr.Zero;
+                handle.Free();
             }
-        }
 
-        public NativeDialogResult showModal()
-        {
-            return DirDialog_showModal(dirDialog);
-        }
-
-        public String Path
-        {
-            get
+            public void showNativeDialogModal(NativeOSWindow parent, String message, String startPath)
             {
-                return Marshal.PtrToStringAnsi(DirDialog_getPath(dirDialog));
+                handle = GCHandle.Alloc(this, GCHandleType.Normal);
+                IntPtr parentPtr = parent != null ? parent._NativePtr : IntPtr.Zero;
+                DirDialog_showModal(parentPtr, message, startPath, resultCb);
             }
-            set
-            {
-                DirDialog_setPath(dirDialog, value);
-            }
+
+            #region PInvoke
+
+            [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+            private static extern void DirDialog_showModal(IntPtr parent, String message, String startPath, DirDialogResultCallback resultCallback);
+
+            #endregion
         }
-
-        #region PInvoke
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr DirDialog_new(IntPtr parent, String message, String startPath);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void DirDialog_delete(IntPtr dirDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern NativeDialogResult DirDialog_showModal(IntPtr dirDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void DirDialog_setPath(IntPtr dirDialog, String path);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr DirDialog_getPath(IntPtr dirDialog);
-
-        #endregion
     }
 }

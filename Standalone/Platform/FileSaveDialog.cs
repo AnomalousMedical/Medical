@@ -19,11 +19,6 @@ namespace Medical
             Wildcard = wildcard;
         }
 
-        public void Dispose()
-        {
-
-        }
-
         /// <summary>
         /// May or may not block the main thread depending on os. Assume it does
         /// not block and handle all results in the callback.

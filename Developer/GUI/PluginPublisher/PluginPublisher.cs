@@ -53,13 +53,14 @@ namespace Developer.GUI
 
         void outDirBrowser_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Select an out directory", MedicalConfig.UserDocRoot))
+            DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Select an out directory", MedicalConfig.UserDocRoot);
+            dirDialog.showModal((result, path) =>
             {
-                if (dirDialog.showModal() == NativeDialogResult.OK)
+                if (result == NativeDialogResult.OK)
                 {
-                    outDirEdit.Caption = dirDialog.Path;
+                    outDirEdit.Caption = path;
                 }
-            }
+            });
         }
 
         void signatureFileBrowser_MouseButtonClick(Widget source, EventArgs e)

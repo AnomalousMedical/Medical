@@ -16,3 +16,6 @@ typedef void (*FileOpenDialogResultCallback)(NativeDialogResult result);
 
 //File Save Dialog
 typedef void (*FileSaveDialogResultCallback)(NativeDialogResult result, String file);
+
+//Dir Dialog
+typedef void (*DirDialogResultCallback)(NativeDialogResult result, String file);

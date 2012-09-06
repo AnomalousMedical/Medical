@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 
-#include "DirDialog.h"
 #include "ColorDialog.h"
 #include "NativeOSWindow.h"
 #include "NativeDialog.h"
@@ -188,7 +187,7 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 	resultCallback(result, path.c_str());
 }
 
-NativeDialogResult DirDialog::showModal()
+extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, String message, String startPath, DirDialogResultCallback resultCallback)
 {
 	char path[MAX_PATH] = "";
 
@@ -202,21 +201,23 @@ NativeDialogResult DirDialog::showModal()
 	}
 	bi.pszDisplayName = path;
 	bi.pidlRoot       = NULL;
-	bi.lpszTitle      = message.c_str();
+	bi.lpszTitle      = message;
 	bi.ulFlags        = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
 
+	std::string strPath;
 	if ((pidl = SHBrowseForFolder(&bi)) != NULL)
 	{
 		bResult = SHGetPathFromIDList(pidl, path);
-		this->path = path;
+		strPath = path;
 		CoTaskMemFree(pidl);
 	}
 
+	NativeDialogResult result = CANCEL;
 	if(bResult)
 	{
-		return OK;
+		result = OK;
 	}
-	return CANCEL;
+	resultCallback(result, strPath.c_str());
 }
 
 NativeDialogResult ColorDialog::showModal()

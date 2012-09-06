@@ -31,9 +31,6 @@
     <ClCompile Include="Src\ColorDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\DirDialog.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Src\MessageDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
@@ -116,9 +113,6 @@
     </ClInclude>
     <ClInclude Include="include\Win32KeyMap.h">
       <Filter>Win32</Filter>
-    </ClInclude>
-    <ClInclude Include="include\DirDialog.h">
-      <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="include\ColorDialog.h">
       <Filter>wxPlatform</Filter>

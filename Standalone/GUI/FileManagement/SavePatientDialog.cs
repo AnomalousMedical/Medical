@@ -221,13 +221,14 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Choose the path to load files from.", locationTextBox.Caption))
+            DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Choose the path to load files from.", locationTextBox.Caption);
+            dirDialog.showModal((result, path) =>
             {
-                if (dirDialog.showModal() == NativeDialogResult.OK)
+                if (result == NativeDialogResult.OK)
                 {
-                    locationTextBox.Caption = dirDialog.Path;
+                    locationTextBox.Caption = path;
                 }
-            }
+            });
         }
     }
 }

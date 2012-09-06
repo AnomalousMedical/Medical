@@ -243,13 +243,14 @@ namespace Developer.GUI
                     startingFolder = MedicalConfig.ImageOutputFolder;
                     ensureOutputFolderExists(startingFolder);
                 }
-                using (DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Select a render output folder", startingFolder))
+                DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Select a render output folder", startingFolder);
+                dirDialog.showModal((result, path) =>
                 {
-                    if (dirDialog.showModal() == NativeDialogResult.OK)
+                    if (result == NativeDialogResult.OK)
                     {
-                        outputFolder.OnlyText = dirDialog.Path;
+                        outputFolder.OnlyText = path;
                     }
-                }
+                });
             }
             catch (Exception ex)
             {
