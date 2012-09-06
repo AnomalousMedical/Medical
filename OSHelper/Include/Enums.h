@@ -8,6 +8,8 @@ enum NativeDialogResult
     CANCEL = 8,
 };
 
+typedef void (*NativeDialogResultCallback)(NativeDialogResult result);
+
 NativeDialogResult interpretResults(int resultCode);
 
 enum CommonMenuItems

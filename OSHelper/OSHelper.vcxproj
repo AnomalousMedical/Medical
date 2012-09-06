@@ -143,7 +143,6 @@
     <ClCompile Include="Src\ColorDialog.cpp" />
     <ClCompile Include="Src\DirDialog.cpp" />
     <ClCompile Include="Src\Enums.cpp" />
-    <ClCompile Include="Src\FileOpenDialog.cpp" />
     <ClCompile Include="Src\FileSaveDialog.cpp" />
     <ClCompile Include="Src\MessageDialog.cpp" />
     <ClCompile Include="Src\NativeMenu.cpp" />
@@ -168,7 +167,6 @@
   <ItemGroup>
     <ClInclude Include="include\ColorDialog.h" />
     <ClInclude Include="include\DirDialog.h" />
-    <ClInclude Include="include\FileOpenDialog.h" />
     <ClInclude Include="include\FileSaveDialog.h" />
     <ClInclude Include="Include\MultiTouch.h" />
     <ClInclude Include="Include\MultiTouchImpl.h" />

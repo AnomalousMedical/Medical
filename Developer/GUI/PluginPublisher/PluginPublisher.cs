@@ -64,24 +64,26 @@ namespace Developer.GUI
 
         void signatureFileBrowser_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Select a signature file", MedicalConfig.UserDocRoot, "", SIGNATURE_WILDCARD, false))
+            FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Select a signature file", MedicalConfig.UserDocRoot, "", SIGNATURE_WILDCARD, false);
+            openDialog.showModal((result, paths) =>
             {
-                if (openDialog.showModal() == NativeDialogResult.OK)
+                if (result == NativeDialogResult.OK)
                 {
-                    signatureFileEdit.Caption = openDialog.Path;
+                    signatureFileEdit.Caption = paths.First();
                 }
-            }
+            });
         }
 
         void pluginFileBrowser_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Select a plugin file", MedicalConfig.UserDocRoot, "", PLUGIN_WILDCARD, false))
+            FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Select a plugin file", MedicalConfig.UserDocRoot, "", PLUGIN_WILDCARD, false);
+            openDialog.showModal((result, dlg) =>
             {
-                if (openDialog.showModal() == NativeDialogResult.OK)
+                if (result == NativeDialogResult.OK)
                 {
-                    pluginFileEdit.Caption = openDialog.Path;
+                    pluginFileEdit.Caption = dlg.First();
                 }
-            }
+            });
         }
     }
 }

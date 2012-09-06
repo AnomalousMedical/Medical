@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 
-#include "FileOpenDialog.h"
 #include "FileSaveDialog.h"
 #include "DirDialog.h"
 #include "ColorDialog.h"
@@ -46,7 +45,10 @@ void convertWildcards(const std::string& wildcard, std::string& filterBuffer)
 	}
 }
 
-NativeDialogResult FileOpenDialog::showModal()
+typedef void (*FileOpenDialogSetPathString)(String path);
+typedef void (*FileOpenDialogResultCallback)(NativeDialogResult result);
+
+extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple, FileOpenDialogSetPathString setPathString, FileOpenDialogResultCallback resultCallback)
 {
 	OPENFILENAME of;
 	ZeroMemory(&of, sizeof(of));
@@ -64,20 +66,20 @@ NativeDialogResult FileOpenDialog::showModal()
 	}
 
 	//Title
-	if(message.length() > 0)
+	if(message != 0)
 	{
-		of.lpstrFileTitle = const_cast<char *>(message.c_str());
+		of.lpstrFileTitle = const_cast<char *>(message);
 	}
 
 	//Default dir
-	if(defaultDir.length() > 0)
+	if(defaultDir != 0)
 	{
-		of.lpstrInitialDir = defaultDir.c_str();
+		of.lpstrInitialDir = defaultDir;
 	}
 
 	//Wildcard, these are in the format description|extension|description|extension
 	std::string filterBuffer;
-	if(wildcard.length() > 0)
+	if(wildcard != 0)
 	{
 		convertWildcards(wildcard, filterBuffer);
 		of.lpstrFilter = filterBuffer.c_str();
@@ -91,7 +93,7 @@ NativeDialogResult FileOpenDialog::showModal()
 	}
 	of.Flags = flags;
 
-	paths.clear();
+	NativeDialogResult dlgResult = CANCEL;
 	//Show Dialog
 	if(GetOpenFileName(&of))
 	{
@@ -113,7 +115,7 @@ NativeDialogResult FileOpenDialog::showModal()
 			file.assign(&(of.lpstrFile[offset]));
 			while(file.length() > 0)
 			{
-				paths.push_back(dirPath + file);
+				setPathString((dirPath + file).c_str());
 				offset += file.length() + 1;
 				if(offset < FILE_NAME_BUFFER_SIZE)
 				{
@@ -127,12 +129,13 @@ NativeDialogResult FileOpenDialog::showModal()
 		}
 		else
 		{
-			paths.push_back(of.lpstrFile);
+			std::string file(of.lpstrFile);
+			setPathString(file.c_str());
 		}
-		return OK;
+		dlgResult = OK;
 	}
 
-	return CANCEL;
+	resultCallback(dlgResult);
 }
 
 NativeDialogResult FileSaveDialog::showModal()

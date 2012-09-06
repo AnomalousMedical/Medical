@@ -120,13 +120,15 @@ namespace Medical.GUI
         void showOpenProjectDialog()
         {
             editorController.stopPlayingTimelines();
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", "", false))
+            FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", "", false);
+            fileDialog.showModal((result, paths) =>
             {
-                if (fileDialog.showModal() == NativeDialogResult.OK)
+                if (result == NativeDialogResult.OK)
                 {
-                    editorController.openProject(Path.GetDirectoryName(fileDialog.Path), fileDialog.Path);
+                    String path = paths.First();
+                    editorController.openProject(Path.GetDirectoryName(path), path);
                 }
-            }
+            });
         }
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
@@ -215,13 +217,14 @@ namespace Medical.GUI
 
                 contextMenu.add(new ContextMenuItem("Import Files", path, delegate(ContextMenuItem item)
                 {
-                    using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Choose files to import.", "", "", "", true))
+                    FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Choose files to import.", "", "", "", true);
+                    fileDialog.showModal((result, paths) =>
                     {
-                        if (fileDialog.showModal() == NativeDialogResult.OK)
+                        if (result == NativeDialogResult.OK)
                         {
-                            editorController.importFiles(new LinkedList<string>(fileDialog.Paths), item.UserObject.ToString());
+                            editorController.importFiles(paths, item.UserObject.ToString());
                         }
-                    }
+                    });
                 }));
 
                 contextMenu.add(new ContextMenuItem("Explore To", path, item =>

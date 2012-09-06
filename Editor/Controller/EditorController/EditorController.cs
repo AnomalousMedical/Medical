@@ -190,7 +190,7 @@ namespace Medical
             resourceProvider.ResourceCache.add(cachedResource);
         }
 
-        public void importFiles(LinkedList<String> files, String targetPath)
+        public void importFiles(IEnumerable<String> files, String targetPath)
         {
             Queue<String> conflictedFiles = new Queue<string>();
             foreach (String file in files)

@@ -37,9 +37,6 @@
     <ClCompile Include="Src\Enums.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\FileOpenDialog.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Src\FileSaveDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
@@ -128,9 +125,6 @@
     </ClInclude>
     <ClInclude Include="include\Win32KeyMap.h">
       <Filter>Win32</Filter>
-    </ClInclude>
-    <ClInclude Include="include\FileOpenDialog.h">
-      <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="include\FileSaveDialog.h">
       <Filter>wxPlatform</Filter>
