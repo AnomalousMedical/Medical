@@ -14,6 +14,8 @@
 CocoaWindow::CocoaWindow(String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 :NativeOSWindow(deleteCB, sizedCB, closedCB, activateCB)
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
     NSRect frame = NSMakeRect(x, y, width, height);
     NSUInteger styleMask =    NSClosableWindowMask | NSTitledWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask;
     NSRect rect = [NSWindow contentRectForFrameRect:frame styleMask:styleMask];
@@ -29,6 +31,8 @@ CocoaWindow::CocoaWindow(String title, int x, int y, int width, int height, Dele
     winDelegate = [[CocoaWindowDelegate alloc] initWithWindow:this];
     [window setDelegate:winDelegate];
     [window setReleasedWhenClosed:false];
+    
+    [pool release];
 }
 
 CocoaWindow::~CocoaWindow()
