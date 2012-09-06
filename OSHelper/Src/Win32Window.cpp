@@ -7,7 +7,7 @@ Win32Window::Win32Window(HWND parent, String title, int x, int y, int width, int
 	:NativeOSWindow(deleteCB, sizedCB, closedCB, activateCB),
 	window(0)
 {	
-	window = CreateWindow(WIN32_WINDOW_CLASS, title, WS_OVERLAPPEDWINDOW, x, y, width, height, parent, NULL, wndclass.hInstance, NULL);
+	window = CreateWindowEx(NULL, WIN32_WINDOW_CLASS, title, WS_OVERLAPPEDWINDOW, x, y, width, height, parent, NULL, wndclass.hInstance, NULL);
 	SetWindowLong(window, GWL_USERDATA, (LONG)this);
 	setCursor(Arrow);
 }
@@ -28,7 +28,8 @@ void Win32Window::setTitle(String title)
     
 void Win32Window::showFullScreen()
 {
-
+	SetWindowLong(window, GWL_STYLE, WS_POPUP | WS_EX_TOPMOST);
+	SetWindowPos(window, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
     
 void Win32Window::setSize(int width, int height)
