@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Enums.h"
+#include "NativeDialog.h"
 #include <string>
 
 class NativeOSWindow;

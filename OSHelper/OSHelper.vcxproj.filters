@@ -34,9 +34,6 @@
     <ClCompile Include="Src\DirDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Enums.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Src\FileSaveDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
     <ClInclude Include="Include\App.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Enums.h">
-      <Filter>wxPlatform</Filter>
-    </ClInclude>
     <ClInclude Include="Include\NativeOSWindow.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
@@ -133,6 +127,9 @@
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="include\ColorDialog.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NativeDialog.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
   </ItemGroup>

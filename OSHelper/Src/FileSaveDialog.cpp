@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "NativeOSWindow.h"
-#include "Enums.h"
+#include "NativeDialog.h"
 #include "FileSaveDialog.h"
 
 FileSaveDialog::FileSaveDialog(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard)

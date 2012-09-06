@@ -1,5 +1,5 @@
 #include "Stdafx.h"
-#include "Enums.h"
+#include "NativeDialog.h"
 #include "NativeOSWindow.h"
 #include "DirDialog.h"
 

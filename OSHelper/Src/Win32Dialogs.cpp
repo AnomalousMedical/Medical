@@ -45,9 +45,6 @@ void convertWildcards(const std::string& wildcard, std::string& filterBuffer)
 	}
 }
 
-typedef void (*FileOpenDialogSetPathString)(String path);
-typedef void (*FileOpenDialogResultCallback)(NativeDialogResult result);
-
 extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple, FileOpenDialogSetPathString setPathString, FileOpenDialogResultCallback resultCallback)
 {
 	OPENFILENAME of;

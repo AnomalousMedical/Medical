@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "Enums.h"
+#include "NativeDialog.h"
 #include "NativeOSWindow.h"
 
 #ifdef WINDOWS
@@ -21,7 +21,17 @@ extern "C" _AnomalousExport NativeDialogResult MessageDialog_showQuestionDialog(
 	{
 		hWnd = (HWND)parent->getHandle();
 	}
-	return interpretResults(MessageBoxA(hWnd, msg, cap, MB_YESNO | MB_ICONQUESTION));
+	switch(MessageBox(hWnd, msg, cap, MB_YESNO | MB_ICONQUESTION))
+	{
+		case IDOK:
+			return OK;
+		case IDYES:
+			return YES;
+		case IDNO:
+			return NO;
+		default:
+			return CANCEL;
+	}
 }
 
 #endif

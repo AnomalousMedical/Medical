@@ -1,5 +1,4 @@
 #include "Stdafx.h"
-#include "Enums.h"
 
 #ifdef USE_WXWIDGETS
 

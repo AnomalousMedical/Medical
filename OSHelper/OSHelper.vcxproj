@@ -142,7 +142,6 @@
     <ClCompile Include="Src\App.cpp" />
     <ClCompile Include="Src\ColorDialog.cpp" />
     <ClCompile Include="Src\DirDialog.cpp" />
-    <ClCompile Include="Src\Enums.cpp" />
     <ClCompile Include="Src\FileSaveDialog.cpp" />
     <ClCompile Include="Src\MessageDialog.cpp" />
     <ClCompile Include="Src\NativeMenu.cpp" />
@@ -171,7 +170,7 @@
     <ClInclude Include="Include\MultiTouch.h" />
     <ClInclude Include="Include\MultiTouchImpl.h" />
     <ClInclude Include="Include\App.h" />
-    <ClInclude Include="Include\Enums.h" />
+    <ClInclude Include="Include\NativeDialog.h" />
     <ClInclude Include="Include\NativeOSWindow.h" />
     <ClInclude Include="Include\PerformanceCounter.h" />
     <ClInclude Include="include\Win32App.h" />
