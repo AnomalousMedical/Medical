@@ -3,19 +3,20 @@
 #include "NativeDialog.h"
 
 #include <string>
-#include <vector>
 
 #include <Cocoa/Cocoa.h>
 
 //Wildcard, these are in the format description|extension|description|extension
-void convertWildcards(const std::string& wildcard, std::vector<std::string>& fileTypeVector)
+void convertWildcards(const std::string& wildcard, NSMutableArray* fileTypeVector)
 {
 	size_t pos = 0;
+    size_t lastPos = 0;
+    size_t dotPos = 0;
 	pos = wildcard.find('|');
 	if(pos == std::string::npos)
 	{
 		//Consider the whole string the filter
-		fileTypeVector.push_back(wildcard);
+		[fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.c_str()]];
 	}
 	else
 	{
@@ -25,18 +26,29 @@ void convertWildcards(const std::string& wildcard, std::vector<std::string>& fil
 			++pipeCount;
             if(pipeCount % 2 == 0)
             {
-                fileTypeVector.push_back(wildcard.substr());//filterBuffer[pos] = '\0';
+                dotPos = wildcard.find('.', lastPos);
+                if(dotPos != std::string::npos && ++dotPos < pos)
+                {
+                    [fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(dotPos, pos - dotPos).c_str()]];
+                }
             }
+            lastPos = pos + 1;
 			pos = wildcard.find('|', pos + 1);
 		}
 		while(pos != std::string::npos);
 		//If the last character was not a pipe make sure to add the last extension
 		if(wildcard.rfind('|') + 1 != wildcard.length())
 		{
+            pos = wildcard.length();
 			++pipeCount;
             if(pipeCount % 2 == 0)
             {
-                fileTypeVector.push_back(wildcard.substr());//filterBuffer[pos] = '\0';
+                dotPos = wildcard.find('.', lastPos);
+                if(dotPos != std::string::npos && ++dotPos < pos)
+                {
+                    [fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(dotPos, pos - dotPos).c_str()]];
+                }
+                //[fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(lastPos, pos - lastPos).c_str()]];
             }
 		}
 	}
@@ -59,6 +71,16 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
         parentWindow = [view window];
     }
     
+    NSMutableArray* allowedFileTypes = [[NSMutableArray alloc] init];
+    
+    //Allowed file types
+    if(wildcard != 0)
+    {
+        convertWildcards(wildcard, allowedFileTypes);
+        //[allowedFileTypes addObject:@"ddp"];
+        [oPanel setAllowedFileTypes:allowedFileTypes];
+    }
+    
     [oPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger returnCode)
      {
          NativeDialogResult result = CANCEL;
@@ -74,6 +96,8 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
          }
          resultCallback(result);
      }];
+    
+    [allowedFileTypes dealloc];
     
     [pool release];
 }
