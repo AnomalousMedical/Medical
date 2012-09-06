@@ -7,8 +7,13 @@
 #include <Cocoa/Cocoa.h>
 
 //Wildcard, these are in the format description|extension|description|extension
-void convertWildcards(const std::string& wildcard, NSMutableArray* fileTypeVector)
+//Will return true if the filters should be used and false if not.
+bool convertWildcards(const std::string& wildcard, NSMutableArray* fileTypeVector)
 {
+    if(wildcard.length() == 0)
+    {
+        return false;
+    }
 	size_t pos = 0;
     size_t lastPos = 0;
     size_t dotPos = 0;
@@ -48,10 +53,11 @@ void convertWildcards(const std::string& wildcard, NSMutableArray* fileTypeVecto
                 {
                     [fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(dotPos, pos - dotPos).c_str()]];
                 }
-                //[fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(lastPos, pos - lastPos).c_str()]];
             }
 		}
 	}
+    
+    return true;
 }
 
 extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple, FileOpenDialogSetPathString setPathString, FileOpenDialogResultCallback resultCallback)
@@ -76,9 +82,10 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
     //Allowed file types
     if(wildcard != 0)
     {
-        convertWildcards(wildcard, allowedFileTypes);
-        //[allowedFileTypes addObject:@"ddp"];
-        [oPanel setAllowedFileTypes:allowedFileTypes];
+        if(convertWildcards(wildcard, allowedFileTypes))
+        {
+            [oPanel setAllowedFileTypes:allowedFileTypes];
+        }
     }
     
     [oPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger returnCode)
@@ -97,7 +104,7 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
          resultCallback(result);
      }];
     
-    [allowedFileTypes dealloc];
+    [allowedFileTypes release];
     
     [pool release];
 }
