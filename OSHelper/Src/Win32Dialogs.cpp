@@ -1,8 +1,8 @@
 #include "StdAfx.h"
 
-#include "ColorDialog.h"
 #include "NativeOSWindow.h"
 #include "NativeDialog.h"
+#include <string>
 
 #include <shlobj.h>
 #include "Commdlg.h"
@@ -220,11 +220,11 @@ extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, Str
 	resultCallback(result, strPath.c_str());
 }
 
-NativeDialogResult ColorDialog::showModal()
+extern "C" _AnomalousExport void ColorDialog_showModal(NativeOSWindow* parent, Color color, ColorDialogResultCallback resultCallback)
 {
 	// initialize the struct used by Windows
     CHOOSECOLOR cc;
-    ZeroMemory(&cc, 0, sizeof(cc));
+    ZeroMemory(&cc, sizeof(cc));
     cc.lStructSize = sizeof(cc);
 
     if (parent != 0)
@@ -248,13 +248,16 @@ NativeDialogResult ColorDialog::showModal()
 
 	cc.lpCustColors = custColors;
 
+	NativeDialogResult result = CANCEL;
+	Color resColor(0.0f, 0.0f, 0.0f);
     cc.Flags = CC_RGBINIT;
     if (ChooseColor(&cc))
     {
-		color.r = GetRValue(cc.rgbResult) / 255.0f;
-		color.g = GetGValue(cc.rgbResult) / 255.0f;
-		color.b = GetBValue(cc.rgbResult) / 255.0f;
-        return OK;
+		resColor.r = GetRValue(cc.rgbResult) / 255.0f;
+		resColor.g = GetGValue(cc.rgbResult) / 255.0f;
+		resColor.b = GetBValue(cc.rgbResult) / 255.0f;
+        result = OK;
     }
-	return CANCEL;
+
+	resultCallback(result, resColor);
 }

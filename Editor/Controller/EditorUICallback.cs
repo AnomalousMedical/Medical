@@ -126,14 +126,15 @@ namespace Medical
 
             this.addCustomQuery<Color>(ShowTextAction.CustomQueries.ChooseColor, queryDelegate =>
             {
-                using (ColorDialog colorDialog = new ColorDialog())
+                ColorDialog colorDialog = new ColorDialog();
+                colorDialog.showModal((result, color) =>
                 {
-                    if (colorDialog.showModal() == NativeDialogResult.OK)
+                    if (result == NativeDialogResult.OK)
                     {
                         String errorPrompt = null;
-                        queryDelegate.Invoke(colorDialog.Color, ref errorPrompt);
+                        queryDelegate.Invoke(color, ref errorPrompt);
                     }
-                }
+                });
             });
 
             this.addOneWayCustomQuery<ShowPropAction>(ShowPropAction.CustomQueries.KeepOpenToggle, showPropAction =>

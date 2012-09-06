@@ -8,6 +8,30 @@ enum NativeDialogResult
     CANCEL = 8,
 };
 
+class Color
+{
+public:
+	float r, g, b, a;
+
+	Color()
+		:r(0.0f),
+		g(0.0f),
+		b(0.0f),
+		a(0.0f)
+	{
+
+	}
+
+	Color(byte r, byte g, byte b)
+		:r(r / 255.0f),
+		g(g / 255.0f),
+		b(b / 255.0f),
+		a(1.0f)
+	{
+
+	}
+};
+
 typedef void (*NativeDialogResultCallback)(NativeDialogResult result);
 
 //File Open Dialog
@@ -19,3 +43,6 @@ typedef void (*FileSaveDialogResultCallback)(NativeDialogResult result, String f
 
 //Dir Dialog
 typedef void (*DirDialogResultCallback)(NativeDialogResult result, String file);
+
+//Color Dialog
+typedef void (*ColorDialogResultCallback)(NativeDialogResult result, Color color);

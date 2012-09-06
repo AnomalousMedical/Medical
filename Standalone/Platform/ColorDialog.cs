@@ -7,63 +7,75 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    public class ColorDialog : IDisposable
+    public class ColorDialog
     {
-        private IntPtr colorDialog;
+        public delegate void ResultCallback(NativeDialogResult result, Color color);
 
         public ColorDialog(NativeOSWindow parent = null)
         {
-            IntPtr parentPtr = IntPtr.Zero;
-            if (parent != null)
-            {
-                parentPtr = parent._NativePtr;
-            }
-            colorDialog = ColorDialog_new(parentPtr);
+            Parent = parent;
         }
 
-        public void Dispose()
+        /// <summary>
+        /// May or may not block the main thread depending on os. Assume it does
+        /// not block and handle all results in the callback.
+        /// </summary>
+        /// <param name="callback">Called when the dialog is done showing with the results.</param>
+        /// <returns></returns>
+        public void showModal(ResultCallback callback)
         {
-            if (colorDialog != IntPtr.Zero)
-            {
-                ColorDialog_delete(colorDialog);
-                colorDialog = IntPtr.Zero;
-            }
+            ColorDialogResults results = new ColorDialogResults(callback);
+            results.showNativeDialogModal(Parent, Color);
         }
 
-        public NativeDialogResult showModal()
+        public NativeOSWindow Parent { get; set; }
+
+        public Color Color { get; set; }
+
+        class ColorDialogResults : IDisposable
         {
-            return ColorDialog_showModal(colorDialog);
-        }
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            private delegate void ColorDialogResultCallback(NativeDialogResult result, Color color);
 
-        public Color Color
-        {
-            get
+            ColorDialogResultCallback resultCb;
+            ResultCallback showModalCallback;
+            GCHandle handle;
+
+            public ColorDialogResults(ResultCallback callback)
             {
-                return ColorDialog_getColor(colorDialog);
+                this.showModalCallback = callback;
+
+                resultCb = (result, color) =>
+                {
+                    try
+                    {
+                        this.showModalCallback(result, color);
+                    }
+                    finally
+                    {
+                        this.Dispose();
+                    }
+                };
             }
-            set
+
+            public void Dispose()
             {
-                ColorDialog_setColor(colorDialog, value);
+                handle.Free();
             }
+
+            public void showNativeDialogModal(NativeOSWindow parent, Color color)
+            {
+                handle = GCHandle.Alloc(this, GCHandleType.Normal);
+                IntPtr parentPtr = parent != null ? parent._NativePtr : IntPtr.Zero;
+                ColorDialog_showModal(parentPtr, color, resultCb);
+            }
+
+            #region PInvoke
+
+            [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+            private static extern void ColorDialog_showModal(IntPtr parent, Color color, ColorDialogResultCallback resultCallback);
+
+            #endregion
         }
-
-        #region PInvoke
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr ColorDialog_new(IntPtr nativeOSWindow);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void ColorDialog_delete(IntPtr colorDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern NativeDialogResult ColorDialog_showModal(IntPtr colorDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern Color ColorDialog_getColor(IntPtr colorDialog);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void ColorDialog_setColor(IntPtr colorDialog, Color color);
-
-        #endregion
     }
 }

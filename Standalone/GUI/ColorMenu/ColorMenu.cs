@@ -75,16 +75,17 @@ namespace Medical.GUI
         void moreColorsButton_MouseButtonClick(Widget source, EventArgs e)
         {
             Color selectedColor = SelectedColor;
-            using (ColorDialog colorDialog = new ColorDialog())
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.Color = selectedColor;
+            colorDialog.showModal((result, color) =>
             {
-                colorDialog.Color = selectedColor;
-                if (colorDialog.showModal() == NativeDialogResult.OK)
+                if (result == NativeDialogResult.OK)
                 {
                     colorGrid.SelectedItem = null;
-                    customColor = colorDialog.Color;
+                    customColor = color;
                     colorGrid_SelectedValueChanged(this, EventArgs.Empty);
                 }
-            }
+            });
         }
 
         void ColorMenu_Hidden(object sender, EventArgs e)

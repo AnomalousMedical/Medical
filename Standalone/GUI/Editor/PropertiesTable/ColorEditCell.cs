@@ -173,14 +173,15 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (ColorDialog colorDialog = new ColorDialog())
+            ColorDialog colorDialog = new ColorDialog();
+            colorDialog.showModal((result, color) =>
             {
-                if (colorDialog.showModal() == NativeDialogResult.OK)
+                if (result == NativeDialogResult.OK)
                 {
-                    editWidget.OnlyText = colorDialog.Color.ToString();
+                    editWidget.OnlyText = color.ToString();
                     clearCellEdit();
                 }
-            }
+            });
         }
 
         void editWidget_KeyButtonReleased(Widget source, EventArgs e)
