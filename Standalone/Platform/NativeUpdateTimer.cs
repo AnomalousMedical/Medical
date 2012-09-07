@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    public class WxUpdateTimer : UpdateTimer
+    public class NativeUpdateTimer : UpdateTimer
     {
         Int64 deltaTime;
         Int64 totalTime = 0;
@@ -15,7 +15,7 @@ namespace Medical
         Int64 lastTime;
         Int64 totalFrameTime;
 
-        public WxUpdateTimer(SystemTimer systemTimer)
+        public NativeUpdateTimer(SystemTimer systemTimer)
             :base(systemTimer)
         {
             

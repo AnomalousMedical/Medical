@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class WxMouse : Mouse, IDisposable
+    class NativeMouse : Mouse, IDisposable
     {
         private NativeOSWindow window;
         private Vector3 absMouse = Vector3.Zero;
@@ -31,7 +31,7 @@ namespace Medical
         MouseMoveDelegate mouseMoveCB;
         MouseWheelDelegate mouseWheelCB;
 
-        public WxMouse(NativeOSWindow window)
+        public NativeMouse(NativeOSWindow window)
         {
             this.window = window;
 
@@ -40,12 +40,12 @@ namespace Medical
             mouseMoveCB = new MouseMoveDelegate(OnMouseMotion);
             mouseWheelCB = new MouseWheelDelegate(OnMouseWheel);
 
-            nativeMouse = WxMouse_new(window._NativePtr, mouseButtonDownCB, mouseButtonUpCB, mouseMoveCB, mouseWheelCB);
+            nativeMouse = NativeMouse_new(window._NativePtr, mouseButtonDownCB, mouseButtonUpCB, mouseMoveCB, mouseWheelCB);
         }
 
         public void Dispose()
         {
-            WxMouse_delete(nativeMouse);
+            NativeMouse_delete(nativeMouse);
             nativeMouse = IntPtr.Zero;
         }
 
@@ -125,10 +125,10 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr WxMouse_new(IntPtr osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
+        private static extern IntPtr NativeMouse_new(IntPtr osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void WxMouse_delete(IntPtr mouse);
+        private static extern void NativeMouse_delete(IntPtr mouse);
 
         #endregion
     }

@@ -148,8 +148,8 @@
     <ClCompile Include="src\Win32Dialogs.cpp" />
     <ClCompile Include="src\Win32Window.cpp" />
     <ClCompile Include="src\Win32DllMain.cpp" />
-    <ClCompile Include="Src\WxKeyboard.cpp" />
-    <ClCompile Include="Src\WxMouse.cpp" />
+    <ClCompile Include="Src\NativeKeyboard.cpp" />
+    <ClCompile Include="Src\NativeMouse.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">Create</PrecompiledHeader>
@@ -167,8 +167,8 @@
     <ClInclude Include="include\Win32App.h" />
     <ClInclude Include="include\Win32KeyMap.h" />
     <ClInclude Include="include\Win32Window.h" />
-    <ClInclude Include="Include\WxKeyboard.h" />
-    <ClInclude Include="Include\WxMouse.h" />
+    <ClInclude Include="Include\NativeKeyboard.h" />
+    <ClInclude Include="Include\NativeMouse.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>

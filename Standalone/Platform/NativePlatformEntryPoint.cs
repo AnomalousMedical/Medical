@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using Engine;
 
-[assembly: Medical.WxPlatformEntryPoint()]
+[assembly: Medical.NativePlatformEntryPoint()]
 
 namespace Medical
 {
-    class WxPlatformEntryPoint : PluginEntryPointAttribute
+    class NativePlatformEntryPoint : PluginEntryPointAttribute
     {
         public override void createPluginInterfaces(PluginManager pluginManager)
         {
-            pluginManager.addPlugin(new WxPlatformPlugin());
+            pluginManager.addPlugin(new NativePlatformPlugin());
         }
     }
 }

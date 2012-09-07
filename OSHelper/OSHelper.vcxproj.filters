@@ -40,12 +40,6 @@
     <ClCompile Include="Src\SystemInfo.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\WxKeyboard.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\WxMouse.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Stdafx.cpp">
       <Filter>DLL</Filter>
     </ClCompile>
@@ -64,6 +58,12 @@
     <ClCompile Include="src\Win32Dialogs.cpp">
       <Filter>Win32</Filter>
     </ClCompile>
+    <ClCompile Include="Src\NativeKeyboard.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeMouse.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\MultiTouch.h">
@@ -79,12 +79,6 @@
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\PerformanceCounter.h">
-      <Filter>wxPlatform</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\WxKeyboard.h">
-      <Filter>wxPlatform</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\WxMouse.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -103,6 +97,12 @@
       <Filter>Win32</Filter>
     </ClInclude>
     <ClInclude Include="Include\NativeDialog.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NativeKeyboard.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NativeMouse.h">
       <Filter>wxPlatform</Filter>
     </ClInclude>
   </ItemGroup>

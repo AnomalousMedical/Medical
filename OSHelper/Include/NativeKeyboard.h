@@ -4,15 +4,15 @@
 
 class NativeOSWindow;
 
-class WxKeyboard
+class NativeKeyboard
 {
 public:
 	typedef void (*KeyDownDelegate)(KeyboardButtonCode keyCode, uint character);
 	typedef void (*KeyUpDelegate)(KeyboardButtonCode keyCode);
     
-	WxKeyboard(NativeOSWindow* osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
+	NativeKeyboard(NativeOSWindow* osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
     
-	~WxKeyboard(void);
+	~NativeKeyboard(void);
     
 private:
 	KeyDownDelegate keyDownCB;

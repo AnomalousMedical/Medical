@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class WxKeyboard : Engine.Platform.Keyboard, IDisposable
+    class NativeKeyboard : Engine.Platform.Keyboard, IDisposable
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void KeyDownDelegate(KeyboardButtonCode keyCode, uint character);
@@ -28,7 +28,7 @@ namespace Medical
         bool ctrlDown = false;
         bool shiftDown = false;
 
-        public WxKeyboard(NativeOSWindow window)
+        public NativeKeyboard(NativeOSWindow window)
         {
             this.window = window;
             window.Deactivated += new EventHandler(window_Deactivated);
@@ -36,12 +36,12 @@ namespace Medical
             keyDownCB = new KeyDownDelegate(OnKeyDown);
             keyUpCB = new KeyUpDelegate(OnKeyUp);
 
-            nativeKeyboard = WxKeyboard_new(window._NativePtr, keyDownCB, keyUpCB);
+            nativeKeyboard = NativeKeyboard_new(window._NativePtr, keyDownCB, keyUpCB);
         }
 
         public void Dispose()
         {
-            WxKeyboard_delete(nativeKeyboard);
+            NativeKeyboard_delete(nativeKeyboard);
             nativeKeyboard = IntPtr.Zero;
         }
 
@@ -138,10 +138,10 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
-        private static extern IntPtr WxKeyboard_new(IntPtr osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
+        private static extern IntPtr NativeKeyboard_new(IntPtr osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void WxKeyboard_delete(IntPtr keyboard);
+        private static extern void NativeKeyboard_delete(IntPtr keyboard);
 
         #endregion
     }

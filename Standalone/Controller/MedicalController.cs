@@ -36,7 +36,7 @@ namespace Medical
 
         //Platform
         private SystemTimer systemTimer;
-        private WxUpdateTimer mainTimer;
+        private NativeUpdateTimer mainTimer;
         private EventManager eventManager;
         private InputHandler inputHandler;
         private EventUpdateListener eventUpdate;
@@ -135,7 +135,7 @@ namespace Medical
             BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
 
-            WxUpdateTimer win32Timer = new WxUpdateTimer(systemTimer);
+            NativeUpdateTimer win32Timer = new NativeUpdateTimer(systemTimer);
             mainTimer = win32Timer;
             
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
@@ -235,7 +235,7 @@ namespace Medical
 
         public void recreateInputHandler(OSWindow window)
         {
-            inputHandler = new WxInputHandler(window as NativeOSWindow);
+            inputHandler = new NativeInputHandler(window as NativeOSWindow);
             eventManager.changeInputHandler(inputHandler);
         }
 
@@ -335,7 +335,7 @@ namespace Medical
             }
         }
 
-        public WxUpdateTimer MainTimer
+        public NativeUpdateTimer MainTimer
         {
             get
             {

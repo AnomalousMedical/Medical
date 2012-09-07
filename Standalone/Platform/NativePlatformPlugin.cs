@@ -8,11 +8,11 @@ using Logging;
 
 namespace Medical
 {
-    public class WxPlatformPlugin : PlatformPlugin
+    public class NativePlatformPlugin : PlatformPlugin
     {
-        public static WxPlatformPlugin Instance { get; private set; }
+        public static NativePlatformPlugin Instance { get; private set; }
 
-        public WxPlatformPlugin()
+        public NativePlatformPlugin()
         {
             if (Instance == null)
             {
@@ -20,7 +20,7 @@ namespace Medical
             }
             else
             {
-                throw new Exception("Can only create WXPlatformPlugin one time.");
+                throw new Exception("Can only create NativePlatformPlugin one time.");
             }
         }
 
@@ -31,37 +31,37 @@ namespace Medical
 
         public SystemTimer createTimer()
         {
-            return new WxSystemTimer();
+            return new NativeSystemTimer();
         }
 
         public void destroyTimer(SystemTimer timer)
         {
-            WxSystemTimer pcTimer = timer as WxSystemTimer;
+            NativeSystemTimer pcTimer = timer as NativeSystemTimer;
             if (pcTimer != null)
             {
                 pcTimer.Dispose();
             }
             else
             {
-                Log.Error("Attempted to delete a SystemTimer that was not a PCSystemTimer in WXPlatformPlugin. Are you mixing platform plugins?");
+                Log.Error("Attempted to delete a SystemTimer that was not a PCSystemTimer in NativePlatformPlugin. Are you mixing platform plugins?");
             }
         }
 
         public InputHandler createInputHandler(OSWindow window, bool foreground, bool exclusive, bool noWinKey)
         {
-            return new WxInputHandler((NativeOSWindow)window);
+            return new NativeInputHandler((NativeOSWindow)window);
         }
 
         public void destroyInputHandler(InputHandler handler)
         {
-            WxInputHandler pcInput = handler as WxInputHandler;
+            NativeInputHandler pcInput = handler as NativeInputHandler;
             if (pcInput != null)
             {
                 pcInput.Dispose();
             }
             else
             {
-                Log.Error("Attempted to delete a InputHandler that was not a PCInputHandler in WXPlatformPlugin. Are you mixing platform plugins?");
+                Log.Error("Attempted to delete a InputHandler that was not a PCInputHandler in NativePlatformPlugin. Are you mixing platform plugins?");
             }
         }
 
@@ -77,7 +77,7 @@ namespace Medical
 
         public string getName()
         {
-            return "WXPlatform";
+            return "NativePlatform";
         }
 
         public DebugInterface getDebugInterface()

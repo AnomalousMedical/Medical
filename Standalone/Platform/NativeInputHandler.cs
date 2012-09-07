@@ -6,14 +6,14 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public class WxInputHandler : InputHandler, IDisposable
+    public class NativeInputHandler : InputHandler, IDisposable
     {
         NativeOSWindow window;
 
-        private WxKeyboard createdKeyboard;
-        private WxMouse createdMouse;
+        private NativeKeyboard createdKeyboard;
+        private NativeMouse createdMouse;
 
-        public WxInputHandler(NativeOSWindow window)
+        public NativeInputHandler(NativeOSWindow window)
         {
             this.window = window;
         }
@@ -34,7 +34,7 @@ namespace Medical
         {
             if (createdKeyboard == null)
             {
-                createdKeyboard = new WxKeyboard(window);
+                createdKeyboard = new NativeKeyboard(window);
             }
             return createdKeyboard;
         }
@@ -43,14 +43,14 @@ namespace Medical
         {
             if (createdMouse == null)
             {
-                createdMouse = new WxMouse(window);
+                createdMouse = new NativeMouse(window);
             }
             return createdMouse;
         }
 
         public override void destroyKeyboard(Keyboard keyboard)
         {
-            ((WxKeyboard)keyboard).Dispose();
+            ((NativeKeyboard)keyboard).Dispose();
             if (keyboard == createdKeyboard)
             {
                 createdKeyboard = null;
@@ -59,7 +59,7 @@ namespace Medical
 
         public override void destroyMouse(Mouse mouse)
         {
-            ((WxMouse)mouse).Dispose();
+            ((NativeMouse)mouse).Dispose();
             if (mouse == createdMouse)
             {
                 createdMouse = null;

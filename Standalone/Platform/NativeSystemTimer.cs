@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class WxSystemTimer : SystemTimer, IDisposable
+    class NativeSystemTimer : SystemTimer, IDisposable
     {
         IntPtr performanceCounter;
 
-        public WxSystemTimer()
+        public NativeSystemTimer()
         {
             performanceCounter = PerformanceCounter_Create();
         }

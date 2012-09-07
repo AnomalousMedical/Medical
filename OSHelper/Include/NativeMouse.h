@@ -4,7 +4,7 @@
 
 class NativeOSWindow;
 
-class WxMouse
+class NativeMouse
 {
 public:
 	typedef void (*MouseButtonDownDelegate)(MouseButtonCode id);
@@ -12,9 +12,9 @@ public:
 	typedef void (*MouseMoveDelegate)(int absX, int absY);
 	typedef void (*MouseWheelDelegate)(int relZ);
     
-	WxMouse(NativeOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
+	NativeMouse(NativeOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
     
-	virtual ~WxMouse();
+	virtual ~NativeMouse();
     
 private:
 	MouseButtonDownDelegate mouseButtonDownCB;
