@@ -12,6 +12,7 @@
 #include <Cocoa/Cocoa.h>
 #include "App.h"
 #import "CocoaIdleApplication.h"
+#import "CocoaIdleApplicationDelegate.h"
 
 class CocoaApp : public App
 {
@@ -26,6 +27,7 @@ public:
     
 private:
     CocoaIdleApplication *app;
+    CocoaIdleApplicationDelegate *appDelegate;
 };
 
 #endif /* defined(__TestOpenGL__CocoaApp__) */

@@ -12,6 +12,9 @@ CocoaApp::CocoaApp()
 {
     app = [CocoaIdleApplication sharedApplication];
     [app setApp:this];
+    
+    appDelegate = [[CocoaIdleApplicationDelegate alloc] initWithApp:app];
+    [app setDelegate:appDelegate];
 }
 
 CocoaApp::~CocoaApp()
@@ -20,6 +23,11 @@ CocoaApp::~CocoaApp()
     {
         [app release];
         app = nil;
+    }
+    if(appDelegate)
+    {
+        [appDelegate release];
+        appDelegate = nil;
     }
 }
 
