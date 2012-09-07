@@ -36,16 +36,15 @@ namespace Medical
         public event TouchEvent TouchMoved;
         public event TouchCanceledEvent AllTouchesCanceled;
 
-        public MultiTouch(OSWindow windowHandle) 
+        public MultiTouch(NativeOSWindow nativeWindow) 
         {
             touchStartedCB = new TouchEventDelegate(touchStarted);
             touchEndedCB = new TouchEventDelegate(touchEnded);
             touchMovedCB = new TouchEventDelegate(touchMoved);
             touchCanceledCB = new TouchEventCanceledDelegate(allTouchesCanceled);
 
-            IntPtr windowPtr = new IntPtr(NumberParser.ParseLong(windowHandle.WindowHandle));
-            Log.Info("Activating MultiTouch on window {0}", windowPtr.ToString());
-            nativeMultiTouch = MultiTouch_new(windowPtr, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
+            Log.Info("Activating MultiTouch on window {0}", nativeWindow._NativePtr);
+            nativeMultiTouch = MultiTouch_new(nativeWindow._NativePtr, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
         }
 
         public void Dispose()
@@ -105,7 +104,7 @@ namespace Medical
 
 #region PInvoke
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr MultiTouch_new(IntPtr hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB);
+        private static extern IntPtr MultiTouch_new(IntPtr nativeWindow, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void MultiTouch_delete(IntPtr multiTouch);

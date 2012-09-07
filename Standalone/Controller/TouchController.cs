@@ -18,7 +18,7 @@ namespace Medical
         private MultiFingerScrollGesture panGesture;
         private TwoFingerZoom zoomGesture;
 
-        public TouchController(OSWindow window, UpdateTimer mainTimer, SceneViewController sceneViewController)
+        public TouchController(NativeOSWindow window, UpdateTimer mainTimer, SceneViewController sceneViewController)
         {
             this.sceneViewController = sceneViewController;
             this.mainTimer = mainTimer;

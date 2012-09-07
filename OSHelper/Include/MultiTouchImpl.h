@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MultiTouch.h"
+#include "NativeOSWindow.h"
 
 typedef void (*TouchEventDelegate)(TouchInfo touchInfo);
 typedef void (*TouchEventCanceledDelegate)();
@@ -8,14 +9,14 @@ typedef void (*TouchEventCanceledDelegate)();
 class MultiTouchImpl : public MultiTouch
 {
 public:
-	MultiTouchImpl(WindowType window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
+	MultiTouchImpl(NativeOSWindow* window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
 		:window(window),
 		touchStartedCB(touchStartedCB),
 		touchEndedCB(touchEndedCB),
 		touchMovedCB(touchMovedCB),
 		touchCanceledCB(touchCanceledCB)
 #ifdef WINDOWS
-		,originalWindowFunction((WndFunc)GetWindowLong(window, GWLP_WNDPROC))
+		,originalWindowFunction((WndFunc)GetWindowLong((HWND)window->getHandle(), GWLP_WNDPROC))
 #endif
 	{
 
@@ -54,7 +55,7 @@ public:
 	#endif
 
 private:
-	WindowType window;
+	NativeOSWindow* window;
 	TouchEventDelegate touchStartedCB;
 	TouchEventDelegate touchEndedCB;
 	TouchEventDelegate touchMovedCB;

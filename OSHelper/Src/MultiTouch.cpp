@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "MultiTouch.h"
 #include "MultiTouchImpl.h"
+#include "NativeOSWindow.h"
 
 #ifdef WINDOWS
 #define MULTITOUCH 1
@@ -17,10 +18,10 @@
 HMODULE mtDriver = NULL;
 WINDOWS_REGISTRATION_FUNC registerWithWindows = NULL;
 
-extern "C" _AnomalousExport MultiTouch* MultiTouch_new(HWND hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
+extern "C" _AnomalousExport MultiTouch* MultiTouch_new(NativeOSWindow* osWindow, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
 {
-	MultiTouch* multiTouch = new MultiTouchImpl(hwnd, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
-	registerWithWindows(hwnd, multiTouch);
+	MultiTouch* multiTouch = new MultiTouchImpl(osWindow, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
+	registerWithWindows((HWND)osWindow->getHandle(), multiTouch);
 	return multiTouch;
 }
 

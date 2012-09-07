@@ -3,12 +3,7 @@
 #ifdef WINDOWS
 	class MultiTouch;
 	typedef LRESULT (CALLBACK *WndFunc)(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam);
-	typedef HWND WindowType;
 	typedef void (*WINDOWS_REGISTRATION_FUNC)(HWND hwnd, MultiTouch* multiTouch);
-#endif
-
-#ifdef MAC_OSX
-	typedef void* WindowType;
 #endif
 
 class TouchInfo
