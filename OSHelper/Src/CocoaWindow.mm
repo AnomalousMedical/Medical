@@ -32,6 +32,8 @@ CocoaWindow::CocoaWindow(String title, int x, int y, int width, int height, Dele
     [window setDelegate:winDelegate];
     [window setReleasedWhenClosed:false];
     
+    setCursor(Arrow);
+    
     [pool release];
 }
 
