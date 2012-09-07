@@ -237,8 +237,6 @@ extern "C" _AnomalousExport void ColorDialog_showModal(NativeOSWindow* parent, C
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    //NSColorPanelCustom* cPanel = [NSColorPanelCustom sharedColorPanel];
-    //[cPanel setDelegate:colorWindowDelegate];
     NSColorPanel* cPanel = [NSColorPanel sharedColorPanel];
     CallbackNotification* cbNotification = [[CallbackNotification alloc] initWithCallback:resultCallback];
     
@@ -251,11 +249,7 @@ extern "C" _AnomalousExport void ColorDialog_showModal(NativeOSWindow* parent, C
         parentWindow = [view window];
     }
     
-    //[cPanel setParentWindow:parentWindow];
-    
     [cPanel makeKeyAndOrderFront: cPanel];
-    
-    //[cbNotification release];
     
     [pool release];
 }
