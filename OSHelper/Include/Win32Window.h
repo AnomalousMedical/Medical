@@ -38,7 +38,11 @@ public:
 		SetCursor(hCursor);
 	}
     
-    //createMenu()
+    virtual void setupMultitouch(MultiTouch* multiTouch)
+	{
+		//This does nothing since we have to do our multitouch in another dll to remain compatable with xp.
+		//See MultTouch.cpp to see how it works.
+	}
 
 	static void createWindowClass(HANDLE hModule);
 
