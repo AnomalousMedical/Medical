@@ -56,12 +56,10 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 
 #ifdef MAC_OSX
 
-#include "OSXMultiTouch.h"
-
-extern "C" _AnomalousExport MultiTouch* MultiTouch_new(WindowType window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
+extern "C" _AnomalousExport MultiTouch* MultiTouch_new(NativeOSWindow* window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
 {
 	MultiTouch* multiTouch = new MultiTouchImpl(window, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
-	registerWithObjectiveC(window, multiTouch);
+	window->setupMultitouch(multiTouch);
 	return multiTouch;
 }
 

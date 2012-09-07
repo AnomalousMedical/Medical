@@ -159,7 +159,10 @@ void CocoaWindow::setCursor(CursorType cursor)
     [window invalidateCursorRectsForView:view];
 }
 
-//createMenu()
+void CocoaWindow::setupMultitouch(MultiTouch *multiTouch)
+{
+    [view setupMultitouch:multiTouch];
+}
 
 //PInvoke
 extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB, NativeOSWindow::ActivateDelegate activateCB)

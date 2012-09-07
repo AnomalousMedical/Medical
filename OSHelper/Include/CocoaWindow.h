@@ -51,6 +51,8 @@ public:
         return currentCursor;
     }
     
+    virtual void setupMultitouch(MultiTouch* multiTouch);
+    
 private:
     NSWindow* window;
     CocoaView* view;

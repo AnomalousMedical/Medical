@@ -12,6 +12,7 @@
 #define KEY_CONVERTER_MAX 127
 
 class CocoaWindow;
+class MultiTouch;
 
 @interface CocoaView : NSView
 {
@@ -19,6 +20,7 @@ class CocoaWindow;
     NSTrackingArea* trackingArea;
     CocoaWindow* cocoaWindow;
     KeyboardButtonCode keyConverter[KEY_CONVERTER_MAX];
+    MultiTouch* multiTouch;
 }
 
 -(id) initWithFrame:(NSRect)frame andWindow:(CocoaWindow*) win;
@@ -40,5 +42,7 @@ class CocoaWindow;
 -(uint)getCharacterId: (NSString*)characters;
 
 -(void)buildKeyConverter;
+
+-(void)setupMultitouch: (MultiTouch*) touch;
 
 @end

@@ -15,6 +15,8 @@ enum CursorType
 #include "KeyboardButtonCode.h"
 #include "MouseButtonCode.h"
 
+class MultiTouch;
+
 class NativeOSWindow
 {
 public:
@@ -56,6 +58,8 @@ public:
     virtual bool getMaximized() = 0;
     
     virtual void setCursor(CursorType cursor) = 0;
+    
+    virtual void setupMultitouch(MultiTouch* multiTouch) = 0;
     
     void fireSized()
 	{

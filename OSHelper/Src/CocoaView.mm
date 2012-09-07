@@ -9,6 +9,7 @@
 #include "StdAfx.h"
 #import "CocoaView.h"
 #include "CocoaWindow.h"
+#include "MultiTouch.h"
 
 @implementation CocoaView
 
@@ -18,6 +19,7 @@
     if (self)
     {
         cocoaWindow = win;
+        multiTouch = 0;
         [self updateTrackingAreas];
         [self buildKeyConverter];
     }
@@ -38,6 +40,60 @@
 -(void)resetCursorRects
 {
     [self addCursorRect:[self visibleRect] cursor:cocoaWindow->getCursor()];
+}
+
+//Multi Touch
+-(void)setupMultitouch: (MultiTouch*) touch
+{
+    multiTouch = touch;
+    [self setAcceptsTouchEvents:true];
+}
+
+- (void)touchesBeganWithEvent:(NSEvent *)event
+{
+    TouchInfo touchInfo;
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:self];
+	for(NSTouch *touch in touches)
+	{
+		NSPoint point = touch.normalizedPosition;
+		touchInfo.normalizedX = point.x;
+		touchInfo.normalizedY = 1.0 - point.y;
+		touchInfo.id = (int)touch.identity;
+		multiTouch->fireTouchStarted(touchInfo);
+	}
+}
+
+- (void)touchesMovedWithEvent:(NSEvent *)event
+{
+    TouchInfo touchInfo;
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:self];
+	for(NSTouch *touch in touches)
+	{
+		NSPoint point = touch.normalizedPosition;
+		touchInfo.normalizedX = point.x;
+		touchInfo.normalizedY = 1.0 - point.y;
+		touchInfo.id = (int)touch.identity;
+		multiTouch->fireTouchMoved(touchInfo);
+	}
+}
+
+- (void)touchesEndedWithEvent:(NSEvent *)event
+{
+    TouchInfo touchInfo;
+	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseEnded inView:self];
+	for(NSTouch *touch in touches)
+	{
+		NSPoint point = touch.normalizedPosition;
+		touchInfo.normalizedX = point.x;
+		touchInfo.normalizedY = 1.0 - point.y;
+		touchInfo.id = (int)touch.identity;
+		multiTouch->fireTouchEnded(touchInfo);
+	}
+}
+
+- (void)touchesCancelledWithEvent:(NSEvent *)event
+{
+	multiTouch->fireAllTouchesCanceled();
 }
 
 //Mouse
