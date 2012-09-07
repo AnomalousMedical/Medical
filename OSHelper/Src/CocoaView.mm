@@ -34,11 +34,10 @@
     [super dealloc];
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+//Cursor
+-(void)resetCursorRects
 {
-    // Drawing code here.
-    //[[NSColor whiteColor] setFill];
-    //NSRectFill(dirtyRect);
+    [self addCursorRect:[self visibleRect] cursor:cocoaWindow->getCursor()];
 }
 
 //Mouse
@@ -49,20 +48,10 @@
         [self removeTrackingArea:trackingArea];
         [trackingArea release];
     }
-    int opts = (/*NSTrackingMouseEnteredAndExited |*/ NSTrackingMouseMoved | NSTrackingActiveAlways);
+    int opts = (NSTrackingMouseMoved | NSTrackingActiveAlways);
     trackingArea = [[NSTrackingArea alloc] initWithRect:[self bounds] options: opts owner:self userInfo:nil];
     [self addTrackingArea:trackingArea];
 }
-
-//-(void)mouseEntered:(NSEvent *)theEvent
-//{
-//    NSLog(@"Mouse Entered");
-//}
-//
-//-(void)mouseExited:(NSEvent *)theEvent
-//{
-//    NSLog(@"Mouse Exited");
-//}
 
 -(void)mouseMoved:(NSEvent *)theEvent
 {
@@ -268,7 +257,6 @@
 
 -(void)fireKeyDown: (int)keyCode character:(NSString*) character
 {
-    //NSLog(@"keyConverter[%i] = KC_%@; //Key %@", keyCode, character, character);
     cocoaWindow->fireKeyDown([self translateToKeyCode:keyCode], [self getCharacterId:character]);
 }
 

@@ -46,12 +46,16 @@ public:
     
     virtual void setCursor(CursorType cursor);
     
-    //createMenu()
+    NSCursor* getCursor()
+    {
+        return currentCursor;
+    }
     
 private:
     NSWindow* window;
     CocoaView* view;
     CocoaWindowDelegate* winDelegate;
+    NSCursor* currentCursor;
 };
 
 #endif /* defined(__TestOpenGL__CocoaWindow__) */

@@ -122,8 +122,39 @@ bool CocoaWindow::getMaximized()
 
 void CocoaWindow::setCursor(CursorType cursor)
 {
-    //NOT IMPLEMENTED
-    //will be trickier, but window.mm in wxwidgets has an implementation that should work
+    switch(cursor)
+	{
+		case Arrow:
+			currentCursor = [NSCursor arrowCursor];
+			break;
+		case Beam:
+			currentCursor = [NSCursor IBeamCursor];
+			break;
+		case SizeLeft:
+			currentCursor = [NSCursor resizeLeftCursor];
+			break;
+		case SizeRight:
+			currentCursor = [NSCursor resizeRightCursor];
+			break;
+		case SizeHorz:
+			currentCursor = [NSCursor resizeLeftRightCursor];
+			break;
+		case SizeVert:
+			currentCursor = [NSCursor resizeUpDownCursor];
+			break;
+		case Hand:
+			currentCursor = [NSCursor openHandCursor];
+			break;
+		case Link:
+			currentCursor = [NSCursor pointingHandCursor];
+			break;
+		default:
+			currentCursor = [NSCursor arrowCursor];
+			break;
+	}
+    
+    [view addCursorRect:[view visibleRect] cursor:currentCursor];
+    [window invalidateCursorRectsForView:view];
 }
 
 //createMenu()
