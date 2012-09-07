@@ -266,11 +266,6 @@ namespace Medical
             taskbar.layout();
             guiManager.loadSavedUI();
 
-            if (PlatformConfig.CreateMenu)
-            {
-                guiManager.createMenuBar(mainWindow.MenuBar);
-            }
-
             //Load recent documents here, this way the document handlers are all loaded
             DocumentController.loadRecentDocuments(MedicalConfig.RecentDocsFile);
         }

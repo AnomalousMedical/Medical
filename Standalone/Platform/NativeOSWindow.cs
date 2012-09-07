@@ -25,7 +25,6 @@ namespace Medical
         ClosedDelegate closedCB;
         ActivateDelegate activateCB;
         String title;
-        NativeMenuBar menuBar = null;
 
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         IntPtr nativeWindow;
@@ -81,10 +80,6 @@ namespace Medical
         private void delete()
         {
             disposed();
-            if (menuBar != null)
-            {
-                menuBar.Dispose(true);
-            }
             nativeWindow = IntPtr.Zero;
         }
 
@@ -148,18 +143,6 @@ namespace Medical
             get
             {
                 return nativeWindow != IntPtr.Zero;
-            }
-        }
-
-        public NativeMenuBar MenuBar
-        {
-            get
-            {
-                if (menuBar == null)
-                {
-                    menuBar = new NativeMenuBar(this, NativeOSWindow_createMenu(nativeWindow));
-                }
-                return menuBar;
             }
         }
 

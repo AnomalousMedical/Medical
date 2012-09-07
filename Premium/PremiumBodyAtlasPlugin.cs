@@ -130,11 +130,6 @@ namespace Medical
             
         }
 
-        public void createMenuBar(NativeMenuBar menu)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             bookmarksController.loadSavedBookmarks();

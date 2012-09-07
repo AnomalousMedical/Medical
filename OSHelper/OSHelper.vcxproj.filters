@@ -31,15 +31,6 @@
     <ClCompile Include="Src\MessageDialog.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>
-    <ClCompile Include="Src\NativeMenu.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\NativeMenuBar.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\NativeMenuItem.cpp">
-      <Filter>wxPlatform</Filter>
-    </ClCompile>
     <ClCompile Include="Src\NativeOSWindow.cpp">
       <Filter>wxPlatform</Filter>
     </ClCompile>

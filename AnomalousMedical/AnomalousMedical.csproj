@@ -128,7 +128,6 @@
     <Compile Include="GUI\DownloadManagerGUI\UninstallInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\PlatformUpdateDownloadInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\UpdateInfo.cs" />
-    <Compile Include="GUI\Menus\SystemMenu.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadManagerServer.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadManagerGUI.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />

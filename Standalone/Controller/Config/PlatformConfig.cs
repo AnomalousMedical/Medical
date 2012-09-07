@@ -88,14 +88,6 @@ namespace Medical
             }
         }
 
-        public static bool CreateMenu
-        {
-            get
-            {
-                return currentConfig.CreateMenuImpl;
-            }
-        }
-
         public static bool AllowCloneWindows
         {
             get
@@ -180,8 +172,6 @@ namespace Medical
         protected abstract bool AllowFullscreenImpl { get; }
 
         protected abstract MouseButtonCode DefaultCameraMouseButtonImpl { get; }
-
-        protected abstract bool CreateMenuImpl { get; }
 
         protected abstract bool AllowCloneWindowsImpl { get; }
 

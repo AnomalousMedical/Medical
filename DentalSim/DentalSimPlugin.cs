@@ -28,11 +28,6 @@ namespace DentalSim
             mandibleMovementDialog.Dispose();
         }
 
-        public void createMenuBar(NativeMenuBar menu)
-        {
-
-        }
-
         public void loadGUIResources()
         {
             ResourceManager.Instance.load("DentalSim.Resources.Imagesets.xml");

@@ -231,11 +231,6 @@ namespace Medical.GUI
             }
         }
 
-        public void createMenuBar(NativeMenuBar menu)
-        {
-            standaloneController.AtlasPluginManager.createMenus(menu);
-        }
-
         public void addManagedDialog(Dialog dialog)
         {
             dialogManager.addManagedDialog(dialog);

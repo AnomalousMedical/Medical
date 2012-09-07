@@ -62,11 +62,6 @@ namespace UnitTestPlugin
             
         }
 
-        public void createMenuBar(NativeMenuBar menu)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             

@@ -19,8 +19,6 @@ namespace Medical
 
         void setMainInterfaceEnabled(bool enabled);
 
-        void createMenuBar(NativeMenuBar menu);
-
         /// <summary>
         /// Called when the scene has finished loading and has been fully revealed. (i.e. any fading effects etc. have been completed).
         /// </summary>

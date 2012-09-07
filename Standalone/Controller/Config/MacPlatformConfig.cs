@@ -86,14 +86,6 @@ namespace Medical
             }
         }
 
-        protected override bool CreateMenuImpl
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         protected override bool AllowCloneWindowsImpl
         {
             get

@@ -38,11 +38,6 @@ namespace Developer
             performanceGui.Dispose();
         }
 
-        public void createMenuBar(NativeMenuBar menu)
-        {
-
-        }
-
         public void loadGUIResources()
         {
             ResourceManager.Instance.load("Developer.Resources.DeveloperImagesets.xml");

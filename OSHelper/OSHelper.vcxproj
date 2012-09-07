@@ -141,9 +141,6 @@
     <ClCompile Include="Src\MultiTouch.cpp" />
     <ClCompile Include="Src\App.cpp" />
     <ClCompile Include="Src\MessageDialog.cpp" />
-    <ClCompile Include="Src\NativeMenu.cpp" />
-    <ClCompile Include="Src\NativeMenuBar.cpp" />
-    <ClCompile Include="Src\NativeMenuItem.cpp" />
     <ClCompile Include="Src\NativeOSWindow.cpp" />
     <ClCompile Include="Src\PerformanceCounter.cpp" />
     <ClCompile Include="Src\SystemInfo.cpp" />

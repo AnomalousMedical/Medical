@@ -577,9 +577,6 @@
     <Compile Include="Platform\DirDialog.cs" />
     <Compile Include="Platform\MultiTouch\SingleFingerGUIDrag.cs" />
     <Compile Include="Platform\MultiTouch\TwoFingerZoom.cs" />
-    <Compile Include="Platform\NativeMenu.cs" />
-    <Compile Include="Platform\NativeMenuBar.cs" />
-    <Compile Include="Platform\NativeMenuItem.cs" />
     <Compile Include="Platform\MessageDialog.cs" />
     <Compile Include="Platform\NativeOSWindow.cs" />
     <Compile Include="Platform\NativeString.cs" />

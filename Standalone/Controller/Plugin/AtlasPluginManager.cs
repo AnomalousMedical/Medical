@@ -469,14 +469,6 @@ namespace Medical
             }
         }
 
-        internal void createMenus(NativeMenuBar menu)
-        {
-            foreach (AtlasPlugin plugin in plugins)
-            {
-                plugin.createMenuBar(menu);
-            }
-        }
-
         internal void sceneRevealed()
         {
             foreach (AtlasPlugin plugin in plugins)

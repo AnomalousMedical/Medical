@@ -15,7 +15,6 @@ namespace Medical.GUI
     {
         private StandaloneController standaloneController;
         private GUIManager guiManager;
-        private SystemMenu systemMenu;
         private LicenseManager licenseManager;
         private AnomalousController bodyAtlasController;
         private DownloadManagerServer downloadServer;
@@ -166,11 +165,6 @@ namespace Medical.GUI
         public void setMainInterfaceEnabled(bool enabled)
         {
             
-        }
-
-        public void createMenuBar(NativeMenuBar menu)
-        {
-            systemMenu = new SystemMenu(menu, this, standaloneController);
         }
 
         public void sceneRevealed()
