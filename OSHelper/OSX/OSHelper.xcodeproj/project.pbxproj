@@ -293,8 +293,6 @@
 					"-framework",
 					IOKit,
 					"-framework",
-					Carbon,
-					"-framework",
 					Cocoa,
 					"-framework",
 					System,
@@ -315,8 +313,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					IOKit,
-					"-framework",
-					Carbon,
 					"-framework",
 					Cocoa,
 					"-framework",
