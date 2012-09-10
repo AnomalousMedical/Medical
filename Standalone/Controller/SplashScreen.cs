@@ -103,7 +103,6 @@ namespace Medical.Controller
             progressBar.Position = position;
             statusText.Caption = status;
             ogreWindow.OgreRenderWindow.update();
-            App.pumpMessages();
         }
 
         public void hide()

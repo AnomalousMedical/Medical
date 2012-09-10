@@ -18,7 +18,6 @@ namespace Medical
     class AnomalousController : StandaloneApp
     {
         StandaloneController controller;
-        bool startupSuceeded = false;
         private SplashScreen splashScreen;
 
         private static String archiveNameFormat = "AnomalousMedical{0}.dat";
@@ -41,15 +40,8 @@ namespace Medical
 
         public override bool OnIdle()
         {
-            if (startupSuceeded)
-            {
-                controller.onIdle();
-                return MainWindow.Instance.Active;
-            }
-            else
-            {
-                return false;
-            }
+            controller.onIdle();
+            return MainWindow.Instance.Active;
         }
 
         public bool startApplication()
@@ -69,21 +61,30 @@ namespace Medical
             LicenseManager.KeyDialogShown += new EventHandler(LicenseManager_KeyDialogShown);
             LicenseManager.getKey();
 
+            controller.IdleHandler.runTemporaryIdle(runSplashScreen());
+
+            return true;
+        }
+
+        private IEnumerable<Object> runSplashScreen()
+        {
             splashScreen.updateStatus(10, "Initializing Core");
+            yield return null;
             controller.initializeControllers(createBackground());
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
+            yield return null;
             controller.createGUI();
             controller.GUIManager.setMainInterfaceEnabled(false);
 
             //Scene Load
             splashScreen.updateStatus(30, "Loading Scene");
-            startupSuceeded = controller.openNewScene(DefaultScene);
+            yield return null;
+            controller.openNewScene(DefaultScene);
 
             splashScreen.updateStatus(70, "Waiting for License");
-
-            return startupSuceeded;
+            yield return null;
         }
 
         public void saveCrashLog()
