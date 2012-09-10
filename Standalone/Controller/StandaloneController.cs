@@ -51,6 +51,7 @@ namespace Medical
         private AnatomyController anatomyController;
         private DownloadController downloadController;
         private PatientDataController patientDataController;
+        private IdleHandler idleHandler;
 
         //GUI
         private GUIManager guiManager;
@@ -87,6 +88,7 @@ namespace Medical
             mainWindow = new MainWindow(app.WindowTitle);
             medicalController.initialize(app, mainWindow, createWindow);
             mainWindow.setPointerManager(PointerManager.Instance);
+            idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
             PointerManager.Instance.Visible = false;
         }
@@ -155,7 +157,7 @@ namespace Medical
             SceneLoaded += measurementGrid.sceneLoaded;
 
             //Image Renderer
-            imageRenderer = new ImageRenderer(medicalController, sceneViewController);
+            imageRenderer = new ImageRenderer(medicalController, sceneViewController, idleHandler);
             imageRenderer.Watermark = watermark;
             imageRenderer.Background = background;
             imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
@@ -272,7 +274,7 @@ namespace Medical
 
         public void onIdle()
         {
-            medicalController.MainTimer.OnIdle();
+            idleHandler.onIdle();
         }
 
         public void openHelpPage()
@@ -533,6 +535,14 @@ namespace Medical
             get
             {
                 return viewHostFactory;
+            }
+        }
+
+        public IdleHandler IdleHandler
+        {
+            get
+            {
+                return idleHandler;
             }
         }
 

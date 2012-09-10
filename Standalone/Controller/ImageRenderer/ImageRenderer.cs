@@ -13,15 +13,6 @@ using Medical.Controller;
 
 namespace Medical
 {
-    class ImageException : Exception
-    {
-        public ImageException(String message)
-            : base(message)
-        {
-
-        }
-    }
-
     public class ImageRenderer
     {
         private static readonly String TRANSPARENCY_STATE = "ImageRenderer";
@@ -42,19 +33,38 @@ namespace Medical
         private SceneViewController sceneViewController;
         private Watermark watermark;
         private ViewportBackground background;
+        private IdleHandler idleHandler;
 
         private ImageRendererProgress imageRendererProgress;
 
         static ImageAttributes IMAGE_ATTRIBUTES = new ImageAttributes();
 
-        public ImageRenderer(MedicalController controller, SceneViewController sceneViewController)
+        public ImageRenderer(MedicalController controller, SceneViewController sceneViewController, IdleHandler idleHandler)
         {
             this.controller = controller;
             this.sceneViewController = sceneViewController;
+            this.idleHandler = idleHandler;
             TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
         }
 
         public Bitmap renderImage(ImageRendererProperties properties)
+        {
+            Bitmap image = null;
+            IEnumerable<Object> process = renderImage(properties, (product) =>
+            {
+                image = product;
+            });
+            IEnumerator<Object> runner = process.GetEnumerator();
+            while (runner.MoveNext()) ;
+            return image;
+        }
+
+        public void renderImageAsync(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
+        {
+            idleHandler.runTemporaryIdle(renderImage(properties, renderingCompletedCallback));
+        }
+
+        private IEnumerable<Object> renderImage(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
         {
             if (imageRendererProgress != null)
             {
@@ -116,30 +126,38 @@ namespace Medical
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
-                try
-                {
-                    bitmap = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt);
-                }
-                catch (ImageRenderException e)
-                {
-                    Log.Error("Could not render image. Returning placeholder image. Reason: {0}.", e.Message);
-                    bitmap = new Bitmap(properties.Width, properties.Height);
-                    using (Graphics g = Graphics.FromImage(bitmap))
+                //try
+                //{
+                IEnumerable<Object> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt,
+                    (product) =>
                     {
-                        using (Brush brush = new SolidBrush(System.Drawing.Color.Black))
-                        {
-                            g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
-                        }
-                        int fontSize = bitmap.Width / 5;
-                        using (Font font = new Font("Tahoma", fontSize, GraphicsUnit.Pixel))
-                        {
-                            String text = "Error";
-                            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                            SizeF textSize = g.MeasureString(text, font, bitmap.Width);
-                            g.DrawString(text, font, Brushes.Red, new RectangleF(0, 0, textSize.Width, textSize.Height));
-                        }
-                    }
+                        bitmap = product;
+                    });
+                foreach (Object obj in process)
+                {
+                    yield return obj;
                 }
+                //}
+                //catch (ImageRenderException e)
+                //{
+                //    Log.Error("Could not render image. Returning placeholder image. Reason: {0}.", e.Message);
+                //    bitmap = new Bitmap(properties.Width, properties.Height);
+                //    using (Graphics g = Graphics.FromImage(bitmap))
+                //    {
+                //        using (Brush brush = new SolidBrush(System.Drawing.Color.Black))
+                //        {
+                //            g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
+                //        }
+                //        int fontSize = bitmap.Width / 5;
+                //        using (Font font = new Font("Tahoma", fontSize, GraphicsUnit.Pixel))
+                //        {
+                //            String text = "Error";
+                //            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                //            SizeF textSize = g.MeasureString(text, font, bitmap.Width);
+                //            g.DrawString(text, font, Brushes.Red, new RectangleF(0, 0, textSize.Width, textSize.Height));
+                //        }
+                //    }
+                //}
 
                 //Turn off layer override
                 if (properties.OverrideLayers)
@@ -164,7 +182,8 @@ namespace Medical
                 imageRendererProgress.Visible = false;
             }
 
-            return bitmap;
+            renderingCompletedCallback(bitmap);
+            yield break;
         }
 
         public void addLicenseText(Bitmap bitmap, String text, int textPixelHeight)
@@ -219,9 +238,9 @@ namespace Medical
         }
 
         //Acutal rendering
-        int maxBackBufferSize = 2048;
+        static int maxBackBufferSize = 2048;
 
-        private TexturePtr createOgreTexture(int finalWidth, int finalHeight, int aaMode, out bool gridRender, out int backBufferWidth, out int backBufferHeight)
+        private static TexturePtr createOgreTexture(int finalWidth, int finalHeight, int aaMode, out bool gridRender, out int backBufferWidth, out int backBufferHeight)
         {
             int largeWidth = finalWidth * aaMode;
             int largeHeight = finalHeight * aaMode;
@@ -251,7 +270,7 @@ namespace Medical
             return backBufferTexture;
         }
 
-        private void createPow2BackBuffer(int largeWidth, int largeHeight, out int backBufferWidth, out int backBufferHeight, out TexturePtr backBufferTexture)
+        private static void createPow2BackBuffer(int largeWidth, int largeHeight, out int backBufferWidth, out int backBufferHeight, out TexturePtr backBufferTexture)
         {
             //The texture creation failed. We will have to use grid rendering with power of two textures.
             int backBufferPow2Size = 2;
@@ -272,8 +291,9 @@ namespace Medical
             }
         }
 
-        private Bitmap createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
+        private IEnumerable<Object> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, Action<Bitmap> renderingCompletedCallback)
         {
+            Bitmap bitmap = null;
 	        OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
 	        if (sceneManager != null)
 	        {
@@ -315,10 +335,17 @@ namespace Medical
 	                        background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
 	                    }
 	
-	                    Bitmap bitmap = null;
                         if (doGridRender)
 	                    {
-                            bitmap = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor);
+                            IEnumerable<Object> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor,
+                                (product) =>
+                                {
+                                    bitmap = product;
+                                });
+                            foreach (Object obj in process)
+                            {
+                                yield return obj;
+                            }
 	                    }
 	                    else
 	                    {
@@ -332,12 +359,11 @@ namespace Medical
 	                    sceneManager.SceneManager.destroyCamera(camera);
 	
 	                    TextureManager.getInstance().remove(texture);
-	
-	                    return bitmap;
 	                }
 	            }
 	        }
-	        return null;
+            renderingCompletedCallback(bitmap);
+            yield break;
         }
 
         private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
@@ -376,7 +402,7 @@ namespace Medical
                     graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
                     graph.CompositingQuality = CompositingQuality.HighQuality;
                     graph.SmoothingMode = SmoothingMode.AntiAlias;
-                    this.renderBitmaps(graph, new Rectangle(0, 0, smallWidth, smallHeight), largeImage, largeImage.Width, largeImage.Height, transparentBG, bgColor);
+                    renderBitmaps(graph, new Rectangle(0, 0, smallWidth, smallHeight), largeImage, largeImage.Width, largeImage.Height, transparentBG, bgColor);
                 }
                 largeImage.Dispose();
             }
@@ -390,7 +416,7 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor)
+        private IEnumerable<Object> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
         {
             renderTexture.getViewport(0).setOverlaysEnabled(false);
 
@@ -456,13 +482,14 @@ namespace Medical
                         renderTexture.update();
 
                         BitmapData bmpData = pieceBitmap.LockBits(new Rectangle(new Point(), pieceBitmap.Size), ImageLockMode.WriteOnly, pieceBitmap.PixelFormat);
-                        unsafe
-                        {
-                            using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
-                            {
-                                renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
-                            }
-                        }
+                        unsafeAsyncBufferCopy(renderTexture, format, bmpData);
+                        //unsafe
+                        //{
+                        //    using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
+                        //    {
+                        //        renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
+                        //    }
+                        //}
                         pieceBitmap.UnlockBits(bmpData);
                         destRect.X = x * imageStepHorizSmall;
                         destRect.Y = y * imageStepVertSmall;
@@ -486,6 +513,8 @@ namespace Medical
                                 break;
                             }
                         }
+
+                        yield return null;
                     }
                     if (scaledPiecewiseBitmap != null)
                     {
@@ -511,10 +540,11 @@ namespace Medical
 
             renderTexture.getViewport(0).setOverlaysEnabled(true);
 
-            return fullBitmap;
+            renderingCompletedCallback(fullBitmap);
+            yield break;
         }
 
-        private void renderBitmaps(Graphics destGraphics, Rectangle destRect, Bitmap source, int sourceWidth, int sourceHeight, bool transparentBG, Engine.Color bgColor)
+        private static void renderBitmaps(Graphics destGraphics, Rectangle destRect, Bitmap source, int sourceWidth, int sourceHeight, bool transparentBG, Engine.Color bgColor)
         {
             if (transparentBG)
             {
@@ -525,6 +555,14 @@ namespace Medical
             else
             {
                 destGraphics.DrawImage(source, destRect);
+            }
+        }
+
+        private static unsafe void unsafeAsyncBufferCopy(RenderTexture renderTexture, OgreWrapper.PixelFormat format, BitmapData bmpData)
+        {
+            using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
+            {
+                renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
             }
         }
 

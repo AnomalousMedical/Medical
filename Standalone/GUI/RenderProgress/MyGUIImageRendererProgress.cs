@@ -42,7 +42,6 @@ namespace Medical.GUI
                 rendererProgress.Position = percentage;
                 statusText.Caption = status;
                 Root.getSingleton()._updateAllRenderTargets();
-                App.pumpMessages();
             }
         }
 

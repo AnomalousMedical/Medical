@@ -181,33 +181,36 @@ namespace Medical.GUI
                 imageProperties.Height = RenderHeight;
                 imageProperties.UseWindowBackgroundColor = true;
                 imageProperties.AntiAliasingMode = 8;
-                currentImage = imageRenderer.renderImage(imageProperties);
-                if (currentImage != null)
-                {
-                    int previewWidth = previewMaxWidth;
-                    int previewHeight = previewMaxHeight;
-                    if (currentImage.Width > currentImage.Height)
+                imageRenderer.renderImageAsync(imageProperties, (product) =>
                     {
-                        float ratio = (float)currentImage.Height / currentImage.Width;
-                        previewHeight = (int)(previewWidth * ratio);
-                    }
-                    else
-                    {
-                        float ratio = (float)currentImage.Width / currentImage.Height;
-                        previewWidth = (int)(previewHeight * ratio);
-                    }
-                    if (previewWidth > currentImage.Width || previewHeight > currentImage.Height)
-                    {
-                        previewWidth = currentImage.Width;
-                        previewHeight = currentImage.Height;
-                    }
-                    imageAtlas = new ImageAtlas("RendererPreview", new Size2(previewWidth, previewHeight), new Size2(previewWidth, previewHeight));
-                    String imageKey = imageAtlas.addImage("PreviewImage", currentImage);
-                    previewImage.setSize(previewWidth, previewHeight);
-                    previewImage.setItemResource(imageKey);
+                        currentImage = product;
+                        if (currentImage != null)
+                        {
+                            int previewWidth = previewMaxWidth;
+                            int previewHeight = previewMaxHeight;
+                            if (currentImage.Width > currentImage.Height)
+                            {
+                                float ratio = (float)currentImage.Height / currentImage.Width;
+                                previewHeight = (int)(previewWidth * ratio);
+                            }
+                            else
+                            {
+                                float ratio = (float)currentImage.Width / currentImage.Height;
+                                previewWidth = (int)(previewHeight * ratio);
+                            }
+                            if (previewWidth > currentImage.Width || previewHeight > currentImage.Height)
+                            {
+                                previewWidth = currentImage.Width;
+                                previewHeight = currentImage.Height;
+                            }
+                            imageAtlas = new ImageAtlas("RendererPreview", new Size2(previewWidth, previewHeight), new Size2(previewWidth, previewHeight));
+                            String imageKey = imageAtlas.addImage("PreviewImage", currentImage);
+                            previewImage.setSize(previewWidth, previewHeight);
+                            previewImage.setItemResource(imageKey);
 
-                }
-                toggleRequireImagesWidgets();
+                        }
+                        toggleRequireImagesWidgets();
+                    });
             }
         }
 

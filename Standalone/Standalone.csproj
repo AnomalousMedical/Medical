@@ -139,6 +139,8 @@
     <Compile Include="Controller\Editor\BrowserAttributes\PropBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\ModelBrowserEditableProperty.cs" />
+    <Compile Include="Controller\IdleHandler.cs" />
+    <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\Presentation\PresentationEntry.cs" />
     <Compile Include="Controller\Presentation\PresentationIndex.cs" />
@@ -353,7 +355,6 @@
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderException.cs" />
-    <Compile Include="Controller\ImageRenderer\OldImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\RenderPreset.cs" />
     <Compile Include="Controller\ImageRenderer\RenderPresetCollection.cs" />
     <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />

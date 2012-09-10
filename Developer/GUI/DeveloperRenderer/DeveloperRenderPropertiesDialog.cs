@@ -186,38 +186,41 @@ namespace Developer.GUI
                 imageProperties.ShowBackground = showBackground.Checked;
                 imageProperties.ShowWatermark = showWatermark.Checked;
                 imageProperties.TransparentBackground = transparent.Checked;
-                currentImage = imageRenderer.renderImage(imageProperties);
-                if (currentImage != null)
+                imageRenderer.renderImageAsync(imageProperties, (product) =>
                 {
-                    if (copyright.Checked)
+                    currentImage = product;
+                    if (currentImage != null)
                     {
-                        writeCopyrightText(currentImage);
-                    }
+                        if (copyright.Checked)
+                        {
+                            writeCopyrightText(currentImage);
+                        }
 
-                    int previewWidth = previewMaxWidth;
-                    int previewHeight = previewMaxHeight;
-                    if (currentImage.Width > currentImage.Height)
-                    {
-                        float ratio = (float)currentImage.Height / currentImage.Width;
-                        previewHeight = (int)(previewWidth * ratio);
-                    }
-                    else
-                    {
-                        float ratio = (float)currentImage.Width / currentImage.Height;
-                        previewWidth = (int)(previewHeight * ratio);
-                    }
-                    if (previewWidth > currentImage.Width || previewHeight > currentImage.Height)
-                    {
-                        previewWidth = currentImage.Width;
-                        previewHeight = currentImage.Height;
-                    }
-                    imageAtlas = new ImageAtlas("RendererPreview", new Size2(previewWidth, previewHeight), new Size2(previewWidth, previewHeight));
-                    String imageKey = imageAtlas.addImage("PreviewImage", currentImage);
-                    previewImage.setSize(previewWidth, previewHeight);
-                    previewImage.setItemResource(imageKey);
+                        int previewWidth = previewMaxWidth;
+                        int previewHeight = previewMaxHeight;
+                        if (currentImage.Width > currentImage.Height)
+                        {
+                            float ratio = (float)currentImage.Height / currentImage.Width;
+                            previewHeight = (int)(previewWidth * ratio);
+                        }
+                        else
+                        {
+                            float ratio = (float)currentImage.Width / currentImage.Height;
+                            previewWidth = (int)(previewHeight * ratio);
+                        }
+                        if (previewWidth > currentImage.Width || previewHeight > currentImage.Height)
+                        {
+                            previewWidth = currentImage.Width;
+                            previewHeight = currentImage.Height;
+                        }
+                        imageAtlas = new ImageAtlas("RendererPreview", new Size2(previewWidth, previewHeight), new Size2(previewWidth, previewHeight));
+                        String imageKey = imageAtlas.addImage("PreviewImage", currentImage);
+                        previewImage.setSize(previewWidth, previewHeight);
+                        previewImage.setItemResource(imageKey);
 
-                }
-                toggleRequireImagesWidgets();
+                    }
+                    toggleRequireImagesWidgets();
+                });
             }
         }
 
