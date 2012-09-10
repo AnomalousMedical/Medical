@@ -62,7 +62,10 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    InputManager.Instance.removeWidgetModal(mainWidget);
+                    if (mainWidget.Visible)
+                    {
+                        InputManager.Instance.removeWidgetModal(mainWidget);
+                    }
                 }
                 mainWidget.Visible = value;
             }
