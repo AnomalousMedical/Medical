@@ -354,7 +354,6 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
-    <Compile Include="Controller\ImageRenderer\ImageRenderException.cs" />
     <Compile Include="Controller\ImageRenderer\RenderPreset.cs" />
     <Compile Include="Controller\ImageRenderer\RenderPresetCollection.cs" />
     <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />

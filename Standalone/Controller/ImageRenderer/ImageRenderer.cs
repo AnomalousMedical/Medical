@@ -13,6 +13,13 @@ using Medical.Controller;
 
 namespace Medical
 {
+    /// <summary>
+    /// I apologize in advance for this class. It has evolved to be far more complex than originally intended. It tries to do way too much work itself.
+    /// 
+    /// The biggest issue is the async way that it works. It uses IEnumerable functions to be able to yield at various points in rendering. There is a normal
+    /// synchronous call you can make, but for large images we need to be able to unwind back to the message pump and continue work on the next idle call.
+    /// This class can handle all of that, but the implementation is very complex as a result.
+    /// </summary>
     public class ImageRenderer
     {
         private static readonly String TRANSPARENCY_STATE = "ImageRenderer";
@@ -47,6 +54,11 @@ namespace Medical
             TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
         }
 
+        /// <summary>
+        /// A synchronous image render. It will happen on the calling thread like normal.
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <returns></returns>
         public Bitmap renderImage(ImageRendererProperties properties)
         {
             Bitmap image = null;
@@ -59,6 +71,13 @@ namespace Medical
             return image;
         }
 
+        /// <summary>
+        /// An async image render. This will hijack the idle handler's onIdle to
+        /// render the image. You supply a callback that will be called when the
+        /// image completes rendering. This funciton will return immediately.
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <param name="renderingCompletedCallback"></param>
         public void renderImageAsync(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
         {
             idleHandler.runTemporaryIdle(renderImage(properties, renderingCompletedCallback));
@@ -126,8 +145,6 @@ namespace Medical
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
-                //try
-                //{
                 IEnumerable<Object> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt,
                     (product) =>
                     {
@@ -137,27 +154,6 @@ namespace Medical
                 {
                     yield return obj;
                 }
-                //}
-                //catch (ImageRenderException e)
-                //{
-                //    Log.Error("Could not render image. Returning placeholder image. Reason: {0}.", e.Message);
-                //    bitmap = new Bitmap(properties.Width, properties.Height);
-                //    using (Graphics g = Graphics.FromImage(bitmap))
-                //    {
-                //        using (Brush brush = new SolidBrush(System.Drawing.Color.Black))
-                //        {
-                //            g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
-                //        }
-                //        int fontSize = bitmap.Width / 5;
-                //        using (Font font = new Font("Tahoma", fontSize, GraphicsUnit.Pixel))
-                //        {
-                //            String text = "Error";
-                //            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                //            SizeF textSize = g.MeasureString(text, font, bitmap.Width);
-                //            g.DrawString(text, font, Brushes.Red, new RectangleF(0, 0, textSize.Width, textSize.Height));
-                //        }
-                //    }
-                //}
 
                 //Turn off layer override
                 if (properties.OverrideLayers)
@@ -287,7 +283,9 @@ namespace Medical
             }
             catch (OgreException)
             {
-                throw new ImageRenderException(String.Format("Could not create back buffer in ogre for this image. Render size is {0}, {1}.", largeWidth, largeHeight));
+                backBufferWidth = 0;
+                backBufferHeight = 0;
+                backBufferTexture = null;
             }
         }
 
@@ -303,63 +301,87 @@ namespace Medical
 
                 using (TexturePtr texture = createOgreTexture(finalWidth, finalHeight, aaMode, out doGridRender, out backBufferWidth, out backBufferHeight))
 	            {
-	                using (HardwarePixelBufferSharedPtr pixelBuffer = texture.Value.getBuffer())
-	                {
-	                    RenderTexture renderTexture = pixelBuffer.Value.getRenderTarget();
-	                    Camera camera = sceneManager.SceneManager.createCamera("__PictureCamera");
-	                    camera.setLodBias(cloneCamera.getLodBias());
-	                    camera.setUseRenderingDistance(cloneCamera.getUseRenderingDistance());
-	                    camera.setNearClipDistance(cloneCamera.getNearClipDistance());
-	                    camera.setFarClipDistance(cloneCamera.getFarClipDistance());
-	                    camera.setPolygonMode(cloneCamera.getPolygonMode());
-	                    camera.setRenderingDistance(cloneCamera.getRenderingDistance());
-	                    camera.setProjectionType(cloneCamera.getProjectionType());
-	                    camera.setFOVy(cloneCamera.getFOVy());
+                    if (texture != null)
+                    {
+                        using (HardwarePixelBufferSharedPtr pixelBuffer = texture.Value.getBuffer())
+                        {
+                            RenderTexture renderTexture = pixelBuffer.Value.getRenderTarget();
+                            Camera camera = sceneManager.SceneManager.createCamera("__PictureCamera");
+                            camera.setLodBias(cloneCamera.getLodBias());
+                            camera.setUseRenderingDistance(cloneCamera.getUseRenderingDistance());
+                            camera.setNearClipDistance(cloneCamera.getNearClipDistance());
+                            camera.setFarClipDistance(cloneCamera.getFarClipDistance());
+                            camera.setPolygonMode(cloneCamera.getPolygonMode());
+                            camera.setRenderingDistance(cloneCamera.getRenderingDistance());
+                            camera.setProjectionType(cloneCamera.getProjectionType());
+                            camera.setFOVy(cloneCamera.getFOVy());
 
-                        camera.setAutoAspectRatio(false);
-                        camera.setAspectRatio((float)finalWidth / finalHeight);
+                            camera.setAutoAspectRatio(false);
+                            camera.setAspectRatio((float)finalWidth / finalHeight);
 
-	                    SceneNode node = sceneManager.SceneManager.createSceneNode("__PictureCameraNode");
-	                    node.attachObject(camera);
-	                    node.setPosition(position);
-	                    sceneManager.SceneManager.getRootSceneNode().addChild(node);
-	                    camera.lookAt(lookAt);
-	                    Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
-	                    node.attachObject(light);
-	                    Viewport viewport = renderTexture.addViewport(camera);
-	                    viewport.setBackgroundColor(backColor);
-	
-	                    //Update background position (if applicable)
-	                    if (background != null)
-	                    {
-	                        background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
-	                    }
-	
-                        if (doGridRender)
-	                    {
-                            IEnumerable<Object> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor,
-                                (product) =>
-                                {
-                                    bitmap = product;
-                                });
-                            foreach (Object obj in process)
+                            SceneNode node = sceneManager.SceneManager.createSceneNode("__PictureCameraNode");
+                            node.attachObject(camera);
+                            node.setPosition(position);
+                            sceneManager.SceneManager.getRootSceneNode().addChild(node);
+                            camera.lookAt(lookAt);
+                            Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
+                            node.attachObject(light);
+                            Viewport viewport = renderTexture.addViewport(camera);
+                            viewport.setBackgroundColor(backColor);
+
+                            //Update background position (if applicable)
+                            if (background != null)
                             {
-                                yield return obj;
+                                background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
                             }
-	                    }
-	                    else
-	                    {
-                            bitmap = simpleRender(backBufferWidth, backBufferHeight, aaMode, showWatermark, transparentBG, backColor, renderTexture);
-	                    }
-	
-	                    renderTexture.destroyViewport(viewport);
-	                    sceneManager.SceneManager.getRootSceneNode().removeChild(node);
-	                    sceneManager.SceneManager.destroyLight(light);
-	                    sceneManager.SceneManager.destroySceneNode(node);
-	                    sceneManager.SceneManager.destroyCamera(camera);
-	
-	                    TextureManager.getInstance().remove(texture);
-	                }
+
+                            if (doGridRender)
+                            {
+                                IEnumerable<Object> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor,
+                                    (product) =>
+                                    {
+                                        bitmap = product;
+                                    });
+                                foreach (Object obj in process)
+                                {
+                                    yield return obj;
+                                }
+                            }
+                            else
+                            {
+                                bitmap = simpleRender(backBufferWidth, backBufferHeight, aaMode, showWatermark, transparentBG, backColor, renderTexture);
+                            }
+
+                            renderTexture.destroyViewport(viewport);
+                            sceneManager.SceneManager.getRootSceneNode().removeChild(node);
+                            sceneManager.SceneManager.destroyLight(light);
+                            sceneManager.SceneManager.destroySceneNode(node);
+                            sceneManager.SceneManager.destroyCamera(camera);
+
+                            TextureManager.getInstance().remove(texture);
+                        }
+                    }
+                    else
+                    {
+                        //An error making the render texture. Log it and return the error image.
+                        Log.Error("Could not render image. Returning placeholder image. Reason: Could not create valid render to texture target.");
+                        bitmap = new Bitmap(finalWidth, finalHeight);
+                        using (Graphics g = Graphics.FromImage(bitmap))
+                        {
+                            using (Brush brush = new SolidBrush(System.Drawing.Color.Black))
+                            {
+                                g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
+                            }
+                            int fontSize = bitmap.Width / 5;
+                            using (Font font = new Font("Tahoma", fontSize, GraphicsUnit.Pixel))
+                            {
+                                String text = "Error";
+                                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                                SizeF textSize = g.MeasureString(text, font, bitmap.Width);
+                                g.DrawString(text, font, Brushes.Red, new RectangleF(0, 0, textSize.Width, textSize.Height));
+                            }
+                        }
+                    }
 	            }
 	        }
             renderingCompletedCallback(bitmap);
