@@ -10,11 +10,26 @@
 
 CocoaApp::CocoaApp()
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
     app = [CocoaIdleApplication sharedApplication];
     [app setApp:this];
     
     appDelegate = [[CocoaIdleApplicationDelegate alloc] initWithApp:app];
     [app setDelegate:appDelegate];
+    
+    id menubar = [[NSMenu new] autorelease];
+    id appMenuItem = [[NSMenuItem new] autorelease];
+    [menubar addItem:appMenuItem];
+    [app setMainMenu:menubar];
+    id appMenu = [[NSMenu new] autorelease];
+    id appName = @"Anomalous Medical";//[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+    id quitTitle = [@"Quit " stringByAppendingString:appName];
+    id quitMenuItem = [[[NSMenuItem alloc] initWithTitle:quitTitle action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
+    [appMenu addItem:quitMenuItem];
+    [appMenuItem setSubmenu:appMenu];
+    
+    [pool drain];
 }
 
 CocoaApp::~CocoaApp()

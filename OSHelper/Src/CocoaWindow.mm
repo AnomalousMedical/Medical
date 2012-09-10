@@ -34,7 +34,7 @@ CocoaWindow::CocoaWindow(String title, int x, int y, int width, int height, Dele
     
     setCursor(Arrow);
     
-    [pool release];
+    [pool drain];
 }
 
 CocoaWindow::~CocoaWindow()
