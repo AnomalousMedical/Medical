@@ -182,6 +182,47 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 	{
 		path = of.lpstrFile;
 		result = OK;
+
+		if(of.nFileExtension == 0 && of.nFilterIndex != 0)
+		{
+			int pairIndex = 0;
+			int extPos = 0;
+			int extEnd = 0;
+			while(pairIndex < of.nFilterIndex)
+			{
+				extPos = filterBuffer.find('\0', extPos);
+				if(extPos != std::string::npos)
+				{
+					++extPos;
+					extEnd = filterBuffer.find('\0', extPos);
+					if(extEnd != std::string::npos)
+					{
+						if(pairIndex == of.nFilterIndex - 1)
+						{
+							extPos = filterBuffer.find('.', extPos);
+							if(extPos != std::string::npos)
+							{
+								path += filterBuffer.substr(extPos, extEnd - extPos);
+								break;
+							}
+						}
+						else
+						{
+							extPos = extEnd + 1;
+							++pairIndex;
+						}
+					}
+					else
+					{
+						break;
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
 	}
 
 	resultCallback(result, path.c_str());
