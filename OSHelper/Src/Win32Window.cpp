@@ -140,7 +140,7 @@ extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow
 #include "Windowsx.h"
 
 //Win32 Message Proc
-uint keycodeToUTF32( unsigned int scanCode);
+uint getUtf32WithSpecial(WPARAM virtualKey, unsigned int scanCode);
 
 KeyboardButtonCode virtualKeyToKeyboardButtonCode(WPARAM wParam);
 
@@ -180,7 +180,7 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 				}
 				break;
 			case WM_KEYDOWN:
-				win->fireKeyDown(virtualKeyToKeyboardButtonCode(wParam), keycodeToUTF32((lParam & 0x01FF0000) >> 16));
+				win->fireKeyDown(virtualKeyToKeyboardButtonCode(wParam), getUtf32WithSpecial(wParam, (lParam & 0x01FF0000) >> 16));
 				break;
 			case WM_KEYUP:
 				win->fireKeyUp(virtualKeyToKeyboardButtonCode(wParam));
@@ -337,6 +337,39 @@ uint keycodeToUTF32( unsigned int scanCode)
  
  	return utf;
  }
+
+uint getUtf32WithSpecial(WPARAM virtualKey, unsigned int scanCode)
+{
+	switch(virtualKey)
+	{
+		case VK_NUMPAD0:
+			return 48;
+		case VK_NUMPAD1:
+			return 49;
+		case VK_NUMPAD2:
+			return 50;
+		case VK_NUMPAD3:
+			return 51;
+		case VK_NUMPAD4:
+			return 52;
+		case VK_NUMPAD5:
+			return 53;
+		case VK_NUMPAD6:
+			return 54;
+		case VK_NUMPAD7:
+			return 55;
+		case VK_NUMPAD8:
+			return 56;
+		case VK_NUMPAD9:
+			return 57;
+		case VK_DIVIDE:
+			return 47;
+		case VK_DECIMAL:
+			return 46;
+		default:
+			return keycodeToUTF32(scanCode);
+	}
+}
 
 #include "Win32KeyMap.h"
 
