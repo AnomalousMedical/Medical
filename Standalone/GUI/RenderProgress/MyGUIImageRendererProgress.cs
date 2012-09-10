@@ -53,9 +53,17 @@ namespace Medical.GUI
             }
             set
             {
-                int x = (int)((RenderManager.Instance.ViewWidth - mainWidget.Width) / 2.0f);
-                int y = (int)((RenderManager.Instance.ViewHeight - mainWidget.Height) / 2.0f);
-                mainWidget.setPosition(x, y);
+                if (value)
+                {
+                    int x = (int)((RenderManager.Instance.ViewWidth - mainWidget.Width) / 2.0f);
+                    int y = (int)((RenderManager.Instance.ViewHeight - mainWidget.Height) / 2.0f);
+                    mainWidget.setPosition(x, y);
+                    InputManager.Instance.addWidgetModal(mainWidget);
+                }
+                else
+                {
+                    InputManager.Instance.removeWidgetModal(mainWidget);
+                }
                 mainWidget.Visible = value;
             }
         }
