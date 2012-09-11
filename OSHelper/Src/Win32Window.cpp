@@ -162,8 +162,11 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 				win->fireActivate(wParam);
 				break;
 			case WM_SETCURSOR:
-				win->activateCursor();
-				return true;
+				if(LOWORD(lParam) == HTCLIENT)
+				{
+					win->activateCursor();
+					return true;
+				}
 				break;
 
 			//Keyboard

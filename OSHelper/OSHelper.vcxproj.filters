@@ -8,9 +8,6 @@
     <Filter Include="MultiTouch">
       <UniqueIdentifier>{761a8e5d-565a-48e1-ae1a-bc1889485541}</UniqueIdentifier>
     </Filter>
-    <Filter Include="wxPlatform">
-      <UniqueIdentifier>{8ffc9668-249c-47af-8ffb-48d2be777205}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DLL">
       <UniqueIdentifier>{704cddde-bc93-4733-af8f-b9a6c72aa8eb}</UniqueIdentifier>
     </Filter>
@@ -20,25 +17,28 @@
     <Filter Include="Win32">
       <UniqueIdentifier>{9cb6a06f-cda5-413f-8671-13bd7eb96b33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NativePlatform">
+      <UniqueIdentifier>{8ffc9668-249c-47af-8ffb-48d2be777205}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MultiTouch.cpp">
       <Filter>MultiTouch</Filter>
     </ClCompile>
     <ClCompile Include="Src\App.cpp">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClCompile>
     <ClCompile Include="Src\MessageDialog.cpp">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClCompile>
     <ClCompile Include="Src\NativeOSWindow.cpp">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClCompile>
     <ClCompile Include="Src\PerformanceCounter.cpp">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClCompile>
     <ClCompile Include="Src\SystemInfo.cpp">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClCompile>
     <ClCompile Include="Stdafx.cpp">
       <Filter>DLL</Filter>
@@ -59,10 +59,10 @@
       <Filter>Win32</Filter>
     </ClCompile>
     <ClCompile Include="Src\NativeKeyboard.cpp">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClCompile>
     <ClCompile Include="Src\NativeMouse.cpp">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,13 +73,13 @@
       <Filter>MultiTouch</Filter>
     </ClInclude>
     <ClInclude Include="Include\App.h">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\NativeOSWindow.h">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\PerformanceCounter.h">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>DLL</Filter>
@@ -97,13 +97,13 @@
       <Filter>Win32</Filter>
     </ClInclude>
     <ClInclude Include="Include\NativeDialog.h">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\NativeKeyboard.h">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClInclude>
     <ClInclude Include="Include\NativeMouse.h">
-      <Filter>wxPlatform</Filter>
+      <Filter>NativePlatform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
