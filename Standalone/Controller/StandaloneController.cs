@@ -116,6 +116,14 @@ namespace Medical
             ThreadManager.cancelAll();
         }
 
+        public void addWorkingArchive()
+        {
+#if ALLOW_OVERRIDE
+            //Add working archive
+            VirtualFileSystem.Instance.addArchive(MedicalConfig.WorkingResourceDirectory);
+#endif
+        }
+
         public void initializeControllers(ViewportBackground background)
         {
             atlasPluginManager.manageInstalledPlugins();

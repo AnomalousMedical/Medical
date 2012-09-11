@@ -70,6 +70,24 @@ namespace Medical
         {
             splashScreen.updateStatus(10, "Initializing Core");
             yield return null;
+
+            //Configure the filesystem
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            //Add primary archive
+            archive.addArchive(this.PrimaryArchive);
+
+            //Add any patch archives
+            int i = 0;
+            String patchArchive = this.getPatchArchiveName(i);
+            while (File.Exists(patchArchive))
+            {
+                archive.addArchive(patchArchive);
+                ++i;
+                patchArchive = this.getPatchArchiveName(i);
+            }
+
+            controller.addWorkingArchive();
+
             controller.initializeControllers(createBackground());
 
             //GUI

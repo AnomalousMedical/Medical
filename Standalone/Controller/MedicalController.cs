@@ -96,23 +96,6 @@ namespace Medical
 
             //Configure the filesystem
             VirtualFileSystem archive = VirtualFileSystem.Instance;
-            //Add primary archive
-            archive.addArchive(app.PrimaryArchive);
-
-            //Add any patch archives
-            int i = 0;
-            String patchArchive = app.getPatchArchiveName(i);
-            while (File.Exists(patchArchive))
-            {
-                archive.addArchive(patchArchive);
-                ++i;
-                patchArchive = app.getPatchArchiveName(i);
-            }
-
-            //Add working archive
-#if ALLOW_OVERRIDE
-            archive.addArchive(MedicalConfig.WorkingResourceDirectory);
-#endif
 
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = configureWindow;
