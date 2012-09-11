@@ -40,10 +40,6 @@ namespace Medical.GUI
             movementSequenceController.PlaybackStarted += movementSequenceController_PlaybackStarted;
             movementSequenceController.PlaybackStopped += movementSequenceController_PlaybackStopped;
             movementSequenceController.PlaybackUpdate +=  movementSequenceController_PlaybackUpdate;
-            if (view.ListenForSequenceChanges)
-            {
-                movementSequenceController.CurrentSequenceChanged += movementSequenceController_CurrentSequenceChanged;
-            }
 
             //Remove button
             Button removeButton = widget.findWidget("RemoveAction") as Button;
@@ -84,6 +80,14 @@ namespace Medical.GUI
             timelineView.addTrack("Muscle Position", Color.Red);
 
             CurrentSequence = view.Sequence;
+            if (view.ListenForSequenceChanges)
+            {
+                movementSequenceController.CurrentSequenceChanged += movementSequenceController_CurrentSequenceChanged;
+                if (CurrentSequence == null)
+                {
+                    CurrentSequence = movementSequenceController.CurrentSequence;
+                }
+            }
 
             ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
         }
