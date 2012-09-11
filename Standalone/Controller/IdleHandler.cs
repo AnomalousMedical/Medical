@@ -5,6 +5,11 @@ using System.Text;
 
 namespace Medical
 {
+    public enum IdleStatus
+    {
+        Ok,
+    }
+
     /// <summary>
     /// This class is designed to run the idle callbacks from the os. Idle
     /// occures when no messages are in the queue to be pumped and a frame
@@ -23,7 +28,7 @@ namespace Medical
         private IdleDelegate defaultIdle;
         private IdleDelegate currentIdleFunc;
 
-        public IEnumerator<Object> enumIdle;
+        public IEnumerator<IdleStatus> enumIdle;
 
         public IdleHandler(IdleDelegate defaultIdle)
         {
@@ -52,7 +57,7 @@ namespace Medical
             currentIdleFunc();
         }
 
-        public void runTemporaryIdle(IEnumerable<Object> idle)
+        public void runTemporaryIdle(IEnumerable<IdleStatus> idle)
         {
             this.enumIdle = idle.GetEnumerator();
             this.currentIdleFunc = idleEnumerator;

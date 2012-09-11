@@ -62,11 +62,11 @@ namespace Medical
         public Bitmap renderImage(ImageRendererProperties properties)
         {
             Bitmap image = null;
-            IEnumerable<Object> process = renderImage(properties, (product) =>
+            IEnumerable<IdleStatus> process = renderImage(properties, (product) =>
             {
                 image = product;
             });
-            IEnumerator<Object> runner = process.GetEnumerator();
+            IEnumerator<IdleStatus> runner = process.GetEnumerator();
             while (runner.MoveNext()) ;
             return image;
         }
@@ -83,7 +83,7 @@ namespace Medical
             idleHandler.runTemporaryIdle(renderImage(properties, renderingCompletedCallback));
         }
 
-        private IEnumerable<Object> renderImage(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> renderImage(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
         {
             if (imageRendererProgress != null)
             {
@@ -145,14 +145,14 @@ namespace Medical
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
-                IEnumerable<Object> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt,
+                IEnumerable<IdleStatus> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt,
                     (product) =>
                     {
                         bitmap = product;
                     });
-                foreach (Object obj in process)
+                foreach (IdleStatus idleStatus in process)
                 {
-                    yield return obj;
+                    yield return idleStatus;
                 }
 
                 //Turn off layer override
@@ -289,7 +289,7 @@ namespace Medical
             }
         }
 
-        private IEnumerable<Object> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, Action<Bitmap> renderingCompletedCallback)
         {
             Bitmap bitmap = null;
 	        OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
@@ -337,14 +337,14 @@ namespace Medical
 
                             if (doGridRender)
                             {
-                                IEnumerable<Object> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor,
+                                IEnumerable<IdleStatus> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor,
                                     (product) =>
                                     {
                                         bitmap = product;
                                     });
-                                foreach (Object obj in process)
+                                foreach (IdleStatus idleStatus in process)
                                 {
-                                    yield return obj;
+                                    yield return idleStatus;
                                 }
                             }
                             else
@@ -438,7 +438,7 @@ namespace Medical
             return bitmap;
         }
 
-        private IEnumerable<Object> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
         {
             renderTexture.getViewport(0).setOverlaysEnabled(false);
 
@@ -505,13 +505,6 @@ namespace Medical
 
                         BitmapData bmpData = pieceBitmap.LockBits(new Rectangle(new Point(), pieceBitmap.Size), ImageLockMode.WriteOnly, pieceBitmap.PixelFormat);
                         unsafeAsyncBufferCopy(renderTexture, format, bmpData);
-                        //unsafe
-                        //{
-                        //    using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
-                        //    {
-                        //        renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
-                        //    }
-                        //}
                         pieceBitmap.UnlockBits(bmpData);
                         destRect.X = x * imageStepHorizSmall;
                         destRect.Y = y * imageStepVertSmall;
@@ -536,7 +529,7 @@ namespace Medical
                             }
                         }
 
-                        yield return null;
+                        yield return IdleStatus.Ok;
                     }
                     if (scaledPiecewiseBitmap != null)
                     {

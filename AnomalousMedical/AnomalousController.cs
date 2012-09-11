@@ -66,10 +66,10 @@ namespace Medical
             return true;
         }
 
-        private IEnumerable<Object> runSplashScreen()
+        private IEnumerable<IdleStatus> runSplashScreen()
         {
             splashScreen.updateStatus(10, "Initializing Core");
-            yield return null;
+            yield return IdleStatus.Ok;
 
             //Configure the filesystem
             VirtualFileSystem archive = VirtualFileSystem.Instance;
@@ -92,17 +92,17 @@ namespace Medical
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
-            yield return null;
+            yield return IdleStatus.Ok;
             controller.createGUI();
             controller.GUIManager.setMainInterfaceEnabled(false);
 
             //Scene Load
             splashScreen.updateStatus(30, "Loading Scene");
-            yield return null;
+            yield return IdleStatus.Ok;
             controller.openNewScene(DefaultScene);
 
             splashScreen.updateStatus(70, "Waiting for License");
-            yield return null;
+            yield return IdleStatus.Ok;
         }
 
         public void saveCrashLog()
