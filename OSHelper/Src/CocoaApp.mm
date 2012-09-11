@@ -15,7 +15,7 @@ CocoaApp::CocoaApp()
     app = [CocoaIdleApplication sharedApplication];
     [app setApp:this];
     
-    appDelegate = [[CocoaIdleApplicationDelegate alloc] initWithApp:app];
+    appDelegate = [[CocoaIdleApplicationDelegate alloc] initWithApp:app andCocoaApp:this];
     [app setDelegate:appDelegate];
     
     id menubar = [[NSMenu new] autorelease];
@@ -48,12 +48,12 @@ CocoaApp::~CocoaApp()
 
 void CocoaApp::run()
 {
-    if(this->fireInit())
-    {
-        [app startIdleCallbacks];
-        [app run];
-        fireExit();
-    }
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    [app run];
+    fireExit();
+    
+    [pool drain];
 }
 
 void CocoaApp::exit()

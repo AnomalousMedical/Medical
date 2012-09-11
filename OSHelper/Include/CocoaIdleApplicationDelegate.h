@@ -9,12 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "CocoaIdleApplication.h"
 
+class CocoaApp;
+
 @interface CocoaIdleApplicationDelegate : NSObject<NSApplicationDelegate>
 {
 @private
     CocoaIdleApplication* app;
+    CocoaApp* cocoaApp;
 }
 
--(id) initWithApp:(CocoaIdleApplication*) theApp;
+-(id) initWithApp:(CocoaIdleApplication*) theApp andCocoaApp:(CocoaApp*) theCocoaApp;
 
 @end

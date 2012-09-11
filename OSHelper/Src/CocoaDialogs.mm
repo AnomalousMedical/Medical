@@ -220,7 +220,6 @@ extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, Str
     
     NativeDialogResult result = OK;
     Color resColor([theColor redComponent], [theColor greenComponent], [theColor blueComponent]);
-    //Color resColor(255.0f, 0.0f, 0.0f);
  
     [[NSNotificationCenter defaultCenter] removeObserver:self name: NSWindowWillCloseNotification object: cPanel];
     
@@ -230,8 +229,6 @@ extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, Str
 }
 
 @end
-
-//The current method in this file appears to be working, however it has 2 problems, the first is that the callbackNotificatoin instances are leaking cause you are not releasing them (commented out) and the second time you call the panel it crashes on close. Also the color that comes back through is wrong, but it will not change until the window is closed, which is progress
  
 extern "C" _AnomalousExport void ColorDialog_showModal(NativeOSWindow* parent, Color color, ColorDialogResultCallback resultCallback)
 {
@@ -242,14 +239,7 @@ extern "C" _AnomalousExport void ColorDialog_showModal(NativeOSWindow* parent, C
     
     [[NSNotificationCenter defaultCenter] addObserver: cbNotification selector: @selector( colorPickerClosed: ) name: NSWindowWillCloseNotification object: cPanel];
     
-    NSWindow* parentWindow = nil;
-    if(parent != 0)
-    {
-        NSView* view = (NSView*)parent->getHandle();
-        parentWindow = [view window];
-    }
-    
-    [cPanel makeKeyAndOrderFront: cPanel];
+    [cPanel makeKeyAndOrderFront: cPanel]; //Leak complaint, but it is released in colorPickerClosed
     
     [pool release];
 }
