@@ -63,10 +63,7 @@
             <Widget type="TextBox" skin="TextBox" position="5 148 65 13" name="OggVorbisLink">
                 <Property key="Caption" value="Ogg Vorbis"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="5 164 67 13" name="wxWidgetsLink">
-                <Property key="Caption" value="wxWidgets"/>
-            </Widget>
-            <Widget type="TextBox" skin="TextBox" position="5 180 135 13" name="MonoLink">
+            <Widget type="TextBox" skin="TextBox" position="5 164 135 13" name="MonoLink">
                 <Property key="Caption" value="Mono (Some Versions)"/>
             </Widget>
         </Widget>

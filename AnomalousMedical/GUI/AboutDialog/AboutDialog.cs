@@ -63,9 +63,6 @@ namespace Medical.GUI
             TextBox oggVorbisText = window.findWidget("OggVorbisLink") as TextBox;
             oggVorbisText.MouseButtonClick += new MyGUIEvent(oggVorbisText_MouseButtonClick);
 
-            TextBox wxWidgetsText = window.findWidget("wxWidgetsLink") as TextBox;
-            wxWidgetsText.MouseButtonClick += new MyGUIEvent(wxWidgetsText_MouseButtonClick);
-
             TextBox monoText = window.findWidget("MonoLink") as TextBox;
             monoText.MouseButtonClick += new MyGUIEvent(monoText_MouseButtonClick);
         }
@@ -73,11 +70,6 @@ namespace Medical.GUI
         void monoText_MouseButtonClick(Widget source, EventArgs e)
         {
             OtherProcessManager.openUrlInBrowser("http://www.mono-project.com");
-        }
-
-        void wxWidgetsText_MouseButtonClick(Widget source, EventArgs e)
-        {
-            OtherProcessManager.openUrlInBrowser("http://www.wxwidgets.org/");
         }
 
         void oggVorbisText_MouseButtonClick(Widget source, EventArgs e)
