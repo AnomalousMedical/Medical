@@ -72,7 +72,7 @@ namespace Medical.GUI
             }
             standaloneController.AnatomyController.ShowPremiumAnatomy = hasPremium;
             guiManager.TaskMenu.ShowAdImage = !hasPremium;
-            guiManager.TaskMenu.AdImageUrl = MedicalConfig.AnomalousMedicalStoreURL;
+            guiManager.TaskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
 
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
