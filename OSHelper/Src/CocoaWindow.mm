@@ -11,7 +11,7 @@
 #include "CocoaView.h"
 #include "CocoaWindowDelegate.h"
 
-CocoaWindow::CocoaWindow(CocoaWindow* parent, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
+CocoaWindow::CocoaWindow(CocoaWindow* parent, String title, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 :NativeOSWindow(deleteCB, sizedCB, closedCB, activateCB)
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -26,6 +26,11 @@ CocoaWindow::CocoaWindow(CocoaWindow* parent, String title, int x, int y, int wi
     if(parent != 0)
     {
         [window setParentWindow:parent->window];
+        
+        if(floatOnParent)
+        {
+            [window setLevel:NSFloatingWindowLevel];
+        }
     }
     
     view = [[CocoaView alloc] initWithFrame:frame andWindow:this];
@@ -172,5 +177,5 @@ void CocoaWindow::setupMultitouch(MultiTouch *multiTouch)
 //PInvoke
 extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB, NativeOSWindow::ActivateDelegate activateCB)
 {
-	return new CocoaWindow(static_cast<CocoaWindow*>(parent), caption, x, y, width, height, deleteCB, sizedCB, closedCB, activateCB);
+	return new CocoaWindow(static_cast<CocoaWindow*>(parent), caption, x, y, width, height, floatOnParent, deleteCB, sizedCB, closedCB, activateCB);
 }
