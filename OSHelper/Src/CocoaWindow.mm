@@ -11,7 +11,7 @@
 #include "CocoaView.h"
 #include "CocoaWindowDelegate.h"
 
-CocoaWindow::CocoaWindow(String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
+CocoaWindow::CocoaWindow(CocoaWindow* parent, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 :NativeOSWindow(deleteCB, sizedCB, closedCB, activateCB)
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -22,6 +22,11 @@ CocoaWindow::CocoaWindow(String title, int x, int y, int width, int height, Dele
     window =  [[NSWindow alloc] initWithContentRect:rect styleMask:styleMask backing: NSBackingStoreBuffered    defer:false];
     [window setBackgroundColor:[NSColor blackColor]];
     [window setTitle: [NSString stringWithUTF8String:title]];
+    
+    if(parent != 0)
+    {
+        [window setParentWindow:parent->window];
+    }
     
     view = [[CocoaView alloc] initWithFrame:frame andWindow:this];
     //[view setAutoresizingMask: NSViewWidthSizable | NSViewHeightSizable];
@@ -167,5 +172,5 @@ void CocoaWindow::setupMultitouch(MultiTouch *multiTouch)
 //PInvoke
 extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB, NativeOSWindow::ActivateDelegate activateCB)
 {
-	return new CocoaWindow(caption, x, y, width, height, deleteCB, sizedCB, closedCB, activateCB);
+	return new CocoaWindow(static_cast<CocoaWindow*>(parent), caption, x, y, width, height, deleteCB, sizedCB, closedCB, activateCB);
 }

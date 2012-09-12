@@ -15,12 +15,10 @@
 @class CocoaView;
 @class CocoaWindowDelegate;
 
-typedef const char* String;
-
 class CocoaWindow : public NativeOSWindow
 {
 public:
-    CocoaWindow(String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
+    CocoaWindow(CocoaWindow* parent, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
     
     virtual ~CocoaWindow();
     
