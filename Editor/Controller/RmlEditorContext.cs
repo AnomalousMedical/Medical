@@ -224,6 +224,28 @@ namespace Medical
                         new CloseViewCommand())
                     ));
                 }
+
+                if (editingMvcContext.Views.hasItem(controllerName))
+                {
+                    RmlView view = editingMvcContext.Views[controllerName] as RmlView;
+                    if (view != null && view.RmlFile == file)
+                    {
+                        GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcView", view.getEditInterface(), true);
+                        genericPropertiesView.ViewLocation = ViewLocations.Left;
+                        genericPropertiesView.IsWindow = true;
+                        genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcViewEditor/Close"));
+                        mvcContext.Views.add(genericPropertiesView);
+
+                        taskbar.addTask(new RunMvcContextActionTask("EditActions", "Edit Actions", "MvcContextEditor/IndividualViewIcon", "Edit", "MvcViewEditor/Show", mvcContext));
+
+                        mvcContext.Controllers.add(new MvcController("MvcViewEditor",
+                        new RunCommandsAction("Show",
+                            new ShowViewIfNotOpenCommand("MvcView")),
+                        new RunCommandsAction("Close",
+                            new CloseViewCommand())
+                        ));
+                    }
+                }
             }
         }
 
