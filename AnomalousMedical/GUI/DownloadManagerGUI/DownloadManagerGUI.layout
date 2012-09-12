@@ -53,11 +53,11 @@
             <Widget type="Button" skin="Button" position="2 109 91 26" name="CancelButton">
                 <Property key="Caption" value="Cancel"/>
             </Widget>
-            <Widget type="ProgressBar" skin="ProgressBarFill" position="12 172 306 27" align="HStretch Top" name="DownloadProgressBar">
+            <Widget type="ProgressBar" skin="ProgressBarFill" position="12 192 306 27" align="HStretch Top" name="DownloadProgressBar">
                 <Property key="Range" value="100"/>
                 <Property key="RangePosition" value="0"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="2 138 328 29" align="HStretch Top" name="DownloadingStatusText">
+            <Widget type="TextBox" skin="TextBox" position="2 138 328 45" align="HStretch Top" name="DownloadingStatusText">
                 <Property key="Caption" value="Downloading"/>
                 <Property key="TextColour" value="#FFFFFF"/>
             </Widget>
