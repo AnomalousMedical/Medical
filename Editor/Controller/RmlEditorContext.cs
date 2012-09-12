@@ -236,7 +236,7 @@ namespace Medical
                         genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcViewEditor/Close"));
                         mvcContext.Views.add(genericPropertiesView);
 
-                        taskbar.addTask(new RunMvcContextActionTask("EditActions", "Edit Actions", "MvcContextEditor/IndividualViewIcon", "Edit", "MvcViewEditor/Show", mvcContext));
+                        taskbar.addTask(new RunMvcContextActionTask("EditView", "Edit View", "MvcContextEditor/IndividualViewIcon", "Edit", "MvcViewEditor/Show", mvcContext));
 
                         mvcContext.Controllers.add(new MvcController("MvcViewEditor",
                         new RunCommandsAction("Show",
