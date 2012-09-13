@@ -78,8 +78,8 @@ Global
 		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.Debug|Any CPU.Build.0 = Debug|x86
 		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.Debug|x86.ActiveCfg = Debug|x86
 		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.Debug|x86.Build.0 = Debug|x86
-		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|x86
-		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.PublicRelease|Any CPU.Build.0 = PublicRelease|x86
+		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|Any CPU
+		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
 		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.PublicRelease|x86.ActiveCfg = Debug|x86
 		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.PublicRelease|x86.Build.0 = Debug|x86
 		{D8A56807-3DAC-44EA-947C-3B232D049AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
