@@ -97,6 +97,10 @@ namespace Medical
         {
             if (!updating)
             {
+                if (TimelinePlaybackStarted != null)
+                {
+                    TimelinePlaybackStarted.Invoke(this, EventArgs.Empty);
+                }
                 this.playPrePostActions = playPrePostActions;
                 activeTimeline = timeline;
                 activeTimeline.TimelineController = this;
@@ -110,10 +114,6 @@ namespace Medical
                 }
                 mainTimer.addFixedUpdateListener(this);
                 updating = true;
-                if (TimelinePlaybackStarted != null)
-                {
-                    TimelinePlaybackStarted.Invoke(this, EventArgs.Empty);
-                }
             }
         }
 
