@@ -30,6 +30,11 @@ namespace Medical.GUI
 
             Button closeAll = (Button)widget.findWidget("closeAll");
             closeAll.MouseButtonClick += new MyGUIEvent(closeAll_MouseButtonClick);
+
+            foreach (ShowPropAction prop in propEditController.OpenProps)
+            {
+                propList.addItem(prop.PropType, prop);
+            }
         }
 
         public override void Dispose()

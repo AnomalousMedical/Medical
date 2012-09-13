@@ -165,6 +165,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<ShowPropAction> OpenProps
+        {
+            get
+            {
+                return openProps;
+            }
+        }
+
         public void setRotateMode()
         {
             simObjectMover.ShowMoveTools = false;
