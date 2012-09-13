@@ -10,7 +10,7 @@ namespace Medical
 {
     public delegate void AnimationCompletedDelegate(LayoutContainer oldChild);
 
-    public class HorizontalPopoutLayoutContainer : LayoutContainer, UpdateListener
+    public class HorizontalPopoutLayoutContainer : LayoutContainer, UpdateListener, IDisposable
     {
         private UpdateTimer mainTimer;
         private LayoutContainer childContainer;
@@ -29,6 +29,14 @@ namespace Medical
         public HorizontalPopoutLayoutContainer(UpdateTimer mainTimer)
         {
             this.mainTimer = mainTimer;
+        }
+
+        public void Dispose()
+        {
+            if (animating)
+            {
+                finishAnimation();
+            }
         }
 
         public override void setAlpha(float alpha)

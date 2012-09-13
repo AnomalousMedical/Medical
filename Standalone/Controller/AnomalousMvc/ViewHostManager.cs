@@ -245,11 +245,7 @@ namespace Medical.Controller.AnomalousMvc
                 if (host._RequestClosed)
                 {
                     host.closing();
-                    //TEMP, this will crash unless it happens after the event fires, so delay the close for a bit
-                    ThreadManager.invoke(new Action(delegate()
-                    {
-                        host._animationCallback(null);
-                    }));
+                    host._animationCallback(null);
                     openFloatingViews.RemoveAt(i--);
                 }
             }

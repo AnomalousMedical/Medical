@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    class VerticalPopoutLayoutContainer : LayoutContainer, UpdateListener
+    class VerticalPopoutLayoutContainer : LayoutContainer, UpdateListener, IDisposable
     {
         private UpdateTimer mainTimer;
         private LayoutContainer childContainer;
@@ -26,6 +26,14 @@ namespace Medical
         public VerticalPopoutLayoutContainer(UpdateTimer mainTimer)
         {
             this.mainTimer = mainTimer;
+        }
+
+        public void Dispose()
+        {
+            if (animating)
+            {
+                finishAnimation();
+            }
         }
 
         public override void setAlpha(float alpha)

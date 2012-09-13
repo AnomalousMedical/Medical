@@ -95,6 +95,7 @@ namespace Medical
 
         public void Dispose()
         {
+            mvcCore.Dispose();
             downloadController.Dispose();
             DocumentController.saveRecentDocuments();
             if (touchController != null)

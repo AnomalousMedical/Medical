@@ -73,6 +73,12 @@ namespace Medical.GUI
                 Log.Warning("Could not save window configuration because the WindowsFile is not defined.");
             }
 
+            //Containers
+            leftAnimatedContainer.Dispose();
+            rightAnimatedContainer.Dispose();
+            topAnimatedContainer.Dispose();
+            bottomAnimatedContainer.Dispose();
+
             //Other
             imageRendererProgress.Dispose();
             continuePrompt.Dispose();

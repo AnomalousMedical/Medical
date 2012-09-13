@@ -17,7 +17,7 @@ namespace Medical.Controller.AnomalousMvc
     /// <summary>
     /// The core is the link from AnomalousMVC to the rest of the system.
     /// </summary>
-    public class AnomalousMvcCore
+    public class AnomalousMvcCore : IDisposable
     {
         private TimelineController timelineController;
         private ViewHostFactory viewHostFactory;
@@ -41,6 +41,17 @@ namespace Medical.Controller.AnomalousMvc
             this.viewHostFactory = viewHostFactory;
 
             viewHostManager = new ViewHostManager(guiManager, viewHostFactory);
+        }
+
+        public void Dispose()
+        {
+            if (contextManager.CurrentContext != null)
+            {
+                contextManager.CurrentContext.suspend();
+                contextManager.CurrentContext.queueShutdown();
+                this.processViewChanges();
+                shutdownContext(contextManager.CurrentContext, true, false);
+            }
         }
 
         public bool isViewOpen(String name)
@@ -201,7 +212,7 @@ namespace Medical.Controller.AnomalousMvc
                 contextManager.CurrentContext.suspend();
                 contextManager.CurrentContext.queueShutdown();
                 this.processViewChanges();
-                this.shutdownContext(contextManager.CurrentContext, false, false); //false, false
+                this.shutdownContext(contextManager.CurrentContext, false, false);
             }
             contextManager.pushContext(context);
             setupContextToRun(context);
