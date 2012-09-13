@@ -87,7 +87,6 @@
     <Compile Include="Controller\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\MvcTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\PluginTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\PresentationTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\RcssTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\RmlTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\SaveableTypeController.cs" />
