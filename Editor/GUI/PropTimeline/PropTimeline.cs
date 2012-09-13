@@ -64,6 +64,14 @@ namespace Medical.GUI
             propEditController.MarkerMoved -= propEditController_MarkerMoved;
             propEditController.ShowPropActionChanged -= propEditController_ShowPropActionChanged;
             propEditController.DurationChanged -= propEditController_DurationChanged;
+
+            if (propData != null)
+            {
+                propData.Updated -= propData_Updated;
+                propData.ActionAdded -= propData_ActionAdded;
+                propData.ActionRemoved -= propData_ActionRemoved;
+            }
+
             timelineView.Dispose();
             base.Dispose();
         }
