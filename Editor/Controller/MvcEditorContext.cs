@@ -26,7 +26,7 @@ namespace Medical
 
         private AnomalousMvcContext editingContext;
 
-        public MvcEditorContext(AnomalousMvcContext editingContext, String file, MvcTypeController mvcTypeController)
+        public MvcEditorContext(AnomalousMvcContext editingContext, String file, MvcTypeController mvcTypeController, EditorUICallback uiCallback)
         {
             this.mvcTypeController = mvcTypeController;
             this.currentFile = file;
@@ -85,6 +85,11 @@ namespace Medical
                 }),
                 new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
+
+            taskbar.addTask(new CallbackTask("PreviewMvc", "Preview", "MvcContextEditor/MVCcomIcon", "", 0, true, (item) =>
+            {
+                uiCallback.previewMvcContext(editingContext);
+            }));
 
             eventContext = new EventContext();
             eventContext.addEvent(new MessageEvent(Events.Save, 

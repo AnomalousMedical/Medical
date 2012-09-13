@@ -64,18 +64,7 @@ namespace Medical
 
             this.addOneWayCustomQuery(AnomalousMvcContext.CustomQueries.Preview, delegate(AnomalousMvcContext context)
             {
-                if (editorController.ResourceProvider != null)
-                {
-                    AnomalousMvcContext copiedContext = copySaver.copy<AnomalousMvcContext>(context);
-                    standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
-                    copiedContext.setResourceProvider(editorController.ResourceProvider);
-                    copiedContext.RuntimeName = "Editor.PreviewMvcContext";
-                    standaloneController.MvcCore.startRunningContext(copiedContext);
-                }
-                else
-                {
-                    MessageBox.show("Cannot run MVC Context. Please open a timeline project first.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                }
+                previewMvcContext(context);
             });
 
             this.addCustomQuery<Browser>(ViewCollection.CustomQueries.CreateViewBrowser, delegate(SendResult<Browser> resultCallback)
@@ -197,6 +186,22 @@ namespace Medical
                 }
                 return browser;
             });
+        }
+
+        public void previewMvcContext(AnomalousMvcContext context)
+        {
+            if (editorController.ResourceProvider != null)
+            {
+                AnomalousMvcContext copiedContext = copySaver.copy<AnomalousMvcContext>(context);
+                standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
+                copiedContext.setResourceProvider(editorController.ResourceProvider);
+                copiedContext.RuntimeName = "Editor.PreviewMvcContext";
+                standaloneController.MvcCore.startRunningContext(copiedContext);
+            }
+            else
+            {
+                MessageBox.show("Cannot run MVC Context. Please open a timeline project first.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         public Browser createActionBrowser()

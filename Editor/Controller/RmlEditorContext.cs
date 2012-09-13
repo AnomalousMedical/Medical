@@ -246,6 +246,11 @@ namespace Medical
                         ));
                     }
                 }
+
+                taskbar.addTask(new CallbackTask("PreviewMvc", "Preview", "MvcContextEditor/MVCcomIcon", "", 0, true, (item) =>
+                {
+                    uiCallback.previewMvcContext(editingMvcContext);
+                }));
             }
         }
 

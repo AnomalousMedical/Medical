@@ -34,7 +34,7 @@ namespace Medical
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
             mvcTypeController.OpenEditor += (file, editingMvcContex) =>
             {
-                mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController);
+                mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController, plugin.UICallback);
                 plugin.UICallback.CurrentEditingMvcContext = editingMvcContex;
                 mvcEditorContext.Focused += (obj) =>
                 {
