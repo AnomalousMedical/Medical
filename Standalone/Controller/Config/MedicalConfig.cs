@@ -275,18 +275,22 @@ namespace Medical
         {
             get
             {
-#if ALLOW_OVERRIDE
-                if (overrideSettings != null)
-                {
-                    return resources.getValue("DefaultScene", SceneDirectory + "/Female.sim.xml");
-                }
-                else
-                {
-                    return SceneDirectory + "/Female.sim.xml";
-                }
-#else
-                return SceneDirectory + "/Female.sim.xml";
-#endif
+                return program.getValue("DefaultScene", "Female.sim.xml");
+            }
+            set
+            {
+                program.setValue("DefaultScene", value);
+            }
+        }
+
+        /// <summary>
+        /// This is the scene to use if the default scene does not exist.
+        /// </summary>
+        public static String FallbackScene
+        {
+            get
+            {
+                return "Female.sim.xml";
             }
         }
 

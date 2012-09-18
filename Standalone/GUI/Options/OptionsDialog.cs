@@ -24,6 +24,7 @@ namespace Medical.GUI
         private ComboBox aaCombo;
         private ComboBox resolutionCombo;
         private ComboBox cameraButtonCombo;
+        private ComboBox defaultSceneCombo;
         private CheckButton fullscreenCheck;
         private CheckButton vsyncCheck;
         private CheckButton showStatsCheck;
@@ -74,6 +75,9 @@ namespace Medical.GUI
                 }
             }
 
+            defaultSceneCombo = (ComboBox)widget.findWidget("DefaultScene");
+            findSceneFiles();
+
             fullscreenCheck = new CheckButton(widget.findWidget("FullscreenCheck") as Button);
             vsyncCheck = new CheckButton(widget.findWidget("VSyncCheck") as Button);
             showStatsCheck = new CheckButton(widget.findWidget("ShowStatsCheck") as Button);
@@ -119,6 +123,18 @@ namespace Medical.GUI
 
             MouseButtonCode cameraButtonCode = MedicalConfig.CameraMouseButton;
             cameraButtonCombo.SelectedIndex = (uint)cameraButtonCode;
+
+            //Default Scene
+            uint count = defaultSceneCombo.ItemCount;
+            String defaultScene = MedicalConfig.DefaultScene;
+            for (uint i = 0; i < defaultSceneCombo.ItemCount; ++i)
+            {
+                if (defaultSceneCombo.getItemDataAt(i).ToString() == defaultScene)
+                {
+                    defaultSceneCombo.SelectedIndex = i;
+                    break;
+                }
+            }
 
             //Graphics Options
             aaCombo.SelectedIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
@@ -181,6 +197,7 @@ namespace Medical.GUI
             MouseButtonCode cameraButtonCode = (MouseButtonCode)cameraButtonCombo.SelectedIndex;
             MedicalConfig.CameraMouseButton = cameraButtonCode;
             OrbitCameraController.changeMouseButton(cameraButtonCode);
+            MedicalConfig.DefaultScene = defaultSceneCombo.SelectedItemData.ToString();
 
             bool videoOptionsChanged = false;
 
@@ -246,6 +263,19 @@ namespace Medical.GUI
                     MessageBox.show(String.Format("Could not delete windows.ini file located at '{0}'.\nPlease delete this file manually to reset your UI.", MedicalConfig.WindowsFile), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                 }
             });
+        }
+
+        void findSceneFiles()
+        {
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            String sceneDirectory = MedicalConfig.SceneDirectory;
+            String[] files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
+            foreach (String file in files)
+            {
+                String fileName = VirtualFileSystem.GetFileName(file);
+                String baseName = fileName.Substring(0, fileName.IndexOf('.'));
+                defaultSceneCombo.addItem(baseName, fileName);
+            }
         }
     }
 }

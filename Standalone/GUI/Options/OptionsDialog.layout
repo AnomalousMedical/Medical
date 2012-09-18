@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="TaskMenuBackground" position="253 99 338 437" layer="Overlapped">
+    <Widget type="Widget" skin="TaskMenuBackground" position="116 97 800 600" layer="Overlapped">
         <Widget type="TextBox" skin="TextBox" position="6 146 76 15">
             <Property key="Caption" value="Anti Aliasing"/>
             <Property key="TextColour" value="#FFFFFF"/>
@@ -34,7 +34,7 @@
         <Widget type="Button" skin="Button" position="6 285 88 25" align="Left Top" name="ApplyButton">
             <Property key="Caption" value="Apply"/>
         </Widget>
-        <Widget type="Button" skin="ButtonXBig" position="313 3 24 20" align="Right Top" name="CancelButton">
+        <Widget type="Button" skin="ButtonXBig" position="775 3 24 20" align="Right Top" name="CancelButton">
             <Property key="Caption" value="Cancel"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 4 105 15">
@@ -51,8 +51,8 @@
             <Property key="AddItem" value="Normal"/>
             <Property key="AddItem" value="Slow"/>
         </Widget>
-        <Widget type="Widget" skin="SepUpVSkin" position="1 123 337 1" align="HStretch Top"/>
-        <Widget type="Widget" skin="SepUpVSkin" position="1 280 337 1" align="HStretch Top"/>
+        <Widget type="Widget" skin="SepUpVSkin" position="1 123 799 1" align="HStretch Top"/>
+        <Widget type="Widget" skin="SepUpVSkin" position="1 280 799 1" align="HStretch Top"/>
         <Widget type="TextBox" skin="TextBox" position="6 62 155 15">
             <Property key="Caption" value="Camera Mouse Button"/>
             <Property key="TextColour" value="#FFFFFF"/>
@@ -76,11 +76,15 @@
         <Widget type="Button" skin="Button" position="6 388 108 26" name="ResetWindows">
             <Property key="Caption" value="Reset Windows"/>
         </Widget>
-        <Widget type="Widget" skin="SepUpVSkin" position="1 313 337 1" align="HStretch Top"/>
+        <Widget type="Widget" skin="SepUpVSkin" position="1 313 799 1" align="HStretch Top"/>
         <Widget type="EditBox" skin="EditBox" position="135 251 72 23" name="MaxFPS"/>
         <Widget type="TextBox" skin="TextBox" position="135 232 116 15">
             <Property key="Caption" value="Maximum Framerate"/>
             <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
+        <Widget type="TextBox" skin="TextBox" position="243 23 109 15">
+            <Property key="Caption" value="Default Scene"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="243 37 214 23" name="DefaultScene"/>
     </Widget>
 </MyGUI>

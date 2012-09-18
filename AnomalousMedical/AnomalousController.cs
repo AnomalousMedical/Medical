@@ -204,7 +204,12 @@ namespace Medical
         {
             get
             {
-                return MedicalConfig.DefaultScene;
+                String scene = Path.Combine(MedicalConfig.SceneDirectory, MedicalConfig.DefaultScene);
+                if (!VirtualFileSystem.Instance.exists(scene))
+                {
+                    scene = Path.Combine(MedicalConfig.SceneDirectory, MedicalConfig.FallbackScene);
+                }
+                return scene;
             }
         }
 
