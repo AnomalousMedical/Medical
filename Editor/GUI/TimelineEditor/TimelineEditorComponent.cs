@@ -147,7 +147,7 @@ namespace Medical.GUI
                         timelineController.setAsTimelineController(currentTimeline);
                         foreach (TimelineAction action in currentTimeline.Actions)
                         {
-                            addActionToTimeline(action);
+                            addActionToTimeline(action, false);
                         }
 
                         currentTimeline.ActionAdded += currentTimeline_ActionAdded;
@@ -311,7 +311,7 @@ namespace Medical.GUI
 
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
         {
-            addActionToTimeline(e.Action);
+            addActionToTimeline(e.Action, true);
         }
 
         void removeActionFromTimeline(TimelineAction action)
@@ -320,9 +320,9 @@ namespace Medical.GUI
             actionDataManager.destroyData(action);
         }
 
-        void addActionToTimeline(TimelineAction action)
+        void addActionToTimeline(TimelineAction action, bool clearSelection)
         {
-            timelineView.addData(actionDataManager.createData(action));
+            timelineView.addData(actionDataManager.createData(action), clearSelection);
         }
 
         void window_RootKeyChangeFocus(Widget source, EventArgs e)
