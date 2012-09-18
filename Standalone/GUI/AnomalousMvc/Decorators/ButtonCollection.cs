@@ -43,6 +43,8 @@ namespace Medical.GUI.AnomalousMvc
                     add(new ButtonDefinition("Finish", "Common/Finish"));
                 }
             }));
+
+            addItemMovementCommands();
         }
 
         protected ButtonCollection(LoadInfo info)

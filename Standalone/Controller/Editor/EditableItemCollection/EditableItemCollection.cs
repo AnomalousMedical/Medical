@@ -127,6 +127,37 @@ namespace Medical.Editor
             return editInterface;
         }
 
+        /// <summary>
+        /// This is an optional method that can be called by subclasses if they
+        /// want to support the items being movable in the list. It should be
+        /// called from customizeEditInterface.
+        /// </summary>
+        protected void addItemMovementCommands()
+        {
+            itemEdits.addCommand(new EditInterfaceCommand("Move Up", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            {
+                ItemType item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+                int index = items.IndexOf(item) - 1;
+                if (index < 0)
+                {
+                    index = 0;
+                }
+                remove(item);
+                insert(index, item);
+            }));
+
+            itemEdits.addCommand(new EditInterfaceCommand("Move Down", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            {
+                ItemType item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+                int index = items.IndexOf(item) + 1;
+                if (index < items.Count)
+                {
+                    remove(item);
+                    insert(index, item);
+                }
+            }));
+        }
+
         public virtual void customizeEditInterface(EditInterface editInterface, EditInterfaceManager<ItemType> itemEdits)
         {
 
