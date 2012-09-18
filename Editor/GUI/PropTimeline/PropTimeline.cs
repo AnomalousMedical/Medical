@@ -76,6 +76,12 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        public override void closing()
+        {
+            timelineView.CurrentData = null;
+            base.closing();
+        }
+
         public void setPropData(ShowPropAction showProp)
         {
             if (propData != null)
@@ -92,7 +98,7 @@ namespace Medical.GUI
                 actionFactory.addTracksForAction(showProp, timelineView);
                 foreach (ShowPropSubAction action in showProp.SubActions)
                 {
-                    addSubActionData(action);
+                    addSubActionData(action, false);
                 }
                 timelineView.Duration = showProp.Duration;
                 propData.Updated += propData_Updated;
@@ -150,7 +156,7 @@ namespace Medical.GUI
 
         void propData_ActionAdded(ShowPropAction showProp, ShowPropSubAction subAction)
         {
-            addSubActionData(subAction);
+            addSubActionData(subAction, true);
         }
 
         void trackFilter_AddTrackItem(string name)
@@ -178,9 +184,9 @@ namespace Medical.GUI
             propData.addSubAction(subAction);
         }
 
-        private void addSubActionData(ShowPropSubAction subAction)
+        private void addSubActionData(ShowPropSubAction subAction, bool clearSelection)
         {
-            timelineView.addData(actionFactory.createData(propData, subAction));
+            timelineView.addData(actionFactory.createData(propData, subAction), clearSelection);
         }
 
         private void removeCurrentData()
@@ -279,7 +285,16 @@ namespace Medical.GUI
             propTimelineData = (PropTimelineData)timelineView.CurrentData;
             if (propTimelineData != null)
             {
+                propEditController.ShowTools = false;
                 propTimelineData.editingStarted();
+            }
+            else
+            {
+                propEditController.ShowTools = true;
+                if (propEditController.CurrentShowPropAction != null)
+                {
+                    propEditController.CurrentShowPropAction._movePreviewProp(propEditController.CurrentShowPropAction.Translation, propEditController.CurrentShowPropAction.Rotation);
+                }
             }
 
             EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);

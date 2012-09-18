@@ -23,11 +23,13 @@ namespace Medical.GUI
         {
             base.editingStarted();
             propEditController.CurrentMovePropAction = moveProp;
+            propEditController.ShowTools = true;
         }
 
         public override void editingCompleted()
         {
             propEditController.CurrentMovePropAction = null;
+            propEditController.ShowTools = false;
             base.editingCompleted();
         }
     }

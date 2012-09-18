@@ -307,7 +307,7 @@ namespace Medical
             }
         }
 
-        internal SimObject PropSimObject
+        public SimObject PropSimObject
         {
             get
             {

@@ -17,7 +17,7 @@ namespace Medical
             GenericSimObjectDefinition doppler = new GenericSimObjectDefinition("Doppler");
             doppler.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = "DopplerProp.mesh";
+            entityDefinition.MeshName = "DopplerWand.mesh";
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             doppler.addElement(nodeDefinition);

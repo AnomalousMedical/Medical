@@ -14,6 +14,7 @@ namespace Medical
 
         private ShowPropAction currentShowPropAction;
         private MovePropAction currentMovePropAction;
+
         private SimObjectMover simObjectMover;
         private float duration = 0.0f;
         private float markerPosition = 0.0f;
@@ -53,6 +54,7 @@ namespace Medical
                     simObjectMover.addMovableObject("Prop", this);
                     simObjectMover.setDrawingSurfaceVisible(true);
                     Duration = currentShowPropAction.Duration;
+                    ShowTools = true;
                 }
                 if (ShowPropActionChanged != null)
                 {
@@ -70,17 +72,6 @@ namespace Medical
             set
             {
                 currentMovePropAction = value;
-                if (currentShowPropAction != null)
-                {
-                    if (currentMovePropAction != null)
-                    {
-                        currentShowPropAction._movePreviewProp(currentMovePropAction.Translation, currentMovePropAction.Rotation);
-                    }
-                    else
-                    {
-                        currentShowPropAction._movePreviewProp(currentShowPropAction.Translation, currentShowPropAction.Rotation);
-                    }
-                }
             }
         }
 
@@ -185,19 +176,13 @@ namespace Medical
             simObjectMover.ShowRotateTools = false;
         }
 
-        #region MovableObject Members
-
         public Vector3 ToolTranslation
         {
             get
             {
-                if (currentMovePropAction != null)
+                if (currentShowPropAction != null)
                 {
-                    return currentMovePropAction.Translation;
-                }
-                else if (currentShowPropAction != null)
-                {
-                    return currentShowPropAction.Translation;
+                    return currentShowPropAction.PropSimObject.Translation;
                 }
                 else
                 {
@@ -213,7 +198,6 @@ namespace Medical
                 if (currentMovePropAction != null)
                 {
                     currentMovePropAction.Translation += offset;
-                    //currentShowPropAction._movePreviewProp(currentMovePropAction.Translation, currentMovePropAction.Rotation);
                 }
                 else
                 {
@@ -226,13 +210,9 @@ namespace Medical
         {
             get
             {
-                if (currentMovePropAction != null)
+                if (currentShowPropAction != null)
                 {
-                    return currentMovePropAction.Rotation;
-                }
-                else if (currentShowPropAction != null)
-                {
-                    return currentShowPropAction.Rotation;
+                    return currentShowPropAction.PropSimObject.Rotation;
                 }
                 else
                 {
@@ -241,10 +221,7 @@ namespace Medical
             }
         }
 
-        public bool ShowTools
-        {
-            get { return true; }
-        }
+        public bool ShowTools { get; set; }
 
         public void rotate(ref Quaternion newRot)
         {
@@ -253,7 +230,6 @@ namespace Medical
                 if (currentMovePropAction != null)
                 {
                     currentMovePropAction.Rotation = newRot;
-                    //currentShowPropAction._movePreviewProp(currentMovePropAction.Translation, currentMovePropAction.Rotation);
                 }
                 else
                 {
@@ -266,7 +242,5 @@ namespace Medical
         {
 
         }
-
-        #endregion
     }
 }
