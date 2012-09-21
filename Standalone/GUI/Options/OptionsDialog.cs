@@ -226,9 +226,9 @@ namespace Medical.GUI
                 videoOptionsChanged = true;
             }
             int maxFpsValue = maxFPS.IntValue;
-            if (maxFpsValue < 2)
+            if (maxFpsValue < EngineConfig.MinimumAllowedFramerate && maxFpsValue != 0)
             {
-                maxFpsValue = 2;
+                maxFpsValue = EngineConfig.MinimumAllowedFramerate;
             }
             if (MedicalConfig.EngineConfig.MaxFPS != maxFpsValue)
             {

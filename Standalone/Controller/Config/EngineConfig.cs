@@ -9,6 +9,7 @@ namespace Medical
     public class EngineConfig
     {
         public event EventHandler ShowStatsToggled;
+        public const int MinimumAllowedFramerate = 60;
 
         private ConfigSection section;
 
@@ -21,7 +22,12 @@ namespace Medical
         {
             get
             {
-                return section.getValue("MaxFPS", 120);
+                int maxFps = section.getValue("MaxFPS", 120);
+                if (maxFps < MinimumAllowedFramerate && maxFps != 0)
+                {
+                    maxFps = MinimumAllowedFramerate;
+                }
+                return maxFps;
             }
             set
             {
