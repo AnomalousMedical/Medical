@@ -14,9 +14,6 @@ namespace Medical
 
         private ShowPropAction currentShowPropAction;
         private MovePropAction currentMovePropAction;
-        private bool allowStartPositionMovement = true;
-        private Vector3 lastMovePropPosition;
-        private Quaternion lastMovePropRotation;
 
         private SimObjectMover simObjectMover;
         private float duration = 0.0f;
@@ -57,9 +54,7 @@ namespace Medical
                     simObjectMover.addMovableObject("Prop", this);
                     simObjectMover.setDrawingSurfaceVisible(true);
                     Duration = currentShowPropAction.Duration;
-                    allowStartPositionMovement = true;
-                    lastMovePropPosition = currentShowPropAction.Translation;
-                    lastMovePropRotation = currentShowPropAction.Rotation;
+                    ShowTools = true;
                 }
                 if (ShowPropActionChanged != null)
                 {
@@ -77,29 +72,6 @@ namespace Medical
             set
             {
                 currentMovePropAction = value;
-                if (currentShowPropAction != null)
-                {
-                    if (currentMovePropAction != null)
-                    {
-                        currentShowPropAction._movePreviewProp(currentMovePropAction.Translation, currentMovePropAction.Rotation);
-                    }
-                    else
-                    {
-                        currentShowPropAction._movePreviewProp(currentShowPropAction.Translation, currentShowPropAction.Rotation);
-                    }
-                }
-            }
-        }
-
-        public bool AllowStartPositionMovement
-        {
-            get
-            {
-                return allowStartPositionMovement;
-            }
-            set
-            {
-                allowStartPositionMovement = value;
             }
         }
 
@@ -204,19 +176,13 @@ namespace Medical
             simObjectMover.ShowRotateTools = false;
         }
 
-        #region MovableObject Members
-
         public Vector3 ToolTranslation
         {
             get
             {
-                if (currentMovePropAction != null)
+                if (currentShowPropAction != null)
                 {
-                    return currentMovePropAction.Translation;
-                }
-                else if (currentShowPropAction != null)
-                {
-                    return currentShowPropAction.Translation;
+                    return currentShowPropAction.PropSimObject.Translation;
                 }
                 else
                 {
@@ -244,13 +210,9 @@ namespace Medical
         {
             get
             {
-                if (currentMovePropAction != null)
+                if (currentShowPropAction != null)
                 {
-                    return currentMovePropAction.Rotation;
-                }
-                else if (currentShowPropAction != null)
-                {
-                    return currentShowPropAction.Rotation;
+                    return currentShowPropAction.PropSimObject.Rotation;
                 }
                 else
                 {
@@ -259,10 +221,7 @@ namespace Medical
             }
         }
 
-        public bool ShowTools
-        {
-            get { return currentMovePropAction != null || allowStartPositionMovement; }
-        }
+        public bool ShowTools { get; set; }
 
         public void rotate(ref Quaternion newRot)
         {
@@ -283,7 +242,5 @@ namespace Medical
         {
 
         }
-
-        #endregion
     }
 }
