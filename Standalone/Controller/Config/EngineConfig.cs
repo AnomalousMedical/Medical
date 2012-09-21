@@ -26,6 +26,7 @@ namespace Medical
                 if (maxFps < MinimumAllowedFramerate && maxFps != 0)
                 {
                     maxFps = MinimumAllowedFramerate;
+                    section.setValue("MaxFPS", MinimumAllowedFramerate);
                 }
                 return maxFps;
             }
