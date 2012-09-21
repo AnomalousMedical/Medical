@@ -8,6 +8,7 @@
 #ifdef WINDOWS
 #define WINVER 0x0500
 #define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <windows.h>
 
 #define _AnomalousExport __declspec(dllexport)

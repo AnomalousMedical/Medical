@@ -1,9 +1,6 @@
 #pragma once
 
 #ifdef WINDOWS
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include "windows.h"
 #define Int64 LONGLONG
 #endif
 

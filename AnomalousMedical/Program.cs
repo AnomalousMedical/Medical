@@ -32,6 +32,13 @@ namespace Medical
                 }
                 MessageDialog.showErrorDialog(errorMessage, "Exception");
             }
+            finally
+            {
+                if (anomalous != null)
+                {
+                    anomalous.Dispose();
+                }
+            }
         }
     }
 }

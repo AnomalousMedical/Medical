@@ -4,6 +4,7 @@
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD ulReasonForCall, LPVOID lpReserved)
 {
+	SetErrorMode(SEM_FAILCRITICALERRORS);
 	if (ulReasonForCall == DLL_PROCESS_ATTACH)
 	{
 		CoInitializeEx(NULL, COINIT_MULTITHREADED);

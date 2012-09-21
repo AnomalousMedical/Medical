@@ -35,8 +35,6 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 	bool loaded = false;
 	if(mtDriver == NULL)
 	{
-		int errorMode = GetErrorMode();
-		SetErrorMode(SEM_FAILCRITICALERRORS);
 		mtDriver = LoadLibraryEx("WinMTDriver.dll", NULL, 0);
 		if(mtDriver != NULL)
 		{
@@ -46,7 +44,6 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 				loaded = true;
 			}
 		}
-		SetErrorMode(errorMode);
 	}
 	else if(registerWithWindows != NULL)
 	{
