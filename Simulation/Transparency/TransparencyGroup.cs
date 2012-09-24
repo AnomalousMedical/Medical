@@ -17,7 +17,14 @@ namespace Medical
 
         public void addTransparencyObject(TransparencyInterface alphaObject)
         {
-            alphaObjects.Add(alphaObject.ObjectName, alphaObject);
+            try
+            {
+                alphaObjects.Add(alphaObject.ObjectName, alphaObject);
+            }
+            catch (ArgumentException)
+            {
+                throw new TransparencyException(String.Format("A Transparency Object named '{0}' from Sim Object '{1}' already exists in the group '{2}'. The Transparency Object that was stored for this name is '{3}'.", alphaObject.ObjectName, alphaObject.Owner.Name, Name, alphaObjects[alphaObject.ObjectName].Owner.Name));
+            }
         }
 
         public void removeTransparencyObject(TransparencyInterface alphaObject)

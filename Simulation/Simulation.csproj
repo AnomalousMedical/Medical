@@ -198,6 +198,7 @@
     <Compile Include="Transparency\TransparencyBlock.cs" />
     <Compile Include="Transparency\TransparencyController.cs" />
     <Compile Include="Transparency\TransparencyCuller.cs" />
+    <Compile Include="Transparency\TransparencyException.cs" />
     <Compile Include="Transparency\TransparencyGroup.cs" />
     <Compile Include="Transparency\TransparencyInterface.cs" />
     <Compile Include="Transparency\TransparencyOverrider.cs" />
