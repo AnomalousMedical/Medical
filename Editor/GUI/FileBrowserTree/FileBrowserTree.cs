@@ -143,12 +143,12 @@ namespace Medical.GUI
             if (resourceProvider != null)
             {
                 fileTree.SuppressLayout = true;
-                String[] directories = resourceProvider.listDirectories("*", path, false);
+                IEnumerable<String> directories = resourceProvider.listDirectories("*", path, false);
                 foreach (String dir in directories)
                 {
                     parentCollection.add(new DirectoryNode(dir, this));
                 }
-                String[] files = resourceProvider.listFiles("*", path, false);
+                IEnumerable<String> files = resourceProvider.listFiles("*", path, false);
                 foreach (String file in files)
                 {
                     parentCollection.add(new FileNode(file));

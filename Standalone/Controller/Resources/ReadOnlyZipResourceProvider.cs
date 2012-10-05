@@ -48,69 +48,69 @@ namespace Medical
             throw new NotImplementedException("deleteFile not supported by this resource provider.");
         }
 
-        public String[] listFiles(String pattern)
+        public IEnumerable<String> listFiles(String pattern)
         {
+            IEnumerable<ZipFileInfo> zipFiles = null;
             try
             {
-                List<ZipFileInfo> zipFiles = zipFile.listFiles("/", pattern, false);
-                String[] ret = new String[zipFiles.Count];
-                int i = 0;
-                foreach (ZipFileInfo info in zipFiles)
-                {
-                    ret[i++] = info.FullName;
-                }
-                return ret;
+                zipFiles = zipFile.listFiles("/", pattern, false);
             }
             catch (Exception ex)
             {
                 Log.Error("Could not list files in directory {0}.\nReason: {1}", resourceLocation, ex.Message);
             }
-            return new String[0];
-        }
-
-        public String[] listFiles(String pattern, String directory, bool recursive)
-        {
-            try
+            if (zipFiles != null)
             {
-                List<ZipFileInfo> zipFiles = zipFile.listFiles(Path.Combine(resourceLocation, directory), pattern, recursive);
-                String[] ret = new String[zipFiles.Count];
-                int i = 0;
                 foreach (ZipFileInfo info in zipFiles)
                 {
-                    ret[i++] = info.FullName;
+                    yield return info.FullName;
                 }
-                return ret;
+            }
+        }
+
+        public IEnumerable<String> listFiles(String pattern, String directory, bool recursive)
+        {
+            IEnumerable<ZipFileInfo> zipFiles = null;
+            try
+            {
+                zipFiles = zipFile.listFiles(Path.Combine(resourceLocation, directory), pattern, recursive);
             }
             catch (Exception ex)
             {
                 Log.Error("Could not list files in directory {0}.\nReason: {1}", Path.Combine(resourceLocation, directory), ex.Message);
             }
-            return new String[0];
+            if (zipFiles != null)
+            {
+                foreach (ZipFileInfo info in zipFiles)
+                {
+                    yield return info.FullName;
+                }
+            }
         }
 
-        public String[] listDirectories(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listDirectories(String pattern, String directory, bool recursive)
         {
+            IEnumerable<ZipFileInfo> zipDirs = null;
             try
             {
-                List<ZipFileInfo> zipDirs = zipFile.listDirectories(Path.Combine(resourceLocation, directory), pattern, recursive);
-                String[] ret = new String[zipDirs.Count];
-                int i = 0;
-                foreach (ZipFileInfo info in zipDirs)
-                {
-                    ret[i++] = info.FullName;
-                }
-                return ret;
+                zipDirs = zipFile.listDirectories(Path.Combine(resourceLocation, directory), pattern, recursive);
             }
             catch (Exception ex)
             {
                 Log.Error("Could not list directories in directory {0}.\nReason: {1}", Path.Combine(resourceLocation, directory), ex.Message);
             }
-            return new String[0];
+            if (zipDirs != null)
+            {
+                foreach (ZipFileInfo info in zipDirs)
+                {
+                    yield return info.FullName;
+                }
+            }
         }
 
         public bool directoryHasEntries(String path)
         {
-            return listFiles("*", path, true).Length > 0 || listDirectories("*", path, true).Length > 0;
+            return listFiles("*", path, true).FirstOrDefault() != null || listDirectories("*", path, true).FirstOrDefault() != null;
         }
 
         public bool exists(String path)

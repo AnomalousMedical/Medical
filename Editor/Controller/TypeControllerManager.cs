@@ -226,10 +226,11 @@ namespace Medical
                 }
                 else
                 {
-                    String[] files = editorController.ResourceProvider.listFiles("*.mvc", "", true);
-                    if (files.Length > 0)
+                    IEnumerable<String> files = editorController.ResourceProvider.listFiles("*.mvc", "", true);
+                    String firstMvcFile = files.FirstOrDefault();
+                    if (firstMvcFile != null)
                     {
-                        editorController.openEditor(files[0]);
+                        editorController.openEditor(firstMvcFile);
                     }
                 }
             }

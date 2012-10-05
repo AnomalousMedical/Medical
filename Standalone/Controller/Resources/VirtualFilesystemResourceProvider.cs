@@ -44,39 +44,33 @@ namespace Medical
             throw new NotImplementedException("Cannot delete files in the VirtualFSResourceProvider");
         }
 
-        public string[] listFiles(string pattern)
+        public IEnumerable<String> listFiles(string pattern)
         {
-            String[] files = virtualFileSystem.listFiles(parentPath, pattern, false);
-            for (int i = 0; i < files.Length; ++i)
+            foreach (String file in virtualFileSystem.listFiles(parentPath, pattern, false))
             {
-                files[i] = files[i].Remove(0, parentPathLength);
+                yield return file.Remove(0, parentPathLength);
             }
-            return files;
         }
 
-        public String[] listFiles(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listFiles(String pattern, String directory, bool recursive)
         {
-            String[] files = virtualFileSystem.listFiles(Path.Combine(parentPath, directory), pattern, recursive);
-            for (int i = 0; i < files.Length; ++i)
+            foreach (String file in virtualFileSystem.listFiles(Path.Combine(parentPath, directory), pattern, recursive))
             {
-                files[i] = files[i].Remove(0, parentPathLength);
+                yield return file.Remove(0, parentPathLength);
             }
-            return files;
         }
 
-        public String[] listDirectories(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listDirectories(String pattern, String directory, bool recursive)
         {
-            String[] files = virtualFileSystem.listDirectories(Path.Combine(parentPath, directory), pattern, recursive);
-            for (int i = 0; i < files.Length; ++i)
+            foreach (String file in virtualFileSystem.listDirectories(Path.Combine(parentPath, directory), pattern, recursive))
             {
-                files[i] = files[i].Remove(0, parentPathLength);
+                yield return file.Remove(0, parentPathLength);
             }
-            return files;
         }
 
         public bool directoryHasEntries(String path)
         {
-            return listFiles("*", path, true).Length > 0 || listDirectories("*", path, true).Length > 0;
+            return listFiles("*", path, true).FirstOrDefault() != null || listDirectories("*", path, true).FirstOrDefault() != null;
         }
 
         public bool exists(string path)

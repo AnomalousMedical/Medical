@@ -59,7 +59,7 @@ namespace Medical
             throw new NotImplementedException("deleteFile not supported by this resource provider.");
         }
 
-        public string[] listFiles(string pattern)
+        public IEnumerable<String> listFiles(string pattern)
         {
             Regex r = new Regex(FileUtility.wildcardToRegex(pattern));
             List<String> files = new List<string>(fileList.Count);
@@ -71,10 +71,10 @@ namespace Medical
                     files.Add(convertToDirectoryStyleFileName(file));
                 }
             }
-            return files.ToArray();
+            return files;
         }
 
-        public String[] listFiles(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listFiles(String pattern, String directory, bool recursive)
         {
             Regex r = new Regex(FileUtility.wildcardToRegex(pattern));
             List<String> files = new List<string>(fileList.Count);
@@ -90,17 +90,17 @@ namespace Medical
                     }
                 }
             }
-            return files.ToArray();
+            return files;
         }
 
-        public String[] listDirectories(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listDirectories(String pattern, String directory, bool recursive)
         {
-            return new String[0];
+            return IEnumerableUtil<String>.EmptyIterator;
         }
 
         public bool directoryHasEntries(String path)
         {
-            return listFiles("*", path, true).Length > 0;
+            return listFiles("*", path, true).Count() > 0;
         }
 
         public bool exists(string path)

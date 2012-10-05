@@ -16,11 +16,11 @@ namespace Medical
 
         void delete(String filename);
 
-        String[] listFiles(String pattern);
+        IEnumerable<String> listFiles(String pattern);
 
-        String[] listFiles(String pattern, String directory, bool recursive);
+        IEnumerable<String> listFiles(String pattern, String directory, bool recursive);
 
-        String[] listDirectories(String pattern, String directory, bool recursive);
+        IEnumerable<String> listDirectories(String pattern, String directory, bool recursive);
 
         bool directoryHasEntries(String path);
 

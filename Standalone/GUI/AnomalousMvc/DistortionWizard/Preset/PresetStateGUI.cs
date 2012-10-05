@@ -112,7 +112,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private void loadPresetSet(PresetStateSet presetStateSet)
         {
-            String[] files = context.ResourceProvider.listFiles("*.pre", presetStateSet.SourceDirectory, false);
+            IEnumerable<String> files = context.ResourceProvider.listFiles("*.pre", presetStateSet.SourceDirectory, false);
             foreach (String file in files)
             {
                 using (XmlTextReader reader = new XmlTextReader(context.ResourceProvider.openFile(file)))

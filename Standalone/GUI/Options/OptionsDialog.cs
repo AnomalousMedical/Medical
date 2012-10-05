@@ -269,7 +269,7 @@ namespace Medical.GUI
         {
             VirtualFileSystem archive = VirtualFileSystem.Instance;
             String sceneDirectory = MedicalConfig.SceneDirectory;
-            String[] files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
+            IEnumerable<String> files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
             foreach (String file in files)
             {
                 String fileName = VirtualFileSystem.GetFileName(file);

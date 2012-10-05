@@ -42,7 +42,7 @@ namespace Medical
             File.Delete(Path.Combine(parentPath, filename));
         }
 
-        public string[] listFiles(string pattern)
+        public IEnumerable<String> listFiles(string pattern)
         {
             String[] files = Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly);
             for (int i = 0; i < files.Length; ++i)
@@ -52,7 +52,7 @@ namespace Medical
             return files;
         }
 
-        public String[] listFiles(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listFiles(String pattern, String directory, bool recursive)
         {
             String[] files = Directory.GetFiles(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             for (int i = 0; i < files.Length; ++i)
@@ -62,7 +62,7 @@ namespace Medical
             return files;
         }
 
-        public String[] listDirectories(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listDirectories(String pattern, String directory, bool recursive)
         {
             String[] directories = Directory.GetDirectories(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
             for (int i = 0; i < directories.Length; ++i)

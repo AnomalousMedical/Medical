@@ -129,34 +129,28 @@ namespace Medical
             }
         }
 
-        public string[] listFiles(string pattern)
+        public IEnumerable<String> listFiles(string pattern)
         {
-            String[] files = Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly);
-            for (int i = 0; i < files.Length; ++i)
+            foreach(String file in Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly))
             {
-                files[i] = files[i].Remove(0, parentPathLength);
+                yield return file.Remove(0, parentPathLength);
             }
-            return files;
         }
 
-        public String[] listFiles(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listFiles(String pattern, String directory, bool recursive)
         {
-            String[] files = Directory.GetFiles(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-            for (int i = 0; i < files.Length; ++i)
+            foreach(String file in Directory.GetFiles(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
             {
-                files[i] = files[i].Remove(0, parentPathLength);
+                yield return file.Remove(0, parentPathLength);
             }
-            return files;
         }
 
-        public String[] listDirectories(String pattern, String directory, bool recursive)
+        public IEnumerable<String> listDirectories(String pattern, String directory, bool recursive)
         {
-            String[] directories = Directory.GetDirectories(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-            for (int i = 0; i < directories.Length; ++i)
+            foreach(String dir in Directory.GetDirectories(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
             {
-                directories[i] = directories[i].Remove(0, parentPathLength);
+                yield return dir.Remove(0, parentPathLength);
             }
-            return directories;
         }
 
         public bool directoryHasEntries(String path)
