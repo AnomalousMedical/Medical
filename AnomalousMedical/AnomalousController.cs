@@ -87,6 +87,10 @@ namespace Medical
             }
 
             controller.addWorkingArchive();
+            if (!MedicalConfig.EngineConfig.UseHardwareSkinning)
+            {
+                VirtualFileSystem.Instance.createVirtualFolderLink("Shaders/SoftwareSkinOverride", "Shaders/Articulometrics/Unified");
+            }
 
             controller.initializeControllers(createBackground());
 

@@ -87,5 +87,17 @@ namespace Medical
                 }
             }
         }
+
+        public bool UseHardwareSkinning
+        {
+            get
+            {
+                return section.getValue("UseHardwareSkinning", true);
+            }
+            set
+            {
+                section.setValue("UseHardwareSkinning", value);
+            }
+        }
     }
 }

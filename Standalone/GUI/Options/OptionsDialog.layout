@@ -77,8 +77,8 @@
             <Property key="Caption" value="Reset Windows"/>
         </Widget>
         <Widget type="Widget" skin="SepUpVSkin" position="1 313 799 1" align="HStretch Top"/>
-        <Widget type="EditBox" skin="EditBox" position="135 251 72 23" name="MaxFPS"/>
-        <Widget type="TextBox" skin="TextBox" position="135 232 116 15">
+        <Widget type="EditBox" skin="EditBox" position="261 160 72 23" name="MaxFPS"/>
+        <Widget type="TextBox" skin="TextBox" position="259 146 116 15">
             <Property key="Caption" value="Maximum Framerate"/>
             <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
@@ -86,5 +86,9 @@
             <Property key="Caption" value="Default Scene"/>
         </Widget>
         <Widget type="ComboBox" skin="ComboBox" position="243 37 214 23" name="DefaultScene"/>
+        <Widget type="Button" skin="CheckBox" position="140 232 134 15" name="HardwareSkinningCheck">
+            <Property key="Caption" value="Hardware Skinning"/>
+            <Property key="TextColour" value="#FFFFFF"/>
+        </Widget>
     </Widget>
 </MyGUI>
