@@ -605,6 +605,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Controller\WindowListener.cs" />
+    <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

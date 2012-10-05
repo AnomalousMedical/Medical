@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Anomalous Medical"
-#define MyAppVersion "1.6.1"
+#define MyAppVersion "1.7.0"
 #define MyAppPublisher "Anomalous Medical"
 #define MyAppURL "http://www.anomalousmedical.com"
 #define MyAppExeName "AnomalousMedical.exe"

@@ -157,6 +157,7 @@
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Props\Splint.cs" />
     <Compile Include="State\CompoundPresetState.cs" />
     <Compile Include="State\MedicalState.cs" />
