@@ -62,22 +62,19 @@ namespace Medical
         public IEnumerable<String> listFiles(string pattern)
         {
             Regex r = new Regex(FileUtility.wildcardToRegex(pattern));
-            List<String> files = new List<string>(fileList.Count);
             foreach (String file in fileList)
             {
                 Match match = r.Match(file);
                 if (match.Success)
                 {
-                    files.Add(convertToDirectoryStyleFileName(file));
+                    yield return convertToDirectoryStyleFileName(file);
                 }
             }
-            return files;
         }
 
         public IEnumerable<String> listFiles(String pattern, String directory, bool recursive)
         {
             Regex r = new Regex(FileUtility.wildcardToRegex(pattern));
-            List<String> files = new List<string>(fileList.Count);
             directory = convertToNamespacePath(directory);
             foreach (String file in fileList)
             {
@@ -86,11 +83,10 @@ namespace Medical
                     Match match = r.Match(file);
                     if (match.Success)
                     {
-                        files.Add(convertToDirectoryStyleFileName(file));
+                        yield return convertToDirectoryStyleFileName(file);
                     }
                 }
             }
-            return files;
         }
 
         public IEnumerable<String> listDirectories(String pattern, String directory, bool recursive)
@@ -100,7 +96,7 @@ namespace Medical
 
         public bool directoryHasEntries(String path)
         {
-            return listFiles("*", path, true).Count() > 0;
+            return listFiles("*", path, true).Any();
         }
 
         public bool exists(string path)

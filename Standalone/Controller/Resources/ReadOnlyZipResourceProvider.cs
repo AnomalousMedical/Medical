@@ -110,7 +110,7 @@ namespace Medical
 
         public bool directoryHasEntries(String path)
         {
-            return listFiles("*", path, true).FirstOrDefault() != null || listDirectories("*", path, true).FirstOrDefault() != null;
+            return listFiles("*", path, true).Any() || listDirectories("*", path, true).Any();
         }
 
         public bool exists(String path)
