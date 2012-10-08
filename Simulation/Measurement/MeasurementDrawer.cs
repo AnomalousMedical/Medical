@@ -38,7 +38,7 @@ namespace Medical
                 blacklist("Cannot find manual object named {0}.", manualObjectName);
             }
             manualObject.setVisible(drawLines);
-            manualObject.begin("MeasurementNoDepth", OperationType.OT_LINE_LIST);
+            manualObject.begin("colorVertexNoDepth", OperationType.OT_LINE_LIST);
             manualObject.position(ref Vector3.Zero);
             manualObject.color(0, 0, 0, 0);
             manualObject.position(ref Vector3.Zero);
