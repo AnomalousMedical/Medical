@@ -115,6 +115,10 @@ namespace Medical.GUI
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
+            CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "StandaloneIcons/Blog", TaskMenuCategories.AnomalousMedical, int.MaxValue - 7, false);
+            blogTaskItem.OnClicked += new CallbackTask.ClickedCallback(blogTaskItem_OnClicked);
+            taskController.addTask(blogTaskItem);
+
             downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.AnomalousMedical, int.MaxValue - 5);
             standaloneController.DownloadController.OpenDownloadGUITask = downloadsTask;
             taskController.addTask(downloadsTask);
@@ -145,6 +149,11 @@ namespace Medical.GUI
             anatomyFinderTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(anatomyFinderTask);
             taskController.addTask(selectionModeTask);
+        }
+
+        void blogTaskItem_OnClicked(CallbackTask item)
+        {
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalBlogURL);
         }
 
         void shopTaskItem_OnClicked(CallbackTask item)
