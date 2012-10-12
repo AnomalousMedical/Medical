@@ -129,13 +129,19 @@ namespace Medical.GUI
             //Default Scene
             uint count = defaultSceneCombo.ItemCount;
             String defaultScene = MedicalConfig.DefaultScene;
+            bool defaultSceneNotFound = true;
             for (uint i = 0; i < defaultSceneCombo.ItemCount; ++i)
             {
                 if (defaultSceneCombo.getItemDataAt(i).ToString() == defaultScene)
                 {
                     defaultSceneCombo.SelectedIndex = i;
+                    defaultSceneNotFound = false;
                     break;
                 }
+            }
+            if (defaultSceneNotFound)
+            {
+                defaultSceneCombo.SelectedIndex = 0;
             }
 
             //Graphics Options
