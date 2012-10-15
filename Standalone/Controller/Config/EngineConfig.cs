@@ -92,7 +92,15 @@ namespace Medical
         {
             get
             {
-                return section.getValue("UseHardwareSkinning", PlatformConfig.PreferHardwareSkinning);
+                //A bit extra checky, but it prevents osx from reading from a config file to do things this way.
+                if (!section.hasValue("UseHardwareSkinning"))
+                {
+                    return section.getValue("UseHardwareSkinning", PlatformConfig.PreferHardwareSkinning);
+                }
+                else
+                {
+                    return section.getValue("UseHardwareSkinning", true);
+                }
             }
             set
             {
