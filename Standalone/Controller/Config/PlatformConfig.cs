@@ -154,6 +154,14 @@ namespace Medical
             }
         }
 
+        public static bool PreferHardwareSkinning
+        {
+            get
+            {
+                return currentConfig.PreferHardwareSkinningImpl;
+            }
+        }
+
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
 
@@ -188,6 +196,8 @@ namespace Medical
         protected abstract ProcessStartInfo RestartProcInfoImpl { get; }
 
         protected abstract bool DefaultEnableMultitouchImpl { get; }
+
+        protected abstract bool PreferHardwareSkinningImpl { get; }
 
         #region PInvoke
 

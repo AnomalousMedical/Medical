@@ -144,5 +144,13 @@ namespace Medical
                 return true;
             }
         }
+
+        protected override bool PreferHardwareSkinningImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

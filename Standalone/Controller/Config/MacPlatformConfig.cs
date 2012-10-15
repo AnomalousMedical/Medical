@@ -163,7 +163,7 @@ namespace Medical
             }
         }
 
-		protected bool PreferHardwareSkinning 
+        protected override bool PreferHardwareSkinningImpl 
 		{
 			get 
 			{

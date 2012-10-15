@@ -92,7 +92,7 @@ namespace Medical
         {
             get
             {
-                return section.getValue("UseHardwareSkinning", true);
+                return section.getValue("UseHardwareSkinning", PlatformConfig.PreferHardwareSkinning);
             }
             set
             {
