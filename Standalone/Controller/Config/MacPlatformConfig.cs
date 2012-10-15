@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Medical
 {
@@ -27,8 +28,8 @@ namespace Medical
 
         public MacPlatformConfig()
         {
-            Log.ImportantInfo("Platform is Mac");
             //ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
+			Log.ImportantInfo("Platform is Mac");
         }
 
         protected override String formatTitleImpl(String windowText, String subText)
@@ -161,5 +162,22 @@ namespace Medical
                 return false;
             }
         }
+
+		protected bool PreferHardwareSkinning 
+		{
+			get 
+			{
+				int major, minor, bugfix;
+				SystemInfo_GetOSXVersion (out major, out minor, out bugfix);
+				return !(major == 10 && (minor == 6 || (minor == 7 && bugfix < 5)));
+			}
+		}
+
+		#region PInvoke
+
+		[DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        private static extern void SystemInfo_GetOSXVersion(out int major, out int minor, out int bugfix);
+
+		#endregion
     }
 }
