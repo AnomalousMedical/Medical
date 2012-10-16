@@ -211,7 +211,14 @@ namespace Medical.GUI
                 {
                     AddItemDialog.AddItem(editorController.ItemTemplates, (itemTemplate) =>
                         {
-                            ((ProjectItemTemplate)itemTemplate).createItem(path, editorController);
+                            try
+                            {
+                                ((ProjectItemTemplate)itemTemplate).createItem(path, editorController);
+                            }
+                            catch (Exception e)
+                            {
+                                MessageBox.show(String.Format("Error creating item.\n{0}", e.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                            }
                         });
                 }));
 
