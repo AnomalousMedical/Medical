@@ -61,36 +61,20 @@ Source: S:\Medical\Release\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
 
+;Open AL
 Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
-; DirectX 9.0
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_D3DCompiler_42_x64.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+;VS 2010 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dcsx_42_x64.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_D3DCompiler_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx10_42_x64.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx10_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx11_42_x64.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx11_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx9_42_x64.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dcsx_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_XACT_x64.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx9_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_XAudio_x64.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_XACT_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_XAudio_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\BDA.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\BDANT.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\BDAXP.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DirectX.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DSETUP.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dsetup32.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DX9Helper.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxdllreg_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxnt.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+;DX Required Files
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DXSETUP.exe"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dsetup32.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DSETUP.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxdllreg_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxupdate.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+;DX August 2009 Files
+Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx9_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_D3DCompiler_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+;.Net 4.0
 Source: S:\dependencies\InstallerDependencies\Windows\dotNetFx40_Client_setup.exe; DestDir: {tmp}; 
 
 [Icons]
