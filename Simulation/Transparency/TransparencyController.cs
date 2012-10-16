@@ -12,8 +12,6 @@ namespace Medical
 
         public static readonly String DefaultTransparencyState = "Default";
 
-        static NaturalSort<RenderGroup> sorter = new NaturalSort<RenderGroup>();
-        static SortedList<RenderGroup, TransparencyGroup> groups = new SortedList<RenderGroup, TransparencyGroup>(sorter);
         static FastIteratorMap<String, TransparencyInterface> transparencyInterfaces = new FastIteratorMap<String, TransparencyInterface>();
         static List<String> transparencyStateNames = new List<string>();
 
@@ -24,39 +22,25 @@ namespace Medical
 
         internal static void addTransparencyObject(TransparencyInterface alphaObject)
         {
-            if (!groups.ContainsKey(alphaObject.RenderGroup))
+            try
             {
-                groups.Add(alphaObject.RenderGroup, new TransparencyGroup(alphaObject.RenderGroup));
+                transparencyInterfaces.Add(alphaObject.ObjectName, alphaObject);
+                //Add all the needed transparency states.
+                for (int i = 1; i < transparencyStateNames.Count; ++i)
+                {
+                    alphaObject.createTransparencyState();
+                }
+                alphaObject.ActiveTransparencyState = TransparencyStateIndex;
             }
-            groups[alphaObject.RenderGroup].addTransparencyObject(alphaObject);
-            //Add all the needed transparency states.
-            for (int i = 1; i < transparencyStateNames.Count; ++i)
+            catch (ArgumentException)
             {
-                alphaObject.createTransparencyState();
+                throw new TransparencyException(String.Format("A Transparency Object named '{0}' from Sim Object '{1}' already exists. The Transparency Object that was stored for this name is '{2}'.", alphaObject.ObjectName, alphaObject.Owner.Name, transparencyInterfaces[alphaObject.ObjectName].Owner.Name));
             }
-            alphaObject.ActiveTransparencyState = TransparencyStateIndex;
-            transparencyInterfaces.Add(alphaObject.ObjectName, alphaObject);
         }
 
         internal static void removeTransparencyObject(TransparencyInterface alphaObject)
         {
-            if (groups.ContainsKey(alphaObject.RenderGroup))
-            {
-                TransparencyGroup group = groups[alphaObject.RenderGroup];
-                group.removeTransparencyObject(alphaObject);
-                if (group.isEmpty())
-                {
-                    groups.Remove(alphaObject.RenderGroup);
-                }
-                transparencyInterfaces.Remove(alphaObject.ObjectName);
-            }
-        }
-
-        public static TransparencyGroup getTransparencyGroup(RenderGroup group)
-        {
-            TransparencyGroup ret = null;
-            groups.TryGetValue(group, out ret);
-            return ret;
+            transparencyInterfaces.Remove(alphaObject.ObjectName);
         }
 
         public static TransparencyInterface getTransparencyObject(String name)
@@ -66,9 +50,12 @@ namespace Medical
             return transInter;
         }
 
-        public static IEnumerable<TransparencyGroup> getGroupIter()
+        public static IEnumerable<TransparencyInterface> TransparencyInterfaces
         {
-            return groups.Values;
+            get
+            {
+                return transparencyInterfaces;
+            }
         }
 
         public static void setAllAlphas(float alpha)
@@ -139,15 +126,6 @@ namespace Medical
                     transInterface.applyTransparencyState(stateIndex);
                 }
             }
-        }
-
-        /// <summary>
-        /// Make a copy of the list of all Transparency Interfaces.
-        /// </summary>
-        /// <returns>A copy of the list of all TransparencyInterfaces. These can be modified and will have an effect on the scene.</returns>
-        public static List<TransparencyInterface> getTransparencyList()
-        {
-            return new List<TransparencyInterface>(transparencyInterfaces);
         }
 
         /// <summary>

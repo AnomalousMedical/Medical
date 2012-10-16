@@ -25,15 +25,12 @@ namespace Medical
         public void captureState()
         {
             entries.Clear();
-            foreach (TransparencyGroup group in TransparencyController.getGroupIter())
+            foreach (TransparencyInterface trans in TransparencyController.TransparencyInterfaces)
             {
-                foreach (TransparencyInterface trans in group.getTransparencyObjectIter())
+                if (trans.CurrentAlpha > Single.Epsilon)
                 {
-                    if (trans.CurrentAlpha > Single.Epsilon)
-                    {
-                        LayerEntry entry = new LayerEntry(trans);
-                        entries.AddLast(entry);
-                    }
+                    LayerEntry entry = new LayerEntry(trans);
+                    entries.AddLast(entry);
                 }
             }
         }
@@ -45,7 +42,7 @@ namespace Medical
 
         public void timedApply(float time)
         {
-            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
+            List<TransparencyInterface> unvisitedInterfaces = new List<TransparencyInterface>(TransparencyController.TransparencyInterfaces);
             foreach (LayerEntry entry in entries)
             {
                 entry.timedApply(time, unvisitedInterfaces);
@@ -58,7 +55,7 @@ namespace Medical
 
         public void instantlyApply()
         {
-            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
+            List<TransparencyInterface> unvisitedInterfaces = new List<TransparencyInterface>(TransparencyController.TransparencyInterfaces);
             foreach (LayerEntry entry in entries)
             {
                 entry.instantlyApply(unvisitedInterfaces);
@@ -71,7 +68,7 @@ namespace Medical
 
         public void instantlyApplyBlendPercent(float percent)
         {
-            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
+            List<TransparencyInterface> unvisitedInterfaces = new List<TransparencyInterface>(TransparencyController.TransparencyInterfaces);
             foreach (LayerEntry entry in entries)
             {
                 entry.instantlyApplyBlendPercent(unvisitedInterfaces, percent);
