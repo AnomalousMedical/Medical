@@ -39,9 +39,9 @@ namespace Medical
             configFile.loadConfigFile();
             if (DocumentAdded != null)
             {
-                foreach (String document in recentDocumentList)
+                for(int i = recentDocumentList.Count - 1; i > -1; --i)//Do list backwards, this will accurately reflect the order the items were accessed
                 {
-                    DocumentAdded.Invoke(this, document);
+                    DocumentAdded.Invoke(this, recentDocumentList[i]);
                 }
             }
         }

@@ -59,7 +59,7 @@ namespace Medical.GUI
 
         private void addDocument(string document)
         {
-            ButtonGridItem item = documentGrid.addItem(documentController.getFileTypePrettyName(document), Path.GetFileNameWithoutExtension(document), documentController.getFileTypeIcon(document));
+            ButtonGridItem item = documentGrid.insertItem(0, documentController.getFileTypePrettyName(document), Path.GetFileNameWithoutExtension(document), documentController.getFileTypeIcon(document));
             item.UserObject = document;
             documentsToItems.Add(document, item);
             item.ItemClicked += new EventHandler(item_ItemClicked);
