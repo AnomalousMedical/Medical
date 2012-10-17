@@ -2,7 +2,7 @@
 
 #include "NativeOSWindow.h"
 
-#define WIN32_WINDOW_CLASS "Win32WindowClass"
+#define WIN32_WINDOW_CLASS L"Win32WindowClass"
 
 class Win32Window : public NativeOSWindow
 {

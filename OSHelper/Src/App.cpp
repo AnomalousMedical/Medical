@@ -29,7 +29,7 @@ extern "C" _AnomalousExport void App_registerDelegates(App* app, OnInitDelegate 
 	app->registerDelegates(onInitCB, onExitCB, onIdleCB);
 }
 
-extern "C" _AnomalousExport void App_run(App* app, int argc, char* argv[])
+extern "C" _AnomalousExport void App_run(App* app)
 {
 	app->run();
 }

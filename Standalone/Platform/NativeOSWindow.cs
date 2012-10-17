@@ -243,13 +243,13 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr NativeOSWindow_create(IntPtr parent, String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activeCB);
+        private static extern IntPtr NativeOSWindow_create(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activeCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_destroy(IntPtr nativeWindow);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void NativeOSWindow_setTitle(IntPtr nativeWindow, String title);
+        private static extern void NativeOSWindow_setTitle(IntPtr nativeWindow, [MarshalAs(UnmanagedType.LPWStr)] String title);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_showFullScreen(IntPtr nativeWindow);

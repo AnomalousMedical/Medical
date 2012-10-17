@@ -58,7 +58,7 @@ namespace Medical
                 {
                     try
                     {
-                        this.showModalCallback(result, Marshal.PtrToStringAnsi(filePtr));
+                        this.showModalCallback(result, Marshal.PtrToStringUni(filePtr));
                     }
                     finally
                     {
@@ -82,7 +82,7 @@ namespace Medical
             #region PInvoke
 
             [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
-            private static extern void FileSaveDialog_showModal(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard, FileSaveDialogResultCallback resultCallback);
+            private static extern void FileSaveDialog_showModal(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String message, [MarshalAs(UnmanagedType.LPWStr)] String defaultDir, [MarshalAs(UnmanagedType.LPWStr)] String defaultFile, [MarshalAs(UnmanagedType.LPWStr)] String wildcard, FileSaveDialogResultCallback resultCallback);
 
             #endregion
         }

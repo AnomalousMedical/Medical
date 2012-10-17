@@ -40,9 +40,9 @@ namespace Medical
         }
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void MessageDialog_showErrorDialog(IntPtr parent, String msg, String cap);
+        private static extern void MessageDialog_showErrorDialog(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String msg, [MarshalAs(UnmanagedType.LPWStr)] String cap);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern NativeDialogResult MessageDialog_showQuestionDialog(IntPtr parent, String msg, String cap);
+        private static extern NativeDialogResult MessageDialog_showQuestionDialog(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String msg, [MarshalAs(UnmanagedType.LPWStr)] String cap);
     }
 }

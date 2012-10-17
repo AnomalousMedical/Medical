@@ -43,8 +43,7 @@ namespace Medical
 
         public void run()
         {
-            string[] args = Environment.GetCommandLineArgs();
-            App_run(appPtr, args.Length, args);
+            App_run(appPtr);
         }
 
         public void exit()
@@ -74,7 +73,7 @@ namespace Medical
         private static extern void App_registerDelegates(IntPtr app, OnInitDelegate onInitCB, OnExitDelegate onExitCB, OnIdleDelegate onIdleCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void App_run(IntPtr app, int argc, String[] argv);
+        private static extern void App_run(IntPtr app);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void App_exit(IntPtr app);

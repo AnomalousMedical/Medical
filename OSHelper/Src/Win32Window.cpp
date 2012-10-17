@@ -23,7 +23,7 @@ Win32Window::~Win32Window()
     
 void Win32Window::setTitle(String title)
 {
-	SetWindowTextA(window, title);
+	SetWindowText(window, title);
 }
     
 void Win32Window::showFullScreen()

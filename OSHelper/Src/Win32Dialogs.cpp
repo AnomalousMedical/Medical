@@ -3,20 +3,21 @@
 #include "NativeOSWindow.h"
 #include "NativeDialog.h"
 #include <string>
+typedef std::wstring StdString;
 
 #include <shlobj.h>
 #include "Commdlg.h"
 #define FILE_NAME_BUFFER_SIZE 65534
 
 //Wildcard, these are in the format description|extension|description|extension
-void convertWildcards(const std::string& wildcard, std::string& filterBuffer)
+void convertWildcards(const StdString& wildcard, StdString& filterBuffer)
 {
 	size_t pos = 0;
 	pos = wildcard.find('|');
-	if(pos == std::string::npos)
+	if(pos == StdString::npos)
 	{
 		//Consider the whole string the filter
-		filterBuffer = wildcard + '\0' + wildcard + '\0';
+		filterBuffer = wildcard + L'\0' + wildcard + L'\0';
 	}
 	else
 	{
@@ -25,21 +26,21 @@ void convertWildcards(const std::string& wildcard, std::string& filterBuffer)
 		do
 		{
 			++pipeCount;
-			filterBuffer[pos] = '\0';
+			filterBuffer[pos] = L'\0';
 			pos = wildcard.find('|', pos + 1);
 		}
-		while(pos != std::string::npos);
+		while(pos != StdString::npos);
 		//If the last character was not a pipe make sure to add a trailing null
 		if(wildcard.rfind('|') + 1 != wildcard.length())
 		{
-			filterBuffer += '\0';
+			filterBuffer += L'\0';
 			++pipeCount;
 		}
 		//Make sure we have an even set of pairs
 		if(pipeCount % 2 != 0)
 		{
-			filterBuffer += "*.*";
-			filterBuffer += '\0';
+			filterBuffer += L"*.*";
+			filterBuffer += L'\0';
 		}
 	}
 }
@@ -51,7 +52,7 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
 	of.lStructSize = sizeof(of);
 
 	//Result buffer
-	char fileNames[FILE_NAME_BUFFER_SIZE] = "";
+	wchar_t fileNames[FILE_NAME_BUFFER_SIZE] = L"";
 	of.lpstrFile = fileNames;
 	of.nMaxFile = FILE_NAME_BUFFER_SIZE;
 
@@ -64,7 +65,7 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
 	//Title
 	if(message != 0)
 	{
-		of.lpstrFileTitle = const_cast<char *>(message);
+		of.lpstrFileTitle = const_cast<wchar_t *>(message);
 	}
 
 	//Default dir
@@ -74,7 +75,7 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
 	}
 
 	//Wildcard, these are in the format description|extension|description|extension
-	std::string filterBuffer;
+	StdString filterBuffer;
 	if(wildcard != 0)
 	{
 		convertWildcards(wildcard, filterBuffer);
@@ -97,8 +98,8 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
 		bool multipleFiles = (of.lpstrFile[of.nFileOffset - 1] == '\0');
 		if(multipleFiles)
 		{
-			std::string dirPath;
-			std::string file;
+			StdString dirPath;
+			StdString file;
 			dirPath.assign(of.lpstrFile, of.nFileOffset - 1);
 			bool isRoot = dirPath[dirPath.length() - 1] == '\\';
 			if(!isRoot)
@@ -125,7 +126,7 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
 		}
 		else
 		{
-			std::string file(of.lpstrFile);
+			StdString file(of.lpstrFile);
 			setPathString(file.c_str());
 		}
 		dlgResult = OK;
@@ -141,7 +142,7 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 	of.lStructSize = sizeof(of);
 
 	//Result buffer
-	char fileNames[FILE_NAME_BUFFER_SIZE] = "";
+	wchar_t fileNames[FILE_NAME_BUFFER_SIZE] = L"";
 	of.lpstrFile = fileNames;
 	of.nMaxFile = FILE_NAME_BUFFER_SIZE;
 
@@ -154,7 +155,7 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 	//Title
 	if(message != 0)
 	{
-		of.lpstrFileTitle = const_cast<char *>(message);
+		of.lpstrFileTitle = const_cast<wchar_t *>(message);
 	}
 
 	//Default dir
@@ -164,7 +165,7 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 	}
 
 	//Wildcard, these are in the format description|extension|description|extension
-	std::string filterBuffer;
+	StdString filterBuffer;
 	if(wildcard != 0)
 	{
 		convertWildcards(wildcard, filterBuffer);
@@ -176,7 +177,7 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 	of.Flags = flags;
 
 	NativeDialogResult result = CANCEL;
-	std::string path;
+	StdString path;
 	//Show Dialog
 	if(GetSaveFileName(&of))
 	{
@@ -190,17 +191,17 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 			int extEnd = 0;
 			while(pairIndex < of.nFilterIndex)
 			{
-				extPos = filterBuffer.find('\0', extPos);
-				if(extPos != std::string::npos)
+				extPos = filterBuffer.find(L'\0', extPos);
+				if(extPos != StdString::npos)
 				{
 					++extPos;
-					extEnd = filterBuffer.find('\0', extPos);
-					if(extEnd != std::string::npos)
+					extEnd = filterBuffer.find(L'\0', extPos);
+					if(extEnd != StdString::npos)
 					{
 						if(pairIndex == of.nFilterIndex - 1)
 						{
 							extPos = filterBuffer.find('.', extPos);
-							if(extPos != std::string::npos)
+							if(extPos != StdString::npos)
 							{
 								path += filterBuffer.substr(extPos, extEnd - extPos);
 								break;
@@ -230,7 +231,7 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 
 extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, String message, String startPath, DirDialogResultCallback resultCallback)
 {
-	char path[MAX_PATH] = "";
+	wchar_t path[MAX_PATH] = L"";
 
 	LPITEMIDLIST pidl     = NULL;
 	BROWSEINFO   bi       = { 0 };
@@ -245,7 +246,7 @@ extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, Str
 	bi.lpszTitle      = message;
 	bi.ulFlags        = BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
 
-	std::string strPath;
+	StdString strPath;
 	if ((pidl = SHBrowseForFolder(&bi)) != NULL)
 	{
 		bResult = SHGetPathFromIDList(pidl, path);

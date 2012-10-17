@@ -11,7 +11,7 @@ extern "C" _AnomalousExport void MessageDialog_showErrorDialog(NativeOSWindow* p
 	{
 		hWnd = (HWND)parent->getHandle();
 	}
-	MessageBoxA(hWnd, msg, cap, MB_OK | MB_ICONEXCLAMATION);
+	MessageBox(hWnd, msg, cap, MB_OK | MB_ICONEXCLAMATION);
 }
 
 extern "C" _AnomalousExport NativeDialogResult MessageDialog_showQuestionDialog(NativeOSWindow* parent, String msg, String cap)
