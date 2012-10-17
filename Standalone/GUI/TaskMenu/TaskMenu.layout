@@ -17,9 +17,9 @@
         <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="70 11 76 22" name="Documents">
             <Property key="Caption" value="Documents"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 574 432" align="Stretch" name="DocumentScroller">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 280 432" align="Stretch" name="DocumentScroller">
             <Property key="CanvasSize" value="300 300"/>
-            <Property key="Visible" value="false"/>
+            <Property key="Visible" value="true"/>
             <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
             <UserString key="ItemHeight" value="54"/>
@@ -28,5 +28,28 @@
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="554 10 24 20" align="Right Top" name="CloseButton"/>
+        <Widget type="Widget" skin="PanelEmpty" position="284 45 292 432" align="Right Top" name="DocumentInfoPanel">
+            <Widget type="ImageBox" skin="ImageBox" position="1 8 32 32" name="DocumentInfoIcon"/>
+            <Widget type="TextBox" skin="TextBox" position="1 45 34 16">
+                <Property key="Caption" value="Name"/>
+                <Property key="TextColour" value="1 1 1"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="1 62 292 16" align="HStretch Top" name="NameLabel">
+                <Property key="TextColour" value="1 1 1"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="1 79 127 16">
+                <Property key="Caption" value="Location"/>
+                <Property key="TextColour" value="1 1 1"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="1 96 292 16" align="HStretch Top" name="LocationLabel">
+                <Property key="TextColour" value="1 1 1"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="1 116 98 28" name="OpenButton">
+                <Property key="Caption" value="Open"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="100 116 98 28" name="RemoveButton">
+                <Property key="Caption" value="Remove"/>
+            </Widget>
+        </Widget>
     </Widget>
 </MyGUI>

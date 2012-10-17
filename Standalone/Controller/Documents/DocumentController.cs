@@ -96,6 +96,11 @@ namespace Medical
             recentDocuments.addDocument(filename);
         }
 
+        public void removeFromRecentDocuments(String filename)
+        {
+            recentDocuments.removeDocument(filename);
+        }
+
         public bool canReadFile(String filename)
         {
             foreach (DocumentHandler handler in documentHandlers)

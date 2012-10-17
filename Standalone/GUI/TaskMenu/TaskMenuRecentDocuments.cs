@@ -17,12 +17,30 @@ namespace Medical.GUI
 
         private Dictionary<String, ButtonGridItem> documentsToItems = new Dictionary<String, ButtonGridItem>();
         private DocumentController documentController;
+        private Widget documentInfoPanel;
+        private ImageBox documentInfoIcon;
+        private TextBox nameLabel;
+        private TextBox locationLabel;
+        private bool showDocumentInfo = false;
 
         public TaskMenuRecentDocuments(Widget widget, DocumentController documentController)
         {
             documentScroller = (ScrollView)widget.findWidget("DocumentScroller");
             documentGrid = new ButtonGrid(documentScroller, new ButtonGridTextAdjustedGridLayout());
-            documentGrid.HighlightSelectedButton = false;
+            documentGrid.HighlightSelectedButton = true;
+            documentGrid.ItemActivated += new EventHandler(documentGrid_ItemActivated);
+            documentGrid.SelectedValueChanged += new EventHandler(documentGrid_SelectedValueChanged);
+
+            documentInfoPanel = widget.findWidget("DocumentInfoPanel");
+            documentInfoPanel.Visible = false;
+            documentInfoIcon = (ImageBox)documentInfoPanel.findWidget("DocumentInfoIcon");
+            nameLabel = (TextBox)documentInfoPanel.findWidget("NameLabel");
+            locationLabel = (TextBox)documentInfoPanel.findWidget("LocationLabel");
+
+            Button openButton = (Button)documentInfoPanel.findWidget("OpenButton");
+            openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
+            Button removeButton = (Button)documentInfoPanel.findWidget("RemoveButton");
+            removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
 
             this.documentController = documentController;
             documentController.DocumentAdded += new RecentDocumentEvent(documentController_DocumentAdded);
@@ -37,7 +55,7 @@ namespace Medical.GUI
 
         public void resizeAndLayout(int newWidth)
         {
-            documentGrid.resizeAndLayout(newWidth);
+            documentGrid.resizeAndLayout(documentScroller.Width);
         }
 
         public bool Visible
@@ -48,6 +66,7 @@ namespace Medical.GUI
             }
             set
             {
+                documentInfoPanel.Visible = value && showDocumentInfo;
                 documentScroller.Visible = value;
             }
         }
@@ -62,7 +81,6 @@ namespace Medical.GUI
             ButtonGridItem item = documentGrid.insertItem(0, documentController.getFileTypePrettyName(document), Path.GetFileNameWithoutExtension(document), documentController.getFileTypeIcon(document));
             item.UserObject = document;
             documentsToItems.Add(document, item);
-            item.ItemClicked += new EventHandler(item_ItemClicked);
         }
 
         private void removeDocument(string document)
@@ -83,13 +101,59 @@ namespace Medical.GUI
             addDocument(document);
         }
 
-        void item_ItemClicked(object sender, EventArgs e)
+        void documentGrid_ItemActivated(object sender, EventArgs e)
         {
-            documentController.openFile(documentGrid.SelectedItem.UserObject.ToString());
-            if (DocumentClicked != null)
+            openSelectedFile();
+        }
+
+        void documentGrid_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (documentGrid.SelectedItem != null)
             {
-                DocumentClicked.Invoke();
+                String document = documentGrid.SelectedItem.UserObject.ToString();
+                documentInfoIcon.setItemResource(documentController.getFileTypeIcon(document));
+                nameLabel.Caption = Path.GetFileName(document);
+                locationLabel.Caption = Path.GetDirectoryName(document);
+                showDocumentInfo = true;
+                if (!documentInfoPanel.Visible)
+                {
+                    documentInfoPanel.Visible = true;
+                }
             }
+            else
+            {
+                showDocumentInfo = false;
+                if (documentInfoPanel.Visible)
+                {
+                    documentInfoPanel.Visible = false;
+                }
+            }
+        }
+
+        private void openSelectedFile()
+        {
+            if (documentGrid.SelectedItem != null)
+            {
+                documentController.openFile(documentGrid.SelectedItem.UserObject.ToString());
+                if (DocumentClicked != null)
+                {
+                    DocumentClicked.Invoke();
+                }
+            }
+        }
+
+        void removeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (documentGrid.SelectedItem != null)
+            {
+                String document = documentGrid.SelectedItem.UserObject.ToString();
+                documentController.removeFromRecentDocuments(document);
+            }
+        }
+
+        void openButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            openSelectedFile();
         }
     }
 }
