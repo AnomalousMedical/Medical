@@ -34,14 +34,14 @@
                 <Property key="Caption" value="Name"/>
                 <Property key="TextColour" value="1 1 1"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="1 62 292 16" align="HStretch Top" name="NameLabel">
+            <Widget type="TextBox" skin="TextBox" position="1 62 290 16" align="HStretch Top" name="NameLabel">
                 <Property key="TextColour" value="1 1 1"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="1 79 127 16">
                 <Property key="Caption" value="Location"/>
                 <Property key="TextColour" value="1 1 1"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="1 96 292 16" align="HStretch Top" name="LocationLabel">
+            <Widget type="TextBox" skin="TextBox" position="1 96 290 16" align="HStretch Top" name="LocationLabel">
                 <Property key="TextColour" value="1 1 1"/>
             </Widget>
             <Widget type="Button" skin="Button" position="1 116 98 28" name="OpenButton">

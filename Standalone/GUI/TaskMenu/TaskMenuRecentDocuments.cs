@@ -114,6 +114,14 @@ namespace Medical.GUI
                 documentInfoIcon.setItemResource(documentController.getFileTypeIcon(document));
                 nameLabel.Caption = Path.GetFileName(document);
                 locationLabel.Caption = Path.GetDirectoryName(document);
+                if (locationLabel.getTextSize().Width > locationLabel.getTextRegion().width)
+                {
+                    locationLabel.TextAlign = Align.Right | Align.VCenter;
+                }
+                else
+                {
+                    locationLabel.TextAlign = Align.Left | Align.VCenter;
+                }
                 showDocumentInfo = true;
                 if (!documentInfoPanel.Visible)
                 {
