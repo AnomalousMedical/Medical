@@ -14,7 +14,7 @@ extern "C" _AnomalousExport void MessageDialog_showErrorDialog(NativeOSWindow* p
 extern "C" _AnomalousExport NativeDialogResult MessageDialog_showQuestionDialog(NativeOSWindow* parent, String msg, String cap)
 {	
 	CFOptionFlags response;
-	CFUserNotificationDisplayAlert(0, kCFUserNotificationCautionAlertLevel, NULL, NULL, NULL, (CFStringRef)[NSString stringWithFormat:@"%S", cap], (CFStringRef)[NSString stringWithFormat:@"%S", msg], CFSTR("Ok"), NULL, NULL, &response);
+	CFUserNotificationDisplayAlert(0, kCFUserNotificationCautionAlertLevel, NULL, NULL, NULL, (CFStringRef)[NSString stringWithFormat:@"%S", cap], (CFStringRef)[NSString stringWithFormat:@"%S", msg], CFSTR("Yes"), CFSTR("No"), NULL, &response);
 	
 	switch (response) {
 		case kCFUserNotificationDefaultResponse:
