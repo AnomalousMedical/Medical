@@ -39,6 +39,7 @@ namespace Medical.GUI
             this.standaloneController = standaloneController;
             this.pluginManager = standaloneController.AtlasPluginManager;
             this.downloadController = standaloneController.DownloadController;
+            downloadController.AllDownloadsComplete += new Action<DownloadController>(downloadController_AllDownloadsComplete);
             this.downloadServer = downloadServer;
             downloadServer.DownloadFound += new Action<ServerDownloadInfo>(downloadServer_DownloadFound);
             downloadServer.FinishedReadingDownloads += new Action(downloadServer_FinishedReadingDownloads);
@@ -328,24 +329,27 @@ namespace Medical.GUI
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
                 addInfoToButtonGrid(downloadInfo.createClientDownloadInfo(), reselectItem);
+                pluginGrid.SuppressLayout = false;
+                pluginGrid.layout();
+            }
+            unsubscribeFromDownload(downloadInfo);
+        }
 
-                if (!downloadController.Downloading && displayRestartMessage)
+        void downloadController_AllDownloadsComplete(DownloadController obj)
+        {
+            if (activeNotDisposed)
+            {
+                if (displayRestartMessage)
                 {
-                    if (!widget.Visible || !reselectItem)
-                    {
-                        notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate);
-                    }
+                    notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate);
                     displayRestartMessage = false;
                     autoStartUpdate = false;
                 }
                 else if (!Visible)
                 {
-                    notificationManager.showNotification(String.Format("{0} has finished downloading.", downloadInfo.Name), "AnomalousMedical/Download");
+                    notificationManager.showNotification(String.Format("Your downloads are complete."), "AnomalousMedical/Download");
                 }
-                pluginGrid.SuppressLayout = false;
-                pluginGrid.layout();
             }
-            unsubscribeFromDownload(downloadInfo);
         }
 
         void downloadInfo_DownloadFailed(ServerDownloadInfo downloadInfo)

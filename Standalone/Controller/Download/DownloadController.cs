@@ -21,6 +21,8 @@ namespace Medical
 
         private ManualResetEvent pauseEvent = new ManualResetEvent(false);
 
+        public event Action<DownloadController> AllDownloadsComplete;
+
         public DownloadController(LicenseManager licenseManager, AtlasPluginManager pluginManager)
         {
             this.licenseManager = licenseManager;
@@ -122,6 +124,13 @@ namespace Medical
                     }
                     else
                     {
+                        ThreadManager.invoke(new Action(delegate()
+                        {
+                            if (AllDownloadsComplete != null)
+                            {
+                                AllDownloadsComplete.Invoke(this);
+                            }
+                        }));
                         pauseEvent.Reset();
                     }
                 }
