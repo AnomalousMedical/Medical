@@ -26,13 +26,13 @@
 		0171DB5D15FA73EF00093F17 /* NativeMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB5B15FA73EF00093F17 /* NativeMouse.h */; };
 		0171DB6015FA73FE00093F17 /* NativeKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB5E15FA73FE00093F17 /* NativeKeyboard.cpp */; };
 		0171DB6115FA73FE00093F17 /* NativeMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB5F15FA73FE00093F17 /* NativeMouse.cpp */; };
+		01AC143D162F2DC700311248 /* MessageDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 01AC143C162F2DC700311248 /* MessageDialog.mm */; };
 		01C7D2571357723E0027AC32 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22C1357723E0027AC32 /* App.h */; };
 		01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2321357723E0027AC32 /* MultiTouch.h */; };
 		01C7D25E1357723E0027AC32 /* MultiTouchImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2331357723E0027AC32 /* MultiTouchImpl.h */; };
 		01C7D25F1357723E0027AC32 /* NativeOSWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2341357723E0027AC32 /* NativeOSWindow.h */; };
 		01C7D2631357723E0027AC32 /* PerformanceCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2381357723E0027AC32 /* PerformanceCounter.h */; };
 		01C7D2661357723E0027AC32 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D23C1357723E0027AC32 /* App.cpp */; };
-		01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2461357723E0027AC32 /* MessageDialog.cpp */; };
 		01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2471357723E0027AC32 /* MultiTouch.cpp */; };
 		01C7D2751357723E0027AC32 /* NativeOSWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24B1357723E0027AC32 /* NativeOSWindow.cpp */; };
 		01C7D2791357723E0027AC32 /* PerformanceCounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24F1357723E0027AC32 /* PerformanceCounter.cpp */; };
@@ -63,13 +63,13 @@
 		0171DB5B15FA73EF00093F17 /* NativeMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeMouse.h; sourceTree = "<group>"; };
 		0171DB5E15FA73FE00093F17 /* NativeKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeKeyboard.cpp; sourceTree = "<group>"; };
 		0171DB5F15FA73FE00093F17 /* NativeMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeMouse.cpp; sourceTree = "<group>"; };
+		01AC143C162F2DC700311248 /* MessageDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MessageDialog.mm; sourceTree = "<group>"; };
 		01C7D22C1357723E0027AC32 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
 		01C7D2321357723E0027AC32 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouch.h; sourceTree = "<group>"; };
 		01C7D2331357723E0027AC32 /* MultiTouchImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouchImpl.h; sourceTree = "<group>"; };
 		01C7D2341357723E0027AC32 /* NativeOSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeOSWindow.h; sourceTree = "<group>"; };
 		01C7D2381357723E0027AC32 /* PerformanceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceCounter.h; sourceTree = "<group>"; };
 		01C7D23C1357723E0027AC32 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
-		01C7D2461357723E0027AC32 /* MessageDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
 		01C7D2471357723E0027AC32 /* MultiTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiTouch.cpp; sourceTree = "<group>"; };
 		01C7D24B1357723E0027AC32 /* NativeOSWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeOSWindow.cpp; sourceTree = "<group>"; };
 		01C7D24F1357723E0027AC32 /* PerformanceCounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceCounter.cpp; sourceTree = "<group>"; };
@@ -129,12 +129,12 @@
 				0171DB4C15FA4ECB00093F17 /* CocoaIdleApplicationDelegate.mm */,
 				0171DB3B15F8C95000093F17 /* CocoaDialogs.mm */,
 				01C7D23C1357723E0027AC32 /* App.cpp */,
-				01C7D2461357723E0027AC32 /* MessageDialog.cpp */,
 				01C7D2471357723E0027AC32 /* MultiTouch.cpp */,
 				01C7D24B1357723E0027AC32 /* NativeOSWindow.cpp */,
 				01C7D24F1357723E0027AC32 /* PerformanceCounter.cpp */,
 				01C7D2501357723E0027AC32 /* PlatformConfig.cpp */,
 				0171DB2A15F1447F00093F17 /* SystemInfo.mm */,
+				01AC143C162F2DC700311248 /* MessageDialog.mm */,
 			);
 			name = Src;
 			path = ../Src;
@@ -254,7 +254,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				01C7D2661357723E0027AC32 /* App.cpp in Sources */,
-				01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */,
 				01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */,
 				01C7D2751357723E0027AC32 /* NativeOSWindow.cpp in Sources */,
 				01C7D2791357723E0027AC32 /* PerformanceCounter.cpp in Sources */,
@@ -270,6 +269,7 @@
 				0171DB4D15FA4ECC00093F17 /* CocoaIdleApplicationDelegate.mm in Sources */,
 				0171DB6015FA73FE00093F17 /* NativeKeyboard.cpp in Sources */,
 				0171DB6115FA73FE00093F17 /* NativeMouse.cpp in Sources */,
+				01AC143D162F2DC700311248 /* MessageDialog.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,58 +8,34 @@
 
 //Wildcard, these are in the format description|extension|description|extension
 //Will return true if the filters should be used and false if not.
-bool convertWildcards(const std::string& wildcard, NSMutableArray* fileTypeVector)
+bool convertWildcards(String utf16Wildcard, NSMutableArray* fileTypeVector)
 {
-    if(wildcard.length() == 0)
+    NSString* wildcard = [NSString stringWithFormat:@"%S", utf16Wildcard];
+    if([wildcard length] == 0)
     {
         return false;
     }
-	size_t pos = 0;
-    size_t lastPos = 0;
-    size_t dotPos = 0;
-	pos = wildcard.find('|');
-	if(pos == std::string::npos)
+    NSUInteger dotPos = 0;
+    NSArray* fileTypes = [wildcard componentsSeparatedByString:@"|"];
+	if([fileTypes count] == 1)
 	{
-        dotPos = wildcard.find('.');
-        pos = wildcard.length();
-        if(dotPos != std::string::npos)
+        dotPos = [wildcard rangeOfString:@"."].location;
+        if(dotPos != NSNotFound)
         {
             //Consider the whole string the filter, from the . to the end
-            [fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(dotPos, pos - dotPos).c_str()]];
+            [fileTypeVector addObject:[wildcard substringFromIndex:dotPos + 1]];
         }		
 	}
 	else
 	{
-		int pipeCount = 0;
-		do
-		{
-			++pipeCount;
-            if(pipeCount % 2 == 0)
+		for(NSUInteger i = 1; i < [fileTypes count]; i += 2)
+        {
+            dotPos = [[fileTypes objectAtIndex:i] rangeOfString:@"."].location;
+            if(dotPos != NSNotFound)
             {
-                dotPos = wildcard.find('.', lastPos);
-                if(dotPos != std::string::npos && ++dotPos < pos)
-                {
-                    [fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(dotPos, pos - dotPos).c_str()]];
-                }
+                [fileTypeVector addObject:[[fileTypes objectAtIndex:i] substringFromIndex:dotPos + 1]];
             }
-            lastPos = pos + 1;
-			pos = wildcard.find('|', pos + 1);
-		}
-		while(pos != std::string::npos);
-		//If the last character was not a pipe make sure to add the last extension
-		if(wildcard.rfind('|') + 1 != wildcard.length())
-		{
-            pos = wildcard.length();
-			++pipeCount;
-            if(pipeCount % 2 == 0)
-            {
-                dotPos = wildcard.find('.', lastPos);
-                if(dotPos != std::string::npos && ++dotPos < pos)
-                {
-                    [fileTypeVector addObject:[NSString stringWithUTF8String:wildcard.substr(dotPos, pos - dotPos).c_str()]];
-                }
-            }
-		}
+        }
 	}
     
     return true;
@@ -102,7 +78,8 @@ extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent
              {
                  NSURL *file = [url filePathURL];
                  NSString* absoluteFile = [file path];
-                 setPathString([absoluteFile cStringUsingEncoding:NSASCIIStringEncoding]);
+                 String pathString = (String)[absoluteFile cStringUsingEncoding:NSUTF16StringEncoding];
+                 setPathString(pathString);
              }
              result = OK;
          }
@@ -140,16 +117,16 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
     
     [oPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger returnCode)
      {
-         std::string resPath;
+         String resPath;
          NativeDialogResult result = CANCEL;
          if(returnCode == NSOKButton)
          {
              NSURL *file = [oPanel URL];
              NSString* absoluteFile = [file path];
-             resPath = [absoluteFile cStringUsingEncoding:NSASCIIStringEncoding];
+             resPath = (String)[absoluteFile cStringUsingEncoding:NSUTF16StringEncoding];
              result = OK;
          }
-         resultCallback(result, resPath.c_str());
+         resultCallback(result, resPath);
      }];
     
     [allowedFileTypes release];
@@ -176,16 +153,16 @@ extern "C" _AnomalousExport void DirDialog_showModal(NativeOSWindow* parent, Str
     
     [oPanel beginSheetModalForWindow:parentWindow completionHandler:^(NSInteger returnCode)
      {
-         std::string resPath;
+         String resPath;
          NativeDialogResult result = CANCEL;
          if(returnCode == NSOKButton)
          {
              NSURL *file = [oPanel URL];
              NSString* absoluteFile = [file path];
-             resPath = [absoluteFile cStringUsingEncoding:NSASCIIStringEncoding];
+             resPath = (String)[absoluteFile cStringUsingEncoding:NSUTF16StringEncoding];
              result = OK;
          }
-         resultCallback(result, resPath.c_str());
+         resultCallback(result, resPath);
      }];
     
     [pool release];

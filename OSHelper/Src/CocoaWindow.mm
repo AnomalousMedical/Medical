@@ -21,7 +21,7 @@ CocoaWindow::CocoaWindow(CocoaWindow* parent, String title, int x, int y, int wi
     NSRect rect = [NSWindow contentRectForFrameRect:frame styleMask:styleMask];
     window =  [[NSWindow alloc] initWithContentRect:rect styleMask:styleMask backing: NSBackingStoreBuffered    defer:false];
     [window setBackgroundColor:[NSColor blackColor]];
-    [window setTitle: [NSString stringWithUTF8String:title]];
+    [window setTitle: [NSString stringWithFormat:@"%S", title]];
     
     if(parent != 0)
     {
@@ -67,7 +67,7 @@ CocoaWindow::~CocoaWindow()
 
 void CocoaWindow::setTitle(String title)
 {
-    [window setTitle: [NSString stringWithUTF8String:title]];
+    [window setTitle: [NSString stringWithFormat:@"%S", title]];
 }
 
 void CocoaWindow::showFullScreen()

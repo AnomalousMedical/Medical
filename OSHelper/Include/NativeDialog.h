@@ -3,8 +3,10 @@
 enum NativeDialogResult
 {
     YES = 1,
+    NDYES = YES, //Workaround for obj-c YES keyword
     OK = 2,
     NO = 4,
+    NDNO = NO, //Workaround for obj-c NO keyword
     CANCEL = 8,
 };
 
