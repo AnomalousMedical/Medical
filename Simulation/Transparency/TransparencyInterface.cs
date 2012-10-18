@@ -49,6 +49,7 @@ namespace Medical
         [Editable] private bool disableOnHidden = true;
         [Editable] private int renderGroupOffset = 0;
         [Editable] private uint subEntityIndex = 0;
+        [Editable] private bool useDepthCheck = false;
 
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
@@ -306,7 +307,7 @@ namespace Medical
                     subEntity.setMaterialName(baseMaterialName);
                     entity.setRenderQueueGroup(0);
                     subEntity.setVisible(true);
-                    //entity.setMaterialLodBias(1.0f, 0, 0);
+                    entity.setMaterialLodBias(1.0f, 0, 0);
                 }
             }
             else if (alpha == 0.0f)
@@ -320,6 +321,7 @@ namespace Medical
                     }
                     else if (hiddenMaterialName != null)
                     {
+                        entity.setMaterialLodBias(1.0f, 0, 0);
                         subEntity.setMaterialName(hiddenMaterialName);
                         entity.setRenderQueueGroup(0);
                     }
@@ -332,7 +334,14 @@ namespace Medical
                     status = TransparencyStatus.Transparent;
                     subEntity.setMaterialName(finalAlphaMaterialName);
                     subEntity.setVisible(true);
-                    //entity.setMaterialLodBias(1.0f, 1, 1);
+                    if (useDepthCheck)
+                    {
+                        entity.setMaterialLodBias(1.0f, 0, 0);
+                    }
+                    else
+                    {
+                        entity.setMaterialLodBias(1.0f, 1, 1);
+                    }
                     switch (RenderGroup)
                     {
                         case RenderGroup.None:
