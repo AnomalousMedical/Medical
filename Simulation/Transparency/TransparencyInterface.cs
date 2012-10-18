@@ -89,6 +89,8 @@ namespace Medical
 
         SubEntity subEntity;
 
+        [DoNotCopy]
+        [DoNotSave]
         TransparencyStatus status = TransparencyStatus.Solid;
 
         [DoNotSave]
