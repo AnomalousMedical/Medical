@@ -27,6 +27,37 @@ namespace Medical
         Nerves,
         ShoulderGirdle,
         Airway,
+        MAX,
+    }
+
+    static class RenderGroupQueue
+    {
+        private static byte[] queueGroups = new byte[(int)RenderGroup.MAX];
+        static RenderGroupQueue()
+        {
+            queueGroups[(int)RenderGroup.None] = 95;
+            queueGroups[(int)RenderGroup.Teeth] = 60;
+            queueGroups[(int)RenderGroup.Bones] = 70;
+            queueGroups[(int)RenderGroup.Muscles] = 70;
+            queueGroups[(int)RenderGroup.Skin] = 90;
+            queueGroups[(int)RenderGroup.Spine] = 70;
+            queueGroups[(int)RenderGroup.Nasal] = 70;
+            queueGroups[(int)RenderGroup.TMJ] = 60;
+            queueGroups[(int)RenderGroup.MouthInterior] = 60;
+            queueGroups[(int)RenderGroup.Nerves] = 70;
+            queueGroups[(int)RenderGroup.ShoulderGirdle] = 60;
+            queueGroups[(int)RenderGroup.Airway] = 60;
+        }
+
+        public static byte GetQueue(RenderGroup group)
+        {
+            return queueGroups[(int)group];
+        }
+
+        public static byte GetQueue(RenderGroup group, byte offset)
+        {
+            return (byte)(queueGroups[(int)group] + offset);
+        }
     }
 
     public enum TransparencyStatus
@@ -342,36 +373,7 @@ namespace Medical
                     {
                         entity.setMaterialLodBias(1.0f, 1, 1);
                     }
-                    switch (RenderGroup)
-                    {
-                        case RenderGroup.None:
-                            entity.setRenderQueueGroup((byte)(95 + renderGroupOffset));
-                            break;
-                        case RenderGroup.Teeth:
-                            entity.setRenderQueueGroup((byte)(0 + renderGroupOffset));
-                            break;
-                        case RenderGroup.Bones:
-                            entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                            break;
-                        case RenderGroup.Muscles:
-                            entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                            break;
-                        case RenderGroup.Nerves:
-                            entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                            break;
-                        case RenderGroup.Skin:
-                            entity.setRenderQueueGroup((byte)(90 + renderGroupOffset));
-                            break;
-                        case RenderGroup.Spine:
-                            entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                            break;
-                        case RenderGroup.Nasal:
-                            entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                            break;
-                        case RenderGroup.TMJ:
-                            entity.setRenderQueueGroup((byte)(60 + renderGroupOffset));
-                            break;
-                    }
+                    entity.setRenderQueueGroup(RenderGroupQueue.GetQueue(RenderGroup, (byte)renderGroupOffset));
                 }
             }
 
