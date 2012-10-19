@@ -26,6 +26,9 @@ namespace Developer.GUI
             enabled = new CheckButton((Button)window.findWidget("Enabled"));
             enabled.CheckedChanged += new MyGUIEvent(enabled_CheckedChanged);
             enabled.Checked = PerformanceMonitor.Enabled;
+
+            Button reset = (Button)window.findWidget("ResetButton");
+            reset.MouseButtonClick += new MyGUIEvent(reset_MouseButtonClick);
         }
 
         void enabled_CheckedChanged(Widget source, EventArgs e)
@@ -46,9 +49,17 @@ namespace Developer.GUI
             StringBuilder sb = new StringBuilder();
             foreach (Timelapse timelapse in PerformanceMonitor.Timelapses)
             {
-                sb.AppendFormat("{0}: {1}ms\n", timelapse.Name, timelapse.Duration);
+                sb.AppendFormat("{0}: {1}ms   |   Min {2}ms   |   Max {3}ms\n", timelapse.Name, timelapse.Duration, timelapse.Min, timelapse.Max);
             }
             text.Caption = sb.ToString();
+        }
+
+        void reset_MouseButtonClick(Widget source, EventArgs e)
+        {
+            foreach (Timelapse timelapse in PerformanceMonitor.Timelapses)
+            {
+                timelapse.resetMinMax();
+            }
         }
     }
 }
