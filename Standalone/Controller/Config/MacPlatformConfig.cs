@@ -4,9 +4,6 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Logging;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -28,7 +25,6 @@ namespace Medical
 
         public MacPlatformConfig()
         {
-            //ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
 			Log.ImportantInfo("Platform is Mac");
         }
 
@@ -109,11 +105,6 @@ namespace Medical
             {
                 return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support/Anomalous Medical/Common");
             }
-        }
-
-        private bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-        {
-            return true;
         }
 
         protected override bool CloseMainWindowOnShutdownImpl

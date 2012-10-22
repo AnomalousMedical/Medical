@@ -5,12 +5,19 @@ using System.Text;
 using System.Net;
 using System.Globalization;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace Medical
 {
     public class ServerConnection
     {
         private List<Tuple<String, String>> arguments;
+
+        static ServerConnection()
+        {
+            ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
+        }
 
         public ServerConnection(String url)
         {
@@ -94,5 +101,17 @@ namespace Medical
         public int Timeout { get; set; }
 
         public String Url { get; set; }
+
+        private static bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            if (sslPolicyErrors == SslPolicyErrors.None)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
