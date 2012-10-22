@@ -139,9 +139,12 @@ namespace Medical
             MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM2/FileDownload{1}", websiteHostUrl, buildUrlExtraPath);
         }
 
-        public static void setUser(String username)
+        public static void setUserDirectory(String username)
         {
-            MedicalConfig.docRoot = Path.Combine(Path.Combine(userAnomalousFolder, "Users"), username);
+            //There is a tiny chance of name collisions here if two users have an invalid char in the same place, but otherwise identical names.
+            //I'm not that worried about it.
+            String sanatizedUser = PathExtensions.MakeValidFileName(username);
+            MedicalConfig.docRoot = Path.Combine(Path.Combine(userAnomalousFolder, "Users"), sanatizedUser);
             windowsFile = docRoot + "/windows.ini";
             bookmarksFolder = docRoot + "/Bookmarks";
             recentDocsFile = docRoot + "/docs.ini";

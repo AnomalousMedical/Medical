@@ -262,7 +262,7 @@ namespace Medical
                 splashScreen.updateStatus(85, "Loading Plugins");
             }
 
-            MedicalConfig.setUser(LicenseManager.User);
+            MedicalConfig.setUserDirectory(LicenseManager.User);
 
             controller.GUIManager.setMainInterfaceEnabled(true);
             controller.setWatermarkText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
