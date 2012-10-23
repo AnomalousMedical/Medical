@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01238FCE1636E74F00A7AA8D /* ConnectionValidator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 01238FCD1636E74E00A7AA8D /* ConnectionValidator.mm */; };
 		0171DB1015F1200100093F17 /* CocoaApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0A15F1200000093F17 /* CocoaApp.h */; };
 		0171DB1115F1200100093F17 /* CocoaView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0B15F1200000093F17 /* CocoaView.h */; };
 		0171DB1215F1200100093F17 /* CocoaWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB0C15F1200000093F17 /* CocoaWindow.h */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01238FCD1636E74E00A7AA8D /* ConnectionValidator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ConnectionValidator.mm; sourceTree = "<group>"; };
 		0171DB0A15F1200000093F17 /* CocoaApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaApp.h; sourceTree = "<group>"; };
 		0171DB0B15F1200000093F17 /* CocoaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaView.h; sourceTree = "<group>"; };
 		0171DB0C15F1200000093F17 /* CocoaWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaWindow.h; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				01C7D2501357723E0027AC32 /* PlatformConfig.cpp */,
 				0171DB2A15F1447F00093F17 /* SystemInfo.mm */,
 				01AC143C162F2DC700311248 /* MessageDialog.mm */,
+				01238FCD1636E74E00A7AA8D /* ConnectionValidator.mm */,
 			);
 			name = Src;
 			path = ../Src;
@@ -270,6 +273,7 @@
 				0171DB6015FA73FE00093F17 /* NativeKeyboard.cpp in Sources */,
 				0171DB6115FA73FE00093F17 /* NativeMouse.cpp in Sources */,
 				01AC143D162F2DC700311248 /* MessageDialog.mm in Sources */,
+				01238FCE1636E74F00A7AA8D /* ConnectionValidator.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

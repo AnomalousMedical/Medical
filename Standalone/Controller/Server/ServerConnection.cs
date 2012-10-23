@@ -117,14 +117,7 @@ namespace Medical
 
         private static bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            if (trustServerConnections && sslPolicyErrors == SslPolicyErrors.None)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+			return trustServerConnections && sslPolicyErrors == SslPolicyErrors.None;
         }
     }
 }
