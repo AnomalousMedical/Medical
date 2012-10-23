@@ -117,6 +117,16 @@ namespace Medical
 
         private static bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
+            //This works by trusting a connection to a page on the anomalous medical website (specified by whatever the host passed to the program is).
+            //If that connection is valid rely on the default runtime checking. If not then override the default runtime checking.
+            //This is useful because mono seems to accept every connection no matter what, so on the mac platform we do an extra ping to the website
+            //using cocoa's method of connecting. If that proves to be valid, then we assume the connections are safe.
+            //
+            //This still leaves open the possiblity that other servers are compromised, but in our case the only other servers we are connecting to are the
+            //windows azure servers, and those should be ok.
+            //
+            //Likely a much better solution exists for this problem, but this method will ensure that at least some kind of check is done to make sure the
+            //anomalousmedical.com server is who it says it is. That is the only server we send credentials to at this point.
 			return trustServerConnections && sslPolicyErrors == SslPolicyErrors.None;
         }
     }

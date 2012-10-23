@@ -133,7 +133,7 @@ namespace Medical
             MedicalConfig.LicenseImageURL = String.Format("{0}/DRM2/LicenseImage", websiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
             MedicalConfig.DefaultAdUrl = String.Format("{0}/DRM2/ProgramAd", websiteHostUrl);
-			MedicalConfig.ValidateConnectionURL = String.Format("{0}", websiteHostUrl);
+			MedicalConfig.ValidateConnectionURL = String.Format("{0}/DRM2/ServerCheck", websiteHostUrl);
 
             MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM2/Update{1}", websiteHostUrl, buildUrlExtraPath);
             MedicalConfig.PluginInfoURL = String.Format("{0}/DRM2/DownloadInfo{1}", websiteHostUrl, buildUrlExtraPath);
