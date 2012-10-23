@@ -13,11 +13,13 @@ namespace Medical
     public class ServerConnection
     {
         private List<Tuple<String, String>> arguments;
+        private static Object validateServerLock = new Object();
+        private static bool trustServerConnections = false;
 
-        //static ServerConnection()
-        //{
-        //    ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
-        //}
+        static ServerConnection()
+        {
+            ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
+        }
 
         public ServerConnection(String url)
         {
@@ -27,6 +29,17 @@ namespace Medical
 
         public virtual void makeRequest(Action<HttpWebResponse> response)
         {
+            if (!trustServerConnections)
+            {
+                lock (validateServerLock)
+                {
+                    //Double check this in lock, can skip if this has already been derived
+                    if (!trustServerConnections)
+                    {
+                        trustServerConnections = PlatformConfig.TrustServerConnections;
+                    }
+                }
+            }
             StringBuilder postData = new StringBuilder();
             if (arguments != null)
             {
@@ -102,16 +115,16 @@ namespace Medical
 
         public String Url { get; set; }
 
-        //private static bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-        //{
-        //    if (sslPolicyErrors == SslPolicyErrors.None)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        private static bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            if (trustServerConnections && sslPolicyErrors == SslPolicyErrors.None)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

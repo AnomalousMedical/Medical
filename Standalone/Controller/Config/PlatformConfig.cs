@@ -162,6 +162,14 @@ namespace Medical
             }
         }
 
+        public static bool TrustServerConnections
+        {
+            get
+            {
+                return currentConfig.TrustServerConnectionsImpl;
+            }
+        }
+
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
 
@@ -198,6 +206,8 @@ namespace Medical
         protected abstract bool DefaultEnableMultitouchImpl { get; }
 
         protected abstract bool PreferHardwareSkinningImpl { get; }
+
+        protected abstract bool TrustServerConnectionsImpl { get; }
 
         #region PInvoke
 

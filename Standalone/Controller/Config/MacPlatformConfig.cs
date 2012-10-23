@@ -164,6 +164,14 @@ namespace Medical
 			}
 		}
 
+        protected override bool TrustServerConnectionsImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
+
 		#region PInvoke
 
 		[DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]

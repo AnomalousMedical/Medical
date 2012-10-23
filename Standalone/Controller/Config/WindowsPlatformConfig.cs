@@ -152,5 +152,13 @@ namespace Medical
                 return true;
             }
         }
+
+        protected override bool TrustServerConnectionsImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
