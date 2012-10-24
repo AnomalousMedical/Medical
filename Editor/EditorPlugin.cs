@@ -8,6 +8,8 @@ using Engine.ObjectManagement;
 using MyGUIPlugin;
 using Medical.Controller;
 using Medical.Editor;
+using System.Reflection;
+using System.IO;
 
 namespace Medical
 {
@@ -32,6 +34,29 @@ namespace Medical
         public EditorPlugin()
         {
             Log.Info("Editor GUI Loaded");
+
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+                {
+                    String assemblyFileName = new AssemblyName(args.Name).Name;
+                    String embeddedResourceName = String.Format("Medical.Resources.{0}.dll", assemblyFileName);
+                    try
+                    {
+                        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(embeddedResourceName))
+                        {
+                            if (stream != null)
+                            {
+                                Byte[] assemblyData = new Byte[stream.Length];
+                                stream.Read(assemblyData, 0, assemblyData.Length);
+                                return Assembly.Load(assemblyData);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                    }
+                    return null;
+                };
         }
 
         public void Dispose()
