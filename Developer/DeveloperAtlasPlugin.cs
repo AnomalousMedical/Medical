@@ -21,6 +21,7 @@ namespace Developer
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
         private GridPropertiesDialog gridProperties;
         private PerformanceGui performanceGui;
+        private DisablePhysicsTask disablePhysics;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -85,12 +86,16 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", CommonResources.NoIcon, TaskMenuCategories.Developer));
+
+            disablePhysics = new DisablePhysicsTask(int.MaxValue);
+            taskController.addTask(disablePhysics);
         }
 
         public void sceneLoaded(SimScene scene)
         {
             advancedMandibleMovement.sceneLoaded(scene);
             discControl.sceneLoaded(scene);
+            disablePhysics.sceneChanged(scene);
         }
 
         public void sceneRevealed()
