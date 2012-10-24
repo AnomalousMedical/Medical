@@ -9,6 +9,10 @@ namespace Medical.Irony
     [Language("XML", "1", "XML Grammar")]
     public class XmlGrammar : Grammar
     {
+        public const String AttributeIdentifier = "AttributeIdentifier";
+        public const String ElementIdentifier = "ElementIdentifier";
+        public const String XmlDeclarationIdentifier = "XmlDeclarationIdentifier";
+
         public XmlGrammar()
             : base(false)
         {
@@ -26,7 +30,9 @@ namespace Medical.Irony
             KeyTerm xmlDeclOpen = ToTerm("<?");
             KeyTerm xmlDeclClose = ToTerm("?>");
 
-            IdentifierTerminal identifier = new IdentifierTerminal("Identifier");
+            IdentifierTerminal attributeIdentifier = new IdentifierTerminal(AttributeIdentifier);
+            IdentifierTerminal elementIdentifier = new IdentifierTerminal(ElementIdentifier);
+            IdentifierTerminal xmlDeclarationIdentifier = new IdentifierTerminal(XmlDeclarationIdentifier);
 
             //Non Terminals
             NonTerminal document = new NonTerminal("document");
@@ -48,17 +54,17 @@ namespace Medical.Irony
             innerContent.Rule = element | stringContent;
             content.Rule = MakeStarRule(content, innerContent);
 
-            attribute.Rule = identifier + equals + stringLiteral;
+            attribute.Rule = attributeIdentifier + equals + stringLiteral;
             optionalAttribute.Rule = MakeStarRule(optionalAttribute, attribute);
 
-            elementStart.Rule = elementOpener + identifier + optionalAttribute + elementCloser;
-            elementEnd.Rule = closeElementOpener + identifier + elementCloser;
-            openCloseElement.Rule = elementOpener + identifier + optionalAttribute + openCloseElementCloser;
+            elementStart.Rule = elementOpener + elementIdentifier + optionalAttribute + elementCloser;
+            elementEnd.Rule = closeElementOpener + elementIdentifier + elementCloser;
+            openCloseElement.Rule = elementOpener + elementIdentifier + optionalAttribute + openCloseElementCloser;
 
             element.Rule = (elementStart + content + elementEnd) | openCloseElement;
             requiredElements.Rule = MakePlusRule(requiredElements, element);
 
-            xmlDeclaration.Rule = xmlDeclOpen + identifier + optionalAttribute + xmlDeclClose;
+            xmlDeclaration.Rule = xmlDeclOpen + xmlDeclarationIdentifier + optionalAttribute + xmlDeclClose;
             optionalXmlDeclaration.Rule = MakeStarRule(optionalXmlDeclaration, xmlDeclaration);
 
             document.Rule = optionalXmlDeclaration + requiredElements;

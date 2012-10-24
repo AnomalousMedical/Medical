@@ -57,6 +57,10 @@ namespace Medical.GUI
                     case TokenColor.Comment:
                         return "#348000";
                     case TokenColor.Identifier:
+                        if (token.Terminal.Name == XmlGrammar.AttributeIdentifier)
+                        {
+                            return "#FF0000";
+                        }
                         return "#800000";
                     case TokenColor.Keyword:
                         return "#800000";
