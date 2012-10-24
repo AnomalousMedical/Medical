@@ -26,9 +26,9 @@ namespace Medical.Irony
             NonTerminal elementEnd = new NonTerminal("ElementEnd");
             NonTerminal openCloseElement = new NonTerminal("OpenCloseElement");
             NonTerminal element = new NonTerminal("Element");
-            NonTerminal optionalElements = new NonTerminal("Elements");
             NonTerminal requiredElements = new NonTerminal("Elements");
             NonTerminal content = new NonTerminal("ElementContent");
+            NonTerminal multiContent = new NonTerminal("MultiContent");
             NonTerminal attribute = new NonTerminal("Attribute");
             NonTerminal optionalAttribute = new NonTerminal("Attribute");
             NonTerminal xmlDeclaration = new NonTerminal("XmlDeclaration");
@@ -37,7 +37,8 @@ namespace Medical.Irony
             //Rules
             this.Root = document;
 
-            content.Rule = optionalElements | stringContent;
+            content.Rule = element | stringContent;
+            multiContent.Rule = MakeStarRule(multiContent, content);
 
             attribute.Rule = identifier + ToTerm("=") + stringLiteral;
             optionalAttribute.Rule = MakeStarRule(optionalAttribute, attribute);
@@ -45,8 +46,8 @@ namespace Medical.Irony
             elementStart.Rule = ToTerm("<") + identifier + optionalAttribute + ToTerm(">");
             elementEnd.Rule = ToTerm("</") + identifier + ToTerm(">");
             openCloseElement.Rule = ToTerm("<") + identifier + optionalAttribute + ToTerm("/>");
-            element.Rule = (elementStart + content + elementEnd) | openCloseElement;
-            optionalElements.Rule = MakeStarRule(optionalElements, element);
+
+            element.Rule = (elementStart + multiContent + elementEnd) | openCloseElement;
             requiredElements.Rule = MakePlusRule(requiredElements, element);
 
             xmlDeclaration.Rule = ToTerm("<?") + identifier + optionalAttribute + ToTerm("?>");
