@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.GUI.AnomalousMvc;
 using Engine.Saving;
+using Engine.Attributes;
 
 namespace Medical.GUI
 {
@@ -13,12 +14,13 @@ namespace Medical.GUI
         public delegate String TextProviderDelegate();
         private TextProviderDelegate textProvider;
 
-        public TextEditorView(String name, TextProviderDelegate textProvider, uint maxLength = 100000, bool wordWrap = false)
+        public TextEditorView(String name, TextProviderDelegate textProvider, uint maxLength = 100000, bool wordWrap = false, TextHighlighter textHighlighter = null)
             :base(name)
         {
             this.textProvider = textProvider;
             this.MaxLength = maxLength;
             this.WordWrap = wordWrap;
+            this.TextHighlighter = textHighlighter;
         }
 
         public String Text
@@ -32,6 +34,8 @@ namespace Medical.GUI
         public uint MaxLength { get; set; }
 
         public bool WordWrap { get; set; }
+
+        public TextHighlighter TextHighlighter { get; set; }
 
         /// <summary>
         /// This is used by the factory to fire when one of these components has

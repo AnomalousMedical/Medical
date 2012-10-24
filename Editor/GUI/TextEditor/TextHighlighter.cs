@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class TextHighlighter
+    interface TextHighlighter
     {
+        void colorString(StringBuilder input);
     }
 }
