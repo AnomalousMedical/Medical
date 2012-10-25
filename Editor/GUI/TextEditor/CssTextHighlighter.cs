@@ -55,11 +55,15 @@ namespace Medical.GUI
                     case TokenColor.Comment:
                         return "#348000";
                     case TokenColor.Identifier:
-                        if (token.Terminal.Name == XmlGrammar.AttributeIdentifier)
+                        switch (token.Terminal.Name)
                         {
-                            return "#FF0000";
+                            case CssGrammar.Property:
+                                return "#FF0000";
+                            case CssGrammar.Value:
+                                return "#0034FF";
+                            default:
+                                return "#800000";
                         }
-                        return "#800000";
                     case TokenColor.Keyword:
                         return "#800000";
                     case TokenColor.Number:
@@ -67,7 +71,7 @@ namespace Medical.GUI
                     case TokenColor.String:
                         return "#0034FF";
                     case TokenColor.Text:
-                        return "#0034FF";
+                        return "#000000";
                     default:
                         return "#000000";
                 }
