@@ -34,6 +34,8 @@ namespace Medical.Irony.Grammars
             KeyTerm blockClose = ToTerm("}");
             KeyTerm semi = ToTerm(";");
             KeyTerm colin = ToTerm(":");
+            KeyTerm childChain = ToTerm(">");
+            KeyTerm siblingProceed = ToTerm("+");
 
             //Non Terminals
             NonTerminal css = new NonTerminal("CSS");
@@ -43,12 +45,14 @@ namespace Medical.Irony.Grammars
             NonTerminal declarations = new NonTerminal("Declarations");
             NonTerminal optPseudoClass = new NonTerminal("PseudoClassRule");
             NonTerminal selectorChain = new NonTerminal("SelectorChain");
+            NonTerminal selectorChainDelim = new NonTerminal("SelectorChainDelim");
 
             //Rules
             this.Root = css;
 
             optPseudoClass.Rule = (colin + pseudoClassId) | Empty;
-            selectorChain.Rule = MakePlusRule(selectorChain, simpleSelectorId);
+            selectorChainDelim.Rule = childChain | siblingProceed | Empty;
+            selectorChain.Rule = MakePlusRule(selectorChain, selectorChainDelim, simpleSelectorId);
 
             declaration.Rule = propertyId + colin + valueId + semi;
             declarations.Rule = MakeStarRule(declarations, declaration);
