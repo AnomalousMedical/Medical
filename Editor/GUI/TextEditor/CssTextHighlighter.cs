@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Irony.Parsing;
 using Medical.Irony;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -46,6 +47,18 @@ namespace Medical.GUI
             }
         }
 
+        private String CommentColor = "#348000";
+
+        private String PropertyColor = "#FF0000";
+
+        private String ValueColor = "#0034FF";
+
+        private String SelectorColor = "#800000";
+
+        private String PunctuationColor = "#000000";
+
+        private String OtherTextColor = "#000000";
+
         private String getColor(Token token)
         {
             if (token.EditorInfo != null)
@@ -53,32 +66,26 @@ namespace Medical.GUI
                 switch (token.EditorInfo.Color)
                 {
                     case TokenColor.Comment:
-                        return "#348000";
+                        return CommentColor;
                     case TokenColor.Identifier:
                         switch (token.Terminal.Name)
                         {
                             case CssGrammar.Property:
-                                return "#FF0000";
+                                return PropertyColor;
                             case CssGrammar.Value:
-                                return "#0034FF";
+                                return ValueColor;
                             default:
-                                return "#800000";
+                                return SelectorColor;
                         }
-                    case TokenColor.Keyword:
-                        return "#800000";
-                    case TokenColor.Number:
-                        return "#000000";
-                    case TokenColor.String:
-                        return "#0034FF";
                     case TokenColor.Text:
-                        return "#000000";
+                        return PunctuationColor;
                     default:
-                        return "#000000";
+                        return OtherTextColor;
                 }
             }
             else
             {
-                return "#000000";
+                return OtherTextColor;
             }
         }
     }

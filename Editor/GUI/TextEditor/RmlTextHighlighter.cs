@@ -46,6 +46,18 @@ namespace Medical.GUI
             }
         }
 
+        private String CommentColor = "#348000";
+
+        private String AttributeColor = "#FF0000";
+
+        private String ElementColor = "#800000";
+
+        private String StringColor = "#0034FF";
+
+        private String TextColor = "#000000";
+
+        private String PunctuationColor = "#0034FF";
+
         private String getColor(Token token)
         {
             if (token.EditorInfo != null)
@@ -53,28 +65,26 @@ namespace Medical.GUI
                 switch (token.EditorInfo.Color)
                 {
                     case TokenColor.Comment:
-                        return "#348000";
+                        return CommentColor;
                     case TokenColor.Identifier:
                         if (token.Terminal.Name == XmlGrammar.AttributeIdentifier)
                         {
-                            return "#FF0000";
+                            return AttributeColor;
                         }
-                        return "#800000";
+                        return ElementColor;
                     case TokenColor.Keyword:
-                        return "#800000";
-                    case TokenColor.Number:
-                        return "#000000";
+                        return ElementColor;
                     case TokenColor.String:
-                        return "#0034FF";
+                        return StringColor;
                     case TokenColor.Text:
-                        return "#0034FF";
+                        return PunctuationColor;
                     default:
-                        return "#000000";
+                        return TextColor;
                 }
             }
             else
             {
-                return "#000000";
+                return TextColor;
             }
         }
     }
