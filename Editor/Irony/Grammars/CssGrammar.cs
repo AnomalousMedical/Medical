@@ -10,7 +10,7 @@ namespace Medical.Irony.Grammars
     [Language("CSS", "1", "CSS Grammar")]
     public class CssGrammar : Grammar
     {
-        public const String SimpleSelectorIdentifier = "Selector";
+        public const String SimpleSelectorIdentifier = "SimpleSelector";
         public const String PseudoClassIdentifier = "PseudoClass";
         public const String Property = "Property";
         public const String Value = "Value";
@@ -36,6 +36,7 @@ namespace Medical.Irony.Grammars
             KeyTerm colin = ToTerm(":");
             KeyTerm childChain = ToTerm(">");
             KeyTerm siblingProceed = ToTerm("+");
+            KeyTerm groupDelim = ToTerm(",");
 
             //Non Terminals
             NonTerminal css = new NonTerminal("CSS");
@@ -44,8 +45,10 @@ namespace Medical.Irony.Grammars
             NonTerminal declaration = new NonTerminal("Declaration");
             NonTerminal declarations = new NonTerminal("Declarations");
             NonTerminal optPseudoClass = new NonTerminal("PseudoClassRule");
-            NonTerminal selectorChain = new NonTerminal("SelectorChain");
-            NonTerminal selectorChainDelim = new NonTerminal("SelectorChainDelim");
+            NonTerminal selectorChain = new NonTerminal("Chain");
+            NonTerminal selectorChainDelim = new NonTerminal("ChainDelim");
+            NonTerminal selectorGroup = new NonTerminal("SelectorGroup");
+            NonTerminal selector = new NonTerminal("Selector");
 
             //Rules
             this.Root = css;
@@ -53,11 +56,13 @@ namespace Medical.Irony.Grammars
             optPseudoClass.Rule = (colin + pseudoClassId) | Empty;
             selectorChainDelim.Rule = childChain | siblingProceed | Empty;
             selectorChain.Rule = MakePlusRule(selectorChain, selectorChainDelim, simpleSelectorId);
+            selector.Rule = selectorChain + optPseudoClass;
+            selectorGroup.Rule = MakePlusRule(selectorGroup, groupDelim, selector);
 
             declaration.Rule = propertyId + colin + valueId + semi;
             declarations.Rule = MakeStarRule(declarations, declaration);
 
-            rule.Rule = selectorChain + optPseudoClass + blockOpen + declarations + blockClose;
+            rule.Rule = selectorGroup + blockOpen + declarations + blockClose;
             rules.Rule = MakeStarRule(rules, rule);
 
             css.Rule = rules;
