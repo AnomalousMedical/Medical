@@ -26,10 +26,28 @@ namespace Medical.GUI
         LanguageData language;
         Parser parser;
 
+        private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f);
+        private String commentColor = "#B675C6";
+        private String propertyColor = "#99B2FF";
+        private String valueColor = "#14EF35";
+        private String selectorColor = "#C4BFC7";
+        private String punctuationColor = "#FFFFFF";
+        private String otherTextColor = "#FFFFFF";
+
         private CssTextHighlighter()
         {
             language = new LanguageData(new CssGrammar());
             parser = new Parser(language);
+
+            ConfigSection cssHighlightSection = EditorConfig.getConfigSection("CssColors");
+
+            Color.TryFromHexString(cssHighlightSection.getValue("BackgroundColor", "#191919"), out backgroundColor, backgroundColor);
+            commentColor = EditorConfig.readConfigHexColor(cssHighlightSection, "CommentColor", commentColor);
+            propertyColor = EditorConfig.readConfigHexColor(cssHighlightSection, "PropertyColor", propertyColor);
+            valueColor = EditorConfig.readConfigHexColor(cssHighlightSection, "ValueColor", valueColor);
+            selectorColor = EditorConfig.readConfigHexColor(cssHighlightSection, "SelectorColor", selectorColor);
+            punctuationColor = EditorConfig.readConfigHexColor(cssHighlightSection, "PunctuationColor", punctuationColor);
+            otherTextColor = EditorConfig.readConfigHexColor(cssHighlightSection, "OtherTextColor", otherTextColor);
         }
 
         public void colorString(StringBuilder input)
@@ -55,20 +73,6 @@ namespace Medical.GUI
             }
         }
 
-        private Color backgroundColor = Color.FromHexString("191919");
-
-        private String CommentColor = "#B675C6";
-
-        private String PropertyColor = "#99B2FF";
-
-        private String ValueColor = "#14EF35";
-
-        private String SelectorColor = "#C4BFC7";
-
-        private String PunctuationColor = "#FFFFFF";
-
-        private String OtherTextColor = "#FFFFFF";
-
         private String getColor(Token token)
         {
             if (token.EditorInfo != null)
@@ -76,26 +80,26 @@ namespace Medical.GUI
                 switch (token.EditorInfo.Color)
                 {
                     case TokenColor.Comment:
-                        return CommentColor;
+                        return commentColor;
                     case TokenColor.Identifier:
                         switch (token.Terminal.Name)
                         {
                             case CssGrammar.Property:
-                                return PropertyColor;
+                                return propertyColor;
                             case CssGrammar.Value:
-                                return ValueColor;
+                                return valueColor;
                             default:
-                                return SelectorColor;
+                                return selectorColor;
                         }
                     case TokenColor.Text:
-                        return PunctuationColor;
+                        return punctuationColor;
                     default:
-                        return OtherTextColor;
+                        return otherTextColor;
                 }
             }
             else
             {
-                return OtherTextColor;
+                return otherTextColor;
             }
         }
     }

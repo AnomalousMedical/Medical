@@ -61,6 +61,7 @@ namespace Medical
 
         public void Dispose()
         {
+            EditorConfig.save();
             projectExplorer.Dispose();
             scratchArea.Dispose();
             aspectRatioTask.Dispose();

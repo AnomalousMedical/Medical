@@ -25,11 +25,28 @@ namespace Medical.GUI
 
         LanguageData language;
         Parser parser;
+        private Color backgroundColor = new Color(0.1f, 0.1f, 0.1f);
+        private String commentColor = "#B675C6";
+        private String attributeColor = "#99B2FF";
+        private String elementColor = "#FFC66D";
+        private String stringColor = "#14EF35";
+        private String textColor = "#FFFFFF";
+        private String punctuationColor = "#CC7832";
 
         private RmlTextHighlighter()
         {
             language = new LanguageData(new XmlGrammar());
             parser = new Parser(language);
+
+            ConfigSection rmlHighlightSection = EditorConfig.getConfigSection("RmlColors");
+
+            Color.TryFromHexString(rmlHighlightSection.getValue("BackgroundColor", "#191919"), out backgroundColor, backgroundColor);
+            commentColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "CommentColor", commentColor);
+            attributeColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "AttributeColor", attributeColor);
+            elementColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "ElementColor", elementColor);
+            stringColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "StringColor", stringColor);
+            textColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "TextColor", textColor);
+            punctuationColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "PunctuationColor", punctuationColor);
         }
 
         public void colorString(StringBuilder input)
@@ -55,20 +72,6 @@ namespace Medical.GUI
             }
         }
 
-        private Color backgroundColor = Color.FromHexString("191919");
-
-        private String CommentColor = "#B675C6";
-
-        private String AttributeColor = "#99B2FF";
-
-        private String ElementColor = "#FFC66D";
-
-        private String StringColor = "#14EF35";
-
-        private String TextColor = "#FFFFFF";
-
-        private String PunctuationColor = "#CC7832";
-
         private String getColor(Token token)
         {
             if (token.EditorInfo != null)
@@ -76,26 +79,26 @@ namespace Medical.GUI
                 switch (token.EditorInfo.Color)
                 {
                     case TokenColor.Comment:
-                        return CommentColor;
+                        return commentColor;
                     case TokenColor.Identifier:
                         if (token.Terminal.Name == XmlGrammar.AttributeIdentifier)
                         {
-                            return AttributeColor;
+                            return attributeColor;
                         }
-                        return ElementColor;
+                        return elementColor;
                     case TokenColor.Keyword:
-                        return ElementColor;
+                        return elementColor;
                     case TokenColor.String:
-                        return StringColor;
+                        return stringColor;
                     case TokenColor.Text:
-                        return PunctuationColor;
+                        return punctuationColor;
                     default:
-                        return TextColor;
+                        return textColor;
                 }
             }
             else
             {
-                return TextColor;
+                return textColor;
             }
         }
     }

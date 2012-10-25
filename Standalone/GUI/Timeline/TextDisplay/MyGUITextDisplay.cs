@@ -45,12 +45,12 @@ namespace Medical.GUI
         public String addColorToSelectedText(Engine.Color color)
         {
             String colorText = textBox.Caption;
-            String defaultColor = "#" + textBox.TextColor.ToHexString();
+            String defaultColor = textBox.TextColor.ToHexString();
             if (textBox.IsTextSelection)
             {
                 int selectionStart = findPositionInColorizedString((int)textBox.TextSelectionStart, colorText);
                 String currentColor = findColorForPosition(selectionStart, colorText, defaultColor);
-                colorText = colorText.Insert(selectionStart, "#" + color.ToHexString());
+                colorText = colorText.Insert(selectionStart, color.ToHexString());
 
                 int selectionEnd = findPositionInColorizedString((int)textBox.TextSelectionEnd, colorText);
                 colorText = colorText.Insert(selectionEnd, currentColor);
@@ -58,7 +58,7 @@ namespace Medical.GUI
             else
             {
                 uint selection = textBox.TextCursor;
-                colorText = colorText.Insert(findPositionInColorizedString((int)selection, colorText), "#" + color.ToHexString());
+                colorText = colorText.Insert(findPositionInColorizedString((int)selection, colorText), color.ToHexString());
             }
             return colorText;
         }
