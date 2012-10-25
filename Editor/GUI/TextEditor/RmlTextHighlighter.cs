@@ -43,8 +43,6 @@ namespace Medical.GUI
 
                 input.Insert(tokenStart + additionalOffset, getColor(token));
                 additionalOffset += 7;
-                input.Insert(tokenEnd + additionalOffset, "#000000");
-                additionalOffset += 7;
             }
         }
 

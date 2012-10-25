@@ -46,7 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Irony">
-      <HintPath>..\..\dependencies\Irony\Irony\bin\Release\Irony.dll</HintPath>
+      <HintPath>..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="libRocketPlugin, Version=1.0.0.1387, Culture=neutral, processorArchitecture=MSIL">
@@ -280,7 +280,7 @@
     <EmbeddedResource Include="Resources\MvcContextIcons.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\..\dependencies\Irony\Irony\bin\Release\Irony.dll">
+    <EmbeddedResource Include="..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll">
       <Link>Resources\Irony.dll</Link>
     </EmbeddedResource>
   </ItemGroup>
