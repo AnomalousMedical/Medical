@@ -22,7 +22,7 @@ namespace Medical.Irony
             Terminal comment = new CommentTerminal("comment", "/*", "*/");
             NonGrammarTerminals.Add(comment);
             Terminal stringContent = new ToTerminatorTerminal("StringContent", ';');
-            //Terminal attributeSelector = new ToTerminatorTerminal("AttributeSelectorContent"
+            ToTerminatorTerminal attributeSelector = new ToTerminatorTerminal("AttributeSelectorContent", ']');
 
             IdentifierTerminal simpleSelectorId = new IdentifierTerminal(SimpleSelectorIdentifier, ".-*#", ".-*#");
             IdentifierTerminal pseudoClassId = new IdentifierTerminal(PseudoClassIdentifier);
@@ -45,18 +45,24 @@ namespace Medical.Irony
             NonTerminal rules = new NonTerminal("Rules");
             NonTerminal declaration = new NonTerminal("Declaration");
             NonTerminal declarations = new NonTerminal("Declarations");
-            NonTerminal optPseudoClass = new NonTerminal("PseudoClassRule");
+            NonTerminal optPseudoClass = new NonTerminal("OptPseudoClass");
             NonTerminal selectorChain = new NonTerminal("Chain");
             NonTerminal selectorChainDelim = new NonTerminal("ChainDelim");
             NonTerminal selectorGroup = new NonTerminal("SelectorGroup");
             NonTerminal selector = new NonTerminal("Selector");
+            NonTerminal optAttributeSelector = new NonTerminal("OptAttributeSelector");
+            NonTerminal multiAttributeSelector = new NonTerminal("MultiAttributeSelector");
+            NonTerminal simpleSelectorWithAttributeSelector = new NonTerminal("simpleSelectorWithAttributeSelector");
 
             //Rules
             this.Root = css;
 
+            optAttributeSelector.Rule = attributeSelectOpen + attributeSelector + attributeSelectClose;
+            multiAttributeSelector.Rule = MakeStarRule(multiAttributeSelector, optAttributeSelector);
             optPseudoClass.Rule = (colin + pseudoClassId) | Empty;
+            simpleSelectorWithAttributeSelector.Rule = simpleSelectorId + multiAttributeSelector;
             selectorChainDelim.Rule = childChain | siblingProceed | Empty;
-            selectorChain.Rule = MakePlusRule(selectorChain, selectorChainDelim, simpleSelectorId);
+            selectorChain.Rule = MakePlusRule(selectorChain, selectorChainDelim, simpleSelectorWithAttributeSelector);
             selector.Rule = selectorChain + optPseudoClass;
             selectorGroup.Rule = MakePlusRule(selectorGroup, groupDelim, selector);
 
@@ -68,8 +74,8 @@ namespace Medical.Irony
 
             css.Rule = rules;
 
-            MarkPunctuation(blockOpen, blockClose, semi, colin);
-            MarkTransient(optPseudoClass);
+            MarkPunctuation(blockOpen, blockClose, semi, colin, attributeSelectOpen, attributeSelectClose);
+            MarkTransient(optPseudoClass, multiAttributeSelector);
         }
     }
 }
