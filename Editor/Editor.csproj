@@ -199,6 +199,7 @@
     <Compile Include="GUI\OpenPropManager\OpenPropManager.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionClipboardContainer.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineEditorView.cs" />
+    <Compile Include="Irony\Grammars\CssGrammar.cs" />
     <Compile Include="Irony\Grammars\XmlGrammar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\TimelineEditor\ActionPrototypes\ShowPropActionData.cs" />

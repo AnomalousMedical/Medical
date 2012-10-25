@@ -30,9 +30,9 @@ namespace Medical.Irony
             KeyTerm xmlDeclOpen = ToTerm("<?");
             KeyTerm xmlDeclClose = ToTerm("?>");
 
-            IdentifierTerminal attributeIdentifier = new IdentifierTerminal(AttributeIdentifier);
-            IdentifierTerminal elementIdentifier = new IdentifierTerminal(ElementIdentifier);
-            IdentifierTerminal xmlDeclarationIdentifier = new IdentifierTerminal(XmlDeclarationIdentifier);
+            IdentifierTerminal attributeIdentifier = new IdentifierTerminal(AttributeIdentifier, ".", ".");
+            IdentifierTerminal elementIdentifier = new IdentifierTerminal(ElementIdentifier, ".", ".");
+            KeyTerm xmlDeclarationIdentifier = ToTerm("xml");
 
             //Non Terminals
             NonTerminal document = new NonTerminal("document");
@@ -72,7 +72,6 @@ namespace Medical.Irony
             MarkPunctuation(elementOpener, elementCloser, closeElementOpener, openCloseElementCloser, equals, xmlDeclOpen, xmlDeclClose);
             MarkTransient(innerContent);
         }
-
     }
 
     public class XmlContentText : Terminal
