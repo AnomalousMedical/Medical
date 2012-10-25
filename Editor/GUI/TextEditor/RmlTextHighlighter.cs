@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Irony.Parsing;
 using Medical.Irony;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -43,6 +44,14 @@ namespace Medical.GUI
 
                 input.Insert(tokenStart + additionalOffset, getColor(token));
                 additionalOffset += 7;
+            }
+        }
+
+        public Color BackgroundColor
+        {
+            get
+            {
+                return Color.White;
             }
         }
 

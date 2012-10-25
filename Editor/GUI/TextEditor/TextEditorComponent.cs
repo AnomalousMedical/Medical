@@ -21,6 +21,7 @@ namespace Medical.GUI
             this.textHighlighter = view.TextHighlighter;
             if (textHighlighter != null)
             {
+                text.setColour(textHighlighter.BackgroundColor);
                 text.EventEditTextChange += new MyGUIEvent(text_EventEditTextChange);
             }
 

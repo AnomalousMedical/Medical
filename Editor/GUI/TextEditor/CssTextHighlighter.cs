@@ -47,6 +47,14 @@ namespace Medical.GUI
             }
         }
 
+        public Color BackgroundColor
+        {
+            get
+            {
+                return Color.White;
+            }
+        }
+
         private String CommentColor = "#348000";
 
         private String PropertyColor = "#FF0000";
