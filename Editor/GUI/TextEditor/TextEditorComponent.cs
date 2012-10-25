@@ -97,7 +97,7 @@ namespace Medical.GUI
         void text_EventEditTextChange(Widget source, EventArgs e)
         {
             uint cursor = text.TextCursor;
-            StringBuilder sb = new StringBuilder(text.OnlyText);
+            StringBuilder sb = new StringBuilder(text.OnlyText.Replace("#", "##"));
             colorString(sb);
             text.Caption = sb.ToString();
             text.TextCursor = cursor;

@@ -43,7 +43,7 @@ namespace Medical
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
 
-            TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.rcssTypeController.loadText(currentFile), wordWrap: false);
+            TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.rcssTypeController.loadText(currentFile), wordWrap: false, textHighlighter:CssTextHighlighter.Instance);
             textEditorView.ViewLocation = ViewLocations.Left;
             textEditorView.IsWindow = true;
             textEditorView.ComponentCreated += (view, component) =>
