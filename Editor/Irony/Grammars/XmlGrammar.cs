@@ -19,9 +19,8 @@ namespace Medical.Irony
             //Terminals
             Terminal comment = new CommentTerminal("comment", "<!--", "-->");
             NonGrammarTerminals.Add(comment);
-            var number = new NumberLiteral("number");
-            var stringLiteral = new StringLiteral("string", "\"", StringOptions.None);
-            var stringContent = new XmlContentText("StringContent");
+            StringLiteral stringLiteral = new StringLiteral("string", "\"", StringOptions.None);
+            Terminal stringContent = new ToTerminatorTerminal("StringContent", '<');
             KeyTerm elementOpener = ToTerm("<");
             KeyTerm closeElementOpener = ToTerm("</");
             KeyTerm elementCloser = ToTerm(">");
@@ -71,35 +70,6 @@ namespace Medical.Irony
 
             MarkPunctuation(elementOpener, elementCloser, closeElementOpener, openCloseElementCloser, equals, xmlDeclOpen, xmlDeclClose);
             MarkTransient(innerContent);
-        }
-    }
-
-    public class XmlContentText : Terminal
-    {
-        public XmlContentText(String name)
-            : base(name)
-        {
-
-        }
-
-        public override IList<string> GetFirsts()
-        {
-            return null;
-        }
-
-        public override Token TryMatch(ParsingContext context, ISourceStream source)
-        {
-            int stopIndex = source.Text.IndexOf('<', source.Location.Position);
-            if (stopIndex == source.Location.Position)
-            {
-                return null;
-            }
-            if (stopIndex < 0)
-            {
-                stopIndex = source.Text.Length;
-            }
-            source.PreviewPosition = stopIndex;
-            return source.CreateToken(this.OutputTerminal);
         }
     }
 }

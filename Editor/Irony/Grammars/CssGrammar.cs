@@ -5,7 +5,7 @@ using System.Text;
 using Irony.Parsing;
 using System.Globalization;
 
-namespace Medical.Irony.Grammars
+namespace Medical.Irony
 {
     [Language("CSS", "1", "CSS Grammar")]
     public class CssGrammar : Grammar
@@ -21,14 +21,13 @@ namespace Medical.Irony.Grammars
             //Terminals
             Terminal comment = new CommentTerminal("comment", "/*", "*/");
             NonGrammarTerminals.Add(comment);
-            var number = new NumberLiteral("number");
-            var stringLiteral = new StringLiteral("string", "\"", StringOptions.None);
-            var stringContent = new XmlContentText("StringContent");
+            Terminal stringContent = new ToTerminatorTerminal("StringContent", ';');
+            //Terminal attributeSelector = new ToTerminatorTerminal("AttributeSelectorContent"
 
-            IdentifierTerminal simpleSelectorId = new IdentifierTerminal(SimpleSelectorIdentifier, ".-*", ".-*");
+            IdentifierTerminal simpleSelectorId = new IdentifierTerminal(SimpleSelectorIdentifier, ".-*#", ".-*#");
             IdentifierTerminal pseudoClassId = new IdentifierTerminal(PseudoClassIdentifier);
             IdentifierTerminal propertyId = new IdentifierTerminal(Property, "-", "-");
-            ValueRule valueId = new ValueRule(Value);
+            ToTerminatorTerminal valueId = new ToTerminatorTerminal(Value, ';');
 
             KeyTerm blockOpen = ToTerm("{");
             KeyTerm blockClose = ToTerm("}");
@@ -37,6 +36,8 @@ namespace Medical.Irony.Grammars
             KeyTerm childChain = ToTerm(">");
             KeyTerm siblingProceed = ToTerm("+");
             KeyTerm groupDelim = ToTerm(",");
+            KeyTerm attributeSelectOpen = ToTerm("[");
+            KeyTerm attributeSelectClose = ToTerm("]");
 
             //Non Terminals
             NonTerminal css = new NonTerminal("CSS");
@@ -69,35 +70,6 @@ namespace Medical.Irony.Grammars
 
             MarkPunctuation(blockOpen, blockClose, semi, colin);
             MarkTransient(optPseudoClass);
-        }
-    }
-
-    public class ValueRule : Terminal
-    {
-        public ValueRule(String name)
-            : base(name)
-        {
-
-        }
-
-        public override IList<string> GetFirsts()
-        {
-            return null;
-        }
-
-        public override Token TryMatch(ParsingContext context, ISourceStream source)
-        {
-            int stopIndex = source.Text.IndexOf(';', source.Location.Position);
-            if (stopIndex == source.Location.Position)
-            {
-                return null;
-            }
-            if (stopIndex < 0)
-            {
-                stopIndex = source.Text.Length;
-            }
-            source.PreviewPosition = stopIndex;
-            return source.CreateToken(this.OutputTerminal);
         }
     }
 }
