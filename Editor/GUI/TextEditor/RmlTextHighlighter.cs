@@ -51,21 +51,23 @@ namespace Medical.GUI
         {
             get
             {
-                return Color.White;
+                return backgroundColor;
             }
         }
 
-        private String CommentColor = "#348000";
+        private Color backgroundColor = Color.FromHexString("191919");
 
-        private String AttributeColor = "#FF0000";
+        private String CommentColor = "#B675C6";
 
-        private String ElementColor = "#800000";
+        private String AttributeColor = "#99B2FF";
 
-        private String StringColor = "#0034FF";
+        private String ElementColor = "#FFC66D";
 
-        private String TextColor = "#000000";
+        private String StringColor = "#14EF35";
 
-        private String PunctuationColor = "#0034FF";
+        private String TextColor = "#FFFFFF";
+
+        private String PunctuationColor = "#CC7832";
 
         private String getColor(Token token)
         {
