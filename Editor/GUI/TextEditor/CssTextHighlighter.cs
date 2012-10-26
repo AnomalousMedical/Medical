@@ -30,7 +30,7 @@ namespace Medical.GUI
         private String commentColor = "#B675C6";
         private String propertyColor = "#99B2FF";
         private String valueColor = "#14EF35";
-        private String selectorColor = "#C4BFC7";
+        private String selectorColor = "#FFC66D";
         private String punctuationColor = "#FFFFFF";
         private String otherTextColor = "#FFFFFF";
 

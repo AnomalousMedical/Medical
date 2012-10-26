@@ -45,7 +45,8 @@ namespace Medical.Irony
             NonTerminal rules = new NonTerminal("Rules");
             NonTerminal declaration = new NonTerminal("Declaration");
             NonTerminal declarations = new NonTerminal("Declarations");
-            NonTerminal optPseudoClass = new NonTerminal("OptPseudoClass");
+            NonTerminal pseudoClassRule = new NonTerminal("PseudoClassRule");
+            NonTerminal pseudoClasses = new NonTerminal("PseudoClasses");
             NonTerminal selectorChain = new NonTerminal("Chain");
             NonTerminal selectorChainDelim = new NonTerminal("ChainDelim");
             NonTerminal selectorGroup = new NonTerminal("SelectorGroup");
@@ -59,11 +60,12 @@ namespace Medical.Irony
 
             optAttributeSelector.Rule = attributeSelectOpen + attributeSelector + attributeSelectClose;
             multiAttributeSelector.Rule = MakeStarRule(multiAttributeSelector, optAttributeSelector);
-            optPseudoClass.Rule = (colin + pseudoClassId) | Empty;
+            pseudoClassRule.Rule = colin + pseudoClassId;
+            pseudoClasses.Rule = MakeStarRule(pseudoClasses, pseudoClassRule);
             simpleSelectorWithAttributeSelector.Rule = simpleSelectorId + multiAttributeSelector;
             selectorChainDelim.Rule = childChain | siblingProceed | Empty;
             selectorChain.Rule = MakePlusRule(selectorChain, selectorChainDelim, simpleSelectorWithAttributeSelector);
-            selector.Rule = selectorChain + optPseudoClass;
+            selector.Rule = selectorChain + pseudoClasses;
             selectorGroup.Rule = MakePlusRule(selectorGroup, groupDelim, selector);
 
             declaration.Rule = propertyId + colin + valueId + semi;
@@ -75,7 +77,7 @@ namespace Medical.Irony
             css.Rule = rules;
 
             MarkPunctuation(blockOpen, blockClose, semi, colin, attributeSelectOpen, attributeSelectClose);
-            MarkTransient(optPseudoClass, multiAttributeSelector);
+            MarkTransient(pseudoClassRule, multiAttributeSelector, pseudoClasses);
         }
     }
 }
