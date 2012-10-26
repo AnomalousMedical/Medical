@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\EditorController\EditorController.cs" />
     <Compile Include="Controller\EditorController\EditorTypeController.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Controller\EditorController\ProjectItemTemplateDelegate.cs" />
     <Compile Include="Controller\EditorController\ProjectItemTemplateFixedNameDelegate.cs" />
     <Compile Include="Controller\EditorController\ProjectTemplate.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\XmlTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\MvcTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\PluginTypeController.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
     <Compile Include="GUI\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
+    <Compile Include="GUI\TextEditor\XmlTextHighlighter.cs" />
     <Compile Include="GUI\TextEditor\CssTextHighlighter.cs" />
     <Compile Include="GUI\TextEditor\RmlTextHighlighter.cs" />
     <Compile Include="GUI\TextEditor\TextEditorComponent.cs" />

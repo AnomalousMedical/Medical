@@ -19,6 +19,7 @@ namespace Medical
         private RmlEditorContext rmlEditorContext;
         private RcssEditorContext rcssEditorContext;
         private TRmlEditorContext trmlEditorContext;
+        private XmlEditorContext xmlEditorContext;
 
         private PropEditController propEditController;
         private StandaloneController standaloneController;
@@ -168,6 +169,26 @@ namespace Medical
                     editorController.runEditorContext(timelineEditorContext.MvcContext);
                 };
 
+            //Xml Type Controller
+            XmlTypeController xmlTypeController = new XmlTypeController(editorController);
+            xmlTypeController.OpenEditor += (file) =>
+            {
+                xmlEditorContext = new XmlEditorContext(file, rmlTypeController.LastRmlFile, xmlTypeController);
+                xmlEditorContext.Focus += (obj) =>
+                {
+                    xmlEditorContext = obj;
+                };
+                xmlEditorContext.Blur += (obj) =>
+                {
+                    xmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                    if (xmlEditorContext == obj)
+                    {
+                        xmlEditorContext = null;
+                    }
+                };
+                editorController.runEditorContext(xmlEditorContext.MvcContext);
+            };
+
             //Add item templates
             editorController.addItemTemplate(new EmptyViewItemTemplate(rmlTypeController, mvcTypeController));
             editorController.addItemTemplate(new ViewWithTimelineItemTemplate(rmlTypeController, mvcTypeController, timelineTypeController));
@@ -180,6 +201,7 @@ namespace Medical
             editorController.addTypeController(rcssTypeController);
             editorController.addTypeController(mvcTypeController);
             editorController.addTypeController(pluginTypeController);
+            editorController.addTypeController(xmlTypeController);
 
             editorController.addItemTemplate(new PluginBrandingResourceItemTemplate());
         }
