@@ -16,6 +16,8 @@ namespace Medical.Controller.AnomalousMvc
         {
             ViewLocation = ViewLocations.Left;
             IsWindow = false;
+            Transparent = false;
+            FillScreen = false;
         }
 
         [Editable]
@@ -23,6 +25,12 @@ namespace Medical.Controller.AnomalousMvc
 
         [Editable]
         public bool IsWindow { get; set; }
+
+        [Editable]
+        public bool Transparent { get; set; }
+
+        [Editable]
+        public bool FillScreen { get; set; }
 
         [EditableAction]
         public String OpeningAction { get; set; }

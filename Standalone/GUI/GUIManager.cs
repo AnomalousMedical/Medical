@@ -40,7 +40,7 @@ namespace Medical.GUI
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIImageDisplayFactory imageDisplayFactory;
         private MyGUITextDisplayFactory textDisplayFactory;
-        private List<FullscreenGUIPopup> fullscreenPopups = new List<FullscreenGUIPopup>();
+        private List<LayoutContainer> fullscreenPopups = new List<LayoutContainer>();
         private MyGUIImageRendererProgress imageRendererProgress;
         private NotificationGUIManager notificationManager;
 
@@ -252,14 +252,15 @@ namespace Medical.GUI
             dialogManager.removeManagedDialog(dialog);
         }
 
-        public void addFullscreenPopup(FullscreenGUIPopup popup)
+        public void addFullscreenPopup(LayoutContainer popup)
         {
-            popup.setPosition((int)innerBorderLayout.Location.x, (int)innerBorderLayout.Location.y);
-            popup.setSize((int)innerBorderLayout.WorkingSize.Width, (int)innerBorderLayout.WorkingSize.Height);
+            popup.Location = new IntVector2((int)innerBorderLayout.Location.x, (int)innerBorderLayout.Location.y);
+            popup.WorkingSize = new IntSize2((int)innerBorderLayout.WorkingSize.Width, (int)innerBorderLayout.WorkingSize.Height);
+            popup.layout();
             fullscreenPopups.Add(popup);
         }
 
-        public void removeFullscreenPopup(FullscreenGUIPopup popup)
+        public void removeFullscreenPopup(LayoutContainer popup)
         {
             fullscreenPopups.Remove(popup);
         }
@@ -348,10 +349,11 @@ namespace Medical.GUI
                 taskMenu.setPosition(xPos, yPos);
                 taskMenu.setSize(innerWidth, innerHeight);
             }
-            foreach (FullscreenGUIPopup fullscreenPopup in fullscreenPopups)
+            foreach (LayoutContainer fullscreenPopup in fullscreenPopups)
             {
-                fullscreenPopup.setPosition(xPos, yPos);
-                fullscreenPopup.setSize(innerWidth, innerHeight);
+                fullscreenPopup.Location = new IntVector2(xPos, yPos);
+                fullscreenPopup.WorkingSize = new IntSize2(innerWidth, innerHeight);
+                fullscreenPopup.layout();
             }
             notificationManager.screenSizeChanged();
         }

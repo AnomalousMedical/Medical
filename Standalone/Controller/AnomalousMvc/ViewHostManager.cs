@@ -245,7 +245,11 @@ namespace Medical.Controller.AnomalousMvc
                 if (host._RequestClosed)
                 {
                     host.closing();
-                    host._animationCallback(null);
+                    //We want to delay the animation callback till after the event.
+                    ThreadManager.invoke(new Action(() =>
+                    {
+                        host._animationCallback(null);
+                    }));
                     openFloatingViews.RemoveAt(i--);
                 }
             }
@@ -254,6 +258,14 @@ namespace Medical.Controller.AnomalousMvc
                 ViewHost viewHost = viewHostFactory.createViewHost(viewInfo.Key, viewInfo.Value);
                 viewHost.opening();
                 openFloatingViews.Add(viewHost);
+                if (viewInfo.Key.FillScreen)
+                {
+                    guiManager.addFullscreenPopup(viewHost.Container);
+                    viewHost.ViewClosing += (closingView) =>
+                    {
+                        guiManager.removeFullscreenPopup(viewHost.Container);
+                    };
+                }
             }
             queuedFloatingViews.Clear();
         }

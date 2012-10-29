@@ -45,9 +45,8 @@ namespace Medical.GUI
             imageAtlas.Dispose();
         }
 
-        public override void setSize(int width, int height)
+        protected override void layoutUpdated()
         {
-            base.setSize(width, height);
             sceneFileGrid.resizeAndLayout(sceneFileGrid.Width);
         }
 

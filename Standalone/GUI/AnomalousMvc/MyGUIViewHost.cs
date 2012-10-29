@@ -13,6 +13,9 @@ namespace Medical.GUI.AnomalousMvc
         private MyGUILayoutContainer layoutContainer;
         private AnomalousMvcContext context;
 
+        public event Action<ViewHost> ViewClosing;
+        public event Action<ViewHost> ViewOpening;
+
         public MyGUIViewHost(AnomalousMvcContext context, View view)
         {
             this.context = context;
@@ -39,10 +42,18 @@ namespace Medical.GUI.AnomalousMvc
             {
                 context.queueRunAction(View.OpeningAction, this);
             }
+            if (ViewOpening != null)
+            {
+                ViewOpening.Invoke(this);
+            }
         }
 
         public void closing()
         {
+            if (ViewClosing != null)
+            {
+                ViewClosing.Invoke(this);
+            }
             if (!String.IsNullOrEmpty(View.ClosingAction))
             {
                 context.queueRunAction(View.ClosingAction, this);

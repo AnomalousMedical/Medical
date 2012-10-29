@@ -7,13 +7,12 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class TopBottomPanelDecorator : Component, ViewHostComponent
+    class FloatingPanelDecorator : Component, ViewHostComponent
     {
         private ViewHostComponent child;
-        private int widgetWidth;
 
-        public TopBottomPanelDecorator(ViewHostComponent child, ButtonCollection buttons, bool transparent)
-            : base(transparent ? "Medical.GUI.AnomalousMvc.Decorators.TopBottomPanelDecoratorTransparent.layout" : "Medical.GUI.AnomalousMvc.Decorators.TopBottomPanelDecorator.layout")
+        public FloatingPanelDecorator(ViewHostComponent child, ButtonCollection buttons, View view)
+            : base(view.Transparent ? "Medical.GUI.AnomalousMvc.Decorators.SidePanelDecoratorTransparent.layout" : "Medical.GUI.AnomalousMvc.Decorators.SidePanelDecorator.layout")
         {
             if (buttons.Count > 0)
             {
@@ -24,9 +23,14 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.attachToWidget(widget);
             child.Widget.setPosition(int.Parse(widget.getUserString("ChildX")), int.Parse(widget.getUserString("ChildY")));
             widget.setSize(child.Widget.Right + int.Parse(widget.getUserString("ChildWidthOffset")), child.Widget.Bottom + int.Parse(widget.getUserString("ChildHeightOffset")));
-            child.Widget.Align = Align.Top | Align.HStretch;
-
-            widgetWidth = widget.Width;
+            if (view.FillScreen)
+            {
+                child.Widget.Align = Align.HStretch | Align.VStretch;
+            }
+            else
+            {
+                child.Widget.Align = Align.Left | Align.VStretch;
+            }
         }
 
         public override void Dispose()
@@ -37,11 +41,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public void topLevelResized()
         {
-            if (widget.Width != widgetWidth)
-            {
-                child.topLevelResized();
-                widgetWidth = widget.Width;
-            }
+            child.topLevelResized();
         }
 
         public void opening()
@@ -76,7 +76,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             get
             {
-                return widget;
+                return widget; 
             }
         }
     }

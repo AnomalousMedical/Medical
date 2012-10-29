@@ -299,9 +299,8 @@ namespace Medical.GUI
             standaloneController.restartWithWarning("Restarting Anomalous Medical will lose all unsaved data. Are you sure you wish to continue?", info.AutoStartUpdate);
         }
 
-        public override void setSize(int width, int height)
+        protected override void layoutUpdated()
         {
-            base.setSize(width, height);
             pluginGrid.layout();
         }
 

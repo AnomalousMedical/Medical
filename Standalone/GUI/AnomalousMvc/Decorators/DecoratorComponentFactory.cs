@@ -68,19 +68,19 @@ namespace Medical.GUI.AnomalousMvc
                 switch (view.ViewLocation)
                 {
                     case ViewLocations.Left:
-                        component = new SidePanelDecorator(component, view.Buttons);
+                        component = new SidePanelDecorator(component, view.Buttons, view.Transparent);
                         break;
                     case ViewLocations.Right:
-                        component = new SidePanelDecorator(component, view.Buttons);
+                        component = new SidePanelDecorator(component, view.Buttons, view.Transparent);
                         break;
                     case ViewLocations.Top:
-                        component = new TopBottomPanelDecorator(component, view.Buttons);
+                        component = new TopBottomPanelDecorator(component, view.Buttons, view.Transparent);
                         break;
                     case ViewLocations.Bottom:
-                        component = new TopBottomPanelDecorator(component, view.Buttons);
+                        component = new TopBottomPanelDecorator(component, view.Buttons, view.Transparent);
                         break;
                     case ViewLocations.Floating:
-                        component = new SidePanelDecorator(component, view.Buttons);
+                        component = new FloatingPanelDecorator(component, view.Buttons, view);
                         break;
                 }
             }

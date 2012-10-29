@@ -53,9 +53,9 @@ namespace Medical.GUI
             this.Shown += new EventHandler(SavePatientDialog_Shown);
         }
 
-        public override void setSize(int width, int height)
+        protected override void layoutUpdated()
         {
-            base.setSize(width, height);
+            int width = widget.Width;
             if (width > 800)
             {
                 width = 800;

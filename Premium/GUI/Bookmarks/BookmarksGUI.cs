@@ -58,10 +58,9 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public override void setSize(int width, int height)
+        protected override void layoutUpdated()
         {
-            base.setSize(width, height);
-            bookmarksList.resizeAndLayout(width);
+            bookmarksList.resizeAndLayout(widget.Width);
         }
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)

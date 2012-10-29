@@ -12,8 +12,8 @@ namespace Medical.GUI.AnomalousMvc
         private ViewHostComponent child;
         private int widgetHeight;
 
-        public SidePanelDecorator(ViewHostComponent child, ButtonCollection buttons)
-            :base("Medical.GUI.AnomalousMvc.Decorators.SidePanelDecorator.layout")
+        public SidePanelDecorator(ViewHostComponent child, ButtonCollection buttons, bool transparent)
+            : base(transparent ? "Medical.GUI.AnomalousMvc.Decorators.SidePanelDecoratorTransparent.layout" : "Medical.GUI.AnomalousMvc.Decorators.SidePanelDecorator.layout")
         {
             if (buttons.Count > 0)
             {
