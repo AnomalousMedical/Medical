@@ -135,6 +135,7 @@
     <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationLink.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationModel.cs" />
+    <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditablePropAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\PropBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableModelAttribute.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIView.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlView\RmlViewHostControl.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />

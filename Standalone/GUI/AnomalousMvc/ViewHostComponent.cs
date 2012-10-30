@@ -22,5 +22,7 @@ namespace Medical.GUI.AnomalousMvc
         MyGUIViewHost ViewHost { get; }
 
         Widget Widget { get; }
+
+        ViewHostControl findControl(string name);
     }
 }

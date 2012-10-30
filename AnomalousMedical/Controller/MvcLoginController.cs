@@ -17,6 +17,7 @@ namespace Medical.Controller
         AnomalousMvcContext context;
         LicenseManager licenseManager;
         bool loggingIn = false;
+        private ViewHostControl passwordControl;
 
         public MvcLoginController(StandaloneController controller, LicenseManager licenseManager)
         {
@@ -35,6 +36,7 @@ namespace Medical.Controller
             context.setResourceProvider(embeddedResourceProvider);
             DataModel credentialsModel = (DataModel)context.Models["Credentials"];
             credentialsModel.setValue("ConnectionURL", MedicalConfig.LicenseServerURL);
+            bool focusPassword = false;
             if (MedicalConfig.StoreCredentials)
             {
                 credentialsModel.setValue("Remember", "True");
@@ -42,6 +44,7 @@ namespace Medical.Controller
             if (licenseManager.IdentifiedUserName != null)
             {
                 credentialsModel.setValue("User", licenseManager.IdentifiedUserName);
+                focusPassword = true;
             }
             if (licenseManager.KeyDialogMessage != null)
             {
@@ -77,6 +80,19 @@ namespace Medical.Controller
             ((RunCommandsAction)context.Controllers["Index"].Actions["Register"]).addCommand(new CallbackCommand((executingContext) =>
             {
                 OtherProcessManager.openUrlInBrowser(MedicalConfig.RegisterURL);
+            }));
+
+            ((RunCommandsAction)context.Controllers["Index"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                passwordControl = executingContext.RunningActionViewHost.findControl("Pass");
+                if (focusPassword)
+                {
+                    passwordControl.focus();
+                }
+                else
+                {
+                    executingContext.RunningActionViewHost.findControl("User").focus();
+                }
             }));
 
             controller.MvcCore.startRunningContext(context);
@@ -117,19 +133,14 @@ namespace Medical.Controller
         {
             try
             {
-                //if (KeyEnteredSucessfully != null)
-                //{
-                //    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
-                //}
                 this.close();
                 licenseManager.keyEnteredSucessfully(License);
             }
             catch (LicenseInvalidException ex)
             {
                 Log.Error("Invalid license returned from server. Reason: {0}", ex.Message);
-                //activateButton.Enabled = true;
-                //cancelButton.Enabled = true;
-                //passwordEdit.Caption = "";
+                passwordControl.Value = "";
+                passwordControl.focus();
                 loggingIn = false;
                 MessageBox.show(String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message), "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
@@ -137,24 +148,23 @@ namespace Medical.Controller
 
         void licenseLoginFail()
         {
-            //activateButton.Enabled = true;
-            //cancelButton.Enabled = true;
-            //passwordEdit.Caption = "";
+            passwordControl.Value = "";
             loggingIn = false;
-            MessageBox.show("Could not get license file. Username or password is invalid.", "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            MessageBox.show("Could not get license file. Username or password is invalid.", "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, (result) =>
+            {
+                passwordControl.focus();
+            });
         }
 
         void licenseServerFail(String message)
         {
-            //activateButton.Enabled = true;
-            //cancelButton.Enabled = true;
+            passwordControl.focus();
             loggingIn = false;
             MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
         }
 
         void close()
         {
-            //controller.MvcCore.shutdownContext(context, true, false);
             context.runAction("Index/Shutdown");
         }
     }

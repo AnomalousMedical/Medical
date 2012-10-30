@@ -25,6 +25,8 @@ namespace Medical.Controller.AnomalousMvc
 
         void analyzeViewData(IDataProvider dataProvider);
 
+        ViewHostControl findControl(String name);
+
         event Action<ViewHost> ViewClosing;
 
         event Action<ViewHost> ViewOpening;

@@ -509,6 +509,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public ViewHost RunningActionViewHost
+        {
+            get
+            {
+                return runningActionViewHost;
+            }
+        }
+
         public ResourceProvider ResourceProvider
         {
             get

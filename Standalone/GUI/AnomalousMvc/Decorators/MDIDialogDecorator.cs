@@ -92,6 +92,11 @@ namespace Medical.GUI.AnomalousMvc
             child.topLevelResized();
         }
 
+        public ViewHostControl findControl(string name)
+        {
+            return child.findControl(name);
+        }
+
         public MyGUIViewHost ViewHost
         {
             get

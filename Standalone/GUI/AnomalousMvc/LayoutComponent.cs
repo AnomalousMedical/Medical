@@ -49,6 +49,11 @@ namespace Medical.GUI.AnomalousMvc
             
         }
 
+        public virtual ViewHostControl findControl(string name)
+        {
+            return null;
+        }
+
         public Widget Widget
         {
             get

@@ -147,6 +147,17 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
+        public override ViewHostControl findControl(string name)
+        {
+            ElementDocument document = rocketWidget.Context.GetDocument(0);
+            Element element = document.GetElementById(name);
+            if (element != null)
+            {
+                return new RmlViewHostControl(element, rocketWidget);
+            }
+            return null;
+        }
+
         const String ifRegex = "(==)|(!=)|(>=)|(<=)|>|<";
 
         private void runIfAnalysis(IDataProvider dataProvider, ElementDocument document)

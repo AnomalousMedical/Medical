@@ -71,6 +71,11 @@ namespace Medical.GUI.AnomalousMvc
             component.analyzeViewData(dataProvider);
         }
 
+        public ViewHostControl findControl(String name)
+        {
+            return component.findControl(name);
+        }
+
         public LayoutContainer Container
         {
             get

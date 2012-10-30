@@ -200,6 +200,11 @@ namespace Medical.GUI
             }
         }
 
+        internal void setFocus()
+        {
+            InputManager.Instance.setKeyFocusWidget(imageBox);
+        }
+
         /// <summary>
         /// The RocketWidget attempts to only render when it needs to (such as
         /// the mouse being over it or having focus. If it is in the background
