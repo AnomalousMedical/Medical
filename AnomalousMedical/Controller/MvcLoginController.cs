@@ -125,7 +125,7 @@ namespace Medical.Controller
             }
             catch (Exception e)
             {
-                ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("Could not connect to license server. Please try again later.\nReason is {0}", e.Message));
+                ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("Could not connect to license server. Please try again later.\nReason: {0}", e.Message));
             }
         }
 
@@ -145,10 +145,8 @@ namespace Medical.Controller
                 Log.Error("Invalid license returned from server. Reason: {0}", ex.Message);
                 passwordControl.Value = "";
                 loggingIn = false;
-                MessageBox.show(String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message), "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, (result) =>
-                {
-                    passwordControl.focus();
-                });
+                messageControl.Value = String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message);
+                passwordControl.focus();
             }
         }
 
@@ -163,10 +161,8 @@ namespace Medical.Controller
         void licenseServerFail(String message)
         {
             loggingIn = false;
-            MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, (result) =>
-            {
-                passwordControl.focus();
-            });
+            messageControl.Value = message;
+            passwordControl.focus();
         }
 
         void close()
