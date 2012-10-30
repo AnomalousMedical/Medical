@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="AnomalousController.cs" />
     <Compile Include="AnomalousMainPlugin.cs" />
+    <Compile Include="Controller\MvcLoginController.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
@@ -140,6 +141,11 @@
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MvcContexts\Login\Index.rml" />
+    <EmbeddedResource Include="MvcContexts\Login\LogIn.rcss" />
+    <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
+    <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
+    <EmbeddedResource Include="MvcContexts\Login\Spin.tl" />
     <None Include="Properties\AssemblyInfoSource.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,6 @@ namespace Medical
         public event EventHandler KeyDialogShown;
 
         private delegate void CallbackDelegate();
-        private LicenseDialog licenseDialog;
         private String keyFile;
         private String programName;
         private CallbackDelegate keyValidCallback;
@@ -246,31 +245,31 @@ namespace Medical
             }
         }
 
+        public String IdentifiedUserName
+        {
+            get
+            {
+                return keyDialogUserName;
+            }
+        }
+
+        public String KeyDialogMessage
+        {
+            get
+            {
+                return keyDialogMessage;
+            }
+        }
+
         private void showKeyDialog()
         {
-            licenseDialog = new LicenseDialog(programName, keyDialogMessage);
-            licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
-            licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
-            licenseDialog.Closed += new EventHandler(licenseDialog_Closed);
-            licenseDialog.center();
-            if (keyDialogUserName != null)
-            {
-                licenseDialog.UserName = keyDialogUserName;
-                licenseDialog.SelectPasswordOnOpen = true;
-            }
-            licenseDialog.open(true);
             if (KeyDialogShown != null)
             {
                 KeyDialogShown.Invoke(this, EventArgs.Empty);
             }
         }
 
-        void licenseDialog_Closed(object sender, EventArgs e)
-        {
-            licenseDialog.Dispose();
-        }
-
-        void licenseDialog_KeyInvalid(object sender, EventArgs e)
+        public void keyInvalid()
         {
             if (KeyInvalid != null)
             {
@@ -278,10 +277,10 @@ namespace Medical
             }
         }
 
-        void licenseDialog_KeyEnteredSucessfully(object sender, EventArgs e)
+        public void keyEnteredSucessfully(byte[] licenseBytes)
         {
-            storeLicenseFile(licenseDialog.License);
-            license = new AnomalousLicense(licenseDialog.License);
+            storeLicenseFile(licenseBytes);
+            license = new AnomalousLicense(licenseBytes);
             fireKeyValid();
         }
 

@@ -79,7 +79,7 @@ namespace Medical.GUI.AnomalousMvc
                     {
                         if (element.GetAttributeString("type") == "checkbox" && !element.HasAttribute("checked"))
                         {
-                            yield return Tuple.Create(element.GetAttributeString("name"), "false");
+                            yield return Tuple.Create(element.GetAttributeString("name"), "");
                         }
                     }
                 }

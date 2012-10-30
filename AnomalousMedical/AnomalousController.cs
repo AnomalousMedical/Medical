@@ -285,6 +285,9 @@ namespace Medical
 
         void LicenseManager_KeyDialogShown(object sender, EventArgs e)
         {
+            MvcLoginController mvcLogin = new MvcLoginController(controller, LicenseManager);
+            mvcLogin.showContext();
+
             splashScreen.updateStatus(100, "");
             splashScreen.hide();
         }

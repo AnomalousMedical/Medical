@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-16"?>
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate">
+		<div class="LogInForm">
+			<h1>Log In</h1>
+			<p>
+				<print name="Message" />
+			</p>
+			<form onsubmit="Index/LogIn" autosubmitid="LogInButton">
+				<h2>User Name or E-Mail</h2>
+				<input type="text" name="User" />
+				<h2>Password</h2>
+				<input type="password" name="Pass" />
+				<input type="checkbox" name="Remember" value="True" />Remember Password
+<h2>Connecting To</h2><p><print name="ConnectionURL" /></p><input type="submit" id="LogInButton">Log In</input>|
+			   <a onclick="Index/Cancel">Cancel</a> | 
+				<a onclick="Index/ForgotPassword">Forgot Password</a> | 
+				<a onclick="Index/Register">Register</a></form>
+		</div>
+	</body>
+</rml>

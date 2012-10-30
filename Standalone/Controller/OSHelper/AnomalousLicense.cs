@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 
 namespace Engine
 {
-    class LicenseInvalidException : Exception
+    public class LicenseInvalidException : Exception
     {
         public LicenseInvalidException(String message)
             :base(message)

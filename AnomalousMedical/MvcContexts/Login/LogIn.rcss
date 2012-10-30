@@ -1,0 +1,46 @@
+body
+{
+	background-color:#00000000;
+	color:white;
+	font-size: 17px;
+}
+
+h1
+{
+	text-align:left;
+}
+
+.LogInForm
+{
+	margin-left: auto;
+	margin-right: 2px;
+	width: 450px;
+	background-color:#00000099;
+	position: absolute;
+	top:50%;
+	height: 354px;
+	margin-top: -177px;
+}
+
+input.text,
+input.password
+{
+	width: 100%;
+}
+
+input.submit
+{
+	background-decorator:none;
+	font-size: 17px;
+}
+
+input.submit:hover
+{
+	background-decorator:none;
+	text-decoration: underline;
+}
+
+a
+{
+	color:white;
+}

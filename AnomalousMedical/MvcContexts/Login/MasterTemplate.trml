@@ -1,0 +1,11 @@
+<template name="MasterTemplate" content="Content">
+  <head>
+    <link type="text/rcss" href="/libRocketPlugin.Resources.rkt.rcss"/>
+    <link type="text/rcss" href="/libRocketPlugin.Resources.Anomalous.rcss"/>
+	 <link type="text/rcss" href="/LogIn.rcss"/>
+  </head>
+  <body>
+    <div id="Content" style="height:100%;">
+    </div>
+  </body>
+</template>

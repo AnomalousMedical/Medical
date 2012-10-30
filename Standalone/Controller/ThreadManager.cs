@@ -93,11 +93,20 @@ namespace Medical.Controller
         {
             lock (targets)
             {
-                foreach (TargetEntry target in targets)
+                foreach (TargetEntry target in activeTargets(targets.Count))
                 {
                     target.invoke();
                 }
-                targets.Clear();
+            }
+        }
+
+        private static IEnumerable<TargetEntry> activeTargets(int targetCount)
+        {
+            for (int i = 0; i < targetCount; ++i)
+            {
+                TargetEntry target = targets[0];
+                targets.RemoveAt(0);
+                yield return target;
             }
         }
 

@@ -1,0 +1,161 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Reflection;
+using Medical.Controller.AnomalousMvc;
+using System.Threading;
+using Engine;
+using Logging;
+using MyGUIPlugin;
+
+namespace Medical.Controller
+{
+    class MvcLoginController
+    {
+        StandaloneController controller;
+        AnomalousMvcContext context;
+        LicenseManager licenseManager;
+        bool loggingIn = false;
+
+        public MvcLoginController(StandaloneController controller, LicenseManager licenseManager)
+        {
+            this.controller = controller;
+            this.licenseManager = licenseManager;
+        }
+
+        public void showContext()
+        {
+            EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Medical.MvcContexts.Login.");
+            controller.TimelineController.setResourceProvider(embeddedResourceProvider);
+
+            //Load and run the mvc context
+            context = controller.MvcCore.loadContext(embeddedResourceProvider.openFile("MvcContext.mvc"));
+            context.RuntimeName = "LogIn";
+            context.setResourceProvider(embeddedResourceProvider);
+            DataModel credentialsModel = (DataModel)context.Models["Credentials"];
+            credentialsModel.setValue("ConnectionURL", MedicalConfig.LicenseServerURL);
+            if (MedicalConfig.StoreCredentials)
+            {
+                credentialsModel.setValue("Remember", "True");
+            }
+            if (licenseManager.IdentifiedUserName != null)
+            {
+                credentialsModel.setValue("User", licenseManager.IdentifiedUserName);
+            }
+            if (licenseManager.KeyDialogMessage != null)
+            {
+                credentialsModel.setValue("Message", licenseManager.KeyDialogMessage);
+            }
+            else
+            {
+                credentialsModel.setValue("Message", "Enter your Anomalous Medical user name and password.");
+            }
+
+            ((RunCommandsAction)context.Controllers["Index"].Actions["LogIn"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                if (!loggingIn)
+                {
+                    loggingIn = true;
+                    Log.Debug("Logging in");
+                    DataModel model = context.getModel<DataModel>("Credentials");
+                    MedicalConfig.StoreCredentials = model.getValue("Remember") == "True";
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense), new Pair<String, String>(model.getValue("User"), model.getValue("Pass")));
+                }
+            }));
+
+            ((RunCommandsAction)context.Controllers["Index"].Actions["Cancel"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                licenseManager.keyInvalid();
+            }));
+
+            ((RunCommandsAction)context.Controllers["Index"].Actions["ForgotPassword"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                OtherProcessManager.openUrlInBrowser(MedicalConfig.ForgotPasswordURL);
+            }));
+
+            ((RunCommandsAction)context.Controllers["Index"].Actions["Register"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                OtherProcessManager.openUrlInBrowser(MedicalConfig.RegisterURL);
+            }));
+
+            controller.MvcCore.startRunningContext(context);
+        }
+
+        public byte[] License { get; private set; }
+
+        void getLicense(Object credentials)
+        {
+            try
+            {
+                Pair<String, String> cred = (Pair<String, String>)credentials;
+                AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
+                License = licenseServer.createLicenseFile(cred.First, cred.Second);
+                if (License != null)
+                {
+                    ThreadManager.invoke(new Callback(licenseCaptured), null);
+                }
+                else
+                {
+                    ThreadManager.invoke(new Callback(licenseLoginFail), null);
+                }
+            }
+            catch (AnomalousLicenseServerException alse)
+            {
+                ThreadManager.invoke(new CallbackString(licenseServerFail), alse.Message);
+            }
+            catch (Exception e)
+            {
+                ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("Could not connect to license server. Please try again later.\nReason is {0}", e.Message));
+            }
+        }
+
+        private delegate void Callback();
+        private delegate void CallbackString(String message);
+
+        void licenseCaptured()
+        {
+            try
+            {
+                //if (KeyEnteredSucessfully != null)
+                //{
+                //    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+                //}
+                this.close();
+                licenseManager.keyEnteredSucessfully(License);
+            }
+            catch (LicenseInvalidException ex)
+            {
+                Log.Error("Invalid license returned from server. Reason: {0}", ex.Message);
+                //activateButton.Enabled = true;
+                //cancelButton.Enabled = true;
+                //passwordEdit.Caption = "";
+                loggingIn = false;
+                MessageBox.show(String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message), "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            }
+        }
+
+        void licenseLoginFail()
+        {
+            //activateButton.Enabled = true;
+            //cancelButton.Enabled = true;
+            //passwordEdit.Caption = "";
+            loggingIn = false;
+            MessageBox.show("Could not get license file. Username or password is invalid.", "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+        }
+
+        void licenseServerFail(String message)
+        {
+            //activateButton.Enabled = true;
+            //cancelButton.Enabled = true;
+            loggingIn = false;
+            MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+        }
+
+        void close()
+        {
+            //controller.MvcCore.shutdownContext(context, true, false);
+            context.runAction("Index/Shutdown");
+        }
+    }
+}

@@ -68,53 +68,61 @@ namespace Medical.GUI.AnomalousMvc
                 foreach (Element input in form.GetElementsByTagName("input"))
                 {
                     String name = input.GetAttributeString("name");
-                    String value = dataProvider.getValue(name);
-                    String type = input.GetAttributeString("type").ToLowerInvariant();
-                    if (value != null)
+                    if (name != null)
                     {
-                        switch(type)
+                        String value = dataProvider.getValue(name);
+                        String type = input.GetAttributeString("type").ToLowerInvariant();
+                        if (value != null)
                         {
-                            case "text":
-                                input.SetAttribute("value", value);
-                                break;
-                            case "password":
-                                input.SetAttribute("value", value);
-                                break;
-                            case "radio":
-                                if (input.GetAttributeString("value") == value)
-                                {
-                                    input.SetAttribute("checked", "true");
-                                }
-                                break;
-                            case "checkbox":
-                                bool check;
-                                if (bool.TryParse(value, out check) && check)
-                                {
-                                    input.SetAttribute("checked", "true");
-                                }
-                                break;
-                            case "range":
-                                input.SetAttribute("value", value);
-                                break;
+                            switch (type)
+                            {
+                                case "text":
+                                    input.SetAttribute("value", value);
+                                    break;
+                                case "password":
+                                    input.SetAttribute("value", value);
+                                    break;
+                                case "radio":
+                                    if (input.GetAttributeString("value") == value)
+                                    {
+                                        input.SetAttribute("checked", "true");
+                                    }
+                                    break;
+                                case "checkbox":
+                                    if (input.GetAttributeString("value") == value)
+                                    {
+                                        input.SetAttribute("checked", "true");
+                                    }
+                                    break;
+                                case "range":
+                                    input.SetAttribute("value", value);
+                                    break;
+                            }
                         }
                     }
                 }
                 foreach (Element textArea in form.GetElementsByTagName("textarea"))
                 {
                     String name = textArea.GetAttributeString("name");
-                    String value = dataProvider.getValue(name);
-                    if (value != null)
+                    if (name != null)
                     {
-                        textArea.SetAttribute("value", value);
+                        String value = dataProvider.getValue(name);
+                        if (value != null)
+                        {
+                            textArea.SetAttribute("value", value);
+                        }
                     }
                 }
                 foreach (ElementFormControl select in form.GetElementsByTagName("select"))
                 {
                     String name = select.GetAttributeString("name");
-                    String value = dataProvider.getValue(name);
-                    if (value != null)
+                    if (name != null)
                     {
-                        select.Value = value;
+                        String value = dataProvider.getValue(name);
+                        if (value != null)
+                        {
+                            select.Value = value;
+                        }
                     }
                 }
             }

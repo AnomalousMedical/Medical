@@ -10,7 +10,7 @@ using Medical;
 
 namespace Engine
 {
-    class AnomalousLicenseServerException : Exception
+    public class AnomalousLicenseServerException : Exception
     {
         public AnomalousLicenseServerException(String message)
             : base(message)

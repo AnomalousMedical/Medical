@@ -471,7 +471,6 @@
     <Compile Include="GUI\StandardDialogEntry.cs" />
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\DialogEntry.cs" />
-    <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
     <Compile Include="GUI\MDIDialog.cs" />
     <Compile Include="GUI\MDIDialogEntry.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
@@ -699,7 +698,6 @@
     <EmbeddedResource Include="GUI\ExamViewer\ExamViewer.layout" />
     <EmbeddedResource Include="GUI\ExamViewer\GenericExamOverview.layout" />
     <EmbeddedResource Include="GUI\ExamViewer\TextAnalysisViewer.layout" />
-    <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\SavePatientDialog.layout" />
