@@ -6,7 +6,7 @@
 	<body template="MasterTemplate">
 		<div class="LogInForm">
 			<h1>Log In</h1>
-			<p>
+			<p id="Message">
 				<print name="Message" />
 			</p>
 			<form onsubmit="Index/LogIn" autosubmitid="LogInButton">

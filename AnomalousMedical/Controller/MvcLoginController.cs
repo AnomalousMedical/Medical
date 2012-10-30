@@ -18,6 +18,7 @@ namespace Medical.Controller
         LicenseManager licenseManager;
         bool loggingIn = false;
         private ViewHostControl passwordControl;
+        private ViewHostControl messageControl;
 
         public MvcLoginController(StandaloneController controller, LicenseManager licenseManager)
         {
@@ -63,6 +64,7 @@ namespace Medical.Controller
                     Log.Debug("Logging in");
                     DataModel model = context.getModel<DataModel>("Credentials");
                     MedicalConfig.StoreCredentials = model.getValue("Remember") == "True";
+                    messageControl.Value = "Connecting to server.";
                     ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense), new Pair<String, String>(model.getValue("User"), model.getValue("Pass")));
                 }
             }));
@@ -85,6 +87,7 @@ namespace Medical.Controller
             ((RunCommandsAction)context.Controllers["Index"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
             {
                 passwordControl = executingContext.RunningActionViewHost.findControl("Pass");
+                messageControl = executingContext.RunningActionViewHost.findControl("Message");
                 if (focusPassword)
                 {
                     passwordControl.focus();
@@ -134,6 +137,7 @@ namespace Medical.Controller
             try
             {
                 this.close();
+                messageControl.Value = "Loading user profile.";
                 licenseManager.keyEnteredSucessfully(License);
             }
             catch (LicenseInvalidException ex)
@@ -150,12 +154,10 @@ namespace Medical.Controller
 
         void licenseLoginFail()
         {
+            messageControl.Value = "Username or password is invalid.";
             passwordControl.Value = "";
+            passwordControl.focus();
             loggingIn = false;
-            MessageBox.show("Could not get license file. Username or password is invalid.", "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, (result) =>
-            {
-                passwordControl.focus();
-            });
         }
 
         void licenseServerFail(String message)

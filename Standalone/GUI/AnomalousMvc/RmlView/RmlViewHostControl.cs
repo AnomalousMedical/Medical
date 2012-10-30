@@ -37,13 +37,17 @@ namespace Medical.GUI.AnomalousMvc
                 {
                     return element.GetAttributeString("value");
                 }
-                return null;
+                return element.InnerRml;
             }
             set
             {
                 if (element.HasAttribute("value"))
                 {
                     element.SetAttribute("value", value);
+                }
+                else
+                {
+                    element.InnerRml = value;
                 }
             }
         }
