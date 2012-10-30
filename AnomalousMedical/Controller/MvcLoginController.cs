@@ -140,9 +140,11 @@ namespace Medical.Controller
             {
                 Log.Error("Invalid license returned from server. Reason: {0}", ex.Message);
                 passwordControl.Value = "";
-                passwordControl.focus();
                 loggingIn = false;
-                MessageBox.show(String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message), "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                MessageBox.show(String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message), "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, (result) =>
+                {
+                    passwordControl.focus();
+                });
             }
         }
 
@@ -158,9 +160,11 @@ namespace Medical.Controller
 
         void licenseServerFail(String message)
         {
-            passwordControl.focus();
             loggingIn = false;
-            MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, (result) =>
+            {
+                passwordControl.focus();
+            });
         }
 
         void close()
