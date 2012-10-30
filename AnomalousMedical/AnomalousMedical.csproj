@@ -145,7 +145,7 @@
     <EmbeddedResource Include="MvcContexts\Login\LogIn.rcss" />
     <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
     <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
-    <EmbeddedResource Include="MvcContexts\Login\Spin.tl" />
+    <EmbeddedResource Include="MvcContexts\Login\Reel.tl" />
     <None Include="Properties\AssemblyInfoSource.cs" />
   </ItemGroup>
   <ItemGroup>
