@@ -228,9 +228,9 @@ namespace Medical
         private void pasteCallback(EditUICallback callback, EditInterfaceCommand caller)
         {
             SaveableClipboard clipboard = null;
-            callback.runCustomQuery(ScratchAreaCustomQueries.GetClipboard, delegate(Object result, ref String errorMessage)
+            callback.runCustomQuery(ScratchAreaCustomQueries.GetClipboard, delegate(SaveableClipboard result, ref String errorMessage)
             {
-                clipboard = result as SaveableClipboard;
+                clipboard = result;
                 return true;
             });
             if (clipboard != null && clipboard.HasSourceObject)

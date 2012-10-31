@@ -11,7 +11,7 @@ h1
 }
 
 .LogInForm
-{
+{	
 	margin-left: auto;
 	margin-right: 2px;
 	width: 450px;
@@ -23,25 +23,45 @@ h1
 	border-color: #6699cc;
 }
 
+.MessageBox
+{
+	background-color:#000000cc;
+	border-width:2px;
+	border-color: #6699cc;
+	top:0px;
+	position: absolute;
+	width: 450px;
+	margin-left: auto;
+	margin-right: 2px;
+}
+
+.ConnectionInfo
+{
+	background-color:#000000cc;
+	border-width:2px;
+	border-color: #6699cc;
+	bottom:0px;
+	position: absolute;
+	width: 450px;
+	margin-left: auto;
+	margin-right: 2px;
+}
+
 input.text,
 input.password
 {
-	width: 100%;
+	width: 440px;
+	margin-left:5px;
+	margin-right:5px;
 }
 
 input.submit
 {
-	background-decorator:none;
 	font-size: 17px;
-}
-
-input.submit:hover
-{
-	background-decorator:none;
-	text-decoration: underline;
+	color: black;
 }
 
 a
 {
-	color:white;
+	color: #6699cc;
 }
