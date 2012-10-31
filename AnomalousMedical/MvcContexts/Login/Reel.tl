@@ -1,6 +1,6 @@
 <Save>
   <Saveable type="Medical.LoadAnotherTimeline, Standalone" id="1">
-    <String name="TargetTimeline">Side.tl</String>
+    <String name="TargetTimeline">Reel.tl</String>
     <Bool name="ShowContinuePrompt">False</Bool>
   </Saveable>
   <Saveable type="Medical.MoveCameraAction, Standalone" id="3">
