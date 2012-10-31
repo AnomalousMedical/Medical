@@ -32,18 +32,7 @@ p
 	margin-top: -177px;
 	border-width:2px;
 	border-color: #6699cc;
-}
-
-.MessageBox
-{
-	background-color:#000000cc;
-	border-width:2px;
-	border-color: #6699cc;
-	top:0px;
-	position: absolute;
-	width: 450px;
-	margin-left: auto;
-	margin-right: 2px;
+	z-index:5;
 }
 
 .ConnectionInfo
@@ -56,6 +45,7 @@ p
 	width: 450px;
 	margin-left: auto;
 	margin-right: 2px;
+	z-index:1;
 }
 
 input.text,
