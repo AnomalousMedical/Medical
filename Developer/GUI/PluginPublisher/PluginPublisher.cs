@@ -46,9 +46,16 @@ namespace Developer.GUI
 
         void publishButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            pluginPublishController.publishPlugin(pluginFileEdit.OnlyText, signatureFileEdit.OnlyText, outDirEdit.OnlyText);
-            DeveloperConfig.LastPluginExportDirectory = outDirEdit.OnlyText;
-            DeveloperConfig.LastPluginKey = signatureFileEdit.OnlyText;
+            try
+            {
+                pluginPublishController.publishPlugin(pluginFileEdit.OnlyText, signatureFileEdit.OnlyText, outDirEdit.OnlyText);
+                DeveloperConfig.LastPluginExportDirectory = outDirEdit.OnlyText;
+                DeveloperConfig.LastPluginKey = signatureFileEdit.OnlyText;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error publishing plugin {0}.\nReason: {1}", pluginFileEdit.OnlyText, ex.Message), "Publish Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         void outDirBrowser_MouseButtonClick(Widget source, EventArgs e)
