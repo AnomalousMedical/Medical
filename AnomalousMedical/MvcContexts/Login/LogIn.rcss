@@ -8,6 +8,17 @@ body
 h1
 {
 	text-align:left;
+	margin-left:3px;
+}
+
+h2
+{
+	margin-left:3px;
+}
+
+p
+{
+	margin-left:3px;
 }
 
 .LogInForm
