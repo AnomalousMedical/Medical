@@ -292,12 +292,16 @@ namespace Medical.GUI
                     if (matches.Count > 0)
                     {
                         searchBox.Caption = "Clicked";
-                        if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection)
+                        if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection || !showPremium)
                         {
-                            AnatomyTag mainTag = matches[0].Tags.First();
-                            if (mainTag != null)
+                            //Search all tags, not just the main one in case the main one doesn't exist.
+                            foreach (AnatomyTag tag in matches[0].Tags)
                             {
-                                itemToSelect = anatomyList.findItemByCaption(mainTag.Tag);
+                                itemToSelect = anatomyList.findItemByCaption(tag.Tag);
+                                if (itemToSelect != null)
+                                {
+                                    break;
+                                }
                             }
                         }
                         anatomyList.SelectedItem = itemToSelect;
