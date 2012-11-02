@@ -14,11 +14,11 @@
 				<input type="text" name="User" id="User" />
 				<h2>Password</h2>
 				<input type="password" name="Pass" id="Pass" />
-				<span style="float:left;width:185px;margin-top:11px;margin-left:5px;">
+				<span style="float:left;width:185pf;margin-top:11pf;margin-left:5pf;">
 					<input type="checkbox" name="Remember" value="True" />Remember Password</span>
-				<input type="submit" id="LogInButton" style="float:right;width:50px;margin-top:7px;margin-right:5px;width:100px;">Log In</input>
+				<input type="submit" id="LogInButton" style="float:right;width:50pf;margin-top:7pf;margin-right:5pf;width:100pf;">Log In</input>
 			</form>
-			<div style="clear:both;margin-bottom:15px;" />
+			<div style="clear:both;margin-bottom:15pf;" />
 			<p>Forgot your <a onclick="Index/ForgotPassword">password</a>?</p>
 			<p>Need to <a onclick="Index/Register">register</a>?</p>
 			<p>Want to <a onclick="Index/Cancel">exit</a>?</p>

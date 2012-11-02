@@ -2,35 +2,35 @@ body
 {
 	background-color:#00000000;
 	color:white;
-	font-size: 17px;
+	font-size: 17pf;
 }
 
 h1
 {
 	text-align:left;
-	margin-left:3px;
+	margin-left:3pf;
 }
 
 h2
 {
-	margin-left:3px;
+	margin-left:3pf;
 }
 
 p
 {
-	margin-left:3px;
+	margin-left:3pf;
 }
 
 .LogInForm
 {	
 	margin-left: auto;
-	margin-right: 2px;
-	width: 450px;
+	margin-right: 2pf;
+	width: 450pf;
 	background-color:#000000cc;
 	position: absolute;
 	top:50%;
-	margin-top: -177px;
-	border-width:2px;
+	margin-top: -177pf;
+	border-width:2pf;
 	border-color: #6699cc;
 	z-index:5;
 }
@@ -38,27 +38,27 @@ p
 .ConnectionInfo
 {
 	background-color:#000000cc;
-	border-width:2px;
+	border-width:2pf;
 	border-color: #6699cc;
-	bottom:0px;
+	bottom:0pf;
 	position: absolute;
-	width: 450px;
+	width: 450pf;
 	margin-left: auto;
-	margin-right: 2px;
+	margin-right: 2pf;
 	z-index:1;
 }
 
 input.text,
 input.password
 {
-	width: 440px;
-	margin-left:5px;
-	margin-right:5px;
+	width: 440pf;
+	margin-left:5pf;
+	margin-right:5pf;
 }
 
 input.submit
 {
-	font-size: 17px;
+	font-size: 17pf;
 	color: black;
 }
 

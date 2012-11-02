@@ -118,6 +118,9 @@ namespace Medical
             BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
 
+            RocketInterface.Instance.FileInterface = new RmlPreprocessStream();
+            RmlPreprocessStream.ScaleFactor = 1.0f;
+
             NativeUpdateTimer win32Timer = new NativeUpdateTimer(systemTimer);
             mainTimer = win32Timer;
             
