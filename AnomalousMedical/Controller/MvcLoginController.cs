@@ -8,6 +8,7 @@ using System.Threading;
 using Engine;
 using Logging;
 using MyGUIPlugin;
+using System.Net;
 
 namespace Medical.Controller
 {
@@ -19,6 +20,7 @@ namespace Medical.Controller
         bool loggingIn = false;
         private ViewHostControl passwordControl;
         private ViewHostControl messageControl;
+        private ViewHostControl errorControl;
 
         public MvcLoginController(StandaloneController controller, LicenseManager licenseManager)
         {
@@ -65,6 +67,7 @@ namespace Medical.Controller
                     DataModel model = context.getModel<DataModel>("Credentials");
                     MedicalConfig.StoreCredentials = model.getValue("Remember") == "True";
                     messageControl.Value = "Connecting to server.";
+                    errorControl.Value = "";
                     ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense), new Pair<String, String>(model.getValue("User"), model.getValue("Pass")));
                 }
             }));
@@ -88,6 +91,7 @@ namespace Medical.Controller
             {
                 passwordControl = executingContext.RunningActionViewHost.findControl("Pass");
                 messageControl = executingContext.RunningActionViewHost.findControl("Message");
+                errorControl = executingContext.RunningActionViewHost.findControl("Error");
                 if (focusPassword)
                 {
                     passwordControl.focus();
@@ -123,6 +127,18 @@ namespace Medical.Controller
             {
                 ThreadManager.invoke(new CallbackString(licenseServerFail), alse.Message);
             }
+            catch (WebException webException)
+            {
+                switch (webException.Status)
+                {
+                    case WebExceptionStatus.TrustFailure:
+                        ThreadManager.invoke(new CallbackString(licenseServerFail), "Error establishing SSL trust relationship with server. Please try again on another internet connection.");
+                        break;
+                    case WebExceptionStatus.ConnectFailure:
+                        ThreadManager.invoke(new CallbackString(licenseServerFail), "Cannot connect to License Server. Please try again later.");
+                        break;
+                }
+            }
             catch (Exception e)
             {
                 ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("Could not connect to license server. Please try again later.\nReason: {0}", e.Message));
@@ -143,16 +159,17 @@ namespace Medical.Controller
             catch (LicenseInvalidException ex)
             {
                 Log.Error("Invalid license returned from server. Reason: {0}", ex.Message);
-                passwordControl.Value = "";
                 loggingIn = false;
-                messageControl.Value = String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message);
+                messageControl.Value = "Please try again.";
+                errorControl.Value = String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message);
                 passwordControl.focus();
             }
         }
 
         void licenseLoginFail()
         {
-            messageControl.Value = "Username or password is invalid.";
+            messageControl.Value = "Please try again.";
+            errorControl.Value = "Username or password is invalid.";
             passwordControl.Value = "";
             passwordControl.focus();
             loggingIn = false;
@@ -161,7 +178,8 @@ namespace Medical.Controller
         void licenseServerFail(String message)
         {
             loggingIn = false;
-            messageControl.Value = message;
+            messageControl.Value = "Please try again.";
+            errorControl.Value = message;
             passwordControl.focus();
         }
 

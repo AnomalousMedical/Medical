@@ -40,7 +40,7 @@ p
 	background-color:#000000cc;
 	border-width:2pf;
 	border-color: #6699cc;
-	bottom:0pf;
+	top:0pf;
 	position: absolute;
 	width: 450pf;
 	margin-left: auto;
