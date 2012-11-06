@@ -6,7 +6,7 @@
 	<body template="MasterTemplate">
 		<div class="LogInForm">
 			<h1>Log In</h1>
-			<p id="Message" style="white-space: pre-wrap;">
+			<p style="white-space: pre-wrap;" id="Message">
 				<print name="Message" />
 			</p>
 			<form onsubmit="Index/LogIn" autosubmitid="LogInButton">
@@ -16,11 +16,9 @@
 				<input type="password" name="Pass" id="Pass" />
 				<span style="float:left;width:185pf;margin-top:11pf;margin-left:5pf;">
 					<input type="checkbox" name="Remember" value="True" />Remember Password</span>
-				<input type="submit" id="LogInButton" style="float:right;width:50pf;margin-top:7pf;margin-right:5pf;width:100pf;">Log In</input>
+				<input type="submit" style="float:right;width:50pf;margin-top:7pf;margin-right:5pf;width:100pf;" id="LogInButton">Log In</input>
 			</form>
-			<p id="Error" style="white-space: pre-wrap;clear:both;margin-bottom:15pf;color:#F11DB1;">
-				
-			</p>
+			<p style="white-space: pre-wrap;clear:both;margin-bottom:15pf;color:#F11DB1;" id="Error" />
 			<p>Forgot your <a onclick="Index/ForgotPassword">password</a>?</p>
 			<p>Need to <a onclick="Index/Register">register</a>?</p>
 			<p>Want to <a onclick="Index/Cancel">exit</a>?</p>

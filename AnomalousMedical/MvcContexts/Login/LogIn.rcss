@@ -9,11 +9,13 @@ h1
 {
 	text-align:left;
 	margin-left:3pf;
+	font-size:17pf;
 }
 
 h2
 {
 	margin-left:3pf;
+	font-size:15pf;
 }
 
 p
