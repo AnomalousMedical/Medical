@@ -5,11 +5,14 @@ using System.Text;
 using Medical;
 using Medical.GUI;
 using Engine.ObjectManagement;
+using System.Runtime.InteropServices;
 
 namespace LeapMotionPlugin
 {
     class LeapAtlasPlugin : AtlasPlugin
     {
+        private Controller leapController;
+        private Listener listener;
 
         public LeapAtlasPlugin(StandaloneController standaloneController)
         {
@@ -18,7 +21,8 @@ namespace LeapMotionPlugin
 
         public void Dispose()
         {
-
+            leapController.Dispose();
+            listener.Dispose();
         }
 
         public void loadGUIResources()
@@ -28,7 +32,8 @@ namespace LeapMotionPlugin
 
         public void initialize(StandaloneController standaloneController)
         {
-            
+            listener = new Listener();
+            leapController = new Controller(listener);
         }
 
         public void sceneLoaded(SimScene scene)
