@@ -32,44 +32,68 @@ namespace LeapMotionPlugin
                 // Check if the hand has any fingers
                 FingerArray fingers = hand.fingers();
                 int numFingers = fingers.Count;
-                switch (numFingers)
+                if (numFingers > 0)
                 {
-                    case 1:
-
-                        break;
-                    case 2:
-
-                        break;
-                    case 3:
-
-                        break;
-                }
-                if (numFingers == 1)
-                {
-                    float sensitivity = 0.1f;
-                    Finger finger = fingers[0];
-                    SceneViewWindow window = sceneViewController.ActiveWindow;
-                    if (window != null)
+                    switch (numFingers)
                     {
-                        Ray tip = finger.tip();
-                        Vector currentFingerPos = tip.position;
-                        if (!firstHandFrame)
-                        {
-                            float yawDelta = (float)(lastFingerPos.x - tip.position.x) * sensitivity;
-                            float pitchDelta = (float)(lastFingerPos.y - tip.position.y) * sensitivity;
-                            ThreadManager.invoke(new Action(() =>
-                            {
-                                window.rotate(yawDelta, pitchDelta);
-                            }));
-                        }
-                        lastFingerPos = currentFingerPos;
-                        firstHandFrame = false;
+                        case 1:
+                            rotate(fingers);
+                            break;
+                        case 2:
+                            pan(fingers);
+                            break;
                     }
                 }
             }
             else
             {
                 firstHandFrame = true;
+            }
+        }
+
+        private void rotate(FingerArray fingers)
+        {
+            float sensitivity = 0.1f;
+            Finger finger = fingers[0];
+            SceneViewWindow window = sceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                Ray tip = finger.tip();
+                Vector currentFingerPos = tip.position;
+                if (!firstHandFrame)
+                {
+                    float yawDelta = (float)(lastFingerPos.x - tip.position.x) * sensitivity;
+                    float pitchDelta = (float)(lastFingerPos.y - tip.position.y) * sensitivity;
+                    ThreadManager.invoke(new Action(() =>
+                    {
+                        window.rotate(yawDelta, pitchDelta);
+                    }));
+                }
+                lastFingerPos = currentFingerPos;
+                firstHandFrame = false;
+            }
+        }
+
+        private void pan(FingerArray fingers)
+        {
+            float sensitivity = 0.1f;
+            Finger finger = fingers[0];
+            SceneViewWindow window = sceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                Ray tip = finger.tip();
+                Vector currentFingerPos = tip.position;
+                if (!firstHandFrame)
+                {
+                    float xDelta = (float)(tip.position.x - lastFingerPos.x) * sensitivity;
+                    float yDelta = (float)(lastFingerPos.y - tip.position.y) * sensitivity;
+                    ThreadManager.invoke(new Action(() =>
+                    {
+                        window.pan(xDelta, yDelta);
+                    }));
+                }
+                lastFingerPos = currentFingerPos;
+                firstHandFrame = false;
             }
         }
     }

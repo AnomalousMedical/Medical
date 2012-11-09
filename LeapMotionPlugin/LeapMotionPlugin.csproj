@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Controller\LeapCameraListener.cs" />
     <Compile Include="Controller\LeapDebugListener.cs" />
+    <Compile Include="Controller\LeapGrabListener.cs" />
     <Compile Include="LeapAtlasPlugin.cs" />
     <Compile Include="LeapAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
