@@ -52,10 +52,6 @@
     <Compile Include="LeapAtlasPlugin.cs" />
     <Compile Include="LeapAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wrapper\Controller.cs" />
-    <Compile Include="Wrapper\Frame.cs" />
-    <Compile Include="Wrapper\LeapNativeClass.cs" />
-    <Compile Include="Wrapper\Listener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\Dependencies\LeapMotion\lib\x86\Leap.dll">

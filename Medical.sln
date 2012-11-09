@@ -35,8 +35,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPlugin", "UnitTestP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeapMotionPlugin", "LeapMotionPlugin\LeapMotionPlugin.csproj", "{8AAFC396-2780-4425-85B1-224957243F73}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LeapMotionWrapper", "LeapMotionWrapper\LeapMotionWrapper.vcxproj", "{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -278,24 +276,6 @@ Global
 		{8AAFC396-2780-4425-85B1-224957243F73}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8AAFC396-2780-4425-85B1-224957243F73}.Release|Win32.ActiveCfg = Release|Any CPU
 		{8AAFC396-2780-4425-85B1-224957243F73}.Release|x86.ActiveCfg = Release|Any CPU
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Debug|Win32.Build.0 = Debug|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Debug|x86.ActiveCfg = Debug|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.PublicRelease|Any CPU.ActiveCfg = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.PublicRelease|Mixed Platforms.Build.0 = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.PublicRelease|Win32.ActiveCfg = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.PublicRelease|Win32.Build.0 = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.PublicRelease|x86.ActiveCfg = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Release|Any CPU.ActiveCfg = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Release|Win32.ActiveCfg = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Release|Win32.Build.0 = Release|Win32
-		{7FD031EF-71B3-481D-81F9-A3BD80FCDB41}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
