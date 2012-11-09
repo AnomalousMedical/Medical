@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\ComboListener.cs" />
     <Compile Include="Controller\LeapCameraListener.cs" />
     <Compile Include="Controller\LeapDebugListener.cs" />
     <Compile Include="Controller\LeapGrabListener.cs" />

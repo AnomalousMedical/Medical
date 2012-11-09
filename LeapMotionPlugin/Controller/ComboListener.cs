@@ -6,13 +6,13 @@ using Medical.Controller;
 
 namespace LeapMotionPlugin
 {
-    class LeapGrabListener : Listener
+    class ComboListener : Listener
     {
         SceneViewController sceneViewController;
         private Vector lastFingerPos = new Vector(0, 0, 0);
         private bool firstHandFrame = true;
 
-        public LeapGrabListener(SceneViewController sceneViewController)
+        public ComboListener(SceneViewController sceneViewController)
         {
             this.sceneViewController = sceneViewController;
         }
@@ -23,6 +23,7 @@ namespace LeapMotionPlugin
             Frame frame = controller.frame();
             HandArray hands = frame.hands();
             int numHands = hands.Count;
+            FingerArray fingers;
 
             if (numHands == 1)
             {
@@ -30,15 +31,23 @@ namespace LeapMotionPlugin
                 Hand hand = hands[0];
 
                 // Check if the hand has any fingers
-                FingerArray fingers = hand.fingers();
+                fingers = hand.fingers();
                 int numFingers = fingers.Count;
-                if (numFingers == 0)
+                if (numFingers > 0)
                 {
-                    //grabbing
-                    Ray palm = hand.palm();
-                    if (palm != null)
+                    //Find the most forward pointing finger.
+                    Finger finger = fingers[0];
+                    for (int i = 1; i < numFingers; ++i)
                     {
-                        rotate(palm.position);
+                        if (finger.tip().direction.z < fingers[i].tip().direction.z)
+                        {
+                            finger = fingers[i];
+                        }
+                    }
+                    Ray ray = finger.tip();
+                    if (ray != null)
+                    {
+                        rotate(ray.position);
                     }
                 }
                 else
@@ -54,7 +63,7 @@ namespace LeapMotionPlugin
 
                 // Check if the hand has any fingers
                 int numFingers = hand.fingers().Count + hand1.fingers().Count;
-                if (numFingers <= 1)
+                if (numFingers <= 2)
                 {
                     Ray palm = hand.palm();
                     Ray palm1 = hand1.palm();
