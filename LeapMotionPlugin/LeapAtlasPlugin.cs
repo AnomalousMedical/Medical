@@ -32,7 +32,7 @@ namespace LeapMotionPlugin
 
         public void initialize(StandaloneController standaloneController)
         {
-            listener = new Listener();
+            listener = new LeapListener();
             leapController = new Controller(listener);
         }
 
