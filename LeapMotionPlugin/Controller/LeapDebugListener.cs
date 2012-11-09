@@ -6,7 +6,7 @@ using Medical.Controller;
 
 namespace LeapMotionPlugin
 {
-    class LeapListener : Listener
+    class LeapDebugListener : Listener
     {
         private Object thisLock = new Object();
 

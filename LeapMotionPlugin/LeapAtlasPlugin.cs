@@ -32,7 +32,7 @@ namespace LeapMotionPlugin
 
         public void initialize(StandaloneController standaloneController)
         {
-            listener = new LeapListener();
+            listener = new LeapCameraListener(standaloneController.SceneViewController);
             leapController = new Controller(listener);
         }
 
