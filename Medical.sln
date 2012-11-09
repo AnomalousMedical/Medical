@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentalSim", "DentalSim\Dent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPlugin", "UnitTestPlugin\UnitTestPlugin.csproj", "{E4043002-4F98-42B0-BA3E-6C34510E16BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeapMotionPlugin", "LeapMotionPlugin\LeapMotionPlugin.csproj", "{8AAFC396-2780-4425-85B1-224957243F73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -214,6 +216,21 @@ Global
 		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E4043002-4F98-42B0-BA3E-6C34510E16BD}.Release|x86.ActiveCfg = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.PublicRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.PublicRelease|x86.ActiveCfg = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8AAFC396-2780-4425-85B1-224957243F73}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
