@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="ManagedListener.cpp" />
   </ItemGroup>
   <ItemGroup>

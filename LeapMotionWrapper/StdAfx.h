@@ -14,4 +14,6 @@ typedef const unsigned short* String; //UTF16 Needed
 #define _HAS_ITERATOR_DEBUGGING 0
 #include "Leap.h"
 
+typedef int64_t Int64;
+
 #endif

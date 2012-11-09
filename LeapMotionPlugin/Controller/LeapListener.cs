@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Medical.Controller;
 
 namespace LeapMotionPlugin
 {
@@ -9,22 +10,34 @@ namespace LeapMotionPlugin
     {
         public override void onInit(Controller controller)
         {
-            Logging.Log.Debug("onInit" + controller);
+            ThreadManager.invoke(new Action(() =>
+            {
+                Logging.Log.Debug("onInit" + controller);
+            }));
         }
 
         public override void onConnect(Controller controller)
         {
-            Logging.Log.Debug("onConnect" + controller);
+            ThreadManager.invoke(new Action(() =>
+            {
+                Logging.Log.Debug("onConnect" + controller);
+            }));
         }
 
         public override void onDisconnect(Controller controller)
         {
-            Logging.Log.Debug("onDisconnect" + controller);
+            ThreadManager.invoke(new Action(() =>
+            {
+                Logging.Log.Debug("onDisconnect" + controller);
+            }));
         }
 
         public override void onFrame(Controller controller)
         {
-            Logging.Log.Debug("onFrame" + controller);
+            ThreadManager.invoke(new Action(() =>
+            {
+                Logging.Log.Debug("onFrame" + controller);
+            }));
         }
     }
 }

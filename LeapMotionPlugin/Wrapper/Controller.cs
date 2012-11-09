@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace LeapMotionPlugin
+namespace LeapMotionPlugin.Wrapper
 {
     class Controller : LeapNativeClass, IDisposable
     {
@@ -39,6 +39,14 @@ namespace LeapMotionPlugin
             Controller_Delete(Ptr);
         }
 
+        public Frame Frame
+        {
+            get
+            {
+                return Frame.getFrameWrapper(Controller_Frame(Ptr));
+            }
+        }
+
         #region PInvoke
 
         [DllImport("LeapMotionWrapper", CallingConvention = CallingConvention.Cdecl)]
@@ -46,6 +54,12 @@ namespace LeapMotionPlugin
 
         [DllImport("LeapMotionWrapper", CallingConvention = CallingConvention.Cdecl)]
         private static extern void Controller_Delete(IntPtr controller);
+
+        [DllImport("LeapMotionWrapper", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr Controller_Frame(IntPtr controller);
+
+        [DllImport("LeapMotionWrapper", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr Controller_Frame_History(IntPtr controller, int history);
 
         #endregion
     }
