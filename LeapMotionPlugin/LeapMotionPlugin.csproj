@@ -39,6 +39,10 @@
     <Reference Include="LeapCSharp">
       <HintPath>..\..\Dependencies\LeapMotion\lib\x86\LeapCSharp.dll</HintPath>
     </Reference>
+    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ComboListener.cs" />
+    <Compile Include="Controller\FingerCountListener.cs" />
     <Compile Include="Controller\LeapCameraListener.cs" />
     <Compile Include="Controller\LeapDebugListener.cs" />
     <Compile Include="Controller\LeapGrabListener.cs" />
