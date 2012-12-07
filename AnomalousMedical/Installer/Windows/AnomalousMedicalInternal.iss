@@ -71,9 +71,9 @@ Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dsetup32.dll"; 
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DSETUP.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxdllreg_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxupdate.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;DX August 2009 Files
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_d3dx9_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Aug2009_D3DCompiler_42_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+;DX June 2010 Files
+Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Jun2010_d3dx9_43_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
+Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Jun2010_D3DCompiler_43_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
 ;.Net 4.0
 Source: S:\dependencies\InstallerDependencies\Windows\dotNetFx40_Client_setup.exe; DestDir: {tmp}; 
 
