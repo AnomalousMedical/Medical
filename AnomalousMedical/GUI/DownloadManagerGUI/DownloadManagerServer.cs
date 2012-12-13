@@ -180,6 +180,8 @@ namespace Medical.GUI
                 ThreadManager.invoke(new Action(delegate()
                 {
                     MessageBox.show(String.Format("Error reading plugin data from the server. Please try again later.\nReason: {0}", e.Message), "Server Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+					Log.Error("Error reading plugin data from server.");
+					Log.Default.printException(e);
                 }));
             }
         }
