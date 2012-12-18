@@ -46,7 +46,7 @@ namespace Medical
                 String argumentFormat = "{0}={1}";
                 foreach (Tuple<String, String> arg in arguments)
                 {
-                    postData.AppendFormat(CultureInfo.InvariantCulture, argumentFormat, Uri.EscapeDataString(arg.Item1), Uri.EscapeDataString(arg.Item2));
+                    postData.AppendFormat(CultureInfo.InvariantCulture, argumentFormat, arg.Item1, Uri.EscapeDataString(arg.Item2));
                     argumentFormat = "&{0}={1}";
                 }
             }
