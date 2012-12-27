@@ -225,6 +225,24 @@ namespace Medical.GUI
             }
         }
 
+        public void insertRawRml(String rml)
+        {
+            if (allowEdit)
+            {
+                if (selectedElementManager.HasSelection)
+                {
+                    Factory.InstanceElementString(selectedElementManager.SelectedElement, rml);
+                    //insertElementIntoParent(img, selectedElementManager.SelectedElement);
+                }
+                else
+                {
+                    Factory.InstanceElementString(TopContentElement, rml);
+                    //TopContentElement.(img);
+                }
+                rmlModified();
+            }
+        }
+
         public String CurrentRml
         {
             get

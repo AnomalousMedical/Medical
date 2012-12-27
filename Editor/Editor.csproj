@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\HtmlDragDropItem.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\EditorController\EditorController.cs" />
@@ -139,6 +140,10 @@
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
+    <Compile Include="GUI\DragAndDrop\DragAndDropComponent.cs" />
+    <Compile Include="GUI\DragAndDrop\DragAndDropFactory.cs" />
+    <Compile Include="GUI\DragAndDrop\DragAndDropItem.cs" />
+    <Compile Include="GUI\DragAndDrop\DragAndDropView.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarView.cs" />
@@ -227,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
+    <EmbeddedResource Include="GUI\DragAndDrop\DragAndDropComponent.layout" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout">
       <SubType>Designer</SubType>
@@ -290,6 +296,7 @@
       <Link>Resources\Irony.dll</Link>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

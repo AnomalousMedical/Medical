@@ -55,6 +55,7 @@ namespace Medical
                 textEditorComponent = component;
             };
             mvcContext.Views.add(textEditorView);
+            
             RmlWysiwygView rmlView = new RmlWysiwygView("RmlView", uiCallback, uiCallback);
             rmlView.ViewLocation = ViewLocations.Left;
             rmlView.IsWindow = true;
@@ -71,6 +72,27 @@ namespace Medical
                 };
             };
             mvcContext.Views.add(rmlView);
+
+            DragAndDropView<HtmlDragDropItem> htmlDragDrop = new DragAndDropView<HtmlDragDropItem>("HtmlDragDrop",
+                new HtmlDragDropItem("Heading", CommonResources.NoIcon, "<h1>Heading</h1>"),
+                new HtmlDragDropItem("Paragraph", CommonResources.NoIcon, "<p>Add paragraph text here.</p>"),
+                new HtmlDragDropItem("Image", CommonResources.NoIcon, "<img src=\"\"></img>"),
+                new HtmlDragDropItem("Broken", CommonResources.NoIcon, "<yea this will be fucked/\"")
+                );
+            htmlDragDrop.Dragging += (item, position) =>
+                {
+                    
+                };
+            htmlDragDrop.DragEnded += (item, position) =>
+                {
+                    if (rmlComponent.Widget.contains(position.x, position.y))
+                    {
+                        rmlComponent.insertRawRml(item.Markup);
+                    }
+                };
+            htmlDragDrop.ViewLocation = ViewLocations.Left;
+            htmlDragDrop.IsWindow = true;
+            mvcContext.Views.add(htmlDragDrop);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
             taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
@@ -99,6 +121,13 @@ namespace Medical
                         {
                             textEditorComponent = null;
                         }))
+                    ));
+
+            mvcContext.Controllers.add(new MvcController("HtmlDragDrop",
+                new RunCommandsAction("Show",
+                    new ShowViewIfNotOpenCommand("HtmlDragDrop")),
+                new RunCommandsAction("Close",
+                    new CloseViewCommand())
                     ));
 
             mvcContext.Controllers.add(new MvcController("Editor",
@@ -172,7 +201,7 @@ namespace Medical
                     })));
 
             mvcContext.Controllers.add(new MvcController("Common",
-                new RunCommandsAction("Start", new RunActionCommand("Editor/Show")),
+                new RunCommandsAction("Start", new RunActionCommand("HtmlDragDrop/Show"), new RunActionCommand("Editor/Show")),
                 new CallbackAction("Focus", context =>
                 {
                     GlobalContextEventHandler.setEventContext(eventContext);
