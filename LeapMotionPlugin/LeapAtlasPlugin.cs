@@ -6,6 +6,7 @@ using Medical;
 using Medical.GUI;
 using Engine.ObjectManagement;
 using System.Runtime.InteropServices;
+using Leap;
 
 namespace LeapMotionPlugin
 {
@@ -16,7 +17,7 @@ namespace LeapMotionPlugin
 
         public LeapAtlasPlugin(StandaloneController standaloneController)
         {
-
+            
         }
 
         public void Dispose()

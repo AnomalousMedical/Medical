@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.Controller;
+using Leap;
 
 namespace LeapMotionPlugin
 {
@@ -21,29 +22,29 @@ namespace LeapMotionPlugin
             }
         }
 
-        public override void onInit(Controller controller)
+        public override void OnInit(Controller controller)
         {
             SafeWriteLine("Initialized");
         }
 
-        public override void onConnect(Controller controller)
+        public override void OnConnect(Controller controller)
         {
             SafeWriteLine("Connected");
         }
 
-        public override void onDisconnect(Controller controller)
+        public override void OnDisconnect(Controller controller)
         {
             SafeWriteLine("Disconnected");
         }
 
-        public override void onFrame(Controller controller)
+        public override void OnFrame(Controller controller)
         {
             // Get the most recent frame and report some basic information
-            Frame frame = controller.frame();
-            HandArray hands = frame.hands();
+            Frame frame = controller.Frame();
+            HandList hands = frame.Hands;
             int numHands = hands.Count;
-            SafeWriteLine("Frame id: " + frame.id()
-                        + ", timestamp: " + frame.timestamp()
+            SafeWriteLine("Frame id: " + frame.Id
+                        + ", timestamp: " + frame.Timestamp
                         + ", hands: " + numHands);
 
             if (numHands >= 1)
@@ -52,7 +53,7 @@ namespace LeapMotionPlugin
                 Hand hand = hands[0];
 
                 // Check if the hand has any fingers
-                FingerArray fingers = hand.fingers();
+                FingerList fingers = hand.Fingers;
                 int numFingers = fingers.Count;
                 if (numFingers >= 1)
                 {
@@ -60,10 +61,9 @@ namespace LeapMotionPlugin
                     Vector pos = new Vector(0, 0, 0);
                     foreach (Finger finger in fingers)
                     {
-                        Ray tip = finger.tip();
-                        pos.x += tip.position.x;
-                        pos.y += tip.position.y;
-                        pos.z += tip.position.z;
+                        pos.x += finger.TipPosition.x;
+                        pos.y += finger.TipPosition.y;
+                        pos.z += finger.TipPosition.z;
                     }
                     pos = new Vector(pos.x / numFingers, pos.y / numFingers, pos.z / numFingers);
                     SafeWriteLine("Hand has " + numFingers + " fingers with average tip position"
@@ -71,12 +71,9 @@ namespace LeapMotionPlugin
                 }
 
                 // Check if the hand has a palm
-                Ray palmRay = hand.palm();
-                if (palmRay != null)
-                {
                     // Get the palm position and wrist direction
-                    Vector palm = palmRay.position;
-                    Vector wrist = palmRay.direction;
+                    Vector palm = hand.PalmPosition;
+                    Vector wrist = hand.PalmNormal;
                     string direction = "";
                     if (wrist.x > 0)
                         direction = "left";
@@ -85,7 +82,6 @@ namespace LeapMotionPlugin
                     SafeWriteLine("Hand is pointing to the " + direction + " with palm position"
                                 + " (" + palm.x + ", " + palm.y + ", " + palm.z + ")");
                 }
-            }
         }
     }
 }

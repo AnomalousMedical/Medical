@@ -36,8 +36,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
-    <Reference Include="LeapCSharp">
-      <HintPath>..\..\Dependencies\LeapMotion\lib\x86\LeapCSharp.dll</HintPath>
+    <Reference Include="LeapCSharp.NET4.0">
+      <HintPath>..\..\Dependencies\LeapMotion\lib\LeapCSharp.NET4.0.dll</HintPath>
     </Reference>
     <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

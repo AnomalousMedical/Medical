@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.Controller;
+using Leap;
 
 namespace LeapMotionPlugin
 {
@@ -17,13 +18,13 @@ namespace LeapMotionPlugin
             this.sceneViewController = sceneViewController;
         }
 
-        public override void onFrame(Controller controller)
+        public override void OnFrame(Controller controller)
         {
             // Get the most recent frame and report some basic information
-            Frame frame = controller.frame();
-            HandArray hands = frame.hands();
+            Frame frame = controller.Frame();
+            HandList hands = frame.Hands;
             int numHands = hands.Count;
-            FingerArray fingers;
+            FingerList fingers;
 
             if (numHands == 2)
             {
@@ -31,7 +32,7 @@ namespace LeapMotionPlugin
                 Hand hand = hands[0];
 
                 // Check if the hand has any fingers
-                fingers = hand.fingers();
+                fingers = hand.Fingers;
                 int numFingers = fingers.Count;
                 if (numFingers > 0)
                 {
@@ -44,17 +45,17 @@ namespace LeapMotionPlugin
                     //        finger = fingers[i];
                     //    }
                     //}
-                    Ray ray = finger.tip();
-                    if (ray != null)
+                    //Ray ray = finger.tip();
+                    //if (ray != null)
                     {
                         Hand counterHand = hands[1];
-                        if (counterHand.fingers().Count == 1)
+                        if (counterHand.Fingers.Count == 1)
                         {
-                            rotate(ray.position);
+                            rotate(finger.TipPosition);
                         }
-                        else if (counterHand.fingers().Count == 2)
+                        else if (counterHand.Fingers.Count == 2)
                         {
-                            pan(ray.position);
+                            pan(finger.TipPosition);
                         }
                         else
                         {

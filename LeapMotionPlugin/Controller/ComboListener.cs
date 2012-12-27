@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.Controller;
+using Leap;
 
 namespace LeapMotionPlugin
 {
@@ -17,13 +18,13 @@ namespace LeapMotionPlugin
             this.sceneViewController = sceneViewController;
         }
 
-        public override void onFrame(Controller controller)
+        public override void OnFrame(Controller controller)
         {
             // Get the most recent frame and report some basic information
-            Frame frame = controller.frame();
-            HandArray hands = frame.hands();
+            Frame frame = controller.Frame();
+            HandList hands = frame.Hands;
             int numHands = hands.Count;
-            FingerArray fingers;
+            FingerList fingers;
 
             if (numHands == 1)
             {
@@ -31,7 +32,7 @@ namespace LeapMotionPlugin
                 Hand hand = hands[0];
 
                 // Check if the hand has any fingers
-                fingers = hand.fingers();
+                fingers = hand.Fingers;
                 int numFingers = fingers.Count;
                 if (numFingers > 0)
                 {
@@ -39,17 +40,17 @@ namespace LeapMotionPlugin
                     Finger finger = fingers[0];
                     for (int i = 1; i < numFingers; ++i)
                     {
-                        if (finger.tip().direction.z < fingers[i].tip().direction.z)
+                        if (finger.Direction.z < fingers[i].Direction.z)
                         {
                             finger = fingers[i];
                         }
                     }
-                    Ray ray = finger.tip();
-                    if (ray != null)
+                    //Ray ray = finger.tip();
+                    //if (ray != null)
                     {
-                        if (ray.direction.z >= 0.9)
+                        if (finger.Direction.z >= 0.9)
                         {
-                            rotate(ray.position);
+                            rotate(finger.TipPosition);
                         }
                     }
                 }
@@ -63,31 +64,25 @@ namespace LeapMotionPlugin
                 // Get the first hand
                 Hand hand = hands[0];
                 Hand hand1 = hands[1];
-
                 // Check if the hand has any fingers
-                int numFingers = hand.fingers().Count + hand1.fingers().Count;
+                int numFingers = hand.Fingers.Count + hand1.Fingers.Count;
                 if (numFingers <= 1)
                 {
-                    Ray palm = hand.palm();
-                    Ray palm1 = hand1.palm();
-                    if (palm != null && palm1 != null)
-                    {
                         Vector averagePos = new Vector(0, 0, 0);
 
-                        averagePos.x += palm.position.x;
-                        averagePos.y += palm.position.y;
-                        averagePos.z += palm.position.z;
+                        averagePos.x += hand.PalmPosition.x;
+                        averagePos.y += hand.PalmPosition.y;
+                        averagePos.z += hand.PalmPosition.z;
 
-                        averagePos.x += palm1.position.x;
-                        averagePos.y += palm1.position.y;
-                        averagePos.z += palm1.position.z;
+                        averagePos.x += hand1.PalmPosition.x;
+                        averagePos.y += hand1.PalmPosition.y;
+                        averagePos.z += hand1.PalmPosition.z;
 
                         averagePos.x /= 2;
                         averagePos.y /= 2;
                         averagePos.z /= 2;
 
                         pan(averagePos);
-                    }
                 }
                 else
                 {

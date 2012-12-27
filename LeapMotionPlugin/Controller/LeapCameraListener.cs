@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.Controller;
+using Leap;
 
 namespace LeapMotionPlugin
 {
@@ -17,11 +18,11 @@ namespace LeapMotionPlugin
             this.sceneViewController = sceneViewController;
         }
 
-        public override void onFrame(Controller controller)
+        public override void OnFrame(Controller controller)
         {
             // Get the most recent frame and report some basic information
-            Frame frame = controller.frame();
-            HandArray hands = frame.hands();
+            Frame frame = controller.Frame();
+            HandList hands = frame.Hands;
             int numHands = hands.Count;
 
             if (numHands >= 1)
@@ -30,7 +31,7 @@ namespace LeapMotionPlugin
                 Hand hand = hands[0];
 
                 // Check if the hand has any fingers
-                FingerArray fingers = hand.fingers();
+                FingerList fingers = hand.Fingers;
                 int numFingers = fingers.Count;
                 if (numFingers > 0)
                 {
@@ -51,19 +52,18 @@ namespace LeapMotionPlugin
             }
         }
 
-        private void rotate(FingerArray fingers)
+        private void rotate(FingerList fingers)
         {
             float sensitivity = 0.1f;
             Finger finger = fingers[0];
             SceneViewWindow window = sceneViewController.ActiveWindow;
             if (window != null)
             {
-                Ray tip = finger.tip();
-                Vector currentFingerPos = tip.position;
+                Vector currentFingerPos = finger.TipPosition;
                 if (!firstHandFrame)
                 {
-                    float yawDelta = (float)(lastFingerPos.x - tip.position.x) * sensitivity;
-                    float pitchDelta = (float)(lastFingerPos.y - tip.position.y) * sensitivity;
+                    float yawDelta = (float)(lastFingerPos.x - currentFingerPos.x) * sensitivity;
+                    float pitchDelta = (float)(lastFingerPos.y - currentFingerPos.y) * sensitivity;
                     ThreadManager.invoke(new Action(() =>
                     {
                         window.rotate(yawDelta, pitchDelta);
@@ -74,19 +74,18 @@ namespace LeapMotionPlugin
             }
         }
 
-        private void pan(FingerArray fingers)
+        private void pan(FingerList fingers)
         {
             float sensitivity = 0.1f;
             Finger finger = fingers[0];
             SceneViewWindow window = sceneViewController.ActiveWindow;
             if (window != null)
             {
-                Ray tip = finger.tip();
-                Vector currentFingerPos = tip.position;
+                Vector currentFingerPos = finger.TipPosition;
                 if (!firstHandFrame)
                 {
-                    float xDelta = (float)(tip.position.x - lastFingerPos.x) * sensitivity;
-                    float yDelta = (float)(lastFingerPos.y - tip.position.y) * sensitivity;
+                    float xDelta = (float)(currentFingerPos.x - lastFingerPos.x) * sensitivity;
+                    float yDelta = (float)(lastFingerPos.y - currentFingerPos.y) * sensitivity;
                     ThreadManager.invoke(new Action(() =>
                     {
                         window.pan(xDelta, yDelta);
