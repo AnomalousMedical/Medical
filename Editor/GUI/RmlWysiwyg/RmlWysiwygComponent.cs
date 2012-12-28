@@ -29,7 +29,7 @@ namespace Medical.GUI
         RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
-        private Element previewElement = null;
+        private PreviewElement previewElement = new PreviewElement();
 
         private AnomalousMvcContext context;
 
@@ -71,7 +71,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            hidePreviewElement();
+            previewElement.Dispose();
             disposed = true;
             rocketWidget.Dispose();
             base.Dispose();
@@ -123,7 +123,7 @@ namespace Medical.GUI
         {
             if (allowEdit)
             {
-                hidePreviewElement();
+                previewElement.hidePreviewElement();
 
                 ElementDocument document = rocketWidget.Context.GetDocument(0);
                 using (Element div = document.CreateElement("temp"))
@@ -167,46 +167,35 @@ namespace Medical.GUI
                 position.y -= widget.AbsoluteTop;
 
                 Element toSelect = rocketWidget.Context.FindElementAtPoint(position);
+                Element selectedElement = selectedElementManager.SelectedElement;
 
-                if (toSelect != selectedElementManager.SelectedElement)
+                if (toSelect != selectedElement)
                 {
-                    if (toSelect != null && toSelect != TopContentElement)
+                    if (toSelect != null)
                     {
-                        bool isNotPreview = true;
-
-                        if (previewElement != null)
+                        Element topContentElement = TopContentElement;
+                        if (toSelect != topContentElement)
                         {
-                            Element toSelectParentWalker = toSelect;
-                            while (toSelectParentWalker != null && isNotPreview)
+                            if (!previewElement.isPreviewOrAncestor(toSelect))
                             {
-                                isNotPreview = toSelectParentWalker != previewElement;
-                                toSelectParentWalker = toSelectParentWalker.ParentNode;
+                                selectedElementManager.SelectedElement = toSelect;
+                                previewElement.hidePreviewElement();
+                                ElementDocument document = rocketWidget.Context.GetDocument(0);
+                                previewElement.showPreviewElement(document, innerRmlHint, toSelect.ParentNode, toSelect);
                             }
                         }
-
-                        if (isNotPreview)
+                        else
                         {
-                            selectedElementManager.SelectedElement = toSelect;
+                            selectedElementManager.SelectedElement = null;
+                            previewElement.hidePreviewElement();
                             ElementDocument document = rocketWidget.Context.GetDocument(0);
-                            hidePreviewElement();
-                            previewElement = document.CreateElement("div");
-                            String style = "border-width: 3px; border-color: red; display: block;";
-                            if (innerRmlHint != null)
-                            {
-                                previewElement.InnerRml = innerRmlHint;
-                            }
-                            else
-                            {
-                                style += "height: 25px; width: 98%;";
-                            }
-                            previewElement.SetAttribute("style", style);
-                            insertElementIntoParent(previewElement, selectedElementManager.SelectedElement);
+                            previewElement.showPreviewElement(document, innerRmlHint, toSelect, null);
                         }
                     }
                     else
                     {
                         selectedElementManager.SelectedElement = null;
-                        hidePreviewElement();
+                        previewElement.hidePreviewElement();
                     }
                 }
 
@@ -517,20 +506,6 @@ namespace Medical.GUI
                 else
                 {
                     parent.InsertBefore(newElement, sibling);
-                }
-            }
-        }
-
-        private void hidePreviewElement()
-        {
-            if (previewElement != null)
-            {
-                Element previewParent = previewElement.ParentNode;
-                if (previewParent != null)
-                {
-                    previewParent.RemoveChild(previewElement);
-                    previewElement.removeReference();
-                    previewElement = null;
                 }
             }
         }
