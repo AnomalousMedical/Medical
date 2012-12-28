@@ -229,17 +229,32 @@ namespace Medical.GUI
         {
             if (allowEdit)
             {
-                if (selectedElementManager.HasSelection)
+                ElementDocument document = rocketWidget.Context.GetDocument(0);
+                using (Element div = document.CreateElement("div"))
                 {
-                    Factory.InstanceElementString(selectedElementManager.SelectedElement, rml);
-                    //insertElementIntoParent(img, selectedElementManager.SelectedElement);
+                    if (selectedElementManager.HasSelection)
+                    {
+                        insertElementIntoParent(div, selectedElementManager.SelectedElement);
+                    }
+                    else
+                    {
+                        TopContentElement.AppendChild(div);
+                    }
+
+                    div.InnerRml = rml;
+
+                    Element parent = div.ParentNode;
+                    Element child;
+
+                    while (div.NumChildren > 0)
+                    {
+                        child = div.GetChild(0);
+                        parent.InsertBefore(div, child);
+                    }
+                    parent.RemoveChild(div);
+
+                    rmlModified();
                 }
-                else
-                {
-                    Factory.InstanceElementString(TopContentElement, rml);
-                    //TopContentElement.(img);
-                }
-                rmlModified();
             }
         }
 
