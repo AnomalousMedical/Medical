@@ -27,10 +27,10 @@ namespace Medical.GUI
                 Element previewParent = previewElement.ParentNode;
                 if (previewParent != null)
                 {
-                    Logging.Log.Debug("Preview Element before hide {0}", previewElement.ReferenceCount);
+                    //Logging.Log.Debug("Preview Element before hide {0}", previewElement.ReferenceCount);
                     previewParent.RemoveChild(previewElement);
-                    previewElement.removeReference(); //wtf this is leaking???
-                    Logging.Log.Debug("Preview Element after hide {0}", previewElement.ReferenceCount);
+                    //previewElement.removeReference(); //wtf this is leaking???
+                    //Logging.Log.Debug("Preview Element after hide {0}", previewElement.ReferenceCount);
                     previewElement = null;
                 }
             }
@@ -38,32 +38,29 @@ namespace Medical.GUI
 
         public void showPreviewElement(ElementDocument document, String innerRmlHint, Element parent, Element sibling)
         {
-            previewElement = document.CreateElement("div");
-            String style = "border-width: 3px; border-color: red; display: block;";
-            if (innerRmlHint != null)
+            using (previewElement = document.CreateElement("div"))
             {
-                previewElement.InnerRml = innerRmlHint;
-            }
-            else
-            {
-                style += "height: 25px; width: 98%;";
-            }
-            previewElement.SetAttribute("style", style);
+                
+                if (innerRmlHint != null)
+                {
+                    previewElement.InnerRml = innerRmlHint;
+                }
+                previewElement.SetAttribute("style", "border-width: 3px; border-color: red; display: block;");
 
-            Logging.Log.Debug("Preview Element created {0}", previewElement.ReferenceCount);
-            
-            if (sibling == null)
-            {
-                parent.AppendChild(previewElement);
-            }
-            else
-            {
-                parent.InsertBefore(previewElement, sibling);
-            }
+                //Logging.Log.Debug("Preview Element created {0}", previewElement.ReferenceCount);
 
-            Logging.Log.Debug("Preview Element shown {0}", previewElement.ReferenceCount);
-            //previewElement.removeReference();
-            Logging.Log.Debug("Preview Element localrefgone {0}", previewElement.ReferenceCount);
+                if (sibling == null)
+                {
+                    parent.AppendChild(previewElement);
+                }
+                else
+                {
+                    parent.InsertBefore(previewElement, sibling);
+                }
+
+                //Logging.Log.Debug("Preview Element shown {0}", previewElement.ReferenceCount);
+            }
+            //Logging.Log.Debug("Preview Element localrefgone {0}", previewElement.ReferenceCount);
         }
 
         public bool isPreviewOrAncestor(Element element)
