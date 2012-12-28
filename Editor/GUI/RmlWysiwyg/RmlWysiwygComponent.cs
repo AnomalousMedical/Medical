@@ -29,6 +29,7 @@ namespace Medical.GUI
         RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
+        private Element previewElement = null;
 
         private AnomalousMvcContext context;
 
@@ -70,6 +71,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            hidePreviewElement();
             disposed = true;
             rocketWidget.Dispose();
             base.Dispose();
@@ -121,6 +123,8 @@ namespace Medical.GUI
         {
             if (allowEdit)
             {
+                hidePreviewElement();
+
                 ElementDocument document = rocketWidget.Context.GetDocument(0);
                 using (Element div = document.CreateElement("temp"))
                 {
@@ -149,18 +153,64 @@ namespace Medical.GUI
                     parent.RemoveChild(div);
 
                     rmlModified();
+
+                    selectedElementManager.SelectedElement = null;
                 }
             }
         }
 
-        public void changeSelectedElement(IntVector2 position)
+        public void changeSelectedElement(IntVector2 position, String innerRmlHint = null)
         {
             if (widget.contains(position.x, position.y))
             {
                 position.x -= widget.AbsoluteLeft;
                 position.y -= widget.AbsoluteTop;
 
-                selectedElementManager.SelectedElement = rocketWidget.Context.FindElementAtPoint(position);
+                Element toSelect = rocketWidget.Context.FindElementAtPoint(position);
+
+                if (toSelect != selectedElementManager.SelectedElement)
+                {
+                    if (toSelect != null && toSelect != TopContentElement)
+                    {
+                        bool isNotPreview = true;
+
+                        if (previewElement != null)
+                        {
+                            Element toSelectParentWalker = toSelect;
+                            while (toSelectParentWalker != null && isNotPreview)
+                            {
+                                isNotPreview = toSelectParentWalker != previewElement;
+                                toSelectParentWalker = toSelectParentWalker.ParentNode;
+                            }
+                        }
+
+                        if (isNotPreview)
+                        {
+                            selectedElementManager.SelectedElement = toSelect;
+                            ElementDocument document = rocketWidget.Context.GetDocument(0);
+                            hidePreviewElement();
+                            previewElement = document.CreateElement("div");
+                            String style = "border-width: 3px; border-color: red; display: block;";
+                            if (innerRmlHint != null)
+                            {
+                                previewElement.InnerRml = innerRmlHint;
+                            }
+                            else
+                            {
+                                style += "height: 25px; width: 98%;";
+                            }
+                            previewElement.SetAttribute("style", style);
+                            insertElementIntoParent(previewElement, selectedElementManager.SelectedElement);
+                        }
+                    }
+                    else
+                    {
+                        selectedElementManager.SelectedElement = null;
+                        hidePreviewElement();
+                    }
+                }
+
+                rmlModified();
             }
         }
 
@@ -467,6 +517,20 @@ namespace Medical.GUI
                 else
                 {
                     parent.InsertBefore(newElement, sibling);
+                }
+            }
+        }
+
+        private void hidePreviewElement()
+        {
+            if (previewElement != null)
+            {
+                Element previewParent = previewElement.ParentNode;
+                if (previewParent != null)
+                {
+                    previewParent.RemoveChild(previewElement);
+                    previewElement.removeReference();
+                    previewElement = null;
                 }
             }
         }
