@@ -79,6 +79,7 @@ namespace Medical
                 new HtmlDragDropItem("Image", "Editor/ImageIcon", "<img src=\"\"></img>"),
                 new HtmlDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"\">Link</a>"),
                 new HtmlDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"\">Button</input>"),
+                new HtmlDragDropItem("Two Columns", CommonResources.NoIcon, "<div><p style=\"white-space: pre-wrap; width: 49%; float:left;\">Column 1 text goes here.</p><p style=\"white-space: pre-wrap; width: 49%; float:right;\">Column 2 text goes here.</p></div>"),
                 new HtmlDragDropItem("Broken", CommonResources.NoIcon, "<yea this will be fucked/\""),
                 new HtmlDragDropItem("Multi", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>")
                 );
