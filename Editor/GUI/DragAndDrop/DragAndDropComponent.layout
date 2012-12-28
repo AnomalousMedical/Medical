@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="ScrollView" skin="ScrollView" position="45 20 247 465">
+    <Widget type="ScrollView" skin="ScrollView" position="45 20 80 465">
         <Property key="CanvasAlign" value="Left Top"/>
         <UserString key="ShowGroupCaptions" value="false"/>
-        <UserString key="ItemHeight" value="128"/>
-        <UserString key="ItemWidth" value="128"/>
+        <UserString key="ItemHeight" value="60"/>
+        <UserString key="ItemWidth" value="60"/>
+        <UserString key="ButtonSkin" value="ImageAndTextButton32"/>
     </Widget>
 </MyGUI>

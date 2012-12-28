@@ -74,9 +74,11 @@ namespace Medical
             mvcContext.Views.add(rmlView);
 
             DragAndDropView<HtmlDragDropItem> htmlDragDrop = new DragAndDropView<HtmlDragDropItem>("HtmlDragDrop",
-                new HtmlDragDropItem("Heading", CommonResources.NoIcon, "<h1>Heading</h1>"),
-                new HtmlDragDropItem("Paragraph", CommonResources.NoIcon, "<p>Add paragraph text here.</p>"),
-                new HtmlDragDropItem("Image", CommonResources.NoIcon, "<img src=\"\"></img>"),
+                new HtmlDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
+                new HtmlDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p style=\"white-space: pre-wrap;\">Add paragraph text here.</p>"),
+                new HtmlDragDropItem("Image", "Editor/ImageIcon", "<img src=\"\"></img>"),
+                new HtmlDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"\">Link</a>"),
+                new HtmlDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"\">Button</input>"),
                 new HtmlDragDropItem("Broken", CommonResources.NoIcon, "<yea this will be fucked/\""),
                 new HtmlDragDropItem("Multi", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>")
                 );
@@ -105,11 +107,6 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Paragraph", "Paragraph", "Editor/ParagraphsIcon", "Edit", "Editor/Paragraph", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Header", "Header", "Editor/HeaderIcon", "Edit", "Editor/Header", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("ActionLink", "Action Link", "Editor/LinksIcon", "Edit", "Editor/ActionLink", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Button", "Button", "Editor/AddButtonIcon", "Edit", "Editor/Button", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Image", "Image", "Editor/ImageIcon", "Edit", "Editor/Image", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("RmlEditor", "Edit Rml", RmlTypeController.Icon, "Edit", "RmlTextEditor/Show", mvcContext));
             mvcContext.Views.add(taskbar);
 
@@ -167,39 +164,8 @@ namespace Medical
                         {
                             textEditorComponent.selectAll();
                         }
-                    }),
-                new CallbackAction("Paragraph", context =>
-                    {
-                        rmlComponent.insertParagraph();
-                    }),
-                new CallbackAction("Header", context =>
-                    {
-                        rmlComponent.insertHeader1();
-                    }),
-                new CallbackAction("ActionLink", context =>
-                    {
-                        BrowserWindow<String>.GetInput(uiCallback.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
-                        {
-                            rmlComponent.insertLink(result);
-                            return true;
-                        });
-                    }),
-                new CallbackAction("Button", context =>
-                    {
-                        BrowserWindow<String>.GetInput(uiCallback.createActionBrowser(), true, delegate(String result, ref string errorPrompt)
-                        {
-                            rmlComponent.insertButton(result);
-                            return true;
-                        });
-                    }),
-                new CallbackAction("Image", context =>
-                    {
-                        BrowserWindow<String>.GetInput(uiCallback.createFileBrowser(new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Image Files"), true, delegate(String result, ref string errorPrompt)
-                        {
-                            rmlComponent.insertImage(result);
-                            return true;
-                        });
-                    })));
+                    })
+                ));
 
             mvcContext.Controllers.add(new MvcController("Common",
                 new RunCommandsAction("Start", new RunActionCommand("HtmlDragDrop/Show"), new RunActionCommand("Editor/Show")),
