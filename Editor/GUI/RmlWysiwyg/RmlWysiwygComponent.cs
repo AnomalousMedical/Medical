@@ -9,6 +9,7 @@ using Medical.GUI.AnomalousMvc;
 using System.Xml;
 using System.IO;
 using Engine.Editing;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -230,31 +231,45 @@ namespace Medical.GUI
             if (allowEdit)
             {
                 ElementDocument document = rocketWidget.Context.GetDocument(0);
-                using (Element div = document.CreateElement("div"))
+                using (Element div = document.CreateElement("temp"))
                 {
-                    if (selectedElementManager.HasSelection)
+                    Element topContentElement = TopContentElement;
+                    if (selectedElementManager.HasSelection && selectedElementManager.SelectedElement != topContentElement)
                     {
                         insertElementIntoParent(div, selectedElementManager.SelectedElement);
                     }
                     else
                     {
-                        TopContentElement.AppendChild(div);
+                        topContentElement.AppendChild(div);
                     }
 
                     div.InnerRml = rml;
 
                     Element parent = div.ParentNode;
                     Element child;
+                    Element next = div.FirstChild;
 
-                    while (div.NumChildren > 0)
+                    while (next != null)
                     {
-                        child = div.GetChild(0);
-                        parent.InsertBefore(div, child);
+                        child = next;
+                        next = child.NextSibling;
+                        parent.InsertBefore(child, div);
                     }
                     parent.RemoveChild(div);
 
                     rmlModified();
                 }
+            }
+        }
+
+        public void changeSelectedElement(IntVector2 position)
+        {
+            if (widget.contains(position.x, position.y))
+            {
+                position.x -= widget.AbsoluteLeft;
+                position.y -= widget.AbsoluteTop;
+
+                selectedElementManager.SelectedElement = rocketWidget.Context.FindElementAtPoint(position);
             }
         }
 

@@ -77,11 +77,12 @@ namespace Medical
                 new HtmlDragDropItem("Heading", CommonResources.NoIcon, "<h1>Heading</h1>"),
                 new HtmlDragDropItem("Paragraph", CommonResources.NoIcon, "<p>Add paragraph text here.</p>"),
                 new HtmlDragDropItem("Image", CommonResources.NoIcon, "<img src=\"\"></img>"),
-                new HtmlDragDropItem("Broken", CommonResources.NoIcon, "<yea this will be fucked/\"")
+                new HtmlDragDropItem("Broken", CommonResources.NoIcon, "<yea this will be fucked/\""),
+                new HtmlDragDropItem("Multi", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>")
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
-                    
+                    rmlComponent.changeSelectedElement(position);
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
