@@ -29,7 +29,7 @@ namespace Medical.GUI
             rocketEventController = null;
         }
 
-        public override EventListener InstanceEventListener(string name)
+        public override EventListener InstanceEventListener(string name, Element element)
         {
             if (rocketEventController != null)
             {

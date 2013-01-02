@@ -76,7 +76,7 @@ namespace Medical
                 ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
                 Cracked = systemOverride.getValue("Cracked", Cracked);
                 BuildName = systemOverride.getValue("CustomBuildName", BuildName);
-                libRocketPlugin.PixelFactorManager.PixelFactor = systemOverride.getValue("PixelFactor", 1.0f);
+                libRocketPlugin.RocketInterface.Instance.PixelsPerInch = systemOverride.getValue("PixelsPerInch", libRocketPlugin.RocketInterface.DefaultPixelsPerInch);
             }
 #endif
             //Fix up paths based on the build name
