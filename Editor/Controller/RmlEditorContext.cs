@@ -89,10 +89,7 @@ namespace Medical
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
-                    if (rmlComponent.Widget.contains(position.x, position.y))
-                    {
-                        rmlComponent.insertRawRml(item.Markup);
-                    }
+                    rmlComponent.insertRawRml(position, item.Markup);
                 };
             htmlDragDrop.ViewLocation = ViewLocations.Left;
             htmlDragDrop.IsWindow = true;

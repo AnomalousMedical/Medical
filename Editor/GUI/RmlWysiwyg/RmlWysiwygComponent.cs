@@ -119,9 +119,14 @@ namespace Medical.GUI
             }
         }
 
-        public void insertRawRml(String rml)
+        public void insertRawRml(IntVector2 position, String rml)
         {
-            if (allowEdit)
+            if (!widget.contains(position.x, position.y))
+            {
+                previewElement.hidePreviewElement();
+                rmlModified();
+            }
+            else if (allowEdit)
             {
                 previewElement.hidePreviewElement();
 
@@ -199,6 +204,11 @@ namespace Medical.GUI
                     }
                 }
 
+                rmlModified();
+            }
+            else
+            {
+                previewElement.hidePreviewElement();
                 rmlModified();
             }
         }
