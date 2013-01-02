@@ -76,7 +76,7 @@ namespace Medical
             DragAndDropView<HtmlDragDropItem> htmlDragDrop = new DragAndDropView<HtmlDragDropItem>("HtmlDragDrop",
                 new HtmlDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new HtmlDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p style=\"white-space: pre-wrap;\">Add paragraph text here.</p>"),
-                new HtmlDragDropItem("Image", "Editor/ImageIcon", "<img src=\"\"></img>"),
+                new HtmlDragDropItem("Image", "Editor/ImageIcon", "<img src=\"Medical.Resources.ImagePlaceholder.png\"></img>"),
                 new HtmlDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"\">Link</a>"),
                 new HtmlDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"\">Button</input>"),
                 new HtmlDragDropItem("Two Columns", CommonResources.NoIcon, "<div><p style=\"white-space: pre-wrap; width: 49%; float:left;\">Column 1 text goes here.</p><p style=\"white-space: pre-wrap; width: 49%; float:right;\">Column 2 text goes here.</p></div>"),
