@@ -52,7 +52,7 @@ namespace Medical.GUI
             }
             else
             {
-                parent.InsertBefore(previewElement, sibling);
+                parent.InsertAfter(previewElement, sibling);
             }
         }
 

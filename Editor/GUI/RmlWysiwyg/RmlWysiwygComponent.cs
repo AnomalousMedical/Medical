@@ -136,7 +136,11 @@ namespace Medical.GUI
                     Element topContentElement = TopContentElement;
                     if (selectedElementManager.HasSelection && selectedElementManager.SelectedElement != topContentElement)
                     {
-                        insertElementIntoParent(div, selectedElementManager.SelectedElement);
+                        Element insertInto = selectedElementManager.SelectedElement.ParentNode;
+                        if (insertInto != null)
+                        {
+                            insertInto.InsertAfter(div, selectedElementManager.SelectedElement);
+                        }
                     }
                     else
                     {
@@ -506,22 +510,6 @@ namespace Medical.GUI
             }
             selectedElementManager.updateHighlightPosition();
             rocketWidget.renderOnNextFrame();
-        }
-
-        private static void insertElementIntoParent(Element newElement, Element sibling)
-        {
-            Element parent = sibling.ParentNode;
-            if (parent != null)
-            {
-                if (sibling == null)
-                {
-                    parent.AppendChild(newElement);
-                }
-                else
-                {
-                    parent.InsertBefore(newElement, sibling);
-                }
-            }
         }
     }
 }
