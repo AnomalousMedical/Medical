@@ -37,7 +37,7 @@ namespace Medical.GUI
             }
         }
 
-        public void showPreviewElement(ElementDocument document, String innerRmlHint, Element parent, Element sibling, String previewElementTagType)
+        public void showPreviewElement(ElementDocument document, String innerRmlHint, Element parent, Element sibling, String previewElementTagType, bool insertBefore)
         {
             if (previewElement == null)
             {
@@ -52,7 +52,7 @@ namespace Medical.GUI
             }
             else
             {
-                parent.InsertAfter(previewElement, sibling);
+                parent.Insert(previewElement, sibling, insertBefore);
             }
         }
 

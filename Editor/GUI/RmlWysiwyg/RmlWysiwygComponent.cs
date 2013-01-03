@@ -30,6 +30,7 @@ namespace Medical.GUI
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
         private PreviewElement previewElement = new PreviewElement();
+        private bool lastInsertBefore = false;
 
         private AnomalousMvcContext context;
 
@@ -139,7 +140,7 @@ namespace Medical.GUI
                         Element insertInto = selectedElementManager.SelectedElement.ParentNode;
                         if (insertInto != null)
                         {
-                            insertInto.InsertAfter(div, selectedElementManager.SelectedElement);
+                            insertInto.Insert(div, selectedElementManager.SelectedElement, lastInsertBefore);
                         }
                     }
                     else
@@ -179,7 +180,12 @@ namespace Medical.GUI
                 Element toSelect = rocketWidget.Context.FindElementAtPoint(position);
                 Element selectedElement = selectedElementManager.SelectedElement;
 
-                if (toSelect != selectedElement)
+                bool insertBefore = false;
+                if (toSelect != null)
+                {
+                    insertBefore = insertBeforeOrAfter(toSelect, position);
+                }
+                if (toSelect != selectedElement || insertBefore != lastInsertBefore)
                 {
                     if (toSelect != null)
                     {
@@ -191,7 +197,7 @@ namespace Medical.GUI
                                 selectedElementManager.SelectedElement = toSelect;
                                 previewElement.hidePreviewElement();
                                 ElementDocument document = rocketWidget.Context.GetDocument(0);
-                                previewElement.showPreviewElement(document, innerRmlHint, toSelect.ParentNode, toSelect, previewElementTagType);
+                                previewElement.showPreviewElement(document, innerRmlHint, toSelect.ParentNode, toSelect, previewElementTagType, insertBefore);
                                 selectedElementManager.HighlightElement = previewElement.HighlightPreviewElement;
                             }
                         }
@@ -200,7 +206,7 @@ namespace Medical.GUI
                             selectedElementManager.SelectedElement = null;
                             previewElement.hidePreviewElement();
                             ElementDocument document = rocketWidget.Context.GetDocument(0);
-                            previewElement.showPreviewElement(document, innerRmlHint, toSelect, null, previewElementTagType);
+                            previewElement.showPreviewElement(document, innerRmlHint, toSelect, null, previewElementTagType, insertBefore);
                             selectedElementManager.HighlightElement = previewElement.HighlightPreviewElement;
                         }
                     }
@@ -210,6 +216,7 @@ namespace Medical.GUI
                         previewElement.hidePreviewElement();
                     }
                 }
+                lastInsertBefore = insertBefore;
 
                 rmlModified();
             }
@@ -510,6 +517,11 @@ namespace Medical.GUI
             }
             selectedElementManager.updateHighlightPosition();
             rocketWidget.renderOnNextFrame();
+        }
+
+        private bool insertBeforeOrAfter(Element element, IntVector2 position)
+        {
+            return position.y - element.AbsoluteTop < element.OffsetHeight / 2;
         }
     }
 }
