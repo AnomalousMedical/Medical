@@ -15,13 +15,7 @@ namespace Medical
 
         public void createProject(EditorResourceProvider resourceProvider, string projectName)
         {
-            using (Stream writeStream = resourceProvider.openWriteStream(MvcContextName))
-            {
-                using (Stream resourceStream = GetType().Assembly.GetManifestResourceStream("Medical.Controller.Project.SimpleMvcContext.mvc"))
-                {
-                    resourceStream.CopyTo(writeStream, 4096);
-                }
-            }
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleMvcContext_mvc, MvcContextName, resourceProvider);
 
             DDAtlasPlugin ddPlugin = new DDAtlasPlugin();
             ddPlugin.PluginName = projectName;
