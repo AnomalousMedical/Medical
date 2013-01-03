@@ -37,12 +37,11 @@ namespace Medical.GUI
             }
         }
 
-        public void showPreviewElement(ElementDocument document, String innerRmlHint, Element parent, Element sibling)
+        public void showPreviewElement(ElementDocument document, String innerRmlHint, Element parent, Element sibling, String previewElementTagType)
         {
             if (previewElement == null)
             {
-                previewElement = document.CreateElement("div");
-                previewElement.SetAttribute("style", "border-width: 3px; border-color: red; display: block;");
+                previewElement = document.CreateElement(previewElementTagType);
             }
             
             previewElement.InnerRml = innerRmlHint;
@@ -70,6 +69,24 @@ namespace Medical.GUI
                 }
             }
             return !isNotPreview;
+        }
+
+        /// <summary>
+        /// This gets a good element to show as the highlight.
+        /// </summary>
+        public Element HighlightPreviewElement
+        {
+            get
+            {
+                if (previewElement != null)
+                {
+                    if (previewElement.NumChildren == 1)
+                    {
+                        return previewElement.GetChild(0);
+                    }
+                }
+                return previewElement;
+            }
         }
     }
 }

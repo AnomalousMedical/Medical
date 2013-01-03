@@ -10,6 +10,7 @@ namespace Medical.GUI
     class SelectedElementManager
     {
         private Element selectedElement;
+        private Element highlightElement;
         private Widget selectionWidget;
 
         public SelectedElementManager(Widget selectionWidget)
@@ -17,16 +18,17 @@ namespace Medical.GUI
             this.selectionWidget = selectionWidget;
         }
 
-        public void clearSelectedElement()
+        public void clearSelectedAndHighlightedElement()
         {
             SelectedElement = null;
+            HighlightElement = null;
         }
 
-        public void updateSelectionPosition()
+        public void updateHighlightPosition()
         {
             if (selectedElement != null)
             {
-                selectionWidget.setCoord((int)selectedElement.AbsoluteLeft, (int)selectedElement.AbsoluteTop, (int)selectedElement.ClientWidth, (int)selectedElement.ClientHeight);
+                selectionWidget.setCoord((int)highlightElement.OffsetLeft, (int)highlightElement.OffsetTop, (int)highlightElement.OffsetWidth, (int)highlightElement.OffsetHeight);
             }
         }
 
@@ -47,10 +49,22 @@ namespace Medical.GUI
             set
             {
                 selectedElement = value;
-                if (selectedElement != null)
+            }
+        }
+
+        public Element HighlightElement
+        {
+            get
+            {
+                return highlightElement;
+            }
+            set
+            {
+                highlightElement = value;
+                if (highlightElement != null)
                 {
                     selectionWidget.Visible = true;
-                    selectionWidget.setCoord((int)selectedElement.AbsoluteLeft, (int)selectedElement.AbsoluteTop, (int)selectedElement.ClientWidth, (int)selectedElement.ClientHeight);
+                    selectionWidget.setCoord((int)highlightElement.OffsetLeft, (int)highlightElement.OffsetTop, (int)highlightElement.OffsetWidth, (int)highlightElement.OffsetHeight);
                 }
                 else
                 {

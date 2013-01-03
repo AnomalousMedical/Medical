@@ -100,7 +100,7 @@ namespace Medical.GUI
         {
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
-            selectedElementManager.clearSelectedElement();
+            selectedElementManager.clearSelectedAndHighlightedElement();
 
             if (documentName != null)
             {
@@ -160,11 +160,12 @@ namespace Medical.GUI
                     rmlModified();
 
                     selectedElementManager.SelectedElement = null;
+                    selectedElementManager.HighlightElement = null;
                 }
             }
         }
 
-        public void changeSelectedElement(IntVector2 position, String innerRmlHint = null)
+        public void changeSelectedElement(IntVector2 position, String innerRmlHint, String previewElementTagType)
         {
             if (widget.contains(position.x, position.y))
             {
@@ -186,7 +187,8 @@ namespace Medical.GUI
                                 selectedElementManager.SelectedElement = toSelect;
                                 previewElement.hidePreviewElement();
                                 ElementDocument document = rocketWidget.Context.GetDocument(0);
-                                previewElement.showPreviewElement(document, innerRmlHint, toSelect.ParentNode, toSelect);
+                                previewElement.showPreviewElement(document, innerRmlHint, toSelect.ParentNode, toSelect, previewElementTagType);
+                                selectedElementManager.HighlightElement = previewElement.HighlightPreviewElement;
                             }
                         }
                         else
@@ -194,12 +196,13 @@ namespace Medical.GUI
                             selectedElementManager.SelectedElement = null;
                             previewElement.hidePreviewElement();
                             ElementDocument document = rocketWidget.Context.GetDocument(0);
-                            previewElement.showPreviewElement(document, innerRmlHint, toSelect, null);
+                            previewElement.showPreviewElement(document, innerRmlHint, toSelect, null, previewElementTagType);
+                            selectedElementManager.HighlightElement = previewElement.HighlightPreviewElement;
                         }
                     }
                     else
                     {
-                        selectedElementManager.SelectedElement = null;
+                        selectedElementManager.clearSelectedAndHighlightedElement();
                         previewElement.hidePreviewElement();
                     }
                 }
@@ -365,7 +368,7 @@ namespace Medical.GUI
                         showRmlElementEditor(element);
                         break;
                     default:
-                        selectedElementManager.clearSelectedElement();
+                        selectedElementManager.clearSelectedAndHighlightedElement();
                         break;
                 }
             }
@@ -373,17 +376,17 @@ namespace Medical.GUI
 
         void rmlImage_EventScrollGesture(Widget source, EventArgs e)
         {
-            selectedElementManager.updateSelectionPosition();
+            selectedElementManager.updateHighlightPosition();
         }
 
         void rmlImage_MouseWheel(Widget source, EventArgs e)
         {
-            selectedElementManager.updateSelectionPosition();
+            selectedElementManager.updateHighlightPosition();
         }
 
         void rmlImage_MouseDrag(Widget source, EventArgs e)
         {
-            selectedElementManager.updateSelectionPosition();
+            selectedElementManager.updateHighlightPosition();
         }
 
         private void showRmlElementEditor(Element element)
@@ -394,7 +397,7 @@ namespace Medical.GUI
                 if (editor.ApplyChanges && !disposed)
                 {
                     String text = editor.Text;
-                    if (isTextElement(element) && String.IsNullOrEmpty(text))
+                    if (isTextElement(element) && String.IsNullOrEmpty(text)) //THIS IS WHERE WE CAN EDIT AUTO DELETEING (or make it configurable somehow)
                     {
                         Element parent = element.ParentNode;
                         if (parent != null)
@@ -402,7 +405,7 @@ namespace Medical.GUI
                             parent.RemoveChild(element);
                             if (element == selectedElementManager.SelectedElement)
                             {
-                                selectedElementManager.clearSelectedElement();
+                                selectedElementManager.clearSelectedAndHighlightedElement();
                             }
                         }
                     }
@@ -477,12 +480,13 @@ namespace Medical.GUI
                     }
                     else
                     {
-                        selectedElementManager.clearSelectedElement();
+                        selectedElementManager.clearSelectedAndHighlightedElement();
                     }
                 }
             };
             currentEditor = editor;
             selectedElementManager.SelectedElement = element;
+            selectedElementManager.HighlightElement = element;
         }
 
         private bool isTextElement(Element element)
@@ -500,7 +504,7 @@ namespace Medical.GUI
             {
                 RmlEdited.Invoke(this);
             }
-            selectedElementManager.updateSelectionPosition();
+            selectedElementManager.updateHighlightPosition();
             rocketWidget.renderOnNextFrame();
         }
 

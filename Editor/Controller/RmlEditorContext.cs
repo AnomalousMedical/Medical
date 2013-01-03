@@ -81,13 +81,13 @@ namespace Medical
                 new HtmlDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"None\">Button</input>"),
                 new HtmlDragDropItem("Separator", CommonResources.NoIcon, "<div class=\"Separator\"></div>"),
                 new HtmlDragDropItem("Two Columns", CommonResources.NoIcon, "<div class=\"TwoColumn\"><div class=\"Column\"><p>Column 1 text goes here.</p></div><div class=\"Column\"><p>Column 2 text goes here.</p></div></div>"),
-                new HtmlDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>"),
+                new HtmlDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>", "div"),
                 new HtmlDragDropItem("Left Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphLeft\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>"),
                 new HtmlDragDropItem("Right Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphRight\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>")
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
-                    rmlComponent.changeSelectedElement(position, item.Markup);
+                    rmlComponent.changeSelectedElement(position, item.Markup, item.PreviewTagType);
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
