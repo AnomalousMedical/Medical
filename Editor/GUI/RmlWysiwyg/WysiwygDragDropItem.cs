@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Medical
 {
-    class HtmlDragDropItem : DragAndDropItem
+    class WysiwygDragDropItem : DragAndDropItem
     {
-        public HtmlDragDropItem(String name = null, String icon = null, String markup = null, String previewTagType = "span")
+        public WysiwygDragDropItem(String name = null, String icon = null, String markup = null, String previewTagType = "span")
             :base(name, icon)
         {
             this.Markup = markup;

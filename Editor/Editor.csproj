@@ -81,7 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\HtmlDragDropItem.cs" />
+    <Compile Include="GUI\RmlWysiwyg\WysiwygDragDropItem.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\EditorController\EditorController.cs" />

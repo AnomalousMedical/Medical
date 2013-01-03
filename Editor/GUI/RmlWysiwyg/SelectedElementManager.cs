@@ -28,7 +28,7 @@ namespace Medical.GUI
         {
             if (selectedElement != null)
             {
-                selectionWidget.setCoord((int)highlightElement.OffsetLeft, (int)highlightElement.OffsetTop, (int)highlightElement.OffsetWidth, (int)highlightElement.OffsetHeight);
+                selectionWidget.setCoord((int)highlightElement.AbsoluteLeft, (int)highlightElement.AbsoluteTop, (int)highlightElement.OffsetWidth, (int)highlightElement.OffsetHeight);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Medical.GUI
                 if (highlightElement != null)
                 {
                     selectionWidget.Visible = true;
-                    selectionWidget.setCoord((int)highlightElement.OffsetLeft, (int)highlightElement.OffsetTop, (int)highlightElement.OffsetWidth, (int)highlightElement.OffsetHeight);
+                    selectionWidget.setCoord((int)highlightElement.AbsoluteLeft, (int)highlightElement.AbsoluteTop, (int)highlightElement.OffsetWidth, (int)highlightElement.OffsetHeight);
                 }
                 else
                 {

@@ -73,17 +73,17 @@ namespace Medical
             };
             mvcContext.Views.add(rmlView);
 
-            DragAndDropView<HtmlDragDropItem> htmlDragDrop = new DragAndDropView<HtmlDragDropItem>("HtmlDragDrop",
-                new HtmlDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
-                new HtmlDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
-                new HtmlDragDropItem("Image", "Editor/ImageIcon", "<img src=\"Medical.Resources.ImagePlaceholder.png\"></img>"),
-                new HtmlDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"None\">Link</a>"),
-                new HtmlDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"None\">Button</input>"),
-                new HtmlDragDropItem("Separator", CommonResources.NoIcon, "<div class=\"Separator\"></div>"),
-                new HtmlDragDropItem("Two Columns", CommonResources.NoIcon, "<div class=\"TwoColumn\"><div class=\"Column\"><p>Column 1 text goes here.</p></div><div class=\"Column\"><p>Column 2 text goes here.</p></div></div>"),
-                new HtmlDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>", "div"),
-                new HtmlDragDropItem("Left Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphLeft\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>"),
-                new HtmlDragDropItem("Right Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphRight\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>")
+            DragAndDropView<WysiwygDragDropItem> htmlDragDrop = new DragAndDropView<WysiwygDragDropItem>("HtmlDragDrop",
+                new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
+                new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
+                new WysiwygDragDropItem("Image", "Editor/ImageIcon", "<img src=\"Medical.Resources.ImagePlaceholder.png\"></img>"),
+                new WysiwygDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"None\">Link</a>"),
+                new WysiwygDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"None\">Button</input>"),
+                new WysiwygDragDropItem("Separator", CommonResources.NoIcon, "<div class=\"Separator\"></div>"),
+                new WysiwygDragDropItem("Two Columns", CommonResources.NoIcon, "<div class=\"TwoColumn\"><div class=\"Column\"><p>Column 1 text goes here.</p></div><div class=\"Column\"><p>Column 2 text goes here.</p></div></div>"),
+                new WysiwygDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>", "div"),
+                new WysiwygDragDropItem("Left Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphLeft\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>"),
+                new WysiwygDragDropItem("Right Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphRight\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>")
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
