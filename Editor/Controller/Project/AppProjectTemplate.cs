@@ -59,7 +59,7 @@ namespace Medical
 	</head>
 	<body template=""MasterTemplate"">
         <h1>{0}</h1>
-        <p style=""white-space: pre-wrap;"">This is the first view for the {0} app. You can modify this file as much as you want to create your view.</p>
+        <p>This is the first view for the {0} app. You can modify this file as much as you want to create your view.</p>
     </body>
 </rml>";
     }

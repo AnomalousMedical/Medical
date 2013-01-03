@@ -41,7 +41,6 @@ div.TwoColumn
 
 div.TwoColumn div.Column
 {
-	white-space: pre-wrap; 
 	width: 50%; 
 	float:left;
 }
