@@ -75,13 +75,15 @@ namespace Medical
 
             DragAndDropView<HtmlDragDropItem> htmlDragDrop = new DragAndDropView<HtmlDragDropItem>("HtmlDragDrop",
                 new HtmlDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
-                new HtmlDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p style=\"white-space: pre-wrap;\">Add paragraph text here.</p>"),
+                new HtmlDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new HtmlDragDropItem("Image", "Editor/ImageIcon", "<img src=\"Medical.Resources.ImagePlaceholder.png\"></img>"),
-                new HtmlDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"\">Link</a>"),
-                new HtmlDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"\">Button</input>"),
-                new HtmlDragDropItem("Two Columns", CommonResources.NoIcon, "<div><p style=\"white-space: pre-wrap; width: 49%; float:left;\">Column 1 text goes here.</p><p style=\"white-space: pre-wrap; width: 49%; float:right;\">Column 2 text goes here.</p></div>"),
-                new HtmlDragDropItem("Broken", CommonResources.NoIcon, "<yea this will be fucked/\""),
-                new HtmlDragDropItem("Multi", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>")
+                new HtmlDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"None\">Link</a>"),
+                new HtmlDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"None\">Button</input>"),
+                new HtmlDragDropItem("Separator", CommonResources.NoIcon, "<div class=\"Separator\"></div>"),
+                new HtmlDragDropItem("Two Columns", CommonResources.NoIcon, "<div class=\"TwoColumn\"><div class=\"Column\"><p>Column 1 text goes here.</p></div><div class=\"Column\"><p>Column 2 text goes here.</p></div></div>"),
+                new HtmlDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>"),
+                new HtmlDragDropItem("Left Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphLeft\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>"),
+                new HtmlDragDropItem("Right Image and Paragraph", CommonResources.NoIcon, "<div class=\"ImageParagraphRight\"><img src=\"Medical.Resources.ImagePlaceholder.png\" /><p>Add paragraph text here.</p></div>")
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {

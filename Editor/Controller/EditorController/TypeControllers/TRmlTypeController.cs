@@ -62,19 +62,8 @@ namespace Medical
         void createNewRcssFile(String filePath)
         {
             creatingNewFile(filePath);
-            saveText(filePath, DefaultMasterPage);
+            saveText(filePath, EmbeddedResourceHelpers.ReadResourceContents(EmbeddedTemplateNames.MasterTemplate_trml));
             openEditor(filePath);
         }
-
-        public const String DefaultMasterPage = @"<template name=""MasterTemplate"" content=""Content"">
-  <head>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.Anomalous.rcss""/>
-  </head>
-  <body>
-    <div id=""Content"" class=""ScrollArea"">
-    </div>
-  </body>
-</template>";
     }
 }

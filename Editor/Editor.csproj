@@ -217,9 +217,14 @@
     <Compile Include="GUI\NewProjectDialog\NewProjectDialog.cs" />
     <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionData.cs" />
+    <Compile Include="Resources\Templates\EmbeddedTemplateNames.cs" />
+    <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <EmbeddedResource Include="Controller\Project\SimpleMvcContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\AspectRatioTask.cs" />
+    <None Include="Resources\Templates\AppIndex.trml" />
+    <EmbeddedResource Include="Resources\Templates\Wysiwyg.rcss" />
+    <EmbeddedResource Include="Resources\Templates\MasterTemplate.trml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

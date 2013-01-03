@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using System.Xml;
 using System.IO;
+using System.Reflection;
 
 namespace Medical
 {
@@ -33,10 +34,10 @@ namespace Medical
             resourceProvider.createDirectory("", "Timeline");
             resourceProvider.createDirectory("", "Resources");
 
-            using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("MasterTemplate.trml")))
-            {
-                streamWriter.Write(TRmlTypeController.DefaultMasterPage);
-            }
+            Assembly editorAssembly = Assembly.GetExecutingAssembly();
+
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider);
 
             using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("Index.rml")))
             {
