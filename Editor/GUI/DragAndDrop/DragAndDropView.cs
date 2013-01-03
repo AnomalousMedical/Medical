@@ -37,6 +37,8 @@ namespace Medical.GUI
         internal abstract void _fireDragging(DragAndDropItem item, IntVector2 position);
 
         internal abstract void _fireDragEnded(DragAndDropItem item, IntVector2 position);
+
+        internal abstract void _fireItemActivated(DragAndDropItem item);
     }
 
     public class DragAndDropView<ItemType> : DragAndDropViewBase
@@ -47,6 +49,7 @@ namespace Medical.GUI
         public event Action<ItemType, IntVector2> DragStarted;
         public event Action<ItemType, IntVector2> Dragging;
         public event Action<ItemType, IntVector2> DragEnded;
+        public event Action<ItemType> ItemActivated;
 
         public DragAndDropView(String name, params ItemType[] items)
             :base(name)
@@ -113,6 +116,14 @@ namespace Medical.GUI
             if (DragEnded != null)
             {
                 DragEnded.Invoke((ItemType)item, position);
+            }
+        }
+
+        internal override void _fireItemActivated(DragAndDropItem item)
+        {
+            if (ItemActivated != null)
+            {
+                ItemActivated.Invoke((ItemType)item);
             }
         }
     }

@@ -21,6 +21,7 @@ namespace Medical.GUI
         {
             dragItems = new ButtonGrid((ScrollView)widget);
             dragItems.HighlightSelectedButton = false;
+            dragItems.ItemActivated += dragItems_ItemActivated;
             this.view = view;
 
             dragItems.SuppressLayout = true;
@@ -78,6 +79,15 @@ namespace Medical.GUI
         {
             dragIconPreview.Visible = false;
             view._fireDragEnded((DragAndDropItem)source.UserObject, arg.Position);
+        }
+
+        void dragItems_ItemActivated(object sender, EventArgs e)
+        {
+            ButtonGridItem item = sender as ButtonGridItem;
+            if(item != null)
+            {
+                view._fireItemActivated((DragAndDropItem)item.UserObject);
+            }
         }
     }
 }

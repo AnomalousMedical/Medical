@@ -91,7 +91,11 @@ namespace Medical
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
-                    rmlComponent.insertRawRml(position, item.Markup);
+                    rmlComponent.insertRml(item.Markup, position);
+                };
+            htmlDragDrop.ItemActivated += (item) =>
+                {
+                    rmlComponent.insertRml(item.Markup);
                 };
             htmlDragDrop.ViewLocation = ViewLocations.Left;
             htmlDragDrop.IsWindow = true;

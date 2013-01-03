@@ -120,14 +120,34 @@ namespace Medical.GUI
             }
         }
 
-        public void insertRawRml(IntVector2 position, String rml)
+        public void insertRml(String rml, IntVector2 position)
         {
             if (!widget.contains(position.x, position.y))
             {
                 previewElement.hidePreviewElement();
                 rmlModified();
             }
-            else if (allowEdit)
+            else if(allowEdit)
+            {
+                insertRmlIntoDocument(rml);
+
+                //Clear selection for drag and drop
+                selectedElementManager.SelectedElement = null;
+                selectedElementManager.HighlightElement = null;
+            }
+        }
+
+        public void insertRml(String rml)
+        {
+            if (allowEdit)
+            {
+                insertRmlIntoDocument(rml);
+            }
+        }
+
+        private void insertRmlIntoDocument(String rml)
+        {
+            if (allowEdit)
             {
                 previewElement.hidePreviewElement();
 
@@ -163,9 +183,6 @@ namespace Medical.GUI
                     parent.RemoveChild(div);
 
                     rmlModified();
-
-                    selectedElementManager.SelectedElement = null;
-                    selectedElementManager.HighlightElement = null;
                 }
             }
         }
