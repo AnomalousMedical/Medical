@@ -30,13 +30,16 @@ namespace Medical.GUI
         {
             PluginDownload pluginDownload = (PluginDownload)download;
             //The plugin has been installed, so we need to remove it from the download list.
-            if (pluginDownload.LoadedSucessfully)
+            if (pluginDownload.Successful)
             {
-                server.removeDetectedPlugin(this);
-            }
-            else if(!download.Cancel)
-            {
-                requestRestart("A plugin you have downloaded requires Anomalous Medical to restart.", false);
+                if (pluginDownload.LoadedSucessfully)
+                {
+                    server.removeDetectedPlugin(this);
+                }
+                else
+                {
+                    requestRestart("A plugin you have downloaded requires Anomalous Medical to restart.", false);
+                }
             }
             base.downloadCompleted(download);
         }

@@ -359,7 +359,7 @@ namespace Medical.GUI
                 bool reselectItem = downloadingItem == pluginGrid.SelectedItem;
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(downloadingItem);
-                MessageBox.show(String.Format("There was an error downloading {0}.\nPlease try again later.", downloadInfo.Name), "Download Error", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                notificationManager.showNotification(String.Format("There was an error downloading {0}.\nPlease try again later.", downloadInfo.Name), MyGUIResourceNames.ErrorIcon);
                 addInfoToButtonGrid(downloadInfo, reselectItem);
                 pluginGrid.SuppressLayout = false;
                 pluginGrid.layout();
