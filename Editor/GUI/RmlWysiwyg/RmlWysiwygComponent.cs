@@ -484,7 +484,7 @@ namespace Medical.GUI
                         element.InnerRml = editor.Text;
                     }
                     rmlModified();
-                    updateUndoStatus(undoRml);
+                    updateUndoStatus(undoRml, true);
                 }
                 if (currentEditor == editor)
                 {
@@ -615,9 +615,15 @@ namespace Medical.GUI
             }
         }
 
-        private void updateUndoStatus(String oldMarkup)
+        private void updateUndoStatus(String oldMarkup, bool check = false)
         {
-            undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(setDocumentRml, UnformattedRml, setDocumentRml, oldMarkup));
+            //This is a hacky way to check for changes (optionally) it should not be needed when the popup editor is overhauled.
+            //You can remove check and keep only the line in the if statement when you no longer need the check.
+            String currentMarkup = UnformattedRml;
+            if (!check || currentMarkup != oldMarkup)
+            {
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(setDocumentRml, currentMarkup, setDocumentRml, oldMarkup));
+            }
         }
     }
 }
