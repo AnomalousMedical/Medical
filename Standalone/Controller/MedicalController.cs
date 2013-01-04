@@ -26,7 +26,7 @@ namespace Medical
 {
     public delegate void LoopUpdate(Clock time);
 
-    public class MedicalController : IDisposable
+    public sealed class MedicalController : IDisposable
     {
         #region Fields
 
@@ -144,8 +144,10 @@ namespace Medical
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
+            MedicalConfig.save();
+
             if (rocketGuiManager != null)
             {
                 rocketGuiManager.Dispose();
@@ -180,7 +182,7 @@ namespace Medical
                 pluginManager.Dispose();
             }
 
-            MedicalConfig.save();
+            Log.Info("Medical Controller Shutdown");
             logListener.closeLogFile();
         }
 
