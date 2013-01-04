@@ -21,11 +21,35 @@ namespace Medical
             this.maxItemCount = maxItemCount;
         }
 
+        public void pushAndExecute(TwoWayCommand command)
+        {
+            push(command);
+            execute();
+        }
+
+        public void pushAndSkip(TwoWayCommand command)
+        {
+            push(command);
+            buffer.skipExecute();
+        }
+
         /// <summary>
-        /// Add a command to the end of the list.
+        /// Executes the current command in the buffer and increments to the next command or does nothing if you are already at the last command.
         /// </summary>
-        /// <param name="command"></param>
-        public void push(TwoWayCommand command)
+        public void execute()
+        {
+            buffer.execute();
+        }
+
+        /// <summary>
+        /// Undoes the current command in the buffer and decrements to the previous command or does nothing if you are already at the first command.
+        /// </summary>
+        public void undo()
+        {
+            buffer.undo();
+        }
+
+        private void push(TwoWayCommand command)
         {
             if (!buffer.OnLast)
             {
@@ -45,28 +69,6 @@ namespace Medical
             }
 
             buffer.push(command);
-        }
-
-        public void pushAndExecute(TwoWayCommand command)
-        {
-            push(command);
-            execute();
-        }
-
-        /// <summary>
-        /// Executes the current command in the buffer and increments to the next command or does nothing if you are already at the last command.
-        /// </summary>
-        public void execute()
-        {
-            buffer.execute();
-        }
-
-        /// <summary>
-        /// Undoes the current command in the buffer and decrements to the previous command or does nothing if you are already at the first command.
-        /// </summary>
-        public void undo()
-        {
-            buffer.undo();
         }
     }
 }

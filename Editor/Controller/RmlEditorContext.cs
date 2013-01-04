@@ -20,7 +20,9 @@ namespace Medical
 
         enum Events
         {
-            Save
+            Save,
+            Undo,
+            Redo
         }
 
         private TextEditorComponent textEditorComponent;
@@ -201,6 +203,30 @@ namespace Medical
                 saveAll();
             };
             eventContext.addEvent(saveEvent);
+
+            MessageEvent undoEvent = new MessageEvent(Events.Undo);
+            undoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
+            undoEvent.addButton(KeyboardButtonCode.KC_Z);
+            undoEvent.FirstFrameUpEvent += eventManager =>
+            {
+                if (rmlComponent != null)
+                {
+                    rmlComponent.undo();
+                }
+            };
+            eventContext.addEvent(undoEvent);
+
+            MessageEvent redoEvent = new MessageEvent(Events.Redo);
+            redoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
+            redoEvent.addButton(KeyboardButtonCode.KC_Y);
+            redoEvent.FirstFrameUpEvent += eventManager =>
+            {
+                if (rmlComponent != null)
+                {
+                    rmlComponent.redo();
+                }
+            };
+            eventContext.addEvent(redoEvent);
 
             if (editingMvcContext != null)
             {

@@ -112,6 +112,18 @@ namespace Medical
         }
 
         /// <summary>
+        /// Skips the current command in the buffer and increments to the next command or does nothing if you are already at the last command.
+        /// </summary>
+        public void skipExecute()
+        {
+            if (currentExecuteCommand != null)
+            {
+                currentUndoCommand = currentExecuteCommand;
+                currentExecuteCommand = currentExecuteCommand.Next;
+            }
+        }
+
+        /// <summary>
         /// Undoes the current command in the buffer and decrements to the previous command or does nothing if you are already at the first command.
         /// </summary>
         public void undo()

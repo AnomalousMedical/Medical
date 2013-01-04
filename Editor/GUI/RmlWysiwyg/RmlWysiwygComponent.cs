@@ -31,6 +31,7 @@ namespace Medical.GUI
         private SelectedElementManager selectedElementManager;
         private PreviewElement previewElement = new PreviewElement();
         private bool lastInsertBefore = false;
+        private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(15);
 
         private AnomalousMvcContext context;
 
@@ -58,7 +59,7 @@ namespace Medical.GUI
                 {
                     if (document != null)
                     {
-                        saveDocumentStartAndEnd(view.RmlFile);
+                        saveDocumentStartAndEndFile(view.RmlFile);
                         document.Show();
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
@@ -105,18 +106,16 @@ namespace Medical.GUI
 
             if (documentName != null)
             {
-                //RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
                 using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
                 {
                     if (document != null)
                     {
-                        saveDocumentStartAndEnd(documentName);
+                        saveDocumentStartAndEndFile(documentName);
                         document.Show();
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
                     }
                 }
-                //RocketEventListenerInstancer.resetEventController();
             }
         }
 
@@ -151,6 +150,8 @@ namespace Medical.GUI
             {
                 previewElement.hidePreviewElement();
 
+                String undoRml = UnformattedRml;
+
                 ElementDocument document = rocketWidget.Context.GetDocument(0);
                 using (Element div = document.CreateElement("temp"))
                 {
@@ -183,6 +184,7 @@ namespace Medical.GUI
                     parent.RemoveChild(div);
 
                     rmlModified();
+                    updateUndoStatus(undoRml);
                 }
             }
         }
@@ -244,14 +246,52 @@ namespace Medical.GUI
             }
         }
 
+        public void undo()
+        {
+            if (currentEditor != null)
+            {
+                currentEditor.ApplyChanges = false;
+                currentEditor.hide();
+            }
+            undoBuffer.undo();
+        }
+
+        public void redo()
+        {
+            if (currentEditor != null)
+            {
+                currentEditor.ApplyChanges = false;
+                currentEditor.hide();
+            }
+            undoBuffer.execute();
+        }
+
         public String CurrentRml
+        {
+            get
+            {
+                String rml = UnformattedRml;
+                if (rml != null)
+                {
+                    rml = formatRml(rml);
+                }
+                return rml;
+            }
+        }
+
+        public String UnformattedRml
         {
             get
             {
                 Element topContentElemnt = TopContentElement;
                 if (topContentElemnt != null)
                 {
-                    return formatRml(topContentElemnt.InnerRml);
+                    String contentRml = topContentElemnt.InnerRml;
+                    StringBuilder sb = new StringBuilder(documentStart.Length + contentRml.Length + documentEnd.Length);
+                    sb.Append(documentStart);
+                    sb.Append(contentRml);
+                    sb.Append(documentEnd);
+                    return sb.ToString();
                 }
                 return null;
             }
@@ -299,8 +339,6 @@ namespace Medical.GUI
 
         private String formatRml(String inputRml)
         {
-            inputRml = inputRml.Insert(0, documentStart);
-            inputRml += documentEnd;
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
@@ -324,13 +362,16 @@ namespace Medical.GUI
             }
         }
 
-        private void saveDocumentStartAndEnd(String file)
+        private void saveDocumentStartAndEndFile(String file)
         {
-            String inputRml;
             using (StreamReader sr = new StreamReader(context.ResourceProvider.openFile(file)))
             {
-                inputRml = sr.ReadToEnd();
+                saveDocumentStartAndEnd(sr.ReadToEnd());
             }
+        }
+
+        private void saveDocumentStartAndEnd(String inputRml)
+        {
             int bodyStart = inputRml.IndexOf("<body", StringComparison.InvariantCultureIgnoreCase);
             if (bodyStart > -1)
             {
@@ -424,6 +465,7 @@ namespace Medical.GUI
             {
                 if (editor.ApplyChanges && !disposed)
                 {
+                    String undoRml = UnformattedRml;
                     String text = editor.Text;
                     if (isTextElement(element) && String.IsNullOrEmpty(text)) //THIS IS WHERE WE CAN EDIT AUTO DELETEING (or make it configurable somehow)
                     {
@@ -442,6 +484,7 @@ namespace Medical.GUI
                         element.InnerRml = editor.Text;
                     }
                     rmlModified();
+                    updateUndoStatus(undoRml);
                 }
                 if (currentEditor == editor)
                 {
@@ -456,11 +499,13 @@ namespace Medical.GUI
                     Element parent = upElement.ParentNode;
                     if (parent != null)
                     {
+                        String undoRml = UnformattedRml;
                         upElement.addReference();
                         parent.RemoveChild(upElement);
                         parent.InsertBefore(upElement, previousSibling);
                         upElement.removeReference();
                         rmlModified();
+                        updateUndoStatus(undoRml);
                     }
                 }
             };
@@ -472,6 +517,8 @@ namespace Medical.GUI
                     Element nextSibling = downElement.NextSibling;
                     if (nextSibling != null)
                     {
+                        String undoRml = UnformattedRml;
+
                         downElement.addReference();
                         parent.RemoveChild(downElement);
                         nextSibling = nextSibling.NextSibling;
@@ -484,8 +531,10 @@ namespace Medical.GUI
                             parent.AppendChild(downElement);
                         }
                         downElement.removeReference();
+
+                        rmlModified();
+                        updateUndoStatus(undoRml);
                     }
-                    rmlModified();
                 }
             };
             editor.DeleteElement += deleteElement =>
@@ -493,6 +542,8 @@ namespace Medical.GUI
                 Element parent = deleteElement.ParentNode;
                 if (parent != null)
                 {
+                    String undoRml = UnformattedRml;
+
                     Element nextSelectionElement = deleteElement.NextSibling;
                     if (nextSelectionElement == null)
                     {
@@ -501,6 +552,7 @@ namespace Medical.GUI
 
                     parent.RemoveChild(deleteElement);
                     rmlModified();
+                    updateUndoStatus(undoRml);
 
                     if (nextSelectionElement != null)
                     {
@@ -539,6 +591,33 @@ namespace Medical.GUI
         private bool insertBeforeOrAfter(Element element, IntVector2 position)
         {
             return position.y - element.AbsoluteTop < element.OffsetHeight / 2;
+        }
+
+        private void setDocumentRml(String rml)
+        {
+            RocketGuiManager.clearAllCaches();
+            rocketWidget.Context.UnloadAllDocuments();
+            selectedElementManager.clearSelectedAndHighlightedElement();
+
+            if (rml != null)
+            {
+                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(rml))
+                {
+                    if (document != null)
+                    {
+                        saveDocumentStartAndEnd(rml);
+                        document.Show();
+                        rocketWidget.removeFocus();
+                        rocketWidget.renderOnNextFrame();
+                        rmlModified();
+                    }
+                }
+            }
+        }
+
+        private void updateUndoStatus(String oldMarkup)
+        {
+            undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(setDocumentRml, UnformattedRml, setDocumentRml, oldMarkup));
         }
     }
 }
