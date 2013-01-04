@@ -18,7 +18,7 @@ namespace Medical
         }
 
         /// <summary>
-        /// Add a command to the list.
+        /// Add a command to the end of the list.
         /// </summary>
         /// <param name="command"></param>
         public void pushCommand(TwoWayCommand command)
@@ -43,6 +43,23 @@ namespace Medical
         }
 
         /// <summary>
+        /// Trim the commands after the current undo command.
+        /// </summary>
+        public void trimCommands()
+        {
+            if (currentUndoCommand != null)
+            {
+                currentExecuteCommand = null;
+                currentUndoCommand.Next = null;
+                lastCommand = currentUndoCommand;
+            }
+            else
+            {
+                clear();
+            }
+        }
+
+        /// <summary>
         /// Pops the first command off the buffer.
         /// </summary>
         public void popFirstCommand()
@@ -52,7 +69,7 @@ namespace Medical
                 //If there is only one command, clear everything
                 if (firstCommand == lastCommand)
                 {
-                    currentUndoCommand = currentExecuteCommand = firstCommand = lastCommand = null;
+                    clear();
                 }
                 else
                 {
@@ -74,6 +91,11 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        public void clear()
+        {
+            currentUndoCommand = currentExecuteCommand = firstCommand = lastCommand = null;
         }
 
         /// <summary>
