@@ -54,7 +54,6 @@ namespace Medical.GUI
 
             if (view.RmlFile != null)
             {
-                //RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
                 using (ElementDocument document = rocketWidget.Context.LoadDocument(view.RmlFile))
                 {
                     if (document != null)
@@ -65,7 +64,6 @@ namespace Medical.GUI
                         rocketWidget.renderOnNextFrame();
                     }
                 }
-                //RocketEventListenerInstancer.resetEventController();
             }
 
             view._fireComponentCreated(this);
