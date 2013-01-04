@@ -21,7 +21,7 @@ namespace Medical
         /// Add a command to the end of the list.
         /// </summary>
         /// <param name="command"></param>
-        public void pushCommand(TwoWayCommand command)
+        public void push(TwoWayCommand command)
         {
             if (lastCommand == null)
             {
@@ -34,7 +34,7 @@ namespace Medical
                 lastCommand.Previous = oldLast;
                 oldLast.Next = lastCommand;
 
-                if (currentExecuteCommand == null)
+                if (OnLast)
                 {
                     //Did we add a command at the end with nothing to execute
                     currentExecuteCommand = lastCommand;
@@ -45,7 +45,7 @@ namespace Medical
         /// <summary>
         /// Trim the commands after the current undo command.
         /// </summary>
-        public void trimCommands()
+        public void trim()
         {
             if (currentUndoCommand != null)
             {
@@ -62,7 +62,7 @@ namespace Medical
         /// <summary>
         /// Pops the first command off the buffer.
         /// </summary>
-        public void popFirstCommand()
+        public void popFirst()
         {
             if (firstCommand != null)
             {
@@ -121,6 +121,32 @@ namespace Medical
                 currentUndoCommand.Data.undo();
                 currentExecuteCommand = currentUndoCommand;
                 currentUndoCommand = currentUndoCommand.Previous;
+            }
+        }
+
+        public bool OnLast
+        {
+            get
+            {
+                return currentExecuteCommand == null;
+            }
+        }
+
+        /// <summary>
+        /// Get the current count of elements, note that this will be computed each time
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                int i = 0;
+                Node<TwoWayCommand> currentNode = firstCommand;
+                while (currentNode != null)
+                {
+                    ++i;
+                    currentNode = currentNode.Next;
+                }
+                return i;
             }
         }
     }

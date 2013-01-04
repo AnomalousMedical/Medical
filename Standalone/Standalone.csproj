@@ -610,6 +610,7 @@
     <Compile Include="Utility\TwoWayCommand.cs" />
     <Compile Include="Utility\TwoWayCommandBuffer.cs" />
     <Compile Include="Utility\TwoWayDelegateCommand.cs" />
+    <Compile Include="Utility\UndoRedoBuffer.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
