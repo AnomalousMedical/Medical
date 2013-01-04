@@ -166,18 +166,18 @@ namespace Medical
             {
                 pluginManager.PlatformPlugin.destroyTimer(systemTimer);
             }
-            if (pluginManager != null)
-            {
-                pluginManager.Dispose();
-            }
             if (rocketGuiManager != null)
             {
                 rocketGuiManager.destroyOgreCustomArchive();
-            } 
+            }
             if (performanceMetricTimer != null)
             {
                 PerformanceMonitor.destroyEnabledState();
                 pluginManager.PlatformPlugin.destroyTimer(performanceMetricTimer);
+            }
+            if (pluginManager != null)
+            {
+                pluginManager.Dispose();
             }
 
             MedicalConfig.save();
