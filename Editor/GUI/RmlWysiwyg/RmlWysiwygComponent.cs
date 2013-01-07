@@ -214,14 +214,11 @@ namespace Medical.GUI
                         Element topContentElement = TopContentElement;
                         if (toSelect != topContentElement)
                         {
-                            if (toSelectIsNotPreview)
-                            {
-                                selectedElementManager.SelectedElement = toSelect;
-                                previewElement.hidePreviewElement();
-                                ElementDocument document = rocketWidget.Context.GetDocument(0);
-                                previewElement.showPreviewElement(document, innerRmlHint, toSelect.ParentNode, toSelect, previewElementTagType, insertBefore);
-                                selectedElementManager.HighlightElement = previewElement.HighlightPreviewElement;
-                            }
+                            selectedElementManager.SelectedElement = toSelect;
+                            previewElement.hidePreviewElement();
+                            ElementDocument document = rocketWidget.Context.GetDocument(0);
+                            previewElement.showPreviewElement(document, innerRmlHint, toSelect.ParentNode, toSelect, previewElementTagType, insertBefore);
+                            selectedElementManager.HighlightElement = previewElement.HighlightPreviewElement;
                         }
                         else
                         {
