@@ -17,6 +17,7 @@ namespace Medical.GUI
         RmlWysiwygComponent rmlComponent;
 
         private String insertRml;
+        private String undoRml = null;
 
         public DraggingElementManager(RmlWysiwygComponent rmlComponent)
         {
@@ -35,10 +36,8 @@ namespace Medical.GUI
             this.dragElement = dragElement;
             dragMouseStartPosition = position;
             firstDrag = true;
-            if (dragElement != null)
-            {
-                insertRml = dragElement.ElementRml;
-            }
+            insertRml = null;
+            undoRml = null;
         }
 
         public void dragging(IntVector2 position)
@@ -61,6 +60,8 @@ namespace Medical.GUI
                     IntVector2 localCoord = rmlComponent.localCoord(position);
                     if (localCoord.x < 0 || localCoord.y < 0 || localCoord.x > dragElement.OffsetWidth || localCoord.y > dragElement.OffsetHeight)
                     {
+                        insertRml = dragElement.ElementRml;
+                        undoRml = rmlComponent.UnformattedRml;
                         Element parent = dragElement.ParentNode;
                         if (parent != null)
                         {
@@ -82,7 +83,7 @@ namespace Medical.GUI
             dragIconPreview.Visible = false;
             if (dragElement == null)
             {
-                rmlComponent.insertRml(insertRml);
+                rmlComponent.insertRml(insertRml, undoRml);
             }
             else
             {

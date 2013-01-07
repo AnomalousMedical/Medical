@@ -131,7 +131,9 @@ namespace Medical.GUI
             }
             else if(allowEdit)
             {
+                String undoRml = UnformattedRml;
                 insertRmlIntoDocument(rml);
+                updateUndoStatus(undoRml);
 
                 //Clear selection for drag and drop
                 selectedElementManager.SelectedElement = null;
@@ -143,7 +145,18 @@ namespace Medical.GUI
         {
             if (allowEdit)
             {
+                String undoRml = UnformattedRml;
                 insertRmlIntoDocument(rml);
+                updateUndoStatus(undoRml);
+            }
+        }
+
+        internal void insertRml(String rml, String undoRml)
+        {
+            if (allowEdit)
+            {
+                insertRmlIntoDocument(rml);
+                updateUndoStatus(undoRml);
             }
         }
 
@@ -152,8 +165,6 @@ namespace Medical.GUI
             if (allowEdit)
             {
                 previewElement.hidePreviewElement();
-
-                String undoRml = UnformattedRml;
 
                 ElementDocument document = rocketWidget.Context.GetDocument(0);
                 using (Element div = document.CreateElement("temp"))
@@ -187,7 +198,6 @@ namespace Medical.GUI
                     parent.RemoveChild(div);
 
                     rmlModified();
-                    updateUndoStatus(undoRml);
                 }
             }
         }
