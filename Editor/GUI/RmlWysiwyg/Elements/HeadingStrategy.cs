@@ -8,8 +8,8 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 {
     class HeadingStrategy : ElementStrategy
     {
-        public HeadingStrategy(String tag)
-            :base(tag, true)
+        public HeadingStrategy(String tag, String previewIconName = "Editor/HeaderIcon")
+            : base(tag, previewIconName, true)
         {
 
         }

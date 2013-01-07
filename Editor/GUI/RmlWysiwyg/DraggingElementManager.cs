@@ -10,6 +10,8 @@ namespace Medical.GUI
 {
     class DraggingElementManager : IDisposable
     {
+        private const String eraseIcon = CommonResources.NoIcon;
+
         private Element dragElement;
         private IntVector2 dragMouseStartPosition;
         bool firstDrag = false;
@@ -18,6 +20,7 @@ namespace Medical.GUI
 
         private String insertRml;
         private String undoRml = null;
+        private String iconName;
         private bool allowDragging = false;
 
         public DraggingElementManager(RmlWysiwygComponent rmlComponent)
@@ -32,7 +35,7 @@ namespace Medical.GUI
             Gui.Instance.destroyWidget(dragIconPreview);
         }
 
-        public void dragStart(IntVector2 position, Element dragElement)
+        public void dragStart(IntVector2 position, Element dragElement, String iconName)
         {
             this.dragElement = dragElement;
             dragMouseStartPosition = position;
@@ -40,6 +43,7 @@ namespace Medical.GUI
             insertRml = null;
             undoRml = null;
             allowDragging = true;
+            this.iconName = iconName;
         }
 
         public void dragging(IntVector2 position)
@@ -54,7 +58,7 @@ namespace Medical.GUI
                 if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - position.x) > 5 || Math.Abs(dragMouseStartPosition.y - position.y) > 5))
                 {
                     dragIconPreview.Visible = true;
-                    dragIconPreview.setItemResource(CommonResources.NoIcon);
+                    dragIconPreview.setItemResource(iconName);
                     LayerManager.Instance.upLayerItem(dragIconPreview);
                 }
                 if (IsDragging)
@@ -78,6 +82,14 @@ namespace Medical.GUI
                     else
                     {
                         rmlComponent.setPreviewElement(position, insertRml, "div");
+                    }
+                    if (rmlComponent.contains(position))
+                    {
+                        dragIconPreview.setItemResource(iconName);
+                    }
+                    else
+                    {
+                        dragIconPreview.setItemResource(eraseIcon);
                     }
                 }
             }

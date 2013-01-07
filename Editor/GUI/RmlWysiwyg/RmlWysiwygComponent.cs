@@ -493,7 +493,7 @@ namespace Medical.GUI
             Element element = rocketWidget.Context.FindElementAtPoint(localPosition);
             if (elementStrategyManager[element].AllowDragAndDrop)
             {
-                draggingElementManager.dragStart(mousePosition, element);
+                draggingElementManager.dragStart(mousePosition, element, elementStrategyManager[element].PreviewIconName);
             }
         }
 
