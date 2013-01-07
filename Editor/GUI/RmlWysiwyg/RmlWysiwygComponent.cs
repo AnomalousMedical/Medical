@@ -160,6 +160,7 @@ namespace Medical.GUI
                         if (insertInto != null)
                         {
                             insertInto.Insert(div, selectedElementManager.SelectedElement, lastInsertBefore);
+                            Logging.Log.Debug("Insert Before {0}", lastInsertBefore);
                         }
                     }
                     else
@@ -197,10 +198,16 @@ namespace Medical.GUI
                 Element toSelect = rocketWidget.Context.FindElementAtPoint(position);
                 Element selectedElement = selectedElementManager.SelectedElement;
 
-                bool insertBefore = false;
+                bool insertBefore = lastInsertBefore;
+                bool selectIsPreviewOrAncestor = false;
                 if (toSelect != null)
                 {
-                    insertBefore = insertBeforeOrAfter(toSelect, position);
+                    selectIsPreviewOrAncestor = previewElement.isPreviewOrAncestor(toSelect);
+                    if (!selectIsPreviewOrAncestor)
+                    {
+                        insertBefore = insertBeforeOrAfter(toSelect, position);
+                        Logging.Log.Debug("Check insert before {0} {1}", toSelect.TagName, insertBefore);
+                    }
                 }
                 if (toSelect != selectedElement || insertBefore != lastInsertBefore)
                 {
@@ -209,7 +216,7 @@ namespace Medical.GUI
                         Element topContentElement = TopContentElement;
                         if (toSelect != topContentElement)
                         {
-                            if (!previewElement.isPreviewOrAncestor(toSelect))
+                            if (!selectIsPreviewOrAncestor)
                             {
                                 selectedElementManager.SelectedElement = toSelect;
                                 previewElement.hidePreviewElement();
@@ -232,10 +239,12 @@ namespace Medical.GUI
                         selectedElementManager.clearSelectedAndHighlightedElement();
                         previewElement.hidePreviewElement();
                     }
-                }
-                lastInsertBefore = insertBefore;
 
-                rmlModified();
+                    lastInsertBefore = insertBefore;
+                    Logging.Log.Debug("Last Insert Before {0}", lastInsertBefore);
+
+                    rmlModified();
+                }
             }
             else
             {
