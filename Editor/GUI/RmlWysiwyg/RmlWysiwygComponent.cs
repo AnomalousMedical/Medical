@@ -30,6 +30,7 @@ namespace Medical.GUI
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
         private PreviewElement previewElement = new PreviewElement();
+        private DraggingElementManager draggingElementManager;
         private bool lastInsertBefore = false;
         private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(15);
 
@@ -45,12 +46,15 @@ namespace Medical.GUI
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
             rmlImage.MouseButtonClick += new MyGUIEvent(rmlImage_MouseButtonClick);
+            rmlImage.MouseButtonPressed += rmlImage_MouseButtonPressed;
+            rmlImage.MouseButtonReleased += rmlImage_MouseButtonReleased;
             rmlImage.MouseDrag += new MyGUIEvent(rmlImage_MouseDrag);
             rmlImage.MouseWheel += new MyGUIEvent(rmlImage_MouseWheel);
             rmlImage.EventScrollGesture += new MyGUIEvent(rmlImage_EventScrollGesture);
             imageHeight = rmlImage.Height;
 
             selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
+            draggingElementManager = new DraggingElementManager(this);
 
             if (view.RmlFile != null)
             {
@@ -71,6 +75,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            draggingElementManager.Dispose();
             previewElement.Dispose();
             disposed = true;
             rocketWidget.Dispose();
@@ -338,6 +343,13 @@ namespace Medical.GUI
             }
         }
 
+        internal IntVector2 localCoord(IntVector2 position)
+        {
+            position.x -= widget.AbsoluteLeft;
+            position.y -= widget.AbsoluteTop;
+            return position;
+        }
+
         private String formatRml(String inputRml)
         {
             try
@@ -457,6 +469,19 @@ namespace Medical.GUI
         void rmlImage_MouseDrag(Widget source, EventArgs e)
         {
             selectedElementManager.updateHighlightPosition();
+            draggingElementManager.dragging(((MouseEventArgs)e).Position);
+        }
+
+        void rmlImage_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            IntVector2 mousePosition = ((MouseEventArgs)e).Position;
+            IntVector2 localPosition = localCoord(mousePosition);
+            draggingElementManager.dragStart(mousePosition, rocketWidget.Context.FindElementAtPoint(localPosition));
+        }
+
+        void rmlImage_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            draggingElementManager.dragEnded(((MouseEventArgs)e).Position);
         }
 
         private void showRmlElementEditor(Element element)
