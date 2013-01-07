@@ -16,6 +16,8 @@ namespace Medical.GUI
 {
     public class RmlWysiwygComponent : LayoutComponent
     {
+        public const String DefaultImage = "/Medical.Resources.ImagePlaceholder.png";
+
         private static ElementStrategyManager elementStrategyManager = new ElementStrategyManager();
 
         static RmlWysiwygComponent()
@@ -24,7 +26,7 @@ namespace Medical.GUI
             elementStrategyManager.add(new HeadingStrategy("p"));
             elementStrategyManager.add(new HeadingStrategy("a"));
             elementStrategyManager.add(new HeadingStrategy("input"));
-            elementStrategyManager.add(new HeadingStrategy("img"));
+            elementStrategyManager.add(new ImageStrategy("img"));
         }
 
         public event Action<RmlWysiwygComponent> RmlEdited;
@@ -384,6 +386,19 @@ namespace Medical.GUI
             return position;
         }
 
+        internal void deleteElement(Element element)
+        {
+            Element parent = element.ParentNode;
+            if (parent != null)
+            {
+                parent.RemoveChild(element);
+                if (element == selectedElementManager.SelectedElement)
+                {
+                    selectedElementManager.clearSelectedAndHighlightedElement();
+                }
+            }
+        }
+
         private String formatRml(String inputRml)
         {
             try
@@ -518,25 +533,11 @@ namespace Medical.GUI
                 if (editor.ApplyChanges && !disposed)
                 {
                     String undoRml = UnformattedRml;
-                    String text = editor.Text;
-                    if (isTextElement(element) && String.IsNullOrEmpty(text)) //THIS IS WHERE WE CAN EDIT AUTO DELETEING (or make it configurable somehow)
+                    if (elementStrategyManager[element].applyChanges(element, editor, this))
                     {
-                        Element parent = element.ParentNode;
-                        if (parent != null)
-                        {
-                            parent.RemoveChild(element);
-                            if (element == selectedElementManager.SelectedElement)
-                            {
-                                selectedElementManager.clearSelectedAndHighlightedElement();
-                            }
-                        }
+                        rmlModified();
+                        updateUndoStatus(undoRml, true);
                     }
-                    else
-                    {
-                        element.InnerRml = editor.Text;
-                    }
-                    rmlModified();
-                    updateUndoStatus(undoRml, true);
                 }
                 if (currentEditor == editor)
                 {
@@ -619,15 +620,6 @@ namespace Medical.GUI
             currentEditor = editor;
             selectedElementManager.SelectedElement = element;
             selectedElementManager.HighlightElement = element;
-        }
-
-        private bool isTextElement(Element element)
-        {
-            if (element.TagName == "img")
-            {
-                return false;
-            }
-            return true;
         }
 
         private void rmlModified()

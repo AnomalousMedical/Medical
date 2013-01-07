@@ -85,6 +85,7 @@
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategyManager.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\HeadingStrategy.cs" />
+    <Compile Include="GUI\RmlWysiwyg\Elements\ImageStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\WysiwygDragDropItem.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorConfig.cs" />

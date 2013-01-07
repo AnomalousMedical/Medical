@@ -26,9 +26,25 @@ namespace Medical.GUI
             return null;
         }
 
-        public virtual bool shouldDelete(Element element)
+        /// <summary>
+        /// Apply the changes from an editor to an element. Return true if changes are made.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="editor"></param>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public virtual bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            return false;
+            String text = editor.Text;
+            if (String.IsNullOrEmpty(text))
+            {
+                component.deleteElement(element);
+            }
+            else
+            {
+                element.InnerRml = editor.Text;
+            }
+            return true;
         }
     }
 }
