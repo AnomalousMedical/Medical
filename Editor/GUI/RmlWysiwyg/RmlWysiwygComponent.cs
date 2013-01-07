@@ -10,11 +10,23 @@ using System.Xml;
 using System.IO;
 using Engine.Editing;
 using Engine;
+using Medical.GUI.RmlWysiwyg.Elements;
 
 namespace Medical.GUI
 {
     public class RmlWysiwygComponent : LayoutComponent
     {
+        private static ElementStrategyManager elementStrategyManager = new ElementStrategyManager();
+
+        static RmlWysiwygComponent()
+        {
+            elementStrategyManager.add(new HeadingStrategy("h1"));
+            elementStrategyManager.add(new HeadingStrategy("p"));
+            elementStrategyManager.add(new HeadingStrategy("a"));
+            elementStrategyManager.add(new HeadingStrategy("input"));
+            elementStrategyManager.add(new HeadingStrategy("img"));
+        }
+
         public event Action<RmlWysiwygComponent> RmlEdited;
 
         private RocketWidget rocketWidget;
@@ -32,7 +44,7 @@ namespace Medical.GUI
         private PreviewElement previewElement = new PreviewElement();
         private DraggingElementManager draggingElementManager;
         private bool lastInsertBefore = false;
-        private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(15);
+        private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(50);
 
         private AnomalousMvcContext context;
 
@@ -126,6 +138,7 @@ namespace Medical.GUI
         {
             if (!widget.contains(position.x, position.y))
             {
+                selectedElementManager.clearSelectedAndHighlightedElement();
                 previewElement.hidePreviewElement();
                 rmlModified();
             }
@@ -149,6 +162,11 @@ namespace Medical.GUI
                 insertRmlIntoDocument(rml);
                 updateUndoStatus(undoRml);
             }
+        }
+
+        public bool contains(IntVector2 position)
+        {
+            return widget.contains(position.x, position.y);
         }
 
         internal void insertRml(String rml, String undoRml)
@@ -257,8 +275,7 @@ namespace Medical.GUI
             }
             else
             {
-                previewElement.hidePreviewElement();
-                rmlModified();
+                clearPreviewElement();
             }
         }
 
@@ -449,27 +466,7 @@ namespace Medical.GUI
             Element element = rocketWidget.Context.GetFocusElement();
             if (element != null)
             {
-                switch (element.TagName)
-                {
-                    case "h1":
-                        showRmlElementEditor(element);
-                        break;
-                    case "p":
-                        showRmlElementEditor(element);
-                        break;
-                    case "a":
-                        showRmlElementEditor(element);
-                        break;
-                    case "input":
-                        showRmlElementEditor(element);
-                        break;
-                    case "img":
-                        showRmlElementEditor(element);
-                        break;
-                    default:
-                        selectedElementManager.clearSelectedAndHighlightedElement();
-                        break;
-                }
+                showRmlElementEditor(element, elementStrategyManager[element]);
             }
         }
 
@@ -493,7 +490,11 @@ namespace Medical.GUI
         {
             IntVector2 mousePosition = ((MouseEventArgs)e).Position;
             IntVector2 localPosition = localCoord(mousePosition);
-            draggingElementManager.dragStart(mousePosition, rocketWidget.Context.FindElementAtPoint(localPosition));
+            Element element = rocketWidget.Context.FindElementAtPoint(localPosition);
+            if (elementStrategyManager[element].AllowDragAndDrop)
+            {
+                draggingElementManager.dragStart(mousePosition, element);
+            }
         }
 
         void rmlImage_MouseButtonReleased(Widget source, EventArgs e)
@@ -501,9 +502,17 @@ namespace Medical.GUI
             draggingElementManager.dragEnded(((MouseEventArgs)e).Position);
         }
 
-        private void showRmlElementEditor(Element element)
+        private void showRmlElementEditor(Element element, ElementStrategy strategy)
         {
-            RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, browserProvider, element, (int)(element.AbsoluteLeft + element.ClientWidth) + rocketWidget.AbsoluteLeft, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
+            RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, rocketWidget.AbsoluteLeft, rocketWidget.AbsoluteTop);
+            if (editor == null)
+            {
+                //The editor was null, which means editing is not supported so just clear the selection.
+                selectedElementManager.clearSelectedAndHighlightedElement();
+                return; //Return here to prevent more execution
+            }
+
+            //Everything is good so setup.
             editor.Hiding += (src, evt) =>
             {
                 if (editor.ApplyChanges && !disposed)
@@ -599,7 +608,7 @@ namespace Medical.GUI
 
                     if (nextSelectionElement != null)
                     {
-                        showRmlElementEditor(nextSelectionElement);
+                        showRmlElementEditor(nextSelectionElement, elementStrategyManager[nextSelectionElement]);
                     }
                     else
                     {
@@ -658,7 +667,7 @@ namespace Medical.GUI
             }
         }
 
-        private void updateUndoStatus(String oldMarkup, bool check = false)
+        internal void updateUndoStatus(String oldMarkup, bool check = false)
         {
             //This is a hacky way to check for changes (optionally) it should not be needed when the popup editor is overhauled.
             //You can remove check and keep only the line in the if statement when you no longer need the check.

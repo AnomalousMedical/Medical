@@ -82,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GUI\RmlWysiwyg\DraggingElementManager.cs" />
+    <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategy.cs" />
+    <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategyManager.cs" />
+    <Compile Include="GUI\RmlWysiwyg\Elements\HeadingStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\WysiwygDragDropItem.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorConfig.cs" />

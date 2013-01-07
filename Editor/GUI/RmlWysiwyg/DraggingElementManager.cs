@@ -18,6 +18,7 @@ namespace Medical.GUI
 
         private String insertRml;
         private String undoRml = null;
+        private bool allowDragging = false;
 
         public DraggingElementManager(RmlWysiwygComponent rmlComponent)
         {
@@ -38,56 +39,74 @@ namespace Medical.GUI
             firstDrag = true;
             insertRml = null;
             undoRml = null;
+            allowDragging = true;
         }
 
         public void dragging(IntVector2 position)
         {
-            if (firstDrag)
+            if (allowDragging)
             {
-                firstDrag = false;
-            }
-            dragIconPreview.setPosition(position.x - (dragIconPreview.Width / 2), position.y - (int)(dragIconPreview.Height * .75f));
-            if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - position.x) > 5 || Math.Abs(dragMouseStartPosition.y - position.y) > 5))
-            {
-                dragIconPreview.Visible = true;
-                dragIconPreview.setItemResource(CommonResources.NoIcon);
-                LayerManager.Instance.upLayerItem(dragIconPreview);
-            }
-            if (IsDragging)
-            {
-                if (dragElement != null)
+                if (firstDrag)
                 {
-                    IntVector2 localCoord = rmlComponent.localCoord(position);
-                    if (localCoord.x < 0 || localCoord.y < 0 || localCoord.x > dragElement.OffsetWidth || localCoord.y > dragElement.OffsetHeight)
-                    {
-                        insertRml = dragElement.ElementRml;
-                        undoRml = rmlComponent.UnformattedRml;
-                        Element parent = dragElement.ParentNode;
-                        if (parent != null)
-                        {
-                            parent.RemoveChild(dragElement);
-                        }
-                        rmlComponent.setPreviewElement(position, insertRml, "div");
-                        dragElement = null;
-                    }
+                    firstDrag = false;
                 }
-                else
+                dragIconPreview.setPosition(position.x - (dragIconPreview.Width / 2), position.y - (int)(dragIconPreview.Height * .75f));
+                if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - position.x) > 5 || Math.Abs(dragMouseStartPosition.y - position.y) > 5))
                 {
-                    rmlComponent.setPreviewElement(position, insertRml, "div");
+                    dragIconPreview.Visible = true;
+                    dragIconPreview.setItemResource(CommonResources.NoIcon);
+                    LayerManager.Instance.upLayerItem(dragIconPreview);
+                }
+                if (IsDragging)
+                {
+                    if (dragElement != null)
+                    {
+                        IntVector2 localCoord = rmlComponent.localCoord(position);
+                        if (localCoord.x < 0 || localCoord.y < 0 || localCoord.x > dragElement.OffsetWidth || localCoord.y > dragElement.OffsetHeight)
+                        {
+                            insertRml = dragElement.ElementRml;
+                            undoRml = rmlComponent.UnformattedRml;
+                            rmlComponent.setPreviewElement(position, insertRml, "div");
+                            Element parent = dragElement.ParentNode;
+                            if (parent != null)
+                            {
+                                parent.RemoveChild(dragElement);
+                            }
+                            dragElement = null;
+                        }
+                    }
+                    else
+                    {
+                        rmlComponent.setPreviewElement(position, insertRml, "div");
+                    }
                 }
             }
         }
 
         public void dragEnded(IntVector2 position)
         {
-            dragIconPreview.Visible = false;
-            if (dragElement == null)
+            if (allowDragging)
             {
-                rmlComponent.insertRml(insertRml, undoRml);
-            }
-            else
-            {
-                rmlComponent.clearPreviewElement();
+                dragIconPreview.Visible = false;
+                if (dragElement == null)
+                {
+                    if (rmlComponent.contains(position))
+                    {
+                        rmlComponent.insertRml(insertRml, undoRml);
+                    }
+                    else
+                    {
+                        //This is effectively a delete, so save undo status
+                        rmlComponent.updateUndoStatus(undoRml);
+                        rmlComponent.clearPreviewElement();
+                    }
+                }
+                else
+                {
+                    dragElement = null;
+                    rmlComponent.clearPreviewElement();
+                }
+                allowDragging = false;
             }
         }
 
