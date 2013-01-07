@@ -160,7 +160,6 @@ namespace Medical.GUI
                         if (insertInto != null)
                         {
                             insertInto.Insert(div, selectedElementManager.SelectedElement, lastInsertBefore);
-                            Logging.Log.Debug("Insert Before {0}", lastInsertBefore);
                         }
                     }
                     else
@@ -199,24 +198,23 @@ namespace Medical.GUI
                 Element selectedElement = selectedElementManager.SelectedElement;
 
                 bool insertBefore = lastInsertBefore;
-                bool selectIsPreviewOrAncestor = false;
+                bool toSelectIsNotPreview = true;
                 if (toSelect != null)
                 {
-                    selectIsPreviewOrAncestor = previewElement.isPreviewOrAncestor(toSelect);
-                    if (!selectIsPreviewOrAncestor)
+                    toSelectIsNotPreview = !previewElement.isPreviewOrAncestor(toSelect);
+                    if (toSelectIsNotPreview)
                     {
                         insertBefore = insertBeforeOrAfter(toSelect, position);
-                        Logging.Log.Debug("Check insert before {0} {1}", toSelect.TagName, insertBefore);
                     }
                 }
-                if (toSelect != selectedElement || insertBefore != lastInsertBefore)
+                if (toSelectIsNotPreview && (toSelect != selectedElement || insertBefore != lastInsertBefore))
                 {
                     if (toSelect != null)
                     {
                         Element topContentElement = TopContentElement;
                         if (toSelect != topContentElement)
                         {
-                            if (!selectIsPreviewOrAncestor)
+                            if (toSelectIsNotPreview)
                             {
                                 selectedElementManager.SelectedElement = toSelect;
                                 previewElement.hidePreviewElement();
@@ -241,7 +239,6 @@ namespace Medical.GUI
                     }
 
                     lastInsertBefore = insertBefore;
-                    Logging.Log.Debug("Last Insert Before {0}", lastInsertBefore);
 
                     rmlModified();
                 }
