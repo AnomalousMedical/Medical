@@ -89,7 +89,7 @@ namespace Medical
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
-                    rmlComponent.changeSelectedElement(position, item.Markup, item.PreviewTagType);
+                    rmlComponent.setPreviewElement(position, item.Markup, item.PreviewTagType);
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {

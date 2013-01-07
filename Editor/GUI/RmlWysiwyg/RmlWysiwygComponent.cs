@@ -192,7 +192,7 @@ namespace Medical.GUI
             }
         }
 
-        public void changeSelectedElement(IntVector2 position, String innerRmlHint, String previewElementTagType)
+        public void setPreviewElement(IntVector2 position, String innerRmlHint, String previewElementTagType)
         {
             if (widget.contains(position.x, position.y))
             {
@@ -250,6 +250,13 @@ namespace Medical.GUI
                 previewElement.hidePreviewElement();
                 rmlModified();
             }
+        }
+
+        public void clearPreviewElement()
+        {
+            selectedElementManager.clearSelectedAndHighlightedElement();
+            previewElement.hidePreviewElement();
+            rmlModified();
         }
 
         public void undo()

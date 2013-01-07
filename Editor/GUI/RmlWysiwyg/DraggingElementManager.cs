@@ -66,23 +66,27 @@ namespace Medical.GUI
                         {
                             parent.RemoveChild(dragElement);
                         }
-                        rmlComponent.changeSelectedElement(position, insertRml, "div");
+                        rmlComponent.setPreviewElement(position, insertRml, "div");
                         dragElement = null;
                     }
                 }
                 else
                 {
-                    rmlComponent.changeSelectedElement(position, insertRml, "div");
+                    rmlComponent.setPreviewElement(position, insertRml, "div");
                 }
             }
         }
 
         public void dragEnded(IntVector2 position)
         {
-            if (IsDragging)
+            dragIconPreview.Visible = false;
+            if (dragElement == null)
             {
-                dragIconPreview.Visible = false;
                 rmlComponent.insertRml(insertRml);
+            }
+            else
+            {
+                rmlComponent.clearPreviewElement();
             }
         }
 
