@@ -1,15 +1,14 @@
 ﻿using libRocketPlugin;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.Elements
 {
-    class ImageStrategy : ElementStrategy
+    class TextElementStrategy : ElementStrategy
     {
-        public ImageStrategy(String tag, String previewIconName = "Editor/ImageIcon")
+        public TextElementStrategy(String tag, String previewIconName = "Editor/HeaderIcon")
             : base(tag, previewIconName, true)
         {
 
@@ -21,17 +20,24 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             return editor;
         }
 
+        /// <summary>
+        /// Apply the changes from an editor to an element. Return true if changes are made.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="editor"></param>
+        /// <param name="component"></param>
+        /// <returns></returns>
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            String src = element.GetAttributeString("src");
-            if (String.IsNullOrEmpty(src))
+            String text = editor.Text;
+            if (String.IsNullOrEmpty(text))
             {
                 component.deleteElement(element);
             }
-            //if (!Core.GetFileInterface().Exists(src, element.OwnerDocument.SourceURL))
-            //{
-            //    element.SetAttribute("src", RmlWysiwygComponent.DefaultImage);
-            //}
+            else
+            {
+                element.InnerRml = editor.Text;
+            }
             return true;
         }
     }

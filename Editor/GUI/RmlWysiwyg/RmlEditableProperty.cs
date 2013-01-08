@@ -110,5 +110,13 @@ namespace Medical.GUI
                     break;
             }
         }
+
+        public String ElementDocumentSourcePath
+        {
+            get
+            {
+                return element.OwnerDocument.SourceURL;
+            }
+        }
     }
 }

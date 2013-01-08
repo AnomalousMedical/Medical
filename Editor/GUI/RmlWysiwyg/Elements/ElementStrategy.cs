@@ -35,16 +35,7 @@ namespace Medical.GUI
         /// <returns></returns>
         public virtual bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            String text = editor.Text;
-            if (String.IsNullOrEmpty(text))
-            {
-                component.deleteElement(element);
-            }
-            else
-            {
-                element.InnerRml = editor.Text;
-            }
-            return true;
+            return false;
         }
     }
 }

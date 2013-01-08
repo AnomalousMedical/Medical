@@ -22,11 +22,12 @@ namespace Medical.GUI
 
         static RmlWysiwygComponent()
         {
-            elementStrategyManager.add(new HeadingStrategy("h1"));
-            elementStrategyManager.add(new HeadingStrategy("p"));
-            elementStrategyManager.add(new HeadingStrategy("a"));
-            elementStrategyManager.add(new HeadingStrategy("input"));
+            elementStrategyManager.add(new TextElementStrategy("h1"));
+            elementStrategyManager.add(new TextElementStrategy("p"));
+            elementStrategyManager.add(new TextElementStrategy("a"));
             elementStrategyManager.add(new ImageStrategy("img"));
+            //Controls
+            elementStrategyManager.add(new ElementStrategy("input"));
         }
 
         public event Action<RmlWysiwygComponent> RmlEdited;
