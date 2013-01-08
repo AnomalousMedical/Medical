@@ -246,9 +246,29 @@ namespace Medical
             {
                 foreach (String searchPattern in searchPatterns)
                 {
-                    foreach (String timeline in editorController.ResourceProvider.listFiles(searchPattern, "", true))
+                    foreach (String file in editorController.ResourceProvider.listFiles(searchPattern, "", true))
                     {
-                        browser.addNode("", null, new BrowserNode(timeline, timeline));
+                        browser.addNode("", null, new BrowserNode(file, file));
+                    }
+                }
+            }
+            else
+            {
+                Log.Warning("No resources loaded.");
+            }
+            return browser;
+        }
+
+        public Browser createFileBrowser(IEnumerable<string> searchPatterns, String prompt, String leadingPath)
+        {
+            Browser browser = new Browser("Files", prompt);
+            if (editorController.ResourceProvider != null)
+            {
+                foreach (String searchPattern in searchPatterns)
+                {
+                    foreach (String file in editorController.ResourceProvider.listFiles(searchPattern, "", true))
+                    {
+                        browser.addNode("", null, new BrowserNode(file, Path.Combine(leadingPath, file)));
                     }
                 }
             }
