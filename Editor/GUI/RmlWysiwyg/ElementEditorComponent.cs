@@ -1,4 +1,5 @@
-﻿using libRocketPlugin;
+﻿using Engine;
+using libRocketPlugin;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,27 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    interface ElementEditorComponent
+    class ElementEditorComponent : Component
     {
-        void attachToParent(RmlElementEditor parentEditor, Widget parent);
+        protected RmlElementEditor parentEditor;
 
-        String Name { get; }
+        public ElementEditorComponent(String layoutFile, String name)
+            :base(layoutFile)
+        {
+            this.Name = name;
+        }
+
+        public virtual void attachToParent(RmlElementEditor parentEditor, Widget parent)
+        {
+            this.parentEditor = parentEditor;
+            widget.Visible = false;
+            IntCoord clientCoord = parent.ClientCoord;
+            widget.setSize(clientCoord.width, clientCoord.height);
+            widget.Align = Align.Stretch;
+            widget.attachToWidget(parent);
+            widget.Visible = true;
+        }
+
+        public String Name { get; set; }
     }
 }

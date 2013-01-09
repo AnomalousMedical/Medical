@@ -8,27 +8,21 @@ using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    class ElementTextEditor : Component, ElementEditorComponent
+    class ElementTextEditor : ElementEditorComponent
     {
         private EditBox text;
-        private RmlElementEditor parentEditor;
 
         public ElementTextEditor()
-            : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementTextEditor.layout")
+            : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementTextEditor.layout", "Text")
         {
             text = (EditBox)widget;
             InputManager.Instance.setKeyFocusWidget(text);
-            Name = "Text";
         }
 
-        public void attachToParent(RmlElementEditor parentEditor, Widget parent)
+        public override void attachToParent(RmlElementEditor parentEditor, Widget parent)
         {
-            IntCoord clientCoord = parent.ClientCoord;
-            text.setSize(clientCoord.width, clientCoord.height);
-            text.Align = Align.Stretch;
+            base.attachToParent(parentEditor, parent);
             text.KeyButtonReleased += text_KeyButtonReleased;
-            text.attachToWidget(parent);
-            this.parentEditor = parentEditor;
             InputManager.Instance.setKeyFocusWidget(text);
         }
 
@@ -43,8 +37,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 text.OnlyText = value.Replace("\r", "");
             }
         }
-
-        public String Name { get; set; }
 
         void text_KeyButtonReleased(Widget source, EventArgs e)
         {

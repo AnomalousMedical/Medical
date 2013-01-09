@@ -9,16 +9,14 @@ using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    class ElementAttributeEditor : Component, ElementEditorComponent
+    class ElementAttributeEditor : ElementEditorComponent
     {
         private ScrollView propertiesScroll;
         private ScrollablePropertiesForm propertiesForm;
 
         public ElementAttributeEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider)
-            : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementAttributeEditor.layout")
+            : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementAttributeEditor.layout", "Attributes")
         {
-            Name = "Attributes";
-
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
             propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
 
@@ -54,37 +52,13 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                         break;
                 }
             }
-            EditInterface = editInterface;
+            propertiesForm.EditInterface = editInterface;
         }
 
         public override void Dispose()
         {
             propertiesForm.Dispose();
             base.Dispose();
-        }
-
-        public void attachToParent(RmlElementEditor parentEditor, Widget parent)
-        {
-            widget.Visible = false;
-            IntCoord clientCoord = parent.ClientCoord;
-            widget.setSize(clientCoord.width, clientCoord.height);
-            widget.Align = Align.Stretch;
-            widget.attachToWidget(parent);
-            widget.Visible = true;
-        }
-
-        public String Name { get; set; }
-
-        public EditInterface EditInterface
-        {
-            get
-            {
-                return propertiesForm.EditInterface;
-            }
-            set
-            {
-                propertiesForm.EditInterface = value;
-            }
         }
     }
 }
