@@ -295,8 +295,7 @@ namespace Medical.GUI
         {
             if (currentEditor != null)
             {
-                currentEditor.ApplyChanges = false;
-                currentEditor.hide();
+                currentEditor.cancelAndHide();
             }
             undoBuffer.undo();
         }
@@ -305,8 +304,7 @@ namespace Medical.GUI
         {
             if (currentEditor != null)
             {
-                currentEditor.ApplyChanges = false;
-                currentEditor.hide();
+                currentEditor.cancelAndHide();
             }
             undoBuffer.execute();
         }
@@ -534,14 +532,11 @@ namespace Medical.GUI
             //Everything is good so setup.
             editor.Hiding += (src, evt) =>
             {
-                if (editor.ApplyChanges && !disposed)
+                if (!disposed && editor.applyChanges(this))
                 {
-                    if (editor.applyChanges(this))
-                    {
-                        rmlModified();
-                        updateUndoStatus(editor.UndoRml, true);
-                        editor.UndoRml = UnformattedRml;
-                    }
+                    rmlModified();
+                    updateUndoStatus(editor.UndoRml, true);
+                    editor.UndoRml = UnformattedRml;
                 }
                 if (currentEditor == editor)
                 {

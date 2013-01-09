@@ -30,8 +30,16 @@ namespace Medical.GUI
         public event Action<Element> MoveElementDown;
         public event Action<Element> DeleteElement;
         
+        /// <summary>
+        /// This delegate will be used when changes should be applied to an element from an editor. Return true if changes are made.
+        /// </summary>
+        /// <param name="element">The element that will be changed.</param>
+        /// <param name="editor">The editor that edited the element.</param>
+        /// <param name="component">The Wysiwyg editor component should be updated.</param>
+        /// <returns></returns>
         public delegate bool ApplyChangesDelegate(Element element, RmlElementEditor editor, RmlWysiwygComponent component);
         public ApplyChangesDelegate applyChangesCb;
+        private bool allowChanges;
 
         private Element element;
         private TabControl tabs;
@@ -60,7 +68,7 @@ namespace Medical.GUI
             Button delete = (Button)widget.findWidget("Delete");
             delete.MouseButtonClick += new MyGUIEvent(delete_MouseButtonClick);
 
-            ApplyChanges = true;
+            allowChanges = true;
         }
 
         public override void Dispose()
@@ -73,9 +81,14 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        /// <summary>
+        /// Apply the changes this editor has to the element. Returns true if changes have been made and the document needs reloading.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns>True if changes are made.</returns>
         public bool applyChanges(RmlWysiwygComponent component)
         {
-            if (applyChangesCb != null)
+            if (allowChanges && applyChangesCb != null)
             {
                 return applyChangesCb.Invoke(element, this, component);
             }
@@ -93,9 +106,13 @@ namespace Medical.GUI
             editorComponents.Add(editorComponent);
         }
 
-        public String UndoRml { get; set; }
+        public void cancelAndHide()
+        {
+            allowChanges = false;
+            this.hide();
+        }
 
-        public bool ApplyChanges { get; set; }
+        public String UndoRml { get; set; }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -104,8 +121,7 @@ namespace Medical.GUI
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            ApplyChanges = false;
-            this.hide();
+            cancelAndHide();
         }
 
         void delete_MouseButtonClick(Widget source, EventArgs e)
