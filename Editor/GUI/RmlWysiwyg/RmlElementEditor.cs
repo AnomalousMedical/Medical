@@ -15,35 +15,30 @@ namespace Medical.GUI
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static RmlElementEditor openTextEditor(MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, Element element, int left, int top)
+        public static RmlElementEditor openTextEditor(Element element, int left, int top)
         {
-            RmlElementEditor textEditor = new RmlElementEditor(uiCallback, browserProvider, element);
-            textEditor.show(left, top);
-            textEditor.Hidden += (source, e) =>
+            RmlElementEditor editor = new RmlElementEditor(element);
+            editor.show(left, top);
+            editor.Hidden += (source, e) =>
             {
                 ((RmlElementEditor)source).Dispose();
             };
-            return textEditor;
+            return editor;
         }
 
         public event Action<Element> MoveElementUp;
         public event Action<Element> MoveElementDown;
         public event Action<Element> DeleteElement;
 
-        private ScrollView propertiesScroll;
-        private ScrollablePropertiesForm propertiesForm;
         private Element element;
         private TabControl tabs;
 
-        protected RmlElementEditor(MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, Element element)
+        protected RmlElementEditor(Element element)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
 
             tabs = (TabControl)widget.findWidget("Tabs");
-
-            propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
-            propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
 
             Button applyButton = (Button)widget.findWidget("ApplyButton");
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
@@ -60,46 +55,11 @@ namespace Medical.GUI
             Button delete = (Button)widget.findWidget("Delete");
             delete.MouseButtonClick += new MyGUIEvent(delete_MouseButtonClick);
 
-            //Build edit interface
-            EditInterface editInterface = new EditInterface(element.TagName);
-            int index = 0;
-            String name = null;
-            String value = null;
-            while (element.IterateAttributes(ref index, ref name, ref value))
-            {
-                switch (name.ToLowerInvariant())
-                {
-                    case "onclick":
-                        editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
-                            {
-                                return browserProvider.createActionBrowser();
-                            }));
-                        break;
-                    case "src":
-                        if (element.TagName == "img")
-                        {
-                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
-                            {
-                                return browserProvider.createFileBrowser(new String[]{ "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp"}, "Images", "/");
-                            }));
-                        }
-                        else
-                        {
-                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element));
-                        }
-                        break;
-                    default:
-                        editInterface.addEditableProperty(new RmlEditableProperty(name, value, element));
-                        break;
-                }
-            }
-            EditInterface = editInterface;
             ApplyChanges = true;
         }
 
         public override void Dispose()
         {
-            propertiesForm.Dispose();
             base.Dispose();
         }
 
@@ -107,18 +67,6 @@ namespace Medical.GUI
         {
             TabItem tab = tabs.addItem(editorComponent.Name);
             editorComponent.attachToParent(this, tab);
-        }
-
-        public EditInterface EditInterface
-        {
-            get
-            {
-                return propertiesForm.EditInterface;
-            }
-            set
-            {
-                propertiesForm.EditInterface = value;
-            }
         }
 
         public String UndoRml { get; set; }
