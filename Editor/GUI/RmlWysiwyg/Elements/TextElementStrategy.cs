@@ -1,4 +1,5 @@
 ﻿using libRocketPlugin;
+using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
             RmlElementEditor editor = RmlElementEditor.openTextEditor(uiCallback, browserProvider, element, (int)(element.AbsoluteLeft + element.ClientWidth) + left, (int)element.AbsoluteTop + top);
+            editor.addElementEditor(new ElementTextEditor() { Text = element.InnerRml });
             return editor;
         }
 
@@ -29,16 +31,17 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         /// <returns></returns>
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            String text = editor.Text;
-            if (String.IsNullOrEmpty(text))
-            {
-                component.deleteElement(element);
-            }
-            else
-            {
-                element.InnerRml = editor.Text;
-            }
-            return true;
+            //String text = editor.Text;
+            //if (String.IsNullOrEmpty(text))
+            //{
+            //    component.deleteElement(element);
+            //}
+            //else
+            //{
+            //    element.InnerRml = editor.Text;
+            //}
+            //return true;
+            return false;
         }
     }
 }

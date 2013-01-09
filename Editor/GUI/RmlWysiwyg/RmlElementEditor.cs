@@ -30,20 +30,17 @@ namespace Medical.GUI
         public event Action<Element> MoveElementDown;
         public event Action<Element> DeleteElement;
 
-        private EditBox text;
         private ScrollView propertiesScroll;
         private ScrollablePropertiesForm propertiesForm;
         private Element element;
+        private TabControl tabs;
 
         protected RmlElementEditor(MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, Element element)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
 
-            text = (EditBox)widget.findWidget("Text");
-            Text = element.InnerRml;
-            text.KeyButtonReleased += new MyGUIEvent(text_KeyButtonReleased);
-            InputManager.Instance.setKeyFocusWidget(text);
+            tabs = (TabControl)widget.findWidget("Tabs");
 
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
             propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
@@ -81,8 +78,6 @@ namespace Medical.GUI
                     case "src":
                         if (element.TagName == "img")
                         {
-                            TabControl tabs = (TabControl)widget.findWidget("Tabs");
-                            tabs.IndexSelected = 1;
                             editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
                             {
                                 return browserProvider.createFileBrowser(new String[]{ "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp"}, "Images", "/");
@@ -108,16 +103,10 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public String Text
+        public void addElementEditor(ElementEditorComponent editorComponent)
         {
-            get
-            {
-                return text.OnlyText;
-            }
-            set
-            {
-                text.OnlyText = value.Replace("\r", "");            
-            }
+            TabItem tab = tabs.addItem(editorComponent.Name);
+            editorComponent.attachToParent(this, tab);
         }
 
         public EditInterface EditInterface
@@ -129,30 +118,6 @@ namespace Medical.GUI
             set
             {
                 propertiesForm.EditInterface = value;
-            }
-        }
-
-        public uint MaxLength
-        {
-            get
-            {
-                return text.MaxTextLength;
-            }
-            set
-            {
-                text.MaxTextLength = value;
-            }
-        }
-
-        public bool WordWrap
-        {
-            get
-            {
-                return text.EditWordWrap;
-            }
-            set
-            {
-                text.EditWordWrap = value;
             }
         }
 
@@ -169,15 +134,6 @@ namespace Medical.GUI
         {
             ApplyChanges = false;
             this.hide();
-        }
-
-        void text_KeyButtonReleased(Widget source, EventArgs e)
-        {
-            KeyEventArgs ke = (KeyEventArgs)e;
-            if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_RETURN && InputManager.Instance.isControlPressed())
-            {
-                this.hide();
-            }
         }
 
         void delete_MouseButtonClick(Widget source, EventArgs e)

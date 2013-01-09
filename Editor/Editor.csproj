@@ -82,6 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GUI\RmlWysiwyg\DraggingElementManager.cs" />
+    <Compile Include="GUI\RmlWysiwyg\ElementEditorComponent.cs" />
+    <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategyManager.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\TextElementStrategy.cs" />
@@ -258,6 +260,7 @@
     <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
+    <EmbeddedResource Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.layout" />
     <EmbeddedResource Include="GUI\RmlWysiwyg\RmlElementEditor.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
