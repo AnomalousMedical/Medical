@@ -16,6 +16,8 @@ namespace Medical.GUI
         private Element element;
         private CreateBrowser browserBuildCallback;
 
+        public event Action<RmlEditableProperty> ValueChanged;
+
         public RmlEditableProperty(String name, String value, Element element, CreateBrowser browserBuildCallback = null)
         {
             this.name = name;
@@ -95,6 +97,7 @@ namespace Medical.GUI
                     element.SetAttribute(name, this.value);
                     break;
             }
+            fireValueChanged();
         }
 
         public void setValueStr(int column, string value)
@@ -109,6 +112,7 @@ namespace Medical.GUI
                     element.SetAttribute(name, this.value);
                     break;
             }
+            fireValueChanged();
         }
 
         public String ElementDocumentSourcePath
@@ -116,6 +120,14 @@ namespace Medical.GUI
             get
             {
                 return element.OwnerDocument.SourceURL;
+            }
+        }
+
+        private void fireValueChanged()
+        {
+            if (ValueChanged != null)
+            {
+                ValueChanged.Invoke(this);
             }
         }
     }

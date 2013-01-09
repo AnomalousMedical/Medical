@@ -30,5 +30,15 @@ namespace Medical.GUI
         }
 
         public String Name { get; set; }
+
+        /// <summary>
+        /// By default the editors will not save their changes, you must call this function 
+        /// from one of the editors when changes are made or they will not appear on the 
+        /// final document when the editor is closed.
+        /// </summary>
+        protected void fireChangesMade()
+        {
+            parentEditor._changesMade();
+        }
     }
 }

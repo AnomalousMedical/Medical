@@ -26,31 +26,37 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             String value = null;
             while (element.IterateAttributes(ref index, ref name, ref value))
             {
+                RmlEditableProperty property;
                 switch (name.ToLowerInvariant())
                 {
                     case "onclick":
-                        editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
+                        property = new RmlEditableProperty(name, value, element, callback =>
                         {
                             return browserProvider.createActionBrowser();
-                        }));
+                        });
                         break;
                     case "src":
                         if (element.TagName == "img")
                         {
-                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element, callback =>
+                            property = new RmlEditableProperty(name, value, element, callback =>
                             {
                                 return browserProvider.createFileBrowser(new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Images", "/");
-                            }));
+                            });
                         }
                         else
                         {
-                            editInterface.addEditableProperty(new RmlEditableProperty(name, value, element));
+                            property = new RmlEditableProperty(name, value, element);
                         }
                         break;
                     default:
-                        editInterface.addEditableProperty(new RmlEditableProperty(name, value, element));
+                        property = new RmlEditableProperty(name, value, element);
                         break;
                 }
+                property.ValueChanged += sender =>
+                    {
+                        fireChangesMade();
+                    };
+                editInterface.addEditableProperty(property);
             }
             propertiesForm.EditInterface = editInterface;
         }

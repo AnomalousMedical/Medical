@@ -68,7 +68,7 @@ namespace Medical.GUI
             Button delete = (Button)widget.findWidget("Delete");
             delete.MouseButtonClick += new MyGUIEvent(delete_MouseButtonClick);
 
-            allowChanges = true;
+            allowChanges = false;
         }
 
         public override void Dispose()
@@ -113,6 +113,11 @@ namespace Medical.GUI
         }
 
         public String UndoRml { get; set; }
+
+        internal void _changesMade()
+        {
+            allowChanges = true;
+        }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {

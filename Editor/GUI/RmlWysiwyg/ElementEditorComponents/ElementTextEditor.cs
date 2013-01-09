@@ -33,7 +33,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             {
                 return text.OnlyText;
             }
-            set
+            private set
             {
                 text.OnlyText = value.Replace("\r", "");
             }
@@ -41,6 +41,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         void text_KeyButtonReleased(Widget source, EventArgs e)
         {
+            this.fireChangesMade();
             KeyEventArgs ke = (KeyEventArgs)e;
             if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_RETURN && InputManager.Instance.isControlPressed())
             {
