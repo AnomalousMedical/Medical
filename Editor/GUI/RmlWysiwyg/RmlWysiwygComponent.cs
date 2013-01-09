@@ -147,6 +147,7 @@ namespace Medical.GUI
             }
             else if(allowEdit)
             {
+                previewElement.hidePreviewElement();
                 String undoRml = UnformattedRml;
                 insertRmlIntoDocument(rml);
                 updateUndoStatus(undoRml);
@@ -161,6 +162,7 @@ namespace Medical.GUI
         {
             if (allowEdit)
             {
+                previewElement.hidePreviewElement();
                 String undoRml = UnformattedRml;
                 insertRmlIntoDocument(rml);
                 updateUndoStatus(undoRml);
@@ -528,16 +530,17 @@ namespace Medical.GUI
                 return; //Return here to prevent more execution
             }
 
+            editor.UndoRml = UnformattedRml;
             //Everything is good so setup.
             editor.Hiding += (src, evt) =>
             {
                 if (editor.ApplyChanges && !disposed)
                 {
-                    String undoRml = UnformattedRml;
                     if (elementStrategyManager[element].applyChanges(element, editor, this))
                     {
                         rmlModified();
-                        updateUndoStatus(undoRml, true);
+                        updateUndoStatus(editor.UndoRml, true);
+                        editor.UndoRml = UnformattedRml;
                     }
                 }
                 if (currentEditor == editor)
@@ -553,13 +556,13 @@ namespace Medical.GUI
                     Element parent = upElement.ParentNode;
                     if (parent != null)
                     {
-                        String undoRml = UnformattedRml;
                         upElement.addReference();
                         parent.RemoveChild(upElement);
                         parent.InsertBefore(upElement, previousSibling);
                         upElement.removeReference();
                         rmlModified();
-                        updateUndoStatus(undoRml);
+                        updateUndoStatus(editor.UndoRml);
+                        editor.UndoRml = UnformattedRml;
                     }
                 }
             };
@@ -571,8 +574,6 @@ namespace Medical.GUI
                     Element nextSibling = downElement.NextSibling;
                     if (nextSibling != null)
                     {
-                        String undoRml = UnformattedRml;
-
                         downElement.addReference();
                         parent.RemoveChild(downElement);
                         nextSibling = nextSibling.NextSibling;
@@ -587,7 +588,8 @@ namespace Medical.GUI
                         downElement.removeReference();
 
                         rmlModified();
-                        updateUndoStatus(undoRml);
+                        updateUndoStatus(editor.UndoRml);
+                        editor.UndoRml = UnformattedRml;
                     }
                 }
             };
@@ -596,8 +598,6 @@ namespace Medical.GUI
                 Element parent = deleteElement.ParentNode;
                 if (parent != null)
                 {
-                    String undoRml = UnformattedRml;
-
                     Element nextSelectionElement = deleteElement.NextSibling;
                     if (nextSelectionElement == null)
                     {
@@ -606,7 +606,8 @@ namespace Medical.GUI
 
                     parent.RemoveChild(deleteElement);
                     rmlModified();
-                    updateUndoStatus(undoRml);
+                    updateUndoStatus(editor.UndoRml);
+                    editor.UndoRml = UnformattedRml;
 
                     if (nextSelectionElement != null)
                     {

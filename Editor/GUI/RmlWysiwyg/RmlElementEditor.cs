@@ -156,6 +156,8 @@ namespace Medical.GUI
             }
         }
 
+        public String UndoRml { get; set; }
+
         public bool ApplyChanges { get; set; }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
