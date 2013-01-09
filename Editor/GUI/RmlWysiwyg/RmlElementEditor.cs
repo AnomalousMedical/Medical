@@ -35,6 +35,7 @@ namespace Medical.GUI
 
         private Element element;
         private TabControl tabs;
+        private List<ElementEditorComponent> editorComponents = new List<ElementEditorComponent>();
 
         protected RmlElementEditor(Element element, ApplyChangesDelegate applyChangesCb)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
@@ -64,6 +65,11 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            foreach (ElementEditorComponent component in editorComponents)
+            {
+                component.Dispose();
+            }
+            editorComponents.Clear();
             base.Dispose();
         }
 
@@ -76,10 +82,15 @@ namespace Medical.GUI
             return false;
         }
 
+        /// <summary>
+        /// Add an element editor to this editor, this class will take owenership of the object and dispose it for you.
+        /// </summary>
+        /// <param name="editorComponent"></param>
         public void addElementEditor(ElementEditorComponent editorComponent)
         {
             TabItem tab = tabs.addItem(editorComponent.Name);
             editorComponent.attachToParent(this, tab);
+            editorComponents.Add(editorComponent);
         }
 
         public String UndoRml { get; set; }

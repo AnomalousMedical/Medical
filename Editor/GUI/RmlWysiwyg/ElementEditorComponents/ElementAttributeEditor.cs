@@ -60,5 +60,11 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             propertiesForm.Dispose();
             base.Dispose();
         }
+
+        public override void attachToParent(RmlElementEditor parentEditor, Widget parent)
+        {
+            base.attachToParent(parentEditor, parent);
+            propertiesForm.layout();
+        }
     }
 }
