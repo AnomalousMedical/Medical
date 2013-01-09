@@ -15,9 +15,9 @@ namespace Medical.GUI
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static RmlElementEditor openTextEditor(Element element, int left, int top)
+        public static RmlElementEditor openTextEditor(Element element, int left, int top, ApplyChangesDelegate applyChangesCb)
         {
-            RmlElementEditor editor = new RmlElementEditor(element);
+            RmlElementEditor editor = new RmlElementEditor(element, applyChangesCb);
             editor.show(left, top);
             editor.Hidden += (source, e) =>
             {
@@ -29,14 +29,18 @@ namespace Medical.GUI
         public event Action<Element> MoveElementUp;
         public event Action<Element> MoveElementDown;
         public event Action<Element> DeleteElement;
+        
+        public delegate bool ApplyChangesDelegate(Element element, RmlElementEditor editor, RmlWysiwygComponent component);
+        public ApplyChangesDelegate applyChangesCb;
 
         private Element element;
         private TabControl tabs;
 
-        protected RmlElementEditor(Element element)
+        protected RmlElementEditor(Element element, ApplyChangesDelegate applyChangesCb)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
+            this.applyChangesCb = applyChangesCb;
 
             tabs = (TabControl)widget.findWidget("Tabs");
 
@@ -61,6 +65,15 @@ namespace Medical.GUI
         public override void Dispose()
         {
             base.Dispose();
+        }
+
+        public bool applyChanges(RmlWysiwygComponent component)
+        {
+            if (applyChangesCb != null)
+            {
+                return applyChangesCb.Invoke(element, this, component);
+            }
+            return false;
         }
 
         public void addElementEditor(ElementEditorComponent editorComponent)

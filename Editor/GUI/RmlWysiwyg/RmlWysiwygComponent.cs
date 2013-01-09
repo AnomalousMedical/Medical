@@ -536,7 +536,7 @@ namespace Medical.GUI
             {
                 if (editor.ApplyChanges && !disposed)
                 {
-                    if (elementStrategyManager[element].applyChanges(element, editor, this))
+                    if (editor.applyChanges(this))
                     {
                         rmlModified();
                         updateUndoStatus(editor.UndoRml, true);

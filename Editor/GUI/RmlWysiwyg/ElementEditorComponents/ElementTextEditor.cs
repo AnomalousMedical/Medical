@@ -12,11 +12,12 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
     {
         private EditBox text;
 
-        public ElementTextEditor()
+        public ElementTextEditor(String startingText)
             : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementTextEditor.layout", "Text")
         {
             text = (EditBox)widget;
             InputManager.Instance.setKeyFocusWidget(text);
+            Text = startingText;
         }
 
         public override void attachToParent(RmlElementEditor parentEditor, Widget parent)

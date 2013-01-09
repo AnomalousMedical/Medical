@@ -25,17 +25,5 @@ namespace Medical.GUI
         {
             return null;
         }
-
-        /// <summary>
-        /// Apply the changes from an editor to an element. Return true if changes are made.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="editor"></param>
-        /// <param name="component"></param>
-        /// <returns></returns>
-        public virtual bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
-        {
-            return false;
-        }
     }
 }

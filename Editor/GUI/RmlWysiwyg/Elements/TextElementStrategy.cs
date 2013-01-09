@@ -17,32 +17,25 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            RmlElementEditor editor = RmlElementEditor.openTextEditor(element, (int)(element.AbsoluteLeft + element.ClientWidth) + left, (int)element.AbsoluteTop + top);
-            editor.addElementEditor(new ElementTextEditor() { Text = element.InnerRml });
-            editor.addElementEditor(new ElementAttributeEditor(element, uiCallback, browserProvider));
+            ElementTextEditor textEditor = new ElementTextEditor(element.InnerRml);
+            ElementAttributeEditor attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
+            RmlElementEditor editor = RmlElementEditor.openTextEditor(element, (int)(element.AbsoluteLeft + element.ClientWidth) + left, (int)element.AbsoluteTop + top, 
+                (updateElement, elementEditor, component) =>
+                {
+                    String text = textEditor.Text;
+                    if (String.IsNullOrEmpty(text))
+                    {
+                        component.deleteElement(element);
+                    }
+                    else
+                    {
+                        element.InnerRml = textEditor.Text;
+                    }
+                    return true;
+                });
+            editor.addElementEditor(textEditor);
+            editor.addElementEditor(attributeEditor);
             return editor;
-        }
-
-        /// <summary>
-        /// Apply the changes from an editor to an element. Return true if changes are made.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="editor"></param>
-        /// <param name="component"></param>
-        /// <returns></returns>
-        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
-        {
-            //String text = editor.Text;
-            //if (String.IsNullOrEmpty(text))
-            //{
-            //    component.deleteElement(element);
-            //}
-            //else
-            //{
-            //    element.InnerRml = editor.Text;
-            //}
-            //return true;
-            return false;
         }
     }
 }
