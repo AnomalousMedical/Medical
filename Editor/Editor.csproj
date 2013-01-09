@@ -87,6 +87,7 @@
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategyManager.cs" />
+    <Compile Include="GUI\RmlWysiwyg\Elements\InputStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\TextElementStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ImageStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\WysiwygDragDropItem.cs" />

@@ -27,7 +27,7 @@ namespace Medical.GUI
             elementStrategyManager.add(new TextElementStrategy("a"));
             elementStrategyManager.add(new ImageStrategy("img"));
             //Controls
-            elementStrategyManager.add(new ElementStrategy("input"));
+            elementStrategyManager.add(new InputStrategy("input"));
         }
 
         public event Action<RmlWysiwygComponent> RmlEdited;
