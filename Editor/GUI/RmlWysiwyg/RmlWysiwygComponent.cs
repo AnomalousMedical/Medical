@@ -477,6 +477,7 @@ namespace Medical.GUI
 
         private void showRmlElementEditor(Element element, ElementStrategy strategy)
         {
+            cancelAndHideEditor();
             RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, rocketWidget.AbsoluteLeft, rocketWidget.AbsoluteTop);
             if (editor == null)
             {
@@ -487,17 +488,20 @@ namespace Medical.GUI
 
             editor.UndoRml = UnformattedRml;
             //Everything is good so setup.
-            editor.Hiding += (src, evt) =>
+            editor.Hidden += (src, arg) =>
+            {
+                if (currentEditor == editor)
+                {
+                    currentEditor = null;
+                }
+            };
+            editor.ApplyChanges += (applyElement) =>
             {
                 if (!disposed && editor.applyChanges(this))
                 {
                     rmlModified();
                     updateUndoStatus(editor.UndoRml, true);
                     editor.UndoRml = UnformattedRml;
-                }
-                if (currentEditor == editor)
-                {
-                    currentEditor = null;
                 }
             };
             editor.MoveElementUp += upElement =>

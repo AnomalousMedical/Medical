@@ -161,7 +161,7 @@ namespace Medical.GUI
 
             this.Showing += new EventHandler(OpenPatientDialog_Showing);
             this.Shown += new EventHandler(OpenPatientDialog_Shown);
-            this.Hiding += new EventHandler(OpenPatientDialog_Hiding);
+            this.Hiding += OpenPatientDialog_Hiding;
             this.Hidden += new EventHandler(OpenPatientDialog_Hidden);
         }
 
@@ -208,11 +208,11 @@ namespace Medical.GUI
             searchBox.Caption = "";
         }
 
-        void OpenPatientDialog_Hiding(object sender, EventArgs e)
+        void OpenPatientDialog_Hiding(object sender, Engine.CancelEventArgs e)
         {
             if (fileListWorker.IsBusy && !bgThreadKnowsAboutCancel)
             {
-                ((Engine.CancelEventArgs)e).Cancel = true;
+                e.Cancel = true;
                 cancelPostAction = CancelPostAction.Close;
                 fileListWorker.CancelAsync();
             }

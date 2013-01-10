@@ -19,7 +19,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         {
             ElementTextEditor textEditor = new ElementTextEditor(element.InnerRml);
             ElementAttributeEditor attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
-            RmlElementEditor editor = RmlElementEditor.openTextEditor(element, (int)(element.AbsoluteLeft + element.ClientWidth) + left, (int)element.AbsoluteTop + top,
+            RmlElementEditor editor = RmlElementEditor.openEditor(element, (int)(element.AbsoluteLeft + element.ClientWidth) + left, (int)element.AbsoluteTop + top,
                 (updateElement, elementEditor, component) =>
                 {
                     String text = textEditor.Text;

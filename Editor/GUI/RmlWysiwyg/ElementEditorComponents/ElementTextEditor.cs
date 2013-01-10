@@ -45,7 +45,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             KeyEventArgs ke = (KeyEventArgs)e;
             if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_RETURN && InputManager.Instance.isControlPressed())
             {
-                parentEditor.hide();
+                fireApplyChanges();
             }
         }
     }

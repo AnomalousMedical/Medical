@@ -35,7 +35,7 @@ namespace Medical.GUI
             loadingWidget = widget.findWidget("Loading");
             loadingWidget.Visible = false;
 
-            this.Hiding += new EventHandler(ChooseSceneDialog_Hiding);
+            this.Hiding += ChooseSceneDialog_Hiding;
             this.Showing += new EventHandler(ChooseSceneDialog_Showing);
         }
 
@@ -127,7 +127,7 @@ namespace Medical.GUI
             loadingWidget.Visible = false;
         }
 
-        void ChooseSceneDialog_Hiding(object sender, EventArgs e)
+        void ChooseSceneDialog_Hiding(object sender, CancelEventArgs e)
         {
             allowSceneChanges = false;
         }

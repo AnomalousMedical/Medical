@@ -52,7 +52,7 @@ namespace Medical.GUI
             {
                 if (Visible)
                 {
-                    this.Hiding += new EventHandler(NotificationGUI_Hiding);
+                    this.Hiding += NotificationGUI_Hiding;
                     this.Hidden += new EventHandler(NotificationGUI_Hidden);
                     this.hide();
                     allowClose = false;
@@ -84,7 +84,7 @@ namespace Medical.GUI
             }
         }
 
-        void NotificationGUI_Hiding(object sender, EventArgs e)
+        void NotificationGUI_Hiding(object sender, CancelEventArgs e)
         {
             notificationManager.notificationClosed(this);
         }

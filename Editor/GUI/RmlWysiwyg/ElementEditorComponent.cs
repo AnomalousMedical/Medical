@@ -10,7 +10,7 @@ namespace Medical.GUI
 {
     class ElementEditorComponent : Component
     {
-        protected RmlElementEditor parentEditor;
+        private RmlElementEditor parentEditor;
 
         public ElementEditorComponent(String layoutFile, String name)
             :base(layoutFile)
@@ -39,6 +39,11 @@ namespace Medical.GUI
         protected void fireChangesMade()
         {
             parentEditor._changesMade();
+        }
+
+        protected void fireApplyChanges()
+        {
+            parentEditor._applyChanges();
         }
     }
 }

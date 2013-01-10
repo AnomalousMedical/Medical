@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Engine.Editing;
 using libRocketPlugin;
 using Medical.Editor;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -15,7 +16,7 @@ namespace Medical.GUI
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static RmlElementEditor openTextEditor(Element element, int left, int top, ApplyChangesDelegate applyChangesCb)
+        public static RmlElementEditor openEditor(Element element, int left, int top, ApplyChangesDelegate applyChangesCb)
         {
             RmlElementEditor editor = new RmlElementEditor(element, applyChangesCb);
             editor.show(left, top);
@@ -29,6 +30,7 @@ namespace Medical.GUI
         public event Action<Element> MoveElementUp;
         public event Action<Element> MoveElementDown;
         public event Action<Element> DeleteElement;
+        public event Action<Element> ApplyChanges;
         
         /// <summary>
         /// This delegate will be used when changes should be applied to an element from an editor. Return true if changes are made.
@@ -39,7 +41,7 @@ namespace Medical.GUI
         /// <returns></returns>
         public delegate bool ApplyChangesDelegate(Element element, RmlElementEditor editor, RmlWysiwygComponent component);
         public ApplyChangesDelegate applyChangesCb;
-        private bool allowChanges;
+        private bool hasChanges;
 
         private Element element;
         private TabControl tabs;
@@ -50,6 +52,7 @@ namespace Medical.GUI
         {
             this.element = element;
             this.applyChangesCb = applyChangesCb;
+            this.Hiding += RmlElementEditor_Hiding;
 
             tabs = (TabControl)widget.findWidget("Tabs");
 
@@ -68,7 +71,7 @@ namespace Medical.GUI
             Button delete = (Button)widget.findWidget("Delete");
             delete.MouseButtonClick += new MyGUIEvent(delete_MouseButtonClick);
 
-            allowChanges = false;
+            hasChanges = false;
         }
 
         public override void Dispose()
@@ -88,7 +91,7 @@ namespace Medical.GUI
         /// <returns>True if changes are made.</returns>
         public bool applyChanges(RmlWysiwygComponent component)
         {
-            if (allowChanges && applyChangesCb != null)
+            if (hasChanges && applyChangesCb != null)
             {
                 return applyChangesCb.Invoke(element, this, component);
             }
@@ -108,7 +111,7 @@ namespace Medical.GUI
 
         public void cancelAndHide()
         {
-            allowChanges = false;
+            hasChanges = false;
             this.hide();
         }
 
@@ -116,12 +119,20 @@ namespace Medical.GUI
 
         internal void _changesMade()
         {
-            allowChanges = true;
+            hasChanges = true;
+        }
+
+        internal void _applyChanges()
+        {
+            if (ApplyChanges != null)
+            {
+                ApplyChanges.Invoke(element);
+            }
         }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.hide();
+            _applyChanges();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
@@ -152,6 +163,11 @@ namespace Medical.GUI
             {
                 MoveElementUp.Invoke(element);
             }
+        }
+
+        void RmlElementEditor_Hiding(object sender, CancelEventArgs e)
+        {
+            e.Cancel = hasChanges;
         }
     }
 }
