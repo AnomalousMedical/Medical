@@ -47,7 +47,7 @@ namespace Medical.GUI
         private PreviewElement previewElement = new PreviewElement();
         private DraggingElementManager draggingElementManager;
         private bool lastInsertBefore = false;
-        private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(50);
+        private UndoRedoBuffer undoBuffer;
 
         private AnomalousMvcContext context;
 
@@ -57,6 +57,7 @@ namespace Medical.GUI
             this.context = context;
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
+            this.undoBuffer = view.UndoBuffer;
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
@@ -291,22 +292,12 @@ namespace Medical.GUI
             rmlModified();
         }
 
-        public void undo()
+        public void cancelAndHideEditor()
         {
             if (currentEditor != null)
             {
                 currentEditor.cancelAndHide();
             }
-            undoBuffer.undo();
-        }
-
-        public void redo()
-        {
-            if (currentEditor != null)
-            {
-                currentEditor.cancelAndHide();
-            }
-            undoBuffer.execute();
         }
 
         public String CurrentRml
@@ -636,6 +627,8 @@ namespace Medical.GUI
 
         private void setDocumentRml(String rml)
         {
+            cancelAndHideEditor();
+
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
             selectedElementManager.clearSelectedAndHighlightedElement();

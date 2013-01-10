@@ -8,6 +8,7 @@ using Engine.Reflection;
 using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
+using Engine.Attributes;
 
 namespace Medical.GUI
 {
@@ -15,17 +16,29 @@ namespace Medical.GUI
     {
         public event Action<RmlWysiwygView, RmlWysiwygComponent> ComponentCreated;
 
-        public RmlWysiwygView(String name, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider)
+        [DoNotSave]
+        private UndoRedoBuffer undoBuffer;
+
+        public RmlWysiwygView(String name, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, UndoRedoBuffer undoBuffer)
             :base(name)
         {
             RmlFile = name + ".rml";
 
             this.UICallback = uiCallback;
             this.BrowserProvider = browserProvider;
+            this.undoBuffer = undoBuffer;
         }
 
         [EditableFile("*.rml", "Rml Files")]
         public String RmlFile { get; set; }
+
+        public UndoRedoBuffer UndoBuffer
+        {
+            get
+            {
+                return undoBuffer;
+            }
+        }
 
         public MedicalUICallback UICallback { get; private set; }
 

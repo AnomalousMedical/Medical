@@ -32,12 +32,15 @@ namespace Medical
         private EventContext eventContext;
         private RmlTypeController rmlTypeController;
         private EditorUICallback uiCallback;
+        private UndoRedoBuffer undoBuffer;
 
         public RmlEditorContext(String file, RmlTypeController rmlTypeController, EditorUICallback uiCallback, AnomalousMvcContext editingMvcContext)
         {
             this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
             this.uiCallback = uiCallback;
+
+            undoBuffer = new UndoRedoBuffer(50);
 
             rmlTypeController.loadText(currentFile);
 
@@ -58,7 +61,7 @@ namespace Medical
             };
             mvcContext.Views.add(textEditorView);
             
-            RmlWysiwygView rmlView = new RmlWysiwygView("RmlView", uiCallback, uiCallback);
+            RmlWysiwygView rmlView = new RmlWysiwygView("RmlView", uiCallback, uiCallback, undoBuffer);
             rmlView.ViewLocation = ViewLocations.Left;
             rmlView.IsWindow = true;
             rmlView.RmlFile = file;
@@ -209,10 +212,7 @@ namespace Medical
             undoEvent.addButton(KeyboardButtonCode.KC_Z);
             undoEvent.FirstFrameUpEvent += eventManager =>
             {
-                if (rmlComponent != null)
-                {
-                    rmlComponent.undo();
-                }
+                undoBuffer.undo();
             };
             eventContext.addEvent(undoEvent);
 
@@ -221,10 +221,7 @@ namespace Medical
             redoEvent.addButton(KeyboardButtonCode.KC_Y);
             redoEvent.FirstFrameUpEvent += eventManager =>
             {
-                if (rmlComponent != null)
-                {
-                    rmlComponent.redo();
-                }
+                undoBuffer.execute();
             };
             eventContext.addEvent(redoEvent);
 
