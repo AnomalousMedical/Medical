@@ -55,6 +55,12 @@ namespace Medical.GUI
             text.insertText(insert, text.TextCursor);
         }
 
+        public void resetTextPosition()
+        {
+            text.HScrollPosition = 0;
+            text.VScrollPosition = 0;
+        }
+
         public String Text
         {
             get
@@ -63,11 +69,15 @@ namespace Medical.GUI
             }
             set
             {
+                uint hScroll = text.HScrollPosition;
+                uint vScroll = text.VScrollPosition;
                 StringBuilder cleanedValue = cleanStringForMyGUI(value);
                 colorString(cleanedValue);
                 allowColorString = false;
                 text.Caption = cleanedValue.ToString();
                 allowColorString = true;
+                text.HScrollPosition = hScroll;
+                text.VScrollPosition = vScroll;
             }
         }
 
