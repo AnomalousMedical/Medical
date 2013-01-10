@@ -72,19 +72,7 @@ namespace Medical.GUI
             selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
             draggingElementManager = new DraggingElementManager(this);
 
-            if (view.RmlFile != null)
-            {
-                using (ElementDocument document = rocketWidget.Context.LoadDocument(view.RmlFile))
-                {
-                    if (document != null)
-                    {
-                        saveDocumentStartAndEndFile(view.RmlFile);
-                        document.Show();
-                        rocketWidget.removeFocus();
-                        rocketWidget.renderOnNextFrame();
-                    }
-                }
-            }
+            loadDocumentFile(view.RmlFile);
 
             view._fireComponentCreated(this);
         }
@@ -122,20 +110,7 @@ namespace Medical.GUI
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
             selectedElementManager.clearSelectedAndHighlightedElement();
-
-            if (documentName != null)
-            {
-                using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
-                {
-                    if (document != null)
-                    {
-                        saveDocumentStartAndEndFile(documentName);
-                        document.Show();
-                        rocketWidget.removeFocus();
-                        rocketWidget.renderOnNextFrame();
-                    }
-                }
-            }
+            loadDocumentFile(documentName);
         }
 
         public void insertRml(String rml, IntVector2 position)
@@ -416,14 +391,6 @@ namespace Medical.GUI
             }
         }
 
-        private void saveDocumentStartAndEndFile(String file)
-        {
-            using (StreamReader sr = new StreamReader(context.ResourceProvider.openFile(file)))
-            {
-                saveDocumentStartAndEnd(sr.ReadToEnd());
-            }
-        }
-
         private void saveDocumentStartAndEnd(String inputRml)
         {
             int bodyStart = inputRml.IndexOf("<body", StringComparison.InvariantCultureIgnoreCase);
@@ -625,10 +592,39 @@ namespace Medical.GUI
             return position.y - element.AbsoluteTop < element.OffsetHeight / 2;
         }
 
-        private void setDocumentRml(String rml)
+        internal void updateUndoStatus(String oldMarkup, bool check = false)
+        {
+            //This is a hacky way to check for changes (optionally) it should not be needed when the popup editor is overhauled.
+            //You can remove check and keep only the line in the if statement when you no longer need the check.
+            String currentMarkup = UnformattedRml;
+            if (!check || currentMarkup != oldMarkup)
+            {
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(undoRedoCallback, currentMarkup, undoRedoCallback, oldMarkup));
+            }
+        }
+
+        private void undoRedoCallback(String rml)
         {
             cancelAndHideEditor();
+            if (setDocumentRml(rml))
+            {
+                rmlModified();
+            }
+        }
 
+        private void loadDocumentFile(String file)
+        {
+            if (file != null)
+            {
+                using (StreamReader sr = new StreamReader(context.ResourceProvider.openFile(file)))
+                {
+                    setDocumentRml(sr.ReadToEnd());
+                }
+            }
+        }
+
+        private bool setDocumentRml(String rml)
+        {
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
             selectedElementManager.clearSelectedAndHighlightedElement();
@@ -643,21 +639,11 @@ namespace Medical.GUI
                         document.Show();
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
-                        rmlModified();
+                        return true;
                     }
                 }
             }
-        }
-
-        internal void updateUndoStatus(String oldMarkup, bool check = false)
-        {
-            //This is a hacky way to check for changes (optionally) it should not be needed when the popup editor is overhauled.
-            //You can remove check and keep only the line in the if statement when you no longer need the check.
-            String currentMarkup = UnformattedRml;
-            if (!check || currentMarkup != oldMarkup)
-            {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(setDocumentRml, currentMarkup, setDocumentRml, oldMarkup));
-            }
+            return false;
         }
     }
 }
