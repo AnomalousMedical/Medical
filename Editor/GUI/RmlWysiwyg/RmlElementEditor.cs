@@ -91,8 +91,9 @@ namespace Medical.GUI
         /// <returns>True if changes are made.</returns>
         public bool applyChanges(RmlWysiwygComponent component)
         {
-            if (hasChanges && applyChangesCb != null)
+            if (hasChanges)
             {
+                hasChanges = false;
                 return applyChangesCb.Invoke(element, this, component);
             }
             return false;
@@ -122,7 +123,7 @@ namespace Medical.GUI
             hasChanges = true;
         }
 
-        internal void _applyChanges()
+        internal void _fireApplyChanges()
         {
             if (ApplyChanges != null)
             {
@@ -132,7 +133,7 @@ namespace Medical.GUI
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            _applyChanges();
+            _fireApplyChanges();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)

@@ -43,7 +43,7 @@ namespace Medical.GUI
 
         protected void fireApplyChanges()
         {
-            parentEditor._applyChanges();
+            parentEditor._fireApplyChanges();
         }
     }
 }
