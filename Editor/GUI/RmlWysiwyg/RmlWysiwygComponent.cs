@@ -107,9 +107,6 @@ namespace Medical.GUI
 
         public void reloadDocument(String documentName)
         {
-            RocketGuiManager.clearAllCaches();
-            rocketWidget.Context.UnloadAllDocuments();
-            selectedElementManager.clearSelectedAndHighlightedElement();
             loadDocumentFile(documentName);
         }
 
@@ -625,6 +622,16 @@ namespace Medical.GUI
 
         private bool setDocumentRml(String rml)
         {
+            float scrollLeft = 0.0f;
+            float scrollTop = 0.0f;
+
+            Element topContentElement = TopContentElement;
+            if (topContentElement != null)
+            {
+                scrollLeft = topContentElement.ScrollLeft;
+                scrollTop = topContentElement.ScrollTop;
+            }
+
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
             selectedElementManager.clearSelectedAndHighlightedElement();
@@ -639,6 +646,14 @@ namespace Medical.GUI
                         document.Show();
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
+
+                        topContentElement = TopContentElement;
+                        if (topContentElement != null)
+                        {
+                            topContentElement.ScrollLeft = scrollLeft;
+                            topContentElement.ScrollTop = scrollTop;
+                        }
+
                         return true;
                     }
                 }
