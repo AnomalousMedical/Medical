@@ -478,7 +478,7 @@ namespace Medical.GUI
         private void showRmlElementEditor(Element element, ElementStrategy strategy)
         {
             cancelAndHideEditor();
-            RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, rocketWidget.AbsoluteLeft, rocketWidget.AbsoluteTop);
+            RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, widget.AbsoluteLeft + widget.Width, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
             if (editor == null)
             {
                 //The editor was null, which means editing is not supported so just clear the selection.
