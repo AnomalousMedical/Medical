@@ -24,6 +24,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
                 {
                     String text = textEditor.Text;
                     element.InnerRml = textEditor.Text;
+                    attributeEditor.applyToElement(element);
                     return true;
                 });
             editor.addElementEditor(textEditor);

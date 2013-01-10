@@ -5,7 +5,7 @@ using System.Text;
 using Engine.Editing;
 using libRocketPlugin;
 
-namespace Medical.GUI
+namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
     class RmlEditableProperty : EditableProperty
     {
@@ -13,16 +13,14 @@ namespace Medical.GUI
 
         private String name;
         private String value;
-        private Element element;
         private CreateBrowser browserBuildCallback;
 
         public event Action<RmlEditableProperty> ValueChanged;
 
-        public RmlEditableProperty(String name, String value, Element element, CreateBrowser browserBuildCallback = null)
+        public RmlEditableProperty(String name, String value, CreateBrowser browserBuildCallback = null)
         {
             this.name = name;
             this.value = value;
-            this.element = element;
             this.browserBuildCallback = browserBuildCallback;
         }
 
@@ -94,7 +92,6 @@ namespace Medical.GUI
                     break;
                 case 1:
                     this.value = value.ToString();
-                    element.SetAttribute(name, this.value);
                     break;
             }
             fireValueChanged();
@@ -109,17 +106,32 @@ namespace Medical.GUI
                     break;
                 case 1:
                     this.value = value;
-                    element.SetAttribute(name, this.value);
                     break;
             }
             fireValueChanged();
         }
 
-        public String ElementDocumentSourcePath
+        public String Name
         {
             get
             {
-                return element.OwnerDocument.SourceURL;
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+
+        public String Value
+        {
+            get
+            {
+                return value;
+            }
+            set
+            {
+                this.value = value;
             }
         }
 

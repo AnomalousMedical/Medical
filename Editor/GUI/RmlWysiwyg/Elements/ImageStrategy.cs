@@ -18,21 +18,19 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
+            ElementAttributeEditor attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openTextEditor(element, (int)(element.AbsoluteLeft + element.ClientWidth) + left, (int)element.AbsoluteTop + top,
                 (updateElement, elementEditor, component) =>
                 {
+                    attributeEditor.applyToElement(element);
                     String src = updateElement.GetAttributeString("src");
                     if (String.IsNullOrEmpty(src))
                     {
                         component.deleteElement(element);
                     }
-                    //if (!Core.GetFileInterface().Exists(src, element.OwnerDocument.SourceURL))
-                    //{
-                    //    element.SetAttribute("src", RmlWysiwygComponent.DefaultImage);
-                    //}
                     return true;
                 });
-            editor.addElementEditor(new ElementAttributeEditor(element, uiCallback, browserProvider));
+            editor.addElementEditor(attributeEditor);
             return editor;
         }
     }

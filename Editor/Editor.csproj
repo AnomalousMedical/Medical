@@ -195,7 +195,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\RmlWysiwyg\PreviewElement.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlEditableProperty.cs" />
+    <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\RmlEditableProperty.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlElementEditor.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygBrowserProvider.cs" />
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponent.cs" />

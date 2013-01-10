@@ -30,6 +30,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
                     else
                     {
                         element.InnerRml = textEditor.Text;
+                        attributeEditor.applyToElement(element);
                     }
                     return true;
                 });

@@ -13,24 +13,26 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
     {
         private ScrollView propertiesScroll;
         private ScrollablePropertiesForm propertiesForm;
+        private List<RmlEditableProperty> originalProperties;
 
         public ElementAttributeEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider)
             : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementAttributeEditor.layout", "Attributes")
         {
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
             propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
+            originalProperties = new List<RmlEditableProperty>(element.NumAttributes);
 
             EditInterface editInterface = new EditInterface(element.TagName);
             int index = 0;
-            String name = null;
-            String value = null;
-            while (element.IterateAttributes(ref index, ref name, ref value))
+            String name;
+            String value;
+            while (element.IterateAttributes(ref index, out name, out value))
             {
                 RmlEditableProperty property;
                 switch (name.ToLowerInvariant())
                 {
                     case "onclick":
-                        property = new RmlEditableProperty(name, value, element, callback =>
+                        property = new RmlEditableProperty(name, value, callback =>
                         {
                             return browserProvider.createActionBrowser();
                         });
@@ -38,18 +40,18 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                     case "src":
                         if (element.TagName == "img")
                         {
-                            property = new RmlEditableProperty(name, value, element, callback =>
+                            property = new RmlEditableProperty(name, value, callback =>
                             {
                                 return browserProvider.createFileBrowser(new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Images", "/");
                             });
                         }
                         else
                         {
-                            property = new RmlEditableProperty(name, value, element);
+                            property = new RmlEditableProperty(name, value);
                         }
                         break;
                     default:
-                        property = new RmlEditableProperty(name, value, element);
+                        property = new RmlEditableProperty(name, value);
                         break;
                 }
                 property.ValueChanged += sender =>
@@ -57,6 +59,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                         fireChangesMade();
                     };
                 editInterface.addEditableProperty(property);
+                originalProperties.Add(property);
             }
             propertiesForm.EditInterface = editInterface;
         }
@@ -71,6 +74,14 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         {
             base.attachToParent(parentEditor, parent);
             propertiesForm.layout();
+        }
+
+        public void applyToElement(Element element)
+        {
+            foreach (RmlEditableProperty property in originalProperties)
+            {
+                element.SetAttribute(property.Name, property.Value);
+            }
         }
     }
 }
