@@ -41,13 +41,14 @@ namespace Medical.GUI
         private bool disposed = false;
         private MedicalUICallback uiCallback;
         private RmlWysiwygBrowserProvider browserProvider;
-        RmlElementEditor currentEditor = null;
+        private RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
         private PreviewElement previewElement = new PreviewElement();
         private DraggingElementManager draggingElementManager;
         private bool lastInsertBefore = false;
         private UndoRedoBuffer undoBuffer;
+        private String documentName;
 
         private AnomalousMvcContext context;
 
@@ -72,7 +73,8 @@ namespace Medical.GUI
             selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
             draggingElementManager = new DraggingElementManager(this);
 
-            loadDocumentFile(view.RmlFile);
+            documentName = view.RmlFile;
+            loadDocumentFile(documentName, false);
 
             view._fireComponentCreated(this);
         }
@@ -105,9 +107,9 @@ namespace Medical.GUI
             }
         }
 
-        public void reloadDocument(String documentName)
+        public void reloadDocument()
         {
-            loadDocumentFile(documentName);
+            loadDocumentFile(documentName, true);
         }
 
         public void insertRml(String rml, IntVector2 position)
@@ -603,33 +605,37 @@ namespace Medical.GUI
         private void undoRedoCallback(String rml)
         {
             cancelAndHideEditor();
-            if (setDocumentRml(rml))
+            if (setDocumentRml(rml, true))
             {
                 rmlModified();
             }
         }
 
-        private void loadDocumentFile(String file)
+        private void loadDocumentFile(String file, bool maintainScrollPosition)
         {
             if (file != null)
             {
                 using (StreamReader sr = new StreamReader(context.ResourceProvider.openFile(file)))
                 {
-                    setDocumentRml(sr.ReadToEnd());
+                    setDocumentRml(sr.ReadToEnd(), maintainScrollPosition);
                 }
             }
         }
 
-        private bool setDocumentRml(String rml)
+        private bool setDocumentRml(String rml, bool maintainScrollPosition)
         {
             float scrollLeft = 0.0f;
             float scrollTop = 0.0f;
+            Element topContentElement;
 
-            Element topContentElement = TopContentElement;
-            if (topContentElement != null)
+            if (maintainScrollPosition)
             {
-                scrollLeft = topContentElement.ScrollLeft;
-                scrollTop = topContentElement.ScrollTop;
+                topContentElement = TopContentElement;
+                if (topContentElement != null)
+                {
+                    scrollLeft = topContentElement.ScrollLeft;
+                    scrollTop = topContentElement.ScrollTop;
+                }
             }
 
             RocketGuiManager.clearAllCaches();
@@ -647,11 +653,14 @@ namespace Medical.GUI
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
 
-                        topContentElement = TopContentElement;
-                        if (topContentElement != null)
+                        if (maintainScrollPosition)
                         {
-                            topContentElement.ScrollLeft = scrollLeft;
-                            topContentElement.ScrollTop = scrollTop;
+                            topContentElement = TopContentElement;
+                            if (topContentElement != null)
+                            {
+                                topContentElement.ScrollLeft = scrollLeft;
+                                topContentElement.ScrollTop = scrollTop;
+                            }
                         }
 
                         return true;

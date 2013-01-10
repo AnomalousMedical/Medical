@@ -325,7 +325,7 @@ namespace Medical
             rmlTypeController.EditorController.saveAllCachedResources();
             if (rmlComponent != null)
             {
-                rmlComponent.reloadDocument(currentFile);
+                rmlComponent.reloadDocument();
             }
         }
 
@@ -338,7 +338,7 @@ namespace Medical
             rmlTypeController.saveFile(CurrentText, currentFile);
             if (rmlComponent != null)
             {
-                rmlComponent.reloadDocument(currentFile);
+                rmlComponent.reloadDocument();
             }
         }
     }
