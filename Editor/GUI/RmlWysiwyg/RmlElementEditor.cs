@@ -61,12 +61,6 @@ namespace Medical.GUI
 
             tabs = (TabControl)widget.findWidget("Tabs");
 
-            Button applyButton = (Button)widget.findWidget("ApplyButton");
-            applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
-
-            Button cancelButton = (Button)widget.findWidget("CancelButton");
-            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
-
             Button up = (Button)widget.findWidget("Up");
             up.MouseButtonClick += new MyGUIEvent(up_MouseButtonClick);
 
@@ -149,16 +143,6 @@ namespace Medical.GUI
             {
                 ChangesMade.Invoke(element);
             }
-        }
-
-        void applyButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            _fireApplyChanges();
-        }
-
-        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            cancelAndHide();
         }
 
         void delete_MouseButtonClick(Widget source, EventArgs e)

@@ -10,13 +10,6 @@
         <Widget type="Button" skin="Button" position="58 2 27 23" name="Delete">
             <Property key="Caption" value="Del"/>
         </Widget>
-        <Widget type="TabControl" skin="TabControl" position="0 27 385 308" align="Stretch" name="Tabs">
-        </Widget>
-        <Widget type="Button" skin="Button" position="4 337 83 25" name="ApplyButton">
-            <Property key="Caption" value="Save"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="90 337 83 25" name="CancelButton">
-            <Property key="Caption" value="Cancel"/>
-        </Widget>
+        <Widget type="TabControl" skin="TabControl" position="0 27 385 341" align="Stretch" name="Tabs"/>
     </Widget>
 </MyGUI>
