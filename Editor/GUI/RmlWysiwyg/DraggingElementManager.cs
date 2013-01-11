@@ -66,7 +66,7 @@ namespace Medical.GUI
                     if (dragElement != null)
                     {
                         IntVector2 localCoord = rmlComponent.localCoord(position);
-                        if (localCoord.x < 0 || localCoord.y < 0 || localCoord.x > dragElement.OffsetWidth || localCoord.y > dragElement.OffsetHeight)
+                        if (localCoord.x < dragElement.AbsoluteLeft || localCoord.y < dragElement.AbsoluteTop || localCoord.x > dragElement.OffsetWidth + dragElement.AbsoluteLeft || localCoord.y > dragElement.OffsetHeight + dragElement.AbsoluteTop)
                         {
                             insertRml = dragElement.ElementRml;
                             undoRml = rmlComponent.UnformattedRml;
