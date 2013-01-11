@@ -52,6 +52,7 @@ namespace Medical.Controller.AnomalousMvc
                 this.processViewChanges();
                 shutdownContext(contextManager.CurrentContext, true, false);
             }
+            viewHostManager.Dispose();
         }
 
         public bool isViewOpen(String name)

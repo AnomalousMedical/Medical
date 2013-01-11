@@ -18,7 +18,7 @@ namespace Medical.Controller.AnomalousMvc
         Floating,
     }
 
-    class ViewHostManager
+    class ViewHostManager : IDisposable
     {
         private GUIManager guiManager;
         private ViewHostFactory viewHostFactory;
@@ -40,11 +40,20 @@ namespace Medical.Controller.AnomalousMvc
 
         private List<KeyValuePair<View, AnomalousMvcContext>> queuedFloatingViews = new List<KeyValuePair<View, AnomalousMvcContext>>();
         private List<ViewHost> openFloatingViews = new List<ViewHost>();
+        private List<ViewHost> closingFloatingViews = new List<ViewHost>();
 
         public ViewHostManager(GUIManager guiManager, ViewHostFactory viewHostFactory)
         {
             this.guiManager = guiManager;
             this.viewHostFactory = viewHostFactory;
+        }
+
+        public void Dispose()
+        {
+            foreach (ViewHost viewHost in closingFloatingViews)
+            {
+                viewHost._animationCallback(null);
+            }
         }
 
         public void requestOpen(View view, AnomalousMvcContext context)
@@ -249,8 +258,10 @@ namespace Medical.Controller.AnomalousMvc
                     ThreadManager.invoke(new Action(() =>
                     {
                         host._animationCallback(null);
+                        closingFloatingViews.Remove(host);
                     }));
                     openFloatingViews.RemoveAt(i--);
+                    closingFloatingViews.Add(host);
                 }
             }
             foreach (KeyValuePair<View, AnomalousMvcContext> viewInfo in queuedFloatingViews)
