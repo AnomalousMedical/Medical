@@ -1,16 +1,21 @@
 ﻿using Engine;
 using libRocketPlugin;
+using Medical.Controller;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Timers;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
     class ElementTextEditor : ElementEditorComponent
     {
+        private const int UPDATE_DELAY = 500;
+
         private EditBox text;
+        private Timer keyTimer;
 
         public ElementTextEditor(String startingText)
             : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementTextEditor.layout", "Text")
@@ -18,6 +23,15 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             text = (EditBox)widget;
             InputManager.Instance.setKeyFocusWidget(text);
             Text = startingText;
+            keyTimer = new Timer(UPDATE_DELAY);
+            keyTimer.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
+            keyTimer.AutoReset = false;
+            keyTimer.Elapsed += keyTimer_Elapsed;
+        }
+
+        public override void Dispose()
+        {
+            keyTimer.Dispose();
         }
 
         public override void attachToParent(RmlElementEditor parentEditor, Widget parent)
@@ -47,6 +61,13 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             {
                 fireApplyChanges();
             }
+            keyTimer.Stop();
+            keyTimer.Start();
+        }
+
+        void keyTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            fireApplyChanges();
         }
     }
 }
