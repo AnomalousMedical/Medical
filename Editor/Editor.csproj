@@ -85,6 +85,7 @@
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponent.cs" />
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
+    <Compile Include="GUI\RmlWysiwyg\Elements\DivStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategy.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategyManager.cs" />
     <Compile Include="GUI\RmlWysiwyg\Elements\InputStrategy.cs" />
