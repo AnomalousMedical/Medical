@@ -30,7 +30,7 @@ namespace Medical.GUI
         public event Action<Element> MoveElementUp;
         public event Action<Element> MoveElementDown;
         public event Action<Element> DeleteElement;
-        public event Action<Element> ApplyChanges;
+        public event Action<Element> ChangesMade;
         
         /// <summary>
         /// This delegate will be used when changes should be applied to an element from an editor. Return true if changes are made.
@@ -41,6 +41,7 @@ namespace Medical.GUI
         /// <returns></returns>
         public delegate bool ApplyChangesDelegate(Element element, RmlElementEditor editor, RmlWysiwygComponent component);
         public ApplyChangesDelegate applyChangesCb;
+
         private bool hasChanges;
 
         private Element element;
@@ -125,9 +126,9 @@ namespace Medical.GUI
 
         internal void _fireApplyChanges()
         {
-            if (ApplyChanges != null)
+            if (ChangesMade != null)
             {
-                ApplyChanges.Invoke(element);
+                ChangesMade.Invoke(element);
             }
         }
 

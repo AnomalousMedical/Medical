@@ -495,7 +495,7 @@ namespace Medical.GUI
                     currentEditor = null;
                 }
             };
-            editor.ApplyChanges += (applyElement) =>
+            editor.ChangesMade += (applyElement) =>
             {
                 if (!disposed && editor.applyChanges(this))
                 {

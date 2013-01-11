@@ -77,12 +77,17 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             propertiesForm.layout();
         }
 
-        public void applyToElement(Element element)
+        public bool applyToElement(Element element)
         {
-            foreach (RmlEditableProperty property in originalProperties)
+            if (HasChanges)
             {
-                element.SetAttribute(property.Name, property.Value);
+                foreach (RmlEditableProperty property in originalProperties)
+                {
+                    element.SetAttribute(property.Name, property.Value);
+                }
+                return true;
             }
+            return false;
         }
     }
 }

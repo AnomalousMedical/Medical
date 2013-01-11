@@ -22,13 +22,14 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top,
                 (updateElement, elementEditor, component) =>
                 {
-                    attributeEditor.applyToElement(element);
+                    bool changed = attributeEditor.applyToElement(element);
                     String src = updateElement.GetAttributeString("src");
                     if (String.IsNullOrEmpty(src))
                     {
                         component.deleteElement(element);
+                        changed = true;
                     }
-                    return true;
+                    return changed;
                 });
             editor.addElementEditor(attributeEditor);
             return editor;

@@ -56,11 +56,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         void text_KeyButtonReleased(Widget source, EventArgs e)
         {
             this.fireChangesMade();
-            KeyEventArgs ke = (KeyEventArgs)e;
-            if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_RETURN && InputManager.Instance.isControlPressed())
-            {
-                fireApplyChanges();
-            }
             keyTimer.Stop();
             keyTimer.Start();
         }
