@@ -488,6 +488,15 @@ namespace Medical.GUI
 
             editor.UndoRml = UnformattedRml;
             //Everything is good so setup.
+            editor.Hiding += (src, arg) =>
+            {
+                if (!disposed && editor.deleteIfNeeded(this))
+                {
+                    rmlModified();
+                    updateUndoStatus(editor.UndoRml, true);
+                    editor.UndoRml = UnformattedRml;
+                }
+            };
             editor.Hidden += (src, arg) =>
             {
                 if (currentEditor == editor)

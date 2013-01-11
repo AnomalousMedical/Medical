@@ -10,6 +10,8 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 {
     class ImageStrategy : ElementStrategy
     {
+        ElementAttributeEditor attributeEditor;
+
         public ImageStrategy(String tag, String previewIconName = "Editor/ImageIcon")
             : base(tag, previewIconName, true)
         {
@@ -18,21 +20,26 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            ElementAttributeEditor attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
-            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top,
-                (updateElement, elementEditor, component) =>
-                {
-                    bool changed = attributeEditor.applyToElement(element);
-                    String src = updateElement.GetAttributeString("src");
-                    if (String.IsNullOrEmpty(src))
-                    {
-                        component.deleteElement(element);
-                        changed = true;
-                    }
-                    return changed;
-                });
+            attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
+            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(attributeEditor);
             return editor;
+        }
+
+        private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        {
+            return attributeEditor.applyToElement(element);
+        }
+
+        private bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        {
+            String src = element.GetAttributeString("src");
+            if (String.IsNullOrEmpty(src))
+            {
+                component.deleteElement(element);
+                return true;
+            }
+            return false;
         }
     }
 }

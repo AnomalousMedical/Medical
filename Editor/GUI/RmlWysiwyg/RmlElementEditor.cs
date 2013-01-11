@@ -13,12 +13,22 @@ namespace Medical.GUI
     class RmlElementEditor : PopupContainer
     {
         /// <summary>
+        /// This delegate will be used when changes should be applied to the document / element from the editor.
+        /// Return true if changes were made that need to be updated / recorded.
+        /// </summary>
+        /// <param name="element">The element that will be changed.</param>
+        /// <param name="editor">The editor that edited the element.</param>
+        /// <param name="component">The Wysiwyg editor component should be updated.</param>
+        /// <returns>Return true if changes were made that need to be updated / recorded.</returns>
+        public delegate bool ModifyDocumentDelegate(Element element, RmlElementEditor editor, RmlWysiwygComponent component);
+
+        /// <summary>
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static RmlElementEditor openEditor(Element element, int left, int top, ApplyChangesDelegate applyChangesCb)
+        public static RmlElementEditor openEditor(Element element, int left, int top, ModifyDocumentDelegate applyChangesCb, ModifyDocumentDelegate deleteElementCheckCb = null)
         {
-            RmlElementEditor editor = new RmlElementEditor(element, applyChangesCb);
+            RmlElementEditor editor = new RmlElementEditor(element, applyChangesCb, deleteElementCheckCb);
             editor.show(left, top);
             editor.Hidden += (source, e) =>
             {
@@ -32,15 +42,8 @@ namespace Medical.GUI
         public event Action<Element> DeleteElement;
         public event Action<Element> ChangesMade;
         
-        /// <summary>
-        /// This delegate will be used when changes should be applied to an element from an editor. Return true if changes are made.
-        /// </summary>
-        /// <param name="element">The element that will be changed.</param>
-        /// <param name="editor">The editor that edited the element.</param>
-        /// <param name="component">The Wysiwyg editor component should be updated.</param>
-        /// <returns></returns>
-        public delegate bool ApplyChangesDelegate(Element element, RmlElementEditor editor, RmlWysiwygComponent component);
-        public ApplyChangesDelegate applyChangesCb;
+        private ModifyDocumentDelegate applyChangesCb;
+        private ModifyDocumentDelegate deleteElementCheckCb;
 
         private bool hasChanges;
 
@@ -48,11 +51,12 @@ namespace Medical.GUI
         private TabControl tabs;
         private List<ElementEditorComponent> editorComponents = new List<ElementEditorComponent>();
 
-        protected RmlElementEditor(Element element, ApplyChangesDelegate applyChangesCb)
+        protected RmlElementEditor(Element element, ModifyDocumentDelegate applyChangesCb, ModifyDocumentDelegate deleteElementCheckCb)
             :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
             this.applyChangesCb = applyChangesCb;
+            this.deleteElementCheckCb = deleteElementCheckCb;
             this.Hiding += RmlElementEditor_Hiding;
 
             tabs = (TabControl)widget.findWidget("Tabs");
@@ -73,6 +77,7 @@ namespace Medical.GUI
             delete.MouseButtonClick += new MyGUIEvent(delete_MouseButtonClick);
 
             hasChanges = false;
+            SmoothShow = false;
         }
 
         public override void Dispose()
@@ -96,6 +101,20 @@ namespace Medical.GUI
             {
                 hasChanges = false;
                 return applyChangesCb.Invoke(element, this, component);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Delete the element from the document if needed. Returns true if changes have been made and the document needs refreshing.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns>True if changes are made.</returns>
+        public bool deleteIfNeeded(RmlWysiwygComponent component)
+        {
+            if (deleteElementCheckCb != null)
+            {
+                return deleteElementCheckCb.Invoke(element, this, component);
             }
             return false;
         }
