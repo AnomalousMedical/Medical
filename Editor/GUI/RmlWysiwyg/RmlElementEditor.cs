@@ -85,7 +85,7 @@ namespace Medical.GUI
         }
 
         /// <summary>
-        /// Apply the changes this editor has to the element. Returns true if changes have been made and the document needs reloading.
+        /// Apply the changes this editor has to the element. Returns true if changes have been made and the document needs refreshing.
         /// </summary>
         /// <param name="component"></param>
         /// <returns>True if changes are made.</returns>
@@ -168,7 +168,10 @@ namespace Medical.GUI
 
         void RmlElementEditor_Hiding(object sender, CancelEventArgs e)
         {
-            e.Cancel = hasChanges;
+            if (hasChanges)
+            {
+                _fireApplyChanges();
+            }
         }
     }
 }
