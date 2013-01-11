@@ -57,6 +57,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 property.ValueChanged += sender =>
                     {
                         fireChangesMade();
+                        fireApplyChanges();
                     };
                 editInterface.addEditableProperty(property);
                 originalProperties.Add(property);
