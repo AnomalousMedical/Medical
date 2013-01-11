@@ -30,7 +30,7 @@ namespace Medical.Irony
             KeyTerm xmlDeclClose = ToTerm("?>");
 
             IdentifierTerminal attributeIdentifier = new IdentifierTerminal(AttributeIdentifier, ".", ".");
-            IdentifierTerminal elementIdentifier = new IdentifierTerminal(ElementIdentifier, ".", ".");
+            IdentifierTerminal elementIdentifier = new IdentifierTerminal(ElementIdentifier, ".-", ".-");
             KeyTerm xmlDeclarationIdentifier = ToTerm("xml");
 
             //Non Terminals

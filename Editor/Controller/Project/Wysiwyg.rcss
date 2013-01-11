@@ -5,13 +5,14 @@ You can make your own rcss files if you need custom styles for your project.
 Include it before or after this file to apply your changes as needed.
 */
 
-separator
+x-separator
 {
 	background: black;
 	height: 3dp;
 	align: center;
 	margin-left: 5dp;
 	margin-right: 5dp;
+	display: block;
 }
 
 div.ImageParagraphLeft

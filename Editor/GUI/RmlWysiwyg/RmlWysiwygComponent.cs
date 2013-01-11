@@ -26,7 +26,7 @@ namespace Medical.GUI
             elementStrategyManager.add(new TextElementStrategy("p"));
             elementStrategyManager.add(new TextElementStrategy("a"));
             elementStrategyManager.add(new ImageStrategy("img"));
-            elementStrategyManager.add(new DivStrategy("separator"));
+            elementStrategyManager.add(new DivStrategy("x-separator"));
             //Controls
             elementStrategyManager.add(new InputStrategy("input"));
         }
