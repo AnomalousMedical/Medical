@@ -112,6 +112,8 @@ namespace Medical
                 saveAll();
             }));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Undo", "Undo", CommonResources.NoIcon, "Edit", "Editor/Undo", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Redo", "Redo", CommonResources.NoIcon, "Edit", "Editor/Redo", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
@@ -173,6 +175,14 @@ namespace Medical
                         {
                             textEditorComponent.selectAll();
                         }
+                    }),
+                new CallbackAction("Undo", context =>
+                    {
+                        undoBuffer.undo();
+                    }),
+                new CallbackAction("Redo", context =>
+                    {
+                        undoBuffer.execute();
                     })
                 ));
 
