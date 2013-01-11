@@ -12,6 +12,7 @@ namespace Medical.GUI
         private EditBox text;
         private bool allowColorString = true;
         private TextHighlighter textHighlighter = null;
+        private bool changesMade = false;
 
         public TextEditorComponent(MyGUIViewHost viewHost, TextEditorView view)
             : base("Medical.GUI.TextEditor.TextEditorComponent.layout", viewHost)
@@ -61,6 +62,19 @@ namespace Medical.GUI
             text.VScrollPosition = 0;
         }
 
+        public void resetChangesMade()
+        {
+            changesMade = false;
+        }
+
+        public bool ChangesMade
+        {
+            get
+            {
+                return changesMade;
+            }
+        }
+
         public String Text
         {
             get
@@ -78,6 +92,7 @@ namespace Medical.GUI
                 allowColorString = true;
                 text.HScrollPosition = hScroll;
                 text.VScrollPosition = vScroll;
+                changesMade = false;
             }
         }
 
@@ -116,6 +131,7 @@ namespace Medical.GUI
             text.TextCursor = cursor;
             text.HScrollPosition = hScrollPos;
             text.VScrollPosition = vScrollPos;
+            changesMade = true;
         }
 
         private StringBuilder cleanStringForMyGUI(String input)

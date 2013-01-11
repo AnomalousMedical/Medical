@@ -317,28 +317,41 @@ namespace Medical
 
         private void saveAll()
         {
-            if (rmlComponent != null)
-            {
-                rmlComponent.aboutToSaveRml();
-            }
+            preSave();
             rmlTypeController.updateCachedText(currentFile, CurrentText);
             rmlTypeController.EditorController.saveAllCachedResources();
-            if (rmlComponent != null)
-            {
-                rmlComponent.reloadDocument();
-            }
+            postSave();
         }
 
         private void save()
+        {
+            preSave();
+            rmlTypeController.saveFile(CurrentText, currentFile);
+            postSave();
+        }
+
+        private void preSave()
         {
             if (rmlComponent != null)
             {
                 rmlComponent.aboutToSaveRml();
             }
-            rmlTypeController.saveFile(CurrentText, currentFile);
-            if (rmlComponent != null)
+        }
+
+        private void postSave()
+        {
+            if (textEditorComponent != null)
             {
-                rmlComponent.reloadDocument();
+                if (textEditorComponent.ChangesMade)
+                {
+                    if (rmlComponent != null)
+                    {
+                        String undoRml = rmlComponent.UnformattedRml;
+                        rmlComponent.reloadDocument();
+                        rmlComponent.updateUndoStatus(undoRml, true);
+                    }
+                    textEditorComponent.resetChangesMade();
+                }
             }
         }
     }
