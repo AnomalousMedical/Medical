@@ -72,8 +72,8 @@ namespace Medical
             recentDocumentList.Clear();
             for (int i = 0; section.hasValue("Document" + i); ++i)
             {
-                String doc = section.getValue("Document" + i, "");
-                if ((File.Exists(doc) || Directory.Exists(doc)) && documentController.canReadFile(doc))
+                String doc = normalizePath(section.getValue("Document" + i, ""));
+                if ((File.Exists(doc) || Directory.Exists(doc)) && documentController.canReadFile(doc) && recentDocumentList.IndexOf(doc) == -1)
                 {
                     recentDocumentList.Add(doc);
                 }
@@ -82,6 +82,7 @@ namespace Medical
 
         public void addDocument(String file)
         {
+            file = normalizePath(file);
             int index = recentDocumentList.IndexOf(file);
             if (index != -1)
             {
@@ -108,6 +109,7 @@ namespace Medical
 
         public void removeDocument(String file)
         {
+            file = normalizePath(file);
             if (recentDocumentList.Remove(file))
             {
                 if (DocumentRemoved != null)
@@ -115,6 +117,24 @@ namespace Medical
                     DocumentRemoved.Invoke(this, file);
                 }
             }
+        }
+
+        private String normalizePath(String file)
+        {
+            StringBuilder normalized = new StringBuilder(file.Length);
+            for (int i = 0; i < file.Length; ++i)
+            {
+                switch (file[i])
+                {
+                    case '\\':
+                        normalized.Append(Path.DirectorySeparatorChar);
+                        break;
+                    default:
+                        normalized.Append(file[i]);
+                        break;
+                }
+            }
+            return normalized.ToString();
         }
 
         #region IEnumerable<string> Members
