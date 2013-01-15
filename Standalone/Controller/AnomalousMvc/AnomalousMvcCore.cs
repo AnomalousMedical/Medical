@@ -60,6 +60,11 @@ namespace Medical.Controller.AnomalousMvc
             return viewHostManager.isViewOpen(name);
         }
 
+        public ViewHost findViewHost(String name)
+        {
+            return viewHostManager.findViewHost(name);
+        }
+
         public void queueShowView(View view, AnomalousMvcContext context)
         {
             viewHostManager.requestOpen(view, context);

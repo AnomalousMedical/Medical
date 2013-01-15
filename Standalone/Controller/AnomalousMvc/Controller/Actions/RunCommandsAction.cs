@@ -152,6 +152,7 @@ namespace Medical.Controller.AnomalousMvc
             viewCommands.addChild(new BrowserNode("Show View", typeof(ShowViewCommand), iconName: "MvcContextEditor/ViewShowIcon"));
             viewCommands.addChild(new BrowserNode("Show View If Not Open", typeof(ShowViewIfNotOpenCommand), iconName: "MvcContextEditor/ViewShowIfNotOpen"));
             viewCommands.addChild(new BrowserNode("Close View", typeof(CloseViewCommand), iconName: "MvcContextEditor/ViewCloseIcon"));
+            viewCommands.addChild(new BrowserNode("Close View If Open", typeof(CloseViewIfOpen), iconName: "MvcContextEditor/ViewCloseIcon"));
             viewCommands.addChild(new BrowserNode("Close All Views", typeof(CloseAllViewsCommand), iconName: "MvcContextEditor/ViewCloseAllIcon"));
             rootNode.addChild(viewCommands);
 

@@ -304,6 +304,36 @@ namespace Medical.Controller.AnomalousMvc
             return false;
         }
 
+        public ViewHost findViewHost(String name)
+        {
+            if(currentLeft != null && currentLeft.Name == name)
+            {
+                return currentLeft;
+            }
+            if(currentRight != null && currentRight.Name == name)
+            {
+                return currentRight;
+            }
+            if(currentTop != null && currentTop.Name == name)
+            {
+                return currentTop;
+            }
+            if(currentBottom != null && currentBottom.Name == name)
+            {
+                return currentBottom;
+            }
+
+            foreach (ViewHost viewHost in openFloatingViews)
+            {
+                if (viewHost.Name == name)
+                {
+                    return viewHost;
+                }
+            }
+
+            return null;
+        }
+
         public StoredViewCollection generateSavedViewLayout()
         {
             StoredViewCollection storedViews = new StoredViewCollection();

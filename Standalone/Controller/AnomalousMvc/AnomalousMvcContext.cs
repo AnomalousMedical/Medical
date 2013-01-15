@@ -219,6 +219,11 @@ namespace Medical.Controller.AnomalousMvc
             return core.isViewOpen(name);
         }
 
+        public ViewHost findViewHost(String name)
+        {
+            return core.findViewHost(name);
+        }
+
         public void queueShowView(String view)
         {
             try
@@ -234,6 +239,11 @@ namespace Medical.Controller.AnomalousMvc
         public void queueCloseView()
         {
             core.queueCloseView(runningActionViewHost);
+        }
+
+        public void queueCloseView(ViewHost viewHost)
+        {
+            core.queueCloseView(viewHost);
         }
 
         public void queueCloseAllViews()
