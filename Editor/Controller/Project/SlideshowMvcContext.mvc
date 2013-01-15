@@ -1,0 +1,80 @@
+<Save>
+  <Saveable type="Medical.Controller.AnomalousMvc.HideMainInterfaceCommand, Standalone" id="5" />
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveCameraPositionCommand, Standalone" id="6">
+    <String name="&lt;Name&gt;k__BackingField">StartupCamera</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveLayersCommand, Standalone" id="7">
+    <String name="&lt;Name&gt;k__BackingField">StartupLayers</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveMedicalStateCommand, Standalone" id="8">
+    <String name="&lt;Name&gt;k__BackingField">StartupMedicalState</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveMusclePositionCommand, Standalone" id="9">
+    <String name="&lt;Name&gt;k__BackingField">StartupMusclePosition</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.NavigateToIndexCommand, Standalone" id="10">
+    <Int name="&lt;Index&gt;k__BackingField">0</Int>
+    <String name="&lt;NavigationModelName&gt;k__BackingField">DefaultNavigation</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="4">
+    <Saveable name="Command0" id="5" />
+    <Saveable name="Command1" id="6" />
+    <Saveable name="Command2" id="7" />
+    <Saveable name="Command3" id="8" />
+    <Saveable name="Command4" id="9" />
+    <Saveable name="Command5" id="10" />
+    <String name="name">Start</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ShowMainInterfaceCommand, Standalone" id="12" />
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreCameraPositionCommand, Standalone" id="13">
+    <String name="&lt;Name&gt;k__BackingField">StartupCamera</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreLayersCommand, Standalone" id="14">
+    <String name="&lt;Name&gt;k__BackingField">StartupLayers</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreMedicalStateCommand, Standalone" id="15">
+    <String name="&lt;Name&gt;k__BackingField">StartupMedicalState</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreMusclePositionCommand, Standalone" id="16">
+    <String name="&lt;Name&gt;k__BackingField">StartupMusclePosition</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="11">
+    <Saveable name="Command0" id="12" />
+    <Saveable name="Command1" id="13" />
+    <Saveable name="Command2" id="14" />
+    <Saveable name="Command3" id="15" />
+    <Saveable name="Command4" id="16" />
+    <String name="name">Shutdown</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ControllerActionCollection, Standalone" id="3">
+    <Saveable name="Items0" id="4" />
+    <Saveable name="Items1" id="11" />
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.MvcController, Standalone" id="2">
+    <Saveable name="actionCollection" id="3" />
+    <String name="name">Common</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ControllerCollection, Standalone" id="1">
+    <Saveable name="Items0" id="2" />
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ViewCollection, Standalone" id="17" />
+  <Saveable type="Medical.Controller.AnomalousMvc.NavigationModel, Standalone" id="19">
+    <Int name="&lt;StartIndex&gt;k__BackingField">0</Int>
+    <String name="name">DefaultNavigation</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ModelCollection, Standalone" id="18">
+    <Saveable name="Items0" id="19" />
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.AnomalousMvcContext, Standalone" id="0">
+    <String name="StartupAction">Common/Start</String>
+    <String name="ShutdownAction">Common/Shutdown</String>
+    <String name="ResumeAction" />
+    <String name="SuspendAction" />
+    <String name="RemovedFromStackAction" />
+    <String name="FocusAction" />
+    <String name="BlurAction" />
+    <Saveable name="Controllers" id="1" />
+    <Saveable name="Views" id="17" />
+    <Saveable name="Models" id="18" />
+  </Saveable>
+</Save>

@@ -95,7 +95,10 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\RestoreMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SaveMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\CallbackCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateFirstCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateLastCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateToCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateToIndexCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseAllViewsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseViewCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\CreateMedicalStateCommand.cs" />

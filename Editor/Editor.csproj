@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ItemTemplates\SlideItemTemplate.cs" />
+    <Compile Include="Controller\Project\SlideshowProjectTemplate.cs" />
     <Compile Include="GUI\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponent.cs" />
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Controller\Project\EmbeddedTemplateNames.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <EmbeddedResource Include="Controller\Project\SimpleMvcContext.mvc" />
+    <EmbeddedResource Include="Controller\Project\SlideshowMvcContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\AspectRatioTask.cs" />
     <EmbeddedResource Include="Controller\Project\Wysiwyg.rcss" />

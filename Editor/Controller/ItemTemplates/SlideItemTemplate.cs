@@ -1,4 +1,5 @@
 ﻿using Engine.Editing;
+using Logging;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
@@ -63,14 +64,33 @@ namespace Medical
                         if (result == MessageBoxStyle.Yes)
                         {
                             mvcContext.Controllers.remove(mvcContext.Controllers[controllerName]);
-                            createController(mvcContext, controllerName);
+                            createController(mvcContext, controllerName, leftViewName);
                         }
                     });
                 }
                 else
                 {
-                    createController(mvcContext, controllerName);
+                    createController(mvcContext, controllerName, leftViewName);
                 }
+
+                MvcModel model;
+                if (mvcContext.Models.tryGetValue(EmbeddedTemplateNames.SlideshowMvcContext.NavigationModel, out model))
+                {
+                    NavigationModel navModel = model as NavigationModel;
+                    if (navModel != null)
+                    {
+                        navModel.addNavigationLink(new NavigationLink(name: controllerName, action: controllerName + "/Show"));
+                    }
+                    else
+                    {
+                        Log.Error("Found a model named '{0}', but it was not a NavigationModel.", EmbeddedTemplateNames.SlideshowMvcContext.NavigationModel);
+                    }
+                }
+                else
+                {
+                    Log.Error("Cannot find navigation model '{0}' while creating slideshow, cannot navigate to state.", EmbeddedTemplateNames.SlideshowMvcContext.NavigationModel);
+                }
+
                 editorController.saveAllCachedResources();
             }
         }
@@ -135,12 +155,12 @@ namespace Medical
             }
         }
 
-        private void createController(AnomalousMvcContext mvcContext, String name)
+        private void createController(AnomalousMvcContext mvcContext, String controllerName, String viewName)
         {
-            MvcController controller = new MvcController(name);
+            MvcController controller = new MvcController(controllerName);
             
             RunCommandsAction show = new RunCommandsAction("Show");
-            show.addCommand(new ShowViewCommand(name));
+            show.addCommand(new ShowViewCommand(viewName));
             CameraPosition cameraPos = new CameraPosition();
             if (sceneViewController.ActiveWindow != null)
             {
@@ -172,7 +192,6 @@ namespace Medical
         private static void createView(AnomalousMvcContext mvcContext, String name)
         {
             RmlView view = new RmlView(name);
-            view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
             mvcContext.Views.add(view);
         }
     }

@@ -103,6 +103,37 @@ namespace Medical.Controller.AnomalousMvc
             return null;
         }
 
+        public NavigationLink getAt(int index)
+        {
+            if (index < links.Count)
+            {
+                CurrentIndex = index;
+                return links[index];
+            }
+            return null;
+        }
+
+        public NavigationLink getFirst()
+        {
+            if (links.Count > 0)
+            {
+                CurrentIndex = 0;
+                return links[0];
+            }
+            return null;
+        }
+
+        public NavigationLink getLast()
+        {
+            int linkCount = links.Count;
+            if (linkCount > 0)
+            {
+                CurrentIndex = linkCount - 1;
+                return links[CurrentIndex];
+            }
+            return null;
+        }
+
         public bool HasNext
         {
             get
