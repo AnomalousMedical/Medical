@@ -65,6 +65,7 @@ namespace Medical
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
+                            mvcContext.Views.remove(mvcContext.Views[name]);
                             createView(mvcContext, name);
                         }
                     });
@@ -79,6 +80,7 @@ namespace Medical
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
+                            mvcContext.Controllers.remove(mvcContext.Controllers[name]);
                             createController(mvcContext, name, timelineName);
                         }
                     });

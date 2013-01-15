@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class SetMusclePositionCommand : ActionCommand
+    public class SetMusclePositionCommand : ActionCommand
     {
         public SetMusclePositionCommand()
         {

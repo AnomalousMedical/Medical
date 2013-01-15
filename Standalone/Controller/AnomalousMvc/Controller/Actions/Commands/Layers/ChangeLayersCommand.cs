@@ -7,11 +7,13 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class ChangeLayersCommand : ActionCommand
+    public class ChangeLayersCommand : ActionCommand
     {
+        private EditableLayerState layers;
+
         public ChangeLayersCommand()
         {
-            Layers = new EditableLayerState("ChangeLayers");
+            layers = new EditableLayerState("ChangeLayers");
         }
 
         public override void execute(AnomalousMvcContext context)
@@ -21,11 +23,17 @@ namespace Medical.Controller.AnomalousMvc
 
         protected override void createEditInterface()
         {
-            editInterface = Layers.getEditInterface(Type, ReflectedEditInterface.DefaultScanner);
+            editInterface = layers.getEditInterface(Type, ReflectedEditInterface.DefaultScanner);
             editInterface.IconReferenceTag = Icon;
         }
 
-        public EditableLayerState Layers { get; set; }
+        public LayerState Layers
+        {
+            get
+            {
+                return layers;
+            }
+        }
 
         public override string Type
         {
@@ -46,7 +54,10 @@ namespace Medical.Controller.AnomalousMvc
         protected ChangeLayersCommand(LoadInfo info)
             :base(info)
         {
-
+            if (!info.hasValue("layers"))
+            {
+                layers = info.GetValue<EditableLayerState>("<Layers>k__BackingField");
+            }
         }
     }
 }

@@ -78,6 +78,39 @@ namespace Medical
             return state;
         }
 
+        public PresetState createPresetState(String name)
+        {
+            MedicalState medicalState = new MedicalState(name);
+            medicalState.update();
+            CompoundPresetState compoundPresetState = new CompoundPresetState("", "", "");
+
+            DiscPresetState leftDiscPreset = new DiscPresetState("LeftTMJDisc", "", "", "");
+            leftDiscPreset.captureFromState(medicalState.Disc.getPosition("LeftTMJDisc"));
+            compoundPresetState.addSubState(leftDiscPreset);
+
+            DiscPresetState rightDiscPreset = new DiscPresetState("RightTMJDisc", "", "", "");
+            rightDiscPreset.captureFromState(medicalState.Disc.getPosition("RightTMJDisc"));
+            compoundPresetState.addSubState(rightDiscPreset);
+            
+            FossaPresetState leftFossaPreset = new FossaPresetState("", "", "");
+            leftFossaPreset.captureFromState("LeftFossa", medicalState.Fossa);
+            compoundPresetState.addSubState(leftFossaPreset);
+            
+            FossaPresetState rightFossaPreset = new FossaPresetState("", "", "");
+            rightFossaPreset.captureFromState("RightFossa", medicalState.Fossa);
+            compoundPresetState.addSubState(rightFossaPreset);
+            
+            AnimationManipulatorPresetState animationManipPresetState = new AnimationManipulatorPresetState("", "", "");
+            animationManipPresetState.captureFromState(medicalState.BoneManipulator);
+            compoundPresetState.addSubState(animationManipPresetState);
+            
+            TeethPresetState teethPreset = new TeethPresetState("", "", "");
+            teethPreset.captureFromState(medicalState.Teeth);
+            compoundPresetState.addSubState(teethPreset);
+
+            return compoundPresetState;
+        }
+
         public void addState(MedicalState state)
         {
             //No states and normal state defined, add it as the first state.

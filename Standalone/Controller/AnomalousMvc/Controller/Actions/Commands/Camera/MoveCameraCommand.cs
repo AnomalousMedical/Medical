@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class MoveCameraCommand : ActionCommand
+    public class MoveCameraCommand : ActionCommand
     {
         public MoveCameraCommand()
         {

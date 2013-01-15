@@ -241,7 +241,7 @@ namespace Medical.Controller.AnomalousMvc
             core.queueCloseAllViews();
         }
 
-        public void applyLayers(EditableLayerState layers)
+        public void applyLayers(LayerState layers)
         {
             core.applyLayers(layers);
         }
