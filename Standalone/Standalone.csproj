@@ -165,6 +165,9 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIView.cs" />
+    <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponent.cs" />
+    <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponentFactory.cs" />
+    <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugView.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlViewHostControl.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
@@ -664,6 +667,9 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponent.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\AnomalousMvc\NavigationView\NavigationComponent.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
