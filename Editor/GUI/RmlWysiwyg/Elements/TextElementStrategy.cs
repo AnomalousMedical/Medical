@@ -20,7 +20,12 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            textEditor = new ElementTextEditor(element.InnerRml);
+            String rml = element.InnerRml;
+            if (rml != null)
+            {
+                rml = rml.Replace("<br/>", "\n");
+            }
+            textEditor = new ElementTextEditor(rml);
             attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(textEditor);
@@ -30,7 +35,8 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            element.InnerRml = textEditor.Text;
+            String text = textEditor.Text;
+            element.InnerRml = text.Replace("\n", "<br/>");
             attributeEditor.applyToElement(element);
             return true;
         }
