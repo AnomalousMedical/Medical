@@ -1,4 +1,5 @@
 ﻿using Engine.Saving;
+using Medical.Controller.AnomalousMvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,26 @@ namespace Medical
         public MedicalRmlSlide()
         {
 
+        }
+
+        protected override void customizeController(MvcController controller, RunCommandsAction showCommand)
+        {
+            base.customizeController(controller, showCommand);
+            showCommand.addCommand(new MoveCameraCommand()
+            {
+                CameraPosition = this.CameraPosition
+            });
+            ChangeLayersCommand layers = new ChangeLayersCommand();
+            layers.Layers.copyFrom(Layers);
+            showCommand.addCommand(layers);
+            showCommand.addCommand(new ChangeMedicalStateCommand()
+            {
+                PresetState = this.MedicalState
+            });
+            showCommand.addCommand(new SetMusclePositionCommand()
+            {
+                MusclePosition = this.MusclePosition
+            });
         }
 
         public CameraPosition CameraPosition

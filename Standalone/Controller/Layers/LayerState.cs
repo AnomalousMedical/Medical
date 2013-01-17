@@ -35,6 +35,15 @@ namespace Medical
             }
         }
 
+        public void copyFrom(LayerState source)
+        {
+            entries.Clear();
+            foreach (LayerEntry entry in source.entries)
+            {
+                entries.AddLast(CopySaver.Default.copy(entry));
+            }
+        }
+
         public void apply()
         {
             timedApply(MedicalConfig.CameraTransitionTime);

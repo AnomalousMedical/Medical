@@ -32,11 +32,11 @@ namespace Medical
             RunCommandsAction showCommand = new RunCommandsAction("Show");
             showCommand.addCommand(new ShowViewCommand(viewName));
             controller.Actions.add(showCommand);
-            customizeController(controller);
+            customizeController(controller, showCommand);
             return controller;
         }
 
-        protected virtual void customizeController(MvcController controller)
+        protected virtual void customizeController(MvcController controller, RunCommandsAction showCommand)
         {
 
         }
