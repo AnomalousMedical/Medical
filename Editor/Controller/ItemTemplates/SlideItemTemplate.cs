@@ -14,14 +14,14 @@ namespace Medical
 {
     class SlideItemTemplate : ProjectItemTemplate
     {
-        private RmlTypeController rmlTypeController;
+        private SlideTypeController slideTypeController;
         private MvcTypeController mvcTypeController;
         private SceneViewController sceneViewController;
         private MedicalStateController medicalStateController;
 
-        public SlideItemTemplate(RmlTypeController rmlTypeController, MvcTypeController mvcTypeController, SceneViewController sceneViewController, MedicalStateController medicalStateController)
+        public SlideItemTemplate(SlideTypeController slideTypeController, MvcTypeController mvcTypeController, SceneViewController sceneViewController, MedicalStateController medicalStateController)
         {
-            this.rmlTypeController = rmlTypeController;
+            this.slideTypeController = slideTypeController;
             this.mvcTypeController = mvcTypeController;
             this.sceneViewController = sceneViewController;
             this.medicalStateController = medicalStateController;
@@ -29,70 +29,27 @@ namespace Medical
 
         public void createItem(string path, EditorController editorController)
         {
-            String slideFolder = Path.Combine(path, PathExtensions.RemoveExtension(Name));
-            if (!editorController.ResourceProvider.exists(slideFolder))
-            {
-                editorController.ResourceProvider.createDirectory(path, Name);
-            }
-            String leftViewFileName = Path.Combine(slideFolder, "Left.rml");
-            rmlTypeController.createRmlFileSafely(leftViewFileName);
-            AnomalousMvcContext mvcContext = mvcTypeController.CurrentObject;
-            if (mvcContext != null)
-            {
-                String leftViewName = PathExtensions.RemoveExtension(leftViewFileName);
-                if (mvcContext.Views.hasItem(leftViewName))
+            String slideName = Path.Combine(path, Path.ChangeExtension(Name, slideTypeController.Extension));
+            slideTypeController.createSlideFileSafely(slideName, (fileName) =>
                 {
-                    MessageBox.show(String.Format("A view named '{0}' already exists. Would you like to overwrite it?", leftViewName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+                    MedicalRmlSlide slide = new MedicalRmlSlide();
+                    CameraPosition cameraPos = new CameraPosition();
+                    if (sceneViewController.ActiveWindow != null)
                     {
-                        if (result == MessageBoxStyle.Yes)
-                        {
-                            mvcContext.Views.remove(mvcContext.Views[leftViewName]);
-                            createView(mvcContext, leftViewName);
-                        }
-                    });
-                }
-                else
-                {
-                    createView(mvcContext, leftViewName);
-                }
-
-                String controllerName = slideFolder;
-                if (mvcContext.Controllers.hasItem(controllerName))
-                {
-                    MessageBox.show(String.Format("A controller named '{0}' already exists. Would you like to overwrite it?", controllerName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
-                    {
-                        if (result == MessageBoxStyle.Yes)
-                        {
-                            mvcContext.Controllers.remove(mvcContext.Controllers[controllerName]);
-                            createController(mvcContext, controllerName, leftViewName);
-                        }
-                    });
-                }
-                else
-                {
-                    createController(mvcContext, controllerName, leftViewName);
-                }
-
-                MvcModel model;
-                if (mvcContext.Models.tryGetValue(EmbeddedTemplateNames.SlideshowMvcContext.NavigationModel, out model))
-                {
-                    NavigationModel navModel = model as NavigationModel;
-                    if (navModel != null)
-                    {
-                        navModel.addNavigationLink(new NavigationLink(name: controllerName, action: controllerName + "/Show"));
+                        SceneViewWindow window = sceneViewController.ActiveWindow;
+                        cameraPos.Translation = window.Translation;
+                        cameraPos.LookAt = window.LookAt;
+                        cameraPos.calculateIncludePoint(window);
                     }
-                    else
-                    {
-                        Log.Error("Found a model named '{0}', but it was not a NavigationModel.", EmbeddedTemplateNames.SlideshowMvcContext.NavigationModel);
-                    }
-                }
-                else
-                {
-                    Log.Error("Cannot find navigation model '{0}' while creating slideshow, cannot navigate to state.", EmbeddedTemplateNames.SlideshowMvcContext.NavigationModel);
-                }
-
-                editorController.saveAllCachedResources();
-            }
+                    slide.CameraPosition = cameraPos;
+                    slide.Layers = new LayerState("");
+                    slide.Layers.captureState();
+                    slide.MedicalState = medicalStateController.createPresetState("");
+                    slide.MusclePosition = new MusclePosition();
+                    slide.MusclePosition.captureState();
+                    return slide;
+                });
+            editorController.saveAllCachedResources();
         }
 
         public string TypeName
@@ -153,40 +110,6 @@ namespace Medical
                 }
                 return editInterface;
             }
-        }
-
-        private void createController(AnomalousMvcContext mvcContext, String controllerName, String viewName)
-        {
-            MvcController controller = new MvcController(controllerName);
-            
-            RunCommandsAction show = new RunCommandsAction("Show");
-            show.addCommand(new ShowViewCommand(viewName));
-            CameraPosition cameraPos = new CameraPosition();
-            if (sceneViewController.ActiveWindow != null)
-            {
-                SceneViewWindow window = sceneViewController.ActiveWindow;
-                cameraPos.Translation = window.Translation;
-                cameraPos.LookAt = window.LookAt;
-                cameraPos.calculateIncludePoint(window);
-            }
-            show.addCommand(new MoveCameraCommand()
-            {
-                CameraPosition = cameraPos
-            });
-            ChangeLayersCommand layers = new ChangeLayersCommand();
-            layers.Layers.captureState();
-            show.addCommand(layers);
-            show.addCommand(new ChangeMedicalStateCommand()
-            {
-                PresetState = medicalStateController.createPresetState("")
-            });
-            controller.Actions.add(show);
-            show.addCommand(new SetMusclePositionCommand());
-            
-            RunCommandsAction close = new RunCommandsAction("Close");
-            close.addCommand(new CloseViewCommand());
-            controller.Actions.add(close);
-            mvcContext.Controllers.add(controller);
         }
 
         private static void createView(AnomalousMvcContext mvcContext, String name)

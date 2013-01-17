@@ -189,12 +189,15 @@ namespace Medical
                 editorController.runEditorContext(xmlEditorContext.MvcContext);
             };
 
+            //Slide Type Controller
+            SlideTypeController slideTypeController = new SlideTypeController(editorController);
+
             //Add item templates
             editorController.addItemTemplate(new EmptyViewItemTemplate(rmlTypeController, mvcTypeController));
             editorController.addItemTemplate(new ViewWithTimelineItemTemplate(rmlTypeController, mvcTypeController, timelineTypeController));
-            editorController.addItemTemplate(new SlideItemTemplate(rmlTypeController, mvcTypeController, standaloneController.SceneViewController, standaloneController.MedicalStateController));
+            editorController.addItemTemplate(new SlideItemTemplate(slideTypeController, mvcTypeController, standaloneController.SceneViewController, standaloneController.MedicalStateController));
 
-            //Add type controllers to editor controller
+            //Add type controllers to editor controller, this also adds some item templates
             editorController.addTypeController(timelineTypeController);
             editorController.addTypeController(movementSequenceTypeController);
             editorController.addTypeController(rmlTypeController);
@@ -203,7 +206,9 @@ namespace Medical
             editorController.addTypeController(mvcTypeController);
             editorController.addTypeController(pluginTypeController);
             editorController.addTypeController(xmlTypeController);
+            editorController.addTypeController(slideTypeController);
 
+            //Add any final item templates
             editorController.addItemTemplate(new PluginBrandingResourceItemTemplate());
         }
 

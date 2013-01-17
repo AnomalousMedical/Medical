@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EditorController\TypeControllers\SlideTypeController.cs" />
     <Compile Include="Controller\ItemTemplates\SlideItemTemplate.cs" />
     <Compile Include="Controller\Project\SlideshowProjectTemplate.cs" />
     <Compile Include="GUI\RmlWysiwyg\DraggingElementManager.cs" />

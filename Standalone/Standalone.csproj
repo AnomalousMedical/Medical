@@ -153,6 +153,10 @@
     <Compile Include="Controller\Server\CredentialServerConnection.cs" />
     <Compile Include="Controller\Server\LicenseReadType.cs" />
     <Compile Include="Controller\Server\ServerConnection.cs" />
+    <Compile Include="Controller\Slideshow\MedicalRmlSlide.cs" />
+    <Compile Include="Controller\Slideshow\RmlSlide.cs" />
+    <Compile Include="Controller\Slideshow\Slide.cs" />
+    <Compile Include="Controller\Slideshow\Slideshow.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
