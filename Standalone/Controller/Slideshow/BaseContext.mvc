@@ -1,0 +1,144 @@
+<Save>
+  <Saveable type="Medical.Controller.AnomalousMvc.HideMainInterfaceCommand, Standalone" id="5" />
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveCameraPositionCommand, Standalone" id="6">
+    <String name="&lt;Name&gt;k__BackingField">StartupCamera</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveLayersCommand, Standalone" id="7">
+    <String name="&lt;Name&gt;k__BackingField">StartupLayers</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveMedicalStateCommand, Standalone" id="8">
+    <String name="&lt;Name&gt;k__BackingField">StartupMedicalState</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.SaveMusclePositionCommand, Standalone" id="9">
+    <String name="&lt;Name&gt;k__BackingField">StartupMusclePosition</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.NavigateToIndexCommand, Standalone" id="10">
+    <Int name="&lt;Index&gt;k__BackingField">0</Int>
+    <String name="&lt;NavigationModelName&gt;k__BackingField">DefaultNavigation</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunActionCommand, Standalone" id="11">
+    <String name="&lt;Action&gt;k__BackingField">NavigationBug/Show</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="4">
+    <Saveable name="Command0" id="5" />
+    <Saveable name="Command1" id="6" />
+    <Saveable name="Command2" id="7" />
+    <Saveable name="Command3" id="8" />
+    <Saveable name="Command4" id="9" />
+    <Saveable name="Command5" id="10" />
+    <Saveable name="Command6" id="11" />
+    <String name="name">Start</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ShowMainInterfaceCommand, Standalone" id="13" />
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreCameraPositionCommand, Standalone" id="14">
+    <String name="&lt;Name&gt;k__BackingField">StartupCamera</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreLayersCommand, Standalone" id="15">
+    <String name="&lt;Name&gt;k__BackingField">StartupLayers</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreMedicalStateCommand, Standalone" id="16">
+    <String name="&lt;Name&gt;k__BackingField">StartupMedicalState</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RestoreMusclePositionCommand, Standalone" id="17">
+    <String name="&lt;Name&gt;k__BackingField">StartupMusclePosition</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="12">
+    <Saveable name="Command0" id="13" />
+    <Saveable name="Command1" id="14" />
+    <Saveable name="Command2" id="15" />
+    <Saveable name="Command3" id="16" />
+    <Saveable name="Command4" id="17" />
+    <String name="name">Shutdown</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ShutdownCommand, Standalone" id="19" />
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="18">
+    <Saveable name="Command0" id="19" />
+    <String name="name">Close</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ControllerActionCollection, Standalone" id="3">
+    <Saveable name="Items0" id="4" />
+    <Saveable name="Items1" id="12" />
+    <Saveable name="Items2" id="18" />
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.MvcController, Standalone" id="2">
+    <Saveable name="actionCollection" id="3" />
+    <String name="name">Common</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ShowViewCommand, Standalone" id="23">
+    <String name="&lt;View&gt;k__BackingField">NavigationBug</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="22">
+    <Saveable name="Command0" id="23" />
+    <String name="name">Show</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.CloseViewCommand, Standalone" id="25" />
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="24">
+    <Saveable name="Command0" id="25" />
+    <String name="name">Hide</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.NavigateNextCommand, Standalone" id="27">
+    <String name="&lt;NavigationModelName&gt;k__BackingField">DefaultNavigation</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="26">
+    <Saveable name="Command0" id="27" />
+    <String name="name">Next</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.NavigatePreviousCommand, Standalone" id="29">
+    <String name="&lt;NavigationModelName&gt;k__BackingField">DefaultNavigation</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.RunCommandsAction, Standalone" id="28">
+    <Saveable name="Command0" id="29" />
+    <String name="name">Previous</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ControllerActionCollection, Standalone" id="21">
+    <Saveable name="Items0" id="22" />
+    <Saveable name="Items1" id="24" />
+    <Saveable name="Items2" id="26" />
+    <Saveable name="Items3" id="28" />
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.MvcController, Standalone" id="20">
+    <Saveable name="actionCollection" id="21" />
+    <String name="name">NavigationBug</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ControllerCollection, Standalone" id="1">
+    <Saveable name="Items0" id="2" />
+    <Saveable name="Items1" id="20" />
+  </Saveable>
+  <Saveable type="Medical.GUI.AnomalousMvc.ButtonCollection, Standalone" id="32" />
+  <Saveable type="Medical.GUI.AnomalousMvc.NavigationBugView, Standalone" id="31">
+    <String name="&lt;NavigationModelName&gt;k__BackingField">DefaultNavigation</String>
+    <String name="&lt;CloseButtonAction&gt;k__BackingField">Common/Close</String>
+    <String name="&lt;PreviousButtonAction&gt;k__BackingField">NavigationBug/Previous</String>
+    <String name="&lt;NextButtonAction&gt;k__BackingField">NavigationBug/Next</String>
+    <Saveable name="buttons" id="32" />
+    <Enum name="&lt;ViewLocation&gt;k__BackingField" type="Medical.Controller.AnomalousMvc.ViewLocations, Standalone">Floating</Enum>
+    <Bool name="&lt;IsWindow&gt;k__BackingField">True</Bool>
+    <Bool name="&lt;Transparent&gt;k__BackingField">False</Bool>
+    <Bool name="&lt;FillScreen&gt;k__BackingField">False</Bool>
+    <String name="&lt;OpeningAction&gt;k__BackingField" />
+    <String name="&lt;ClosingAction&gt;k__BackingField" />
+    <String name="name">NavigationBug</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ViewCollection, Standalone" id="30">
+    <Saveable name="Items0" id="31" />
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.NavigationModel, Standalone" id="34">
+    <Int name="&lt;StartIndex&gt;k__BackingField">0</Int>
+    <String name="name">DefaultNavigation</String>
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.ModelCollection, Standalone" id="33">
+    <Saveable name="Items0" id="34" />
+  </Saveable>
+  <Saveable type="Medical.Controller.AnomalousMvc.AnomalousMvcContext, Standalone" id="0">
+    <String name="StartupAction">Common/Start</String>
+    <String name="ShutdownAction">Common/Shutdown</String>
+    <String name="ResumeAction" />
+    <String name="SuspendAction" />
+    <String name="RemovedFromStackAction" />
+    <String name="FocusAction" />
+    <String name="BlurAction" />
+    <Saveable name="Controllers" id="1" />
+    <Saveable name="Views" id="30" />
+    <Saveable name="Models" id="33" />
+  </Saveable>
+</Save>

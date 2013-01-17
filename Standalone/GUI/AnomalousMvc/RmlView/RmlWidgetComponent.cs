@@ -46,6 +46,33 @@ namespace Medical.GUI.AnomalousMvc
             view._fireComponentCreated(this);
         }
 
+        public RmlWidgetComponent(RawRmlView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetComponent.layout", viewHost)
+        {
+            this.context = context;
+
+            rmlImage = (ImageBox)widget;
+            rocketWidget = new RocketWidget(rmlImage);
+            imageHeight = rmlImage.Height;
+
+            if (view.Rml != null)
+            {
+                RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(view.Rml))
+                {
+                    if (document != null)
+                    {
+                        document.Show();
+                        rocketWidget.removeFocus();
+                        rocketWidget.renderOnNextFrame();
+                    }
+                }
+                RocketEventListenerInstancer.resetEventController();
+            }
+
+            view._fireComponentCreated(this);
+        }
+
         public override void Dispose()
         {
             rocketWidget.Dispose();

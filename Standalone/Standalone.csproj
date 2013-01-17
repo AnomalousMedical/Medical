@@ -147,6 +147,8 @@
     <Compile Include="Controller\IdleHandler.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
+    <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
+    <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />
     <Compile Include="Controller\Resources\ResourceProviderRocketFSExtension.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugView.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlView\RawRmlView.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlViewHostControl.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
@@ -618,10 +621,12 @@
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Controller\WindowListener.cs" />
     <Compile Include="Utility\Node.cs" />
+    <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\TwoWayCommand.cs" />
     <Compile Include="Utility\TwoWayCommandBuffer.cs" />
     <Compile Include="Utility\TwoWayDelegateCommand.cs" />
     <Compile Include="Utility\UndoRedoBuffer.cs" />
+    <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

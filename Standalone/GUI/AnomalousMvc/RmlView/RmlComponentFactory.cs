@@ -15,6 +15,10 @@ namespace Medical.GUI.AnomalousMvc
             {
                 return new RmlWidgetComponent((RmlView)view, context, viewHost);
             }
+            else if (view is RawRmlView)
+            {
+                return new RmlWidgetComponent((RawRmlView)view, context, viewHost);
+            }
             return null;
         }
 

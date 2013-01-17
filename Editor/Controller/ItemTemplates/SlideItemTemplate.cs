@@ -47,6 +47,7 @@ namespace Medical
                     slide.MedicalState = medicalStateController.createPresetState("");
                     slide.MusclePosition = new MusclePosition();
                     slide.MusclePosition.captureState();
+                    slide.Rml = defaultSlide;
                     return slide;
                 });
             editorController.saveAllCachedResources();
@@ -117,5 +118,16 @@ namespace Medical
             RmlView view = new RmlView(name);
             mvcContext.Views.add(view);
         }
+
+        private const String defaultSlide = @"<rml>
+	<head>
+		<link type=""text/template"" href=""/MasterTemplate.trml"" />
+	</head>
+	<body template=""MasterTemplate"">
+        <h1>Insert Heading Here</h1>
+        <p>Type paragraph here.</p>
+    </body>
+</rml>
+";
     }
 }

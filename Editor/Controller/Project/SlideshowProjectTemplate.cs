@@ -11,17 +11,17 @@ namespace Medical.GUI
 {
     class SlideshowProjectTemplate : ProjectTemplate
     {
-        private const String MvcContextName = "MvcContext.mvc";
+        private const String SlideshowName = "Slides.show";
 
         public void createProject(EditorResourceProvider resourceProvider, string projectName)
         {
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleMvcContext_mvc, MvcContextName, resourceProvider);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleMvcContext_mvc, SlideshowName, resourceProvider);
 
             DDAtlasPlugin ddPlugin = new DDAtlasPlugin();
             ddPlugin.PluginName = projectName;
             ddPlugin.PluginNamespace = projectName;
-            StartAnomalousMvcTask mvcTask = new StartAnomalousMvcTask("Task", projectName, "", "Slideshows");
-            mvcTask.ContextFile = MvcContextName;
+            StartSlideshowTask mvcTask = new StartSlideshowTask("Task", projectName, "", "Slideshows");
+            mvcTask.SlideshowFile = SlideshowName;
             ddPlugin.addTask(mvcTask);
             saveObject(ddPlugin, resourceProvider, "Plugin.ddp");
 
@@ -29,12 +29,9 @@ namespace Medical.GUI
 
             EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider);
             EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider);
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideshowMvcContext.File, "MvcContext.mvc", resourceProvider);
 
-            using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("Index.slides")))
-            {
-                streamWriter.Write("This file a slideshow makes");
-            }
+            Slideshow slideshow = new Slideshow();
+            saveObject(slideshow, resourceProvider, SlideshowName);
         }
 
         public String getDefaultFileName(String projectName)

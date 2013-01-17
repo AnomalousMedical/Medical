@@ -66,7 +66,7 @@ namespace Medical
             }
         }
 
-        public MedicalRmlSlide(LoadInfo info)
+        protected MedicalRmlSlide(LoadInfo info)
             :base(info)
         {
 
