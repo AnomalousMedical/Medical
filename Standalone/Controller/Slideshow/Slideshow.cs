@@ -1,4 +1,5 @@
-﻿using Engine.Saving;
+﻿using Engine.Editing;
+using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
 using System;
@@ -17,6 +18,26 @@ namespace Medical
         public Slideshow()
         {
 
+        }
+
+        public void addSlide(Slide slide)
+        {
+            slides.Add(slide);
+        }
+
+        public void removeSlide(Slide slide)
+        {
+            slides.Remove(slide);
+        }
+
+        public void insertSlide(Slide before, Slide insert)
+        {
+            insertSlide(slides.IndexOf(before), insert);
+        }
+
+        public void insertSlide(int index, Slide slide)
+        {
+            slides.Insert(index, slide);
         }
 
         public AnomalousMvcContext createContext(ResourceProvider resourceProvider)
@@ -43,6 +64,14 @@ namespace Medical
             return mvcContext;
         }
 
+        public IEnumerable<Slide> Slides
+        {
+            get
+            {
+                return slides.AsReadOnly();
+            }
+        }
+
         protected Slideshow(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
@@ -53,6 +82,11 @@ namespace Medical
         {
             ReflectedSaver.SaveObject(this, info, ReflectedSaver.DefaultScanner);
             info.ExtractList("Slides", slides);
+        }
+
+        public EditInterface getEditInterface()
+        {
+            throw new NotImplementedException();
         }
     }
 }

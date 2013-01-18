@@ -84,6 +84,7 @@
     <Compile Include="Controller\ShowEditorContext.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\ShowTypeController.cs" />
     <Compile Include="Controller\Project\SlideshowProjectTemplate.cs" />
+    <Compile Include="Controller\SlideshowEditController.cs" />
     <Compile Include="GUI\RmlWysiwyg\RawRmlWysiwygView.cs" />
     <Compile Include="GUI\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponent.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
     <Compile Include="GUI\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
+    <Compile Include="GUI\SlideshowExplorer\SlideshowExplorer.cs" />
     <Compile Include="GUI\TextEditor\XmlTextHighlighter.cs" />
     <Compile Include="GUI\TextEditor\CssTextHighlighter.cs" />
     <Compile Include="GUI\TextEditor\RmlTextHighlighter.cs" />
@@ -275,6 +277,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
+    <EmbeddedResource Include="GUI\SlideshowExplorer\SlideshowExplorer.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\PropTimeline.layout" />

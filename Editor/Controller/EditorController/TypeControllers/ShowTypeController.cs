@@ -23,34 +23,6 @@ namespace Medical
 
         }
 
-        public String createFileSafely(String filePath)
-        {
-            filePath = Path.ChangeExtension(filePath, Extension);
-            if (EditorController.ResourceProvider.exists(filePath))
-            {
-                MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
-                {
-                    if (overrideResult == MessageBoxStyle.Yes)
-                    {
-                        createNewShow(filePath);
-                    }
-                });
-            }
-            else
-            {
-                createNewShow(filePath);
-            }
-            return filePath;
-        }
-
-        void createNewShow(String filePath)
-        {
-            Slideshow slideshow = new Slideshow();
-            creatingNewFile(filePath);
-            saveObject(filePath, slideshow);
-            openEditor(filePath);
-        }
-
         public void save(Slideshow slide, String filename)
         {
             try
@@ -60,8 +32,8 @@ namespace Medical
             }
             catch (Exception ex)
             {
-                MessageBox.show(String.Format("There was an error saving your timeline to\n'{0}'\nPlease make sure that destination is valid.", filename), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                Log.Error("Could not save timeline. {0}", ex.Message);
+                MessageBox.show(String.Format("There was an error saving your slideshow to\n'{0}'\nPlease make sure that destination is valid.", filename), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Could not save slideshow. {0}", ex.Message);
             }
         }
     }

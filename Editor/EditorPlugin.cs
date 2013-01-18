@@ -31,6 +31,11 @@ namespace Medical
         private PropEditController propEditController;
         private TypeControllerManager typeControllerManager;
 
+        private SlideshowExplorer slideshowExplorer;
+        private EditorController slideshowEditorController;
+        private SlideshowEditController slideshowEditController;
+
+
         public EditorPlugin()
         {
             Log.Info("Editor GUI Loaded");
@@ -63,6 +68,7 @@ namespace Medical
         {
             EditorConfig.save();
             projectExplorer.Dispose();
+            slideshowExplorer.Dispose();
             scratchArea.Dispose();
             aspectRatioTask.Dispose();
             editorController.Dispose();
@@ -95,6 +101,8 @@ namespace Medical
             standaloneController.DocumentController.addDocumentHandler(new ProjectDocumentHandler(editorController));
             propEditController = new PropEditController(propMover);
 
+            slideshowEditorController = new EditorController(standaloneController, editorTimelineController);
+
             //UI Helpers
             editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
@@ -105,11 +113,16 @@ namespace Medical
             projectExplorer = new ProjectExplorer(editorController);
             guiManager.addManagedDialog(projectExplorer);
 
+            slideshowEditController = new SlideshowEditController(standaloneController, this.UICallback, this.propEditController, slideshowEditorController);
+            slideshowExplorer = new SlideshowExplorer(slideshowEditorController, slideshowEditController);
+            guiManager.addManagedDialog(slideshowExplorer);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "Editor/ProjectExplorerIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Slideshow Editor", CommonResources.NoIcon, TaskMenuCategories.Editor));
 
             typeControllerManager = new TypeControllerManager(standaloneController, this);
 

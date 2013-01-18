@@ -25,19 +25,16 @@ namespace Medical
             Redo
         }
 
-        private TextEditorComponent textEditorComponent;
         private RmlWysiwygComponent rmlComponent;
-        private String currentFile;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
-        private ShowTypeController showTypeController;
+        private Slide slide;
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
 
-        public ShowEditorContext(String file, ShowTypeController showTypeController, EditorUICallback uiCallback, AnomalousMvcContext editingMvcContext)
+        public ShowEditorContext(MedicalRmlSlide slide, EditorUICallback uiCallback)
         {
-            this.showTypeController = showTypeController;
-            this.currentFile = file;
+            this.slide = slide;
             this.uiCallback = uiCallback;
 
             undoBuffer = new UndoRedoBuffer(50);
@@ -49,28 +46,24 @@ namespace Medical
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
 
-            TextEditorView textEditorView = new TextEditorView("RmlEditor", () => rmlComponent.CurrentRml, wordWrap: false, textHighlighter: RmlTextHighlighter.Instance);
-            textEditorView.ViewLocation = ViewLocations.Left;
-            textEditorView.IsWindow = true;
-            textEditorView.Buttons.add(new CloseButtonDefinition("Close", "RmlTextEditor/Close"));
-            textEditorView.ComponentCreated += (view, component) =>
-            {
-                textEditorComponent = component;
-            };
-            mvcContext.Views.add(textEditorView);
+            //ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", showTypeController.CurrentObject.getEditInterface());
+            //genericEditor.IsWindow = true;
+            //genericEditor.ViewLocation = ViewLocations.Left;
+            //mvcContext.Views.add(genericEditor);
             
             RawRmlWysiwygView rmlView = new RawRmlWysiwygView("RmlView", uiCallback, uiCallback, undoBuffer);
             rmlView.ViewLocation = ViewLocations.Left;
             rmlView.IsWindow = true;
+            rmlView.Rml = slide.Rml;
             rmlView.ComponentCreated += (view, component) =>
             {
                 rmlComponent = component;
                 rmlComponent.RmlEdited += rmlEditor =>
                 {
-                    if (textEditorComponent != null)
-                    {
-                        textEditorComponent.Text = rmlEditor.CurrentRml;
-                    }
+                    //if (textEditorComponent != null)
+                    //{
+                    //    textEditorComponent.Text = rmlEditor.CurrentRml;
+                    //}
                 };
             };
             mvcContext.Views.add(rmlView);
@@ -103,7 +96,7 @@ namespace Medical
             htmlDragDrop.IsWindow = true;
             mvcContext.Views.add(htmlDragDrop);
 
-            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
+            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", "NOT DEFINED", "Editor/Close");
             taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
             {
                 saveAll();
@@ -117,17 +110,6 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("RmlEditor", "Edit Rml", RmlTypeController.Icon, "Edit", "RmlTextEditor/Show", mvcContext));
             mvcContext.Views.add(taskbar);
-
-            mvcContext.Controllers.add(new MvcController("RmlTextEditor",
-                new RunCommandsAction("Show",
-                    new ShowViewIfNotOpenCommand("RmlEditor")),
-                new RunCommandsAction("Close",
-                    new CloseViewCommand(),
-                    new CallbackCommand(context =>
-                        {
-                            textEditorComponent = null;
-                        }))
-                    ));
 
             mvcContext.Controllers.add(new MvcController("HtmlDragDrop",
                 new RunCommandsAction("Show",
@@ -147,31 +129,19 @@ namespace Medical
                     }),
                 new CallbackAction("Cut", context =>
                     {
-                        if (textEditorComponent != null)
-                        {
-                            textEditorComponent.cut();
-                        }
+                        
                     }),
                 new CallbackAction("Copy", context =>
                     {
-                        if (textEditorComponent != null)
-                        {
-                            textEditorComponent.copy();
-                        }
+                        
                     }),
                 new CallbackAction("Paste", context =>
                     {
-                        if (textEditorComponent != null)
-                        {
-                            textEditorComponent.paste();
-                        }
+                        
                     }),
                 new CallbackAction("SelectAll", context =>
                     {
-                        if (textEditorComponent != null)
-                        {
-                            textEditorComponent.selectAll();
-                        }
+                        
                     }),
                 new CallbackAction("Undo", context =>
                     {
@@ -231,57 +201,6 @@ namespace Medical
                 undoBuffer.execute();
             };
             eventContext.addEvent(redoEvent);
-
-            if (editingMvcContext != null)
-            {
-                String controllerName = PathExtensions.RemoveExtension(file);
-                if(editingMvcContext.Controllers.hasItem(controllerName))
-                {
-                    MvcController viewController = editingMvcContext.Controllers[controllerName];
-
-                    GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", viewController.getEditInterface(), true);
-                    genericPropertiesView.ViewLocation = ViewLocations.Left;
-                    genericPropertiesView.IsWindow = true;
-                    genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcEditor/Close"));
-                    mvcContext.Views.add(genericPropertiesView);
-
-                    taskbar.addTask(new RunMvcContextActionTask("EditActions", "Edit Actions", "MvcContextEditor/ControllerIcon", "Edit", "MvcEditor/Show", mvcContext));
-
-                    mvcContext.Controllers.add(new MvcController("MvcEditor",
-                    new RunCommandsAction("Show",
-                        new ShowViewIfNotOpenCommand("MvcContext")),
-                    new RunCommandsAction("Close",
-                        new CloseViewCommand())
-                    ));
-                }
-
-                if (editingMvcContext.Views.hasItem(controllerName))
-                {
-                    RmlView view = editingMvcContext.Views[controllerName] as RmlView;
-                    if (view != null && view.RmlFile == file)
-                    {
-                        GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcView", view.getEditInterface(), true);
-                        genericPropertiesView.ViewLocation = ViewLocations.Left;
-                        genericPropertiesView.IsWindow = true;
-                        genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcViewEditor/Close"));
-                        mvcContext.Views.add(genericPropertiesView);
-
-                        taskbar.addTask(new RunMvcContextActionTask("EditView", "Edit View", "MvcContextEditor/IndividualViewIcon", "Edit", "MvcViewEditor/Show", mvcContext));
-
-                        mvcContext.Controllers.add(new MvcController("MvcViewEditor",
-                        new RunCommandsAction("Show",
-                            new ShowViewIfNotOpenCommand("MvcView")),
-                        new RunCommandsAction("Close",
-                            new CloseViewCommand())
-                        ));
-                    }
-                }
-
-                taskbar.addTask(new CallbackTask("PreviewMvc", "Preview", "MvcContextEditor/MVCcomIcon", "", 0, true, (item) =>
-                {
-                    uiCallback.previewMvcContext(editingMvcContext);
-                }));
-            }
         }
 
         public void close()
@@ -301,24 +220,7 @@ namespace Medical
         {
             get
             {
-                //If the text editor is open it is the master, if it is not then
-                //use the rml wysiwyg
-                if (textEditorComponent != null)
-                {
-                    return textEditorComponent.Text;
-                }
-                else
-                {
-                    return rmlComponent.CurrentRml;
-                }
-            }
-        }
-
-        public string CurrentFile
-        {
-            get
-            {
-                return currentFile;
+                return rmlComponent.CurrentRml;
             }
         }
 
@@ -327,14 +229,12 @@ namespace Medical
             preSave();
             //rmlTypeController.updateCachedText(currentFile, CurrentText);
             //rmlTypeController.EditorController.saveAllCachedResources();
-            postSave();
         }
 
         private void save()
         {
             preSave();
             //rmlTypeController.saveFile(CurrentText, currentFile);
-            postSave();
         }
 
         private void preSave()
@@ -342,23 +242,6 @@ namespace Medical
             if (rmlComponent != null)
             {
                 rmlComponent.aboutToSaveRml();
-            }
-        }
-
-        private void postSave()
-        {
-            if (textEditorComponent != null)
-            {
-                if (textEditorComponent.ChangesMade)
-                {
-                    if (rmlComponent != null)
-                    {
-                        String undoRml = rmlComponent.UnformattedRml;
-                        rmlComponent.reloadDocument();
-                        rmlComponent.updateUndoStatus(undoRml, true);
-                    }
-                    textEditorComponent.resetChangesMade();
-                }
             }
         }
     }
