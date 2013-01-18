@@ -32,12 +32,12 @@ namespace Medical
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
 
-        public SlideEditorContext(MedicalRmlSlide slide, EditorUICallback uiCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, Action<String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
 
-            undoBuffer = new UndoRedoBuffer(50);
+            this.undoBuffer = undoBuffer;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -66,6 +66,7 @@ namespace Medical
                     //}
                 };
             };
+            rmlView.UndoRedoCallback = wysiwygUndoCallback;
             mvcContext.Views.add(rmlView);
 
             DragAndDropView<WysiwygDragDropItem> htmlDragDrop = new DragAndDropView<WysiwygDragDropItem>("HtmlDragDrop",
@@ -208,6 +209,14 @@ namespace Medical
         public void close()
         {
             mvcContext.runAction("Editor/Close");
+        }
+
+        public void setWysiwygRml(String rml, bool keepScrollPosition)
+        {
+            if (rmlComponent != null)
+            {
+                rmlComponent.setRml(rml, keepScrollPosition);
+            }
         }
 
         public AnomalousMvcContext MvcContext

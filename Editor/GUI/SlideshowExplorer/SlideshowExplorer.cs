@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Engine;
 using System.IO;
 using Engine.Platform;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -21,26 +22,36 @@ namespace Medical.GUI
         MenuItem closeProject;
         MenuItem saveAll;
 
-        MenuItem add;
-
         private Slideshow slideshow;
         private EditorController editorController;
         private SlideshowEditController slideEditController;
+        private UndoRedoBuffer undoBuffer;
+        private bool createSlideChangeUndo = true;
 
-        //Dialogs
+        //Buttons
+        Button addButton;
+        Button removeButton;
+
         private ButtonGrid slideGrid;
         private ScrollView scroll;
+        private ButtonGridItem lastSelectedItem = null;
 
         public SlideshowExplorer(EditorController editorController, SlideshowEditController slideEditController)
             : base("Medical.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
             this.editorController = editorController;
             this.slideEditController = slideEditController;
+            this.undoBuffer = slideEditController.UndoBuffer;
             editorController.ProjectChanged += editorController_ProjectChanged;
 
+            addButton = (Button)window.findWidget("Add");
+            addButton.MouseButtonClick += addButton_MouseButtonClick;
+            removeButton = (Button)window.findWidget("Remove");
+
             slideEditController.SlideshowLoaded += slideEditController_SlideshowLoaded;
-            slideEditController.SlideAdded += slideEditController_SlideAdded;
             slideEditController.SlideshowClosed += slideEditController_SlideshowClosed;
+            slideEditController.SlideAdded += slideEditController_SlideAdded;
+            slideEditController.SlideRemoved += slideEditController_SlideRemoved;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -57,7 +68,6 @@ namespace Medical.GUI
             openProject = fileMenu.addItem("Open Project");
             closeProject = fileMenu.addItem("Close Project");
             saveAll = fileMenu.addItem("Save");
-            add = fileMenu.addItem("Add");
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
         }
@@ -144,6 +154,8 @@ namespace Medical.GUI
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
+            undoBuffer.clear();
+            lastSelectedItem = null;
             if (editorController.ResourceProvider != null)
             {
                 window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
@@ -178,22 +190,23 @@ namespace Medical.GUI
             {
                 editorController.closeProject();
             }
-            else if (menuEventArgs.Item == add)
+        }
+
+        void addButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (slideshow != null)
             {
-                if (slideshow != null)
+                AddItemDialog.AddItem(editorController.ItemTemplates, (itemTemplate) =>
                 {
-                    AddItemDialog.AddItem(editorController.ItemTemplates, (itemTemplate) =>
+                    try
                     {
-                        try
-                        {
-                            ((ProjectItemTemplate)itemTemplate).createItem("", editorController);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                        }
-                    });
-                }
+                        ((ProjectItemTemplate)itemTemplate).createItem("", editorController);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    }
+                });
             }
         }
 
@@ -220,25 +233,65 @@ namespace Medical.GUI
             addSlideToGrid(slide);
         }
 
-        void addSlideToGrid(Slide slide)
+        void slideEditController_SlideRemoved(Slide slide)
         {
-            ButtonGridItem item = slideGrid.addItem("", "Slide " + (slideGrid.Count + 1));
-            item.UserObject = slide;
+            removeSlideFromGrid(slide);
         }
 
         void slideGrid_SelectedValueChanged(object sender, EventArgs e)
         {
             ButtonGridItem item = slideGrid.SelectedItem;
+            if (lastSelectedItem != null && createSlideChangeUndo)
+            {
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<ButtonGridItem, ButtonGridItem>((redoItem) =>
+                    {
+                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                        ThreadManager.invoke(new Action(delegate()
+                            {
+                                createSlideChangeUndo = false;
+                                slideGrid.SelectedItem = redoItem;
+                                createSlideChangeUndo = true;
+                            }));
+                    },
+                    item,
+                    (undoItem) =>
+                    {
+                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                        ThreadManager.invoke(new Action(delegate()
+                            {
+                                createSlideChangeUndo = false;
+                                slideGrid.SelectedItem = undoItem;
+                                createSlideChangeUndo = true;
+                            }));
+                    },
+                    lastSelectedItem));
+            }
             if (item != null)
             {
                 slideEditController.editSlide((Slide)item.UserObject);
             }
+            lastSelectedItem = item;
         }
 
         void slideEditController_SlideshowClosed()
         {
             slideGrid.clear();
             slideshow = null;
+        }
+
+        void addSlideToGrid(Slide slide)
+        {
+            ButtonGridItem item = slideGrid.addItem("", "Slide " + (slideGrid.Count + 1));
+            item.UserObject = slide;
+        }
+
+        void removeSlideFromGrid(Slide slide)
+        {
+            ButtonGridItem item = slideGrid.findItemByUserObject(slide);
+            if (item != null)
+            {
+                slideGrid.removeItem(item);
+            }
         }
     }
 }

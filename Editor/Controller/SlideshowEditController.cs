@@ -12,6 +12,8 @@ namespace Medical
         public event Action<Slide> SlideAdded;
         public event Action<Slide> SlideRemoved;
 
+        private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(50);
+
         //Editor Contexts
         private SlideEditorContext slideEditorContext;
 
@@ -54,7 +56,10 @@ namespace Medical
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, uiCallback);
+                slideEditorContext = new SlideEditorContext(medicalSlide, uiCallback, undoBuffer, (rml) =>
+                {
+                    slideEditorContext.setWysiwygRml(rml, true);
+                });
                 slideEditorContext.Focus += (obj) =>
                 {
                     slideEditorContext = obj;
@@ -77,6 +82,14 @@ namespace Medical
             if (SlideRemoved != null)
             {
                 SlideRemoved.Invoke(slide);
+            }
+        }
+
+        public UndoRedoBuffer UndoBuffer
+        {
+            get
+            {
+                return undoBuffer;
             }
         }
 

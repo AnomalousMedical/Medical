@@ -59,16 +59,15 @@ namespace Medical.GUI
         private bool lastInsertBefore = false;
         private UndoRedoBuffer undoBuffer;
         private String documentName;
+        private Action<String> undoRedoCallback;
 
         private AnomalousMvcContext context;
 
-        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+        private RmlWysiwygComponent(AnomalousMvcContext context, MyGUIViewHost viewHost)
             : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
+            undoRedoCallback = defaultUndoRedoCallback;
             this.context = context;
-            this.uiCallback = view.UICallback;
-            this.browserProvider = view.BrowserProvider;
-            this.undoBuffer = view.UndoBuffer;
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
@@ -82,6 +81,14 @@ namespace Medical.GUI
 
             selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
             draggingElementManager = new DraggingElementManager(this);
+        }
+
+        public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            :this(context, viewHost)
+        {
+            this.uiCallback = view.UICallback;
+            this.browserProvider = view.BrowserProvider;
+            this.undoBuffer = view.UndoBuffer;
 
             documentName = view.RmlFile;
             loadDocumentFile(documentName, false);
@@ -90,25 +97,16 @@ namespace Medical.GUI
         }
 
         public RmlWysiwygComponent(RawRmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
+            : this(context, viewHost)
         {
-            this.context = context;
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
 
-            rmlImage = (ImageBox)widget;
-            rocketWidget = new RocketWidget(rmlImage);
-            rmlImage.MouseButtonClick += new MyGUIEvent(rmlImage_MouseButtonClick);
-            rmlImage.MouseButtonPressed += rmlImage_MouseButtonPressed;
-            rmlImage.MouseButtonReleased += rmlImage_MouseButtonReleased;
-            rmlImage.MouseDrag += new MyGUIEvent(rmlImage_MouseDrag);
-            rmlImage.MouseWheel += new MyGUIEvent(rmlImage_MouseWheel);
-            rmlImage.EventScrollGesture += new MyGUIEvent(rmlImage_EventScrollGesture);
-            imageHeight = rmlImage.Height;
-
-            selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
-            draggingElementManager = new DraggingElementManager(this);
+            if (view.UndoRedoCallback != null)
+            {
+                undoRedoCallback = view.UndoRedoCallback;
+            }
 
             documentName = null;
             setDocumentRml(view.Rml, false);
@@ -147,6 +145,11 @@ namespace Medical.GUI
         public void reloadDocument()
         {
             loadDocumentFile(documentName, true);
+        }
+
+        public void setRml(String rml, bool keepScrollPosition)
+        {
+            setDocumentRml(rml, keepScrollPosition);
         }
 
         public void insertRml(String rml, IntVector2 position)
@@ -652,7 +655,7 @@ namespace Medical.GUI
             }
         }
 
-        private void undoRedoCallback(String rml)
+        private void defaultUndoRedoCallback(String rml)
         {
             cancelAndHideEditor();
             if (setDocumentRml(rml, true))

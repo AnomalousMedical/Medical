@@ -30,6 +30,8 @@ namespace Medical.GUI
         [Editable]
         public String Rml { get; set; }
 
+        public Action<String> UndoRedoCallback { get; set; }
+
         public UndoRedoBuffer UndoBuffer
         {
             get

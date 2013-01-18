@@ -70,5 +70,10 @@ namespace Medical
 
             buffer.push(command);
         }
+
+        public void clear()
+        {
+            buffer.clear();
+        }
     }
 }
