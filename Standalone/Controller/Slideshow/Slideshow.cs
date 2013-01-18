@@ -12,6 +12,8 @@ namespace Medical
 {
     public class Slideshow : Saveable
     {
+        private List<Slide> slides = new List<Slide>();
+
         public Slideshow()
         {
 
@@ -26,19 +28,17 @@ namespace Medical
                 mvcContext = SharedXmlSaver.Load<AnomalousMvcContext>(resourceStream);
             }
             NavigationModel navModel = (NavigationModel)mvcContext.Models[SlideshowProps.BaseContextProperties.NavigationModel];
-            foreach (String file in resourceProvider.listFiles("*.sld"))
+            int i = 0;
+            foreach(Slide slide in slides)
             {
-                using (Stream stream = resourceProvider.openFile(file))
-                {
-                    Slide slide = SharedXmlSaver.Load<Slide>(stream);
-                    View view = slide.createView(file);
-                    mvcContext.Views.add(view);
+                String slideName = "Slide" + i++;
+                View view = slide.createView(slideName);
+                mvcContext.Views.add(view);
 
-                    MvcController controller = slide.createController(file, view.Name);
-                    mvcContext.Controllers.add(controller);
-                    NavigationLink link = new NavigationLink(file, null, file + "/Show");
-                    navModel.addNavigationLink(link);
-                }
+                MvcController controller = slide.createController(slideName, view.Name);
+                mvcContext.Controllers.add(controller);
+                NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");
+                navModel.addNavigationLink(link);
             }
             return mvcContext;
         }
@@ -46,11 +46,13 @@ namespace Medical
         protected Slideshow(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
+            info.RebuildList("Slides", slides);
         }
 
         public virtual void getInfo(SaveInfo info)
         {
             ReflectedSaver.SaveObject(this, info, ReflectedSaver.DefaultScanner);
+            info.ExtractList("Slides", slides);
         }
     }
 }

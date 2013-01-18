@@ -89,6 +89,33 @@ namespace Medical.GUI
             view._fireComponentCreated(this);
         }
 
+        public RmlWysiwygComponent(RawRmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
+            : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
+        {
+            this.context = context;
+            this.uiCallback = view.UICallback;
+            this.browserProvider = view.BrowserProvider;
+            this.undoBuffer = view.UndoBuffer;
+
+            rmlImage = (ImageBox)widget;
+            rocketWidget = new RocketWidget(rmlImage);
+            rmlImage.MouseButtonClick += new MyGUIEvent(rmlImage_MouseButtonClick);
+            rmlImage.MouseButtonPressed += rmlImage_MouseButtonPressed;
+            rmlImage.MouseButtonReleased += rmlImage_MouseButtonReleased;
+            rmlImage.MouseDrag += new MyGUIEvent(rmlImage_MouseDrag);
+            rmlImage.MouseWheel += new MyGUIEvent(rmlImage_MouseWheel);
+            rmlImage.EventScrollGesture += new MyGUIEvent(rmlImage_EventScrollGesture);
+            imageHeight = rmlImage.Height;
+
+            selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
+            draggingElementManager = new DraggingElementManager(this);
+
+            documentName = null;
+            setDocumentRml(view.Rml, false);
+
+            view._fireComponentCreated(this);
+        }
+
         public override void Dispose()
         {
             draggingElementManager.Dispose();

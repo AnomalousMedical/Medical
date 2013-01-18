@@ -21,6 +21,10 @@ namespace Medical.GUI
             {
                 return new RmlWysiwygComponent((RmlWysiwygView)view, context, viewHost);
             }
+            if (view is RawRmlWysiwygView)
+            {
+                return new RmlWysiwygComponent((RawRmlWysiwygView)view, context, viewHost);
+            }
             return null;
         }
 

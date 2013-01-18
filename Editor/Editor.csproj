@@ -81,9 +81,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\EditorController\TypeControllers\SlideTypeController.cs" />
-    <Compile Include="Controller\ItemTemplates\SlideItemTemplate.cs" />
+    <Compile Include="Controller\ShowEditorContext.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\ShowTypeController.cs" />
     <Compile Include="Controller\Project\SlideshowProjectTemplate.cs" />
+    <Compile Include="GUI\RmlWysiwyg\RawRmlWysiwygView.cs" />
     <Compile Include="GUI\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponent.cs" />
     <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />

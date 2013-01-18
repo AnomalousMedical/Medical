@@ -20,6 +20,7 @@ namespace Medical
         private RcssEditorContext rcssEditorContext;
         private TRmlEditorContext trmlEditorContext;
         private XmlEditorContext xmlEditorContext;
+        private ShowEditorContext showEditorContext;
 
         private PropEditController propEditController;
         private StandaloneController standaloneController;
@@ -189,13 +190,29 @@ namespace Medical
                 editorController.runEditorContext(xmlEditorContext.MvcContext);
             };
 
-            //Slide Type Controller
-            SlideTypeController slideTypeController = new SlideTypeController(editorController);
+            //Show Type Controller
+            ShowTypeController showTypeController = new ShowTypeController(editorController);
+            showTypeController.OpenEditor += (file, slideshow) =>
+                {
+                    showEditorContext = new ShowEditorContext(file, showTypeController, plugin.UICallback, mvcTypeController.CurrentObject);
+                    showEditorContext.Focus += (obj) =>
+                    {
+                        showEditorContext = obj;
+                    };
+                    showEditorContext.Blur += obj =>
+                    {
+                        //rmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                        if (showEditorContext == obj)
+                        {
+                            showEditorContext = null;
+                        }
+                    };
+                    editorController.runEditorContext(showEditorContext.MvcContext);
+                };
 
             //Add item templates
             editorController.addItemTemplate(new EmptyViewItemTemplate(rmlTypeController, mvcTypeController));
             editorController.addItemTemplate(new ViewWithTimelineItemTemplate(rmlTypeController, mvcTypeController, timelineTypeController));
-            editorController.addItemTemplate(new SlideItemTemplate(slideTypeController, mvcTypeController, standaloneController.SceneViewController, standaloneController.MedicalStateController));
 
             //Add type controllers to editor controller, this also adds some item templates
             editorController.addTypeController(timelineTypeController);
@@ -206,7 +223,7 @@ namespace Medical
             editorController.addTypeController(mvcTypeController);
             editorController.addTypeController(pluginTypeController);
             editorController.addTypeController(xmlTypeController);
-            editorController.addTypeController(slideTypeController);
+            editorController.addTypeController(showTypeController);
 
             //Add any final item templates
             editorController.addItemTemplate(new PluginBrandingResourceItemTemplate());
@@ -241,6 +258,10 @@ namespace Medical
             if (trmlEditorContext != null)
             {
                 trmlEditorContext.close();
+            }
+            if (showEditorContext != null)
+            {
+                showEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)

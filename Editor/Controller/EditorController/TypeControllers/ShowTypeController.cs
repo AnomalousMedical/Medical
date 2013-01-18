@@ -13,18 +13,17 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public class SlideTypeController : SaveableTypeController<Slide>
+    public class ShowTypeController : SaveableTypeController<Slideshow>
     {
         public const String Icon = CommonResources.NoIcon;
-        public delegate Slide CreateSlide(String filePath);
 
-        public SlideTypeController(EditorController editorController)
-            : base(".sld", editorController)
+        public ShowTypeController(EditorController editorController)
+            : base(".show", editorController)
         {
 
         }
 
-        public String createSlideFileSafely(String filePath, CreateSlide createSlideCb)
+        public String createFileSafely(String filePath)
         {
             filePath = Path.ChangeExtension(filePath, Extension);
             if (EditorController.ResourceProvider.exists(filePath))
@@ -33,26 +32,26 @@ namespace Medical
                 {
                     if (overrideResult == MessageBoxStyle.Yes)
                     {
-                        createNewSlide(filePath, createSlideCb);
+                        createNewShow(filePath);
                     }
                 });
             }
             else
             {
-                createNewSlide(filePath, createSlideCb);
+                createNewShow(filePath);
             }
             return filePath;
         }
 
-        void createNewSlide(String filePath, CreateSlide createSlideCb)
+        void createNewShow(String filePath)
         {
-            Slide slide = createSlideCb(filePath);
+            Slideshow slideshow = new Slideshow();
             creatingNewFile(filePath);
-            saveObject(filePath, slide);
+            saveObject(filePath, slideshow);
             openEditor(filePath);
         }
 
-        public void save(Slide slide, String filename)
+        public void save(Slideshow slide, String filename)
         {
             try
             {
