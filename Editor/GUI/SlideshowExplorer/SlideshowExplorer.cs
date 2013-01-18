@@ -40,6 +40,7 @@ namespace Medical.GUI
 
             slideEditController.SlideshowLoaded += slideEditController_SlideshowLoaded;
             slideEditController.SlideAdded += slideEditController_SlideAdded;
+            slideEditController.SlideshowClosed += slideEditController_SlideshowClosed;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -204,8 +205,8 @@ namespace Medical.GUI
 
         void slideEditController_SlideshowLoaded(Slideshow show)
         {
-            slideGrid.clear();
             slideGrid.SuppressLayout = true;
+            slideGrid.clear();
             foreach (Slide slide in show.Slides)
             {
                 addSlideToGrid(slide);
@@ -233,6 +234,12 @@ namespace Medical.GUI
             {
                 slideEditController.editSlide((Slide)item.UserObject);
             }
+        }
+
+        void slideEditController_SlideshowClosed()
+        {
+            slideGrid.clear();
+            slideshow = null;
         }
     }
 }

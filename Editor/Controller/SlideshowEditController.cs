@@ -9,6 +9,7 @@ namespace Medical
     {
         public event Action<Slideshow> SlideshowLoaded;
         public event Action<Slide> SlideAdded;
+        public event Action SlideshowClosed;
 
         //Editor Contexts
         private SlideEditorContext slideEditorContext;
@@ -94,6 +95,10 @@ namespace Medical
                         loadSlideshow(firstFile);
                     }
                 }
+            }
+            else if (SlideshowClosed != null)
+            {
+                SlideshowClosed.Invoke();
             }
         }
 
