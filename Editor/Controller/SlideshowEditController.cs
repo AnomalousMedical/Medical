@@ -10,13 +10,14 @@ namespace Medical
         public event Action<Slideshow> SlideshowLoaded;
 
         //Editor Contexts
-        private ShowEditorContext showEditorContext;
+        private SlideEditorContext slideEditorContext;
 
         private StandaloneController standaloneController;
         private PropEditController propEditController;
         private EditorController editorController;
         private ShowTypeController showTypeController;
         private EditorUICallback uiCallback;
+        private Slideshow slideshow;
 
         public SlideshowEditController(StandaloneController standaloneController, EditorUICallback uiCallback, PropEditController propEditController, EditorController editorController)
         {
@@ -29,31 +30,44 @@ namespace Medical
             //Show Type Controller
             showTypeController = new ShowTypeController(editorController);
             editorController.addTypeController(showTypeController);
+
+            MedicalSlideItemTemplate medicalSlideTemplate = new MedicalSlideItemTemplate(standaloneController.SceneViewController, standaloneController.MedicalStateController);
+            medicalSlideTemplate.SlideCreated += (slide) =>
+                {
+                    if (slideshow != null)
+                    {
+                        slideshow.addSlide(slide);
+                    }
+                };
+            editorController.addItemTemplate(medicalSlideTemplate);
         }
 
-        public void editSlide(MedicalRmlSlide slide)
+        public void editSlide(Slide slide)
         {
-            showEditorContext = new ShowEditorContext(slide, uiCallback);
-            showEditorContext.Focus += (obj) =>
+            if (slide is MedicalRmlSlide)
             {
-                showEditorContext = obj;
-            };
-            showEditorContext.Blur += obj =>
-            {
-                //rmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
-                if (showEditorContext == obj)
+                slideEditorContext = new SlideEditorContext((MedicalRmlSlide)slide, uiCallback);
+                slideEditorContext.Focus += (obj) =>
                 {
-                    showEditorContext = null;
-                }
-            };
-            editorController.runEditorContext(showEditorContext.MvcContext);
+                    slideEditorContext = obj;
+                };
+                slideEditorContext.Blur += obj =>
+                {
+                    //rmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                    if (slideEditorContext == obj)
+                    {
+                        slideEditorContext = null;
+                    }
+                };
+                editorController.runEditorContext(slideEditorContext.MvcContext);
+            }
         }
 
         void editorController_ProjectChanged(EditorController editorController, string fullFilePath)
         {
-            if (showEditorContext != null)
+            if (slideEditorContext != null)
             {
-                showEditorContext.close();
+                slideEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)
@@ -79,7 +93,7 @@ namespace Medical
 
         void loadSlideshow(String file)
         {
-            Slideshow slideshow = editorController.loadFile<Slideshow>(file);
+            slideshow = editorController.loadFile<Slideshow>(file);
             if (SlideshowLoaded != null)
             {
                 SlideshowLoaded.Invoke(slideshow);

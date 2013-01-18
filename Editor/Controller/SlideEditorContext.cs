@@ -13,10 +13,10 @@ using Medical.Editor;
 
 namespace Medical
 {
-    class ShowEditorContext
+    class SlideEditorContext
     {
-        public event Action<ShowEditorContext> Focus;
-        public event Action<ShowEditorContext> Blur;
+        public event Action<SlideEditorContext> Focus;
+        public event Action<SlideEditorContext> Blur;
 
         enum Events
         {
@@ -32,7 +32,7 @@ namespace Medical
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
 
-        public ShowEditorContext(MedicalRmlSlide slide, EditorUICallback uiCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, EditorUICallback uiCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
