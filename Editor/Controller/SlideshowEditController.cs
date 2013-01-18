@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Medical.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Medical
         public event Action SlideshowClosed;
         public event Action<Slide> SlideAdded;
         public event Action<Slide> SlideRemoved;
+        public event Action<Slide> SlideSelected;
 
         private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(50);
 
@@ -23,6 +25,9 @@ namespace Medical
         private ShowTypeController showTypeController;
         private EditorUICallback uiCallback;
         private Slideshow slideshow;
+
+        private bool allowUndoCreation = true;
+        private Slide lastEditSlide = null;
 
         public SlideshowEditController(StandaloneController standaloneController, EditorUICallback uiCallback, PropEditController propEditController, EditorController editorController)
         {
@@ -39,20 +44,14 @@ namespace Medical
             MedicalSlideItemTemplate medicalSlideTemplate = new MedicalSlideItemTemplate(standaloneController.SceneViewController, standaloneController.MedicalStateController);
             medicalSlideTemplate.SlideCreated += (slide) =>
                 {
-                    if (slideshow != null)
-                    {
-                        slideshow.addSlide(slide);
-                        if (SlideAdded != null)
-                        {
-                            SlideAdded.Invoke(slide);
-                        }
-                    }
+                    addSlide(slide);
                 };
             editorController.addItemTemplate(medicalSlideTemplate);
         }
 
         public void editSlide(Slide slide)
         {
+            bool undoNeeded = false;
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
@@ -73,6 +72,46 @@ namespace Medical
                     }
                 };
                 editorController.runEditorContext(slideEditorContext.MvcContext);
+                undoNeeded = true;
+            }
+
+            if (undoNeeded)
+            {
+                if (lastEditSlide != null && allowUndoCreation)
+                {
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<Slide, Slide>(
+                        (redoItem) =>
+                        {
+                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                            ThreadManager.invoke(new Action(delegate()
+                            {
+                                allowUndoCreation = false;
+                                if (SlideSelected != null)
+                                {
+                                    SlideSelected.Invoke(redoItem);
+                                }
+                                allowUndoCreation = true;
+                            }));
+                        },
+                        slide,
+                        (undoItem) =>
+                        {
+                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                            ThreadManager.invoke(new Action(delegate()
+                            {
+                                allowUndoCreation = false;
+                                if (SlideSelected != null)
+                                {
+                                    SlideSelected.Invoke(undoItem);
+                                }
+                                allowUndoCreation = true;
+                            }));
+                        },
+                        lastEditSlide)
+                    );
+                }
+
+                lastEditSlide = slide;
             }
         }
 
@@ -82,6 +121,47 @@ namespace Medical
             if (SlideRemoved != null)
             {
                 SlideRemoved.Invoke(slide);
+            }
+            if (allowUndoCreation)
+            {
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<Slide>((executeSlide) =>
+                {
+                    allowUndoCreation = false;
+                    slideshow.removeSlide(executeSlide);
+                    allowUndoCreation = true;
+                },
+                (undoSlide) =>
+                {
+                    allowUndoCreation = false;
+                    slideshow.addSlide(undoSlide);
+                    allowUndoCreation = true;
+                },
+                slide));
+            }
+        }
+
+        public void addSlide(Slide slide)
+        {
+            slideshow.addSlide(slide);
+            if (SlideAdded != null)
+            {
+                SlideAdded.Invoke(slide);
+            }
+            if (allowUndoCreation)
+            {
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<Slide>((executeSlide) =>
+                {
+                    allowUndoCreation = false;
+                    slideshow.addSlide(executeSlide);
+                    allowUndoCreation = true;
+                },
+                (undoSlide) =>
+                {
+                    allowUndoCreation = false;
+                    slideshow.removeSlide(undoSlide);
+                    allowUndoCreation = true;
+                },
+                slide));
             }
         }
 
@@ -99,6 +179,8 @@ namespace Medical
             {
                 slideEditorContext.close();
             }
+            lastEditSlide = null;
+            undoBuffer.clear();
 
             if (editorController.ResourceProvider != null)
             {

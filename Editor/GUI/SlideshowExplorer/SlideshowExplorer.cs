@@ -25,8 +25,6 @@ namespace Medical.GUI
         private Slideshow slideshow;
         private EditorController editorController;
         private SlideshowEditController slideEditController;
-        private UndoRedoBuffer undoBuffer;
-        private bool createSlideChangeUndo = true;
 
         //Buttons
         Button addButton;
@@ -34,24 +32,24 @@ namespace Medical.GUI
 
         private ButtonGrid slideGrid;
         private ScrollView scroll;
-        private ButtonGridItem lastSelectedItem = null;
 
         public SlideshowExplorer(EditorController editorController, SlideshowEditController slideEditController)
             : base("Medical.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
             this.editorController = editorController;
             this.slideEditController = slideEditController;
-            this.undoBuffer = slideEditController.UndoBuffer;
             editorController.ProjectChanged += editorController_ProjectChanged;
 
             addButton = (Button)window.findWidget("Add");
             addButton.MouseButtonClick += addButton_MouseButtonClick;
             removeButton = (Button)window.findWidget("Remove");
+            removeButton.MouseButtonClick += removeButton_MouseButtonClick;
 
             slideEditController.SlideshowLoaded += slideEditController_SlideshowLoaded;
             slideEditController.SlideshowClosed += slideEditController_SlideshowClosed;
             slideEditController.SlideAdded += slideEditController_SlideAdded;
             slideEditController.SlideRemoved += slideEditController_SlideRemoved;
+            slideEditController.SlideSelected += slideEditController_SlideSelected;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -154,8 +152,6 @@ namespace Medical.GUI
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
-            undoBuffer.clear();
-            lastSelectedItem = null;
             if (editorController.ResourceProvider != null)
             {
                 window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
@@ -210,6 +206,18 @@ namespace Medical.GUI
             }
         }
 
+        void removeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (slideshow != null)
+            {
+                ButtonGridItem selectedItem = slideGrid.SelectedItem;
+                if (selectedItem != null)
+                {
+                    slideEditController.removeSlide((Slide)selectedItem.UserObject);
+                }
+            }
+        }
+
         void fileBrowser_FileSelected(FileBrowserTree tree, string path)
         {
             editorController.openEditor(path);
@@ -241,36 +249,10 @@ namespace Medical.GUI
         void slideGrid_SelectedValueChanged(object sender, EventArgs e)
         {
             ButtonGridItem item = slideGrid.SelectedItem;
-            if (lastSelectedItem != null && createSlideChangeUndo)
-            {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<ButtonGridItem, ButtonGridItem>((redoItem) =>
-                    {
-                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                        ThreadManager.invoke(new Action(delegate()
-                            {
-                                createSlideChangeUndo = false;
-                                slideGrid.SelectedItem = redoItem;
-                                createSlideChangeUndo = true;
-                            }));
-                    },
-                    item,
-                    (undoItem) =>
-                    {
-                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                        ThreadManager.invoke(new Action(delegate()
-                            {
-                                createSlideChangeUndo = false;
-                                slideGrid.SelectedItem = undoItem;
-                                createSlideChangeUndo = true;
-                            }));
-                    },
-                    lastSelectedItem));
-            }
             if (item != null)
             {
                 slideEditController.editSlide((Slide)item.UserObject);
             }
-            lastSelectedItem = item;
         }
 
         void slideEditController_SlideshowClosed()
@@ -292,6 +274,11 @@ namespace Medical.GUI
             {
                 slideGrid.removeItem(item);
             }
+        }
+
+        void slideEditController_SlideSelected(Slide slide)
+        {
+            slideGrid.SelectedItem = slideGrid.findItemByUserObject(slide);
         }
     }
 }
