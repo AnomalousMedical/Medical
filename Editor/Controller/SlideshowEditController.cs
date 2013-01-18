@@ -115,53 +115,74 @@ namespace Medical
             }
         }
 
+        class SlideInfo
+        {
+            public SlideInfo(Slide slide, int index)
+            {
+                this.Slide = slide;
+                this.Index = index;
+            }
+
+            public Slide Slide { get; set; }
+
+            public int Index { get; set; }
+        }
+
         public void removeSlide(Slide slide)
         {
-            slideshow.removeSlide(slide);
+            int slideIndex = slideshow.indexOf(slide);
+            slideshow.removeAt(slideIndex);
             if (SlideRemoved != null)
             {
                 SlideRemoved.Invoke(slide);
             }
             if (allowUndoCreation)
             {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<Slide>((executeSlide) =>
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
                 {
                     allowUndoCreation = false;
-                    slideshow.removeSlide(executeSlide);
+                    removeSlide(executeSlide.Slide);
                     allowUndoCreation = true;
                 },
                 (undoSlide) =>
                 {
                     allowUndoCreation = false;
-                    slideshow.addSlide(undoSlide);
+                    addSlide(undoSlide.Slide, undoSlide.Index);
                     allowUndoCreation = true;
                 },
-                slide));
+                new SlideInfo(slide, slideIndex)));
             }
         }
 
-        public void addSlide(Slide slide)
+        public void addSlide(Slide slide, int index = -1)
         {
-            slideshow.addSlide(slide);
+            if (index == -1)
+            {
+                slideshow.addSlide(slide);
+            }
+            else
+            {
+                slideshow.insertSlide(index, slide);
+            }
             if (SlideAdded != null)
             {
                 SlideAdded.Invoke(slide);
             }
             if (allowUndoCreation)
             {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<Slide>((executeSlide) =>
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
                 {
                     allowUndoCreation = false;
-                    slideshow.addSlide(executeSlide);
+                    addSlide(executeSlide.Slide, executeSlide.Index);
                     allowUndoCreation = true;
                 },
                 (undoSlide) =>
                 {
                     allowUndoCreation = false;
-                    slideshow.removeSlide(undoSlide);
+                    removeSlide(undoSlide.Slide);
                     allowUndoCreation = true;
                 },
-                slide));
+                new SlideInfo(slide, slideshow.indexOf(slide))));
             }
         }
 

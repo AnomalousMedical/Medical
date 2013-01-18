@@ -30,6 +30,11 @@ namespace Medical
             slides.Remove(slide);
         }
 
+        public void removeAt(int index)
+        {
+            slides.RemoveAt(index);
+        }
+
         public void insertSlide(Slide before, Slide insert)
         {
             insertSlide(slides.IndexOf(before), insert);
@@ -38,6 +43,11 @@ namespace Medical
         public void insertSlide(int index, Slide slide)
         {
             slides.Insert(index, slide);
+        }
+
+        public int indexOf(Slide slide)
+        {
+            return slides.IndexOf(slide);
         }
 
         public AnomalousMvcContext createContext(ResourceProvider resourceProvider)
