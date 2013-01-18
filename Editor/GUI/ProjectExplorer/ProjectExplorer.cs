@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Engine;
 using System.IO;
 using Engine.Platform;
+using Engine.Editing;
 
 namespace Medical.GUI
 {
@@ -79,7 +80,15 @@ namespace Medical.GUI
         void showNewProjectDialog()
         {
             editorController.stopPlayingTimelines();
-            NewProjectDialog.ShowDialog((template, fullProjectName) =>
+
+            Browser browse = new Browser("Project Templates", "Create Project");
+            BrowserNode appNode = new BrowserNode("App", new AppProjectTemplate());
+            browse.addNode("", null, appNode);
+            browse.DefaultSelection = appNode;
+            browse.addNode("", null, new BrowserNode("Question App", new QuestionAppProjectTemplate()));
+            browse.addNode("", null, new BrowserNode("Empty", new EmptyProjectTemplate()));
+
+            NewProjectDialog.ShowDialog(browse, (template, fullProjectName) =>
             {
                 if (Directory.Exists(fullProjectName))
                 {

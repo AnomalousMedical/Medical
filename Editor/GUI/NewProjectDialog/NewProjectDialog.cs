@@ -11,16 +11,8 @@ namespace Medical.GUI
 {
     class NewProjectDialog : InputBrowserWindow<ProjectTemplate>
     {
-        public static void ShowDialog(Action<ProjectTemplate, String> resultCallback)
+        public static void ShowDialog(Browser browse, Action<ProjectTemplate, String> resultCallback)
         {
-            Browser browse = new Browser("Project Templates", "Create Project");
-            BrowserNode appNode = new BrowserNode("App", new AppProjectTemplate());
-            browse.addNode("", null, appNode);
-            browse.DefaultSelection = appNode;
-            browse.addNode("", null, new BrowserNode("Slideshow", new SlideshowProjectTemplate()));
-            browse.addNode("", null, new BrowserNode("Question App", new QuestionAppProjectTemplate()));
-            browse.addNode("", null, new BrowserNode("Empty", new EmptyProjectTemplate()));
-
             NewProjectDialog projectDialog = new NewProjectDialog();
             projectDialog.setBrowser(browse);
             projectDialog.Closing += (sender, e) =>

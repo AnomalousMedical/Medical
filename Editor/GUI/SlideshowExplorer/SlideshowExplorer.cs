@@ -8,6 +8,7 @@ using System.IO;
 using Engine.Platform;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
+using Engine.Editing;
 
 namespace Medical.GUI
 {
@@ -104,7 +105,13 @@ namespace Medical.GUI
         void showNewProjectDialog()
         {
             editorController.stopPlayingTimelines();
-            NewProjectDialog.ShowDialog((template, fullProjectName) =>
+
+            Browser browse = new Browser("Slideshows", "Create Slideshow");
+            BrowserNode defaultNode = new BrowserNode("Slideshow", new SlideshowProjectTemplate());
+            browse.addNode("", null, defaultNode);
+            browse.DefaultSelection = defaultNode;
+
+            NewProjectDialog.ShowDialog(browse, (template, fullProjectName) =>
             {
                 if (Directory.Exists(fullProjectName))
                 {
