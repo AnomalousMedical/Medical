@@ -229,16 +229,16 @@ namespace Medical.GUI
             slideGrid.clear();
             foreach (Slide slide in show.Slides)
             {
-                addSlideToGrid(slide);
+                addSlideToGrid(slide, -1);
             }
             slideGrid.SuppressLayout = false;
             slideGrid.resizeAndLayout(scroll.ClientCoord.width);
             this.slideshow = show;
         }
 
-        void slideEditController_SlideAdded(Slide slide)
+        void slideEditController_SlideAdded(Slide slide, int index)
         {
-            addSlideToGrid(slide);
+            addSlideToGrid(slide, index);
         }
 
         void slideEditController_SlideRemoved(Slide slide)
@@ -261,9 +261,17 @@ namespace Medical.GUI
             slideshow = null;
         }
 
-        void addSlideToGrid(Slide slide)
+        void addSlideToGrid(Slide slide, int index)
         {
-            ButtonGridItem item = slideGrid.addItem("", "Slide " + (slideGrid.Count + 1));
+            ButtonGridItem item;
+            if (index == -1)
+            {
+                item = slideGrid.addItem("", "Slide " + (slideGrid.Count + 1));
+            }
+            else
+            {
+                item = slideGrid.insertItem(index, "", "Slide " + (index + 1));
+            }
             item.UserObject = slide;
         }
 

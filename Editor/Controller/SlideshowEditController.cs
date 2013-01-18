@@ -10,7 +10,7 @@ namespace Medical
     {
         public event Action<Slideshow> SlideshowLoaded;
         public event Action SlideshowClosed;
-        public event Action<Slide> SlideAdded;
+        public event Action<Slide, int> SlideAdded;
         public event Action<Slide> SlideRemoved;
         public event Action<Slide> SlideSelected;
 
@@ -128,29 +128,103 @@ namespace Medical
             public int Index { get; set; }
         }
 
+        class RemoveSlideInfo : SlideInfo
+        {
+            public RemoveSlideInfo(Slide slide, int index, Slide changeToSlide)
+                :base(slide, index)
+            {
+                this.ChangeToSlide = changeToSlide;
+            }
+
+            public Slide ChangeToSlide { get; set; }
+        }
+
         public void removeSlide(Slide slide)
         {
             int slideIndex = slideshow.indexOf(slide);
-            slideshow.removeAt(slideIndex);
-            if (SlideRemoved != null)
+            if (slideIndex != -1)
             {
-                SlideRemoved.Invoke(slide);
-            }
-            if (allowUndoCreation)
-            {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
+                slideshow.removeAt(slideIndex);
+                if (SlideRemoved != null)
                 {
-                    allowUndoCreation = false;
-                    removeSlide(executeSlide.Slide);
-                    allowUndoCreation = true;
-                },
-                (undoSlide) =>
+                    SlideRemoved.Invoke(slide);
+                }
+
+                Slide changeToSlide = null;
+                if (slide == lastEditSlide)
                 {
+                    if (slideIndex < slideshow.Count)
+                    {
+                        changeToSlide = slideshow.get(slideIndex);
+                    }
+                    else if (slideIndex - 1 > 0)
+                    {
+                        changeToSlide = slideshow.get(slideIndex - 1);
+                    }
+                }
+
+                if (changeToSlide != null)
+                {
+                    bool wasAllowingUndo = allowUndoCreation;
                     allowUndoCreation = false;
-                    addSlide(undoSlide.Slide, undoSlide.Index);
-                    allowUndoCreation = true;
-                },
-                new SlideInfo(slide, slideIndex)));
+                    if (SlideSelected != null)
+                    {
+                        SlideSelected.Invoke(changeToSlide);
+                    }
+                    allowUndoCreation = wasAllowingUndo;
+                }
+
+                if (allowUndoCreation)
+                {
+                    if (changeToSlide == null)
+                    {
+                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
+                        {
+                            allowUndoCreation = false;
+                            removeSlide(executeSlide.Slide);
+                            allowUndoCreation = true;
+                        },
+                        (undoSlide) =>
+                        {
+                            allowUndoCreation = false;
+                            addSlide(undoSlide.Slide, undoSlide.Index);
+                            allowUndoCreation = true;
+                        },
+                        new SlideInfo(slide, slideIndex)));
+                    }
+                    else
+                    {
+                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<RemoveSlideInfo>((executeSlide) =>
+                        {
+                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                            ThreadManager.invoke(new Action(delegate()
+                            {
+                                allowUndoCreation = false;
+                                removeSlide(executeSlide.Slide);
+                                if (SlideSelected != null)
+                                {
+                                    SlideSelected.Invoke(executeSlide.ChangeToSlide);
+                                }
+                                allowUndoCreation = true;
+                            }));
+                        },
+                        (undoSlide) =>
+                        {
+                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                            ThreadManager.invoke(new Action(delegate()
+                            {
+                                allowUndoCreation = false;
+                                addSlide(undoSlide.Slide, undoSlide.Index);
+                                if (SlideSelected != null)
+                                {
+                                    SlideSelected.Invoke(undoSlide.Slide);
+                                }
+                                allowUndoCreation = true;
+                            }));
+                        },
+                        new RemoveSlideInfo(slide, slideIndex, changeToSlide)));
+                    }
+                }
             }
         }
 
@@ -166,7 +240,7 @@ namespace Medical
             }
             if (SlideAdded != null)
             {
-                SlideAdded.Invoke(slide);
+                SlideAdded.Invoke(slide, index);
             }
             if (allowUndoCreation)
             {

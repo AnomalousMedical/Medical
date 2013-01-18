@@ -50,6 +50,11 @@ namespace Medical
             return slides.IndexOf(slide);
         }
 
+        public Slide get(int index)
+        {
+            return slides[index];
+        }
+
         public AnomalousMvcContext createContext(ResourceProvider resourceProvider)
         {
             AnomalousMvcContext mvcContext;
@@ -82,6 +87,14 @@ namespace Medical
             }
         }
 
+        public int Count
+        {
+            get
+            {
+                return slides.Count;
+            }
+        }
+
         protected Slideshow(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
@@ -92,11 +105,6 @@ namespace Medical
         {
             ReflectedSaver.SaveObject(this, info, ReflectedSaver.DefaultScanner);
             info.ExtractList("Slides", slides);
-        }
-
-        public EditInterface getEditInterface()
-        {
-            throw new NotImplementedException();
         }
     }
 }
