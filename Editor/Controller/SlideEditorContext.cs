@@ -96,20 +96,20 @@ namespace Medical
             htmlDragDrop.IsWindow = true;
             mvcContext.Views.add(htmlDragDrop);
 
-            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", "NOT DEFINED", "Editor/Close");
-            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
-            {
-                saveAll();
-            }));
-            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Undo", "Undo", CommonResources.NoIcon, "Edit", "Editor/Undo", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Redo", "Redo", CommonResources.NoIcon, "Edit", "Editor/Redo", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("RmlEditor", "Edit Rml", RmlTypeController.Icon, "Edit", "RmlTextEditor/Show", mvcContext));
-            mvcContext.Views.add(taskbar);
+            //EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", "NOT DEFINED", "Editor/Close");
+            //taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
+            //{
+            //    saveAll();
+            //}));
+            //taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
+            //taskbar.addTask(new RunMvcContextActionTask("Undo", "Undo", CommonResources.NoIcon, "Edit", "Editor/Undo", mvcContext));
+            //taskbar.addTask(new RunMvcContextActionTask("Redo", "Redo", CommonResources.NoIcon, "Edit", "Editor/Redo", mvcContext));
+            //taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
+            //taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
+            //taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
+            //taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
+            //taskbar.addTask(new RunMvcContextActionTask("RmlEditor", "Edit Rml", RmlTypeController.Icon, "Edit", "RmlTextEditor/Show", mvcContext));
+            //mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("HtmlDragDrop",
                 new RunCommandsAction("Show",
@@ -120,8 +120,9 @@ namespace Medical
 
             mvcContext.Controllers.add(new MvcController("Editor",
                 new RunCommandsAction("Show",
-                    new ShowViewCommand("RmlView"),
-                    new ShowViewCommand("InfoBar")),
+                    new ShowViewCommand("RmlView")
+                    //,new ShowViewCommand("InfoBar")
+                    ),
                 new RunCommandsAction("Close", new CloseAllViewsCommand()),
                 new CallbackAction("Save", context =>
                     {
@@ -165,6 +166,7 @@ namespace Medical
                 }),
                 new CallbackAction("Blur", context =>
                 {
+                    commitText();
                     GlobalContextEventHandler.disableEventContext(eventContext);
                     if (Blur != null)
                     {
@@ -226,18 +228,18 @@ namespace Medical
 
         private void saveAll()
         {
-            preSave();
+            commitText();
             //rmlTypeController.updateCachedText(currentFile, CurrentText);
             //rmlTypeController.EditorController.saveAllCachedResources();
         }
 
         private void save()
         {
-            preSave();
+            commitText();
             //rmlTypeController.saveFile(CurrentText, currentFile);
         }
 
-        private void preSave()
+        private void commitText()
         {
             if (rmlComponent != null)
             {

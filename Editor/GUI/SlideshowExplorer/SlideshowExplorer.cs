@@ -24,9 +24,10 @@ namespace Medical.GUI
         MenuItem add;
 
         private Slideshow slideshow;
+        private EditorController editorController;
+        private SlideshowEditController slideEditController;
 
         //Dialogs
-        private EditorController editorController;
         private ButtonGrid slideGrid;
         private ScrollView scroll;
 
@@ -34,15 +35,18 @@ namespace Medical.GUI
             : base("Medical.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
             this.editorController = editorController;
+            this.slideEditController = slideEditController;
             editorController.ProjectChanged += editorController_ProjectChanged;
 
             slideEditController.SlideshowLoaded += slideEditController_SlideshowLoaded;
+            slideEditController.SlideAdded += slideEditController_SlideAdded;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
 
             scroll = (ScrollView)window.findWidget("Scroll");
             slideGrid = new ButtonGrid(scroll, new ButtonGridListLayout());
+            slideGrid.SelectedValueChanged += slideGrid_SelectedValueChanged;
 
             //File Menu
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
@@ -202,15 +206,33 @@ namespace Medical.GUI
         {
             slideGrid.clear();
             slideGrid.SuppressLayout = true;
-            int i = 0;
             foreach (Slide slide in show.Slides)
             {
-                ButtonGridItem item = slideGrid.addItem("", "Slide " + i++);
-                item.UserObject = slide;
+                addSlideToGrid(slide);
             }
             slideGrid.SuppressLayout = false;
             slideGrid.resizeAndLayout(scroll.ClientCoord.width);
             this.slideshow = show;
+        }
+
+        void slideEditController_SlideAdded(Slide slide)
+        {
+            addSlideToGrid(slide);
+        }
+
+        void addSlideToGrid(Slide slide)
+        {
+            ButtonGridItem item = slideGrid.addItem("", "Slide " + (slideGrid.Count + 1));
+            item.UserObject = slide;
+        }
+
+        void slideGrid_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ButtonGridItem item = slideGrid.SelectedItem;
+            if (item != null)
+            {
+                slideEditController.editSlide((Slide)item.UserObject);
+            }
         }
     }
 }

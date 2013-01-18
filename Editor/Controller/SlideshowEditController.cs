@@ -8,6 +8,7 @@ namespace Medical
     public class SlideshowEditController
     {
         public event Action<Slideshow> SlideshowLoaded;
+        public event Action<Slide> SlideAdded;
 
         //Editor Contexts
         private SlideEditorContext slideEditorContext;
@@ -37,6 +38,10 @@ namespace Medical
                     if (slideshow != null)
                     {
                         slideshow.addSlide(slide);
+                        if (SlideAdded != null)
+                        {
+                            SlideAdded.Invoke(slide);
+                        }
                     }
                 };
             editorController.addItemTemplate(medicalSlideTemplate);
@@ -46,14 +51,15 @@ namespace Medical
         {
             if (slide is MedicalRmlSlide)
             {
-                slideEditorContext = new SlideEditorContext((MedicalRmlSlide)slide, uiCallback);
+                MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
+                slideEditorContext = new SlideEditorContext(medicalSlide, uiCallback);
                 slideEditorContext.Focus += (obj) =>
                 {
                     slideEditorContext = obj;
                 };
                 slideEditorContext.Blur += obj =>
                 {
-                    //rmlTypeController.updateCachedText(obj.CurrentFile, obj.CurrentText);
+                    medicalSlide.Rml = obj.CurrentText;
                     if (slideEditorContext == obj)
                     {
                         slideEditorContext = null;
