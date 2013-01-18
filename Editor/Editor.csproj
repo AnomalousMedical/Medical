@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Documents\SlideshowDocumentHandler.cs" />
     <Compile Include="Controller\ItemTemplates\MedicalSlideItemTemplate.cs" />
     <Compile Include="Controller\SlideEditorContext.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\ShowTypeController.cs" />

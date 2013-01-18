@@ -144,7 +144,6 @@ namespace Medical.GUI
 
         void editorController_ProjectChanged(EditorController editorController, String defaultFile)
         {
-            //fileBrowser.setResourceProvider(editorController.ResourceProvider);
             if (editorController.ResourceProvider != null)
             {
                 window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);

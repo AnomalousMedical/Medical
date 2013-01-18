@@ -102,6 +102,7 @@ namespace Medical
             propEditController = new PropEditController(propMover);
 
             slideshowEditorController = new EditorController(standaloneController, editorTimelineController);
+            standaloneController.DocumentController.addDocumentHandler(new SlideshowDocumentHandler(slideshowEditorController));
 
             //UI Helpers
             editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);

@@ -8,8 +8,9 @@ namespace Medical
     public class SlideshowEditController
     {
         public event Action<Slideshow> SlideshowLoaded;
-        public event Action<Slide> SlideAdded;
         public event Action SlideshowClosed;
+        public event Action<Slide> SlideAdded;
+        public event Action<Slide> SlideRemoved;
 
         //Editor Contexts
         private SlideEditorContext slideEditorContext;
@@ -70,6 +71,15 @@ namespace Medical
             }
         }
 
+        public void removeSlide(Slide slide)
+        {
+            slideshow.removeSlide(slide);
+            if (SlideRemoved != null)
+            {
+                SlideRemoved.Invoke(slide);
+            }
+        }
+
         void editorController_ProjectChanged(EditorController editorController, string fullFilePath)
         {
             if (slideEditorContext != null)
@@ -79,7 +89,6 @@ namespace Medical
 
             if (editorController.ResourceProvider != null)
             {
-                //standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.BackingLocation);
                 //Try to open a default mvc context
                 String file = "Slides.show";
                 if (editorController.ResourceProvider.exists(file))
@@ -104,6 +113,7 @@ namespace Medical
 
         void loadSlideshow(String file)
         {
+            standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.getFullFilePath(file));
             slideshow = editorController.loadFile<Slideshow>(file);
             if (SlideshowLoaded != null)
             {
