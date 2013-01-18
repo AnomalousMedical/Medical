@@ -7,6 +7,7 @@ using Engine;
 using System.IO;
 using Engine.Platform;
 using Medical.Controller;
+using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
@@ -14,6 +15,8 @@ namespace Medical.GUI
     {
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
+
+        public Action<AnomalousMvcContext> RunContext;
 
         //File Menu
         MenuBar menuBar;
@@ -29,6 +32,7 @@ namespace Medical.GUI
         //Buttons
         Button addButton;
         Button removeButton;
+        Button playButton;
 
         private ButtonGrid slideGrid;
         private ScrollView scroll;
@@ -44,6 +48,8 @@ namespace Medical.GUI
             addButton.MouseButtonClick += addButton_MouseButtonClick;
             removeButton = (Button)window.findWidget("Remove");
             removeButton.MouseButtonClick += removeButton_MouseButtonClick;
+            playButton = (Button)window.findWidget("Play");
+            playButton.MouseButtonClick += playButton_MouseButtonClick;
 
             slideEditController.SlideshowLoaded += slideEditController_SlideshowLoaded;
             slideEditController.SlideshowClosed += slideEditController_SlideshowClosed;
@@ -214,6 +220,20 @@ namespace Medical.GUI
                 if (selectedItem != null)
                 {
                     slideEditController.removeSlide((Slide)selectedItem.UserObject);
+                }
+            }
+        }
+
+        void playButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (slideshow != null)
+            {
+                AnomalousMvcContext context = slideshow.createContext(editorController.ResourceProvider);
+                context.RuntimeName = "Editor.PreviewMvcContext";
+                context.setResourceProvider(editorController.ResourceProvider);
+                if (RunContext != null)
+                {
+                    RunContext.Invoke(context);
                 }
             }
         }

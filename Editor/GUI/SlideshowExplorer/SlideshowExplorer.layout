@@ -15,5 +15,8 @@
         <Widget type="Button" skin="Button" position="33 30 28 20" name="Remove">
             <Property key="Caption" value="-"/>
         </Widget>
+        <Widget type="Button" skin="Button" position="156 30 41 20" name="Play">
+            <Property key="Caption" value="Play"/>
+        </Widget>
     </Widget>
 </MyGUI>

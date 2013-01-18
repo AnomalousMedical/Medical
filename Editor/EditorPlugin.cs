@@ -116,6 +116,11 @@ namespace Medical
 
             slideshowEditController = new SlideshowEditController(standaloneController, this.UICallback, this.propEditController, slideshowEditorController);
             slideshowExplorer = new SlideshowExplorer(slideshowEditorController, slideshowEditController);
+            slideshowExplorer.RunContext = (context) =>
+            {
+                standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
+                standaloneController.MvcCore.startRunningContext(context);
+            };
             guiManager.addManagedDialog(slideshowExplorer);
 
             //Tasks Menu
