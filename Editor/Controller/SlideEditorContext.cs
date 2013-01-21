@@ -212,6 +212,7 @@ namespace Medical
         {
             if (rmlComponent != null)
             {
+                rmlComponent.cancelAndHideEditor();
                 rmlComponent.setRml(rml, keepScrollPosition);
             }
         }
