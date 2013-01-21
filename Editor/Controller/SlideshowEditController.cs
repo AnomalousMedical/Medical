@@ -55,7 +55,7 @@ namespace Medical
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, uiCallback, undoBuffer, (rml) =>
+                slideEditorContext = new SlideEditorContext(medicalSlide, editorController, uiCallback, undoBuffer, (rml) =>
                 {
                     slideEditorContext.setWysiwygRml(rml, true);
                 });

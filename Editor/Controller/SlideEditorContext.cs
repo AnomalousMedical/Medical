@@ -31,12 +31,13 @@ namespace Medical
         private Slide slide;
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
+        private EditorController editorController;
 
-        public SlideEditorContext(MedicalRmlSlide slide, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, Action<String> wysiwygUndoCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, EditorController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, Action<String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
-
+            this.editorController = editorController;
             this.undoBuffer = undoBuffer;
 
             mvcContext = new AnomalousMvcContext();
@@ -124,7 +125,7 @@ namespace Medical
                 new RunCommandsAction("Close", new CloseAllViewsCommand()),
                 new CallbackAction("Save", context =>
                     {
-                        save();
+                        saveAll();
                     }),
                 new CallbackAction("Cut", context =>
                     {
@@ -236,14 +237,7 @@ namespace Medical
         private void saveAll()
         {
             commitText();
-            //rmlTypeController.updateCachedText(currentFile, CurrentText);
-            //rmlTypeController.EditorController.saveAllCachedResources();
-        }
-
-        private void save()
-        {
-            commitText();
-            //rmlTypeController.saveFile(CurrentText, currentFile);
+            editorController.saveAllCachedResources();
         }
 
         private void commitText()

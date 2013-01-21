@@ -9,7 +9,7 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class NavigateToIndexCommand : ActionCommand
+    public class NavigateToIndexCommand : ActionCommand
     {
         public NavigateToIndexCommand()
         {

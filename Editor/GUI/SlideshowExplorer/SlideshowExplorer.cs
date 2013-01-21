@@ -235,7 +235,18 @@ namespace Medical.GUI
         {
             if (slideshow != null)
             {
-                AnomalousMvcContext context = slideshow.createContext(editorController.ResourceProvider);
+                int startIndex = 0;
+                ButtonGridItem selectedItem = slideGrid.SelectedItem;
+                if (selectedItem != null)
+                {
+                    //LAME! No other real way to do it for right now.
+                    startIndex = slideshow.indexOf((Slide)selectedItem.UserObject);
+                    if (startIndex < 0)
+                    {
+                        startIndex = 0;
+                    }
+                }
+                AnomalousMvcContext context = slideshow.createContext(editorController.ResourceProvider, startIndex);
                 context.RuntimeName = "Editor.PreviewMvcContext";
                 context.setResourceProvider(editorController.ResourceProvider);
                 if (RunContext != null)

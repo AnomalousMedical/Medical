@@ -55,7 +55,7 @@ namespace Medical
             return slides[index];
         }
 
-        public AnomalousMvcContext createContext(ResourceProvider resourceProvider)
+        public AnomalousMvcContext createContext(ResourceProvider resourceProvider, int startIndex = 0)
         {
             AnomalousMvcContext mvcContext;
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -76,6 +76,13 @@ namespace Medical
                 NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");
                 navModel.addNavigationLink(link);
             }
+
+            RunCommandsAction runCommands = (RunCommandsAction)mvcContext.Controllers["Common"].Actions["Start"];
+            runCommands.addCommand(new NavigateToIndexCommand()
+            {
+                Index = startIndex
+            });
+
             return mvcContext;
         }
 
