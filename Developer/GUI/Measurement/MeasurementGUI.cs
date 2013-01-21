@@ -15,6 +15,7 @@ namespace Developer.GUI
     {
         private TextBox text;
         private CheckButton enabled;
+        private CheckButton showLines;
         private StandaloneController standaloneController;
 
         public MeasurementGUI(StandaloneController standaloneController)
@@ -23,12 +24,14 @@ namespace Developer.GUI
             this.standaloneController = standaloneController;
 
             text = (TextBox)window.findWidget("Text");
+
             enabled = new CheckButton((Button)window.findWidget("Enabled"));
             enabled.CheckedChanged += new MyGUIEvent(enabled_CheckedChanged);
-            enabled.Checked = PerformanceMonitor.Enabled;
+            enabled.Checked = false;
 
-            Button reset = (Button)window.findWidget("ResetButton");
-            reset.MouseButtonClick += new MyGUIEvent(reset_MouseButtonClick);
+            showLines = new CheckButton((Button)window.findWidget("Show"));
+            showLines.Checked = MeasurementController.ShowingMeasurements;
+            showLines.CheckedChanged += showLines_CheckedChanged;
         }
 
         void enabled_CheckedChanged(Widget source, EventArgs e)
@@ -54,12 +57,9 @@ namespace Developer.GUI
             text.Caption = sb.ToString();
         }
 
-        void reset_MouseButtonClick(Widget source, EventArgs e)
+        void showLines_CheckedChanged(Widget source, EventArgs e)
         {
-            foreach (Timelapse timelapse in PerformanceMonitor.Timelapses)
-            {
-                timelapse.resetMinMax();
-            }
+            MeasurementController.ShowingMeasurements = showLines.Checked;
         }
     }
 }
