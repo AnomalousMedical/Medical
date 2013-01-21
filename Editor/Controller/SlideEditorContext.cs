@@ -60,10 +60,7 @@ namespace Medical
                 rmlComponent = component;
                 rmlComponent.RmlEdited += rmlEditor =>
                 {
-                    //if (textEditorComponent != null)
-                    //{
-                    //    textEditorComponent.Text = rmlEditor.CurrentRml;
-                    //}
+                    slide.Rml = rmlEditor.CurrentRml;
                 };
             };
             rmlView.UndoRedoCallback = wysiwygUndoCallback;
