@@ -164,7 +164,7 @@ namespace Medical
             {
                 path = Path.Combine(parentPath, path);
             }
-            return File.Exists(path);
+            return File.Exists(path) || Directory.Exists(path);
         }
 
         public String getFullFilePath(String filename)

@@ -12,5 +12,7 @@ namespace Medical
         View createView(String name);
 
         MvcController createController(String name, String viewName);
+
+        String UniqueName { get; }
     }
 }

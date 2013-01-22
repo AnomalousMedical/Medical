@@ -1,4 +1,5 @@
-﻿using Engine.Editing;
+﻿using Engine.Attributes;
+using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
@@ -12,10 +13,13 @@ namespace Medical
     public class RmlSlide : Slide
     {
         private String rml;
+
+        [DoNotSave] //Saved manually
+        private String id;
         
         public RmlSlide()
         {
-
+            id = Guid.NewGuid().ToString();
         }
 
         public View createView(String name)
@@ -41,6 +45,14 @@ namespace Medical
 
         }
 
+        public String UniqueName
+        {
+            get
+            {
+                return id;
+            }
+        }
+
         [Editable]
         public String Rml
         {
@@ -57,11 +69,16 @@ namespace Medical
         protected RmlSlide(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
+            id = info.GetValueCb("Id", () =>
+                {
+                    return Guid.NewGuid().ToString();
+                });
         }
 
         public virtual void getInfo(SaveInfo info)
         {
             ReflectedSaver.SaveObject(this, info, ReflectedSaver.DefaultScanner);
+            info.AddValue("Id", id.ToString());
         }
     }
 }
