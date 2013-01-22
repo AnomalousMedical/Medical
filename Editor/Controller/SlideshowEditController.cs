@@ -238,6 +238,12 @@ namespace Medical
             {
                 slideshow.insertSlide(index, slide);
             }
+
+            if (!editorController.ResourceProvider.exists(slide.UniqueName))
+            {
+                editorController.ResourceProvider.createDirectory("", slide.UniqueName);
+            }
+
             if (SlideAdded != null)
             {
                 SlideAdded.Invoke(slide, index);
@@ -257,6 +263,36 @@ namespace Medical
                     allowUndoCreation = true;
                 },
                 new SlideInfo(slide, slideshow.indexOf(slide))));
+            }
+        }
+
+        public void cleanup()
+        {
+            undoBuffer.clear(); //Can't really recover from this one, so just erase all undo
+            List<Guid> cleanupSlides = new List<Guid>(projectGuidDirectories());
+            foreach (Slide slide in slideshow.Slides)
+            {
+                Guid guid;
+                if (Guid.TryParse(slide.UniqueName, out guid))
+                {
+                    cleanupSlides.Remove(guid);
+                }
+            }
+            foreach (Guid dir in cleanupSlides)
+            {
+                editorController.ResourceProvider.delete(dir.ToString("D"));
+            }
+        }
+
+        private IEnumerable<Guid> projectGuidDirectories()
+        {
+            Guid guid;
+            foreach (String file in editorController.ResourceProvider.listDirectories("*", "", false))
+            {
+                if (Guid.TryParse(file, out guid))
+                {
+                    yield return guid;
+                }
             }
         }
 

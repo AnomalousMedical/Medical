@@ -19,7 +19,7 @@ namespace Medical
         
         public RmlSlide()
         {
-            id = Guid.NewGuid().ToString();
+            id = Guid.NewGuid().ToString("D");
         }
 
         public View createView(String name)
@@ -71,7 +71,7 @@ namespace Medical
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
             id = info.GetValueCb("Id", () =>
                 {
-                    return Guid.NewGuid().ToString();
+                    return Guid.NewGuid().ToString("D");
                 });
         }
 

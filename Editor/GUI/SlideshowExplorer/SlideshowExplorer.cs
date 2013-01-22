@@ -25,6 +25,7 @@ namespace Medical.GUI
         MenuItem openProject;
         MenuItem closeProject;
         MenuItem saveAll;
+        MenuItem cleanup;
 
         private Slideshow slideshow;
         private EditorController editorController;
@@ -73,6 +74,7 @@ namespace Medical.GUI
             openProject = fileMenu.addItem("Open Project");
             closeProject = fileMenu.addItem("Close Project");
             saveAll = fileMenu.addItem("Save");
+            cleanup = fileMenu.addItem("Cleanup");
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
         }
@@ -198,6 +200,17 @@ namespace Medical.GUI
             else if (menuEventArgs.Item == closeProject)
             {
                 editorController.closeProject();
+            }
+            else if (menuEventArgs.Item == cleanup)
+            {
+                MessageBox.show("Cleaning up your slideshow will remove unneeded files, however, your project will be saved and all of your undo history will be lost.\nAre you sure you wish to continue?", "Cleanup", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        editorController.saveAllCachedResources();
+                        slideEditController.cleanup();
+                    }
+                });
             }
         }
 
