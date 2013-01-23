@@ -255,10 +255,10 @@ namespace Lecture
             }
         }
 
-        private const int slideWidth = 100;
-        private const int sceneWidth = 300;
-        private const int thumbWidth = slideWidth + sceneWidth;
-        private const int thumbHeight = 256;
+        private const int thumbWidth = 183;
+        private const int thumbHeight = 101;
+        private const int slideWidth = thumbWidth / 3;
+        private const int sceneWidth = thumbWidth - slideWidth;
 
         private void updateThumbnail()
         {
