@@ -1,17 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Medical;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Editor")]
+[assembly: AssemblyTitle("Lecture")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Anomalous Medical")]
-[assembly: AssemblyProduct("Editor Tools")]
-[assembly: AssemblyCopyright("Copyright © Anomalous Medical 2010")]
+[assembly: AssemblyProduct("Lecture Tools")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +20,7 @@ using Medical;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9db9d39f-efe2-4bcb-a3ed-1141a8f3a97e")]
+[assembly: Guid("96a3fcd0-ada7-4bb6-bb43-436b609b37a2")]
 
 // Version information for an assembly consists of the following four values:
 //

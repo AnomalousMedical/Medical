@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MyGUI type="List">
+  <List file="Lecture.Resources.BrandingIcon.xml"/>
+  <List file="Lecture.Resources.Icons.xml"/>
+</MyGUI>
