@@ -354,9 +354,12 @@ namespace Lecture.GUI
             {
                 if (editorController.ResourceProvider.exists(thumbPath))
                 {
-                    using (Image thumb = Bitmap.FromStream(editorController.ResourceProvider.openFile(thumbPath)))
+                    using (Stream stream = editorController.ResourceProvider.openFile(thumbPath))
                     {
-                        return imageAtlas.addImage(slide.UniqueName, thumb);
+                        using (Image thumb = Bitmap.FromStream(stream))
+                        {
+                            return imageAtlas.addImage(slide.UniqueName, thumb);
+                        }
                     }
                 }
             }

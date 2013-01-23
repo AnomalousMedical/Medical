@@ -255,17 +255,20 @@ namespace Lecture
             }
         }
 
+        private const int slideWidth = 100;
+        private const int sceneWidth = 300;
+        private const int thumbWidth = slideWidth + sceneWidth;
+        private const int thumbHeight = 256;
+
         private void updateThumbnail()
         {
             if (editorController.ResourceProvider != null)
             {
                 ImageRendererProperties imageProperties = new ImageRendererProperties();
-                imageProperties.Width = 256;
-                imageProperties.Height = 256;
-                imageProperties.UseWindowBackgroundColor = false;
-                imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
+                imageProperties.Width = sceneWidth;
+                imageProperties.Height = thumbHeight;
                 imageProperties.AntiAliasingMode = 2;
-                imageProperties.TransparentBackground = true;
+                imageProperties.TransparentBackground = false;
                 imageProperties.UseActiveViewportLocation = false;
                 imageProperties.OverrideLayers = true;
                 imageProperties.ShowBackground = false;
@@ -275,22 +278,30 @@ namespace Lecture
                 imageProperties.CameraPosition = slide.CameraPosition.Translation;
                 imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
 
-                using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
+                using (Bitmap thumb = new Bitmap(thumbWidth, thumbHeight))
                 {
-                    try
+                    using (Graphics g = Graphics.FromImage(thumb))
                     {
-                        using (Stream stream = editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName)))
+                        rmlComponent.writeToGraphics(g, new Rectangle(0, 0, slideWidth, thumbHeight));
+                        using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
                         {
-                            thumb.Save(stream, ImageFormat.Png);
+                            g.DrawImage(sceneThumb, slideWidth, 0);
                         }
-                        if (ThumbnailUpdated != null)
+                        try
                         {
-                            ThumbnailUpdated.Invoke(slide, thumb);
+                            using (Stream stream = editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName)))
+                            {
+                                thumb.Save(stream, ImageFormat.Png);
+                            }
+                            if (ThumbnailUpdated != null)
+                            {
+                                ThumbnailUpdated.Invoke(slide, thumb);
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
+                        catch (Exception ex)
+                        {
+                            Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
+                        }
                     }
                 }
             }

@@ -11,6 +11,7 @@ using System.IO;
 using Engine.Editing;
 using Engine;
 using Medical.GUI.RmlWysiwyg.Elements;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -187,6 +188,11 @@ namespace Medical.GUI
         public bool contains(IntVector2 position)
         {
             return widget.contains(position.x, position.y);
+        }
+
+        public void writeToGraphics(Graphics g, Rectangle destRect)
+        {
+            rocketWidget.writeToGraphics(g, destRect);
         }
 
         internal void insertRml(String rml, String undoRml)

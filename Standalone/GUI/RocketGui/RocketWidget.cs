@@ -7,6 +7,8 @@ using OgreWrapper;
 using libRocketPlugin;
 using Engine;
 using Engine.Platform;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Medical.GUI
 {
@@ -60,7 +62,7 @@ namespace Medical.GUI
             pixelBuffer = texture.Value.getBuffer();
             renderTexture = pixelBuffer.Value.getRenderTarget();
             vp = renderTexture.addViewport(camera);
-            vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+            vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
             vp.setOverlaysEnabled(false);
             vp.clear();
 
@@ -166,7 +168,7 @@ namespace Medical.GUI
                     pixelBuffer = texture.Value.getBuffer();
                     renderTexture = pixelBuffer.Value.getRenderTarget();
                     vp = renderTexture.addViewport(camera);
-                    vp.setBackgroundColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+                    vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
                     vp.setOverlaysEnabled(false);
                     vp.clear();
 
@@ -197,6 +199,34 @@ namespace Medical.GUI
             {
                 element.Blur();
                 renderOnNextFrame();
+            }
+        }
+
+        public void writeToGraphics(Graphics g, Rectangle destRect)
+        {
+            unsafe
+            {
+                OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
+                System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+                using (Bitmap fullBitmap = new Bitmap(currentTextureWidth, currentTextureHeight, bitmapFormat))
+                {
+                    BitmapData bmpData = fullBitmap.LockBits(new Rectangle(new Point(), fullBitmap.Size), ImageLockMode.WriteOnly, fullBitmap.PixelFormat);
+                    using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
+                    {
+                        renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
+                    }
+                    fullBitmap.UnlockBits(bmpData);
+
+                    float cropRatio = (float)imageBox.Width / destRect.Width;
+
+                    Rectangle srcRect = new Rectangle(0, 0, imageBox.Width, (int)(destRect.Height * cropRatio));
+                    if (srcRect.Height > fullBitmap.Height)
+                    {
+                        srcRect.Height = fullBitmap.Height;
+                    }
+
+                    g.DrawImage(fullBitmap, destRect, srcRect, GraphicsUnit.Pixel);
+                }
             }
         }
 
