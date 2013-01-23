@@ -123,11 +123,14 @@ namespace Lecture
                     new CloseViewCommand())
                     ));
 
-            mvcContext.Controllers.add(new MvcController("Editor",
-                new RunCommandsAction("Show",
+            RunCommandsAction showCommand = new RunCommandsAction("Show",
                     new ShowViewCommand("RmlView")
-                    //,new ShowViewCommand("InfoBar")
-                    ),
+                //,new ShowViewCommand("InfoBar")
+                    );
+            slide.populateCommand(showCommand);
+
+            mvcContext.Controllers.add(new MvcController("Editor",
+                showCommand,
                 new RunCommandsAction("Close", new CloseAllViewsCommand()),
                 new CallbackAction("Save", context =>
                     {

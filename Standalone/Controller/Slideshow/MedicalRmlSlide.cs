@@ -22,18 +22,23 @@ namespace Medical
         protected override void customizeController(MvcController controller, RunCommandsAction showCommand)
         {
             base.customizeController(controller, showCommand);
-            showCommand.addCommand(new MoveCameraCommand()
+            populateCommand(showCommand);
+        }
+
+        public void populateCommand(RunCommandsAction action)
+        {
+            action.addCommand(new MoveCameraCommand()
             {
                 CameraPosition = this.CameraPosition
             });
             ChangeLayersCommand layers = new ChangeLayersCommand();
             layers.Layers.copyFrom(Layers);
-            showCommand.addCommand(layers);
-            showCommand.addCommand(new ChangeMedicalStateCommand()
+            action.addCommand(layers);
+            action.addCommand(new ChangeMedicalStateCommand()
             {
                 PresetState = this.MedicalState
             });
-            showCommand.addCommand(new SetMusclePositionCommand()
+            action.addCommand(new SetMusclePositionCommand()
             {
                 MusclePosition = this.MusclePosition
             });
