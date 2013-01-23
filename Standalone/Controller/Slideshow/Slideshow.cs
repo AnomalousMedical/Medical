@@ -13,6 +13,8 @@ namespace Medical
 {
     public class Slideshow : Saveable
     {
+        public const String SlideThumbName = "Thumb.png";
+
         private List<Slide> slides = new List<Slide>();
 
         public Slideshow()

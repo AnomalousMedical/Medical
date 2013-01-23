@@ -8,6 +8,7 @@
         <Widget type="ScrollView" skin="ScrollView" position="0 54 199 260" align="Stretch" name="Scroll">
             <Property key="CanvasSize" value="199 283"/>
             <Property key="CanvasAlign" value="Left Top"/>
+            <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
         <Widget type="Button" skin="Button" position="3 30 28 20" name="Add">
             <Property key="Caption" value="+"/>

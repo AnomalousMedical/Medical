@@ -11,6 +11,8 @@ using Medical.Platform;
 using Engine.Platform;
 using Medical.Editor;
 using Medical;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Lecture
 {
@@ -18,6 +20,7 @@ namespace Lecture
     {
         public event Action<SlideEditorContext> Focus;
         public event Action<SlideEditorContext> Blur;
+        public event Action<Slide, Bitmap> ThumbnailUpdated;
 
         enum Events
         {
@@ -29,17 +32,19 @@ namespace Lecture
         private RmlWysiwygComponent rmlComponent;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
-        private Slide slide;
+        private MedicalRmlSlide slide;
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
         private EditorController editorController;
+        private ImageRenderer imageRenderer;
 
-        public SlideEditorContext(MedicalRmlSlide slide, EditorController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, Action<String> wysiwygUndoCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, EditorController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, Action<String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
             this.editorController = editorController;
             this.undoBuffer = undoBuffer;
+            this.imageRenderer = imageRenderer;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -246,6 +251,48 @@ namespace Lecture
             if (rmlComponent != null)
             {
                 rmlComponent.aboutToSaveRml();
+                updateThumbnail();
+            }
+        }
+
+        private void updateThumbnail()
+        {
+            if (editorController.ResourceProvider != null)
+            {
+                ImageRendererProperties imageProperties = new ImageRendererProperties();
+                imageProperties.Width = 256;
+                imageProperties.Height = 256;
+                imageProperties.UseWindowBackgroundColor = false;
+                imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
+                imageProperties.AntiAliasingMode = 2;
+                imageProperties.TransparentBackground = true;
+                imageProperties.UseActiveViewportLocation = false;
+                imageProperties.OverrideLayers = true;
+                imageProperties.ShowBackground = false;
+                imageProperties.ShowWatermark = false;
+                imageProperties.ShowUIUpdates = false;
+                imageProperties.LayerState = slide.Layers;
+                imageProperties.CameraPosition = slide.CameraPosition.Translation;
+                imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
+
+                using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
+                {
+                    try
+                    {
+                        using (Stream stream = editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName)))
+                        {
+                            thumb.Save(stream, ImageFormat.Png);
+                        }
+                        if (ThumbnailUpdated != null)
+                        {
+                            ThumbnailUpdated.Invoke(slide, thumb);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
+                    }
+                }
             }
         }
     }

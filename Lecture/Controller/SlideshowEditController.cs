@@ -2,6 +2,7 @@
 using Medical.Controller;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -14,6 +15,7 @@ namespace Lecture
         public event Action<Slide, int> SlideAdded;
         public event Action<Slide> SlideRemoved;
         public event Action<Slide> SlideSelected;
+        public event Action<Slide, Bitmap> ThumbnailUpdated;
 
         private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(50);
 
@@ -26,6 +28,7 @@ namespace Lecture
         private ShowTypeController showTypeController;
         private EditorUICallback uiCallback;
         private Slideshow slideshow;
+        private ImageRenderer imageRenderer;
 
         private bool allowUndoCreation = true;
         private Slide lastEditSlide = null;
@@ -36,6 +39,7 @@ namespace Lecture
             this.uiCallback = uiCallback;
             this.propEditController = propEditController;
             this.editorController = editorController;
+            this.imageRenderer = standaloneController.ImageRenderer;
             editorController.ProjectChanged += editorController_ProjectChanged;
 
             //Show Type Controller
@@ -56,7 +60,7 @@ namespace Lecture
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, editorController, uiCallback, undoBuffer, (rml) =>
+                slideEditorContext = new SlideEditorContext(medicalSlide, editorController, uiCallback, undoBuffer, imageRenderer, (rml) =>
                 {
                     slideEditorContext.setWysiwygRml(rml, true);
                 });
@@ -70,6 +74,13 @@ namespace Lecture
                     if (slideEditorContext == obj)
                     {
                         slideEditorContext = null;
+                    }
+                };
+                slideEditorContext.ThumbnailUpdated += (thumbSlide, thumb) =>
+                {
+                    if (ThumbnailUpdated != null)
+                    {
+                        ThumbnailUpdated.Invoke(thumbSlide, thumb);
                     }
                 };
                 editorController.runEditorContext(slideEditorContext.MvcContext);

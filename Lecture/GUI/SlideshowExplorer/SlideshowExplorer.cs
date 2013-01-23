@@ -11,6 +11,7 @@ using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
 using Medical.GUI;
 using Medical;
+using System.Drawing;
 
 namespace Lecture.GUI
 {
@@ -41,6 +42,8 @@ namespace Lecture.GUI
         private ButtonGrid slideGrid;
         private ScrollView scroll;
 
+        private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new Size2(256, 256), new Size2(512, 512));
+
         public SlideshowExplorer(EditorController editorController, SlideshowEditController slideEditController)
             : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
@@ -60,6 +63,7 @@ namespace Lecture.GUI
             slideEditController.SlideAdded += slideEditController_SlideAdded;
             slideEditController.SlideRemoved += slideEditController_SlideRemoved;
             slideEditController.SlideSelected += slideEditController_SlideSelected;
+            slideEditController.ThumbnailUpdated += slideEditController_ThumbnailUpdated;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -84,6 +88,7 @@ namespace Lecture.GUI
         public override void Dispose()
         {
             slideGrid.Dispose();
+            imageAtlas.Dispose();
             base.Dispose();
         }
 
@@ -273,6 +278,7 @@ namespace Lecture.GUI
 
         void slideEditController_SlideshowLoaded(Slideshow show)
         {
+            imageAtlas.clear();
             slideGrid.SuppressLayout = true;
             slideGrid.clear();
             foreach (Slide slide in show.Slides)
@@ -311,6 +317,8 @@ namespace Lecture.GUI
 
         void addSlideToGrid(Slide slide, int index)
         {
+            String thumbName = loadThumbnail(slide);
+
             ButtonGridItem item;
             if (index == -1)
             {
@@ -321,10 +329,12 @@ namespace Lecture.GUI
                 item = slideGrid.insertItem(index, "", "Slide " + (index + 1));
             }
             item.UserObject = slide;
+            item.setImage(thumbName);
         }
 
         void removeSlideFromGrid(Slide slide)
         {
+            imageAtlas.removeImage(slide.UniqueName);
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {
@@ -335,6 +345,36 @@ namespace Lecture.GUI
         void slideEditController_SlideSelected(Slide slide)
         {
             slideGrid.SelectedItem = slideGrid.findItemByUserObject(slide);
+        }
+
+        private String loadThumbnail(Slide slide)
+        {
+            String thumbPath = Path.Combine(slide.UniqueName, Slideshow.SlideThumbName);
+            try
+            {
+                if (editorController.ResourceProvider.exists(thumbPath))
+                {
+                    using (Image thumb = Bitmap.FromStream(editorController.ResourceProvider.openFile(thumbPath)))
+                    {
+                        return imageAtlas.addImage(slide.UniqueName, thumb);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Log.Error("Could not load thumbnail because of {0} exception.\nReason: {1}", ex.GetType(), ex.Message);
+            }
+            return null;
+        }
+
+        void slideEditController_ThumbnailUpdated(Slide slide, Bitmap thumb)
+        {
+            ButtonGridItem item = slideGrid.findItemByUserObject(slide);
+            if (item != null)
+            {
+                imageAtlas.removeImage(slide.UniqueName);
+                item.setImage(imageAtlas.addImage(slide.UniqueName, thumb));
+            }
         }
     }
 }
