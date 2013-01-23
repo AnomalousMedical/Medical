@@ -12,6 +12,7 @@ using Engine.Editing;
 using Medical.GUI;
 using Medical;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Lecture.GUI
 {
@@ -378,6 +379,18 @@ namespace Lecture.GUI
                 item.setImage(null);
                 imageAtlas.removeImage(slide.UniqueName);
                 item.setImage(imageAtlas.addImage(slide.UniqueName, thumb));
+            }
+
+            try
+            {
+                using (Stream stream = editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName)))
+                {
+                    thumb.Save(stream, ImageFormat.Png);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
             }
         }
     }

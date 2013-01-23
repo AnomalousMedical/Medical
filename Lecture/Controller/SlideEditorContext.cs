@@ -287,20 +287,10 @@ namespace Lecture
                         {
                             g.DrawImage(sceneThumb, slideWidth, 0);
                         }
-                        try
+
+                        if (ThumbnailUpdated != null)
                         {
-                            using (Stream stream = editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName)))
-                            {
-                                thumb.Save(stream, ImageFormat.Png);
-                            }
-                            if (ThumbnailUpdated != null)
-                            {
-                                ThumbnailUpdated.Invoke(slide, thumb);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
+                            ThumbnailUpdated.Invoke(slide, thumb);
                         }
                     }
                 }
