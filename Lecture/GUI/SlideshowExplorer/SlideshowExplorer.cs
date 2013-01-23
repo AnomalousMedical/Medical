@@ -278,9 +278,9 @@ namespace Lecture.GUI
 
         void slideEditController_SlideshowLoaded(Slideshow show)
         {
-            imageAtlas.clear();
             slideGrid.SuppressLayout = true;
             slideGrid.clear();
+            imageAtlas.clear(); //We want to be sure to clear out the slidegrid first.
             foreach (Slide slide in show.Slides)
             {
                 addSlideToGrid(slide, -1);
