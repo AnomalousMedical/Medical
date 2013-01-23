@@ -1,4 +1,6 @@
-﻿using Medical;
+﻿using Lecture.GUI;
+using Medical;
+using Medical.GUI;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,14 @@ namespace Lecture
 {
     class LecturePlugin : AtlasPlugin
     {
+        private SlideshowExplorer slideshowExplorer;
+        private EditorController slideshowEditorController;
+        private SlideshowEditController slideshowEditController;
+        private TimelineController editorTimelineController;
+        private EditorUICallback editorUICallback;
+        private PropEditController propEditController;
+        private SimObjectMover propMover;
+
         public LecturePlugin()
         {
 
@@ -17,7 +27,8 @@ namespace Lecture
 
         public void Dispose()
         {
-
+            slideshowExplorer.Dispose();
+            slideshowEditorController.Dispose();
         }
 
         public void loadGUIResources()
@@ -27,7 +38,36 @@ namespace Lecture
 
         public void initialize(StandaloneController standaloneController)
         {
-            
+            GUIManager guiManager = standaloneController.GUIManager;
+
+            editorTimelineController = new TimelineController(standaloneController);
+            guiManager.giveGUIsToTimelineController(editorTimelineController);
+
+            slideshowEditorController = new EditorController(standaloneController, editorTimelineController);
+            standaloneController.DocumentController.addDocumentHandler(new SlideshowDocumentHandler(slideshowEditorController));
+
+            //Prop Mover
+            MedicalController medicalController = standaloneController.MedicalController;
+            propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager);
+            medicalController.FixedLoopUpdate += propMover.update;
+
+            propEditController = new PropEditController(propMover);
+
+            editorUICallback = new EditorUICallback(standaloneController, slideshowEditorController, propEditController);
+
+            slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, slideshowEditorController);
+            slideshowExplorer = new SlideshowExplorer(slideshowEditorController, slideshowEditController);
+            slideshowExplorer.RunContext = (context) =>
+            {
+                standaloneController.TimelineController.setResourceProvider(slideshowEditorController.ResourceProvider);
+                standaloneController.MvcCore.startRunningContext(context);
+            };
+            guiManager.addManagedDialog(slideshowExplorer);
+
+            TaskController taskController = standaloneController.TaskController;
+            taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Slideshow Editor", CommonResources.NoIcon, TaskMenuCategories.Editor));
+
+            CommonEditorResources.initialize(standaloneController);
         }
 
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)

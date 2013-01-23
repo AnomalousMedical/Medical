@@ -64,7 +64,7 @@ namespace Medical.GUI
         private AnomalousMvcContext context;
 
         private RmlWysiwygComponent(AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
+            : base("Medical.GUI.Editor.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
             undoRedoCallback = defaultUndoRedoCallback;
             this.context = context;
@@ -644,7 +644,7 @@ namespace Medical.GUI
             return position.y - element.AbsoluteTop < element.OffsetHeight / 2;
         }
 
-        internal void updateUndoStatus(String oldMarkup, bool check = false)
+        public void updateUndoStatus(String oldMarkup, bool check = false)
         {
             //This is a hacky way to check for changes (optionally) it should not be needed when the popup editor is overhauled.
             //You can remove check and keep only the line in the if statement when you no longer need the check.

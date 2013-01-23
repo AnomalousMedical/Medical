@@ -10,8 +10,9 @@ using MyGUIPlugin;
 using Medical.Platform;
 using Engine.Platform;
 using Medical.Editor;
+using Medical;
 
-namespace Medical
+namespace Lecture
 {
     class SlideEditorContext
     {

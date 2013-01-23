@@ -52,7 +52,7 @@ namespace Medical.GUI
         private List<ElementEditorComponent> editorComponents = new List<ElementEditorComponent>();
 
         protected RmlElementEditor(Element element, ModifyDocumentDelegate applyChangesCb, ModifyDocumentDelegate deleteElementCheckCb)
-            :base("Medical.GUI.RmlWysiwyg.RmlElementEditor.layout")
+            : base("Medical.GUI.Editor.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
             this.applyChangesCb = applyChangesCb;

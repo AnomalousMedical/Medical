@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    static class EditorConfig
+    public static class EditorConfig
     {
         private static ConfigFile configFile;
 

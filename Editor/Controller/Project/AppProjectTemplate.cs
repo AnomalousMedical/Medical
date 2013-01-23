@@ -15,7 +15,7 @@ namespace Medical
 
         public void createProject(EditorResourceProvider resourceProvider, string projectName)
         {
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleMvcContext_mvc, MvcContextName, resourceProvider);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleMvcContext_mvc, MvcContextName, resourceProvider, Assembly.GetExecutingAssembly());
 
             DDAtlasPlugin ddPlugin = new DDAtlasPlugin();
             ddPlugin.PluginName = projectName;
@@ -30,8 +30,8 @@ namespace Medical
 
             Assembly editorAssembly = Assembly.GetExecutingAssembly();
 
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider);
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider, Assembly.GetExecutingAssembly());
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider, Assembly.GetExecutingAssembly());
 
             using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("Index.rml")))
             {

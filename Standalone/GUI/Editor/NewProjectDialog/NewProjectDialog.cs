@@ -9,7 +9,7 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class NewProjectDialog : InputBrowserWindow<ProjectTemplate>
+    public class NewProjectDialog : InputBrowserWindow<ProjectTemplate>
     {
         public static void ShowDialog(Browser browse, Action<ProjectTemplate, String> resultCallback)
         {
@@ -36,7 +36,7 @@ namespace Medical.GUI
         private EditBox projectLocation;
 
         protected NewProjectDialog()
-            :base("Create Project", "", "Medical.GUI.NewProjectDialog.NewProjectDialog.layout")
+            :base("Create Project", "", "Medical.GUI.Editor.NewProjectDialog.NewProjectDialog.layout")
         {
             projectLocation = window.findWidget("ProjectLocation") as EditBox;
             projectLocation.Caption = EditorConfig.ProjectDirectory;

@@ -6,6 +6,7 @@ using Medical.GUI;
 using System.IO;
 using MyGUIPlugin;
 using libRocketPlugin;
+using System.Reflection;
 
 namespace Medical
 {
@@ -62,7 +63,7 @@ namespace Medical
         void createNewRcssFile(String filePath)
         {
             creatingNewFile(filePath);
-            saveText(filePath, EmbeddedResourceHelpers.ReadResourceContents(EmbeddedTemplateNames.MasterTemplate_trml));
+            saveText(filePath, EmbeddedResourceHelpers.ReadResourceContents(EmbeddedTemplateNames.MasterTemplate_trml, Assembly.GetExecutingAssembly()));
             openEditor(filePath);
         }
     }

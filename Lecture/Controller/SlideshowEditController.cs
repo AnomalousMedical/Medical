@@ -1,10 +1,11 @@
-﻿using Medical.Controller;
+﻿using Medical;
+using Medical.Controller;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Medical
+namespace Lecture
 {
     public class SlideshowEditController
     {

@@ -31,11 +31,6 @@ namespace Medical
         private PropEditController propEditController;
         private TypeControllerManager typeControllerManager;
 
-        private SlideshowExplorer slideshowExplorer;
-        private EditorController slideshowEditorController;
-        private SlideshowEditController slideshowEditController;
-
-
         public EditorPlugin()
         {
             Log.Info("Editor GUI Loaded");
@@ -68,7 +63,6 @@ namespace Medical
         {
             EditorConfig.save();
             projectExplorer.Dispose();
-            slideshowExplorer.Dispose();
             scratchArea.Dispose();
             aspectRatioTask.Dispose();
             editorController.Dispose();
@@ -101,9 +95,6 @@ namespace Medical
             standaloneController.DocumentController.addDocumentHandler(new ProjectDocumentHandler(editorController));
             propEditController = new PropEditController(propMover);
 
-            slideshowEditorController = new EditorController(standaloneController, editorTimelineController);
-            standaloneController.DocumentController.addDocumentHandler(new SlideshowDocumentHandler(slideshowEditorController));
-
             //UI Helpers
             editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
@@ -114,28 +105,16 @@ namespace Medical
             projectExplorer = new ProjectExplorer(editorController);
             guiManager.addManagedDialog(projectExplorer);
 
-            slideshowEditController = new SlideshowEditController(standaloneController, this.UICallback, this.propEditController, slideshowEditorController);
-            slideshowExplorer = new SlideshowExplorer(slideshowEditorController, slideshowEditController);
-            slideshowExplorer.RunContext = (context) =>
-            {
-                standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
-                standaloneController.MvcCore.startRunningContext(context);
-            };
-            guiManager.addManagedDialog(slideshowExplorer);
-
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "Editor/ProjectExplorerIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Slideshow Editor", CommonResources.NoIcon, TaskMenuCategories.Editor));
 
             typeControllerManager = new TypeControllerManager(standaloneController, this);
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
-
-            standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory());
 
             standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(editorTimelineController, editorController, standaloneController.Clipboard, this));
             standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(editorUICallback, editorController));
@@ -144,7 +123,7 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard, propEditController));
             standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
             standaloneController.ViewHostFactory.addFactory(new MovementSequenceEditorFactory(standaloneController.MovementSequenceController, editorController, standaloneController.Clipboard));
-            standaloneController.ViewHostFactory.addFactory(new DragAndDropFactory());
+            CommonEditorResources.initialize(standaloneController);
 
             editorController.ProjectChanged += editorController_ProjectChanged;
         }

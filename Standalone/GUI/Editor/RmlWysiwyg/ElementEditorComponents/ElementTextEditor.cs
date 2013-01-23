@@ -18,7 +18,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private Timer keyTimer;
 
         public ElementTextEditor(String startingText)
-            : base("Medical.GUI.RmlWysiwyg.ElementEditorComponents.ElementTextEditor.layout", "Text")
+            : base("Medical.GUI.Editor.RmlWysiwyg.ElementEditorComponents.ElementTextEditor.layout", "Text")
         {
             text = (EditBox)widget;
             InputManager.Instance.setKeyFocusWidget(text);

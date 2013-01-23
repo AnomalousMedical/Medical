@@ -10,8 +10,9 @@ using Logging;
 using Medical.Controller.AnomalousMvc;
 using Medical.Platform;
 using Engine.Platform;
+using Medical;
 
-namespace Medical
+namespace Lecture
 {
     public class ShowTypeController : SaveableTypeController<Slideshow>
     {

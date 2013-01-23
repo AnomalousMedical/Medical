@@ -19,7 +19,7 @@ namespace Medical.GUI
         private SendResult<PresetState> resultCallback;
 
         public PresetStateCaptureDialog(SendResult<PresetState> resultCallback)
-            :base("Medical.GUI.PresetStateCaptureDialog.PresetStateCaptureDialog.layout")
+            :base("Medical.GUI.Editor.PresetStateCaptureDialog.PresetStateCaptureDialog.layout")
         {
             this.resultCallback = resultCallback;
 

@@ -1,5 +1,6 @@
 ﻿using Engine.Editing;
 using Logging;
+using Medical;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
@@ -10,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Medical
+namespace Lecture
 {
     class MedicalSlideItemTemplate : ProjectItemTemplate
     {

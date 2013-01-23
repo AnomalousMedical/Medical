@@ -7,6 +7,7 @@ using System.Xml;
 using System.IO;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
+using System.Reflection;
 
 namespace Medical
 {
@@ -69,8 +70,8 @@ namespace Medical
 
             resourceProvider.createDirectory("", "Resources");
 
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider);
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider, Assembly.GetExecutingAssembly());
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider, Assembly.GetExecutingAssembly());
 
             using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("Index.rml")))
             {

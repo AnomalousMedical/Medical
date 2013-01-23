@@ -17,7 +17,7 @@ namespace Medical.GUI
         private bool firstDrag;
 
         public DragAndDropComponent(MyGUIViewHost viewHost, DragAndDropViewBase view)
-            :base("Medical.GUI.DragAndDrop.DragAndDropComponent.layout", viewHost)
+            :base("Medical.GUI.Editor.DragAndDrop.DragAndDropComponent.layout", viewHost)
         {
             dragItems = new ButtonGrid((ScrollView)widget);
             dragItems.HighlightSelectedButton = false;

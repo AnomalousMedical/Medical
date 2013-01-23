@@ -9,8 +9,10 @@ using Engine.Platform;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
+using Medical.GUI;
+using Medical;
 
-namespace Medical.GUI
+namespace Lecture.GUI
 {
     public class SlideshowExplorer : MDIDialog
     {
@@ -40,7 +42,7 @@ namespace Medical.GUI
         private ScrollView scroll;
 
         public SlideshowExplorer(EditorController editorController, SlideshowEditController slideEditController)
-            : base("Medical.GUI.SlideshowExplorer.SlideshowExplorer.layout")
+            : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
             this.editorController = editorController;
             this.slideEditController = slideEditController;
@@ -267,11 +269,6 @@ namespace Medical.GUI
                     RunContext.Invoke(context);
                 }
             }
-        }
-
-        void fileBrowser_FileSelected(FileBrowserTree tree, string path)
-        {
-            editorController.openEditor(path);
         }
 
         void slideEditController_SlideshowLoaded(Slideshow show)

@@ -1,4 +1,5 @@
 ﻿using Engine.Saving;
+using Medical;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 
-namespace Medical.GUI
+namespace Lecture.GUI
 {
     class SlideshowProjectTemplate : ProjectTemplate
     {
@@ -15,8 +16,6 @@ namespace Medical.GUI
 
         public void createProject(EditorResourceProvider resourceProvider, string projectName)
         {
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleMvcContext_mvc, SlideshowName, resourceProvider);
-
             DDAtlasPlugin ddPlugin = new DDAtlasPlugin();
             ddPlugin.PluginName = projectName;
             ddPlugin.PluginNamespace = projectName;
@@ -27,8 +26,8 @@ namespace Medical.GUI
 
             Assembly editorAssembly = Assembly.GetExecutingAssembly();
 
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider);
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider, EmbeddedTemplateNames.Assembly);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider, EmbeddedTemplateNames.Assembly);
 
             Slideshow slideshow = new Slideshow();
             saveObject(slideshow, resourceProvider, SlideshowName);

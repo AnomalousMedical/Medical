@@ -81,50 +81,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Documents\SlideshowDocumentHandler.cs" />
-    <Compile Include="Controller\ItemTemplates\MedicalSlideItemTemplate.cs" />
-    <Compile Include="Controller\SlideEditorContext.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\ShowTypeController.cs" />
-    <Compile Include="Controller\Project\SlideshowProjectTemplate.cs" />
-    <Compile Include="Controller\SlideshowEditController.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RawRmlWysiwygView.cs" />
-    <Compile Include="GUI\RmlWysiwyg\DraggingElementManager.cs" />
-    <Compile Include="GUI\RmlWysiwyg\ElementEditorComponent.cs" />
-    <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
-    <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
-    <Compile Include="GUI\RmlWysiwyg\Elements\DivStrategy.cs" />
-    <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategy.cs" />
-    <Compile Include="GUI\RmlWysiwyg\Elements\ElementStrategyManager.cs" />
-    <Compile Include="GUI\RmlWysiwyg\Elements\InputStrategy.cs" />
-    <Compile Include="GUI\RmlWysiwyg\Elements\TextElementStrategy.cs" />
-    <Compile Include="GUI\RmlWysiwyg\Elements\ImageStrategy.cs" />
-    <Compile Include="GUI\RmlWysiwyg\WysiwygDragDropItem.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
-    <Compile Include="Controller\EditorConfig.cs" />
-    <Compile Include="Controller\EditorController\EditorController.cs" />
-    <Compile Include="Controller\EditorController\EditorTypeController.cs" />
-    <Compile Include="Controller\EditorController\ProjectItemTemplate.cs" />
-    <Compile Include="Controller\EditorController\ProjectItemTemplateDelegate.cs" />
-    <Compile Include="Controller\EditorController\ProjectItemTemplateFixedNameDelegate.cs" />
-    <Compile Include="Controller\EditorController\ProjectTemplate.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\XmlTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\MvcTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\PluginTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\RcssTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\RmlTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\SaveableTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\SaveableTypeControllerCachedResource.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\TextTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\TimelineTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\TRmlTypeController.cs" />
-    <Compile Include="Controller\EditorResourceProvider\CachedResource.cs" />
-    <Compile Include="Controller\EditorResourceProvider\EditorResourceProvider.cs" />
-    <Compile Include="Controller\EditorResourceProvider\ResourceCache.cs" />
-    <Compile Include="Controller\EditorResourceProvider\SaveableCachedResource.cs" />
-    <Compile Include="Controller\EditorResourceProvider\SaveableObjectStream.cs" />
-    <Compile Include="Controller\EditorResourceProvider\TextCachedResource.cs" />
     <Compile Include="Controller\ItemTemplates\PluginBrandingResourceItemTemplate.cs" />
     <Compile Include="Controller\ItemTemplates\ViewWithTimelineItemTemplate.cs" />
     <Compile Include="Controller\ItemTemplates\EmptyViewItemTemplate.cs" />
@@ -145,22 +110,16 @@
     <Compile Include="Controller\Mvc\EditMenu\EditMenuProvider.cs" />
     <Compile Include="Controller\Project\AppProjectTemplate.cs" />
     <Compile Include="Controller\Project\EmptyProjectTemplate.cs" />
-    <Compile Include="Controller\PropEditController.cs" />
     <Compile Include="Controller\RmlEditorContext.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaItem.cs" />
     <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
-    <Compile Include="Controller\EditorUICallback.cs" />
     <Compile Include="Controller\TimelineEditorContext.cs" />
     <Compile Include="Controller\TypeControllerManager.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
-    <Compile Include="GUI\DragAndDrop\DragAndDropComponent.cs" />
-    <Compile Include="GUI\DragAndDrop\DragAndDropFactory.cs" />
-    <Compile Include="GUI\DragAndDrop\DragAndDropItem.cs" />
-    <Compile Include="GUI\DragAndDrop\DragAndDropView.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarView.cs" />
@@ -186,7 +145,6 @@
     <Compile Include="GUI\MovementSequence\MovementSequenceEditorFactory.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditorView.cs" />
     <Compile Include="GUI\OpenPropManager\OpenPropManagerView.cs" />
-    <Compile Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
     <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />
     <Compile Include="GUI\FileBrowserTree\FileNode.cs" />
@@ -202,16 +160,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
-    <Compile Include="GUI\RmlWysiwyg\PreviewElement.cs" />
-    <Compile Include="GUI\RmlWysiwyg\ElementEditorComponents\RmlEditableProperty.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlElementEditor.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygBrowserProvider.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponent.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
-    <Compile Include="GUI\RmlWysiwyg\RmlWysiwygView.cs" />
-    <Compile Include="GUI\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
-    <Compile Include="GUI\SlideshowExplorer\SlideshowExplorer.cs" />
     <Compile Include="GUI\TextEditor\XmlTextHighlighter.cs" />
     <Compile Include="GUI\TextEditor\CssTextHighlighter.cs" />
     <Compile Include="GUI\TextEditor\RmlTextHighlighter.cs" />
@@ -232,13 +181,10 @@
     <Compile Include="Irony\Grammars\XmlGrammar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\TimelineEditor\ActionPrototypes\ShowPropActionData.cs" />
-    <Compile Include="GUI\NewProjectDialog\NewProjectDialog.cs" />
     <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
     <Compile Include="GUI\TimelineEditor\TimelineActionData.cs" />
     <Compile Include="Controller\Project\EmbeddedTemplateNames.cs" />
-    <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <EmbeddedResource Include="Controller\Project\SimpleMvcContext.mvc" />
-    <EmbeddedResource Include="Controller\Project\SlideshowMvcContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\AspectRatioTask.cs" />
     <EmbeddedResource Include="Controller\Project\Wysiwyg.rcss" />
@@ -256,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
-    <EmbeddedResource Include="GUI\DragAndDrop\DragAndDropComponent.layout" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout">
       <SubType>Designer</SubType>
@@ -267,19 +212,10 @@
     <EmbeddedResource Include="GUI\GenericEditor\GenericEditorComponent.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
-    <EmbeddedResource Include="GUI\NewProjectDialog\NewProjectDialog.layout" />
-    <EmbeddedResource Include="GUI\PresetStateCaptureDialog\PresetStateCaptureDialog.layout" />
     <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
-    <EmbeddedResource Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.layout" />
-    <EmbeddedResource Include="GUI\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.layout" />
-    <EmbeddedResource Include="GUI\RmlWysiwyg\RmlElementEditor.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
-    <EmbeddedResource Include="GUI\SlideshowExplorer\SlideshowExplorer.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />
     <EmbeddedResource Include="GUI\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\PropTimeline.layout" />
