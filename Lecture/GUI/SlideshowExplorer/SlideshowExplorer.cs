@@ -39,6 +39,7 @@ namespace Lecture.GUI
         Button addButton;
         Button removeButton;
         Button playButton;
+        Button captureButton;
 
         private ButtonGrid slideGrid;
         private ScrollView scroll;
@@ -58,6 +59,8 @@ namespace Lecture.GUI
             removeButton.MouseButtonClick += removeButton_MouseButtonClick;
             playButton = (Button)window.findWidget("Play");
             playButton.MouseButtonClick += playButton_MouseButtonClick;
+            captureButton = (Button)window.findWidget("Capture");
+            captureButton.MouseButtonClick += captureButton_MouseButtonClick;
 
             slideEditController.SlideshowLoaded += slideEditController_SlideshowLoaded;
             slideEditController.SlideshowClosed += slideEditController_SlideshowClosed;
@@ -392,6 +395,11 @@ namespace Lecture.GUI
             {
                 Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
             }
+        }
+
+        void captureButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            slideEditController.capture();
         }
     }
 }

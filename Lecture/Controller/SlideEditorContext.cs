@@ -37,14 +37,16 @@ namespace Lecture
         private UndoRedoBuffer undoBuffer;
         private EditorController editorController;
         private ImageRenderer imageRenderer;
+        private MedicalSlideItemTemplate itemTemplate;
 
-        public SlideEditorContext(MedicalRmlSlide slide, EditorController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, Action<String> wysiwygUndoCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, EditorController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
             this.editorController = editorController;
             this.undoBuffer = undoBuffer;
             this.imageRenderer = imageRenderer;
+            this.itemTemplate = itemTemplate;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -225,6 +227,12 @@ namespace Lecture
                 rmlComponent.cancelAndHideEditor();
                 rmlComponent.setRml(rml, keepScrollPosition);
             }
+        }
+
+        internal void capture()
+        {
+            itemTemplate.applySceneStateToSlide(slide);
+            updateThumbnail();
         }
 
         public AnomalousMvcContext MvcContext

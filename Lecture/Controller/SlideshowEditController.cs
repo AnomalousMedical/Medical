@@ -29,6 +29,7 @@ namespace Lecture
         private EditorUICallback uiCallback;
         private Slideshow slideshow;
         private ImageRenderer imageRenderer;
+        private MedicalSlideItemTemplate medicalSlideTemplate;
 
         private bool allowUndoCreation = true;
         private Slide lastEditSlide = null;
@@ -46,7 +47,7 @@ namespace Lecture
             showTypeController = new ShowTypeController(editorController);
             editorController.addTypeController(showTypeController);
 
-            MedicalSlideItemTemplate medicalSlideTemplate = new MedicalSlideItemTemplate(standaloneController.SceneViewController, standaloneController.MedicalStateController);
+            medicalSlideTemplate = new MedicalSlideItemTemplate(standaloneController.SceneViewController, standaloneController.MedicalStateController);
             medicalSlideTemplate.SlideCreated += (slide) =>
                 {
                     addSlide(slide);
@@ -60,7 +61,7 @@ namespace Lecture
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, editorController, uiCallback, undoBuffer, imageRenderer, (rml) =>
+                slideEditorContext = new SlideEditorContext(medicalSlide, editorController, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
                 {
                     slideEditorContext.setWysiwygRml(rml, true);
                 });
@@ -356,6 +357,14 @@ namespace Lecture
             if (SlideshowLoaded != null)
             {
                 SlideshowLoaded.Invoke(slideshow);
+            }
+        }
+
+        public void capture()
+        {
+            if (slideEditorContext != null)
+            {
+                slideEditorContext.capture();
             }
         }
     }

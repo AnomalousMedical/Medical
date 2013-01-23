@@ -20,5 +20,8 @@
         <Widget type="Button" skin="Button" position="156 30 41 20" name="Play">
             <Property key="Caption" value="Play"/>
         </Widget>
+        <Widget type="Button" skin="Button" position="80 30 57 20" name="Capture">
+            <Property key="Caption" value="Capture"/>
+        </Widget>
     </Widget>
 </MyGUI>

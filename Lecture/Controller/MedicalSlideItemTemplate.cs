@@ -29,6 +29,16 @@ namespace Lecture
         public void createItem(string path, EditorController editorController)
         {
             MedicalRmlSlide slide = new MedicalRmlSlide();
+            applySceneStateToSlide(slide);
+            slide.Rml = defaultSlide;
+            if (SlideCreated != null)
+            {
+                SlideCreated.Invoke(slide);
+            }
+        }
+
+        public void applySceneStateToSlide(MedicalRmlSlide slide)
+        {
             CameraPosition cameraPos = new CameraPosition();
             if (sceneViewController.ActiveWindow != null)
             {
@@ -43,11 +53,6 @@ namespace Lecture
             slide.MedicalState = medicalStateController.createPresetState("");
             slide.MusclePosition = new MusclePosition();
             slide.MusclePosition.captureState();
-            slide.Rml = defaultSlide;
-            if (SlideCreated != null)
-            {
-                SlideCreated.Invoke(slide);
-            }
         }
 
         public string TypeName
