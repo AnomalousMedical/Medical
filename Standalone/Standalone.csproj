@@ -773,6 +773,9 @@
     <EmbeddedResource Include="Resources\TeethMovementIcons.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons.xml" />
+    <EmbeddedResource Include="Resources\MoreEditorIcons.xml" />
+    <EmbeddedResource Include="Resources\MoreEditorIcons.png" />
+    <EmbeddedResource Include="Resources\ImagePlaceholder.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

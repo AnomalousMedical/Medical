@@ -1,4 +1,5 @@
 ﻿using Medical.GUI;
+using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace Medical
             if (load)
             {
                 load = false;
+
+                ResourceManager.Instance.load("Medical.Resources.MoreEditorIcons.xml");
+
                 standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory());
                 standaloneController.ViewHostFactory.addFactory(new DragAndDropFactory());
             }

@@ -2,7 +2,6 @@
 
 <MyGUI type="List">
   <List file="Medical.Resources.EditorIcons.xml"/>
-  <List file="Medical.Resources.MoreEditorIcons.xml"/>
   <List file="Medical.Resources.EditorFileIcons.xml"/>
   <List file="Medical.Resources.MvcContextIcons.xml"/>
   <List file="Medical.Resources.TimelineImages.xml"/>

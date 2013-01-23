@@ -243,10 +243,6 @@
     <EmbeddedResource Include="Resources\EditorBrandingIcon.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MoreEditorIcons.png" />
-    <EmbeddedResource Include="Resources\MoreEditorIcons.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\EditorFileIcons.png" />
     <EmbeddedResource Include="Resources\EditorFileIcons.xml" />
   </ItemGroup>
@@ -258,9 +254,6 @@
     <EmbeddedResource Include="..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll">
       <Link>Resources\Irony.dll</Link>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ImagePlaceholder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
