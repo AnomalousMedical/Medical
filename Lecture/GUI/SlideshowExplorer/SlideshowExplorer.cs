@@ -375,6 +375,7 @@ namespace Lecture.GUI
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {
+                item.setImage(null);
                 imageAtlas.removeImage(slide.UniqueName);
                 item.setImage(imageAtlas.addImage(slide.UniqueName, thumb));
             }
