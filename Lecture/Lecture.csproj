@@ -54,6 +54,7 @@
     <Compile Include="Controller\MedicalSlideItemTemplate.cs" />
     <Compile Include="Controller\ShowTypeController.cs" />
     <Compile Include="Controller\SlideEditorContext.cs" />
+    <Compile Include="Controller\SlideSceneInfo.cs" />
     <Compile Include="Controller\SlideshowDocumentHandler.cs" />
     <Compile Include="Controller\SlideshowProjectTemplate.cs" />
     <Compile Include="GUI\SlideshowExplorer\SlideshowExplorer.cs" />

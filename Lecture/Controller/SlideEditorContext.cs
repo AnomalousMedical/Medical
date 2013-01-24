@@ -229,6 +229,17 @@ namespace Lecture
             }
         }
 
+        public SlideSceneInfo getCurrentSceneInfo()
+        {
+            return new SlideSceneInfo(slide);
+        }
+
+        public void applySceneInfo(SlideSceneInfo info)
+        {
+            info.applyToSlide(slide);
+            updateThumbnail();
+        }
+
         internal void capture()
         {
             itemTemplate.applySceneStateToSlide(slide);

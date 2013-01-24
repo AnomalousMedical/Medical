@@ -364,8 +364,16 @@ namespace Lecture
         {
             if (slideEditorContext != null)
             {
+                SlideSceneInfo undoInfoStack = slideEditorContext.getCurrentSceneInfo();
                 slideEditorContext.capture();
+                SlideSceneInfo redoInfoStack = slideEditorContext.getCurrentSceneInfo();
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideSceneInfo, SlideSceneInfo>(applySceneInfo, redoInfoStack, applySceneInfo, undoInfoStack));
             }
+        }
+
+        private void applySceneInfo(SlideSceneInfo info)
+        {
+            slideEditorContext.applySceneInfo(info);
         }
     }
 }
