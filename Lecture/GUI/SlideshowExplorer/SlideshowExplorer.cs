@@ -313,7 +313,14 @@ namespace Lecture.GUI
             }
             else
             {
+                slideGrid.SuppressLayout = true;
                 item = slideGrid.insertItem(index, "", "Slide " + (index + 1));
+                foreach (ButtonGridItem laterItem in slideGrid.Items.Skip(++index))
+                {
+                    laterItem.Caption = "Slide " + ++index;
+                }
+                slideGrid.SuppressLayout = false;
+                slideGrid.layout();
             }
             item.UserObject = slide;
             item.setImage(thumbName);
@@ -324,7 +331,15 @@ namespace Lecture.GUI
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {
+                slideGrid.SuppressLayout = true;
                 slideGrid.removeItem(item);
+                int index = 1;
+                foreach (ButtonGridItem button in slideGrid.Items)
+                {
+                    button.Caption = "Slide " + index++;
+                }
+                slideGrid.SuppressLayout = false;
+                slideGrid.layout();
             }
         }
 
