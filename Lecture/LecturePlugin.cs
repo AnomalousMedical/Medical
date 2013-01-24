@@ -13,7 +13,7 @@ namespace Lecture
     class LecturePlugin : AtlasPlugin
     {
         private SlideshowExplorer slideshowExplorer;
-        private EditorController slideshowEditorController;
+        private EditorController editorController;
         private SlideshowEditController slideshowEditController;
         private TimelineController editorTimelineController;
         private EditorUICallback editorUICallback;
@@ -28,7 +28,7 @@ namespace Lecture
         public void Dispose()
         {
             slideshowExplorer.Dispose();
-            slideshowEditorController.Dispose();
+            editorController.Dispose();
         }
 
         public void loadGUIResources()
@@ -43,8 +43,8 @@ namespace Lecture
             editorTimelineController = new TimelineController(standaloneController);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
 
-            slideshowEditorController = new EditorController(standaloneController, editorTimelineController);
-            standaloneController.DocumentController.addDocumentHandler(new SlideshowDocumentHandler(slideshowEditorController));
+            editorController = new EditorController(standaloneController, editorTimelineController);
+            standaloneController.DocumentController.addDocumentHandler(new SlideshowDocumentHandler(editorController));
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
@@ -53,13 +53,13 @@ namespace Lecture
 
             propEditController = new PropEditController(propMover);
 
-            editorUICallback = new EditorUICallback(standaloneController, slideshowEditorController, propEditController);
+            editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
-            slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, slideshowEditorController);
-            slideshowExplorer = new SlideshowExplorer(slideshowEditorController, slideshowEditController);
+            slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, editorController);
+            slideshowExplorer = new SlideshowExplorer(slideshowEditController);
             slideshowExplorer.RunContext = (context) =>
             {
-                standaloneController.TimelineController.setResourceProvider(slideshowEditorController.ResourceProvider);
+                standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
                 standaloneController.MvcCore.startRunningContext(context);
             };
             guiManager.addManagedDialog(slideshowExplorer);

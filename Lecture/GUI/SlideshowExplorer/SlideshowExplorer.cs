@@ -32,8 +32,8 @@ namespace Lecture.GUI
         MenuItem cleanup;
 
         private Slideshow slideshow;
-        private EditorController editorController;
         private SlideshowEditController slideEditController;
+        private SlideImageManager slideImageManager;
 
         //Buttons
         Button addButton;
@@ -44,14 +44,11 @@ namespace Lecture.GUI
         private ButtonGrid slideGrid;
         private ScrollView scroll;
 
-        private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new Size2(256, 256), new Size2(512, 512));
-
-        public SlideshowExplorer(EditorController editorController, SlideshowEditController slideEditController)
+        public SlideshowExplorer(SlideshowEditController slideEditController)
             : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
-            this.editorController = editorController;
             this.slideEditController = slideEditController;
-            editorController.ProjectChanged += editorController_ProjectChanged;
+            slideImageManager = new SlideImageManager(slideEditController);
 
             addButton = (Button)window.findWidget("Add");
             addButton.MouseButtonClick += addButton_MouseButtonClick;
@@ -92,13 +89,13 @@ namespace Lecture.GUI
         public override void Dispose()
         {
             slideGrid.Dispose();
-            imageAtlas.Dispose();
+            slideImageManager.Dispose();
             base.Dispose();
         }
 
         void createNewProjectClicked(Widget source, EventArgs e)
         {
-            if (editorController.ResourceProvider == null || editorController.ResourceProvider.ResourceCache.Count == 0)
+            if (slideEditController.ResourceProvider == null || slideEditController.ResourceProvider.ResourceCache.Count == 0)
             {
                 showNewProjectDialog();
             }
@@ -108,7 +105,7 @@ namespace Lecture.GUI
                 {
                     if (result == MessageBoxStyle.Ok)
                     {
-                        editorController.saveAllCachedResources();
+                        slideEditController.save();
                     }
                     showNewProjectDialog();
                 });
@@ -117,7 +114,7 @@ namespace Lecture.GUI
 
         void showNewProjectDialog()
         {
-            editorController.stopPlayingTimelines();
+            slideEditController.stopPlayingTimelines();
 
             Browser browse = new Browser("Slideshows", "Create Slideshow");
             BrowserNode defaultNode = new BrowserNode("Slideshow", new SlideshowProjectTemplate());
@@ -132,20 +129,20 @@ namespace Lecture.GUI
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
-                            editorController.createNewProject(fullProjectName, true, template);
+                            slideEditController.createNewProject(fullProjectName, true, template);
                         }
                     });
                 }
                 else
                 {
-                    editorController.createNewProject(fullProjectName, false, template);
+                    slideEditController.createNewProject(fullProjectName, false, template);
                 }
             });
         }
 
         void openProjectClicked(Widget source, EventArgs e)
         {
-            if (editorController.ResourceProvider == null || editorController.ResourceProvider.ResourceCache.Count == 0)
+            if (slideEditController.ResourceProvider == null || slideEditController.ResourceProvider.ResourceCache.Count == 0)
             {
                 showOpenProjectDialog();
             }
@@ -155,7 +152,7 @@ namespace Lecture.GUI
                 {
                     if (result == MessageBoxStyle.Ok)
                     {
-                        editorController.saveAllCachedResources();
+                        slideEditController.save();
                     }
                     showOpenProjectDialog();
                 });
@@ -164,28 +161,16 @@ namespace Lecture.GUI
 
         void showOpenProjectDialog()
         {
-            editorController.stopPlayingTimelines();
+            slideEditController.stopPlayingTimelines();
             FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", "", false);
             fileDialog.showModal((result, paths) =>
             {
                 if (result == NativeDialogResult.OK)
                 {
                     String path = paths.First();
-                    editorController.openProject(Path.GetDirectoryName(path), path);
+                    slideEditController.openProject(Path.GetDirectoryName(path), path);
                 }
             });
-        }
-
-        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
-        {
-            if (editorController.ResourceProvider != null)
-            {
-                window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
-            }
-            else
-            {
-                window.Caption = windowTitle;
-            }
         }
 
         void ProjectExplorer_Resized(object sender, EventArgs e)
@@ -206,11 +191,11 @@ namespace Lecture.GUI
             }
             else if (menuEventArgs.Item == saveAll)
             {
-                editorController.saveAllCachedResources();
+                slideEditController.save();
             }
             else if (menuEventArgs.Item == closeProject)
             {
-                editorController.closeProject();
+                slideEditController.closeProject();
             }
             else if (menuEventArgs.Item == cleanup)
             {
@@ -218,7 +203,7 @@ namespace Lecture.GUI
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
-                        editorController.saveAllCachedResources();
+                        slideEditController.save();
                         slideEditController.cleanup();
                     }
                 });
@@ -229,17 +214,7 @@ namespace Lecture.GUI
         {
             if (slideshow != null)
             {
-                AddItemDialog.AddItem(editorController.ItemTemplates, (itemTemplate) =>
-                {
-                    try
-                    {
-                        ((ProjectItemTemplate)itemTemplate).createItem("", editorController);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                    }
-                });
+                AddItemDialog.AddItem(slideEditController.ItemTemplates, slideEditController.createItem);
             }
         }
 
@@ -270,9 +245,9 @@ namespace Lecture.GUI
                         startIndex = 0;
                     }
                 }
-                AnomalousMvcContext context = slideshow.createContext(editorController.ResourceProvider, startIndex);
+                AnomalousMvcContext context = slideshow.createContext(slideEditController.ResourceProvider, startIndex);
                 context.RuntimeName = "Editor.PreviewMvcContext";
-                context.setResourceProvider(editorController.ResourceProvider);
+                context.setResourceProvider(slideEditController.ResourceProvider);
                 if (RunContext != null)
                 {
                     RunContext.Invoke(context);
@@ -284,7 +259,7 @@ namespace Lecture.GUI
         {
             slideGrid.SuppressLayout = true;
             slideGrid.clear();
-            imageAtlas.clear(); //We want to be sure to clear out the slidegrid first.
+            slideImageManager.clear(); //We want to be sure to clear out the slidegrid first.
             foreach (Slide slide in show.Slides)
             {
                 addSlideToGrid(slide, -1);
@@ -292,6 +267,7 @@ namespace Lecture.GUI
             slideGrid.SuppressLayout = false;
             slideGrid.resizeAndLayout(scroll.ClientCoord.width);
             this.slideshow = show;
+            window.Caption = String.Format(windowTitleFormat, windowTitle, slideEditController.ResourceProvider.BackingLocation);
         }
 
         void slideEditController_SlideAdded(Slide slide, int index)
@@ -317,11 +293,12 @@ namespace Lecture.GUI
         {
             slideGrid.clear();
             slideshow = null;
+            window.Caption = windowTitle;
         }
 
         void addSlideToGrid(Slide slide, int index)
         {
-            String thumbName = loadThumbnail(slide);
+            String thumbName = slideImageManager.loadThumbnail(slide);
 
             ButtonGridItem item;
             if (index == -1)
@@ -338,7 +315,7 @@ namespace Lecture.GUI
 
         void removeSlideFromGrid(Slide slide)
         {
-            imageAtlas.removeImage(slide.UniqueName);
+            slideImageManager.removeImage(slide);
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {
@@ -351,49 +328,13 @@ namespace Lecture.GUI
             slideGrid.SelectedItem = slideGrid.findItemByUserObject(slide);
         }
 
-        private String loadThumbnail(Slide slide)
-        {
-            String thumbPath = Path.Combine(slide.UniqueName, Slideshow.SlideThumbName);
-            try
-            {
-                if (editorController.ResourceProvider.exists(thumbPath))
-                {
-                    using (Stream stream = editorController.ResourceProvider.openFile(thumbPath))
-                    {
-                        using (Image thumb = Bitmap.FromStream(stream))
-                        {
-                            return imageAtlas.addImage(slide.UniqueName, thumb);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.Log.Error("Could not load thumbnail because of {0} exception.\nReason: {1}", ex.GetType(), ex.Message);
-            }
-            return null;
-        }
-
         void slideEditController_ThumbnailUpdated(Slide slide, Bitmap thumb)
         {
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {
-                item.setImage(null);
-                imageAtlas.removeImage(slide.UniqueName);
-                item.setImage(imageAtlas.addImage(slide.UniqueName, thumb));
-            }
-
-            try
-            {
-                using (Stream stream = editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName)))
-                {
-                    thumb.Save(stream, ImageFormat.Png);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
+                item.setImage(null); //Null the image or else the program gets crashy
+                item.setImage(slideImageManager.thumbnailUpdated(slide, thumb));
             }
         }
 

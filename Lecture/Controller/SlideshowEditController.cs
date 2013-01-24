@@ -1,5 +1,6 @@
 ﻿using Medical;
 using Medical.Controller;
+using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,6 +17,7 @@ namespace Lecture
         public event Action<Slide> SlideRemoved;
         public event Action<Slide> SlideSelected;
         public event Action<Slide, Bitmap> ThumbnailUpdated;
+        public event Action Saved;
 
         private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(50);
 
@@ -61,7 +63,7 @@ namespace Lecture
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, editorController, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
+                slideEditorContext = new SlideEditorContext(medicalSlide, this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
                 {
                     slideEditorContext.setWysiwygRml(rml, true);
                 });
@@ -297,6 +299,15 @@ namespace Lecture
             }
         }
 
+        public void save()
+        {
+            editorController.saveAllCachedResources();
+            if (Saved != null)
+            {
+                Saved.Invoke();
+            }
+        }
+
         private IEnumerable<Guid> projectGuidDirectories()
         {
             Guid guid;
@@ -314,6 +325,14 @@ namespace Lecture
             get
             {
                 return undoBuffer;
+            }
+        }
+
+        public EditorResourceProvider ResourceProvider
+        {
+            get
+            {
+                return editorController.ResourceProvider;
             }
         }
 
@@ -374,6 +393,46 @@ namespace Lecture
         private void applySceneInfo(SlideSceneInfo info)
         {
             slideEditorContext.applySceneInfo(info);
+        }
+
+        internal void stopPlayingTimelines()
+        {
+            editorController.stopPlayingTimelines();
+        }
+
+        internal void createNewProject(string projectDirectory, bool deleteOld, ProjectTemplate projectTemplate)
+        {
+            editorController.createNewProject(projectDirectory, deleteOld, projectTemplate);
+        }
+
+        internal void closeProject()
+        {
+            editorController.closeProject();
+        }
+
+        internal void openProject(string projectPath, string fullFilePath)
+        {
+            editorController.openProject(projectPath, fullFilePath);
+        }
+
+        public IEnumerable<AddItemTemplate> ItemTemplates
+        {
+            get
+            {
+                return editorController.ItemTemplates;
+            }
+        }
+
+        public void createItem(AddItemTemplate itemTemplate)
+        {
+            try
+            {
+                ((ProjectItemTemplate)itemTemplate).createItem("", editorController);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
     }
 }

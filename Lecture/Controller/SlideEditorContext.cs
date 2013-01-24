@@ -35,16 +35,16 @@ namespace Lecture
         private MedicalRmlSlide slide;
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
-        private EditorController editorController;
+        private SlideshowEditController slideEditorController;
         private ImageRenderer imageRenderer;
         private MedicalSlideItemTemplate itemTemplate;
         private RunCommandsAction setupScene;
 
-        public SlideEditorContext(MedicalRmlSlide slide, EditorController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String> wysiwygUndoCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
-            this.editorController = editorController;
+            this.slideEditorController = editorController;
             this.undoBuffer = undoBuffer;
             this.imageRenderer = imageRenderer;
             this.itemTemplate = itemTemplate;
@@ -55,11 +55,6 @@ namespace Lecture
             mvcContext.BlurAction = "Common/Blur";
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
-
-            //ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", showTypeController.CurrentObject.getEditInterface());
-            //genericEditor.IsWindow = true;
-            //genericEditor.ViewLocation = ViewLocations.Left;
-            //mvcContext.Views.add(genericEditor);
             
             RawRmlWysiwygView rmlView = new RawRmlWysiwygView("RmlView", uiCallback, uiCallback, undoBuffer);
             rmlView.ViewLocation = ViewLocations.Left;
@@ -271,7 +266,7 @@ namespace Lecture
         private void saveAll()
         {
             commitText();
-            editorController.saveAllCachedResources();
+            slideEditorController.save();
         }
 
         private void commitText()
@@ -286,18 +281,16 @@ namespace Lecture
             }
         }
 
-        private const int thumbWidth = 183;
-        private const int thumbHeight = 101;
-        private const int slideWidth = thumbWidth / 3;
-        private const int sceneWidth = thumbWidth - slideWidth;
+        private const int slideWidth = SlideImageManager.ThumbWidth / 3;
+        private const int sceneWidth = SlideImageManager.ThumbWidth - slideWidth;
 
         private void updateThumbnail()
         {
-            if (editorController.ResourceProvider != null && rmlComponent != null)
+            if (slideEditorController.ResourceProvider != null && rmlComponent != null)
             {
                 ImageRendererProperties imageProperties = new ImageRendererProperties();
                 imageProperties.Width = sceneWidth;
-                imageProperties.Height = thumbHeight;
+                imageProperties.Height = SlideImageManager.ThumbHeight;
                 imageProperties.AntiAliasingMode = 2;
                 imageProperties.TransparentBackground = false;
                 imageProperties.UseActiveViewportLocation = false;
@@ -309,11 +302,11 @@ namespace Lecture
                 imageProperties.CameraPosition = slide.CameraPosition.Translation;
                 imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
 
-                using (Bitmap thumb = new Bitmap(thumbWidth, thumbHeight))
+                using (Bitmap thumb = new Bitmap(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight))
                 {
                     using (Graphics g = Graphics.FromImage(thumb))
                     {
-                        rmlComponent.writeToGraphics(g, new Rectangle(0, 0, slideWidth, thumbHeight));
+                        rmlComponent.writeToGraphics(g, new Rectangle(0, 0, slideWidth, SlideImageManager.ThumbHeight));
                         using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
                         {
                             g.DrawImage(sceneThumb, slideWidth, 0);
