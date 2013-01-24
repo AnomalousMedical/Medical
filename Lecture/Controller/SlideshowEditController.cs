@@ -258,23 +258,79 @@ namespace Lecture
             {
                 SlideAdded.Invoke(slide, index);
             }
+
+            bool wasAllowingUndo = allowUndoCreation;
+            allowUndoCreation = false;
+            if (SlideSelected != null)
+            {
+                SlideSelected.Invoke(slide);
+            }
+            allowUndoCreation = wasAllowingUndo;
+
+            //Delay this till the next frame, so the rml has actually been rendererd
+            ThreadManager.invoke(new Action(delegate()
+            {
+                if (slideEditorContext != null)
+                {
+                    slideEditorContext.updateThumbnail();
+                }
+            }));
+
             if (allowUndoCreation)
             {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
+                if (lastEditSlide == null)
                 {
-                    allowUndoCreation = false;
-                    addSlide(executeSlide.Slide, executeSlide.Index);
-                    allowUndoCreation = true;
-                },
-                (undoSlide) =>
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
+                    {
+                        allowUndoCreation = false;
+                        addSlide(executeSlide.Slide, executeSlide.Index);
+                        allowUndoCreation = true;
+                    },
+                    (undoSlide) =>
+                    {
+                        allowUndoCreation = false;
+                        removeSlide(undoSlide.Slide);
+                        allowUndoCreation = true;
+                    },
+                    new SlideInfo(slide, slideshow.indexOf(slide)),
+                    trimmedFunc: cleanupThumbnail
+                    ));
+                }
+                else
                 {
-                    allowUndoCreation = false;
-                    removeSlide(undoSlide.Slide);
-                    allowUndoCreation = true;
-                },
-                new SlideInfo(slide, slideshow.indexOf(slide)),
-                trimmedFunc: cleanupThumbnail
-                ));
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<RemoveSlideInfo>(
+                    (executeSlide) =>
+                    {
+                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                        ThreadManager.invoke(new Action(delegate()
+                        {
+                            allowUndoCreation = false;
+                            addSlide(executeSlide.Slide, executeSlide.Index);
+                            if (SlideSelected != null)
+                            {
+                                SlideSelected.Invoke(executeSlide.Slide);
+                            }
+                            allowUndoCreation = true;
+                        }));
+                    },
+                    (undoSlide) =>
+                    {
+                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                        ThreadManager.invoke(new Action(delegate()
+                        {
+                            allowUndoCreation = false;
+                            if (SlideSelected != null)
+                            {
+                                SlideSelected.Invoke(undoSlide.ChangeToSlide);
+                            }
+                            removeSlide(undoSlide.Slide);
+                            allowUndoCreation = true;
+                        }));
+                    },
+                    new RemoveSlideInfo(slide, index, lastEditSlide),
+                    poppedFrontFunc: cleanupThumbnail
+                    ));
+                }
             }
         }
 

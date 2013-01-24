@@ -283,7 +283,7 @@ namespace Lecture
         private const int slideWidth = SlideImageManager.ThumbWidth / 3;
         private const int sceneWidth = SlideImageManager.ThumbWidth - slideWidth;
 
-        private void updateThumbnail()
+        public void updateThumbnail()
         {
             if (slideEditorController.ResourceProvider != null && rmlComponent != null)
             {
