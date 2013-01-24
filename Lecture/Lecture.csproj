@@ -57,7 +57,7 @@
     <Compile Include="Controller\SlideSceneInfo.cs" />
     <Compile Include="Controller\SlideshowDocumentHandler.cs" />
     <Compile Include="Controller\SlideshowProjectTemplate.cs" />
-    <Compile Include="GUI\SlideshowExplorer\SlideImageManager.cs" />
+    <Compile Include="Controller\SlideImageManager.cs" />
     <Compile Include="GUI\SlideshowExplorer\SlideshowExplorer.cs" />
     <Compile Include="LecturePlugin.cs" />
     <Compile Include="LecturePluginEntryPoint.cs" />

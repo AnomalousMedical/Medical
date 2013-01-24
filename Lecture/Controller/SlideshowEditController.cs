@@ -16,8 +16,6 @@ namespace Lecture
         public event Action<Slide, int> SlideAdded;
         public event Action<Slide> SlideRemoved;
         public event Action<Slide> SlideSelected;
-        public event Action<Slide, Bitmap> ThumbnailUpdated;
-        public event Action Saved;
 
         private UndoRedoBuffer undoBuffer = new UndoRedoBuffer(50);
 
@@ -32,6 +30,7 @@ namespace Lecture
         private Slideshow slideshow;
         private ImageRenderer imageRenderer;
         private MedicalSlideItemTemplate medicalSlideTemplate;
+        private SlideImageManager slideImageManager;
 
         private bool allowUndoCreation = true;
         private Slide lastEditSlide = null;
@@ -44,6 +43,7 @@ namespace Lecture
             this.editorController = editorController;
             this.imageRenderer = standaloneController.ImageRenderer;
             editorController.ProjectChanged += editorController_ProjectChanged;
+            slideImageManager = new SlideImageManager(this);
 
             //Show Type Controller
             showTypeController = new ShowTypeController(editorController);
@@ -77,13 +77,6 @@ namespace Lecture
                     if (slideEditorContext == obj)
                     {
                         slideEditorContext = null;
-                    }
-                };
-                slideEditorContext.ThumbnailUpdated += (thumbSlide, thumb) =>
-                {
-                    if (ThumbnailUpdated != null)
-                    {
-                        ThumbnailUpdated.Invoke(thumbSlide, thumb);
                     }
                 };
                 editorController.runEditorContext(slideEditorContext.MvcContext);
@@ -302,10 +295,7 @@ namespace Lecture
         public void save()
         {
             editorController.saveAllCachedResources();
-            if (Saved != null)
-            {
-                Saved.Invoke();
-            }
+            slideImageManager.saveThumbnails();
         }
 
         private IEnumerable<Guid> projectGuidDirectories()
@@ -333,6 +323,14 @@ namespace Lecture
             get
             {
                 return editorController.ResourceProvider;
+            }
+        }
+
+        public SlideImageManager SlideImageManager
+        {
+            get
+            {
+                return slideImageManager;
             }
         }
 

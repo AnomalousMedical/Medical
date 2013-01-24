@@ -20,7 +20,6 @@ namespace Lecture
     {
         public event Action<SlideEditorContext> Focus;
         public event Action<SlideEditorContext> Blur;
-        public event Action<Slide, Bitmap> ThumbnailUpdated;
 
         enum Events
         {
@@ -302,21 +301,16 @@ namespace Lecture
                 imageProperties.CameraPosition = slide.CameraPosition.Translation;
                 imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
 
-                using (Bitmap thumb = new Bitmap(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight))
+                Bitmap thumb = slideEditorController.SlideImageManager.createThumbBitmap(slide);
+                using (Graphics g = Graphics.FromImage(thumb))
                 {
-                    using (Graphics g = Graphics.FromImage(thumb))
+                    rmlComponent.writeToGraphics(g, new Rectangle(0, 0, slideWidth, SlideImageManager.ThumbHeight));
+                    using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
                     {
-                        rmlComponent.writeToGraphics(g, new Rectangle(0, 0, slideWidth, SlideImageManager.ThumbHeight));
-                        using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
-                        {
-                            g.DrawImage(sceneThumb, slideWidth, 0);
-                        }
-
-                        if (ThumbnailUpdated != null)
-                        {
-                            ThumbnailUpdated.Invoke(slide, thumb);
-                        }
+                        g.DrawImage(sceneThumb, slideWidth, 0);
                     }
+
+                    slideEditorController.SlideImageManager.thumbnailUpdated(slide);
                 }
             }
         }

@@ -12,8 +12,11 @@ using System.Threading.Tasks;
 
 namespace Lecture
 {
-    class SlideImageManager : IDisposable
+    public class SlideImageManager : IDisposable
     {
+        public event Action<Slide> ThumbUpdating;
+        public event Action<Slide, String> ThumbUpdated;
+
         public const int ThumbWidth = 183;
         public const int ThumbHeight = 101;
 
@@ -24,7 +27,6 @@ namespace Lecture
         public SlideImageManager(SlideshowEditController slideEditController)
         {
             this.slideEditController = slideEditController;
-            slideEditController.Saved += slideEditController_Saved;
         }
 
         public void Dispose()
@@ -62,8 +64,9 @@ namespace Lecture
             return null;
         }
 
-        public String thumbnailUpdated(Slide slide, Bitmap thumb)
+        public Bitmap createThumbBitmap(Slide slide)
         {
+            Bitmap thumb = new Bitmap(ThumbWidth, ThumbHeight);
             Bitmap oldThumb;
             if (unsavedThumbs.TryGetValue(slide, out oldThumb))
             {
@@ -74,8 +77,21 @@ namespace Lecture
             {
                 unsavedThumbs.Add(slide, thumb);
             }
+            return thumb;
+        }
+
+        public void thumbnailUpdated(Slide slide)
+        {
+            if (ThumbUpdating != null)
+            {
+                ThumbUpdating.Invoke(slide);
+            }
             imageAtlas.removeImage(slide.UniqueName);
-            return imageAtlas.addImage(slide.UniqueName, thumb);
+            String imageKey = imageAtlas.addImage(slide.UniqueName, unsavedThumbs[slide]);
+            if (ThumbUpdated != null)
+            {
+                ThumbUpdated.Invoke(slide, imageKey);
+            }
         }
 
         public void saveThumbnails()
@@ -117,12 +133,6 @@ namespace Lecture
                 thumb.Dispose();
             }
             unsavedThumbs.Clear();
-        }
-
-        void slideEditController_Saved()
-        {
-            //saveThumbnails();
-            //This almost works, for now it is commented so slides will never update on disk. Just want to commit the changes made so far.
         }
     }
 }

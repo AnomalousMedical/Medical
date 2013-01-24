@@ -48,7 +48,7 @@ namespace Lecture.GUI
             : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
             this.slideEditController = slideEditController;
-            slideImageManager = new SlideImageManager(slideEditController);
+            slideImageManager = slideEditController.SlideImageManager;
 
             addButton = (Button)window.findWidget("Add");
             addButton.MouseButtonClick += addButton_MouseButtonClick;
@@ -64,7 +64,9 @@ namespace Lecture.GUI
             slideEditController.SlideAdded += slideEditController_SlideAdded;
             slideEditController.SlideRemoved += slideEditController_SlideRemoved;
             slideEditController.SlideSelected += slideEditController_SlideSelected;
-            slideEditController.ThumbnailUpdated += slideEditController_ThumbnailUpdated;
+
+            slideImageManager.ThumbUpdating += slideImageManager_ThumbUpdating;
+            slideImageManager.ThumbUpdated += slideImageManager_ThumbUpdated;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -328,13 +330,21 @@ namespace Lecture.GUI
             slideGrid.SelectedItem = slideGrid.findItemByUserObject(slide);
         }
 
-        void slideEditController_ThumbnailUpdated(Slide slide, Bitmap thumb)
+        void slideImageManager_ThumbUpdated(Slide slide, String key)
+        {
+            ButtonGridItem item = slideGrid.findItemByUserObject(slide);
+            if (item != null)
+            {
+                item.setImage(key);
+            }
+        }
+
+        void slideImageManager_ThumbUpdating(Slide slide)
         {
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {
                 item.setImage(null); //Null the image or else the program gets crashy
-                item.setImage(slideImageManager.thumbnailUpdated(slide, thumb));
             }
         }
 
