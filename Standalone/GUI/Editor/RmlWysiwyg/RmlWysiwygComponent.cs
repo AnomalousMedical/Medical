@@ -61,6 +61,7 @@ namespace Medical.GUI
         private UndoRedoBuffer undoBuffer;
         private String documentName;
         private Action<String> undoRedoCallback;
+        private bool changesMade = false;
 
         private AnomalousMvcContext context;
 
@@ -391,6 +392,14 @@ namespace Medical.GUI
             }
         }
 
+        public bool ChangesMade
+        {
+            get
+            {
+                return changesMade;
+            }
+        }
+
         internal IntVector2 localCoord(IntVector2 position)
         {
             position.x -= widget.AbsoluteLeft;
@@ -637,6 +646,7 @@ namespace Medical.GUI
 
         private void rmlModified()
         {
+            changesMade = true;
             if (RmlEdited != null)
             {
                 RmlEdited.Invoke(this);

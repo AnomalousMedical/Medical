@@ -279,7 +279,10 @@ namespace Lecture
             if (rmlComponent != null)
             {
                 rmlComponent.aboutToSaveRml();
-                updateThumbnail();
+                if (rmlComponent.ChangesMade)
+                {
+                    updateThumbnail();
+                }
             }
         }
 
@@ -290,7 +293,7 @@ namespace Lecture
 
         private void updateThumbnail()
         {
-            if (editorController.ResourceProvider != null)
+            if (editorController.ResourceProvider != null && rmlComponent != null)
             {
                 ImageRendererProperties imageProperties = new ImageRendererProperties();
                 imageProperties.Width = sceneWidth;
