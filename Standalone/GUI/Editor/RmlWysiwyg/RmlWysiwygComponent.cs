@@ -149,9 +149,13 @@ namespace Medical.GUI
             loadDocumentFile(documentName, true);
         }
 
-        public void setRml(String rml, bool keepScrollPosition)
+        public void setRml(String rml, bool keepScrollPosition, bool considerAsChange = false)
         {
             setDocumentRml(rml, keepScrollPosition);
+            if (considerAsChange)
+            {
+                changesMade = true;
+            }
         }
 
         public void insertRml(String rml, IntVector2 position)

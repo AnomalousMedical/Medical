@@ -222,7 +222,7 @@ namespace Lecture
             if (rmlComponent != null)
             {
                 rmlComponent.cancelAndHideEditor();
-                rmlComponent.setRml(rml, keepScrollPosition);
+                rmlComponent.setRml(rml, keepScrollPosition, true);
             }
         }
 
