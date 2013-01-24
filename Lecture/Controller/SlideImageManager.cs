@@ -12,9 +12,19 @@ using System.Threading.Tasks;
 
 namespace Lecture
 {
+    /// <summary>
+    /// This class manages the lifecycle for slideshow images.
+    /// </summary>
     public class SlideImageManager : IDisposable
     {
+        /// <summary>
+        /// Called before a thumbnail is updated in the image atlas (This is mostly a mygui hack as it gets unstable if images are removed from it while they are still being used.)
+        /// </summary>
         public event Action<Slide> ThumbUpdating;
+
+        /// <summary>
+        /// Called when the thumbnail for a slide is updated. Passes the name of the image along.
+        /// </summary>
         public event Action<Slide, String> ThumbUpdated;
 
         public const int ThumbWidth = 183;
@@ -64,6 +74,11 @@ namespace Lecture
             return null;
         }
 
+        /// <summary>
+        /// Call this function to make a new thumbnail bitmap for a slide.
+        /// </summary>
+        /// <param name="slide"></param>
+        /// <returns></returns>
         public Bitmap createThumbBitmap(Slide slide)
         {
             Bitmap thumb = new Bitmap(ThumbWidth, ThumbHeight);
@@ -80,6 +95,10 @@ namespace Lecture
             return thumb;
         }
 
+        /// <summary>
+        /// Call this function if you updated the thumbnail for a slide.
+        /// </summary>
+        /// <param name="slide"></param>
         public void thumbnailUpdated(Slide slide)
         {
             if (ThumbUpdating != null)
@@ -94,6 +113,9 @@ namespace Lecture
             }
         }
 
+        /// <summary>
+        /// This will save all outstanding thumbnails to the disk.
+        /// </summary>
         public void saveThumbnails()
         {
             foreach (Slide slide in unsavedThumbs.Keys)
@@ -115,7 +137,11 @@ namespace Lecture
             unsavedThumbs.Clear();
         }
 
-        internal void removeImage(Slide slide)
+        /// <summary>
+        /// Remove an image for a given slide.
+        /// </summary>
+        /// <param name="slide"></param>
+        public void removeImage(Slide slide)
         {
             imageAtlas.removeImage(slide.UniqueName);
             Bitmap oldThumb;
