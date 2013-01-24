@@ -230,7 +230,9 @@ namespace Lecture
                                 allowUndoCreation = true;
                             }));
                         },
-                        new RemoveSlideInfo(slide, slideIndex, changeToSlide)));
+                        new RemoveSlideInfo(slide, slideIndex, changeToSlide),
+                        poppedFrontFunc: cleanupThumbnail
+                        ));
                     }
                 }
             }
@@ -270,7 +272,9 @@ namespace Lecture
                     removeSlide(undoSlide.Slide);
                     allowUndoCreation = true;
                 },
-                new SlideInfo(slide, slideshow.indexOf(slide))));
+                new SlideInfo(slide, slideshow.indexOf(slide)),
+                trimmedFunc: cleanupThumbnail
+                ));
             }
         }
 
@@ -431,6 +435,11 @@ namespace Lecture
             {
                 MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
             }
+        }
+
+        private void cleanupThumbnail(SlideInfo slideInfo)
+        {
+            slideImageManager.removeImage(slideInfo.Slide);
         }
     }
 }

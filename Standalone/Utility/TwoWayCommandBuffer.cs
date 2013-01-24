@@ -49,6 +49,12 @@ namespace Medical
         {
             if (currentUndoCommand != null)
             {
+                Node<TwoWayCommand> currentTrimCommand = currentUndoCommand.Next;
+                while (currentTrimCommand != null)
+                {
+                    currentTrimCommand.Data.trimmed();
+                    currentTrimCommand = currentTrimCommand.Next;
+                }
                 currentExecuteCommand = null;
                 currentUndoCommand.Next = null;
                 lastCommand = currentUndoCommand;
@@ -66,6 +72,7 @@ namespace Medical
         {
             if (firstCommand != null)
             {
+                firstCommand.Data.poppedFront();
                 //If there is only one command, clear everything
                 if (firstCommand == lastCommand)
                 {
@@ -95,6 +102,12 @@ namespace Medical
 
         public void clear()
         {
+            Node<TwoWayCommand> current = firstCommand;
+            while (current != null)
+            {
+                current.Data.cleared();
+                current = current.Next;
+            }
             currentUndoCommand = currentExecuteCommand = firstCommand = lastCommand = null;
         }
 

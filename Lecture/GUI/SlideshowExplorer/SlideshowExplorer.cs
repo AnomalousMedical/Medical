@@ -317,7 +317,6 @@ namespace Lecture.GUI
 
         void removeSlideFromGrid(Slide slide)
         {
-            slideImageManager.removeImage(slide);
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {

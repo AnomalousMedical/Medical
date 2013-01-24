@@ -10,5 +10,11 @@ namespace Medical
         void execute();
 
         void undo();
+
+        void poppedFront();
+
+        void cleared();
+
+        void trimmed();
     }
 }

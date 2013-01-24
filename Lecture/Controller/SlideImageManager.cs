@@ -53,6 +53,12 @@ namespace Lecture
 
         public String loadThumbnail(Slide slide)
         {
+            String id = imageAtlas.getImageId(slide.UniqueName);
+            if (id != null)
+            {
+                return id;
+            }
+
             String thumbPath = Path.Combine(slide.UniqueName, Slideshow.SlideThumbName);
             try
             {
