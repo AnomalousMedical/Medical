@@ -38,6 +38,7 @@ namespace Lecture
         private EditorController editorController;
         private ImageRenderer imageRenderer;
         private MedicalSlideItemTemplate itemTemplate;
+        private RunCommandsAction setupScene;
 
         public SlideEditorContext(MedicalRmlSlide slide, EditorController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String> wysiwygUndoCallback)
         {
@@ -125,14 +126,16 @@ namespace Lecture
                     new CloseViewCommand())
                     ));
 
-            RunCommandsAction showCommand = new RunCommandsAction("Show",
-                    new ShowViewCommand("RmlView")
-                //,new ShowViewCommand("InfoBar")
-                    );
-            slide.populateCommand(showCommand);
+            setupScene = new RunCommandsAction("SetupScene");
+            slide.populateCommand(setupScene);
 
             mvcContext.Controllers.add(new MvcController("Editor",
-                showCommand,
+                setupScene,
+                new RunCommandsAction("Show",
+                    new ShowViewCommand("RmlView"),
+                    new RunActionCommand("Editor/SetupScene")
+                //,new ShowViewCommand("InfoBar")
+                    ),
                 new RunCommandsAction("Close", new CloseAllViewsCommand()),
                 new CallbackAction("Save", context =>
                     {
@@ -236,7 +239,10 @@ namespace Lecture
 
         public void applySceneInfo(SlideSceneInfo info)
         {
+            setupScene.clear();
             info.applyToSlide(slide);
+            slide.populateCommand(setupScene);
+            mvcContext.runAction("Editor/SetupScene");
             updateThumbnail();
         }
 

@@ -38,6 +38,12 @@ namespace Medical.Controller.AnomalousMvc
             commandRemoved(command);
         }
 
+        public void clear()
+        {
+            commands.Clear();
+            commandsCleared();
+        }
+
         public override void execute(AnomalousMvcContext context)
         {
             foreach (ActionCommand command in commands)
@@ -112,6 +118,14 @@ namespace Medical.Controller.AnomalousMvc
             if (editInterfaceManager != null)
             {
                 editInterfaceManager.removeSubInterface(command);
+            }
+        }
+
+        void commandsCleared()
+        {
+            if (editInterfaceManager != null)
+            {
+                editInterfaceManager.clearSubInterfaces();
             }
         }
 
