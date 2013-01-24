@@ -294,7 +294,7 @@ namespace Lecture
                 imageProperties.TransparentBackground = false;
                 imageProperties.UseActiveViewportLocation = false;
                 imageProperties.OverrideLayers = true;
-                imageProperties.ShowBackground = false;
+                imageProperties.ShowBackground = true;
                 imageProperties.ShowWatermark = false;
                 imageProperties.ShowUIUpdates = false;
                 imageProperties.LayerState = slide.Layers;

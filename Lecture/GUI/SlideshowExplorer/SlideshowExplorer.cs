@@ -270,6 +270,10 @@ namespace Lecture.GUI
             slideGrid.resizeAndLayout(scroll.ClientCoord.width);
             this.slideshow = show;
             window.Caption = String.Format(windowTitleFormat, windowTitle, slideEditController.ResourceProvider.BackingLocation);
+            if (!Visible)
+            {
+                Visible = true;
+            }
         }
 
         void slideEditController_SlideAdded(Slide slide, int index)

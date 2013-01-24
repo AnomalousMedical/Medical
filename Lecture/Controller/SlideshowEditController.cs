@@ -52,7 +52,19 @@ namespace Lecture
             medicalSlideTemplate = new MedicalSlideItemTemplate(standaloneController.SceneViewController, standaloneController.MedicalStateController);
             medicalSlideTemplate.SlideCreated += (slide) =>
                 {
-                    addSlide(slide);
+                    if (lastEditSlide != null)
+                    {
+                        int insertIndex = slideshow.indexOf(lastEditSlide);
+                        if (insertIndex != -1)
+                        {
+                            ++insertIndex;
+                        }
+                        addSlide(slide, insertIndex);
+                    }
+                    else
+                    {
+                        addSlide(slide);
+                    }
                 };
             editorController.addItemTemplate(medicalSlideTemplate);
         }
@@ -259,14 +271,6 @@ namespace Lecture
                 SlideAdded.Invoke(slide, index);
             }
 
-            bool wasAllowingUndo = allowUndoCreation;
-            allowUndoCreation = false;
-            if (SlideSelected != null)
-            {
-                SlideSelected.Invoke(slide);
-            }
-            allowUndoCreation = wasAllowingUndo;
-
             //Delay this till the next frame, so the rml has actually been rendererd
             ThreadManager.invoke(new Action(delegate()
             {
@@ -332,6 +336,14 @@ namespace Lecture
                     ));
                 }
             }
+
+            bool wasAllowingUndo = allowUndoCreation;
+            allowUndoCreation = false;
+            if (SlideSelected != null)
+            {
+                SlideSelected.Invoke(slide);
+            }
+            allowUndoCreation = wasAllowingUndo;
         }
 
         public void cleanup()
