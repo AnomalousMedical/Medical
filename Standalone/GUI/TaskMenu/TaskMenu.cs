@@ -27,7 +27,7 @@ namespace Medical.GUI
 
         private const int UNKNOWN_GROUP_WEIGHT = int.MaxValue / 2;
 
-        private SingleSelectButtonGrid iconGrid;
+        private NoSelectButtonGrid iconGrid;
         private ScrollView iconScroller;
 
         private TaskMenuRecentDocuments recentDocuments;
@@ -58,8 +58,7 @@ namespace Medical.GUI
             taskController.TaskRemoved += new TaskDelegate(taskController_TaskRemoved);
 
             iconScroller = (ScrollView)widget.findWidget("IconScroller");
-            iconGrid = new SingleSelectButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout(), new TaskMenuItemComparer(), GroupCompare);
-            iconGrid.HighlightSelectedButton = false;
+            iconGrid = new NoSelectButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout(), new TaskMenuItemComparer(), GroupCompare);
 
             iconGrid.defineGroup(TaskMenuCategories.Patient, 0);
             iconGrid.defineGroup(TaskMenuCategories.Navigation, 1);
@@ -200,8 +199,9 @@ namespace Medical.GUI
 
         void item_ItemClicked(object sender, EventArgs e)
         {
-            Task item = (Task)iconGrid.SelectedItem.UserObject;
-            taskMenuPositioner.CurrentItem = iconGrid.SelectedItem;
+            ButtonGridItem bgSender = (ButtonGridItem)sender;
+            Task item = (Task)bgSender.UserObject;
+            taskMenuPositioner.CurrentItem = bgSender;
             item.clicked(taskMenuPositioner);
             hide();
             if (TaskItemOpened != null)
