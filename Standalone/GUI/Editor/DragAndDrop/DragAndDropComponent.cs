@@ -10,7 +10,7 @@ namespace Medical.GUI
 {
     public class DragAndDropComponent : LayoutComponent
     {
-        public ButtonGrid dragItems;
+        private NoSelectButtonGrid dragItems;
         private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
         private DragAndDropViewBase view;
@@ -19,8 +19,7 @@ namespace Medical.GUI
         public DragAndDropComponent(MyGUIViewHost viewHost, DragAndDropViewBase view)
             :base("Medical.GUI.Editor.DragAndDrop.DragAndDropComponent.layout", viewHost)
         {
-            dragItems = new ButtonGrid((ScrollView)widget);
-            dragItems.HighlightSelectedButton = false;
+            dragItems = new NoSelectButtonGrid((ScrollView)widget);
             dragItems.ItemActivated += dragItems_ItemActivated;
             this.view = view;
 

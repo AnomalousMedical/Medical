@@ -39,7 +39,7 @@ namespace Medical.GUI
             DefaultEvents.registerDefaultEvent(openAnatomyFinder);
         }
 
-        private ButtonGrid anatomyList;
+        private SingleSelectButtonGrid anatomyList;
         private EditBox searchBox;
 
         private AnatomyContextWindowManager anatomyWindowManager;
@@ -71,7 +71,7 @@ namespace Medical.GUI
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
 
-            anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
+            anatomyList = new SingleSelectButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
             anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
 

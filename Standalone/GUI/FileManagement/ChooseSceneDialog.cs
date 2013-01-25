@@ -14,7 +14,7 @@ namespace Medical.GUI
     {
         public event EventHandler ChooseScene;
 
-        private ButtonGrid sceneFileGrid;
+        private SingleSelectButtonGrid sceneFileGrid;
         private ImageAtlas imageAtlas;
         private bool allowSceneChanges = false;
         private Widget loadingWidget;
@@ -23,7 +23,7 @@ namespace Medical.GUI
             : base("Medical.GUI.FileManagement.ChooseSceneDialog.layout", guiManager)
         {
             Button cancelButton = widget.findWidget("ChooseScene/Cancel") as Button;
-            sceneFileGrid = new ButtonGrid(widget.findWidget("ChooseScene/FileSelect") as ScrollView);
+            sceneFileGrid = new SingleSelectButtonGrid(widget.findWidget("ChooseScene/FileSelect") as ScrollView);
             sceneFileGrid.HighlightSelectedButton = false;
 
             imageAtlas = new ImageAtlas("ChooseSceneDialog", new Size2(sceneFileGrid.ItemWidth, sceneFileGrid.ItemHeight));

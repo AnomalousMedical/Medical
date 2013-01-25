@@ -12,7 +12,7 @@ namespace Medical.GUI
     {
         public event EventDelegate DocumentClicked;
 
-        private ButtonGrid documentGrid;
+        private SingleSelectButtonGrid documentGrid;
         private ScrollView documentScroller;
 
         private Dictionary<String, ButtonGridItem> documentsToItems = new Dictionary<String, ButtonGridItem>();
@@ -26,8 +26,7 @@ namespace Medical.GUI
         public TaskMenuRecentDocuments(Widget widget, DocumentController documentController)
         {
             documentScroller = (ScrollView)widget.findWidget("DocumentScroller");
-            documentGrid = new ButtonGrid(documentScroller, new ButtonGridTextAdjustedGridLayout());
-            documentGrid.HighlightSelectedButton = true;
+            documentGrid = new SingleSelectButtonGrid(documentScroller, new ButtonGridTextAdjustedGridLayout());
             documentGrid.ItemActivated += new EventHandler(documentGrid_ItemActivated);
             documentGrid.SelectedValueChanged += new EventHandler(documentGrid_SelectedValueChanged);
 

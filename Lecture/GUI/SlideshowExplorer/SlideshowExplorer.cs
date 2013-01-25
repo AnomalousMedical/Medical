@@ -41,7 +41,7 @@ namespace Lecture.GUI
         Button playButton;
         Button captureButton;
 
-        private ButtonGrid slideGrid;
+        private SingleSelectButtonGrid slideGrid;
         private ScrollView scroll;
 
         public SlideshowExplorer(SlideshowEditController slideEditController)
@@ -72,7 +72,7 @@ namespace Lecture.GUI
             menuBar = window.findWidget("MenuBar") as MenuBar;
 
             scroll = (ScrollView)window.findWidget("Scroll");
-            slideGrid = new ButtonGrid(scroll, new ButtonGridListLayout());
+            slideGrid = new SingleSelectButtonGrid(scroll, new ButtonGridListLayout());
             slideGrid.SelectedValueChanged += slideGrid_SelectedValueChanged;
 
             //File Menu

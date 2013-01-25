@@ -14,7 +14,7 @@ namespace Medical.GUI
     {
         BookmarksController bookmarksController;
 
-        ButtonGrid bookmarksList;
+        NoSelectButtonGrid bookmarksList;
         EditBox bookmarkName;
 
         IntSize2 widgetSmallSize;
@@ -31,8 +31,7 @@ namespace Medical.GUI
             bookmarksController.BookmarkRemoved += new BookmarkDelegate(bookmarksController_BookmarkRemoved);
 
             ScrollView bookmarksListScroll = (ScrollView)widget.findWidget("BookmarksList");
-            bookmarksList = new ButtonGrid(bookmarksListScroll);
-            bookmarksList.HighlightSelectedButton = false;
+            bookmarksList = new NoSelectButtonGrid(bookmarksListScroll);
 
             Button addButton = (Button)widget.findWidget("AddButton");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);

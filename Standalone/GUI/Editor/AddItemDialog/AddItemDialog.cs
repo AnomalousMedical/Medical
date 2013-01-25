@@ -33,13 +33,13 @@ namespace Medical.GUI
         }
 
         private ScrollingExpandingEditInterfaceViewer expandingView;
-        private ButtonGrid itemGrid;
+        private SingleSelectButtonGrid itemGrid;
         public event Action<AddItemTemplate> CreateItem;
 
         protected AddItemDialog()
             :base("Medical.GUI.Editor.AddItemDialog.AddItemDialog.layout")
         {
-            itemGrid = new ButtonGrid((ScrollView)window.findWidget("ItemList"), new ButtonGridListLayout());
+            itemGrid = new SingleSelectButtonGrid((ScrollView)window.findWidget("ItemList"), new ButtonGridListLayout());
             itemGrid.SelectedValueChanged += new EventHandler(itemGrid_SelectedValueChanged);
 
             expandingView = new ScrollingExpandingEditInterfaceViewer((ScrollView)window.findWidget("ItemProperties"), null);

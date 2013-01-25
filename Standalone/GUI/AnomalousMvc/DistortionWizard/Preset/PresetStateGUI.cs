@@ -21,14 +21,14 @@ namespace Medical.GUI.AnomalousMvc
         private String subDirectory;
         private ImageAtlas imageAtlas;
 
-        private ButtonGrid presetListView;
+        private SingleSelectButtonGrid presetListView;
 
         public PresetStateGUI(PresetStateView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
             : base("Medical.GUI.AnomalousMvc.DistortionWizard.Preset.PresetStateGUI.layout", wizardView, context, viewHost)
         {
             this.subDirectory = wizardView.PresetDirectory;
 
-            presetListView = new ButtonGrid(widget.findWidget("PresetPanel/ScrollView") as ScrollView);
+            presetListView = new SingleSelectButtonGrid(widget.findWidget("PresetPanel/ScrollView") as ScrollView);
             presetListView.SelectedValueChanged += new EventHandler(presetListView_SelectedValueChanged);
 
             imageAtlas = new ImageAtlas("PresetStateGUI_" + subDirectory, new Size2(100, 100));

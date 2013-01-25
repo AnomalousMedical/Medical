@@ -20,7 +20,7 @@ namespace Medical.GUI
         }
 
         private ColorChosenDelegate colorChosenCallback;
-        private ButtonGrid colorGrid;
+        private SingleSelectButtonGrid colorGrid;
         private Color customColor = Color.Black;
 
         private ColorMenu(ColorChosenDelegate colorChosenCallback)
@@ -28,7 +28,7 @@ namespace Medical.GUI
         {
             this.colorChosenCallback = colorChosenCallback;
 
-            colorGrid = new ButtonGrid(widget.findWidget("ColorGrid") as ScrollView);
+            colorGrid = new SingleSelectButtonGrid(widget.findWidget("ColorGrid") as ScrollView);
             for (int i = 0; i < 77; ++i)
             {
                 ButtonGridItem item = colorGrid.addItem("Main", "", "Colors/" + i);

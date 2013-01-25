@@ -10,7 +10,7 @@ namespace Medical.GUI
     public class StateListDialog : MDIDialog
     {
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f));
-        private ButtonGrid stateListBox;
+        private SingleSelectButtonGrid stateListBox;
         private Dictionary<MedicalState, ButtonGridItem> entries = new Dictionary<MedicalState, ButtonGridItem>();
         private bool ignoreIndexChanges = false;
         private int lastWidth = -1;
@@ -21,7 +21,7 @@ namespace Medical.GUI
         public StateListDialog(MedicalStateController stateController)
             :base("Medical.GUI.StateList.StateListDialog.layout")
         {
-            stateListBox = new ButtonGrid(window.findWidget("StateList/ScrollView") as ScrollView, new ButtonGridListLayout());
+            stateListBox = new SingleSelectButtonGrid(window.findWidget("StateList/ScrollView") as ScrollView, new ButtonGridListLayout());
             stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);
 
             Button deleteButton = window.findWidget("StateList/DeleteButton") as Button;

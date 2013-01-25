@@ -16,14 +16,14 @@ namespace Medical.GUI.AnomalousMvc
         private ImageAtlas thumbnailImages;
         private List<ThumbnailPickerInfo> thumbnailProperties = new List<ThumbnailPickerInfo>();
         private ImageRenderer imageRenderer;
-        private ButtonGrid imageGrid;
+        private SingleSelectButtonGrid imageGrid;
 
         public event ThumbnailPickerGUIEvent SelectedThumbnailChanged;
 
         public ThumbnailPickerGUI(ImageRenderer imageRenderer, ScrollView thumbnailScroll)
         {
             this.imageRenderer = imageRenderer;
-            imageGrid = new ButtonGrid(thumbnailScroll);
+            imageGrid = new SingleSelectButtonGrid(thumbnailScroll);
             imageGrid.SelectedValueChanged += new EventHandler(imageGrid_SelectedValueChanged);
             thumbnailImages = new ImageAtlas("ThumbnailPicker", new Size2(imageGrid.ItemWidth, imageGrid.ItemHeight));
         }
