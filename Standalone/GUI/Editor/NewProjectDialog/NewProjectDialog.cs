@@ -48,7 +48,7 @@ namespace Medical.GUI
                 }
                 catch (Exception e)
                 {
-                    Log.Error("Could not create Timeline Project directory {0} because {1}", projectLocation.Caption, e.Message);
+                    Log.Error("Could not create project directory {0} because {1}", projectLocation.Caption, e.Message);
                 }
             }
 

@@ -384,7 +384,23 @@ namespace Medical.GUI
                     keyChar = (char)0;
                     context.ProcessTextInput('\n');
                     break;
+				case KeyIdentifier.KI_LEFT:
+					keyChar = (char)0;
+					break;
+				case KeyIdentifier.KI_RIGHT:
+					keyChar = (char)0;
+					break;
+				case KeyIdentifier.KI_UP:
+					keyChar = (char)0;
+					break;
+				case KeyIdentifier.KI_DOWN:
+					keyChar = (char)0;
+					break;
+				case KeyIdentifier.KI_BACK:
+					keyChar = (char)0;
+					break;
             }
+
             if (keyChar >= 32)
             {
                 context.ProcessTextInput(keyChar);
