@@ -203,7 +203,7 @@ namespace Medical.GUI
                                 previewWidth = currentImage.Width;
                                 previewHeight = currentImage.Height;
                             }
-                            imageAtlas = new ImageAtlas("RendererPreview", new Size2(previewWidth, previewHeight), new Size2(previewWidth, previewHeight));
+                            imageAtlas = new ImageAtlas("RendererPreview", new Size2(previewWidth, previewHeight));
                             String imageKey = imageAtlas.addImage("PreviewImage", currentImage);
                             previewImage.setSize(previewWidth, previewHeight);
                             previewImage.setItemResource(imageKey);

@@ -19,7 +19,7 @@ namespace Medical.GUI
         public event Action<ServerDownloadInfo> DownloadFound;
         public event Action FinishedReadingDownloads;
 
-        private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100), new Size2(1024, 1024));
+        private ImageAtlas serverImages = new ImageAtlas("PluginManagerServerImages", new Size2(100, 100));
         private LicenseManager licenseManager;
         List<ServerPluginDownloadInfo> detectedServerPlugins = new List<ServerPluginDownloadInfo>();
         private bool foundPlatformUpdate = false;

@@ -28,7 +28,7 @@ namespace Medical
         private AnatomyTree anatomyTree = new AnatomyTree();
 
         private ImageRenderer imageRenderer;
-        private ImageAtlas imageAtlas = new ImageAtlas("AntomyThumbnails", new Size2(50, 50), new Size2(512, 512));
+        private ImageAtlas imageAtlas = new ImageAtlas("AntomyThumbnails", new Size2(50, 50));
 
         private AnatomyPickingMode pickingMode;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;

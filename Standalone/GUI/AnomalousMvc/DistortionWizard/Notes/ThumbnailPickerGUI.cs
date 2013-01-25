@@ -25,7 +25,7 @@ namespace Medical.GUI.AnomalousMvc
             this.imageRenderer = imageRenderer;
             imageGrid = new ButtonGrid(thumbnailScroll);
             imageGrid.SelectedValueChanged += new EventHandler(imageGrid_SelectedValueChanged);
-            thumbnailImages = new ImageAtlas("ThumbnailPicker", new Size2(imageGrid.ItemWidth, imageGrid.ItemHeight), new Size2(512, 512));
+            thumbnailImages = new ImageAtlas("ThumbnailPicker", new Size2(imageGrid.ItemWidth, imageGrid.ItemHeight));
         }
 
         public void Dispose()

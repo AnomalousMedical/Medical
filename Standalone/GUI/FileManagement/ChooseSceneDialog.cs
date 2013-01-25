@@ -26,7 +26,7 @@ namespace Medical.GUI
             sceneFileGrid = new ButtonGrid(widget.findWidget("ChooseScene/FileSelect") as ScrollView);
             sceneFileGrid.HighlightSelectedButton = false;
 
-            imageAtlas = new ImageAtlas("ChooseSceneDialog", new Size2(sceneFileGrid.ItemWidth, sceneFileGrid.ItemHeight), new Size2(512, 512));
+            imageAtlas = new ImageAtlas("ChooseSceneDialog", new Size2(sceneFileGrid.ItemWidth, sceneFileGrid.ItemHeight));
 
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 

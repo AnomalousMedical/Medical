@@ -31,7 +31,7 @@ namespace Medical.GUI.AnomalousMvc
             presetListView = new ButtonGrid(widget.findWidget("PresetPanel/ScrollView") as ScrollView);
             presetListView.SelectedValueChanged += new EventHandler(presetListView_SelectedValueChanged);
 
-            imageAtlas = new ImageAtlas("PresetStateGUI_" + subDirectory, new Size2(100, 100), new Size2(512, 512));
+            imageAtlas = new ImageAtlas("PresetStateGUI_" + subDirectory, new Size2(100, 100));
         }
 
         public override void Dispose()
