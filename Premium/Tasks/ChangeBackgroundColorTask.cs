@@ -21,11 +21,14 @@ namespace Medical
         public override void clicked(TaskPositioner positioner)
         {
             IntVector2 location = positioner.findGoodWindowPosition(0, 0);
-            ColorMenu.ShowColorMenu(location.x, location.y, delegate(Color color)
+            ColorMenu colorMenu = ColorMenu.ShowColorMenu(location.x, location.y, delegate(Color color)
             {
                 sceneViewController.ActiveWindow.BackColor = color;
-                fireItemClosed();
             });
+            colorMenu.Hiding += (sender, e) =>
+                {
+                    fireItemClosed();
+                };
         }
 
         public override bool Active

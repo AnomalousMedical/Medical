@@ -13,10 +13,11 @@ namespace Medical.GUI
         private static bool colorsLoaded = false;
         public delegate void ColorChosenDelegate(Color color);
 
-        public static void ShowColorMenu(int left, int top, ColorChosenDelegate colorChosenCallback)
+        public static ColorMenu ShowColorMenu(int left, int top, ColorChosenDelegate colorChosenCallback)
         {
             ColorMenu colorMenu = new ColorMenu(colorChosenCallback);
             colorMenu.show(left, top);
+            return colorMenu;
         }
 
         private ColorChosenDelegate colorChosenCallback;
