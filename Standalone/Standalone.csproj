@@ -673,6 +673,7 @@
     <Compile Include="Utility\TwoWayCommandBuffer.cs" />
     <Compile Include="Utility\TwoWayDelegateCommand.cs" />
     <Compile Include="Utility\UndoRedoBuffer.cs" />
+    <Compile Include="Utility\WorkQueue.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

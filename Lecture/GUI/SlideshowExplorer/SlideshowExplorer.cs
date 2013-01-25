@@ -304,8 +304,6 @@ namespace Lecture.GUI
 
         void addSlideToGrid(Slide slide, int index)
         {
-            String thumbName = slideImageManager.loadThumbnail(slide);
-
             ButtonGridItem item;
             if (index == -1)
             {
@@ -323,7 +321,15 @@ namespace Lecture.GUI
                 slideGrid.layout();
             }
             item.UserObject = slide;
-            item.setImage(thumbName);
+            slideImageManager.loadThumbnail(slide, (loadedThumbSlide, id) =>
+                {
+                    //Ensure that the item still exists
+                    ButtonGridItem imageUpdateItem = slideGrid.findItemByUserObject(loadedThumbSlide);
+                    if (imageUpdateItem != null)
+                    {
+                        imageUpdateItem.setImage(id);
+                    }
+                });
         }
 
         void removeSlideFromGrid(Slide slide)

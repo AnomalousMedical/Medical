@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Medical;
+using Medical.Controller;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace Lecture
         private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new Size2(ThumbWidth, ThumbHeight), new Size2(512, 512));
         private Dictionary<Slide, Bitmap> unsavedThumbs = new Dictionary<Slide, Bitmap>();
         private SlideshowEditController slideEditController;
+        private WorkQueue workQueue = new WorkQueue();
 
         public SlideImageManager(SlideshowEditController slideEditController)
         {
@@ -51,33 +53,46 @@ namespace Lecture
             clearUnsavedThumbs();
         }
 
-        public String loadThumbnail(Slide slide)
+        public void loadThumbnail(Slide slide, Action<Slide, String> loadedCallback)
         {
             String id = imageAtlas.getImageId(slide.UniqueName);
             if (id != null)
             {
-                return id;
+                loadedCallback(slide, id);
             }
 
-            String thumbPath = Path.Combine(slide.UniqueName, Slideshow.SlideThumbName);
-            try
-            {
-                if (slideEditController.ResourceProvider.exists(thumbPath))
+            workQueue.enqueue(() =>
                 {
-                    using (Stream stream = slideEditController.ResourceProvider.openFile(thumbPath))
+                    String thumbPath = Path.Combine(slide.UniqueName, Slideshow.SlideThumbName);
+                    try
                     {
-                        using (Image thumb = Bitmap.FromStream(stream))
+                        if (slideEditController.ResourceProvider.exists(thumbPath))
                         {
-                            return imageAtlas.addImage(slide.UniqueName, thumb);
+                            using (Stream stream = slideEditController.ResourceProvider.openFile(thumbPath))
+                            {
+                                Image thumb = Bitmap.FromStream(stream);
+                                ThreadManager.invoke(new Action(() =>
+                                    {
+                                        try
+                                        {
+                                            if (!imageAtlas.containsImage(slide.UniqueName))
+                                            {
+                                                loadedCallback(slide, imageAtlas.addImage(slide.UniqueName, thumb));
+                                            }
+                                        }
+                                        finally
+                                        {
+                                            thumb.Dispose();
+                                        }
+                                    }));
+                            }
                         }
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.Log.Error("Could not load thumbnail because of {0} exception.\nReason: {1}", ex.GetType(), ex.Message);
-            }
-            return null;
+                    catch (Exception ex)
+                    {
+                        Logging.Log.Error("Could not load thumbnail because of {0} exception.\nReason: {1}", ex.GetType(), ex.Message);
+                    }
+                });
         }
 
         /// <summary>
