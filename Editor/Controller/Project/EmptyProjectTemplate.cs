@@ -7,12 +7,7 @@ namespace Medical
 {
     class EmptyProjectTemplate : ProjectTemplate
     {
-        public void createProject(EditorResourceProvider resourceProvider, String projectName)
-        {
-            
-        }
-
-        public String getDefaultFileName(String projectName)
+        public String createProject(EditorResourceProvider resourceProvider, String projectName)
         {
             return null;
         }

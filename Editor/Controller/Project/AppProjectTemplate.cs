@@ -13,7 +13,7 @@ namespace Medical
     {
         private const String MvcContextName = "MvcContext.mvc";
 
-        public void createProject(EditorResourceProvider resourceProvider, string projectName)
+        public String createProject(EditorResourceProvider resourceProvider, string projectName)
         {
             EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleMvcContext_mvc, MvcContextName, resourceProvider, Assembly.GetExecutingAssembly());
 
@@ -37,10 +37,7 @@ namespace Medical
             {
                 streamWriter.Write(indexRml, projectName);
             }
-        }
 
-        public String getDefaultFileName(String projectName)
-        {
             return null;
         }
 

@@ -87,8 +87,7 @@ namespace Medical
                 String projectName = Path.GetFileName(projectDirectory);
                 closeResourceProvider();
                 openResourceProvider(projectDirectory);
-                projectTemplate.createProject(ResourceProvider, projectName);
-                String fullProjectName = projectTemplate.getDefaultFileName(projectName);
+                String fullProjectName = projectTemplate.createProject(ResourceProvider, projectName);
                 if (fullProjectName != null)
                 {
                     fullProjectName = Path.Combine(projectDirectory, fullProjectName);
@@ -98,7 +97,6 @@ namespace Medical
                     fullProjectName = projectDirectory;
                 }
                 projectChanged(fullProjectName);
-                standaloneController.DocumentController.addToRecentDocuments(fullProjectName);
             }
             catch (Exception ex)
             {

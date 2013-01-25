@@ -16,7 +16,7 @@ namespace Medical
         private const String MvcContextName = "MvcContext.mvc";
         private const String TimelineName = "MainTimeline.tl";
 
-        public void createProject(EditorResourceProvider resourceProvider, string projectName)
+        public String createProject(EditorResourceProvider resourceProvider, string projectName)
         {
             AnomalousMvcContext mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Startup";
@@ -77,10 +77,7 @@ namespace Medical
             {
                 streamWriter.Write(indexRml, projectName);
             }
-        }
 
-        public String getDefaultFileName(String projectName)
-        {
             return null;
         }
 
