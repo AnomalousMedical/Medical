@@ -357,7 +357,6 @@ namespace Lecture
 
         public void moveSlides(IEnumerable<Slide> slides, int index)
         {
-            int actualInsertIndex = index;
             List<MoveSlideInfo> sortedSlides = new List<MoveSlideInfo>(from slide in slides
                                                                        select new MoveSlideInfo()
                                                                        {
@@ -372,6 +371,52 @@ namespace Lecture
 
             bool wasAllowingUndo = allowUndoCreation;
             allowUndoCreation = false;
+            doMoveSlides(index, sortedSlides);
+            allowUndoCreation = wasAllowingUndo;
+
+            if (allowUndoCreation)
+            {
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand(
+                    () => //Execute
+                    {
+                        allowUndoCreation = false;
+                        doMoveSlides(index, sortedSlides);
+                        allowUndoCreation = true;
+                    },
+                    () => //Undo
+                    {
+                        allowUndoCreation = false;
+                        foreach (MoveSlideInfo info in sortedSlides)
+                        {
+                            int formerIndex = slideshow.indexOf(info.Slide);
+                            slideshow.removeAt(formerIndex);
+                            if (SlideRemoved != null)
+                            {
+                                SlideRemoved.Invoke(info.Slide);
+                            }
+                            int insertIndex = info.OriginalIndex;
+                            //if (formerIndex < insertIndex)
+                            //{
+                            //    --insertIndex;
+                            //}
+                            slideshow.insertSlide(insertIndex, info.Slide);
+                            if (SlideAdded != null)
+                            {
+                                SlideAdded.Invoke(info.Slide, insertIndex);
+                            }
+                        }
+                        if (SlideSelected != null)
+                        {
+                            SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides));
+                        }
+                        allowUndoCreation = true;
+                    }));
+            }
+        }
+
+        private void doMoveSlides(int index, List<MoveSlideInfo> sortedSlides)
+        {
+            int actualInsertIndex = index;
             foreach (MoveSlideInfo slideInfo in sortedSlides)
             {
                 if (slideInfo.OriginalIndex <= index)
@@ -401,40 +446,6 @@ namespace Lecture
                     primarySelection = sortedSlides[0].Slide;
                 }
                 SlideSelected.Invoke(primarySelection, secondarySlideSelections(sortedSlides));
-            }
-            allowUndoCreation = wasAllowingUndo;
-
-            if (allowUndoCreation)
-            {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand(
-                    () => //Execute
-                    {
-                        allowUndoCreation = false;
-                        moveSlides(from info in sortedSlides select info.Slide, index);
-                        allowUndoCreation = true;
-                    },
-                    () => //Undo
-                    {
-                        allowUndoCreation = false;
-                        foreach (MoveSlideInfo info in sortedSlides)
-                        {
-                            slideshow.removeSlide(info.Slide);
-                            if (SlideRemoved != null)
-                            {
-                                SlideRemoved.Invoke(info.Slide);
-                            }
-                            slideshow.insertSlide(info.OriginalIndex, info.Slide);
-                            if (SlideAdded != null)
-                            {
-                                SlideAdded.Invoke(info.Slide, info.OriginalIndex);
-                            }
-                        }
-                        if (SlideSelected != null)
-                        {
-                            SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides));
-                        }
-                        allowUndoCreation = true;
-                    }));
             }
         }
 
