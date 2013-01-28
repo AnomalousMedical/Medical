@@ -73,8 +73,9 @@ namespace Lecture
 
         public void editSlide(Slide slide)
         {
-            bool undoNeeded = false;
-            if (slide is MedicalRmlSlide)
+            bool openedEditContext = false;
+            //This is done like this so we could have multiple slide types besides MedicalRmlSlide
+            if (slide != lastEditSlide && slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
                 slideEditorContext = new SlideEditorContext(medicalSlide, this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
@@ -94,10 +95,10 @@ namespace Lecture
                     }
                 };
                 editorController.runEditorContext(slideEditorContext.MvcContext);
-                undoNeeded = true;
+                openedEditContext = true;
             }
 
-            if (undoNeeded)
+            if (openedEditContext)
             {
                 if (lastEditSlide != null && allowUndoCreation)
                 {
@@ -132,7 +133,6 @@ namespace Lecture
                         lastEditSlide)
                     );
                 }
-
                 lastEditSlide = slide;
             }
         }
@@ -390,7 +390,22 @@ namespace Lecture
                 }
                 ++actualInsertIndex;
             }
+            if (SlideSelected != null)
+            {
+                SlideSelected.Invoke(lastEditSlide, movedSecondarySlides(sortedSlides));
+            }
             allowUndoCreation = true;
+        }
+
+        private IEnumerable<Slide> movedSecondarySlides(List<MoveSlideInfo> movedSlides)
+        {
+            foreach (MoveSlideInfo info in movedSlides)
+            {
+                if (info.Slide != lastEditSlide)
+                {
+                    yield return info.Slide;
+                }
+            }
         }
 
         public void cleanup()

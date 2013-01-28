@@ -374,7 +374,15 @@ namespace Lecture.GUI
 
         void slideEditController_SlideSelected(Slide primary, IEnumerable<Slide> secondary)
         {
-            slideGrid.SelectedItem = slideGrid.findItemByUserObject(primary);
+            slideGrid.setSelection(slideGrid.findItemByUserObject(primary), secondarySelectedButtonGridItems(secondary));
+        }
+
+        private IEnumerable<ButtonGridItem> secondarySelectedButtonGridItems(IEnumerable<Slide> secondary)
+        {
+            foreach (Slide slide in secondary)
+            {
+                yield return slideGrid.findItemByUserObject(slide);
+            }
         }
 
         void slideImageManager_ThumbUpdated(Slide slide, String key)
