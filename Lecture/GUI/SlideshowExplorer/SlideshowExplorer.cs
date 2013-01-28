@@ -372,9 +372,9 @@ namespace Lecture.GUI
             }
         }
 
-        void slideEditController_SlideSelected(Slide slide)
+        void slideEditController_SlideSelected(Slide primary, IEnumerable<Slide> secondary)
         {
-            slideGrid.SelectedItem = slideGrid.findItemByUserObject(slide);
+            slideGrid.SelectedItem = slideGrid.findItemByUserObject(primary);
         }
 
         void slideImageManager_ThumbUpdated(Slide slide, String key)
