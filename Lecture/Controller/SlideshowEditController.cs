@@ -161,6 +161,12 @@ namespace Lecture
             public Slide ChangeToSlide { get; set; }
         }
 
+        public void removeSlides(IEnumerable<Slide> slides)
+        {
+            List<SlideInfo> removedSlides = new List<SlideInfo>(from slide in slides select new SlideInfo(slide, slideshow.indexOf(slide)));
+
+        }
+
         public void removeSlide(Slide slide)
         {
             int slideIndex = slideshow.indexOf(slide);
@@ -348,25 +354,13 @@ namespace Lecture
             allowUndoCreation = wasAllowingUndo;
         }
 
-        class MoveSlideInfo
-        {
-            public int OriginalIndex { get; set; }
-
-            public Slide Slide { get; set; }
-        }
-
         public void moveSlides(IEnumerable<Slide> slides, int index)
         {
-            List<MoveSlideInfo> sortedSlides = new List<MoveSlideInfo>(from slide in slides
-                                                                       select new MoveSlideInfo()
-                                                                       {
-                                                                           OriginalIndex = slideshow.indexOf(slide),
-                                                                           Slide = slide
-                                                                       });
+            List<SlideInfo> sortedSlides = new List<SlideInfo>(from slide in slides select new SlideInfo(slide, slideshow.indexOf(slide)));
 
-            sortedSlides.Sort(new Comparison<MoveSlideInfo>((left, right) =>
+            sortedSlides.Sort(new Comparison<SlideInfo>((left, right) =>
                 {
-                    return left.OriginalIndex - right.OriginalIndex;
+                    return left.Index - right.Index;
                 }));
 
             bool wasAllowingUndo = allowUndoCreation;
@@ -386,7 +380,7 @@ namespace Lecture
                     () => //Undo
                     {
                         allowUndoCreation = false;
-                        foreach (MoveSlideInfo info in sortedSlides)
+                        foreach (SlideInfo info in sortedSlides)
                         {
                             int formerIndex = slideshow.indexOf(info.Slide);
                             slideshow.removeAt(formerIndex);
@@ -398,12 +392,12 @@ namespace Lecture
                         //Can't think of how to do this without two loops, have to compensate for other things
                         //that need to be undone or else this won't put things back, two loops makes sure
                         //all items are removed and we can just insert back to original indices.
-                        foreach(MoveSlideInfo info in sortedSlides)
+                        foreach (SlideInfo info in sortedSlides)
                         {
-                            slideshow.insertSlide(info.OriginalIndex, info.Slide);
+                            slideshow.insertSlide(info.Index, info.Slide);
                             if (SlideAdded != null)
                             {
-                                SlideAdded.Invoke(info.Slide, info.OriginalIndex);
+                                SlideAdded.Invoke(info.Slide, info.Index);
                             }
                         }
                         if (SlideSelected != null)
@@ -415,12 +409,12 @@ namespace Lecture
             }
         }
 
-        private void doMoveSlides(int index, List<MoveSlideInfo> sortedSlides)
+        private void doMoveSlides(int index, List<SlideInfo> sortedSlides)
         {
             int actualInsertIndex = index;
-            foreach (MoveSlideInfo slideInfo in sortedSlides)
+            foreach (SlideInfo slideInfo in sortedSlides)
             {
-                if (slideInfo.OriginalIndex <= index)
+                if (slideInfo.Index <= index)
                 {
                     --actualInsertIndex;
                 }
@@ -450,9 +444,9 @@ namespace Lecture
             }
         }
 
-        private IEnumerable<Slide> secondarySlideSelections(IEnumerable<MoveSlideInfo> movedSlides)
+        private IEnumerable<Slide> secondarySlideSelections(IEnumerable<SlideInfo> movedSlides)
         {
-            foreach (MoveSlideInfo info in movedSlides)
+            foreach (SlideInfo info in movedSlides)
             {
                 if (info.Slide != lastEditSlide)
                 {
