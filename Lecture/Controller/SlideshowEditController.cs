@@ -393,7 +393,14 @@ namespace Lecture
             }
             if (SlideSelected != null)
             {
-                SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides));
+                Slide primarySelection = lastEditSlide;
+                if (primarySelection == null)
+                {
+                    //Double check the last edit slide if the user moved a slide without actually clicking and releasing that slide will be null,
+                    //in this case use the slide that was moved.
+                    primarySelection = sortedSlides[0].Slide;
+                }
+                SlideSelected.Invoke(primarySelection, secondarySlideSelections(sortedSlides));
             }
             allowUndoCreation = wasAllowingUndo;
 
