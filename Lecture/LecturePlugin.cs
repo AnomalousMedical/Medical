@@ -102,7 +102,7 @@ namespace Lecture
         {
             get
             {
-                return "Lecture Tools";
+                return "SmartLecture Tools";
             }
         }
 

@@ -44,6 +44,15 @@ namespace Lecture.GUI
         private MultiSelectButtonGrid slideGrid;
         private ScrollView scroll;
 
+        //Drag Drop
+        private ImageBox dragIconPreview;
+        private Widget dropLocationPreview;
+        private IntVector2 dragMouseStartPosition;
+        private bool firstDrag;
+        private int dragHoverIndex;
+        private ButtonGridItem dragHoverItem;
+        private ButtonGridItem dragItem;
+
         public SlideshowExplorer(SlideshowEditController slideEditController)
             : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
         {
@@ -86,10 +95,16 @@ namespace Lecture.GUI
             cleanup = fileMenu.addItem("Cleanup");
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
+
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, 32, 32, Align.Default, "Info", "SlideDragAndDropPreview");
+            dragIconPreview.Visible = false;
+            dropLocationPreview = Gui.Instance.createWidgetT("Widget", "2dBorderPanelSkin", 0, 0, 100, 10, Align.Default, "Info", "SlideDropPreview");
+            dropLocationPreview.Visible = false;
         }
 
         public override void Dispose()
         {
+            Gui.Instance.destroyWidget(dragIconPreview);
             slideGrid.Dispose();
             slideImageManager.Dispose();
             base.Dispose();
@@ -330,6 +345,9 @@ namespace Lecture.GUI
                         imageUpdateItem.setImage(id);
                     }
                 });
+            item.MouseButtonPressed += item_MouseButtonPressed;
+            item.MouseButtonReleased += item_MouseButtonReleased;
+            item.MouseDrag += item_MouseDrag;
         }
 
         void removeSlideFromGrid(Slide slide)
@@ -337,6 +355,10 @@ namespace Lecture.GUI
             ButtonGridItem item = slideGrid.findItemByUserObject(slide);
             if (item != null)
             {
+                item.MouseButtonPressed -= item_MouseButtonPressed;
+                item.MouseButtonReleased -= item_MouseButtonReleased;
+                item.MouseDrag -= item_MouseDrag;
+
                 slideGrid.SuppressLayout = true;
                 slideGrid.removeItem(item);
                 int index = 1;
@@ -375,6 +397,114 @@ namespace Lecture.GUI
         void captureButton_MouseButtonClick(Widget source, EventArgs e)
         {
             slideEditController.capture();
+        }
+
+        void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
+        {
+            if (firstDrag)
+            {
+                dragHoverIndex = slideshow.indexOf((Slide)source.UserObject);
+                dragHoverItem = source;
+                dragItem = source;
+                firstDrag = false;
+            }
+            dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
+            if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
+            {
+                dropLocationPreview.Visible = true;
+                dropLocationPreview.setSize(dragHoverItem.Width, dropLocationPreview.Height);
+                LayerManager.Instance.upLayerItem(dropLocationPreview);
+                dragIconPreview.Visible = true;
+                dragIconPreview.setItemResource(CommonResources.NoIcon);
+                LayerManager.Instance.upLayerItem(dragIconPreview);
+            }
+
+            IntVector2 point = arg.Position;
+            if (point.y > dragHoverItem.AbsoluteTop && point.y < dragHoverItem.AbsoluteTop + dragHoverItem.Height)
+            {
+                if (point.y < dragHoverItem.AbsoluteTop + (dragHoverItem.Height / 2))
+                {
+                    dropLocationPreview.setPosition(dragHoverItem.AbsoluteLeft, dragHoverItem.AbsoluteTop);
+                }
+                else
+                {
+                    dropLocationPreview.setPosition(dragHoverItem.AbsoluteLeft, dragHoverItem.AbsoluteTop + dragHoverItem.Height);
+                }
+            }
+            else
+            {
+                if (point.y < dragHoverItem.AbsoluteTop + (dragHoverItem.Height / 2))
+                {
+                    //Look behind
+                    int newIndex = dragHoverIndex - 1;
+                    bool keepSearching = true;
+                    ButtonGridItem checkItem = null;
+                    while (newIndex >= 0 && keepSearching)
+                    {
+                        checkItem = slideGrid.getItem(newIndex);
+                        if (checkItem.AbsoluteTop < point.y)
+                        {
+                            keepSearching = false;
+                        }
+                        else
+                        {
+                            --newIndex;
+                        }
+                    }
+                    dragHoverItem = checkItem;
+                    dragHoverIndex = newIndex;
+                    if (dragHoverIndex < 0)
+                    {
+                        dragHoverIndex = 0;
+                        dragHoverItem = slideGrid.getItem(dragHoverIndex);
+                    }
+                }
+                else
+                {
+                    //Look ahead
+                    int newIndex = dragHoverIndex + 1;
+                    bool keepSearching = true;
+                    ButtonGridItem checkItem = null;
+                    while (newIndex < slideshow.Count && keepSearching)
+                    {
+                        checkItem = slideGrid.getItem(newIndex);
+                        if (checkItem.AbsoluteTop > point.y)
+                        {
+                            keepSearching = false;
+                        }
+                        else
+                        {
+                            ++newIndex;
+                        }
+                    }
+                    dragHoverItem = checkItem;
+                    dragHoverIndex = newIndex;
+                    if (dragHoverIndex > slideshow.Count - 1)
+                    {
+                        dragHoverIndex = slideshow.Count - 1;
+                        dragHoverItem = slideGrid.getItem(dragHoverIndex);
+                    }
+                }
+            }
+        }
+
+        void item_MouseButtonReleased(ButtonGridItem source, MouseEventArgs arg)
+        {
+            if (dragIconPreview.Visible)
+            {
+                dragIconPreview.Visible = false;
+                dropLocationPreview.Visible = false;
+                slideEditController.moveSlides((Slide)dragItem.UserObject, dragHoverIndex);
+                dragItem = null;
+            }
+        }
+
+        void item_MouseButtonPressed(ButtonGridItem source, MouseEventArgs arg)
+        {
+            dragMouseStartPosition = arg.Position;
+            firstDrag = true;
+            dragHoverIndex = -1;
+            dragHoverItem = null;
         }
     }
 }

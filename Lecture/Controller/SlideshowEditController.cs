@@ -346,6 +346,12 @@ namespace Lecture
             allowUndoCreation = wasAllowingUndo;
         }
 
+        public void moveSlides(Slide slide, int index)
+        {
+            removeSlide(slide);
+            addSlide(slide, index);
+        }
+
         public void cleanup()
         {
             undoBuffer.clear(); //Can't really recover from this one, so just erase all undo
