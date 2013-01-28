@@ -238,9 +238,9 @@ namespace Lecture.GUI
 
         void removeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (slideshow != null)
+            if (slideshow != null && slideGrid.SelectedItem != null)
             {
-                slideEditController.removeSlides(from item in slideGrid.SelectedItems select (Slide)item.UserObject);
+                slideEditController.removeSlides(from item in slideGrid.SelectedItems select (Slide)item.UserObject, (Slide)slideGrid.SelectedItem.UserObject);
             }
         }
 

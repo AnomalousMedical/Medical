@@ -166,8 +166,9 @@ namespace Lecture
             public Slide ChangeToSlide { get; set; }
         }
 
-        public void removeSlides(IEnumerable<Slide> slides)
+        public void removeSlides(IEnumerable<Slide> slides, Slide primarySelection)
         {
+            int slideIndex = slideshow.indexOf(primarySelection);
             List<SlideInfo> removedSlides = new List<SlideInfo>(from slide in slides select new SlideInfo(slide, slideshow.indexOf(slide)));
             if (removedSlides.Count > 0)
             {
@@ -175,27 +176,58 @@ namespace Lecture
 
                 doRemoveSlides(removedSlides);
 
+                Slide changeToSlide = null;
+                if (primarySelection == lastEditSlide)
+                {
+                    if (slideIndex < slideshow.Count)
+                    {
+                        changeToSlide = slideshow.get(slideIndex);
+                    }
+                    else if (slideIndex - 1 > 0)
+                    {
+                        changeToSlide = slideshow.get(slideIndex - 1);
+                    }
+                }
+                if (changeToSlide != null && SlideSelected != null)
+                {
+                    SlideSelected.Invoke(changeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
+                }
+
                 if (allowUndoCreation)
                 {
                     undoBuffer.pushAndSkip(new TwoWayDelegateCommand(
                         () => //Execute
                         {
-                            allowUndoCreation = false;
-                            doRemoveSlides(removedSlides);
-                            allowUndoCreation = true;
+                            ThreadManager.invoke(new Action(() =>
+                            {
+                                allowUndoCreation = false;
+                                doRemoveSlides(removedSlides);
+                                if (changeToSlide != null && SlideSelected != null)
+                                {
+                                    SlideSelected.Invoke(changeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
+                                }
+                                allowUndoCreation = true;
+                            }));
                         },
                         () => //Undo
                         {
-                            allowUndoCreation = false;
-                            foreach (SlideInfo slide in removedSlides)
+                            ThreadManager.invoke(new Action(() =>
                             {
-                                slideshow.insertSlide(slide.Index, slide.Slide);
-                                if (SlideAdded != null)
+                                allowUndoCreation = false;
+                                foreach (SlideInfo slide in removedSlides)
                                 {
-                                    SlideAdded.Invoke(slide.Slide, slide.Index);
+                                    slideshow.insertSlide(slide.Index, slide.Slide);
+                                    if (SlideAdded != null)
+                                    {
+                                        SlideAdded.Invoke(slide.Slide, slide.Index);
+                                    }
                                 }
-                            }
-                            allowUndoCreation = true;
+                                if (SlideSelected != null)
+                                {
+                                    SlideSelected.Invoke(primarySelection, secondarySlideSelections(removedSlides, primarySelection));
+                                }
+                                allowUndoCreation = true;
+                            }));
                         },
                         poppedFrontFunc: () =>
                         {
@@ -455,7 +487,7 @@ namespace Lecture
                         }
                         if (SlideSelected != null)
                         {
-                            SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides));
+                            SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides, lastEditSlide));
                         }
                         allowUndoCreation = true;
                     }));
@@ -493,15 +525,15 @@ namespace Lecture
                     //in this case use the slide that was moved.
                     primarySelection = sortedSlides[0].Slide;
                 }
-                SlideSelected.Invoke(primarySelection, secondarySlideSelections(sortedSlides));
+                SlideSelected.Invoke(primarySelection, secondarySlideSelections(sortedSlides, primarySelection));
             }
         }
 
-        private IEnumerable<Slide> secondarySlideSelections(IEnumerable<SlideInfo> movedSlides)
+        private static IEnumerable<Slide> secondarySlideSelections(IEnumerable<SlideInfo> movedSlides, Slide skipSlide)
         {
             foreach (SlideInfo info in movedSlides)
             {
-                if (info.Slide != lastEditSlide)
+                if (info.Slide != skipSlide)
                 {
                     yield return info.Slide;
                 }
