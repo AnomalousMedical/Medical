@@ -188,10 +188,14 @@ namespace Lecture
                         changeToSlide = slideshow.get(slideIndex - 1);
                     }
                 }
+
+                bool wasAllowingUndo = allowUndoCreation;
+                allowUndoCreation = false;
                 if (changeToSlide != null && SlideSelected != null)
                 {
                     SlideSelected.Invoke(changeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
                 }
+                allowUndoCreation = wasAllowingUndo;
 
                 if (allowUndoCreation)
                 {
