@@ -148,6 +148,11 @@ namespace Lecture
             public Slide Slide { get; set; }
 
             public int Index { get; set; }
+
+            public static int Sort(SlideInfo left, SlideInfo right)
+            {
+                return left.Index - right.Index;
+            }
         }
 
         class RemoveSlideInfo : SlideInfo
@@ -164,7 +169,58 @@ namespace Lecture
         public void removeSlides(IEnumerable<Slide> slides)
         {
             List<SlideInfo> removedSlides = new List<SlideInfo>(from slide in slides select new SlideInfo(slide, slideshow.indexOf(slide)));
+            if (removedSlides.Count > 0)
+            {
+                removedSlides.Sort(SlideInfo.Sort);
 
+                doRemoveSlides(removedSlides);
+
+                if (allowUndoCreation)
+                {
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand(
+                        () => //Execute
+                        {
+                            allowUndoCreation = false;
+                            doRemoveSlides(removedSlides);
+                            allowUndoCreation = true;
+                        },
+                        () => //Undo
+                        {
+                            allowUndoCreation = false;
+                            foreach (SlideInfo slide in removedSlides)
+                            {
+                                slideshow.insertSlide(slide.Index, slide.Slide);
+                                if (SlideAdded != null)
+                                {
+                                    SlideAdded.Invoke(slide.Slide, slide.Index);
+                                }
+                            }
+                            allowUndoCreation = true;
+                        },
+                        poppedFrontFunc: () =>
+                        {
+                            foreach (SlideInfo slideInfo in removedSlides)
+                            {
+                                cleanupThumbnail(slideInfo);
+                            }
+                        }));
+                }
+            }
+        }
+
+        private void doRemoveSlides(List<SlideInfo> removedSlides)
+        {
+            bool wasAllowingUndo = allowUndoCreation;
+            allowUndoCreation = false;
+            foreach (SlideInfo slideInfo in removedSlides)
+            {
+                slideshow.removeSlide(slideInfo.Slide);
+                if (SlideRemoved != null)
+                {
+                    SlideRemoved.Invoke(slideInfo.Slide);
+                }
+            }
+            allowUndoCreation = wasAllowingUndo;
         }
 
         public void removeSlide(Slide slide)
@@ -206,7 +262,8 @@ namespace Lecture
                 {
                     if (changeToSlide == null)
                     {
-                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
+                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>(
+                        (executeSlide) =>
                         {
                             allowUndoCreation = false;
                             removeSlide(executeSlide.Slide);
@@ -357,11 +414,7 @@ namespace Lecture
         public void moveSlides(IEnumerable<Slide> slides, int index)
         {
             List<SlideInfo> sortedSlides = new List<SlideInfo>(from slide in slides select new SlideInfo(slide, slideshow.indexOf(slide)));
-
-            sortedSlides.Sort(new Comparison<SlideInfo>((left, right) =>
-                {
-                    return left.Index - right.Index;
-                }));
+            sortedSlides.Sort(SlideInfo.Sort);
 
             bool wasAllowingUndo = allowUndoCreation;
             allowUndoCreation = false;

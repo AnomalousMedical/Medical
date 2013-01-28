@@ -240,11 +240,7 @@ namespace Lecture.GUI
         {
             if (slideshow != null)
             {
-                ButtonGridItem selectedItem = slideGrid.SelectedItem;
-                if (selectedItem != null)
-                {
-                    slideEditController.removeSlide((Slide)selectedItem.UserObject);
-                }
+                slideEditController.removeSlides(from item in slideGrid.SelectedItems select (Slide)item.UserObject);
             }
         }
 
