@@ -394,15 +394,16 @@ namespace Lecture
                             {
                                 SlideRemoved.Invoke(info.Slide);
                             }
-                            int insertIndex = info.OriginalIndex;
-                            //if (formerIndex < insertIndex)
-                            //{
-                            //    --insertIndex;
-                            //}
-                            slideshow.insertSlide(insertIndex, info.Slide);
+                        }
+                        //Can't think of how to do this without two loops, have to compensate for other things
+                        //that need to be undone or else this won't put things back, two loops makes sure
+                        //all items are removed and we can just insert back to original indices.
+                        foreach(MoveSlideInfo info in sortedSlides)
+                        {
+                            slideshow.insertSlide(info.OriginalIndex, info.Slide);
                             if (SlideAdded != null)
                             {
-                                SlideAdded.Invoke(info.Slide, insertIndex);
+                                SlideAdded.Invoke(info.Slide, info.OriginalIndex);
                             }
                         }
                         if (SlideSelected != null)
