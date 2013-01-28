@@ -52,6 +52,7 @@ namespace Lecture.GUI
         private int dragHoverIndex;
         private ButtonGridItem dragHoverItem;
         private ButtonGridItem dragItem;
+        private bool dropAfter = false;
 
         public SlideshowExplorer(SlideshowEditController slideEditController)
             : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
@@ -425,10 +426,12 @@ namespace Lecture.GUI
                 if (point.y < dragHoverItem.AbsoluteTop + (dragHoverItem.Height / 2))
                 {
                     dropLocationPreview.setPosition(dragHoverItem.AbsoluteLeft, dragHoverItem.AbsoluteTop);
+                    dropAfter = false;
                 }
                 else
                 {
                     dropLocationPreview.setPosition(dragHoverItem.AbsoluteLeft, dragHoverItem.AbsoluteTop + dragHoverItem.Height);
+                    dropAfter = true;
                 }
             }
             else
@@ -494,7 +497,11 @@ namespace Lecture.GUI
             {
                 dragIconPreview.Visible = false;
                 dropLocationPreview.Visible = false;
-                slideEditController.moveSlides((Slide)dragItem.UserObject, dragHoverIndex);
+                if (dropAfter)
+                {
+                    ++dragHoverIndex;
+                }
+                slideEditController.moveSlides(SelectedSlides, dragHoverIndex);
                 dragItem = null;
             }
         }
@@ -505,6 +512,21 @@ namespace Lecture.GUI
             firstDrag = true;
             dragHoverIndex = -1;
             dragHoverItem = null;
+        }
+
+        private IEnumerable<Slide> SelectedSlides
+        {
+            get
+            {
+                if (dragItem != null && !dragItem.StateCheck)
+                {
+                    yield return (Slide)dragItem.UserObject;
+                }
+                foreach (ButtonGridItem item in slideGrid.SelectedItems)
+                {
+                    yield return (Slide)item.UserObject;
+                }
+            }
         }
     }
 }

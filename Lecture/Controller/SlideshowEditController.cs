@@ -346,10 +346,44 @@ namespace Lecture
             allowUndoCreation = wasAllowingUndo;
         }
 
-        public void moveSlides(Slide slide, int index)
+        class MoveSlideInfo
         {
-            removeSlide(slide);
-            addSlide(slide, index);
+            public int OriginalIndex { get; set; }
+
+            public Slide Slide { get; set; }
+        }
+
+        public void moveSlides(IEnumerable<Slide> slides, int index)
+        {
+            int actualInsertIndex = index;
+            List<MoveSlideInfo> sortedSlides = new List<MoveSlideInfo>(from slide in slides
+                                                                       select new MoveSlideInfo()
+                                                                       {
+                                                                           OriginalIndex = slideshow.indexOf(slide),
+                                                                           Slide = slide
+                                                                       });
+            sortedSlides.Sort(new Comparison<MoveSlideInfo>((left, right) =>
+                {
+                    return left.OriginalIndex - right.OriginalIndex;
+                }));
+
+            allowUndoCreation = false;
+            Logging.Log.Debug("Insert index starting at {0}", actualInsertIndex);
+            foreach (MoveSlideInfo slideInfo in sortedSlides)
+            {
+                if (slideInfo.OriginalIndex <= index)
+                {
+                    Logging.Log.Debug("Slide index was {0}, decrement acutal insert", slideInfo.OriginalIndex);
+                    --actualInsertIndex;
+                }
+                removeSlide(slideInfo.Slide);
+            }
+            Logging.Log.Debug("Actually inserting at {0}", actualInsertIndex);
+            foreach (MoveSlideInfo slideInfo in sortedSlides)
+            {
+                addSlide(slideInfo.Slide, actualInsertIndex++);
+            }
+            allowUndoCreation = true;
         }
 
         public void cleanup()
