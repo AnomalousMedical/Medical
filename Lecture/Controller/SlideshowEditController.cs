@@ -370,6 +370,7 @@ namespace Lecture
                     return left.OriginalIndex - right.OriginalIndex;
                 }));
 
+            bool wasAllowingUndo = allowUndoCreation;
             allowUndoCreation = false;
             foreach (MoveSlideInfo slideInfo in sortedSlides)
             {
@@ -392,12 +393,45 @@ namespace Lecture
             }
             if (SlideSelected != null)
             {
-                SlideSelected.Invoke(lastEditSlide, movedSecondarySlides(sortedSlides));
+                SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides));
             }
-            allowUndoCreation = true;
+            allowUndoCreation = wasAllowingUndo;
+
+            if (allowUndoCreation)
+            {
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand(
+                    () => //Execute
+                    {
+                        allowUndoCreation = false;
+                        moveSlides(from info in sortedSlides select info.Slide, index);
+                        allowUndoCreation = true;
+                    },
+                    () => //Undo
+                    {
+                        allowUndoCreation = false;
+                        foreach (MoveSlideInfo info in sortedSlides)
+                        {
+                            slideshow.removeSlide(info.Slide);
+                            if (SlideRemoved != null)
+                            {
+                                SlideRemoved.Invoke(info.Slide);
+                            }
+                            slideshow.insertSlide(info.OriginalIndex, info.Slide);
+                            if (SlideAdded != null)
+                            {
+                                SlideAdded.Invoke(info.Slide, info.OriginalIndex);
+                            }
+                        }
+                        if (SlideSelected != null)
+                        {
+                            SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides));
+                        }
+                        allowUndoCreation = true;
+                    }));
+            }
         }
 
-        private IEnumerable<Slide> movedSecondarySlides(List<MoveSlideInfo> movedSlides)
+        private IEnumerable<Slide> secondarySlideSelections(IEnumerable<MoveSlideInfo> movedSlides)
         {
             foreach (MoveSlideInfo info in movedSlides)
             {
