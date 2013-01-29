@@ -10,14 +10,19 @@ namespace Lecture.GUI
 {
     class SlideTaskbar : LayoutComponent
     {
-        private String closeAction;
         private String currentFile;
+        private SlideTaskbarView view;
+        private TextBox idLabel;
 
         public SlideTaskbar(SlideTaskbarView view, MyGUIViewHost viewHost)
             : base("Lecture.GUI.SlideTaskbar.SlideTaskbar.layout", viewHost)
         {
-            closeAction = view.CloseAction;
-            this.currentFile = view.File;
+            this.view = view;
+            this.currentFile = view.DisplayName;
+            view.DisplayNameChanged += view_NameChanged;
+
+            idLabel = (TextBox)widget.findWidget("IdLabel");
+            idLabel.Caption = view.DisplayName;
 
             int left = 1;
             foreach (Task task in view.Tasks)
@@ -34,6 +39,7 @@ namespace Lecture.GUI
 
         public override void Dispose()
         {
+            view.DisplayNameChanged -= view_NameChanged;
             base.Dispose();
         }
 
@@ -52,9 +58,9 @@ namespace Lecture.GUI
             ((Task)source.UserObject).clicked(null);
         }
 
-        void closeButton_MouseButtonClick(Widget source, EventArgs e)
+        void view_NameChanged(SlideTaskbarView obj)
         {
-            ViewHost.Context.runAction(closeAction, ViewHost);
+            idLabel.Caption = view.DisplayName;
         }
     }
 }

@@ -11,14 +11,16 @@ namespace Lecture.GUI
 {
     class SlideTaskbarView : MyGUIView
     {
+        public event Action<SlideTaskbarView> DisplayNameChanged;
+        private String displayName;
+
         private List<Task> tasks = new List<Task>();
 
-        public SlideTaskbarView(String name, String file, String closeAction = null)
+        public SlideTaskbarView(String name, String displayName)
             :base(name)
         {
-            this.File = file;
+            this.DisplayName = displayName;
             this.ViewLocation = ViewLocations.Top;
-            this.CloseAction = closeAction;
         }
 
         public void addTask(Task task)
@@ -34,9 +36,21 @@ namespace Lecture.GUI
             }
         }
 
-        public String File { get; set; }
-
-        public String CloseAction { get; set; }
+        public String DisplayName
+        {
+            get
+            {
+                return displayName;
+            }
+            set
+            {
+                displayName = value;
+                if (DisplayNameChanged != null)
+                {
+                    DisplayNameChanged.Invoke(this);
+                }
+            }
+        }
 
         protected SlideTaskbarView(LoadInfo info)
             :base(info)

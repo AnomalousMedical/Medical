@@ -81,7 +81,7 @@ namespace Lecture
             if (slide != lastEditSlide && slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
+                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
                 {
                     slideEditorContext.setWysiwygRml(rml, true);
                 });
@@ -99,6 +99,10 @@ namespace Lecture
                 };
                 editorController.runEditorContext(slideEditorContext.MvcContext);
                 openedEditContext = true;
+            }
+            else
+            {
+                slideEditorContext.slideNameChanged("Slide " + (slideshow.indexOf(slide) + 1));
             }
 
             if (openedEditContext)

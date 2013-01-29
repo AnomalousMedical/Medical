@@ -39,8 +39,9 @@ namespace Lecture
         private ImageRenderer imageRenderer;
         private MedicalSlideItemTemplate itemTemplate;
         private RunCommandsAction setupScene;
+        private SlideTaskbarView taskbar;
 
-        public SlideEditorContext(MedicalRmlSlide slide, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String> wysiwygUndoCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -99,7 +100,7 @@ namespace Lecture
             htmlDragDrop.IsWindow = true;
             mvcContext.Views.add(htmlDragDrop);
 
-            SlideTaskbarView taskbar = new SlideTaskbarView("InfoBar", "NOT DEFINED", "Editor/Close");
+            taskbar = new SlideTaskbarView("InfoBar", slideName);
             taskbar.addTask(new CallbackTask("Save", "Save", "FileToolstrip/Save", "", 0, true, item =>
             {
                 saveAll();
@@ -222,6 +223,11 @@ namespace Lecture
         public SlideSceneInfo getCurrentSceneInfo()
         {
             return new SlideSceneInfo(slide);
+        }
+
+        public void slideNameChanged(string slideName)
+        {
+            taskbar.DisplayName = slideName;
         }
 
         public void applySceneInfo(SlideSceneInfo info)

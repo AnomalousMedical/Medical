@@ -74,6 +74,10 @@ namespace Lecture.GUI
             menuActions.Add(fileMenu.addItem("Open"), openProject);
             menuActions.Add(fileMenu.addItem("Close"), slideEditController.closeProject);
             menuActions.Add(fileMenu.addItem("Save"), slideEditController.save);
+            fileMenu.addItem("Sep", MenuItemType.Separator);
+            menuActions.Add(fileMenu.addItem("Present"), play);
+            menuActions.Add(fileMenu.addItem("Present from Beginning"), playFromBeginning);
+            fileMenu.addItem("Sep2", MenuItemType.Separator);
             menuActions.Add(fileMenu.addItem("Cleanup"), cleanup);
 
             MenuItem editMenuItem = menuBar.addItem("Edit", MenuItemType.Popup);
@@ -86,9 +90,6 @@ namespace Lecture.GUI
             menuActions.Add(slideMenu.addItem("Add"), addSlide);
             menuActions.Add(slideMenu.addItem("Remove"), removeSelected);
             menuActions.Add(slideMenu.addItem("Capture"), slideEditController.capture);
-            slideMenu.addItem("Sep", MenuItemType.Separator);
-            menuActions.Add(slideMenu.addItem("Present"), play);
-            menuActions.Add(slideMenu.addItem("Present from Beginning"), playFromBeginning);
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
 
