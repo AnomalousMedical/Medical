@@ -55,7 +55,7 @@ namespace Lecture
 
             editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
-            slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, editorController);
+            slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, editorController, editorTimelineController);
             slideshowEditController.RunContext = (context) =>
             {
                 standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);

@@ -43,10 +43,10 @@ namespace Medical
             if (cachedResources.TryGetValue(filename, out resource) && resource.AllowClose)
             {
                 cachedResources.Remove(filename);
-            }
-            if (CachedResourceRemoved != null)
-            {
-                CachedResourceRemoved.Invoke(this, resource);
+                if (CachedResourceRemoved != null)
+                {
+                    CachedResourceRemoved.Invoke(this, resource);
+                }
             }
         }
 

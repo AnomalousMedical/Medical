@@ -127,7 +127,7 @@ namespace Lecture
             }));
             taskbar.addTask(new CallbackTask("EditTimeline", "Edit Timeline", "Lecture.Icon.EditTimeline", "Edit", 0, true, item =>
             {
-                
+                editorController.editTimeline(slide);
             }));
             taskbar.addTask(new CallbackTask("Present", "Present", "Lecture.Icon.Present", "Edit", 0, true, item =>
             {

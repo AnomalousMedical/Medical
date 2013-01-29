@@ -5,6 +5,7 @@ using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -36,23 +37,29 @@ namespace Lecture
         private ImageRenderer imageRenderer;
         private MedicalSlideItemTemplate medicalSlideTemplate;
         private SlideImageManager slideImageManager;
+        private TimelineTypeController timelineTypeController;
+        private TimelineEditorContext timelineEditorContext;
+        private TimelineController timelineController;
 
         private bool allowUndoCreation = true;
         private Slide lastEditSlide = null;
 
-        public SlideshowEditController(StandaloneController standaloneController, EditorUICallback uiCallback, PropEditController propEditController, EditorController editorController)
+        public SlideshowEditController(StandaloneController standaloneController, EditorUICallback uiCallback, PropEditController propEditController, EditorController editorController, TimelineController timelineController)
         {
             this.standaloneController = standaloneController;
             this.uiCallback = uiCallback;
             this.propEditController = propEditController;
             this.editorController = editorController;
             this.imageRenderer = standaloneController.ImageRenderer;
+            this.timelineController = timelineController;
             editorController.ProjectChanged += editorController_ProjectChanged;
             slideImageManager = new SlideImageManager(this);
 
             //Show Type Controller
             showTypeController = new ShowTypeController(editorController);
             editorController.addTypeController(showTypeController);
+            timelineTypeController = new TimelineTypeController(editorController);
+            editorController.addTypeController(timelineTypeController);
 
             medicalSlideTemplate = new MedicalSlideItemTemplate(standaloneController.SceneViewController, standaloneController.MedicalStateController);
             medicalSlideTemplate.SlideCreated += (slide) =>
@@ -100,7 +107,7 @@ namespace Lecture
                 editorController.runEditorContext(slideEditorContext.MvcContext);
                 openedEditContext = true;
             }
-            else
+            else if(slideEditorContext != null)
             {
                 slideEditorContext.slideNameChanged("Slide " + (slideshow.indexOf(slide) + 1));
             }
@@ -141,6 +148,39 @@ namespace Lecture
                     );
                 }
                 lastEditSlide = slide;
+            }
+        }
+
+        public void editTimeline(Slide slide)
+        {
+            try
+            {
+                Timeline timeline = null;
+                String timelineFilePath = Path.Combine(slide.UniqueName, "Timeline.tl");
+                if (!ResourceProvider.exists(timelineFilePath))
+                {
+                    timelineTypeController.createNewTimeline(timelineFilePath);
+                }
+                timeline = editorController.loadFile<Timeline>(timelineFilePath); //By loading after creating we ensure this is in the cached resources
+
+                propEditController.removeAllOpenProps();
+                timelineEditorContext = new TimelineEditorContext(timeline, timelineFilePath, this, propEditController, editorController, uiCallback, timelineController);
+                timelineEditorContext.Focus += obj =>
+                {
+                    timelineEditorContext = obj;
+                };
+                timelineEditorContext.Blur += obj =>
+                {
+                    if (obj == timelineEditorContext)
+                    {
+                        timelineEditorContext = null;
+                    }
+                };
+                editorController.runEditorContext(timelineEditorContext.MvcContext);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error opening timeline for editing.\n{0}", ex.Message), "Load Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
             }
         }
 
