@@ -194,14 +194,17 @@ namespace Lecture.GUI
 
         void cleanup()
         {
-            MessageBox.show("Cleaning up your slideshow will remove unneeded files, however, your project will be saved and all of your undo history will be lost.\nAre you sure you wish to continue?", "Cleanup", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+            if (slideshow != null)
             {
-                if (result == MessageBoxStyle.Yes)
+                MessageBox.show("Cleaning up your slideshow will remove unneeded files, however, your project will be saved and all of your undo history will be lost.\nAre you sure you wish to continue?", "Cleanup", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
                 {
-                    slideEditController.save();
-                    slideEditController.cleanup();
-                }
-            });
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        slideEditController.save();
+                        slideEditController.cleanup();
+                    }
+                });
+            }
         }
 
         void menuItemAccept(Widget source, EventArgs e)
