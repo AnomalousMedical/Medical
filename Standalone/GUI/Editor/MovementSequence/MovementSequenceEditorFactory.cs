@@ -12,13 +12,11 @@ namespace Medical.GUI
     class MovementSequenceEditorFactory : ViewHostComponentFactory
     {
         MovementSequenceController movementSequenceController;
-        EditorController editorController;
         SaveableClipboard clipboard;
 
-        public MovementSequenceEditorFactory(MovementSequenceController movementSequenceController, EditorController editorController, SaveableClipboard clipboard)
+        public MovementSequenceEditorFactory(MovementSequenceController movementSequenceController, SaveableClipboard clipboard)
         {
             this.movementSequenceController = movementSequenceController;
-            this.editorController = editorController;
             this.clipboard = clipboard;
         }
 
@@ -26,7 +24,7 @@ namespace Medical.GUI
         {
             if (view is MovementSequenceEditorView)
             {
-                return new MovementSequenceEditor(movementSequenceController, clipboard, editorController, viewHost, (MovementSequenceEditorView)view);
+                return new MovementSequenceEditor(movementSequenceController, clipboard, viewHost, (MovementSequenceEditorView)view);
             }
             return null;
         }

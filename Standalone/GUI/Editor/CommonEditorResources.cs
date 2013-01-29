@@ -24,6 +24,7 @@ namespace Medical
                 standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory());
                 standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard));
                 standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(standaloneController.Clipboard));
+                standaloneController.ViewHostFactory.addFactory(new MovementSequenceEditorFactory(standaloneController.MovementSequenceController, standaloneController.Clipboard));
 
                 PropertiesForm.addFormCreationMethod(typeof(ChangeHandPosition), (property, parentWidget) =>
                 {

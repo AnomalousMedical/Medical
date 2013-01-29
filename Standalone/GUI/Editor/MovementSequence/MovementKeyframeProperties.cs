@@ -12,7 +12,7 @@ namespace Medical.GUI
         private MovementSequenceState movementSequenceState;
 
         public MovementKeyframeProperties(Widget parentWidget)
-            : base(parentWidget, "Medical.GUI.MovementSequence.MovementKeyframeProperties.layout")
+            : base(parentWidget, "Medical.GUI.Editor.MovementSequence.MovementKeyframeProperties.layout")
         {
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
             useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);

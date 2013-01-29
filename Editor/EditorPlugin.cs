@@ -119,7 +119,6 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new EditorInfoBarFactory());
             standaloneController.ViewHostFactory.addFactory(new TextEditorComponentFactory());
             standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
-            standaloneController.ViewHostFactory.addFactory(new MovementSequenceEditorFactory(standaloneController.MovementSequenceController, editorController, standaloneController.Clipboard));
             CommonEditorResources.initialize(standaloneController);
 
             editorController.ProjectChanged += editorController_ProjectChanged;

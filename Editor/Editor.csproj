@@ -122,12 +122,6 @@
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarView.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
-    <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
-    <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
-    <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
-    <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
-    <Compile Include="GUI\MovementSequence\MovementSequenceEditorFactory.cs" />
-    <Compile Include="GUI\MovementSequence\MovementSequenceEditorView.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
     <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />
     <Compile Include="GUI\FileBrowserTree\FileNode.cs" />
@@ -168,8 +162,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbarFileButton.layout" />
-    <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
-    <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />

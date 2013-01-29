@@ -232,6 +232,12 @@
     <Compile Include="GUI\Editor\GenericEditor\GenericPropertiesFormView.cs" />
     <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
     <Compile Include="GUI\Editor\InputWindow.cs" />
+    <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeData.cs" />
+    <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.cs" />
+    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceClipboardContainer.cs" />
+    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceEditor.cs" />
+    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceEditorFactory.cs" />
+    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceEditorView.cs" />
     <Compile Include="GUI\Editor\NewProjectDialog\NewProjectDialog.cs" />
     <Compile Include="GUI\Editor\OpenPropManager\OpenPropManager.cs" />
     <Compile Include="GUI\Editor\OpenPropManager\OpenPropManagerView.cs" />
@@ -781,6 +787,8 @@
     <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorVerticalComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
+    <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.layout" />
+    <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\NewProjectDialog\NewProjectDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\OpenPropManager\OpenPropManager.layout" />
     <EmbeddedResource Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.layout" />

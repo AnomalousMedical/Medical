@@ -22,16 +22,14 @@ namespace Medical.GUI
         private NumericEdit durationEdit;
         private bool allowSynchronization = true;
         private SaveableClipboard clipboard;
-        private EditorController editorController;
 
         private MovementSequenceController movementSequenceController;
         private MovementSequence movementSequence;
 
-        public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard, EditorController editorController, MyGUIViewHost viewHost, MovementSequenceEditorView view)
-            : base("Medical.GUI.MovementSequence.MovementSequenceEditor.layout", viewHost)
+        public MovementSequenceEditor(MovementSequenceController movementSequenceController, SaveableClipboard clipboard, MyGUIViewHost viewHost, MovementSequenceEditorView view)
+            : base("Medical.GUI.Editor.MovementSequence.MovementSequenceEditor.layout", viewHost)
         {
             this.clipboard = clipboard;
-            this.editorController = editorController;
 
             widget.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
