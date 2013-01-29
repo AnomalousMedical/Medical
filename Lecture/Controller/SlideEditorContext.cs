@@ -105,31 +105,35 @@ namespace Lecture
             {
                 saveAll();
             }));
-            taskbar.addTask(new CallbackTask("Undo", "Undo", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("Undo", "Undo", "Lecture.Icon.Undo", "Edit", 0, true, item =>
             {
                 undoBuffer.undo();
             }));
-            taskbar.addTask(new CallbackTask("Redo", "Redo", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("Redo", "Redo", "Lecture.Icon.Redo", "Edit", 0, true, item =>
             {
                 undoBuffer.execute();
             }));
-            taskbar.addTask(new CallbackTask("AddSlide", "Add Slide", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("AddSlide", "Add Slide", "Lecture.Icon.AddSlide", "Edit", 0, true, item =>
             {
                 AddItemDialog.AddItem(editorController.ItemTemplates, editorController.createItem);
             }));
-            taskbar.addTask(new CallbackTask("RemoveSlide", "Remove Slide", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("RemoveSlide", "Remove Slide", "Lecture.Icon.RemoveSlide", "Edit", 0, true, item =>
             {
                 editorController.removeSelectedSlides();
             }));
-            taskbar.addTask(new CallbackTask("Capture", "Capture", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("Capture", "Capture", "Lecture.Icon.Capture", "Edit", 0, true, item =>
             {
                 editorController.capture();
             }));
-            taskbar.addTask(new CallbackTask("Present", "Present", CommonResources.NoIcon, "Edit", 0, true, item =>
+            //taskbar.addTask(new CallbackTask("EditTimeline", "Edit Timeline", "Lecture.Icon.EditTimeline", "Edit", 0, true, item =>
+            //{
+            //    throw new NotImplementedException();
+            //}));
+            taskbar.addTask(new CallbackTask("Present", "Present", "Lecture.Icon.Present", "Edit", 0, true, item =>
             {
                 editorController.runSlideshow(slide);
             }));
-            taskbar.addTask(new CallbackTask("PresentFromBeginning", "Present From Beginning", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("PresentFromBeginning", "Present From Beginning", "Lecture.Icon.PresetBeginning", "Edit", 0, true, item =>
             {
                 editorController.runSlideshow(0);
             }));

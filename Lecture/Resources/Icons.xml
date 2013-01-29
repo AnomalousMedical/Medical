@@ -1,77 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
-  <Resource type="ResourceImageSet" name="Lecture.PublisherIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.AddSlide">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.RenderIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.Capture">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="32 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.ExamIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.EditTimeline">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.MovementIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.Present">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="96 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.DiscEditorIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.PresetBeginning">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="128 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.ScratchAreaIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.Redo">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="160 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.AspectRatioIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.RemoveSlide">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="192 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.GridIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.Undo">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="224 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.PlugInEditorIcon">
-    <Group name="Icons" texture="Lecture.Resources.DeveloperIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="256 0"/>
-      </Index>
-    </Group>
-  </Resource>
-  
 </MyGUI>
 
