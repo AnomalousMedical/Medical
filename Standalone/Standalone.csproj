@@ -233,6 +233,8 @@
     <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
     <Compile Include="GUI\Editor\InputWindow.cs" />
     <Compile Include="GUI\Editor\NewProjectDialog\NewProjectDialog.cs" />
+    <Compile Include="GUI\Editor\OpenPropManager\OpenPropManager.cs" />
+    <Compile Include="GUI\Editor\OpenPropManager\OpenPropManagerView.cs" />
     <Compile Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ConstrainableFormComponent.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormButton.cs" />
@@ -262,6 +264,18 @@
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormVector3.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ScrollablePropertiesForm.cs" />
     <Compile Include="GUI\Editor\PropertyEditor.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\PropTimeline.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\PropTimelineClipboardContainer.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\PropTimelineData.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\PropTimelineFactory.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\PropTimelineView.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\ShowPropSubActionFactory.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\ShowPropSubActionPrototype.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\ShowPropTimelineInfo.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\MovePropPrototype.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponent.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
@@ -282,6 +296,15 @@
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygView.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\WysiwygDragDropItem.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\ActionPrototypes\ShowPropActionData.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\ActionPrototypes\ShowPropActionPrototype.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\ActionPrototypes\TimelineActionPrototype.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\TimelineActionClipboardContainer.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\TimelineActionData.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\TimelineActionDataManager.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\TimelineComponentFactory.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.cs" />
+    <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
@@ -759,6 +782,7 @@
     <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorVerticalComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\NewProjectDialog\NewProjectDialog.layout" />
+    <EmbeddedResource Include="GUI\Editor\OpenPropManager\OpenPropManager.layout" />
     <EmbeddedResource Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormComboBox.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormWidthHeight.layout" />
@@ -766,12 +790,16 @@
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBoxBrowser.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormXYZ.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.layout" />
+    <EmbeddedResource Include="GUI\Editor\PropTimeline\PropTimeline.layout" />
+    <EmbeddedResource Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
+    <EmbeddedResource Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
+    <EmbeddedResource Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />
     <EmbeddedResource Include="Resources\DegenerationImages.png" />

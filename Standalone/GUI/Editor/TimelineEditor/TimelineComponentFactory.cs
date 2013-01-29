@@ -10,17 +10,11 @@ namespace Medical.GUI
 {
     class TimelineComponentFactory : ViewHostComponentFactory
     {
-        TimelineController timelineController;
-        EditorController editorController;
         SaveableClipboard clipboard;
-        EditorPlugin editorPlugin;
 
-        public TimelineComponentFactory(TimelineController timelineController, EditorController editorController, SaveableClipboard clipboard, EditorPlugin editorPlugin)
+        public TimelineComponentFactory(SaveableClipboard clipboard)
         {
-            this.timelineController = timelineController;
-            this.editorController = editorController;
             this.clipboard = clipboard;
-            this.editorPlugin = editorPlugin;
         }
 
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
@@ -28,7 +22,7 @@ namespace Medical.GUI
             if (view is TimelineEditorView)
             {
                 TimelineEditorView editorView = (TimelineEditorView)view;
-                TimelineEditorComponent timelineEditor = new TimelineEditorComponent(viewHost, timelineController, editorController, clipboard, editorPlugin);
+                TimelineEditorComponent timelineEditor = new TimelineEditorComponent(viewHost, editorView, clipboard);
                 timelineEditor.CurrentTimeline = editorView.Timeline;
                 return timelineEditor;
             }

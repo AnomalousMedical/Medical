@@ -36,7 +36,7 @@ namespace Medical
         private TimelineTypeController timelineTypeController;
         private PropEditController propEditController;
 
-        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, PropEditController propEditController, EditorController editorController, MedicalUICallback uiCallback)
+        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, PropEditController propEditController, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
         {
             this.currentTimeline = timeline;
             this.currentFile = path;
@@ -53,18 +53,18 @@ namespace Medical
             mvcContext.Models.add(new EditMenuManager());
             mvcContext.Models.add(new EditInterfaceHandler());
             
-            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline));
+            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController));
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
             genericEditor.IsWindow = true;
             genericEditor.ViewLocation = ViewLocations.Left;
             mvcContext.Views.add(genericEditor);
             
-            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline");
+            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController);
             propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
             mvcContext.Views.add(propTimelineView);
 
-            OpenPropManagerView propManagerView = new OpenPropManagerView("PropManager");
+            OpenPropManagerView propManagerView = new OpenPropManagerView("PropManager", propEditController);
             propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
             mvcContext.Views.add(propManagerView);
 
@@ -247,14 +247,6 @@ namespace Medical
         private void saveAll()
         {
             timelineTypeController.EditorController.saveAllCachedResources();
-        }
-
-        static TimelineEditorContext()
-        {
-            PropertiesForm.addFormCreationMethod(typeof(ChangeHandPosition), (property, parentWidget) =>
-            {
-                return new PoseableHandProperties(property, parentWidget);
-            });
         }
     }
 }

@@ -154,7 +154,7 @@ namespace Medical
             timelineTypeController.OpenEditor += (file, timeline) =>
                 {
                     propEditController.removeAllOpenProps();
-                    timelineEditorContext = new TimelineEditorContext(timeline, file, timelineTypeController, propEditController, plugin.EditorController, plugin.UICallback);
+                    timelineEditorContext = new TimelineEditorContext(timeline, file, timelineTypeController, propEditController, plugin.EditorController, plugin.UICallback, plugin.TimelineController);
                     timelineEditorContext.Focus += obj =>
                         {
                             timelineEditorContext = obj;

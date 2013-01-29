@@ -8,14 +8,17 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI
 {
-    class PropTimelineView : MyGUIView
+    public class PropTimelineView : MyGUIView
     {
-        public PropTimelineView(String name)
+        public PropTimelineView(String name, PropEditController propEditController)
             : base(name)
         {
             IsWindow = true;
             ViewLocation = ViewLocations.Top;
+            this.PropEditController = propEditController;
         }
+
+        public PropEditController PropEditController { get; set; }
 
         public PropTimelineView(LoadInfo info)
             :base(info)

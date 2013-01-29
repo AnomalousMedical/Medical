@@ -8,14 +8,17 @@ using Engine.Saving;
 
 namespace Medical.GUI
 {
-    class OpenPropManagerView : MyGUIView
+    public class OpenPropManagerView : MyGUIView
     {
-        public OpenPropManagerView(String name)
+        public OpenPropManagerView(String name, PropEditController propEditController)
             : base(name)
         {
             IsWindow = true;
             ViewLocation = ViewLocations.Floating;
+            this.PropEditController = propEditController;
         }
+
+        public PropEditController PropEditController { get; set; }
 
         public OpenPropManagerView(LoadInfo info)
             :base(info)

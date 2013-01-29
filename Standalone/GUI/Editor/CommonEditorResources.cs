@@ -22,6 +22,13 @@ namespace Medical
                 standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory());
                 standaloneController.ViewHostFactory.addFactory(new DragAndDropFactory());
                 standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory());
+                standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard));
+                standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(standaloneController.Clipboard));
+
+                PropertiesForm.addFormCreationMethod(typeof(ChangeHandPosition), (property, parentWidget) =>
+                {
+                    return new PoseableHandProperties(property, parentWidget);
+                });
             }
         }
     }

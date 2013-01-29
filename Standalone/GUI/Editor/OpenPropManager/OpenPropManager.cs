@@ -15,7 +15,7 @@ namespace Medical.GUI
         private PropEditController propEditController;
 
         public OpenPropManager(PropEditController propEditController, MyGUIViewHost viewHost)
-            :base("Medical.GUI.OpenPropManager.OpenPropManager.layout", viewHost)
+            :base("Medical.GUI.Editor.OpenPropManager.OpenPropManager.layout", viewHost)
         {
             this.propEditController = propEditController;
             propEditController.PropOpened += propEditController_PropOpened;

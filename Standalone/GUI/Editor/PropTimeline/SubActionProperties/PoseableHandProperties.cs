@@ -35,7 +35,7 @@ namespace Medical.GUI
         private PoseableFingerSectionControl thumbProx;
         private PoseableFingerSectionControl thumbDistal;
 
-        public PoseableHandProperties(EditableProperty property, Widget parentWidget, String layoutFile = "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout")
+        public PoseableHandProperties(EditableProperty property, Widget parentWidget, String layoutFile = "Medical.GUI.Editor.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout")
             :base(property, parentWidget, layoutFile)
         {
             widget.ForwardMouseWheelToParent = true;

@@ -30,17 +30,17 @@ namespace Medical.GUI
         private Button fastForwardButton;
         private bool blockSelectionChanges = false;
 
-        public TimelineEditorComponent(MyGUIViewHost viewHost, TimelineController timelineController, EditorController editorController, SaveableClipboard clipboard, EditorPlugin editorPlugin)
-            :base("Medical.GUI.TimelineEditor.TimelineEditorComponent.layout", viewHost)
+        public TimelineEditorComponent(MyGUIViewHost viewHost, TimelineEditorView view, SaveableClipboard clipboard)
+            :base("Medical.GUI.Editor.TimelineEditor.TimelineEditorComponent.layout", viewHost)
         {
             Widget window = this.widget;
             window.RootKeyChangeFocus += new MyGUIEvent(window_RootKeyChangeFocus);
 
             this.clipboard = clipboard;
-            this.editorController = editorController;
-            this.propEditController = editorPlugin.PropEditController;
+            this.editorController = view.EditorController;
+            this.propEditController = view.PropEditController;
 
-            this.timelineController = timelineController;
+            this.timelineController = view.TimelineController;
             timelineController.TimelinePlaybackStarted += timelineController_TimelinePlaybackStarted;
             timelineController.TimelinePlaybackStopped += timelineController_TimelinePlaybackStopped;
             timelineController.TimeTicked += timelineController_TimeTicked;

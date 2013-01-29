@@ -24,7 +24,7 @@ namespace Medical.GUI
         private PropTimelineData propTimelineData = null;
 
         public PropTimeline(SaveableClipboard clipboard, PropEditController propEditController, MyGUIViewHost viewHost)
-            :base("Medical.GUI.PropTimeline.PropTimeline.layout", viewHost)
+            : base("Medical.GUI.Editor.PropTimeline.PropTimeline.layout", viewHost)
         {
             this.clipboard = clipboard;
             this.propEditController = propEditController;
