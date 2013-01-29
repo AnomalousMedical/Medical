@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position="247 241 353 67" layer="Overlapped">
+        <Widget type="Button" skin="ButtonDownSkin" position="335 2 20 18" align="Right Top" name="FileListButton"/>
+    </Widget>
+</MyGUI>

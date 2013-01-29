@@ -13,6 +13,7 @@ using Medical.Editor;
 using Medical;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Lecture.GUI;
 
 namespace Lecture
 {
@@ -98,20 +99,40 @@ namespace Lecture
             htmlDragDrop.IsWindow = true;
             mvcContext.Views.add(htmlDragDrop);
 
-            //EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", "NOT DEFINED", "Editor/Close");
-            //taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
-            //{
-            //    saveAll();
-            //}));
-            //taskbar.addTask(new RunMvcContextActionTask("Save", "Save Rml File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Undo", "Undo", CommonResources.NoIcon, "Edit", "Editor/Undo", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Redo", "Redo", CommonResources.NoIcon, "Edit", "Editor/Redo", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "Edit", "Editor/Cut", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "Edit", "Editor/Copy", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "Edit", "Editor/Paste", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "Edit", "Editor/SelectAll", mvcContext));
-            //taskbar.addTask(new RunMvcContextActionTask("RmlEditor", "Edit Rml", RmlTypeController.Icon, "Edit", "RmlTextEditor/Show", mvcContext));
-            //mvcContext.Views.add(taskbar);
+            SlideTaskbarView taskbar = new SlideTaskbarView("InfoBar", "NOT DEFINED", "Editor/Close");
+            taskbar.addTask(new CallbackTask("Save", "Save", "FileToolstrip/Save", "", 0, true, item =>
+            {
+                saveAll();
+            }));
+            taskbar.addTask(new CallbackTask("Undo", "Undo", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                undoBuffer.undo();
+            }));
+            taskbar.addTask(new CallbackTask("Redo", "Redo", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                undoBuffer.execute();
+            }));
+            taskbar.addTask(new CallbackTask("AddSlide", "Add Slide", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                AddItemDialog.AddItem(editorController.ItemTemplates, editorController.createItem);
+            }));
+            taskbar.addTask(new CallbackTask("RemoveSlide", "Remove Slide", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                editorController.removeSelectedSlides();
+            }));
+            taskbar.addTask(new CallbackTask("Capture", "Capture", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                editorController.capture();
+            }));
+            taskbar.addTask(new CallbackTask("Play", "Play", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                editorController.runSlideshow(slide);
+            }));
+            taskbar.addTask(new CallbackTask("PlayFromBeginning", "Play From Beginning", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                editorController.runSlideshow(0);
+            }));
+            mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("HtmlDragDrop",
                 new RunCommandsAction("Show",
@@ -127,38 +148,10 @@ namespace Lecture
                 setupScene,
                 new RunCommandsAction("Show",
                     new ShowViewCommand("RmlView"),
+                    new ShowViewCommand("InfoBar"),
                     new RunActionCommand("Editor/SetupScene")
-                //,new ShowViewCommand("InfoBar")
                     ),
-                new RunCommandsAction("Close", new CloseAllViewsCommand()),
-                new CallbackAction("Save", context =>
-                    {
-                        saveAll();
-                    }),
-                new CallbackAction("Cut", context =>
-                    {
-                        
-                    }),
-                new CallbackAction("Copy", context =>
-                    {
-                        
-                    }),
-                new CallbackAction("Paste", context =>
-                    {
-                        
-                    }),
-                new CallbackAction("SelectAll", context =>
-                    {
-                        
-                    }),
-                new CallbackAction("Undo", context =>
-                    {
-                        undoBuffer.undo();
-                    }),
-                new CallbackAction("Redo", context =>
-                    {
-                        undoBuffer.execute();
-                    })
+                new RunCommandsAction("Close", new CloseAllViewsCommand())
                 ));
 
             mvcContext.Controllers.add(new MvcController("Common",

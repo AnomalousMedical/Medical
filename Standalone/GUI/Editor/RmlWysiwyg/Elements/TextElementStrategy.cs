@@ -23,7 +23,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             String rml = element.InnerRml;
             if (rml != null)
             {
-                rml = rml.Replace("<br/>", "\n");
+                rml = rml.Replace("<br />", "\n");
             }
             textEditor = new ElementTextEditor(rml);
             attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
@@ -36,7 +36,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = textEditor.Text;
-            element.InnerRml = text.Replace("\n", "<br/>");
+            element.InnerRml = text.Replace("\n", "<br />");
             attributeEditor.applyToElement(element);
             return true;
         }

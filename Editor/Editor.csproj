@@ -128,7 +128,6 @@
     <Compile Include="GUI\EditorTaskbar\EditorTaskbar.cs" />
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarFileButton.cs" />
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarView.cs" />
-    <Compile Include="GUI\EditorTaskbar\RunMvcContextActionTask.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
     <Compile Include="GUI\GenericEditor\ExpandingGenericEditorView.cs" />

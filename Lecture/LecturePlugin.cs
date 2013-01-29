@@ -56,18 +56,19 @@ namespace Lecture
             editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
             slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, editorController);
-            slideshowExplorer = new SlideshowExplorer(slideshowEditController);
-            slideshowExplorer.RunContext = (context) =>
+            slideshowEditController.RunContext = (context) =>
             {
                 standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
                 standaloneController.MvcCore.startRunningContext(context);
             };
+            slideshowExplorer = new SlideshowExplorer(slideshowEditController);
             guiManager.addManagedDialog(slideshowExplorer);
 
             TaskController taskController = standaloneController.TaskController;
             taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Slideshow Editor", CommonResources.NoIcon, TaskMenuCategories.Editor));
 
             CommonEditorResources.initialize(standaloneController);
+            standaloneController.ViewHostFactory.addFactory(new SlideTaskbarFactory());
         }
 
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)

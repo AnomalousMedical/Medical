@@ -21,8 +21,6 @@ namespace Lecture.GUI
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
 
-        public Action<AnomalousMvcContext> RunContext;
-
         //File Menu
         MenuBar menuBar;
         MenuItem newProject;
@@ -74,6 +72,7 @@ namespace Lecture.GUI
             slideEditController.SlideAdded += slideEditController_SlideAdded;
             slideEditController.SlideRemoved += slideEditController_SlideRemoved;
             slideEditController.SlideSelected += slideEditController_SlideSelected;
+            slideEditController.RequestRemoveSelected += removeSelected;
 
             slideImageManager.ThumbUpdating += slideImageManager_ThumbUpdating;
             slideImageManager.ThumbUpdated += slideImageManager_ThumbUpdated;
@@ -238,6 +237,11 @@ namespace Lecture.GUI
 
         void removeButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            removeSelected();
+        }
+
+        private void removeSelected()
+        {
             if (slideshow != null && slideGrid.SelectedItem != null)
             {
                 slideEditController.removeSlides(from item in slideGrid.SelectedItems select (Slide)item.UserObject, (Slide)slideGrid.SelectedItem.UserObject);
@@ -259,13 +263,7 @@ namespace Lecture.GUI
                         startIndex = 0;
                     }
                 }
-                AnomalousMvcContext context = slideshow.createContext(slideEditController.ResourceProvider, startIndex);
-                context.RuntimeName = "Editor.PreviewMvcContext";
-                context.setResourceProvider(slideEditController.ResourceProvider);
-                if (RunContext != null)
-                {
-                    RunContext.Invoke(context);
-                }
+                slideEditController.runSlideshow(startIndex);
             }
         }
 

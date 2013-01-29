@@ -1,5 +1,6 @@
 ﻿using Medical;
 using Medical.Controller;
+using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Lecture
         public event Action SlideshowClosed;
         public event Action<Slide, int> SlideAdded;
         public event Action<Slide> SlideRemoved;
+        public event Action RequestRemoveSelected;
+        public Action<AnomalousMvcContext> RunContext;
 
         public delegate void SelectSlides(Slide primary, IEnumerable<Slide> secondary);
         public event SelectSlides SlideSelected;
@@ -164,6 +167,14 @@ namespace Lecture
             }
 
             public Slide ChangeToSlide { get; set; }
+        }
+
+        public void removeSelectedSlides()
+        {
+            if (RequestRemoveSelected != null)
+            {
+                RequestRemoveSelected.Invoke();
+            }
         }
 
         public void removeSlides(IEnumerable<Slide> slides, Slide primarySelection)
@@ -566,6 +577,22 @@ namespace Lecture
         {
             editorController.saveAllCachedResources();
             slideImageManager.saveThumbnails();
+        }
+
+        public void runSlideshow(int startIndex)
+        {
+            AnomalousMvcContext context = slideshow.createContext(ResourceProvider, startIndex);
+            context.RuntimeName = "Editor.PreviewMvcContext";
+            context.setResourceProvider(ResourceProvider);
+            if (RunContext != null)
+            {
+                RunContext.Invoke(context);
+            }
+        }
+
+        public void runSlideshow(MedicalRmlSlide slide)
+        {
+            runSlideshow(slideshow.indexOf(slide));
         }
 
         private IEnumerable<Guid> projectGuidDirectories()
