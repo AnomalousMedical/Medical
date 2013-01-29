@@ -73,7 +73,7 @@ namespace Medical
                 View view = slide.createView(slideName);
                 mvcContext.Views.add(view);
 
-                MvcController controller = slide.createController(slideName, view.Name);
+                MvcController controller = slide.createController(slideName, view.Name, resourceProvider);
                 mvcContext.Controllers.add(controller);
                 NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");
                 navModel.addNavigationLink(link);

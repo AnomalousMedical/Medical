@@ -5,6 +5,7 @@ using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -30,13 +31,19 @@ namespace Medical
             };
         }
 
-        public MvcController createController(String name, String viewName)
+        public MvcController createController(String name, String viewName, ResourceProvider resourceProvider)
         {
             MvcController controller = new MvcController(name);
             RunCommandsAction showCommand = new RunCommandsAction("Show");
             showCommand.addCommand(new ShowViewCommand(viewName));
+            String timelinePath = Path.Combine(UniqueName, "Timeline.tl");
+            if (resourceProvider.exists(timelinePath))
+            {
+                showCommand.addCommand(new PlayTimelineCommand(timelinePath));
+            }
             controller.Actions.add(showCommand);
             customizeController(controller, showCommand);
+
             return controller;
         }
 
