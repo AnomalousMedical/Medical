@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSX" position="228 118 210 347" layer="Overlapped">
-        <Property key="Caption" value="Project Explorer"/>
+        <Property key="Caption" value="Editor Tools"/>
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 198 26" align="HStretch Top" name="MenuBar"/>

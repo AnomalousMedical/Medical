@@ -109,7 +109,7 @@ namespace Medical
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "ScratchAreaIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.ProjectExplorer", "Project Explorer", "Editor/ProjectExplorerIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.EditorTools", "Editor Tools", "EditorIcons.EditorTools", TaskMenuCategories.Editor));
 
             typeControllerManager = new TypeControllerManager(standaloneController, this);
 
