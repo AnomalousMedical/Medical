@@ -21,23 +21,14 @@ namespace Lecture.GUI
         private String windowTitle;
         private const String windowTitleFormat = "{0} - {1}";
 
+        private Dictionary<MenuItem, Action> menuActions = new Dictionary<MenuItem, Action>();
+
         //File Menu
         MenuBar menuBar;
-        MenuItem newProject;
-        MenuItem openProject;
-        MenuItem closeProject;
-        MenuItem saveAll;
-        MenuItem cleanup;
 
         private Slideshow slideshow;
         private SlideshowEditController slideEditController;
         private SlideImageManager slideImageManager;
-
-        //Buttons
-        Button addButton;
-        Button removeButton;
-        Button playButton;
-        Button captureButton;
 
         private MultiSelectButtonGrid slideGrid;
         private ScrollView scroll;
@@ -58,15 +49,6 @@ namespace Lecture.GUI
             this.slideEditController = slideEditController;
             slideImageManager = slideEditController.SlideImageManager;
 
-            addButton = (Button)window.findWidget("Add");
-            addButton.MouseButtonClick += addButton_MouseButtonClick;
-            removeButton = (Button)window.findWidget("Remove");
-            removeButton.MouseButtonClick += removeButton_MouseButtonClick;
-            playButton = (Button)window.findWidget("Play");
-            playButton.MouseButtonClick += playButton_MouseButtonClick;
-            captureButton = (Button)window.findWidget("Capture");
-            captureButton.MouseButtonClick += captureButton_MouseButtonClick;
-
             slideEditController.SlideshowLoaded += slideEditController_SlideshowLoaded;
             slideEditController.SlideshowClosed += slideEditController_SlideshowClosed;
             slideEditController.SlideAdded += slideEditController_SlideAdded;
@@ -79,6 +61,7 @@ namespace Lecture.GUI
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
+            menuBar.ItemAccept += menuItemAccept;
 
             scroll = (ScrollView)window.findWidget("Scroll");
             slideGrid = new MultiSelectButtonGrid(scroll, new ButtonGridListLayout());
@@ -87,12 +70,25 @@ namespace Lecture.GUI
             //File Menu
             MenuItem fileMenuItem = menuBar.addItem("File", MenuItemType.Popup);
             MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
-            fileMenu.ItemAccept += new MyGUIEvent(fileMenu_ItemAccept);
-            newProject = fileMenu.addItem("New Project");
-            openProject = fileMenu.addItem("Open Project");
-            closeProject = fileMenu.addItem("Close Project");
-            saveAll = fileMenu.addItem("Save");
-            cleanup = fileMenu.addItem("Cleanup");
+            menuActions.Add(fileMenu.addItem("New"), createNewProject);
+            menuActions.Add(fileMenu.addItem("Open"), openProject);
+            menuActions.Add(fileMenu.addItem("Close"), slideEditController.closeProject);
+            menuActions.Add(fileMenu.addItem("Save"), slideEditController.save);
+            menuActions.Add(fileMenu.addItem("Cleanup"), cleanup);
+
+            MenuItem editMenuItem = menuBar.addItem("Edit", MenuItemType.Popup);
+            MenuControl editMenu = menuBar.createItemPopupMenuChild(editMenuItem);
+            menuActions.Add(editMenu.addItem("Undo"), slideEditController.UndoBuffer.undo);
+            menuActions.Add(editMenu.addItem("Redo"), slideEditController.UndoBuffer.execute);
+
+            MenuItem slideMenuItem = menuBar.addItem("Slide", MenuItemType.Popup);
+            MenuControl slideMenu = menuBar.createItemPopupMenuChild(slideMenuItem);
+            menuActions.Add(slideMenu.addItem("Add"), addSlide);
+            menuActions.Add(slideMenu.addItem("Remove"), removeSelected);
+            menuActions.Add(slideMenu.addItem("Capture"), slideEditController.capture);
+            slideMenu.addItem("Sep", MenuItemType.Separator);
+            menuActions.Add(slideMenu.addItem("Present"), play);
+            menuActions.Add(slideMenu.addItem("Present from Beginning"), playFromBeginning);
 
             this.Resized += new EventHandler(ProjectExplorer_Resized);
 
@@ -110,7 +106,7 @@ namespace Lecture.GUI
             base.Dispose();
         }
 
-        void createNewProjectClicked(Widget source, EventArgs e)
+        void createNewProject()
         {
             if (slideEditController.ResourceProvider == null || slideEditController.ResourceProvider.ResourceCache.Count == 0)
             {
@@ -157,7 +153,7 @@ namespace Lecture.GUI
             });
         }
 
-        void openProjectClicked(Widget source, EventArgs e)
+        void openProject()
         {
             if (slideEditController.ResourceProvider == null || slideEditController.ResourceProvider.ResourceCache.Count == 0)
             {
@@ -195,49 +191,30 @@ namespace Lecture.GUI
             slideGrid.resizeAndLayout(scroll.ClientCoord.width);
         }
 
-        void fileMenu_ItemAccept(Widget source, EventArgs e)
+        void cleanup()
         {
-            MenuCtrlAcceptEventArgs menuEventArgs = (MenuCtrlAcceptEventArgs)e;
-            if (menuEventArgs.Item == newProject)
+            MessageBox.show("Cleaning up your slideshow will remove unneeded files, however, your project will be saved and all of your undo history will be lost.\nAre you sure you wish to continue?", "Cleanup", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
             {
-                createNewProjectClicked(source, e);
-            }
-            else if (menuEventArgs.Item == openProject)
-            {
-                openProjectClicked(source, e);
-            }
-            else if (menuEventArgs.Item == saveAll)
-            {
-                slideEditController.save();
-            }
-            else if (menuEventArgs.Item == closeProject)
-            {
-                slideEditController.closeProject();
-            }
-            else if (menuEventArgs.Item == cleanup)
-            {
-                MessageBox.show("Cleaning up your slideshow will remove unneeded files, however, your project will be saved and all of your undo history will be lost.\nAre you sure you wish to continue?", "Cleanup", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+                if (result == MessageBoxStyle.Yes)
                 {
-                    if (result == MessageBoxStyle.Yes)
-                    {
-                        slideEditController.save();
-                        slideEditController.cleanup();
-                    }
-                });
-            }
+                    slideEditController.save();
+                    slideEditController.cleanup();
+                }
+            });
         }
 
-        void addButton_MouseButtonClick(Widget source, EventArgs e)
+        void menuItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs menuEventArgs = (MenuCtrlAcceptEventArgs)e;
+            menuActions[menuEventArgs.Item].Invoke();
+        }
+
+        void addSlide()
         {
             if (slideshow != null)
             {
                 AddItemDialog.AddItem(slideEditController.ItemTemplates, slideEditController.createItem);
             }
-        }
-
-        void removeButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            removeSelected();
         }
 
         private void removeSelected()
@@ -248,7 +225,7 @@ namespace Lecture.GUI
             }
         }
 
-        void playButton_MouseButtonClick(Widget source, EventArgs e)
+        void play()
         {
             if (slideshow != null)
             {
@@ -264,6 +241,14 @@ namespace Lecture.GUI
                     }
                 }
                 slideEditController.runSlideshow(startIndex);
+            }
+        }
+
+        void playFromBeginning()
+        {
+            if (slideshow != null)
+            {
+                slideEditController.runSlideshow(0);
             }
         }
 
@@ -395,11 +380,6 @@ namespace Lecture.GUI
             {
                 item.setImage(null); //Null the image or else the program gets crashy
             }
-        }
-
-        void captureButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            slideEditController.capture();
         }
 
         void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)

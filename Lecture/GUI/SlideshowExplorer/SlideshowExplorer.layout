@@ -5,23 +5,11 @@
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 198 26" align="HStretch Top" name="MenuBar"/>
-        <Widget type="ScrollView" skin="ScrollView" position="0 54 199 260" align="Stretch" name="Scroll">
+        <Widget type="ScrollView" skin="ScrollView" position="0 27 199 287" align="Stretch" name="Scroll">
             <Property key="CanvasSize" value="199 283"/>
             <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="False"/>
             <UserString key="ButtonSkin" value="SlidePreviewButtonGridItem"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="3 30 28 20" name="Add">
-            <Property key="Caption" value="+"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="33 30 28 20" name="Remove">
-            <Property key="Caption" value="-"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="156 30 41 20" name="Play">
-            <Property key="Caption" value="Play"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="80 30 57 20" name="Capture">
-            <Property key="Caption" value="Capture"/>
         </Widget>
     </Widget>
 </MyGUI>

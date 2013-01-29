@@ -74,14 +74,14 @@ namespace Lecture
             DragAndDropView<WysiwygDragDropItem> htmlDragDrop = new DragAndDropView<WysiwygDragDropItem>("HtmlDragDrop",
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
-                new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\"></img>", RmlWysiwygComponent.DefaultImage)),
-                new WysiwygDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"None\">Link</a>"),
-                new WysiwygDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"None\">Button</input>"),
-                new WysiwygDragDropItem("Separator", CommonResources.NoIcon, "<x-separator/>"),
-                new WysiwygDragDropItem("Two Columns", CommonResources.NoIcon, "<div class=\"TwoColumn\"><div class=\"Column\"><p>Column 1 text goes here.</p></div><div class=\"Column\"><p>Column 2 text goes here.</p></div></div>"),
-                new WysiwygDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>", "div"),
-                new WysiwygDragDropItem("Left Image and Paragraph", CommonResources.NoIcon, String.Format("<div class=\"ImageParagraphLeft\"><img src=\"{0}\" /><p>Add paragraph text here.</p></div>", RmlWysiwygComponent.DefaultImage)),
-                new WysiwygDragDropItem("Right Image and Paragraph", CommonResources.NoIcon, String.Format("<div class=\"ImageParagraphRight\"><img src=\"{0}\" /><p>Add paragraph text here.</p></div>", RmlWysiwygComponent.DefaultImage))
+                new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\"></img>", RmlWysiwygComponent.DefaultImage))
+                //new WysiwygDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"None\">Link</a>"),
+                //new WysiwygDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"None\">Button</input>"),
+                //new WysiwygDragDropItem("Separator", CommonResources.NoIcon, "<x-separator/>"),
+                //new WysiwygDragDropItem("Two Columns", CommonResources.NoIcon, "<div class=\"TwoColumn\"><div class=\"Column\"><p>Column 1 text goes here.</p></div><div class=\"Column\"><p>Column 2 text goes here.</p></div></div>"),
+                //new WysiwygDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>", "div"),
+                //new WysiwygDragDropItem("Left Image and Paragraph", CommonResources.NoIcon, String.Format("<div class=\"ImageParagraphLeft\"><img src=\"{0}\" /><p>Add paragraph text here.</p></div>", RmlWysiwygComponent.DefaultImage)),
+                //new WysiwygDragDropItem("Right Image and Paragraph", CommonResources.NoIcon, String.Format("<div class=\"ImageParagraphRight\"><img src=\"{0}\" /><p>Add paragraph text here.</p></div>", RmlWysiwygComponent.DefaultImage))
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
@@ -124,11 +124,11 @@ namespace Lecture
             {
                 editorController.capture();
             }));
-            taskbar.addTask(new CallbackTask("Play", "Play", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("Present", "Present", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
                 editorController.runSlideshow(slide);
             }));
-            taskbar.addTask(new CallbackTask("PlayFromBeginning", "Play From Beginning", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("PresentFromBeginning", "Present From Beginning", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
                 editorController.runSlideshow(0);
             }));
