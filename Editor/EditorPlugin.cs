@@ -117,7 +117,6 @@ namespace Medical
             taskController.addTask(aspectRatioTask);
 
             standaloneController.ViewHostFactory.addFactory(new TimelineComponentFactory(editorTimelineController, editorController, standaloneController.Clipboard, this));
-            standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory(editorUICallback, editorController));
             standaloneController.ViewHostFactory.addFactory(new EditorInfoBarFactory());
             standaloneController.ViewHostFactory.addFactory(new TextEditorComponentFactory());
             standaloneController.ViewHostFactory.addFactory(new PropTimelineFactory(standaloneController.Clipboard, propEditController));

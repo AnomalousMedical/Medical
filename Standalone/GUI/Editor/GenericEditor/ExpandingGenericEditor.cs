@@ -20,11 +20,11 @@ namespace Medical.GUI
         private String name;
         private EditorController editorController;
 
-        public ExpandingGenericEditor(MyGUIViewHost viewHost, ExpandingGenericEditorView view, MedicalUICallback uiCallback, EditorController editorController)
-            : base("Medical.GUI.GenericEditor.ExpandingGenericEditor.layout", viewHost)
+        public ExpandingGenericEditor(MyGUIViewHost viewHost, ExpandingGenericEditorView view)
+            : base("Medical.GUI.Editor.GenericEditor.ExpandingGenericEditor.layout", viewHost)
         {
             this.name = view.Name;
-            this.editorController = editorController;
+            this.editorController = view.EditorController;
 
             EditInterfaceHandler editInterfaceHandler = viewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
@@ -32,7 +32,7 @@ namespace Medical.GUI
                 editInterfaceHandler.setEditInterfaceConsumer(this);
             }
 
-            expandingView = new ScrollingExpandingEditInterfaceViewer((ScrollView)widget.findWidget("Scroller"), uiCallback);
+            expandingView = new ScrollingExpandingEditInterfaceViewer((ScrollView)widget.findWidget("Scroller"), view.EditUICallback);
 
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
 

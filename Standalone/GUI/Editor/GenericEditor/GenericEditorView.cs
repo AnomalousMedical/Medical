@@ -8,17 +8,23 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class GenericEditorView : MyGUIView
+    public class GenericEditorView : MyGUIView
     {
-        public GenericEditorView(String name, EditInterface editInterface, bool horizontalAlignment = false)
+        public GenericEditorView(String name, EditInterface editInterface, MedicalUICallback editUICallback, EditorController editorController, bool horizontalAlignment = false)
             : base(name)
         {
             this.EditInterface = editInterface;
+            this.EditUICallback = editUICallback;
+            this.EditorController = editorController;
             this.HorizontalAlignment = horizontalAlignment;
             this.ViewLocation = Controller.AnomalousMvc.ViewLocations.Right;
         }
 
         public EditInterface EditInterface { get; set; }
+
+        public MedicalUICallback EditUICallback { get; set; }
+
+        public EditorController EditorController { get; set; }
 
         public bool HorizontalAlignment { get; set; }
 

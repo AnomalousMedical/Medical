@@ -21,6 +21,7 @@ namespace Medical
 
                 standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory());
                 standaloneController.ViewHostFactory.addFactory(new DragAndDropFactory());
+                standaloneController.ViewHostFactory.addFactory(new GenericEditorComponentFactory());
             }
         }
     }

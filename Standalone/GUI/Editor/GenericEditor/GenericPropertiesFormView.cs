@@ -9,21 +9,27 @@ using Engine.Attributes;
 
 namespace Medical.GUI
 {
-    public class ExpandingGenericEditorView : MyGUIView
+    public class GenericPropertiesFormView : MyGUIView
     {
-        public ExpandingGenericEditorView(String name, EditInterface editInterface, bool horizontalAlignment = false)
+        public GenericPropertiesFormView(String name, EditInterface editInterface, EditorController editorController, MedicalUICallback editUICallback, bool horizontalAlignment = false)
             : base(name)
         {
             this.EditInterface = editInterface;
             this.HorizontalAlignment = horizontalAlignment;
             this.ViewLocation = Controller.AnomalousMvc.ViewLocations.Right;
+            this.EditorController = editorController;
+            this.EditUICallback = editUICallback;
         }
 
         public EditInterface EditInterface { get; set; }
 
         public bool HorizontalAlignment { get; set; }
 
-        protected ExpandingGenericEditorView(LoadInfo info)
+        public MedicalUICallback EditUICallback { get; set; }
+
+        public EditorController EditorController { get; set; }
+
+        protected GenericPropertiesFormView(LoadInfo info)
             : base(info)
         {
 

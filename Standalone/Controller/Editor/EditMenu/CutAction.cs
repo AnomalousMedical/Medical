@@ -8,9 +8,9 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class CopyAction : ControllerAction
+    public class CutAction : ControllerAction
     {
-        public CopyAction(String name = "Copy", String editMenuManagerName = EditMenuManager.DefaultName)
+        public CutAction(String name = "Cut", String editMenuManagerName = EditMenuManager.DefaultName)
             : base(name)
         {
             EditMenuManagerName = editMenuManagerName;
@@ -24,11 +24,11 @@ namespace Medical.Controller.AnomalousMvc
             EditMenuManager menuManager = context.getModel<EditMenuManager>(EditMenuManagerName);
             if (menuManager != null)
             {
-                menuManager.copy();
+                menuManager.cut();
             }
         }
 
-        protected CopyAction(LoadInfo info)
+        protected CutAction(LoadInfo info)
             :base(info)
         {
 

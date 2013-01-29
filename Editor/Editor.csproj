@@ -100,14 +100,6 @@
     <Compile Include="Controller\MvcEditorContext.cs" />
     <Compile Include="Controller\RcssEditorContext.cs" />
     <Compile Include="Controller\Documents\ProjectDocumentHandler.cs" />
-    <Compile Include="Controller\Mvc\EditInterface\EditInterfaceConsumer.cs" />
-    <Compile Include="Controller\Mvc\EditInterface\EditInterfaceHandler.cs" />
-    <Compile Include="Controller\Mvc\EditMenu\SelectAllAction.cs" />
-    <Compile Include="Controller\Mvc\EditMenu\PasteAction.cs" />
-    <Compile Include="Controller\Mvc\EditMenu\CopyAction.cs" />
-    <Compile Include="Controller\Mvc\EditMenu\CutAction.cs" />
-    <Compile Include="Controller\Mvc\EditMenu\EditMenuManager.cs" />
-    <Compile Include="Controller\Mvc\EditMenu\EditMenuProvider.cs" />
     <Compile Include="Controller\Project\AppProjectTemplate.cs" />
     <Compile Include="Controller\Project\EmptyProjectTemplate.cs" />
     <Compile Include="Controller\RmlEditorContext.cs" />
@@ -130,13 +122,6 @@
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarView.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
-    <Compile Include="GUI\GenericEditor\ExpandingGenericEditorView.cs" />
-    <Compile Include="GUI\GenericEditor\ExpandingGenericEditor.cs" />
-    <Compile Include="GUI\GenericEditor\GenericEditorComponent.cs" />
-    <Compile Include="GUI\GenericEditor\GenericEditorComponentFactory.cs" />
-    <Compile Include="GUI\GenericEditor\GenericEditorView.cs" />
-    <Compile Include="GUI\GenericEditor\GenericPropertiesFormComponent.cs" />
-    <Compile Include="GUI\GenericEditor\GenericPropertiesFormView.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceClipboardContainer.cs" />
@@ -206,9 +191,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbarFileButton.layout" />
-    <EmbeddedResource Include="GUI\GenericEditor\ExpandingGenericEditor.layout" />
-    <EmbeddedResource Include="GUI\GenericEditor\GenericEditorVerticalComponent.layout" />
-    <EmbeddedResource Include="GUI\GenericEditor\GenericEditorComponent.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
@@ -253,6 +235,9 @@
     <EmbeddedResource Include="..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll">
       <Link>Resources\Irony.dll</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\Mvc\EditInterface\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,7 +6,7 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    interface EditInterfaceConsumer
+    public interface EditInterfaceConsumer
     {
         EditInterface CurrentEditInterface { get; set; }
     }

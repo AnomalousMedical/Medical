@@ -10,13 +10,9 @@ namespace Medical.GUI
 {
     class GenericEditorComponentFactory : ViewHostComponentFactory
     {
-        MedicalUICallback uiCallback;
-        EditorController editorController;
-
-        public GenericEditorComponentFactory(MedicalUICallback uiCallback, EditorController editorController)
+        public GenericEditorComponentFactory()
         {
-            this.uiCallback = uiCallback;
-            this.editorController = editorController;
+            
         }
 
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
@@ -24,18 +20,18 @@ namespace Medical.GUI
             if (view is GenericEditorView)
             {
                 GenericEditorView genericEditorView = (GenericEditorView)view;
-                GenericEditorComponent component = new GenericEditorComponent(viewHost, view.Name, uiCallback, editorController, genericEditorView.HorizontalAlignment);
+                GenericEditorComponent component = new GenericEditorComponent(viewHost, genericEditorView, genericEditorView.HorizontalAlignment);
                 component.CurrentEditInterface = genericEditorView.EditInterface;
                 return component;
             }
             if (view is GenericPropertiesFormView)
             {
-                GenericPropertiesFormComponent component = new GenericPropertiesFormComponent(viewHost, (GenericPropertiesFormView)view, uiCallback, editorController);
+                GenericPropertiesFormComponent component = new GenericPropertiesFormComponent(viewHost, (GenericPropertiesFormView)view);
                 return component;
             }
             if (view is ExpandingGenericEditorView)
             {
-                return new ExpandingGenericEditor(viewHost, (ExpandingGenericEditorView)view, uiCallback, editorController);
+                return new ExpandingGenericEditor(viewHost, (ExpandingGenericEditorView)view);
             }
             return null;
         }

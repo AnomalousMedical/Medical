@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine.Editing;
+using Engine.Saving.XMLSaver;
+using System.Xml;
+using System.IO;
+using Engine.Saving;
 using Medical.GUI.AnomalousMvc;
 using Medical.Controller.AnomalousMvc;
-using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class GenericPropertiesFormComponent : LayoutComponent, EditInterfaceConsumer, EditMenuProvider
+    public class GenericEditorComponent : LayoutComponent, EditInterfaceConsumer, EditMenuProvider
     {
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
 
-        private PropertiesForm propertiesForm;
+        private ResizingTable table;
+        private PropertiesTable propTable;
 
         private ObjectEditor objectEditor;
 
@@ -22,20 +27,19 @@ namespace Medical.GUI
 
         private EditorController editorController;
 
-        public GenericPropertiesFormComponent(MyGUIViewHost viewHost, GenericPropertiesFormView genericEditorView, MedicalUICallback uiCallback, EditorController editorController)
-            : base(genericEditorView.HorizontalAlignment ? "Medical.GUI.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
+        public GenericEditorComponent(MyGUIViewHost viewHost, GenericEditorView view, bool horizontalAlignment = true)
+            : base(horizontalAlignment ? "Medical.GUI.Editor.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.Editor.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
         {
-            Widget window = this.widget;
+            this.name = view.Name;
+            this.editorController = view.EditorController;
 
-            this.name = genericEditorView.Name;
-            this.editorController = editorController;
+            tree = new Tree((ScrollView)widget.findWidget("TreeScroller"));
+            editTreeView = new EditInterfaceTreeView(tree, view.EditUICallback);
 
-            tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
-            editTreeView = new EditInterfaceTreeView(tree, uiCallback);
+            table = new ResizingTable((ScrollView)widget.findWidget("TableScroller"));
+            propTable = new PropertiesTable(table, view.EditUICallback);
 
-            propertiesForm = new ScrollablePropertiesForm((ScrollView)window.findWidget("TableScroller"), uiCallback);
-
-            objectEditor = new ObjectEditor(editTreeView, propertiesForm, uiCallback);
+            objectEditor = new ObjectEditor(editTreeView, propTable, view.EditUICallback);
 
             EditInterfaceHandler editInterfaceHandler = viewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
@@ -44,8 +48,6 @@ namespace Medical.GUI
             }
 
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
-
-            CurrentEditInterface = genericEditorView.EditInterface;
         }
 
         public override void Dispose()
@@ -56,7 +58,8 @@ namespace Medical.GUI
                 editInterfaceHandler.setEditInterfaceConsumer(null);
             }
             objectEditor.Dispose();
-            propertiesForm.Dispose();
+            propTable.Dispose();
+            table.Dispose();
             editTreeView.Dispose();
             tree.Dispose();
             base.Dispose();
@@ -78,27 +81,27 @@ namespace Medical.GUI
         {
             base.topLevelResized();
             tree.layout();
-            propertiesForm.layout();
+            table.layout();
         }
 
         public void cut()
         {
-
+            
         }
 
         public void copy()
         {
-
+            
         }
 
         public void paste()
         {
-
+            
         }
 
         public void selectAll()
         {
-
+            
         }
 
         void widget_RootKeyChangeFocus(Widget source, EventArgs e)
@@ -106,11 +109,7 @@ namespace Medical.GUI
             RootFocusEventArgs rfea = (RootFocusEventArgs)e;
             if (rfea.Focus)
             {
-                EditMenuManager editMenuManager = ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName);
-                if (editMenuManager != null)
-                {
-                    editMenuManager.setMenuProvider(this);
-                }
+                ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
             }
         }
     }

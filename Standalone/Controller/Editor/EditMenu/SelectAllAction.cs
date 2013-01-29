@@ -8,7 +8,7 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class SelectAllAction : ControllerAction
+    public class SelectAllAction : ControllerAction
     {
         public SelectAllAction(String name = "SelectAll", String editMenuManagerName = EditMenuManager.DefaultName)
             : base(name)

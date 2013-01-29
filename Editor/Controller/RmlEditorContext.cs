@@ -34,7 +34,7 @@ namespace Medical
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
 
-        public RmlEditorContext(String file, RmlTypeController rmlTypeController, EditorUICallback uiCallback, AnomalousMvcContext editingMvcContext)
+        public RmlEditorContext(String file, RmlTypeController rmlTypeController, AnomalousMvcContext editingMvcContext, EditorController editorController, EditorUICallback uiCallback)
         {
             this.rmlTypeController = rmlTypeController;
             this.currentFile = file;
@@ -242,7 +242,7 @@ namespace Medical
                 {
                     MvcController viewController = editingMvcContext.Controllers[controllerName];
 
-                    GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", viewController.getEditInterface(), true);
+                    GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", viewController.getEditInterface(), editorController, uiCallback, true);
                     genericPropertiesView.ViewLocation = ViewLocations.Left;
                     genericPropertiesView.IsWindow = true;
                     genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcEditor/Close"));
@@ -263,7 +263,7 @@ namespace Medical
                     RmlView view = editingMvcContext.Views[controllerName] as RmlView;
                     if (view != null && view.RmlFile == file)
                     {
-                        GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcView", view.getEditInterface(), true);
+                        GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcView", view.getEditInterface(), editorController, uiCallback, true);
                         genericPropertiesView.ViewLocation = ViewLocations.Left;
                         genericPropertiesView.IsWindow = true;
                         genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcViewEditor/Close"));

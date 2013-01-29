@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    interface EditMenuProvider
+    public interface EditMenuProvider
     {
         void cut();
 

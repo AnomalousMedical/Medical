@@ -35,7 +35,7 @@ namespace Medical
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
             mvcTypeController.OpenEditor += (file, editingMvcContex) =>
             {
-                mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController, plugin.UICallback);
+                mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController, plugin.EditorController, plugin.UICallback);
                 plugin.UICallback.CurrentEditingMvcContext = editingMvcContex;
                 mvcEditorContext.Focused += (obj) =>
                 {
@@ -55,7 +55,7 @@ namespace Medical
             RmlTypeController rmlTypeController = new RmlTypeController(editorController);
             rmlTypeController.OpenEditor += (file) =>
                 {
-                    rmlEditorContext = new RmlEditorContext(file, rmlTypeController, plugin.UICallback, mvcTypeController.CurrentObject);
+                    rmlEditorContext = new RmlEditorContext(file, rmlTypeController, mvcTypeController.CurrentObject, plugin.EditorController, plugin.UICallback);
                     rmlEditorContext.Focus += (obj) =>
                         {
                             rmlEditorContext = obj;
@@ -95,7 +95,7 @@ namespace Medical
             PluginTypeController pluginTypeController = new PluginTypeController(editorController);
             pluginTypeController.OpenEditor += (file, ddPlugin) =>
                 {
-                    pluginEditorContext = new PluginEditorContext(ddPlugin, file, pluginTypeController);
+                    pluginEditorContext = new PluginEditorContext(ddPlugin, file, pluginTypeController, plugin.EditorController, plugin.UICallback);
                     pluginEditorContext.Focus += obj =>
                         {
                             pluginEditorContext = obj;
@@ -154,7 +154,7 @@ namespace Medical
             timelineTypeController.OpenEditor += (file, timeline) =>
                 {
                     propEditController.removeAllOpenProps();
-                    timelineEditorContext = new TimelineEditorContext(timeline, file, timelineTypeController, propEditController);
+                    timelineEditorContext = new TimelineEditorContext(timeline, file, timelineTypeController, propEditController, plugin.EditorController, plugin.UICallback);
                     timelineEditorContext.Focus += obj =>
                         {
                             timelineEditorContext = obj;

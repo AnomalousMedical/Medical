@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class EditMenuManager : MvcModel
+    public class EditMenuManager : MvcModel
     {
         public const String DefaultName = "EditMenuManager";
 

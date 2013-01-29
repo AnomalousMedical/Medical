@@ -26,7 +26,7 @@ namespace Medical
 
         private DDAtlasPlugin plugin;
 
-        public PluginEditorContext(DDAtlasPlugin plugin, String file, PluginTypeController pluginTypeController)
+        public PluginEditorContext(DDAtlasPlugin plugin, String file, PluginTypeController pluginTypeController, EditorController editorController, MedicalUICallback uiCallback)
         {
             this.pluginTypeController = pluginTypeController;
             this.currentFile = file;
@@ -41,7 +41,7 @@ namespace Medical
 
             mvcContext.Models.add(new EditMenuManager());
 
-            GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", plugin.EditInterface, true);
+            GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", plugin.EditInterface, editorController, uiCallback, true);
             genericPropertiesView.ViewLocation = ViewLocations.Left;
             genericPropertiesView.IsWindow = true;
             mvcContext.Views.add(genericPropertiesView);

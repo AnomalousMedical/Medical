@@ -8,7 +8,7 @@ using Engine.Editing;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class PasteAction : ControllerAction
+    public class PasteAction : ControllerAction
     {
         public PasteAction(String name = "Paste", String editMenuManagerName = EditMenuManager.DefaultName)
             : base(name)

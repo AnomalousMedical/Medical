@@ -26,7 +26,7 @@ namespace Medical
 
         private AnomalousMvcContext editingContext;
 
-        public MvcEditorContext(AnomalousMvcContext editingContext, String file, MvcTypeController mvcTypeController, EditorUICallback uiCallback)
+        public MvcEditorContext(AnomalousMvcContext editingContext, String file, MvcTypeController mvcTypeController, EditorController editorController, EditorUICallback uiCallback)
         {
             this.mvcTypeController = mvcTypeController;
             this.currentFile = file;
@@ -41,7 +41,7 @@ namespace Medical
 
             mvcContext.Models.add(new EditMenuManager());
 
-            GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", editingContext.getEditInterface(), true);
+            GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", editingContext.getEditInterface(), editorController, uiCallback, true);
             genericPropertiesView.ViewLocation = ViewLocations.Left;
             genericPropertiesView.IsWindow = true;
             mvcContext.Views.add(genericPropertiesView);

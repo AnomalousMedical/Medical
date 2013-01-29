@@ -125,10 +125,10 @@ namespace Lecture
             {
                 editorController.capture();
             }));
-            //taskbar.addTask(new CallbackTask("EditTimeline", "Edit Timeline", "Lecture.Icon.EditTimeline", "Edit", 0, true, item =>
-            //{
-            //    throw new NotImplementedException();
-            //}));
+            taskbar.addTask(new CallbackTask("EditTimeline", "Edit Timeline", "Lecture.Icon.EditTimeline", "Edit", 0, true, item =>
+            {
+                
+            }));
             taskbar.addTask(new CallbackTask("Present", "Present", "Lecture.Icon.Present", "Edit", 0, true, item =>
             {
                 editorController.runSlideshow(slide);

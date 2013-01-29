@@ -8,7 +8,7 @@ using Engine.Saving;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class EditInterfaceHandler : MvcModel
+    public class EditInterfaceHandler : MvcModel
     {
         public const String DefaultName = "EditInterfaceHandler";
 
