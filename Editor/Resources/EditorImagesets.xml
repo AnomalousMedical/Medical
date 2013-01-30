@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <MyGUI type="List">
-  <List file="Medical.Resources.EditorIcons.xml"/>
   <List file="Medical.Resources.EditorFileIcons.xml"/>
   <List file="Medical.Resources.MvcContextIcons.xml"/>
-  <List file="Medical.Resources.TimelineImages.xml"/>
-  <List file="Medical.Resources.HandImages.xml"/>
   <List file="Medical.Resources.EditorBrandingIcon.xml"/>
   <List file="Medical.Resources.EditorIconsMerge.xml"/>
 </MyGUI>

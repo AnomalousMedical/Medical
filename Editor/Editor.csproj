@@ -168,20 +168,7 @@
     <EmbeddedResource Include="GUI\SaveTimelineDialog\SaveTimelineDialog.layout" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\EditorIcons.xml" />
     <EmbeddedResource Include="Resources\EditorImagesets.xml" />
-    <EmbeddedResource Include="Resources\EditorIcons.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TimelineImages.png" />
-    <EmbeddedResource Include="Resources\TimelineImages.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\LeftHandOutline.png" />
-    <EmbeddedResource Include="Resources\RightHandOutline.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\HandImages.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\EditorBrandingIcon.png" />

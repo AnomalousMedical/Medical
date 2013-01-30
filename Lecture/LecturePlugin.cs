@@ -48,7 +48,7 @@ namespace Lecture
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
-            propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager);
+            propMover = new SimObjectMover("LectureProps", medicalController.PluginManager, medicalController.EventManager);
             medicalController.FixedLoopUpdate += propMover.update;
 
             propEditController = new PropEditController(propMover);
@@ -73,12 +73,12 @@ namespace Lecture
 
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)
         {
-            
+            propMover.sceneLoaded(scene);
         }
 
         public void sceneUnloading(Engine.ObjectManagement.SimScene scene)
         {
-            
+            propMover.sceneUnloading(scene);
         }
 
         public void setMainInterfaceEnabled(bool enabled)

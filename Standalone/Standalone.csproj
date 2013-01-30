@@ -832,6 +832,13 @@
     <EmbeddedResource Include="Resources\MoreEditorIcons.xml" />
     <EmbeddedResource Include="Resources\MoreEditorIcons.png" />
     <EmbeddedResource Include="Resources\ImagePlaceholder.png" />
+    <EmbeddedResource Include="Resources\EditorIcons.png" />
+    <EmbeddedResource Include="Resources\EditorIcons.xml" />
+    <EmbeddedResource Include="Resources\TimelineImages.png" />
+    <EmbeddedResource Include="Resources\TimelineImages.xml" />
+    <EmbeddedResource Include="Resources\LeftHandOutline.png" />
+    <EmbeddedResource Include="Resources\RightHandOutline.png" />
+    <EmbeddedResource Include="Resources\HandImages.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

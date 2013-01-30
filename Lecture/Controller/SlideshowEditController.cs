@@ -84,32 +84,21 @@ namespace Lecture
         public void editSlide(Slide slide)
         {
             bool openedEditContext = false;
-            //This is done like this so we could have multiple slide types besides MedicalRmlSlide
-            if (slide != lastEditSlide && slide is MedicalRmlSlide)
+            if (slide != lastEditSlide)
             {
-                MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
-                {
-                    slideEditorContext.setWysiwygRml(rml, true);
-                });
-                slideEditorContext.Focus += (obj) =>
-                {
-                    slideEditorContext = obj;
-                };
-                slideEditorContext.Blur += obj =>
-                {
-                    medicalSlide.Rml = obj.CurrentText;
-                    if (slideEditorContext == obj)
-                    {
-                        slideEditorContext = null;
-                    }
-                };
-                editorController.runEditorContext(slideEditorContext.MvcContext);
-                openedEditContext = true;
+                openedEditContext = openContextForSlide(slide);
             }
-            else if(slideEditorContext != null)
+            else
             {
-                slideEditorContext.slideNameChanged("Slide " + (slideshow.indexOf(slide) + 1));
+                if (slideEditorContext != null)
+                {
+                    slideEditorContext.slideNameChanged("Slide " + (slideshow.indexOf(slide) + 1));
+                }
+                else
+                {
+                    openContextForSlide(slide); //If the slide context is null the timeline editor is open, switch back to slide editing.
+                    //We ignore the context open result, because we do not care about undo in this situation
+                }
             }
 
             if (openedEditContext)
@@ -151,6 +140,35 @@ namespace Lecture
             }
         }
 
+        private bool openContextForSlide(Slide slide)
+        {
+            bool openedEditContext = false;
+            //This is done like this so we could have multiple slide types besides MedicalRmlSlide
+            if (slide is MedicalRmlSlide)
+            {
+                MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
+                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
+                {
+                    slideEditorContext.setWysiwygRml(rml, true);
+                });
+                slideEditorContext.Focus += (obj) =>
+                {
+                    slideEditorContext = obj;
+                };
+                slideEditorContext.Blur += obj =>
+                {
+                    medicalSlide.Rml = obj.CurrentText;
+                    if (slideEditorContext == obj)
+                    {
+                        slideEditorContext = null;
+                    }
+                };
+                editorController.runEditorContext(slideEditorContext.MvcContext);
+                openedEditContext = true;
+            }
+            return openedEditContext;
+        }
+
         public void editTimeline(Slide slide)
         {
             try
@@ -164,7 +182,7 @@ namespace Lecture
                 timeline = editorController.loadFile<Timeline>(timelineFilePath); //By loading after creating we ensure this is in the cached resources
 
                 propEditController.removeAllOpenProps();
-                timelineEditorContext = new TimelineEditorContext(timeline, timelineFilePath, this, propEditController, editorController, uiCallback, timelineController);
+                timelineEditorContext = new TimelineEditorContext(timeline, slide, String.Format("Slide {0} - Timeline", slideshow.indexOf(slide) + 1), this, propEditController, editorController, uiCallback, timelineController);
                 timelineEditorContext.Focus += obj =>
                 {
                     timelineEditorContext = obj;

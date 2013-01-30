@@ -17,7 +17,10 @@ namespace Medical
             {
                 load = false;
 
+                ResourceManager.Instance.load("Medical.Resources.EditorIcons.xml");
                 ResourceManager.Instance.load("Medical.Resources.MoreEditorIcons.xml");
+                ResourceManager.Instance.load("Medical.Resources.TimelineImages.xml");
+                ResourceManager.Instance.load("Medical.Resources.HandImages.xml");
 
                 standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory());
                 standaloneController.ViewHostFactory.addFactory(new DragAndDropFactory());

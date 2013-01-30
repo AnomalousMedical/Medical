@@ -30,7 +30,6 @@ namespace Lecture
         public event Action<TimelineEditorContext> Focus;
         public event Action<TimelineEditorContext> Blur;
 
-        private String currentFile;
         private Timeline currentTimeline;
 
         private EventContext eventContext;
@@ -38,10 +37,9 @@ namespace Lecture
         private SlideshowEditController slideshowEditController;
         private PropEditController propEditController;
 
-        public TimelineEditorContext(Timeline timeline, String path, SlideshowEditController slideshowEditController, PropEditController propEditController, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
+        public TimelineEditorContext(Timeline timeline, Slide slide, String name, SlideshowEditController slideshowEditController, PropEditController propEditController, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
         {
             this.currentTimeline = timeline;
-            this.currentFile = path;
             this.slideshowEditController = slideshowEditController;
             this.propEditController = propEditController;
 
@@ -75,12 +73,11 @@ namespace Lecture
             movementSequenceEditor.ViewLocation = ViewLocations.Top;
             mvcContext.Views.add(movementSequenceEditor);
 
-            SlideTaskbarView taskbar = new SlideTaskbarView("TimelineInfoBar", currentFile);
-            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
+            SlideTaskbarView taskbar = new SlideTaskbarView("TimelineInfoBar", name);
+            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "FileToolstrip/Save", "", 0, true, item =>
             {
                 saveAll();
             }));
-            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Timeline", "FileToolstrip/Save", "", "TimelineEditor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "", "TimelineEditor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "", "TimelineEditor/Copy", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "", "TimelineEditor/Paste", mvcContext));
@@ -90,6 +87,10 @@ namespace Lecture
             taskbar.addTask(new RunMvcContextActionTask("PropTimeline", "Prop Timeline Editor", "PropEditorIcon", "", "PropTimeline/ShowIfNotOpen", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("PropManager", "Open Prop Manager", "PropManagerIcon", "", "PropManager/ShowIfNotOpen", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", "", "MovementSequenceEditor/ShowIfNotOpen", mvcContext));
+            taskbar.addTask(new CallbackTask("EditSlide", "Edit Slide", "Lecture.Icon.EditSlide", "", 0, true, item =>
+            {
+                slideshowEditController.editSlide(slide);
+            }));
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("TimelineEditor",
@@ -100,10 +101,6 @@ namespace Lecture
                 ),
                 new RunCommandsAction("Close",
                     new CloseAllViewsCommand()),
-                new CallbackAction("Save", context =>
-                    {
-                        //timelineTypeController.saveTimeline(currentTimeline, currentFile);
-                    }),
                 new CutAction(),
                 new CopyAction(),
                 new PasteAction(),
