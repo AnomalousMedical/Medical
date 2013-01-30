@@ -720,6 +720,10 @@ namespace Lecture
             {
                 slideEditorContext.close();
             }
+            if (timelineEditorContext != null)
+            {
+                timelineEditorContext.close();
+            }
             lastEditSlide = null;
             undoBuffer.clear();
 

@@ -180,7 +180,7 @@ namespace Medical
         {
             get
             {
-                if (currentShowPropAction != null)
+                if (currentShowPropAction != null && currentShowPropAction.PropSimObject != null)
                 {
                     return currentShowPropAction.PropSimObject.Translation;
                 }
@@ -210,7 +210,7 @@ namespace Medical
         {
             get
             {
-                if (currentShowPropAction != null)
+                if (currentShowPropAction != null && currentShowPropAction.PropSimObject != null)
                 {
                     return currentShowPropAction.PropSimObject.Rotation;
                 }
