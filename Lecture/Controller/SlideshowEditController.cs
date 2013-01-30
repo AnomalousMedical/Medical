@@ -576,7 +576,7 @@ namespace Lecture
             int actualInsertIndex = index;
             foreach (SlideInfo slideInfo in sortedSlides)
             {
-                if (slideInfo.Index <= index)
+                if (slideInfo.Index <= index && actualInsertIndex > 0)
                 {
                     --actualInsertIndex;
                 }
