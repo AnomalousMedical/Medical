@@ -73,7 +73,7 @@ namespace Medical
             for (int i = 0; section.hasValue("Document" + i); ++i)
             {
                 String doc = normalizePath(section.getValue("Document" + i, ""));
-                if ((File.Exists(doc) || Directory.Exists(doc)) && documentController.canReadFile(doc) && recentDocumentList.IndexOf(doc) == -1)
+                if ((File.Exists(doc) || Directory.Exists(doc)) && recentDocumentList.IndexOf(doc) == -1)
                 {
                     recentDocumentList.Add(doc);
                 }

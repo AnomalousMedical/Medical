@@ -28,12 +28,12 @@ namespace Medical
 
         public string getPrettyName(string filename)
         {
-            return "Editor Project";
+            return "Editor Projects";
         }
 
         public string getIcon(string filename)
         {
-            return "TimelineEditorIcon";
+            return "EditorIcons.EditorTools";
         }
     }
 }

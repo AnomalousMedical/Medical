@@ -17,7 +17,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="StandaloneIcons/VolumeControl">
+  <Resource type="ResourceImageSet" name="StandaloneIcons/UnknownDocument">
     <Group name="Icons" texture="Medical.Resources.StandaloneIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 0"/>
@@ -25,10 +25,18 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="StandaloneIcons/VolumeControlOff">
+  <Resource type="ResourceImageSet" name="StandaloneIcons/VolumeControl">
     <Group name="Icons" texture="Medical.Resources.StandaloneIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="96 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="StandaloneIcons/VolumeControlOff">
+    <Group name="Icons" texture="Medical.Resources.StandaloneIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 0"/>
       </Index>
     </Group>
   </Resource>

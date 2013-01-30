@@ -72,7 +72,7 @@ namespace Medical
                     return handler.getPrettyName(filename);
                 }
             }
-            return Path.GetExtension(filename);
+            return "Unknown";
         }
 
         public String getFileTypeIcon(String filename)
@@ -84,7 +84,7 @@ namespace Medical
                     return handler.getIcon(filename);
                 }
             }
-            return "";
+            return "StandaloneIcons/UnknownDocument";
         }
 
         /// <summary>

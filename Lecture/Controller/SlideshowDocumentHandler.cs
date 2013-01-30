@@ -29,7 +29,7 @@ namespace Lecture
 
         public string getPrettyName(string filename)
         {
-            return "Slideshow";
+            return "Smart Lectures";
         }
 
         public string getIcon(string filename)
