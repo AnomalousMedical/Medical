@@ -23,14 +23,20 @@ namespace Medical
             id = Guid.NewGuid().ToString("D");
         }
 
-        public View createView(String name)
+        public View createView(String name, bool allowPrevious, bool allowNext)
         {
             RawRmlView view = new RawRmlView(name)
             {
                 Rml = this.Rml
             };
-            view.Buttons.add(new ButtonDefinition("Previous", "NavigationBug/Previous"));
-            view.Buttons.add(new ButtonDefinition("Next", "NavigationBug/Next"));
+            if (allowPrevious)
+            {
+                view.Buttons.add(new ButtonDefinition("Previous", "NavigationBug/Previous"));
+            }
+            if (allowNext)
+            {
+                view.Buttons.add(new ButtonDefinition("Next", "NavigationBug/Next"));
+            }
             view.Buttons.add(new CloseButtonDefinition("Close", "Common/Close"));
             return view;
         }

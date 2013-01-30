@@ -9,7 +9,7 @@ namespace Medical
 {
     public interface Slide : Saveable
     {
-        View createView(String name);
+        View createView(String name, bool allowPrevious, bool allowNext);
 
         MvcController createController(String name, String viewName, ResourceProvider resourceProvider);
 

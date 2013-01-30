@@ -725,7 +725,7 @@ namespace Lecture
 
             if (editorController.ResourceProvider != null)
             {
-                //Try to open a default mvc context
+                //Try to open a default slideshow
                 String file = "Slides.show";
                 if (editorController.ResourceProvider.exists(file))
                 {
@@ -754,6 +754,13 @@ namespace Lecture
             if (SlideshowLoaded != null)
             {
                 SlideshowLoaded.Invoke(slideshow);
+            }
+            if (slideshow.Count > 0)
+            {
+                if (SlideSelected != null)
+                {
+                    SlideSelected(slideshow.get(0), IEnumerableUtil<Slide>.EmptyIterator);
+                }
             }
         }
 

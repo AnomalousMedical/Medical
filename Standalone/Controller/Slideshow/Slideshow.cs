@@ -67,11 +67,13 @@ namespace Medical
             }
             NavigationModel navModel = (NavigationModel)mvcContext.Models[SlideshowProps.BaseContextProperties.NavigationModel];
             int i = 0;
+            int lastSlideIndex = slides.Count - 1;
             foreach(Slide slide in slides)
             {
-                String slideName = "Slide" + i++;
-                View view = slide.createView(slideName);
+                String slideName = "Slide" + i;
+                View view = slide.createView(slideName, i != 0, i != lastSlideIndex);
                 mvcContext.Views.add(view);
+                ++i;
 
                 MvcController controller = slide.createController(slideName, view.Name, resourceProvider);
                 mvcContext.Controllers.add(controller);
