@@ -25,10 +25,14 @@ namespace Medical
 
         public View createView(String name)
         {
-            return new RawRmlView(name)
+            RawRmlView view = new RawRmlView(name)
             {
                 Rml = this.Rml
             };
+            view.Buttons.add(new ButtonDefinition("Previous", "NavigationBug/Previous"));
+            view.Buttons.add(new ButtonDefinition("Next", "NavigationBug/Next"));
+            view.Buttons.add(new CloseButtonDefinition("Close", "Common/Close"));
+            return view;
         }
 
         public MvcController createController(String name, String viewName, ResourceProvider resourceProvider)

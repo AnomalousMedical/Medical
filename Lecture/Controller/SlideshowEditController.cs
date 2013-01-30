@@ -653,6 +653,13 @@ namespace Lecture
                     Slide slide = slideshow.get(model.CurrentIndex);
                     ThreadManager.invoke(new Action(() =>
                         {
+                            if (lastEditSlide == slide)
+                            {
+                                if (SlideSelected != null)
+                                {
+                                    SlideSelected.Invoke(null, IEnumerableUtil<Slide>.EmptyIterator);
+                                }
+                            }
                             if (SlideSelected != null)
                             {
                                 SlideSelected.Invoke(slide, IEnumerableUtil<Slide>.EmptyIterator);
