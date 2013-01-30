@@ -766,6 +766,10 @@ namespace Lecture
                     SlideSelected(slideshow.get(0), IEnumerableUtil<Slide>.EmptyIterator);
                 }
             }
+            else
+            {
+                medicalSlideTemplate.createItem("", editorController);
+            }
         }
 
         public void capture()

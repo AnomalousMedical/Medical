@@ -65,7 +65,7 @@ namespace Lecture
             guiManager.addManagedDialog(slideshowExplorer);
 
             TaskController taskController = standaloneController.TaskController;
-            taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Smart Lecture Editor", CommonResources.NoIcon, TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Smart Lecture Tools", CommonResources.NoIcon, TaskMenuCategories.Editor));
 
             CommonEditorResources.initialize(standaloneController);
             standaloneController.ViewHostFactory.addFactory(new SlideTaskbarFactory());
