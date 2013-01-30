@@ -86,7 +86,7 @@ namespace Lecture
             bool openedEditContext = false;
             if (slide != lastEditSlide)
             {
-                openedEditContext = openContextForSlide(slide);
+                openedEditContext = openEditorContextForSlide(slide);
             }
             else
             {
@@ -96,7 +96,7 @@ namespace Lecture
                 }
                 else
                 {
-                    openContextForSlide(slide); //If the slide context is null the timeline editor is open, switch back to slide editing.
+                    openEditorContextForSlide(slide); //If the slide context is null the timeline editor is open, switch back to slide editing.
                     //We ignore the context open result, because we do not care about undo in this situation
                 }
             }
@@ -140,7 +140,7 @@ namespace Lecture
             }
         }
 
-        private bool openContextForSlide(Slide slide)
+        private bool openEditorContextForSlide(Slide slide)
         {
             bool openedEditContext = false;
             //This is done like this so we could have multiple slide types besides MedicalRmlSlide
@@ -644,8 +644,22 @@ namespace Lecture
         public void runSlideshow(int startIndex)
         {
             AnomalousMvcContext context = slideshow.createContext(ResourceProvider, startIndex);
-            context.RuntimeName = "Editor.PreviewMvcContext";
+            context.RuntimeName = editorController.EditorContextRuntimeName;
             context.setResourceProvider(ResourceProvider);
+            context.BlurAction = "Common/Blur";
+            CallbackAction blurAction = new CallbackAction("Blur", blurContext =>
+                {
+                    NavigationModel model = blurContext.getModel<NavigationModel>(Medical.SlideshowProps.BaseContextProperties.NavigationModel);
+                    Slide slide = slideshow.get(model.CurrentIndex);
+                    ThreadManager.invoke(new Action(() =>
+                        {
+                            if (SlideSelected != null)
+                            {
+                                SlideSelected.Invoke(slide, IEnumerableUtil<Slide>.EmptyIterator);
+                            }
+                        }));
+                });
+            context.Controllers["Common"].Actions.add(blurAction);
             if (RunContext != null)
             {
                 RunContext.Invoke(context);

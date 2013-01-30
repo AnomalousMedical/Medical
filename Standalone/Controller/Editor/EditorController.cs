@@ -45,6 +45,7 @@ namespace Medical
         {
             this.timelineController = timelineController;
             this.standaloneController = standaloneController;
+            EditorContextRuntimeName = "Editor.CurrentEditor";
         }
 
         public void Dispose()
@@ -253,10 +254,12 @@ namespace Medical
             }
         }
 
+        public String EditorContextRuntimeName { get; set; }
+
         public void runEditorContext(AnomalousMvcContext mvcContext)
         {
             mvcContext.setResourceProvider(resourceProvider);
-            mvcContext.RuntimeName = "Editor.CurrentEditor";
+            mvcContext.RuntimeName = EditorContextRuntimeName;
             standaloneController.MvcCore.startRunningContext(mvcContext);
         }
 
