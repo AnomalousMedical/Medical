@@ -8,6 +8,7 @@ using Engine.Saving.XMLSaver;
 using System.Xml;
 using MyGUIPlugin;
 using Logging;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -40,6 +41,7 @@ namespace Medical
             if (Directory.Exists(parentPath))
             {
                 fileWatcher = new FileSystemWatcher(parentPath);
+                fileWatcher.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
                 fileWatcher.IncludeSubdirectories = true;
                 fileWatcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite;
                 fileWatcher.Created += new FileSystemEventHandler(fileWatcher_Created);
@@ -49,6 +51,7 @@ namespace Medical
                 fileWatcher.EnableRaisingEvents = true;
 
                 directoryWatcher = new FileSystemWatcher(parentPath);
+                directoryWatcher.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
                 directoryWatcher.IncludeSubdirectories = true;
                 directoryWatcher.NotifyFilter = NotifyFilters.DirectoryName | NotifyFilters.LastWrite;
                 directoryWatcher.Created += new FileSystemEventHandler(directoryWatcher_Created);
