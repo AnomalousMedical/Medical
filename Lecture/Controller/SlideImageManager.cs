@@ -60,39 +60,41 @@ namespace Lecture
             {
                 loadedCallback(slide, id);
             }
-
-            workQueue.enqueue(() =>
-                {
-                    String thumbPath = Path.Combine(slide.UniqueName, Slideshow.SlideThumbName);
-                    try
+            else
+            {
+                workQueue.enqueue(() =>
                     {
-                        if (slideEditController.ResourceProvider.exists(thumbPath))
+                        String thumbPath = Path.Combine(slide.UniqueName, Slideshow.SlideThumbName);
+                        try
                         {
-                            using (Stream stream = slideEditController.ResourceProvider.openFile(thumbPath))
+                            if (slideEditController.ResourceProvider.exists(thumbPath))
                             {
-                                Image thumb = Bitmap.FromStream(stream);
-                                ThreadManager.invoke(new Action(() =>
-                                    {
-                                        try
+                                using (Stream stream = slideEditController.ResourceProvider.openFile(thumbPath))
+                                {
+                                    Image thumb = Bitmap.FromStream(stream);
+                                    ThreadManager.invoke(new Action(() =>
                                         {
-                                            if (!imageAtlas.containsImage(slide.UniqueName))
+                                            try
                                             {
-                                                loadedCallback(slide, imageAtlas.addImage(slide.UniqueName, thumb));
+                                                if (!imageAtlas.containsImage(slide.UniqueName))
+                                                {
+                                                    loadedCallback(slide, imageAtlas.addImage(slide.UniqueName, thumb));
+                                                }
                                             }
-                                        }
-                                        finally
-                                        {
-                                            thumb.Dispose();
-                                        }
-                                    }));
+                                            finally
+                                            {
+                                                thumb.Dispose();
+                                            }
+                                        }));
+                                }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.Log.Error("Could not load thumbnail because of {0} exception.\nReason: {1}", ex.GetType(), ex.Message);
-                    }
-                });
+                        catch (Exception ex)
+                        {
+                            Logging.Log.Error("Could not load thumbnail because of {0} exception.\nReason: {1}", ex.GetType(), ex.Message);
+                        }
+                    });
+            }
         }
 
         /// <summary>
