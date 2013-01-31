@@ -14,7 +14,7 @@ namespace Medical.GUI
 {
     public class RocketWidget : IDisposable
     {
-        private const String RTT_BASE_NAME = "__RocketRTT{0}{1}";
+        private const String RTT_BASE_NAME = "__RocketRTT{0}_{1}";
         private const int MAX_TEXTURE_SIZE_POW2 = 4096;
         private const int MIN_TEXTURE_SIZE_POW2 = 2;
 
@@ -130,6 +130,7 @@ namespace Medical.GUI
             if (texture != null)
             {
                 texture.Dispose();
+                RenderManager.Instance.destroyTexture(textureName);
             }
             if (camera != null)
             {
