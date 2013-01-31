@@ -366,7 +366,12 @@ namespace Medical.GUI
         {
             if (allowAnatomySelectionChanges)
             {
-                AnatomyContextWindow contextWindow = changeSelectedAnatomy(window.Right, anatomyList.SelectedItem.AbsoluteTop);
+                int top = 0;
+                if (anatomyList.SelectedItem != null)
+                {
+                    top = anatomyList.SelectedItem.AbsoluteTop;
+                }
+                AnatomyContextWindow contextWindow = changeSelectedAnatomy(window.Right, top);
                 if (contextWindow != null)
                 {
                     //float x = window.Right;

@@ -53,5 +53,13 @@ namespace Medical.Controller.AnomalousMvc
                 return null;
             }
         }
+
+        public int Count
+        {
+            get
+            {
+                return activeContexts.Count;
+            }
+        }
     }
 }
