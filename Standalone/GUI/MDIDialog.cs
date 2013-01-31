@@ -138,6 +138,11 @@ namespace Medical.GUI
         /// </summary>
         public override void Dispose()
         {
+            window.WindowChangedCoord -= window_WindowChangedCoord;
+            window.RootKeyChangeFocus -= window_RootKeyChangeFocus;
+            window.CaptionWidget.MouseButtonPressed -= window_MouseButtonPressed;
+            window.CaptionWidget.MouseButtonReleased -= window_MouseButtonReleased;
+            window.CaptionWidget.MouseDrag -= window_MouseDrag; //Wont have to override this in mygui 3.2 as it has all multicast delegates
             base.Dispose();
             LayoutManager.Instance.unloadLayout(dialogLayout);
         }

@@ -52,8 +52,8 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.setCoord(0, 0, clientCoord.width, clientCoord.height);
             child.Widget.Align = Align.Stretch;
 
-            Resized += new EventHandler(MDIDialogDecorator_Resized);
-            Closing += new EventHandler<DialogCancelEventArgs>(MDIDialogDecorator_Closing);
+            Resized += MDIDialogDecorator_Resized;
+            Closing += MDIDialogDecorator_Closing;
 
             child.topLevelResized();
             window.Visible = false;
@@ -61,7 +61,10 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void Dispose()
         {
+            Resized -= MDIDialogDecorator_Resized;
+            Closing -= MDIDialogDecorator_Closing;
             child.Dispose();
+            base.Dispose();
         }
 
         public void opening()

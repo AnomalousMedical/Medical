@@ -48,6 +48,10 @@ namespace Medical.GUI
             editInterface.OnForeColorChanged -= editInterface_OnForeColorChanged;
             editInterface.OnIconReferenceChanged -= editInterface_OnIconReferenceChanged;
             editInterface.OnNameChanged -= editInterface_OnNameChanged;
+            foreach (EditInterfaceTreeNode child in Children)
+            {
+                child.Dispose();
+            }
             base.Dispose();
         }
 

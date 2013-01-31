@@ -67,7 +67,16 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            
+            tree.AfterSelect -= tree_AfterSelect;
+            tree.BeforeSelect -= tree_BeforeSelect;
+            tree.NodeMouseReleased -= tree_NodeMouseReleased;
+            tree.NodeMouseDoubleClick -= tree_NodeMouseDoubleClick;
+            tree.NodeMouseClick -= tree_NodeMouseClick;
+
+            if (parentNode != null)
+            {
+                parentNode.Dispose();
+            }
         }
 
         public EditInterface EditInterface
