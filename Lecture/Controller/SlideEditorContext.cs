@@ -261,7 +261,11 @@ namespace Lecture
         {
             get
             {
-                return rmlComponent.CurrentRml;
+                if (rmlComponent != null)
+                {
+                    return rmlComponent.CurrentRml;
+                }
+                return null;
             }
         }
 

@@ -41,6 +41,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            dragItems.Dispose();
             Gui.Instance.destroyWidget(dragIconPreview);
             base.Dispose();
         }
