@@ -529,16 +529,28 @@ namespace Lecture.GUI
             }
         }
 
+        /// <summary>
+        /// This is kind of dumb, basically the SlideshowExplorer does not know if it is 
+        /// being opened from a showMainInterface or because the user clicked it. So we set
+        /// safeToEditSlide to false in the blurred function for playing slideshows, this blocks it
+        /// from trying to open its own editor when the current context is shutting down.
+        /// We set this back to true every time the slide opens. If you have trouble with a context
+        /// loading while another one is open check this little hack first.
+        /// </summary>
+        bool safeToEditSlide = true;
+
         void SlideshowExplorer_Shown(object sender, EventArgs e)
         {
-            if (closeProjectOnClose && slideGrid.SelectedItem != null)
+            if (closeProjectOnClose && safeToEditSlide && slideGrid.SelectedItem != null)
             {
                 slideEditController.editSlide((Slide)slideGrid.SelectedItem.UserObject);
             }
+            safeToEditSlide = true;
         }
 
         void slideEditController_SlideshowContextBlurred(AnomalousMvcContext obj)
         {
+            safeToEditSlide = false;
             closeProjectOnClose = true;
         }
 
