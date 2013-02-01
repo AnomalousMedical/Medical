@@ -102,6 +102,7 @@ namespace Lecture.GUI
             dropLocationPreview.Visible = false;
 
             this.Closed += SlideshowExplorer_Closed;
+            this.Shown += SlideshowExplorer_Shown;
         }
 
         public override void Dispose()
@@ -525,6 +526,14 @@ namespace Lecture.GUI
             if (closeProjectOnClose)
             {
                 slideEditController.closeEditors();
+            }
+        }
+
+        void SlideshowExplorer_Shown(object sender, EventArgs e)
+        {
+            if (closeProjectOnClose && slideGrid.SelectedItem != null)
+            {
+                slideEditController.editSlide((Slide)slideGrid.SelectedItem.UserObject);
             }
         }
 
