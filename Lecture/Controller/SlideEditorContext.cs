@@ -316,9 +316,8 @@ namespace Lecture
                     {
                         g.DrawImage(sceneThumb, slideWidth, 0);
                     }
-
-                    slideEditorController.SlideImageManager.thumbnailUpdated(slide);
                 }
+                slideEditorController.SlideImageManager.thumbnailUpdated(slide);
             }
         }
     }

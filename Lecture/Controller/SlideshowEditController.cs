@@ -830,7 +830,10 @@ namespace Lecture
 
         private void cleanupThumbnail(SlideInfo slideInfo)
         {
-            slideImageManager.removeImage(slideInfo.Slide);
+            if (slideshow.indexOf(slideInfo.Slide) == -1)
+            {
+                slideImageManager.removeImage(slideInfo.Slide);
+            }
         }
     }
 }
