@@ -506,7 +506,7 @@ namespace Lecture
                         }));
                     },
                     new RemoveSlideInfo(slide, index, lastEditSlide),
-                    poppedFrontFunc: cleanupThumbnail
+                    trimmedFunc: cleanupThumbnail
                     ));
                 }
             }
@@ -830,6 +830,13 @@ namespace Lecture
 
         private void cleanupThumbnail(SlideInfo slideInfo)
         {
+            //Double check the slideshow to make sure the slide isn't in use. This was causing
+            //big problems, but the double check fixed it. The root cause was actually that the add
+            //slide undos were removing their thumbnails incorrectly, however, I will leave this guard here
+            //to make this function a bit more robust anyway. Checking the slideshow quick before removing the
+            //thumbnail won't take that long.
+            //
+            //Call it paranoia, we were stumped by this for days
             if (slideshow.indexOf(slideInfo.Slide) == -1)
             {
                 slideImageManager.removeImage(slideInfo.Slide);
