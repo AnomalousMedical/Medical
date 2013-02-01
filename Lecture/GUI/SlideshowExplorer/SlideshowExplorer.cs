@@ -524,7 +524,7 @@ namespace Lecture.GUI
         {
             if (closeProjectOnClose)
             {
-                slideEditController.closeProject();
+                slideEditController.closeEditors();
             }
         }
 

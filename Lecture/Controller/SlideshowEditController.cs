@@ -723,14 +723,7 @@ namespace Lecture
 
         void editorController_ProjectChanged(EditorController editorController, string fullFilePath)
         {
-            if (slideEditorContext != null)
-            {
-                slideEditorContext.close();
-            }
-            if (timelineEditorContext != null)
-            {
-                timelineEditorContext.close();
-            }
+            closeEditors();
             lastEditSlide = null;
             undoBuffer.clear();
 
@@ -813,6 +806,18 @@ namespace Lecture
         internal void openProject(string projectPath, string fullFilePath)
         {
             editorController.openProject(projectPath, fullFilePath);
+        }
+
+        internal void closeEditors()
+        {
+            if (slideEditorContext != null)
+            {
+                slideEditorContext.close();
+            }
+            if (timelineEditorContext != null)
+            {
+                timelineEditorContext.close();
+            }
         }
 
         public IEnumerable<AddItemTemplate> ItemTemplates
