@@ -1,4 +1,5 @@
-﻿using Engine.Editing;
+﻿using Engine.Attributes;
+using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
@@ -15,6 +16,7 @@ namespace Medical
     {
         public const String SlideThumbName = "Thumb.png";
 
+        [DoNotSave]
         private List<Slide> slides = new List<Slide>();
 
         public Slideshow()
