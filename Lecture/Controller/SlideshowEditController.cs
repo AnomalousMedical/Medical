@@ -18,7 +18,8 @@ namespace Lecture
         public event Action<Slide, int> SlideAdded;
         public event Action<Slide> SlideRemoved;
         public event Action RequestRemoveSelected;
-        public Action<AnomalousMvcContext> RunContext;
+        public event Action<AnomalousMvcContext> SlideshowContextStarting;
+        public event Action<AnomalousMvcContext> SlideshowContextBlurred;
 
         public delegate void SelectSlides(Slide primary, IEnumerable<Slide> secondary);
         public event SelectSlides SlideSelected;
@@ -651,6 +652,10 @@ namespace Lecture
                 {
                     NavigationModel model = blurContext.getModel<NavigationModel>(Medical.SlideshowProps.BaseContextProperties.NavigationModel);
                     Slide slide = slideshow.get(model.CurrentIndex);
+                    if (SlideshowContextBlurred != null)
+                    {
+                        SlideshowContextBlurred.Invoke(blurContext);
+                    }
                     ThreadManager.invoke(new Action(() =>
                         {
                             if (lastEditSlide == slide)
@@ -667,10 +672,12 @@ namespace Lecture
                         }));
                 });
             context.Controllers["Common"].Actions.add(blurAction);
-            if (RunContext != null)
+            if (SlideshowContextStarting != null)
             {
-                RunContext.Invoke(context);
+                SlideshowContextStarting.Invoke(context);
             }
+            standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
+            standaloneController.MvcCore.startRunningContext(context);
         }
 
         public void runSlideshow(MedicalRmlSlide slide)

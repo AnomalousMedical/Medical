@@ -42,6 +42,7 @@ namespace Lecture.GUI
         private ButtonGridItem dragHoverItem;
         private ButtonGridItem dragItem;
         private bool dropAfter = false;
+        bool closeProjectOnClose = true;
 
         public SlideshowExplorer(SlideshowEditController slideEditController)
             : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
@@ -55,6 +56,8 @@ namespace Lecture.GUI
             slideEditController.SlideRemoved += slideEditController_SlideRemoved;
             slideEditController.SlideSelected += slideEditController_SlideSelected;
             slideEditController.RequestRemoveSelected += removeSelected;
+            slideEditController.SlideshowContextStarting += slideEditController_SlideshowContextStarting;
+            slideEditController.SlideshowContextBlurred += slideEditController_SlideshowContextBlurred;
 
             slideImageManager.ThumbUpdating += slideImageManager_ThumbUpdating;
             slideImageManager.ThumbUpdated += slideImageManager_ThumbUpdated;
@@ -97,6 +100,8 @@ namespace Lecture.GUI
             dragIconPreview.Visible = false;
             dropLocationPreview = Gui.Instance.createWidgetT("Widget", "2dBorderPanelSkin", 0, 0, 100, 10, Align.Default, "Info", "SlideDropPreview");
             dropLocationPreview.Visible = false;
+
+            this.Closed += SlideshowExplorer_Closed;
         }
 
         public override void Dispose()
@@ -513,6 +518,24 @@ namespace Lecture.GUI
                     yield return (Slide)item.UserObject;
                 }
             }
+        }
+
+        void SlideshowExplorer_Closed(object sender, EventArgs e)
+        {
+            if (closeProjectOnClose)
+            {
+                slideEditController.closeProject();
+            }
+        }
+
+        void slideEditController_SlideshowContextBlurred(AnomalousMvcContext obj)
+        {
+            closeProjectOnClose = true;
+        }
+
+        void slideEditController_SlideshowContextStarting(AnomalousMvcContext obj)
+        {
+            closeProjectOnClose = false;
         }
     }
 }

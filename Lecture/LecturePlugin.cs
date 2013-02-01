@@ -56,11 +56,6 @@ namespace Lecture
             editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
             slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, editorController, editorTimelineController);
-            slideshowEditController.RunContext = (context) =>
-            {
-                standaloneController.TimelineController.setResourceProvider(editorController.ResourceProvider);
-                standaloneController.MvcCore.startRunningContext(context);
-            };
             slideshowExplorer = new SlideshowExplorer(slideshowEditController);
             guiManager.addManagedDialog(slideshowExplorer);
 
