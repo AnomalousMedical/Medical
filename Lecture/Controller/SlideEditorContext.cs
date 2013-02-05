@@ -117,6 +117,10 @@ namespace Lecture
             {
                 slideEditorController.createSlide();
             }));
+            taskbar.addTask(new CallbackTask("DuplicateSlide", "Duplicate Slide", "Lecture.Icon.DuplicateSlide", "Edit", 0, true, item =>
+            {
+                slideEditorController.duplicateSlide(slide);
+            }));
             taskbar.addTask(new CallbackTask("RemoveSlide", "Remove Slide", "Lecture.Icon.RemoveSlide", "Edit", 0, true, item =>
             {
                 editorController.removeSelectedSlides();

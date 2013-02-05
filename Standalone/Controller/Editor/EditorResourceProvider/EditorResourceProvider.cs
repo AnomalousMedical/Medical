@@ -97,6 +97,21 @@ namespace Medical
             }
         }
 
+        public void copy(string from, string to)
+        {
+            String fullFromPath = Path.Combine(parentPath, from);
+            String fullToPath = Path.Combine(parentPath, to);
+            FileAttributes attrs = File.GetAttributes(fullFromPath);
+            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                DirectoryExtensions.Copy(fullFromPath, fullToPath, true);
+            }
+            else
+            {
+                File.Copy(fullFromPath, fullToPath, true);
+            }
+        }
+
         public IEnumerable<String> listFiles(string pattern)
         {
             foreach(String file in Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly))

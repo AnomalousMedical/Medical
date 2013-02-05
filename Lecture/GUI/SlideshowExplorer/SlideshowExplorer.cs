@@ -91,6 +91,7 @@ namespace Lecture.GUI
             MenuItem slideMenuItem = menuBar.addItem("Slide", MenuItemType.Popup);
             MenuControl slideMenu = menuBar.createItemPopupMenuChild(slideMenuItem);
             menuActions.Add(slideMenu.addItem("Add"), addSlide);
+            menuActions.Add(slideMenu.addItem("Duplicate"), duplicateSlide);
             menuActions.Add(slideMenu.addItem("Remove"), removeSelected);
             menuActions.Add(slideMenu.addItem("Capture"), slideEditController.capture);
 
@@ -224,6 +225,14 @@ namespace Lecture.GUI
             if (slideshow != null)
             {
                 slideEditController.createSlide();
+            }
+        }
+
+        void duplicateSlide()
+        {
+            if (slideGrid.SelectedItem != null)
+            {
+                slideEditController.duplicateSlide((Slide)slideGrid.SelectedItem.UserObject);
             }
         }
 

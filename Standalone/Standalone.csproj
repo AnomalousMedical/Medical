@@ -711,6 +711,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Controller\WindowListener.cs" />
+    <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\Node.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />

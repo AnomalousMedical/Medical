@@ -13,6 +13,11 @@ namespace Medical
 
         MvcController createController(String name, String viewName, ResourceProvider resourceProvider);
 
+        /// <summary>
+        /// Make a new unique name for the slide, should only need to be done when duplicating a slide for some reason.
+        /// </summary>
+        void generateNewUniqueName();
+
         String UniqueName { get; }
     }
 }

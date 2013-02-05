@@ -1,4 +1,5 @@
-﻿using Medical;
+﻿using Engine.Saving;
+using Medical;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI;
@@ -819,6 +820,20 @@ namespace Lecture
             {
                 timelineEditorContext.close();
             }
+        }
+
+        public void duplicateSlide(Slide slide)
+        {
+            Slide copied = CopySaver.Default.copy(slide);
+            String oldName = copied.UniqueName;
+            copied.generateNewUniqueName();
+            int index = slideshow.indexOf(slide) + 1;
+            if (index >= slideshow.Count)
+            {
+                index = -1;
+            }
+            editorController.ResourceProvider.copy(oldName, copied.UniqueName);
+            addSlide(copied, index);
         }
 
         public void createSlide()

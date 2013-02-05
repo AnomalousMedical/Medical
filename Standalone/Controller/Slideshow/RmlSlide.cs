@@ -62,6 +62,11 @@ namespace Medical
 
         }
 
+        public void generateNewUniqueName()
+        {
+            id = Guid.NewGuid().ToString("D");
+        }
+
         public String UniqueName
         {
             get
