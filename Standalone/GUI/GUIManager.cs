@@ -327,7 +327,7 @@ namespace Medical.GUI
             {
                 version = new Version("0.0.0.0");
             }
-            if (version > new Version("2.0.0.2818"))
+            if (version > new Version("1.0.0.2818"))
             {
                 dialogManager.loadDialogLayout(configFile);
             }
