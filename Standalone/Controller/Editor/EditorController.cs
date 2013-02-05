@@ -27,6 +27,12 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Called before the active resource provider closes.
+        /// </summary>
+        public event Action<EditorResourceProvider> ResourceProviderClosing;
+        public event Action<EditorResourceProvider> ResourceProviderOpened;
+
         private StandaloneController standaloneController;
         private Dictionary<String, EditorTypeController> typeControllers = new Dictionary<String, EditorTypeController>();
         private EditorResourceProvider resourceProvider;
@@ -50,10 +56,7 @@ namespace Medical
 
         public void Dispose()
         {
-            if (resourceProvider != null)
-            {
-                resourceProvider.Dispose();
-            }
+            closeResourceProvider();
         }
 
         public void addItemTemplate(ProjectItemTemplate itemTemplate)
@@ -291,13 +294,20 @@ namespace Medical
         {
             resourceProvider = new EditorResourceProvider(projectPath);
             timelineController.setResourceProvider(ResourceProvider);
+            if (ResourceProviderOpened != null)
+            {
+                ResourceProviderOpened.Invoke(resourceProvider);
+            }
         }
 
         private void closeResourceProvider()
         {
             if (resourceProvider != null)
             {
-                resourceProvider.Dispose();
+                if (ResourceProviderClosing != null)
+                {
+                    ResourceProviderClosing.Invoke(resourceProvider);
+                }
                 resourceProvider = null;
             }
         }

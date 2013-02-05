@@ -15,13 +15,17 @@ namespace Medical.GUI
         private String currentFile;
         private Button fileListButton;
         private bool allowFileRefresh = true;
+        private EditorFilesystemWatcher filesystemWatcher;
+        private ResourceCache resourceCache;
 
-        public EditorTaskbar(EditorTaskbarView view, MyGUIViewHost viewHost, EditorController editorController)
+        public EditorTaskbar(EditorTaskbarView view, MyGUIViewHost viewHost, EditorController editorController, EditorFilesystemWatcher filesystemWatcher)
             :base("Medical.GUI.EditorTaskbar.EditorTaskbar.layout", viewHost)
         {
             closeAction = view.CloseAction;
             this.editorController = editorController;
             this.currentFile = view.File;
+            this.filesystemWatcher = filesystemWatcher;
+            this.resourceCache = editorController.ResourceProvider.ResourceCache;
 
             fileListButton = (Button)widget.findWidget("FileListButton");
             fileListButton.MouseButtonClick += new MyGUIEvent(fileListButton_MouseButtonClick);
@@ -38,19 +42,16 @@ namespace Medical.GUI
                 left += taskButton.Width + 2;
             }
 
-            editorController.ResourceProvider.ResourceCache.CachedResourceAdded += ResourceCache_CachedResourceAdded;
-            editorController.ResourceProvider.FileRenamed += ResourceProvider_FileRenamed;
-            editorController.ResourceProvider.FileDeleted += ResourceProvider_FileDeleted;
+            resourceCache.CachedResourceAdded += ResourceCache_CachedResourceAdded;
+            filesystemWatcher.FileRenamed += ResourceProvider_FileRenamed;
+            filesystemWatcher.FileDeleted += ResourceProvider_FileDeleted;
         }
 
         public override void Dispose()
         {
-            if (editorController.ResourceProvider != null)
-            {
-                editorController.ResourceProvider.ResourceCache.CachedResourceAdded -= ResourceCache_CachedResourceAdded;
-                editorController.ResourceProvider.FileRenamed -= ResourceProvider_FileRenamed;
-                editorController.ResourceProvider.FileDeleted -= ResourceProvider_FileDeleted;
-            }
+            resourceCache.CachedResourceAdded -= ResourceCache_CachedResourceAdded;
+            filesystemWatcher.FileRenamed -= ResourceProvider_FileRenamed;
+            filesystemWatcher.FileDeleted -= ResourceProvider_FileDeleted;
             clearFileTabs();
             base.Dispose();
         }

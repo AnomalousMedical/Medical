@@ -21,7 +21,7 @@ namespace Medical.GUI
         {
             if (view is EditorTaskbarView)
             {
-                return new EditorTaskbar((EditorTaskbarView)view, viewHost, editorController);
+                return new EditorTaskbar((EditorTaskbarView)view, viewHost, editorController, FilesystemWatcher);
             }
             return null;
         }
@@ -30,5 +30,7 @@ namespace Medical.GUI
         {
             
         }
+
+        public EditorFilesystemWatcher FilesystemWatcher { get; set; }
     }
 }

@@ -30,6 +30,7 @@ namespace Medical
         private EditorUICallback editorUICallback;
         private PropEditController propEditController;
         private TypeControllerManager typeControllerManager;
+        private EditorTaskbarFactory editorTaskbarFactory;
 
         public EditorPlugin()
         {
@@ -98,11 +99,14 @@ namespace Medical
             //UI Helpers
             editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
 
+            typeControllerManager = new TypeControllerManager(standaloneController, this);
+            typeControllerManager.FilesystemWatcherCreated += typeControllerManager_FilesystemWatcherCreated;
+
             //Dialogs
             scratchArea = new ScratchArea(scratchAreaController, editorUICallback);
             guiManager.addManagedDialog(scratchArea);
 
-            projectExplorer = new ProjectExplorer(editorController);
+            projectExplorer = new ProjectExplorer(editorController, typeControllerManager);
             guiManager.addManagedDialog(projectExplorer);
 
             //Tasks Menu
@@ -111,14 +115,13 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "EditorIcons.ScratchAreaIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.EditorTools", "Editor Tools", "EditorIcons.EditorTools", TaskMenuCategories.Editor));
 
-            typeControllerManager = new TypeControllerManager(standaloneController, this);
-
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
 
+            editorTaskbarFactory = new EditorTaskbarFactory(editorController);
             standaloneController.ViewHostFactory.addFactory(new EditorInfoBarFactory());
             standaloneController.ViewHostFactory.addFactory(new TextEditorComponentFactory());
-            standaloneController.ViewHostFactory.addFactory(new EditorTaskbarFactory(editorController));
+            standaloneController.ViewHostFactory.addFactory(editorTaskbarFactory);
             CommonEditorResources.initialize(standaloneController);
 
             editorController.ProjectChanged += editorController_ProjectChanged;
@@ -251,6 +254,11 @@ namespace Medical
         void guiManager_MainGUIShown()
         {
             propEditController.showOpenProps();
+        }
+
+        void typeControllerManager_FilesystemWatcherCreated(EditorFilesystemWatcher obj)
+        {
+            editorTaskbarFactory.FilesystemWatcher = obj;
         }
     }
 }

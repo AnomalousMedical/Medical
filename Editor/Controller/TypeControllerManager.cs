@@ -9,8 +9,11 @@ using Medical.GUI;
 
 namespace Medical
 {
-    class TypeControllerManager
+    public class TypeControllerManager
     {
+        public event Action<EditorFilesystemWatcher> FilesystemWatcherCreated;
+        public event Action<EditorFilesystemWatcher> FilesystemWatcherDisposing;
+
         //Editor contexts
         private MvcEditorContext mvcEditorContext;
         private MovementSequenceEditorContext movementSequenceEditorContext;
@@ -23,6 +26,7 @@ namespace Medical
 
         private PropEditController propEditController;
         private StandaloneController standaloneController;
+        private EditorFilesystemWatcher editorFilesystemWatcher;
 
         public TypeControllerManager(StandaloneController standaloneController, EditorPlugin plugin)
         {
@@ -30,6 +34,8 @@ namespace Medical
             propEditController = plugin.PropEditController;
             EditorController editorController = plugin.EditorController;
             editorController.ProjectChanged += editorController_ProjectChanged;
+            editorController.ResourceProviderClosing += editorController_ResourceProviderClosing;
+            editorController.ResourceProviderOpened += editorController_ResourceProviderOpened;
 
             //MVC Type Controller
             MvcTypeController mvcTypeController = new MvcTypeController(editorController);
@@ -257,6 +263,24 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        void editorController_ResourceProviderOpened(EditorResourceProvider obj)
+        {
+            editorFilesystemWatcher = new EditorFilesystemWatcher(obj);
+            if (FilesystemWatcherCreated != null)
+            {
+                FilesystemWatcherCreated.Invoke(editorFilesystemWatcher);
+            }
+        }
+
+        void editorController_ResourceProviderClosing(EditorResourceProvider obj)
+        {
+            if (FilesystemWatcherDisposing != null)
+            {
+                FilesystemWatcherDisposing.Invoke(editorFilesystemWatcher);
+            }
+            editorFilesystemWatcher.Dispose();
         }
     }
 }

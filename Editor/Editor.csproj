@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EditorFilesystemWatcher.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\XmlTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\MovementSequenceTypeController.cs" />

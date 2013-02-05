@@ -23,15 +23,19 @@ namespace Medical.GUI
         MenuItem saveAll;
 
         private FileBrowserTree fileBrowser;
+        private TypeControllerManager typeControllerManager;
 
         //Dialogs
         private EditorController editorController;
 
-        public ProjectExplorer(EditorController editorController)
+        public ProjectExplorer(EditorController editorController, TypeControllerManager typeControllerManager)
             :base("Medical.GUI.ProjectExplorer.ProjectExplorer.layout")
         {
             this.editorController = editorController;
             editorController.ProjectChanged += editorController_ProjectChanged;
+            this.typeControllerManager = typeControllerManager;
+            typeControllerManager.FilesystemWatcherCreated += typeControllerManager_FilesystemWatcherCreated;
+            typeControllerManager.FilesystemWatcherDisposing += typeControllerManager_FilesystemWatcherDisposing;
 
             windowTitle = window.Caption;
             menuBar = window.findWidget("MenuBar") as MenuBar;
@@ -54,6 +58,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            editorController.ProjectChanged -= editorController_ProjectChanged;
             fileBrowser.Dispose();
             base.Dispose();
         }
@@ -146,9 +151,6 @@ namespace Medical.GUI
             if (editorController.ResourceProvider != null)
             {
                 window.Caption = String.Format(windowTitleFormat, windowTitle, editorController.ResourceProvider.BackingLocation);
-                editorController.ResourceProvider.FileCreated += new ResourceProviderFileEvent(ResourceProvider_FileCreated);
-                editorController.ResourceProvider.FileDeleted += new ResourceProviderFileDeletedEvent(ResourceProvider_FileDeleted);
-                editorController.ResourceProvider.FileRenamed += new ResourceProviderFileRenamedEvent(ResourceProvider_FileRenamed);
             }
             else
             {
@@ -278,6 +280,20 @@ namespace Medical.GUI
                 }));
             }
             tree.showContextMenu(contextMenu);
+        }
+
+        void typeControllerManager_FilesystemWatcherDisposing(EditorFilesystemWatcher obj)
+        {
+            obj.FileCreated -= ResourceProvider_FileCreated;
+            obj.FileDeleted -= ResourceProvider_FileDeleted;
+            obj.FileRenamed -= ResourceProvider_FileRenamed;
+        }
+
+        void typeControllerManager_FilesystemWatcherCreated(EditorFilesystemWatcher obj)
+        {
+            obj.FileCreated += ResourceProvider_FileCreated;
+            obj.FileDeleted += ResourceProvider_FileDeleted;
+            obj.FileRenamed += ResourceProvider_FileRenamed;
         }
     }
 }
