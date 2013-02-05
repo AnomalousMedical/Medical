@@ -115,7 +115,7 @@ namespace Lecture
             }));
             taskbar.addTask(new CallbackTask("AddSlide", "Add Slide", "Lecture.Icon.AddSlide", "Edit", 0, true, item =>
             {
-                AddItemDialog.AddItem(editorController.ItemTemplates, editorController.createItem);
+                slideEditorController.createSlide();
             }));
             taskbar.addTask(new CallbackTask("RemoveSlide", "Remove Slide", "Lecture.Icon.RemoveSlide", "Edit", 0, true, item =>
             {

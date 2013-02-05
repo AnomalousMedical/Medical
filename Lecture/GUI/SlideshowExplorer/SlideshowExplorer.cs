@@ -223,7 +223,7 @@ namespace Lecture.GUI
         {
             if (slideshow != null)
             {
-                AddItemDialog.AddItem(slideEditController.ItemTemplates, slideEditController.createItem);
+                slideEditController.createSlide();
             }
         }
 

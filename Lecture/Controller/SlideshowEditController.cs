@@ -1,6 +1,7 @@
 ﻿using Medical;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
+using Medical.GUI;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -820,25 +821,24 @@ namespace Lecture
             }
         }
 
-        public IEnumerable<AddItemTemplate> ItemTemplates
+        public void createSlide()
         {
-            get
-            {
-                return editorController.ItemTemplates;
-            }
+            //Commented code will bring up the template dialog
+            //AddItemDialog.AddItem(editorController.ItemTemplates, createItem);
+            medicalSlideTemplate.createItem("", editorController);
         }
 
-        public void createItem(AddItemTemplate itemTemplate)
-        {
-            try
-            {
-                ((ProjectItemTemplate)itemTemplate).createItem("", editorController);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-            }
-        }
+        //private void createItem(AddItemTemplate itemTemplate)
+        //{
+        //    try
+        //    {
+        //        ((ProjectItemTemplate)itemTemplate).createItem("", editorController);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+        //    }
+        //}
 
         private void cleanupThumbnail(SlideInfo slideInfo)
         {
