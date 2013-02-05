@@ -181,9 +181,12 @@ namespace Medical.GUI
 
         void removeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            MovementKeyframeData data = timelineView.CurrentData as MovementKeyframeData;
-            timelineView.removeData(data);
-            movementSequence.deleteState(data.KeyFrame);
+            if (movementSequence != null)
+            {
+                MovementKeyframeData data = timelineView.CurrentData as MovementKeyframeData;
+                timelineView.removeData(data);
+                movementSequence.deleteState(data.KeyFrame);
+            }
         }
 
         private void deleteSelectedActions()
@@ -234,11 +237,14 @@ namespace Medical.GUI
 
         void trackFilter_AddTrackItem(string name)
         {
-            MovementSequenceState state = new MovementSequenceState();
-            state.captureState();
-            state.StartTime = timelineView.MarkerTime;
-            movementSequence.addState(state);
-            addStateToTimeline(state);
+            if (movementSequence != null)
+            {
+                MovementSequenceState state = new MovementSequenceState();
+                state.captureState();
+                state.StartTime = timelineView.MarkerTime;
+                movementSequence.addState(state);
+                addStateToTimeline(state);
+            }
         }
 
         private void synchronizeDuration(object sender, float duration)
