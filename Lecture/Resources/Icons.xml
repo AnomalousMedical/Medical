@@ -41,7 +41,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.Icon.PresetBeginning">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.PresentBeginning">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="160 0"/>

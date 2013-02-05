@@ -133,7 +133,7 @@ namespace Lecture
             {
                 editorController.runSlideshow(slide);
             }));
-            taskbar.addTask(new CallbackTask("PresentFromBeginning", "Present From Beginning", "Lecture.Icon.PresetBeginning", "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("PresentFromBeginning", "Present From Beginning", "Lecture.Icon.PresentBeginning", "Edit", 0, true, item =>
             {
                 editorController.runSlideshow(0);
             }));
