@@ -839,6 +839,8 @@
     <EmbeddedResource Include="Resources\LeftHandOutline.png" />
     <EmbeddedResource Include="Resources\RightHandOutline.png" />
     <EmbeddedResource Include="Resources\HandImages.xml" />
+    <EmbeddedResource Include="Resources\RmlWysiwygIcons.png" />
+    <EmbeddedResource Include="Resources\RmlWysiwygIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

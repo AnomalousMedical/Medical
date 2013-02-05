@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelSkin" position="96 60 385 368" layer="Overlapped">
-        <Widget type="Button" skin="Button" position="2 2 27 23" name="Up">
+        <Widget type="Button" skin="ImageButton" position="2 2 27 23" name="Up">
             <Property key="Caption" value="Up"/>
+            <Property key="ImageResource" value="Medical.Icon.RmlWysiwyg.MoveUp"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="30 2 27 23" name="Down">
+        <Widget type="Button" skin="ImageButton" position="30 2 27 23" name="Down">
             <Property key="Caption" value="Dn"/>
+            <Property key="ImageResource" value="Medical.Icon.RmlWysiwyg.MoveDown"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="58 2 27 23" name="Delete">
+        <Widget type="Button" skin="ImageButton" position="58 2 27 23" name="Delete">
             <Property key="Caption" value="Del"/>
+            <Property key="ImageResource" value="Medical.Icon.RmlWysiwyg.Delete"/>
         </Widget>
         <Widget type="TabControl" skin="TabControl" position="0 27 385 341" align="Stretch" name="Tabs"/>
     </Widget>

@@ -21,6 +21,7 @@ namespace Medical
                 ResourceManager.Instance.load("Medical.Resources.MoreEditorIcons.xml");
                 ResourceManager.Instance.load("Medical.Resources.TimelineImages.xml");
                 ResourceManager.Instance.load("Medical.Resources.HandImages.xml");
+                ResourceManager.Instance.load("Medical.Resources.RmlWysiwygIcons.xml");
 
                 standaloneController.ViewHostFactory.addFactory(new RmlWysiwygComponentFactory());
                 standaloneController.ViewHostFactory.addFactory(new DragAndDropFactory());
