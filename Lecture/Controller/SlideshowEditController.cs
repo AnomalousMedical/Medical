@@ -825,7 +825,14 @@ namespace Lecture
         {
             //Commented code will bring up the template dialog
             //AddItemDialog.AddItem(editorController.ItemTemplates, createItem);
-            medicalSlideTemplate.createItem("", editorController);
+            try
+            {
+                medicalSlideTemplate.createItem("", editorController);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error creating slide.\n{0}", ex.Message), "Error Creating Slide", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         //private void createItem(AddItemTemplate itemTemplate)

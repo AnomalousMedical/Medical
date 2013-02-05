@@ -11,9 +11,9 @@ namespace Medical.GUI
 {
     public class NewProjectDialog : InputBrowserWindow<ProjectTemplate>
     {
-        public static void ShowDialog(Browser browse, Action<ProjectTemplate, String> resultCallback)
+        public static NewProjectDialog ShowDialog(Browser browse, Action<ProjectTemplate, String> resultCallback)
         {
-            NewProjectDialog projectDialog = new NewProjectDialog();
+            NewProjectDialog projectDialog = new NewProjectDialog(browse.Prompt);
             projectDialog.setBrowser(browse);
             projectDialog.Closing += (sender, e) =>
             {
@@ -31,13 +31,15 @@ namespace Medical.GUI
             projectDialog.center();
             projectDialog.ensureVisible();
             projectDialog.open(true);
+            return projectDialog;
         }
 
         private EditBox projectLocation;
 
-        protected NewProjectDialog()
+        protected NewProjectDialog(String caption)
             :base("Create Project", "", "Medical.GUI.Editor.NewProjectDialog.NewProjectDialog.layout")
         {
+            window.Caption = caption;
             projectLocation = window.findWidget("ProjectLocation") as EditBox;
             projectLocation.Caption = EditorConfig.ProjectDirectory;
             if (!Directory.Exists(projectLocation.Caption))

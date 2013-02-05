@@ -136,7 +136,7 @@ namespace Lecture.GUI
         {
             slideEditController.stopPlayingTimelines();
 
-            Browser browse = new Browser("Slideshows", "Create Slideshow");
+            Browser browse = new Browser("Smart Lectures", "Create Smart Lecture");
             BrowserNode defaultNode = new BrowserNode("Slideshow", new SlideshowProjectTemplate());
             browse.addNode("", null, defaultNode);
             browse.DefaultSelection = defaultNode;
