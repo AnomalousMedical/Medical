@@ -102,27 +102,23 @@ namespace Lecture.GUI
                 using (Stream imageStream = resourceProvider.openFile(filename))
                 {
                     Image image = Bitmap.FromStream(imageStream);
-                    int width = 34;
-                    int height = 10;
-                    float aspect = 4f / 3f;
+
                     int left = 0;
                     int top = 0;
-                    if (image.Width != 0 && image.Width > image.Height)
+                    int width = 8;
+                    float aspect = (float)image.Height / image.Width;
+                    int height = (int)((float)imagePanel.Width * aspect);
+                    if (height < imagePanel.Height)
                     {
-                        aspect = (float)image.Height / image.Width;
-                        height = (int)((float)imagePanel.Width * aspect);
-                        if (height < imagePanel.Height)
-                        {
-                            width = imagePanel.Width;
-                            top = (imagePanel.Height - height) / 2;
-                        }
-                        else
-                        {
-                            aspect = (float)image.Width / image.Height;
-                            height = imagePanel.Height;
-                            width = (int)((float)imagePanel.Height * aspect);
-                            left = (imagePanel.Width - width) / 2;
-                        }
+                        width = imagePanel.Width;
+                        top = (imagePanel.Height - height) / 2;
+                    }
+                    else
+                    {
+                        aspect = (float)image.Width / image.Height;
+                        height = imagePanel.Height;
+                        width = (int)((float)imagePanel.Height * aspect);
+                        left = (imagePanel.Width - width) / 2;
                     }
                     ThreadManager.invoke(() =>
                     {
