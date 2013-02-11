@@ -42,7 +42,6 @@ namespace Lecture.GUI
         private ButtonGridItem dragHoverItem;
         private ButtonGridItem dragItem;
         private bool dropAfter = false;
-        bool closeProjectOnClose = true;
 
         public SlideshowExplorer(SlideshowEditController slideEditController)
             : base("Lecture.GUI.SlideshowExplorer.SlideshowExplorer.layout")
@@ -56,8 +55,6 @@ namespace Lecture.GUI
             slideEditController.SlideRemoved += slideEditController_SlideRemoved;
             slideEditController.SlideSelected += slideEditController_SlideSelected;
             slideEditController.RequestRemoveSelected += removeSelected;
-            slideEditController.SlideshowContextStarting += slideEditController_SlideshowContextStarting;
-            slideEditController.SlideshowContextBlurred += slideEditController_SlideshowContextBlurred;
 
             slideImageManager.ThumbUpdating += slideImageManager_ThumbUpdating;
             slideImageManager.ThumbUpdated += slideImageManager_ThumbUpdated;
@@ -102,8 +99,7 @@ namespace Lecture.GUI
             dropLocationPreview = Gui.Instance.createWidgetT("Widget", "2dBorderPanelSkin", 0, 0, 100, 10, Align.Default, "Info", "SlideDropPreview");
             dropLocationPreview.Visible = false;
 
-            this.Closed += SlideshowExplorer_Closed;
-            this.Shown += SlideshowExplorer_Shown;
+            window.WindowButtonPressed += window_WindowButtonPressed;
         }
 
         public override void Dispose()
@@ -530,42 +526,9 @@ namespace Lecture.GUI
             }
         }
 
-        void SlideshowExplorer_Closed(object sender, EventArgs e)
+        void window_WindowButtonPressed(Widget source, EventArgs e)
         {
-            if (closeProjectOnClose)
-            {
-                slideEditController.closeEditors();
-            }
-        }
-
-        /// <summary>
-        /// This is kind of dumb, basically the SlideshowExplorer does not know if it is 
-        /// being opened from a showMainInterface or because the user clicked it. So we set
-        /// safeToEditSlide to false in the blurred function for playing slideshows, this blocks it
-        /// from trying to open its own editor when the current context is shutting down.
-        /// We set this back to true every time the slide opens. If you have trouble with a context
-        /// loading while another one is open check this little hack first.
-        /// </summary>
-        bool safeToEditSlide = true;
-
-        void SlideshowExplorer_Shown(object sender, EventArgs e)
-        {
-            if (closeProjectOnClose && safeToEditSlide && slideGrid.SelectedItem != null)
-            {
-                slideEditController.editSlide((Slide)slideGrid.SelectedItem.UserObject);
-            }
-            safeToEditSlide = true;
-        }
-
-        void slideEditController_SlideshowContextBlurred(AnomalousMvcContext obj)
-        {
-            safeToEditSlide = false;
-            closeProjectOnClose = true;
-        }
-
-        void slideEditController_SlideshowContextStarting(AnomalousMvcContext obj)
-        {
-            closeProjectOnClose = false;
+            slideEditController.closeEditors();
         }
     }
 }
