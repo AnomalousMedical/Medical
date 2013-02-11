@@ -10,7 +10,7 @@ using System.Timers;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    class ElementTextEditor : ElementEditorComponent
+    public class ElementTextEditor : ElementEditorComponent
     {
         private const int UPDATE_DELAY = 500;
 

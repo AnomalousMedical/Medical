@@ -19,12 +19,20 @@ namespace Medical.GUI
         [DoNotSave]
         private UndoRedoBuffer undoBuffer;
 
+        [DoNotSave]
+        private LinkedList<ElementStrategy> customStrategies = new LinkedList<ElementStrategy>();
+
         public RawRmlWysiwygView(String name, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, UndoRedoBuffer undoBuffer)
             :base(name)
         {
             this.UICallback = uiCallback;
             this.BrowserProvider = browserProvider;
             this.undoBuffer = undoBuffer;
+        }
+
+        public void addCustomStrategy(ElementStrategy strategy)
+        {
+            customStrategies.AddLast(strategy);
         }
 
         [Editable]
@@ -37,6 +45,14 @@ namespace Medical.GUI
             get
             {
                 return undoBuffer;
+            }
+        }
+
+        public IEnumerable<ElementStrategy> CustomElementStrategies
+        {
+            get
+            {
+                return customStrategies;
             }
         }
 

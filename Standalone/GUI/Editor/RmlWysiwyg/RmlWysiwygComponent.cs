@@ -44,7 +44,7 @@ namespace Medical.GUI
 
         private AnomalousMvcContext context;
 
-        private RmlWysiwygComponent(AnomalousMvcContext context, MyGUIViewHost viewHost)
+        private RmlWysiwygComponent(AnomalousMvcContext context, MyGUIViewHost viewHost, IEnumerable<ElementStrategy> elementStrategies)
             : base("Medical.GUI.Editor.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
             undoRedoCallback = defaultUndoRedoCallback;
@@ -62,10 +62,15 @@ namespace Medical.GUI
 
             selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
             draggingElementManager = new DraggingElementManager(this);
+
+            foreach (var elementStrategy in elementStrategies)
+            {
+                elementStrategyManager.add(elementStrategy);
+            }
         }
 
         public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            :this(context, viewHost)
+            : this(context, viewHost, view.CustomElementStrategies)
         {
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
@@ -78,7 +83,7 @@ namespace Medical.GUI
         }
 
         public RmlWysiwygComponent(RawRmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : this(context, viewHost)
+            : this(context, viewHost, view.CustomElementStrategies)
         {
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
@@ -390,7 +395,7 @@ namespace Medical.GUI
             return position;
         }
 
-        internal void deleteElement(Element element)
+        public void deleteElement(Element element)
         {
             Element parent = element.ParentNode;
             if (parent != null)

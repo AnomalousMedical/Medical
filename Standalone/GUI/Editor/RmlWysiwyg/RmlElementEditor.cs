@@ -10,7 +10,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class RmlElementEditor : PopupContainer
+    public class RmlElementEditor : PopupContainer
     {
         /// <summary>
         /// This delegate will be used when changes should be applied to the document / element from the editor.

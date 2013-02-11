@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class ElementStrategy
+    public class ElementStrategy
     {
         public ElementStrategy(String tagName, String previewIconName = CommonResources.NoIcon, bool allowDragAndDrop = false)
         {

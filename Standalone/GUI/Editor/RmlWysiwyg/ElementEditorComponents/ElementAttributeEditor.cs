@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    class ElementAttributeEditor : ElementEditorComponent
+    public class ElementAttributeEditor : ElementEditorComponent
     {
         private ScrollView propertiesScroll;
         private ScrollablePropertiesForm propertiesForm;

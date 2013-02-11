@@ -70,6 +70,7 @@ namespace Lecture
                 };
             };
             rmlView.UndoRedoCallback = wysiwygUndoCallback;
+            rmlView.addCustomStrategy(new SlideImageStrategy("img"));
             mvcContext.Views.add(rmlView);
 
             DragAndDropView<WysiwygDragDropItem> htmlDragDrop = new DragAndDropView<WysiwygDragDropItem>("HtmlDragDrop",

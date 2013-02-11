@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class ElementEditorComponent : Component
+    public class ElementEditorComponent : Component
     {
         private RmlElementEditor parentEditor;
 
