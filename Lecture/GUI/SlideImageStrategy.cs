@@ -10,7 +10,7 @@ namespace Lecture.GUI
 {
     class SlideImageStrategy : ElementStrategy
     {
-        ElementAttributeEditor attributeEditor;
+        SlideImageComponent slideImageEditor;
 
         public SlideImageStrategy(String tag, String previewIconName = "Editor/ImageIcon")
             : base(tag, previewIconName, true)
@@ -20,15 +20,15 @@ namespace Lecture.GUI
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
+            slideImageEditor = new SlideImageComponent();
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
-            editor.addElementEditor(attributeEditor);
+            editor.addElementEditor(slideImageEditor);
             return editor;
         }
 
         private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            return attributeEditor.applyToElement(element);
+            return slideImageEditor.applyToElement(element);
         }
 
         private bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)

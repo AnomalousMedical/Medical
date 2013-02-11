@@ -65,6 +65,7 @@
     <Compile Include="Controller\SlideImageManager.cs" />
     <Compile Include="Controller\TimelineEditorContext.cs" />
     <Compile Include="Controller\TimelineTypeController.cs" />
+    <Compile Include="GUI\SlideImageComponent\SlideImageComponent.cs" />
     <Compile Include="GUI\SlideTaskbar\SlideTaskbar.cs" />
     <Compile Include="GUI\SlideTaskbar\SlideTaskbarFactory.cs" />
     <Compile Include="GUI\SlideTaskbar\SlideTaskbarView.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Controller\SlideshowEditController.cs" />
     <Compile Include="Resources\Project\EmbeddedTemplateNames.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
+    <EmbeddedResource Include="GUI\SlideImageComponent\SlideImageComponent.layout" />
     <EmbeddedResource Include="GUI\SlideTaskbar\SlideTaskbar.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
