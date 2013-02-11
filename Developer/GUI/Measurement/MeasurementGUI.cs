@@ -52,7 +52,7 @@ namespace Developer.GUI
             StringBuilder sb = new StringBuilder();
             foreach (Measurement measurement in MeasurementController.Measurements)
             {
-                sb.AppendFormat("{1:f2} mm - {0}\n", measurement.MeasurementName, measurement.CurrentDelta);
+                sb.AppendFormat("#000000{1:f2} mm #555566- {0}\n", measurement.MeasurementName, measurement.CurrentDelta);
             }
             text.Caption = sb.ToString();
         }

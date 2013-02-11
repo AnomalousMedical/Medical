@@ -15,5 +15,8 @@
         <Widget type="TextBox" skin="TextBox" position="94 168 51 15" align="Left Bottom">
             <Property key="Caption" value="Size"/>
         </Widget>
+        <Widget type="TextBox" skin="TextBox" position="160 190 18 19">
+            <Property key="Caption" value="%"/>
+        </Widget>
     </Widget>
 </MyGUI>

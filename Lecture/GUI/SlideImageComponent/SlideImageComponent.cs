@@ -33,11 +33,14 @@ namespace Lecture.GUI
         const bool Key = false;
         private bool NotDisposed = true;
 
-        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName)
+        float currentWidth;
+
+        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName, float currentWidth)
             : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "SlideImage")
         {
             this.resourceProvider = resourceProvider;
             this.subdirectory = subdirectory;
+            this.currentWidth = currentWidth;
 
             Button browseButton = (Button)widget.findWidget("Browse");
             browseButton.MouseButtonClick += browseButton_MouseButtonClick;
@@ -172,6 +175,10 @@ namespace Lecture.GUI
                         {
                             if (NotDisposed)
                             {
+                                if (currentWidth != -1)
+                                {
+                                    sizeEdit.Value = (int)((float)currentWidth / image.Width * 100);
+                                }
                                 imagePreview.setPosition(left, top);
                                 imagePreview.setSize(width, height);
                                 imageAtlas.ImageSize = new IntSize2(width, height);
@@ -203,8 +210,8 @@ namespace Lecture.GUI
         {
             element.SetAttribute("src", imageName);
             float scale = sizeEdit.Value / 100f;
-            element.SetAttribute("width", currentImageSize.Width * scale + "pf");
-            element.SetAttribute("height", currentImageSize.Height * scale + "pf");
+            element.SetAttribute("width", (currentImageSize.Width * scale) + "pf");
+            element.SetAttribute("height", (currentImageSize.Height * scale) + "pf");
             return true;
         }
 

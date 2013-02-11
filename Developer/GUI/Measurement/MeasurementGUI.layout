@@ -1,13 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-  <Widget type="Window" skin="WindowCSX" position="59 82 385 237" layer="Overlapped">
-    <Property key="Caption" value="Measurements"/>
-    <Widget type="Button" skin="Button" position="1 6 101 34" name="Enabled">
-      <Property key="Caption" value="Enabled"/>
+    <Widget type="Window" skin="WindowCSX" position="59 82 385 237" layer="Overlapped">
+        <Property key="Caption" value="Measurements"/>
+        <Widget type="Button" skin="Button" position="1 6 101 34" name="Enabled">
+            <Property key="Caption" value="Enabled"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="105 6 101 34" name="Show">
+            <Property key="Caption" value="Show"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="0 46 378 161" align="Stretch" name="Text">
+            <Property key="MultiLine" value="true"/>
+            <Property key="ReadOnly" value="true"/>
+            <Property key="Static" value="true"/>
+            <Property key="Caption" value="67"/>
+            <Property key="TextAlign" value="Left Top"/>
+            <Property key="FontName" value="TimelineText.50"/>
+        </Widget>
     </Widget>
-    <Widget type="TextBox" skin="TextBox" position="0 46 378 161" align="Stretch" name="Text"/>
-    <Widget type="Button" skin="Button" position="105 6 101 34" name="Show">
-      <Property key="Caption" value="Show"/>
-    </Widget>
-  </Widget>
 </MyGUI>
