@@ -83,11 +83,21 @@ namespace Medical.Controller
 
         }
 
+        public static void invokeAndWait(Action target)
+        {
+            doStartInvokeAndWait(target);
+        }
+
         /// <summary>
         /// Exectue a Delegate when doInvoke is called on the thread that calls doInvoke
         /// </summary>
         /// <param name="target"></param>
         public static void invokeAndWait(Delegate target, params object[] args)
+        {
+            doStartInvokeAndWait(target, args);
+        }
+
+        private static void doStartInvokeAndWait(Delegate target, params object[] args)
         {
             TargetEntry entry = new TargetEntry(target, args);
             lock (targets)
@@ -107,7 +117,17 @@ namespace Medical.Controller
             }
         }
 
+        public static void invoke(Action target)
+        {
+            doStartInvoke(target);
+        }
+
         public static void invoke(Delegate target, params object[] args)
+        {
+            doStartInvoke(target, args);
+        }
+
+        private static void doStartInvoke(Delegate target, params object[] args)
         {
             TargetEntry entry = new TargetEntry(target, args);
             lock (targets)

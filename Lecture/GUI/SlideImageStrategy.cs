@@ -24,7 +24,7 @@ namespace Lecture.GUI
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory);
+            slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"));
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(slideImageEditor);
             return editor;

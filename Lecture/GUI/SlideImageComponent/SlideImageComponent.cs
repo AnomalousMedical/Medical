@@ -1,13 +1,16 @@
 ﻿using Engine;
 using libRocketPlugin;
 using Medical;
+using Medical.Controller;
 using Medical.GUI;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Lecture.GUI
 {
@@ -17,10 +20,11 @@ namespace Lecture.GUI
         ImageAtlas imageAtlas;
         EditorResourceProvider resourceProvider;
         String subdirectory;
+        String imageName;
 
         const bool Key = false;
 
-        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory)
+        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName)
             : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "SlideImage")
         {
             this.resourceProvider = resourceProvider;
@@ -31,6 +35,14 @@ namespace Lecture.GUI
 
             imagePreview = (ImageBox)widget.findWidget("Image");
             imageAtlas = new ImageAtlas("SlideImageComponentAtlas", new Size2(imagePreview.Width, imagePreview.Height));
+
+            if (currentImageName != null)
+            {
+                ThreadPool.QueueUserWorkItem(o =>
+                {
+                    openImageBGThread(Path.Combine(subdirectory, currentImageName));
+                });
+            }
         }
 
         public override void Dispose()
@@ -48,19 +60,70 @@ namespace Lecture.GUI
                 {
                     if (imageAtlas.containsImage(Key))
                     {
-                        imagePreview.setImageTexture(null);
+                        imagePreview.setItemResource(null);
                         imageAtlas.removeImage(Key);
                     }
                     String path = paths.First();
-                    String filename = Guid.NewGuid().ToString("D") + Path.GetExtension(path);
-                    File.Copy(path, Path.Combine(resourceProvider.BackingLocation, subdirectory, filename));
+                    imageName = Guid.NewGuid().ToString("D") + Path.GetExtension(path);
+                    String filename = Path.Combine(subdirectory, imageName);
+
+                    ThreadPool.QueueUserWorkItem((stateInfo) =>
+                        {
+                            try
+                            {
+                                using (Stream writeStream = resourceProvider.openWriteStream(filename))
+                                {
+                                    using (Stream readStream = File.Open(path, FileMode.Open, FileAccess.Read))
+                                    {
+                                        readStream.CopyTo(writeStream);
+                                    }
+                                }
+                                openImageBGThread(filename);
+                            }
+                            catch (Exception ex)
+                            {
+                                ThreadManager.invoke(() =>
+                                {
+                                    MessageBox.show(String.Format("Error copying file {0} to your project.\nReason: {1}", path, ex.Message), "Image Copy Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                                });
+                            }
+                        });
                 }
             });
         }
 
+        private void openImageBGThread(String filename)
+        {
+            try
+            {
+                using (Stream imageStream = resourceProvider.openFile(filename))
+                {
+                    Image image = Bitmap.FromStream(imageStream);
+                    ThreadManager.invoke(() =>
+                    {
+                        try
+                        {
+                            String imageKey = imageAtlas.addImage(Key, image);
+                            imagePreview.setItemResource(imageKey);
+                        }
+                        finally
+                        {
+                            image.Dispose();
+                        }
+                        this.fireChangesMade();
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         internal bool applyToElement(Element element)
         {
-            return false;
+            element.SetAttribute("src", imageName);
+            return true;
         }
     }
 }
