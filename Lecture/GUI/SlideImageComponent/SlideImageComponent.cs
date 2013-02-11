@@ -30,6 +30,7 @@ namespace Lecture.GUI
         IntSize2 currentImageSize;
 
         const bool Key = false;
+        private bool NotDisposed = true;
 
         public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName)
             : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "SlideImage")
@@ -42,7 +43,7 @@ namespace Lecture.GUI
 
             imagePreview = (ImageBox)widget.findWidget("Image");
             imagePanel = widget.findWidget("ImagePanel");
-            imageAtlas = new ImageAtlas("SlideImageComponentAtlas", new IntSize2(imagePreview.Width, imagePreview.Height));
+            imageAtlas = new ImageAtlas("SlideImageComponentAtlas_" + Guid.NewGuid().ToString("D"), new IntSize2(imagePreview.Width, imagePreview.Height));
             sizeEdit = new Int32NumericEdit((EditBox)widget.findWidget("Size"))
             {
                 MaxValue = 10000,
@@ -69,6 +70,8 @@ namespace Lecture.GUI
 
         public override void Dispose()
         {
+            NotDisposed = false;
+            keyTimer.Dispose();
             base.Dispose();
             imageAtlas.Dispose();
         }
@@ -144,11 +147,14 @@ namespace Lecture.GUI
                     {
                         try
                         {
-                            imagePreview.setPosition(left, top);
-                            imagePreview.setSize(width, height);
-                            imageAtlas.ImageSize = new IntSize2(width, height);
-                            String imageKey = imageAtlas.addImage(Key, image);
-                            imagePreview.setItemResource(imageKey);
+                            if (NotDisposed)
+                            {
+                                imagePreview.setPosition(left, top);
+                                imagePreview.setSize(width, height);
+                                imageAtlas.ImageSize = new IntSize2(width, height);
+                                String imageKey = imageAtlas.addImage(Key, image);
+                                imagePreview.setItemResource(imageKey);
+                            }
                         }
                         finally
                         {
