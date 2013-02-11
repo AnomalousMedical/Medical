@@ -18,6 +18,8 @@ namespace Medical
         /// </summary>
         void generateNewUniqueName();
 
+        void cleanup(CleanupFileInfo info);
+
         String UniqueName { get; }
     }
 }

@@ -78,6 +78,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
+    <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />

@@ -622,6 +622,10 @@ namespace Lecture
 
         public void cleanup()
         {
+            //Cleanup slide trash
+            CleanupFileInfo cleanupInfo = new CleanupFileInfo();
+            slideshow.cleanup(cleanupInfo);
+            
             undoBuffer.clear(); //Can't really recover from this one, so just erase all undo
             List<Guid> cleanupSlides = new List<Guid>(projectGuidDirectories());
             foreach (Slide slide in slideshow.Slides)
@@ -630,6 +634,20 @@ namespace Lecture
                 if (Guid.TryParse(slide.UniqueName, out guid))
                 {
                     cleanupSlides.Remove(guid);
+                }
+                foreach (String file in ResourceProvider.listFiles("*", slide.UniqueName, true))
+                {
+                    if (!cleanupInfo.isClaimed(file))
+                    {
+                        try
+                        {
+                            editorController.ResourceProvider.delete(file);
+                        }
+                        catch (Exception ex)
+                        {
+                            Logging.Log.Error("Cleanup -- Failed to delete file '{0}'. Reason: {1}", file, ex.Message);
+                        }
+                    }
                 }
             }
             foreach (Guid dir in cleanupSlides)

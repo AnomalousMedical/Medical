@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace Medical
 {
@@ -66,6 +67,22 @@ namespace Medical
         public void generateNewUniqueName()
         {
             id = Guid.NewGuid().ToString("D");
+        }
+
+        public virtual void cleanup(CleanupFileInfo info)
+        {
+            info.claimFile(Path.Combine(UniqueName, "Timeline.tl"));
+            info.claimFile(Path.Combine(UniqueName, "Thumb.png"));
+            //Need to save timeline files somehow
+            XDocument rmlDoc = XDocument.Parse(rml);
+            var images = from query in rmlDoc.Descendants("img") 
+                         where query.Attribute("src") != null 
+                         select query.Attribute("src").Value;
+
+            foreach (String image in images)
+            {
+                info.claimFile(Path.Combine(UniqueName, image));
+            }
         }
 
         public String UniqueName

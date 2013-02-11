@@ -92,6 +92,14 @@ namespace Medical
             return mvcContext;
         }
 
+        public void cleanup(CleanupFileInfo cleanupInfo)
+        {
+            foreach (Slide slide in slides)
+            {
+                slide.cleanup(cleanupInfo);
+            }
+        }
+
         public IEnumerable<Slide> Slides
         {
             get
