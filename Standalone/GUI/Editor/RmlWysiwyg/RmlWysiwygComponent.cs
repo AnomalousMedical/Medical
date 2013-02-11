@@ -85,6 +85,7 @@ namespace Medical.GUI
         public RmlWysiwygComponent(RawRmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
             : this(context, viewHost, view.CustomElementStrategies)
         {
+            this.FakeLoadLocation = view.FakePath;
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
@@ -387,6 +388,8 @@ namespace Medical.GUI
                 return changesMade;
             }
         }
+
+        public String FakeLoadLocation { get; set; }
 
         internal IntVector2 localCoord(IntVector2 position)
         {
@@ -701,7 +704,7 @@ namespace Medical.GUI
 
             if (rml != null)
             {
-                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(rml))
+                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(rml, FakeLoadLocation))
                 {
                     if (document != null)
                     {

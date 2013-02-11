@@ -61,6 +61,7 @@ namespace Lecture
             rmlView.ViewLocation = ViewLocations.Left;
             rmlView.IsWindow = true;
             rmlView.Rml = slide.Rml;
+            rmlView.FakePath = slide.UniqueName + "/index.rml";
             rmlView.ComponentCreated += (view, component) =>
             {
                 rmlComponent = component;

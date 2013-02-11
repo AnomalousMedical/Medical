@@ -43,6 +43,7 @@ namespace Lecture.GUI
                     openImageBGThread(Path.Combine(subdirectory, currentImageName));
                 });
             }
+            imageName = currentImageName;
         }
 
         public override void Dispose()
