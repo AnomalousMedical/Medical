@@ -26,6 +26,7 @@ namespace Lecture.GUI
         String subdirectory;
         String imageName;
         Widget imagePanel;
+        Widget loadingLabel;
         Int32NumericEdit sizeEdit;
         IntSize2 currentImageSize;
 
@@ -58,12 +59,26 @@ namespace Lecture.GUI
             keyTimer.AutoReset = false;
             keyTimer.Elapsed += keyTimer_Elapsed;
 
+            loadingLabel = widget.findWidget("LoadLabel");
+
             if (currentImageName != null)
             {
-                System.Threading.ThreadPool.QueueUserWorkItem(o =>
+                String loadPath = Path.Combine(subdirectory, currentImageName);
+                if (resourceProvider.exists(loadPath))
                 {
-                    openImageBGThread(Path.Combine(subdirectory, currentImageName));
-                });
+                    System.Threading.ThreadPool.QueueUserWorkItem(o =>
+                    {
+                        openImageBGThread(loadPath);
+                    });
+                }
+                else
+                {
+                    loadingLabel.Visible = false;
+                }
+            }
+            else
+            {
+                loadingLabel.Visible = false;
             }
             imageName = currentImageName;
         }
@@ -103,7 +118,7 @@ namespace Lecture.GUI
                                         readStream.CopyTo(writeStream);
                                     }
                                 }
-                                openImageBGThread(filename);
+                                openImageBGThread(filename, true);
                             }
                             catch (Exception ex)
                             {
@@ -117,7 +132,7 @@ namespace Lecture.GUI
             });
         }
 
-        private void openImageBGThread(String filename)
+        private void openImageBGThread(String filename, bool applyUpdate = false)
         {
             try
             {
@@ -154,7 +169,12 @@ namespace Lecture.GUI
                                 imageAtlas.ImageSize = new IntSize2(width, height);
                                 String imageKey = imageAtlas.addImage(Key, image);
                                 imagePreview.setItemResource(imageKey);
-                                widget.findWidget("LoadLabel").Visible = false;
+                                loadingLabel.Visible = false;
+                                if (applyUpdate)
+                                {
+                                    this.fireChangesMade();
+                                    this.fireApplyChanges();
+                                }
                             }
                         }
                         finally
