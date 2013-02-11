@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     public class StateListDialog : MDIDialog
     {
-        private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f));
+        private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new IntSize2(100, 100));
         private SingleSelectButtonGrid stateListBox;
         private Dictionary<MedicalState, ButtonGridItem> entries = new Dictionary<MedicalState, ButtonGridItem>();
         private bool ignoreIndexChanges = false;

@@ -22,7 +22,7 @@ namespace Medical.Controller
         public event BookmarkDelegate BookmarkRemoved;
 
         private ImageRendererProperties imageProperties;
-        private ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(100, 100));
+        private ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new IntSize2(100, 100));
 
         private StandaloneController standaloneController;
         private BookmarkDelegate mainThreadCallback;

@@ -31,7 +31,7 @@ namespace Lecture
         public const int ThumbWidth = 183;
         public const int ThumbHeight = 101;
 
-        private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new Size2(ThumbWidth, ThumbHeight));
+        private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new IntSize2(ThumbWidth, ThumbHeight));
         private Dictionary<Slide, Bitmap> unsavedThumbs = new Dictionary<Slide, Bitmap>();
         private SlideshowEditController slideEditController;
         private WorkQueue workQueue = new WorkQueue();

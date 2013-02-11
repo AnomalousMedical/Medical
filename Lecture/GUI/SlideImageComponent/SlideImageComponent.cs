@@ -21,6 +21,7 @@ namespace Lecture.GUI
         EditorResourceProvider resourceProvider;
         String subdirectory;
         String imageName;
+        Widget imagePanel;
 
         const bool Key = false;
 
@@ -34,7 +35,8 @@ namespace Lecture.GUI
             browseButton.MouseButtonClick += browseButton_MouseButtonClick;
 
             imagePreview = (ImageBox)widget.findWidget("Image");
-            imageAtlas = new ImageAtlas("SlideImageComponentAtlas", new Size2(imagePreview.Width, imagePreview.Height));
+            imagePanel = widget.findWidget("ImagePanel");
+            imageAtlas = new ImageAtlas("SlideImageComponentAtlas", new IntSize2(imagePreview.Width, imagePreview.Height));
 
             if (currentImageName != null)
             {
@@ -100,10 +102,36 @@ namespace Lecture.GUI
                 using (Stream imageStream = resourceProvider.openFile(filename))
                 {
                     Image image = Bitmap.FromStream(imageStream);
+                    int width = 34;
+                    int height = 10;
+                    float aspect = 4f / 3f;
+                    int left = 0;
+                    int top = 0;
+                    if (image.Width != 0 && image.Width > image.Height)
+                    {
+                        aspect = (float)image.Height / image.Width;
+                        height = (int)((float)imagePanel.Width * aspect);
+                        if (height < imagePanel.Height)
+                        {
+                            width = imagePanel.Width;
+                            top = (imagePanel.Height - height) / 2;
+                        }
+                        else
+                        {
+                            aspect = (float)image.Width / image.Height;
+                            height = imagePanel.Height;
+                            width = (int)((float)imagePanel.Height * aspect);
+                            left = (imagePanel.Width - width) / 2;
+                        }
+                    }
                     ThreadManager.invoke(() =>
                     {
                         try
                         {
+                            Logging.Log.Debug("Size {0}, {1}, {2}, {3}", left, top, width, height);
+                            imagePreview.setPosition(left, top);
+                            imagePreview.setSize(width, height);
+                            imageAtlas.ImageSize = new IntSize2(width, height);
                             String imageKey = imageAtlas.addImage(Key, image);
                             imagePreview.setItemResource(imageKey);
                         }

@@ -55,7 +55,7 @@ namespace Medical.GUI
                     imageAtlas.Dispose();
                 }
                 bitmapSize = bitmap.Size;
-                Size2 imageSize = new Size2(bitmapSize.Width, bitmapSize.Height);
+                IntSize2 imageSize = new IntSize2(bitmapSize.Width, bitmapSize.Height);
                 imageAtlas = new ImageAtlas("MyGUIImageDisplay_", imageSize);
                 String imageKey = imageAtlas.addImage(this, bitmap);
                 imageBox.setItemResource(imageKey);
