@@ -27,7 +27,8 @@ namespace Medical
         {
             RawRmlView view = new RawRmlView(name)
             {
-                Rml = this.Rml
+                Rml = this.Rml,
+                FakePath = UniqueName + "/index.rml"
             };
             if (allowPrevious)
             {

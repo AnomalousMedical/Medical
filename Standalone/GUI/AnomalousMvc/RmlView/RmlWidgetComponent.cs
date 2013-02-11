@@ -54,11 +54,12 @@ namespace Medical.GUI.AnomalousMvc
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
             imageHeight = rmlImage.Height;
+            this.FakeLoadLocation = view.FakePath;
 
             if (view.Rml != null)
             {
                 RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
-                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(view.Rml))
+                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(view.Rml, FakeLoadLocation))
                 {
                     if (document != null)
                     {
@@ -307,5 +308,7 @@ namespace Medical.GUI.AnomalousMvc
                 RocketEventListenerInstancer.resetEventController();
             }
         }
+
+        public String FakeLoadLocation { get; set; }
     }
 }

@@ -23,6 +23,9 @@ namespace Medical.GUI.AnomalousMvc
         [Editable]
         public String Rml { get; set; }
 
+        [Editable]
+        public String FakePath { get; set; }
+
         internal void _fireComponentCreated(RmlWidgetComponent component)
         {
             if (ComponentCreated != null)
