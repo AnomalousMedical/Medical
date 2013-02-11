@@ -92,13 +92,13 @@ namespace Developer.GUI
                     {
                         spaceCount += 5;
                     }
-                    if (measurement.MeasurementName == "Midline")
-                    {
-                        spaceCount += 2;
-                    }
                     if (measurement.MeasurementName == "Right Fossa Ramus")
                     {
-                        spaceCount -= 1;
+                        spaceCount -= 3;
+                    }
+                    if (measurement.MeasurementName == "Left Fossa Ramus")
+                    {
+                        spaceCount -= 2;
                     }
                     if (measurement.MeasurementName == "Left Molar Oblique")
                     {
@@ -110,7 +110,23 @@ namespace Developer.GUI
                     }
                     if (measurement.MeasurementName == "Fissure to 3")
                     {
-                        spaceCount += 1;
+                        spaceCount += 4;
+                    }
+                    if (measurement.MeasurementName == "Fissure to 30")
+                    {
+                        spaceCount += 3;
+                    }
+                    if (measurement.MeasurementName == "Fissure to 14")
+                    {
+                        spaceCount += 3;
+                    }
+                    if (measurement.MeasurementName == "Fissure to 19")
+                    {
+                        spaceCount += 3;
+                    }
+                    if (measurement.MeasurementName == "Midline")
+                    {
+                        spaceCount += 5;
                     }
                     
                     sb.AppendFormat(" *  #555566{0}{2}#000000{1} mm\n", measurement.MeasurementName, deltaString, spaceString.Substring(0, spaceCount));
