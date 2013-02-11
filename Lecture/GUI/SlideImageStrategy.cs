@@ -1,4 +1,5 @@
 ﻿using libRocketPlugin;
+using Medical;
 using Medical.GUI;
 using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using System;
@@ -11,16 +12,19 @@ namespace Lecture.GUI
     class SlideImageStrategy : ElementStrategy
     {
         SlideImageComponent slideImageEditor;
+        EditorResourceProvider editorResourceProvider;
+        String subdirectory;
 
-        public SlideImageStrategy(String tag, String previewIconName = "Editor/ImageIcon")
+        public SlideImageStrategy(String tag, EditorResourceProvider editorResourceProvider, String subdirectory, String previewIconName = "Editor/ImageIcon")
             : base(tag, previewIconName, true)
         {
-
+            this.editorResourceProvider = editorResourceProvider;
+            this.subdirectory = subdirectory;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            slideImageEditor = new SlideImageComponent();
+            slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(slideImageEditor);
             return editor;
