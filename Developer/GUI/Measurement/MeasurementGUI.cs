@@ -47,12 +47,49 @@ namespace Developer.GUI
             }
         }
 
+        static String[] categoryOrder = new String[] { "FOUNDATIONAL DIMENSION", "OCCLUSAL HORIZONTAL CHANGES", "OCCLUSAL VERTICAL CHANGES" };
+        const String spaceString = "                                 ";
+
         void MedicalController_FixedLoopUpdate(Clock time)
         {
+            Dictionary<String, List<Measurement>> categories = new Dictionary<String, List<Measurement>>();
             StringBuilder sb = new StringBuilder();
             foreach (Measurement measurement in MeasurementController.Measurements)
             {
-                sb.AppendFormat("#000000{1:f2} mm #555566- {0}\n", measurement.MeasurementName, measurement.CurrentDelta);
+                List<Measurement> category;
+                if(!categories.TryGetValue(measurement.Category, out category))
+                {
+                    category = new List<Measurement>();
+                    categories.Add(measurement.Category, category);
+                }
+                category.Add(measurement);
+            }
+            String categoryFormat = "#000000{0}\n\n";
+            bool firstCategory = true;
+            foreach (String categoryKey in categoryOrder)
+            {
+                sb.AppendFormat(categoryFormat, categoryKey);
+                if (firstCategory)
+                {
+                    firstCategory = false;
+                    categoryFormat = "\n" + categoryFormat;
+                }
+                List<Measurement> category = categories[categoryKey];
+                category.Sort((left, right) =>
+                    {
+                        return left.Index - right.Index;
+                    });
+                
+                foreach (Measurement measurement in category)
+                {
+                    String deltaString = measurement.CurrentDelta.ToString("f2");
+                    int spaceCount = spaceString.Length - measurement.MeasurementName.Length - deltaString.Length;
+                    if (spaceCount < 0)
+                    {
+                        spaceCount = 0;
+                    }
+                    sb.AppendFormat(" *  #555566{0}{2}#000000{1} mm\n", measurement.MeasurementName, deltaString, spaceString.Substring(0, spaceCount));
+                }
             }
             text.Caption = sb.ToString();
         }

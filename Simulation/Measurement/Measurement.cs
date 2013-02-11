@@ -36,6 +36,12 @@ namespace Medical
         String measurementName;
 
         [Editable]
+        String category;
+
+        [Editable]
+        int index;
+
+        [Editable]
         Color color = Color.Blue;
 
         [Editable]
@@ -99,6 +105,30 @@ namespace Medical
             set
             {
                 measurementName = value;
+            }
+        }
+
+        public String Category
+        {
+            get
+            {
+                return category;
+            }
+            set
+            {
+                category = value;
+            }
+        }
+
+        public int Index
+        {
+            get
+            {
+                return index;
+            }
+            set
+            {
+                index = value;
             }
         }
 
