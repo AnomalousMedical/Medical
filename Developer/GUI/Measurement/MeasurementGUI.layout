@@ -12,7 +12,6 @@
             <Property key="MultiLine" value="true"/>
             <Property key="ReadOnly" value="true"/>
             <Property key="Static" value="true"/>
-            <Property key="Caption" value="67"/>
             <Property key="TextAlign" value="Left Top"/>
             <Property key="FontName" value="TimelineText.50"/>
         </Widget>

@@ -88,6 +88,31 @@ namespace Developer.GUI
                     {
                         spaceCount = 0;
                     }
+                    if (measurement.MeasurementName == "AOB")
+                    {
+                        spaceCount += 5;
+                    }
+                    if (measurement.MeasurementName == "Midline")
+                    {
+                        spaceCount += 2;
+                    }
+                    if (measurement.MeasurementName == "Right Fossa Ramus")
+                    {
+                        spaceCount -= 1;
+                    }
+                    if (measurement.MeasurementName == "Left Molar Oblique")
+                    {
+                        spaceCount -= 3;
+                    }
+                    if (measurement.MeasurementName == "Right Molar Oblique")
+                    {
+                        spaceCount -= 4;
+                    }
+                    if (measurement.MeasurementName == "Fissure to 3")
+                    {
+                        spaceCount += 1;
+                    }
+                    
                     sb.AppendFormat(" *  #555566{0}{2}#000000{1} mm\n", measurement.MeasurementName, deltaString, spaceString.Substring(0, spaceCount));
                 }
             }
