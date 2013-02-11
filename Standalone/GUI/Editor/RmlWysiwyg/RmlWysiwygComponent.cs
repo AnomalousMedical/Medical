@@ -19,30 +19,9 @@ namespace Medical.GUI
     {
         public const String DefaultImage = "/Medical.Resources.ImagePlaceholder.png";
 
-        private static ElementStrategyManager elementStrategyManager = new ElementStrategyManager();
-
-        static RmlWysiwygComponent()
-        {
-            //Headers
-            elementStrategyManager.add(new TextElementStrategy("h1"));
-            elementStrategyManager.add(new TextElementStrategy("h2"));
-            elementStrategyManager.add(new TextElementStrategy("h3"));
-            elementStrategyManager.add(new TextElementStrategy("h4"));
-            elementStrategyManager.add(new TextElementStrategy("h5"));
-            elementStrategyManager.add(new TextElementStrategy("h6"));
-            
-            //Text
-            elementStrategyManager.add(new TextElementStrategy("p"));
-            elementStrategyManager.add(new TextElementStrategy("a"));
-            elementStrategyManager.add(new ImageStrategy("img"));
-            elementStrategyManager.add(new DivStrategy("x-separator"));
-            
-            //Controls
-            elementStrategyManager.add(new InputStrategy("input"));
-        }
-
         public event Action<RmlWysiwygComponent> RmlEdited;
 
+        private ElementStrategyManager elementStrategyManager = new ElementStrategyManager();
         private RocketWidget rocketWidget;
         private ImageBox rmlImage;
         private int imageHeight;

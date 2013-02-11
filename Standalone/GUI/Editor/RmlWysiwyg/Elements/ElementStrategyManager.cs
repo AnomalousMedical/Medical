@@ -1,4 +1,5 @@
 ﻿using libRocketPlugin;
+using Medical.GUI.RmlWysiwyg.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,28 @@ namespace Medical.GUI
 {
     class ElementStrategyManager
     {
+        private static ElementStrategyManager defaultElementStrategyManager = new ElementStrategyManager();
+
+        static ElementStrategyManager()
+        {
+            //Headers
+            defaultElementStrategyManager.add(new TextElementStrategy("h1"));
+            defaultElementStrategyManager.add(new TextElementStrategy("h2"));
+            defaultElementStrategyManager.add(new TextElementStrategy("h3"));
+            defaultElementStrategyManager.add(new TextElementStrategy("h4"));
+            defaultElementStrategyManager.add(new TextElementStrategy("h5"));
+            defaultElementStrategyManager.add(new TextElementStrategy("h6"));
+
+            //Text
+            defaultElementStrategyManager.add(new TextElementStrategy("p"));
+            defaultElementStrategyManager.add(new TextElementStrategy("a"));
+            defaultElementStrategyManager.add(new ImageStrategy("img"));
+            defaultElementStrategyManager.add(new DivStrategy("x-separator"));
+
+            //Controls
+            defaultElementStrategyManager.add(new InputStrategy("input"));
+        }
+
         private Dictionary<String, ElementStrategy> strategies = new Dictionary<string, ElementStrategy>();
         private ElementStrategy defaultStrategy = new ElementStrategy("default");
 
@@ -33,8 +56,13 @@ namespace Medical.GUI
                 ElementStrategy ret = defaultStrategy;
                 if (element != null)
                 {
+                    String tagName = element.TagName;
                     ElementStrategy strat;
-                    if (strategies.TryGetValue(element.TagName, out strat))
+                    if (strategies.TryGetValue(tagName, out strat))
+                    {
+                        ret = strat;
+                    }
+                    else if(defaultElementStrategyManager.strategies.TryGetValue(tagName, out strat))
                     {
                         ret = strat;
                     }
