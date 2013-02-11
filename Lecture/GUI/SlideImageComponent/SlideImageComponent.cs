@@ -93,7 +93,7 @@ namespace Lecture.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose an image", wildcard: "Portable Network Graphics (*.png)|*.png");
+            FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose an image", wildcard: "Images|*");
             openDialog.showModal((result, paths) =>
             {
                 if (result == NativeDialogResult.OK)
@@ -104,10 +104,13 @@ namespace Lecture.GUI
                         imageAtlas.removeImage(Key);
                     }
                     String path = paths.First();
-                    imageName = Guid.NewGuid().ToString("D") + Path.GetExtension(path);
-                    String filename = Path.Combine(subdirectory, imageName);
+                    String extension = Path.GetExtension(path);
+                    if (extension.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        imageName = Guid.NewGuid().ToString("D") + extension;
+                        String filename = Path.Combine(subdirectory, imageName);
 
-                    System.Threading.ThreadPool.QueueUserWorkItem((stateInfo) =>
+                        System.Threading.ThreadPool.QueueUserWorkItem((stateInfo) =>
                         {
                             try
                             {
@@ -128,6 +131,11 @@ namespace Lecture.GUI
                                 });
                             }
                         });
+                    }
+                    else
+                    {
+                        MessageBox.show(String.Format("Cannot open a file with extension '{0}'. Please choose a file that is a Png Image (.png) or a Jpeg (.jpg or .jpeg).", extension), "Can't Load Image", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                    }
                 }
             });
         }
@@ -187,7 +195,7 @@ namespace Lecture.GUI
             }
             catch (Exception ex)
             {
-
+                Logging.Log.Error("Could not load image '{0}'. Reason: {1}", filename, ex.Message);
             }
         }
 
