@@ -154,6 +154,7 @@ namespace Lecture.GUI
                                 imageAtlas.ImageSize = new IntSize2(width, height);
                                 String imageKey = imageAtlas.addImage(Key, image);
                                 imagePreview.setItemResource(imageKey);
+                                widget.findWidget("LoadLabel").Visible = false;
                             }
                         }
                         finally

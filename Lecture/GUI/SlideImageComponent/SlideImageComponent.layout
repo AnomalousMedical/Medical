@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="0 0 241 218" layer="Back">
-        <Widget type="Button" skin="Button" position="4 187 88 27" align="Left Bottom" name="Browse">
+    <Widget type="Widget" skin="PanelEmpty" position="0 0 241 214" layer="Back">
+        <Widget type="Button" skin="Button" position="4 183 88 27" align="Left Bottom" name="Browse">
             <Property key="Caption" value="Browse"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="9 7 225 163" align="Stretch" name="ImagePanel">
+        <Widget type="Widget" skin="PanelEmpty" position="9 7 225 159" align="Stretch" name="ImagePanel">
             <Widget type="ImageBox" skin="ImageBox" position="0 0 100 100" align="Left Top" name="Image"/>
+            <Widget type="TextBox" skin="TextBox" position="49 58 126 42" align="Center" name="LoadLabel">
+                <Property key="FontName" value="TimelineText.50"/>
+                <Property key="Caption" value="Loading"/>
+            </Widget>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position="94 189 63 25" align="Left Bottom" name="Size"/>
-        <Widget type="TextBox" skin="TextBox" position="94 172 51 15" align="Left Bottom">
+        <Widget type="EditBox" skin="EditBox" position="94 185 63 25" align="Left Bottom" name="Size"/>
+        <Widget type="TextBox" skin="TextBox" position="94 168 51 15" align="Left Bottom">
             <Property key="Caption" value="Size"/>
         </Widget>
     </Widget>
