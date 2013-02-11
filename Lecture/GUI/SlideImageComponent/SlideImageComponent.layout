@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="0 0 241 218">
-        <Widget type="Button" skin="Button" position="6 182 88 27" align="Left Bottom" name="Browse">
+        <Widget type="Button" skin="Button" position="4 187 88 27" align="Left Bottom" name="Browse">
             <Property key="Caption" value="Browse"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="9 7 225 171" align="Stretch" name="ImagePanel">
+        <Widget type="Widget" skin="PanelEmpty" position="9 7 225 163" align="Stretch" name="ImagePanel">
             <Widget type="ImageBox" skin="ImageBox" position="0 0 100 100" align="Left Top" name="Image"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="94 189 63 25" align="Left Bottom" name="Size"/>
+        <Widget type="TextBox" skin="TextBox" position="94 172 51 15" align="Left Bottom">
+            <Property key="Caption" value="Size"/>
         </Widget>
     </Widget>
 </MyGUI>

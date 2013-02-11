@@ -10,18 +10,24 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
+using System.Timers;
 
 namespace Lecture.GUI
 {
     class SlideImageComponent : ElementEditorComponent
     {
+        private const int UPDATE_DELAY = 250;
+
+        private Timer keyTimer;
+
         ImageBox imagePreview;
         ImageAtlas imageAtlas;
         EditorResourceProvider resourceProvider;
         String subdirectory;
         String imageName;
         Widget imagePanel;
+        Int32NumericEdit sizeEdit;
+        IntSize2 currentImageSize;
 
         const bool Key = false;
 
@@ -37,10 +43,23 @@ namespace Lecture.GUI
             imagePreview = (ImageBox)widget.findWidget("Image");
             imagePanel = widget.findWidget("ImagePanel");
             imageAtlas = new ImageAtlas("SlideImageComponentAtlas", new IntSize2(imagePreview.Width, imagePreview.Height));
+            sizeEdit = new Int32NumericEdit((EditBox)widget.findWidget("Size"))
+            {
+                MaxValue = 10000,
+                MinValue = 0,
+                Increment = 10,
+                Value = 100
+            };
+            sizeEdit.ValueChanged += sizeEdit_ValueChanged;
+
+            keyTimer = new Timer(UPDATE_DELAY);
+            keyTimer.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
+            keyTimer.AutoReset = false;
+            keyTimer.Elapsed += keyTimer_Elapsed;
 
             if (currentImageName != null)
             {
-                ThreadPool.QueueUserWorkItem(o =>
+                System.Threading.ThreadPool.QueueUserWorkItem(o =>
                 {
                     openImageBGThread(Path.Combine(subdirectory, currentImageName));
                 });
@@ -70,7 +89,7 @@ namespace Lecture.GUI
                     imageName = Guid.NewGuid().ToString("D") + Path.GetExtension(path);
                     String filename = Path.Combine(subdirectory, imageName);
 
-                    ThreadPool.QueueUserWorkItem((stateInfo) =>
+                    System.Threading.ThreadPool.QueueUserWorkItem((stateInfo) =>
                         {
                             try
                             {
@@ -120,11 +139,11 @@ namespace Lecture.GUI
                         width = (int)((float)imagePanel.Height * aspect);
                         left = (imagePanel.Width - width) / 2;
                     }
+                    currentImageSize = new IntSize2(image.Width, image.Height);
                     ThreadManager.invoke(() =>
                     {
                         try
                         {
-                            Logging.Log.Debug("Size {0}, {1}, {2}, {3}", left, top, width, height);
                             imagePreview.setPosition(left, top);
                             imagePreview.setSize(width, height);
                             imageAtlas.ImageSize = new IntSize2(width, height);
@@ -148,7 +167,22 @@ namespace Lecture.GUI
         internal bool applyToElement(Element element)
         {
             element.SetAttribute("src", imageName);
+            float scale = sizeEdit.Value / 100f;
+            element.SetAttribute("width", currentImageSize.Width * scale + "pf");
+            element.SetAttribute("height", currentImageSize.Height * scale + "pf");
             return true;
+        }
+
+        void sizeEdit_ValueChanged(Widget source, EventArgs e)
+        {
+            this.fireChangesMade();
+            keyTimer.Stop();
+            keyTimer.Start();
+        }
+
+        void keyTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            fireApplyChanges();
         }
     }
 }
