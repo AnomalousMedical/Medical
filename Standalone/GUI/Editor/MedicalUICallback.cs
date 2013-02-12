@@ -8,6 +8,8 @@ using Logging;
 
 namespace Medical.GUI
 {
+    
+
     public class MedicalUICallback : EditUICallback
     {
         private Dictionary<Object, Delegate> customQueries = new Dictionary<object, Delegate>();
@@ -29,12 +31,34 @@ namespace Medical.GUI
 
         public void showBrowser<T>(Browser browser, SendResult<T> resultCallback)
         {
-            BrowserWindow<T>.GetInput(browser, true, resultCallback);
+            switch (browser.Hint)
+            {
+                case Browser.DisplayHint.Tree:
+                    BrowserWindow<T>.GetInput(browser, true, resultCallback);
+                    break;
+                case Browser.DisplayHint.Images:
+                    BrowserWindow<T>.GetInput(browser, true, resultCallback);
+                    break;
+                default:
+                    BrowserWindow<T>.GetInput(browser, true, resultCallback);
+                    break;
+            }
         }
 
         public void showInputBrowser<T>(Browser browser, SendResult<T, string> resultCallback)
         {
-            InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
+            switch (browser.Hint)
+            {
+                case Browser.DisplayHint.Tree:
+                    InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
+                    break;
+                case Browser.DisplayHint.Images:
+                    InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
+                    break;
+                default:
+                    InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
+                    break;
+            }
         }
 
         public void showFolderBrowserDialog(SendResult<string> resultCallback)

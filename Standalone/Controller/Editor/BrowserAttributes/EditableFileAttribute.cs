@@ -16,11 +16,14 @@ namespace Medical.Editor
         {
             this.fileSearchPattern = fileSearchPattern;
             this.prompt = prompt;
+            DisplayHint = Browser.DisplayHint.Tree;
         }
+
+        public Browser.DisplayHint DisplayHint { get; set; }
 
         public override EditableProperty createEditableProperty(MemberWrapper memberWrapper, object target)
         {
-            return new FileBrowserEditableProperty(memberWrapper.getWrappedName(), memberWrapper, target, fileSearchPattern.Split('|'), prompt);
+            return new FileBrowserEditableProperty(memberWrapper.getWrappedName(), memberWrapper, target, fileSearchPattern.Split('|'), prompt, DisplayHint);
         }
     }
 }
