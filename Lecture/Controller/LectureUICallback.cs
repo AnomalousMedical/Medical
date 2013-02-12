@@ -25,7 +25,7 @@ namespace Lecture
             Browser browser = new Browser("Files", prompt);
             if (editorController.ResourceProvider != null)
             {
-                foreach (String timeline in editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true))
+                foreach (String timeline in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
                 {
                     browser.addNode("", null, new BrowserNode(timeline.Substring(dirLength), timeline));
                 }
@@ -45,7 +45,7 @@ namespace Lecture
             {
                 foreach (String searchPattern in searchPatterns)
                 {
-                    foreach (String file in editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true))
+                    foreach (String file in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
                     {
                         browser.addNode("", null, new BrowserNode(file.Substring(dirLength), file));
                     }
@@ -66,7 +66,7 @@ namespace Lecture
             {
                 foreach (String searchPattern in searchPatterns)
                 {
-                    foreach (String file in editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true))
+                    foreach (String file in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
                     {
                         browser.addNode("", null, new BrowserNode(file.Substring(dirLength), Path.Combine(leadingPath, file)));
                     }
@@ -103,6 +103,17 @@ namespace Lecture
                 ++dirLength;
             }
             return dirLength;
+        }
+
+        IEnumerable<String> thumbFilter(IEnumerable<String> files)
+        {
+            foreach (String file in files)
+            {
+                if (!Path.GetFileName(file).Equals("thumb.png", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    yield return file;
+                }
+            }
         }
     }
 }

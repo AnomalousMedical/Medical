@@ -13,16 +13,26 @@ namespace Medical.GUI
 {
     public class ImageBrowserWindow<BrowseType> : Dialog
     {
+        const int FullImageWidth = 165;
+        const int FullImageHeight = 135;
+        const int Inflation = 10;
+
         private SendResult<BrowseType> SendResult;
 
         private SingleSelectButtonGrid imageGrid;
         private BrowserImageManager imageManager;
+        private ScrollView gridScroll;
 
         public ImageBrowserWindow(String message, ResourceProvider resourceProvider)
             :base("Medical.GUI.Editor.ImageBrowserWindow.layout")
         {
-            imageGrid = new SingleSelectButtonGrid((ScrollView)window.findWidget("ScrollView"));
+            gridScroll = (ScrollView)window.findWidget("ScrollView");
+            imageGrid = new SingleSelectButtonGrid(gridScroll);
             imageGrid.ItemActivated += imageGrid_ItemActivated;
+            imageGrid.ItemWidth = FullImageWidth + Inflation;
+            imageGrid.ItemHeight = FullImageHeight + Inflation;
+            imageGrid.ButtonSkin = "ButtonGridImageButton";
+            imageGrid.ShowGroupCaptions = false;
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
             window.Caption = message;
 
@@ -44,7 +54,7 @@ namespace Medical.GUI
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
-            imageGrid.layout();
+            imageGrid.resizeAndLayout(gridScroll.ClientCoord.width);
         }
 
         public void setBrowser(Browser browser)
@@ -59,10 +69,10 @@ namespace Medical.GUI
             {
                 ButtonGridItem item = imageGrid.addItem("", node.Text);
                 item.UserObject = node.Value;
-                imageManager.loadThumbnail(node.Value.ToString(), (imageKey, size) =>
+                imageManager.loadThumbnail(node.Value.ToString(), FullImageWidth, FullImageHeight, (imageKey, size) =>
                 {
                     item.setImage(imageKey);
-                    item.setImageSize(size.Width, size.Height);
+                    item.setImageSize(size.Width, size.Height, FullImageWidth + Inflation, FullImageHeight + Inflation);
                 });
                 if (node == defaultNode)
                 {
@@ -154,9 +164,7 @@ namespace Medical.GUI
     {
         private static WorkQueue workQueue = new WorkQueue();
 
-        public const int ThumbWidth = 100;
-        public const int ThumbHeight = 100;
-        private ImageAtlas imageAtlas = new ImageAtlas("ImageBrowserThumbs" + Guid.NewGuid().ToString("D"), new IntSize2(ThumbWidth, ThumbHeight));
+        private ImageAtlas imageAtlas = new ImageAtlas("ImageBrowserThumbs" + Guid.NewGuid().ToString("D"), new IntSize2(100, 100));
         private ResourceProvider resourceProvider;
         bool disposed = false;
         private Dictionary<String, IntSize2> sizes = new Dictionary<string, IntSize2>();
@@ -173,7 +181,7 @@ namespace Medical.GUI
             disposed = true;
         }
 
-        public void loadThumbnail(String file, Action<String, IntSize2> loadedCallback)
+        public void loadThumbnail(String file, int width, int height, Action<String, IntSize2> loadedCallback)
         {
             String id = imageAtlas.getImageId(file);
             if (id != null)
@@ -200,6 +208,7 @@ namespace Medical.GUI
                                         {
                                             if (!imageAtlas.containsImage(file))
                                             {
+                                                imageAtlas.ImageSize = new IntSize2(width, height);
                                                 IntSize2 size;
                                                 String imageKey = imageAtlas.addImage(file, thumb, out size);
                                                 sizes.Add(imageKey, size);
