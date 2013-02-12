@@ -138,10 +138,7 @@ namespace Lecture
                                         readStream.CopyTo(writeStream);
                                     }
                                 }
-                                ThreadManager.invoke(new Action(() =>
-                                {
-                                    finishedCallback(writePath);
-                                }));
+                                finishedCallback(writePath);
                             }
                             catch (Exception ex)
                             {

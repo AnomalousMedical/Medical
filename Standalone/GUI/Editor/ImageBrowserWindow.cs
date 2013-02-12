@@ -152,8 +152,11 @@ namespace Medical.GUI
                                 {
                                     importCallback(path, previewPath =>
                                         {
-                                            BrowserNode node = new BrowserNode("", previewPath);
-                                            inputBox.addNodes(node, node);
+                                            ThreadManager.invoke(new Action(() =>
+                                            {
+                                                BrowserNode node = new BrowserNode("", previewPath);
+                                                inputBox.addNodes(node, node);
+                                            }));
                                         });
                                 }
                                 else
