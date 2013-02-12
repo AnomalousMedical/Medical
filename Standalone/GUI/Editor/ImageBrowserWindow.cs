@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine.Editing;
+using Engine;
+using System.IO;
+using System.Drawing;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -11,13 +15,14 @@ namespace Medical.GUI
     {
         private SendResult<BrowseType> SendResult;
 
-        private Tree browserTree;
+        private SingleSelectButtonGrid imageGrid;
+        private BrowserImageManager imageManager;
 
-        public ImageBrowserWindow(String message)
+        public ImageBrowserWindow(String message, ResourceProvider resourceProvider)
             :base("Medical.GUI.Editor.ImageBrowserWindow.layout")
         {
-            browserTree = new Tree((ScrollView)window.findWidget("ScrollView"));
-            browserTree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(browserTree_NodeMouseDoubleClick);
+            imageGrid = new SingleSelectButtonGrid((ScrollView)window.findWidget("ScrollView"));
+            imageGrid.ItemActivated += imageGrid_ItemActivated;
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
             window.Caption = message;
 
@@ -27,35 +32,39 @@ namespace Medical.GUI
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
             Accepted = false;
+
+            imageManager = new BrowserImageManager(resourceProvider);
+        }
+
+        public override void Dispose()
+        {
+            imageManager.Dispose();
+            base.Dispose();
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
-            browserTree.layout();
+            imageGrid.layout();
         }
 
         public void setBrowser(Browser browser)
         {
-            browserTree.Nodes.clear();
-            TreeNode parentNode = addNodes(browser.getTopNode(), browser.DefaultSelection);
-            browserTree.Nodes.add(parentNode);
-            parentNode.Expanded = true;
+            imageGrid.clear();
+            addNodes(browser.getTopNode(), browser.DefaultSelection);
         }
 
-        private TreeNode addNodes(BrowserNode node, BrowserNode defaultNode)
+        private void addNodes(BrowserNode node, BrowserNode defaultNode)
         {
-            TreeNode treeNode = new TreeNode(node.Text);
-            treeNode.ImageResource = node.IconName;
-            treeNode.UserData = node.Value;
+            ButtonGridItem item = imageGrid.addItem("", node.Text, node.IconName);
+            item.UserObject = node.Value;
             if (node == defaultNode)
             {
-                browserTree.SelectedNode = treeNode;
+                imageGrid.SelectedItem = item;
             }
             foreach (BrowserNode child in node.getChildIterator())
             {
-                treeNode.Children.add(addNodes(child, defaultNode));
+                addNodes(child, defaultNode);
             }
-            return treeNode;
         }
 
         /// <summary>
@@ -65,9 +74,9 @@ namespace Medical.GUI
         {
             get
             {
-                if (browserTree.SelectedNode != null)
+                if (imageGrid.SelectedItem != null)
                 {
-                    return (BrowseType)browserTree.SelectedNode.UserData;
+                    return (BrowseType)imageGrid.SelectedItem.UserObject;
                 }
                 return default(BrowseType);
             }
@@ -78,15 +87,6 @@ namespace Medical.GUI
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
-        }
-
-        void browserTree_NodeMouseDoubleClick(object sender, TreeEventArgs e)
-        {
-            if (SelectedValue != null)
-            {
-                Accepted = true;
-                close();
-            }
         }
 
         void selectButton_MouseButtonClick(Widget source, EventArgs e)
@@ -104,9 +104,18 @@ namespace Medical.GUI
             close();
         }
 
-        public static void GetInput(Browser browser, bool modal, SendResult<BrowseType> sendResult)
+        void imageGrid_ItemActivated(object sender, EventArgs e)
         {
-            ImageBrowserWindow<BrowseType> inputBox = new ImageBrowserWindow<BrowseType>(browser.Prompt);
+            if (SelectedValue != null)
+            {
+                Accepted = true;
+                close();
+            }
+        }
+
+        public static void GetInput(Browser browser, bool modal, SendResult<BrowseType> sendResult, ResourceProvider resourceProvider)
+        {
+            ImageBrowserWindow<BrowseType> inputBox = new ImageBrowserWindow<BrowseType>(browser.Prompt, resourceProvider);
             inputBox.setBrowser(browser);
             inputBox.SendResult = sendResult;
             inputBox.Closing += new EventHandler<DialogCancelEventArgs>(inputBox_Closing);
@@ -130,6 +139,70 @@ namespace Medical.GUI
         {
             ImageBrowserWindow<BrowseType> inputBox = (ImageBrowserWindow<BrowseType>)sender;
             inputBox.Dispose();
+        }
+    }
+
+    class BrowserImageManager : IDisposable
+    {
+        private static WorkQueue workQueue = new WorkQueue();
+
+        public const int ThumbWidth = 183;
+        public const int ThumbHeight = 101;
+        private ImageAtlas imageAtlas = new ImageAtlas("ImageBrowserThumbs" + Guid.NewGuid().ToString("D"), new IntSize2(ThumbWidth, ThumbHeight));
+        private ResourceProvider resourceProvider;
+
+        public BrowserImageManager(ResourceProvider resourceProvider)
+        {
+            this.resourceProvider = resourceProvider;
+        }
+
+        public void Dispose()
+        {
+            imageAtlas.Dispose();
+        }
+
+        public void loadThumbnail(String file, Action<String, String> loadedCallback)
+        {
+            String id = imageAtlas.getImageId(file);
+            if (id != null)
+            {
+                loadedCallback(file, id);
+            }
+            else
+            {
+                workQueue.enqueue(() =>
+                {
+                    String thumbPath = file;
+                    try
+                    {
+                        if (resourceProvider.exists(thumbPath))
+                        {
+                            using (Stream stream = resourceProvider.openFile(thumbPath))
+                            {
+                                Image thumb = Bitmap.FromStream(stream);
+                                ThreadManager.invoke(new Action(() =>
+                                {
+                                    try
+                                    {
+                                        if (!imageAtlas.containsImage(file))
+                                        {
+                                            loadedCallback(file, imageAtlas.addImage(file, thumb));
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        thumb.Dispose();
+                                    }
+                                }));
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.Log.Error("Could not load thumbnail because of {0} exception.\nReason: {1}", ex.GetType(), ex.Message);
+                    }
+                });
+            }
         }
     }
 }

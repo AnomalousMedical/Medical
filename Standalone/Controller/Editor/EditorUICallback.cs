@@ -280,5 +280,19 @@ namespace Medical
         }
 
         public AnomalousMvcContext CurrentEditingMvcContext { get; set; }
+
+        public override void showBrowser<T>(Browser browser, SendResult<T> resultCallback)
+        {
+            switch (browser.Hint)
+            {
+                case Browser.DisplayHint.Images:
+                    ImageBrowserWindow<T>.GetInput(browser, true, resultCallback, editorController.ResourceProvider);
+                    break;
+                default:
+                    base.showBrowser<T>(browser, resultCallback);
+                    break;
+            }
+            
+        }
     }
 }

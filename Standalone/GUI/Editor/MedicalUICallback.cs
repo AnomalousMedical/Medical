@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.GUI
 {
-    
+
 
     public class MedicalUICallback : EditUICallback
     {
@@ -29,30 +29,14 @@ namespace Medical.GUI
             return SelectedEditInterface;
         }
 
-        public void showBrowser<T>(Browser browser, SendResult<T> resultCallback)
+        public virtual void showBrowser<T>(Browser browser, SendResult<T> resultCallback)
         {
-            switch (browser.Hint)
-            {
-                case Browser.DisplayHint.Tree:
-                    BrowserWindow<T>.GetInput(browser, true, resultCallback);
-                    break;
-                case Browser.DisplayHint.Images:
-                    ImageBrowserWindow<T>.GetInput(browser, true, resultCallback);
-                    break;
-                default:
-                    BrowserWindow<T>.GetInput(browser, true, resultCallback);
-                    break;
-            }
+            BrowserWindow<T>.GetInput(browser, true, resultCallback);
         }
 
         public void showInputBrowser<T>(Browser browser, SendResult<T, string> resultCallback)
         {
-            switch (browser.Hint)
-            {
-                default:
-                    InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
-                    break;
-            }
+            InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
         }
 
         public void showFolderBrowserDialog(SendResult<string> resultCallback)
@@ -185,7 +169,7 @@ namespace Medical.GUI
                 Log.Warning("Could not find custom object query {0}. No query run.", queryKey.ToString());
             }
         }
-        
+
         /// <summary>
         /// This method allows the interface to run a custom query on the
         /// UICallback. This can do anything and is not defined here.
