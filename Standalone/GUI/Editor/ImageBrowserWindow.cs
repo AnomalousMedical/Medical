@@ -59,9 +59,10 @@ namespace Medical.GUI
             {
                 ButtonGridItem item = imageGrid.addItem("", node.Text);
                 item.UserObject = node.Value;
-                imageManager.loadThumbnail(node.Value.ToString(), imageKey =>
+                imageManager.loadThumbnail(node.Value.ToString(), (imageKey, size) =>
                 {
                     item.setImage(imageKey);
+                    item.setImageSize(size.Width, size.Height);
                 });
                 if (node == defaultNode)
                 {
@@ -153,10 +154,12 @@ namespace Medical.GUI
     {
         private static WorkQueue workQueue = new WorkQueue();
 
-        public const int ThumbWidth = 183;
-        public const int ThumbHeight = 101;
+        public const int ThumbWidth = 100;
+        public const int ThumbHeight = 100;
         private ImageAtlas imageAtlas = new ImageAtlas("ImageBrowserThumbs" + Guid.NewGuid().ToString("D"), new IntSize2(ThumbWidth, ThumbHeight));
         private ResourceProvider resourceProvider;
+        bool disposed = false;
+        private Dictionary<String, IntSize2> sizes = new Dictionary<string, IntSize2>();
 
         public BrowserImageManager(ResourceProvider resourceProvider)
         {
@@ -167,14 +170,15 @@ namespace Medical.GUI
         public void Dispose()
         {
             imageAtlas.Dispose();
+            disposed = true;
         }
 
-        public void loadThumbnail(String file, Action<String> loadedCallback)
+        public void loadThumbnail(String file, Action<String, IntSize2> loadedCallback)
         {
             String id = imageAtlas.getImageId(file);
             if (id != null)
             {
-                loadedCallback(id);
+                loadedCallback(id, sizes[file]);
             }
             else
             {
@@ -192,9 +196,15 @@ namespace Medical.GUI
                                 {
                                     try
                                     {
-                                        if (!imageAtlas.containsImage(file))
+                                        if (!disposed)
                                         {
-                                            loadedCallback(imageAtlas.addImage(file, thumb));
+                                            if (!imageAtlas.containsImage(file))
+                                            {
+                                                IntSize2 size;
+                                                String imageKey = imageAtlas.addImage(file, thumb, out size);
+                                                sizes.Add(imageKey, size);
+                                                loadedCallback(imageKey, size);
+                                            }
                                         }
                                     }
                                     finally
