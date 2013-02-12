@@ -14,19 +14,19 @@ namespace Medical.Editor
             BuildBrowser
         }
 
-        private String browserSearchPattern;
         private String prompt;
+        private List<String> searchPatterns;
 
-        public FileBrowserEditableProperty(String name, MemberWrapper propertyInfo, Object instance, String browserSearchPattern, String prompt)
+        public FileBrowserEditableProperty(String name, MemberWrapper propertyInfo, Object instance, IEnumerable<String> searchPatterns, String prompt)
             :base(name, propertyInfo, instance)
         {
-            this.browserSearchPattern = browserSearchPattern;
+            this.searchPatterns = new List<String>(searchPatterns);
             this.prompt = prompt;
         }
 
         protected override Browser buildBrowser(EditUICallback uiCallback)
         {
-            return uiCallback.runSyncCustomQuery<Browser, String, String>(CustomQueries.BuildBrowser, browserSearchPattern, prompt);
+            return uiCallback.runSyncCustomQuery<Browser, IEnumerable<String>, String>(CustomQueries.BuildBrowser, searchPatterns, prompt);
         }
     }
 }

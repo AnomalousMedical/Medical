@@ -118,7 +118,7 @@ namespace Medical
             }
         }
 
-        [EditableFile("*.png", "Choose Image File")]
+        [EditableFile("*.png|*.jpg|*.jpeg", "Choose Image File")]
         public String ImageFile
         {
             get

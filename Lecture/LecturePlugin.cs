@@ -16,7 +16,7 @@ namespace Lecture
         private EditorController editorController;
         private SlideshowEditController slideshowEditController;
         private TimelineController editorTimelineController;
-        private EditorUICallback editorUICallback;
+        private LectureUICallback editorUICallback;
         private PropEditController propEditController;
         private SimObjectMover propMover;
 
@@ -53,7 +53,7 @@ namespace Lecture
 
             propEditController = new PropEditController(propMover);
 
-            editorUICallback = new EditorUICallback(standaloneController, editorController, propEditController);
+            editorUICallback = new LectureUICallback(standaloneController, editorController, propEditController);
 
             slideshowEditController = new SlideshowEditController(standaloneController, editorUICallback, this.propEditController, editorController, editorTimelineController);
             slideshowExplorer = new SlideshowExplorer(slideshowEditController);

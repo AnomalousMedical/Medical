@@ -20,7 +20,7 @@ namespace Medical
     public class EditorUICallback : MedicalUICallback, RmlWysiwygBrowserProvider
     {
         private StandaloneController standaloneController;
-        private EditorController editorController;
+        protected EditorController editorController;
         private CopySaver copySaver = new CopySaver();
         private PropEditController propEditController;
 
@@ -138,7 +138,7 @@ namespace Medical
                 }
             });
 
-            this.addSyncCustomQuery<Browser, String, String>(FileBrowserEditableProperty.CustomQueries.BuildBrowser, (searchPattern, prompt) =>
+            this.addSyncCustomQuery<Browser, IEnumerable<String>, String>(FileBrowserEditableProperty.CustomQueries.BuildBrowser, (searchPattern, prompt) =>
             {
                 return createFileBrowser(searchPattern, prompt);
             });
@@ -222,7 +222,7 @@ namespace Medical
             return browser;
         }
 
-        public Browser createFileBrowser(String searchPattern, String prompt)
+        public virtual Browser createFileBrowser(String searchPattern, String prompt)
         {
             Browser browser = new Browser("Files", prompt);
             if (editorController.ResourceProvider != null)
@@ -239,7 +239,7 @@ namespace Medical
             return browser;
         }
 
-        public Browser createFileBrowser(IEnumerable<string> searchPatterns, string prompt)
+        public virtual Browser createFileBrowser(IEnumerable<string> searchPatterns, string prompt)
         {
             Browser browser = new Browser("Files", prompt);
             if (editorController.ResourceProvider != null)
@@ -259,7 +259,7 @@ namespace Medical
             return browser;
         }
 
-        public Browser createFileBrowser(IEnumerable<string> searchPatterns, String prompt, String leadingPath)
+        public virtual Browser createFileBrowser(IEnumerable<string> searchPatterns, String prompt, String leadingPath)
         {
             Browser browser = new Browser("Files", prompt);
             if (editorController.ResourceProvider != null)

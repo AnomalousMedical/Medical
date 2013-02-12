@@ -20,7 +20,7 @@ namespace Medical.Editor
 
         public override EditableProperty createEditableProperty(MemberWrapper memberWrapper, object target)
         {
-            return new FileBrowserEditableProperty(memberWrapper.getWrappedName(), memberWrapper, target, fileSearchPattern, prompt);
+            return new FileBrowserEditableProperty(memberWrapper.getWrappedName(), memberWrapper, target, fileSearchPattern.Split('|'), prompt);
         }
     }
 }

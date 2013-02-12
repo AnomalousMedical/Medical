@@ -35,7 +35,7 @@ namespace Lecture
         private PropEditController propEditController;
         private EditorController editorController;
         private ShowTypeController showTypeController;
-        private EditorUICallback uiCallback;
+        private LectureUICallback uiCallback;
         private Slideshow slideshow;
         private ImageRenderer imageRenderer;
         private MedicalSlideItemTemplate medicalSlideTemplate;
@@ -47,7 +47,7 @@ namespace Lecture
         private bool allowUndoCreation = true;
         private Slide lastEditSlide = null;
 
-        public SlideshowEditController(StandaloneController standaloneController, EditorUICallback uiCallback, PropEditController propEditController, EditorController editorController, TimelineController timelineController)
+        public SlideshowEditController(StandaloneController standaloneController, LectureUICallback uiCallback, PropEditController propEditController, EditorController editorController, TimelineController timelineController)
         {
             this.standaloneController = standaloneController;
             this.uiCallback = uiCallback;
@@ -140,6 +140,7 @@ namespace Lecture
                     );
                 }
                 lastEditSlide = slide;
+                uiCallback.CurrentDirectory = slide.UniqueName;
             }
         }
 

@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\LectureUICallback.cs" />
     <Compile Include="Controller\MedicalSlideItemTemplate.cs" />
     <Compile Include="Controller\ShowTypeController.cs" />
     <Compile Include="Controller\SlideEditorContext.cs" />
