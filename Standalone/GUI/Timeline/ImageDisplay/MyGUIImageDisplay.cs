@@ -155,17 +155,14 @@ namespace Medical.GUI
 
             if (keepAspectRatio)
             {
-                if (height < width)
+                float aspect = (float)bitmapSize.Height / bitmapSize.Width;
+                newWidth = (int)(size.Width * width);
+                newHeight = (int)(newWidth * aspect);
+                if (newHeight > height)
                 {
-                    newHeight = (int)(size.Height * height);
-                    float heightRatio = (float)newHeight / bitmapSize.Height;
-                    newWidth = (int)(heightRatio * bitmapSize.Width);
-                }
-                else
-                {
-                    newWidth = (int)(size.Width * width);
-                    float widthRatio = (float)newWidth / bitmapSize.Width;
-                    newHeight = (int)(widthRatio * bitmapSize.Height);
+                    aspect = (float)bitmapSize.Width / bitmapSize.Height;
+                    newHeight = height;
+                    newWidth = (int)(newHeight * aspect);
                 }
             }
             else
