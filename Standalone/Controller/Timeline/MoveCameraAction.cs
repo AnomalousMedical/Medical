@@ -144,6 +144,11 @@ namespace Medical
             
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+
+        }
+
         [Editable]
         public Vector3 Translation { get; set; }
 

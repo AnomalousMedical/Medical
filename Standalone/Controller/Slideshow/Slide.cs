@@ -18,7 +18,7 @@ namespace Medical
         /// </summary>
         void generateNewUniqueName();
 
-        void cleanup(CleanupFileInfo info);
+        void cleanup(CleanupFileInfo info, ResourceProvider resourceProvider);
 
         String UniqueName { get; }
     }

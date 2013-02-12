@@ -36,6 +36,11 @@ namespace Medical
             
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+
+        }
+
         private void skipToEndButton()
         {
             TimelineController.stopPlayback(true);

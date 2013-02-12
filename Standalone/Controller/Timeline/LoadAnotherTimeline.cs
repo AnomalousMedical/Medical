@@ -75,6 +75,11 @@ namespace Medical
             }
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+            cleanupInfo.claimFile(TargetTimeline);
+        }
+
         private void changeTimelineButton()
         {
             timelineControllerAfterDoAction.startPlayback(timelineControllerAfterDoAction.openTimeline(TargetTimeline));

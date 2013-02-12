@@ -41,6 +41,11 @@ namespace Medical
             }
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+            cleanupInfo.claimFile(Scene);
+        }
+
         [Editable]
         public String Scene { get; set; }
 

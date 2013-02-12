@@ -69,9 +69,18 @@ namespace Medical
             id = Guid.NewGuid().ToString("D");
         }
 
-        public virtual void cleanup(CleanupFileInfo info)
+        public virtual void cleanup(CleanupFileInfo info, ResourceProvider resourceProvider)
         {
-            info.claimFile(Path.Combine(UniqueName, "Timeline.tl"));
+            String timelinePath = Path.Combine(UniqueName, "Timeline.tl");
+            info.claimFile(timelinePath);
+            if (resourceProvider.exists(timelinePath))
+            {
+                using (Stream stream = resourceProvider.openFile(timelinePath))
+                {
+                    Timeline timeline = SharedXmlSaver.Load<Timeline>(stream);
+                    timeline.cleanup(info);
+                }
+            }
             info.claimFile(Path.Combine(UniqueName, "Thumb.png"));
             //Need to save timeline files somehow
             XDocument rmlDoc = XDocument.Parse(rml);

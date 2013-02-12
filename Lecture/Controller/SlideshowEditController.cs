@@ -624,7 +624,7 @@ namespace Lecture
         {
             //Cleanup slide trash
             CleanupFileInfo cleanupInfo = new CleanupFileInfo();
-            slideshow.cleanup(cleanupInfo);
+            slideshow.cleanup(cleanupInfo, ResourceProvider);
             
             undoBuffer.clear(); //Can't really recover from this one, so just erase all undo
             List<Guid> cleanupSlides = new List<Guid>(projectGuidDirectories());

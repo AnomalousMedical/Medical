@@ -28,6 +28,8 @@ namespace Medical
 
         public abstract void findFileReference(TimelineStaticInfo info);
 
+        public abstract void cleanup(CleanupFileInfo cleanupInfo);
+
         public EditInterface getEditInterface()
         {
             if (editInterface == null)

@@ -122,6 +122,11 @@ namespace Medical
             
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+
+        }
+
         public override void reverseSides()
         {
             Translation = new Vector3(-Translation.x, Translation.y, Translation.z);

@@ -95,6 +95,11 @@ namespace Medical
             }
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+            cleanupInfo.claimFile(SoundFile);
+        }
+
         public override bool Finished
         {
             get

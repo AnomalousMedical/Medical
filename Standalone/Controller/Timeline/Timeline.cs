@@ -196,6 +196,24 @@ namespace Medical
             }
         }
 
+        public void cleanup(CleanupFileInfo cleanupInfo)
+        {
+            foreach (TimelineInstantAction action in PreActions)
+            {
+                action.cleanup(cleanupInfo);
+            }
+
+            foreach (TimelineAction action in Actions)
+            {
+                action.cleanup(cleanupInfo);
+            }
+
+            foreach (TimelineInstantAction action in PostActions)
+            {
+                action.cleanup(cleanupInfo);
+            }
+        }
+
         public bool Finished
         {
             get

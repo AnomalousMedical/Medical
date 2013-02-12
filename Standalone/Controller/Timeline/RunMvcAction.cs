@@ -35,6 +35,11 @@ namespace Medical
             
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+
+        }
+
         [EditableAction]
         public String Action { get; set; }
 

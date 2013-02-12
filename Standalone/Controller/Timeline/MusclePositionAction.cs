@@ -73,6 +73,11 @@ namespace Medical
             
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+
+        }
+
         public override void reverseSides()
         {
             targetState.reverseSides();

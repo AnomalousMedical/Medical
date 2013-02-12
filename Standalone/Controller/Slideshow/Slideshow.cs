@@ -92,11 +92,11 @@ namespace Medical
             return mvcContext;
         }
 
-        public void cleanup(CleanupFileInfo cleanupInfo)
+        public void cleanup(CleanupFileInfo cleanupInfo, ResourceProvider resourceProvider)
         {
             foreach (Slide slide in slides)
             {
-                slide.cleanup(cleanupInfo);
+                slide.cleanup(cleanupInfo, resourceProvider);
             }
         }
 

@@ -37,6 +37,11 @@ namespace Medical
             
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+
+        }
+
         #region Saving
 
         protected RepeatPreviousPostActions(LoadInfo info)

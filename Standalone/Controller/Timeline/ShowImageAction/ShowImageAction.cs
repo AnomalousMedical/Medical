@@ -105,6 +105,11 @@ namespace Medical
             }
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+            cleanupInfo.claimFile(ImageFile);
+        }
+
         public override bool Finished
         {
             get

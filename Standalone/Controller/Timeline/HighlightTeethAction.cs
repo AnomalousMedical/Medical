@@ -61,6 +61,11 @@ namespace Medical
             
         }
 
+        public override void cleanup(CleanupFileInfo cleanupInfo)
+        {
+
+        }
+
         public override void editingCompleted()
         {
             TeethController.HighlightContacts = false;
