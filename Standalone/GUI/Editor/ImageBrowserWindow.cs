@@ -22,9 +22,10 @@ namespace Medical.GUI
         private SingleSelectButtonGrid imageGrid;
         private BrowserImageManager imageManager;
         private ScrollView gridScroll;
+        private Button importButton;
 
         public ImageBrowserWindow(String message, ResourceProvider resourceProvider)
-            :base("Medical.GUI.Editor.ImageBrowserWindow.layout")
+            : base("Medical.GUI.Editor.ImageBrowserWindow.layout")
         {
             gridScroll = (ScrollView)window.findWidget("ScrollView");
             imageGrid = new SingleSelectButtonGrid(gridScroll);
@@ -40,6 +41,7 @@ namespace Medical.GUI
             selectButton.MouseButtonClick += new MyGUIEvent(selectButton_MouseButtonClick);
             Button cancelButton = (Button)window.findWidget("Cancel");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+            importButton = (Button)window.findWidget("Import");
 
             Accepted = false;
 
@@ -54,7 +56,7 @@ namespace Medical.GUI
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
-            imageGrid.resizeAndLayout(gridScroll.ClientCoord.width);
+            imageGrid.resizeAndLayout(gridScroll.ViewCoord.width);
         }
 
         public void setBrowser(Browser browser)
@@ -131,15 +133,51 @@ namespace Medical.GUI
             }
         }
 
-        public static void GetInput(Browser browser, bool modal, SendResult<BrowseType> sendResult, ResourceProvider resourceProvider)
+        public static void GetInput(Browser browser, bool modal, SendResult<BrowseType> sendResult, ResourceProvider resourceProvider, Action<String, Action<String>> importCallback = null)
         {
             ImageBrowserWindow<BrowseType> inputBox = new ImageBrowserWindow<BrowseType>(browser.Prompt, resourceProvider);
             inputBox.setBrowser(browser);
+            if (importCallback != null)
+            {
+                inputBox.importButton.MouseButtonClick += (source, e) =>
+                    {
+                        FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose Image", wildcard: "Images|*");
+                        openDialog.showModal((result, paths) =>
+                        {
+                            if (result == NativeDialogResult.OK)
+                            {
+                                String path = paths.First();
+                                String extension = Path.GetExtension(path);
+                                if (extension.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    importCallback(path, previewPath =>
+                                        {
+                                            BrowserNode node = new BrowserNode("", previewPath);
+                                            inputBox.addNodes(node, node);
+                                        });
+                                }
+                                else
+                                {
+                                    MessageBox.show(String.Format("Cannot open a file with extension '{0}'. Please choose a file that is a Png Image (.png) or a Jpeg (.jpg or .jpeg).", extension), "Can't Load Image", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                                }
+                            }
+                        });
+                    };
+            }
+            else
+            {
+                inputBox.importButton.Visible = false;
+            }
             inputBox.SendResult = sendResult;
             inputBox.Closing += new EventHandler<DialogCancelEventArgs>(inputBox_Closing);
             inputBox.Closed += new EventHandler(inputBox_Closed);
             inputBox.center();
             inputBox.open(modal);
+        }
+
+        static void importButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         static void inputBox_Closing(object sender, DialogCancelEventArgs e)
