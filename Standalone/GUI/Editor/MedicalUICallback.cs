@@ -37,7 +37,7 @@ namespace Medical.GUI
                     BrowserWindow<T>.GetInput(browser, true, resultCallback);
                     break;
                 case Browser.DisplayHint.Images:
-                    BrowserWindow<T>.GetInput(browser, true, resultCallback);
+                    ImageBrowserWindow<T>.GetInput(browser, true, resultCallback);
                     break;
                 default:
                     BrowserWindow<T>.GetInput(browser, true, resultCallback);
@@ -49,12 +49,6 @@ namespace Medical.GUI
         {
             switch (browser.Hint)
             {
-                case Browser.DisplayHint.Tree:
-                    InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
-                    break;
-                case Browser.DisplayHint.Images:
-                    InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
-                    break;
                 default:
                     InputBrowserWindow<T>.GetInput(browser, true, resultCallback);
                     break;

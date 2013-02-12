@@ -216,6 +216,7 @@
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplate.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplateAdapter.cs" />
     <Compile Include="GUI\Editor\CommonEditorResources.cs" />
+    <Compile Include="GUI\Editor\ImageBrowserWindow.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropComponent.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropFactory.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropItem.cs" />
@@ -784,6 +785,7 @@
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
     <EmbeddedResource Include="GUI\Editor\AddItemDialog\AddItemDialog.layout" />
+    <EmbeddedResource Include="GUI\Editor\ImageBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\DragAndDrop\DragAndDropComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.layout" />
     <EmbeddedResource Include="GUI\Editor\GenericEditor\ExpandingGenericEditor.layout" />

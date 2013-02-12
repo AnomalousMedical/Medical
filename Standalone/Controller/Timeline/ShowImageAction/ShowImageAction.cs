@@ -118,7 +118,7 @@ namespace Medical
             }
         }
 
-        [EditableFile("*.png|*.jpg|*.jpeg", "Choose Image File")]
+        [EditableFile("*.png|*.jpg|*.jpeg", "Choose Image File", DisplayHint=Browser.DisplayHint.Images)]
         public String ImageFile
         {
             get
