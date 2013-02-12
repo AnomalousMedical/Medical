@@ -55,11 +55,18 @@ namespace Medical.GUI
 
         private void addNodes(BrowserNode node, BrowserNode defaultNode)
         {
-            ButtonGridItem item = imageGrid.addItem("", node.Text, node.IconName);
-            item.UserObject = node.Value;
-            if (node == defaultNode)
+            if (node.Value != null)
             {
-                imageGrid.SelectedItem = item;
+                ButtonGridItem item = imageGrid.addItem("", node.Text);
+                item.UserObject = node.Value;
+                imageManager.loadThumbnail(node.Value.ToString(), imageKey =>
+                {
+                    item.setImage(imageKey);
+                });
+                if (node == defaultNode)
+                {
+                    imageGrid.SelectedItem = item;
+                }
             }
             foreach (BrowserNode child in node.getChildIterator())
             {
@@ -154,6 +161,7 @@ namespace Medical.GUI
         public BrowserImageManager(ResourceProvider resourceProvider)
         {
             this.resourceProvider = resourceProvider;
+            imageAtlas.ResizeMode = ImageResizeMode.KeepAspect;
         }
 
         public void Dispose()
@@ -161,12 +169,12 @@ namespace Medical.GUI
             imageAtlas.Dispose();
         }
 
-        public void loadThumbnail(String file, Action<String, String> loadedCallback)
+        public void loadThumbnail(String file, Action<String> loadedCallback)
         {
             String id = imageAtlas.getImageId(file);
             if (id != null)
             {
-                loadedCallback(file, id);
+                loadedCallback(id);
             }
             else
             {
@@ -186,7 +194,7 @@ namespace Medical.GUI
                                     {
                                         if (!imageAtlas.containsImage(file))
                                         {
-                                            loadedCallback(file, imageAtlas.addImage(file, thumb));
+                                            loadedCallback(imageAtlas.addImage(file, thumb));
                                         }
                                     }
                                     finally
