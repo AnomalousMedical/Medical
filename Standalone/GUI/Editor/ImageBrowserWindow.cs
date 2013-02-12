@@ -178,11 +178,6 @@ namespace Medical.GUI
             inputBox.open(modal);
         }
 
-        static void importButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         static void inputBox_Closing(object sender, DialogCancelEventArgs e)
         {
             ImageBrowserWindow<BrowseType> inputBox = (ImageBrowserWindow<BrowseType>)sender;
