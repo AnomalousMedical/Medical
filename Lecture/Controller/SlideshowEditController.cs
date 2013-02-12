@@ -260,7 +260,7 @@ namespace Lecture
                     {
                         changeToSlide = slideshow.get(slideIndex);
                     }
-                    else if (slideIndex - 1 > 0)
+                    else if (slideIndex - 1 >= 0)
                     {
                         changeToSlide = slideshow.get(slideIndex - 1);
                     }
@@ -354,7 +354,7 @@ namespace Lecture
                     {
                         changeToSlide = slideshow.get(slideIndex);
                     }
-                    else if (slideIndex - 1 > 0)
+                    else if (slideIndex - 1 >= 0)
                     {
                         changeToSlide = slideshow.get(slideIndex - 1);
                     }
@@ -665,6 +665,10 @@ namespace Lecture
 
         public void runSlideshow(int startIndex)
         {
+            if (startIndex == -1)
+            {
+                startIndex = 0;
+            }
             AnomalousMvcContext context = slideshow.createContext(ResourceProvider, startIndex);
             context.RuntimeName = editorController.EditorContextRuntimeName;
             context.setResourceProvider(ResourceProvider);
