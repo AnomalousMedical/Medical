@@ -7,6 +7,7 @@ using SoundPlugin;
 using Engine.Saving;
 using Engine.Editing;
 using Medical.Editor;
+using System.IO;
 
 namespace Medical
 {
@@ -98,6 +99,29 @@ namespace Medical
         public override void cleanup(CleanupFileInfo cleanupInfo)
         {
             cleanupInfo.claimFile(SoundFile);
+        }
+
+        public enum CustomQueries
+        {
+            Record,
+            EditExternally
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Record", (callback, caller) =>
+                {
+                    callback.runCustomQuery<String, String>(CustomQueries.Record, (String soundFileName, ref String errorPrompt) =>
+                    {
+                        SoundFile = soundFileName;
+                        return true;
+                    }, SoundFile);
+                }));
+            editInterface.addCommand(new EditInterfaceCommand("Edit Externally", (callback, caller) =>
+            {
+                callback.runOneWayCustomQuery(CustomQueries.EditExternally, SoundFile);
+            }));
         }
 
         public override bool Finished

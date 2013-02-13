@@ -79,12 +79,19 @@ namespace Medical
 
         public void save(Stream destStream)
         {
-            using (Stream sourceStream = File.Open(tempFilePath, FileMode.Open, FileAccess.Read))
+            if (File.Exists(tempFilePath))
             {
-                using (OggEncoder oggEncoder = new OggEncoder())
+                using (Stream sourceStream = File.Open(tempFilePath, FileMode.Open, FileAccess.Read))
                 {
-                    oggEncoder.encodeToStream(sourceStream, destStream);
+                    using (OggEncoder oggEncoder = new OggEncoder())
+                    {
+                        oggEncoder.encodeToStream(sourceStream, destStream);
+                    }
                 }
+            }
+            else
+            {
+                throw new FileNotFoundException("Cannot find temporary audio file {0}", tempFilePath);
             }
         }
 

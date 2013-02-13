@@ -7,6 +7,7 @@ using Engine.ObjectManagement;
 using UnitTestPlugin.GUI;
 using Medical.GUI;
 using Logging;
+using System.IO;
 
 namespace UnitTestPlugin
 {

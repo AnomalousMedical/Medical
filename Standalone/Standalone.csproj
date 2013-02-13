@@ -286,6 +286,7 @@
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
+    <Compile Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponent.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
@@ -807,6 +808,7 @@
     <EmbeddedResource Include="GUI\Editor\PropTimeline\PropTimeline.layout" />
     <EmbeddedResource Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
     <EmbeddedResource Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
+    <EmbeddedResource Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.layout">

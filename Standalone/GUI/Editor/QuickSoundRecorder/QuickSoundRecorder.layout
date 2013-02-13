@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCX" position="85 94 191 110" layer="Overlapped">
+        <Property key="Caption" value="Sound Recorder"/>
+        <Widget type="Button" skin="Button" position="1 6 63 27" name="Record">
+            <Property key="Caption" value="Record"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 50 48 27" align="Left Bottom" name="Save">
+            <Property key="Caption" value="Save"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="53 50 48 27" align="Left Bottom" name="Cancel">
+            <Property key="Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="67 6 38 14">
+            <Property key="Caption" value="Status"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="67 20 108 13" name="StatusLabel">
+            <Property key="Caption" value="Stopped"/>
+        </Widget>
+    </Widget>
+</MyGUI>

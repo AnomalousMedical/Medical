@@ -19,7 +19,25 @@ namespace Lecture
         public LectureUICallback(StandaloneController standaloneController, EditorController editorController, PropEditController propEditController)
             : base(standaloneController, editorController, propEditController)
         {
+            addCustomQuery<String, String>(PlaySoundAction.CustomQueries.Record, (queryResult, soundFile) =>
+                {
+                    String finalSoundFile = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString("D") + ".ogg");
+                    String error = null;
+                    QuickSoundRecorder.ShowDialog(finalSoundFile, editorController.ResourceProvider.openWriteStream,
+                    newSoundFile =>
+                    {
+                        queryResult.Invoke(newSoundFile, ref error);
+                    });
+                });
 
+            addOneWayCustomQuery<String>(PlaySoundAction.CustomQueries.EditExternally, soundFile =>
+            {
+                if (editorController.ResourceProvider.exists(soundFile))
+                {
+                    String fullPath = editorController.ResourceProvider.getFullFilePath(soundFile);
+                    OtherProcessManager.openLocalURL(fullPath);
+                }
+            });
         }
 
         public override Browser createFileBrowser(String searchPattern, String prompt)

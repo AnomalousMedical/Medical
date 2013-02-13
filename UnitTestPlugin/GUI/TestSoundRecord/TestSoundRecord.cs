@@ -40,7 +40,6 @@ namespace UnitTestPlugin.GUI
 
         void enabled_CheckedChanged(Widget source, EventArgs e)
         {
-            PerformanceMonitor.Enabled = enabled.Checked;
             if (enabled.Checked)
             {
                 recordAudioController.startRecording();
