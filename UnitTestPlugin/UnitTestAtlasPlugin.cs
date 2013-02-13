@@ -23,6 +23,7 @@ namespace UnitTestPlugin
         public void Dispose()
         {
             testImageAtlas.Dispose();
+            testSoundRecord.Dispose();
         }
 
         public void loadGUIResources()

@@ -173,6 +173,7 @@
     <Compile Include="Controller\IdleHandler.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
+    <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />

@@ -15,18 +15,15 @@ namespace UnitTestPlugin.GUI
 {
     class TestSoundRecord : MDIDialog
     {
-        private TextBox text;
         private CheckButton enabled;
         private StandaloneController standaloneController;
-        private CaptureDevice captureDevice;
-        private Stream writeStream;
+        private RecordAudioController recordAudioController = new RecordAudioController();
 
         public TestSoundRecord(StandaloneController standaloneController)
             : base("UnitTestPlugin.GUI.TestSoundRecord.TestSoundRecord.layout")
         {
             this.standaloneController = standaloneController;
 
-            text = (TextBox)window.findWidget("Text");
             enabled = new CheckButton((Button)window.findWidget("Enabled"));
             enabled.CheckedChanged += new MyGUIEvent(enabled_CheckedChanged);
             enabled.Checked = PerformanceMonitor.Enabled;
@@ -35,62 +32,45 @@ namespace UnitTestPlugin.GUI
             reset.MouseButtonClick += new MyGUIEvent(reset_MouseButtonClick);
         }
 
+        public override void Dispose()
+        {
+            recordAudioController.Dispose();
+            base.Dispose();
+        }
+
         void enabled_CheckedChanged(Widget source, EventArgs e)
         {
             PerformanceMonitor.Enabled = enabled.Checked;
             if (enabled.Checked)
             {
-                captureDevice = SoundPluginInterface.Instance.SoundManager.openCaptureDevice();
-                writeStream = new MemoryStream();// File.Open(Path.Combine(MedicalConfig.UserDocRoot, "TestOutput.wav"), FileMode.Create, FileAccess.Write);
-                unsafe
-                {
-                    captureDevice.start((byte* buffer, int length) =>
-                    {
-                        byte[] byteBuffer = new byte[length];
-                        for (int i = 0; i < length; ++i)
-                        {
-                            byteBuffer[i] = buffer[i];
-                        }
-                        writeStream.Write(byteBuffer, 0, length);
-                    });
-                }
+                recordAudioController.startRecording();
             }
             else
             {
-                captureDevice.Dispose();
-                if (writeStream != null)
-                {
-                    writeStream.Seek(0, SeekOrigin.Begin);
-                    using (Stream fileWriter = File.Open(Path.Combine(MedicalConfig.UserDocRoot, "Test.raw"), FileMode.Create, FileAccess.Write))
-                    {
-                        writeStream.CopyTo(fileWriter);
-                    }
-                    writeStream.Close();
-                    writeStream = null;
-                }
-                captureDevice = null;
+                recordAudioController.stopRecording();
             }
         }
 
         unsafe void reset_MouseButtonClick(Widget source, EventArgs e)
         {
-            try
+            FileSaveDialog fileSave = new FileSaveDialog(MainWindow.Instance, "Save your audio file", wildcard: "Ogg Vorbis (*.ogg)|*.ogg");
+            fileSave.showModal((result, file) =>
             {
-                if (File.Exists(Path.Combine(MedicalConfig.UserDocRoot, "Test.raw")))
+                if (result == NativeDialogResult.OK)
                 {
-                    using (Stream sourceFile = File.Open(Path.Combine(MedicalConfig.UserDocRoot, "Test.raw"), FileMode.Open, FileAccess.Read))
+                    try
                     {
-                        using (Stream destFile = File.Open(Path.Combine(MedicalConfig.UserDocRoot, "Test.ogg"), FileMode.Create, FileAccess.Write))
+                        using (Stream destFile = File.Open(file, FileMode.Create, FileAccess.Write))
                         {
-                            OggEncoder.encodeToStream(sourceFile, destFile);
+                            recordAudioController.save(destFile);
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Logging.Log.Error(ex.Message);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Logging.Log.Error(ex.Message);
-            }
+            });
         }
     }
 }
