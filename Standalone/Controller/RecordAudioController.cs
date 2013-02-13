@@ -16,7 +16,13 @@ namespace Medical
 
         public RecordAudioController()
         {
-            tempFilePath = Path.Combine(MedicalConfig.UserDocRoot, Guid.NewGuid().ToString("D") + ".raw");
+            tempFilePath = Path.Combine(MedicalConfig.TemporaryFilesPath, "RecordedAudio");
+            if(!Directory.Exists(tempFilePath))
+            {
+                Directory.CreateDirectory(tempFilePath);
+            }
+            
+            tempFilePath = Path.Combine(tempFilePath, Guid.NewGuid().ToString("D") + ".raw");
         }
 
         public void Dispose()

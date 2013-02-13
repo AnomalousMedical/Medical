@@ -93,6 +93,11 @@ namespace Medical
             {
                 Directory.CreateDirectory(commonAnomalousFolder);
             }
+            TemporaryFilesPath = Path.Combine(commonAnomalousFolder, "Temp");
+            if (!Directory.Exists(TemporaryFilesPath))
+            {
+                Directory.CreateDirectory(TemporaryFilesPath);
+            }
 
             //Configure plugins
             pluginConfig = new PluginConfig(Path.Combine(commonAnomalousFolder, "Plugins"));
@@ -174,6 +179,8 @@ namespace Medical
         }
 
         public static String SafeDownloadFolder { get; private set; }
+
+        public static String TemporaryFilesPath { get; private set; }
 
         public static String UserDocRoot
         {
