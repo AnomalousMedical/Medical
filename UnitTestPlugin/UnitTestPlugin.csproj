@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Engine">
@@ -40,6 +41,10 @@
     <Reference Include="OgrePlugin">
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
     </Reference>
+    <Reference Include="SoundPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -50,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\TestSoundRecord\TestSoundRecord.cs" />
     <Compile Include="UnitTestAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\TestImageAtlas\TestImageAtlas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +76,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\TestSoundRecord\TestSoundRecord.layout" />
     <EmbeddedResource Include="Resources\DownloadIcon.png" />
     <EmbeddedResource Include="Resources\LegacyLogoSmall.jpg" />
   </ItemGroup>

@@ -13,6 +13,7 @@ namespace UnitTestPlugin
     class UnitTestAtlasPlugin : AtlasPlugin
     {
         TestImageAtlas testImageAtlas;
+        TestSoundRecord testSoundRecord;
 
         public UnitTestAtlasPlugin()
         {
@@ -37,6 +38,9 @@ namespace UnitTestPlugin
             guiManager.addManagedDialog(testImageAtlas);
             //testImageAtlas.Visible = true;
 
+            testSoundRecord = new TestSoundRecord(standaloneController);
+            guiManager.addManagedDialog(testSoundRecord);
+
             standaloneController.TaskController.addTask(new CallbackTask("UnitTest.SaveFileDialog", "Test Save File", CommonResources.NoIcon, "Unit Test", 0, false, (item) =>
                 {
                     FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, wildcard:"Text files|*.txt|Xml Files|*.xml|Bitmap files|*.bmp");
@@ -45,6 +49,8 @@ namespace UnitTestPlugin
                             Log.Debug("Save dialog returned '{0}', path '{1}'", result, path);
                         });
                 }));
+
+            standaloneController.TaskController.addTask(new MDIDialogOpenTask(testSoundRecord, "UnitTestPlugin.TestSoundRecord", "Sound Record", CommonResources.NoIcon, "Unit Test", true));
         }
 
         public void sceneLoaded(SimScene scene)
