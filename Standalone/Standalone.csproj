@@ -605,6 +605,7 @@
     <Compile Include="Layout\MDI\MDIDocumentWindow.cs" />
     <Compile Include="Platform\GlobalEventHandler\EventContext.cs" />
     <Compile Include="Platform\GlobalEventHandler\GlobalContextEventHandler.cs" />
+    <Compile Include="Platform\ManagedLogListener.cs" />
     <Compile Include="Platform\MultiTouch\Finger.cs" />
     <Compile Include="Platform\MultiTouch\Gesture.cs" />
     <Compile Include="Platform\MultiTouch\GestureEngine.cs" />

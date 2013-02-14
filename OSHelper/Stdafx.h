@@ -24,4 +24,7 @@ typedef unsigned int uint;
 typedef unsigned char byte;
 typedef unsigned short ushort;
 
+#include "NativeLog.h"
+extern NativeLog logger;
+
 #endif

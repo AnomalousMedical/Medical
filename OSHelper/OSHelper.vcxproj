@@ -141,9 +141,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\ManagedLogListener.cpp" />
     <ClCompile Include="Src\MultiTouch.cpp" />
     <ClCompile Include="Src\App.cpp" />
     <ClCompile Include="Src\MessageDialog.cpp" />
+    <ClCompile Include="Src\NativeLog.cpp" />
     <ClCompile Include="Src\NativeOSWindow.cpp" />
     <ClCompile Include="Src\PerformanceCounter.cpp" />
     <ClCompile Include="Src\SystemInfo.cpp" />
@@ -165,6 +167,7 @@
     <ClInclude Include="Include\MultiTouchImpl.h" />
     <ClInclude Include="Include\App.h" />
     <ClInclude Include="Include\NativeDialog.h" />
+    <ClInclude Include="Include\NativeLog.h" />
     <ClInclude Include="Include\NativeOSWindow.h" />
     <ClInclude Include="Include\PerformanceCounter.h" />
     <ClInclude Include="include\Win32App.h" />

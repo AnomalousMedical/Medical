@@ -5,11 +5,14 @@ using System.Text;
 using Engine;
 using Engine.Platform;
 using Logging;
+using Medical.Platform;
 
 namespace Medical
 {
     public class NativePlatformPlugin : PlatformPlugin
     {
+        private ManagedLogListener managedLogListener = new ManagedLogListener();
+
         public static NativePlatformPlugin Instance { get; private set; }
 
         public NativePlatformPlugin()
@@ -26,7 +29,7 @@ namespace Medical
 
         public void Dispose()
         {
-
+            managedLogListener.Dispose();
         }
 
         public SystemTimer createTimer()

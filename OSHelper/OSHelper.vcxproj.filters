@@ -20,6 +20,9 @@
     <Filter Include="NativePlatform">
       <UniqueIdentifier>{8ffc9668-249c-47af-8ffb-48d2be777205}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{bec92bbb-c35a-4e1c-9be5-9790f961bf04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\MultiTouch.cpp">
@@ -64,6 +67,12 @@
     <ClCompile Include="Src\NativeMouse.cpp">
       <Filter>NativePlatform</Filter>
     </ClCompile>
+    <ClCompile Include="Src\ManagedLogListener.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeLog.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\MultiTouch.h">
@@ -104,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="Include\NativeMouse.h">
       <Filter>NativePlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NativeLog.h">
+      <Filter>Log</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
