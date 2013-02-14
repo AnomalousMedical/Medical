@@ -29,15 +29,6 @@ namespace Lecture
                         queryResult.Invoke(newSoundFile, ref error);
                     });
                 });
-
-            addOneWayCustomQuery<String>(PlaySoundAction.CustomQueries.EditExternally, soundFile =>
-            {
-                if (editorController.ResourceProvider.exists(soundFile))
-                {
-                    String fullPath = editorController.ResourceProvider.getFullFilePath(soundFile);
-                    OtherProcessManager.openLocalURL(fullPath);
-                }
-            });
         }
 
         public override Browser createFileBrowser(String searchPattern, String prompt)

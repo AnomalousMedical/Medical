@@ -186,6 +186,15 @@ namespace Medical
                 }
                 return browser;
             });
+
+            addOneWayCustomQuery<String>(PlaySoundAction.CustomQueries.EditExternally, soundFile =>
+            {
+                if (editorController.ResourceProvider.exists(soundFile))
+                {
+                    String fullPath = editorController.ResourceProvider.getFullFilePath(soundFile);
+                    OtherProcessManager.openLocalURL(fullPath);
+                }
+            });
         }
 
         public void previewMvcContext(AnomalousMvcContext context)
