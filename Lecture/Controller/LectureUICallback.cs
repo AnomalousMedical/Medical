@@ -142,37 +142,42 @@ namespace Lecture
             switch (browser.Hint)
             {
                 case Browser.DisplayHint.Images:
-                    ImageBrowserWindow<T>.GetInput(browser, true, resultCallback, editorController.ResourceProvider, (importFile, finishedCallback) =>
-                    {
-                        System.Threading.ThreadPool.QueueUserWorkItem((stateInfo) =>
-                        {
-                            try
-                            {
-                                String writePath = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString("D") + Path.GetExtension(importFile));
-                                using (Stream writeStream = editorController.ResourceProvider.openWriteStream(writePath))
-                                {
-                                    using (Stream readStream = File.Open(importFile, FileMode.Open, FileAccess.Read))
-                                    {
-                                        readStream.CopyTo(writeStream);
-                                    }
-                                }
-                                finishedCallback(writePath);
-                            }
-                            catch (Exception ex)
-                            {
-                                ThreadManager.invoke(() =>
-                                {
-                                    MessageBox.show(String.Format("Error copying file {0} to your project.\nReason: {1}", importFile, ex.Message), "Image Copy Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                                });
-                            }
-                        });
-                    });
+                    ImageBrowserWindow<T>.GetInput(browser, true, resultCallback, editorController.ResourceProvider, importFile);
+                    break;
+                case Browser.DisplayHint.Sounds:
+                    BrowserWindow<T>.GetInput(browser, true, resultCallback, importFile, "Choose Sound", "Ogg Vorbis Files (.ogg)|*.ogg", ".ogg");
                     break;
                 default:
                     base.showBrowser<T>(browser, resultCallback);
                     break;
             }
 
+        }
+
+        private void importFile(String importFile, Action<String> finishedCallback)
+        {
+            System.Threading.ThreadPool.QueueUserWorkItem((stateInfo) =>
+            {
+                try
+                {
+                    String writePath = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString("D") + Path.GetExtension(importFile));
+                    using (Stream writeStream = editorController.ResourceProvider.openWriteStream(writePath))
+                    {
+                        using (Stream readStream = File.Open(importFile, FileMode.Open, FileAccess.Read))
+                        {
+                            readStream.CopyTo(writeStream);
+                        }
+                    }
+                    finishedCallback(writePath);
+                }
+                catch (Exception ex)
+                {
+                    ThreadManager.invoke(() =>
+                    {
+                        MessageBox.show(String.Format("Error copying file {0} to your project.\nReason: {1}", importFile, ex.Message), "Import Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    });
+                }
+            });
         }
     }
 }

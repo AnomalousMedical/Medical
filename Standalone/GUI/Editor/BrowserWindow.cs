@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine.Editing;
+using System.IO;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -12,6 +14,7 @@ namespace Medical.GUI
         private SendResult<BrowseType> SendResult;
 
         private Tree browserTree;
+        private Button importButton;
 
         public BrowserWindow(String message)
             :base("Medical.GUI.Editor.BrowserWindow.layout")
@@ -25,6 +28,7 @@ namespace Medical.GUI
             selectButton.MouseButtonClick += new MyGUIEvent(selectButton_MouseButtonClick);
             Button cancelButton = (Button)window.findWidget("Cancel");
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+            importButton = (Button)window.findWidget("Import");
 
             Accepted = false;
         }
@@ -104,7 +108,7 @@ namespace Medical.GUI
             close();
         }
 
-        public static void GetInput(Browser browser, bool modal, SendResult<BrowseType> sendResult)
+        private static BrowserWindow<BrowseType> createInputBox(Browser browser, bool modal, SendResult<BrowseType> sendResult)
         {
             BrowserWindow<BrowseType> inputBox = new BrowserWindow<BrowseType>(browser.Prompt);
             inputBox.setBrowser(browser);
@@ -113,6 +117,46 @@ namespace Medical.GUI
             inputBox.Closed += new EventHandler(inputBox_Closed);
             inputBox.center();
             inputBox.open(modal);
+            return inputBox;
+        }
+
+        public static void GetInput(Browser browser, bool modal, SendResult<BrowseType> sendResult)
+        {
+            BrowserWindow<BrowseType> inputBox = createInputBox(browser, modal, sendResult);
+            inputBox.importButton.Visible = false;
+        }
+
+        public static void GetInput(Browser browser, bool modal, SendResult<BrowseType> sendResult, Action<String, Action<String>> importCallback, String prompt, String wildcard, String extension)
+        {
+            BrowserWindow<BrowseType> inputBox = createInputBox(browser, modal, sendResult);
+            inputBox.importButton.MouseButtonClick += (source, e) =>
+            {
+                FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, prompt, wildcard: wildcard);
+                openDialog.showModal((result, paths) =>
+                {
+                    if (result == NativeDialogResult.OK)
+                    {
+                        String path = paths.First();
+                        String ext = Path.GetExtension(path);
+                        if (ext.Equals(extension, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            importCallback(path, previewPath =>
+                            {
+                                ThreadManager.invoke(new Action(() =>
+                                {
+                                    BrowserNode node = new BrowserNode(Path.GetFileName(previewPath), previewPath);
+                                    inputBox.browserTree.Nodes.First().Children.add(inputBox.addNodes(node, node));
+                                    inputBox.browserTree.layout();
+                                }));
+                            });
+                        }
+                        else
+                        {
+                            MessageBox.show(String.Format("Cannot open a file with extension '{0}'.", extension), "Can't Load File", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                        }
+                    }
+                });
+            };
         }
 
         static void inputBox_Closing(object sender, DialogCancelEventArgs e)

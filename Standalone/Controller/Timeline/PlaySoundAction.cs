@@ -132,7 +132,7 @@ namespace Medical
             }
         }
 
-        [EditableFile("*.ogg", "Choose Sound File")]
+        [EditableFile("*.ogg", "Choose Sound File", DisplayHint=Browser.DisplayHint.Sounds)]
         public String SoundFile
         {
             get
