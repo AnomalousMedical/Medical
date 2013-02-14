@@ -34,7 +34,7 @@ namespace Lecture
 
         public string getIcon(string filename)
         {
-            return CommonResources.NoIcon;
+            return "Lecture.Icon.SmartLectureIcon";
         }
     }
 }

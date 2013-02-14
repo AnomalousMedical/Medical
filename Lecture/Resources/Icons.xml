@@ -73,10 +73,18 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Lecture.Icon.Undo">
+  <Resource type="ResourceImageSet" name="Lecture.Icon.SmartLectureIcon">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
         <Frame point="288 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.Icon.Undo">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="320 0"/>
       </Index>
     </Group>
   </Resource>
