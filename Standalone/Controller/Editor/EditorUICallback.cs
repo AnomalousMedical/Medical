@@ -79,9 +79,9 @@ namespace Medical
             {
                 Browser browser = new Browser("Models", "Choose Model Type");
 
-                browser.addNode("", null, new BrowserNode("DataModel", typeof(DataModel), DataModel.DefaultName));
-                browser.addNode("", null, new BrowserNode("Navigation", typeof(NavigationModel), NavigationModel.DefaultName));
-                browser.addNode("", null, new BrowserNode("MedicalStateInfo", typeof(MedicalStateInfoModel), MedicalStateInfoModel.DefaultName));
+                browser.addNode(null, null, new BrowserNode("DataModel", typeof(DataModel), DataModel.DefaultName));
+                browser.addNode(null, null, new BrowserNode("Navigation", typeof(NavigationModel), NavigationModel.DefaultName));
+                browser.addNode(null, null, new BrowserNode("MedicalStateInfo", typeof(MedicalStateInfoModel), MedicalStateInfoModel.DefaultName));
                 String error = null;
                 resultCallback(browser, ref error);
             });
@@ -148,7 +148,7 @@ namespace Medical
                 Browser browser = new Browser("Models", "Choose Model");
                 foreach (String propName in standaloneController.TimelineController.PropFactory.PropNames)
                 {
-                    browser.addNode("", null, new BrowserNode(propName, propName));
+                    browser.addNode(null, null, new BrowserNode(propName, propName));
                 }
                 return browser;
             });
@@ -160,7 +160,7 @@ namespace Medical
                 {
                     foreach (View view in CurrentEditingMvcContext.Views)
                     {
-                        browser.addNode("", null, new BrowserNode(view.Name, view.Name));
+                        browser.addNode(null, null, new BrowserNode(view.Name, view.Name));
                     }
                 }
                 return browser;
@@ -180,7 +180,7 @@ namespace Medical
                     {
                         if (assignableFromType.IsAssignableFrom(model.GetType()))
                         {
-                            browser.addNode("", null, new BrowserNode(model.Name, model.Name));
+                            browser.addNode(null, null, new BrowserNode(model.Name, model.Name));
                         }
                     }
                 }
@@ -225,7 +225,7 @@ namespace Medical
                     {
                         controllerNode.addChild(new BrowserNode(action.Name, String.Format("{0}/{1}", controller.Name, action.Name)));
                     }
-                    browser.addNode("", null, controllerNode);
+                    browser.addNode(null, null, controllerNode);
                 }
             }
             return browser;
@@ -238,7 +238,7 @@ namespace Medical
             {
                 foreach (String timeline in editorController.ResourceProvider.listFiles(searchPattern, "", true))
                 {
-                    browser.addNode("", null, new BrowserNode(timeline, timeline));
+                    browser.addNode(null, null, new BrowserNode(timeline, timeline));
                 }
             }
             else
@@ -257,7 +257,7 @@ namespace Medical
                 {
                     foreach (String file in editorController.ResourceProvider.listFiles(searchPattern, "", true))
                     {
-                        browser.addNode("", null, new BrowserNode(file, file));
+                        browser.addNode(null, null, new BrowserNode(file, file));
                     }
                 }
             }
@@ -277,7 +277,7 @@ namespace Medical
                 {
                     foreach (String file in editorController.ResourceProvider.listFiles(searchPattern, "", true))
                     {
-                        browser.addNode("", null, new BrowserNode(file, Path.Combine(leadingPath, file)));
+                        browser.addNode(null, null, new BrowserNode(file, Path.Combine(leadingPath, file)));
                     }
                 }
             }

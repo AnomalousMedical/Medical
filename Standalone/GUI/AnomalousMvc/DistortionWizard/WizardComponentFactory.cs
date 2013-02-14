@@ -39,7 +39,7 @@ namespace Medical.GUI.AnomalousMvc
             wizardNode.addChild(new GenericBrowserNode<ViewCollection.CreateView>("Teeth Adaptation", name => { return new TeethAdaptationView(name); }));
             wizardNode.addChild(new GenericBrowserNode<ViewCollection.CreateView>("Teeth Height Adaptation", name => { return new TeethHeightAdaptationView(name); }));
             wizardNode.addChild(new GenericBrowserNode<ViewCollection.CreateView>("Notes", name => { return new NotesView(name); }));
-            browser.addNode("", null, wizardNode);
+            browser.addNode(null, null, wizardNode);
         }
     }
 }

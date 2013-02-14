@@ -135,7 +135,7 @@ namespace Lecture.GUI
 
             Browser browse = new Browser("Smart Lectures", "Create Smart Lecture");
             BrowserNode defaultNode = new BrowserNode("Slideshow", new SlideshowProjectTemplate());
-            browse.addNode("", null, defaultNode);
+            browse.addNode(null, null, defaultNode);
             browse.DefaultSelection = defaultNode;
 
             NewProjectDialog.ShowDialog(browse, (template, fullProjectName) =>

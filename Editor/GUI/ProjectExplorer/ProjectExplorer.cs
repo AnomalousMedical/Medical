@@ -88,10 +88,10 @@ namespace Medical.GUI
 
             Browser browse = new Browser("Project Templates", "Create Project");
             BrowserNode appNode = new BrowserNode("App", new AppProjectTemplate());
-            browse.addNode("", null, appNode);
+            browse.addNode(null, null, appNode);
             browse.DefaultSelection = appNode;
-            browse.addNode("", null, new BrowserNode("Question App", new QuestionAppProjectTemplate()));
-            browse.addNode("", null, new BrowserNode("Empty", new EmptyProjectTemplate()));
+            browse.addNode(null, null, new BrowserNode("Question App", new QuestionAppProjectTemplate()));
+            browse.addNode(null, null, new BrowserNode("Empty", new EmptyProjectTemplate()));
 
             NewProjectDialog.ShowDialog(browse, (template, fullProjectName) =>
             {

@@ -39,7 +39,7 @@ namespace Lecture
             {
                 foreach (String timeline in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
                 {
-                    browser.addNode("", null, new BrowserNode(timeline.Substring(dirLength), timeline));
+                    browser.addNode(null, null, new BrowserNode(timeline.Substring(dirLength), timeline));
                 }
             }
             else
@@ -59,7 +59,7 @@ namespace Lecture
                 {
                     foreach (String file in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
                     {
-                        browser.addNode("", null, new BrowserNode(file.Substring(dirLength), file));
+                        browser.addNode(null, null, new BrowserNode(file.Substring(dirLength), file));
                     }
                 }
             }
@@ -80,7 +80,7 @@ namespace Lecture
                 {
                     foreach (String file in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
                     {
-                        browser.addNode("", null, new BrowserNode(file.Substring(dirLength), Path.Combine(leadingPath, file)));
+                        browser.addNode(null, null, new BrowserNode(file.Substring(dirLength), Path.Combine(leadingPath, file)));
                     }
                 }
             }
