@@ -19,12 +19,15 @@ namespace Medical.GUI
         private CheckButton record;
         private Button save;
         private TextBox status;
+        private TextBox etLabel;
         private RecordAudioController recordAudioController = new RecordAudioController();
         private Func<String, Stream> streamProvider;
+        private MedicalController medicalController;
+        private Int64 startTime;
 
-        public static void ShowDialog(String soundFile, Func<String, Stream> streamProvider, Action<String> soundUpdatedCallback)
+        public static void ShowDialog(MedicalController medicalController, String soundFile, Func<String, Stream> streamProvider, Action<String> soundUpdatedCallback)
         {
-            QuickSoundRecorder recorder = new QuickSoundRecorder(soundFile, streamProvider);
+            QuickSoundRecorder recorder = new QuickSoundRecorder(medicalController, soundFile, streamProvider);
 
             recorder.SoundUpdated += soundUpdatedCallback;
             recorder.Closed += (sender, e) =>
@@ -37,11 +40,12 @@ namespace Medical.GUI
             recorder.open(true);
         }
 
-        private QuickSoundRecorder(String file, Func<String, Stream> streamProvider)
+        private QuickSoundRecorder(MedicalController medicalController, String file, Func<String, Stream> streamProvider)
             : base("Medical.GUI.Editor.QuickSoundRecorder.QuickSoundRecorder.layout")
         {
             this.OutputFile = file;
             this.streamProvider = streamProvider;
+            this.medicalController = medicalController;
 
             record = new CheckButton((Button)window.findWidget("Record"));
             record.CheckedChanged += new MyGUIEvent(enabled_CheckedChanged);
@@ -55,6 +59,7 @@ namespace Medical.GUI
             cancel.MouseButtonClick += cancel_MouseButtonClick;
 
             status = (TextBox)window.findWidget("StatusLabel");
+            etLabel = (TextBox)window.findWidget("EtLabel");
         }
 
         public override void Dispose()
@@ -70,12 +75,36 @@ namespace Medical.GUI
             {
                 recordAudioController.startRecording();
                 status.Caption = "Recording";
+                medicalController.FixedLoopUpdate += MedicalController_FixedLoopUpdate;
+                startTime = medicalController.MainTimer.ElapsedTime;
             }
             else
             {
-                recordAudioController.stopRecording();
-                status.Caption = "Stopped";
+                stopRecording();
             }
+        }
+
+        private void stopRecording()
+        {
+            medicalController.FixedLoopUpdate -= MedicalController_FixedLoopUpdate;
+            recordAudioController.stopRecording();
+            status.Caption = "Stopped";
+        }
+
+        protected override void onClosing(DialogCancelEventArgs args)
+        {
+            base.onClosing(args);
+            if (recordAudioController.ActivelyRecording)
+            {
+                stopRecording();
+            }
+        }
+
+        void MedicalController_FixedLoopUpdate(Clock time)
+        {
+            Int64 timeDelta = medicalController.MainTimer.ElapsedTime - startTime;
+            DateTime dateTime = new DateTime(timeDelta * 10);
+            etLabel.Caption = dateTime.ToString("HH:mm:ss");
         }
 
         void cancel_MouseButtonClick(Widget source, EventArgs e)

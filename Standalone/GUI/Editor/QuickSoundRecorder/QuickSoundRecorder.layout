@@ -1,21 +1,26 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCX" position="85 94 191 110" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="85 94 396 66" layer="Overlapped">
         <Property key="Caption" value="Sound Recorder"/>
         <Widget type="Button" skin="Button" position="1 6 63 27" name="Record">
             <Property key="Caption" value="Record"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 50 48 27" align="Left Bottom" name="Save">
+        <Widget type="Button" skin="Button" position="285 6 48 27" align="Right Top" name="Save">
             <Property key="Caption" value="Save"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="53 50 48 27" align="Left Bottom" name="Cancel">
+        <Widget type="Button" skin="Button" position="337 6 48 27" align="Right Top" name="Cancel">
             <Property key="Caption" value="Cancel"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="67 6 38 14">
             <Property key="Caption" value="Status"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="67 20 108 13" name="StatusLabel">
+        <Widget type="TextBox" skin="TextBox" position="67 20 60 13" name="StatusLabel">
             <Property key="Caption" value="Stopped"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="132 6 150 27" name="EtLabel">
+            <Property key="Caption" value="00:00:00"/>
+            <Property key="FontName" value="TimelineText.50"/>
+            <Property key="FontHeight" value="30"/>
         </Widget>
     </Widget>
 </MyGUI>

@@ -102,5 +102,13 @@ namespace Medical
                 return hasRecording;
             }
         }
+
+        public bool ActivelyRecording
+        {
+            get
+            {
+                return captureDevice != null;
+            }
+        }
     }
 }

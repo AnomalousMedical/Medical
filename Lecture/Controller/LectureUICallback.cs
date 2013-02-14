@@ -23,7 +23,7 @@ namespace Lecture
                 {
                     String finalSoundFile = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString("D") + ".ogg");
                     String error = null;
-                    QuickSoundRecorder.ShowDialog(finalSoundFile, editorController.ResourceProvider.openWriteStream,
+                    QuickSoundRecorder.ShowDialog(standaloneController.MedicalController, finalSoundFile, editorController.ResourceProvider.openWriteStream,
                     newSoundFile =>
                     {
                         queryResult.Invoke(newSoundFile, ref error);
