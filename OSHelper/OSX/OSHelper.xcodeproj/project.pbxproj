@@ -27,6 +27,9 @@
 		0171DB5D15FA73EF00093F17 /* NativeMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0171DB5B15FA73EF00093F17 /* NativeMouse.h */; };
 		0171DB6015FA73FE00093F17 /* NativeKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB5E15FA73FE00093F17 /* NativeKeyboard.cpp */; };
 		0171DB6115FA73FE00093F17 /* NativeMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0171DB5F15FA73FE00093F17 /* NativeMouse.cpp */; };
+		01A7B05316CD4C5B0092E07F /* NativeLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 01A7B05216CD4C5B0092E07F /* NativeLog.h */; };
+		01A7B05716CD4C6F0092E07F /* ManagedLogListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01A7B05516CD4C6F0092E07F /* ManagedLogListener.cpp */; };
+		01A7B05816CD4C6F0092E07F /* NativeLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01A7B05616CD4C6F0092E07F /* NativeLog.cpp */; };
 		01AC143D162F2DC700311248 /* MessageDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = 01AC143C162F2DC700311248 /* MessageDialog.mm */; };
 		01C7D2571357723E0027AC32 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22C1357723E0027AC32 /* App.h */; };
 		01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2321357723E0027AC32 /* MultiTouch.h */; };
@@ -65,6 +68,9 @@
 		0171DB5B15FA73EF00093F17 /* NativeMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeMouse.h; sourceTree = "<group>"; };
 		0171DB5E15FA73FE00093F17 /* NativeKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeKeyboard.cpp; sourceTree = "<group>"; };
 		0171DB5F15FA73FE00093F17 /* NativeMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeMouse.cpp; sourceTree = "<group>"; };
+		01A7B05216CD4C5B0092E07F /* NativeLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeLog.h; sourceTree = "<group>"; };
+		01A7B05516CD4C6F0092E07F /* ManagedLogListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ManagedLogListener.cpp; sourceTree = "<group>"; };
+		01A7B05616CD4C6F0092E07F /* NativeLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeLog.cpp; sourceTree = "<group>"; };
 		01AC143C162F2DC700311248 /* MessageDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MessageDialog.mm; sourceTree = "<group>"; };
 		01C7D22C1357723E0027AC32 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
 		01C7D2321357723E0027AC32 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouch.h; sourceTree = "<group>"; };
@@ -97,6 +103,7 @@
 		01C7D22B1357723E0027AC32 /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				01A7B05216CD4C5B0092E07F /* NativeLog.h */,
 				0171DB5A15FA73EF00093F17 /* NativeKeyboard.h */,
 				0171DB5B15FA73EF00093F17 /* NativeMouse.h */,
 				0171DB4515F905CE00093F17 /* NativeDialog.h */,
@@ -121,6 +128,8 @@
 		01C7D23B1357723E0027AC32 /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				01A7B05516CD4C6F0092E07F /* ManagedLogListener.cpp */,
+				01A7B05616CD4C6F0092E07F /* NativeLog.cpp */,
 				0171DB5E15FA73FE00093F17 /* NativeKeyboard.cpp */,
 				0171DB5F15FA73FE00093F17 /* NativeMouse.cpp */,
 				0171DB1615F1235A00093F17 /* CocoaApp.mm */,
@@ -203,6 +212,7 @@
 				0171DB4615F905CE00093F17 /* NativeDialog.h in Headers */,
 				0171DB5C15FA73EF00093F17 /* NativeKeyboard.h in Headers */,
 				0171DB5D15FA73EF00093F17 /* NativeMouse.h in Headers */,
+				01A7B05316CD4C5B0092E07F /* NativeLog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +284,8 @@
 				0171DB6115FA73FE00093F17 /* NativeMouse.cpp in Sources */,
 				01AC143D162F2DC700311248 /* MessageDialog.mm in Sources */,
 				01238FCE1636E74F00A7AA8D /* ConnectionValidator.mm in Sources */,
+				01A7B05716CD4C6F0092E07F /* ManagedLogListener.cpp in Sources */,
+				01A7B05816CD4C6F0092E07F /* NativeLog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

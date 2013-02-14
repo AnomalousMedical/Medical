@@ -23,7 +23,12 @@ bool convertWildcards(String utf16Wildcard, NSMutableArray* fileTypeVector)
         if(dotPos != NSNotFound)
         {
             //Consider the whole string the filter, from the . to the end
-            [fileTypeVector addObject:[wildcard substringFromIndex:dotPos + 1]];
+            NSString* card = [wildcard substringFromIndex:dotPos + 1];
+            if([card isEqualToString: @"*"])
+            {
+                return false;
+            }
+            [fileTypeVector addObject:card];
         }		
 	}
 	else
@@ -33,12 +38,17 @@ bool convertWildcards(String utf16Wildcard, NSMutableArray* fileTypeVector)
             dotPos = [[fileTypes objectAtIndex:i] rangeOfString:@"."].location;
             if(dotPos != NSNotFound)
             {
-                [fileTypeVector addObject:[[fileTypes objectAtIndex:i] substringFromIndex:dotPos + 1]];
+                NSString* card = [[fileTypes objectAtIndex:i] substringFromIndex:dotPos + 1];
+                if([card isEqualToString: @"*"])
+                {
+                    return false;
+                }
+                [fileTypeVector addObject:card];
             }
         }
 	}
     
-    return true;
+    return fileTypeVector.count > 0;
 }
 
 extern "C" _AnomalousExport void FileOpenDialog_showModal(NativeOSWindow* parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple, FileOpenDialogSetPathString setPathString, FileOpenDialogResultCallback resultCallback)

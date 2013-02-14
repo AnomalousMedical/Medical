@@ -45,7 +45,7 @@ namespace UnitTestPlugin
 
             standaloneController.TaskController.addTask(new CallbackTask("UnitTest.SaveFileDialog", "Test Save File", CommonResources.NoIcon, "Unit Test", 0, false, (item) =>
                 {
-                    FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, wildcard:"Text files|*.txt|Xml Files|*.xml|Bitmap files|*.bmp");
+                    FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, wildcard:"All Files|*");
                     saveDialog.showModal((result, path) =>
                         {
                             Log.Debug("Save dialog returned '{0}', path '{1}'", result, path);
