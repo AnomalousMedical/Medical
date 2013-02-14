@@ -44,6 +44,10 @@ public:
 		//See MultTouch.cpp to see how it works.
 	}
 
+	void manageCapture(MouseButtonCode mouseCode);
+
+	void manageRelease(MouseButtonCode mouseCode);
+
 	static void createWindowClass(HANDLE hModule);
 
 	static void destroyWindowClass();
@@ -51,4 +55,5 @@ private:
 	HWND window;
 	static WNDCLASSEX wndclass;
 	HCURSOR hCursor;
+	bool mouseDown[MouseButtonCode::NUM_BUTTONS];
 };

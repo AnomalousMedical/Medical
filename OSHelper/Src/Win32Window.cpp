@@ -10,6 +10,11 @@ Win32Window::Win32Window(HWND parent, String title, int x, int y, int width, int
 	window = CreateWindowEx(NULL, WIN32_WINDOW_CLASS, title, WS_OVERLAPPEDWINDOW, x, y, width, height, parent, NULL, wndclass.hInstance, NULL);
 	SetWindowLong(window, GWL_USERDATA, (LONG)this);
 	setCursor(Arrow);
+
+	for(int i = 0; i < MouseButtonCode::NUM_BUTTONS; ++i)
+	{
+		mouseDown[i] = false;
+	}
 }
     
 Win32Window::~Win32Window()
@@ -125,6 +130,40 @@ void Win32Window::setCursor(CursorType cursor)
 	}
 }
 
+void Win32Window::manageCapture(MouseButtonCode mouseCode)
+{
+	bool shouldCapture = true;
+	for(int i = 0; i < MouseButtonCode::NUM_BUTTONS; ++i)
+	{
+		if(mouseDown[i])
+		{
+			shouldCapture = false;
+		}
+	}
+	mouseDown[mouseCode] = true;
+	if(shouldCapture)
+	{
+		SetCapture(window);
+	}
+}
+
+void Win32Window::manageRelease(MouseButtonCode mouseCode)
+{
+	mouseDown[mouseCode] = false;
+	bool release = true;
+	for(int i = 0; i < MouseButtonCode::NUM_BUTTONS; ++i)
+	{
+		if(mouseDown[i])
+		{
+			release = false;
+		}
+	}
+	if(release)
+	{
+		ReleaseCapture();
+	}
+}
+
 //PInvoke
 extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosedDelegate closedCB, NativeOSWindow::ActivateDelegate activateCB)
 {
@@ -191,30 +230,38 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 
 			//Mouse
 			case WM_LBUTTONDOWN:
+				win->manageCapture(MB_BUTTON0);
 				win->fireMouseButtonDown(MB_BUTTON0);
 				break;
 			case WM_LBUTTONUP:
 				win->fireMouseButtonUp(MB_BUTTON0);
+				win->manageRelease(MB_BUTTON0);
 				break;
 			case WM_RBUTTONDOWN:
+				win->manageCapture(MB_BUTTON1);
 				win->fireMouseButtonDown(MB_BUTTON1);
 				break;
 			case WM_RBUTTONUP:
 				win->fireMouseButtonUp(MB_BUTTON1);
+				win->manageRelease(MB_BUTTON1);
 				break;
 			case WM_MBUTTONDOWN:
+				win->manageCapture(MB_BUTTON2);
 				win->fireMouseButtonDown(MB_BUTTON2);
 				break;
 			case WM_MBUTTONUP:
 				win->fireMouseButtonUp(MB_BUTTON2);
+				win->manageRelease(MB_BUTTON2);
 				break;
 			case WM_XBUTTONDOWN:
 				switch(GET_XBUTTON_WPARAM (wParam))
 				{
 					case XBUTTON1:
+						win->manageCapture(MB_BUTTON3);
 						win->fireMouseButtonDown(MB_BUTTON3);
 						break;
 					case XBUTTON2:
+						win->manageCapture(MB_BUTTON4);
 						win->fireMouseButtonDown(MB_BUTTON4);
 						break;
 				}
@@ -224,9 +271,11 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 				{
 					case XBUTTON1:
 						win->fireMouseButtonUp(MB_BUTTON3);
+						win->manageRelease(MB_BUTTON3);
 						break;
 					case XBUTTON2:
 						win->fireMouseButtonUp(MB_BUTTON4);
+						win->manageRelease(MB_BUTTON4);
 						break;
 				}
 				break;

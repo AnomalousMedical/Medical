@@ -96,10 +96,7 @@ namespace Medical
 
         void OnMouseUp(MouseButtonCode id)
         {
-            //all of a sudden we have to check for this
-            //wxWidets is sending mouse up events twice for some reason when double
-            //clicking. This fixes it for now. Check ticket number 616 for more info.
-            //need to move away from wxWidgets anyway
+            //Make sure the button is down
             if(buttonDownStatus[(int)id])
             {
                 buttonDownStatus[(int)id] = false;
