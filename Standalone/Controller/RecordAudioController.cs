@@ -44,26 +44,37 @@ namespace Medical
             }
         }
 
-        public unsafe void startRecording()
+        public unsafe bool startRecording()
         {
             if (captureDevice == null)
             {
                 hasRecording = true;
                 captureDevice = SoundPluginInterface.Instance.SoundManager.openCaptureDevice();
-                writeStream = File.Open(tempFilePath, FileMode.Create, FileAccess.Write);
-                unsafe
+                if (captureDevice.Valid)
                 {
-                    captureDevice.start((byte* buffer, int length) =>
+                    writeStream = File.Open(tempFilePath, FileMode.Create, FileAccess.Write);
+                    unsafe
                     {
-                        byte[] byteBuffer = new byte[length];
-                        for (int i = 0; i < length; ++i)
+                        captureDevice.start((byte* buffer, int length) =>
                         {
-                            byteBuffer[i] = buffer[i];
-                        }
-                        writeStream.Write(byteBuffer, 0, length);
-                    });
+                            byte[] byteBuffer = new byte[length];
+                            for (int i = 0; i < length; ++i)
+                            {
+                                byteBuffer[i] = buffer[i];
+                            }
+                            writeStream.Write(byteBuffer, 0, length);
+                        });
+                    }
+                    return true;
+                }
+                else
+                {
+                    captureDevice.Dispose();
+                    captureDevice = null;
+                    return false;
                 }
             }
+            return false;
         }
 
         public void stopRecording()

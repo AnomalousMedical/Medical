@@ -24,6 +24,7 @@ namespace Medical.GUI
         private Func<String, Stream> streamProvider;
         private MedicalController medicalController;
         private Int64 startTime;
+        bool allowPlaybackToggle = true;
 
         public static void ShowDialog(MedicalController medicalController, String soundFile, Func<String, Stream> streamProvider, Action<String> soundUpdatedCallback)
         {
@@ -70,17 +71,30 @@ namespace Medical.GUI
 
         void enabled_CheckedChanged(Widget source, EventArgs e)
         {
-            save.Enabled = !record.Checked;
-            if (record.Checked)
+            if (allowPlaybackToggle)
             {
-                recordAudioController.startRecording();
-                status.Caption = "Recording";
-                medicalController.FixedLoopUpdate += MedicalController_FixedLoopUpdate;
-                startTime = medicalController.MainTimer.ElapsedTime;
-            }
-            else
-            {
-                stopRecording();
+                save.Enabled = !record.Checked;
+                if (record.Checked)
+                {
+                    if (recordAudioController.startRecording())
+                    {
+                        status.Caption = "Recording";
+                        medicalController.FixedLoopUpdate += MedicalController_FixedLoopUpdate;
+                        startTime = medicalController.MainTimer.ElapsedTime;
+                    }
+                    else
+                    {
+                        allowPlaybackToggle = false;
+                        MessageBox.show("Could not open your recording device.\nIs your device plugged in and recognized by your operating system?\nIf you just plugged your device in you might need to restart Anomalous Medical.", "Recording Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                        record.Checked = false;
+                        save.Enabled = false;
+                        allowPlaybackToggle = true;
+                    }
+                }
+                else
+                {
+                    stopRecording();
+                }
             }
         }
 
