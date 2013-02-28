@@ -36,7 +36,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
-    <Reference Include="LeapCSharp.NET4.0">
+    <Reference Include="LeapCSharp.NET4.0, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\LeapMotion\lib\LeapCSharp.NET4.0.dll</HintPath>
     </Reference>
     <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -54,20 +55,22 @@
   <ItemGroup>
     <Compile Include="Controller\ComboListener.cs" />
     <Compile Include="Controller\FingerCountListener.cs" />
+    <Compile Include="Controller\HighLevelListener.cs" />
     <Compile Include="Controller\LeapCameraListener.cs" />
     <Compile Include="Controller\LeapDebugListener.cs" />
     <Compile Include="Controller\LeapGrabListener.cs" />
     <Compile Include="LeapAtlasPlugin.cs" />
     <Compile Include="LeapAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\MathHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\Dependencies\LeapMotion\lib\x86\Leap.dll">
       <Link>Leap.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Dependencies\LeapMotion\lib\x86\_LeapCSharp.dll">
-      <Link>_LeapCSharp.dll</Link>
+    <Content Include="..\..\Dependencies\LeapMotion\lib\x86\LeapCSharp.dll">
+      <Link>LeapCSharp.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
