@@ -52,6 +52,7 @@ namespace Medical
         private DownloadController downloadController;
         private PatientDataController patientDataController;
         private IdleHandler idleHandler;
+        private BehaviorErrorManager behaviorErrorManager;
 
         //GUI
         private GUIManager guiManager;
@@ -91,6 +92,8 @@ namespace Medical
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
             PointerManager.Instance.Visible = false;
+
+            behaviorErrorManager = new BehaviorErrorManager();
         }
 
         public void Dispose()
@@ -609,6 +612,7 @@ namespace Medical
             sceneViewController.destroyCameras();
             background.destroyBackground();
             backgroundController.sceneUnloading();
+            behaviorErrorManager.clear();
             if (medicalController.openScene(file))
             {
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
@@ -633,6 +637,13 @@ namespace Medical
                     anatomyController.sceneLoaded();
                 }
                 success = true;
+                if (behaviorErrorManager.HasErrors)
+                {
+                    guiManager.NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", CommonResources.NoIcon, new Action(() =>
+                        {
+
+                        }));
+                }
             }
             return success;
         }
