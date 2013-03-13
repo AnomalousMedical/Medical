@@ -145,7 +145,7 @@ namespace Medical
                 return true;
             }
 #endif
-            //Make this statement override only when you switch to guids
+            //Make this statement override only when you switch to guids, get rid of the special case in AtlasPluginManager
             if (featureCode == -1)
             {
                 return true;

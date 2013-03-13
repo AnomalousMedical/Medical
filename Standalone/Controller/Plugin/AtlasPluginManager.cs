@@ -381,7 +381,10 @@ namespace Medical
             if (standaloneController.App.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
             {
                 uninitializedPlugins.Add(plugin);
-                usedPluginIds.Add(plugin.PluginId);
+                if (plugin.PluginId != -1)
+                {
+                    usedPluginIds.Add(plugin.PluginId);
+                }
             }
             else
             {
