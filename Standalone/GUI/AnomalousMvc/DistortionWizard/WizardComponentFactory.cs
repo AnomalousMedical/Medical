@@ -7,7 +7,7 @@ using Engine.Editing;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class WizardComponentFactory : ViewHostComponentFactory
+    public class WizardComponentFactory : ViewHostComponentFactory
     {
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
@@ -21,6 +21,12 @@ namespace Medical.GUI.AnomalousMvc
         }
 
         public void createViewBrowser(Browser browser)
+        {
+            //This is done by the WizardComponentViews class in the Developer plugin. It calls the static function makeViewBrowser, this way if the user
+            //does not have dev tool access they cannot make wizard based stuff in the editor.
+        }
+
+        public static void makeViewBrowser(Browser browser)
         {
             BrowserNode wizardNode = new BrowserNode("Wizard Views", null);
             wizardNode.addChild(new GenericBrowserNode<ViewCollection.CreateView>("Disclaimer", name => { return new DisclaimerView(name); }));

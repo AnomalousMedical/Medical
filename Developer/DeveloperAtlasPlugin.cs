@@ -95,6 +95,8 @@ namespace Developer
 
             disablePhysics = new DisablePhysicsTask(int.MaxValue);
             taskController.addTask(disablePhysics);
+
+            standaloneController.ViewHostFactory.addFactory(new WizardComponentViews());
         }
 
         public void sceneLoaded(SimScene scene)
