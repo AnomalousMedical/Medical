@@ -145,7 +145,17 @@ namespace Medical
                 return true;
             }
 #endif
-            return license != null ? license.supportsFeature(featureCode) : false;
+            //Make this statement override only when you switch to guids
+            if (featureCode == -1)
+            {
+                return true;
+            }
+
+            if (license != null)
+            {
+                return license.supportsFeature(featureCode);
+            }
+            return false;
         }
 
         /// <summary>

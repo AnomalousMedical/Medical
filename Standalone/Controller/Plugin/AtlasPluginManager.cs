@@ -31,6 +31,7 @@ namespace Medical
         private XmlSaver xmlSaver = new XmlSaver();
         private bool addedPluginsToMyGUIResourceGroup = false;
         private ManagePluginInstructions managePluginInstructions;
+        private HashSet<long> usedPluginIds = new HashSet<long>();
 
         private static RSACryptoServiceProvider rsaProvider;
         private static SHA1CryptoServiceProvider sha1Provider;
@@ -375,11 +376,12 @@ namespace Medical
             addPlugin(plugin, true);
         }
 
-        public void addPlugin(AtlasPlugin plugin, bool addAssemblyResources)
+        private void addPlugin(AtlasPlugin plugin, bool addAssemblyResources)
         {
-            if (plugin.PluginId == -1 || standaloneController.App.LicenseManager.allowFeature(plugin.PluginId))
+            if (standaloneController.App.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
             {
                 uninitializedPlugins.Add(plugin);
+                usedPluginIds.Add(plugin.PluginId);
             }
             else
             {

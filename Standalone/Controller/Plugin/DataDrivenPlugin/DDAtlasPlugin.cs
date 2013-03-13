@@ -38,40 +38,37 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
-            if (PluginId == -1 || standaloneController.App.LicenseManager.allowFeature(PluginId))
+            TimelineController = standaloneController.TimelineController;
+            MvcCore = standaloneController.MvcCore;
+
+            TaskController taskController = standaloneController.TaskController;
+            foreach (DDPluginTask task in tasks)
             {
-                TimelineController = standaloneController.TimelineController;
-                MvcCore = standaloneController.MvcCore;
+                task._setPlugin(this);
+                taskController.addTask(task);
+            }
 
-                TaskController taskController = standaloneController.TaskController;
-                foreach (DDPluginTask task in tasks)
+            //Load sequences
+            if (!String.IsNullOrEmpty(SequencesDirectory))
+            {
+                String fullSequencesDirectory = Path.Combine(PluginRootFolder, SequencesDirectory);
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                if (archive.exists(fullSequencesDirectory))
                 {
-                    task._setPlugin(this);
-                    taskController.addTask(task);
-                }
-
-                //Load sequences
-                if (!String.IsNullOrEmpty(SequencesDirectory))
-                {
-                    String fullSequencesDirectory = Path.Combine(PluginRootFolder, SequencesDirectory);
-                    VirtualFileSystem archive = VirtualFileSystem.Instance;
-                    if (archive.exists(fullSequencesDirectory))
+                    MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
+                    foreach (String directory in archive.listDirectories(fullSequencesDirectory, false, false))
                     {
-                        MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
-                        foreach (String directory in archive.listDirectories(fullSequencesDirectory, false, false))
+                        String groupName = archive.getFileInfo(directory).Name;
+                        foreach (String file in archive.listFiles(directory, false))
                         {
-                            String groupName = archive.getFileInfo(directory).Name;
-                            foreach (String file in archive.listFiles(directory, false))
+                            VirtualFileInfo fileInfo = archive.getFileInfo(file);
+                            String fileName = fileInfo.Name;
+                            if (fileName.EndsWith(".seq"))
                             {
-                                VirtualFileInfo fileInfo = archive.getFileInfo(file);
-                                String fileName = fileInfo.Name;
-                                if (fileName.EndsWith(".seq"))
-                                {
-                                    VirtualFSMovementSequenceInfo info = new VirtualFSMovementSequenceInfo();
-                                    info.Name = fileName.Substring(0, fileName.Length - 4);
-                                    info.FileName = fileInfo.FullName;
-                                    movementSequenceController.addMovementSequence(groupName, info);
-                                }
+                                VirtualFSMovementSequenceInfo info = new VirtualFSMovementSequenceInfo();
+                                info.Name = fileName.Substring(0, fileName.Length - 4);
+                                info.FileName = fileInfo.FullName;
+                                movementSequenceController.addMovementSequence(groupName, info);
                             }
                         }
                     }
