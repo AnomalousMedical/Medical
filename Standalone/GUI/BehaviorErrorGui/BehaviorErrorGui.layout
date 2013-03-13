@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="60 80 247 382" layer="Overlapped">
+        <Widget type="ImageBox" skin="ImageBox" position_real="0 0 1 1" align="Stretch" name="RmlImage"/>
+    </Widget>
+</MyGUI>

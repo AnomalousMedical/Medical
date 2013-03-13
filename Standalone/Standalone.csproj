@@ -212,6 +212,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="GUI\BehaviorErrorGui\BehaviorErrorGui.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemDialog.cs" />
@@ -785,6 +786,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.layout" />
+    <EmbeddedResource Include="GUI\BehaviorErrorGui\BehaviorErrorGui.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />

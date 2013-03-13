@@ -63,6 +63,7 @@ namespace Medical
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
+        private BehaviorErrorGui errorGui;
 
         //Platform
         private MainWindow mainWindow;
@@ -98,6 +99,10 @@ namespace Medical
 
         public void Dispose()
         {
+            if (errorGui != null)
+            {
+                errorGui.Dispose();
+            }
             mvcCore.Dispose();
             downloadController.Dispose();
             DocumentController.saveRecentDocuments();
@@ -641,7 +646,15 @@ namespace Medical
                 {
                     guiManager.NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", CommonResources.NoIcon, new Action(() =>
                         {
-
+                            errorGui = new BehaviorErrorGui(behaviorErrorManager);
+                            guiManager.addManagedDialog(errorGui);
+                            errorGui.Closed += (evt, args) =>
+                                {
+                                    guiManager.removeManagedDialog(errorGui);
+                                    errorGui.Dispose();
+                                    errorGui = null;
+                                };
+                            errorGui.Visible = true;
                         }));
                 }
             }
