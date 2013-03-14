@@ -83,7 +83,7 @@ namespace Medical
             cloneWindowDialog = new CloneWindowDialog();
 
             //Tasks
-            windowLayout = new ChangeWindowLayoutTask(standaloneController);
+            windowLayout = new ChangeWindowLayoutTask(standaloneController.SceneViewController);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
@@ -117,7 +117,7 @@ namespace Medical
 
         public void sceneLoaded(SimScene scene)
         {
-            
+            windowLayout.sceneLoaded(scene);
         }
 
         public void sceneUnloading(SimScene scene)

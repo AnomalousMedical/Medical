@@ -15,7 +15,6 @@ namespace Medical
         [DoNotSave]
         private LinkedList<SceneViewWindowPreset> presets = new LinkedList<SceneViewWindowPreset>();
         private String name;
-        private bool hidden = false;
 
         public SceneViewWindowPresetSet()
         {
@@ -53,19 +52,6 @@ namespace Medical
             internal set
             {
                 name = value;
-            }
-        }
-
-        [Editable]
-        public bool Hidden
-        {
-            get
-            {
-                return hidden;
-            }
-            set
-            {
-                hidden = value;
             }
         }
 

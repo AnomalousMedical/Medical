@@ -47,6 +47,7 @@ namespace Medical
             SimulationScene scene = new SimulationScene(name);
             scene.PresetDirectory = presetDirectory;
             scene.SequenceDirectory = sequenceDirectory;
+            scene.WindowPresets = CopySaver.Default.copy(windowPresets);
             return scene;
         }
 
@@ -95,6 +96,10 @@ namespace Medical
             get
             {
                 return windowPresets;
+            }
+            internal set
+            {
+                windowPresets = value;
             }
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.ObjectManagement;
 using Engine;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -14,6 +15,7 @@ namespace Medical
 
         private String presetDirectory;
         private String sequenceDirectory;
+        private SceneViewWindowPresetController windowPresets;
 
         public SimulationScene(String name)
         {
@@ -27,6 +29,7 @@ namespace Medical
             SimulationSceneDefinition definition = new SimulationSceneDefinition(name);
             definition.PresetDirectory = presetDirectory;
             definition.SequenceDirectory = sequenceDirectory;
+            definition.WindowPresets = CopySaver.Default.copy(windowPresets);
             return definition;
         }
 
@@ -75,6 +78,18 @@ namespace Medical
             set
             {
                 sequenceDirectory = value;
+            }
+        }
+
+        public SceneViewWindowPresetController WindowPresets
+        {
+            get
+            {
+                return windowPresets;
+            }
+            internal set
+            {
+                windowPresets = value;
             }
         }
 

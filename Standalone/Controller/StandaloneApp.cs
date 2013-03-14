@@ -12,8 +12,6 @@ namespace Medical.Controller
             
         }
 
-        public abstract void createWindowPresets(SceneViewWindowPresetController windowPresetController);
-
         public abstract String WindowTitle { get; }
 
         public abstract String PrimaryArchive { get; }

@@ -18,10 +18,9 @@ namespace Medical
 
         public SceneViewWindowPresetController()
         {
-            defaultPreset = new SceneViewWindowPresetSet("__Default");
+            defaultPreset = new SceneViewWindowPresetSet("Default");
             SceneViewWindowPreset preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
             defaultPreset.addPreset(preset);
-            addPresetSet(defaultPreset);
         }
 
         public void addPresetSet(SceneViewWindowPresetSet preset)
@@ -72,6 +71,14 @@ namespace Medical
             }
         }
 
+        public SceneViewWindowPresetSet Default
+        {
+            get
+            {
+                return defaultPreset;
+            }
+        }
+
         protected SceneViewWindowPresetController(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info);
@@ -106,10 +113,7 @@ namespace Medical
 
                 foreach (SceneViewWindowPresetSet set in presetSets)
                 {
-                    if (set != defaultPreset)
-                    {
-                        itemAdded(set);
-                    }
+                    itemAdded(set);
                 }
             }
             return editInterface;

@@ -62,13 +62,13 @@ namespace Medical
         private ViewportBackground background;
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
-        private SceneViewWindowPresetController windowPresetController;
 
         //Platform
         private MainWindow mainWindow;
         private StandaloneApp app;
         private AtlasPluginManager atlasPluginManager;
 		private bool shuttingDown = false;
+        private bool firstSceneLoad = true;
 
         //Touch
         private TouchController touchController;
@@ -250,17 +250,11 @@ namespace Medical
 
         public void createGUI()
         {
-            windowPresetController = new SceneViewWindowPresetController();
-            app.createWindowPresets(windowPresetController);
-
             //GUI
             guiManager.createGUI(mdiLayout);
             guiManager.giveGUIsToTimelineController(timelineController);
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
-
-            //Create scene view windows
-            sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
         }
 
         public void initializePlugins()
@@ -417,14 +411,6 @@ namespace Medical
             get
             {
                 return imageRenderer;
-            }
-        }
-
-        public SceneViewWindowPresetController PresetWindows
-        {
-            get
-            {
-                return windowPresetController;
             }
         }
 
@@ -626,8 +612,14 @@ namespace Medical
                     backgroundController.sceneLoaded(ogreScene);
                     background.createBackground(ogreScene);
 
+                    if (firstSceneLoad)
+                    {
+                        firstSceneLoad = false;
+                        SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                        sceneViewController.createFromPresets(medicalScene.WindowPresets.Default);
+                    }
+
                     sceneViewController.createCameras(medicalController.CurrentScene);
-                    SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
 
                     if (SceneLoaded != null)
                     {
