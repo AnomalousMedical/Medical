@@ -63,7 +63,6 @@ namespace Medical
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
-        private RmlWindow errorGui;
 
         //Platform
         private MainWindow mainWindow;
@@ -99,10 +98,6 @@ namespace Medical
 
         public void Dispose()
         {
-            if (errorGui != null)
-            {
-                errorGui.Dispose();
-            }
             mvcCore.Dispose();
             downloadController.Dispose();
             DocumentController.saveRecentDocuments();
@@ -652,7 +647,7 @@ namespace Medical
 
         private void showLoadErrorGui()
         {
-            errorGui = new RmlWindow(behaviorErrorManager);
+            RmlWindow errorGui = new RmlWindow(behaviorErrorManager);
             StringBuilder htmlString = new StringBuilder();
             foreach (BehaviorBlacklistEventArgs blacklist in behaviorErrorManager.BlacklistEvents)
             {
@@ -666,13 +661,7 @@ namespace Medical
                 }
             }
             errorGui.setBodyMarkup(htmlString.ToString());
-            guiManager.addManagedDialog(errorGui);
-            errorGui.Closed += (evt, args) =>
-            {
-                guiManager.removeManagedDialog(errorGui);
-                errorGui.Dispose();
-                errorGui = null;
-            };
+            guiManager.autoDisposeDialog(errorGui);
             errorGui.Visible = true;
         }
 

@@ -8,5 +8,6 @@ namespace Medical.GUI
         void openMainGUIDialog();
         void serialize(Engine.ConfigFile file);
         void closeMainGUIDialog();
+        void disposeDialog();
     }
 }

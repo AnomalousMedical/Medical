@@ -72,6 +72,7 @@ namespace Medical.GUI
             {
                 Log.Warning("Could not save window configuration because the WindowsFile is not defined.");
             }
+            dialogManager.Dispose();
 
             //Containers
             leftAnimatedContainer.Dispose();
@@ -263,6 +264,11 @@ namespace Medical.GUI
         public void removeFullscreenPopup(LayoutContainer popup)
         {
             fullscreenPopups.Remove(popup);
+        }
+
+        public void autoDisposeDialog(MDIDialog autoDisposeDialog)
+        {
+            dialogManager.autoDisposeDialog(autoDisposeDialog);
         }
 
         /// <summary>

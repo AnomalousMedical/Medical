@@ -8,16 +8,25 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    public class DialogManager
+    public class DialogManager : IDisposable
     {
         private List<DialogEntry> dialogs = new List<DialogEntry>();
         private Dictionary<MDIDialog, DialogEntry> mdiDialogs = new Dictionary<MDIDialog, DialogEntry>();
         private MDILayoutManager mdiLayoutManager;
         private StoredMDILayout storedLayout;
+        private Dictionary<Object, DialogEntry> autoDisposeDialogs = new Dictionary<Object, DialogEntry>();
 
         public DialogManager(MDILayoutManager mdiLayoutManager)
         {
             this.mdiLayoutManager = mdiLayoutManager;
+        }
+
+        public void Dispose()
+        {
+            foreach (DialogEntry entry in autoDisposeDialogs.Values)
+            {
+                entry.disposeDialog();
+            }
         }
 
         public void addManagedDialog(Dialog dialog)
@@ -84,6 +93,19 @@ namespace Medical.GUI
             }
             mdiLayoutManager.restoreLayout(storedLayout);
             storedLayout = null;
+        }
+
+        public void autoDisposeDialog(MDIDialog autoDisposeDialog)
+        {
+            autoDisposeDialog.Closed += mdiDialogAutoDispose;
+            autoDisposeDialogs.Add(autoDisposeDialog, new MDIDialogEntry(autoDisposeDialog));
+        }
+
+        void mdiDialogAutoDispose(object sender, EventArgs e)
+        {
+            MDIDialog dialog = (MDIDialog)sender;
+            dialog.Dispose();
+            autoDisposeDialogs.Remove(dialog);
         }
     }
 }

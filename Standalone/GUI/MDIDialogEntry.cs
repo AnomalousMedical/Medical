@@ -41,5 +41,10 @@ namespace Medical.GUI
         {
             dialog.ensureVisible();
         }
+
+        public void disposeDialog()
+        {
+            dialog.Dispose();
+        }
     }
 }
