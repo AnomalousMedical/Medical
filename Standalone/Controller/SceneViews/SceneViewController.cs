@@ -63,9 +63,9 @@ namespace Medical.Controller
             }
         }
 
-        public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, MDISceneViewWindow previous = null, WindowAlignment alignment = WindowAlignment.Left)
+        public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, MDISceneViewWindow previous = null, WindowAlignment alignment = WindowAlignment.Left)
         {
-            MDISceneViewWindow window = doCreateWindow(name, translation, lookAt, boundMin, boundMax);
+            MDISceneViewWindow window = doCreateWindow(name, translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance);
             if (previous != null)
             {
                 mdiLayout.showWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
@@ -243,13 +243,13 @@ namespace Medical.Controller
                 if (windowIndex < currentWindowConfig.Count)
                 {
                     Bookmark bmk = currentWindowConfig[windowIndex++];
-                    camera = createWindow(preset.Name, bmk.CameraTranslation, bmk.CameraLookAt, preset.BoundMin, preset.BoundMax, findWindow(preset.ParentWindow), preset.WindowPosition);
+                    camera = createWindow(preset.Name, bmk.CameraTranslation, bmk.CameraLookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, findWindow(preset.ParentWindow), preset.WindowPosition);
                     TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
                     bmk.Layers.instantlyApply();
                 }
                 else
                 {
-                    camera = createWindow(preset.Name, preset.Position, preset.LookAt, preset.BoundMin, preset.BoundMax, findWindow(preset.ParentWindow), preset.WindowPosition);
+                    camera = createWindow(preset.Name, preset.Position, preset.LookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, findWindow(preset.ParentWindow), preset.WindowPosition);
                 }
             }
         }
@@ -385,9 +385,9 @@ namespace Medical.Controller
         /// <param name="translation"></param>
         /// <param name="lookAt"></param>
         /// <returns></returns>
-        private MDISceneViewWindow doCreateWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax)
+        private MDISceneViewWindow doCreateWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance)
         {
-            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, null, eventManager);
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
             MDISceneViewWindow window = new MDISceneViewWindow(rm, this, mainTimer, orbitCamera, name);

@@ -16,6 +16,8 @@ namespace Medical
         Vector3 lookAt;
         Vector3 boundMin;
         Vector3 boundMax;
+        float minOrbitDistance = 0.0f;
+        float maxOrbitDistance = 500.0f;
         String parentWindow;
         WindowAlignment windowPosition = WindowAlignment.Top;
 
@@ -87,6 +89,32 @@ namespace Medical
             set
             {
                 boundMax = value;
+            }
+        }
+
+        [Editable]
+        public float OrbitMinDistance
+        {
+            get
+            {
+                return minOrbitDistance;
+            }
+            set
+            {
+                minOrbitDistance = value;
+            }
+        }
+
+        [Editable]
+        public float OrbitMaxDistance
+        {
+            get
+            {
+                return maxOrbitDistance;
+            }
+            set
+            {
+                maxOrbitDistance = value;
             }
         }
 

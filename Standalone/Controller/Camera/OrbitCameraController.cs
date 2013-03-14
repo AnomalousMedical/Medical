@@ -72,6 +72,8 @@ namespace Medical
 
         private Vector3 boundMax;
         private Vector3 boundMin;
+        private float minOrbitDistance;
+        private float maxOrbitDistance;
 
         private SceneView camera;
         private EventManager events;
@@ -113,7 +115,7 @@ namespace Medical
         private bool allowRotation = true;
         private bool allowZoom = true;
 
-        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, CameraMotionValidator motionValidator, EventManager eventManager)
+        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventManager eventManager)
         {
             this.camera = null;
             this.events = eventManager;
@@ -122,6 +124,8 @@ namespace Medical
             this.motionValidator = motionValidator;
             this.boundMax = boundMax;
             this.boundMin = boundMin;
+            this.minOrbitDistance = minOrbitDistance;
+            this.maxOrbitDistance = maxOrbitDistance;
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
@@ -270,17 +274,17 @@ namespace Medical
                     if (mouseCoords.z < 0)
                     {
                         orbitDistance += 3.6f;
-                        if (orbitDistance > 500.0f)
+                        if (orbitDistance > maxOrbitDistance)
                         {
-                            orbitDistance = 500.0f;
+                            orbitDistance = maxOrbitDistance;
                         }
                     }
                     else if (mouseCoords.z > 0)
                     {
                         orbitDistance -= 3.6f;
-                        if (orbitDistance < 0.0f)
+                        if (orbitDistance < minOrbitDistance)
                         {
-                            orbitDistance = 0.0f;
+                            orbitDistance = minOrbitDistance;
                         }
                     }
                     updateTranslation(normalDirection * orbitDistance + lookAt);
@@ -290,13 +294,13 @@ namespace Medical
 
         private void moveZoom()
         {
-            if (orbitDistance < 0.2f)
+            if (orbitDistance < minOrbitDistance)
             {
-                orbitDistance = 0.2f;
+                orbitDistance = minOrbitDistance;
             }
-            if (orbitDistance > 500.0f)
+            if (orbitDistance > maxOrbitDistance)
             {
-                orbitDistance = 500.0f;
+                orbitDistance = maxOrbitDistance;
             }
             updateTranslation(normalDirection * orbitDistance + lookAt);
         }
