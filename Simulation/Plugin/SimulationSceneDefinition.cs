@@ -24,10 +24,12 @@ namespace Medical
         private String name;
         private String presetDirectory;
         private String sequenceDirectory;
+        private SceneViewWindowPresetController windowPresets;
 
         public SimulationSceneDefinition(String name)
         {
             this.name = name;
+            windowPresets = new SceneViewWindowPresetController();
         }
 
         #region Functions
@@ -88,6 +90,14 @@ namespace Medical
             }
         }
 
+        public SceneViewWindowPresetController WindowPresets
+        {
+            get
+            {
+                return windowPresets;
+            }
+        }
+
         #endregion
 
         #region EditInterface
@@ -99,6 +109,7 @@ namespace Medical
             if (editInterface == null)
             {
                 editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, name + "Simulation Scene", null);
+                editInterface.addSubInterface(windowPresets.getEditInterface());
             }
             return editInterface;
         }
@@ -108,16 +119,19 @@ namespace Medical
         #region Saveable Members
 
         private const String NAME = "Name";
-        private const String CAMERA_FILE_DIRECTORY = "CameraFileDirectory";
         private const String PRESET_DIRECTORY = "PresetDirectory";
-        private const String LAYERS_FILE_DIRECTORY = "LayersFileDirectory";
         private const String SEQUENCE_DIRECTORY = "SequenceDirectory";
+        private const String WINDOW_PRESETS = "WindowPresets";
 
         protected SimulationSceneDefinition(LoadInfo info)
         {
             name = info.GetString(NAME);
             presetDirectory = info.GetString(PRESET_DIRECTORY);
             sequenceDirectory = info.GetString(SEQUENCE_DIRECTORY);
+            windowPresets = info.GetValueCb<SceneViewWindowPresetController>(WINDOW_PRESETS, () =>
+            {
+                return new SceneViewWindowPresetController();
+            });
         }
 
         public void getInfo(SaveInfo info)
@@ -125,6 +139,7 @@ namespace Medical
             info.AddValue(NAME, name);
             info.AddValue(PRESET_DIRECTORY, presetDirectory);
             info.AddValue(SEQUENCE_DIRECTORY, sequenceDirectory);
+            info.AddValue(WINDOW_PRESETS, windowPresets);
         }
 
         #endregion

@@ -78,7 +78,7 @@ namespace Medical
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            EditInterface tagPropertiesInterface = ReflectedEditInterface.createEditInterface("Tag Properties", null);
+            EditInterface tagPropertiesInterface = ReflectedEditInterface.createUnscannedEditInterface("Tag Properties", null);
             tagPropertiesInterface.addCommand(new EditInterfaceCommand("Add Tag Property", addProperty));
             propertyManager = new EditInterfaceManager<AnatomyTagProperties>(tagPropertiesInterface);
             propertyManager.addCommand(new EditInterfaceCommand("Remove", removeProperty));

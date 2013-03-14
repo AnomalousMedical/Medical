@@ -91,7 +91,7 @@ namespace Medical
                 browser.addNode(null, SEPS, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
                 browser.addNode(null, SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
 
-                editInterface = ReflectedEditInterface.createEditInterface("Pre Actions", null);
+                editInterface = ReflectedEditInterface.createUnscannedEditInterface("Pre Actions", null);
                 editInterface.addCommand(new EditInterfaceCommand("Add Pre Action", addAction));
 
                 actionManager = new EditInterfaceManager<TimelineInstantAction>(editInterface);
@@ -155,7 +155,7 @@ namespace Medical
                 browser.addNode(null, SEPS, new BrowserNode("Repeat Previous", typeof(RepeatPreviousPostActions)));
                 browser.addNode(null, SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
 
-                editInterface = ReflectedEditInterface.createEditInterface("Post Actions", null);
+                editInterface = ReflectedEditInterface.createUnscannedEditInterface("Post Actions", null);
                 editInterface.addCommand(new EditInterfaceCommand("Add Post Action", addAction));
 
                 actionManager = new EditInterfaceManager<TimelineInstantAction>(editInterface);

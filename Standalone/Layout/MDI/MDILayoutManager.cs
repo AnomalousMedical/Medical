@@ -8,17 +8,6 @@ using MyGUIPlugin;
 
 namespace Medical.Controller
 {
-    /// <summary>
-    /// Descibes the alignment of one window to another.
-    /// </summary>
-    public enum WindowAlignment
-    {
-        Left,
-        Right,
-        Top,
-        Bottom
-    }
-
     public enum DockLocation
     {
         None = 0,
