@@ -144,6 +144,25 @@ namespace Medical
             MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM2/Update{1}", websiteHostUrl, buildUrlExtraPath);
             MedicalConfig.PluginInfoURL = String.Format("{0}/DRM2/DownloadInfo{1}", websiteHostUrl, buildUrlExtraPath);
             MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM2/FileDownload{1}", websiteHostUrl, buildUrlExtraPath);
+
+            //Read command line
+            String[] commandLine = Environment.GetCommandLineArgs();
+            for (int i = 0; i < commandLine.Length; ++i)
+            {
+                switch (commandLine[i])
+                {
+                    case "-startTask":
+                        if (i + 1 < commandLine.Length)
+                        {
+                            StartupTask = commandLine[i + 1];
+                        }
+                        else
+                        {
+                            Log.Error("Command line argument '-startTask' requires a task name after it.");
+                        }
+                        break;
+                }
+            }
         }
 
         public static void setUserDirectory(String username)
@@ -417,5 +436,7 @@ namespace Medical
         public static String AnomalousMedicalBlogURL { get; private set; }
 
 		public static String ValidateConnectionURL { get; private set; }
+
+        public static String StartupTask { get; private set; }
     }
 }

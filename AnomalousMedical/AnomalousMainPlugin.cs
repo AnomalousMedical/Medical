@@ -180,7 +180,19 @@ namespace Medical.GUI
         {
             UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.App.LicenseManager);
 
-            if (MedicalConfig.FirstRun)
+            if (!String.IsNullOrEmpty(MedicalConfig.StartupTask))
+            {
+                Task commandLineTask = standaloneController.TaskController.getTask(MedicalConfig.StartupTask);
+                if (commandLineTask != null)
+                {
+                    commandLineTask.clicked(null);
+                }
+                else
+                {
+                    standaloneController.GUIManager.NotificationManager.showNotification(String.Format("Cannot load command line supplied task '{0}'\nPlease make sure it is named correctly and that you own this plugin.", MedicalConfig.StartupTask), MessageBoxIcons.Error);
+                }
+            }
+            else if (MedicalConfig.FirstRun)
             {
                 MedicalConfig.FirstRun = false;
                 Task introTask = standaloneController.TaskController.getTask("DDPlugin.IntroductionTutorial.Task");

@@ -644,7 +644,7 @@ namespace Medical
                 success = true;
                 if (behaviorErrorManager.HasErrors)
                 {
-                    guiManager.NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", CommonResources.NoIcon, new Action(() =>
+                    guiManager.NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, new Action(() =>
                         {
                             errorGui = new BehaviorErrorGui(behaviorErrorManager);
                             guiManager.addManagedDialog(errorGui);
