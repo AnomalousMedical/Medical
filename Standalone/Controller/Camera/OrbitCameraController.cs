@@ -22,9 +22,6 @@ namespace Medical
     {
         #region Static
 
-        private readonly Vector3 LOOK_AT_BOUND_MAX = new Vector3(15.0f, 15.0f, 15.0f);
-        private readonly Vector3 LOOK_AT_BOUND_MIN = new Vector3(-15.0f, -40.0f, -15.0f);
-
         private static MouseButtonCode currentMouseButton = MedicalConfig.CameraMouseButton;
         private static MessageEvent rotateCamera;
         private static MessageEvent panCamera;
@@ -73,6 +70,9 @@ namespace Medical
 
         #endregion Static
 
+        private Vector3 boundMax;
+        private Vector3 boundMin;
+
         private SceneView camera;
         private EventManager events;
 
@@ -113,13 +113,15 @@ namespace Medical
         private bool allowRotation = true;
         private bool allowZoom = true;
 
-        public OrbitCameraController(Vector3 translation, Vector3 lookAt, CameraMotionValidator motionValidator, EventManager eventManager)
+        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, CameraMotionValidator motionValidator, EventManager eventManager)
         {
             this.camera = null;
             this.events = eventManager;
             this.translation = translation;
             this.lookAt = lookAt;
             this.motionValidator = motionValidator;
+            this.boundMax = boundMax;
+            this.boundMin = boundMin;
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
@@ -302,29 +304,29 @@ namespace Medical
         private void moveLookAt()
         {
             //Restrict look at position
-            if (lookAt.x > LOOK_AT_BOUND_MAX.x)
+            if (lookAt.x > boundMax.x)
             {
-                lookAt.x = LOOK_AT_BOUND_MAX.x;
+                lookAt.x = boundMax.x;
             }
-            else if (lookAt.x < LOOK_AT_BOUND_MIN.x)
+            else if (lookAt.x < boundMin.x)
             {
-                lookAt.x = LOOK_AT_BOUND_MIN.x;
+                lookAt.x = boundMin.x;
             }
-            if (lookAt.y > LOOK_AT_BOUND_MAX.y)
+            if (lookAt.y > boundMax.y)
             {
-                lookAt.y = LOOK_AT_BOUND_MAX.y;
+                lookAt.y = boundMax.y;
             }
-            else if (lookAt.y < LOOK_AT_BOUND_MIN.y)
+            else if (lookAt.y < boundMin.y)
             {
-                lookAt.y = LOOK_AT_BOUND_MIN.y;
+                lookAt.y = boundMin.y;
             }
-            if (lookAt.z > LOOK_AT_BOUND_MAX.z)
+            if (lookAt.z > boundMax.z)
             {
-                lookAt.z = LOOK_AT_BOUND_MAX.z;
+                lookAt.z = boundMax.z;
             }
-            else if (lookAt.z < LOOK_AT_BOUND_MIN.z)
+            else if (lookAt.z < boundMin.z)
             {
-                lookAt.z = LOOK_AT_BOUND_MIN.z;
+                lookAt.z = boundMin.z;
             }
 
             updateTranslation(lookAt + normalDirection * orbitDistance);
@@ -573,6 +575,30 @@ namespace Medical
             set
             {
                 panVelocity = value;
+            }
+        }
+
+        public Vector3 BoundMax
+        {
+            get
+            {
+                return boundMax;
+            }
+            set
+            {
+                boundMax = value;
+            }
+        }
+
+        public Vector3 BoundMin
+        {
+            get
+            {
+                return boundMin;
+            }
+            set
+            {
+                boundMin = value;
             }
         }
     }

@@ -14,6 +14,8 @@ namespace Medical
         String name;
         Vector3 position;
         Vector3 lookAt;
+        Vector3 boundMin;
+        Vector3 boundMax;
         String parentWindow;
         WindowAlignment windowPosition = WindowAlignment.Top;
 
@@ -59,6 +61,32 @@ namespace Medical
             set
             {
                 lookAt = value;
+            }
+        }
+
+        [Editable]
+        public Vector3 BoundMin
+        {
+            get
+            {
+                return boundMin;
+            }
+            set
+            {
+                boundMin = value;
+            }
+        }
+
+        [Editable]
+        public Vector3 BoundMax
+        {
+            get
+            {
+                return boundMax;
+            }
+            set
+            {
+                boundMax = value;
             }
         }
 
