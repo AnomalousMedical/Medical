@@ -8,37 +8,45 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class BehaviorErrorGui : MDIDialog
+    class RmlWindow : MDIDialog
     {
         ImageBox rmlImage;
         RocketWidget rocketWidget;
 
-        public BehaviorErrorGui(BehaviorErrorManager behaviorErrorManager)
-            : base("Medical.GUI.BehaviorErrorGui.BehaviorErrorGui.layout")
+        public RmlWindow(BehaviorErrorManager behaviorErrorManager)
+            : base("Medical.GUI.RmlWindow.RmlWindow.layout")
         {
             rmlImage = (ImageBox)window.findWidget("RmlImage");
             rocketWidget = new RocketWidget(rmlImage);
 
             window.WindowChangedCoord += window_WindowChangedCoord;
+        }
+
+        /// <summary>
+        /// You can use this to just do body using a default head.
+        /// </summary>
+        public void setBodyMarkup(String markup)
+        {
+            rocketWidget.Context.UnloadAllDocuments();
 
             StringBuilder htmlString = new StringBuilder();
             htmlString.Append(@"<rml>  <head>
     <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
     <link type=""text/rcss"" href=""libRocketPlugin.Resources.Anomalous.rcss""/>
     </head><body><div id=""Content"" class=""ScrollArea"">");
-            foreach (BehaviorBlacklistEventArgs blacklist in behaviorErrorManager.BlacklistEvents)
-            {
-                if (blacklist.Behavior != null)
-                {
-                    htmlString.AppendFormat("<p>Behavior {0}, type='{1}', SimObject='{3}' blacklisted.  Reason: {2}</p>", blacklist.Behavior.Name, blacklist.Behavior.GetType().Name, blacklist.Message, blacklist.Behavior.Owner != null ? blacklist.Behavior.Owner.Name : "NullOwner");
-                }
-                else
-                {
-                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}</p>", blacklist.Message);
-                }
-            }
+            htmlString.Append(markup);
             htmlString.Append("</div></body></rml>");
-            using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(htmlString.ToString()))
+            setFullMarkup(htmlString.ToString());
+        }
+
+        /// <summary>
+        /// Use this to control the full markup for the window.
+        /// </summary>
+        public void setFullMarkup(String markup)
+        {
+            rocketWidget.Context.UnloadAllDocuments();
+
+            using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(markup))
             {
                 if (document != null)
                 {

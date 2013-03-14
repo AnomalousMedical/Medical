@@ -63,7 +63,7 @@ namespace Medical
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
-        private BehaviorErrorGui errorGui;
+        private RmlWindow errorGui;
 
         //Platform
         private MainWindow mainWindow;
@@ -644,21 +644,36 @@ namespace Medical
                 success = true;
                 if (behaviorErrorManager.HasErrors)
                 {
-                    guiManager.NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, new Action(() =>
-                        {
-                            errorGui = new BehaviorErrorGui(behaviorErrorManager);
-                            guiManager.addManagedDialog(errorGui);
-                            errorGui.Closed += (evt, args) =>
-                                {
-                                    guiManager.removeManagedDialog(errorGui);
-                                    errorGui.Dispose();
-                                    errorGui = null;
-                                };
-                            errorGui.Visible = true;
-                        }));
+                    guiManager.NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
                 }
             }
             return success;
+        }
+
+        private void showLoadErrorGui()
+        {
+            errorGui = new RmlWindow(behaviorErrorManager);
+            StringBuilder htmlString = new StringBuilder();
+            foreach (BehaviorBlacklistEventArgs blacklist in behaviorErrorManager.BlacklistEvents)
+            {
+                if (blacklist.Behavior != null)
+                {
+                    htmlString.AppendFormat("<p>Behavior {0}, type='{1}', SimObject='{3}' blacklisted.  Reason: {2}</p>", blacklist.Behavior.Name, blacklist.Behavior.GetType().Name, blacklist.Message, blacklist.Behavior.Owner != null ? blacklist.Behavior.Owner.Name : "NullOwner");
+                }
+                else
+                {
+                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}</p>", blacklist.Message);
+                }
+            }
+            errorGui.setBodyMarkup(htmlString.ToString());
+            guiManager.addManagedDialog(errorGui);
+            errorGui.Closed += (evt, args) =>
+            {
+                guiManager.removeManagedDialog(errorGui);
+                errorGui.Dispose();
+                errorGui = null;
+            };
+            errorGui.Visible = true;
         }
 
         /// <summary>

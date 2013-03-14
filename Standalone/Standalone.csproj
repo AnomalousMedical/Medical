@@ -212,7 +212,6 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
-    <Compile Include="GUI\BehaviorErrorGui\BehaviorErrorGui.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemDialog.cs" />
@@ -319,6 +318,7 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.cs" />
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
+    <Compile Include="GUI\RmlWindow\RmlWindow.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
@@ -786,7 +786,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.layout" />
-    <EmbeddedResource Include="GUI\BehaviorErrorGui\BehaviorErrorGui.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
@@ -821,6 +820,7 @@
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
+    <EmbeddedResource Include="GUI\RmlWindow\RmlWindow.layout" />
     <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />
     <EmbeddedResource Include="Resources\DegenerationImages.png" />
     <EmbeddedResource Include="Resources\TeethMovementIcons.xml" />
