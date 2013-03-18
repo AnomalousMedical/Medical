@@ -27,7 +27,7 @@ namespace Medical
             }
         }
 
-        public void signDataFile(String file, String outFile, X509Certificate2 cert)
+        public static void SignDataFile(String file, String outFile, X509Certificate2 cert)
         {
             byte[] signature;
             RSACryptoServiceProvider privateKey = cert.PrivateKey as RSACryptoServiceProvider;
@@ -55,6 +55,13 @@ namespace Medical
 
         public bool isSafeDataFile(String file)
         {
+#if ALLOW_OVERRIDE
+            if (MedicalConfig.AllowUnsignedPlugins)
+            {
+                return true;
+            }
+#endif
+
             byte[] signature;
             X509Certificate2 cert;
             using (BinaryReader reader = new BinaryReader(File.Open(file, FileMode.Open, FileAccess.Read)))
@@ -71,14 +78,32 @@ namespace Medical
 
                 if (timestamp <= cert.NotAfter && timestamp >= cert.NotBefore)
                 {
-                    RSACryptoServiceProvider publicKey = cert.PublicKey.Key as RSACryptoServiceProvider;
-                    reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                    byte[] hash;
-                    using (Stream stream = new SignedStream(reader.BaseStream, footerStart))
+                    if (cert.RawData.SequenceEqual(authorityBytes))
                     {
-                        hash = sha1.ComputeHash(stream);
+                        RSACryptoServiceProvider publicKey = cert.PublicKey.Key as RSACryptoServiceProvider;
+                        reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                        byte[] hash;
+                        using (Stream stream = new SignedStream(reader.BaseStream, footerStart))
+                        {
+                            hash = sha1.ComputeHash(stream);
+                        }
+                        if (publicKey.VerifyHash(hash, Sha1OID, signature))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            Log.Error("Plugin '{0}' is improperly signed.", file);
+                        }
                     }
-                    return publicKey.VerifyHash(hash, Sha1OID, signature);
+                    else
+                    {
+                        Log.Error("Plugin '{0}' is signed but does not match the authority.", file);
+                    }
+                }
+                else
+                {
+                    Log.Error("Invalid timestamp on plugin '{0}'.", file);
                 }
                 return false;
             }
