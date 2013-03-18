@@ -39,6 +39,8 @@ namespace Medical
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
 
+        private PluginVerifier pluginVerifier = new PluginVerifier(Assembly.GetExecutingAssembly());
+
         static AtlasPluginManager()
         {
             rsaProvider = new RSACryptoServiceProvider();
@@ -124,7 +126,7 @@ namespace Medical
             }
         }
 
-        public bool addDllPlugin(String dllName)
+        private bool addDllPlugin(String dllName)
         {
             bool loadedPlugin = false;
             String fullPath = Path.GetFullPath(dllName);
@@ -138,42 +140,45 @@ namespace Medical
                 String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
                 if (!loadedPluginNames.Contains(dllFileName))
                 {
-                    try
+                    if (pluginVerifier.isSafeDll(fullPath))
                     {
-                        Assembly assembly = Assembly.LoadFile(fullPath);
-
-                        //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
-                        loadedPluginNames.Add(dllFileName);
-
-                        AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                        if (attributes.Length > 0)
-                        {
-                            foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
-                            {
-                                entryPointAttribute.createPlugin(standaloneController);
-                            }
-                            loadedPlugin = true;
-                        }
-                        else
-                        {
-                            String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
-                            firePluginLoadError(errorMessage);
-                            Log.Error(errorMessage);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
-                        Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
                         try
                         {
-                            File.Delete(fullPath);
+                            Assembly assembly = Assembly.LoadFile(fullPath);
+
+                            //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
+                            loadedPluginNames.Add(dllFileName);
+
+                            AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                            if (attributes.Length > 0)
+                            {
+                                foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                                {
+                                    entryPointAttribute.createPlugin(standaloneController);
+                                }
+                                loadedPlugin = true;
+                            }
+                            else
+                            {
+                                String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                                firePluginLoadError(errorMessage);
+                                Log.Error(errorMessage);
+                            }
                         }
-                        catch (Exception deleteEx)
+                        catch (Exception e)
                         {
-                            Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
-                            managePluginInstructions.addFileToDelete(fullPath);
-                            saveManagementInstructions();
+                            firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
+                            Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
+                            try
+                            {
+                                File.Delete(fullPath);
+                            }
+                            catch (Exception deleteEx)
+                            {
+                                Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
+                                managePluginInstructions.addFileToDelete(fullPath);
+                                saveManagementInstructions();
+                            }
                         }
                     }
                 }
@@ -189,7 +194,7 @@ namespace Medical
             return loadedPlugin;
         }
 
-        public bool addDataDrivenPlugin(String path)
+        private bool addDataDrivenPlugin(String path)
         {
             bool loadedPlugin = false;
             String pluginDirectory = null;

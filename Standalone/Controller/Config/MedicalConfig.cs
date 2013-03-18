@@ -77,6 +77,7 @@ namespace Medical
                 Cracked = systemOverride.getValue("Cracked", Cracked);
                 BuildName = systemOverride.getValue("CustomBuildName", BuildName);
                 libRocketPlugin.RocketInterface.Instance.PixelsPerInch = systemOverride.getValue("PixelsPerInch", libRocketPlugin.RocketInterface.DefaultPixelsPerInch);
+                AllowUnsignedPlugins = systemOverride.getValue("AllowUnsignedPlugins", false);
             }
 #endif
             //Fix up paths based on the build name
@@ -301,6 +302,8 @@ namespace Medical
         }
 
         public static bool Cracked { get; private set; }
+
+        public static bool AllowUnsignedPlugins { get; private set; }
 #endif
 
         public static String DefaultScene

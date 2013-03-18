@@ -51,6 +51,9 @@
     <Reference Include="libRocketPlugin">
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\..\Dependencies\Mono\SharedLib\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -173,7 +176,9 @@
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\IdleHandler.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
+    <Compile Include="Controller\Plugin\PluginVerifier.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
+    <Compile Include="Controller\Plugin\SignedStream.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
