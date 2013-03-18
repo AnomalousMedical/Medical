@@ -33,9 +33,6 @@ namespace Medical
         private ManagePluginInstructions managePluginInstructions;
         private HashSet<long> usedPluginIds = new HashSet<long>();
 
-        private static RSACryptoServiceProvider rsaProvider;
-        private static SHA1CryptoServiceProvider sha1Provider;
-
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
 
@@ -43,9 +40,7 @@ namespace Medical
 
         static AtlasPluginManager()
         {
-            rsaProvider = new RSACryptoServiceProvider();
-            rsaProvider.FromXmlString("<RSAKeyValue><Modulus>sFBRdwESLKFtqMjfjMLrZiueRyeaNd+bbK4CFnC3tvZEnqDDs3OLajebXYSDD+MABD1DRJ+XJgKZO1XmBUW2BpK415CwHj+6cFf0/Vz4eBknoruJRJEhMyQJ4k/RTmpiSl+WCrtpPV9EuBTBnlmAFGWEX53c/v/ihqooV/DpVWE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>");
-            sha1Provider = new SHA1CryptoServiceProvider();
+            
         }
 
         public AtlasPluginManager(StandaloneController standaloneController)
