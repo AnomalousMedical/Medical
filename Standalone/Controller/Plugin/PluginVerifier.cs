@@ -11,19 +11,27 @@ using System.Text;
 
 namespace Medical
 {
-    class PluginVerifier
+    public class PluginVerifier
     {
         private static readonly String Sha1OID = CryptoConfig.MapNameToOID("SHA1");
         private static SHA1Managed sha1 = new SHA1Managed();
 
         byte[] authorityBytes;
 
-        public PluginVerifier(Assembly authorityAssembly)
+        internal PluginVerifier(Assembly authorityAssembly)
         {
             AuthenticodeDeformatter authorityAd = new AuthenticodeDeformatter(Assembly.GetExecutingAssembly().Location);
             if (authorityAd.SigningCertificate != null)
             {
                 authorityBytes = authorityAd.SigningCertificate.RawData;
+            }
+        }
+
+        internal PluginVerifier(Stream certStream)
+        {
+            using (BinaryReader br = new BinaryReader(certStream))
+            {
+                authorityBytes = br.ReadBytes((int)certStream.Length);
             }
         }
 
@@ -53,7 +61,7 @@ namespace Medical
             }
         }
 
-        public bool isSafeDataFile(String file)
+        internal bool isSafeDataFile(String file)
         {
 #if ALLOW_OVERRIDE
             if (MedicalConfig.AllowUnsignedPlugins)
@@ -62,54 +70,62 @@ namespace Medical
             }
 #endif
 
-            byte[] signature;
-            X509Certificate2 cert;
-            using (BinaryReader reader = new BinaryReader(File.Open(file, FileMode.Open, FileAccess.Read)))
+            try
             {
-                reader.BaseStream.Seek(reader.BaseStream.Length - sizeof(long), SeekOrigin.Begin);
-                long footerStart = reader.ReadInt64();
-                reader.BaseStream.Seek(footerStart, SeekOrigin.Begin);
-                long signatureLength = reader.ReadInt64();
-                signature = reader.ReadBytes((int)signatureLength);
-                long publicKeyLength = reader.ReadInt64();
-                byte[] publicKeyBytes = reader.ReadBytes((int)publicKeyLength);
-                cert = new X509Certificate2(publicKeyBytes);
-                DateTime timestamp = new DateTime(reader.ReadInt64());
-
-                if (timestamp <= cert.NotAfter && timestamp >= cert.NotBefore)
+                byte[] signature;
+                X509Certificate2 cert;
+                using (BinaryReader reader = new BinaryReader(File.Open(file, FileMode.Open, FileAccess.Read)))
                 {
-                    if (cert.RawData.SequenceEqual(authorityBytes))
+                    reader.BaseStream.Seek(reader.BaseStream.Length - sizeof(long), SeekOrigin.Begin);
+                    long footerStart = reader.ReadInt64();
+                    reader.BaseStream.Seek(footerStart, SeekOrigin.Begin);
+                    long signatureLength = reader.ReadInt64();
+                    signature = reader.ReadBytes((int)signatureLength);
+                    long publicKeyLength = reader.ReadInt64();
+                    byte[] publicKeyBytes = reader.ReadBytes((int)publicKeyLength);
+                    cert = new X509Certificate2(publicKeyBytes);
+                    DateTime timestamp = new DateTime(reader.ReadInt64());
+
+                    if (timestamp <= cert.NotAfter && timestamp >= cert.NotBefore)
                     {
-                        RSACryptoServiceProvider publicKey = cert.PublicKey.Key as RSACryptoServiceProvider;
-                        reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                        byte[] hash;
-                        using (Stream stream = new SignedStream(reader.BaseStream, footerStart))
+                        if (cert.RawData.SequenceEqual(authorityBytes))
                         {
-                            hash = sha1.ComputeHash(stream);
-                        }
-                        if (publicKey.VerifyHash(hash, Sha1OID, signature))
-                        {
-                            return true;
+                            RSACryptoServiceProvider publicKey = cert.PublicKey.Key as RSACryptoServiceProvider;
+                            reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                            byte[] hash;
+                            using (Stream stream = new SignedStream(reader.BaseStream, footerStart))
+                            {
+                                hash = sha1.ComputeHash(stream);
+                            }
+                            if (publicKey.VerifyHash(hash, Sha1OID, signature))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                Log.Error("Plugin '{0}' is improperly signed.", file);
+                            }
                         }
                         else
                         {
-                            Log.Error("Plugin '{0}' is improperly signed.", file);
+                            Log.Error("Plugin '{0}' is signed but does not match the authority.", file);
                         }
                     }
                     else
                     {
-                        Log.Error("Plugin '{0}' is signed but does not match the authority.", file);
+                        Log.Error("Invalid timestamp on plugin '{0}'.", file);
                     }
+                    return false;
                 }
-                else
-                {
-                    Log.Error("Invalid timestamp on plugin '{0}'.", file);
-                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Exception reading signature info for plugin '{0}' Message '{1}'.", file, ex.Message);
                 return false;
             }
         }
 
-        public bool isSafeDll(String path)
+        internal bool isSafeDll(String path)
         {
             bool safe = false;
             if (authorityBytes != null)

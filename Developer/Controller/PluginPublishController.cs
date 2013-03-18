@@ -7,6 +7,7 @@ using System.IO;
 using Logging;
 using Ionic.Zip;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Developer
 {
@@ -20,14 +21,14 @@ namespace Developer
             this.pluginManager = pluginManager;
         }
 
-        public void publishPlugin(String pluginFile, String keyFile, String outDirectory)
+        public void publishPlugin(String pluginFile, String certFile, String certPass, String outDirectory)
         {
             try
             {
                 DDAtlasPlugin plugin = null;
                 using (Stream stream = File.Open(pluginFile, FileMode.Open))
                 {
-                    plugin = pluginManager.loadPlugin(stream);
+                    plugin = SharedXmlSaver.Load<DDAtlasPlugin>(stream);
                 }
 
                 if (plugin != null)
@@ -46,7 +47,7 @@ namespace Developer
                     {
                         Directory.CreateDirectory(outDirectory);
                     }
-                    copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, keyFile, true, true);
+                    copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, certFile, certPass, true, true);
                 }
             }
             finally
@@ -55,7 +56,7 @@ namespace Developer
             }
         }
 
-        private void copyResources(DDAtlasPlugin plugin, String basePath, String targetDirectory, String pluginFile, String keyFile, bool compress, bool obfuscate)
+        private void copyResources(DDAtlasPlugin plugin, String basePath, String targetDirectory, String pluginFile, String certFile, String certPass, bool compress, bool obfuscate)
         {
             String archiveName = plugin.PluginNamespace;
             basePath = Path.GetFullPath(basePath) + Path.DirectorySeparatorChar;
@@ -81,8 +82,6 @@ namespace Developer
                 Log.Info("Copying {0} to {1}.", sourceFile.FullName, destination);
                 File.Copy(sourceFile.FullName, destination, true);
             }
-            //Sign the key file
-            signPluginFile(Path.Combine(targetDirectory, Path.GetFileName(pluginFile)), keyFile);
 
             //Compress
             if (compress)
@@ -108,45 +107,20 @@ namespace Developer
                     String obfuscateFileName = originalDirectory + "\\" + archiveName + ".dat";
                     obfuscateZipFile(zipFileName, obfuscateFileName);
                     File.Delete(zipFileName);
+
+                    //Sign the file
+                    signPluginFile(obfuscateFileName, certFile, certPass);
                 }
             }
         }
 
-        private static void signPluginFile(String pluginFile, String keyFile)
+        private static void signPluginFile(String dataFile, String certFile, String password)
         {
-            byte[] pluginBytes = null;
-            using (Stream stream = File.Open(pluginFile, FileMode.Open))
-            {
-                pluginBytes = new byte[stream.Length];
-                stream.Read(pluginBytes, 0, pluginBytes.Length);
-            }
-
-            String privateKey = null;
-            using (StreamReader sr = new StreamReader(File.Open(keyFile, FileMode.Open)))
-            {
-                privateKey = sr.ReadToEnd();
-            }
-
-            if (pluginBytes != null && privateKey != null)
-            {
-                RSACryptoServiceProvider.UseMachineKeyStore = true;
-                RSACryptoServiceProvider rsaAlgo = new RSACryptoServiceProvider();
-                rsaAlgo.FromXmlString(privateKey);
-                byte[] signedPlugin = rsaAlgo.SignData(pluginBytes, new SHA1CryptoServiceProvider());
-
-                using (Stream outStream = File.OpenWrite(pluginFile))
-                {
-                    BinaryWriter binaryWriter = new BinaryWriter(outStream);
-                    binaryWriter.Write('S');
-                    binaryWriter.Write('D');
-                    binaryWriter.Write('D');
-                    binaryWriter.Write('P');
-                    binaryWriter.Write(signedPlugin.Length);
-                    binaryWriter.Write(signedPlugin, 0, signedPlugin.Length);
-                    binaryWriter.Write(pluginBytes.Length);
-                    binaryWriter.Write(pluginBytes, 0, pluginBytes.Length);
-                }
-            }
+            String signedFile = Path.Combine(Path.GetDirectoryName(dataFile), "Signed_" + Path.GetFileName(dataFile));
+            X509Certificate2 cert = new X509Certificate2(certFile, password);
+            PluginVerifier.SignDataFile(dataFile, signedFile, cert);
+            File.Delete(dataFile);
+            File.Move(signedFile, dataFile);
         }
 
         public static void obfuscateZipFile(String zipFileName, String obfuscateFileName)

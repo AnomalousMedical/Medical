@@ -39,7 +39,7 @@ namespace Medical
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
 
-        private PluginVerifier pluginVerifier = new PluginVerifier(Assembly.GetExecutingAssembly());
+        private PluginVerifier pluginVerifier = new PluginVerifier(Assembly.GetExecutingAssembly().GetManifestResourceStream("Medical.Resources.2012-2013Public.cer"));
 
         static AtlasPluginManager()
         {
@@ -206,36 +206,39 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
-                try
+                if (pluginVerifier.isSafeDataFile(fullPath))
                 {
-                    if (!loadedPluginNames.Contains(dataFileName))
-                    {
-                        //Add the archive to the VirtualFileSystem if needed
-                        if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
-                        {
-                            VirtualFileSystem.Instance.addArchive(fullPath);
-                        }
-                        pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
-
-                        loadedPluginNames.Add(dataFileName);
-                    }
-                    else
-                    {
-                        Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
-                    }
-                }
-                catch (ZipAccess.ZipIOException e)
-                {
-                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
-                    Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
+                    String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
                     try
                     {
-                        File.Delete(fullPath);
+                        if (!loadedPluginNames.Contains(dataFileName))
+                        {
+                            //Add the archive to the VirtualFileSystem if needed
+                            if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
+                            {
+                                VirtualFileSystem.Instance.addArchive(fullPath);
+                            }
+                            pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
+
+                            loadedPluginNames.Add(dataFileName);
+                        }
+                        else
+                        {
+                            Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
+                        }
                     }
-                    catch (Exception deleteEx)
+                    catch (ZipAccess.ZipIOException e)
                     {
-                        Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                        firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
+                        Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
+                        try
+                        {
+                            File.Delete(fullPath);
+                        }
+                        catch (Exception deleteEx)
+                        {
+                            Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                        }
                     }
                 }
             }
@@ -278,18 +281,25 @@ namespace Medical
                 {
                     using (Stream pluginStream = VirtualFileSystem.Instance.openStream(pluginDefinitionFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                     {
-                        DDAtlasPlugin plugin = loadPlugin(pluginStream);
-                        if (plugin != null)
+                        try
                         {
-                            plugin.Location = fullPath;
-                            plugin.PluginRootFolder = pluginDirectory;
-                            addPlugin(plugin, false);
-                            loadedPlugin = true;
+                            DDAtlasPlugin plugin = SharedXmlSaver.Load<DDAtlasPlugin>(pluginStream);
+                            if (plugin != null)
+                            {
+                                plugin.Location = fullPath;
+                                plugin.PluginRootFolder = pluginDirectory;
+                                addPlugin(plugin, false);
+                                loadedPlugin = true;
+                            }
+                            else
+                            {
+                                throw new Exception(String.Format("Error loading '{0}' in path '{1}' from '{2}' because it was null.", pluginDefinitionFile, path, fullPath));
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
                             firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", Path.GetFileName(fullPath)));
-                            Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it was null.", pluginDefinitionFile, path, fullPath);
+                            Log.Error(ex.Message);
                             try
                             {
                                 File.Delete(fullPath);
@@ -310,70 +320,6 @@ namespace Medical
             }
 
             return loadedPlugin;
-        }
-
-        /// <summary>
-        /// Load a plugin from a stream. The stream will NOT be closed by this method.
-        /// </summary>
-        /// <param name="stream">The stream to read the plugin from.</param>
-        /// <returns>A DDAtlasPlugin object or null if an error occured.</returns>
-        public DDAtlasPlugin loadPlugin(Stream stream)
-        {
-            //Read the file
-            byte[] fileContents = new byte[stream.Length];
-            stream.Read(fileContents, 0, fileContents.Length);
-
-            //Read the plugin as a signed plugin
-            try
-            {
-                byte[] hashedData;
-                byte[] realData;
-                using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(fileContents)))
-                {
-                    char[] magicLetters = binaryReader.ReadChars(4);
-                    if (magicLetters[0] == 'S' &&
-                        magicLetters[1] == 'D' &&
-                        magicLetters[2] == 'D' &&
-                        magicLetters[3] == 'P')
-                    {
-                        hashedData = new byte[binaryReader.ReadInt32()];
-                        binaryReader.Read(hashedData, 0, hashedData.Length);
-                        realData = new byte[binaryReader.ReadInt32()];
-                        binaryReader.Read(realData, 0, realData.Length);
-
-                        if (rsaProvider.VerifyData(realData, sha1Provider, hashedData))
-                        {
-                            using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(realData)))
-                            {
-                                DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
-                                return plugin;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-
-#if ALLOW_OVERRIDE
-            //If we allow overrides try to read the plugin as unsigned
-            try
-            {
-                using (XmlTextReader xmlReader = new XmlTextReader(new MemoryStream(fileContents)))
-                {
-                    DDAtlasPlugin plugin = xmlSaver.restoreObject(xmlReader) as DDAtlasPlugin;
-                    return plugin;
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-#endif
-
-            return null;
         }
 
         public void addPlugin(AtlasPlugin plugin)

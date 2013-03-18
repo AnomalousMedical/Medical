@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="45 61 382 188" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="45 61 382 229" layer="Overlapped">
         <Property key="Caption" value="Plugin Publisher"/>
-        <Widget type="Button" skin="Button" position="5 129 68 22" align="Left Bottom" name="PublishButton">
+        <Widget type="Button" skin="Button" position="5 170 68 22" align="Left Bottom" name="PublishButton">
             <Property key="Caption" value="Publish"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="3 4 157 15">
@@ -13,17 +13,23 @@
             <Property key="Caption" value="..."/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="3 45 164 15">
-            <Property key="Caption" value="Signature Private Key File"/>
+            <Property key="Caption" value="Certificate File"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="4 63 331 22" align="HStretch Top" name="SignatureFileEdit"/>
         <Widget type="Button" skin="Button" position="337 61 29 26" align="Right Top" name="SignatureFileBrowser">
             <Property key="Caption" value="..."/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="4 87 179 15">
+        <Widget type="TextBox" skin="TextBox" position="4 87 179 15" align="Right Top">
+            <Property key="Caption" value="Certificate Password"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="4 103 331 22" align="HStretch Top" name="CertPassword">
+            <Property key="Password" value="true"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="4 128 179 15" align="Right Top">
             <Property key="Caption" value="Output Directory"/>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position="4 103 331 22" align="HStretch Top" name="OutDirEdit"/>
-        <Widget type="Button" skin="Button" position="337 101 29 28" align="Right Top" name="OutDirBrowser">
+        <Widget type="EditBox" skin="EditBox" position="4 144 331 22" align="HStretch Top" name="OutDirEdit"/>
+        <Widget type="Button" skin="Button" position="337 142 29 28" align="Right Top" name="OutDirBrowser">
             <Property key="Caption" value="..."/>
         </Widget>
     </Widget>

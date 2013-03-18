@@ -12,11 +12,12 @@ namespace Developer.GUI
     class PluginPublisher : MDIDialog
     {
         private const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp";
-        private const String SIGNATURE_WILDCARD = "Signature File (*.xml)|*.xml";
+        private const String SIGNATURE_WILDCARD = "Personal Information Exchange (*.p12)|*.p12|All Files|*.*";
 
         private EditBox pluginFileEdit;
         private EditBox signatureFileEdit;
         private EditBox outDirEdit;
+        private EditBox certPasswordEdit;
 
         private PluginPublishController pluginPublishController;
 
@@ -30,6 +31,7 @@ namespace Developer.GUI
             signatureFileEdit.Caption = DeveloperConfig.LastPluginKey;
             outDirEdit = (EditBox)window.findWidget("OutDirEdit");
             outDirEdit.Caption = DeveloperConfig.LastPluginExportDirectory;
+            certPasswordEdit = (EditBox)window.findWidget("CertPassword");
 
             Button pluginFileBrowser = (Button)window.findWidget("PluginFileBrowser");
             pluginFileBrowser.MouseButtonClick += new MyGUIEvent(pluginFileBrowser_MouseButtonClick);
@@ -48,7 +50,7 @@ namespace Developer.GUI
         {
             try
             {
-                pluginPublishController.publishPlugin(pluginFileEdit.OnlyText, signatureFileEdit.OnlyText, outDirEdit.OnlyText);
+                pluginPublishController.publishPlugin(pluginFileEdit.OnlyText, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, outDirEdit.OnlyText);
                 DeveloperConfig.LastPluginExportDirectory = outDirEdit.OnlyText;
                 DeveloperConfig.LastPluginKey = signatureFileEdit.OnlyText;
             }
