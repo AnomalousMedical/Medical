@@ -6,6 +6,7 @@ using Medical.Controller;
 using Medical.GUI;
 using MyGUIPlugin;
 using Medical;
+using System.IO;
 
 namespace Developer.GUI
 {
@@ -50,9 +51,36 @@ namespace Developer.GUI
         {
             try
             {
-                pluginPublishController.publishPlugin(pluginFileEdit.OnlyText, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, outDirEdit.OnlyText);
+                String pluginName = pluginFileEdit.OnlyText;
+                if (File.Exists(pluginName))
+                {
+                    doPublish(pluginName);
+                }
+                else if(Directory.Exists(pluginName))
+                {
+                    foreach (String directory in Directory.GetDirectories(pluginName))
+                    {
+                        String ddpPath = Path.Combine(directory, "Plugin.ddp");
+                        if (File.Exists(ddpPath))
+                        {
+                            doPublish(ddpPath);
+                        }
+                    }
+                }
                 DeveloperConfig.LastPluginExportDirectory = outDirEdit.OnlyText;
                 DeveloperConfig.LastPluginKey = signatureFileEdit.OnlyText;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error publishing plugin {0}.\nReason: {1}", pluginFileEdit.OnlyText, ex.Message), "Publish Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
+        }
+
+        void doPublish(String pluginName)
+        {
+            try
+            {
+                pluginPublishController.publishPlugin(pluginName, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, outDirEdit.OnlyText);
             }
             catch (Exception ex)
             {
