@@ -181,6 +181,14 @@ namespace Medical
             }
         }
 
+        public bool AllowUninstall
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         #region Saveable Members
 
         protected DDAtlasPlugin(LoadInfo info)

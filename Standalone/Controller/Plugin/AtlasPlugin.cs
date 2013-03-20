@@ -21,6 +21,7 @@ namespace Medical
 
         /// <summary>
         /// Called when the scene has finished loading and has been fully revealed. (i.e. any fading effects etc. have been completed).
+        /// This only happens on the first scene load when the program opens.
         /// </summary>
         void sceneRevealed();
 
@@ -39,5 +40,10 @@ namespace Medical
         /// The verison of the plugin.
         /// </summary>
         Version Version { get; }
+
+        /// <summary>
+        /// Return true to allow the plugin to be uninstalled.
+        /// </summary>
+        bool AllowUninstall { get; }
     }
 }

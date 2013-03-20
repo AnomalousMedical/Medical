@@ -207,7 +207,7 @@ namespace Medical.GUI
         {
             get
             {
-                return -1;
+                return 0;
             }
         }
 
@@ -240,6 +240,14 @@ namespace Medical.GUI
             get
             {
                 return GetType().Assembly.GetName().Version;
+            }
+        }
+
+        public bool AllowUninstall
+        {
+            get
+            {
+                return false;
             }
         }
 

@@ -102,7 +102,7 @@ namespace Medical
 
         public void addPluginToUninstall(AtlasPlugin plugin)
         {
-            if (plugin.PluginId != -1)
+            if (plugin.AllowUninstall)
             {
                 managePluginInstructions.addFileToDelete(plugin.Location);
                 saveManagementInstructions();
@@ -327,7 +327,9 @@ namespace Medical
             if (standaloneController.App.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
             {
                 uninitializedPlugins.Add(plugin);
+#if ALLOW_OVERRIDE
                 if (plugin.PluginId != -1)
+#endif
                 {
                     usedPluginIds.Add(plugin.PluginId);
                 }

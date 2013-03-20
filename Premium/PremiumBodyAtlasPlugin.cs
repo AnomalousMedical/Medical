@@ -175,6 +175,14 @@ namespace Medical
             }
         }
 
+        public bool AllowUninstall
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public void open()
         {
             openPatientDialog.show(0, 0);

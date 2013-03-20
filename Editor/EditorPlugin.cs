@@ -177,6 +177,14 @@ namespace Medical
             }
         }
 
+        public bool AllowUninstall
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public SimObjectMover SimObjectMover
         {
             get

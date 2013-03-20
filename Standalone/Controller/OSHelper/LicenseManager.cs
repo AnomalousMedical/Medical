@@ -144,9 +144,16 @@ namespace Medical
             {
                 return true;
             }
-#endif
-            //Make this statement override only when you switch to guids, get rid of the special case in AtlasPluginManager
+
             if (featureCode == -1)
+            {
+                return true;
+            }
+#endif
+
+            //0 is the main plugin
+            //29 is the intro tutorial
+            if (featureCode == 0 || featureCode == 29)
             {
                 return true;
             }

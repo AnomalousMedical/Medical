@@ -114,5 +114,13 @@ namespace UnitTestPlugin
                 return GetType().Assembly.GetName().Version;
             }
         }
+
+        public bool AllowUninstall
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
