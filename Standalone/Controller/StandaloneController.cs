@@ -58,7 +58,6 @@ namespace Medical
         private GUIManager guiManager;
         private SceneViewController sceneViewController;
         private Watermark watermark;
-        private BackgroundController backgroundController;
         private ViewportBackground background;
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
@@ -97,6 +96,7 @@ namespace Medical
 
         public void Dispose()
         {
+            background.Dispose();
             mvcCore.Dispose();
             downloadController.Dispose();
             DocumentController.saveRecentDocuments();
@@ -160,7 +160,6 @@ namespace Medical
 
             //Background
             this.background = background;
-            backgroundController = new BackgroundController(background, sceneViewController);
 
             //Measurement grid
             measurementGrid = new MeasurementGrid("MeasurementGrid", medicalController, sceneViewController);
@@ -595,8 +594,6 @@ namespace Medical
             }
             anatomyController.sceneUnloading();
             sceneViewController.destroyCameras();
-            background.destroyBackground();
-            backgroundController.sceneUnloading();
             behaviorErrorManager.clear();
             if (medicalController.openScene(file))
             {
@@ -608,8 +605,6 @@ namespace Medical
                 if (defaultScene != null)
                 {
                     OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
-                    backgroundController.sceneLoaded(ogreScene);
-                    background.createBackground(ogreScene);
 
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                     sceneViewController.createFromPresets(medicalScene.WindowPresets.Default, false);

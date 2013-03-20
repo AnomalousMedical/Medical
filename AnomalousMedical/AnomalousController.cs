@@ -168,7 +168,9 @@ namespace Medical
         {
             OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "Background", true);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-            ViewportBackground background = new ViewportBackground("SourceBackground", "BodyAtlasBackground", 900, 500, 500, 5, 5);
+            ViewportBackground background = new ViewportBackground("SourceBackground", "BodyAtlasBackground", 900, 5000, 5000, 50, 50);
+            background.setVisible(true);
+            background.createBackground(MyGUIInterface.Instance.OgrePlatform.getRenderManager());
             return background;
         }
 

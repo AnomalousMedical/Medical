@@ -401,7 +401,6 @@
     <Compile Include="Controller\AnomalousMvc\View\ViewCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHost.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHostFactory.cs" />
-    <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="Controller\Camera\CameraMover.cs" />
     <Compile Include="Controller\Camera\OrbitCameraController.cs" />

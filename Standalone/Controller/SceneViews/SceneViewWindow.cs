@@ -83,6 +83,7 @@ namespace Medical.Controller
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
             sceneView.moveSceneStats(new Vector2(0.0f, 0.1f));
+            sceneView.ClearEveryFrame = false;
             //camera.setRenderingMode(renderingMode);
             cameraMover.setCamera(new CameraPositioner(sceneView, 200, -200));
             CameraResolver.addMotionValidator(this);

@@ -6,15 +6,20 @@ using OgreWrapper;
 using Engine;
 using Logging;
 using OgrePlugin;
+using MyGUIPlugin;
 
 namespace Medical.Controller
 {
-    public class ViewportBackground
+    public class ViewportBackground : IDisposable
     {
         private SceneNode backgroundNode;
         private ManualObject background;
         private SceneNode parentNode;
         private SceneManager sceneManager;
+        private OgreWindow ogreWindow;
+        private Camera camera;
+        private Viewport vp;
+        private OgreRenderManager ogreRenderManager;
 
         private String name;
         private String materialName;
@@ -36,9 +41,29 @@ namespace Medical.Controller
             this.uvY = uvY;
         }
 
-        public void createBackground(OgreSceneManager sceneManager)
+        public void Dispose()
         {
-            this.sceneManager = sceneManager.SceneManager;
+            destroyBackground();
+        }
+
+        public void createBackground(OgreRenderManager ogreRenderManager)
+        {
+            this.ogreRenderManager = ogreRenderManager;
+
+            sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, name + "BackgroundScene");
+            ogreWindow = PluginManager.Instance.RendererPlugin.PrimaryWindow as OgreWindow;
+
+            //Create camera and viewport
+            camera = sceneManager.createCamera(name + "BackgroundCamera");
+            camera.setNearClipDistance(1.0f);
+            camera.setAutoAspectRatio(true);
+            camera.setFOVy(new Degree(10.0f));
+            vp = ogreWindow.OgreRenderWindow.addViewport(camera, 0, 0.0f, 0.0f, 1.0f, 1.0f);
+            vp.setBackgroundColor(new Color(0.149f, 0.149f, 0.149f));
+            vp.setOverlaysEnabled(false);
+            vp.setClearEveryFrame(true);
+            vp.clear();
+
             parentNode = this.sceneManager.getRootSceneNode();
 
             background = this.sceneManager.createManualObject(name);
@@ -76,6 +101,12 @@ namespace Medical.Controller
 
             parentNode.addChild(backgroundNode);
             backgroundNode.setVisible(visible);
+
+            Vector3 backgroundPosition = new Vector3(0, 0, -1000);
+            backgroundNode.setPosition(backgroundPosition);
+            camera.lookAt(backgroundPosition);
+
+            ogreRenderManager.setActiveViewport(ogreRenderManager.getActiveViewport() + 1);
         }
 
         public void destroyBackground()
@@ -88,34 +119,35 @@ namespace Medical.Controller
                 background = null;
                 backgroundNode = null;
                 parentNode = null;
-                sceneManager = null;
+            }
+            if (vp != null)
+            {
+                ogreWindow.OgreRenderWindow.destroyViewport(vp);
+                ogreRenderManager.setActiveViewport(ogreRenderManager.getActiveViewport() - 1);
+            }
+            if (camera != null)
+            {
+                sceneManager.destroyCamera(camera);
+            }
+            if (sceneManager != null)
+            {
+                Root.getSingleton().destroySceneManager(sceneManager);
             }
         }
 
         public void setVisible(bool visible)
         {
             this.visible = visible;
-            background.setVisible(visible);
+            if (background != null)
+            {
+                background.setVisible(visible);
+            }
         }
 
         public void updatePosition(Vector3 cameraPos, Vector3 cameraDirection, Quaternion rotation)
         {
-            backgroundNode.setPosition(cameraPos + cameraDirection * distance);
-            backgroundNode.setOrientation(rotation);
-        }
-
-        public ViewportBackground clone(String newName)
-        {
-            return new ViewportBackground(newName, materialName, distance, halfWidth * 2.0f, halfHeight * 2.0f, uvX, uvY);
-        }
-
-        public void preRenderCallback(SceneViewWindow window, bool callingCameraRender)
-        {
-            setVisible(callingCameraRender);
-            if (callingCameraRender)
-            {
-                updatePosition(window.Translation, window.Direction, window.Orientation);
-            }
+            //backgroundNode.setPosition(cameraPos + cameraDirection * distance);
+            //backgroundNode.setOrientation(rotation);
         }
     }
 }
