@@ -68,7 +68,6 @@ namespace Medical
         private StandaloneApp app;
         private AtlasPluginManager atlasPluginManager;
 		private bool shuttingDown = false;
-        private bool firstSceneLoad = true;
 
         //Touch
         private TouchController touchController;
@@ -612,12 +611,8 @@ namespace Medical
                     backgroundController.sceneLoaded(ogreScene);
                     background.createBackground(ogreScene);
 
-                    if (firstSceneLoad)
-                    {
-                        firstSceneLoad = false;
-                        SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-                        sceneViewController.createFromPresets(medicalScene.WindowPresets.Default);
-                    }
+                    SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                    sceneViewController.createFromPresets(medicalScene.WindowPresets.Default, false);
 
                     sceneViewController.createCameras(medicalController.CurrentScene);
 

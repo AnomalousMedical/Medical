@@ -211,26 +211,29 @@ namespace Medical.Controller
             }
         }
 
-        public void createFromPresets(SceneViewWindowPresetSet presets)
+        public void createFromPresets(SceneViewWindowPresetSet presets, bool keepOldSettings = true)
         {
             //Capture current window configuration info
             List<Bookmark> currentWindowConfig = new List<Bookmark>();
-            SceneViewWindow activeWindow = ActiveWindow;
-            if (activeWindow != null)
+            if (keepOldSettings)
             {
-                TransparencyController.ActiveTransparencyState = activeWindow.CurrentTransparencyState;
-                LayerState layerState = new LayerState("");
-                layerState.captureState();
-                currentWindowConfig.Add(new Bookmark("", activeWindow.Translation, activeWindow.LookAt, layerState));
-            }
-            foreach (MDISceneViewWindow window in mdiWindows)
-            {
-                if (window != activeWindow)
+                SceneViewWindow activeWindow = ActiveWindow;
+                if (activeWindow != null)
                 {
-                    TransparencyController.ActiveTransparencyState = window.CurrentTransparencyState;
+                    TransparencyController.ActiveTransparencyState = activeWindow.CurrentTransparencyState;
                     LayerState layerState = new LayerState("");
                     layerState.captureState();
-                    currentWindowConfig.Add(new Bookmark("", window.Translation, window.LookAt, layerState));
+                    currentWindowConfig.Add(new Bookmark("", activeWindow.Translation, activeWindow.LookAt, layerState));
+                }
+                foreach (MDISceneViewWindow window in mdiWindows)
+                {
+                    if (window != activeWindow)
+                    {
+                        TransparencyController.ActiveTransparencyState = window.CurrentTransparencyState;
+                        LayerState layerState = new LayerState("");
+                        layerState.captureState();
+                        currentWindowConfig.Add(new Bookmark("", window.Translation, window.LookAt, layerState));
+                    }
                 }
             }
 
