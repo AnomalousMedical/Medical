@@ -10,14 +10,14 @@ namespace Medical.Controller
     class CloneCamera : CameraMover
     {
         private SceneViewController sceneViewController;
-        private SceneView camera;
+        private CameraPositioner camera;
 
         public CloneCamera(SceneViewController sceneViewController)
         {
             this.sceneViewController = sceneViewController;
         }
 
-        public override void setCamera(SceneView camera)
+        public override void setCamera(CameraPositioner camera)
         {
             this.camera = camera;
         }

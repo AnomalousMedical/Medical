@@ -84,7 +84,7 @@ namespace Medical.Controller
             sceneView.setFarClipDistance(1000.0f);
             sceneView.moveSceneStats(new Vector2(0.0f, 0.1f));
             //camera.setRenderingMode(renderingMode);
-            cameraMover.setCamera(sceneView);
+            cameraMover.setCamera(new CameraPositioner(sceneView, 200, -200));
             CameraResolver.addMotionValidator(this);
             sceneView.showSceneStats(MedicalConfig.EngineConfig.ShowStatistics);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;

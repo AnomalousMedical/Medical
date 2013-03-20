@@ -180,6 +180,7 @@
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\Plugin\SignedStream.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
+    <Compile Include="Controller\SceneViews\CameraPositioner.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
