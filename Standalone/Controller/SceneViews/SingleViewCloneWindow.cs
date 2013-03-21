@@ -17,8 +17,8 @@ namespace Medical.Controller
         private RendererWindow rendererWindow;
         private NativeOSWindow osWindow;
 
-        public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, bool floatOnParent)
-            :base(controller, mainTimer, cameraMover, name)
+        public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, bool floatOnParent)
+            :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
             Point location = SystemInfo.getDisplayLocation(windowInfo.MonitorIndex);
             location.Y = -1;

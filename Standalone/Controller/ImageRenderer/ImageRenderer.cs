@@ -336,7 +336,7 @@ namespace Medical
                             ViewportBackground bgViewport = null;
                             if (background != null)
                             {
-                                bgViewport = new ViewportBackground("ImageRenderer", background, renderTexture);
+                                bgViewport = new ViewportBackground("ImageRenderer", 0, background, renderTexture);
                                 bgViewport.BackgroundColor = backColor;
                                 viewport.setClearEveryFrame(false);
                                 bgViewport.Camera.setAutoAspectRatio(false);

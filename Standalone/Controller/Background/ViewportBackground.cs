@@ -16,13 +16,11 @@ namespace Medical.Controller
         private RenderTarget renderTarget;
         private Camera camera;
         private Viewport vp;
-        private OgreRenderManager ogreRenderManager;
         private BackgroundScene backgroundScene;
 
-        public ViewportBackground(String name, BackgroundScene backgroundScene, RenderTarget renderTarget, OgreRenderManager ogreRenderManager = null)
+        public ViewportBackground(String name, int zOrder, BackgroundScene backgroundScene, RenderTarget renderTarget)
         {
             this.name = name;
-            this.ogreRenderManager = ogreRenderManager;
             this.renderTarget = renderTarget;
             this.backgroundScene = backgroundScene;
 
@@ -31,18 +29,13 @@ namespace Medical.Controller
             camera.setNearClipDistance(1.0f);
             camera.setAutoAspectRatio(true);
             camera.setFOVy(new Degree(10.0f));
-            vp = renderTarget.addViewport(camera, 0, 0.0f, 0.0f, 1.0f, 1.0f);
+            vp = renderTarget.addViewport(camera, zOrder, 0.0f, 0.0f, 1.0f, 1.0f);
             vp.setBackgroundColor(new Color(0.149f, 0.149f, 0.149f));
             vp.setOverlaysEnabled(false);
             vp.setClearEveryFrame(true);
             vp.clear();
 
             camera.lookAt(backgroundScene.BackgroundPosition);
-
-            if (ogreRenderManager != null)
-            {
-                ogreRenderManager.setActiveViewport(ogreRenderManager.getActiveViewport() + 1);
-            }
         }
 
         public void Dispose()
@@ -50,15 +43,16 @@ namespace Medical.Controller
             if (vp != null)
             {
                 renderTarget.destroyViewport(vp);
-                if (ogreRenderManager != null)
-                {
-                    ogreRenderManager.setActiveViewport(ogreRenderManager.getActiveViewport() - 1);
-                }
             }
             if (camera != null)
             {
                 backgroundScene.SceneManager.destroyCamera(camera);
             }
+        }
+
+        public void setDimensions(float left, float top, float width, float height)
+        {
+            vp.setDimensions(left, top, width, height);
         }
 
         public Camera Camera

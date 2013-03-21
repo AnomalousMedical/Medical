@@ -59,7 +59,6 @@ namespace Medical
         private SceneViewController sceneViewController;
         private Watermark watermark;
         private BackgroundScene background;
-        private ViewportBackground mainBackgroundView;
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
 
@@ -97,8 +96,6 @@ namespace Medical
 
         public void Dispose()
         {
-            mainBackgroundView.Dispose();
-            background.Dispose();
             mvcCore.Dispose();
             downloadController.Dispose();
             DocumentController.saveRecentDocuments();
@@ -113,6 +110,7 @@ namespace Medical
             anatomyController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();
+            background.Dispose();
             mdiLayout.Dispose();
             medicalController.Dispose();
             mainWindow.Dispose();
@@ -133,7 +131,6 @@ namespace Medical
         {
             //Background
             this.background = background;
-            mainBackgroundView = new ViewportBackground("MainBackground", background, ((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow, MyGUIInterface.Instance.OgrePlatform.getRenderManager());
 
             atlasPluginManager.manageInstalledPlugins();
 
@@ -156,7 +153,7 @@ namespace Medical
             medicalController.MainTimer.addFixedUpdateListener(new MDIUpdate(medicalController.EventManager, mdiLayout));
 
             //SceneView
-            sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager());
+            sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
 
             //Watermark
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);

@@ -46,9 +46,15 @@ namespace Medical.Controller
         private bool autoAspectRatio = true;
         private Widget borderPanel0;
         private Widget borderPanel1;
+        protected BackgroundScene background;
+        private ViewportBackground vpBackground;
+        private int zIndexStart;
+        private int zOffset = 0;
 
-        public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
+        public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
         {
+            this.zIndexStart = zIndexStart;
+            this.background = background;
             this.controller = controller;
             this.cameraMover = cameraMover;
             cameraMover.MotionValidator = this;
@@ -63,10 +69,14 @@ namespace Medical.Controller
             UseDefaultTransparency = false;
             NearPlaneWorldPos = 200;
             FarPlaneWorldPos = -200;
+
+            vpBackground = new ViewportBackground(name + "SceneViewBackground", zIndexStart + zOffset++, background, ((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow);
+            vpBackground.BackgroundColor = backColor;
         }
 
         public virtual void Dispose()
         {
+            vpBackground.Dispose();
             mainTimer.removeFixedUpdateListener(cameraMover);
             TransparencyController.removeTransparencyState(transparencyStateName);
             destroyBorderPanels();
@@ -78,8 +88,9 @@ namespace Medical.Controller
             this.window = window;
             SimSubScene defaultScene = scene.getDefaultSubScene();
 
-            sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
+            sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt, zIndexStart + zOffset++);
             sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
+            vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             sceneView.BackgroundColor = backColor;
             sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
@@ -103,6 +114,7 @@ namespace Medical.Controller
         {
             if (sceneView != null)
             {
+                --zOffset;
                 Log.Info("Destroying SceneView for {0}.", name);
                 CameraResolver.removeMotionValidator(this);
                 sceneView.FindVisibleObjects -= sceneView_FindVisibleObjects;
@@ -188,6 +200,7 @@ namespace Medical.Controller
             if (sceneView != null)
             {
                 sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
+                vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             }
 
             if (Resized != null)
@@ -439,6 +452,10 @@ namespace Medical.Controller
             set
             {
                 backColor = value;
+                if (vpBackground != null)
+                {
+                    vpBackground.BackgroundColor = value;
+                }
                 if (sceneView != null)
                 {
                     sceneView.BackgroundColor = value;

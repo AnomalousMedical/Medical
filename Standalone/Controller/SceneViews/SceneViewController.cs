@@ -18,8 +18,6 @@ namespace Medical.Controller
 
     public class SceneViewController : IDisposable
     {
-        private uint defaultMyGUIActiveViewport;
-
         public event SceneViewWindowEvent WindowCreated;
         public event SceneViewWindowEvent WindowDestroyed;
         public event SceneViewWindowEvent ActiveWindowChanged;
@@ -36,19 +34,20 @@ namespace Medical.Controller
         private bool allowZoom = true;
         private bool autoAspectRatio = true;
         private float aspectRatio = 4f / 3f;
+        private BackgroundScene background;
 
         private SingleViewCloneWindow cloneWindow = null;
         private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
 
-        public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager)
+        public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager, BackgroundScene background)
         {
+            this.background = background;
             this.eventManager = eventManager;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
             this.mdiLayout = mdiLayout;
 
             rm = renderManager;
-            defaultMyGUIActiveViewport = rm.getActiveViewport();
             mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
 
             MedicalConfig.EngineConfig.ShowStatsToggled += new EventHandler(EngineConfig_ShowStatsToggled);
@@ -63,9 +62,9 @@ namespace Medical.Controller
             }
         }
 
-        public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, MDISceneViewWindow previous = null, WindowAlignment alignment = WindowAlignment.Left)
+        public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, int zIndexStart, MDISceneViewWindow previous = null, WindowAlignment alignment = WindowAlignment.Left)
         {
-            MDISceneViewWindow window = doCreateWindow(name, translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance);
+            MDISceneViewWindow window = doCreateWindow(name, translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, zIndexStart);
             if (previous != null)
             {
                 mdiLayout.showWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
@@ -156,7 +155,6 @@ namespace Medical.Controller
             {
                 cloneWindow.destroySceneView();
             }
-            rm.setActiveViewport(defaultMyGUIActiveViewport);
             camerasCreated = false;
             currentScene = null;
         }
@@ -179,7 +177,7 @@ namespace Medical.Controller
             if (cloneWindow == null)
             {
                 CloneCamera cloneCamera = new CloneCamera(this);
-                cloneWindow = new SingleViewCloneWindow(windowInfo, this, mainTimer, cloneCamera, "Clone", floatOnParent);
+                cloneWindow = new SingleViewCloneWindow(windowInfo, this, mainTimer, cloneCamera, "Clone", background, 0, floatOnParent);
                 cloneWindow.Closed += new EventHandler(cloneWindow_Closed);
                 if (WindowCreated != null)
                 {
@@ -239,6 +237,8 @@ namespace Medical.Controller
 
             //Create windows
             int windowIndex = 0;
+            int zOrder = 100;
+            int zOrderInc = 10;
             closeAllWindows();
             SceneViewWindow camera;
             foreach (SceneViewWindowPreset preset in presets.getPresetEnum())
@@ -246,14 +246,15 @@ namespace Medical.Controller
                 if (windowIndex < currentWindowConfig.Count)
                 {
                     Bookmark bmk = currentWindowConfig[windowIndex++];
-                    camera = createWindow(preset.Name, bmk.CameraTranslation, bmk.CameraLookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, findWindow(preset.ParentWindow), preset.WindowPosition);
+                    camera = createWindow(preset.Name, bmk.CameraTranslation, bmk.CameraLookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, zOrder, findWindow(preset.ParentWindow), preset.WindowPosition);
                     TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
                     bmk.Layers.instantlyApply();
                 }
                 else
                 {
-                    camera = createWindow(preset.Name, preset.Position, preset.LookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, findWindow(preset.ParentWindow), preset.WindowPosition);
+                    camera = createWindow(preset.Name, preset.Position, preset.LookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, zOrder, findWindow(preset.ParentWindow), preset.WindowPosition);
                 }
+                zOrder += zOrderInc;
             }
         }
 
@@ -388,12 +389,12 @@ namespace Medical.Controller
         /// <param name="translation"></param>
         /// <param name="lookAt"></param>
         /// <returns></returns>
-        private MDISceneViewWindow doCreateWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance)
+        private MDISceneViewWindow doCreateWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, int zIndexStart)
         {
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
-            MDISceneViewWindow window = new MDISceneViewWindow(rm, this, mainTimer, orbitCamera, name);
+            MDISceneViewWindow window = new MDISceneViewWindow(rm, this, mainTimer, orbitCamera, name, background, zIndexStart);
             window.AutoAspectRatio = autoAspectRatio;
             window.AspectRatio = aspectRatio;
             if (WindowCreated != null)

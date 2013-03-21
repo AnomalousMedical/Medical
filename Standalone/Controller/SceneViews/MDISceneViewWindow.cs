@@ -14,10 +14,11 @@ namespace Medical.Controller
         private MDIDocumentWindow mdiWindow;
         private OgreRenderManager rm;
 
-        public MDISceneViewWindow(OgreRenderManager rm, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
-            :base(controller, mainTimer, cameraMover, name)
+        public MDISceneViewWindow(OgreRenderManager rm, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
+            :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
             this.rm = rm;
+            rm.setActiveViewport(rm.getActiveViewport() + 1); //For Background
 
             //MDI Window
             mdiWindow = new MDIDocumentWindow(Name);
@@ -33,6 +34,7 @@ namespace Medical.Controller
         public override void Dispose()
         {
             base.Dispose();
+            rm.setActiveViewport(rm.getActiveViewport() - 1); //For background
             mdiWindow.Dispose();
         }
 
