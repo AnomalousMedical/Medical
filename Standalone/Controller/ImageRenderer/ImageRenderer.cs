@@ -334,6 +334,8 @@ namespace Medical
                                 bgViewport = new ViewportBackground("ImageRenderer", background, renderTexture);
                                 bgViewport.BackgroundColor = backColor;
                                 viewport.setClearEveryFrame(false);
+                                bgViewport.Camera.setAutoAspectRatio(false);
+                                bgViewport.Camera.setAspectRatio((float)finalWidth / finalHeight);
                             }
                             else
                             {
