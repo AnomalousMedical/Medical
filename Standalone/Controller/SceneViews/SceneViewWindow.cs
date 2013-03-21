@@ -69,8 +69,15 @@ namespace Medical.Controller
             UseDefaultTransparency = false;
             NearPlaneWorldPos = 200;
             FarPlaneWorldPos = -200;
+        }
 
-            vpBackground = new ViewportBackground(name + "SceneViewBackground", zIndexStart + zOffset++, background, ((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow);
+        /// <summary>
+        /// You must call this function to activate the background with the appropriate render target.
+        /// </summary>
+        /// <param name="renderTarget"></param>
+        protected void createBackground(RenderTarget renderTarget)
+        {
+            vpBackground = new ViewportBackground(name + "SceneViewBackground", zIndexStart + zOffset++, background, renderTarget);
             vpBackground.BackgroundColor = backColor;
         }
 

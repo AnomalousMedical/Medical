@@ -6,6 +6,8 @@ using Engine.Platform;
 using MyGUIPlugin;
 using Engine.Renderer;
 using Engine.ObjectManagement;
+using Engine;
+using OgrePlugin;
 
 namespace Medical.Controller
 {
@@ -17,6 +19,7 @@ namespace Medical.Controller
         public MDISceneViewWindow(OgreRenderManager rm, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
             :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
+            this.createBackground(((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow);
             this.rm = rm;
             rm.setActiveViewport(rm.getActiveViewport() + 1); //For Background
 
