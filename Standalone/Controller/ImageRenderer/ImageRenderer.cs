@@ -39,7 +39,7 @@ namespace Medical
         private MedicalController controller;
         private SceneViewController sceneViewController;
         private Watermark watermark;
-        private ViewportBackground background;
+        private BackgroundScene background;
         private IdleHandler idleHandler;
 
         private ImageRendererProgress imageRendererProgress;
@@ -121,10 +121,10 @@ namespace Medical
                     cameraLookAt = properties.CameraLookAt;
                 }
 
-                //Background Activation
-                if (background != null && properties.ShowBackground)
+                //Turn off background if needed
+                if (background != null)
                 {
-                    background.setVisible(true);
+                    background.setVisible(properties.ShowBackground);
                 }
 
                 //Layer override
@@ -161,10 +161,10 @@ namespace Medical
                     TransparencyController.ActiveTransparencyState = activeTransparencyState;
                 }
 
-                //Background deactivation
-                if (background != null && properties.ShowBackground)
+                //Reactivate background
+                if (background != null)
                 {
-                    background.setVisible(false);
+                    background.setVisible(true);
                 }
 
                 if (ImageRenderCompleted != null)
@@ -326,13 +326,19 @@ namespace Medical
                             camera.lookAt(lookAt);
                             Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
                             node.attachObject(light);
-                            Viewport viewport = renderTexture.addViewport(camera);
-                            viewport.setBackgroundColor(backColor);
-
-                            //Update background position (if applicable)
+                            Viewport viewport = renderTexture.addViewport(camera, 1, 0.0f, 0.0f, 1.0f, 1.0f);
+                            
+                            ViewportBackground bgViewport = null;
                             if (background != null)
                             {
-                                background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
+                                bgViewport = new ViewportBackground("ImageRenderer", background, renderTexture);
+                                bgViewport.BackgroundColor = backColor;
+                                viewport.setClearEveryFrame(false);
+                                viewport.setOverlaysEnabled(false);
+                            }
+                            else
+                            {
+                                viewport.setBackgroundColor(backColor);
                             }
 
                             if (doGridRender)
@@ -353,6 +359,10 @@ namespace Medical
                             }
 
                             renderTexture.destroyViewport(viewport);
+                            if (bgViewport != null)
+                            {
+                                bgViewport.Dispose();
+                            }
                             sceneManager.SceneManager.getRootSceneNode().removeChild(node);
                             sceneManager.SceneManager.destroyLight(light);
                             sceneManager.SceneManager.destroySceneNode(node);
@@ -440,8 +450,6 @@ namespace Medical
 
         private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
         {
-            renderTexture.getViewport(0).setOverlaysEnabled(false);
-
             float originalLeft, originalRight, originalTop, originalBottom;
             camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
 
@@ -593,7 +601,7 @@ namespace Medical
             }
         }
 
-        public ViewportBackground Background
+        public BackgroundScene Background
         {
             get
             {

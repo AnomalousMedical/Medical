@@ -58,7 +58,8 @@ namespace Medical
         private GUIManager guiManager;
         private SceneViewController sceneViewController;
         private Watermark watermark;
-        private ViewportBackground background;
+        private BackgroundScene background;
+        private ViewportBackground mainBackgroundView;
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
 
@@ -96,6 +97,7 @@ namespace Medical
 
         public void Dispose()
         {
+            mainBackgroundView.Dispose();
             background.Dispose();
             mvcCore.Dispose();
             downloadController.Dispose();
@@ -127,8 +129,12 @@ namespace Medical
 #endif
         }
 
-        public void initializeControllers(ViewportBackground background)
+        public void initializeControllers(BackgroundScene background)
         {
+            //Background
+            this.background = background;
+            mainBackgroundView = new ViewportBackground("MainBackground", background, ((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow, MyGUIInterface.Instance.OgrePlatform.getRenderManager());
+
             atlasPluginManager.manageInstalledPlugins();
 
             clipboard = new SaveableClipboard();
@@ -157,9 +163,6 @@ namespace Medical
             OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
-
-            //Background
-            this.background = background;
 
             //Measurement grid
             measurementGrid = new MeasurementGrid("MeasurementGrid", medicalController, sceneViewController);
