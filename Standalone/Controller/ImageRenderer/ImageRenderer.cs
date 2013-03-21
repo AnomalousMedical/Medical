@@ -334,16 +334,16 @@ namespace Medical
                                 bgViewport = new ViewportBackground("ImageRenderer", background, renderTexture);
                                 bgViewport.BackgroundColor = backColor;
                                 viewport.setClearEveryFrame(false);
-                                viewport.setOverlaysEnabled(false);
                             }
                             else
                             {
                                 viewport.setBackgroundColor(backColor);
                             }
+                            viewport.setOverlaysEnabled(false);
 
                             if (doGridRender)
                             {
-                                IEnumerable<IdleStatus> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor,
+                                IEnumerable<IdleStatus> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, bgViewport != null ? bgViewport.Camera : null, transparentBG, backColor,
                                     (product) =>
                                     {
                                         bitmap = product;
@@ -448,7 +448,7 @@ namespace Medical
             return bitmap;
         }
 
-        private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, Camera backgroundCamera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
         {
             float originalLeft, originalRight, originalTop, originalBottom;
             camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
@@ -460,6 +460,14 @@ namespace Medical
             float gridStepHoriz = (originalRight * 2) / imageCountWidth;
             float gridStepVert = (originalTop * 2) / imageCountHeight;
 
+            float bgOriginalLeft = 0, bgOriginalRight = 0, bgOriginalTop = 0, bgOriginalBottom = 0, bgGridStepHoriz = 0, bgGridStepVert = 0;
+            if (backgroundCamera != null)
+            {
+                backgroundCamera.getFrustumExtents(out bgOriginalLeft, out bgOriginalRight, out bgOriginalTop, out bgOriginalBottom);
+                bgGridStepHoriz = (bgOriginalRight * 2) / imageCountWidth;
+                bgGridStepVert = (bgOriginalTop * 2) / imageCountHeight;
+            }
+
             int imageStepHoriz = backBufferWidth;
             int imageStepVert = backBufferHeight;
 
@@ -469,6 +477,7 @@ namespace Medical
             int imageStepVertSmall = finalHeight / imageCountHeight;
 
             float left, right, top, bottom;
+            float bgLeft, bgRight, bgTop, bgBottom;
             int totalSS = imageCountWidth * imageCountHeight;
 
             String updateString = "Rendering piece {0} of " + totalSS;
@@ -508,6 +517,15 @@ namespace Medical
                         bottom = top - gridStepVert;
 
                         camera.setFrustumExtents(left, right, top, bottom);
+                        if (backgroundCamera != null)
+                        {
+                            bgLeft = bgOriginalLeft + bgGridStepHoriz * x;
+                            bgRight = bgLeft + bgGridStepHoriz;
+                            bgTop = bgOriginalTop - bgGridStepVert * y;
+                            bgBottom = bgTop - bgGridStepVert;
+
+                            backgroundCamera.setFrustumExtents(bgLeft, bgRight, bgTop, bgBottom);
+                        }
                         Root.getSingleton().clearEventTimes();
                         renderTexture.update();
 
