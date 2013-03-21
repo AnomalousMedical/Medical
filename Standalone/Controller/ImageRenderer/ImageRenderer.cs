@@ -145,7 +145,7 @@ namespace Medical
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
-                IEnumerable<IdleStatus> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt,
+                IEnumerable<IdleStatus> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt, sceneWindow.NearPlaneWorldPos, sceneWindow.FarPlaneWorldPos,
                     (product) =>
                     {
                         bitmap = product;
@@ -289,7 +289,7 @@ namespace Medical
             }
         }
 
-        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, float nearWorldPos, float farWorldPos, Action<Bitmap> renderingCompletedCallback)
         {
             Bitmap bitmap = null;
 	        OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
@@ -327,7 +327,12 @@ namespace Medical
                             Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
                             node.attachObject(light);
                             Viewport viewport = renderTexture.addViewport(camera, 1, 0.0f, 0.0f, 1.0f, 1.0f);
-                            
+
+                            float near, far;
+                            CameraPositioner.computeClipDistances(position.length(), nearWorldPos, farWorldPos, out near, out far);
+                            camera.setNearClipDistance(near);
+                            camera.setFarClipDistance(far);
+
                             ViewportBackground bgViewport = null;
                             if (background != null)
                             {

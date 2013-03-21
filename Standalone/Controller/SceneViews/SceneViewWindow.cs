@@ -61,6 +61,8 @@ namespace Medical.Controller
             transparencyStateName = name;
             TransparencyController.createTransparencyState(transparencyStateName);
             UseDefaultTransparency = false;
+            NearPlaneWorldPos = 200;
+            FarPlaneWorldPos = -200;
         }
 
         public virtual void Dispose()
@@ -85,7 +87,7 @@ namespace Medical.Controller
             sceneView.moveSceneStats(new Vector2(0.0f, 0.1f));
             sceneView.ClearEveryFrame = false;
             //camera.setRenderingMode(renderingMode);
-            cameraMover.setCamera(new CameraPositioner(sceneView, 200, -200));
+            cameraMover.setCamera(new CameraPositioner(sceneView, NearPlaneWorldPos, FarPlaneWorldPos));
             CameraResolver.addMotionValidator(this);
             sceneView.showSceneStats(MedicalConfig.EngineConfig.ShowStatistics);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
@@ -542,6 +544,10 @@ namespace Medical.Controller
                 }
             }
         }
+
+        public float NearPlaneWorldPos { get; set; }
+
+        public float FarPlaneWorldPos { get; set; }
 
         void sceneView_FindVisibleObjects(SceneView sceneView)
         {

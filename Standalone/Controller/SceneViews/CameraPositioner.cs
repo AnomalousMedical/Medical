@@ -52,19 +52,24 @@ namespace Medical
 
         private void updateNearFarPlanes()
         {
-            float distance = Translation.length();
-            float near = distance - nearPlaneWorldPos;
+            float near, far;
+            computeClipDistances(Translation.length(), nearPlaneWorldPos, farPlaneWorldPos, out near, out far);
+            sceneView.setNearClipDistance(near);
+            sceneView.setFarClipDistance(far);
+        }
+
+        public static void computeClipDistances(float distance, float nearPlaneWorldPos, float farPlaneWorldPos, out float near, out float far)
+        {
+            near = distance - nearPlaneWorldPos;
             if (near < 1.0f)
             {
                 near = 1.0f;
             }
-            float far = distance - farPlaneWorldPos;
+            far = distance - farPlaneWorldPos;
             if (far < near)
             {
                 far = near + 500.0f;
             }
-            sceneView.setNearClipDistance(near);
-            sceneView.setFarClipDistance(far);
         }
     }
 }
