@@ -15,7 +15,7 @@ namespace Medical.Controller.AnomalousMvc
     /// As a result it will track a "currentAction" along with the actual stack of previous actions, it has
     /// been hardened against flowing off the front of the stack.
     /// </summary>
-    class BackStackModel : MvcModel
+    public class BackStackModel : MvcModel
     {
         public const String DefaultName = "DefaultNavigationStack";
 

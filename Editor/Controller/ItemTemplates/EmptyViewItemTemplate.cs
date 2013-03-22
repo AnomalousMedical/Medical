@@ -48,6 +48,9 @@ namespace Medical
         [Editable]
         public String Name { get; set; }
 
+        [Editable]
+        public bool BackButton { get; set; }
+
         public void createItem(string path, EditorController editorController)
         {
             String fullPath = Path.Combine(path, Name);
@@ -63,13 +66,13 @@ namespace Medical
                         if (result == MessageBoxStyle.Yes)
                         {
                             mvcContext.Views.remove(mvcContext.Views[name]);
-                            createView(mvcContext, name);
+                            createView(mvcContext, name, BackButton);
                         }
                     });
                 }
                 else
                 {
-                    createView(mvcContext, name);
+                    createView(mvcContext, name, BackButton);
                 }
                 if (mvcContext.Controllers.hasItem(name))
                 {
@@ -78,13 +81,13 @@ namespace Medical
                         if (result == MessageBoxStyle.Yes)
                         {
                             mvcContext.Controllers.remove(mvcContext.Controllers[name]);
-                            createController(mvcContext, name);
+                            createController(mvcContext, name, BackButton);
                         }
                     });
                 }
                 else
                 {
-                    createController(mvcContext, name);
+                    createController(mvcContext, name, BackButton);
                 }
                 editorController.saveAllCachedResources();
             }
@@ -93,13 +96,18 @@ namespace Medical
         public virtual void reset()
         {
             Name = null;
+            BackButton = false;
         }
 
-        private static void createController(AnomalousMvcContext mvcContext, String name)
+        private static void createController(AnomalousMvcContext mvcContext, String name, bool backButton)
         {
             MvcController controller = new MvcController(name);
             RunCommandsAction show = new RunCommandsAction("Show");
             show.addCommand(new ShowViewCommand(name));
+            if (backButton)
+            {
+                show.addCommand(new RecordBackAction());
+            }
             controller.Actions.add(show);
             RunCommandsAction close = new RunCommandsAction("Close");
             close.addCommand(new CloseViewCommand());
@@ -107,9 +115,13 @@ namespace Medical
             mvcContext.Controllers.add(controller);
         }
 
-        private static void createView(AnomalousMvcContext mvcContext, String name)
+        private static void createView(AnomalousMvcContext mvcContext, String name, bool backButton)
         {
             RmlView view = new RmlView(name);
+            if (backButton)
+            {
+                view.Buttons.add(new ButtonDefinition("Back", "Common/GoBack"));
+            }
             view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
             mvcContext.Views.add(view);
         }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class RecordBackAction : ActionCommand
+    public class RecordBackAction : ActionCommand
     {
         public RecordBackAction()
         {

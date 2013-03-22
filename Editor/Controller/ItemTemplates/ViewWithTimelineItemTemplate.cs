@@ -50,6 +50,9 @@ namespace Medical
         [Editable]
         public String Name { get; set; }
 
+        [Editable]
+        public bool BackButton { get; set; }
+
         public void createItem(string path, EditorController editorController)
         {
             String fullPath = Path.Combine(path, Name);
@@ -66,13 +69,13 @@ namespace Medical
                         if (result == MessageBoxStyle.Yes)
                         {
                             mvcContext.Views.remove(mvcContext.Views[name]);
-                            createView(mvcContext, name);
+                            createView(mvcContext, name, BackButton);
                         }
                     });
                 }
                 else
                 {
-                    createView(mvcContext, name);
+                    createView(mvcContext, name, BackButton);
                 }
                 if (mvcContext.Controllers.hasItem(name))
                 {
@@ -81,13 +84,13 @@ namespace Medical
                         if (result == MessageBoxStyle.Yes)
                         {
                             mvcContext.Controllers.remove(mvcContext.Controllers[name]);
-                            createController(mvcContext, name, timelineName);
+                            createController(mvcContext, name, timelineName, BackButton);
                         }
                     });
                 }
                 else
                 {
-                    createController(mvcContext, name, timelineName);
+                    createController(mvcContext, name, timelineName, BackButton);
                 }
                 editorController.saveAllCachedResources();
             }
@@ -96,12 +99,17 @@ namespace Medical
         public virtual void reset()
         {
             Name = null;
+            BackButton = false;
         }
 
-        private static void createController(AnomalousMvcContext mvcContext, String name, String timelineName)
+        private static void createController(AnomalousMvcContext mvcContext, String name, String timelineName, bool backButton)
         {
             MvcController controller = new MvcController(name);
             RunCommandsAction show = new RunCommandsAction("Show");
+            if (backButton)
+            {
+                show.addCommand(new RecordBackAction());
+            }
             show.addCommand(new ShowViewCommand(name));
             show.addCommand(new PlayTimelineCommand(timelineName));
             controller.Actions.add(show);
@@ -114,9 +122,13 @@ namespace Medical
             mvcContext.Controllers.add(controller);
         }
 
-        private static void createView(AnomalousMvcContext mvcContext, String name)
+        private static void createView(AnomalousMvcContext mvcContext, String name, bool backButton)
         {
             RmlView view = new RmlView(name);
+            if (backButton)
+            {
+                view.Buttons.add(new ButtonDefinition("Back", "Common/GoBack"));
+            }
             view.Buttons.add(new CloseButtonDefinition("Close", name + "/Close"));
             view.ClosingAction = name + "/Closing";
             mvcContext.Views.add(view);

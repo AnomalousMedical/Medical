@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    class GoBackAction : ActionCommand
+    public class GoBackAction : ActionCommand
     {
         public GoBackAction()
         {
