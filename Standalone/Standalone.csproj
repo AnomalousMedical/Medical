@@ -91,6 +91,8 @@
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcContext.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\CallbackAction.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Back\GoBackAction.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Back\RecordBackAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\CollectFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\AnalyzeFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\PopulateFormData.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="Controller\AnomalousMvc\IDataProvider.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModelItem.cs" />
+    <Compile Include="Controller\AnomalousMvc\Model\Models\Back\BackStackModel.cs" />
     <Compile Include="Controller\AnomalousMvc\QueuedAction.cs" />
     <Compile Include="Controller\AnomalousMvc\View\StoredViewCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\MvcModel.cs" />

@@ -82,6 +82,7 @@ namespace Medical
                 browser.addNode(null, null, new BrowserNode("DataModel", typeof(DataModel), DataModel.DefaultName));
                 browser.addNode(null, null, new BrowserNode("Navigation", typeof(NavigationModel), NavigationModel.DefaultName));
                 browser.addNode(null, null, new BrowserNode("MedicalStateInfo", typeof(MedicalStateInfoModel), MedicalStateInfoModel.DefaultName));
+                browser.addNode(null, null, new BrowserNode("BackStack", typeof(BackStackModel), BackStackModel.DefaultName));
                 String error = null;
                 resultCallback(browser, ref error);
             });

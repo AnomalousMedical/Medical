@@ -427,6 +427,11 @@ namespace Medical.Controller.AnomalousMvc
         /// </summary>
         public String RuntimeName { get; set; }
 
+        /// <summary>
+        /// This is the name of the currently running action.
+        /// </summary>
+        public String ExecutingAction { get; private set; }
+
         public ControllerCollection Controllers
         {
             get
@@ -597,7 +602,9 @@ namespace Medical.Controller.AnomalousMvc
             ControllerAction action = findAction(address);
             if (action != null)
             {
+                ExecutingAction = address;
                 action.execute(this);
+                ExecutingAction = null;
             }
             else
             {
