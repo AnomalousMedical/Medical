@@ -12,12 +12,21 @@ namespace Medical.GUI
 {
     public class PropertiesForm : PropertyEditor, IDisposable
     {
+        public event Action<PropertiesForm> LayoutChanged;
+
         private List<PropertiesFormComponent> components = new List<PropertiesFormComponent>();
         protected StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
         private Widget widget;
         private MedicalUICallback uiCallback;
         private EditInterface currentEditInterface;
         private EditablePropertyInfo currentPropInfo;
+
+        //These control the advanced button, it will appear if there are advanced properties in the 
+        //edit interface, once the user clicks on it it will disappear and all advanced properties will
+        //be displayed after that.
+        private bool showAdvancedProperties = false;
+        private LinkedList<EditableProperty> hiddenAdvancedProperties = new LinkedList<EditableProperty>();
+        private PropertiesFormButton showAdvancedButton = null;
 
         public PropertiesForm(Widget widget, MedicalUICallback uiCallback)
         {
@@ -52,6 +61,10 @@ namespace Medical.GUI
             int width = widget.Width;
             flowLayout.WorkingSize = new IntSize2(width, height);
             flowLayout.layout();
+            if (LayoutChanged != null)
+            {
+                LayoutChanged.Invoke(this);
+            }
         }
 
         public EditInterface EditInterface
@@ -123,9 +136,40 @@ namespace Medical.GUI
 
         private void addProperty(EditableProperty property)
         {
-            PropertiesFormComponent component = createComponenet(property);
-            components.Add(component);
-            flowLayout.addChild(component.Container);
+            if (showAdvancedProperties || !property.Advanced)
+            {
+                PropertiesFormComponent component = createComponenet(property);
+                components.Add(component);
+                flowLayout.addChild(component.Container);
+            }
+            else
+            {
+                hiddenAdvancedProperties.AddLast(property);
+                if (showAdvancedButton == null)
+                {
+                    showAdvancedButton = new PropertiesFormButton(currentEditInterface, new EditInterfaceCommand("Show Advanced", (sender, callback) =>
+                        {
+                            addHiddenProperties();
+                        }), uiCallback, widget);
+                    components.Add(showAdvancedButton);
+                    flowLayout.addChild(showAdvancedButton.Container);
+                }
+            }
+        }
+
+        private void addHiddenProperties()
+        {
+            showAdvancedProperties = true;
+            foreach (EditableProperty property in hiddenAdvancedProperties)
+            {
+                addProperty(property);
+            }
+            hiddenAdvancedProperties.Clear();
+            components.Remove(showAdvancedButton);
+            flowLayout.removeChild(showAdvancedButton.Container);
+            showAdvancedButton.Dispose();
+            showAdvancedButton = null;
+            layout();
         }
 
         private void removeProperty(EditableProperty property)
@@ -137,9 +181,10 @@ namespace Medical.GUI
                     components.Remove(component);
                     flowLayout.removeChild(component.Container);
                     component.Dispose();
-                    break;
+                    return;
                 }
             }
+            hiddenAdvancedProperties.Remove(property);
         }
 
         private PropertiesFormComponent createComponenet(EditableProperty property)

@@ -16,9 +16,9 @@ namespace Medical
         private float lastTime;
 
         public MoveCameraAction()
-            :this(0.0f, null)
+            : this(0.0f, null)
         {
-            
+
         }
 
         public MoveCameraAction(float startTime, String cameraName)
@@ -31,7 +31,7 @@ namespace Medical
         }
 
         public MoveCameraAction(float startTime, String cameraName, Vector3 translation, Vector3 lookAt)
-            :this(startTime, cameraName)
+            : this(startTime, cameraName)
         {
             this.Translation = translation;
             this.LookAt = lookAt;
@@ -90,7 +90,7 @@ namespace Medical
 
         public override void stopped(float timelineTime, Clock clock)
         {
-            
+
         }
 
         public override void update(float timelineTime, Clock clock)
@@ -141,7 +141,7 @@ namespace Medical
 
         public override void findFileReference(TimelineStaticInfo info)
         {
-            
+
         }
 
         public override void cleanup(CleanupFileInfo cleanupInfo)
@@ -149,19 +149,19 @@ namespace Medical
 
         }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public Vector3 Translation { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public Vector3 LookAt { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public String CameraName { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public Vector3 IncludePoint { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public bool UseSystemCameraTransitionTime { get; set; }
 
         public override float Duration
