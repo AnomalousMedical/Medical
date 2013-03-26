@@ -113,7 +113,7 @@ namespace Medical
         /// <summary>
         /// If this is true the MovementSequenceController will get a pause command, if false it will get a stop command.
         /// </summary>
-        [Editable]
+        [Editable(Advanced = true)]
         public bool PauseOnStop { get; set; }
 
         protected override void customizeEditInterface(EditInterface editInterface)

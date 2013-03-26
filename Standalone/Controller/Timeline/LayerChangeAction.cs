@@ -139,10 +139,10 @@ namespace Medical
 
         public LayerState LayerState { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public String TransparencyState { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public bool UseSystemLayerTransitionTime { get; set; }
 
         public override string TypeName
