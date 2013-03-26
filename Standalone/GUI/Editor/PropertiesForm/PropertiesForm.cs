@@ -12,15 +12,12 @@ namespace Medical.GUI
 {
     public class PropertiesForm : PropertyEditor, IDisposable
     {
-        public event Action<PropertiesForm> LayoutChanged;
-
         private List<PropertiesFormComponent> components = new List<PropertiesFormComponent>();
         protected StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 3, new IntVector2(0, 0));
         private Widget widget;
         private MedicalUICallback uiCallback;
         private EditInterface currentEditInterface;
         private EditablePropertyInfo currentPropInfo;
-        private PropertiesFormAdvancedWidget advancedWidget = null;
 
         public PropertiesForm(Widget widget, MedicalUICallback uiCallback)
         {
@@ -55,10 +52,6 @@ namespace Medical.GUI
             int width = widget.Width;
             flowLayout.WorkingSize = new IntSize2(width, height);
             flowLayout.layout();
-            if (LayoutChanged != null)
-            {
-                LayoutChanged.Invoke(this);
-            }
         }
 
         public EditInterface EditInterface
@@ -130,27 +123,9 @@ namespace Medical.GUI
 
         private void addProperty(EditableProperty property)
         {
-            PropertiesFormComponent component;
-            if (property.Advanced)
-            {
-                if (advancedWidget == null)
-                {
-                    advancedWidget = new PropertiesFormAdvancedWidget(widget);
-                    advancedWidget.OnExpandToggle += (advWidget) =>
-                        {
-                            layout();
-                        };
-                    flowLayout.addChild(advancedWidget.LayoutContainer);
-                }
-                component = createComponenet(property, advancedWidget.ComponentWidget);
-                advancedWidget.addComponent(component);
-            }
-            else
-            {
-                component = createComponenet(property, widget);
-                flowLayout.addChild(component.Container);
-            }
+            PropertiesFormComponent component = createComponenet(property);
             components.Add(component);
+            flowLayout.addChild(component.Container);
         }
 
         private void removeProperty(EditableProperty property)
@@ -167,19 +142,19 @@ namespace Medical.GUI
             }
         }
 
-        private PropertiesFormComponent createComponenet(EditableProperty property, Widget parentWidget)
+        private PropertiesFormComponent createComponenet(EditableProperty property)
         {
             Type propertyType = property.getPropertyType(1);
             //Have to do this because we cannot "out" a method using trygetvalue
             if (FormCreationMethods.ContainsKey(propertyType))
             {
-                return FormCreationMethods[propertyType].Invoke(property, parentWidget);
+                return FormCreationMethods[propertyType].Invoke(property, widget);
             }
             else if (propertyType.IsEnum)
             {
                 if (propertyType.GetCustomAttributes(typeof(SingleEnumAttribute), true).Length > 0)
                 {
-                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, parentWidget, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => fieldInfo.Name));
+                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, widget, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => fieldInfo.Name));
                     return editorCell;
                 }
                 //else if (propertyType.GetCustomAttributes(typeof(MultiEnumAttribute), true).Length > 0)
@@ -193,9 +168,9 @@ namespace Medical.GUI
             //No match, create an appropriate text box
             if (property.hasBrowser(1))
             {
-                return new PropertiesFormTextBoxBrowser(property, parentWidget, uiCallback);
+                return new PropertiesFormTextBoxBrowser(property, widget, uiCallback);
             }
-            return new PropertiesFormTextBox(property, parentWidget);
+            return new PropertiesFormTextBox(property, widget);
         }
 
         public delegate PropertiesFormComponent CreateComponent(EditableProperty property, Widget parent);

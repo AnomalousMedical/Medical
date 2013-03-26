@@ -258,7 +258,6 @@
     <Compile Include="GUI\Editor\OpenPropManager\OpenPropManagerView.cs" />
     <Compile Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ConstrainableFormComponent.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormAdvancedWidget.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormButton.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormColor.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormComboBox.cs" />
@@ -758,7 +757,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormAdvancedWidget.layout" />
     <EmbeddedResource Include="Resources\2012-2013Public.cer" />
     <None Include="Resources\AnomalousMedical.png" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />

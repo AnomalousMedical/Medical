@@ -135,11 +135,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        /// <summary>
-        /// Set this to true to indicate to the ui that this property is advanced.
-        /// </summary>
-        public bool Advanced { get; set; }
-
         private void fireValueChanged()
         {
             if (ValueChanged != null)
