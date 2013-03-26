@@ -20,6 +20,7 @@ namespace Medical.GUI
         private MedicalUICallback uiCallback;
         private ExpandingNode parent;
         private Widget childArea;
+        private bool respondToPropertiesFormLayout = true;
 
         private List<ExpandingNode> children = new List<ExpandingNode>();
 
@@ -40,6 +41,7 @@ namespace Medical.GUI
 
             childArea = widget.findWidget("ChildArea");
             propertiesForm = new PropertiesForm(childArea, uiCallback);
+            propertiesForm.LayoutChanged += propertiesForm_LayoutChanged;
 
             this.editInterface = editInterface;
             editInterface.OnSubInterfaceAdded += editInterface_OnSubInterfaceAdded;
@@ -80,7 +82,9 @@ namespace Medical.GUI
             widget.setPosition(0, top);
             if (Expanded)
             {
+                respondToPropertiesFormLayout = false;
                 propertiesForm.layout();
+                respondToPropertiesFormLayout = true;
                 int height = propertiesForm.Height;
                 foreach (ExpandingNode child in children)
                 {
@@ -181,6 +185,14 @@ namespace Medical.GUI
         void editInterface_OnSubInterfaceAdded(EditInterface editInterface)
         {
             addSubInterface(editInterface);
+        }
+
+        void propertiesForm_LayoutChanged(PropertiesForm obj)
+        {
+            if (respondToPropertiesFormLayout)
+            {
+                layout();
+            }
         }
     }
 }

@@ -149,19 +149,19 @@ namespace Medical
 
         }
 
-        [Editable]
+        [Editable(Advanced=true)]
         public Vector3 Translation { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public Vector3 LookAt { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public String CameraName { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public Vector3 IncludePoint { get; set; }
 
-        [Editable]
+        [Editable(Advanced = true)]
         public bool UseSystemCameraTransitionTime { get; set; }
 
         public override float Duration

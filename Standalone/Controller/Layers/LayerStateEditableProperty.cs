@@ -101,5 +101,10 @@ namespace Medical
         {
             return null;
         }
+
+        /// <summary>
+        /// Set this to true to indicate to the ui that this property is advanced.
+        /// </summary>
+        public bool Advanced { get; set; }
     }
 }

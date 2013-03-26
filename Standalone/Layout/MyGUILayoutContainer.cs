@@ -24,10 +24,13 @@ namespace Medical
         /// Change the desired size and invalidate.
         /// </summary>
         /// <param name="desiredSize">The new desired size.</param>
-        public void changeDesiredSize(IntSize2 desiredSize)
+        public void changeDesiredSize(IntSize2 desiredSize, bool invalidate = true)
         {
             this.desiredSize = desiredSize;
-            invalidate();
+            if (invalidate)
+            {
+                this.invalidate();
+            }
         }
 
         public override void setAlpha(float alpha)
