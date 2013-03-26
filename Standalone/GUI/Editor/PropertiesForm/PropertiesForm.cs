@@ -136,6 +136,11 @@ namespace Medical.GUI
 
         private void addProperty(EditableProperty property)
         {
+            flowLayout.SuppressLayout = true;
+            if (showAdvancedButton != null)
+            {
+                flowLayout.removeChild(showAdvancedButton.Container);
+            }
             if (showAdvancedProperties || !property.Advanced)
             {
                 PropertiesFormComponent component = createComponenet(property);
@@ -152,9 +157,13 @@ namespace Medical.GUI
                             addHiddenProperties();
                         }), uiCallback, widget);
                     components.Add(showAdvancedButton);
-                    flowLayout.addChild(showAdvancedButton.Container);
                 }
             }
+            if (showAdvancedButton != null)
+            {
+                flowLayout.addChild(showAdvancedButton.Container);
+            }
+            flowLayout.SuppressLayout = false;
         }
 
         private void addHiddenProperties()
