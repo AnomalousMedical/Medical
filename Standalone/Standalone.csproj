@@ -748,6 +748,7 @@
     <Compile Include="Utility\IEnumerableUtil.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
+    <EmbeddedResource Include="Resources\2013-2014Verisign.cer" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -757,7 +758,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
-    <EmbeddedResource Include="Resources\2012-2013Public.cer" />
     <None Include="Resources\AnomalousMedical.png" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecoratorTransparent.layout" />

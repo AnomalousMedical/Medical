@@ -36,7 +36,7 @@ namespace Medical
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
 
-        private PluginVerifier pluginVerifier = new PluginVerifier(Assembly.GetExecutingAssembly().GetManifestResourceStream("Medical.Resources.2012-2013Public.cer"));
+        private PluginVerifier pluginVerifier = new PluginVerifier(Assembly.GetExecutingAssembly().GetManifestResourceStream("Medical.Resources.2013-2014Verisign.cer"));
 
         static AtlasPluginManager()
         {
