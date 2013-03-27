@@ -11,7 +11,7 @@ using Medical;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Anomalous Medical")]
 [assembly: AssemblyProduct("Premium")]
-[assembly: AssemblyCopyright("Copyright © Anomalous Medical 2011")]
+[assembly: AssemblyCopyright("Copyright © Anomalous Medical 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
