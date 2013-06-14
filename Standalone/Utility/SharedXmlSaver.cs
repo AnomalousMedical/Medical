@@ -28,7 +28,7 @@ namespace Medical
 
         public static void Save(Saveable save, Stream stream)
         {
-            using (XmlTextWriter textWriter = new XmlTextWriter(stream, Encoding.Default))
+            using (XmlTextWriter textWriter = new XmlTextWriter(stream, Encoding.Unicode))
             {
                 textWriter.Formatting = Formatting.Indented;
                 xmlSaver.saveObject(save, textWriter);

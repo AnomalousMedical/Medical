@@ -75,7 +75,7 @@ namespace Medical.Controller
 
             bookmark.BackingFile = filename;
 
-            using (XmlTextWriter xmlWriter = new XmlTextWriter(filename, Encoding.Default))
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(filename, Encoding.Unicode))
             {
                 xmlWriter.Formatting = Formatting.Indented;
                 xmlSaver.saveObject(bookmark, xmlWriter);

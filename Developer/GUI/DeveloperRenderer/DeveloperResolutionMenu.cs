@@ -96,7 +96,7 @@ namespace Developer.GUI
             {
                 container.AddLast((RenderPreset)presets.getItemDataAt(i));
             }
-            using (XmlTextWriter xmlWriter = new XmlTextWriter(RenderPresetsFile, Encoding.Default))
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(RenderPresetsFile, Encoding.Unicode))
             {
                 xmlWriter.Formatting = Formatting.Indented;
                 xmlSaver.saveObject(container, xmlWriter);

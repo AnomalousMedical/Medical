@@ -28,7 +28,7 @@ namespace Medical
         {
             try
             {
-                using (XmlTextWriter xmlWriter = new XmlTextWriter(FilesystemPath, Encoding.Default))
+                using (XmlTextWriter xmlWriter = new XmlTextWriter(FilesystemPath, Encoding.Unicode))
                 {
                     xmlWriter.Formatting = Formatting.Indented;
                     xmlSaver.saveObject(saveable, xmlWriter);

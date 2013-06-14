@@ -43,7 +43,7 @@ namespace Medical
             }
             using (MemoryStream headerStream = new MemoryStream())
             {
-                using (XmlTextWriter headerWriter = new XmlTextWriter(headerStream, Encoding.Default))
+                using (XmlTextWriter headerWriter = new XmlTextWriter(headerStream, Encoding.Unicode))
                 {
                     headerWriter.WriteStartElement(PATIENT_HEADER);
                     headerWriter.WriteElementString(FIRST_NAME, FirstName);
@@ -56,7 +56,7 @@ namespace Medical
                         {
                             bw.Write(headerStream.Length + sizeof(long));
                             fileStream.Write(headerStream.GetBuffer(), 0, (int)headerStream.Length);
-                            using (XmlTextWriter dataWriter = new XmlTextWriter(fileStream, Encoding.Default))
+                            using (XmlTextWriter dataWriter = new XmlTextWriter(fileStream, Encoding.Unicode))
                             {
                                 dataWriter.Formatting = Formatting.Indented;
                                 xmlSaver.saveObject(patientData, dataWriter);

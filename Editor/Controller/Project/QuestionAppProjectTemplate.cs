@@ -83,7 +83,7 @@ namespace Medical
 
         private void saveObject(Saveable saveable, EditorResourceProvider resourceProvider, String filename)
         {
-            using (XmlTextWriter writer = new XmlTextWriter(resourceProvider.openWriteStream(filename), Encoding.Default))
+            using (XmlTextWriter writer = new XmlTextWriter(resourceProvider.openWriteStream(filename), Encoding.Unicode))
             {
                 writer.Formatting = Formatting.Indented;
                 EditorController.XmlSaver.saveObject(saveable, writer);

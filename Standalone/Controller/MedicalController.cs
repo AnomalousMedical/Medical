@@ -276,7 +276,7 @@ namespace Medical
             XmlTextWriter textWriter = null;
             try
             {
-                textWriter = new XmlTextWriter(filename, Encoding.Default);
+                textWriter = new XmlTextWriter(filename, Encoding.Unicode);
                 textWriter.Formatting = Formatting.Indented;
                 xmlSaver.saveObject(package, textWriter);
             }

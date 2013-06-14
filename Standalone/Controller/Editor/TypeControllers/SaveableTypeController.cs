@@ -66,7 +66,7 @@ namespace Medical
 
         public void saveObject(String filename, T saveable)
         {
-            using (XmlTextWriter writer = new XmlTextWriter(EditorController.ResourceProvider.openWriteStream(filename), Encoding.Default))
+            using (XmlTextWriter writer = new XmlTextWriter(EditorController.ResourceProvider.openWriteStream(filename), Encoding.Unicode))
             {
                 writer.Formatting = Formatting.Indented;
                 EditorController.XmlSaver.saveObject(saveable, writer);

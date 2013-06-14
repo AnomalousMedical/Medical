@@ -20,7 +20,7 @@ namespace Medical
         public SaveableObjectStream(Saveable saveable)
         {
             stream = new MemoryStream();
-            xmlWriter = new XmlTextWriter(stream, Encoding.Default);
+            xmlWriter = new XmlTextWriter(stream, Encoding.Unicode);
             xmlWriter.Formatting = Formatting.Indented;
             EditorController.XmlSaver.saveObject(saveable, xmlWriter);
             xmlWriter.Flush();
