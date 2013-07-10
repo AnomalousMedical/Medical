@@ -152,9 +152,9 @@ namespace Medical.Controller
         {
             try
             {
+                licenseManager.keyEnteredSucessfully(License);
                 this.close();
                 messageControl.Value = "Loading user profile.";
-                licenseManager.keyEnteredSucessfully(License);
             }
             catch (LicenseInvalidException ex)
             {
