@@ -19,6 +19,8 @@ namespace Developer.GUI
         private EditBox signatureFileEdit;
         private EditBox outDirEdit;
         private EditBox certPasswordEdit;
+        private EditBox counterSignatureFileEdit;
+        private EditBox counterSignaturePassword;
 
         private PluginPublishController pluginPublishController;
 
@@ -33,6 +35,9 @@ namespace Developer.GUI
             outDirEdit = (EditBox)window.findWidget("OutDirEdit");
             outDirEdit.Caption = DeveloperConfig.LastPluginExportDirectory;
             certPasswordEdit = (EditBox)window.findWidget("CertPassword");
+            counterSignatureFileEdit = (EditBox)window.findWidget("CounterSignatureFileEdit");
+            counterSignatureFileEdit.Caption = DeveloperConfig.LastPluginCounterSignatureKey;
+            counterSignaturePassword = (EditBox)window.findWidget("CounterSignaturePassword");
 
             Button pluginFileBrowser = (Button)window.findWidget("PluginFileBrowser");
             pluginFileBrowser.MouseButtonClick += new MyGUIEvent(pluginFileBrowser_MouseButtonClick);
@@ -45,6 +50,9 @@ namespace Developer.GUI
 
             Button publishButton = (Button)window.findWidget("PublishButton");
             publishButton.MouseButtonClick += new MyGUIEvent(publishButton_MouseButtonClick);
+
+            Button counterSignatureFileBrowser = (Button)window.findWidget("CounterSignatureFileBrowser");
+            counterSignatureFileBrowser.MouseButtonClick += counterSignatureFileBrowser_MouseButtonClick;
         }
 
         void publishButton_MouseButtonClick(Widget source, EventArgs e)
@@ -80,7 +88,7 @@ namespace Developer.GUI
         {
             try
             {
-                pluginPublishController.publishPlugin(pluginName, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, outDirEdit.OnlyText);
+                pluginPublishController.publishPlugin(pluginName, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, counterSignatureFileEdit.OnlyText, counterSignaturePassword.OnlyText, outDirEdit.OnlyText);
             }
             catch (Exception ex)
             {
@@ -108,6 +116,18 @@ namespace Developer.GUI
                 if (result == NativeDialogResult.OK)
                 {
                     signatureFileEdit.Caption = paths.First();
+                }
+            });
+        }
+
+        void counterSignatureFileBrowser_MouseButtonClick(Widget source, EventArgs e)
+        {
+            FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Select a counter signature file", MedicalConfig.UserDocRoot, "", SIGNATURE_WILDCARD, false);
+            openDialog.showModal((result, paths) =>
+            {
+                if (result == NativeDialogResult.OK)
+                {
+                    counterSignatureFileEdit.Caption = paths.First();
                 }
             });
         }

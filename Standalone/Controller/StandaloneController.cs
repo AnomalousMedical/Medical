@@ -76,6 +76,7 @@ namespace Medical
             this.app = app;
 
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalUserRoot, FolderFinder.AnomalousMedicalAllUserRoot);
+            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile);
             atlasPluginManager = new AtlasPluginManager(this);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             guiManager = new GUIManager(this);

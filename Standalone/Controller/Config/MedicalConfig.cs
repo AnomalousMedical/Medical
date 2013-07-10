@@ -128,6 +128,9 @@ namespace Medical
                 Directory.CreateDirectory(SafeDownloadFolder);
             }
 
+            //Certificate store
+            MedicalConfig.CertificateStoreFile = Path.Combine(userAnomalousFolder, "CertificateStore.cst");
+
             //Configure website urls
             MedicalConfig.HelpURL = String.Format("{0}/Help", websiteHostUrl);
             MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", websiteHostUrl);
@@ -441,5 +444,7 @@ namespace Medical
 		public static String ValidateConnectionURL { get; private set; }
 
         public static String StartupTask { get; private set; }
+
+        public static String CertificateStoreFile { get; set; }
     }
 }

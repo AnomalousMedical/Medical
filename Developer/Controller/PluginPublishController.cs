@@ -8,6 +8,7 @@ using Logging;
 using Ionic.Zip;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using Anomalous.Security;
 
 namespace Developer
 {
@@ -21,7 +22,7 @@ namespace Developer
             this.pluginManager = pluginManager;
         }
 
-        public void publishPlugin(String pluginFile, String certFile, String certPass, String outDirectory)
+        public void publishPlugin(String pluginFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, String outDirectory)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace Developer
                     {
                         Directory.CreateDirectory(outDirectory);
                     }
-                    copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, certFile, certPass, true, true);
+                    copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, true, true);
                 }
             }
             finally
@@ -56,7 +57,7 @@ namespace Developer
             }
         }
 
-        private void copyResources(DDAtlasPlugin plugin, String basePath, String targetDirectory, String pluginFile, String certFile, String certPass, bool compress, bool obfuscate)
+        private void copyResources(DDAtlasPlugin plugin, String basePath, String targetDirectory, String pluginFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, bool compress, bool obfuscate)
         {
             String archiveName = plugin.PluginNamespace;
             basePath = Path.GetFullPath(basePath) + Path.DirectorySeparatorChar;
@@ -109,16 +110,15 @@ namespace Developer
                     File.Delete(zipFileName);
 
                     //Sign the file
-                    signPluginFile(obfuscateFileName, certFile, certPass);
+                    signPluginFile(obfuscateFileName, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword);
                 }
             }
         }
 
-        private static void signPluginFile(String dataFile, String certFile, String password)
+        private static void signPluginFile(String dataFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword)
         {
             String signedFile = Path.Combine(Path.GetDirectoryName(dataFile), "Signed_" + Path.GetFileName(dataFile));
-            X509Certificate2 cert = new X509Certificate2(certFile, password);
-            PluginVerifier.SignDataFile(dataFile, signedFile, cert);
+            SignedDataFile.SignDataFile(dataFile, signedFile, CryptoHelper.LoadPkcs12(certFile, certFilePassword), CryptoHelper.LoadPkcs12(counterSignatureFile, counterSignaturePassword));
             File.Delete(dataFile);
             File.Move(signedFile, dataFile);
         }

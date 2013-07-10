@@ -1,35 +1,48 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="45 61 382 229" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="42 60 382 313" layer="Overlapped">
         <Property key="Caption" value="Plugin Publisher"/>
-        <Widget type="Button" skin="Button" position="5 170 68 22" align="Left Bottom" name="PublishButton">
+        <Widget type="Button" skin="Button" position="5 254 68 22" align="Left Bottom" name="PublishButton">
             <Property key="Caption" value="Publish"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="3 4 157 15">
-            <Property key="Caption" value="Plugin File"/>
+            <Property key="Caption" value="Plugin File or Directory of Plugins"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="4 21 331 22" align="HStretch Top" name="PluginFileEdit"/>
         <Widget type="Button" skin="Button" position="337 19 29 26" align="Right Top" name="PluginFileBrowser">
             <Property key="Caption" value="..."/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="3 45 164 15">
-            <Property key="Caption" value="Certificate File"/>
+            <Property key="Caption" value="Signature File"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="4 63 331 22" align="HStretch Top" name="SignatureFileEdit"/>
         <Widget type="Button" skin="Button" position="337 61 29 26" align="Right Top" name="SignatureFileBrowser">
             <Property key="Caption" value="..."/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 87 179 15" align="Right Top">
-            <Property key="Caption" value="Certificate Password"/>
+            <Property key="Caption" value="Signature Password"/>
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="4 103 331 22" align="HStretch Top" name="CertPassword">
             <Property key="Password" value="true"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="4 128 179 15" align="Right Top">
+        <Widget type="TextBox" skin="TextBox" position="4 127 164 15">
+            <Property key="Caption" value="Counter Signature File"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="4 143 331 22" align="HStretch Top" name="CounterSignatureFileEdit"/>
+        <Widget type="Button" skin="Button" position="337 141 29 26" align="Right Top" name="CounterSignatureFileBrowser">
+            <Property key="Caption" value="..."/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="4 167 179 15" align="Right Top">
+            <Property key="Caption" value="Counter Signature Password"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="4 184 331 22" align="HStretch Top" name="CounterSignaturePassword">
+            <Property key="Password" value="true"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="4 208 179 15" align="Right Top">
             <Property key="Caption" value="Output Directory"/>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position="4 144 331 22" align="HStretch Top" name="OutDirEdit"/>
-        <Widget type="Button" skin="Button" position="337 142 29 28" align="Right Top" name="OutDirBrowser">
+        <Widget type="EditBox" skin="EditBox" position="4 225 331 22" align="HStretch Top" name="OutDirEdit"/>
+        <Widget type="Button" skin="Button" position="337 222 29 28" align="Right Top" name="OutDirBrowser">
             <Property key="Caption" value="..."/>
         </Widget>
     </Widget>

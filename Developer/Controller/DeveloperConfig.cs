@@ -39,5 +39,17 @@ namespace Developer
                 developerSection.setValue("LastPluginExportDirectory", value);
             }
         }
+
+        public static String LastPluginCounterSignatureKey
+        {
+            get
+            {
+                return developerSection.getValue("LastPluginCounterSignatureKey", "");
+            }
+            set
+            {
+                developerSection.setValue("LastPluginCounterSignatureKey", value);
+            }
+        }
     }
 }

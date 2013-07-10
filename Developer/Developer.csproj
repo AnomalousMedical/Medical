@@ -65,6 +65,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Mono\lib\Release\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>

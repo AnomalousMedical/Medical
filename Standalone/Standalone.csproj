@@ -150,6 +150,7 @@
     <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
     <Compile Include="Controller\Background\BackgroundScene.cs" />
     <Compile Include="Controller\BehaviorErrorManager.cs" />
+    <Compile Include="Controller\Config\CertificateStoreManager.cs" />
     <Compile Include="Controller\Config\EditorConfig.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditablePropAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\PropBrowserEditableProperty.cs" />
@@ -183,7 +184,6 @@
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\Plugin\PluginVerifier.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
-    <Compile Include="Controller\Plugin\SignedStream.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\SceneViews\CameraPositioner.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
@@ -749,7 +749,8 @@
     <Compile Include="Utility\IEnumerableUtil.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
-    <EmbeddedResource Include="Resources\2013-2014Verisign.cer" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
