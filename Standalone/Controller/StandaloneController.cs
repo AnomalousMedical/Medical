@@ -76,7 +76,6 @@ namespace Medical
             this.app = app;
 
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalUserRoot, FolderFinder.AnomalousMedicalAllUserRoot);
-            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile);
             atlasPluginManager = new AtlasPluginManager(this);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             guiManager = new GUIManager(this);
@@ -118,6 +117,11 @@ namespace Medical
 
             //Stop any waiting background threads last.
             ThreadManager.cancelAll();
+        }
+
+        public void setupCertificateStore()
+        {
+            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile);
         }
 
         public void addWorkingArchive()

@@ -53,6 +53,8 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
+            controller.setupCertificateStore();
+
             UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
 
             LicenseManager = new LicenseManager("Anomalous Medical", MedicalConfig.LicenseFile);
