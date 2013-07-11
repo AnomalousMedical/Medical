@@ -35,20 +35,22 @@ namespace Engine
                 {
                     licenseData[i] ^= 125;
                 }
-                byte[] hashedData;
+                byte[] signature;
                 byte[] realData;
                 using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(licenseData)))
                 {
-                    hashedData = new byte[binaryReader.ReadInt32()];
-                    binaryReader.Read(hashedData, 0, hashedData.Length);
+                    signature = new byte[binaryReader.ReadInt32()];
+                    binaryReader.Read(signature, 0, signature.Length);
                     realData = new byte[binaryReader.ReadInt32()];
                     binaryReader.Read(realData, 0, realData.Length);
                 }
 
                 RSACryptoServiceProvider rsaService = CertificateStoreManager.CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
-                using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo))
+                String hashAlgoName = CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo;
+                using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(hashAlgoName))
                 {
-                    match = rsaService.VerifyData(realData, hashAlgorithm, hashedData);
+                    byte[] hash = hashAlgorithm.ComputeHash(realData);
+                    match = rsaService.VerifyHash(hash, CryptoConfig.MapNameToOID(hashAlgoName), signature);
                     if (match)
                     {
                         using (StreamReader textReader = new StreamReader(new MemoryStream(realData)))

@@ -52,10 +52,12 @@ namespace Medical
                                 int serverResponseLength = serverDataStream.ReadInt32();
                                 byte[] serverResponse = serverDataStream.ReadBytes(serverResponseLength);
 
-                                RSACryptoServiceProvider decrypt = CertificateStoreManager.CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
+                                RSACryptoServiceProvider rsaService = CertificateStoreManager.CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
+                                String hashAlgoName = CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo;
                                 using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo))
                                 {
-                                    if (decrypt.VerifyData(serverResponse, hashAlgorithm, signature))
+                                    byte[] hash = hashAlgorithm.ComputeHash(serverResponse);
+                                    if (rsaService.VerifyHash(hash, CryptoConfig.MapNameToOID(hashAlgoName), signature))
                                     {
                                         using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(serverResponse)))
                                         {
