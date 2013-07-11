@@ -45,24 +45,18 @@ namespace Engine
                     binaryReader.Read(realData, 0, realData.Length);
                 }
 
-                RSACryptoServiceProvider rsaService = CertificateStoreManager.CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
-                String hashAlgoName = CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo;
-                using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(hashAlgoName))
+                match = CertificateStoreManager.IsValidServerCommunication(realData, signature);
+                if (match)
                 {
-                    byte[] hash = hashAlgorithm.ComputeHash(realData);
-                    match = rsaService.VerifyHash(hash, CryptoConfig.MapNameToOID(hashAlgoName), signature);
-                    if (match)
+                    using (StreamReader textReader = new StreamReader(new MemoryStream(realData)))
                     {
-                        using (StreamReader textReader = new StreamReader(new MemoryStream(realData)))
+                        LicenseeName = textReader.ReadLine();
+                        User = textReader.ReadLine();
+                        Pass = textReader.ReadLine();
+                        String feature;
+                        while ((feature = textReader.ReadLine()) != null)
                         {
-                            LicenseeName = textReader.ReadLine();
-                            User = textReader.ReadLine();
-                            Pass = textReader.ReadLine();
-                            String feature;
-                            while ((feature = textReader.ReadLine()) != null)
-                            {
-                                features.Add(NumberParser.ParseLong(feature));
-                            }
+                            features.Add(NumberParser.ParseLong(feature));
                         }
                     }
                 }

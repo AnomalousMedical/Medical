@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Medical
 {
     public class CertificateStoreManager
     {
-        public static void Initialize(String certificateStoreFile)
+        internal static void Initialize(String certificateStoreFile)
         {
             if (File.Exists(certificateStoreFile))
             {
@@ -25,6 +26,17 @@ namespace Medical
         }
 
         public static CertificateStore CertificateStore { get; set; }
+
+        public static bool IsValidServerCommunication(byte[] data, byte[] signature)
+        {
+            RSACryptoServiceProvider rsaService = CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
+            String hashAlgoName = CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo;
+            using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(hashAlgoName))
+            {
+                byte[] hash = hashAlgorithm.ComputeHash(data);
+                return rsaService.VerifyHash(hash, CryptoConfig.MapNameToOID(hashAlgoName), signature);
+            }
+        }
 
         private static X509Certificate LoadEmbeddedCertificate(String name)
         {
