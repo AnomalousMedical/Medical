@@ -12,6 +12,9 @@ namespace Medical
 {
     public class CertificateStoreManager
     {
+        private static String hashAlgoName;
+        private static String hashAlgoOid;
+
         internal static void Initialize(String certificateStoreFile)
         {
             if (File.Exists(certificateStoreFile))
@@ -21,6 +24,8 @@ namespace Medical
                     byte[] bytes = new byte[fs.Length];
                     fs.Read(bytes, 0, bytes.Length);
                     CertificateStore = CertificateStore.fromSignedBytes(bytes, LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalRoot.cer"), LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalCertificateStore.cer"));
+                    hashAlgoName = CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo;
+                    hashAlgoOid = CryptoConfig.MapNameToOID(hashAlgoName);
                 }
             }
         }
@@ -30,11 +35,10 @@ namespace Medical
         public static bool IsValidServerCommunication(byte[] data, byte[] signature)
         {
             RSACryptoServiceProvider rsaService = CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
-            String hashAlgoName = CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo;
             using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(hashAlgoName))
             {
                 byte[] hash = hashAlgorithm.ComputeHash(data);
-                return rsaService.VerifyHash(hash, CryptoConfig.MapNameToOID(hashAlgoName), signature);
+                return rsaService.VerifyHash(hash, hashAlgoOid, signature);
             }
         }
 
