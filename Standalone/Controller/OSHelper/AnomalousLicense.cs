@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
+using Medical;
 
 namespace Engine
 {
@@ -44,20 +45,22 @@ namespace Engine
                     binaryReader.Read(realData, 0, realData.Length);
                 }
 
-                RSACryptoServiceProvider decrypt = new RSACryptoServiceProvider();
-                decrypt.FromXmlString(Medical.MedicalConfig.ServerPublicKey);
-                match = decrypt.VerifyData(realData, new SHA1CryptoServiceProvider(), hashedData);
-                if (match)
+                RSACryptoServiceProvider rsaService = CertificateStoreManager.CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
+                using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo))
                 {
-                    using (StreamReader textReader = new StreamReader(new MemoryStream(realData)))
+                    match = rsaService.VerifyData(realData, hashAlgorithm, hashedData);
+                    if (match)
                     {
-                        LicenseeName = textReader.ReadLine();
-                        User = textReader.ReadLine();
-                        Pass = textReader.ReadLine();
-                        String feature;
-                        while ((feature = textReader.ReadLine()) != null)
+                        using (StreamReader textReader = new StreamReader(new MemoryStream(realData)))
                         {
-                            features.Add(NumberParser.ParseLong(feature));
+                            LicenseeName = textReader.ReadLine();
+                            User = textReader.ReadLine();
+                            Pass = textReader.ReadLine();
+                            String feature;
+                            while ((feature = textReader.ReadLine()) != null)
+                            {
+                                features.Add(NumberParser.ParseLong(feature));
+                            }
                         }
                     }
                 }

@@ -52,20 +52,22 @@ namespace Medical
                                 int serverResponseLength = serverDataStream.ReadInt32();
                                 byte[] serverResponse = serverDataStream.ReadBytes(serverResponseLength);
 
-                                RSACryptoServiceProvider decrypt = new RSACryptoServiceProvider();
-                                decrypt.FromXmlString(MedicalConfig.ServerPublicKey);
-                                if (decrypt.VerifyData(serverResponse, new SHA1CryptoServiceProvider(), signature))
+                                RSACryptoServiceProvider decrypt = CertificateStoreManager.CertificateStore.ServerCommunicationCertificate.RSA as RSACryptoServiceProvider;
+                                using (HashAlgorithm hashAlgorithm = HashAlgorithm.Create(CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo))
                                 {
-                                    using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(serverResponse)))
+                                    if (decrypt.VerifyData(serverResponse, hashAlgorithm, signature))
                                     {
-                                        success = binaryReader.ReadBoolean();
-                                        message = binaryReader.ReadString();
-                                        promptStoreVisit = true;
+                                        using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(serverResponse)))
+                                        {
+                                            success = binaryReader.ReadBoolean();
+                                            message = binaryReader.ReadString();
+                                            promptStoreVisit = true;
+                                        }
                                     }
-                                }
-                                else
-                                {
-                                    message = "Signature mismatch from server. Image not licensed.";
+                                    else
+                                    {
+                                        message = "Signature mismatch from server. Image not licensed.";
+                                    }
                                 }
                             }
                         });

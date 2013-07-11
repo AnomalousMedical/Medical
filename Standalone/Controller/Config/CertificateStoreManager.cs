@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Medical
 {
-    class CertificateStoreManager
+    public class CertificateStoreManager
     {
         public static void Initialize(String certificateStoreFile)
         {
