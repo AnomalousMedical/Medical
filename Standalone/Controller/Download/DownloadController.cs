@@ -149,7 +149,6 @@ namespace Medical
             try
             {
                 CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.PluginDownloadURL, licenseManager.User, licenseManager.MachinePassword);
-                serverConnection.Timeout = 60000;
                 serverConnection.addArgument("Type", download.Type.ToString());
                 serverConnection.addArgument("Version", UpdateController.CurrentVersion.ToString());
                 serverConnection.addArgument(download.IdName, download.Id);

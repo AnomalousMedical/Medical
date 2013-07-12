@@ -19,12 +19,15 @@ namespace Medical
         static ServerConnection()
         {
             ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
+            DefaultTimeout = 60000;
         }
+
+        public static int DefaultTimeout { get; set; }
 
         public ServerConnection(String url)
         {
             this.Url = url;
-            Timeout = 10000;
+            Timeout = DefaultTimeout;
         }
 
         public virtual void makeRequest(Action<HttpWebResponse> response)

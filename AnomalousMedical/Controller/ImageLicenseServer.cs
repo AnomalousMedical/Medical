@@ -41,7 +41,6 @@ namespace Medical
                 try
                 {
                     CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.LicenseImageURL, licenseManager.User, licenseManager.MachinePassword);
-                    serverConnection.Timeout = 60000;
                     serverConnection.addArgument("LicenseType", ((int)type).ToString());
                     serverConnection.makeRequestGetStream(responseStream =>
                         {
@@ -92,7 +91,6 @@ namespace Medical
                 try
                 {
                     ServerConnection serverConnection = new ServerConnection(MedicalConfig.LicenseReaderURL);
-                    serverConnection.Timeout = 60000;
                     serverConnection.addArgument("Type", LicenseReadType.Image.ToString());
                     serverConnection.addArgument("Id", ((int)licenseType).ToString());
                     serverConnection.makeRequestGetStream(responseStream =>

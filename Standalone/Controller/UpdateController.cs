@@ -87,7 +87,6 @@ namespace Medical
                 {
                     Version localVersion = CurrentVersion > DownloadedVersion ? CurrentVersion : DownloadedVersion;
                     CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.UpdateCheckURL, licenseManager.User, licenseManager.MachinePassword);
-                    serverConnection.Timeout = 60000;
                     serverConnection.addArgument("Version", localVersion.ToString());
                     serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
                     serverConnection.addArgument("PluginList", installedPluginsList);
