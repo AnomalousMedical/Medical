@@ -97,7 +97,7 @@ namespace Medical.GUI
                 ServerConnection serverConnection = new ServerConnection(MedicalConfig.LicenseReaderURL);
                 serverConnection.Timeout = 60000;
                 serverConnection.addArgument("Type", LicenseReadType.Plugin.ToString());
-                serverConnection.makeRequest(responseStream =>
+                serverConnection.makeRequestGetStream(responseStream =>
                     {
                         using (StreamReader serverDataStream = new StreamReader(responseStream))
                         {

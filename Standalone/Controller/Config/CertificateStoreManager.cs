@@ -1,9 +1,11 @@
 ﻿using Anomalous.Security;
+using Logging;
 using Mono.Security.X509;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,22 +17,71 @@ namespace Medical
         private static String hashAlgoName;
         private static String hashAlgoOid;
 
-        internal static void Initialize(String certificateStoreFile)
+        internal static void Initialize(String certificateStoreFile, String certificateStoreUrl)
         {
+            ServerConnection serverConnection = new ServerConnection(certificateStoreUrl);
             if (File.Exists(certificateStoreFile))
             {
-                using (FileStream fs = new FileStream(certificateStoreFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+                try
                 {
-                    byte[] bytes = new byte[fs.Length];
-                    fs.Read(bytes, 0, bytes.Length);
-                    CertificateStore = CertificateStore.fromSignedBytes(bytes, LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalRoot.cer"), LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalCertificateStore.cer"));
-                    hashAlgoName = CertificateStoreManager.CertificateStore.ServerCommunicationHashAlgo;
-                    hashAlgoOid = CryptoConfig.MapNameToOID(hashAlgoName);
+                    using (FileStream fs = new FileStream(certificateStoreFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    {
+                        byte[] bytes = new byte[fs.Length];
+                        fs.Read(bytes, 0, bytes.Length);
+                        CertificateStore = CertificateStore.fromSignedBytes(bytes, LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalRoot.cer"), LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalCertificateStore.cer"));
+                    }
+                    serverConnection.addArgument("clientIssueDate", CertificateStore.IssueDate.Ticks.ToString());
                 }
+                catch (SigningException se)
+                {
+                    Log.Error("Signing Exception occured loading '{0}'. Message: {1}. Will attempt to reload from server.", certificateStoreFile, se.Message);
+                }
+            }
+
+            try
+            {
+                serverConnection.makeRequestDownloadResponse(responseStream =>
+                    {
+                        try
+                        {
+                            byte[] bytes = new byte[responseStream.Length];
+                            responseStream.Read(bytes, 0, bytes.Length);
+                            CertificateStore = CertificateStore.fromSignedBytes(bytes, LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalRoot.cer"), LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalCertificateStore.cer"));
+                            using (FileStream fs = File.Open(certificateStoreFile, FileMode.Create, FileAccess.Write))
+                            {
+                                fs.Write(bytes, 0, bytes.Length);
+                            }
+                        }
+                        catch (SigningException se)
+                        {
+                            Log.Error("Signing Exception occured loading response from '{0}'. Message: {1}. Will attempt to use existing store.", certificateStoreUrl, se.Message);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error("A {0} occured when trying to read the certificate store from the server. Message: {1}.", ex.GetType().Name, ex.Message);
+                        }
+                    });
+            }
+            catch (Exception ex)
+            {
+                Log.Error("A {0} occured when trying to read the certificate store from the server. Message: {1}.", ex.GetType().Name, ex.Message);
+            }
+
+            if (CertificateStore != null)
+            {
+                hashAlgoName = CertificateStore.ServerCommunicationHashAlgo;
+                hashAlgoOid = CryptoConfig.MapNameToOID(hashAlgoName);
+                Log.ImportantInfo("Certificate Store Issue Date is {0}", CertificateStore.IssueDate.ToString("MM/dd/yyyy"));
+            }
+            else
+            {
+                String message = String.Format("Cannot find certificate store file '{0}'. Unable to run program without a certificate store.", certificateStoreFile);
+                Log.Error(message);
+                throw new CertificateStoreException(message);
             }
         }
 
-        public static CertificateStore CertificateStore { get; set; }
+        public static CertificateStore CertificateStore { get; private set; }
 
         public static bool IsValidServerCommunication(byte[] data, byte[] signature)
         {

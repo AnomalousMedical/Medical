@@ -34,7 +34,7 @@ namespace Engine
             byte[] licenseBytes = null;
 
             CredentialServerConnection serverConnection = new CredentialServerConnection(baseURL, user, pass);
-            serverConnection.makeRequest(dataStream =>
+            serverConnection.makeRequestGetStream(dataStream =>
                 {
                     using (Stream licenseStream = new MemoryStream())
                     {

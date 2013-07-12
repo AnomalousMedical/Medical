@@ -121,7 +121,7 @@ namespace Medical
 
         public void setupCertificateStore()
         {
-            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile);
+            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
         }
 
         public void addWorkingArchive()

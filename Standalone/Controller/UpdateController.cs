@@ -91,7 +91,7 @@ namespace Medical
                     serverConnection.addArgument("Version", localVersion.ToString());
                     serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
                     serverConnection.addArgument("PluginList", installedPluginsList);
-                    serverConnection.makeRequest(responseStream =>
+                    serverConnection.makeRequestGetStream(responseStream =>
                         {
                             using (BinaryReader serverDataStream = new BinaryReader(responseStream))
                             {

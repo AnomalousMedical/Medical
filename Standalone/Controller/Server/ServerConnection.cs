@@ -73,7 +73,7 @@ namespace Medical
             }
         }
 
-        public void makeRequest(Action<Stream> response)
+        public void makeRequestGetStream(Action<Stream> response)
         {
             makeRequest(webResponse =>
                 {
@@ -86,7 +86,7 @@ namespace Medical
 
         public void makeRequestDownloadResponse(Action<Stream> response)
         {
-            makeRequest(serverDataStream =>
+            makeRequestGetStream(serverDataStream =>
                 {
                     using (MemoryStream localDataStream = new MemoryStream())
                     {

@@ -144,6 +144,7 @@ namespace Medical
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
             MedicalConfig.DefaultAdUrl = String.Format("{0}/DRM3/ProgramAd", websiteHostUrl);
 			MedicalConfig.ValidateConnectionURL = String.Format("{0}/DRM3/ServerCheck", websiteHostUrl);
+            MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM3/CertificateStore", websiteHostUrl);
 
             MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM3/Update{1}", websiteHostUrl, buildUrlExtraPath);
             MedicalConfig.PluginInfoURL = String.Format("{0}/DRM3/DownloadInfo{1}", websiteHostUrl, buildUrlExtraPath);
@@ -438,5 +439,7 @@ namespace Medical
         public static String StartupTask { get; private set; }
 
         public static String CertificateStoreFile { get; set; }
+
+        public static String CertificateStoreUrl { get; set; }
     }
 }
