@@ -41,7 +41,7 @@ namespace Medical
             }
         }
 
-        public Download downloadPlugin(int pluginId, DownloadListener downloadListener)
+        public Download downloadPlugin(long pluginId, DownloadListener downloadListener)
         {
             PluginDownload pluginDownload = new PluginDownload(pluginId, this, downloadListener);
             startDownload(pluginDownload);

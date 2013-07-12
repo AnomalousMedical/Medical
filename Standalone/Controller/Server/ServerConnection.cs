@@ -87,7 +87,7 @@ namespace Medical
                 });
         }
 
-        public void makeRequestDownloadResponse(Action<Stream> response)
+        public void makeRequestDownloadResponse(Action<MemoryStream> response)
         {
             makeRequestGetStream(serverDataStream =>
                 {

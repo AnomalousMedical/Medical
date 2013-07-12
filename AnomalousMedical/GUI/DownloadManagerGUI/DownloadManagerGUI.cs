@@ -89,16 +89,7 @@ namespace Medical.GUI
         {
             if (!readingServerPluginInfo)
             {
-                List<AtlasPlugin> installedPluginsList = new List<AtlasPlugin>();
-
-                if (addedInstalledPlugins)
-                {
-                    foreach (AtlasPlugin plugin in pluginManager.LoadedPlugins)
-                    {
-                        installedPluginsList.Add(plugin);
-                    }
-                }
-                else
+                if (!addedInstalledPlugins)
                 {
                     pluginGrid.SuppressLayout = true;
 
@@ -107,7 +98,6 @@ namespace Medical.GUI
                         if (plugin.AllowUninstall)
                         {
                             addInfoToButtonGrid(new UninstallInfo(plugin), false);
-                            installedPluginsList.Add(plugin);
                         }
                     }
                     foreach (AtlasPlugin plugin in pluginManager.UnlicensedPlugins)
@@ -131,7 +121,7 @@ namespace Medical.GUI
 
                 readingServerPluginInfo = true;
                 readingInfo.Visible = true;
-                downloadServer.readPluginInfoFromServer(installedPluginsList);
+                downloadServer.readPluginInfoFromServer(pluginManager);
             }
         }
 

@@ -10,6 +10,7 @@ using Medical.Controller;
 using System.Net;
 using System.Globalization;
 using Logging;
+using Mono.Security;
 
 namespace Medical
 {
@@ -64,37 +65,37 @@ namespace Medical
 
         public static void checkForUpdate(Action<bool> checkCompletedCallback, AtlasPluginManager pluginManager, LicenseManager licenseManager)
         {
-            //Get a copy of the installed plugins
-            List<AtlasPlugin> installedPlugins = new List<AtlasPlugin>(pluginManager.LoadedPlugins);
-
             //Check for updates on a background thread
             Thread updateThread = new Thread(delegate()
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (AtlasPlugin plugin in installedPlugins)
-                {
-                    sb.AppendFormat("{0}|{1}", plugin.PluginId.ToString(), plugin.Version.ToString());
-                    sb.Append(",");
-                }
-                String installedPluginsList = String.Empty;
-                if (sb.Length > 0)
-                {
-                    installedPluginsList = sb.ToString(0, sb.Length - 1);
-                }
-
                 bool foundUpdate = false;
                 try
                 {
-                    Version localVersion = CurrentVersion > DownloadedVersion ? CurrentVersion : DownloadedVersion;
                     CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.UpdateCheckURL, licenseManager.User, licenseManager.MachinePassword);
-                    serverConnection.addArgument("Version", localVersion.ToString());
                     serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
-                    serverConnection.addArgument("PluginList", installedPluginsList);
-                    serverConnection.makeRequestGetStream(responseStream =>
+                    serverConnection.makeRequestDownloadResponse(responseStream =>
                         {
-                            using (BinaryReader serverDataStream = new BinaryReader(responseStream))
+                            ASN1 asn1 = new ASN1(responseStream.ToArray());
+                            Version remotePlatformVersion = Version.Parse(Encoding.ASCII.GetString(asn1.Element(0, 0x13).Value));
+                            if (remotePlatformVersion > CurrentVersion)
                             {
-                                foundUpdate = serverDataStream.ReadBoolean();
+                                foundUpdate = true;
+                            }
+                            else
+                            {
+                                ASN1 pluginInfos = asn1.Element(1, 0x30);
+                                for (int i = 0; i < pluginInfos.Count; ++i)
+                                {
+                                    ASN1 pluginInfo = pluginInfos[i];
+                                    long pluginId = BitConverter.ToInt64(pluginInfo[0].Value, 0);
+                                    Version remotePluginVersion = Version.Parse(Encoding.ASCII.GetString(pluginInfo.Element(1, 0x13).Value));
+                                    AtlasPlugin plugin = pluginManager.getPlugin(pluginId);
+                                    if (plugin != null && remotePluginVersion > plugin.Version)
+                                    {
+                                        foundUpdate = true;
+                                        break;
+                                    }
+                                }
                             }
                         });
                 }

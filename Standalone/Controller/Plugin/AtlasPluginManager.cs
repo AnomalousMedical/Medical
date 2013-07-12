@@ -344,7 +344,7 @@ namespace Medical
             }
         }
 
-        public AtlasPlugin getPlugin(int pluginId)
+        public AtlasPlugin getPlugin(long pluginId)
         {
             foreach (AtlasPlugin plugin in plugins)
             {

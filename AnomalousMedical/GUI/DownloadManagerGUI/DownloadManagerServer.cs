@@ -11,6 +11,7 @@ using MyGUIPlugin;
 using System.Globalization;
 using Engine;
 using System.Threading;
+using Mono.Security;
 
 namespace Medical.GUI
 {
@@ -44,22 +45,11 @@ namespace Medical.GUI
             }
         }
 
-        public void readPluginInfoFromServer(List<AtlasPlugin> installedPlugins)
+        public void readPluginInfoFromServer(AtlasPluginManager pluginManager)
         {
             Thread serverReadThread = new Thread(delegate()
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (AtlasPlugin plugin in installedPlugins)
-                {
-                    sb.AppendFormat("{0}|{1}", plugin.PluginId.ToString(), plugin.Version.ToString());
-                    sb.Append(",");
-                }
-                String installedPluginsList = String.Empty;
-                if (sb.Length > 0)
-                {
-                    installedPluginsList = sb.ToString(0, sb.Length - 1);
-                }
-                readServerPluginInfo(installedPluginsList);
+                readServerPluginInfo(pluginManager);
                 ThreadManager.invoke(new Action(delegate()
                 {
                     if (FinishedReadingDownloads != null)
@@ -71,7 +61,7 @@ namespace Medical.GUI
             serverReadThread.Start();
         }
 
-        public String readLicenseFromServer(int pluginId)
+        public String readLicenseFromServer(long pluginId)
         {
             String postData = String.Format(CultureInfo.InvariantCulture, "pluginId={0}", pluginId);
             return readServerLicenseInfo(postData);
@@ -113,40 +103,52 @@ namespace Medical.GUI
             return null;
         }
 
-        private void readServerPluginInfo(String commaSeparatedPluginList)
+        private void readServerPluginInfo(AtlasPluginManager pluginManager)
         {
             try
             {
-                Version localVersion = UpdateController.CurrentVersion;
                 CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.PluginInfoURL, licenseManager.User, licenseManager.MachinePassword);
-                serverConnection.Timeout = 60000;
-                serverConnection.addArgument("Version", localVersion.ToString());
                 serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
-                serverConnection.addArgument("PluginList", commaSeparatedPluginList);
                 serverConnection.makeRequestDownloadResponse(responseStream =>
                     {
-                        using (BinaryReader streamReader = new BinaryReader(responseStream))
+                        ASN1 asn1 = new ASN1(responseStream.ToArray());
+                        if (!foundPlatformUpdate)
                         {
-                            String versionString = streamReader.ReadString();
-                            if (!foundPlatformUpdate)
+                            Version remoteVersion = Version.Parse(Encoding.ASCII.GetString(asn1.Element(0, 0x13).Value));
+                            if (remoteVersion > UpdateController.CurrentVersion && remoteVersion > UpdateController.DownloadedVersion)
                             {
-                                Version remoteVersion = new Version(versionString);
-                                if (remoteVersion > localVersion && remoteVersion > UpdateController.DownloadedVersion)
+                                ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
                                 {
-                                    ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
+                                    if (DownloadFound != null)
                                     {
-                                        if (DownloadFound != null)
-                                        {
-                                            DownloadFound.Invoke(downloadInfo);
-                                        }
-                                    }), new PlatformUpdateDownloadInfo(remoteVersion, this));
-                                    foundPlatformUpdate = true;
-                                }
+                                        DownloadFound.Invoke(downloadInfo);
+                                    }
+                                }), new PlatformUpdateDownloadInfo(remoteVersion, this));
+                                foundPlatformUpdate = true;
                             }
-                            while (active && streamReader.PeekChar() != -1)
+                        }
+                        ASN1 pluginInfos = asn1.Element(1, 0x30);
+                        for(int i = 0; i < pluginInfos.Count && active; ++i)
+                        {
+                            ASN1 asn1PluginInfo = pluginInfos[i];
+                            long pluginId = BitConverter.ToInt64(asn1PluginInfo[0].Value, 0);
+                            Version remotePluginVersion = Version.Parse(Encoding.ASCII.GetString(asn1PluginInfo.Element(1, 0x13).Value));
+                            String name = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(2, 0x1E).Value);
+                            AtlasPlugin plugin = pluginManager.getPlugin(pluginId);
+
+                            ServerPluginDownloadInfo pluginInfo = null;
+                            if (plugin == null)
                             {
-                                ServerPluginDownloadInfo pluginInfo = new ServerPluginDownloadInfo(this, streamReader.ReadInt32(), streamReader.ReadString(), (ServerDownloadStatus)streamReader.ReadInt16());
-                                String imageURL = streamReader.ReadString();
+                                pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.NotInstalled);
+                            }
+                            else if(remotePluginVersion > plugin.Version)
+                            {
+                                pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.Update);
+                            }
+
+                            if (pluginInfo != null)
+                            {
+                                String imageURL = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(3, 0x1E).Value);
                                 if (!alreadyFoundPlugin(pluginInfo.PluginId))
                                 {
                                     if (!String.IsNullOrEmpty(imageURL))
@@ -213,7 +215,7 @@ namespace Medical.GUI
             return null;
         }
 
-        private bool alreadyFoundPlugin(int pluginId)
+        private bool alreadyFoundPlugin(long pluginId)
         {
             foreach (ServerPluginDownloadInfo downloadInfo in detectedServerPlugins)
             {

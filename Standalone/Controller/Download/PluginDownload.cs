@@ -10,7 +10,7 @@ namespace Medical
 {
     public class PluginDownload : Download
     {
-        public PluginDownload(int pluginId, DownloadController controller, DownloadListener downloadListener)
+        public PluginDownload(long pluginId, DownloadController controller, DownloadListener downloadListener)
             :base(controller, downloadListener)
         {
             this.PluginId = pluginId;

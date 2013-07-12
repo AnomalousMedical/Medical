@@ -13,7 +13,7 @@ namespace Medical.GUI
         private String description = null;
         private bool readingDescriptionFromServer = false;
 
-        public ServerPluginDownloadInfo(DownloadManagerServer server, int pluginId, String name, ServerDownloadStatus status)
+        public ServerPluginDownloadInfo(DownloadManagerServer server, long pluginId, String name, ServerDownloadStatus status)
             :base(status)
         {
             this.server = server;
@@ -55,7 +55,7 @@ namespace Medical.GUI
             return new UpdateInfo(ImageKey, Name, String.Format("You must restart Anomalous Medical to finish installing {0}. You may install more things by selecting them and clicking install before restarting.", Name), ServerDownloadStatus.PendingInstall, false);
         }
 
-        public int PluginId { get; set; }
+        public long PluginId { get; set; }
 
         public override string MoreInfoURL
         {
