@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 using Medical;
+using Mono.Security;
 
 namespace Engine
 {
@@ -48,16 +49,14 @@ namespace Engine
                 match = CertificateStoreManager.IsValidServerCommunication(realData, signature);
                 if (match)
                 {
-                    using (StreamReader textReader = new StreamReader(new MemoryStream(realData)))
+                    ASN1 license = new ASN1(realData);
+                    LicenseeName = Encoding.BigEndianUnicode.GetString(license.Element(0, 0x1E).Value);
+                    User = Encoding.BigEndianUnicode.GetString(license.Element(1, 0x1E).Value);
+                    Pass = Encoding.BigEndianUnicode.GetString(license.Element(2, 0x1E).Value);
+                    ASN1 featuresAsn1 = license.Element(3, 0x30);
+                    for(int i = 0; i < featuresAsn1.Count; ++i)
                     {
-                        LicenseeName = textReader.ReadLine();
-                        User = textReader.ReadLine();
-                        Pass = textReader.ReadLine();
-                        String feature;
-                        while ((feature = textReader.ReadLine()) != null)
-                        {
-                            features.Add(NumberParser.ParseLong(feature));
-                        }
+                        features.Add(BitConverter.ToInt64(featuresAsn1[i].Value, 0));
                     }
                 }
             }
