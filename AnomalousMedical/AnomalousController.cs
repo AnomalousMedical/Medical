@@ -58,6 +58,8 @@ namespace Medical
 
             UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
 
+            splashScreen.updateStatus(5, "Loading Files from Server");
+
             return true;
         }
 
