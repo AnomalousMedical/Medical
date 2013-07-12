@@ -43,6 +43,10 @@ namespace Medical
                     {
                         Log.Error("Signing Exception occured loading '{0}'. Message: {1}. Will attempt to reload from server.", certificateStoreFile, se.Message);
                     }
+                    catch (Exception ex)
+                    {
+                        Log.Error("A {0} occured when trying to read the certificate store from the server. Message: {1}. Will attempt to reload from server.", certificateStoreFile, ex.Message);
+                    }
                 }
 
                 try

@@ -87,7 +87,6 @@ namespace Medical
             medicalController = new MedicalController();
             mainWindow = new MainWindow(app.WindowTitle);
             medicalController.initialize(app, mainWindow, createWindow);
-            medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
             mainWindow.setPointerManager(PointerManager.Instance);
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
@@ -701,10 +700,6 @@ namespace Medical
         void medicalController_FullSpeedLoopUpdate(Clock time)
         {
             ThreadManager.doInvoke();
-        }
-
-        void medicalController_FixedLoopUpdate(Clock time)
-        {
         }
 
         void atlasPluginManager_PluginLoadError(string message)
