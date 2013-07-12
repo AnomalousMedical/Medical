@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Medical
 {
-    public class BackgroundScene
+    public class BackgroundScene : IDisposable
     {
         private SceneNode backgroundNode;
         private ManualObject background;

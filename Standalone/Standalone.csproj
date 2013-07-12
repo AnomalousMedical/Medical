@@ -150,7 +150,6 @@
     <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
     <Compile Include="Controller\Background\BackgroundScene.cs" />
     <Compile Include="Controller\BehaviorErrorManager.cs" />
-    <Compile Include="Controller\Config\CertificateStoreException.cs" />
     <Compile Include="Controller\Config\CertificateStoreManager.cs" />
     <Compile Include="Controller\Config\EditorConfig.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditablePropAttribute.cs" />
@@ -729,6 +728,7 @@
     <Compile Include="Controller\WindowListener.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
+    <Compile Include="Utility\IDisposableUtil.cs" />
     <Compile Include="Utility\Node.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\TwoWayCommand.cs" />

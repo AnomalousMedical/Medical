@@ -134,6 +134,7 @@ namespace Medical
                     ThreadManager.invoke(showKeyDialogCallback);
                 }
             });
+            t.IsBackground = true;
             t.Start();
         }
 

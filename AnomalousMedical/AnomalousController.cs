@@ -46,6 +46,9 @@ namespace Medical
 
         public bool startApplication()
         {
+            CertificateStoreManager.CertificateStoreLoaded += CertificateStoreManager_CertificateStoreLoaded;
+            CertificateStoreManager.CertificateStoreLoadError += CertificateStoreManager_CertificateStoreLoadError;
+
             //Core
             controller = new StandaloneController(this);
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
@@ -53,10 +56,13 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
-            controller.setupCertificateStore();
-
             UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
 
+            return true;
+        }
+
+        void CertificateStoreManager_CertificateStoreLoaded()
+        {
             LicenseManager = new LicenseManager("Anomalous Medical", MedicalConfig.LicenseFile);
             LicenseManager.KeyValid += new EventHandler(licenseManager_KeyValid);
             LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
@@ -64,8 +70,21 @@ namespace Medical
             LicenseManager.getKey();
 
             controller.IdleHandler.runTemporaryIdle(runSplashScreen());
+        }
 
-            return true;
+        void CertificateStoreManager_CertificateStoreLoadError()
+        {
+            MessageBox.show("Anomalous Medical must connect to the Internet at least one time to download essential files.\nIf you can connect to the Internet, please do so now and click Retry.\nIf you cannot connect please click Cancel and try again when you have an Internet connection.", "Internet Connection Issue", MessageBoxStyle.IconQuest | MessageBoxStyle.Retry | MessageBoxStyle.Cancel, (result) =>
+                {
+                    if (result == MessageBoxStyle.Retry)
+                    {
+                        controller.retryLoadingCertificateStore();
+                    }
+                    else
+                    {
+                        controller.exit();
+                    }
+                });
         }
 
         private IEnumerable<IdleStatus> runSplashScreen()

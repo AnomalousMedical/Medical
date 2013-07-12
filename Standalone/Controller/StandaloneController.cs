@@ -76,6 +76,7 @@ namespace Medical
             this.app = app;
 
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalUserRoot, FolderFinder.AnomalousMedicalAllUserRoot);
+            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
             atlasPluginManager = new AtlasPluginManager(this);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             guiManager = new GUIManager(this);
@@ -86,40 +87,50 @@ namespace Medical
             medicalController = new MedicalController();
             mainWindow = new MainWindow(app.WindowTitle);
             medicalController.initialize(app, mainWindow, createWindow);
+            medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
+            medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
             mainWindow.setPointerManager(PointerManager.Instance);
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
             PointerManager.Instance.Visible = false;
 
             behaviorErrorManager = new BehaviorErrorManager();
+
+            windowListener = new WindowListener(this);
+            medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
+            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.DeactivateOnFocusChange = false;
         }
 
         public void Dispose()
         {
-            mvcCore.Dispose();
-            downloadController.Dispose();
-            DocumentController.saveRecentDocuments();
-            if (touchController != null)
+            mvcCore.DisposeIfNotNull();
+            downloadController.DisposeIfNotNull();
+            if (DocumentController != null)
             {
-                touchController.Dispose();
+                DocumentController.saveRecentDocuments();
             }
-            atlasPluginManager.Dispose();
-            guiManager.Dispose();
-            watermark.Dispose();
-            measurementGrid.Dispose();
-            anatomyController.Dispose();
-            medicalStateController.Dispose();
-            sceneViewController.Dispose();
-            background.Dispose();
-            mdiLayout.Dispose();
-            medicalController.Dispose();
-            mainWindow.Dispose();
+            touchController.DisposeIfNotNull();
+            atlasPluginManager.DisposeIfNotNull();
+            guiManager.DisposeIfNotNull();
+            watermark.DisposeIfNotNull();
+            measurementGrid.DisposeIfNotNull();
+            anatomyController.DisposeIfNotNull();
+            medicalStateController.DisposeIfNotNull();
+            sceneViewController.DisposeIfNotNull();
+            background.DisposeIfNotNull();
+            mdiLayout.DisposeIfNotNull();
+            medicalController.DisposeIfNotNull();
+            mainWindow.DisposeIfNotNull();
 
             //Stop any waiting background threads last.
             ThreadManager.cancelAll();
         }
 
-        public void setupCertificateStore()
+        /// <summary>
+        /// This function will try to load the certificate store again, It is only intended to be called during startup
+        /// when the user is asked to connect to the internet, please do not call it any other time.
+        /// </summary>
+        public void retryLoadingCertificateStore()
         {
             CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
         }
@@ -148,10 +159,6 @@ namespace Medical
             MyGUIInterface myGUI = MyGUIInterface.Instance;
             myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
             myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
-
-            windowListener = new WindowListener(this);
-            medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.DeactivateOnFocusChange = false;
 
             //MDI Layout
             mdiLayout = new MDILayoutManager();
@@ -256,8 +263,6 @@ namespace Medical
             //GUI
             guiManager.createGUI(mdiLayout);
             guiManager.giveGUIsToTimelineController(timelineController);
-            medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
-            medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
         }
 
         public void initializePlugins()
