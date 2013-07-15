@@ -13,6 +13,7 @@ namespace Medical
     public class ServerConnection
     {
         private List<Tuple<String, String>> arguments;
+        private List<UploadFileInfo> fileStreams;
         private static Object validateServerLock = new Object();
         private static bool trustServerConnections = false;
 
@@ -44,8 +45,15 @@ namespace Medical
                 }
             }
 
-            //HttpWebRequest request = buildRequestFormMultipart();
-            HttpWebRequest request = buildRequestFormUrlEncoded();
+            HttpWebRequest request;
+            if (fileStreams != null)
+            {
+                request = buildRequestFormMultipart();
+            }
+            else
+            {
+                request = buildRequestFormUrlEncoded();
+            }
 
             // Get the response.
             using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponse())
@@ -93,6 +101,27 @@ namespace Medical
                 arguments = new List<Tuple<string, string>>();
             }
             arguments.Add(Tuple.Create(key, value));
+        }
+
+        /// <summary>
+        /// Add a stream to this request. The stream will be closed when the request is made.
+        /// </summary>
+        /// <param name="key">The key for the stream.</param>
+        /// <param name="fileName">The file name for the stream.</param>
+        /// <param name="stream">The stream.</param>
+        public void addFileStream(String key, Stream stream, String contentType = null, String fileName = null)
+        {
+            if (fileStreams == null)
+            {
+                fileStreams = new List<UploadFileInfo>();
+            }
+            fileStreams.Add(new UploadFileInfo()
+            {
+                Key = key,
+                Stream = stream,
+                ContentType = contentType != null ? contentType : "application/octet-stream",
+                FileName = fileName != null ? fileName : "__AutoFileName" + fileStreams.Count
+            });
         }
 
         public int Timeout { get; set; }
@@ -147,11 +176,26 @@ namespace Medical
             List<Mime> parts = new List<Mime>();
             if (arguments != null)
             {
-                foreach (Tuple<String, String> arg in arguments)
+                foreach (var arg in arguments)
                 {
                     Mime part = new Mime();
                     part.Headers["Content-Disposition"] = String.Format("form-data; name=\"{0}\"", arg.Item1);
-                    part.Data = new MemoryStream(Encoding.UTF8.GetBytes(arg.Item2)); //Might need uri.escapedatastring, need to test
+                    part.Data = new MemoryStream(Encoding.UTF8.GetBytes(arg.Item2));
+                    parts.Add(part);
+                }
+            }
+
+            if (fileStreams != null)
+            {
+                foreach (var file in fileStreams)
+                {
+                    Mime part = new Mime();
+
+                    part.Headers["Content-Disposition"] = String.Format("form-data; name=\"{0}\"; filename=\"{1}\"", file.Key, file.FileName);
+                    part.Headers["Content-Type"] = file.ContentType;
+
+                    part.Data = file.Stream;
+
                     parts.Add(part);
                 }
             }

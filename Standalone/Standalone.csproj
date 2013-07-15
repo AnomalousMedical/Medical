@@ -187,6 +187,7 @@
     <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\SceneViews\CameraPositioner.cs" />
     <Compile Include="Controller\Server\Mime.cs" />
+    <Compile Include="Controller\Server\UploadFileInfo.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
