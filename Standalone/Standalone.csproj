@@ -51,9 +51,8 @@
     <Reference Include="libRocketPlugin">
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\Mono\lib\Release\Mono.Security.dll</HintPath>
+    <Reference Include="Mono.Anomalous.Security">
+      <HintPath>..\..\Dependencies\Mono\lib\Release\Mono.Anomalous.Security.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
