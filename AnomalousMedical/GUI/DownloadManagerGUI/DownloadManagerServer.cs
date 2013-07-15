@@ -136,7 +136,10 @@ namespace Medical.GUI
                         }
                         else if(pluginUpdateInfo.Version > plugin.Version)
                         {
-                            newDownloadInfos.Add(pluginUpdateInfo.PluginId, new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, "", ServerDownloadStatus.Update));
+                            alertDownloadFound(new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, plugin.PluginName, ServerDownloadStatus.Update)
+                            {
+                                ImageKey = plugin.BrandingImageKey
+                            });
                         }
                     }
                 }
@@ -181,14 +184,7 @@ namespace Medical.GUI
                                     }
                                 }
 
-                                ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfoCb)
-                                {
-                                    if (DownloadFound != null)
-                                    {
-                                        DownloadFound.Invoke(downloadInfoCb);
-                                    }
-                                }), downloadInfo);
-                                detectedServerPlugins.Add(downloadInfo);
+                                alertDownloadFound(downloadInfo);
                             }
                         });
                     }
@@ -203,6 +199,19 @@ namespace Medical.GUI
 					Log.Default.printException(e);
                 }));
             }
+        }
+
+        //Runs on background thread
+        private void alertDownloadFound(ServerPluginDownloadInfo downloadInfo)
+        {
+            ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfoCb)
+            {
+                if (DownloadFound != null)
+                {
+                    DownloadFound.Invoke(downloadInfoCb);
+                }
+            }), downloadInfo);
+            detectedServerPlugins.Add(downloadInfo);
         }
 
         //Runs on background thread
