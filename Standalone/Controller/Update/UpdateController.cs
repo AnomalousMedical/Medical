@@ -71,33 +71,23 @@ namespace Medical
                 bool foundUpdate = false;
                 try
                 {
-                    CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.UpdateCheckURL, licenseManager.User, licenseManager.MachinePassword);
-                    serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
-                    serverConnection.makeRequestDownloadResponse(responseStream =>
+                    ServerUpdateInfo updateInfo = getUpdateInfo(licenseManager);
+                    if (updateInfo.RemotePlatformVersion > CurrentVersion)
+                    {
+                        foundUpdate = true;
+                    }
+                    else
+                    {
+                        foreach(var pluginUpdate in updateInfo.PluginUpdateInfo)
                         {
-                            ASN1 asn1 = new ASN1(responseStream.ToArray());
-                            Version remotePlatformVersion = Version.Parse(Encoding.ASCII.GetString(asn1.Element(0, 0x13).Value));
-                            if (remotePlatformVersion > CurrentVersion)
+                            AtlasPlugin plugin = pluginManager.getPlugin(pluginUpdate.PluginId);
+                            if (plugin != null && pluginUpdate.Version > plugin.Version)
                             {
                                 foundUpdate = true;
+                                break;
                             }
-                            else
-                            {
-                                ASN1 pluginInfos = asn1.Element(1, 0x30);
-                                for (int i = 0; i < pluginInfos.Count; ++i)
-                                {
-                                    ASN1 pluginInfo = pluginInfos[i];
-                                    long pluginId = BitConverter.ToInt64(pluginInfo[0].Value, 0);
-                                    Version remotePluginVersion = Version.Parse(Encoding.ASCII.GetString(pluginInfo.Element(1, 0x13).Value));
-                                    AtlasPlugin plugin = pluginManager.getPlugin(pluginId);
-                                    if (plugin != null && remotePluginVersion > plugin.Version)
-                                    {
-                                        foundUpdate = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        });
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -107,6 +97,23 @@ namespace Medical
                 ThreadManager.invoke(checkCompletedCallback, foundUpdate);
             });
             updateThread.Start();
+        }
+
+        /// <summary>
+        /// Get the update info from the server, note that this makes a web request on the calling thread.
+        /// </summary>
+        /// <param name="licenseManager"></param>
+        /// <returns></returns>
+        public static ServerUpdateInfo getUpdateInfo(LicenseManager licenseManager)
+        {
+            CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.UpdateCheckURL, licenseManager.User, licenseManager.MachinePassword);
+            serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
+            ServerUpdateInfo updateInfo = null;
+            serverConnection.makeRequestDownloadResponse(responseStream =>
+            {
+                updateInfo = new ServerUpdateInfo(responseStream.ToArray());
+            });
+            return updateInfo;
         }
 
         public static void writeUpdateIndex(String updateInstallerFile, Version version)

@@ -107,75 +107,93 @@ namespace Medical.GUI
         {
             try
             {
-                CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.PluginInfoURL, licenseManager.User, licenseManager.MachinePassword);
-                serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
-                serverConnection.makeRequestDownloadResponse(responseStream =>
+                ServerUpdateInfo serverUpdateInfo = UpdateController.getUpdateInfo(licenseManager);
+                if (!foundPlatformUpdate)
+                {
+                    Version remoteVersion = serverUpdateInfo.RemotePlatformVersion;
+                    if (remoteVersion > UpdateController.CurrentVersion && remoteVersion > UpdateController.DownloadedVersion)
                     {
-                        ASN1 asn1 = new ASN1(responseStream.ToArray());
-                        if (!foundPlatformUpdate)
+                        ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
                         {
-                            Version remoteVersion = Version.Parse(Encoding.ASCII.GetString(asn1.Element(0, 0x13).Value));
-                            if (remoteVersion > UpdateController.CurrentVersion && remoteVersion > UpdateController.DownloadedVersion)
+                            if (DownloadFound != null)
                             {
-                                ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
-                                {
-                                    if (DownloadFound != null)
-                                    {
-                                        DownloadFound.Invoke(downloadInfo);
-                                    }
-                                }), new PlatformUpdateDownloadInfo(remoteVersion, this));
-                                foundPlatformUpdate = true;
+                                DownloadFound.Invoke(downloadInfo);
                             }
-                        }
-                        ASN1 pluginInfos = asn1.Element(1, 0x30);
-                        for(int i = 0; i < pluginInfos.Count && active; ++i)
+                        }), new PlatformUpdateDownloadInfo(remoteVersion, this));
+                        foundPlatformUpdate = true;
+                    }
+                }
+                foreach(var pluginUpdateInfo in serverUpdateInfo.PluginUpdateInfo)
+                {
+                    //ASN1 asn1PluginInfo = pluginInfos[i];
+                    //long pluginId = BitConverter.ToInt64(asn1PluginInfo[0].Value, 0);
+                    //Version remotePluginVersion = Version.Parse(Encoding.ASCII.GetString(asn1PluginInfo.Element(1, 0x13).Value));
+                    //String name = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(2, 0x1E).Value);
+                    List<ServerPluginDownloadInfo> newDownloadInfos = new List<ServerPluginDownloadInfo>();
+                    if (!alreadyFoundPlugin(pluginUpdateInfo.PluginId))
+                    {
+                        AtlasPlugin plugin = pluginManager.getPlugin(pluginUpdateInfo.PluginId);
+                        if (plugin == null)
                         {
-                            ASN1 asn1PluginInfo = pluginInfos[i];
-                            long pluginId = BitConverter.ToInt64(asn1PluginInfo[0].Value, 0);
-                            Version remotePluginVersion = Version.Parse(Encoding.ASCII.GetString(asn1PluginInfo.Element(1, 0x13).Value));
-                            String name = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(2, 0x1E).Value);
-                            AtlasPlugin plugin = pluginManager.getPlugin(pluginId);
-
-                            ServerPluginDownloadInfo pluginInfo = null;
-                            if (plugin == null)
-                            {
-                                pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.NotInstalled);
-                            }
-                            else if(remotePluginVersion > plugin.Version)
-                            {
-                                pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.Update);
-                            }
-
-                            if (pluginInfo != null)
-                            {
-                                String imageURL = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(3, 0x1E).Value);
-                                if (!alreadyFoundPlugin(pluginInfo.PluginId))
-                                {
-                                    if (!String.IsNullOrEmpty(imageURL))
-                                    {
-                                        using (Bitmap image = loadImageFromURL(imageURL))
-                                        {
-                                            if (image != null)
-                                            {
-                                                ThreadManager.invokeAndWait(new Action(delegate()
-                                                {
-                                                    pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
-                                                }));
-                                            }
-                                        }
-                                    }
-                                    ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
-                                    {
-                                        if (DownloadFound != null)
-                                        {
-                                            DownloadFound.Invoke(downloadInfo);
-                                        }
-                                    }), pluginInfo);
-                                    detectedServerPlugins.Add(pluginInfo);
-                                }
-                            }
+                            newDownloadInfos.Add(new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, "", ServerDownloadStatus.NotInstalled));
                         }
-                    });
+                        else if(pluginUpdateInfo.Version > plugin.Version)
+                        {
+                            newDownloadInfos.Add(new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, "", ServerDownloadStatus.Update));
+                        }
+                    }
+
+                    if (newDownloadInfos.Count > 0)
+                    {
+                        using (BinaryWriter br = new BinaryWriter(new MemoryStream()))
+                        {
+                            foreach (var info in newDownloadInfos)
+                            {
+                                br.Write(info.PluginId);
+                            }
+                            CredentialServerConnection connection = new CredentialServerConnection(MedicalConfig.PluginInfoURL, licenseManager.User, licenseManager.MachinePassword);
+                        }
+                    }
+
+                    //ServerPluginDownloadInfo pluginInfo = null;
+                    //if (plugin == null)
+                    //{
+                    //    pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.NotInstalled);
+                    //}
+                    //else if(remotePluginVersion > plugin.Version)
+                    //{
+                    //    pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.Update);
+                    //}
+
+                    //if (pluginInfo != null)
+                    //{
+                    //    String imageURL = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(3, 0x1E).Value);
+                    //    if (!alreadyFoundPlugin(pluginInfo.PluginId))
+                    //    {
+                    //        if (!String.IsNullOrEmpty(imageURL))
+                    //        {
+                    //            using (Bitmap image = loadImageFromURL(imageURL))
+                    //            {
+                    //                if (image != null)
+                    //                {
+                    //                    ThreadManager.invokeAndWait(new Action(delegate()
+                    //                    {
+                    //                        pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
+                    //                    }));
+                    //                }
+                    //            }
+                    //        }
+                    //        ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
+                    //        {
+                    //            if (DownloadFound != null)
+                    //            {
+                    //                DownloadFound.Invoke(downloadInfo);
+                    //            }
+                    //        }), pluginInfo);
+                    //        detectedServerPlugins.Add(pluginInfo);
+                    //    }
+                    //}
+                }
             }
             catch (Exception e)
             {

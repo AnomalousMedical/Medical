@@ -43,28 +43,9 @@ namespace Medical
                     }
                 }
             }
-            StringBuilder postData = new StringBuilder();
-            if (arguments != null)
-            {
-                String argumentFormat = "{0}={1}";
-                foreach (Tuple<String, String> arg in arguments)
-                {
-                    postData.AppendFormat(CultureInfo.InvariantCulture, argumentFormat, arg.Item1, Uri.EscapeDataString(arg.Item2));
-                    argumentFormat = "&{0}={1}";
-                }
-            }
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(Url));
-            request.Timeout = Timeout;
-            request.Method = "POST";
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData.ToString());
-            request.ContentType = "application/x-www-form-urlencoded";
-
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-            }
+            //HttpWebRequest request = buildRequestFormMultipart();
+            HttpWebRequest request = buildRequestFormUrlEncoded();
 
             // Get the response.
             using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponse())
@@ -131,6 +112,90 @@ namespace Medical
             //Likely a much better solution exists for this problem, but this method will ensure that at least some kind of check is done to make sure the
             //anomalousmedical.com server is who it says it is. That is the only server we send credentials to at this point.
 			return trustServerConnections && sslPolicyErrors == SslPolicyErrors.None;
+        }
+
+        private HttpWebRequest buildRequestFormUrlEncoded()
+        {
+            StringBuilder postData = new StringBuilder();
+            if (arguments != null)
+            {
+                String argumentFormat = "{0}={1}";
+                foreach (Tuple<String, String> arg in arguments)
+                {
+                    postData.AppendFormat(CultureInfo.InvariantCulture, argumentFormat, arg.Item1, Uri.EscapeDataString(arg.Item2));
+                    argumentFormat = "&{0}={1}";
+                }
+            }
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(Url));
+            request.Timeout = Timeout;
+            request.Method = "POST";
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData.ToString());
+            request.ContentType = "application/x-www-form-urlencoded";
+
+            request.ContentLength = byteArray.Length;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+            return request;
+        }
+
+        private HttpWebRequest buildRequestFormMultipart()
+        {
+            List<Mime> parts = new List<Mime>();
+            if (arguments != null)
+            {
+                foreach (Tuple<String, String> arg in arguments)
+                {
+                    Mime part = new Mime();
+                    part.Headers["Content-Disposition"] = String.Format("form-data; name=\"{0}\"", arg.Item1);
+                    part.Data = new MemoryStream(Encoding.UTF8.GetBytes(arg.Item2)); //Might need uri.escapedatastring, need to test
+                    parts.Add(part);
+                }
+            }
+
+            string boundary = "----------" + DateTime.Now.Ticks.ToString("x");
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(Url));
+            request.Timeout = Timeout;
+            request.Method = "POST";
+            request.ContentType = "multipart/form-data; boundary=" + boundary; ;
+
+            byte[] footer = Encoding.UTF8.GetBytes("--" + boundary + "--\r\n");
+            long contentLength = footer.Length;
+
+            foreach (Mime part in parts)
+            {
+                contentLength += part.GenerateHeader(boundary);
+            }
+
+            request.ContentLength = contentLength;
+
+            byte[] buffer = new byte[8192];
+            byte[] afterFile = Encoding.UTF8.GetBytes("\r\n");
+            int read;
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                foreach (Mime part in parts)
+                {
+                    dataStream.Write(part.Header, 0, part.Header.Length);
+
+                    while ((read = part.Data.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        dataStream.Write(buffer, 0, read);
+                    }
+
+                    part.Dispose();
+
+                    dataStream.Write(afterFile, 0, afterFile.Length);
+                }
+
+                dataStream.Write(footer, 0, footer.Length);
+            }
+
+            return request;
         }
     }
 }
