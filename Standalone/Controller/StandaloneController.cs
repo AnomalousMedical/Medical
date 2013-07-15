@@ -77,8 +77,6 @@ namespace Medical
 
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalUserRoot, FolderFinder.AnomalousMedicalAllUserRoot);
             CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
-            atlasPluginManager = new AtlasPluginManager(this);
-            atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             guiManager = new GUIManager(this);
 
             MyGUIInterface.OSTheme = PlatformConfig.ThemeFile;
@@ -147,6 +145,8 @@ namespace Medical
             //Background
             this.background = background;
 
+            atlasPluginManager = new AtlasPluginManager(this);
+            atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             atlasPluginManager.manageInstalledPlugins();
 
             clipboard = new SaveableClipboard();
