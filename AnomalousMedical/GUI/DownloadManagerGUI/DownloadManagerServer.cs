@@ -123,76 +123,75 @@ namespace Medical.GUI
                         foundPlatformUpdate = true;
                     }
                 }
+
+                Dictionary<long, ServerPluginDownloadInfo> newDownloadInfos = new Dictionary<long, ServerPluginDownloadInfo>();
                 foreach(var pluginUpdateInfo in serverUpdateInfo.PluginUpdateInfo)
                 {
-                    //ASN1 asn1PluginInfo = pluginInfos[i];
-                    //long pluginId = BitConverter.ToInt64(asn1PluginInfo[0].Value, 0);
-                    //Version remotePluginVersion = Version.Parse(Encoding.ASCII.GetString(asn1PluginInfo.Element(1, 0x13).Value));
-                    //String name = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(2, 0x1E).Value);
-                    List<ServerPluginDownloadInfo> newDownloadInfos = new List<ServerPluginDownloadInfo>();
                     if (!alreadyFoundPlugin(pluginUpdateInfo.PluginId))
                     {
                         AtlasPlugin plugin = pluginManager.getPlugin(pluginUpdateInfo.PluginId);
                         if (plugin == null)
                         {
-                            newDownloadInfos.Add(new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, "", ServerDownloadStatus.NotInstalled));
+                            newDownloadInfos.Add(pluginUpdateInfo.PluginId, new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, "", ServerDownloadStatus.NotInstalled));
                         }
                         else if(pluginUpdateInfo.Version > plugin.Version)
                         {
-                            newDownloadInfos.Add(new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, "", ServerDownloadStatus.Update));
+                            newDownloadInfos.Add(pluginUpdateInfo.PluginId, new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, "", ServerDownloadStatus.Update));
                         }
                     }
+                }
 
-                    if (newDownloadInfos.Count > 0)
+                if (newDownloadInfos.Count > 0)
+                {
+                    using (BinaryWriter br = new BinaryWriter(new MemoryStream()))
                     {
-                        using (BinaryWriter br = new BinaryWriter(new MemoryStream()))
+                        foreach (var info in newDownloadInfos.Keys)
                         {
-                            foreach (var info in newDownloadInfos)
-                            {
-                                br.Write(info.PluginId);
-                            }
-                            CredentialServerConnection connection = new CredentialServerConnection(MedicalConfig.PluginInfoURL, licenseManager.User, licenseManager.MachinePassword);
+                            br.Write(info);
                         }
+                        br.Seek(0, SeekOrigin.Begin);
+
+                        ServerConnection connection = new ServerConnection(MedicalConfig.PluginInfoURL);
+                        connection.addFileStream("PluginIds", br.BaseStream);
+                        connection.makeRequestDownloadResponse(response =>
+                        {
+                            ASN1 results = new ASN1(response.ToArray());
+                            for (int i = 0; i < results.Count; ++i)
+                            {
+                                ASN1 pluginInfo = results[i];
+                                long pluginId = BitConverter.ToInt64(pluginInfo[0].Value, 0);
+                                ServerPluginDownloadInfo downloadInfo = newDownloadInfos[pluginId];
+                                downloadInfo.Name = Encoding.BigEndianUnicode.GetString(pluginInfo[1].Value);
+                                ASN1 brandingImageLocationAsn1 = pluginInfo[2];
+                                if (brandingImageLocationAsn1.Tag != 0x05)
+                                {
+                                    String imageURL = Encoding.BigEndianUnicode.GetString(brandingImageLocationAsn1.Value);
+                                    if (!String.IsNullOrEmpty(imageURL))
+                                    {
+                                        using (Bitmap image = loadImageFromURL(imageURL))
+                                        {
+                                            if (image != null)
+                                            {
+                                                ThreadManager.invokeAndWait(new Action(delegate()
+                                                {
+                                                    downloadInfo.ImageKey = serverImages.addImage(pluginInfo, image);
+                                                }));
+                                            }
+                                        }
+                                    }
+                                }
+
+                                ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfoCb)
+                                {
+                                    if (DownloadFound != null)
+                                    {
+                                        DownloadFound.Invoke(downloadInfoCb);
+                                    }
+                                }), downloadInfo);
+                                detectedServerPlugins.Add(downloadInfo);
+                            }
+                        });
                     }
-
-                    //ServerPluginDownloadInfo pluginInfo = null;
-                    //if (plugin == null)
-                    //{
-                    //    pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.NotInstalled);
-                    //}
-                    //else if(remotePluginVersion > plugin.Version)
-                    //{
-                    //    pluginInfo = new ServerPluginDownloadInfo(this, pluginId, name, ServerDownloadStatus.Update);
-                    //}
-
-                    //if (pluginInfo != null)
-                    //{
-                    //    String imageURL = Encoding.BigEndianUnicode.GetString(asn1PluginInfo.Element(3, 0x1E).Value);
-                    //    if (!alreadyFoundPlugin(pluginInfo.PluginId))
-                    //    {
-                    //        if (!String.IsNullOrEmpty(imageURL))
-                    //        {
-                    //            using (Bitmap image = loadImageFromURL(imageURL))
-                    //            {
-                    //                if (image != null)
-                    //                {
-                    //                    ThreadManager.invokeAndWait(new Action(delegate()
-                    //                    {
-                    //                        pluginInfo.ImageKey = serverImages.addImage(pluginInfo, image);
-                    //                    }));
-                    //                }
-                    //            }
-                    //        }
-                    //        ThreadManager.invoke(new Action<ServerDownloadInfo>(delegate(ServerDownloadInfo downloadInfo)
-                    //        {
-                    //            if (DownloadFound != null)
-                    //            {
-                    //                DownloadFound.Invoke(downloadInfo);
-                    //            }
-                    //        }), pluginInfo);
-                    //        detectedServerPlugins.Add(pluginInfo);
-                    //    }
-                    //}
                 }
             }
             catch (Exception e)
