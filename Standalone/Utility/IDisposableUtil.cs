@@ -12,7 +12,7 @@ namespace Medical
         /// not null.
         /// </summary>
         /// <param name="disposable">The disposable to dispose, can be null.</param>
-        public static void DisposeIfNotNull(this IDisposable disposable)
+        public static void DisposeIfNotNull(IDisposable disposable)
         {
             if (disposable != null)
             {

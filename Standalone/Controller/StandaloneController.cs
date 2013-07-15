@@ -102,24 +102,24 @@ namespace Medical
 
         public void Dispose()
         {
-            mvcCore.DisposeIfNotNull();
-            downloadController.DisposeIfNotNull();
+			IDisposableUtil.DisposeIfNotNull(mvcCore);
+			IDisposableUtil.DisposeIfNotNull(downloadController);
             if (DocumentController != null)
             {
                 DocumentController.saveRecentDocuments();
             }
-            touchController.DisposeIfNotNull();
-            atlasPluginManager.DisposeIfNotNull();
-            guiManager.DisposeIfNotNull();
-            watermark.DisposeIfNotNull();
-            measurementGrid.DisposeIfNotNull();
-            anatomyController.DisposeIfNotNull();
-            medicalStateController.DisposeIfNotNull();
-            sceneViewController.DisposeIfNotNull();
-            background.DisposeIfNotNull();
-            mdiLayout.DisposeIfNotNull();
-            medicalController.DisposeIfNotNull();
-            mainWindow.DisposeIfNotNull();
+			IDisposableUtil.DisposeIfNotNull(touchController);
+			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
+			IDisposableUtil.DisposeIfNotNull(guiManager);
+			IDisposableUtil.DisposeIfNotNull(watermark);
+			IDisposableUtil.DisposeIfNotNull(measurementGrid);
+			IDisposableUtil.DisposeIfNotNull(anatomyController);
+			IDisposableUtil.DisposeIfNotNull(medicalStateController);
+			IDisposableUtil.DisposeIfNotNull(sceneViewController);
+			IDisposableUtil.DisposeIfNotNull(background);
+			IDisposableUtil.DisposeIfNotNull(mdiLayout);
+			IDisposableUtil.DisposeIfNotNull(medicalController);
+			IDisposableUtil.DisposeIfNotNull(mainWindow);
 
             //Stop any waiting background threads last.
             ThreadManager.cancelAll();

@@ -72,20 +72,20 @@ namespace Medical.GUI
             {
                 Log.Warning("Could not save window configuration because the WindowsFile is not defined.");
             }
-            dialogManager.DisposeIfNotNull();
+			IDisposableUtil.DisposeIfNotNull(dialogManager);
 
             //Containers
-            leftAnimatedContainer.DisposeIfNotNull();
-            rightAnimatedContainer.DisposeIfNotNull();
-            topAnimatedContainer.DisposeIfNotNull();
-            bottomAnimatedContainer.DisposeIfNotNull();
+			IDisposableUtil.DisposeIfNotNull(leftAnimatedContainer);
+			IDisposableUtil.DisposeIfNotNull(rightAnimatedContainer);
+			IDisposableUtil.DisposeIfNotNull(topAnimatedContainer);
+			IDisposableUtil.DisposeIfNotNull(bottomAnimatedContainer);
 
             //Other
-            imageRendererProgress.DisposeIfNotNull();
-            continuePrompt.DisposeIfNotNull();
-            taskMenu.DisposeIfNotNull();
-            taskbar.DisposeIfNotNull();
-            notificationManager.DisposeIfNotNull();
+			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
+			IDisposableUtil.DisposeIfNotNull(continuePrompt);
+			IDisposableUtil.DisposeIfNotNull(taskMenu);
+			IDisposableUtil.DisposeIfNotNull(taskbar);
+			IDisposableUtil.DisposeIfNotNull(notificationManager);
         }
 
         public void createGUI(MDILayoutManager mdiManager)

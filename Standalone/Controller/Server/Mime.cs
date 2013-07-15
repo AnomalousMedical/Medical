@@ -16,7 +16,7 @@ namespace Medical
 
         public void Dispose()
         {
-            Data.DisposeIfNotNull();
+            IDisposableUtil.DisposeIfNotNull(Data);
         }
 
         public Stream Data { get; set; }
