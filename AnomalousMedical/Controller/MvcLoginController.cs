@@ -137,6 +137,9 @@ namespace Medical.Controller
                     case WebExceptionStatus.ConnectFailure:
                         ThreadManager.invoke(new CallbackString(licenseServerFail), "Cannot connect to License Server. Please try again later.");
                         break;
+                    default:
+                        ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("An undefined error occured connecting to the license server. Please try again later. The status was {0}.", webException.Status));
+                        break;
                 }
             }
             catch (Exception e)
