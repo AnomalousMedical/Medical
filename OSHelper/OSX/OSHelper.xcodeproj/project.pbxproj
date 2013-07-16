@@ -43,6 +43,7 @@
 		01C7D27A1357723E0027AC32 /* PlatformConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2501357723E0027AC32 /* PlatformConfig.cpp */; };
 		01C7D27F1357723E0027AC32 /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2551357723E0027AC32 /* Stdafx.cpp */; };
 		01C7D2801357723E0027AC32 /* Stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2561357723E0027AC32 /* Stdafx.h */; };
+		01C908B61795C95F0018C959 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C908B51795C95F0018C959 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		01C7D2501357723E0027AC32 /* PlatformConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlatformConfig.cpp; sourceTree = "<group>"; };
 		01C7D2551357723E0027AC32 /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../Stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		01C7D2561357723E0027AC32 /* Stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stdafx.h; path = ../Stdafx.h; sourceTree = SOURCE_ROOT; };
+		01C908B51795C95F0018C959 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		5073E0C609E734A800EC74B6 /* OSHelperProj.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = OSHelperProj.xcconfig; sourceTree = "<group>"; };
 		5073E0C709E734A800EC74B6 /* OSHelperTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = OSHelperTarget.xcconfig; sourceTree = "<group>"; };
 		D2AAC09D05546B4700DB518D /* libOSHelper.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libOSHelper.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01C908B61795C95F0018C959 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +166,7 @@
 		0867D691FE84028FC02AAC07 /* OSHelper */ = {
 			isa = PBXGroup;
 			children = (
+				01C908B51795C95F0018C959 /* Security.framework */,
 				01C7D22B1357723E0027AC32 /* Include */,
 				01C7D23B1357723E0027AC32 /* Src */,
 				01C7D2551357723E0027AC32 /* Stdafx.cpp */,
