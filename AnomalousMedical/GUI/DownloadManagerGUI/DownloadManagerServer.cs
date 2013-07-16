@@ -233,10 +233,7 @@ namespace Medical.GUI
             }
             catch (Exception e)
             {
-                ThreadManager.invoke(new Action(delegate()
-                {
-                    Log.Error("Could not load image from {0} because {1}.", url, e.Message);
-                }));
+                Log.Error("Could not load image from {0} because {1}.", url, e.Message);
             }
             return null;
         }

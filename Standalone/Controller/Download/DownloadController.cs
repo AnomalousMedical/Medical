@@ -191,10 +191,7 @@ namespace Medical
             }
             catch (Exception e)
             {
-                ThreadManager.invoke(new Action(delegate()
-                {
-                    Log.Error("Error reading plugin data from the server: {0}", e.Message);
-                }));
+                Log.Error("Error reading plugin data from the server: {0}", e.Message);
             }
             download.completed(success);
         }
