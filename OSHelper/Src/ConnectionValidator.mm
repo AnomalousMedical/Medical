@@ -40,7 +40,7 @@ OSStatus EvaluateCert (SecCertificateRef cert, CFTypeRef policyRef, SecTrustResu
     return (status2);
 }
 
-extern "C" _AnomalousExport bool CertificateValidator_ValidateSSLCertificate(unsigned char* certBytes, unsigned int certBytesLength, const char* hostName)
+extern "C" _AnomalousExport bool CertificateValidator_ValidateSSLCertificate(unsigned char* certBytes, unsigned int certBytesLength, String hostName)
 {
     SecTrustRef trustRef = nil;
     SecTrustResultType result = kSecTrustResultRecoverableTrustFailure;
@@ -49,7 +49,11 @@ extern "C" _AnomalousExport bool CertificateValidator_ValidateSSLCertificate(uns
     CFStringRef cfHostName = NULL;
     if(hostName != NULL)
     {
-        cfHostName = CFStringCreateWithCString(kCFAllocatorDefault, hostName, kCFStringEncodingASCII);
+        cfHostName = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("%S"), hostName);
+        if(cfHostName == NULL)
+        {
+            return false; //Fail if a host is provided, but cannot be translated. This prevents us trusting something we shouldn't if there is an error here.
+        }
     }
     
     NSData *certData = [NSData dataWithBytes:certBytes length:certBytesLength];

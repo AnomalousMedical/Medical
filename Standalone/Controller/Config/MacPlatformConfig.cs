@@ -196,13 +196,9 @@ namespace Medical
 		[DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void SystemInfo_GetOSXVersion(out int major, out int minor, out int bugfix);
 
-		[DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-		[return: MarshalAs(UnmanagedType.I1)]
-		private static extern bool ConnectionValidator_ValidateUrl([MarshalAs(UnmanagedType.LPWStr)] String url);
-
         [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        private static unsafe extern bool CertificateValidator_ValidateSSLCertificate(byte* certBytes, uint certBytesLength, String url);
+		private static unsafe extern bool CertificateValidator_ValidateSSLCertificate(byte* certBytes, uint certBytesLength, [MarshalAs(UnmanagedType.LPWStr)] String url);
 
 		#endregion
     }
