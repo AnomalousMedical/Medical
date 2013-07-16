@@ -7,6 +7,7 @@ using Logging;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Medical
 {
@@ -164,11 +165,29 @@ namespace Medical
 			}
 		}
 
-        protected override bool TrustServerConnectionsImpl
+        protected override bool HasCustomSSLValidationImpl
         {
             get
             {
-                return ConnectionValidator_ValidateUrl(MedicalConfig.ValidateConnectionURL);
+                return true;
+            }
+        }
+
+        private object sslTrustLock = new object();
+
+        protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
+        {
+            unsafe
+            {
+                //Apple says that the functions used on the native side to check validity are potentially not thread safe, so lock here when checking.
+                lock (sslTrustLock)
+                {
+                    byte[] certBytes = certificate.Export(X509ContentType.Cert);
+                    fixed (byte* certBytesPtr = &certBytes[0])
+                    {
+                        return CertificateValidator_ValidateSSLCertificate(certBytesPtr, (uint)certBytes.Length, hostName);
+                    }
+                }
             }
         }
 
@@ -180,6 +199,10 @@ namespace Medical
 		[DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
 		[return: MarshalAs(UnmanagedType.I1)]
 		private static extern bool ConnectionValidator_ValidateUrl([MarshalAs(UnmanagedType.LPWStr)] String url);
+
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static unsafe extern bool CertificateValidator_ValidateSSLCertificate(byte* certBytes, uint certBytesLength, String url);
 
 		#endregion
     }

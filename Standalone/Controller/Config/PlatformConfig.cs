@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Medical
 {
@@ -162,12 +163,17 @@ namespace Medical
             }
         }
 
-        public static bool TrustServerConnections
+        public static bool HasCustomSSLValidation
         {
             get
             {
-                return currentConfig.TrustServerConnectionsImpl;
+                return currentConfig.HasCustomSSLValidationImpl;
             }
+        }
+
+        public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
+        {
+            return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
         }
 
         //Subclass
@@ -207,7 +213,9 @@ namespace Medical
 
         protected abstract bool PreferHardwareSkinningImpl { get; }
 
-        protected abstract bool TrustServerConnectionsImpl { get; }
+        protected abstract bool HasCustomSSLValidationImpl { get; }
+
+        protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
 
         #region PInvoke
 

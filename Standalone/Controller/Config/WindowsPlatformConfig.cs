@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Logging;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Medical
 {
@@ -153,12 +154,17 @@ namespace Medical
             }
         }
 
-        protected override bool TrustServerConnectionsImpl
+        protected override bool HasCustomSSLValidationImpl
         {
             get
             {
-                return true;
+                return false;
             }
+        }
+
+        protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
+        {
+            throw new NotImplementedException();
         }
     }
 }
