@@ -135,10 +135,16 @@ namespace Medical
 
                 if (host != null)
                 {
-                    return PlatformConfig.TrustSSLCertificate(certificate, host);
+                    bool trusted = PlatformConfig.TrustSSLCertificate(certificate, host);
+					if (!trusted) 
+					{
+						Logging.Log.Error("Could not trust ssl certificate with subject '{0}' for host '{1}'. Connections to this server will not be possible", certificate.Subject, host);
+					}
+					return trusted;
                 }
                 else
                 {
+					Logging.Log.Error("Host not specified when validating ssl certificate with subject '{0}'. Connections to this server will not be possible", certificate.Subject, host);
                     return false; //If we cannot check with the hosts, we just want to fail.
                 }
             }

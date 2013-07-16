@@ -40,7 +40,7 @@ OSStatus EvaluateCert (SecCertificateRef cert, CFTypeRef policyRef, SecTrustResu
     return (status2);
 }
 
-bool CertificateValidator_ValidateSSLCertificate(unsigned char* certBytes, unsigned int bytesLength, const char* hostName)
+extern "C" _AnomalousExport bool CertificateValidator_ValidateSSLCertificate(unsigned char* certBytes, unsigned int certBytesLength, const char* hostName)
 {
     SecTrustRef trustRef = nil;
     SecTrustResultType result = kSecTrustResultRecoverableTrustFailure;
@@ -52,7 +52,7 @@ bool CertificateValidator_ValidateSSLCertificate(unsigned char* certBytes, unsig
         cfHostName = CFStringCreateWithCString(kCFAllocatorDefault, hostName, kCFStringEncodingASCII);
     }
     
-    NSData *certData = [NSData dataWithBytes:certBytes length:bytesLength];
+    NSData *certData = [NSData dataWithBytes:certBytes length:certBytesLength];
     SecCertificateRef cert = SecCertificateCreateWithData(NULL, (CFDataRef)certData);
     if(cert != nil)
     {
