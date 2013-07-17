@@ -77,6 +77,7 @@ namespace Developer.GUI
                 }
                 DeveloperConfig.LastPluginExportDirectory = outDirEdit.OnlyText;
                 DeveloperConfig.LastPluginKey = signatureFileEdit.OnlyText;
+                DeveloperConfig.LastPluginCounterSignatureKey = counterSignatureFileEdit.OnlyText;
             }
             catch (Exception ex)
             {
