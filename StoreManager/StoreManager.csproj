@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EditPluginDetailsController.cs" />
+    <Compile Include="Controller\UploadPluginController.cs" />
     <Compile Include="StoreManagerPlugin.cs" />
     <Compile Include="StoreManagerPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,6 +54,16 @@
       <Project>{e217c194-a14f-41de-a838-c401e60adf15}</Project>
       <Name>Standalone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\EditPluginDetails.rml" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\Index.rml" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\MasterTemplate.trml" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\MvcContext.mvc" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\Plugin.ddp" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\UploadPlugin.rcss" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\Wysiwyg.rcss" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

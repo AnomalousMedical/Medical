@@ -1,0 +1,21 @@
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate">
+		<h1>Edit Details</h1>
+		<form onsubmit="EditPluginDetails/BeginUpload" autosubmitid="LogInButton">
+			<h2>Title</h2>
+			<input type="text" name="Title" id="Title" />
+			<h2>Branding Image</h2>
+			<p>This cannot be set at this time</p>
+			<h2>Copyright Agreement</h2>
+			<p>
+				<input type="checkbox" value="True" name="CopyrightAgree" id="CopyrightAgree" /> I assert that I own the rights to use all of the content that is being uploaded. This includes any text that has been written and any images and sounds added to this plugin.
+			</p>
+			<input type="submit">Upload</input>
+		</form>
+		<p class="StatusMessage" id="Message" />
+		<p class="ErrorMessage" id="Error" />
+	</body>
+</rml>

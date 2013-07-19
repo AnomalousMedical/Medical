@@ -1,10 +1,10 @@
-﻿using Medical;
+﻿using Anomalous.Medical.StoreManager.Controller;
+using Medical;
 using Medical.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Anomalous.Medical.StoreManager
 {
@@ -27,7 +27,12 @@ namespace Anomalous.Medical.StoreManager
 
         public void initialize(StandaloneController standaloneController)
         {
-            GUIManager guiManager = standaloneController.GUIManager;
+            Task task = new CallbackTask("Anomalous.Medical.StoreManager.UploadPlugin", "Upload Plugin", CommonResources.NoIcon, "Store Manager", 0, false, item =>
+                {
+                    UploadPluginController uploadPlugin = new UploadPluginController(standaloneController, new DDAtlasPlugin());
+                    uploadPlugin.showContext();
+                });
+            standaloneController.TaskController.addTask(task);
         }
 
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)
