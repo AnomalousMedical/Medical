@@ -14,7 +14,7 @@ namespace Medical
         public const String Icon = "EditorFileIcon/.rcss";
 
         public RcssTypeController(EditorController editorController)
-            : base(".rcss", editorController)
+            : base(".rcss", Encoding.UTF8, editorController)
         {
 
         }

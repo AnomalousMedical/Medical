@@ -15,7 +15,7 @@ namespace Medical
         public const String Icon = "EditorFileIcon/.trml";
 
         public TRmlTypeController(EditorController editorController)
-            : base(".trml", editorController)
+            : base(".trml", Encoding.UTF8, editorController)
         {
 
         }

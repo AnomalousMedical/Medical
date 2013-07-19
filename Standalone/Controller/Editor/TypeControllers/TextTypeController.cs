@@ -12,10 +12,10 @@ namespace Medical
 
         public event Action<String> OpenEditor;
 
-        public TextTypeController(String extension, EditorController editorController)
+        public TextTypeController(String extension, Encoding textEncoding, EditorController editorController)
             :base(extension, editorController)
         {
-            
+            this.TextEncoding = textEncoding;
         }
 
         public override void closeFile(string file)
@@ -45,7 +45,7 @@ namespace Medical
                 //Missed open real file
                 using (StreamReader stringReader = new StreamReader(EditorController.ResourceProvider.openFile(filename)))
                 {
-                    cachedResource = new TextTypeControllerCachedResource(filename, stringReader.ReadToEnd(), this);
+                    cachedResource = new TextTypeControllerCachedResource(filename, TextEncoding, stringReader.ReadToEnd(), this);
                     EditorController.ResourceProvider.ResourceCache.add(cachedResource);
                 }
             }
@@ -77,6 +77,8 @@ namespace Medical
                 }
             }
         }
+
+        public Encoding TextEncoding { get; set; }
 
         protected void creatingNewFile(String filePath)
         {

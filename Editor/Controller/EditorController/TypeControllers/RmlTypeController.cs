@@ -15,7 +15,7 @@ namespace Medical
         public const String Icon = "EditorFileIcon/.rml";
 
         public RmlTypeController(EditorController editorController)
-            :base(".rml", editorController)
+            : base(".rml", Encoding.UTF8, editorController)
         {
             
         }

@@ -14,7 +14,7 @@ namespace Medical
         public const String Icon = CommonResources.NoIcon;
 
         public XmlTypeController(EditorController editorController)
-            : base(".xml", editorController)
+            : base(".xml", Encoding.UTF8, editorController)
         {
 
         }

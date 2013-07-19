@@ -9,8 +9,8 @@ namespace Medical
     {
         TextTypeController typeController;
 
-        public TextTypeControllerCachedResource(String file, String text, TextTypeController typeController)
-            :base(file, text)
+        public TextTypeControllerCachedResource(String file, Encoding textEncoding, String text, TextTypeController typeController)
+            :base(file, textEncoding, text)
         {
             this.typeController = typeController;
         }
