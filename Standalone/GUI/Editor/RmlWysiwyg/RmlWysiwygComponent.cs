@@ -423,6 +423,7 @@ namespace Medical.GUI
                 settings.IndentChars = "\t";
                 settings.NewLineChars = "\n";
                 settings.NewLineHandling = NewLineHandling.Replace;
+                settings.OmitXmlDeclaration = true; //.Net wants to write the string as UTF-16, but in libRocket rml files are always UTF-8, so we don't need a declaration and it would be wrong anyway.
                 using (XmlWriter xmlWriter = XmlWriter.Create(sb, settings))
                 {
                     xmlDoc.Save(xmlWriter);
