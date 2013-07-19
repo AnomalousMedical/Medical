@@ -16,7 +16,13 @@ namespace Medical
 
         public override Stream openStream()
         {
-            return new MemoryStream(Encoding.Unicode.GetBytes(CachedString));
+            byte[] preamble = Encoding.Unicode.GetPreamble();
+            byte[] data = Encoding.Unicode.GetBytes(CachedString);
+            MemoryStream ms = new MemoryStream(preamble.Length + data.Length);
+            ms.Write(preamble, 0, preamble.Length);
+            ms.Write(data, 0, data.Length);
+            ms.Seek(0, SeekOrigin.Begin);
+            return ms;
         }
 
         public String CachedString { get; set; }
