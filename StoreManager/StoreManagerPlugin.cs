@@ -59,7 +59,7 @@ namespace Anomalous.Medical.StoreManager
         {
             get
             {
-                return -1;
+                return 31;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Anomalous.Medical.StoreManager
         {
             get
             {
-                return "Store Manager Tools";
+                return "Store Manager";
             }
         }
 

@@ -45,6 +45,11 @@
   <ItemGroup>
     <Compile Include="Controller\EditPluginDetailsController.cs" />
     <Compile Include="Controller\UploadPluginController.cs" />
+    <Compile Include="Models\PluginModel.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
+    <Compile Include="Models\StoreModel.cs" />
+    <Compile Include="Models\StorePluginsModel.cs" />
+    <Compile Include="Models\UserStoresModel.cs" />
     <Compile Include="StoreManagerPlugin.cs" />
     <Compile Include="StoreManagerPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
