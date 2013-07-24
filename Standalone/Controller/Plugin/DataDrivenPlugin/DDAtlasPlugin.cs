@@ -120,6 +120,14 @@ namespace Medical
             return false;
         }
 
+        public IEnumerable<DDPluginTask> Tasks
+        {
+            get
+            {
+                return tasks;
+            }
+        }
+
         [Editable]
         public String IconResourceFile { get; set; }
 
