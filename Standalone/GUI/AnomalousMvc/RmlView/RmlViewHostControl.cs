@@ -41,6 +41,7 @@ namespace Medical.GUI.AnomalousMvc
             set
             {
                 element.SetProperty("display", value ? "block" : "none"); //Yea... just assuming block
+                rocketWidget.renderOnNextFrame();
             }
         }
 

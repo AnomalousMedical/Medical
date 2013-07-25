@@ -14,48 +14,74 @@ namespace Anomalous.Medical.StoreManager.Controller
 {
     class ChooseStoreController
     {
+        private LicenseManager licenseManager;
+        private bool allowGetUserStores = true;
+
         public ChooseStoreController(AnomalousMvcContext context, LicenseManager licenseManager)
         {
             MvcController controller = context.Controllers["ChooseStore"];
+            this.licenseManager = licenseManager;
 
-            ((RunCommandsAction)controller.Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
+            ((RunCommandsAction)controller.Actions["GetUserStores"]).addCommand(new CallbackCommand((executingContext) =>
             {
-                //messageControl = executingContext.RunningActionViewHost.findControl("Message");
-                //errorControl = executingContext.RunningActionViewHost.findControl("Error");
+                getUserStores(executingContext);
+            }));
+        }
+
+        private void getUserStores(AnomalousMvcContext executingContext)
+        {
+            if (allowGetUserStores)
+            {
+                allowGetUserStores = false;
+                ViewHostControl progressMessage = executingContext.RunningActionViewHost.findControl("ProgressMessage");
+                ViewHostControl storeSelection = executingContext.RunningActionViewHost.findControl("StoreSelection");
+                ViewHostControl errorMessage = executingContext.RunningActionViewHost.findControl("ErrorMessage");
+                progressMessage.Visible = true;
+                storeSelection.Visible = false;
+                errorMessage.Visible = false;
+
                 ThreadPool.QueueUserWorkItem((stateInfo) =>
+                {
+                    UserStoresModel userStores = null;
+                    try
                     {
                         CredentialServerConnection serverConnection = new CredentialServerConnection(StoreManagerConfig.StoreListUrl, licenseManager.User, licenseManager.MachinePassword);
-                        UserStoresModel userStores = null;
                         serverConnection.makeRequestSaveableResponse(saveable =>
+                        {
+                            userStores = saveable as UserStoresModel;
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.Log.Error("{0} occured when trying to get the list of user stores. Message: {1}", ex.GetType().Name, ex.Message);
+                    }
+                    ThreadManager.invoke(() =>
+                    {
+                        //Need to check that this context is still active
+                        if (userStores != null)
+                        {
+                            progressMessage.Visible = false;
+                            storeSelection.Visible = true;
+                            ViewHostControl formElement = executingContext.RunningActionViewHost.findControl("StoreSelectionForms");
+                            String formatString = formElement.Value;
+                            StringBuilder sb = new StringBuilder();
+                            foreach (var store in userStores.Stores)
                             {
-                                userStores = saveable as UserStoresModel;
-                            });
-                        ThreadManager.invoke(() =>
-                            {
-                                //Need to check that this context is still active
-                                if (userStores != null)
-                                {
-                                    ViewHostControl progressMessage = executingContext.RunningActionViewHost.findControl("ProgressMessage");
-                                    progressMessage.Visible = false;
-                                    ViewHostControl storeSelection = executingContext.RunningActionViewHost.findControl("StoreSelection");
-                                    storeSelection.Visible = true;
-                                    ViewHostControl formElement = executingContext.RunningActionViewHost.findControl("StoreSelectionForms");
-                                    String formatString = formElement.Value;
-                                    StringBuilder sb = new StringBuilder();
-                                    foreach (var store in userStores.Stores)
-                                    {
-                                        sb.AppendFormat(formatString, store.UniqueName, store.Name);
-                                    }
-                                    formElement.Value = sb.ToString();
-                                }
-                                else
-                                {
-                                    ViewHostControl progressMessage = executingContext.RunningActionViewHost.findControl("ProgressMessage");
-                                    progressMessage.Value = "TEMPORARY, could not contact server";
-                                }
-                            });
+                                sb.AppendFormat(formatString, store.UniqueName, store.Name);
+                            }
+                            formElement.Value = sb.ToString();
+                        }
+                        else
+                        {
+                            progressMessage.Visible = false;
+                            errorMessage.Visible = true;
+                        }
+
+                        //Set fetch allow back to true.
+                        allowGetUserStores = true;
                     });
-            }));
+                });
+            }
         }
     }
 }

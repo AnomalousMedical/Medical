@@ -11,10 +11,11 @@
 				<form onsubmit="ChooseStore/SelectStore" id="{0}">
 					<p>
 						<input type="hidden" value="{0}" name="StoreUniqueName" />
-						<input type="submit" name="StorePrettyName" value="{1}">{1}</input>
+						<input type="submit" value="{1}" name="StorePrettyName">{1}</input>
 					</p>
 				</form>
 			</div>
 		</div>
+		<p id="ErrorMessage" style="display:none;">There was an error contacting the server. You can <a onclick="ChooseStore/GetUserStores">retry</a> or <a onclick="ChooseStore/Close">quit uploading</a>.</p>
 	</body>
 </rml>
