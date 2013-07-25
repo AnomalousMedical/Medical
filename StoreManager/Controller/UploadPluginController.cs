@@ -14,6 +14,7 @@ namespace Anomalous.Medical.StoreManager.Controller
         private StandaloneController controller;
         AnomalousMvcContext context;
         EditPluginDetailsController editPluginDetails;
+        ChooseStoreController chooseStore;
         DDAtlasPlugin plugin;
 
         public UploadPluginController(StandaloneController standaloneController, DDAtlasPlugin plugin)
@@ -33,7 +34,8 @@ namespace Anomalous.Medical.StoreManager.Controller
             context.setResourceProvider(embeddedResourceProvider);
             //DataModel pluginDetailsModel = (DataModel)context.Models["PluginDetails"];
 
-            editPluginDetails = new EditPluginDetailsController(context, plugin);
+            chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
+            //editPluginDetails = new EditPluginDetailsController(context, plugin);
 
             controller.MvcCore.startRunningContext(context);
         }

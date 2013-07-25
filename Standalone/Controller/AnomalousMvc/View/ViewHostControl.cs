@@ -14,6 +14,8 @@ namespace Medical.Controller.AnomalousMvc
 
         void blur();
 
+        bool Visible { get; set; }
+
         String Value { get; set; }
     }
 }

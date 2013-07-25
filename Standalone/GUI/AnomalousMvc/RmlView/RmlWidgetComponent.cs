@@ -30,7 +30,7 @@ namespace Medical.GUI.AnomalousMvc
 
             if (view.RmlFile != null)
             {
-                RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+                startRmlUpdate();
                 using (ElementDocument document = rocketWidget.Context.LoadDocument(view.RmlFile))
                 {
                     if (document != null)
@@ -40,7 +40,7 @@ namespace Medical.GUI.AnomalousMvc
                         rocketWidget.renderOnNextFrame();
                     }
                 }
-                RocketEventListenerInstancer.resetEventController();
+                endRmlUpdate();
             }
 
             view._fireComponentCreated(this);
@@ -58,7 +58,7 @@ namespace Medical.GUI.AnomalousMvc
 
             if (view.Rml != null)
             {
-                RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+                startRmlUpdate();
                 using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(view.Rml, FakeLoadLocation))
                 {
                     if (document != null)
@@ -68,7 +68,7 @@ namespace Medical.GUI.AnomalousMvc
                         rocketWidget.renderOnNextFrame();
                     }
                 }
-                RocketEventListenerInstancer.resetEventController();
+                endRmlUpdate();
             }
 
             view._fireComponentCreated(this);
@@ -181,7 +181,7 @@ namespace Medical.GUI.AnomalousMvc
             Element element = document.GetElementById(name);
             if (element != null)
             {
-                return new RmlViewHostControl(element, rocketWidget);
+                return new RmlViewHostControl(element, this, rocketWidget);
             }
             return null;
         }
@@ -295,7 +295,7 @@ namespace Medical.GUI.AnomalousMvc
 
             if (documentName != null)
             {
-                RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+                startRmlUpdate();
                 using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
                 {
                     if (document != null)
@@ -305,8 +305,18 @@ namespace Medical.GUI.AnomalousMvc
                         rocketWidget.renderOnNextFrame();
                     }
                 }
-                RocketEventListenerInstancer.resetEventController();
+                endRmlUpdate();
             }
+        }
+
+        public void startRmlUpdate()
+        {
+            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+        }
+
+        public void endRmlUpdate()
+        {
+            RocketEventListenerInstancer.resetEventController();
         }
 
         public String FakeLoadLocation { get; set; }

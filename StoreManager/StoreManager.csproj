@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\StoreManagerConfig.cs" />
+    <Compile Include="Controller\ChooseStoreController.cs" />
     <Compile Include="Controller\EditPluginDetailsController.cs" />
     <Compile Include="Controller\UploadPluginController.cs" />
     <Compile Include="Models\PluginModel.cs" />
@@ -60,7 +62,9 @@
       <Name>Standalone</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\ChooseStore.rml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MvcContexts\UploadPlugin\EditPluginDetails.rml" />
     <EmbeddedResource Include="MvcContexts\UploadPlugin\Index.rml" />
@@ -70,6 +74,7 @@
     <EmbeddedResource Include="MvcContexts\UploadPlugin\UploadPlugin.rcss" />
     <EmbeddedResource Include="MvcContexts\UploadPlugin\Wysiwyg.rcss" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

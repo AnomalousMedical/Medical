@@ -20,6 +20,14 @@ namespace Anomalous.Medical.StoreManager.Models
             this.stores.AddRange(stores);
         }
 
+        public IEnumerable<StoreModel> Stores
+        {
+            get
+            {
+                return stores;
+            }
+        }
+
         protected UserStoresModel(LoadInfo info)
         {
             info.RebuildList("Store", stores);

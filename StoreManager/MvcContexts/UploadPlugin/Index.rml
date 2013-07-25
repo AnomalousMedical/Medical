@@ -4,9 +4,7 @@
 	</head>
 	<body template="MasterTemplate">
 		<h1>Upload Plugin</h1>
-		<p>You are just a few quick clicks from uploading your new plugin to Anomalous Medical's servers and sharing them with the rest of the world through your store.</p>
-		<p>Before we begin is this a new plugin or an update to an existing plugin?</p>
-		<input type="submit" onclick="Index/NewPlugin">New Plugin</input>
-		<input type="submit" onclick="Index/PluginUpgrade">Plugin Upgrade</input>
+		<p>You are just a few short clicks from uploading your new plugin to Anomalous Medical's servers and sharing them with the rest of the world through your store.</p>
+		<input type="submit" onclick="Index/Next">Next</input>
 	</body>
 </rml>

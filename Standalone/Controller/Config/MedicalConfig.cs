@@ -46,7 +46,7 @@ namespace Medical
 
         public MedicalConfig(String userAnomalousFolder, String commonAnomalousFolder)
         {
-            String websiteHostUrl = "https://www.anomalousmedical.com";
+            WebsiteHostUrl = "https://www.anomalousmedical.com";
 
             //Setup directories
             MedicalConfig.userAnomalousFolder = userAnomalousFolder;
@@ -70,7 +70,7 @@ namespace Medical
                 resources = overrideSettings.createOrRetrieveConfigSection("Resources");
 
                 ConfigSection website = overrideSettings.createOrRetrieveConfigSection("Website");
-                websiteHostUrl = website.getValue("Host", websiteHostUrl);
+                WebsiteHostUrl = website.getValue("Host", WebsiteHostUrl);
 
                 Cracked = false;
                 ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
@@ -133,22 +133,22 @@ namespace Medical
             MedicalConfig.CertificateStoreFile = Path.Combine(userAnomalousFolder, "CertificateStore.cst");
 
             //Configure website urls
-            MedicalConfig.HelpURL = String.Format("{0}/Help", websiteHostUrl);
-            MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", websiteHostUrl);
-            MedicalConfig.RegisterURL = String.Format("{0}/Login", websiteHostUrl);
-            MedicalConfig.LicenseServerURL = String.Format("{0}/DRM3/License", websiteHostUrl);
-            MedicalConfig.AnomalousMedicalStoreURL = String.Format("{0}/Store", websiteHostUrl);
-            MedicalConfig.AnomalousMedicalBlogURL = String.Format("{0}/Blog", websiteHostUrl);
-            MedicalConfig.ProductPageBaseURL = String.Format("{0}/Product/Plugin/{{0}}", websiteHostUrl);
-            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM3/LicenseReader", websiteHostUrl);
-            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM3/LicenseImage", websiteHostUrl);
-            MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", websiteHostUrl);
-            MedicalConfig.DefaultAdUrl = String.Format("{0}/DRM3/ProgramAd", websiteHostUrl);
-            MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM3/CertificateStore", websiteHostUrl);
+            MedicalConfig.HelpURL = String.Format("{0}/Help", WebsiteHostUrl);
+            MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", WebsiteHostUrl);
+            MedicalConfig.RegisterURL = String.Format("{0}/Login", WebsiteHostUrl);
+            MedicalConfig.LicenseServerURL = String.Format("{0}/DRM3/License", WebsiteHostUrl);
+            MedicalConfig.AnomalousMedicalStoreURL = String.Format("{0}/Store", WebsiteHostUrl);
+            MedicalConfig.AnomalousMedicalBlogURL = String.Format("{0}/Blog", WebsiteHostUrl);
+            MedicalConfig.ProductPageBaseURL = String.Format("{0}/Product/Plugin/{{0}}", WebsiteHostUrl);
+            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM3/LicenseReader", WebsiteHostUrl);
+            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM3/LicenseImage", WebsiteHostUrl);
+            MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", WebsiteHostUrl);
+            MedicalConfig.DefaultAdUrl = String.Format("{0}/DRM3/ProgramAd", WebsiteHostUrl);
+            MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM3/CertificateStore", WebsiteHostUrl);
 
-            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM3/Update{1}", websiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM3/DownloadInfo{1}", websiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM3/FileDownload{1}", websiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM3/Update{1}", WebsiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM3/DownloadInfo{1}", WebsiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM3/FileDownload{1}", WebsiteHostUrl, buildUrlExtraPath);
 
             //Read command line
             String[] commandLine = Environment.GetCommandLineArgs();
@@ -436,8 +436,10 @@ namespace Medical
 
         public static String StartupTask { get; private set; }
 
-        public static String CertificateStoreFile { get; set; }
+        public static String CertificateStoreFile { get; private set; }
 
-        public static String CertificateStoreUrl { get; set; }
+        public static String CertificateStoreUrl { get; private set; }
+
+        public static String WebsiteHostUrl { get; private set; }
     }
 }

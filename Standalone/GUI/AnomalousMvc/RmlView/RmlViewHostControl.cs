@@ -11,11 +11,13 @@ namespace Medical.GUI.AnomalousMvc
     {
         private Element element;
         private RocketWidget rocketWidget;
+        private RmlWidgetComponent rmlWidgetComponent;
 
-        public RmlViewHostControl(Element element, RocketWidget rocketWidget)
+        public RmlViewHostControl(Element element, RmlWidgetComponent rmlWidgetComponent, RocketWidget rocketWidget)
         {
             this.element = element;
             this.rocketWidget = rocketWidget;
+            this.rmlWidgetComponent = rmlWidgetComponent;
         }
 
         public void focus()
@@ -27,6 +29,19 @@ namespace Medical.GUI.AnomalousMvc
         public void blur()
         {
             element.Blur();
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                String display = element.GetPropertyString("display");
+                return display != null && !display.Equals("none", StringComparison.InvariantCultureIgnoreCase);
+            }
+            set
+            {
+                element.SetProperty("display", value ? "block" : "none"); //Yea... just assuming block
+            }
         }
 
         public string Value
@@ -47,8 +62,11 @@ namespace Medical.GUI.AnomalousMvc
                 }
                 else
                 {
+                    rmlWidgetComponent.startRmlUpdate();
                     element.InnerRml = value;
+                    rmlWidgetComponent.endRmlUpdate();
                 }
+                rocketWidget.renderOnNextFrame();
             }
         }
     }

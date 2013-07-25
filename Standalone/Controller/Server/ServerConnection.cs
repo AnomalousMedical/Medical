@@ -7,6 +7,9 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using Engine.Saving;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace Medical
 {
@@ -27,6 +30,7 @@ namespace Medical
         {
             this.Url = url;
             Timeout = DefaultTimeout;
+            ResponseStatusCode = HttpStatusCode.Unused;
         }
 
         public virtual void makeRequest(Action<HttpWebResponse> response)
@@ -44,7 +48,8 @@ namespace Medical
             // Get the response.
             using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponse())
             {
-                if (webResponse.StatusCode == HttpStatusCode.OK)
+                ResponseStatusCode = webResponse.StatusCode;
+                if (ResponseStatusCode == HttpStatusCode.OK)
                 {
                     response(webResponse);
                 }
@@ -76,6 +81,18 @@ namespace Medical
                         }
                         localDataStream.Seek(0, SeekOrigin.Begin);
                         response(localDataStream);
+                    }
+                });
+        }
+
+        public void makeRequestSaveableResponse(Action<Saveable> response)
+        {
+            makeRequestGetStream(serverDataStream =>
+                {
+                    XmlSaver xmlSaver = new XmlSaver();
+                    using (XmlReader xmlReader = new XmlTextReader(serverDataStream))
+                    {
+                        response(xmlSaver.restoreObject(xmlReader) as Saveable);
                     }
                 });
         }
@@ -113,6 +130,8 @@ namespace Medical
         public int Timeout { get; set; }
 
         public String Url { get; set; }
+
+        public HttpStatusCode ResponseStatusCode { get; set; }
 
         /// <summary>
         /// Verify the validation result either using the default based on sslPolicyErrors or a custom function for a given os. This depends on
