@@ -1,46 +1,137 @@
-﻿using Medical;
+﻿using Anomalous.Medical.StoreManager.Config;
+using Anomalous.Medical.StoreManager.Models;
+using Medical;
+using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Anomalous.Medical.StoreManager.Controller
 {
     class EditPluginDetailsController
     {
-        private bool beginningUpload = false;
-        private ViewHostControl messageControl;
-        private ViewHostControl errorControl;
+        private bool allowSavePluginDetails = true;
 
-        public EditPluginDetailsController(AnomalousMvcContext context, DDAtlasPlugin plugin)
+        public EditPluginDetailsController(AnomalousMvcContext context, LicenseManager licenseManager)
         {
-            ((RunCommandsAction)context.Controllers["EditPluginDetails"].Actions["BeginUpload"]).addCommand(new CallbackCommand((executingContext) =>
+            ((RunCommandsAction)context.Controllers["EditPluginDetails"].Actions["SavePluginDetails"]).addCommand(new CallbackCommand((executingContext) =>
             {
-                if (!beginningUpload)
+                if (allowSavePluginDetails)
                 {
-                    beginningUpload = true;
+                    allowSavePluginDetails = false;
+                    bool submitToServer = true;
+                    String errorMessage = "";
+
+                    ViewHostControl message = executingContext.RunningActionViewHost.findControl("Message");
+                    ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
+
+                    message.Visible = true;
+                    error.Visible = false;
+
                     DataModel model = context.getModel<DataModel>("PluginDetails");
-                    if (model.getValue("CopyrightAgree") == "True")
+                    String storeUniqueName = model.getValue("StoreUniqueName");
+                    String pluginUniqueName = model.getValue("PluginUniqueName");
+                    String title = model.getValue("Title");
+                    String ownsCopyright = model.getValue("CopyrightAgree");
+                    String mode = model.getValue("Mode");
+
+                    if (ownsCopyright != "True")
                     {
-                        messageControl.Value = "Connecting to server.";
-                        errorControl.Value = "";
-                        //ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense), new Pair<String, String>(model.getValue("User"), model.getValue("Pass")));
+                        submitToServer = false;
+                        errorMessage = "You must assert that you own the copyright to all content in this plugin.";
+                    }
+
+                    if (String.IsNullOrWhiteSpace(title))
+                    {
+                        submitToServer = false;
+                        errorMessage = "You must enter a title for this plugin.";
+                    }
+
+                    CredentialServerConnection serverConnection = null;
+                    bool storePluginUniqueName = false;
+                    switch (mode)
+                    {
+                        case "Create":
+                            serverConnection = new CredentialServerConnection(StoreManagerConfig.CreatePluginUrl(storeUniqueName), licenseManager.User, licenseManager.MachinePassword);
+                            serverConnection.addArgument("Title", title);
+                            serverConnection.addArgument("OwnsCopyright", "True");
+                            storePluginUniqueName = true;
+                            break;
+
+                        case "Update":
+                            serverConnection = new CredentialServerConnection(StoreManagerConfig.UpdatePluginUrl(storeUniqueName), licenseManager.User, licenseManager.MachinePassword);
+                            serverConnection.addArgument("Title", title);
+                            serverConnection.addArgument("OwnsCopyright", "True");
+                            serverConnection.addArgument("PluginUniqueName", pluginUniqueName);
+                            break;
+
+                        default:
+                            submitToServer = false;
+                            errorMessage = "Unsupported mode";
+                            break;
+                    }
+
+                    if (submitToServer)
+                    {
+                        ThreadPool.QueueUserWorkItem(arg =>
+                            {
+                                ResponseModel response = null;
+                                try
+                                {
+                                    serverConnection.makeRequestSaveableResponse(saveable =>
+                                        {
+                                            response = saveable as ResponseModel;
+                                        });
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logging.Log.Error("{0} occured when trying to get the list of user stores. Message: {1}", ex.GetType().Name, ex.Message);
+                                }
+                                ThreadManager.invoke(() =>
+                                    {
+                                        //Need to check that ui is still active
+                                        if (response != null)
+                                        {
+                                            if (response.Success)
+                                            {
+                                                if (storePluginUniqueName)
+                                                {
+                                                    model.setValue("PluginUniqueName", response.Message);
+                                                }
+                                                message.Visible = false;
+                                                error.Visible = false;
+                                                allowSavePluginDetails = true;
+                                            }
+                                            else
+                                            {
+                                                setError(executingContext, response.Message, message, error);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            setError(executingContext, "", message, error);
+                                        }
+                                    });
+                            });
                     }
                     else
                     {
-                        beginningUpload = false;
-                        messageControl.Value = "";
-                        errorControl.Value = "You must assert that you own the copyright to the content you are uploading.";
+                        setError(executingContext, errorMessage, message, error);
                     }
                 }
             }));
+        }
 
-            ((RunCommandsAction)context.Controllers["EditPluginDetails"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
-            {
-                messageControl = executingContext.RunningActionViewHost.findControl("Message");
-                errorControl = executingContext.RunningActionViewHost.findControl("Error");
-            }));
+        private void setError(AnomalousMvcContext executingContext, String errorMessage, ViewHostControl message, ViewHostControl error)
+        {
+            message.Visible = false;
+            error.Visible = true;
+            ViewHostControl errorOutput = executingContext.RunningActionViewHost.findControl("ErrorOutput");
+            errorOutput.Value = errorMessage;
+            allowSavePluginDetails = true;
         }
     }
 }

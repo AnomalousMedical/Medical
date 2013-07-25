@@ -4,7 +4,7 @@
 	</head>
 	<body template="MasterTemplate">
 		<h1>Edit Details</h1>
-		<form onsubmit="EditPluginDetails/BeginUpload" autosubmitid="LogInButton">
+		<form onsubmit="EditPluginDetails/SavePluginDetails" autosubmitid="LogInButton">
 			<h2>Title</h2>
 			<input type="text" name="Title" id="Title" />
 			<h2>Branding Image</h2>
@@ -15,7 +15,12 @@
 			</p>
 			<input type="submit">Upload</input>
 		</form>
-		<p class="StatusMessage" id="Message" />
-		<p class="ErrorMessage" id="Error" />
+		<p id="Message" style="display:none;">Sending plugin details to server...</p>
+		<div id="Error" style="display:none;">
+			<p>An error occured sending your plugin to the server.</p>
+			<p>
+				<span id="ErrorOutput" />
+			</p>
+		</div>
 	</body>
 </rml>

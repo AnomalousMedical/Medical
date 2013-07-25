@@ -1,0 +1,9 @@
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate">
+		<h1>Create or Update</h1>
+		<p>You have chosen the <print name="StorePrettyName" /> store. Would you like to <a onclick="CreateOrUpdate/Create">create</a> a new plugin or <a onclick="CreateOrUpdate/Update">update</a> an existing one?</p>
+	</body>
+</rml>

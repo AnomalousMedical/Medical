@@ -32,10 +32,9 @@ namespace Anomalous.Medical.StoreManager.Controller
             context = controller.MvcCore.loadContext(embeddedResourceProvider.openFile("MvcContext.mvc"));
             context.RuntimeName = "UploadPlugin";
             context.setResourceProvider(embeddedResourceProvider);
-            //DataModel pluginDetailsModel = (DataModel)context.Models["PluginDetails"];
 
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
-            //editPluginDetails = new EditPluginDetailsController(context, plugin);
+            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager);
 
             controller.MvcCore.startRunningContext(context);
         }

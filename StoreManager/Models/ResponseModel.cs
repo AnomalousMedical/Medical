@@ -17,7 +17,7 @@ namespace Anomalous.Medical.StoreManager.Models
 
         public String Message { get; set; }
 
-        public ResponseModel(LoadInfo info)
+        protected ResponseModel(LoadInfo info)
         {
             Success = info.GetBoolean("Success");
             Message = info.GetString("Message");
