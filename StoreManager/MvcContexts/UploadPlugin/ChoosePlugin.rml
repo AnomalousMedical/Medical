@@ -1,0 +1,21 @@
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate">
+		<h1>Choose Plugin to Update</h1>
+		<p id="ProgressMessage">Getting list of your plugins from server...</p>
+		<div id="PluginSelection" style="display:none;">
+			<p>Select the plugin you wish to update. Please note that plugin updates will go out to all current users of your plugin. If you do not wish to do this go back and create a new plugin.</p>
+			<div id="PluginSelectionForms">
+				<form onsubmit="ChoosePlugin/SelectPlugin">
+					<p>
+						<input type="hidden" value="{0}" name="PluginUniqueName" />
+						<input type="submit" value="{1}" name="Title">{1}</input>
+					</p>
+				</form>
+			</div>
+		</div>
+		<p id="ErrorMessage" style="display:none;">There was an error contacting the server. You can <a onclick="ChoosePlugin/GetPlugins">retry</a> or <a onclick="ChoosePlugin/Close">quit uploading</a>.</p>
+	</body>
+</rml>

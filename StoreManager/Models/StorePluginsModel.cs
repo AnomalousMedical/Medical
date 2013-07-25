@@ -29,5 +29,13 @@ namespace Anomalous.Medical.StoreManager.Models
         {
             info.ExtractList("Plugin", plugins);
         }
+
+        public IEnumerable<PluginModel> Plugins
+        {
+            get
+            {
+                return plugins;
+            }
+        }
     }
 }

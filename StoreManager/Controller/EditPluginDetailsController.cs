@@ -51,14 +51,14 @@ namespace Anomalous.Medical.StoreManager.Controller
                     }
 
                     CredentialServerConnection serverConnection = null;
-                    bool storePluginUniqueName = false;
+                    bool savePluginUniqueName = false;
                     switch (mode)
                     {
                         case "Create":
                             serverConnection = new CredentialServerConnection(StoreManagerConfig.CreatePluginUrl(storeUniqueName), licenseManager.User, licenseManager.MachinePassword);
                             serverConnection.addArgument("Title", title);
                             serverConnection.addArgument("OwnsCopyright", "True");
-                            storePluginUniqueName = true;
+                            savePluginUniqueName = true;
                             break;
 
                         case "Update":
@@ -97,7 +97,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                                         {
                                             if (response.Success)
                                             {
-                                                if (storePluginUniqueName)
+                                                if (savePluginUniqueName)
                                                 {
                                                     model.setValue("PluginUniqueName", response.Message);
                                                 }
