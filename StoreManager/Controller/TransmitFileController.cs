@@ -52,29 +52,39 @@ namespace Anomalous.Medical.StoreManager.Controller
 
                 ThreadPool.QueueUserWorkItem(arg =>
                 {
-                    createArchive();
-                    ThreadManager.invokeAndWait(() =>
+                    try
                     {
-                        creatingArchiveDone.Visible = true;
-                        gettingUploadUrl.Visible = true;
-                    });
-                    getUploadUrl();
-                    ThreadManager.invokeAndWait(() =>
+                        createArchive();
+                        ThreadManager.invokeAndWait(() =>
+                        {
+                            creatingArchiveDone.Visible = true;
+                            gettingUploadUrl.Visible = true;
+                        });
+                        getUploadUrl();
+                        ThreadManager.invokeAndWait(() =>
+                        {
+                            gettingUploadUrlDone.Visible = true;
+                            sendingFile.Visible = true;
+                        });
+                        sendFile();
+                        ThreadManager.invokeAndWait(() =>
+                        {
+                            sendingFileDone.Visible = true;
+                            completingUpload.Visible = true;
+                        });
+                        completeUpload();
+                        ThreadManager.invokeAndWait(() =>
+                        {
+                            completingUploadDone.Visible = true;
+                            executingContext.runAction("TransmitFile/SendFileCompleted");
+                        });
+                    }
+                    catch (Exception ex)
                     {
-                        gettingUploadUrlDone.Visible = true;
-                        sendingFile.Visible = true;
-                    });
-                    sendFile();
-                    ThreadManager.invokeAndWait(() =>
-                    {
-                        sendingFileDone.Visible = true;
-                        completingUpload.Visible = true;
-                    });
-                    completeUpload();
-                    ThreadManager.invokeAndWait(() =>
-                    {
-                        completingUploadDone.Visible = true;
-                    });
+                        //Display errors on main thread
+                    }
+
+                    allowSend = true;
                 });
             }
         }

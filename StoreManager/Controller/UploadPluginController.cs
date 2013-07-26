@@ -17,6 +17,7 @@ namespace Anomalous.Medical.StoreManager.Controller
         ChooseStoreController chooseStore;
         ChoosePluginController choosePlugin;
         TransmitFileController transmitFile;
+        UploadCompleteController uploadComplete;
         DDAtlasPlugin plugin;
 
         public UploadPluginController(StandaloneController standaloneController, DDAtlasPlugin plugin)
@@ -39,6 +40,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
             transmitFile = new TransmitFileController(context, controller.App.LicenseManager);
+            uploadComplete = new UploadCompleteController(context);
 
             controller.MvcCore.startRunningContext(context);
 

@@ -11,6 +11,7 @@ namespace Anomalous.Medical.StoreManager.Config
         static String createPluginUrlFormat;
         static String updatePluginUrlFormat;
         static String getPluginsFormat;
+        static String storeDashboardPluginsFormat;
 
         static StoreManagerConfig()
         {
@@ -18,6 +19,7 @@ namespace Anomalous.Medical.StoreManager.Config
             createPluginUrlFormat = String.Format("{0}/PluginUpload/CreateNew/{{0}}", MedicalConfig.WebsiteHostUrl);
             updatePluginUrlFormat = String.Format("{0}/PluginUpload/Update/{{0}}", MedicalConfig.WebsiteHostUrl);
             getPluginsFormat = String.Format("{0}/PluginUpload/GetStorePlugins/{{0}}", MedicalConfig.WebsiteHostUrl);
+            storeDashboardPluginsFormat = String.Format("{0}/StoreDashboard/Plugins/{{0}}", MedicalConfig.WebsiteHostUrl);
         }
 
         public static String StoreListUrl { get; private set; }
@@ -35,6 +37,11 @@ namespace Anomalous.Medical.StoreManager.Config
         public static String GetStorePluginsUrl(String storeUniqueName)
         {
             return string.Format(getPluginsFormat, storeUniqueName);
+        }
+
+        public static String GetStoreDashboardPluginsUrl(String storeUniqueName)
+        {
+            return string.Format(storeDashboardPluginsFormat, storeUniqueName);
         }
     }
 }

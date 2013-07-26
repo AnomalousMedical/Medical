@@ -48,6 +48,7 @@
     <Compile Include="Controller\ChoosePluginController.cs" />
     <Compile Include="Controller\EditPluginDetailsController.cs" />
     <Compile Include="Controller\TransmitFileController.cs" />
+    <Compile Include="Controller\UploadCompleteController.cs" />
     <Compile Include="Controller\UploadPluginController.cs" />
     <Compile Include="Models\PluginModel.cs" />
     <Compile Include="Models\ResponseModel.cs" />
@@ -84,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MvcContexts\UploadPlugin\TransmitFile.rml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\UploadComplete.rml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
