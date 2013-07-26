@@ -201,6 +201,8 @@
     <Compile Include="Controller\Slideshow\RmlSlide.cs" />
     <Compile Include="Controller\Slideshow\Slide.cs" />
     <Compile Include="Controller\Slideshow\Slideshow.cs" />
+    <Compile Include="Controller\TaskController\ArgumentCallbackTask.cs" />
+    <Compile Include="Controller\TaskController\ArgumentTask.cs" />
     <Compile Include="Controller\TaskController\RunMvcContextActionTask.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
     <Compile Include="Controller\Update\PluginUpdateInfo.cs" />

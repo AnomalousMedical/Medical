@@ -155,6 +155,11 @@ namespace Lecture
                 {
                     slideEditorContext.setWysiwygRml(rml, true);
                 });
+                if (standaloneController.SharePluginTask != null)
+                {
+                    standaloneController.SharePluginTask.Argument = editorController.ResourceProvider.BackingLocation;
+                    slideEditorContext.addTask(standaloneController.SharePluginTask);
+                }
                 slideEditorContext.Focus += (obj) =>
                 {
                     slideEditorContext = obj;

@@ -26,7 +26,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             this.plugin = plugin;
         }
 
-        public void showContext()
+        public void showContext(String pluginSourcePath)
         {
             EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Anomalous.Medical.StoreManager.MvcContexts.UploadPlugin.");
             controller.TimelineController.setResourceProvider(embeddedResourceProvider);
@@ -39,7 +39,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
             editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
-            transmitFile = new TransmitFileController(context, controller.App.LicenseManager, "C:/Users/AndrewPiper/Documents/Anomalous Medical/Users/threax/Editor Projects/TestUploadPlugin");
+            transmitFile = new TransmitFileController(context, controller.App.LicenseManager, pluginSourcePath);
             uploadComplete = new UploadCompleteController(context);
 
             controller.MvcCore.startRunningContext(context);

@@ -221,6 +221,11 @@ namespace Lecture
             mvcContext.runAction("Editor/Close");
         }
 
+        public void addTask(Task task)
+        {
+            taskbar.addTask(task);
+        }
+
         public void setWysiwygRml(String rml, bool keepScrollPosition)
         {
             if (rmlComponent != null)

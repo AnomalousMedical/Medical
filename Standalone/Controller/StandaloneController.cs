@@ -551,6 +551,12 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// This is a link to the task that shares projects. It can be null, which means that the user cannot
+        /// share projects and the task should not be displayed. This should only be set by the StoreManager plugin.
+        /// </summary>
+        public ArgumentTask<String> SharePluginTask { get; set; }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();
