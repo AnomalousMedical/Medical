@@ -111,8 +111,8 @@ namespace Medical
 
         void ad_SetupX509Chains(Mono.Security.X509.X509Chain signerChain, Mono.Security.X509.X509Chain timestampChain)
         {
-            certificateStore.setupChain(signerChain);
-            certificateStore.setupChain(timestampChain);
+            signerChain.TrustAnchors.AddRange(certificateStore.TrustAnchors);
+            timestampChain.TrustAnchors.AddRange(certificateStore.TrustAnchors);
         }
     }
 }
