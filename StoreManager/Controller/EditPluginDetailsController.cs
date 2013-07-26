@@ -104,6 +104,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                                                 message.Visible = false;
                                                 error.Visible = false;
                                                 allowSavePluginDetails = true;
+                                                context.runAction("EditPluginDetails/FinishedSaving");
                                             }
                                             else
                                             {

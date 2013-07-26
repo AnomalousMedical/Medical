@@ -1,0 +1,12 @@
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate">
+		<h1>Transmitting File</h1>
+		<p id="CreatingArchive" style="display:none;">Creating file archive... <span id="CreatingArchiveDone" style="display:none;">Done</span></p>
+		<p id="GettingUploadUrl" style="display:none;">Getting upload url... <span id="GettingUploadUrlDone" style="display:none;">Done</span></p>
+		<p id="SendingFile" style="display:none;">Sending file... <span id="SendingFileDone" style="display:none;">Done</span></p>
+		<p id="CompletingUpload" style="display:none;">Completing upload... <span id="CompletingUploadDone" style="display:none;">Done</span></p>
+	</body>
+</rml>
