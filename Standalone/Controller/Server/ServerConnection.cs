@@ -85,16 +85,18 @@ namespace Medical
                 });
         }
 
-        public void makeRequestSaveableResponse(Action<Saveable> response)
+        public Saveable makeRequestSaveableResponse()
         {
+            Saveable response = null;
             makeRequestGetStream(serverDataStream =>
                 {
                     XmlSaver xmlSaver = new XmlSaver();
                     using (XmlReader xmlReader = new XmlTextReader(serverDataStream))
                     {
-                        response(xmlSaver.restoreObject(xmlReader) as Saveable);
+                        response = xmlSaver.restoreObject(xmlReader) as Saveable;
                     }
                 });
+            return response;
         }
 
         public void addArgument(String key, String value)

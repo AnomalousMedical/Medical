@@ -39,13 +39,10 @@ namespace Anomalous.Medical.StoreManager.Controller
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
             editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
-            transmitFile = new TransmitFileController(context, controller.App.LicenseManager);
+            transmitFile = new TransmitFileController(context, controller.App.LicenseManager, "C:/Users/AndrewPiper/Documents/Anomalous Medical/Users/threax/Editor Projects/TestUploadPlugin");
             uploadComplete = new UploadCompleteController(context);
 
             controller.MvcCore.startRunningContext(context);
-
-            DataModel model = context.getModel<DataModel>("PluginDetails");
-            model.setValue("SourceFile", "C:/Users/AndrewPiper/Documents/Anomalous Medical/Users/threax/Editor Projects/TestUploadPlugin");
         }
     }
 }

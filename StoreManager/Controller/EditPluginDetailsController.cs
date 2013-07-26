@@ -81,10 +81,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                                 ResponseModel response = null;
                                 try
                                 {
-                                    serverConnection.makeRequestSaveableResponse(saveable =>
-                                        {
-                                            response = saveable as ResponseModel;
-                                        });
+                                    response = serverConnection.makeRequestSaveableResponse() as ResponseModel;
                                 }
                                 catch (Exception ex)
                                 {

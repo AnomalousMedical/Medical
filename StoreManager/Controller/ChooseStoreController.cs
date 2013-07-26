@@ -46,10 +46,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                     try
                     {
                         CredentialServerConnection serverConnection = new CredentialServerConnection(StoreManagerConfig.StoreListUrl, licenseManager.User, licenseManager.MachinePassword);
-                        serverConnection.makeRequestSaveableResponse(saveable =>
-                        {
-                            userStores = saveable as UserStoresModel;
-                        });
+                        userStores = serverConnection.makeRequestSaveableResponse() as UserStoresModel;
                     }
                     catch (Exception ex)
                     {
