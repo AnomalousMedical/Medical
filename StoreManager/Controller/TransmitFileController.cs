@@ -50,6 +50,11 @@ namespace Anomalous.Medical.StoreManager.Controller
                 ViewHostControl completingUploadDone = executingContext.RunningActionViewHost.findControl("CompletingUploadDone");
                 completingUploadDone.Visible = false;
 
+                ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
+                error.Visible = false;
+                ViewHostControl errorMessage = executingContext.RunningActionViewHost.findControl("ErrorMessage");
+                errorMessage.Value = "";
+
                 ThreadPool.QueueUserWorkItem(arg =>
                 {
                     try
@@ -81,7 +86,11 @@ namespace Anomalous.Medical.StoreManager.Controller
                     }
                     catch (Exception ex)
                     {
-                        //Display errors on main thread
+                        ThreadManager.invokeAndWait(() =>
+                        {
+                            error.Visible = true;
+                            errorMessage.Value = ex.Message;
+                        });
                     }
 
                     allowSend = true;
@@ -101,6 +110,7 @@ namespace Anomalous.Medical.StoreManager.Controller
 
         private void sendFile()
         {
+            throw new Exception("Ze googles they do nothing");
             Thread.Sleep(1000);
         }
 
