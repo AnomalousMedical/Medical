@@ -157,8 +157,20 @@ namespace Lecture
                 });
                 if (standaloneController.SharePluginTask != null)
                 {
-                    standaloneController.SharePluginTask.Argument = editorController.ResourceProvider.BackingLocation;
-                    slideEditorContext.addTask(standaloneController.SharePluginTask);
+                    CallbackTask cleanupBeforeShareTask = new CallbackTask("Lecture.SharePluginTask", standaloneController.SharePluginTask.Name, standaloneController.SharePluginTask.IconName, standaloneController.SharePluginTask.Category, standaloneController.SharePluginTask.Weight, standaloneController.SharePluginTask.ShowOnTaskbar, (item) =>
+                    {
+                        MessageBox.show("Before sharing your Smart Lecture it will be cleaned and saved. Do you wish to continue?", "Share Smart Lecture", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+                        {
+                            if (result == MessageBoxStyle.Yes)
+                            {
+                                this.save();
+                                this.cleanup();
+                                standaloneController.SharePluginTask.Argument = editorController.ResourceProvider.BackingLocation;
+                                standaloneController.SharePluginTask.clicked(null);
+                            }
+                        });
+                    });
+                    slideEditorContext.addTask(cleanupBeforeShareTask);
                 }
                 slideEditorContext.Focus += (obj) =>
                 {
