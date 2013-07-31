@@ -155,9 +155,9 @@ namespace Lecture
                 {
                     slideEditorContext.setWysiwygRml(rml, true);
                 });
-                if (standaloneController.SharePluginTask != null)
+                if (standaloneController.SharePluginController != null)
                 {
-                    CallbackTask cleanupBeforeShareTask = new CallbackTask("Lecture.SharePluginTask", standaloneController.SharePluginTask.Name, standaloneController.SharePluginTask.IconName, standaloneController.SharePluginTask.Category, standaloneController.SharePluginTask.Weight, standaloneController.SharePluginTask.ShowOnTaskbar, (item) =>
+                    CallbackTask cleanupBeforeShareTask = new CallbackTask("Lecture.SharePluginTask", standaloneController.SharePluginController.Name, standaloneController.SharePluginController.IconName, standaloneController.SharePluginController.Category, 0, false, (item) =>
                     {
                         MessageBox.show("Before sharing your Smart Lecture it will be cleaned and saved. Do you wish to continue?", "Share Smart Lecture", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
                         {
@@ -165,8 +165,7 @@ namespace Lecture
                             {
                                 this.save();
                                 this.cleanup();
-                                standaloneController.SharePluginTask.Argument = editorController.ResourceProvider.BackingLocation;
-                                standaloneController.SharePluginTask.clicked(null);
+                                standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingLocation, PluginCreationTool.SmartLectureTools);
                             }
                         });
                     });

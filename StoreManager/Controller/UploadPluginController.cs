@@ -1,4 +1,5 @@
-﻿using Logging;
+﻿using Anomalous.Medical.StoreManager.Models;
+using Logging;
 using Medical;
 using Medical.Controller.AnomalousMvc;
 using System;
@@ -26,7 +27,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             this.plugin = plugin;
         }
 
-        public void showContext(String pluginSourcePath)
+        public void showContext(String pluginSourcePath, PluginCreationTool tool)
         {
             EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Anomalous.Medical.StoreManager.MvcContexts.UploadPlugin.");
             controller.TimelineController.setResourceProvider(embeddedResourceProvider);
@@ -37,7 +38,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             context.setResourceProvider(embeddedResourceProvider);
 
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
-            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager);
+            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
             transmitFile = new TransmitFileController(context, controller.App.LicenseManager, pluginSourcePath);
             uploadComplete = new UploadCompleteController(context);

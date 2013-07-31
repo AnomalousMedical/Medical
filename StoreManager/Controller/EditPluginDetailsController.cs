@@ -15,7 +15,7 @@ namespace Anomalous.Medical.StoreManager.Controller
     {
         private bool allowSavePluginDetails = true;
 
-        public EditPluginDetailsController(AnomalousMvcContext context, LicenseManager licenseManager)
+        public EditPluginDetailsController(AnomalousMvcContext context, LicenseManager licenseManager, PluginCreationTool tool)
         {
             ((RunCommandsAction)context.Controllers["EditPluginDetails"].Actions["SavePluginDetails"]).addCommand(new CallbackCommand((executingContext) =>
             {
@@ -58,6 +58,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                             serverConnection = new CredentialServerConnection(StoreManagerConfig.CreatePluginUrl(storeUniqueName), licenseManager.User, licenseManager.MachinePassword);
                             serverConnection.addArgument("Title", title);
                             serverConnection.addArgument("OwnsCopyright", "True");
+                            serverConnection.addArgument("Tool", tool.ToString());
                             savePluginUniqueName = true;
                             break;
 
@@ -65,6 +66,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                             serverConnection = new CredentialServerConnection(StoreManagerConfig.UpdatePluginUrl(storeUniqueName), licenseManager.User, licenseManager.MachinePassword);
                             serverConnection.addArgument("Title", title);
                             serverConnection.addArgument("OwnsCopyright", "True");
+                            serverConnection.addArgument("Tool", tool.ToString());
                             serverConnection.addArgument("PluginUniqueName", pluginUniqueName);
                             break;
 

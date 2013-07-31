@@ -552,10 +552,10 @@ namespace Medical
         }
 
         /// <summary>
-        /// This is a link to the task that shares projects. It can be null, which means that the user cannot
-        /// share projects and the task should not be displayed. This should only be set by the StoreManager plugin.
+        /// This controller enables sharing of plugins. If it does not exist the program cannot share plugins.
+        /// Do not create this anywhere except in StoreManagerPlugin.
         /// </summary>
-        public ArgumentTask<String> SharePluginTask { get; set; }
+        public SharePluginController SharePluginController { get; set; }
 
         public void recreateMainWindow()
         {

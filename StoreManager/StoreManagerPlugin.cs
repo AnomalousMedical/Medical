@@ -27,11 +27,16 @@ namespace Anomalous.Medical.StoreManager
 
         public void initialize(StandaloneController standaloneController)
         {
-            standaloneController.SharePluginTask = new ArgumentCallbackTask<String>("Anomalous.Medical.StoreManager.UploadPlugin", "Share", CommonResources.NoIcon, "Store Manager", 0, false, item =>
+            standaloneController.SharePluginController = new SharePluginController((source, tool) =>
                 {
                     UploadPluginController uploadPlugin = new UploadPluginController(standaloneController, new DDAtlasPlugin());
-                    uploadPlugin.showContext(item.Argument);
-                });
+                    uploadPlugin.showContext(source, tool);
+                })
+                {
+                    Name = "Share",
+                    IconName = CommonResources.NoIcon,
+                    Category = "Store Manager"
+                };
         }
 
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)
