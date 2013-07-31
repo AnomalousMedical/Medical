@@ -25,6 +25,7 @@ namespace Medical
         private MvcTypeController mvcTypeController;
 
         private AnomalousMvcContext editingContext;
+        private EditorTaskbarView taskbar;
 
         public MvcEditorContext(AnomalousMvcContext editingContext, String file, MvcTypeController mvcTypeController, EditorController editorController, EditorUICallback uiCallback)
         {
@@ -46,7 +47,7 @@ namespace Medical
             genericPropertiesView.IsWindow = true;
             mvcContext.Views.add(genericPropertiesView);
 
-            EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
+            taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
             taskbar.addTask(new CallbackTask("SaveAll", "Save All", "Editor/SaveAllIcon", "", 0, true, item =>
             {
                 saveAll();
@@ -103,6 +104,11 @@ namespace Medical
         public void close()
         {
             mvcContext.runAction("Editor/Close");
+        }
+
+        public void addTask(Task task)
+        {
+            taskbar.addTask(task);
         }
 
         public AnomalousMvcContext MvcContext

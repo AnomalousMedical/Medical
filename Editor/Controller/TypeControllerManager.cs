@@ -6,6 +6,7 @@ using Medical.Controller.AnomalousMvc;
 using System.IO;
 using Medical.GUI.AnomalousMvc;
 using Medical.GUI;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -43,6 +44,22 @@ namespace Medical
             {
                 mvcEditorContext = new MvcEditorContext(editingMvcContex, file, mvcTypeController, plugin.EditorController, plugin.UICallback);
                 plugin.UICallback.CurrentEditingMvcContext = editingMvcContex;
+                if (standaloneController.SharePluginTask != null)
+                {
+                    CallbackTask cleanupBeforeShareTask = new CallbackTask("Lecture.SharePluginTask", standaloneController.SharePluginTask.Name, standaloneController.SharePluginTask.IconName, standaloneController.SharePluginTask.Category, standaloneController.SharePluginTask.Weight, standaloneController.SharePluginTask.ShowOnTaskbar, (item) =>
+                    {
+                        MessageBox.show("Before sharing your Editor Project it will be saved. Do you wish to continue?", "Share Editor Project", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+                        {
+                            if (result == MessageBoxStyle.Yes)
+                            {
+                                editorController.saveAllCachedResources();
+                                standaloneController.SharePluginTask.Argument = editorController.ResourceProvider.BackingLocation;
+                                standaloneController.SharePluginTask.clicked(null);
+                            }
+                        });
+                    });
+                    mvcEditorContext.addTask(cleanupBeforeShareTask);
+                }
                 mvcEditorContext.Focused += (obj) =>
                 {
                     mvcEditorContext = obj;
