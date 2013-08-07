@@ -178,6 +178,7 @@ namespace Lecture
                 new CallbackAction("Blur", context =>
                 {
                     commitText();
+                    rmlView.Rml = slide.Rml = CurrentText;
                     GlobalContextEventHandler.disableEventContext(eventContext);
                     if (Blur != null)
                     {
@@ -286,7 +287,7 @@ namespace Lecture
             slideEditorController.save();
         }
 
-        private void commitText()
+        public void commitText()
         {
             if (rmlComponent != null)
             {

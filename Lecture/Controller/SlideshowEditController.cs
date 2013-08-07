@@ -163,6 +163,7 @@ namespace Lecture
                         {
                             if (result == MessageBoxStyle.Yes)
                             {
+                                slideEditorContext.commitText();
                                 this.save();
                                 this.cleanup();
                                 standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingLocation, PluginCreationTool.SmartLectureTools);
@@ -177,7 +178,6 @@ namespace Lecture
                 };
                 slideEditorContext.Blur += obj =>
                 {
-                    medicalSlide.Rml = obj.CurrentText;
                     if (slideEditorContext == obj)
                     {
                         slideEditorContext = null;
