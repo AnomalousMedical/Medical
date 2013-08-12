@@ -20,27 +20,25 @@ namespace Anomalous.Medical.StoreManager.Controller
         ChoosePluginController choosePlugin;
         TransmitFileController transmitFile;
         UploadCompleteController uploadComplete;
-        DDAtlasPlugin plugin;
 
-        public UploadPluginController(StandaloneController standaloneController, DDAtlasPlugin plugin)
+        public UploadPluginController(StandaloneController standaloneController)
         {
             this.controller = standaloneController;
-            this.plugin = plugin;
         }
 
         public void showContext(String pluginSourcePath, PluginCreationTool tool)
         {
-            EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Anomalous.Medical.StoreManager.MvcContexts.UploadPlugin.");
-            controller.TimelineController.setResourceProvider(embeddedResourceProvider);
+            ResourceProvider resourceProvider = new StoreManagerResourceProvider(new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Anomalous.Medical.StoreManager.MvcContexts.UploadPlugin."), new FilesystemResourceProvider(pluginSourcePath));
+            controller.TimelineController.setResourceProvider(resourceProvider);
 
             //Load and run the mvc context
-            context = controller.MvcCore.loadContext(embeddedResourceProvider.openFile("MvcContext.mvc"));
+            context = controller.MvcCore.loadContext(resourceProvider.openFile("MvcContext.mvc"));
             context.RuntimeName = "UploadPlugin";
-            context.setResourceProvider(embeddedResourceProvider);
+            context.setResourceProvider(resourceProvider);
 
             indexController = new IndexController(context, controller.App.LicenseManager);
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
-            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool);
+            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool, resourceProvider);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
             transmitFile = new TransmitFileController(context, controller.App.LicenseManager, pluginSourcePath);
             uploadComplete = new UploadCompleteController(context);

@@ -29,7 +29,7 @@ namespace Anomalous.Medical.StoreManager
         {
             standaloneController.SharePluginController = new SharePluginController((source, tool) =>
                 {
-                    UploadPluginController uploadPlugin = new UploadPluginController(standaloneController, new DDAtlasPlugin());
+                    UploadPluginController uploadPlugin = new UploadPluginController(standaloneController);
                     uploadPlugin.showContext(source, tool);
                 })
                 {

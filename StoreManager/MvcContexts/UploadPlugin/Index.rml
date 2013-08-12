@@ -6,12 +6,14 @@
 		<h1>Upload Plugin</h1>
 		<p>You are just a few short clicks from uploading your new plugin to Anomalous Medical's servers and sharing them with the rest of the world through your store.</p>
 		<p>For security purposes please enter your Anomalous Medical password to continue.</p>
+    <form onsubmit="Index/CheckPassword" autosubmitid="NextButton">
 		<p>
-			<input id="Password" type="password" />
+			  <input id="Password" type="password" />
 		</p>
 		<p>
-			<input type="submit" onclick="Index/CheckPassword">Next</input>
+			<input type="submit" id="NextButton">Next</input>
 		</p>
+    </form>
 		<div id="Error" style="display:none;">
 			<p>The password you entered is not correct..</p>
 		</div>

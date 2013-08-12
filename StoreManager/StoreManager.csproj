@@ -38,8 +38,13 @@
     <Reference Include="Engine">
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
+    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +57,7 @@
     <Compile Include="Controller\ChoosePluginController.cs" />
     <Compile Include="Controller\EditPluginDetailsController.cs" />
     <Compile Include="Controller\IndexController.cs" />
+    <Compile Include="Controller\StoreManagerResourceProvider.cs" />
     <Compile Include="Controller\TransmitFileController.cs" />
     <Compile Include="Controller\UploadCompleteController.cs" />
     <Compile Include="Controller\UploadPluginController.cs" />
@@ -63,6 +69,7 @@
     <Compile Include="StoreManagerPlugin.cs" />
     <Compile Include="StoreManagerPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\LogoUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Standalone\Standalone.csproj">
