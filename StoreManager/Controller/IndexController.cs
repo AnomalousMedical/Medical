@@ -15,6 +15,12 @@ namespace Anomalous.Medical.StoreManager.Controller
 
         public IndexController(AnomalousMvcContext context, LicenseManager licenseManager)
         {
+            ((RunCommandsAction)context.Controllers["Index"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
+                {
+                    ViewHostControl passwordTextBox = executingContext.RunningActionViewHost.findControl("Password");
+                    passwordTextBox.focus();
+                }));
+
             ((RunCommandsAction)context.Controllers["Index"].Actions["CheckPassword"]).addCommand(new CallbackCommand((executingContext) =>
             {
                 if (allowLogin)

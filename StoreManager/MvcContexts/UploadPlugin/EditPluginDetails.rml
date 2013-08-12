@@ -4,9 +4,9 @@
 	</head>
 	<body template="MasterTemplate">
 		<h1>Edit Details</h1>
-			<h2>Branding Image</h2>
-			<p id="ImageDiv" />
-			<input type="submit" onclick="EditPluginDetails/BrowseImage">Browse</input>
+		<h2>Branding Image</h2>
+		<p id="ImageDiv" />
+		<input type="submit" onclick="EditPluginDetails/BrowseImage">Browse</input>
 		<form onsubmit="EditPluginDetails/SavePluginDetails">
 			<h2>Title</h2>
 			<input type="text" name="Title" id="Title" />
