@@ -51,6 +51,7 @@
     <Compile Include="Controller\ChooseStoreController.cs" />
     <Compile Include="Controller\ChoosePluginController.cs" />
     <Compile Include="Controller\EditPluginDetailsController.cs" />
+    <Compile Include="Controller\IndexController.cs" />
     <Compile Include="Controller\TransmitFileController.cs" />
     <Compile Include="Controller\UploadCompleteController.cs" />
     <Compile Include="Controller\UploadPluginController.cs" />

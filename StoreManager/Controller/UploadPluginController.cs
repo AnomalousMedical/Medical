@@ -14,6 +14,7 @@ namespace Anomalous.Medical.StoreManager.Controller
     {
         private StandaloneController controller;
         AnomalousMvcContext context;
+        IndexController indexController;
         EditPluginDetailsController editPluginDetails;
         ChooseStoreController chooseStore;
         ChoosePluginController choosePlugin;
@@ -37,6 +38,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             context.RuntimeName = "UploadPlugin";
             context.setResourceProvider(embeddedResourceProvider);
 
+            indexController = new IndexController(context, controller.App.LicenseManager);
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
             editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);

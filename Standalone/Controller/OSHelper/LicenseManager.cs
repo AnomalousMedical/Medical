@@ -174,14 +174,23 @@ namespace Medical
         /// <returns></returns>
         public bool getNewLicense()
         {
+            return getNewLicense(license.User, license.Pass);
+        }
+
+        public bool getNewLicense(String user, String pass)
+        {
             try
             {
                 AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass);
+                byte[] licenseBytes = licenseServer.createLicenseFile(user, pass);
                 if (licenseBytes != null)
                 {
                     storeLicenseFile(licenseBytes);
                     license = new AnomalousLicense(licenseBytes);
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (AnomalousLicenseServerException)
