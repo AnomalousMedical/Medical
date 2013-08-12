@@ -177,7 +177,12 @@ namespace Anomalous.Medical.StoreManager.Controller
             ViewHostControl imageDiv = executingContext.RunningActionViewHost.findControl("ImageDiv");
             if (resourceProvider.exists(IconSourceFile))
             {
-                imageDiv.Value = String.Format("<img src=\"{0}\"/>", IconSourceFile);
+                imageDiv.Value = "";
+                //Delaying this by a frame forces it to reload
+                ThreadManager.invoke(() =>
+                {
+                    imageDiv.Value = String.Format("<img id={0} src=\"{1}\"/>", Guid.NewGuid().ToString(), IconSourceFile);
+                });
             }
         }
 

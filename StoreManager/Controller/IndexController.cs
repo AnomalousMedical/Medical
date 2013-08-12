@@ -36,6 +36,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                                 ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
                                 error.Visible = true;
                                 passwordTextBox.Value = "";
+                                passwordTextBox.focus();
                             }
                             allowLogin = true;
                         });
