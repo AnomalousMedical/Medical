@@ -33,10 +33,8 @@ tr td:nth-child(2)
 							<td>{1}</td>
 							<td>
 								<form onsubmit="ChooseStore/SelectStore" id="{0}">
-									<p>
-										<input type="hidden" value="{0}" name="StoreUniqueName" />
-										<input type="submit" class="LinkButton" name="StorePrettyName" value="{1}">Select</input>
-									</p>
+									<input type="hidden" value="{0}" name="StoreUniqueName" />
+									<input type="submit" class="LinkButton" name="StorePrettyName" value="{1}">Select</input>
 								</form>
 							</td>
 						<tr>
