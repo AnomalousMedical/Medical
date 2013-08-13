@@ -30,22 +30,38 @@ namespace Anomalous.Medical.StoreManager.Controller
                     String pass = passwordTextBox.Value;
                     ThreadPool.QueueUserWorkItem(arg =>
                     {
-                        bool loginSucessful = licenseManager.login(licenseManager.User, pass);
-                        ThreadManager.invoke(() =>
+                        try
                         {
-                            if (loginSucessful)
+                            bool loginSucessful = licenseManager.login(licenseManager.User, pass);
+                            ThreadManager.invoke(() =>
                             {
-                                executingContext.runAction("Index/Next");
-                            }
-                            else
+                                if (loginSucessful)
+                                {
+                                    executingContext.runAction("Index/Next");
+                                }
+                                else
+                                {
+                                    ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
+                                    error.Visible = true;
+                                    error.Value = "The password you entered is not correct.";
+                                    passwordTextBox.Value = "";
+                                    passwordTextBox.focus();
+                                }
+                                allowLogin = true;
+                            });
+                        }
+                        catch (AnomalousLicenseServerException ex)
+                        {
+                            ThreadManager.invoke(() =>
                             {
                                 ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
                                 error.Visible = true;
+                                error.Value = ex.Message;
                                 passwordTextBox.Value = "";
                                 passwordTextBox.focus();
-                            }
-                            allowLogin = true;
-                        });
+                                allowLogin = true;
+                            });
+                        }
                     });
                 }
             }));
