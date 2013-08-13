@@ -24,7 +24,7 @@ namespace Medical.Irony
             ToTerminatorTerminal attributeSelector = new ToTerminatorTerminal("AttributeSelectorContent", ']');
 
             IdentifierTerminal simpleSelectorId = new IdentifierTerminal(SimpleSelectorIdentifier, ".-*#", ".-*#");
-            IdentifierTerminal pseudoClassId = new IdentifierTerminal(PseudoClassIdentifier);
+            IdentifierTerminal pseudoClassId = new IdentifierTerminal(PseudoClassIdentifier, "-)(", "-)(");
             IdentifierTerminal propertyId = new IdentifierTerminal(Property, "-", "-");
             ToTerminatorTerminal valueId = new ToTerminatorTerminal(Value, ';');
             valueId.EditorInfo = new TokenEditorInfo(TokenType.Identifier, TokenColor.Identifier, TokenTriggers.None);

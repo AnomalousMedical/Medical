@@ -40,3 +40,46 @@ input.LinkButton:hover
 	background-decorator: none;
 	text-decoration: underline;
 }
+
+table
+{
+	display:block;
+	border-width: 1px;
+	border-color:rgb(166, 201, 226);
+	margin-right:1px;
+}
+
+thead
+{
+	display:block;
+}
+
+thead tr
+{
+	background-color:rgb(102, 153, 204);
+	color:White;
+	font-weight: bold;
+	font-size: 15px;
+	line-height:24px;
+}
+
+tr
+{
+	display:block;
+}
+
+tbody tr
+{
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+tbody tr:hover
+{
+	background-color:rgb(240, 240, 240);
+}
+
+tr td
+{
+	display: inline-block;
+}
