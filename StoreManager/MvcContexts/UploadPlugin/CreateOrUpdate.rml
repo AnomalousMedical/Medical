@@ -4,6 +4,10 @@
 	</head>
 	<body template="MasterTemplate">
 		<h1>Create or Update</h1>
-		<p>You have chosen the <print name="StorePrettyName" /> store. Would you like to <a onclick="CreateOrUpdate/Create">create</a> a new plugin or <a onclick="CreateOrUpdate/Update">update</a> an existing one?</p>
+		<p>You have chosen the <print name="StorePrettyName" /> store.
+		<h2>Create</h2>
+		 <a onclick="CreateOrUpdate/Create">Click here</a> to create a new plugin.
+		<h2>Update</h2>
+		<a onclick="CreateOrUpdate/Update">Click here</a> to update an existing plugin. If you choose this option any users that already have access to this plugin will get an update.</p>
 	</body>
 </rml>

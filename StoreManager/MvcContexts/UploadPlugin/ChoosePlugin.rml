@@ -8,10 +8,11 @@
 		<div id="PluginSelection" style="display:none;">
 			<p>Select the plugin you wish to update. Please note that plugin updates will go out to all current users of your plugin. If you do not wish to do this go back and create a new plugin.</p>
 			<div id="PluginSelectionForms">
+				<h2>{1}</h2>
 				<form onsubmit="ChoosePlugin/SelectPlugin">
 					<p>
 						<input type="hidden" value="{0}" name="PluginUniqueName" />
-						<input type="submit" value="{1}" name="Title">{1}</input>
+						<input type="submit" class="LinkButton" name="Title" value="{1}">Update</input>
 					</p>
 				</form>
 			</div>

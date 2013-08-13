@@ -8,10 +8,11 @@
 		<div id="StoreSelection" style="display:none;">
 			<p>Select the store that you wish to upload your plugin to.</p>
 			<div id="StoreSelectionForms">
+				<h2>{1}</h2>
 				<form onsubmit="ChooseStore/SelectStore" id="{0}">
 					<p>
 						<input type="hidden" value="{0}" name="StoreUniqueName" />
-						<input type="submit" value="{1}" name="StorePrettyName">{1}</input>
+						<input type="submit" class="LinkButton" value="{1}" name="StorePrettyName">Select</input>
 					</p>
 				</form>
 			</div>

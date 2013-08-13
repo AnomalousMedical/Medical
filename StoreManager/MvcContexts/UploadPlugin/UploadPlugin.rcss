@@ -2,3 +2,41 @@ p
 {
 	margin-bottom:10px;
 }
+
+h2
+{
+	margin-bottom:4px;
+}
+
+input.LinkButton
+{
+	display:inline;
+	background-decorator: none;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-size: 13;
+	text-align: center;
+	tab-index: auto;
+	color: Blue;
+}
+
+input.LinkButton:focus
+{
+   display:inline;
+	background-decorator: none;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-size: 13;
+	text-align: center;
+	tab-index: auto;
+}
+
+input.LinkButton:hover
+{
+	background-decorator: none;
+	text-decoration: underline;
+}
