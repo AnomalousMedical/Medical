@@ -9,7 +9,7 @@ using Mono.Security;
 
 namespace Engine
 {
-    public class LicenseInvalidException : Exception
+    internal class LicenseInvalidException : Exception
     {
         public LicenseInvalidException(String message)
             :base(message)
@@ -22,7 +22,7 @@ namespace Engine
     /// This class represents a license file. It does not do any validation of
     /// its own, but will contain values that can be validated.
     /// </summary>
-    class AnomalousLicense
+    internal class AnomalousLicense
     {
         private List<long> features = new List<long>();
 

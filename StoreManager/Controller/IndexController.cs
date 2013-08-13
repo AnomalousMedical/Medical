@@ -30,7 +30,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                     String pass = passwordTextBox.Value;
                     ThreadPool.QueueUserWorkItem(arg =>
                     {
-                        bool loginSucessful = licenseManager.getNewLicense(licenseManager.User, pass);
+                        bool loginSucessful = licenseManager.login(licenseManager.User, pass);
                         ThreadManager.invoke(() =>
                         {
                             if (loginSucessful)

@@ -21,11 +21,13 @@ namespace Medical.Controller
         private ViewHostControl passwordControl;
         private ViewHostControl messageControl;
         private ViewHostControl errorControl;
+        private Action loginSucessfulCallback;
 
-        public MvcLoginController(StandaloneController controller, LicenseManager licenseManager)
+        public MvcLoginController(StandaloneController controller, LicenseManager licenseManager, Action loginSucessfulCallback)
         {
             this.controller = controller;
             this.licenseManager = licenseManager;
+            this.loginSucessfulCallback = loginSucessfulCallback;
         }
 
         public void showContext()
@@ -74,7 +76,7 @@ namespace Medical.Controller
 
             ((RunCommandsAction)context.Controllers["Index"].Actions["Cancel"]).addCommand(new CallbackCommand((executingContext) =>
             {
-                licenseManager.keyInvalid();
+                controller.exit();
             }));
 
             ((RunCommandsAction)context.Controllers["Index"].Actions["ForgotPassword"]).addCommand(new CallbackCommand((executingContext) =>
@@ -105,16 +107,12 @@ namespace Medical.Controller
             controller.MvcCore.startRunningContext(context);
         }
 
-        public byte[] License { get; private set; }
-
         void getLicense(Object credentials)
         {
             try
             {
                 Pair<String, String> cred = (Pair<String, String>)credentials;
-                AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-                License = licenseServer.createLicenseFile(cred.First, cred.Second);
-                if (License != null)
+                if (licenseManager.login(cred.First, cred.Second))
                 {
                     ThreadManager.invoke(new Callback(licenseCaptured), null);
                 }
@@ -127,28 +125,6 @@ namespace Medical.Controller
             {
                 ThreadManager.invoke(new CallbackString(licenseServerFail), alse.Message);
             }
-            catch (WebException webException)
-            {
-                switch (webException.Status)
-                {
-                    case WebExceptionStatus.TrustFailure:
-                        ThreadManager.invoke(new CallbackString(licenseServerFail), "Error establishing SSL trust relationship with server. Please try again on another internet connection.");
-                        break;
-                    case WebExceptionStatus.ConnectFailure:
-                        ThreadManager.invoke(new CallbackString(licenseServerFail), "Cannot connect to License Server. Please try again later.");
-                        break;
-                    case WebExceptionStatus.NameResolutionFailure:
-                        ThreadManager.invoke(new CallbackString(licenseServerFail), "Could not find host name. Please try again later.");
-                        break;
-                    default:
-                        ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("An undefined error occured connecting to the license server. Please try again later. The status was {0}.", webException.Status));
-                        break;
-                }
-            }
-            catch (Exception e)
-            {
-                ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("Could not connect to license server. Please try again later.\nReason: {0}", e.Message));
-            }
         }
 
         private delegate void Callback();
@@ -156,20 +132,9 @@ namespace Medical.Controller
 
         void licenseCaptured()
         {
-            try
-            {
-                licenseManager.keyEnteredSucessfully(License);
-                this.close();
-                messageControl.Value = "Loading user profile.";
-            }
-            catch (LicenseInvalidException ex)
-            {
-                Log.Error("Invalid license returned from server. Reason: {0}", ex.Message);
-                loggingIn = false;
-                messageControl.Value = "Please try again.";
-                errorControl.Value = String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message);
-                passwordControl.focus();
-            }
+            loginSucessfulCallback();
+            this.close();
+            messageControl.Value = "Loading user profile.";
         }
 
         void licenseLoginFail()

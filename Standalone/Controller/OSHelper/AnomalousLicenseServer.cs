@@ -10,16 +10,7 @@ using Medical;
 
 namespace Engine
 {
-    public class AnomalousLicenseServerException : Exception
-    {
-        public AnomalousLicenseServerException(String message)
-            : base(message)
-        {
-
-        }
-    }
-
-    public class AnomalousLicenseServer
+    internal class AnomalousLicenseServer
     {
         private String baseURL;
         private static byte[] ERROR_RESPOSE_BYTES = Encoding.UTF8.GetBytes("ANOMALOUS_RESPOSE|");

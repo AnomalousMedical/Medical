@@ -182,6 +182,7 @@
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\IdleHandler.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
+    <Compile Include="Controller\OSHelper\AnomalousLicenseServerException.cs" />
     <Compile Include="Controller\Plugin\PluginVerifier.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />

@@ -65,11 +65,8 @@ namespace Medical
 
         void CertificateStoreManager_CertificateStoreLoaded()
         {
-            LicenseManager = new LicenseManager("Anomalous Medical", MedicalConfig.LicenseFile);
-            LicenseManager.KeyValid += new EventHandler(licenseManager_KeyValid);
-            LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
-            LicenseManager.KeyDialogShown += new EventHandler(LicenseManager_KeyDialogShown);
-            LicenseManager.getKey();
+            LicenseManager = new LicenseManager(MedicalConfig.LicenseFile);
+            LicenseManager.getKey(processKeyResults);
 
             controller.IdleHandler.runTemporaryIdle(runSplashScreen());
         }
@@ -214,14 +211,19 @@ namespace Medical
             }
         }
 
-        #region License
-
-        void licenseManager_KeyInvalid(object sender, EventArgs e)
+        void processKeyResults(bool valid)
         {
-            controller.exit();
+            if (valid)
+            {
+                keyValid();
+            }
+            else
+            {
+                showKeyDialog();
+            }
         }
 
-        void licenseManager_KeyValid(object sender, EventArgs e)
+        void keyValid()
         {
             if (splashScreen != null && splashScreen.Visible)
             {
@@ -249,15 +251,13 @@ namespace Medical
             controller.MedicalController.MainTimer.resetLastTime();
         }
 
-        void LicenseManager_KeyDialogShown(object sender, EventArgs e)
+        void showKeyDialog()
         {
-            MvcLoginController mvcLogin = new MvcLoginController(controller, LicenseManager);
+            MvcLoginController mvcLogin = new MvcLoginController(controller, LicenseManager, keyValid);
             mvcLogin.showContext();
 
             splashScreen.updateStatus(100, "");
             splashScreen.hide();
         }
-
-        #endregion
     }
 }

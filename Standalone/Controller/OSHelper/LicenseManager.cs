@@ -1,7 +1,4 @@
-﻿//#define CRACKED
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,51 +9,30 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Medical.Controller;
 using Logging;
+using System.Net;
 
 namespace Medical
 {
     public class LicenseManager
     {
-        /// <summary>
-        /// This event will fire if the key is entered in the dialog sucessfully.
-        /// </summary>
-        public event EventHandler KeyValid;
-        
-        /// <summary>
-        /// This event will fire if the key could not be entered.
-        /// </summary>
-        public event EventHandler KeyInvalid;
-
-        /// <summary>
-        /// This will be fired when the key dialog is shown.
-        /// </summary>
-        public event EventHandler KeyDialogShown;
-
-        private delegate void CallbackDelegate();
         private String keyFile;
-        private String programName;
-        private CallbackDelegate keyValidCallback;
-        private CallbackDelegate showKeyDialogCallback;
 
         private AnomalousLicense license;
         private String keyDialogMessage = null;
         private String keyDialogUserName = null;
 
-        public LicenseManager(String programName, String keyFile)
+        public LicenseManager(String keyFile)
         {
             this.keyFile = keyFile;
-            this.programName = programName;
-            keyValidCallback = new CallbackDelegate(fireKeyValid);
-            showKeyDialogCallback = new CallbackDelegate(showKeyDialog);
         }
 
-        public void getKey()
+        public void getKey(Action<bool> resultCallback)
         {
 #if ALLOW_OVERRIDE
             if (MedicalConfig.Cracked)
             {
                 Logging.Log.ImportantInfo("Running with no copy protection");
-                ThreadManager.invoke(keyValidCallback);
+                ThreadManager.invoke(() => resultCallback(true));
                 return;
             }
 #endif
@@ -125,14 +101,7 @@ namespace Medical
                     }
                 }
                 //Check validity
-                if (Valid)
-                {
-                    ThreadManager.invoke(keyValidCallback);
-                }
-                else
-                {
-                    ThreadManager.invoke(showKeyDialogCallback);
-                }
+                ThreadManager.invoke(() => resultCallback(Valid));
             });
             t.IsBackground = true;
             t.Start();
@@ -174,10 +143,25 @@ namespace Medical
         /// <returns></returns>
         public bool getNewLicense()
         {
-            return getNewLicense(license.User, license.Pass);
+            try
+            {
+                return login(license.User, license.Pass);
+            }
+            catch (AnomalousLicenseServerException)
+            {
+                return false;
+            }
         }
 
-        public bool getNewLicense(String user, String pass)
+        /// <summary>
+        /// Login to the server with the given username and password. Returns true if the login was correct, false if the user / pass is incorrect.
+        /// Throws an AnomalousLicenseServerException if something goes wrong when logging in.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="pass"></param>
+        /// <returns>True if login was correct, false if it is incorrect.</returns>
+        /// <exception cref="AnomalousLicenseServerException">If something goes wrong connecting to the server.</exception>
+        public bool login(String user, String pass)
         {
             try
             {
@@ -192,16 +176,34 @@ namespace Medical
                 {
                     return false;
                 }
+                return true;
             }
-            catch (AnomalousLicenseServerException)
+            catch (AnomalousLicenseServerException alse)
             {
-                return false;
+                throw alse;
             }
-            catch (Exception)
+            catch (WebException webException)
             {
-                return false;
+                switch (webException.Status)
+                {
+                    case WebExceptionStatus.TrustFailure:
+                        throw new AnomalousLicenseServerException("Error establishing SSL trust relationship with server. Please try again on another internet connection.");
+                    case WebExceptionStatus.ConnectFailure:
+                        throw new AnomalousLicenseServerException("Cannot connect to License Server. Please try again later.");
+                    case WebExceptionStatus.NameResolutionFailure:
+                        throw new AnomalousLicenseServerException("Could not find host name. Please try again later.");
+                    default:
+                        throw new AnomalousLicenseServerException(String.Format("An undefined error occured connecting to the license server. Please try again later. The status was {0}.", webException.Status));
+                }
             }
-            return true;
+            catch (LicenseInvalidException ex)
+            {
+                throw new AnomalousLicenseServerException(String.Format("License returned from server is invalid.\nReason: {0}\nPlease contact support at CustomerService@AnomalousMedical.com.", ex.Message));
+            }
+            catch (Exception e)
+            {
+                throw new AnomalousLicenseServerException(String.Format("Could not connect to license server. Please try again later.\nReason: {0}", e.Message));
+            }
         }
 
         public void deleteLicense()
@@ -288,29 +290,6 @@ namespace Medical
             }
         }
 
-        private void showKeyDialog()
-        {
-            if (KeyDialogShown != null)
-            {
-                KeyDialogShown.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        public void keyInvalid()
-        {
-            if (KeyInvalid != null)
-            {
-                KeyInvalid.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        public void keyEnteredSucessfully(byte[] licenseBytes)
-        {
-            storeLicenseFile(licenseBytes);
-            license = new AnomalousLicense(licenseBytes);
-            fireKeyValid();
-        }
-
         private void storeLicenseFile(byte[] license)
         {
             if (MedicalConfig.StoreCredentials)
@@ -319,14 +298,6 @@ namespace Medical
                 {
                     fileStream.Write(license, 0, license.Length);
                 }
-            }
-        }
-
-        private void fireKeyValid()
-        {
-            if (KeyValid != null)
-            {
-                KeyValid.Invoke(this, EventArgs.Empty);
             }
         }
     }
