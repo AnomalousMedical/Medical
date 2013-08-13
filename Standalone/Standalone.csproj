@@ -182,7 +182,7 @@
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\IdleHandler.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
-    <Compile Include="Controller\OSHelper\AnomalousLicenseServerException.cs" />
+    <Compile Include="Controller\License\AnomalousLicenseServerException.cs" />
     <Compile Include="Controller\Plugin\PluginVerifier.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
@@ -489,9 +489,9 @@
     <Compile Include="Controller\MedicalStates\PatientData.cs" />
     <Compile Include="Controller\MovementSequence\EmbeddedMovementSequenceInfo.cs" />
     <Compile Include="Controller\MovementSequence\VirtualFSMovementSequenceInfo.cs" />
-    <Compile Include="Controller\OSHelper\AnomalousLicense.cs" />
-    <Compile Include="Controller\OSHelper\AnomalousLicenseServer.cs" />
-    <Compile Include="Controller\OSHelper\LicenseManager.cs" />
+    <Compile Include="Controller\License\AnomalousLicense.cs" />
+    <Compile Include="Controller\License\AnomalousLicenseServer.cs" />
+    <Compile Include="Controller\License\LicenseManager.cs" />
     <Compile Include="Controller\PatientDataController.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginEntryPointAttribute.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\DDAtlasPlugin.cs" />
