@@ -37,7 +37,7 @@ tr td:nth-child(2)
 									<input type="submit" class="LinkButton" name="StorePrettyName" value="{1}">Select</input>
 								</form>
 							</td>
-						<tr>
+						</tr>
 					</div>
 				</tbody>
 			</table>

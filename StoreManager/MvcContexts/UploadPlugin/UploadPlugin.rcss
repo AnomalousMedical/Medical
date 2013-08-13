@@ -1,3 +1,14 @@
+.ProgressBar
+{
+	border-width:1px;
+	margin-right:1px;
+}
+
+.ProgressBarInner
+{
+	background-color:rgb(166, 201, 226);
+}
+
 p
 {
 	margin-bottom:10px;

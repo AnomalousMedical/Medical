@@ -70,5 +70,13 @@ namespace Medical.GUI.AnomalousMvc
                 rocketWidget.renderOnNextFrame();
             }
         }
+
+        public Element Element
+        {
+            get
+            {
+                return element;
+            }
+        }
     }
 }

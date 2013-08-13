@@ -4,6 +4,7 @@ using Ionic.Zip;
 using Medical;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,6 +67,9 @@ namespace Anomalous.Medical.StoreManager.Controller
                 error.Visible = false;
                 ViewHostControl errorMessage = executingContext.RunningActionViewHost.findControl("ErrorMessage");
                 errorMessage.Value = "";
+                RmlViewHostControl progressBarInner = (RmlViewHostControl)executingContext.RunningActionViewHost.findControl("ProgressBarInner");
+                progressBarInner.Value = "0%";
+                progressBarInner.Element.SetProperty("width", "0%");
 
                 ThreadPool.QueueUserWorkItem(arg =>
                 {
@@ -83,7 +87,15 @@ namespace Anomalous.Medical.StoreManager.Controller
                             gettingUploadUrlDone.Visible = true;
                             sendingFile.Visible = true;
                         });
-                        sendFile(uploadUrl);
+                        sendFile(uploadUrl, (progress) =>
+                            {
+                                ThreadManager.invoke(() =>
+                                    {
+                                        String width = progress + "%";
+                                        progressBarInner.Element.SetProperty("width", width);
+                                        progressBarInner.Value = width;
+                                    });
+                            });
                         ThreadManager.invokeAndWait(() =>
                         {
                             sendingFileDone.Visible = true;
@@ -159,19 +171,28 @@ namespace Anomalous.Medical.StoreManager.Controller
             return response.Message;
         }
 
-        private void sendFile(String uploadUrl)
+        private void sendFile(String uploadUrl, Action<int> progressCallback)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(uploadUrl));
             request.Timeout = ServerConnection.DefaultTimeout;
             request.Method = "PUT";
             request.Headers.Add("x-ms-blob-type", "BlockBlob");
             request.ContentType = "application/zip";
+            byte[] buffer = new byte[4096];
             using (Stream stream = File.Open(archiveFile, FileMode.Open, FileAccess.Read))
             {
                 request.ContentLength = stream.Length;
                 using (Stream dataStream = request.GetRequestStream())
                 {
-                    stream.CopyTo(dataStream);
+                    int read;
+                    float total = 0;
+                    do
+                    {
+                        read = stream.Read(buffer, 0, buffer.Length);
+                        dataStream.Write(buffer, 0, read);
+                        total += read;
+                        progressCallback((int)(total / stream.Length * 100));
+                    } while (read != 0) ;
                 }
             }
 
