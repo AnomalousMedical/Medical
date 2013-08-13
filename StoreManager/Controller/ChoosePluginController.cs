@@ -67,7 +67,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                             StringBuilder sb = new StringBuilder();
                             foreach (var plugin in plugins.Plugins)
                             {
-                                sb.AppendFormat(formatString, plugin.UniqueName, plugin.Name);
+                                sb.AppendFormat(formatString, plugin.UniqueName, plugin.Name, plugin.Version);
                             }
                             formElement.Value = sb.ToString();
                         }

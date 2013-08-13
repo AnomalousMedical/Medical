@@ -4,18 +4,19 @@
 		<style type="text/css">
 tr td:nth-child(1)
 {
-	width:150px;
+	width:200px;
 	text-align:left;
 }
 
 tr td:nth-child(2)
 {
-	width:100px;
+	margin-left:3px;
+	width:97px;
 }
 
 tr td:nth-child(3)
 {
-	width:10px;
+	width:43px;
 	text-align:right;
 }
 	</style>
@@ -37,7 +38,7 @@ tr td:nth-child(3)
 					<div id="PluginSelectionForms">
 						<tr>
 							<td>{1}</td>
-							<td>1.0.0.0</td>
+							<td>{2}</td>
 							<td>
 								<form onsubmit="ChoosePlugin/SelectPlugin">
 									<input type="hidden" value="{0}" name="PluginUniqueName" />

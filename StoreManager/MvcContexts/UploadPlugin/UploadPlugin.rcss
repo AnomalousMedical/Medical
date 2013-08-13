@@ -82,4 +82,5 @@ tbody tr:hover
 tr td
 {
 	display: inline-block;
+	vertical-align:top;
 }

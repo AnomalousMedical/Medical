@@ -1,21 +1,48 @@
 <rml>
 	<head>
 		<link type="text/template" href="/MasterTemplate.trml" />
+		<style type="text/css">
+tr td:nth-child(1)
+{
+	width:300px;
+	text-align:left;
+}
+
+tr td:nth-child(2)
+{
+	width:43px;
+	text-align:right;
+}
+	</style>
 	</head>
 	<body template="MasterTemplate">
 		<h1>Choose Store</h1>
 		<p id="ProgressMessage">Getting list of your stores from server...</p>
 		<div id="StoreSelection" style="display:none;">
 			<p>Select the store that you wish to upload your plugin to.</p>
-			<div id="StoreSelectionForms">
-				<h2>{1}</h2>
-				<form onsubmit="ChooseStore/SelectStore" id="{0}">
-					<p>
-						<input type="hidden" value="{0}" name="StoreUniqueName" />
-						<input type="submit" class="LinkButton" value="{1}" name="StorePrettyName">Select</input>
-					</p>
-				</form>
-			</div>
+			<table>
+				<thead>
+					<tr>
+						<td>Name</td>
+						<td />
+					</tr>
+				</thead>
+				<tbody>
+					<div id="StoreSelectionForms">
+						<tr>
+							<td>{1}</td>
+							<td>
+								<form onsubmit="ChooseStore/SelectStore" id="{0}">
+									<p>
+										<input type="hidden" value="{0}" name="StoreUniqueName" />
+										<input type="submit" class="LinkButton" name="StorePrettyName" value="{1}">Select</input>
+									</p>
+								</form>
+							</td>
+						<tr>
+					</div>
+				</tbody>
+			</table>
 		</div>
 		<p id="ErrorMessage" style="display:none;">There was an error contacting the server. You can <a onclick="ChooseStore/GetUserStores">retry</a> or <a onclick="ChooseStore/Close">quit uploading</a>.</p>
 	</body>
