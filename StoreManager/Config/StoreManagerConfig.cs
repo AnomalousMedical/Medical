@@ -15,6 +15,7 @@ namespace Anomalous.Medical.StoreManager.Config
         static String storeDashboardPluginsFormat;
         static String beginUploadFormat;
         static String uploadCompletedFormat;
+        static String uploadCanceledFormat;
 
         static StoreManagerConfig()
         {
@@ -25,6 +26,7 @@ namespace Anomalous.Medical.StoreManager.Config
             storeDashboardPluginsFormat = String.Format("{0}/StoreDashboard/Plugins/{{0}}", MedicalConfig.WebsiteHostUrl);
             beginUploadFormat = String.Format("{0}/PluginUpload/BeginUpload/{{0}}", MedicalConfig.WebsiteHostUrl);
             uploadCompletedFormat = String.Format("{0}/PluginUpload/UploadCompleted/{{0}}", MedicalConfig.WebsiteHostUrl);
+            uploadCanceledFormat = String.Format("{0}/PluginUpload/UploadCanceled/{{0}}", MedicalConfig.WebsiteHostUrl);
         }
 
         public static String StoreListUrl { get; private set; }
@@ -65,6 +67,11 @@ namespace Anomalous.Medical.StoreManager.Config
         public static String GetStoreDashboardPluginsUrl(String storeUniqueName)
         {
             return string.Format(storeDashboardPluginsFormat, storeUniqueName);
+        }
+
+        internal static string GetCancelUploadUrl(string storeUniqueName)
+        {
+            return string.Format(uploadCanceledFormat, storeUniqueName);
         }
     }
 }

@@ -121,6 +121,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                                             continueUpload = false;
                                         }
                                     });
+                                //Thread.Sleep(100);
                                 shouldContinueUpload(); //Even though we don't wait here its possible that continueUpload will get set to false, so this will stop the upload process.
                             });
                         ThreadManager.invokeAndWait(() =>
@@ -153,14 +154,26 @@ namespace Anomalous.Medical.StoreManager.Controller
                     }
                     catch (CancelUploadException)
                     {
-                        //Do nothing, user canceled
+                        cancelUpload(storeUniqueName, pluginUniqueName);
                     }
                     catch (Exception ex)
                     {
+                        String message = ex.Message;
+                        try
+                        {
+                            cancelUpload(storeUniqueName, pluginUniqueName);
+                        }
+                        catch (Exception cancelException)
+                        {
+                            String.Format("{0} Additional {1} canceling the upload request. Message: {2}.", message, cancelException.GetType().Name, cancelException.Message);
+                        }
                         ThreadManager.invokeAndWait(() =>
                         {
-                            error.Visible = true;
-                            errorMessage.Value = ex.Message;
+                            if (viewHost.Open)
+                            {
+                                error.Visible = true;
+                                errorMessage.Value = message;
+                            }
                         });
                     }
 
@@ -231,15 +244,24 @@ namespace Anomalous.Medical.StoreManager.Controller
                 request.ContentLength = stream.Length;
                 using (Stream dataStream = request.GetRequestStream())
                 {
-                    int read;
-                    float total = 0;
-                    do
+                    try
                     {
-                        read = stream.Read(buffer, 0, buffer.Length);
-                        dataStream.Write(buffer, 0, read);
-                        total += read;
-                        progressCallback((int)(total / stream.Length * 100));
-                    } while (read != 0) ;
+                        int read;
+                        float total = 0;
+                        do
+                        {
+                            read = stream.Read(buffer, 0, buffer.Length);
+                            dataStream.Write(buffer, 0, read);
+                            total += read;
+                            progressCallback((int)(total / stream.Length * 100));
+                        } while (read != 0);
+                    }
+                    catch (CancelUploadException ex)
+                    {
+                        //This doesn't really fix the uploading problems, but everything else works so going to commit.
+                        request.Abort();
+                        throw ex;
+                    }
                 }
             }
 
@@ -265,7 +287,30 @@ namespace Anomalous.Medical.StoreManager.Controller
             }
             catch (Exception ex)
             {
-                Logging.Log.Error("{0} occured when trying to get the list of user stores. Message: {1}", ex.GetType().Name, ex.Message);
+                Logging.Log.Error("{0} occured when trying to complete upload. Message: {1}", ex.GetType().Name, ex.Message);
+            }
+            if (response == null)
+            {
+                throw new Exception("Response from server was invalid.");
+            }
+            if (!response.Success)
+            {
+                throw new Exception(response.Message);
+            }
+        }
+
+        private void cancelUpload(String storeUniqueName, String pluginUniqueName)
+        {
+            CredentialServerConnection serverConnection = new CredentialServerConnection(StoreManagerConfig.GetCancelUploadUrl(storeUniqueName), licenseManager.User, licenseManager.MachinePassword);
+            serverConnection.addArgument("PluginUniqueName", pluginUniqueName);
+            ResponseModel response = null;
+            try
+            {
+                response = serverConnection.makeRequestSaveableResponse() as ResponseModel;
+            }
+            catch (Exception ex)
+            {
+                Logging.Log.Error("{0} occured when trying to cancel upload. Message: {1}", ex.GetType().Name, ex.Message);
             }
             if (response == null)
             {
