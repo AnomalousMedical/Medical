@@ -50,7 +50,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                     try
                     {
                         CredentialServerConnection serverConnection = new CredentialServerConnection(StoreManagerConfig.GetStorePluginsUrl(storeUniqueName), licenseManager.User, licenseManager.MachinePassword);
-                        plugins = serverConnection.makeRequestSaveableResponse() as StorePluginsModel;
+                        plugins = serverConnection.makeRequestSaveableResponse(StoreManagerTypeFinder.Instance) as StorePluginsModel;
                     }
                     catch (Exception ex)
                     {

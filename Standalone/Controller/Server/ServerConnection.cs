@@ -85,12 +85,20 @@ namespace Medical
                 });
         }
 
-        public Saveable makeRequestSaveableResponse()
+        public Saveable makeRequestSaveableResponse(TypeFinder typeFinder = null)
         {
             Saveable response = null;
             makeRequestGetStream(serverDataStream =>
                 {
-                    XmlSaver xmlSaver = new XmlSaver();
+                    XmlSaver xmlSaver;
+                    if (typeFinder == null)
+                    {
+                        xmlSaver = new XmlSaver();
+                    }
+                    else
+                    {
+                        xmlSaver = new XmlSaver(typeFinder);
+                    }
                     using (XmlReader xmlReader = new XmlTextReader(serverDataStream))
                     {
                         response = xmlSaver.restoreObject(xmlReader) as Saveable;

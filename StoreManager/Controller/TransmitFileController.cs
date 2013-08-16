@@ -231,7 +231,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             ResponseModel response = null;
             try
             {
-                response = serverConnection.makeRequestSaveableResponse() as ResponseModel;
+                response = serverConnection.makeRequestSaveableResponse(StoreManagerTypeFinder.Instance) as ResponseModel;
             }
             catch (Exception ex)
             {
@@ -307,7 +307,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             ResponseModel response = null;
             try
             {
-                response = serverConnection.makeRequestSaveableResponse() as ResponseModel;
+                response = serverConnection.makeRequestSaveableResponse(StoreManagerTypeFinder.Instance) as ResponseModel;
             }
             catch (Exception ex)
             {
@@ -330,7 +330,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             ResponseModel response = null;
             try
             {
-                response = serverConnection.makeRequestSaveableResponse() as ResponseModel;
+                response = serverConnection.makeRequestSaveableResponse(StoreManagerTypeFinder.Instance) as ResponseModel;
             }
             catch (Exception ex)
             {
