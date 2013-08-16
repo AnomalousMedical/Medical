@@ -8,9 +8,11 @@
 		<p id="GettingUploadUrl" style="display:none;">Getting upload url... <span id="GettingUploadUrlDone" style="display:none;">Done</span></p>
 		<p id="SendingFile" style="display:none;">Sending file... <span id="SendingFileDone" style="display:none;">Done</span><div class="ProgressBar"><div class="ProgressBarInner" id="ProgressBarInner" style="width:0%;">
 						0%
-				</div></div></p>
+				</div></div>
+			<p id="TransferRate"></p>
+		</p>
 		<p id="CompletingUpload" style="display:none;">Completing upload... <span id="CompletingUploadDone" style="display:none;">Done</span></p>
-		<p id="Error" style="display:none">An error occured transmitting your file to the server. You can <a onclick="Common/GoBack"> go back</a> and try again or <a onclick="TransmitFile/Close">quit uploading</a>.</p>
+		<p id="Error" style="display:none;">An error occured transmitting your file to the server. You can <a onclick="Common/GoBack">go back</a> and try again or <a onclick="TransmitFile/Close">quit uploading</a>.</p>
 		<p id="ErrorMessage" />
 	</body>
 </rml>

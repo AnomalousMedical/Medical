@@ -74,6 +74,8 @@ namespace Anomalous.Medical.StoreManager.Controller
                 RmlViewHostControl progressBarInner = (RmlViewHostControl)viewHost.findControl("ProgressBarInner");
                 progressBarInner.Value = "0%";
                 progressBarInner.Element.SetProperty("width", "0%");
+                ViewHostControl transferRate = viewHost.findControl("TransferRate");
+                transferRate.Value = "Calculating Speed";
 
                 ThreadPool.QueueUserWorkItem(arg =>
                 {
@@ -120,6 +122,14 @@ namespace Anomalous.Medical.StoreManager.Controller
                                                 String width = progress + "%";
                                                 progressBarInner.Element.SetProperty("width", width);
                                                 progressBarInner.Value = width;
+                                                if (Double.IsInfinity(kbPerSec))
+                                                {
+                                                    transferRate.Value = "Calculating Speed";
+                                                }
+                                                else
+                                                {
+                                                    transferRate.Value = String.Format("{0:N2} Kb per second", kbPerSec);
+                                                }
                                             }
                                             else
                                             {
@@ -255,17 +265,17 @@ namespace Anomalous.Medical.StoreManager.Controller
                     try
                     {
                         int read;
-                        float total = 0;
+                        float totalRead = 0;
                         DateTime startTime = DateTime.Now;
                         TimeSpan totalTime;
                         double kbPerSec = 0.0;
                         while((read = stream.Read(buffer, 0, buffer.Length)) != 0)
                         {
                             dataStream.Write(buffer, 0, read);
-                            total += read;
+                            totalRead += read;
                             totalTime = DateTime.Now - startTime;
-                            kbPerSec = (read * 1000.0f) / (totalTime.TotalMilliseconds * 1024.0f);
-                            progressCallback((int)(total / stream.Length * 100), kbPerSec, false);
+                            kbPerSec = (totalRead * 1000.0f) / (totalTime.TotalMilliseconds * 1024.0f);
+                            progressCallback((int)(totalRead / stream.Length * 100), kbPerSec, false);
                         }
                         progressCallback(100, kbPerSec, true);
                     }
