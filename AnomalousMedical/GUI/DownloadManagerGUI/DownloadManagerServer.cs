@@ -37,14 +37,6 @@ namespace Medical.GUI
             active = false;
         }
 
-        public ImageAtlas ServerImages
-        {
-            get
-            {
-                return serverImages;
-            }
-        }
-
         public void readPluginInfoFromServer(AtlasPluginManager pluginManager)
         {
             ThreadPool.QueueUserWorkItem((arg) =>
@@ -135,7 +127,7 @@ namespace Medical.GUI
                         }
                         else if(pluginUpdateInfo.Version > plugin.Version)
                         {
-                            alertDownloadFound(new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, plugin.PluginName, ServerDownloadStatus.Update)
+                            newDownloadInfos.Add(pluginUpdateInfo.PluginId, new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, plugin.PluginName, ServerDownloadStatus.Update)
                             {
                                 ImageKey = plugin.BrandingImageKey
                             });
@@ -163,23 +155,30 @@ namespace Medical.GUI
                                 ASN1 pluginInfo = results[i];
                                 long pluginId = BitConverter.ToInt64(pluginInfo[0].Value, 0);
                                 ServerPluginDownloadInfo downloadInfo = newDownloadInfos[pluginId];
-                                downloadInfo.Name = Encoding.BigEndianUnicode.GetString(pluginInfo[1].Value);
-                                ASN1 brandingImageLocationAsn1 = pluginInfo[2];
-                                if (brandingImageLocationAsn1.Tag != 0x05)
+                                bool updateImage = true;
+                                if (downloadInfo.Status == ServerDownloadStatus.Update)
                                 {
-                                    String imageURL = Encoding.BigEndianUnicode.GetString(brandingImageLocationAsn1.Value);
-                                    if (!String.IsNullOrEmpty(imageURL))
+                                    String newName = Encoding.BigEndianUnicode.GetString(pluginInfo[1].Value);
+                                    if (downloadInfo.Name != newName)
                                     {
-                                        using (Bitmap image = loadImageFromURL(imageURL))
-                                        {
-                                            if (image != null)
-                                            {
-                                                ThreadManager.invokeAndWait(new Action(delegate()
-                                                {
-                                                    downloadInfo.ImageKey = serverImages.addImage(pluginInfo, image);
-                                                }));
-                                            }
-                                        }
+                                        downloadInfo.Name = String.Format("{0}\nUpdate for {1}", newName, downloadInfo.Name);
+                                    }
+                                    else
+                                    {
+                                        updateImage = false; //Only update images on name changes.
+                                    }
+                                }
+                                else
+                                {
+                                    downloadInfo.Name = Encoding.BigEndianUnicode.GetString(pluginInfo[1].Value);
+                                }
+                                if (updateImage)
+                                {
+                                    ASN1 brandingImageLocationAsn1 = pluginInfo[2];
+                                    if (brandingImageLocationAsn1.Tag != 0x05)
+                                    {
+                                        String imageURL = Encoding.BigEndianUnicode.GetString(brandingImageLocationAsn1.Value);
+                                        getBrandingImageForDownload(downloadInfo, imageURL);
                                     }
                                 }
 
@@ -211,6 +210,24 @@ namespace Medical.GUI
                 }
             }), downloadInfo);
             detectedServerPlugins.Add(downloadInfo);
+        }
+
+        //Runs on background thread
+        private void getBrandingImageForDownload(ServerPluginDownloadInfo downloadInfo, String imageURL)
+        {
+            if (!String.IsNullOrEmpty(imageURL))
+            {
+                using (Bitmap image = loadImageFromURL(imageURL))
+                {
+                    if (image != null)
+                    {
+                        ThreadManager.invokeAndWait(new Action(delegate()
+                        {
+                            downloadInfo.ImageKey = serverImages.addImage(downloadInfo, image);
+                        }));
+                    }
+                }
+            }
         }
 
         //Runs on background thread
