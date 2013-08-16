@@ -47,7 +47,7 @@ namespace Medical.GUI
 
         public void readPluginInfoFromServer(AtlasPluginManager pluginManager)
         {
-            Thread serverReadThread = new Thread(delegate()
+            ThreadPool.QueueUserWorkItem((arg) =>
             {
                 readServerPluginInfo(pluginManager);
                 ThreadManager.invoke(new Action(delegate()
@@ -58,7 +58,6 @@ namespace Medical.GUI
                     }
                 }));
             });
-            serverReadThread.Start();
         }
 
         public String readLicenseFromServer(long pluginId)

@@ -70,7 +70,7 @@ namespace Medical.GUI
             {
                 if (download.TotalSize > 0)
                 {
-                    StatusString = String.Format("{0}\n{4} - {1}%\n{2} of {3} (MB)", Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"), download.StatusString);
+                    StatusString = String.Format("{0}\n{4} - {1}%\n{2} of {3} (MB) at {5} kb per second", Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"), download.StatusString, download.DownloadSpeed.ToString("N2"));
                 }
                 else
                 {

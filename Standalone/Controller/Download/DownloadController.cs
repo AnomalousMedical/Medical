@@ -204,10 +204,14 @@ namespace Medical
                 byte[] buffer = new byte[8 * 1024];
                 int len;
                 download.TotalRead = 0;
+                DateTime startTime = DateTime.Now;
+                TimeSpan totalTime;
                 while ((len = serverDataStream.Read(buffer, 0, buffer.Length)) > 0 && !download.Cancel)
                 {
                     download.TotalRead += len;
                     localDataStream.Write(buffer, 0, len);
+                    totalTime = DateTime.Now - startTime;
+                    download.DownloadSpeed = (download.TotalRead * 1000.0f) / (totalTime.TotalMilliseconds * 1024.0f);
                     download.updateStatus();
                 }
             }
