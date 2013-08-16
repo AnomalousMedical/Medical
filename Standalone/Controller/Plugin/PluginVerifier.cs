@@ -24,7 +24,7 @@ namespace Medical
         internal bool isSafeDataFile(String file)
         {
 #if ALLOW_OVERRIDE
-            if (MedicalConfig.AllowUnsignedPlugins)
+            if (MedicalConfig.AllowUnsignedDataFilePlugins)
             {
                 return true;
             }
@@ -80,7 +80,7 @@ namespace Medical
         internal bool isSafeDll(String path)
         {
 #if ALLOW_OVERRIDE
-            if (MedicalConfig.AllowUnsignedPlugins)
+            if (MedicalConfig.AllowUnsignedDllPlugins)
             {
                 return true;
             }
