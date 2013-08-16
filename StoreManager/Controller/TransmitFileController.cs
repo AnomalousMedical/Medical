@@ -22,6 +22,7 @@ namespace Anomalous.Medical.StoreManager.Controller
         private String pluginSourcePath;
         private String archiveFile;
         private bool continueUpload = true;
+        private bool processedLastProgressUpdate = true;
 
         public TransmitFileController(AnomalousMvcContext context, LicenseManager licenseManager, String pluginSourcePath)
         {
@@ -106,23 +107,29 @@ namespace Anomalous.Medical.StoreManager.Controller
                             }
                         });
                         shouldContinueUpload();
-                        sendFile(uploadUrl, (progress) =>
+                        processedLastProgressUpdate = true;
+                        sendFile(uploadUrl, (progress, kbPerSec, finished) =>
                             {
-                                ThreadManager.invoke(() =>
-                                    {
-                                        if (viewHost.Open)
+                                if (processedLastProgressUpdate || finished)
+                                {
+                                    processedLastProgressUpdate = false;
+                                    ThreadManager.invoke(() =>
                                         {
-                                            String width = progress + "%";
-                                            progressBarInner.Element.SetProperty("width", width);
-                                            progressBarInner.Value = width;
-                                        }
-                                        else
-                                        {
-                                            continueUpload = false;
-                                        }
-                                    });
-                                //Thread.Sleep(100);
-                                shouldContinueUpload(); //Even though we don't wait here its possible that continueUpload will get set to false, so this will stop the upload process.
+                                            if (viewHost.Open)
+                                            {
+                                                String width = progress + "%";
+                                                progressBarInner.Element.SetProperty("width", width);
+                                                progressBarInner.Value = width;
+                                            }
+                                            else
+                                            {
+                                                continueUpload = false;
+                                            }
+                                            processedLastProgressUpdate = true;
+                                        });
+                                    //Thread.Sleep(100);
+                                    shouldContinueUpload(); //Even though we don't wait here its possible that continueUpload will get set to false, so this will stop the upload process.
+                                }
                             });
                         ThreadManager.invokeAndWait(() =>
                         {
@@ -231,13 +238,14 @@ namespace Anomalous.Medical.StoreManager.Controller
             return response.Message;
         }
 
-        private void sendFile(String uploadUrl, Action<int> progressCallback)
+        private void sendFile(String uploadUrl, Action<int, double, bool> progressCallback)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(uploadUrl));
             request.Timeout = ServerConnection.DefaultTimeout;
             request.Method = "PUT";
             request.Headers.Add("x-ms-blob-type", "BlockBlob");
             request.ContentType = "application/zip";
+            request.AllowWriteStreamBuffering = false;
             byte[] buffer = new byte[4096];
             using (Stream stream = File.Open(archiveFile, FileMode.Open, FileAccess.Read))
             {
@@ -248,18 +256,24 @@ namespace Anomalous.Medical.StoreManager.Controller
                     {
                         int read;
                         float total = 0;
-                        do
+                        DateTime startTime = DateTime.Now;
+                        TimeSpan totalTime;
+                        double kbPerSec = 0.0;
+                        while((read = stream.Read(buffer, 0, buffer.Length)) != 0)
                         {
-                            read = stream.Read(buffer, 0, buffer.Length);
                             dataStream.Write(buffer, 0, read);
                             total += read;
-                            progressCallback((int)(total / stream.Length * 100));
-                        } while (read != 0);
+                            totalTime = DateTime.Now - startTime;
+                            kbPerSec = (read * 1000.0f) / (totalTime.TotalMilliseconds * 1024.0f);
+                            progressCallback((int)(total / stream.Length * 100), kbPerSec, false);
+                        }
+                        progressCallback(100, kbPerSec, true);
                     }
                     catch (CancelUploadException ex)
                     {
-                        //This doesn't really fix the uploading problems, but everything else works so going to commit.
-                        request.Abort();
+                        //Can't come up with anything to fix the uploading problems, it will
+                        //cancel, but the endpoint in storage will be screwed up for a little while
+                        //before the user can upload again.
                         throw ex;
                     }
                 }

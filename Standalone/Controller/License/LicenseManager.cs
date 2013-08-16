@@ -192,6 +192,8 @@ namespace Medical
                         throw new AnomalousLicenseServerException("Cannot connect to License Server. Please try again later.");
                     case WebExceptionStatus.NameResolutionFailure:
                         throw new AnomalousLicenseServerException("Could not find host name. Please try again later.");
+                    case WebExceptionStatus.Timeout:
+                        throw new AnomalousLicenseServerException("Connection to license server timed out. Please try again later.");
                     default:
                         throw new AnomalousLicenseServerException(String.Format("An undefined error occured connecting to the license server. Please try again later. The status was {0}.", webException.Status));
                 }
