@@ -33,9 +33,10 @@ namespace Anomalous.Medical.StoreManager.Controller
             if (allowGet)
             {
                 allowGet = false;
-                ViewHostControl progressMessage = executingContext.RunningActionViewHost.findControl("ProgressMessage");
-                ViewHostControl pluginSelection = executingContext.RunningActionViewHost.findControl("PluginSelection");
-                ViewHostControl errorMessage = executingContext.RunningActionViewHost.findControl("ErrorMessage");
+                ViewHost viewHost = executingContext.RunningActionViewHost;
+                ViewHostControl progressMessage = viewHost.findControl("ProgressMessage");
+                ViewHostControl pluginSelection = viewHost.findControl("PluginSelection");
+                ViewHostControl errorMessage = viewHost.findControl("ErrorMessage");
                 progressMessage.Visible = true;
                 pluginSelection.Visible = false;
                 errorMessage.Visible = false;
@@ -57,24 +58,26 @@ namespace Anomalous.Medical.StoreManager.Controller
                     }
                     ThreadManager.invoke(() =>
                     {
-                        //Need to check that this context is still active
-                        if (plugins != null)
+                        if (viewHost.Open)
                         {
-                            progressMessage.Visible = false;
-                            pluginSelection.Visible = true;
-                            ViewHostControl formElement = executingContext.RunningActionViewHost.findControl("PluginSelectionForms");
-                            String formatString = formElement.Value;
-                            StringBuilder sb = new StringBuilder();
-                            foreach (var plugin in plugins.Plugins)
+                            if (plugins != null)
                             {
-                                sb.AppendFormat(formatString, plugin.UniqueName, plugin.Name, plugin.Version);
+                                progressMessage.Visible = false;
+                                pluginSelection.Visible = true;
+                                ViewHostControl formElement = viewHost.findControl("PluginSelectionForms");
+                                String formatString = formElement.Value;
+                                StringBuilder sb = new StringBuilder();
+                                foreach (var plugin in plugins.Plugins)
+                                {
+                                    sb.AppendFormat(formatString, plugin.UniqueName, plugin.Name, plugin.Version);
+                                }
+                                formElement.Value = sb.ToString();
                             }
-                            formElement.Value = sb.ToString();
-                        }
-                        else
-                        {
-                            progressMessage.Visible = false;
-                            errorMessage.Visible = true;
+                            else
+                            {
+                                progressMessage.Visible = false;
+                                errorMessage.Visible = true;
+                            }
                         }
 
                         //Set fetch allow back to true.

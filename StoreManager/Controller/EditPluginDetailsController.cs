@@ -72,8 +72,9 @@ namespace Anomalous.Medical.StoreManager.Controller
                     bool submitToServer = true;
                     String errorMessage = "";
 
-                    ViewHostControl message = executingContext.RunningActionViewHost.findControl("Message");
-                    ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
+                    ViewHost viewHost = executingContext.RunningActionViewHost;
+                    ViewHostControl message = viewHost.findControl("Message");
+                    ViewHostControl error = viewHost.findControl("Error");
 
                     message.Visible = true;
                     error.Visible = false;

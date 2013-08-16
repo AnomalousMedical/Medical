@@ -21,6 +21,7 @@ namespace Anomalous.Medical.StoreManager.Controller
         private bool allowSend = true;
         private String pluginSourcePath;
         private String archiveFile;
+        private bool continueUpload = true;
 
         public TransmitFileController(AnomalousMvcContext context, LicenseManager licenseManager, String pluginSourcePath)
         {
@@ -38,36 +39,38 @@ namespace Anomalous.Medical.StoreManager.Controller
         {
             if (allowSend)
             {
+                continueUpload = true;
                 DataModel model = executingContext.getModel<DataModel>("PluginDetails");
                 String storeUniqueName = model.getValue("StoreUniqueName");
                 String pluginUniqueName = model.getValue("PluginUniqueName");
 
                 allowSend = false;
-                ViewHostControl creatingArchive = executingContext.RunningActionViewHost.findControl("CreatingArchive");
+                ViewHost viewHost = executingContext.RunningActionViewHost;
+                ViewHostControl creatingArchive = viewHost.findControl("CreatingArchive");
                 creatingArchive.Visible = true;
-                ViewHostControl creatingArchiveDone = executingContext.RunningActionViewHost.findControl("CreatingArchiveDone");
+                ViewHostControl creatingArchiveDone = viewHost.findControl("CreatingArchiveDone");
                 creatingArchiveDone.Visible = false;
 
-                ViewHostControl gettingUploadUrl = executingContext.RunningActionViewHost.findControl("GettingUploadUrl");
+                ViewHostControl gettingUploadUrl = viewHost.findControl("GettingUploadUrl");
                 gettingUploadUrl.Visible = false;
-                ViewHostControl gettingUploadUrlDone = executingContext.RunningActionViewHost.findControl("GettingUploadUrlDone");
+                ViewHostControl gettingUploadUrlDone = viewHost.findControl("GettingUploadUrlDone");
                 gettingUploadUrlDone.Visible = false;
 
-                ViewHostControl sendingFile = executingContext.RunningActionViewHost.findControl("SendingFile");
+                ViewHostControl sendingFile = viewHost.findControl("SendingFile");
                 sendingFile.Visible = false;
-                ViewHostControl sendingFileDone = executingContext.RunningActionViewHost.findControl("SendingFileDone");
+                ViewHostControl sendingFileDone = viewHost.findControl("SendingFileDone");
                 sendingFileDone.Visible = false;
 
-                ViewHostControl completingUpload = executingContext.RunningActionViewHost.findControl("CompletingUpload");
+                ViewHostControl completingUpload = viewHost.findControl("CompletingUpload");
                 completingUpload.Visible = false;
-                ViewHostControl completingUploadDone = executingContext.RunningActionViewHost.findControl("CompletingUploadDone");
+                ViewHostControl completingUploadDone = viewHost.findControl("CompletingUploadDone");
                 completingUploadDone.Visible = false;
 
-                ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
+                ViewHostControl error = viewHost.findControl("Error");
                 error.Visible = false;
-                ViewHostControl errorMessage = executingContext.RunningActionViewHost.findControl("ErrorMessage");
+                ViewHostControl errorMessage = viewHost.findControl("ErrorMessage");
                 errorMessage.Value = "";
-                RmlViewHostControl progressBarInner = (RmlViewHostControl)executingContext.RunningActionViewHost.findControl("ProgressBarInner");
+                RmlViewHostControl progressBarInner = (RmlViewHostControl)viewHost.findControl("ProgressBarInner");
                 progressBarInner.Value = "0%";
                 progressBarInner.Element.SetProperty("width", "0%");
 
@@ -78,35 +81,79 @@ namespace Anomalous.Medical.StoreManager.Controller
                         createArchive(pluginUniqueName);
                         ThreadManager.invokeAndWait(() =>
                         {
-                            creatingArchiveDone.Visible = true;
-                            gettingUploadUrl.Visible = true;
+                            if (viewHost.Open)
+                            {
+                                creatingArchiveDone.Visible = true;
+                                gettingUploadUrl.Visible = true;
+                            }
+                            else
+                            {
+                                continueUpload = false;
+                            }
                         });
+                        shouldContinueUpload();
                         String uploadUrl = getUploadUrl(storeUniqueName, pluginUniqueName);
                         ThreadManager.invokeAndWait(() =>
                         {
-                            gettingUploadUrlDone.Visible = true;
-                            sendingFile.Visible = true;
+                            if (viewHost.Open)
+                            {
+                                gettingUploadUrlDone.Visible = true;
+                                sendingFile.Visible = true;
+                            }
+                            else
+                            {
+                                continueUpload = false;
+                            }
                         });
+                        shouldContinueUpload();
                         sendFile(uploadUrl, (progress) =>
                             {
                                 ThreadManager.invoke(() =>
                                     {
-                                        String width = progress + "%";
-                                        progressBarInner.Element.SetProperty("width", width);
-                                        progressBarInner.Value = width;
+                                        if (viewHost.Open)
+                                        {
+                                            String width = progress + "%";
+                                            progressBarInner.Element.SetProperty("width", width);
+                                            progressBarInner.Value = width;
+                                        }
+                                        else
+                                        {
+                                            continueUpload = false;
+                                        }
                                     });
+                                shouldContinueUpload(); //Even though we don't wait here its possible that continueUpload will get set to false, so this will stop the upload process.
                             });
                         ThreadManager.invokeAndWait(() =>
                         {
-                            sendingFileDone.Visible = true;
-                            completingUpload.Visible = true;
+                            if (viewHost.Open)
+                            {
+                                sendingFileDone.Visible = true;
+                                completingUpload.Visible = true;
+                            }
+                            else
+                            {
+                                continueUpload = false;
+                            }
                         });
+                        shouldContinueUpload();
                         completeUpload(storeUniqueName, pluginUniqueName);
                         ThreadManager.invokeAndWait(() =>
                         {
-                            completingUploadDone.Visible = true;
-                            executingContext.runAction("TransmitFile/SendFileCompleted");
+                            if (viewHost.Open)
+                            {
+                                completingUploadDone.Visible = true;
+                                executingContext.runAction("TransmitFile/SendFileCompleted");
+                            }
+                            else
+                            {
+                                continueUpload = false;
+                            }
                         });
+                        //Got to the end, dont need to check continue upload, add that if you add another step.
+                    }
+                    catch (CancelUploadException)
+                    {
+                        //Do nothing, user canceled
                     }
                     catch (Exception ex)
                     {
@@ -235,6 +282,14 @@ namespace Anomalous.Medical.StoreManager.Controller
             if (File.Exists(archiveFile))
             {
                 File.Delete(archiveFile);
+            }
+        }
+
+        private void shouldContinueUpload()
+        {
+            if (!continueUpload)
+            {
+                throw new CancelUploadException();
             }
         }
     }

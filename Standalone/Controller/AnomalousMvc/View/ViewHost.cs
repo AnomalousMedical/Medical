@@ -13,6 +13,8 @@ namespace Medical.Controller.AnomalousMvc
 
         LayoutContainer Container { get; }
 
+        bool Open { get; }
+
         bool _RequestClosed { get; set; }
 
         void _animationCallback(LayoutContainer oldChild);

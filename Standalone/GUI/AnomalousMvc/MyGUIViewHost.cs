@@ -37,6 +37,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public void opening()
         {
+            Open = true;
             component.opening();
             if (!String.IsNullOrEmpty(View.OpeningAction))
             {
@@ -50,6 +51,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public void closing()
         {
+            Open = false;
             if (ViewClosing != null)
             {
                 ViewClosing.Invoke(this);
@@ -97,6 +99,8 @@ namespace Medical.GUI.AnomalousMvc
         public View View { get; private set; }
 
         public bool _RequestClosed { get; set; }
+
+        public bool Open { get; private set; }
 
         public void _animationCallback(LayoutContainer oldChild)
         {

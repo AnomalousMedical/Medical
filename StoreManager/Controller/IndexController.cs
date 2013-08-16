@@ -26,7 +26,8 @@ namespace Anomalous.Medical.StoreManager.Controller
                 if (allowLogin)
                 {
                     allowLogin = false;
-                    ViewHostControl passwordTextBox = executingContext.RunningActionViewHost.findControl("Password");
+                    ViewHost viewHost = executingContext.RunningActionViewHost;
+                    ViewHostControl passwordTextBox = viewHost.findControl("Password");
                     String pass = passwordTextBox.Value;
                     ThreadPool.QueueUserWorkItem(arg =>
                     {
@@ -35,17 +36,20 @@ namespace Anomalous.Medical.StoreManager.Controller
                             bool loginSucessful = licenseManager.login(licenseManager.User, pass);
                             ThreadManager.invoke(() =>
                             {
-                                if (loginSucessful)
+                                if (viewHost.Open)
                                 {
-                                    executingContext.runAction("Index/Next");
-                                }
-                                else
-                                {
-                                    ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
-                                    error.Visible = true;
-                                    error.Value = "The password you entered is not correct.";
-                                    passwordTextBox.Value = "";
-                                    passwordTextBox.focus();
+                                    if (loginSucessful)
+                                    {
+                                        executingContext.runAction("Index/Next");
+                                    }
+                                    else
+                                    {
+                                        ViewHostControl error = viewHost.findControl("Error");
+                                        error.Visible = true;
+                                        error.Value = "The password you entered is not correct.";
+                                        passwordTextBox.Value = "";
+                                        passwordTextBox.focus();
+                                    }
                                 }
                                 allowLogin = true;
                             });
@@ -54,11 +58,14 @@ namespace Anomalous.Medical.StoreManager.Controller
                         {
                             ThreadManager.invoke(() =>
                             {
-                                ViewHostControl error = executingContext.RunningActionViewHost.findControl("Error");
-                                error.Visible = true;
-                                error.Value = ex.Message;
-                                passwordTextBox.Value = "";
-                                passwordTextBox.focus();
+                                if (viewHost.Open)
+                                {
+                                    ViewHostControl error = viewHost.findControl("Error");
+                                    error.Visible = true;
+                                    error.Value = ex.Message;
+                                    passwordTextBox.Value = "";
+                                    passwordTextBox.focus();
+                                }
                                 allowLogin = true;
                             });
                         }

@@ -33,9 +33,10 @@ namespace Anomalous.Medical.StoreManager.Controller
             if (allowGetUserStores)
             {
                 allowGetUserStores = false;
-                ViewHostControl progressMessage = executingContext.RunningActionViewHost.findControl("ProgressMessage");
-                ViewHostControl storeSelection = executingContext.RunningActionViewHost.findControl("StoreSelection");
-                ViewHostControl errorMessage = executingContext.RunningActionViewHost.findControl("ErrorMessage");
+                ViewHost viewHost = executingContext.RunningActionViewHost;
+                ViewHostControl progressMessage = viewHost.findControl("ProgressMessage");
+                ViewHostControl storeSelection = viewHost.findControl("StoreSelection");
+                ViewHostControl errorMessage = viewHost.findControl("ErrorMessage");
                 progressMessage.Visible = true;
                 storeSelection.Visible = false;
                 errorMessage.Visible = false;
@@ -54,24 +55,26 @@ namespace Anomalous.Medical.StoreManager.Controller
                     }
                     ThreadManager.invoke(() =>
                     {
-                        //Need to check that this context is still active
-                        if (userStores != null)
+                        if (viewHost.Open)
                         {
-                            progressMessage.Visible = false;
-                            storeSelection.Visible = true;
-                            ViewHostControl formElement = executingContext.RunningActionViewHost.findControl("StoreSelectionForms");
-                            String formatString = formElement.Value;
-                            StringBuilder sb = new StringBuilder();
-                            foreach (var store in userStores.Stores)
+                            if (userStores != null)
                             {
-                                sb.AppendFormat(formatString, store.UniqueName, store.Name);
+                                progressMessage.Visible = false;
+                                storeSelection.Visible = true;
+                                ViewHostControl formElement = viewHost.findControl("StoreSelectionForms");
+                                String formatString = formElement.Value;
+                                StringBuilder sb = new StringBuilder();
+                                foreach (var store in userStores.Stores)
+                                {
+                                    sb.AppendFormat(formatString, store.UniqueName, store.Name);
+                                }
+                                formElement.Value = sb.ToString();
                             }
-                            formElement.Value = sb.ToString();
-                        }
-                        else
-                        {
-                            progressMessage.Visible = false;
-                            errorMessage.Visible = true;
+                            else
+                            {
+                                progressMessage.Visible = false;
+                                errorMessage.Visible = true;
+                            }
                         }
 
                         //Set fetch allow back to true.
