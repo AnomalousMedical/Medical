@@ -19,7 +19,7 @@ tr td:nth-child(2)
 		<h1>Choose Store</h1>
 		<p id="ProgressMessage">Getting list of your stores from server...</p>
 		<div id="StoreSelection" style="display:none;">
-			<p>Select the store that you wish to upload your plugin to.</p>
+			<p>Select the store that you wish to upload your content to.</p>
 			<table>
 				<thead>
 					<tr>

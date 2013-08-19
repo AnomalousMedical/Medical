@@ -12,13 +12,13 @@
 			<input type="text" name="Title" id="Title" />
 			<h2>Copyright Agreement</h2>
 			<p>
-				<input type="checkbox" value="True" name="CopyrightAgree" id="CopyrightAgree" /> I assert that I own the rights to use all of the content that is being uploaded. This includes any text that has been written and any images and sounds added to this plugin.
+				<input type="checkbox" value="True" name="CopyrightAgree" id="CopyrightAgree" /> I assert that I own the rights to use all of the materials being uploaded. This includes any text that has been written and any images and sounds that have been added.
 			</p>
 			<input type="submit">Upload</input>
 		</form>
-		<p id="Message" style="display:none;">Sending plugin details to server...</p>
+		<p id="Message" style="display:none;">Sending content details to server...</p>
 		<div id="Error" style="display:none;">
-			<p>An error occured sending your plugin to the server.</p>
+			<p>An error occured sending your content to the server.</p>
 			<p>
 				<span id="ErrorOutput" />
 			</p>

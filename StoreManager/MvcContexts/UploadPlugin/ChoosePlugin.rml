@@ -22,10 +22,10 @@ tr td:nth-child(3)
 	</style>
 	</head>
 	<body template="MasterTemplate">
-		<h1>Choose Plugin to Update</h1>
-		<p id="ProgressMessage">Getting list of your plugins from server...</p>
+		<h1>Choose Content to Update</h1>
+		<p id="ProgressMessage">Getting list of your content from the server...</p>
 		<div id="PluginSelection" style="display:none;">
-			<p>Select the plugin you wish to update. Please note that plugin updates will go out to all current users of your plugin. If you do not wish to do this go back and create a new plugin.</p>
+			<p>Select the content you wish to update. Please note that content updates will go out to all current users. If you do not wish to do this go back and create new content.</p>
 			<table>
 				<thead>
 					<tr>

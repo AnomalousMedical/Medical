@@ -3,8 +3,8 @@
 		<link type="text/template" href="/MasterTemplate.trml" />
 	</head>
 	<body template="MasterTemplate">
-		<h1>Upload Plugin</h1>
-		<p>You are just a few short clicks from uploading your new plugin to Anomalous Medical's servers and sharing them with the rest of the world through your store.</p>
+		<h1>Upload Content</h1>
+		<p>You are just a few short clicks from uploading your new content to Anomalous Medical's servers and sharing them with the rest of the world through your store.</p>
 		<p>For security purposes please enter your Anomalous Medical password to continue.</p>
 		<form onsubmit="Index/CheckPassword" autosubmitid="NextButton">
 			<p>

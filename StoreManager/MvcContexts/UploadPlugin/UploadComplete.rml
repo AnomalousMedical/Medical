@@ -4,8 +4,8 @@
 	</head>
 	<body template="MasterTemplate">
 		<h1>Upload Complete</h1>
-		<p>Your plugin <print name="Title" /> has been uploaded to the <print name="StorePrettyName" /> store. It is now queued for processing. 
-Depending on the server load it might take a while for your plugin to process and become available to distribute. 
+		<p>Your content <print name="Title" /> has been uploaded to the <print name="StorePrettyName" /> store. It is now queued for processing. 
+Depending on the server load it might take a while for your content to process and become available to distribute. 
 You may visit your <a onclick="UploadComplete/VisitDashboard">store dashboard</a> to see its status.</p>
 	</body>
 </rml>
