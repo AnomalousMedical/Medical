@@ -93,7 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MvcContexts\UploadPlugin\MasterTemplate.trml" />
     <EmbeddedResource Include="MvcContexts\UploadPlugin\MvcContext.mvc" />
-    <EmbeddedResource Include="MvcContexts\UploadPlugin\Plugin.ddp" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\Plugin.ddp">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MvcContexts\UploadPlugin\UploadPlugin.rcss" />
     <EmbeddedResource Include="MvcContexts\UploadPlugin\Wysiwyg.rcss" />
   </ItemGroup>
