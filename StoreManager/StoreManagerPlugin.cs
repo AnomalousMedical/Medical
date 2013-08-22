@@ -1,6 +1,7 @@
 ﻿using Anomalous.Medical.StoreManager.Controller;
 using Medical;
 using Medical.GUI;
+using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Anomalous.Medical.StoreManager
 
         public void loadGUIResources()
         {
-            //ResourceManager.Instance.load("Lecture.Resources.Imagesets.xml");
+            ResourceManager.Instance.load("Anomalous.Medical.StoreManager.Resources.Imagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -34,7 +35,7 @@ namespace Anomalous.Medical.StoreManager
                 })
                 {
                     Name = "Share",
-                    IconName = CommonResources.NoIcon,
+                    IconName = "StoreManager/Icon",
                     Category = "Store Manager"
                 };
         }
@@ -79,7 +80,7 @@ namespace Anomalous.Medical.StoreManager
         {
             get
             {
-                return CommonResources.NoIcon;
+                return "StoreManager/BrandingImage";
             }
         }
 
