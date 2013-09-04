@@ -99,6 +99,10 @@ namespace Medical.GUI
             try
             {
                 ServerUpdateInfo serverUpdateInfo = UpdateController.getUpdateInfo(licenseManager);
+                if (serverUpdateInfo == null)
+                {
+                    throw new Exception("No update data returned from server.");
+                }
                 if (!foundPlatformUpdate)
                 {
                     Version remoteVersion = serverUpdateInfo.RemotePlatformVersion;
