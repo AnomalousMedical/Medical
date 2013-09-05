@@ -76,8 +76,9 @@
 	<ResourceFiles Include="..\..\$(Configuration)\SoundPlugin.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\Standalone.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\libRocketPlugin.dll" />
-      <ResourceFiles Include="..\..\$(Configuration)\Mono.Anomalous.Security.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
+    <ResourceFiles Include="..\..\$(Configuration)\Mono.Anomalous.Security.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\DotNetZip.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
 	<ResourceFiles Include="..\..\$(Configuration)\IntroductionTutorial.dat" />
 	
 	<ResourceFiles Include="..\..\Release\libOSHelper.dylib" />
