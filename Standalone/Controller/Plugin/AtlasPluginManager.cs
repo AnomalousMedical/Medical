@@ -25,6 +25,7 @@ namespace Medical
         private List<AtlasPlugin> plugins = new List<AtlasPlugin>();
         private List<AtlasPlugin> uninitializedPlugins = new List<AtlasPlugin>();
         private List<AtlasPlugin> unlicensedPlugins = new List<AtlasPlugin>();
+        private Dictionary<String, Assembly> artworkPluginAssemblies = new Dictionary<string, Assembly>();
         private SimScene currentScene;
         private String additionalSearchPath;
         private HashSet<String> loadedPluginNames = new HashSet<string>();
@@ -51,7 +52,7 @@ namespace Medical
 
             additionalSearchPath = FolderFinder.ExecutableFolder;
 
-            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(FindArtworkPluginAssembly);
         }
 
         public void Dispose()
@@ -340,7 +341,10 @@ namespace Medical
             }
             if (addAssemblyResources)
             {
-                OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+                Type pluginType = plugin.GetType();
+                Assembly assembly = pluginType.Assembly;
+                artworkPluginAssemblies.Add(assembly.FullName, assembly);
+                OgreResourceGroupManager.getInstance().addResourceLocation(pluginType.AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
             }
         }
 
@@ -464,26 +468,11 @@ namespace Medical
             }
         }
 
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        private Assembly FindArtworkPluginAssembly(object sender, ResolveEventArgs args)
         {
-            String assemblyName = args.Name;
-            foreach (AtlasPlugin plugin in plugins)
-            {
-                Assembly assembly = plugin.GetType().Assembly;
-                if (assembly.FullName == assemblyName)
-                {
-                    return assembly;
-                }
-            }
-            foreach (AtlasPlugin plugin in uninitializedPlugins)
-            {
-                Assembly assembly = plugin.GetType().Assembly;
-                if (assembly.FullName == assemblyName)
-                {
-                    return assembly;
-                }
-            }
-            return null;
+            Assembly assembly = null;
+            artworkPluginAssemblies.TryGetValue(args.Name, out assembly);
+            return assembly;
         }
 
         private void saveManagementInstructions()
