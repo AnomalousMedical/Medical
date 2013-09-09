@@ -1,19 +1,6 @@
 #include "StdAfx.h"
 #import <Cocoa/Cocoa.h>
 
-extern "C" _AnomalousExport bool ConnectionValidator_ValidateUrl(String url)
-{
-    NSURL *nsurl = [NSURL URLWithString:[NSString stringWithFormat:@"%S", url]];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:nsurl];
-    NSError *error = nil;
-    NSURLResponse *response = nil;
-    
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    bool success = response != nil;
-    [request release];
-    return success;
-}
-
 OSStatus EvaluateCert (SecCertificateRef cert, CFTypeRef policyRef, SecTrustResultType *result, SecTrustRef *pTrustRef)
 {
     OSStatus status1;
@@ -42,6 +29,8 @@ OSStatus EvaluateCert (SecCertificateRef cert, CFTypeRef policyRef, SecTrustResu
 
 extern "C" _AnomalousExport bool CertificateValidator_ValidateSSLCertificate(unsigned char* certBytes, unsigned int certBytesLength, String hostName)
 {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
     SecTrustRef trustRef = nil;
     SecTrustResultType result = kSecTrustResultRecoverableTrustFailure;
     bool success = false;
@@ -78,7 +67,8 @@ extern "C" _AnomalousExport bool CertificateValidator_ValidateSSLCertificate(uns
     }
     
     CFRelease(cert);
-    CFRelease(certData);
+    
+    [pool drain];
     
     return success;
 }
