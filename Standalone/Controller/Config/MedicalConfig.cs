@@ -79,6 +79,8 @@ namespace Medical
                 libRocketPlugin.RocketInterface.Instance.PixelsPerInch = systemOverride.getValue("PixelsPerInch", libRocketPlugin.RocketInterface.DefaultPixelsPerInch);
                 AllowUnsignedDllPlugins = systemOverride.getValue("AllowUnsignedDllPlugins", false);
                 AllowUnsignedDataFilePlugins = systemOverride.getValue("AllowUnsignedDataFilePlugins", false);
+                CertificateStoreTrustedRoot = systemOverride.getValue("CertificateStoreTrustedRoot", (String)null);
+                CertificateStoreTrustedSignature = systemOverride.getValue("CertificateStoreTrustedSignature", (String)null);
             }
 #endif
             //Fix up paths based on the build name
@@ -311,6 +313,18 @@ namespace Medical
         public static bool AllowUnsignedDllPlugins { get; private set; }
 
         public static bool AllowUnsignedDataFilePlugins { get; private set; }
+
+        public static String CertificateStoreTrustedRoot { get; private set; }
+
+        public static String CertificateStoreTrustedSignature { get; private set; }
+
+        public static bool OverrideCertificateStore
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(CertificateStoreTrustedRoot) && !String.IsNullOrEmpty(CertificateStoreTrustedSignature);
+            }
+        }
 #endif
 
         public static String DefaultScene

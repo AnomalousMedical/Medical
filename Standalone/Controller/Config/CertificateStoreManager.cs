@@ -26,6 +26,17 @@ namespace Medical
         {
             Thread t = new Thread((arg) =>
             {
+                X509Certificate trustRoot = LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalRoot.cer");
+                X509Certificate trustedSignature = LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalCertificateStore.cer");
+
+                #if ALLOW_OVERRIDE
+                if (MedicalConfig.OverrideCertificateStore)
+                {
+                    trustRoot = LoadOverrideCertificate(MedicalConfig.CertificateStoreTrustedRoot);
+                    trustedSignature = LoadOverrideCertificate(MedicalConfig.CertificateStoreTrustedSignature);
+                }
+                #endif
+
                 ServerConnection serverConnection = new ServerConnection(certificateStoreUrl);
                 if (File.Exists(certificateStoreFile))
                 {
@@ -35,7 +46,7 @@ namespace Medical
                         {
                             byte[] bytes = new byte[fs.Length];
                             fs.Read(bytes, 0, bytes.Length);
-                            CertificateStore = CertificateStore.fromSignedBytes(bytes, LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalRoot.cer"), LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalCertificateStore.cer"));
+                            CertificateStore = CertificateStore.fromSignedBytes(bytes, trustRoot, trustedSignature);
                         }
                         serverConnection.addArgument("clientIssueDate", CertificateStore.IssueDate.Ticks.ToString());
                     }
@@ -57,7 +68,7 @@ namespace Medical
                             {
                                 byte[] bytes = new byte[responseStream.Length];
                                 responseStream.Read(bytes, 0, bytes.Length);
-                                CertificateStore = CertificateStore.fromSignedBytes(bytes, LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalRoot.cer"), LoadEmbeddedCertificate("Medical.Resources.AnomalousMedicalCertificateStore.cer"));
+                                CertificateStore = CertificateStore.fromSignedBytes(bytes, trustRoot, trustedSignature);
                                 using (FileStream fs = File.Open(certificateStoreFile, FileMode.Create, FileAccess.Write))
                                 {
                                     fs.Write(bytes, 0, bytes.Length);
@@ -123,10 +134,23 @@ namespace Medical
         {
             using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(name))
             {
-                byte[] rawCert = new byte[stream.Length];
-                stream.Read(rawCert, 0, rawCert.Length);
-                return new X509Certificate(rawCert);
+                return ReadCertificateFromStream(stream);
             }
+        }
+
+        private static X509Certificate LoadOverrideCertificate(String fileName)
+        {
+            using (Stream stream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                return ReadCertificateFromStream(stream);
+            }
+        }
+
+        private static X509Certificate ReadCertificateFromStream(Stream stream)
+        {
+            byte[] rawCert = new byte[stream.Length];
+            stream.Read(rawCert, 0, rawCert.Length);
+            return new X509Certificate(rawCert);
         }
     }
 }
