@@ -29,7 +29,7 @@
     <AssemblyName>BulletWrapper</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
-  <UsingTask TaskName="BuildXCode" AssemblyFile="$(MSBUILD_EXT_HOME)\Anomalous\bin\Release\AnomalousMSBuild.dll" />
+  <UsingTask TaskName="BuildXCode" AssemblyFile="..\..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
   <!-- Modify the OutputFiles as needed for each project. -->
   <ItemGroup>
     <OutputFiles Include="build\Release\libOSHelper.dylib" />
@@ -38,7 +38,7 @@
     <BuildXCode Configuration="$(Configuration)" />
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="../../$(Configuration)" />
   </Target>
-  <UsingTask TaskName="CleanXCode" AssemblyFile="$(MSBUILD_EXT_HOME)\Anomalous\bin\Release\AnomalousMSBuild.dll" />
+  <UsingTask TaskName="CleanXCode" AssemblyFile="..\..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
   <Target Name="Clean">
     <CleanXCode />
   </Target>
