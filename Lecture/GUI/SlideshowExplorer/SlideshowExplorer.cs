@@ -178,16 +178,23 @@ namespace Lecture.GUI
 
         void showOpenProjectDialog()
         {
-            slideEditController.stopPlayingTimelines();
-            FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", "", false);
-            fileDialog.showModal((result, paths) =>
+            try
             {
-                if (result == NativeDialogResult.OK)
+                slideEditController.stopPlayingTimelines();
+                FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", "", false);
+                fileDialog.showModal((result, paths) =>
                 {
-                    String path = paths.First();
-                    slideEditController.openProject(Path.GetDirectoryName(path), path);
-                }
-            });
+                    if (result == NativeDialogResult.OK)
+                    {
+                        String path = paths.First();
+                        slideEditController.openProject(Path.GetDirectoryName(path), path);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("{0} loading the project. Message {1}.", ex.GetType().Name, ex.Message), "Project Load Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         void ProjectExplorer_Resized(object sender, EventArgs e)
