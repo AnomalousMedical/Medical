@@ -77,6 +77,9 @@ namespace Medical
                 Cracked = systemOverride.getValue("Cracked", Cracked);
                 BuildName = systemOverride.getValue("CustomBuildName", BuildName);
                 libRocketPlugin.RocketInterface.Instance.PixelsPerInch = systemOverride.getValue("PixelsPerInch", libRocketPlugin.RocketInterface.DefaultPixelsPerInch);
+                float pixelScale = systemOverride.getValue("PixelScale", 1.0f);
+                MyGUIPlugin.MyGUIInterface.ScaleFactor = pixelScale;
+                libRocketPlugin.RocketInterface.Instance.PixelScale = pixelScale;
                 AllowUnsignedDllPlugins = systemOverride.getValue("AllowUnsignedDllPlugins", false);
                 AllowUnsignedDataFilePlugins = systemOverride.getValue("AllowUnsignedDataFilePlugins", false);
                 CertificateStoreTrustedRoot = systemOverride.getValue("CertificateStoreTrustedRoot", (String)null);

@@ -28,21 +28,21 @@ namespace Medical
         private AnatomyTree anatomyTree = new AnatomyTree();
 
         private ImageRenderer imageRenderer;
-        private ImageAtlas imageAtlas = new ImageAtlas("AntomyThumbnails", new IntSize2(50, 50));
+        private ImageAtlas imageAtlas;
 
         private AnatomyPickingMode pickingMode;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
         public event EventDelegate<AnatomyController, bool> ShowPremiumAnatomyChanged;
         private bool showPremiumAnatomy = true;
 
-        public AnatomyController(ImageRenderer imageRenderer)
+        public AnatomyController(ImageRenderer imageRenderer, int thumbWidth, int thumbHeight)
         {
             this.imageRenderer = imageRenderer;
             TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
 
             imageProperties = new ImageRendererProperties();
-            imageProperties.Width = 50;
-            imageProperties.Height = 50;
+            imageProperties.Width = thumbWidth;
+            imageProperties.Height = thumbHeight;
             imageProperties.UseWindowBackgroundColor = false;
             imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
             imageProperties.AntiAliasingMode = 2;
@@ -51,6 +51,8 @@ namespace Medical
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;
             imageProperties.ShowUIUpdates = false;
+
+            imageAtlas = new ImageAtlas("AntomyThumbnails", new IntSize2(thumbWidth, thumbHeight));
         }
 
         public void Dispose()

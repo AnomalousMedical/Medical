@@ -185,7 +185,7 @@ namespace Medical
             imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
 
             //Anatomy Controller
-            anatomyController = new AnatomyController(imageRenderer);
+            anatomyController = new AnatomyController(imageRenderer, ScaleHelper.Scaled(50), ScaleHelper.Scaled(50));
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);

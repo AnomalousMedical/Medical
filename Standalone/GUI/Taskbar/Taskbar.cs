@@ -21,11 +21,12 @@ namespace Medical.GUI
         public event OpenTaskMenuEvent OpenTaskMenu;
         public event Action<Taskbar> AlignmentChanged;
 
+        private int appButtonNarrowWidth = ScaleHelper.Scaled(48);
         private Layout myGUIlayout;
         private Widget taskbarWidget;
         private Button appButton;
-        private int padding = 3;
-        private IntSize2 itemSize = new IntSize2(48, 48);
+        private int padding = ScaleHelper.Scaled(3);
+        private IntSize2 itemSize;
         private LayoutContainer child;
         private TaskbarAlignment alignment = TaskbarAlignment.Top;
         private IntCoord gapCoord = new IntCoord();
@@ -35,12 +36,13 @@ namespace Medical.GUI
         private String narrowIcon;
 
         private int appButtonWideWidth;
-        private int appButtonNarrowWidth = 48;
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
         internal Taskbar(StandaloneController controller)
         {
+            itemSize = new IntSize2(appButtonNarrowWidth, appButtonNarrowWidth);
+
             myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 
             taskbarWidget = myGUIlayout.getWidget(0);

@@ -8,10 +8,10 @@ Include it before or after this file to apply your changes as needed.
 x-separator
 {
 	background: black;
-	height: 3dp;
+	height: 2sp;
 	align: center;
-	margin-left: 5dp;
-	margin-right: 5dp;
+	margin-left: 3sp;
+	margin-right: 3sp;
 	display: block;
 }
 
