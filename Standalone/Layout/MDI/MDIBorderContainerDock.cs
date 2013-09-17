@@ -14,14 +14,14 @@ namespace Medical.Controller
 
         private MDILayoutContainerAbsolute layoutContainer;
         private Widget separator;
-        private int separatorSecondSize = 5;
 
         public MDIBorderContainerDock(MDILayoutContainerAbsolute layoutContainer)
             :base(layoutContainer.CurrentDockLocation)
         {
             this.layoutContainer = layoutContainer;
             layoutContainer._setParent(this);
-            separator = Gui.Instance.createWidgetT("Widget", "MDISeparator", 0, 0, separatorSecondSize, separatorSecondSize, Align.Left | Align.Top, "Back", "");
+            int padding = layoutContainer.Padding;
+            separator = Gui.Instance.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Back", "");
             separator.MouseDrag += separator_MouseDrag;
             switch(CurrentDockLocation)
             {
@@ -48,31 +48,32 @@ namespace Medical.Controller
 
         public override void layout()
         {
+            int padding = layoutContainer.Padding;
             switch(CurrentDockLocation)
             {
                 case DockLocation.Left:
-                    separator.setPosition((Location.x + WorkingSize.Width - separatorSecondSize), Location.y);
-                    separator.setSize(separatorSecondSize, WorkingSize.Height);
+                    separator.setPosition((Location.x + WorkingSize.Width - padding), Location.y);
+                    separator.setSize(padding, WorkingSize.Height);
                     layoutContainer.Location = Location;
-                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width - padding, WorkingSize.Height);
                     break;
                 case DockLocation.Right:
                     separator.setPosition(Location.x, Location.y);
-                    separator.setSize(separatorSecondSize, WorkingSize.Height);
-                    layoutContainer.Location = new IntVector2(Location.x + separatorSecondSize, Location.y);
-                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
+                    separator.setSize(padding, WorkingSize.Height);
+                    layoutContainer.Location = new IntVector2(Location.x + padding, Location.y);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width - padding, WorkingSize.Height);
                     break;
                 case DockLocation.Top:
-                    separator.setPosition(Location.x, (Location.y + WorkingSize.Height - separatorSecondSize));
-                    separator.setSize(WorkingSize.Width, separatorSecondSize);
+                    separator.setPosition(Location.x, (Location.y + WorkingSize.Height - padding));
+                    separator.setSize(WorkingSize.Width, padding);
                     layoutContainer.Location = Location;
-                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - padding);
                     break;
                 case DockLocation.Bottom:
                     separator.setPosition(Location.x, (Location.y));
-                    separator.setSize(WorkingSize.Width, separatorSecondSize);
-                    layoutContainer.Location = new IntVector2(Location.x, Location.y + separatorSecondSize);
-                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
+                    separator.setSize(WorkingSize.Width, padding);
+                    layoutContainer.Location = new IntVector2(Location.x, Location.y + padding);
+                    layoutContainer.WorkingSize = new IntSize2(WorkingSize.Width, WorkingSize.Height - padding);
                     break;
                 default:
                     layoutContainer.Location = Location;

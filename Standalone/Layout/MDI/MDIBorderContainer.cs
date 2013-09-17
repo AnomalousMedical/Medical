@@ -15,6 +15,8 @@ namespace Medical.Controller
     /// </summary>
     public class MDIBorderContainer : MDIContainerBase, IDisposable
     {
+        private static readonly int LocationPreviewSize = ScaleHelper.Scaled(25);
+
         private MDIBorderContainerDock left;
         private MDIBorderContainerDock right;
         private MDIBorderContainerDock top;
@@ -43,22 +45,22 @@ namespace Medical.Controller
 
             left = new MDIBorderContainerDock(new MDILayoutContainerAbsolute(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Left));
             left._setParent(this);
-            leftContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
+            leftContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, LocationPreviewSize, LocationPreviewSize, Align.Left | Align.Top, "Info", "");
             leftContainerWidget.Visible = false;
 
             right = new MDIBorderContainerDock(new MDILayoutContainerAbsolute(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Right));
             right._setParent(this);
-            rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
+            rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, LocationPreviewSize, LocationPreviewSize, Align.Left | Align.Top, "Info", "");
             rightContainerWidget.Visible = false;
 
             top = new MDIBorderContainerDock(new MDILayoutContainerAbsolute(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Top));
             top._setParent(this);
-            topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
+            topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, LocationPreviewSize, LocationPreviewSize, Align.Left | Align.Top, "Info", "");
             topContainerWidget.Visible = false;
 
             bottom = new MDIBorderContainerDock(new MDILayoutContainerAbsolute(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Bottom));
             bottom._setParent(this);
-            bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
+            bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, LocationPreviewSize, LocationPreviewSize, Align.Left | Align.Top, "Info", "");
             bottomContainerWidget.Visible = false;
 
             

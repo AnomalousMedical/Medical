@@ -37,7 +37,7 @@ namespace Medical.Controller
         /// Constructor
         /// </summary>
         public MDILayoutManager()
-            :this(5)
+            :this(ScaleHelper.Scaled(5))
         {
 
         }
