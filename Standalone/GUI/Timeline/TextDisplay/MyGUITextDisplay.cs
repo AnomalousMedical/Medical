@@ -176,16 +176,18 @@ namespace Medical.GUI
             }
         }
 
+        private int unscaledFontHeight = 0;
         public int FontHeight
         {
             get
             {
-                return textBox.FontHeight;
+                return unscaledFontHeight;
             }
             set
             {
                 textBox.Font = textFactory.getMyGUIFont(fontName, value);
-                textBox.FontHeight = value;
+                unscaledFontHeight = value;
+                textBox.FontHeight = ScaleHelper.Scaled(value);
             }
         }
 
