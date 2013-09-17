@@ -11,8 +11,12 @@ namespace Medical.GUI.AnomalousMvc
     {
         private ViewHostComponent child;
         private int widgetHeight;
-        private const int BUTTON_AREA_HEIGHT = 36;
-        private const int BUTTON_PADDING = 3;
+        private static int BUTTON_AREA_HEIGHT = ScaleHelper.Scaled(36);
+        private static int BUTTON_PADDING = ScaleHelper.Scaled(3);
+        private static int BUTTON_Y = ScaleHelper.Scaled(4);
+        private static int BUTTON_HEIGHT = ScaleHelper.Scaled(28);
+        private static int BUTTON_X_BIG_WIDTH = ScaleHelper.Scaled(24);
+        private static int BUTTON_X_BIG_HEIGHT = ScaleHelper.Scaled(20);
 
         private List<Button> buttons = new List<Button>();
         private List<Button> variableSizeButtons = new List<Button>();
@@ -40,7 +44,7 @@ namespace Medical.GUI.AnomalousMvc
 
             foreach (ButtonDefinitionBase buttonDef in buttonDefinitions)
             {
-                buttonDef.createButton(buttonFactory, currentX, 4, buttonWidth - BUTTON_PADDING, 28);                
+                buttonDef.createButton(buttonFactory, currentX, BUTTON_Y, buttonWidth - BUTTON_PADDING, BUTTON_HEIGHT);
             }
         }
 
@@ -126,7 +130,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public void addCloseButton(CloseButtonDefinition buttonDefinition, int x, int y, int width, int height)
         {
-            addButton((Button)widget.createWidgetT("Button", "ButtonXBig", x, y + 4, 24, 20, Align.Default, ""), buttonDefinition);
+            addButton((Button)widget.createWidgetT("Button", "ButtonXBig", x, y + BUTTON_Y, BUTTON_X_BIG_WIDTH, BUTTON_X_BIG_HEIGHT, Align.Default, ""), buttonDefinition);
         }
 
         private void addButton(Button button, ButtonDefinitionBase buttonDef)

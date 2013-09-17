@@ -11,8 +11,13 @@ namespace Medical.GUI.AnomalousMvc
 {
     class NavigationComponent : LayoutComponent
     {
+        private static int NavButtonWidth = ScaleHelper.Scaled(78);
+        private static int NavButtonHeight = ScaleHelper.Scaled(64);
+        private static int CaptionPadding = ScaleHelper.Scaled(10);
+        private static IntVector2 FlowStartLocation = new IntVector2(ScaleHelper.Scaled(4), ScaleHelper.Scaled(10));
+
         private ScrollView iconScrollView;
-        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10, new IntVector2(4, 10));
+        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, CaptionPadding, FlowStartLocation);
         private List<NavigationButton> buttons = new List<NavigationButton>();
         private NavigationButton selectedButton;
         private NavigationView view;
@@ -27,7 +32,7 @@ namespace Medical.GUI.AnomalousMvc
 
             iconScrollView = (ScrollView)widget;
             IntSize2 size = iconScrollView.CanvasSize;
-            size.Width = 10;
+            size.Width = CaptionPadding;
             iconScrollView.CanvasSize = size;
         }
 
@@ -80,11 +85,11 @@ namespace Medical.GUI.AnomalousMvc
 
         private void addButton(String action, String text, String imageKey)
         {
-            Button button = iconScrollView.createWidgetT("Button", "VerticalIconTextButton", 0, 0, 78, 64, Align.Default, "") as Button;
+            Button button = iconScrollView.createWidgetT("Button", "VerticalIconTextButton", 0, 0, NavButtonWidth, NavButtonHeight, Align.Default, "") as Button;
             button.Caption = text;
             button.ForwardMouseWheelToParent = true;
             int captionWidth = (int)button.getTextSize().Width;
-            button.setSize(captionWidth + 10, button.Height);
+            button.setSize(captionWidth + CaptionPadding, button.Height);
             button.ImageBox.setItemResource(imageKey);
             NavigationButton navButton = new NavigationButton(button);
             navButton.Clicked += new EventDelegate<NavigationButton>(navButton_Clicked);
