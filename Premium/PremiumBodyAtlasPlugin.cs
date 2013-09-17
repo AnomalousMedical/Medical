@@ -34,7 +34,7 @@ namespace Medical
         public PremiumBodyAtlasPlugin(StandaloneController standaloneController)
         {
             this.licenseManager = standaloneController.App.LicenseManager;
-            bookmarksController = new BookmarksController(standaloneController);
+            bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100));
         }
 
         public void Dispose()

@@ -10,6 +10,11 @@ namespace Lecture.GUI
 {
     class SlideTaskbar : LayoutComponent
     {
+        private static int TaskButtonTop = ScaleHelper.Scaled(20);
+        private static int TaskButtonWidth = ScaleHelper.Scaled(48);
+        private static int TaskButtonHeight = ScaleHelper.Scaled(48);
+        private static int TaskButtonPadding = ScaleHelper.Scaled(2);
+
         private String currentFile;
         private SlideTaskbarView view;
         private TextBox idLabel;
@@ -27,13 +32,13 @@ namespace Lecture.GUI
             int left = 1;
             foreach (Task task in view.Tasks)
             {
-                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, 20, 48, 48, Align.Left | Align.Top, task.UniqueName);
+                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, TaskButtonTop, TaskButtonWidth, TaskButtonHeight, Align.Left | Align.Top, task.UniqueName);
                 taskButton.UserObject = task;
                 taskButton.NeedToolTip = true;
                 taskButton.ImageBox.setItemResource(task.IconName);
                 taskButton.MouseButtonClick += new MyGUIEvent(taskButton_MouseButtonClick);
                 taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
-                left += taskButton.Width + 2;
+                left += taskButton.Width + TaskButtonPadding;
             }
         }
 

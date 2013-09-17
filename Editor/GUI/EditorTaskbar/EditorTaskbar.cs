@@ -9,6 +9,11 @@ namespace Medical.GUI
 {
     class EditorTaskbar : LayoutComponent
     {
+        private static int TaskButtonTop = ScaleHelper.Scaled(20);
+        private static int TaskButtonWidth = ScaleHelper.Scaled(48);
+        private static int TaskButtonHeight = ScaleHelper.Scaled(48);
+        private static int TaskButtonPadding = ScaleHelper.Scaled(2);
+
         private String closeAction;
         private List<EditorTaskbarFileButton> fileButtons = new List<EditorTaskbarFileButton>();
         private EditorController editorController;
@@ -33,13 +38,13 @@ namespace Medical.GUI
             int left = 1;
             foreach (Task task in view.Tasks)
             {
-                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, 20, 48, 48, Align.Left | Align.Top, task.UniqueName);
+                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, TaskButtonTop, TaskButtonWidth, TaskButtonHeight, Align.Left | Align.Top, task.UniqueName);
                 taskButton.UserObject = task;
                 taskButton.NeedToolTip = true;
                 taskButton.ImageBox.setItemResource(task.IconName);
                 taskButton.MouseButtonClick += new MyGUIEvent(taskButton_MouseButtonClick);
                 taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
-                left += taskButton.Width + 2;
+                left += taskButton.Width + TaskButtonPadding;
             }
 
             resourceCache.CachedResourceAdded += ResourceCache_CachedResourceAdded;

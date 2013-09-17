@@ -44,7 +44,7 @@ namespace Medical.GUI
             trash = (ImageBox)widget.findWidget("TrashPanel");
             trash.Visible = false;
 
-            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, bookmarksController.BookmarkWidth, bookmarksController.BookmarkHeight, Align.Default, "Info", "BookmarksDragIconPreview");
             dragIconPreview.Visible = false;
 
             Button closeButton = (Button)widget.findWidget("CloseButton");

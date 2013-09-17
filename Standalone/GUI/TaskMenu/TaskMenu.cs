@@ -81,7 +81,7 @@ namespace Medical.GUI
 
             this.Hidden += new EventHandler(TaskMenu_Hidden);
 
-            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, 32, 32, Align.Default, "Info", "TaskMenuDragIconPreview");
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, ScaleHelper.Scaled(32), ScaleHelper.Scaled(32), Align.Default, "Info", "TaskMenuDragIconPreview");
             dragIconPreview.Visible = false;
 
             Button closeButton = (Button)widget.findWidget("CloseButton");

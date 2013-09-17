@@ -22,21 +22,23 @@ namespace Medical.Controller
         public event BookmarkDelegate BookmarkRemoved;
 
         private ImageRendererProperties imageProperties;
-        private ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new IntSize2(100, 100));
+        private ImageAtlas imageAtlas;
 
         private StandaloneController standaloneController;
         private BookmarkDelegate mainThreadCallback;
 
         private bool cancelBackgroundLoading = false;
 
-        public BookmarksController(StandaloneController standaloneController)
+        public BookmarksController(StandaloneController standaloneController, int width, int height)
         {
             this.standaloneController = standaloneController;
             mainThreadCallback = fireBookmarkAdded;
 
+            imageAtlas = new ImageAtlas("Bookmarks", new IntSize2(width, height));
+
             imageProperties = new ImageRendererProperties();
-            imageProperties.Width = 100;
-            imageProperties.Height = 100;
+            imageProperties.Width = width;
+            imageProperties.Height = height;
             imageProperties.UseWindowBackgroundColor = false;
             imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
             imageProperties.AntiAliasingMode = 2;
@@ -154,6 +156,22 @@ namespace Medical.Controller
                     }
                 });
             backgroundLoaderThread.Start();
+        }
+
+        public int BookmarkWidth
+        {
+            get
+            {
+                return imageProperties.Width;
+            }
+        }
+
+        public int BookmarkHeight
+        {
+            get
+            {
+                return imageProperties.Height;
+            }
         }
 
         private void fireBookmarkAdded(Bookmark bookmark)
