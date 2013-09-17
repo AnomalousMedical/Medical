@@ -9,6 +9,9 @@ namespace Medical.GUI
 {
     class PropertiesFormButton : PropertiesFormComponent
     {
+        private static int ButtonWidth = ScaleHelper.Scaled(100);
+        private static int ButtonHeight = ScaleHelper.Scaled(25);
+
         private MyGUILayoutContainer layoutContainer;
         private EditInterfaceCommand command;
         private Button button;
@@ -20,7 +23,7 @@ namespace Medical.GUI
             this.editInterface = editInterface;
             this.uiCallback = uiCallback;
             this.command = command;
-            button = (Button)parent.createWidgetT("Button", "Button", 0, 0, 100, 25, Align.Default, "");
+            button = (Button)parent.createWidgetT("Button", "Button", 0, 0, ButtonWidth, ButtonHeight, Align.Default, "");
             button.Caption = command.Name;
             button.ForwardMouseWheelToParent = true;
             layoutContainer = new MyGUILayoutContainer(button);

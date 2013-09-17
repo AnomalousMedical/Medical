@@ -68,14 +68,14 @@ namespace Medical.GUI
             if (anatomyController.ShowPremiumAnatomy)
             {
                 individualButton.Visible = true;
-                noneButton.setPosition(8, 137);
-                widget.setSize(widget.Width, 205);
+                noneButton.setPosition(ScaleHelper.Scaled(8), ScaleHelper.Scaled(137));
+                widget.setSize(widget.Width, ScaleHelper.Scaled(205));
             }
             else
             {
                 individualButton.Visible = false;
                 noneButton.setPosition(individualButton.Left, individualButton.Top);
-                widget.setSize(widget.Width, 137);
+                widget.setSize(widget.Width, ScaleHelper.Scaled(137));
             }
         }
     }

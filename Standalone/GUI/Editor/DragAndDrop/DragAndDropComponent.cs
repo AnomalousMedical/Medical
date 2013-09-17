@@ -35,7 +35,7 @@ namespace Medical.GUI
             dragItems.SuppressLayout = false;
             dragItems.layout();
 
-            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, 32, 32, Align.Default, "Info", view.Name + "DragAndDropPreview");
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, ScaleHelper.Scaled(32), ScaleHelper.Scaled(32), Align.Default, "Info", view.Name + "DragAndDropPreview");
             dragIconPreview.Visible = false;
         }
 
