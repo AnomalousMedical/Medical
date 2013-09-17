@@ -22,7 +22,7 @@ namespace Medical.GUI
         private IntSize2 undockedMinSize;
         private IntSize2 undockedMaxSize;
         private static IntSize2 DOCKED_MIN_SIZE = new IntSize2();
-        private static IntSize2 DOCKED_MAX_SIZE = new IntSize2(3000, 3000);
+        private static IntSize2 DOCKED_MAX_SIZE = new IntSize2(ScaleHelper.Scaled(3000), ScaleHelper.Scaled(3000));
         private String originalLayer;
         protected IntSize2 dockedSize;
 
@@ -248,9 +248,9 @@ namespace Medical.GUI
         {
             ConfigSection section = configFile.createOrRetrieveConfigSection(persistName);
             loadDockProperties(section);
-            String location = section.getValue("Location", desiredLocation.ToString());
+            String location = section.getValue("Location", () => desiredLocation.ToString());
             desiredLocation.fromString(location);
-            String dockedSizeStr = section.getValue("DockedSize", dockedSize.ToString());
+            String dockedSizeStr = section.getValue("DockedSize", () => dockedSize.ToString());
             dockedSize.fromString(dockedSizeStr);
 
             if (CurrentDockLocation == DockLocation.Floating)
@@ -291,7 +291,7 @@ namespace Medical.GUI
         {
             try
             {
-                CurrentDockLocation = (DockLocation)Enum.Parse(typeof(DockLocation), section.getValue("DockLocation", CurrentDockLocation.ToString()));
+                CurrentDockLocation = (DockLocation)Enum.Parse(typeof(DockLocation), section.getValue("DockLocation", () => CurrentDockLocation.ToString()));
             }
             catch (Exception)
             {

@@ -19,7 +19,7 @@ namespace Medical.GUI
         {
             ConfigSection section = configFile.createOrRetrieveConfigSection(PersistName);
             loadDockProperties(section);
-            String location = section.getValue("Location", DesiredLocation.ToString());
+            String location = section.getValue("Location", () => DesiredLocation.ToString());
             Rect desiredLocation = new Rect();
             desiredLocation.fromString(location);
 
