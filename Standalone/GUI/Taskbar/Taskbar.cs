@@ -391,7 +391,7 @@ namespace Medical.GUI
         private void layoutTaskbarVertical()
         {
             appButton.ImageBox.setItemResource(narrowIcon);
-            appButton.ImageBox.setSize(32, 32);
+            appButton.ImageBox.setSize(ScaleHelper.Scaled(32), ScaleHelper.Scaled(32));
             appButton.setSize(appButtonNarrowWidth, appButton.Height);
             Vector2 startLocation = new Vector2(appButton.Left, 0);
             Vector2 currentLocation = startLocation;
@@ -458,7 +458,7 @@ namespace Medical.GUI
         private void layoutTaskbarHorizontal()
         {
             appButton.ImageBox.setItemResource(wideIcon);
-            appButton.ImageBox.setSize(130, 32);
+            appButton.ImageBox.setSize(ScaleHelper.Scaled(130), ScaleHelper.Scaled(32));
             appButton.setSize(appButtonWideWidth, appButton.Height);
             Vector2 startLocation = new Vector2(0, appButton.Top);
             Vector2 currentLocation = startLocation;
