@@ -159,9 +159,9 @@ namespace Medical
             subEntity.setCustomParameter(0, alphaQuat);
             if (disableOnHidden)
             {
-                subEntity.setVisible(alpha != 0.0f);
+                subEntity.setVisible(alpha >= 0.00008f);
             }
-            if (alpha == 1.0f)
+            if (alpha >= 0.9999f)
             {
                 subEntity.setMaterialName(baseMaterialName);
                 entity.setRenderQueueGroup(0);

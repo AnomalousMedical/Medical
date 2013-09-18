@@ -104,7 +104,7 @@ namespace Medical
                 this.playPrePostActions = playPrePostActions;
                 activeTimeline = timeline;
                 activeTimeline.TimelineController = this;
-                if (startTime == 0.0f)
+                if (startTime <= 0.00008f)
                 {
                     activeTimeline.start(playPrePostActions);
                 }

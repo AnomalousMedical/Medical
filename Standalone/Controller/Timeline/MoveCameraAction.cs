@@ -73,7 +73,7 @@ namespace Medical
                     }
                     window.immediatlySetPosition(translation.lerp(ref finalTrans, ref percent), lookAt.lerp(ref finalLookAt, ref percent));
                     float time = Duration - currentTime;
-                    if (time == 0.0f)
+                    if (time <= 0.001f)
                     {
                         time = 0.001f;
                     }
