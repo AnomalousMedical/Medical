@@ -60,6 +60,11 @@ namespace Medical.GUI
             }
         }
 
+        /// <summary>
+        /// Call to load dialog layouts, not required to be called every time the program 
+        /// runs if it is not appropriate to load dialog info.
+        /// </summary>
+        /// <param name="windowConfig"></param>
         public void loadDialogLayout(ConfigFile windowConfig)
         {
             foreach (DialogEntry dialog in dialogs)
