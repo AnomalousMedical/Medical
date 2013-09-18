@@ -398,11 +398,11 @@ namespace Medical.GUI
             {
                 Anatomy selectedAnatomy = (Anatomy)selectedItem.UserObject;
                 TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
-                if (transparencyChanger.CurrentAlpha == 1.0f)
+                if (transparencyChanger.CurrentAlpha >= 0.9999f)
                 {
                     transparencyChanger.smoothBlend(0.7f, MedicalConfig.CameraTransitionTime);
                 }
-                else if (transparencyChanger.CurrentAlpha == 0.0f)
+                else if (transparencyChanger.CurrentAlpha <= 0.00008f)
                 {
                     transparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime);
                 }

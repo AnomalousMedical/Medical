@@ -99,7 +99,7 @@ namespace Medical
             currentAlpha = alpha;
             alphaQuat.w = alpha;
             subEntity.setCustomParameter(0, alphaQuat);
-            if (alpha == 1.0f)
+            if (alpha >= 0.9999f)
             {
                 if (status != TransparencyStatus.Solid)
                 {
@@ -110,7 +110,7 @@ namespace Medical
                     //entity.setMaterialLodBias(1.0f, 0, 0);
                 }
             }
-            else if (alpha == 0.0f)
+            else if (alpha <= 0.00008f)
             {
                 if (status != TransparencyStatus.Hidden)
                 {
