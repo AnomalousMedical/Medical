@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanelNoTranspo" position="132 162 181 166" layer="Overlapped">
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelSkin" position="132 162 181 166" layer="Overlapped">
         <Widget type="TextBox" skin="TextBox" position="4 4 45 15">
-            <Property key="Widget_Caption" value="Colors"/>
+            <Property key="Caption" value="Colors"/>
         </Widget>
         <Widget type="Widget" skin="SepUpHSkin" position="1 16 180 1"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 20 177 120" name="ColorGrid">
-            <Property key="ScrollView_CanvasSize" value="177 120"/>
-            <Property key="ScrollView_VisibleVScroll" value="false"/>
-            <Property key="ScrollView_VisibleHScroll" value="false"/>
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="CanvasSize" value="177 120"/>
+            <Property key="VisibleVScroll" value="false"/>
+            <Property key="VisibleHScroll" value="false"/>
+            <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ItemWidth" value="14"/>
             <UserString key="ItemHeight" value="14"/>
             <UserString key="ButtonSkin" value="ColorSwatchButton"/>
@@ -18,8 +18,9 @@
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
         <Widget type="Button" skin="Button" position="4 143 88 20" align="Left Bottom" name="MoreColorsButton">
-            <Property key="Widget_Caption" value="More Colors"/>
-            <Property key="Text_TextAlign" value="HCenter VCenter"/>
+            <Property key="Caption" value="More Colors"/>
+            <Property key="TextAlign" value="HCenter VCenter"/>
         </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

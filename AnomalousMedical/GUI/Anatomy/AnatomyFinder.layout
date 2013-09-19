@@ -4,7 +4,7 @@
         <Property key="Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="EditBox" skin="EditBox" position="1 5 161 23" align="HStretch Top" name="SearchBox"/>
+        <Widget type="EditBox" skin="EditBox" position="0 5 162 23" align="HStretch Top" name="SearchBox"/>
         <Widget type="Button" skin="Button" position="164 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Caption" value="Clear"/>
         </Widget>
@@ -20,4 +20,5 @@
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

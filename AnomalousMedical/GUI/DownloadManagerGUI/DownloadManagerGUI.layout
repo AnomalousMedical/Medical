@@ -53,7 +53,7 @@
             <Widget type="Button" skin="Button" position="2 109 91 26" name="CancelButton">
                 <Property key="Caption" value="Cancel"/>
             </Widget>
-            <Widget type="ProgressBar" skin="ProgressBarFill" position="12 192 306 27" align="HStretch Top" name="DownloadProgressBar">
+            <Widget type="ProgressBar" skin="ProgressBar" position="12 192 306 27" align="HStretch Top" name="DownloadProgressBar">
                 <Property key="Range" value="100"/>
                 <Property key="RangePosition" value="0"/>
             </Widget>

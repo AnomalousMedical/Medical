@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelSkin" position="68 216 360 70" layer="Overlapped">
-        <Widget type="ProgressBar" skin="ProgressBarFill" position="4 20 352 18" align="HStretch Top" name="RenderingProgress">
+        <Widget type="ProgressBar" skin="ProgressBar" position="4 20 352 18" align="HStretch Top" name="RenderingProgress">
             <Property key="Range" value="100"/>
             <Property key="RangePosition" value="0"/>
         </Widget>

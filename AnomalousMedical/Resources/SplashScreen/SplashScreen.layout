@@ -7,7 +7,7 @@
         <UserString key="ImageWidth" value="1920"/>
         <UserString key="ImageHeight" value="1200"/>
         <Widget type="Widget" skin="PanelEmpty" position="2 2 1024 768" layer="Main" name="WidgetPanel">
-            <Widget type="ProgressBar" skin="ProgressBarFill" position="240 742 544 25" align="HStretch Bottom" name="SplashScreen/ProgressBar"/>
+            <Widget type="ProgressBar" skin="ProgressBar" position="240 742 544 25" align="HStretch Bottom" name="SplashScreen/ProgressBar"/>
             <Widget type="TextBox" skin="TextBox" position="240 726 544 15" align="HStretch Bottom" name="SplashScreen/Status">
                 <Property key="Caption" value="Loading..."/>
                 <Property key="TextAlign" value="Left Top"/>

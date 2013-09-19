@@ -34,7 +34,7 @@
             <Widget type="Button" skin="ButtonXBig" position="689 1 24 20" align="Right Top" name="Open/CancelButton">
                 <Property key="Caption" value="Cancel"/>
             </Widget>
-            <Widget type="ProgressBar" skin="ProgressBarFill" position="571 93 140 23" align="Right Top" name="Open/LoadingProgress"/>
+            <Widget type="ProgressBar" skin="ProgressBar" position="571 93 140 23" align="Right Top" name="Open/LoadingProgress"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="220 207 275 87" align="Center" name="Loading">
             <Property key="Caption" value="Loading"/>

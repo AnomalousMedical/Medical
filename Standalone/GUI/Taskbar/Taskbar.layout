@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="77 136 147 56" layer="Back">
+    <Widget type="Widget" skin="TaskbarSkin" position="77 136 147 56" layer="Back">
         <Widget type="Button" skin="AppButton" position="2 4 134 48" name="AppButton">
             <Property key="ImageResource" value="AppButton/Image"/>
         </Widget>
