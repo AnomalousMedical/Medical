@@ -265,16 +265,19 @@ namespace Medical.GUI
         {
             MessageBox.show("This will reset all window positions back to their defaults.\nIt will remove all icons from the Task Bar and you will have to put them back.\nAnomalous Medical will need to restart and you will lose any unsaved data.\nAre you sure you want to continue?", "Restart", MessageBoxStyle.IconInfo | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
             {
-                if (guiManager.deleteWindowsFile())
+                if (result == MessageBoxStyle.Yes)
                 {
-                    if (RequestRestart != null)
+                    if (guiManager.deleteWindowsFile())
                     {
-                        RequestRestart.Invoke(this, EventArgs.Empty);
+                        if (RequestRestart != null)
+                        {
+                            RequestRestart.Invoke(this, EventArgs.Empty);
+                        }
                     }
-                }
-                else
-                {
-                    MessageBox.show(String.Format("Could not delete windows.ini file located at '{0}'.\nPlease delete this file manually to reset your UI.", MedicalConfig.WindowsFile), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    else
+                    {
+                        MessageBox.show(String.Format("Could not delete windows.ini file located at '{0}'.\nPlease delete this file manually to reset your UI.", MedicalConfig.WindowsFile), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    }
                 }
             });
         }
