@@ -14,7 +14,6 @@
             <Property key="Caption" value="Choose Scene"/>
             <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
-        <Widget type="Widget" skin="SepUpVSkin" position="4 28 555 2" align="HStretch Top"/>
         <Widget type="TextBox" skin="TextBox" position="145 136 275 87" align="Center" name="Loading">
             <Property key="Caption" value="Loading"/>
             <Property key="TextColour" value="#FFFFFF"/>
@@ -22,4 +21,5 @@
             <Property key="FontName" value="TimelineText.100"/>
         </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

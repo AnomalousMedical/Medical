@@ -4,7 +4,6 @@
         <Widget type="TextBox" skin="TextBox" position="4 4 45 15">
             <Property key="Caption" value="Colors"/>
         </Widget>
-        <Widget type="Widget" skin="SepUpHSkin" position="1 16 180 1"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 20 177 120" name="ColorGrid">
             <Property key="CanvasSize" value="177 120"/>
             <Property key="VisibleVScroll" value="false"/>

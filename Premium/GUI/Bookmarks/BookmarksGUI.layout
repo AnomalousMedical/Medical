@@ -21,7 +21,6 @@
             <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="318 7 24 20" align="Right Top" name="CloseButton"/>
-        <Widget type="Widget" skin="SepUpVSkin" position="8 51 332 2" align="HStretch Top"/>
         <Widget type="ImageBox" skin="ImageBox" position="123 426 100 100" align="HCenter Bottom" name="TrashPanel">
             <Property key="ImageResource" value="Bookmarks/Trash"/>
         </Widget>

@@ -67,6 +67,5 @@
                 <Property key="Caption" value="Mono (Some Versions)"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="SepUpHSkin" position="1 162 349 2"/>
     </Widget>
 </MyGUI>
