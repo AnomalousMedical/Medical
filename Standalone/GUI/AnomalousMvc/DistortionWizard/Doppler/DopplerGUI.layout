@@ -56,7 +56,7 @@
                 <Property key="AddItem" value="Unknown"/>
                 <Property key="ReadOnly" value="true"/>
             </Widget>
-            <Widget type="Widget" skin="PanelSecondary" position="4 244 180 170">
+            <Widget type="Widget" skin="BorderedPanel" position="4 244 180 170">
                 <Widget type="TextBox" skin="TextBox" position="4 4 42 14">
                     <Property key="Caption" value="Stage"/>
                 </Widget>
@@ -84,7 +84,7 @@
                 <Widget type="Button" skin="RadioButton" position="6 150 57 15" name="DopplerPanel/StageVb">
                     <Property key="Caption" value="Vb"/>
                 </Widget>
-                <Widget type="Widget" skin="PanelSecondary" position="78 4 98 76" name="DopplerPanel/RDAReductionGroupBox">
+                <Widget type="Widget" skin="BorderedPanel" position="78 4 98 76" name="DopplerPanel/RDAReductionGroupBox">
                     <Property key="Enabled" value="true"/>
                     <Widget type="TextBox" skin="TextBox" position="4 4 92 15">
                         <Property key="Caption" value="RDA Reduction"/>

@@ -42,7 +42,7 @@
                 <Property key="AddItem" value="Osteophyte"/>
                 <Property key="Static" value="true"/>
             </Widget>
-            <Widget type="Widget" skin="PanelSecondary" position="4 200 186 161">
+            <Widget type="Widget" skin="BorderedPanel" position="4 200 186 161">
                 <Widget type="TextBox" skin="TextBox" position="4 4 42 15">
                     <Property key="Caption" value="Stage"/>
                 </Widget>
@@ -70,7 +70,7 @@
                 <Widget type="Button" skin="RadioButton" position="9 142 57 15" name="DiscSpace/StageVb">
                     <Property key="Caption" value="Vb"/>
                 </Widget>
-                <Widget type="Widget" skin="PanelSecondary" position="79 4 103 74" name="DiscSpace/ClockFace">
+                <Widget type="Widget" skin="BorderedPanel" position="79 4 103 74" name="DiscSpace/ClockFace">
                     <Widget type="TextBox" skin="TextBox" position="4 4 92 15">
                         <Property key="Caption" value="Clock Face"/>
                     </Widget>
@@ -84,7 +84,7 @@
                         <Property key="Caption" value="10 O&apos;Clock"/>
                     </Widget>
                 </Widget>
-                <Widget type="Widget" skin="PanelSecondary" position="79 82 103 75" name="DiscSpace/RDAReduction">
+                <Widget type="Widget" skin="BorderedPanel" position="79 82 103 75" name="DiscSpace/RDAReduction">
                     <Widget type="TextBox" skin="TextBox" position="4 4 92 15">
                         <Property key="Caption" value="RDA Reduction"/>
                     </Widget>
