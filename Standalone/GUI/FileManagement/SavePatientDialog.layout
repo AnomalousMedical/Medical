@@ -33,7 +33,7 @@
                 <Property key="Caption" value="Save"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="233 140 50 50" align="Right Top" name="Save/WarningImage">
-                <Property key="ImageResource" value="pic_CoreMessageIcon"/>
+                <Property key="ImageResource" value="MessageBoxIcon"/>
                 <Property key="ImageIndex" value="Warning"/>
                 <Property key="ImageGroup" value="Icons"/>
                 <Property key="ImageName" value="Warning"/>

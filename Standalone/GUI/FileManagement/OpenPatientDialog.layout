@@ -21,7 +21,7 @@
                 <Property key="TextColour" value="#FFFFFF"/>
             </Widget>
             <Widget type="ImageBox" skin="ImageBox" position="479 49 50 50" align="Right Top" name="Open/WarningImage">
-                <Property key="ImageResource" value="pic_CoreMessageIcon"/>
+                <Property key="ImageResource" value="MessageBoxIcon"/>
                 <Property key="ImageGroup" value="Icons"/>
                 <Property key="ImageName" value="Warning"/>
             </Widget>
