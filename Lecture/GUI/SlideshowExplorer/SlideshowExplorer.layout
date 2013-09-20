@@ -9,7 +9,7 @@
             <Property key="CanvasSize" value="199 283"/>
             <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="False"/>
-            <UserString key="ButtonSkin" value="SlidePreviewButtonGridItem"/>
+            <UserString key="ButtonSkin" value="SlidePreviewListItem"/>
         </Widget>
     </Widget>
 </MyGUI>
