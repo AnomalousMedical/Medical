@@ -336,7 +336,6 @@ namespace Medical.GUI
 
         void buildTrackActions()
         {
-            int i = 0;
             actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction)));
             actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction)));
             actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction)));

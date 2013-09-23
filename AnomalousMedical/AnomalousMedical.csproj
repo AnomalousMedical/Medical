@@ -171,7 +171,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\SplashScreen\SplashText.png" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.xml" />
-    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.png" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashIMG.png" />
     <EmbeddedResource Include="Resources\FileToolstrip.xml" />
     <EmbeddedResource Include="Resources\FileToolstrip.png" />

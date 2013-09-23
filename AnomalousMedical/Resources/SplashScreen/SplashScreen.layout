@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="ImageBox" skin="ImageBox" position="0 0 1024 768" align="Left Top" layer="Main">
-        <Property key="ImageResource" value="SplashScreen/Logo"/>
-        <Property key="ImageGroup" value="Icons"/>
-        <Property key="ImageName" value="Icon"/>
+    <Widget type="Widget" skin="PanelSkin" position="0 0 1024 768" align="Left Top" layer="Main">
+        <Property key="Colour" value="#282828"/>
         <UserString key="ImageWidth" value="1920"/>
         <UserString key="ImageHeight" value="1200"/>
         <Widget type="Widget" skin="PanelEmpty" position="2 2 1024 768" layer="Main" name="WidgetPanel">
