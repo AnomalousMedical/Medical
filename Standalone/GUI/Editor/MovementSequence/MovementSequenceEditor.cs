@@ -75,7 +75,7 @@ namespace Medical.GUI
             numberLine = new NumberLine(widget.findWidget("NumberLine") as ScrollView, timelineView);
 
             //Add tracks to timeline.
-            timelineView.addTrack("Muscle Position", Color.Red);
+            timelineView.addTrack("Muscle Position", new Color(0.8f, 0f, 0f), Color.Red);
 
             CurrentSequence = view.Sequence;
             if (view.ListenForSequenceChanges)

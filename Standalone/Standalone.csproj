@@ -780,7 +780,9 @@
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.layout" />
+    <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Disclaimer\DisclaimerGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\DiscSpace\DiscSpaceGUI.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\DistortionWizard\Doppler\DopplerGUI.layout" />
@@ -816,7 +818,9 @@
     <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorVerticalComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.layout" />
-    <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementSequenceEditor.layout" />
+    <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementSequenceEditor.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Editor\NewProjectDialog\NewProjectDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\OpenPropManager\OpenPropManager.layout" />
     <EmbeddedResource Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.layout" />
@@ -839,7 +843,9 @@
     <EmbeddedResource Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\RmlWindow\RmlWindow.layout" />
-    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout" />
+    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\DegenerationImages.png" />
     <EmbeddedResource Include="Resources\TeethMovementIcons.xml" />
     <EmbeddedResource Include="Resources\DegenerationImages.xml" />

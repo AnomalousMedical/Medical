@@ -74,9 +74,9 @@ namespace Medical.GUI
 
             //Add tracks to timeline.
             buildTrackActions();
-            foreach (TimelineActionPrototype actionProp in actionDataManager.Prototypes)
+            foreach (TimelineActionPrototype action in actionDataManager.Prototypes)
             {
-                timelineView.addTrack(actionProp.TypeName, actionProp.Color);
+                timelineView.addTrack(action.TypeName, action.NormalColor, action.SelectedColor);
             }
 
             //Enabled = false;
@@ -336,16 +336,16 @@ namespace Medical.GUI
 
         void buildTrackActions()
         {
-            actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction), new Color(128 / 255f, 0 / 255f, 255 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction), new Color(247 / 255f, 150 / 255f, 70 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction), new Color(155 / 255f, 187 / 255f, 89 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Move Camera", typeof(MoveCameraAction), new Color(192 / 255f, 80 / 255f, 77 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sequence", typeof(PlaySequenceAction), new Color(31 / 255f, 73 / 255f, 125 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Muscle Position", typeof(MusclePositionAction), new Color(255 / 255f, 0 / 255f, 0 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Show Image", typeof(ShowImageAction), new Color(31 / 255f, 73 / 255f, 125 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Show Text", typeof(ShowTextAction), new Color(31 / 255f, 255 / 255f, 125 / 255f)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sound", typeof(PlaySoundAction), new Color(0 / 255f, 0 / 255f, 0 / 255f)));
-            actionDataManager.addPrototype(new ShowPropActionPrototype(new Color(128 / 255f, 0 / 255f, 255 / 255f), propEditController));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction), Color.FromRGB(0x8000ff), Color.FromRGB(0xb062ff)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction), Color.FromRGB(0x00b050), Color.FromRGB(0x26f181)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction), Color.FromRGB(0xf58700), Color.FromRGB(0xffb800)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Move Camera", typeof(MoveCameraAction), Color.FromRGB(0x008ef0), Color.FromRGB(0x00b0f0)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Muscle Position", typeof(MusclePositionAction), Color.FromRGB(0xff0000), Color.FromRGB(0xff6300)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sequence", typeof(PlaySequenceAction), Color.FromRGB(0x8000ff), Color.FromRGB(0xb062ff)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Image", typeof(ShowImageAction), Color.FromRGB(0x00b050), Color.FromRGB(0x26f181)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Text", typeof(ShowTextAction), Color.FromRGB(0xf58700), Color.FromRGB(0xffb800)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sound", typeof(PlaySoundAction), Color.FromRGB(0x008ef0), Color.FromRGB(0x00b0f0)));
+            actionDataManager.addPrototype(new ShowPropActionPrototype(Color.FromRGB(0xff0000), Color.FromRGB(0x00b0f0), propEditController));
         }
     }
 }
