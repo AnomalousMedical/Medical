@@ -334,18 +334,32 @@ namespace Medical.GUI
             }
         }
 
+        private static readonly Color[] TrackColors = { Color.FromRGB(0xb366ff), Color.FromRGB(0x66d598), Color.FromRGB(0xf5b362), Color.FromRGB(0x60b5f0), Color.FromRGB(0xff6666) };
+        private static readonly Color[] TrackSelectedColors = { Color.FromRGB(0x8000ff), Color.FromRGB(0x00b050), Color.FromRGB(0xf58700), Color.FromRGB(0x008ef0), Color.FromRGB(0xff0000) };
+
         void buildTrackActions()
         {
-            actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction), Color.FromRGB(0x8000ff), Color.FromRGB(0xb062ff)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction), Color.FromRGB(0x00b050), Color.FromRGB(0x26f181)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction), Color.FromRGB(0xf58700), Color.FromRGB(0xffb800)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Move Camera", typeof(MoveCameraAction), Color.FromRGB(0x008ef0), Color.FromRGB(0x00b0f0)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Muscle Position", typeof(MusclePositionAction), Color.FromRGB(0xff0000), Color.FromRGB(0xff6300)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sequence", typeof(PlaySequenceAction), Color.FromRGB(0x8000ff), Color.FromRGB(0xb062ff)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Show Image", typeof(ShowImageAction), Color.FromRGB(0x00b050), Color.FromRGB(0x26f181)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Show Text", typeof(ShowTextAction), Color.FromRGB(0xf58700), Color.FromRGB(0xffb800)));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sound", typeof(PlaySoundAction), Color.FromRGB(0x008ef0), Color.FromRGB(0x00b0f0)));
-            actionDataManager.addPrototype(new ShowPropActionPrototype(Color.FromRGB(0xff0000), Color.FromRGB(0x00b0f0), propEditController));
+            int i = 0;
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Move Camera", typeof(MoveCameraAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Muscle Position", typeof(MusclePositionAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sequence", typeof(PlaySequenceAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Image", typeof(ShowImageAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Text", typeof(ShowTextAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sound", typeof(PlaySoundAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
+            actionDataManager.addPrototype(new ShowPropActionPrototype(TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)], propEditController));
+        }
+
+        int colorIndex(ref int i)
+        {
+            return i % TrackColors.Length;
+        }
+
+        int selectedIndex(ref int i)
+        {
+            return i++ % TrackColors.Length;
         }
     }
 }
