@@ -10,9 +10,8 @@ namespace Medical.GUI
     {
         private Type type;
 
-        public ShowPropSubActionPrototype(Type type, Color color, String typeName)
+        public ShowPropSubActionPrototype(Type type, String typeName)
         {
-            this.Color = color;
             this.type = type;
             this.TypeName = typeName;
         }
@@ -26,8 +25,6 @@ namespace Medical.GUI
         {
             return new PropTimelineData(action);
         }
-
-        public Color Color { get; private set; }
 
         public String TypeName { get; private set; }
     }

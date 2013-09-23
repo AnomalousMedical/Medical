@@ -25,7 +25,7 @@ namespace Medical.GUI
         {
             foreach (ShowPropSubActionPrototype data in trackData)
             {
-                timeline.addTrack(data.TypeName, data.Color, data.Color);
+                timeline.addTrack(data.TypeName);
             }
         }
 

@@ -10,8 +10,8 @@ namespace Medical.GUI
     {
         private PropEditController propEditController;
 
-        public ShowPropActionPrototype(Color normalColor, Color selectedColor, PropEditController propEditController)
-            : base("Show Prop", typeof(ShowPropAction), normalColor, selectedColor)
+        public ShowPropActionPrototype(PropEditController propEditController)
+            : base("Show Prop", typeof(ShowPropAction))
         {
             this.propEditController = propEditController;
         }

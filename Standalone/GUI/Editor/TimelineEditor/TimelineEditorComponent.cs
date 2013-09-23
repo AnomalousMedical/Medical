@@ -76,7 +76,7 @@ namespace Medical.GUI
             buildTrackActions();
             foreach (TimelineActionPrototype action in actionDataManager.Prototypes)
             {
-                timelineView.addTrack(action.TypeName, action.NormalColor, action.SelectedColor);
+                timelineView.addTrack(action.TypeName);
             }
 
             //Enabled = false;
@@ -334,32 +334,19 @@ namespace Medical.GUI
             }
         }
 
-        private static readonly Color[] TrackColors = { Color.FromRGB(0xb366ff), Color.FromRGB(0x66d598), Color.FromRGB(0xf5b362), Color.FromRGB(0x60b5f0), Color.FromRGB(0xff6666) };
-        private static readonly Color[] TrackSelectedColors = { Color.FromRGB(0x8000ff), Color.FromRGB(0x00b050), Color.FromRGB(0xf58700), Color.FromRGB(0x008ef0), Color.FromRGB(0xff0000) };
-
         void buildTrackActions()
         {
             int i = 0;
-            actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Move Camera", typeof(MoveCameraAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Muscle Position", typeof(MusclePositionAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sequence", typeof(PlaySequenceAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Show Image", typeof(ShowImageAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Show Text", typeof(ShowTextAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sound", typeof(PlaySoundAction), TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)]));
-            actionDataManager.addPrototype(new ShowPropActionPrototype(TrackColors[colorIndex(ref i)], TrackSelectedColors[selectedIndex(ref i)], propEditController));
-        }
-
-        int colorIndex(ref int i)
-        {
-            return i % TrackColors.Length;
-        }
-
-        int selectedIndex(ref int i)
-        {
-            return i++ % TrackColors.Length;
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Medical State", typeof(ChangeMedicalStateAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Highlight Teeth", typeof(HighlightTeethAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Change Layers", typeof(LayerChangeAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Move Camera", typeof(MoveCameraAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Muscle Position", typeof(MusclePositionAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sequence", typeof(PlaySequenceAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Image", typeof(ShowImageAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Show Text", typeof(ShowTextAction)));
+            actionDataManager.addPrototype(new TimelineActionPrototype("Play Sound", typeof(PlaySoundAction)));
+            actionDataManager.addPrototype(new ShowPropActionPrototype(propEditController));
         }
     }
 }

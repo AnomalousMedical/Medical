@@ -8,10 +8,8 @@ namespace Medical.GUI
 {
     class TimelineActionPrototype
     {
-        public TimelineActionPrototype(String typeName, Type type, Color normalColor, Color selectedColor)
+        public TimelineActionPrototype(String typeName, Type type)
         {
-            this.NormalColor = normalColor;
-            this.SelectedColor = selectedColor;
             this.TypeName = typeName;
             this.Type = type;
         }
@@ -25,10 +23,6 @@ namespace Medical.GUI
         {
             return (TimelineAction)Activator.CreateInstance(Type);
         }
-
-        public Color NormalColor { get; private set; }
-
-        public Color SelectedColor { get; set; }
 
         public String TypeName { get; private set; }
 

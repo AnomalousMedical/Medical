@@ -10,8 +10,8 @@ namespace Medical.GUI
     {
         private PropEditController propEditController;
 
-        public MovePropPrototype(Type type, Color color, String typeName, PropEditController propEditController)
-            :base(type, color, typeName)
+        public MovePropPrototype(Type type, String typeName, PropEditController propEditController)
+            :base(type, typeName)
         {
             this.propEditController = propEditController;
         }
