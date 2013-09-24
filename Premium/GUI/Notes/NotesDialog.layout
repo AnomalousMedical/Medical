@@ -28,7 +28,7 @@
         <Widget type="TextBox" skin="TextBox" position="0 128 47 15">
             <Property key="Caption" value="Notes"/>
         </Widget>
-        <Widget type="EditBox" skin="WordWrapWhite" position="0 142 211 198" align="Stretch" name="Notes/NotesText">
+        <Widget type="EditBox" skin="WordWrapSolid" position="0 142 211 198" align="Stretch" name="Notes/NotesText">
             <Property key="MultiLine" value="true"/>
             <Property key="MaxTextLength" value="2900"/>
             <Property key="TextAlign" value="Left Top"/>

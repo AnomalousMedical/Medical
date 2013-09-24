@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="81 114 352 600" layer="Overlapped">
-        <Widget type="EditBox" skin="WordWrapWhite" position="4 40 344 556" align="Left VStretch">
+        <Widget type="EditBox" skin="WordWrapSolid" position="4 40 344 556" align="Left VStretch">
             <Property key="MultiLine" value="true"/>
             <Property key="ReadOnly" value="true"/>
             <Property key="MaxTextLength" value="2900"/>
