@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="BorderedPanel" position="89 91 181 204" layer="Overlapped" name="ResolutionMenu">
+    <Widget type="Widget" skin="PopupPanel" position="89 91 181 204" layer="Overlapped" name="ResolutionMenu">
         <Widget type="TextBox" skin="TextBox" position="4 4 70 13">
             <Property key="Caption" value="Presets"/>
         </Widget>
