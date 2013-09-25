@@ -66,6 +66,10 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            foreach (CommandUIElement commandUI in dynamicWidgets)
+            {
+                commandUI.Dispose();
+            }
             transparencySlider.Dispose();
             base.Dispose();
         }
