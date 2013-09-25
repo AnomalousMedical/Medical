@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="132 162 181 166" layer="Overlapped">
+    <Widget type="Widget" skin="PopupPanel" position="132 162 181 166" layer="Overlapped">
         <Widget type="TextBox" skin="TextBox" position="4 4 45 15">
             <Property key="Caption" value="Colors"/>
         </Widget>

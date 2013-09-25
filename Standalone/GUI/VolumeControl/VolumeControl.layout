@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="BorderedPanel" position="107 43 50 167" layer="Overlapped" name="VolumePanel">
+    <Widget type="Widget" skin="PopupPanel" position="107 43 50 167" layer="Overlapped" name="VolumePanel">
         <Widget type="Button" skin="ButtonSound" position="14 138 24 24" align="Right Bottom" name="VolumeSliderButton">
             <Property key="Caption" value="V"/>
         </Widget>

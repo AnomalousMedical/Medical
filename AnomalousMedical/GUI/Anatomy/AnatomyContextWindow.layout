@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="SolidBackground" position="97 162 224 114" layer="Overlapped">
+    <Widget type="Widget" skin="PopupPanel" position="97 162 224 114" layer="Overlapped">
         <Widget type="Button" skin="ButtonAcceptSkin" position="176 2 22 22" align="Right Top" name="PinButton">
             <Property key="Caption" value="Pin"/>
         </Widget>

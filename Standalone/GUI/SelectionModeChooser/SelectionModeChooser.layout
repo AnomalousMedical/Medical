@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="187 65 81 205" layer="Overlapped">
+    <Widget type="Widget" skin="PopupPanel" position="187 65 81 205" layer="Overlapped">
         <Widget type="Button" skin="VerticalIconTextButton" position="8 3 64 64" name="GroupButton">
             <Property key="Caption" value="Group"/>
             <Property key="ImageResource" value="SelectionIcons\GroupSelection"/>
