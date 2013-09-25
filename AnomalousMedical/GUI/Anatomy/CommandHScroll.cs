@@ -21,10 +21,10 @@ namespace Medical.GUI
             this.command = command;
             command.NumericValueChanged += command_NumericValueChanged;
 
-            caption = (TextBox)parentWidget.createWidgetT("TextBox", "TextBox", 0, 0, parentWidget.Width - SIDE_PADDING, 15, Align.Default, "");
+            caption = (TextBox)parentWidget.createWidgetT("TextBox", "TextBox", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(15), Align.Default, "");
             caption.Caption = command.UIText;
 
-            slider = (ScrollBar)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width - SIDE_PADDING, 20, Align.Default, "");
+            slider = (ScrollBar)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(20), Align.Default, "");
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
             slider.UserObject = command;
             slider.ScrollRange = (int)SCROLL_MAX;

@@ -17,7 +17,7 @@ namespace Medical.GUI
             this.command = command;
             command.BooleanValueChanged += command_BooleanValueChanged;
 
-            checkButton = (Button)parentWidget.createWidgetT("Button", "CheckBox", 0, 0, parentWidget.Width - SIDE_PADDING, 20, Align.Default, "");
+            checkButton = (Button)parentWidget.createWidgetT("Button", "CheckBox", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(20), Align.Default, "");
             checkButton.MouseButtonClick += new MyGUIEvent(checkButton_MouseButtonClick);
             checkButton.Caption = command.UIText;
             checkButton.Selected = command.BooleanValue;

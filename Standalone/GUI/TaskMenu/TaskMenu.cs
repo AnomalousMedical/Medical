@@ -26,6 +26,9 @@ namespace Medical.GUI
         }
 
         private const int UNKNOWN_GROUP_WEIGHT = int.MaxValue / 2;
+        private static readonly int AdWidth = ScaleHelper.Scaled(230);
+        private static readonly int AdHeight = ScaleHelper.Scaled(460);
+        private static readonly int WithAdTaskMenuPosition = ScaleHelper.Scaled(240);
 
         private NoSelectButtonGrid iconGrid;
         private ScrollView iconScroller;
@@ -148,10 +151,10 @@ namespace Medical.GUI
                 if (ShowAdImage && AdImageKey != null)
                 {
                     firstTimeShown = false;
-                    iconScroller.setPosition(240, iconScroller.Top);
-                    iconScroller.setSize(widget.Width - 240, iconScroller.Height);
+                    iconScroller.setPosition(WithAdTaskMenuPosition, iconScroller.Top);
+                    iconScroller.setSize(widget.Width - WithAdTaskMenuPosition, iconScroller.Height);
                     iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
-                    adImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", 2, iconScroller.Top, 230, 460, Align.Left | Align.Top, "");
+                    adImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", 2, iconScroller.Top, AdWidth, AdHeight, Align.Left | Align.Top, "");
                     adImage.setItemResource(AdImageKey);
                     adImage.MouseButtonClick += adImage_MouseButtonClick;
                 }
