@@ -5,6 +5,6 @@
         <UserString key="ShowGroupCaptions" value="false"/>
         <UserString key="ItemHeight" value="60"/>
         <UserString key="ItemWidth" value="60"/>
-        <UserString key="ButtonSkin" value="ImageAndTextButton32"/>
+        <UserString key="ButtonSkin" value="DragAndDropComponentSkin"/>
     </Widget>
 </MyGUI>
