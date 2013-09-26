@@ -210,8 +210,9 @@ namespace Lecture.GUI
         {
             element.SetAttribute("src", imageName);
             float scale = sizeEdit.Value / 100f;
-            element.SetAttribute("width", (currentImageSize.Width * scale) + "pf");
-            element.SetAttribute("height", (currentImageSize.Height * scale) + "pf");
+            element.SetAttribute("width", (currentImageSize.Width * scale).ToString());
+            element.SetAttribute("height", (currentImageSize.Height * scale).ToString());
+            element.SetAttribute("scale", "true");
             return true;
         }
 
