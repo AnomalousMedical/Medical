@@ -28,8 +28,8 @@ namespace Lecture
         /// </summary>
         public event Action<Slide, String> ThumbUpdated;
 
-        public const int ThumbWidth = 183;
-        public const int ThumbHeight = 101;
+        public static readonly int ThumbWidth = ScaleHelper.Scaled(183);
+        public static readonly int ThumbHeight = ScaleHelper.Scaled(101);
 
         private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new IntSize2(ThumbWidth, ThumbHeight));
         private Dictionary<Slide, Bitmap> unsavedThumbs = new Dictionary<Slide, Bitmap>();

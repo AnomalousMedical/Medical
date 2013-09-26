@@ -299,8 +299,8 @@ namespace Lecture
             }
         }
 
-        private const int slideWidth = SlideImageManager.ThumbWidth / 3;
-        private const int sceneWidth = SlideImageManager.ThumbWidth - slideWidth;
+        private static readonly int slideWidth = SlideImageManager.ThumbWidth / 3;
+        private static readonly int sceneWidth = SlideImageManager.ThumbWidth - slideWidth;
 
         public void updateThumbnail()
         {

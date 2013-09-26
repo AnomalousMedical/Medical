@@ -203,8 +203,28 @@ namespace Medical.GUI
             }
         }
 
+        /// <summary>
+        /// Write to the given graphics, if the widget texture is not large enough it will be
+        /// resized temporarily and then sized back. So be careful with large destrects.
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="destRect"></param>
         public void writeToGraphics(Graphics g, Rectangle destRect)
         {
+            bool changedSize = false;
+            IntSize2 originalSize = new IntSize2(imageBox.Width, imageBox.Height);
+            float cropRatio = (float)imageBox.Width / destRect.Width;
+            Rectangle srcRect = new Rectangle(0, 0, imageBox.Width, (int)(destRect.Height * cropRatio));
+
+            //Make sure the source image is large enough, if not resize.
+            if (originalSize.Width < srcRect.Width || originalSize.Height < srcRect.Height)
+            {
+                imageBox.setSize(srcRect.Width, srcRect.Height);
+                changedSize = true;
+                resized();
+                renderTexture.update();
+            }
+
             unsafe
             {
                 OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
@@ -218,9 +238,6 @@ namespace Medical.GUI
                     }
                     fullBitmap.UnlockBits(bmpData);
 
-                    float cropRatio = (float)imageBox.Width / destRect.Width;
-
-                    Rectangle srcRect = new Rectangle(0, 0, imageBox.Width, (int)(destRect.Height * cropRatio));
                     if (srcRect.Height > fullBitmap.Height)
                     {
                         srcRect.Height = fullBitmap.Height;
@@ -228,6 +245,12 @@ namespace Medical.GUI
 
                     g.DrawImage(fullBitmap, destRect, srcRect, GraphicsUnit.Pixel);
                 }
+            }
+            if (changedSize)
+            {
+                imageBox.setSize(originalSize.Width, originalSize.Height);
+                resized();
+                renderTexture.update();
             }
         }
 
