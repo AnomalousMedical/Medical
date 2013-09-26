@@ -227,6 +227,13 @@ namespace Medical.Controller.AnomalousMvc
 
         public void shutdownContext(AnomalousMvcContext context, bool removeContext, bool resumePreviousContext)
         {
+            timelineController.stopPlayback(false);
+            if (removeContext)
+            {
+                context.shutdown();
+                contextManager.removeContext(context);
+            }
+
             RocketGuiManager.clearAllCaches();
             RocketInterface.Instance.FileInterface.removeExtension(currentFSExtension);
             currentFSExtension = null;
@@ -234,13 +241,6 @@ namespace Medical.Controller.AnomalousMvc
             OgreResourceGroupManager.getInstance().removeResourceLocation(context.ResourceProvider.BackingLocation, "RocketMvc");
             OgreResourceGroupManager.getInstance().destroyResourceGroup("RocketMvc");
             OgreArchiveManager.getInstance().unload(context.ResourceProvider.BackingLocation);
-
-            timelineController.stopPlayback(false);
-            if (removeContext)
-            {
-                context.shutdown();
-                contextManager.removeContext(context);
-            }
 
             if (resumePreviousContext)
             {
