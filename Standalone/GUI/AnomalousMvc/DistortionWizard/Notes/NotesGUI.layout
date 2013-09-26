@@ -25,7 +25,7 @@
             <Property key="Caption" value="Select Thumbnail"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="6 137 339 165" align="HStretch Top" name="Notes/Thumbnails">
-            <Property key="CanvasSize" value="245 10"/>
+            <Property key="CanvasSize" value="310 10"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="4 309 47 15">
