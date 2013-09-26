@@ -416,11 +416,13 @@ namespace Lecture.GUI
             dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
             if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
             {
+                Slide slide = (Slide)source.UserObject;
                 dropLocationPreview.Visible = true;
                 dropLocationPreview.setSize(dragHoverItem.Width, dropLocationPreview.Height);
                 LayerManager.Instance.upLayerItem(dropLocationPreview);
                 dragIconPreview.Visible = true;
-                dragIconPreview.setItemResource(CommonResources.NoIcon);
+                dragIconPreview.setItemResource(slideImageManager.getThumbnailId(slide));
+                dragIconPreview.setSize(SlideImageManager.ThumbWidth / 2, SlideImageManager.ThumbHeight / 2);
                 LayerManager.Instance.upLayerItem(dragIconPreview);
             }
 
@@ -499,6 +501,7 @@ namespace Lecture.GUI
         {
             if (dragIconPreview.Visible)
             {
+                dragIconPreview.setItemResource(null);
                 dragIconPreview.Visible = false;
                 dropLocationPreview.Visible = false;
                 if (dropAfter)

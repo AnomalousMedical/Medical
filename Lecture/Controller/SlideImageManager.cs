@@ -97,6 +97,11 @@ namespace Lecture
             }
         }
 
+        public String getThumbnailId(Slide slide)
+        {
+            return imageAtlas.getImageId(slide.UniqueName);
+        }
+
         /// <summary>
         /// Call this function to make a new thumbnail bitmap for a slide.
         /// </summary>
