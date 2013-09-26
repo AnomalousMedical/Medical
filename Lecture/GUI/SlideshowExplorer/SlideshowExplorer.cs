@@ -406,6 +406,11 @@ namespace Lecture.GUI
 
         void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
         {
+            if (!source.StateCheck) //Make sure the slide to be moved is selected
+            {
+                return;
+            }
+
             if (firstDrag)
             {
                 dragHoverIndex = slideshow.indexOf((Slide)source.UserObject);
