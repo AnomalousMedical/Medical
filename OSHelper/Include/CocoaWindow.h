@@ -51,6 +51,8 @@ public:
     
     virtual void setupMultitouch(MultiTouch* multiTouch);
     
+    virtual float getWindowScaling();
+    
 protected:
     NSRect safeConvertRectToBacking(NSRect rect);
     

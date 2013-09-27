@@ -171,6 +171,15 @@ void CocoaWindow::setCursor(CursorType cursor)
     [window invalidateCursorRectsForView:view];
 }
 
+float CocoaWindow::getWindowScaling()
+{
+    if(hasRetinaFunctions)
+    {
+        return [window backingScaleFactor];
+    }
+    return 1.0f;
+}
+
 void CocoaWindow::setupMultitouch(MultiTouch *multiTouch)
 {
     [view setupMultitouch:multiTouch];
