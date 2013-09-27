@@ -8,6 +8,7 @@ using Medical.Controller;
 using OgreWrapper;
 using System.Diagnostics;
 using Medical.GUI;
+using Engine;
 
 namespace Medical
 {

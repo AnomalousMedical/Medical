@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI.AnomalousMvc;
 using MyGUIPlugin;
 using Medical;
+using Engine;
 
 namespace Lecture.GUI
 {

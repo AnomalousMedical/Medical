@@ -81,8 +81,6 @@ namespace Medical
 
             MyGUIInterface.OSTheme = PlatformConfig.ThemeFile;
 
-            //Engine core
-            medicalController = new MedicalController();
             mainWindow = new MainWindow(app.WindowTitle);
 
             //Setup DPI
@@ -105,10 +103,10 @@ namespace Medical
                     break;
             }
 
-            MyGUIPlugin.MyGUIInterface.ScaleFactor = pixelScale;
-            libRocketPlugin.RocketInterface.Instance.PixelScale = pixelScale;
+            ScaleHelper._setScaleFactor(pixelScale);
 
             //Initialize engine
+            medicalController = new MedicalController();
             medicalController.initialize(app, mainWindow, createWindow);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
             mainWindow.setPointerManager(PointerManager.Instance);

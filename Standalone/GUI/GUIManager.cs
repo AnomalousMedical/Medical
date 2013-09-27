@@ -65,7 +65,7 @@ namespace Medical.GUI
                 ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
                 ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
                 infoSection.setValue(INFO_VERSION, this.GetType().Assembly.GetName().Version.ToString());
-                infoSection.setValue(INFO_UISCALE, ScaleHelper.CachedScaleFactor);
+                infoSection.setValue(INFO_UISCALE, ScaleHelper.ScaleFactor);
                 dialogManager.saveDialogLayout(configFile);
                 guiTaskManager.savePinnedTasks(configFile);
                 configFile.writeConfigFile();
@@ -326,7 +326,7 @@ namespace Medical.GUI
             configFile.loadConfigFile();
             ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
             String versionString = infoSection.getValue(INFO_VERSION, "0.0.0.0");
-            float uiScale = infoSection.getValue(INFO_UISCALE, ScaleHelper.CachedScaleFactor);
+            float uiScale = infoSection.getValue(INFO_UISCALE, ScaleHelper.ScaleFactor);
             Version version;
             try
             {
@@ -338,7 +338,7 @@ namespace Medical.GUI
             }
             if (version > new Version("1.0.0.2818"))
             {
-                if (uiScale.EpsilonEquals(ScaleHelper.CachedScaleFactor, 1e-3f)) //Don't load dialog positions if the scales do not match
+                if (uiScale.EpsilonEquals(ScaleHelper.ScaleFactor, 1e-3f)) //Don't load dialog positions if the scales do not match
                 {
                     dialogManager.loadDialogLayout(configFile);
                 }

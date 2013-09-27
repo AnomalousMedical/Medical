@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine.Editing;
+using Engine;
 
 namespace Medical.GUI
 {
