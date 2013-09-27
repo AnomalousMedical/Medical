@@ -25,6 +25,7 @@ namespace Medical.GUI
         private ComboBox resolutionCombo;
         private ComboBox cameraButtonCombo;
         private ComboBox defaultSceneCombo;
+        private ComboBox uiSize;
         private CheckButton fullscreenCheck;
         private CheckButton vsyncCheck;
         private CheckButton showStatsCheck;
@@ -46,6 +47,11 @@ namespace Medical.GUI
             aaCombo = widget.findWidget("AACombo") as ComboBox;
             resolutionCombo = widget.findWidget("ResolutionCombo") as ComboBox;
             cameraButtonCombo = widget.findWidget("CameraButtonCombo") as ComboBox;
+
+            uiSize = (ComboBox)widget.findWidget("UISize");
+            uiSize.addItem("Smaller", UIExtraScale.Smaller);
+            uiSize.addItem("Normal", UIExtraScale.Normal);
+            uiSize.addItem("Larger", UIExtraScale.Larger);
 
             RenderSystem rs = Root.getSingleton().getRenderSystem();
             if (rs.hasConfigOption("FSAA"))
@@ -144,6 +150,16 @@ namespace Medical.GUI
                 defaultSceneCombo.SelectedIndex = 0;
             }
 
+            uint scalingIndex = uiSize.findItemIndexWithData(MedicalConfig.ExtraScaling);
+            if (scalingIndex != ComboBox.Invalid)
+            {
+                uiSize.SelectedIndex = scalingIndex;
+            }
+            else
+            {
+                uiSize.SelectedIndex = uiSize.findItemIndexWithData(UIExtraScale.Normal);
+            }
+
             //Graphics Options
             aaCombo.SelectedIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
             fullscreenCheck.Checked = MedicalConfig.EngineConfig.Fullscreen;
@@ -209,6 +225,12 @@ namespace Medical.GUI
             MedicalConfig.DefaultScene = defaultSceneCombo.SelectedItemData.ToString();
 
             bool videoOptionsChanged = false;
+
+            if (MedicalConfig.ExtraScaling != (UIExtraScale)uiSize.SelectedItemData)
+            {
+                MedicalConfig.ExtraScaling = (UIExtraScale)uiSize.SelectedItemData;
+                videoOptionsChanged = true;
+            }
 
             if (OgreConfig.FSAA != aaCombo.getItemNameAt(aaCombo.SelectedIndex))
             {

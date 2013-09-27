@@ -95,6 +95,16 @@ namespace Medical
             }
 #endif
 
+            switch (MedicalConfig.ExtraScaling)
+            {
+                case UIExtraScale.Smaller:
+                    pixelScale -= .15f;
+                    break;
+                case UIExtraScale.Larger:
+                    pixelScale += .25f;
+                    break;
+            }
+
             MyGUIPlugin.MyGUIInterface.ScaleFactor = pixelScale;
             libRocketPlugin.RocketInterface.Instance.PixelScale = pixelScale;
 

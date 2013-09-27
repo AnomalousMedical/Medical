@@ -11,6 +11,13 @@ using Medical.GUI;
 
 namespace Medical
 {
+    public enum UIExtraScale
+    {
+        Smaller,
+        Normal,
+        Larger
+    }
+    
     public class MedicalConfig
     {
         private static ConfigFile configFile;
@@ -287,6 +294,23 @@ namespace Medical
             set
             {
                 program.setValue("FirstRun", value);
+            }
+        }
+
+        public static UIExtraScale ExtraScaling
+        {
+            get
+            {
+                UIExtraScale extraScale;
+                if (!Enum.TryParse<UIExtraScale>(program.getValue("ExtraScaling", () => UIExtraScale.Normal.ToString()), out extraScale))
+                {
+                    extraScale = UIExtraScale.Normal;
+                }
+                return extraScale;
+            }
+            set
+            {
+                program.setValue("ExtraScaling", value.ToString());
             }
         }
 
