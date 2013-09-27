@@ -165,7 +165,9 @@
     <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />
     <None Include="app.config" />
-    <None Include="Properties\AnomalousMedical.manifest" />
+    <None Include="Properties\AnomalousMedical.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Resources\Background\Background.material" />
   </ItemGroup>
   <ItemGroup>

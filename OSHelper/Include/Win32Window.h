@@ -33,6 +33,8 @@ public:
     
     virtual void setCursor(CursorType cursor);
 
+	virtual float getWindowScaling();
+
 	void activateCursor()
 	{
 		SetCursor(hCursor);

@@ -81,3 +81,8 @@ extern "C" _AnomalousExport void NativeOSWindow_setCursor(NativeOSWindow* native
 {
 	nativeWindow->setCursor(cursor);
 }
+
+extern "C" _AnomalousExport float NativeOSWindow_getWindowScaling(NativeOSWindow* nativeWindow)
+{
+	return nativeWindow->getWindowScaling();
+}

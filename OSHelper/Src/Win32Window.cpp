@@ -130,6 +130,19 @@ void Win32Window::setCursor(CursorType cursor)
 	}
 }
 
+float Win32Window::getWindowScaling()
+{
+	HDC hdc = GetDC(window);
+	if (hdc)
+	{
+		int dpiX = GetDeviceCaps(hdc, LOGPIXELSX);
+		ReleaseDC(NULL, hdc);
+
+		return dpiX / 96.0f; //Windows base dpi is 96
+	}
+	return 1.0f;
+}
+
 void Win32Window::manageCapture(MouseButtonCode mouseCode)
 {
 	bool shouldCapture = true;

@@ -146,6 +146,14 @@ namespace Medical
             }
         }
 
+        public float WindowScaling
+        {
+            get
+            {
+                return NativeOSWindow_getWindowScaling(nativeWindow);
+            }
+        }
+
         #region OSWindow Members
 
         public bool Focused
@@ -284,6 +292,9 @@ namespace Medical
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeOSWindow_createMenu(IntPtr nativeWindow);
+
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        private static extern float NativeOSWindow_getWindowScaling(IntPtr nativeWindow);
 
         #endregion
     }

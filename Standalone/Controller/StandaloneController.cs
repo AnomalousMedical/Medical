@@ -84,6 +84,21 @@ namespace Medical
             //Engine core
             medicalController = new MedicalController();
             mainWindow = new MainWindow(app.WindowTitle);
+
+            //Setup DPI
+            float pixelScale = mainWindow.WindowScaling;
+
+#if ALLOW_OVERRIDE
+            if (MedicalConfig.PixelScaleOverride > 0.5f)
+            {
+                pixelScale = MedicalConfig.PixelScaleOverride;
+            }
+#endif
+
+            MyGUIPlugin.MyGUIInterface.ScaleFactor = pixelScale;
+            libRocketPlugin.RocketInterface.Instance.PixelScale = pixelScale;
+
+            //Initialize engine
             medicalController.initialize(app, mainWindow, createWindow);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
             mainWindow.setPointerManager(PointerManager.Instance);

@@ -60,6 +60,8 @@ public:
     virtual void setCursor(CursorType cursor) = 0;
     
     virtual void setupMultitouch(MultiTouch* multiTouch) = 0;
+
+	virtual float getWindowScaling() = 0;
     
     void fireSized()
 	{
