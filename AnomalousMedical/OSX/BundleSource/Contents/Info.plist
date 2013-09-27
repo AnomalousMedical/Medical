@@ -8,6 +8,8 @@
 	<string>AnomalousMedical</string>
 	<key>CFBundleName</key>
 	<string>Anomalous Medical</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 	<key>CFBundleIconFile</key>
 	<string>Skull.icns</string>
 </dict>

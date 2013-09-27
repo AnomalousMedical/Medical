@@ -51,11 +51,15 @@ public:
     
     virtual void setupMultitouch(MultiTouch* multiTouch);
     
+protected:
+    NSRect safeConvertRectToBacking(NSRect rect);
+    
 private:
     NSWindow* window;
     CocoaView* view;
     CocoaWindowDelegate* winDelegate;
     NSCursor* currentCursor;
+    bool hasRetinaFunctions;
 };
 
 #endif /* defined(__TestOpenGL__CocoaWindow__) */

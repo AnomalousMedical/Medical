@@ -21,6 +21,7 @@ class MultiTouch;
     CocoaWindow* cocoaWindow;
     KeyboardButtonCode keyConverter[KEY_CONVERTER_MAX];
     MultiTouch* multiTouch;
+    bool hasRetinaFunctions;
 }
 
 -(id) initWithFrame:(NSRect)frame andWindow:(CocoaWindow*) win;
@@ -44,5 +45,9 @@ class MultiTouch;
 -(void)buildKeyConverter;
 
 -(void)setupMultitouch: (MultiTouch*) touch;
+
+-(NSRect)safeConvertRectToBacking: (NSRect) rect;
+
+-(NSPoint)safeConvertPointToBacking: (NSPoint) point;
 
 @end
