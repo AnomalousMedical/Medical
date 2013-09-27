@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Anomalous Medical Internal"
-#define MyAppVersion "1.10.0"
+#define MyAppVersion "2.0.0"
 #define MyAppPublisher "Anomalous Medical"
 #define MyAppURL "http://www.anomalousmedical.com"
 #define MyAppExeName "AnomalousMedical.exe"
@@ -26,7 +26,7 @@ OutputDir=S:\Medical\Release\Setups
 OutputBaseFilename=AnomalousMedicalSetup
 Compression=lzma
 SolidCompression=yes
-SignTool=AnomalousMedicalSign /d $qAnomalous Medical Internal Installer$q $f
+SignTool=AnomalousMedicalSign $qAnomalous Medical Internal Installer$q $f
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
