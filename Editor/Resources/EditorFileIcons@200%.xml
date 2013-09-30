@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.ddp">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.jpg">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="0 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.mvc">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="0 128"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.ogg">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.png">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.rcss">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.rml">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.seq">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 128"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.tl">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="128 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/.trml">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="192 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="EditorFileIcon/FolderIcon">
+    <Group name="Icons" texture="Medical.Resources.EditorFileIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="128 128"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+
