@@ -16,7 +16,7 @@ namespace Medical.GUI
         public PlatformUpdateDownloadInfo(Version version, DownloadManagerServer server)
             : base(ServerDownloadStatus.Update)
         {
-            Name = "Anomalous Platform version " + version;
+            Name = "Anomalous Medical version " + version;
             this.Version = version;
             this.ImageKey = "AnomalousMedicalCore/UpdateImage";
             this.server = server;

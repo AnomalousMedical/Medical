@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="AnomalousMedicalCore/BrandingImage">
+    <Group name="Icons" texture="Medical.Resources.CorePluginIcon@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="AnomalousMedicalCore/UpdateImage">
+    <Group name="Icons" texture="Medical.Resources.CorePluginIcon@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="200 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

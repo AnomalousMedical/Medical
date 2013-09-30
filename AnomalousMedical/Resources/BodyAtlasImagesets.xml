@@ -6,7 +6,7 @@
   <List file="Medical.Resources.AppButton.xml"/>
   <List file="Medical.Resources.BodyAtlasIcons.xml"/>
   <List file="Medical.Resources.SelectionIcons.xml"/>
-  <List file="Medical.Resources.CoreBrandingImage.xml"/>
+  <List file="Medical.Resources.CorePluginIcon.xml"/>
   <List file="Medical.Resources.PremiumAd.xml"/>
   <List file="Medical.Resources.SequenceIcons.xml"/>
 </MyGUI>

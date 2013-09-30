@@ -186,12 +186,14 @@
     <EmbeddedResource Include="Resources\SelectionIcons.xml" />
     <EmbeddedResource Include="Resources\SelectionIcons.png" />
     <EmbeddedResource Include="Resources\Background\AnomalousMedicalWatermark.png" />
-    <EmbeddedResource Include="Resources\CoreBrandingImage.xml" />
     <EmbeddedResource Include="Resources\CorePluginIcon.png" />
     <EmbeddedResource Include="Resources\PremiumAd.png" />
     <EmbeddedResource Include="Resources\PremiumAd.xml" />
     <EmbeddedResource Include="Resources\SequenceIcons.png" />
     <EmbeddedResource Include="Resources\SequenceIcons.xml" />
+    <EmbeddedResource Include="Resources\CorePluginIcon%40200%25.png" />
+    <EmbeddedResource Include="Resources\CorePluginIcon%40200%25.xml" />
+    <EmbeddedResource Include="Resources\CorePluginIcon.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
