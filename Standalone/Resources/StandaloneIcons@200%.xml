@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="StandaloneIcons/Blog">
+    <Group name="Icons" texture="Medical.Resources.StandaloneIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="StandaloneIcons/NoIcon">
+    <Group name="Icons" texture="Medical.Resources.StandaloneIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="StandaloneIcons/UnknownDocument">
+    <Group name="Icons" texture="Medical.Resources.StandaloneIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="StandaloneIcons/VolumeControl">
+    <Group name="Icons" texture="Medical.Resources.StandaloneIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="StandaloneIcons/VolumeControlOff">
+    <Group name="Icons" texture="Medical.Resources.StandaloneIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="256 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

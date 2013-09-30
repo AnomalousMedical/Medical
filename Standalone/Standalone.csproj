@@ -877,6 +877,10 @@
     <EmbeddedResource Include="Resources\HandImages.xml" />
     <EmbeddedResource Include="Resources\RmlWysiwygIcons.png" />
     <EmbeddedResource Include="Resources\RmlWysiwygIcons.xml" />
+    <EmbeddedResource Include="Resources\MoreEditorIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\MoreEditorIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

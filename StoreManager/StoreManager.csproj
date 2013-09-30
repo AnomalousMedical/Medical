@@ -126,6 +126,11 @@
     <EmbeddedResource Include="Resources\Icon.png" />
     <EmbeddedResource Include="Resources\Imagesets.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BrandingImage%40200%25.png" />
+    <EmbeddedResource Include="Resources\Icon%40200%25.png" />
+    <EmbeddedResource Include="Resources\Imagesets%40200%25.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

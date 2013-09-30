@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<MyGUI type="Resource" version="1.1">
+    <Resource type="ResourceImageSet" name="StoreManager/BrandingImage">
+      <Group name="Icons" texture="Anomalous.Medical.StoreManager.Resources.BrandingImage@200%.png" size="200 200">
+        <Index name="Icon">
+          <Frame point="0 0"/>
+        </Index>
+      </Group>
+      </Resource>
+      <Resource type="ResourceImageSet" name="StoreManager/Icon">
+      <Group name="Icons" texture="Anomalous.Medical.StoreManager.Resources.Icon@200%.png" size="64 64">
+        <Index name="Icon">
+          <Frame point="0 0"/>
+        </Index>
+      </Group>
+    </Resource>
+</MyGUI>
