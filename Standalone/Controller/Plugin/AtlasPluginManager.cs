@@ -344,7 +344,7 @@ namespace Medical
                 Type pluginType = plugin.GetType();
                 Assembly assembly = pluginType.Assembly;
                 artworkPluginAssemblies.Add(assembly.FullName, assembly);
-                OgreResourceGroupManager.getInstance().addResourceLocation(pluginType.AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+                OgreResourceGroupManager.getInstance().addResourceLocation(pluginType.AssemblyQualifiedName, "EmbeddedScalableResource", "MyGUI", true);
             }
         }
 
