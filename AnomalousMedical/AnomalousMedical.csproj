@@ -196,6 +196,8 @@
     <EmbeddedResource Include="Resources\CorePluginIcon.xml" />
     <EmbeddedResource Include="Resources\AppButton%40200%25.png" />
     <EmbeddedResource Include="Resources\AppButton%40200%25.xml" />
+    <EmbeddedResource Include="Resources\SelectionIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\SelectionIcons%40200%25.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
