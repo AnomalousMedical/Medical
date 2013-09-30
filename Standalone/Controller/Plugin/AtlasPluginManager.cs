@@ -371,7 +371,7 @@ namespace Medical
             //If a plugins folder exists in the virtual file system add it to the MyGUI group.
             if (VirtualFileSystem.Instance.exists("Plugins"))
             {
-                OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "EngineArchive", "MyGUI", true);
+                OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "ScalableEngineArchive", "MyGUI", true);
                 addedPluginsToMyGUIResourceGroup = true;
             }
 
