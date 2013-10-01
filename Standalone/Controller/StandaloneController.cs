@@ -293,6 +293,7 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.WizardImagesets.xml");
 
             ResourceManager.Instance.load("Medical.Resources.StandaloneIcons.xml");
+            ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
 
             Taskbar taskbar = GUIManager.Taskbar;
             TaskMenu taskMenu = GUIManager.TaskMenu;

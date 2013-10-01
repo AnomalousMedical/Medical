@@ -881,6 +881,10 @@
     <EmbeddedResource Include="Resources\MoreEditorIcons%40200%25.xml" />
     <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\CommonToolstrip%40200%25.png" />
+    <EmbeddedResource Include="Resources\CommonToolstrip%40200%25.xml" />
+    <EmbeddedResource Include="Resources\CommonToolstrip.png" />
+    <EmbeddedResource Include="Resources\CommonToolstrip.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

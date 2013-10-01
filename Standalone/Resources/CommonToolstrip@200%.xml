@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="CommonToolstrip/Save">
+    <Group name="Icons" texture="Medical.Resources.CommonToolstrip@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="CommonToolstrip/SaveAs">
+    <Group name="Icons" texture="Medical.Resources.CommonToolstrip@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

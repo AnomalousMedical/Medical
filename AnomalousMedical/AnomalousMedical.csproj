@@ -174,11 +174,7 @@
     <EmbeddedResource Include="Resources\SplashScreen\SplashText.png" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.xml" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashIMG.png" />
-    <EmbeddedResource Include="Resources\FileToolstrip.xml" />
-    <EmbeddedResource Include="Resources\FileToolstrip.png" />
     <EmbeddedResource Include="Resources\BodyAtlasImagesets.xml" />
-    <EmbeddedResource Include="Resources\BodyAtlasIcons.xml" />
-    <EmbeddedResource Include="Resources\BodyAtlasIcons.png" />
     <EmbeddedResource Include="Resources\AppButton.xml" />
     <EmbeddedResource Include="Resources\AppButton.png" />
     <EmbeddedResource Include="Resources\AboutImage.xml" />
@@ -198,6 +194,10 @@
     <EmbeddedResource Include="Resources\AppButton%40200%25.xml" />
     <EmbeddedResource Include="Resources\SelectionIcons%40200%25.png" />
     <EmbeddedResource Include="Resources\SelectionIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons.png" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
