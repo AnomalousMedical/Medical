@@ -17,7 +17,7 @@ namespace Medical
         private SceneViewWindowPresetController presetWindows;
 
         public ChangeWindowLayoutTask(SceneViewController sceneViewController)
-            : base("Medical.ChangeWindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.Tools)
+            : base("Medical.ChangeWindowLayout", "Window Layout", "PremiumFeatures/WindowLayoutIcon", TaskMenuCategories.Tools)
         {
             this.sceneViewController = sceneViewController;
             this.ShowOnTimelineTaskbar = true;

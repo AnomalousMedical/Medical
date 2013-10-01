@@ -102,22 +102,12 @@
     <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\PremiumToolbar.png" />
-    <EmbeddedResource Include="Resources\PremiumToolbar.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\BookmarksIcons.xml" />
     <EmbeddedResource Include="Resources\Trash.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\PremiumBrandingImage.xml" />
     <EmbeddedResource Include="Resources\PremiumFeaturesIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\LectureIcons.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\LectureIcons.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\PremiumIcons%40200%25.png" />

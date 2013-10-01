@@ -11,7 +11,7 @@ namespace Medical.GUI
         private CloneWindowDialog cloneWindowDialog;
 
         public CloneWindowTask(StandaloneController standaloneController, CloneWindowDialog cloneWindowDialog)
-            : base("Medical.CloneWindow", "Clone Window", "CloneWindowIcon", TaskMenuCategories.Tools)
+            : base("Medical.CloneWindow", "Clone Window", "PremiumFeatures/CloneWindow", TaskMenuCategories.Tools)
         {
             this.standaloneController = standaloneController;
             this.cloneWindowDialog = cloneWindowDialog;

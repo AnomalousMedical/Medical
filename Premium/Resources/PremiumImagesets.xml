@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <MyGUI type="List">
-  <List file="Medical.Resources.PremiumToolbar.xml"/>
   <List file="Medical.Resources.BookmarksIcons.xml"/>
   <List file="Medical.Resources.PremiumBrandingImage.xml"/>
-  <List file="Medical.Resources.LectureIcons.xml"/>
   <List file="Medical.Resources.PremiumIcons.xml"/>
 </MyGUI>

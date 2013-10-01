@@ -99,15 +99,15 @@ namespace Medical
             saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
             taskController.addTask(saveAsTaskItem);
 
-            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation);
+            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "PremiumFeatures/FavoritesIcon", TaskMenuCategories.Navigation);
             bookmarkTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(bookmarkTask);
 
-            MDIDialogOpenTask statesTask = new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient);
+            MDIDialogOpenTask statesTask = new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
             statesTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(statesTask);
 
-            MDIDialogOpenTask notesTask = new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient);
+            MDIDialogOpenTask notesTask = new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "PremiumFeatures/NotesIcon", TaskMenuCategories.Patient);
             notesTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(notesTask);
 
