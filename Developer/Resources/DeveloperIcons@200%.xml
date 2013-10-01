@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="Developer.DiscEditorIcon">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@200%.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,41 +10,41 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Developer.ExamIcon">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@200%.png" size="64 64">
       <Index name="Icon">
-        <Frame point="0 32"/>
+        <Frame point="0 64"/>
       </Index>
     </Group>
   </Resource>
 
   <Resource type="ResourceImageSet" name="Developer.GridIcon">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="32 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@200%.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@200%.png" size="64 64">
       <Index name="Icon">
-        <Frame point="32 32"/>
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@200%.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 64"/>
       </Index>
     </Group>
   </Resource>
 
   <Resource type="ResourceImageSet" name="Developer.RenderIcon">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@200%.png" size="64 64">
       <Index name="Icon">
-        <Frame point="64 32"/>
+        <Frame point="128 64"/>
       </Index>
     </Group>
   </Resource>
