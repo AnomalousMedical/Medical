@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="FossaImages/LeftFossaFlat">
+    <Group name="Icons" texture="Medical.Resources.FossaImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FossaImages/LeftFossaNormal">
+    <Group name="Icons" texture="Medical.Resources.FossaImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="200 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FossaImages/RightFossaFlat">
+    <Group name="Icons" texture="Medical.Resources.FossaImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="0 200"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FossaImages/RightFossaNormal">
+    <Group name="Icons" texture="Medical.Resources.FossaImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="200 200"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

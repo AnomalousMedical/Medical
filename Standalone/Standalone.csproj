@@ -897,6 +897,8 @@
     <EmbeddedResource Include="Resources\ProfileIcons%40200%25.xml" />
     <EmbeddedResource Include="Resources\DopplerPanelImages%40200%25.png" />
     <EmbeddedResource Include="Resources\DopplerPanelImages%40200%25.xml" />
+    <EmbeddedResource Include="Resources\FossaImages%40200%25.png" />
+    <EmbeddedResource Include="Resources\FossaImages%40200%25.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
