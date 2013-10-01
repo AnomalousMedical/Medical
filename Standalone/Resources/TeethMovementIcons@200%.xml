@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptBottomTeeth">
+    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@200%.png" size="94 94">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptLeftLateral">
+    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@200%.png" size="94 94">
+      <Index name="Icon">
+        <Frame point="94 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptMidlineAnterior">
+    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@200%.png" size="94 94">
+      <Index name="Icon">
+        <Frame point="188 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptRightLateral">
+    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@200%.png" size="94 94">
+      <Index name="Icon">
+        <Frame point="282 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptTopTeeth">
+    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@200%.png" size="94 94">
+      <Index name="Icon">
+        <Frame point="376 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

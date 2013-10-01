@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="DopplerPanelImages/BothJoints">
-    <Group name="Icons" texture="Medical.Resources.DopplerPanelImages.png" size="47 47">
+    <Group name="Icons" texture="Medical.Resources.DopplerPanelImages@200%.png" size="94 94">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,17 +10,17 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DopplerPanelImages/JointLateral">
-    <Group name="Icons" texture="Medical.Resources.DopplerPanelImages.png" size="47 47">
+    <Group name="Icons" texture="Medical.Resources.DopplerPanelImages@200%.png" size="94 94">
       <Index name="Icon">
-        <Frame point="47 0"/>
+        <Frame point="94 0"/>
       </Index>
     </Group>
   </Resource>
 
   <Resource type="ResourceImageSet" name="DopplerPanelImages/JointTop">
-    <Group name="Icons" texture="Medical.Resources.DopplerPanelImages.png" size="47 47">
+    <Group name="Icons" texture="Medical.Resources.DopplerPanelImages@200%.png" size="94 94">
       <Index name="Icon">
-        <Frame point="94 0"/>
+        <Frame point="188 0"/>
       </Index>
     </Group>
   </Resource>

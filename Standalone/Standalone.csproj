@@ -891,6 +891,12 @@
     <EmbeddedResource Include="Resources\GrowthImages%40200%25.xml" />
     <EmbeddedResource Include="Resources\DistortionPanelIcons%40200%25.png" />
     <EmbeddedResource Include="Resources\DistortionPanelIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\TeethMovementIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\TeethMovementIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\ProfileIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\ProfileIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\DopplerPanelImages%40200%25.png" />
+    <EmbeddedResource Include="Resources\DopplerPanelImages%40200%25.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
