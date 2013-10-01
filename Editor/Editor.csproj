@@ -192,12 +192,14 @@
     <Folder Include="Controller\Mvc\EditInterface\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\EditorIconsMerge.png" />
-    <EmbeddedResource Include="Resources\EditorIconsMerge.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\EditorFileIcons%40200%25.png" />
     <EmbeddedResource Include="Resources\EditorFileIcons%40200%25.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EditorIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\EditorIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\EditorIcons.png" />
+    <EmbeddedResource Include="Resources\EditorIcons.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

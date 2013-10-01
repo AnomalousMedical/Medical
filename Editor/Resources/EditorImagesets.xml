@@ -4,5 +4,5 @@
   <List file="Medical.Resources.EditorFileIcons.xml"/>
   <List file="Medical.Resources.MvcContextIcons.xml"/>
   <List file="Medical.Resources.EditorBrandingIcon.xml"/>
-  <List file="Medical.Resources.EditorIconsMerge.xml"/>
+  <List file="Medical.Resources.EditorIcons.xml"/>
 </MyGUI>
