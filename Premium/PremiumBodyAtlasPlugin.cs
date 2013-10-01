@@ -89,13 +89,13 @@ namespace Medical
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
-            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1));
+            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "PremiumFeatures/Open", TaskMenuCategories.Patient, 1));
 
-            CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2, false);
+            CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "CommonToolstrip/Save", TaskMenuCategories.Patient, 2, false);
             saveTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveTaskItem_OnClicked);
             taskController.addTask(saveTaskItem);
 
-            CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "FileToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
+            CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "CommonToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
             saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
             taskController.addTask(saveAsTaskItem);
 

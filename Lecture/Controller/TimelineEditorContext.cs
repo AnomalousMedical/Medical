@@ -74,7 +74,7 @@ namespace Lecture
             mvcContext.Views.add(movementSequenceEditor);
 
             SlideTaskbarView taskbar = new SlideTaskbarView("TimelineInfoBar", name);
-            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "FileToolstrip/Save", "", 0, true, item =>
+            taskbar.addTask(new CallbackTask("SaveAll", "Save All", "CommonToolstrip/Save", "", 0, true, item =>
             {
                 saveAll();
             }));

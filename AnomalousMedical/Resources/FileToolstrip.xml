@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/About">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/About">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 0"/>
@@ -9,7 +9,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/ChangeScene">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/ChangeScene">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="32 0"/>
@@ -17,15 +17,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/CheckForUpdates">
-    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="64 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="FileToolstrip/Exit">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/Exit">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="96 0"/>
@@ -33,7 +25,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/Help">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/Help">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 32"/>
@@ -41,7 +33,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/Open">
+  <Resource type="ResourceImageSet" name="PremiumFeatures/Open">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 64"/>
@@ -49,7 +41,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/Options">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/Options">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 96"/>
@@ -57,7 +49,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/Save">
+  <Resource type="ResourceImageSet" name="CommonToolstrip/Save">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="32 32"/>
@@ -65,7 +57,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="FileToolstrip/SaveAs">
+  <Resource type="ResourceImageSet" name="CommonToolstrip/SaveAs">
     <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 32"/>

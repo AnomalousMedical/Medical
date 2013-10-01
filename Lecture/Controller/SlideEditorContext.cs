@@ -103,7 +103,7 @@ namespace Lecture
             mvcContext.Views.add(htmlDragDrop);
 
             taskbar = new SlideTaskbarView("InfoBar", slideName);
-            taskbar.addTask(new CallbackTask("Save", "Save", "FileToolstrip/Save", "", 0, true, item =>
+            taskbar.addTask(new CallbackTask("Save", "Save", "CommonToolstrip/Save", "", 0, true, item =>
             {
                 saveAll();
             }));

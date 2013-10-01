@@ -55,7 +55,7 @@ namespace Medical
             {
                 saveAll();
             }));
-            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Movement Sequence File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Movement Sequence File", "CommonToolstrip/Save", "File", "Editor/Save", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Cut", "Cut", "Editor/CutIcon", "", "Editor/Cut", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "", "Editor/Copy", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "", "Editor/Paste", mvcContext));

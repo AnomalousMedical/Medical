@@ -51,7 +51,7 @@ namespace Medical
             {
                 saveAll();
             }));
-            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Plugin Definition File", "FileToolstrip/Save", "File", "Editor/Save", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Save", "Save Plugin Definition File", "CommonToolstrip/Save", "File", "Editor/Save", mvcContext));
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("Editor", 
