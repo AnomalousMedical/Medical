@@ -13,7 +13,7 @@ namespace Developer
         private BulletScene bulletScene = null;
 
         public DisablePhysicsTask(int weight)
-            : base("Developer.DisablePhysicsTask", "Disable Physics", CommonResources.NoIcon, "Developer")
+            : base("Developer.DisablePhysicsTask", "Disable Physics", "Developer.DisablePhysics", "Developer")
         {
             this.Weight = weight;
             this.ShowOnTimelineTaskbar = true;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
-  <Resource type="ResourceImageSet" name="Developer.DiscEditorIcon">
+  <Resource type="ResourceImageSet" name="Developer.StatisticsIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 0"/>
@@ -9,7 +9,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.ExamIcon">
+  <Resource type="ResourceImageSet" name="Developer.DisablePhysics">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 32"/>
@@ -17,7 +17,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.GridIcon">
+  <Resource type="ResourceImageSet" name="Developer.DiscEditorIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="32 0"/>
@@ -25,15 +25,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="64 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
+  <Resource type="ResourceImageSet" name="Developer.ExamIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="32 32"/>
@@ -41,10 +33,42 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.RenderIcon">
+  <Resource type="ResourceImageSet" name="Developer.GridIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.Measurements">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.RenderIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 32"/>
       </Index>
     </Group>
   </Resource>
