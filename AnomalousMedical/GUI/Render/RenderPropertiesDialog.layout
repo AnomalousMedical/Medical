@@ -27,7 +27,7 @@
         </Widget>
         <Widget type="Button" skin="Button" position="6 220 72 26" name="RenderingTab/Render">
             <Property key="Caption" value="Render"/>
-            <Property key="ImageResource" value="RenderIcon"/>
+            <Property key="ImageResource" value="AnomalousMedical/RenderIcon"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 3 59 13">
             <Property key="Caption" value="Preview"/>

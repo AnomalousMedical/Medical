@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
-<Resource type="ResourceImageSet" name="ImageResolutionIcon">
-    <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="64 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="RenderIcon">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/RenderIcon">
     <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="96 0"/>
@@ -17,15 +9,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="ExamIcon">
-    <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="128 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="SearchIcon">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/SearchIcon">
     <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="160 0"/>

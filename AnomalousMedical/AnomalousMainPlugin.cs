@@ -140,12 +140,12 @@ namespace Medical.GUI
             taskController.addTask(exitTaskItem);
 
             //Tools Section
-            MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools);
+            MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Tools);
             renderTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(renderTask);
 
             //Navigation Section
-            MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation);
+            MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Navigation);
             anatomyFinderTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(anatomyFinderTask);
             taskController.addTask(selectionModeTask);

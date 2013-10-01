@@ -11,7 +11,7 @@ namespace Medical.GUI
         private String filename;
 
         public OpenImageNotification(String filename)
-            : base(String.Format("Image saved as {0}.\nClick here to open.", Path.GetFileName(filename)), "RenderIcon")
+            : base(String.Format("Image saved as {0}.\nClick here to open.", Path.GetFileName(filename)), "AnomalousMedical/RenderIcon")
         {
             this.filename = filename;
         }
