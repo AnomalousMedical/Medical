@@ -36,7 +36,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleMedialPole">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="400 0"/>
+        <Frame point="0 100"/>
       </Index>
     </Group>
   </Resource>
@@ -44,7 +44,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleMedialPoleDistorted">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="0 100"/>
+        <Frame point="0 200"/>
       </Index>
     </Group>
   </Resource>
@@ -52,7 +52,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleRoughness">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="0 200"/>
+        <Frame point="0 300"/>
       </Index>
     </Group>
   </Resource>
@@ -60,7 +60,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleRoughnessDistorted">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="0 300"/>
+        <Frame point="100 100"/>
       </Index>
     </Group>
   </Resource>
@@ -68,7 +68,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyle">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="0 400"/>
+        <Frame point="200 100"/>
       </Index>
     </Group>
   </Resource>
@@ -76,7 +76,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleDistorted">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="100 100"/>
+        <Frame point="300 100"/>
       </Index>
     </Group>
   </Resource>
@@ -84,7 +84,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleLateralPole">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="200 100"/>
+        <Frame point="100 200"/>
       </Index>
     </Group>
   </Resource>
@@ -92,7 +92,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleLateralPoleDistorted">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="300 100"/>
+        <Frame point="100 300"/>
       </Index>
     </Group>
   </Resource>
@@ -100,7 +100,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleMedialPole">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="400 100"/>
+        <Frame point="200 200"/>
       </Index>
     </Group>
   </Resource>
@@ -108,7 +108,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleMedialPoleDistorted">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="100 200"/>
+        <Frame point="300 200"/>
       </Index>
     </Group>
   </Resource>
@@ -116,7 +116,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleRoughness">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="100 300"/>
+        <Frame point="200 300"/>
       </Index>
     </Group>
   </Resource>
@@ -124,7 +124,7 @@
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleRoughnessDistorted">
     <Group name="Icons" texture="Medical.Resources.DegenerationImages.png" size="100 100">
       <Index name="Icon">
-        <Frame point="100 400"/>
+        <Frame point="300 300"/>
       </Index>
     </Group>
   </Resource>

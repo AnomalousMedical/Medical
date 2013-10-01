@@ -885,6 +885,10 @@
     <EmbeddedResource Include="Resources\CommonToolstrip%40200%25.xml" />
     <EmbeddedResource Include="Resources\CommonToolstrip.png" />
     <EmbeddedResource Include="Resources\CommonToolstrip.xml" />
+    <EmbeddedResource Include="Resources\DegenerationImages%40200%25.png" />
+    <EmbeddedResource Include="Resources\DegenerationImages%40200%25.xml" />
+    <EmbeddedResource Include="Resources\GrowthImages%40200%25.png" />
+    <EmbeddedResource Include="Resources\GrowthImages%40200%25.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

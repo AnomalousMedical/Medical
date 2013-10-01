@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftAntegonialNotch">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,153 +10,153 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftAntegonialNotchDistorted">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="0 100"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftCondyleHeight">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
         <Frame point="0 200"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftCondyleHeightSmall">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftCondyleHeight">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
-        <Frame point="0 300"/>
+        <Frame point="0 400"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftCondyleHeightSmall">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="0 600"/>
       </Index>
     </Group>
   </Resource>
 
   <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftCondyleRotation">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="100 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftCondyleRotationRotated">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
         <Frame point="200 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftMandibularNotch">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="300 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftMandibularNotchDistorted">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftCondyleRotationRotated">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
         <Frame point="400 0"/>
       </Index>
     </Group>
   </Resource>
 
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftMandibularNotch">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="600 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftMandibularNotchDistorted">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="800 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
   <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftRamusHeight">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="100 100"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftRamusHeightSmall">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="100 200"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightAntegonialNotch">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="100 300"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightAntegonialNotchDistorted">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="200 100"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleHeight">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="300 100"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleHeightSmall">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
-      <Index name="Icon">
-        <Frame point="400 100"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleRotation">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
         <Frame point="200 200"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleRotationRotated">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthLeftRamusHeightSmall">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
-        <Frame point="200 300"/>
+        <Frame point="200 400"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightMandibularNotch">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightAntegonialNotch">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
-        <Frame point="300 200"/>
+        <Frame point="200 600"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightMandibularNotchDistorted">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightAntegonialNotchDistorted">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
         <Frame point="400 200"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightRamusHeight">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleHeight">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
-        <Frame point="300 300"/>
+        <Frame point="600 200"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleHeightSmall">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="800 200"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleRotation">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="400 400"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightCondyleRotationRotated">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="400 600"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightMandibularNotch">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="600 400"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightMandibularNotchDistorted">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="800 400"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightRamusHeight">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="600 600"/>
       </Index>
     </Group>
   </Resource>
 
   <Resource type="ResourceImageSet" name="GrowthImages/GrowthRightRamusHeightSmall">
-    <Group name="Icons" texture="Medical.Resources.GrowthImages.png" size="100 100">
+    <Group name="Icons" texture="Medical.Resources.GrowthImages@200%.png" size="200 200">
       <Index name="Icon">
-        <Frame point="400 300"/>
+        <Frame point="800 600"/>
       </Index>
     </Group>
   </Resource>
