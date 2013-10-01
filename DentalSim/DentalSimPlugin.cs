@@ -52,7 +52,7 @@ namespace DentalSim
             mandibleMovementTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(mandibleMovementTask);
 
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Eminence", "Eminence", "DistortionPanelIcons/LeftFossa", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Eminence.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
+            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Eminence", "Eminence", "DentalSimIcons/Eminence", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Eminence.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Dentition.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Timeline.", "DiscClockFace.mvc", standaloneController.TimelineController, standaloneController.MvcCore, true));
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Mandible.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
