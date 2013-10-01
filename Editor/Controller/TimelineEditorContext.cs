@@ -85,9 +85,9 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "", "TimelineEditor/SelectAll", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Translation", "Translation", "Editor/TranslateIcon", "", "TimelineEditor/Translation", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Rotation", "Rotation", "Editor/RotateIcon", "", "TimelineEditor/Rotation", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("PropTimeline", "Prop Timeline Editor", "PropEditorIcon", "", "PropTimeline/ShowIfNotOpen", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("PropManager", "Open Prop Manager", "PropManagerIcon", "", "PropManager/ShowIfNotOpen", mvcContext));
-            taskbar.addTask(new RunMvcContextActionTask("MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", "", "MovementSequenceEditor/ShowIfNotOpen", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("PropTimeline", "Prop Timeline Editor", "Editor/PropTimelineEditorIcon", "", "PropTimeline/ShowIfNotOpen", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("PropManager", "Open Prop Manager", "Editor/PropManagerIcon", "", "PropManager/ShowIfNotOpen", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("MovementSequenceEditor", "Movement Sequence Editor", "Editor/MovementSequenceEditorIcon", "", "MovementSequenceEditor/ShowIfNotOpen", mvcContext));
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("TimelineEditor",

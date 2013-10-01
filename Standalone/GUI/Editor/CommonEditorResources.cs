@@ -17,8 +17,7 @@ namespace Medical
             {
                 load = false;
 
-                ResourceManager.Instance.load("Medical.Resources.EditorIcons.xml");
-                ResourceManager.Instance.load("Medical.Resources.MoreEditorIcons.xml");
+                ResourceManager.Instance.load("Medical.Resources.CommonEditorIcons.xml");
                 ResourceManager.Instance.load("Medical.Resources.TimelineImages.xml");
                 ResourceManager.Instance.load("Medical.Resources.HandImages.xml");
                 ResourceManager.Instance.load("Medical.Resources.RmlWysiwygIcons.xml");

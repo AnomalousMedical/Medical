@@ -12,7 +12,7 @@ namespace Medical
 {
     public class MovementSequenceTypeController : SaveableTypeController<MovementSequence>
     {
-        private const String Icon = "MovementSequenceEditorIcon";
+        private const String Icon = "Editor/MovementSequenceEditorIcon";
 
         public MovementSequenceTypeController(EditorController editorController)
             :base(".seq", editorController)

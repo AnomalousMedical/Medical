@@ -865,11 +865,7 @@
     <EmbeddedResource Include="Resources\TeethMovementIcons.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons.xml" />
-    <EmbeddedResource Include="Resources\MoreEditorIcons.xml" />
-    <EmbeddedResource Include="Resources\MoreEditorIcons.png" />
     <EmbeddedResource Include="Resources\ImagePlaceholder.png" />
-    <EmbeddedResource Include="Resources\EditorIcons.png" />
-    <EmbeddedResource Include="Resources\EditorIcons.xml" />
     <EmbeddedResource Include="Resources\TimelineImages.png" />
     <EmbeddedResource Include="Resources\TimelineImages.xml" />
     <EmbeddedResource Include="Resources\LeftHandOutline.png" />
@@ -877,8 +873,6 @@
     <EmbeddedResource Include="Resources\HandImages.xml" />
     <EmbeddedResource Include="Resources\RmlWysiwygIcons.png" />
     <EmbeddedResource Include="Resources\RmlWysiwygIcons.xml" />
-    <EmbeddedResource Include="Resources\MoreEditorIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\MoreEditorIcons%40200%25.xml" />
     <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.xml" />
     <EmbeddedResource Include="Resources\CommonToolstrip%40200%25.png" />
@@ -899,6 +893,10 @@
     <EmbeddedResource Include="Resources\DopplerPanelImages%40200%25.xml" />
     <EmbeddedResource Include="Resources\FossaImages%40200%25.png" />
     <EmbeddedResource Include="Resources\FossaImages%40200%25.xml" />
+    <EmbeddedResource Include="Resources\CommonEditorIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\CommonEditorIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\CommonEditorIcons.png" />
+    <EmbeddedResource Include="Resources\CommonEditorIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

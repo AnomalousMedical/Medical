@@ -169,6 +169,8 @@
     <EmbeddedResource Include="GUI\SaveTimelineDialog\SaveTimelineDialog.layout" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\EditorIcons.png" />
+    <EmbeddedResource Include="Resources\EditorIcons.xml" />
     <EmbeddedResource Include="Resources\EditorImagesets.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -198,8 +200,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\EditorIcons%40200%25.png" />
     <EmbeddedResource Include="Resources\EditorIcons%40200%25.xml" />
-    <EmbeddedResource Include="Resources\EditorIcons.png" />
-    <EmbeddedResource Include="Resources\EditorIcons.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
