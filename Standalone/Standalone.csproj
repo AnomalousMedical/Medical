@@ -889,6 +889,8 @@
     <EmbeddedResource Include="Resources\DegenerationImages%40200%25.xml" />
     <EmbeddedResource Include="Resources\GrowthImages%40200%25.png" />
     <EmbeddedResource Include="Resources\GrowthImages%40200%25.xml" />
+    <EmbeddedResource Include="Resources\DistortionPanelIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\DistortionPanelIcons%40200%25.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
