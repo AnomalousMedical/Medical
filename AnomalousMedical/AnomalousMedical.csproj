@@ -198,6 +198,8 @@
     <EmbeddedResource Include="Resources\AnomalousMedicalIcons%40200%25.xml" />
     <EmbeddedResource Include="Resources\AnomalousMedicalIcons.png" />
     <EmbeddedResource Include="Resources\AnomalousMedicalIcons.xml" />
+    <EmbeddedResource Include="Resources\SequenceIcons%40200%25.png" />
+    <EmbeddedResource Include="Resources\SequenceIcons%40200%25.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

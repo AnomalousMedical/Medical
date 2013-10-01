@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="SequenceToolstrip/Sequence">
@@ -10,7 +9,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="SequenceToolstrip/Play">
+  <Resource type="ResourceImageSet" name="SequenceToolstrip/Stop">
     <Group name="Icons" texture="Medical.Resources.SequenceIcons.png" size="16 16">
       <Index name="Icon">
         <Frame point="32 0"/>
@@ -18,7 +17,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="SequenceToolstrip/Stop">
+  <Resource type="ResourceImageSet" name="SequenceToolstrip/Play">
     <Group name="Icons" texture="Medical.Resources.SequenceIcons.png" size="16 16">
       <Index name="Icon">
         <Frame point="32 16"/>
@@ -27,3 +26,4 @@
   </Resource>
 
 </MyGUI>
+
