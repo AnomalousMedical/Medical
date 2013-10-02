@@ -1,0 +1,6 @@
+copy "..\..\..\Release\Premium.dll" "..\..\..\Release\Setups\Premium.dll"
+copy "..\..\..\Release\DentalSim.dll" "..\..\..\Release\Setups\DentalSim.dll"
+copy "..\..\..\Release\Developer.dll" "..\..\..\Release\Setups\Developer.dll"
+copy "..\..\..\Release\Editor.dll" "..\..\..\Release\Setups\Editor.dll"
+copy "..\..\..\Release\Lecture.dll" "..\..\..\Release\Setups\Lecture.dll"
+copy "..\..\..\Release\StoreManager.dll" "..\..\..\Release\Setups\StoreManager.dll"
