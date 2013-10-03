@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/BottomTeeth">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/Disclaimer">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 64"/>
       </Index>
@@ -18,7 +18,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/LeftCondyleDegeneration">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 0"/>
       </Index>
@@ -26,7 +26,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/LeftCondyleGrowth">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 64"/>
       </Index>
@@ -34,7 +34,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/LeftDiscPosition">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 0"/>
       </Index>
@@ -42,7 +42,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/LeftDiscSpace">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 64"/>
       </Index>
@@ -50,7 +50,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/LeftFossa">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 0"/>
       </Index>
@@ -58,7 +58,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/Notes">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 64"/>
       </Index>
@@ -66,7 +66,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/Profile">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 0"/>
       </Index>
@@ -74,7 +74,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/RightCondyleDegeneration">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 64"/>
       </Index>
@@ -82,7 +82,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/RightCondyleGrowth">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="320 0"/>
       </Index>
@@ -90,7 +90,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/RightDiscPosition">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="320 64"/>
       </Index>
@@ -98,7 +98,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/RightDiscSpace">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="384 0"/>
       </Index>
@@ -106,7 +106,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/RightFossa">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="448 0"/>
       </Index>
@@ -114,7 +114,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/TeethAdaptation">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="384 64"/>
       </Index>
@@ -122,7 +122,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DistortionPanelIcons/TopTeeth">
-    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.DistortionPanelIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="448 64"/>
       </Index>

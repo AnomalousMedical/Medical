@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="ProfileIcons/ProfileLeftLateral">
-    <Group name="Icons" texture="Medical.Resources.ProfileIcons@200%.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.ProfileIcons@2x.png" size="94 94">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="ProfileIcons/ProfileLeftMidLateral">
-    <Group name="Icons" texture="Medical.Resources.ProfileIcons@200%.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.ProfileIcons@2x.png" size="94 94">
       <Index name="Icon">
         <Frame point="94 0"/>
       </Index>
@@ -18,7 +18,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="ProfileIcons/ProfileMidline">
-    <Group name="Icons" texture="Medical.Resources.ProfileIcons@200%.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.ProfileIcons@2x.png" size="94 94">
       <Index name="Icon">
         <Frame point="188 0"/>
       </Index>
@@ -26,7 +26,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="ProfileIcons/ProfileRightLateral">
-    <Group name="Icons" texture="Medical.Resources.ProfileIcons@200%.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.ProfileIcons@2x.png" size="94 94">
       <Index name="Icon">
         <Frame point="282 0"/>
       </Index>
@@ -34,7 +34,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="ProfileIcons/ProfileRightMidLateral">
-    <Group name="Icons" texture="Medical.Resources.ProfileIcons@200%.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.ProfileIcons@2x.png" size="94 94">
       <Index name="Icon">
         <Frame point="376 0"/>
       </Index>

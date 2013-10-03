@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleLateralPole">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="200 0"/>
       </Index>
@@ -18,7 +18,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleLateralPoleDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="400 0"/>
       </Index>
@@ -26,7 +26,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleMedialPole">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="600 0"/>
       </Index>
@@ -34,7 +34,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleMedialPoleDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="0 200"/>
       </Index>
@@ -42,7 +42,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleRoughness">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="0 400"/>
       </Index>
@@ -50,7 +50,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyleRoughnessDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="0 600"/>
       </Index>
@@ -58,7 +58,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyle">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="200 200"/>
       </Index>
@@ -66,7 +66,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="400 200"/>
       </Index>
@@ -74,7 +74,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleLateralPole">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="600 200"/>
       </Index>
@@ -82,7 +82,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleLateralPoleDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="200 400"/>
       </Index>
@@ -90,7 +90,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleMedialPole">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="200 600"/>
       </Index>
@@ -98,7 +98,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleMedialPoleDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="400 400"/>
       </Index>
@@ -106,7 +106,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleRoughness">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="600 400"/>
       </Index>
@@ -114,7 +114,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationLeftCondyleRoughnessDistorted">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="400 600"/>
       </Index>
@@ -122,7 +122,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="DegenerationImages/DegenerationRightCondyle">
-    <Group name="Icons" texture="Medical.Resources.DegenerationImages@200%.png" size="200 200">
+    <Group name="Icons" texture="Medical.Resources.DegenerationImages@2x.png" size="200 200">
       <Index name="Icon">
         <Frame point="600 600"/>
       </Index>

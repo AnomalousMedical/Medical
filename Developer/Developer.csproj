@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
@@ -140,12 +140,12 @@
     <Folder Include="GUI\DDAtlasPluginEditor\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\DeveloperIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\DeveloperIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\DeveloperIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DeveloperIcons%402x.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\DeveloperBrandingIcon%40200%25.png" />
-    <EmbeddedResource Include="Resources\DeveloperBrandingIcon%40200%25.xml" />
+    <EmbeddedResource Include="Resources\DeveloperBrandingIcon%402x.png" />
+    <EmbeddedResource Include="Resources\DeveloperBrandingIcon%402x.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

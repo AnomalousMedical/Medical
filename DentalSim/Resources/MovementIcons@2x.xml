@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="Movement/ManipForceDown">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipForceUp">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 64"/>
       </Index>
@@ -18,7 +18,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipHorizontalBothBack">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 0"/>
       </Index>
@@ -26,7 +26,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipHorizontalBothForward">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 64"/>
       </Index>
@@ -34,7 +34,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipLeftHorizontalBack">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 0"/>
       </Index>
@@ -42,7 +42,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipLeftHorizontalForward">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 64"/>
       </Index>
@@ -50,7 +50,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipRightHorizontalBack">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 0"/>
       </Index>
@@ -58,7 +58,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipRightHorizontalForward">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 64"/>
       </Index>
@@ -66,7 +66,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipVerticalClosed">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 0"/>
       </Index>
@@ -74,7 +74,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/ManipVerticalOpen">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 64"/>
       </Index>
@@ -82,7 +82,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Movement/Reset">
-    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="DentalSim.Resources.MovementIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="320 0"/>
       </Index>

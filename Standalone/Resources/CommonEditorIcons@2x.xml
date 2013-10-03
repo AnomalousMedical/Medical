@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="Editor/AddButtonIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/CopyIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 64"/>
       </Index>
@@ -18,7 +18,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/CutIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 128"/>
       </Index>
@@ -26,7 +26,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/EmptyViewIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 192"/>
       </Index>
@@ -34,7 +34,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/HeaderIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 0"/>
       </Index>
@@ -42,7 +42,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/ImageIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 0"/>
       </Index>
@@ -50,7 +50,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/LinksIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 0"/>
       </Index>
@@ -58,7 +58,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/MovementSequenceEditorIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 0"/>
       </Index>
@@ -66,7 +66,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/ParagraphsIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 64"/>
       </Index>
@@ -74,7 +74,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/PasteIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 128"/>
       </Index>
@@ -82,7 +82,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/PluginBrandingResources">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 192"/>
       </Index>
@@ -90,7 +90,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/ProjectExplorerIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 64"/>
       </Index>
@@ -98,7 +98,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/PropManagerIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 64"/>
       </Index>
@@ -106,7 +106,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/PropTimelineEditorIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 64"/>
       </Index>
@@ -114,7 +114,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/RotateIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 128"/>
       </Index>
@@ -122,7 +122,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/SaveAllIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 192"/>
       </Index>
@@ -130,7 +130,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/SelectAllIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 128"/>
       </Index>
@@ -138,7 +138,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/TranslateIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 128"/>
       </Index>
@@ -146,7 +146,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="Editor/ViewWithTimelineIcon">
-    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.CommonEditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 192"/>
       </Index>

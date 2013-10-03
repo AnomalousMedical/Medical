@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="EditorIcons.AspectRatioIcon">
-    <Group name="Icons" texture="Medical.Resources.EditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.EditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="EditorIcons.EditorTools">
-    <Group name="Icons" texture="Medical.Resources.EditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.EditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 0"/>
       </Index>
@@ -18,7 +18,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="EditorIcons.ScratchAreaIcon">
-    <Group name="Icons" texture="Medical.Resources.EditorIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.EditorIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 0"/>
       </Index>

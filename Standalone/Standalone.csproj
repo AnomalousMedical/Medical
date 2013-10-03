@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -873,28 +873,28 @@
     <EmbeddedResource Include="Resources\HandImages.xml" />
     <EmbeddedResource Include="Resources\RmlWysiwygIcons.png" />
     <EmbeddedResource Include="Resources\RmlWysiwygIcons.xml" />
-    <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\StandaloneIcons%40200%25.xml" />
-    <EmbeddedResource Include="Resources\CommonToolstrip%40200%25.png" />
-    <EmbeddedResource Include="Resources\CommonToolstrip%40200%25.xml" />
+    <EmbeddedResource Include="Resources\StandaloneIcons%402x.png" />
+    <EmbeddedResource Include="Resources\StandaloneIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\CommonToolstrip%402x.png" />
+    <EmbeddedResource Include="Resources\CommonToolstrip%402x.xml" />
     <EmbeddedResource Include="Resources\CommonToolstrip.png" />
     <EmbeddedResource Include="Resources\CommonToolstrip.xml" />
-    <EmbeddedResource Include="Resources\DegenerationImages%40200%25.png" />
-    <EmbeddedResource Include="Resources\DegenerationImages%40200%25.xml" />
-    <EmbeddedResource Include="Resources\GrowthImages%40200%25.png" />
-    <EmbeddedResource Include="Resources\GrowthImages%40200%25.xml" />
-    <EmbeddedResource Include="Resources\DistortionPanelIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\DistortionPanelIcons%40200%25.xml" />
-    <EmbeddedResource Include="Resources\TeethMovementIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\TeethMovementIcons%40200%25.xml" />
-    <EmbeddedResource Include="Resources\ProfileIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\ProfileIcons%40200%25.xml" />
-    <EmbeddedResource Include="Resources\DopplerPanelImages%40200%25.png" />
-    <EmbeddedResource Include="Resources\DopplerPanelImages%40200%25.xml" />
-    <EmbeddedResource Include="Resources\FossaImages%40200%25.png" />
-    <EmbeddedResource Include="Resources\FossaImages%40200%25.xml" />
-    <EmbeddedResource Include="Resources\CommonEditorIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\CommonEditorIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\DegenerationImages%402x.png" />
+    <EmbeddedResource Include="Resources\DegenerationImages%402x.xml" />
+    <EmbeddedResource Include="Resources\GrowthImages%402x.png" />
+    <EmbeddedResource Include="Resources\GrowthImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionPanelIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionPanelIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\TeethMovementIcons%402x.png" />
+    <EmbeddedResource Include="Resources\TeethMovementIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\ProfileIcons%402x.png" />
+    <EmbeddedResource Include="Resources\ProfileIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\DopplerPanelImages%402x.png" />
+    <EmbeddedResource Include="Resources\DopplerPanelImages%402x.xml" />
+    <EmbeddedResource Include="Resources\FossaImages%402x.png" />
+    <EmbeddedResource Include="Resources\FossaImages%402x.xml" />
+    <EmbeddedResource Include="Resources\CommonEditorIcons%402x.png" />
+    <EmbeddedResource Include="Resources\CommonEditorIcons%402x.xml" />
     <EmbeddedResource Include="Resources\CommonEditorIcons.png" />
     <EmbeddedResource Include="Resources\CommonEditorIcons.xml" />
     <Content Include="skull.ico" />

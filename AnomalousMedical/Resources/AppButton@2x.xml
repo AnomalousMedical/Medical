@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="AppButton/NarrowImage">
-    <Group name="Icons" texture="Medical.Resources.AppButton@200%.png" size="55 64">
+    <Group name="Icons" texture="Medical.Resources.AppButton@2x.png" size="55 64">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="AppButton/WideImage">
-    <Group name="Icons" texture="Medical.Resources.AppButton@200%.png" size="227 64">
+    <Group name="Icons" texture="Medical.Resources.AppButton@2x.png" size="227 64">
       <Index name="Icon">
         <Frame point="55 0"/>
       </Index>

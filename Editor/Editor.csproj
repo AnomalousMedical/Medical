@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -194,16 +194,16 @@
     <Folder Include="Controller\Mvc\EditInterface\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\EditorFileIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\EditorFileIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\EditorFileIcons%402x.png" />
+    <EmbeddedResource Include="Resources\EditorFileIcons%402x.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\EditorIcons%40200%25.png" />
-    <EmbeddedResource Include="Resources\EditorIcons%40200%25.xml" />
+    <EmbeddedResource Include="Resources\EditorIcons%402x.png" />
+    <EmbeddedResource Include="Resources\EditorIcons%402x.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\EditorBrandingIcon%40200%25.png" />
-    <EmbeddedResource Include="Resources\EditorBrandingIcon%40200%25.xml" />
+    <EmbeddedResource Include="Resources\EditorBrandingIcon%402x.png" />
+    <EmbeddedResource Include="Resources\EditorBrandingIcon%402x.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

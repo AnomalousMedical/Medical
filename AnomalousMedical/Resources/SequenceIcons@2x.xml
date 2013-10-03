@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="SequenceToolstrip/Sequence">
-    <Group name="Icons" texture="Medical.Resources.SequenceIcons@200%.png" size="64 64">
+    <Group name="Icons" texture="Medical.Resources.SequenceIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,7 +10,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="SequenceToolstrip/Play">
-    <Group name="Icons" texture="Medical.Resources.SequenceIcons@200%.png" size="32 32">
+    <Group name="Icons" texture="Medical.Resources.SequenceIcons@2x.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 0"/>
       </Index>
@@ -18,7 +18,7 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="SequenceToolstrip/Stop">
-    <Group name="Icons" texture="Medical.Resources.SequenceIcons@200%.png" size="32 32">
+    <Group name="Icons" texture="Medical.Resources.SequenceIcons@2x.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 32"/>
       </Index>

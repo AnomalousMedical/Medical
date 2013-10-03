@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="Lecture.BrandingImage">
-  <Group name="Icons" texture="Lecture.Resources.BrandingIcon@200%.png" size="200 200">
+  <Group name="Icons" texture="Lecture.Resources.BrandingIcon@2x.png" size="200 200">
     <Index name="Icon">
       <Frame point="0 0"/>
     </Index>
