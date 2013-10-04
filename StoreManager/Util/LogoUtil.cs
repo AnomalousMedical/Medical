@@ -10,11 +10,17 @@ namespace Anomalous.Medical.StoreManager.Util
 {
     public class LogoUtil
     {
+        /// <summary>
+        /// Save a resized image maintaining aspect ratio, the width and height specify the max width and max height.
+        /// </summary>
         public static void SaveResizedImage(Bitmap source, Stream stream, int width, int height)
         {
             SaveResizedImage(source, stream, ref width, ref height);
         }
 
+        /// <summary>
+        /// Save a resized image maintaining aspect ratio, the width and height specify the max width and max height.
+        /// </summary>
         public static void SaveResizedImage(Bitmap source, Stream stream, ref int width, ref int height)
         {
             if (source.Width > source.Height)

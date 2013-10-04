@@ -44,6 +44,18 @@ namespace Anomalous.Medical.StoreManager.Controller
                         {
                             using (Bitmap source = (Bitmap)Bitmap.FromFile(path))
                             {
+                                //Cap the uploaded image size at 1000
+                                int resizedWidth = source.Width;
+                                int resizedHeight = source.Height;
+                                if (resizedWidth > 1000)
+                                {
+                                    resizedWidth = 1000;
+                                }
+                                if (resizedHeight > 1000)
+                                {
+                                    resizedHeight = 1000;
+                                }
+
                                 String iconPath = Path.GetDirectoryName(IconSourceFile);
                                 if (!resourceProvider.exists(iconPath))
                                 {
@@ -51,7 +63,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                                 }
                                 using (Stream stream = resourceProvider.openWriteStream(IconSourceFile))
                                 {
-                                    LogoUtil.SaveResizedImage(source, stream, 100, 100);
+                                    LogoUtil.SaveResizedImage(source, stream, resizedWidth, resizedHeight);
                                 }
                             }
                             setImage(resourceProvider, executingContext);
