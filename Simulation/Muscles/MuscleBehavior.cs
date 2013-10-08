@@ -36,6 +36,10 @@ namespace Medical
         [DoNotSave]
         protected bool selected = false;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private BulletScene bulletScene;
+
         public MuscleBehavior()
         {
 
@@ -54,14 +58,23 @@ namespace Medical
                 blacklist("Cannot find SimObject {0}.", targetSimObject);
             }
             MuscleController.addMuscle(Owner.Name, this);
+
+            bulletScene = actor.Scene;
+            bulletScene.Tick += bulletScene_Tick;
         }
 
         protected override void destroy()
         {
+            bulletScene.Tick -= bulletScene_Tick;
             MuscleController.removeMuscle(Owner.Name);
         }
 
         public override void update(Clock clock, EventManager events)
+        {
+            
+        }
+
+        void bulletScene_Tick(float timeSpan)
         {
             if (force != 0.0f)
             {
