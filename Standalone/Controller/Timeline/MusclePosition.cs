@@ -22,12 +22,24 @@ namespace Medical
         public void captureState()
         {
             MuscleBehavior movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
-            muscleForce = movingMuscle.getForce();
-            movingTargetPosition = MuscleController.MovingTarget.Offset;
+            if (movingMuscle != null)
+            {
+                muscleForce = movingMuscle.getForce();
+            }
+            if (MuscleController.MovingTarget != null)
+            {
+                movingTargetPosition = MuscleController.MovingTarget.Offset;
+            }
             ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
             ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
-            leftCPPosition = leftCP.CurrentLocation;
-            rightCPPosition = rightCP.CurrentLocation;
+            if (leftCP != null)
+            {
+                leftCPPosition = leftCP.CurrentLocation;
+            }
+            if (rightCP != null)
+            {
+                rightCPPosition = rightCP.CurrentLocation;
+            }
         }
 
         public void reverseSides()
