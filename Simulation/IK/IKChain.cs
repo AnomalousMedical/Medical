@@ -93,7 +93,8 @@ namespace Medical.IK
             //Update World position of chain based on any transforms that would have happened to the base
             updateJointTransforms();
 
-            doIk();            
+            //doIk();            
+            CCD3d(targetObj.Translation);
 
             //Sync new positions back to sim object
             foreach (IKJoint jj in joints)
@@ -102,6 +103,7 @@ namespace Medical.IK
             }
         }
 
+        //Newer 3d game engine design method
         private void doIk()
         {
             int iter, i, j, k;
@@ -132,6 +134,87 @@ namespace Medical.IK
                     }
                 }
             }
+        }
+
+        //CCD 3d Method from Darwin3d
+        //http://www.darwin3d.com/gdm1998.htm#gdm0998
+
+        [Editable]
+        int MAX_IK_TRIES = 100;		// TIMES THROUGH THE CCD LOOP (TRIES = # / LINKS) 
+
+        [Editable]
+        float IK_POS_THRESH = 1.0f;	// THRESHOLD FOR SUCCESS
+
+        private bool CCD3d(Vector3 endPos)
+        {
+            //Start of CCD3d algo
+            int EFFECTOR_POS = joints.Count - 1;
+            Vector3 rootPos, curEnd, desiredEnd, targetVector, curVector, crossResult;
+            double cosAngle, turnAngle, turnDeg; //Probably change this from double
+            int link, tries;
+            Quaternion aquat;
+
+            //START AT THE LAST LINK IN THE CHAIN
+            link = EFFECTOR_POS - 1;
+            tries = 0;						// LOOP COUNTER SO I KNOW WHEN TO QUIT
+            do
+            {
+                // THE COORDS OF THE X,Y,Z POSITION OF THE ROOT OF THIS BONE IS IN THE MATRIX
+                // TRANSLATION PART WHICH IS IN THE 12,13,14 POSITION OF THE MATRIX
+                //we have this directly from the sim object
+                rootPos = joints[link].WorldTranslation;
+
+                // POSITION OF THE END EFFECTOR
+                curEnd = joints[EFFECTOR_POS].WorldTranslation;
+
+                // DESIRED END EFFECTOR POSITION
+                desiredEnd = endPos;
+
+                // SEE IF I AM ALREADY CLOSE ENOUGH
+                if (curEnd.distance2(ref desiredEnd) > IK_POS_THRESH)
+                {
+                    // CREATE THE VECTOR TO THE CURRENT EFFECTOR POS
+                    curVector = curEnd - rootPos;
+
+                    // CREATE THE DESIRED EFFECTOR POSITION VECTOR
+                    targetVector = endPos - rootPos;
+
+                    // NORMALIZE THE VECTORS (EXPENSIVE, REQUIRES A SQRT)
+                    curVector.normalize();
+                    targetVector.normalize();
+
+                    // THE DOT PRODUCT GIVES ME THE COSINE OF THE DESIRED ANGLE
+                    cosAngle = targetVector.dot(ref curVector);
+
+                    // IF THE DOT PRODUCT RETURNS 1.0, I DON'T NEED TO ROTATE AS IT IS 0 DEGREES
+                    if (cosAngle < 0.99999)
+                    {
+                        // USE THE CROSS PRODUCT TO CHECK WHICH WAY TO ROTATE
+                        crossResult = curVector.cross(ref targetVector);
+                        crossResult.normalize();
+                        if (!crossResult.isNumber())
+                        {
+                            crossResult = Vector3.UnitZ;
+                        }
+                        turnAngle = Math.Acos(cosAngle);
+
+                        //skipping degree conversion and damping
+
+                        aquat = new Quaternion(crossResult, (float)turnAngle);
+                        joints[link].LocalRotation *= aquat;
+
+                        //skipping restrictions
+
+                        // RECALC ALL THE MATRICES WITHOUT DRAWING ANYTHING
+                        // In our case this updates all the IKJoint world transforms
+                        updateJointTransforms();
+                    }
+
+                    if (--link < 0) link = EFFECTOR_POS - 1;	// START OF THE CHAIN, RESTART
+                }
+            } while (tries++ < MAX_IK_TRIES && curEnd.distance2(ref desiredEnd) > IK_POS_THRESH);
+
+            return tries != MAX_IK_TRIES;
         }
 
         private void updateJointTransforms(int startIndex)
