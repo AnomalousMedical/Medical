@@ -70,6 +70,7 @@ namespace Medical.IK
             {
                 j.computeLocalChainOffsets();
             }
+            step = autoStep;
         }
 
         public override void update(Clock clock, EventManager eventManager)
@@ -92,14 +93,44 @@ namespace Medical.IK
             //Update World position of chain based on any transforms that would have happened to the base
             updateJointTransforms();
 
-            //CCD3d algo
-            //CCD3d(targetObj.Translation);
-            //GameEngineDesign(targetObj.Translation);
+            doIk();            
 
             //Sync new positions back to sim object
             foreach (IKJoint jj in joints)
             {
                 jj.updateSimObjectPosition();
+            }
+        }
+
+        private void doIk()
+        {
+            int iter, i, j, k;
+            IKJoint joint;
+            int mNumJoints = joints.Count;
+
+            for (iter = 0; iter < iterations; ++iter)
+            {
+                for (k = 0; k < mNumJoints; ++k)
+                {
+                    int r = mNumJoints - 1 - k;
+                    joint = joints[r];
+
+                    //Skipping translation for now
+
+                    for (i = 0; i < 3; ++i)
+                    {
+                        if (joint.AllowRotation(i))
+                        {
+                            if (joint.UpdateLocalR(i, goals))
+                            {
+                                for (j = r; j < mNumJoints; ++j)
+                                {
+                                    joints[j].updateWorldTransforms();
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

@@ -26,7 +26,7 @@ namespace Medical.IK
             this.effector = effector;
         }
 
-        public Vector3 Target
+        public Vector3 TargetPosition
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Medical.IK
             }
         }
 
-        public Vector3 Effector
+        public Vector3 EffectorPosition
         {
             get
             {

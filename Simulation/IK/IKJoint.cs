@@ -58,10 +58,75 @@ namespace Medical.IK
             }
         }
 
-        //Newer Wild Magic method
-        bool updateLocalR(int i)
+        internal bool UpdateLocalR(int i, List<IKGoal> goals)
         {
-            return false;
+            Vector3 U = GetAxis(i);
+            float numer = 0.0f;
+            float denom = 0.0f;
+
+            float oldNorm = 0.0f;
+            IKGoal goal;
+            int g;
+            for (g = 0; g < goals.Count; ++g)
+            {
+                goal = goals[g];
+                Vector3 EmP = goal.EffectorPosition - worldTranslation;
+                Vector3 GmP = goal.TargetPosition - worldTranslation;
+                Vector3 GmE = goal.TargetPosition - goal.EffectorPosition;
+
+                oldNorm = GmE.length2();
+                Vector3 UxEmP = U.cross(ref EmP);
+                Vector3 UxUxEmP = U.cross(ref UxEmP);
+                numer += goal.Weight * GmP.dot(ref UxEmP);
+                denom -= goal.Weight * GmP.dot(ref UxUxEmP);
+            }
+
+            if (numer * numer + denom * denom < epsilon)
+            {
+                // Undefined atan2, no rotation.
+                return false;
+            }
+
+            // Desired angle to rotate about axis(i).
+            float theta = (float)Math.Atan2(numer, denom);
+
+            //Skip euler clamping
+
+            // Test whether step should be taken.
+            float newNorm = 0.0f;
+            Quaternion rotate = new Quaternion(U, theta);
+            for (g = 0; g < goals.Count; ++g)
+            {
+                goal = goals[g];
+                Vector3 EmP = goal.EffectorPosition - worldTranslation;
+                Vector3 newE = worldTranslation + Quaternion.quatRotate(rotate, EmP);
+                Vector3 GmE = goal.TargetPosition - newE;
+                newNorm += GmE.length2();
+            }
+
+            if (newNorm >= oldNorm)
+            {
+                // Rotation does not get effector closer to goal.
+                return false;
+            }
+
+            // Update the local rotation.
+            localRotation = rotate;
+
+            return true;
+        }
+
+        private Vector3 GetAxis(int i)
+        {
+            //Slow, fix later
+            if (parent != null)
+            {
+                return parent.WorldRotation.toRotationMatrix().getColumn(i);
+            }
+            else
+            {
+                return NoParentMatrix.getColumn(i);
+            }
         }
 
         internal void updateWorldTransforms()
@@ -134,6 +199,11 @@ namespace Medical.IK
             {
                 parent = value;
             }
+        }
+
+        internal bool AllowRotation(int i)
+        {
+            return allowRotation[i];
         }
     }
 }
