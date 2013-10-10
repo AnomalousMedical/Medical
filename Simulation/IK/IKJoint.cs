@@ -13,9 +13,7 @@ namespace Medical.IK
     {
         const float epsilon = 1e-6f;
 
-        private static readonly Matrix3x3 NoParentMatrix = new Matrix3x3(1, 1, 1, 
-                                                                         0, 0, 0, 
-                                                                         0, 0, 0);
+        private static readonly Matrix3x3 NoParentMatrix = Quaternion.Identity.toRotationMatrix();
         [DoNotCopy]
         [DoNotSave]
         bool[] allowTranslation = new bool[]{ false, false, false };
@@ -23,6 +21,10 @@ namespace Medical.IK
         [DoNotCopy]
         [DoNotSave]
         bool[] allowRotation = new bool[] { true, true, true };
+
+        [DoNotCopy]
+        [DoNotSave]
+        private IKJoint parent;
 
         [Editable]
         private String parentSimObjectName;
@@ -35,25 +37,9 @@ namespace Medical.IK
         protected override void link()
         {
             base.link();
-            //if (parentSimObjectName != null)
-            //{
-            //    Parent = Owner.getOtherSimObject(parentSimObjectName);
-            //    if (Parent != null) //Initial setup
-            //    {
-            //        Quaternion inverseParentRot = Parent.Rotation.inverse();
-            //        localTranslation = Owner.Translation - Parent.Translation;
-            //        localTranslation = Quaternion.quatRotate(inverseParentRot, localTranslation);
-            //        localRotation = Owner.Rotation * inverseParentRot;
-            //    }
-            //    else
-            //    {
-            //        localTranslation = Vector3.Zero;
-            //        localRotation = Quaternion.Identity;
-            //    }
-            //}
         }
 
-        internal void computeLocalChainOffsets(IKJoint parent)
+        internal void computeLocalChainOffsets()
         {
             worldTranslation = Owner.Translation;
             worldRotation = Owner.Rotation;
@@ -72,7 +58,13 @@ namespace Medical.IK
             }
         }
 
-        internal void updateWorldTransforms(IKJoint parent)
+        //Newer Wild Magic method
+        bool updateLocalR(int i)
+        {
+            return false;
+        }
+
+        internal void updateWorldTransforms()
         {
             //Apply trans and rot
             if (parent == null)
@@ -129,6 +121,18 @@ namespace Medical.IK
             set
             {
                 localRotation = value;
+            }
+        }
+
+        public IKJoint Parent
+        {
+            get
+            {
+                return parent;
+            }
+            set
+            {
+                parent = value;
             }
         }
     }
