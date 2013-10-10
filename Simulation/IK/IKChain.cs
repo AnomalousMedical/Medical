@@ -9,14 +9,8 @@ using System.Text;
 
 namespace Medical.IK
 {
-    //based on http://www.darwin3d.com/gdm1998.htm#gdm0998
     class IKChain : Behavior
     {
-        const double ROTATE_SPEED = 1.0;		// SPEED OF ROTATION
-        const int EFFECTOR_POS = 5;		// THIS CHAIN HAS 5 LINKS
-        const int MAX_IK_TRIES = 100;		// TIMES THROUGH THE CCD LOOP (TRIES = # / LINKS) 
-        const float IK_POS_THRESH = 1.0f;	// THRESHOLD FOR SUCCESS
-
         enum Events
         {
             Step
@@ -91,12 +85,25 @@ namespace Medical.IK
             joints[0].computeLocalChainOffsets(null);
 
             //Update World position of chain based on any transforms that would have happened to the base
-
             updateJointTransforms();
 
-            //Argument to CCD3d algo
-            Vector3 endPos = targetObj.Translation;
+            CCD3d(targetObj.Translation);
 
+            //Sync new positions back to sim object
+            foreach (IKJoint jj in joints)
+            {
+                jj.updateSimObjectPosition();
+            }
+        }
+
+        //CCD 3d Method from Darwin3d
+        //http://www.darwin3d.com/gdm1998.htm#gdm0998
+
+        const int MAX_IK_TRIES = 100;		// TIMES THROUGH THE CCD LOOP (TRIES = # / LINKS) 
+        const float IK_POS_THRESH = 0.3f;	// THRESHOLD FOR SUCCESS
+
+        private bool CCD3d(Vector3 endPos)
+        {
             //Start of CCD3d algo
             int EFFECTOR_POS = joints.Count - 1;
             Vector3 rootPos, curEnd, desiredEnd, targetVector, curVector, crossResult;
@@ -152,30 +159,15 @@ namespace Medical.IK
                         //skipping restrictions
 
                         // RECALC ALL THE MATRICES WITHOUT DRAWING ANYTHING
+                        // In our case this updates all the IKJoint world transforms
                         updateJointTransforms();
                     }
 
                     if (--link < 0) link = EFFECTOR_POS - 1;	// START OF THE CHAIN, RESTART
                 }
-
-
             } while (tries++ < MAX_IK_TRIES && curEnd.distance2(ref desiredEnd) > IK_POS_THRESH);
 
-            if (tries == MAX_IK_TRIES)
-            {
-                //return false;
-            }
-            else
-            {
-                //return true;
-            }
-
-            //End CCD3d Algo
-            //Sync new positions back to sim object
-            foreach (IKJoint jj in joints)
-            {
-                jj.updateSimObjectPosition();
-            }
+            return tries != MAX_IK_TRIES;
         }
 
         private void updateJointTransforms()
