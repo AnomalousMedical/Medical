@@ -30,11 +30,14 @@ namespace Medical.GUI
         CheckButton discLockedCheck;
         CheckButton lateralPoleDisplacementCheck;
 
-        public DiscPanel(Widget parent, int x, int y)
+        public DiscPanel(Widget parent, int x, int y, String name)
             : base("Developer.GUI.DiscEditor.DiscPanel.layout")
         {
             widget.attachToWidget(parent);
             widget.setPosition(x, y);
+
+            TextBox sideLabel = (TextBox)widget.findWidget("SideLabel");
+            sideLabel.Caption = name;
 
             discPopSlider = new MinMaxScroll((ScrollBar)widget.findWidget("discPopSlider"));
             discPopSlider.Minimum = 0;

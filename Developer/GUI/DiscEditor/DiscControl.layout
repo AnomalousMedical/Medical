@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCX" position="117 68 281 785" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="117 68 281 661" layer="Overlapped">
         <Property key="Caption" value="Disc Properties"/>
         <Widget type="ScrollBar" skin="SliderH" position="68 2 125 25" name="horizontalOffsetTrackBar"/>
         <Widget type="TextBox" skin="TextBox" position="0 6 62 17">
@@ -8,4 +8,5 @@
         </Widget>
         <Widget type="EditBox" skin="EditBox" position="197 5 66 18" name="horizontalOffsetUpDown"/>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

@@ -33,9 +33,9 @@ namespace Medical.GUI
             horizontalOffsetUpDown.Increment = 0.1f;
 
             this.Visible = true;
-            leftDiscPanel = new DiscPanel(window, 6, 445);
+            leftDiscPanel = new DiscPanel(window, 6, 295, "Left Disc");
             leftDiscPanel.DiscName = "LeftTMJDisc";
-            rightDiscPanel = new DiscPanel(window, 8, 198);
+            rightDiscPanel = new DiscPanel(window, 6, 35, "Right Disc");
             rightDiscPanel.DiscName = "RightTMJDisc";
             this.Visible = false;
         }
@@ -44,6 +44,10 @@ namespace Medical.GUI
         {
             leftDiscPanel.sceneLoaded();
             rightDiscPanel.sceneLoaded();
+            if (rightDiscPanel.Disc != null)
+            {
+                synchronizeHorizontalOffset(rightDiscPanel.Disc, rightDiscPanel.Disc.HorizontalOffset.x);
+            }
         }
 
         public void sceneUnloading()
