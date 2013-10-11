@@ -129,11 +129,6 @@
     <Compile Include="ControlPoint\FossaController.cs" />
     <Compile Include="ControlPoint\FossaPresetState.cs" />
     <Compile Include="ControlPoint\FossaState.cs" />
-    <Compile Include="IK\BaseMover.cs" />
-    <Compile Include="IK\IKChain.cs" />
-    <Compile Include="IK\IKGoal.cs" />
-    <Compile Include="IK\IKJoint.cs" />
-    <Compile Include="IK\TargetMover.cs" />
     <Compile Include="Mandible\Mandible.cs" />
     <Compile Include="Mandible\MandibleController.cs" />
     <Compile Include="Measurement\Measurement.cs" />
