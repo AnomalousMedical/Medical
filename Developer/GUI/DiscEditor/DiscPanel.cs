@@ -30,6 +30,13 @@ namespace Medical.GUI
         CheckButton discLockedCheck;
         CheckButton lateralPoleDisplacementCheck;
 
+        float storedPop;
+        float storedDiscOffset;
+        float storedRDAOffset;
+        bool storedLocked;
+        bool storedLateralPoleDisplaced;
+        Vector3 storedClockFaceOffset;
+
         public DiscPanel(Widget parent, int x, int y, String name)
             : base("Developer.GUI.DiscEditor.DiscPanel.layout")
         {
@@ -110,6 +117,7 @@ namespace Medical.GUI
                 synchronizeRDAOffset(disc, disc.RDAOffset.y);
                 synchronizeLocked(disc, disc.Locked);
                 synchronizeLateralPoleDisplacement(disc, disc.DisplaceLateralPole);
+                synchronizeClockFaceOffset(disc, disc.ClockFaceOffset);
             }
         }
 
@@ -120,12 +128,29 @@ namespace Medical.GUI
 
         public void reset()
         {
+            storedPop = disc.PopLocation;
+            storedDiscOffset = disc.DiscOffset.y;
+            storedRDAOffset = disc.RDAOffset.y;
+            storedLocked = disc.Locked;
+            storedLateralPoleDisplaced = disc.DisplaceLateralPole;
+            storedClockFaceOffset = disc.ClockFaceOffset;
+
             synchronizePop(null, disc.NormalPopLocation);
             synchronizeDiscOffset(null, disc.NormalDiscOffset.y);
             synchronizeRDAOffset(null, disc.NormalRDAOffset.y);
             synchronizeLocked(null, false);
             synchronizeLateralPoleDisplacement(null, false);
             synchronizeClockFaceOffset(null, disc.NormalClockFaceOffset);
+        }
+
+        public void restore()
+        {
+            synchronizePop(null, storedPop);
+            synchronizeDiscOffset(null, storedDiscOffset);
+            synchronizeRDAOffset(null, storedRDAOffset);
+            synchronizeLocked(null, storedLocked);
+            synchronizeLateralPoleDisplacement(null, storedLateralPoleDisplaced);
+            synchronizeClockFaceOffset(null, storedClockFaceOffset);
         }
 
         public String DiscName { get; set; }

@@ -22,8 +22,8 @@
         <Widget type="Button" skin="CheckBox" position="5 128 70 17" name="discLockedCheck">
             <Property key="Caption" value="Locked"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="3 158 104 13">
-            <Property key="Caption" value="Clock Face Offset"/>
+        <Widget type="TextBox" skin="TextBox" position="3 158 233 13">
+            <Property key="Caption" value="Additional Slipped Disc Offset"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="2 186 62 13">
             <Property key="Caption" value="Horizontal"/>

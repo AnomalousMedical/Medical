@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class DiscControl : MDIDialog
+    class DiscControl : FixedSizeMDIDialog
     {
         private bool allowSynchronization = true;
 
@@ -17,6 +17,9 @@ namespace Medical.GUI
 
         DiscPanel leftDiscPanel;
         DiscPanel rightDiscPanel;
+        Button restoreButton;
+
+        private float storedHorizontalOffset;
 
         public DiscControl()
             : base("Developer.GUI.DiscEditor.DiscControl.layout")
@@ -32,12 +35,37 @@ namespace Medical.GUI
             horizontalOffsetUpDown.MinValue = -1.0f;
             horizontalOffsetUpDown.Increment = 0.1f;
 
+            Button resetButton = (Button)window.findWidget("ResetButton");
+            resetButton.MouseButtonClick += resetButton_MouseButtonClick;
+
+            restoreButton = (Button)window.findWidget("RestoreButton");
+            restoreButton.MouseButtonClick += restoreButton_MouseButtonClick;
+
             this.Visible = true;
             leftDiscPanel = new DiscPanel(window, 6, 295, "Left Disc");
             leftDiscPanel.DiscName = "LeftTMJDisc";
             rightDiscPanel = new DiscPanel(window, 6, 35, "Right Disc");
             rightDiscPanel.DiscName = "RightTMJDisc";
             this.Visible = false;
+        }
+
+        void restoreButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            synchronizeHorizontalOffset(null, storedHorizontalOffset);
+            leftDiscPanel.restore();
+            rightDiscPanel.restore();
+            restoreButton.Enabled = false;
+        }
+
+        void resetButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            storedHorizontalOffset = rightDiscPanel.Disc.HorizontalOffset.x;
+
+            synchronizeHorizontalOffset(null, 0.0f);
+            leftDiscPanel.reset();
+            rightDiscPanel.reset();
+
+            restoreButton.Enabled = true;
         }
 
         public void sceneLoaded(SimScene scene)
