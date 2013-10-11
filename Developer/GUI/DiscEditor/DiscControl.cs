@@ -41,12 +41,20 @@ namespace Medical.GUI
             restoreButton = (Button)window.findWidget("RestoreButton");
             restoreButton.MouseButtonClick += restoreButton_MouseButtonClick;
 
+            Button captureButton = (Button)window.findWidget("CaptureButton");
+            captureButton.MouseButtonClick += captureButton_MouseButtonClick;
+
             this.Visible = true;
             leftDiscPanel = new DiscPanel(window, 6, 295, "Left Disc");
             leftDiscPanel.DiscName = "LeftTMJDisc";
             rightDiscPanel = new DiscPanel(window, 6, 35, "Right Disc");
             rightDiscPanel.DiscName = "RightTMJDisc";
             this.Visible = false;
+        }
+
+        void captureButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            sceneLoaded(null);
         }
 
         void restoreButton_MouseButtonClick(Widget source, EventArgs e)
