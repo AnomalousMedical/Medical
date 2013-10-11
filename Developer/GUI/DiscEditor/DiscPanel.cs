@@ -78,6 +78,7 @@ namespace Medical.GUI
 
             discLockedCheck = new CheckButton((Button)widget.findWidget("discLockedCheck"));
             lateralPoleDisplacementCheck = new CheckButton((Button)widget.findWidget("lateralPoleDisplacementCheck"));
+            lateralPoleDisplacementCheck.CheckedChanged += lateralPoleDisplacementCheck_CheckedChanged;
 
             discPopSlider.ScrollChangePosition += new MyGUIEvent(discPopSlider_ValueChanged);
             discPopUpDown.ValueChanged += new MyGUIEvent(discPopUpDown_ValueChanged);
