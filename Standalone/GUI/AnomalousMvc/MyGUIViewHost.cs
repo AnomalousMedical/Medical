@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using Medical.Controller.AnomalousMvc;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI.AnomalousMvc
 {
     public class MyGUIViewHost : ViewHost
     {
         private ViewHostComponent component;
-        private MyGUILayoutContainer layoutContainer;
+        private VariableSizeMyGUILayoutContainer layoutContainer;
         private AnomalousMvcContext context;
 
         public event Action<ViewHost> ViewClosing;
@@ -26,7 +27,7 @@ namespace Medical.GUI.AnomalousMvc
         public void setTopComponent(ViewHostComponent component)
         {
             this.component = component;
-            layoutContainer = new MyGUILayoutContainer(component.Widget);
+            layoutContainer = new VariableSizeMyGUILayoutContainer(component.Widget, getDesiredSize);
             layoutContainer.LayoutChanged += new Action(layoutContainer_LayoutChanged);
         }
 
@@ -106,6 +107,25 @@ namespace Medical.GUI.AnomalousMvc
         {
             Dispose();
             InputManager.Instance.refreshMouseWidget();
+        }
+
+        IntSize2 getDesiredSize()
+        {
+            if (View.SizeStrategy == Controller.AnomalousMvc.View.SizeType.Percentage)
+            {
+                if (View.ViewLocation == ViewLocations.Left || View.ViewLocation == ViewLocations.Right)
+                {
+                    int width = (int)(View.Size * 0.01f * layoutContainer.TopmostWorkingSize.Width);
+                    return new IntSize2(width, component.Widget.Height);
+                }
+
+                if (View.ViewLocation == ViewLocations.Top || View.ViewLocation == ViewLocations.Bottom)
+                {
+                    int height = (int)(View.Size * 0.01f * layoutContainer.TopmostWorkingSize.Height);
+                    return new IntSize2(component.Widget.Width, height);
+                }
+            }
+            return new IntSize2(component.Widget.Width, component.Widget.Height);
         }
 
         void layoutContainer_LayoutChanged()

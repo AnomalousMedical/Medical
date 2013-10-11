@@ -11,6 +11,12 @@ namespace Medical.Controller.AnomalousMvc
 {
     public abstract class View : SaveableEditableItem
     {
+        public enum SizeType
+        {
+            Auto,
+            Percentage,
+        }
+
         public View(String name)
             :base(name)
         {
@@ -18,6 +24,8 @@ namespace Medical.Controller.AnomalousMvc
             IsWindow = false;
             Transparent = false;
             FillScreen = false;
+            SizeStrategy = SizeType.Auto;
+            Size = 0;
         }
 
         [Editable]
@@ -37,6 +45,12 @@ namespace Medical.Controller.AnomalousMvc
 
         [EditableAction]
         public String ClosingAction { get; set; }
+
+        [Editable]
+        public SizeType SizeStrategy { get; set; }
+
+        [Editable]
+        public int Size { get; set; }
 
         protected View(LoadInfo info)
             :base (info)
