@@ -113,7 +113,7 @@ namespace Medical.GUI.AnomalousMvc
 
         IntSize2 getDesiredSize()
         {
-            if (View.SizeStrategy == Controller.AnomalousMvc.View.SizeType.Percentage)
+            if (View.SizeStrategy == ViewSizeStrategy.Percentage)
             {
                 if (View.ViewLocation == ViewLocations.Left || View.ViewLocation == ViewLocations.Right)
                 {

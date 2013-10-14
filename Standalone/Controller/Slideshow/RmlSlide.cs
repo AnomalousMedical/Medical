@@ -15,6 +15,8 @@ namespace Medical
     public class RmlSlide : Slide
     {
         private String rml;
+        private int size = 50;
+        private ViewSizeStrategy sizeStrategy = ViewSizeStrategy.Auto;
 
         [DoNotSave] //Saved manually
         private String id;
@@ -29,7 +31,9 @@ namespace Medical
             RawRmlView view = new RawRmlView(name)
             {
                 Rml = this.Rml,
-                FakePath = UniqueName + "/index.rml"
+                FakePath = UniqueName + "/index.rml",
+                SizeStrategy = this.SizeStrategy,
+                Size = this.Size,
             };
             if (allowPrevious)
             {
@@ -112,6 +116,32 @@ namespace Medical
             set
             {
                 rml = value;
+            }
+        }
+
+        [Editable]
+        public int Size
+        {
+            get
+            {
+                return size;
+            }
+            set
+            {
+                size = value;
+            }
+        }
+
+        [Editable]
+        public ViewSizeStrategy SizeStrategy
+        {
+            get
+            {
+                return sizeStrategy;
+            }
+            set
+            {
+                sizeStrategy = value;
             }
         }
 

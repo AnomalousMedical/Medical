@@ -9,14 +9,14 @@ using Engine.Attributes;
 
 namespace Medical.Controller.AnomalousMvc
 {
+    public enum ViewSizeStrategy
+    {
+        Auto,
+        Percentage,
+    }
+
     public abstract class View : SaveableEditableItem
     {
-        public enum SizeType
-        {
-            Auto,
-            Percentage,
-        }
-
         public View(String name)
             :base(name)
         {
@@ -24,7 +24,7 @@ namespace Medical.Controller.AnomalousMvc
             IsWindow = false;
             Transparent = false;
             FillScreen = false;
-            SizeStrategy = SizeType.Auto;
+            SizeStrategy = ViewSizeStrategy.Auto;
             Size = 0;
         }
 
@@ -47,7 +47,7 @@ namespace Medical.Controller.AnomalousMvc
         public String ClosingAction { get; set; }
 
         [Editable]
-        public SizeType SizeStrategy { get; set; }
+        public ViewSizeStrategy SizeStrategy { get; set; }
 
         [Editable]
         public int Size { get; set; }
