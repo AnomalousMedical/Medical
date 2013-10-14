@@ -22,7 +22,7 @@ namespace Medical.GUI
             defaultElementStrategyManager.add(new TextElementStrategy("h6"));
 
             //Text
-            defaultElementStrategyManager.add(new TextElementStrategy("p"));
+            defaultElementStrategyManager.add(new TextElementStrategy("p", "Editor/ParagraphsIcon"));
             defaultElementStrategyManager.add(new TextElementStrategy("a"));
             defaultElementStrategyManager.add(new ImageStrategy("img"));
             defaultElementStrategyManager.add(new DivStrategy("x-separator"));

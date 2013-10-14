@@ -74,7 +74,7 @@ namespace Lecture
             rmlView.addCustomStrategy(new SlideImageStrategy("img", editorController.ResourceProvider, slide.UniqueName));
             mvcContext.Views.add(rmlView);
 
-            DragAndDropView<WysiwygDragDropItem> htmlDragDrop = new DragAndDropView<WysiwygDragDropItem>("HtmlDragDrop",
+            DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" scale=\"true\"></img>", RmlWysiwygComponent.DefaultImage))
@@ -98,9 +98,6 @@ namespace Lecture
                 {
                     rmlComponent.insertRml(item.Markup);
                 };
-            htmlDragDrop.ViewLocation = ViewLocations.Left;
-            htmlDragDrop.IsWindow = true;
-            mvcContext.Views.add(htmlDragDrop);
 
             taskbar = new SlideTaskbarView("InfoBar", slideName);
             taskbar.addTask(new CallbackTask("Save", "Save", "CommonToolstrip/Save", "", 0, true, item =>
@@ -115,6 +112,10 @@ namespace Lecture
             {
                 undoBuffer.execute();
             }));
+            foreach (Task htmlDragDropTask in htmlDragDrop.Tasks)
+            {
+                taskbar.addTask(htmlDragDropTask);
+            }
             taskbar.addTask(new CallbackTask("AddSlide", "Add Slide", "Lecture.Icon.AddSlide", "Edit", 0, true, item =>
             {
                 slideEditorController.createSlide();
@@ -145,13 +146,6 @@ namespace Lecture
             }));
             mvcContext.Views.add(taskbar);
 
-            mvcContext.Controllers.add(new MvcController("HtmlDragDrop",
-                new RunCommandsAction("Show",
-                    new ShowViewIfNotOpenCommand("HtmlDragDrop")),
-                new RunCommandsAction("Close",
-                    new CloseViewCommand())
-                    ));
-
             setupScene = new RunCommandsAction("SetupScene");
             slide.populateCommand(setupScene);
 
@@ -166,9 +160,10 @@ namespace Lecture
                 ));
 
             mvcContext.Controllers.add(new MvcController("Common",
-                new RunCommandsAction("Start", new RunActionCommand("HtmlDragDrop/Show"), new RunActionCommand("Editor/Show")),
+                new RunCommandsAction("Start", new RunActionCommand("Editor/Show")),
                 new CallbackAction("Focus", context =>
                 {
+                    htmlDragDrop.CreateIconPreview();
                     GlobalContextEventHandler.setEventContext(eventContext);
                     if (Focus != null)
                     {
@@ -180,6 +175,7 @@ namespace Lecture
                     commitText();
                     rmlView.Rml = slide.Rml = CurrentText;
                     GlobalContextEventHandler.disableEventContext(eventContext);
+                    htmlDragDrop.DestroyIconPreview();
                     if (Blur != null)
                     {
                         Blur.Invoke(this);

@@ -27,12 +27,28 @@ namespace Medical
             Weight = DEFAULT_WEIGHT;
             ShowOnTaskbar = true;
             ShowOnTimelineTaskbar = false;
+            Draggable = false;
         }
 
         /// <summary>
         /// Called when this item is clicked.
         /// </summary>
         public abstract void clicked(TaskPositioner taskPositioner);
+
+        public virtual void dragged(IntVector2 position)
+        {
+
+        }
+
+        public virtual void dragStarted(IntVector2 position)
+        {
+
+        }
+
+        public virtual void dragEnded(IntVector2 position)
+        {
+
+        }
 
         public abstract bool Active
         {
@@ -52,6 +68,8 @@ namespace Medical
         public bool ShowOnTaskbar { get; set; }
 
         public bool ShowOnTimelineTaskbar { get; set; }
+
+        public bool Draggable { get; set; }
 
         protected void fireItemClosed()
         {

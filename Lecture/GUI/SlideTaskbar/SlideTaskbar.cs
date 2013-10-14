@@ -39,8 +39,29 @@ namespace Lecture.GUI
                 taskButton.ImageBox.setItemResource(task.IconName);
                 taskButton.MouseButtonClick += new MyGUIEvent(taskButton_MouseButtonClick);
                 taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
+                if (task.Draggable)
+                {
+                    taskButton.MouseDrag += taskButton_MouseDrag;
+                    taskButton.MouseButtonPressed += taskButton_MouseButtonPressed;
+                    taskButton.MouseButtonReleased += taskButton_MouseButtonReleased;
+                }
                 left += taskButton.Width + TaskButtonPadding;
             }
+        }
+
+        void taskButton_MouseDrag(Widget source, EventArgs e)
+        {
+            ((Task)source.UserObject).dragged(((MouseEventArgs)e).Position);
+        }
+
+        void taskButton_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            ((Task)source.UserObject).dragStarted(((MouseEventArgs)e).Position);
+        }
+
+        void taskButton_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            ((Task)source.UserObject).dragEnded(((MouseEventArgs)e).Position);
         }
 
         public override void Dispose()
