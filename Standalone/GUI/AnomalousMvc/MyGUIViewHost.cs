@@ -29,6 +29,8 @@ namespace Medical.GUI.AnomalousMvc
             this.component = component;
             layoutContainer = new VariableSizeMyGUILayoutContainer(component.Widget, getDesiredSize);
             layoutContainer.LayoutChanged += new Action(layoutContainer_LayoutChanged);
+            layoutContainer.AnimatedResizeStarted += layoutContainer_AnimatedResizeStarted;
+            layoutContainer.AnimatedResizeCompleted += layoutContainer_AnimatedResizeCompleted;
         }
 
         public void Dispose()
@@ -131,6 +133,16 @@ namespace Medical.GUI.AnomalousMvc
         void layoutContainer_LayoutChanged()
         {
             component.topLevelResized();
+        }
+
+        void layoutContainer_AnimatedResizeCompleted()
+        {
+            component.animatedResizeCompleted();
+        }
+
+        void layoutContainer_AnimatedResizeStarted(IntSize2 finalSize)
+        {
+            component.animatedResizeStarted(finalSize);
         }
     }
 }

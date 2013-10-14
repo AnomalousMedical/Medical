@@ -76,6 +76,16 @@ namespace Medical.GUI.AnomalousMvc
             child.topLevelResized();
         }
 
+        public void animatedResizeStarted(IntSize2 finalSize)
+        {
+            child.animatedResizeStarted(finalSize);
+        }
+
+        public void animatedResizeCompleted()
+        {
+            child.animatedResizeCompleted();
+        }
+
         public void opening()
         {
             child.opening();

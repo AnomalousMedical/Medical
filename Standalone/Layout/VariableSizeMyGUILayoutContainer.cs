@@ -12,6 +12,8 @@ namespace Medical
         private Widget widget;
 
         public event Action LayoutChanged;
+        public event Action<IntSize2> AnimatedResizeStarted;
+        public event Action AnimatedResizeCompleted;
         Func<IntSize2> desiredSizeCallback;
 
         public VariableSizeMyGUILayoutContainer(Widget widget, Func<IntSize2> desiredSizeCallback)
@@ -58,6 +60,24 @@ namespace Medical
         public override void bringToFront()
         {
             LayerManager.Instance.upLayerItem(widget);
+        }
+
+        public override void animatedResizeStarted(IntSize2 finalSize)
+        {
+            base.animatedResizeStarted(finalSize);
+            if (AnimatedResizeStarted != null)
+            {
+                AnimatedResizeStarted.Invoke(finalSize);
+            }
+        }
+
+        public override void animatedResizeCompleted()
+        {
+            base.animatedResizeCompleted();
+            if (AnimatedResizeCompleted != null)
+            {
+                AnimatedResizeCompleted.Invoke();
+            }
         }
 
         public override bool Visible

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller.AnomalousMvc;
+using Engine;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -11,6 +12,9 @@ namespace Medical.GUI.AnomalousMvc
     {
         private ViewHostComponent child;
         private int widgetWidth;
+
+        private IntVector2 childPosition;
+        private IntSize2 childSizeOffset;
 
         public TopBottomPanelDecorator(ViewHostComponent child, ButtonCollection buttons, bool transparent)
             : base(transparent ? "Medical.GUI.AnomalousMvc.Decorators.TopBottomPanelDecoratorTransparent.layout" : "Medical.GUI.AnomalousMvc.Decorators.TopBottomPanelDecorator.layout")
@@ -22,9 +26,11 @@ namespace Medical.GUI.AnomalousMvc
 
             this.child = child;
             child.Widget.attachToWidget(widget);
-            child.Widget.setPosition(int.Parse(widget.getUserString("ChildX")), int.Parse(widget.getUserString("ChildY")));
-            widget.setSize(child.Widget.Right + int.Parse(widget.getUserString("ChildWidthOffset")), child.Widget.Bottom + int.Parse(widget.getUserString("ChildHeightOffset")));
-            child.Widget.Align = Align.Top | Align.HStretch;
+            childPosition = new IntVector2(int.Parse(widget.getUserString("ChildX")), int.Parse(widget.getUserString("ChildY")));
+            child.Widget.setPosition(childPosition.x, childPosition.y);
+            childSizeOffset = new IntSize2(int.Parse(widget.getUserString("ChildWidthOffset")), int.Parse(widget.getUserString("ChildHeightOffset")));
+            widget.setSize(child.Widget.Right + childSizeOffset.Width, child.Widget.Bottom + childSizeOffset.Height);
+            child.Widget.Align = Align.HStretch | Align.VStretch;
 
             widgetWidth = widget.Width;
         }
@@ -42,6 +48,22 @@ namespace Medical.GUI.AnomalousMvc
                 child.topLevelResized();
                 widgetWidth = widget.Width;
             }
+        }
+
+        public void animatedResizeStarted(IntSize2 finalSize)
+        {
+            //This class eats this event, it sets up the child to be a fixed size at the final size
+            //This prevents it from laying out the child a million times during animation.
+            child.Widget.Align = Align.Top | Align.HStretch;
+            child.Widget.setPosition(childPosition.x, childPosition.y);
+            child.Widget.setSize(finalSize.Width - childSizeOffset.Width, finalSize.Height - childSizeOffset.Height);
+            child.topLevelResized();
+        }
+
+        public void animatedResizeCompleted()
+        {
+            //This class eats this event, it sets up the child to be stretched again.
+            child.Widget.Align = Align.HStretch | Align.VStretch;
         }
 
         public void opening()

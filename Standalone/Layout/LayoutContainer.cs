@@ -40,6 +40,16 @@ namespace Medical
 
         public abstract void bringToFront();
 
+        public virtual void animatedResizeStarted(IntSize2 finalSize)
+        {
+
+        }
+
+        public virtual void animatedResizeCompleted()
+        {
+
+        }
+
         public abstract void setAlpha(float alpha);
 
         public abstract void layout();

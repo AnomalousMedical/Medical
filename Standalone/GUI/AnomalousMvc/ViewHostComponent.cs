@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller.AnomalousMvc;
+using Engine;
 
 namespace Medical.GUI.AnomalousMvc
 {
     public interface ViewHostComponent : IDisposable
     {
         void topLevelResized();
+
+        void animatedResizeStarted(IntSize2 finalSize);
+
+        void animatedResizeCompleted();
 
         void opening();
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller.AnomalousMvc;
+using Engine;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -42,6 +43,16 @@ namespace Medical.GUI.AnomalousMvc
         public void topLevelResized()
         {
             child.topLevelResized();
+        }
+
+        public void animatedResizeStarted(IntSize2 finalSize)
+        {
+            child.animatedResizeStarted(finalSize);
+        }
+
+        public void animatedResizeCompleted()
+        {
+            child.animatedResizeCompleted();
         }
 
         public void opening()
