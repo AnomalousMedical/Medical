@@ -113,21 +113,9 @@ namespace Medical.GUI.AnomalousMvc
 
         IntSize2 getDesiredSize()
         {
-            if (View.SizeStrategy == ViewSizeStrategy.Percentage)
-            {
-                if (View.ViewLocation == ViewLocations.Left || View.ViewLocation == ViewLocations.Right)
-                {
-                    int width = (int)(View.Size * 0.01f * layoutContainer.TopmostWorkingSize.Width);
-                    return new IntSize2(width, component.Widget.Height);
-                }
-
-                if (View.ViewLocation == ViewLocations.Top || View.ViewLocation == ViewLocations.Bottom)
-                {
-                    int height = (int)(View.Size * 0.01f * layoutContainer.TopmostWorkingSize.Height);
-                    return new IntSize2(component.Widget.Width, height);
-                }
-            }
-            return new IntSize2(component.Widget.Width, component.Widget.Height);
+            IntSize2 workingSize = layoutContainer.TopmostWorkingSize;
+            return new IntSize2(View.computeWidth(component.Widget.Width, workingSize.Width), 
+                                View.computeHeight(component.Widget.Height, workingSize.Height));
         }
 
         void layoutContainer_LayoutChanged()

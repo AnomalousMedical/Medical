@@ -1,4 +1,5 @@
-﻿using Engine.Attributes;
+﻿using Engine;
+using Engine.Attributes;
 using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
@@ -32,8 +33,8 @@ namespace Medical
             {
                 Rml = this.Rml,
                 FakePath = UniqueName + "/index.rml",
-                SizeStrategy = this.SizeStrategy,
-                Size = this.Size,
+                WidthSizeStrategy = this.SizeStrategy,
+                Size = new IntSize2(Size, Size),
             };
             if (allowPrevious)
             {
