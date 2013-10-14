@@ -261,6 +261,11 @@ namespace Medical.GUI
                 return buildConstrainableForm(property, new PropertiesFormSize2(property, parent));
             });
 
+            FormCreationMethods.Add(typeof(IntSize2), (property, parent) =>
+            {
+                return buildConstrainableForm(property, new PropertiesFormIntSize2(property, parent));
+            });
+
             FormCreationMethods.Add(typeof(Byte), (property, parent) =>
             {
                 return buildConstrainableForm(property, new PropertiesFormByte(property, parent));
