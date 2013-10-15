@@ -10,7 +10,7 @@ namespace Medical
 {
     public delegate void AnimationCompletedDelegate(LayoutContainer oldChild);
 
-    public class HorizontalPopoutLayoutContainer : LayoutContainer, UpdateListener, IDisposable
+    public class HorizontalPopoutLayoutContainer : AnimatedLayoutContainer, UpdateListener
     {
         private UpdateTimer mainTimer;
         private LayoutContainer childContainer;
@@ -31,7 +31,7 @@ namespace Medical
             this.mainTimer = mainTimer;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (animating)
             {
@@ -72,7 +72,7 @@ namespace Medical
             }
         }
 
-        public void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
+        public override void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
         {
             //If we were animating when a new request comes in clear the old animation first.
             if (animating)
@@ -227,7 +227,7 @@ namespace Medical
             }
         }
 
-        public LayoutContainer CurrentContainer
+        public override LayoutContainer CurrentContainer
         {
             get
             {

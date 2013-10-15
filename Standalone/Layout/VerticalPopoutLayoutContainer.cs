@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    class VerticalPopoutLayoutContainer : LayoutContainer, UpdateListener, IDisposable
+    class VerticalPopoutLayoutContainer : AnimatedLayoutContainer, UpdateListener
     {
         private UpdateTimer mainTimer;
         private LayoutContainer childContainer;
@@ -28,7 +28,7 @@ namespace Medical
             this.mainTimer = mainTimer;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (animating)
             {
@@ -80,7 +80,7 @@ namespace Medical
             invalidate();
         }
 
-        public void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
+        public override void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
         {
             //If we were animating when a new request comes in clear the old animation first.
             if (animating)
@@ -218,6 +218,14 @@ namespace Medical
                 {
                     childContainer.Visible = value;
                 }
+            }
+        }
+
+        public override LayoutContainer CurrentContainer
+        {
+            get
+            {
+                return childContainer;
             }
         }
 

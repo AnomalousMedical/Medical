@@ -119,6 +119,11 @@ namespace Medical.Controller
             }
         }
 
+        public void changeCenterParent(LayoutContainer newCenterParent, Action<LayoutContainer> setCenterInNewParent)
+        {
+            rootContainer.changeCenterParent(newCenterParent, setCenterInNewParent);
+        }
+
         /// <summary>
         /// Inject a mouse button down event.
         /// </summary>

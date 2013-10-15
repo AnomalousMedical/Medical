@@ -132,7 +132,7 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     currentLeft = viewHostFactory.createViewHost(queuedLeft, queuedLeftContext);
                     currentLeft.opening();
-                    guiManager.changeLeftPanel(currentLeft.Container);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Left, currentLeft.Container);
                 }
                 //If there is a panel open they must be switched
                 else
@@ -141,14 +141,14 @@ namespace Medical.Controller.AnomalousMvc
                     last.closing();
                     currentLeft = viewHostFactory.createViewHost(queuedLeft, queuedLeftContext);
                     currentLeft.opening();
-                    guiManager.changeLeftPanel(currentLeft.Container, last._animationCallback);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Left, currentLeft.Container, last._animationCallback);
                 }
             }
             //There is no other panel queued and the current panel wants to be closed
             else if (currentLeft != null && currentLeft._RequestClosed)
             {
                 currentLeft.closing();
-                guiManager.changeLeftPanel(null, currentLeft._animationCallback);
+                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Left, null, currentLeft._animationCallback);
                 currentLeft = null;
             }
             queuedLeft = null;
@@ -163,7 +163,7 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     currentRight = viewHostFactory.createViewHost(queuedRight, queuedRightContext);
                     currentRight.opening();
-                    guiManager.changeRightPanel(currentRight.Container);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Right, currentRight.Container);
                 }
                 //If there is a panel open they must be switched
                 else
@@ -172,14 +172,14 @@ namespace Medical.Controller.AnomalousMvc
                     last.closing();
                     currentRight = viewHostFactory.createViewHost(queuedRight, queuedRightContext);
                     currentRight.opening();
-                    guiManager.changeRightPanel(currentRight.Container, last._animationCallback);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Right, currentRight.Container, last._animationCallback);
                 }
             }
             //There is no other panel queued and the current panel wants to be closed
             else if (currentRight != null && currentRight._RequestClosed)
             {
                 currentRight.closing();
-                guiManager.changeRightPanel(null, currentRight._animationCallback);
+                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Right, null, currentRight._animationCallback);
                 currentRight = null;
             }
             queuedRight = null;
@@ -194,7 +194,7 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     currentTop = viewHostFactory.createViewHost(queuedTop, queuedTopContext);
                     currentTop.opening();
-                    guiManager.changeTopPanel(currentTop.Container);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Top, currentTop.Container);
                 }
                 //If there is a panel open they must be switched
                 else
@@ -203,14 +203,14 @@ namespace Medical.Controller.AnomalousMvc
                     last.closing();
                     currentTop = viewHostFactory.createViewHost(queuedTop, queuedTopContext);
                     currentTop.opening();
-                    guiManager.changeTopPanel(currentTop.Container, last._animationCallback);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Top, currentTop.Container, last._animationCallback);
                 }
             }
             //There is no other panel queued and the current panel wants to be closed
             else if (currentTop != null && currentTop._RequestClosed)
             {
                 currentTop.closing();
-                guiManager.changeTopPanel(null, currentTop._animationCallback);
+                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Top, null, currentTop._animationCallback);
                 currentTop = null;
             }
             queuedTop = null;
@@ -225,7 +225,7 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     currentBottom = viewHostFactory.createViewHost(queuedBottom, queuedBottomContext);
                     currentBottom.opening();
-                    guiManager.changeBottomPanel(currentBottom.Container);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Bottom, currentBottom.Container);
                 }
                 //If there is a panel open they must be switched
                 else
@@ -234,14 +234,14 @@ namespace Medical.Controller.AnomalousMvc
                     last.closing();
                     currentBottom = viewHostFactory.createViewHost(queuedBottom, queuedBottomContext);
                     currentBottom.opening();
-                    guiManager.changeBottomPanel(currentBottom.Container, last._animationCallback);
+                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Bottom, currentBottom.Container, last._animationCallback);
                 }
             }
             //There is no other panel queued and the current panel wants to be closed
             else if (currentBottom != null && currentBottom._RequestClosed)
             {
                 currentBottom.closing();
-                guiManager.changeBottomPanel(null, currentBottom._animationCallback);
+                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Bottom, null, currentBottom._animationCallback);
                 currentBottom = null;
             }
             queuedBottom = null;

@@ -23,6 +23,7 @@ namespace Medical.Controller
         private MDIBorderContainerDock bottom;
         private MDILayoutContainer center;
         private FloatingWindowContainer floating;
+        private LayoutContainer centerParentContainer = null;
 
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
@@ -453,9 +454,18 @@ namespace Medical.Controller
             left.WorkingSize = new IntSize2(leftDesired.Width, centerSize.Height);
             left.layout();
 
-            center.Location = new IntVector2(this.Location.x + leftDesired.Width, this.Location.y + topDesired.Height);
-            center.WorkingSize = centerSize;
-            center.layout();
+            if (centerParentContainer != null)
+            {
+                centerParentContainer.Location = new IntVector2(this.Location.x + leftDesired.Width, this.Location.y + topDesired.Height);
+                centerParentContainer.WorkingSize = centerSize;
+                centerParentContainer.layout();
+            }
+            else
+            {
+                center.Location = new IntVector2(this.Location.x + leftDesired.Width, this.Location.y + topDesired.Height);
+                center.WorkingSize = centerSize;
+                center.layout();
+            }
 
             right.Location = new IntVector2(this.Location.x + leftDesired.Width + centerSize.Width, this.Location.y + topDesired.Height);
             right.WorkingSize = new IntSize2(rightDesired.Width, centerSize.Height);
@@ -548,6 +558,20 @@ namespace Medical.Controller
                 top.Visible = value;
                 bottom.Visible = value;
             }
+        }
+
+        public void changeCenterParent(LayoutContainer newCenterParent, Action<LayoutContainer> setCenterInNewParent)
+        {
+            if (newCenterParent != null)
+            {
+                newCenterParent._setParent(this);
+                setCenterInNewParent(center);
+            }
+            else
+            {
+                center._setParent(this);
+            }
+            centerParentContainer = newCenterParent;
         }
     }
 }
