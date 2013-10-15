@@ -76,7 +76,8 @@ namespace Medical.GUI
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
 
-            documentName = view.RmlFile;
+            documentName = view.RmlFile.Replace('\\', '/');
+            this.FakeLoadLocation = documentName;
             loadDocumentFile(documentName, false);
 
             view._fireComponentCreated(this);
@@ -86,6 +87,10 @@ namespace Medical.GUI
             : this(context, viewHost, view.CustomElementStrategies)
         {
             this.FakeLoadLocation = view.FakePath;
+            if (this.FakeLoadLocation != null)
+            {
+                this.FakeLoadLocation = this.FakeLoadLocation.Replace('\\', '/');
+            }
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
