@@ -99,6 +99,14 @@ namespace Medical
             }
         }
 
+        public void updateToVersion(int version)
+        {
+            if (version == 2)
+            {
+                rml = rml.Replace("href=\"/MasterTemplate.trml\"", "href=\"../MasterTemplate.trml\"");
+            }
+        }
+
         public String UniqueName
         {
             get

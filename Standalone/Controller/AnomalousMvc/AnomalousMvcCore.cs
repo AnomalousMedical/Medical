@@ -26,7 +26,6 @@ namespace Medical.Controller.AnomalousMvc
         private GUIManager guiManager;
         private StandaloneController standaloneController;
         private ActiveContextManager contextManager = new ActiveContextManager();
-        private ResourceProviderRocketFSExtension currentFSExtension = null;
 
         private XmlSaver xmlSaver = new XmlSaver();
 
@@ -235,12 +234,6 @@ namespace Medical.Controller.AnomalousMvc
             }
 
             RocketGuiManager.clearAllCaches();
-            RocketInterface.Instance.FileInterface.removeExtension(currentFSExtension);
-            currentFSExtension = null;
-            
-            OgreResourceGroupManager.getInstance().removeResourceLocation(context.ResourceProvider.BackingLocation, "RocketMvc");
-            OgreResourceGroupManager.getInstance().destroyResourceGroup("RocketMvc");
-            OgreArchiveManager.getInstance().unload(context.ResourceProvider.BackingLocation);
 
             if (resumePreviousContext)
             {
@@ -317,14 +310,6 @@ namespace Medical.Controller.AnomalousMvc
         private void setupContextToRun(AnomalousMvcContext context)
         {
             timelineController.MvcContext = context;
-            currentFSExtension = new ResourceProviderRocketFSExtension(context.ResourceProvider);
-            RocketInterface.Instance.FileInterface.addExtension(currentFSExtension);
-
-            OgreResourceGroupManager.getInstance().createResourceGroup("RocketMvc");
-            OgreResourceProviderArchiveFactory.AddResourceProvider(context.ResourceProvider.BackingLocation, context.ResourceProvider);
-            OgreResourceGroupManager.getInstance().addResourceLocation(context.ResourceProvider.BackingLocation, OgreResourceProviderArchiveFactory.Name, "RocketMvc", false);
-            //OgreResourceGroupManager.getInstance().initializeResourceGroup("RocketMvc");
-
             context.Core = this;
         }
     }

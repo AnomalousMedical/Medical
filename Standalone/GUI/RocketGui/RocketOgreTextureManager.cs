@@ -11,16 +11,6 @@ namespace Medical.GUI
     {
         private const String RocketImageOgreGroup = "RocketImages";
 
-        public static void refreshTextures()
-        {
-            //The textures are unloaded and released so they will refresh if they are updated.
-            TextureDatabase.ReleaseTextures();
-            OgreResourceGroupManager.getInstance().removeResourceLocation("__RmlViewerFilesystem__", RocketImageOgreGroup);
-            OgreResourceGroupManager.getInstance().destroyResourceGroup(RocketImageOgreGroup);
-            OgreArchiveManager.getInstance().unload("__RmlViewerFilesystem__");
-            OgreResourceGroupManager.getInstance().addResourceLocation("__RmlViewerFilesystem__", RocketRawOgreFilesystemArchive.ArchiveName, RocketImageOgreGroup, false);
-        }
-
         public static void startup()
         {
             OgreResourceGroupManager.getInstance().createResourceGroup("Rocket");

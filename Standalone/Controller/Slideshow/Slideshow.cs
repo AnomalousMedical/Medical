@@ -120,6 +120,14 @@ namespace Medical
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
             info.RebuildList("Slides", slides);
+            int version = info.GetInt32("Version", 1);
+            if (version != 2)
+            {
+                foreach (Slide slide in slides)
+                {
+                    slide.updateToVersion(2);
+                }
+            }
         }
 
         public virtual void getInfo(SaveInfo info)

@@ -21,5 +21,7 @@ namespace Medical
         void cleanup(CleanupFileInfo info, ResourceProvider resourceProvider);
 
         String UniqueName { get; }
+
+        void updateToVersion(int version);
     }
 }

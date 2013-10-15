@@ -5,6 +5,7 @@ using System.Text;
 using OgreWrapper;
 using Engine;
 using System.IO;
+using libRocketPlugin;
 
 namespace Medical.GUI
 {
@@ -30,7 +31,7 @@ namespace Medical.GUI
 
         protected override Stream doOpen(string filename)
         {
-            return File.Open(filename, FileMode.Open, FileAccess.Read);
+            return RocketInterface.Instance.FileInterface.Open(filename);
         }
 
         protected override void doList(bool recursive, bool dirs, IntPtr ogreStringVector)
@@ -55,7 +56,7 @@ namespace Medical.GUI
 
         protected override bool exists(string filename)
         {
-            return File.Exists(filename);
+            return RocketInterface.Instance.FileInterface.Exists(filename);
         }
     }
 }

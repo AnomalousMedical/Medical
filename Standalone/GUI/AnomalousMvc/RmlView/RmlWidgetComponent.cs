@@ -31,7 +31,7 @@ namespace Medical.GUI.AnomalousMvc
             if (view.RmlFile != null)
             {
                 startRmlUpdate();
-                using (ElementDocument document = rocketWidget.Context.LoadDocument(view.RmlFile.Replace('\\', '/')))
+                using (ElementDocument document = rocketWidget.Context.LoadDocument(RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.RmlFile)))
                 {
                     if (document != null)
                     {
@@ -54,10 +54,13 @@ namespace Medical.GUI.AnomalousMvc
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
             imageHeight = rmlImage.Height;
-            this.FakeLoadLocation = view.FakePath;
-            if (this.FakeLoadLocation != null)
+            if (view.FakePath != null)
             {
-                this.FakeLoadLocation = this.FakeLoadLocation.Replace('\\', '/');
+                this.FakeLoadLocation = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.FakePath);
+            }
+            else
+            {
+                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.BackingLocation);
             }
 
             if (view.Rml != null)

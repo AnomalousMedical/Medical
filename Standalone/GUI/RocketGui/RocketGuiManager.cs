@@ -80,7 +80,6 @@ namespace Medical.GUI
 
         public static void clearAllCaches()
         {
-            RocketOgreTextureManager.refreshTextures();
             Factory.ClearStyleSheetCache();
             TemplateCache.ClearTemplateCache();
         }

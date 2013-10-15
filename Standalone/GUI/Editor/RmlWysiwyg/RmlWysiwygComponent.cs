@@ -76,7 +76,7 @@ namespace Medical.GUI
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
 
-            documentName = view.RmlFile.Replace('\\', '/');
+            documentName = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.RmlFile);
             this.FakeLoadLocation = documentName;
             loadDocumentFile(documentName, false);
 
@@ -86,11 +86,15 @@ namespace Medical.GUI
         public RmlWysiwygComponent(RawRmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
             : this(context, viewHost, view.CustomElementStrategies)
         {
-            this.FakeLoadLocation = view.FakePath;
-            if (this.FakeLoadLocation != null)
+            if (view.FakePath != null)
             {
-                this.FakeLoadLocation = this.FakeLoadLocation.Replace('\\', '/');
+                this.FakeLoadLocation = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.FakePath);
             }
+            else
+            {
+                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.BackingLocation);
+            }
+
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
