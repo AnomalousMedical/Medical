@@ -12,6 +12,7 @@ using Engine.Saving.XMLSaver;
 using Engine.Saving;
 using System.Xml;
 using Medical.Controller.AnomalousMvc;
+using libRocketPlugin;
 
 namespace Medical
 {
@@ -36,6 +37,7 @@ namespace Medical
         private StandaloneController standaloneController;
         private Dictionary<String, EditorTypeController> typeControllers = new Dictionary<String, EditorTypeController>();
         private EditorResourceProvider resourceProvider;
+        private ResourceProviderRocketFSExtension resourceProviderRocketFSExtension;
         private TimelineController timelineController;
 
         private List<ProjectItemTemplate> itemTemplates = new List<ProjectItemTemplate>();
@@ -293,6 +295,8 @@ namespace Medical
         private void openResourceProvider(String projectPath)
         {
             resourceProvider = new EditorResourceProvider(projectPath);
+            resourceProviderRocketFSExtension = new ResourceProviderRocketFSExtension(resourceProvider);
+            RocketInterface.Instance.FileInterface.addExtension(resourceProviderRocketFSExtension);
             timelineController.setResourceProvider(ResourceProvider);
             if (ResourceProviderOpened != null)
             {
@@ -308,6 +312,8 @@ namespace Medical
                 {
                     ResourceProviderClosing.Invoke(resourceProvider);
                 }
+                RocketInterface.Instance.FileInterface.removeExtension(resourceProviderRocketFSExtension);
+                resourceProviderRocketFSExtension = null;
                 resourceProvider = null;
             }
         }

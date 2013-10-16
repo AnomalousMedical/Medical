@@ -10,20 +10,34 @@ namespace Medical
     class ResourceProviderRocketFSExtension : RocketFileSystemExtension
     {
         private ResourceProvider resourceProvider;
+        private String fixedBackingLocation;
 
         public ResourceProviderRocketFSExtension(ResourceProvider resourceProvider)
         {
             this.resourceProvider = resourceProvider;
+            fixedBackingLocation = resourceProvider.BackingLocation.Replace('\\', '/');
+            if (!fixedBackingLocation.EndsWith("/"))
+            {
+                fixedBackingLocation += "/";
+            }
         }
 
         public bool canOpenFile(string file)
         {
-            return resourceProvider.exists(file);
+            if(file.StartsWith(fixedBackingLocation))
+            {
+                return resourceProvider.exists(file.Substring(fixedBackingLocation.Length));
+            }
+            return false;
         }
 
         public Stream openFile(string file)
         {
-            return resourceProvider.openFile(file);
+            if (file.StartsWith(fixedBackingLocation))
+            {
+                return resourceProvider.openFile(file.Substring(fixedBackingLocation.Length));
+            }
+            return null;
         }
     }
 }
