@@ -178,11 +178,6 @@ namespace Medical
                 //This is the main engine plugin manager, it should be last unless subsystems need to be shutdown before any additional disposing
                 pluginManager.Dispose();
             }
-            if (rocketGuiManager != null)
-            {
-                //These have to be deleted after ogre.
-                rocketGuiManager.destroyOgreCustomArchive();
-            }
 
             Log.Info("Medical Controller Shutdown");
             logListener.closeLogFile();

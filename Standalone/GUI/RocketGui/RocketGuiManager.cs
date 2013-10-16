@@ -28,15 +28,9 @@ namespace Medical.GUI
             {
                 eventListenerInstancer.Dispose();
             }
-        }
-
-        /// <summary>
-        /// This is one final dispose step, but this has to be done AFTER ogre is shutdown.
-        /// </summary>
-        public void destroyOgreCustomArchive()
-        {
             if (rocketRenderSystemListener != null)
             {
+                Root.getSingleton().getRenderSystem().removeListener(rocketRenderSystemListener);
                 rocketRenderSystemListener.Dispose();
             }
         }
