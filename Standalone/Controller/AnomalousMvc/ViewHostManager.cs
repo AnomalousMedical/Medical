@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Medical.GUI;
 using Engine.Attributes;
+using Engine;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -23,21 +24,17 @@ namespace Medical.Controller.AnomalousMvc
         private GUIManager guiManager;
         private ViewHostFactory viewHostFactory;
 
-        private ViewHostPanelInfo[] panels = new ViewHostPanelInfo[8];
-
         private List<KeyValuePair<View, AnomalousMvcContext>> queuedFloatingViews = new List<KeyValuePair<View, AnomalousMvcContext>>();
         private List<ViewHost> openFloatingViews = new List<ViewHost>();
         private List<ViewHost> closingFloatingViews = new List<ViewHost>();
+        private List<ViewHostPanelInfo> openPanels = new List<ViewHostPanelInfo>();
+        private RemovableListIterator<ViewHostPanelInfo> openPanelsEnumerator;
 
         public ViewHostManager(GUIManager guiManager, ViewHostFactory viewHostFactory)
         {
             this.guiManager = guiManager;
             this.viewHostFactory = viewHostFactory;
-
-            for (int i = 0; i < panels.Length; ++i)
-            {
-                panels[i] = new ViewHostPanelInfo();
-            }
+            openPanelsEnumerator = new RemovableListIterator<ViewHostPanelInfo>(openPanels);
         }
 
         public void Dispose()
@@ -61,24 +58,16 @@ namespace Medical.Controller.AnomalousMvc
                 switch (view.ViewLocation)
                 {
                     case ViewLocations.Left:
-                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Outer)];
-                        panel.PanelName = BorderPanelNames.Left;
-                        panel.PanelSet = BorderPanelSets.Outer;
+                        panel = findPanel(BorderPanelNames.Left, BorderPanelSets.Outer);
                         break;
                     case ViewLocations.Right:
-                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Outer)];
-                        panel.PanelName = BorderPanelNames.Right;
-                        panel.PanelSet = BorderPanelSets.Outer;
+                        panel = findPanel(BorderPanelNames.Right, BorderPanelSets.Outer);
                         break;
                     case ViewLocations.Top:
-                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Outer)];
-                        panel.PanelName = BorderPanelNames.Top;
-                        panel.PanelSet = BorderPanelSets.Outer;
+                        panel = findPanel(BorderPanelNames.Top, BorderPanelSets.Outer);
                         break;
                     case ViewLocations.Bottom:
-                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Outer)];
-                        panel.PanelName = BorderPanelNames.Bottom;
-                        panel.PanelSet = BorderPanelSets.Outer;
+                        panel = findPanel(BorderPanelNames.Bottom, BorderPanelSets.Outer);
                         break;
                     case ViewLocations.Floating:
                         queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
@@ -102,7 +91,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void requestCloseAll()
         {
-            foreach (var panel in panels)
+            foreach (var panel in openPanels)
             {
                 if (panel.Current != null)
                 {
@@ -117,7 +106,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void processViewChanges()
         {
-            foreach (var panel in panels)
+            foreach (var panel in openPanelsEnumerator.Values)
             {
                 if (panel.Queued != null)
                 {
@@ -147,6 +136,10 @@ namespace Medical.Controller.AnomalousMvc
                 }
                 panel.Queued = null;
                 panel.QueuedContext = null;
+                if (panel.Current == null)
+                {
+                    openPanelsEnumerator.RemoveCurrent();
+                }
             }
 
             //Floating views
@@ -185,7 +178,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public bool isViewOpen(String name)
         {
-            foreach (var panel in panels)
+            foreach (var panel in openPanels)
             {
                 if (panel.Current != null && panel.Current.Name == name)
                 {
@@ -206,7 +199,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public ViewHost findViewHost(String name)
         {
-            foreach (var panel in panels)
+            foreach (var panel in openPanels)
             {
                 if (panel.Current != null && panel.Current.Name == name)
                 {
@@ -228,7 +221,7 @@ namespace Medical.Controller.AnomalousMvc
         public StoredViewCollection generateSavedViewLayout()
         {
             StoredViewCollection storedViews = new StoredViewCollection();
-            foreach (var panel in panels)
+            foreach (var panel in openPanels)
             {
                 if (panel.Current != null)
                 {
@@ -258,7 +251,7 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     return true;
                 }
-                foreach (var panel in panels)
+                foreach (var panel in openPanels) //Make sure the views are actually open
                 {
                     if (panel.Current != null)
                     {
@@ -267,6 +260,24 @@ namespace Medical.Controller.AnomalousMvc
                 }
                 return false;
             }
+        }
+
+        private ViewHostPanelInfo findPanel(BorderPanelNames name, BorderPanelSets set)
+        {
+            foreach (var panel in openPanels)
+            {
+                if (panel.PanelName == name && panel.PanelSet == set)
+                {
+                    return panel;
+                }
+            }
+            ViewHostPanelInfo newPanel = new ViewHostPanelInfo()
+            {
+                PanelSet = set,
+                PanelName = name
+            };
+            openPanels.Add(newPanel);
+            return newPanel;
         }
     }
 }
