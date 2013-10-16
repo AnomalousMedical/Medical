@@ -23,20 +23,7 @@ namespace Medical.Controller.AnomalousMvc
         private GUIManager guiManager;
         private ViewHostFactory viewHostFactory;
 
-        private ViewHost currentLeft;
-        private ViewHost currentRight;
-        private ViewHost currentTop;
-        private ViewHost currentBottom;
-
-        private View queuedLeft;
-        private View queuedRight;
-        private View queuedTop;
-        private View queuedBottom;
-
-        private AnomalousMvcContext queuedLeftContext;
-        private AnomalousMvcContext queuedRightContext;
-        private AnomalousMvcContext queuedTopContext;
-        private AnomalousMvcContext queuedBottomContext;
+        private ViewHostPanelInfo[] panels = new ViewHostPanelInfo[8];
 
         private List<KeyValuePair<View, AnomalousMvcContext>> queuedFloatingViews = new List<KeyValuePair<View, AnomalousMvcContext>>();
         private List<ViewHost> openFloatingViews = new List<ViewHost>();
@@ -46,6 +33,11 @@ namespace Medical.Controller.AnomalousMvc
         {
             this.guiManager = guiManager;
             this.viewHostFactory = viewHostFactory;
+
+            for (int i = 0; i < panels.Length; ++i)
+            {
+                panels[i] = new ViewHostPanelInfo();
+            }
         }
 
         public void Dispose()
@@ -64,27 +56,38 @@ namespace Medical.Controller.AnomalousMvc
             }
             else
             {
+                //Temp
+                ViewHostPanelInfo panel = null;
                 switch (view.ViewLocation)
                 {
                     case ViewLocations.Left:
-                        queuedLeft = view;
-                        queuedLeftContext = context;
+                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Outer)];
+                        panel.PanelName = BorderPanelNames.Left;
+                        panel.PanelSet = BorderPanelSets.Outer;
                         break;
                     case ViewLocations.Right:
-                        queuedRight = view;
-                        queuedRightContext = context;
+                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Outer)];
+                        panel.PanelName = BorderPanelNames.Right;
+                        panel.PanelSet = BorderPanelSets.Outer;
                         break;
                     case ViewLocations.Top:
-                        queuedTop = view;
-                        queuedTopContext = context;
+                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Outer)];
+                        panel.PanelName = BorderPanelNames.Top;
+                        panel.PanelSet = BorderPanelSets.Outer;
                         break;
                     case ViewLocations.Bottom:
-                        queuedBottom = view;
-                        queuedBottomContext = context;
+                        panel = panels[guiManager.getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Outer)];
+                        panel.PanelName = BorderPanelNames.Bottom;
+                        panel.PanelSet = BorderPanelSets.Outer;
                         break;
                     case ViewLocations.Floating:
                         queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
                         break;
+                }
+                if (panel != null)
+                {
+                    panel.Queued = view;
+                    panel.QueuedContext = context;
                 }
             }
         }
@@ -99,21 +102,12 @@ namespace Medical.Controller.AnomalousMvc
 
         public void requestCloseAll()
         {
-            if (currentLeft != null)
+            foreach (var panel in panels)
             {
-                currentLeft._RequestClosed = true;
-            }
-            if (currentRight != null)
-            {
-                currentRight._RequestClosed = true;
-            }
-            if (currentTop != null)
-            {
-                currentTop._RequestClosed = true;
-            }
-            if (currentBottom != null)
-            {
-                currentBottom._RequestClosed = true;
+                if (panel.Current != null)
+                {
+                    panel.Current._RequestClosed = true;
+                }
             }
             foreach (ViewHost viewHost in openFloatingViews)
             {
@@ -123,129 +117,37 @@ namespace Medical.Controller.AnomalousMvc
 
         public void processViewChanges()
         {
-            //-----------Left Panel-----------------
-            //If we have another panel queued
-            if (queuedLeft != null)
+            foreach (var panel in panels)
             {
-                //If there is no panel open
-                if (currentLeft == null)
+                if (panel.Queued != null)
                 {
-                    currentLeft = viewHostFactory.createViewHost(queuedLeft, queuedLeftContext);
-                    currentLeft.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Left, currentLeft.Container);
+                    //If there is no panel open
+                    if (panel.Current == null)
+                    {
+                        panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
+                        panel.Current.opening();
+                        guiManager.changePanel(panel.PanelSet, panel.PanelName, panel.Current.Container);
+                    }
+                    //If there is a panel open they must be switched
+                    else
+                    {
+                        ViewHost last = panel.Current;
+                        last.closing();
+                        panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
+                        panel.Current.opening();
+                        guiManager.changePanel(panel.PanelSet, panel.PanelName, panel.Current.Container, last._animationCallback);
+                    }
                 }
-                //If there is a panel open they must be switched
-                else
+                //There is no other panel queued and the current panel wants to be closed
+                else if (panel.Current != null && panel.Current._RequestClosed)
                 {
-                    ViewHost last = currentLeft;
-                    last.closing();
-                    currentLeft = viewHostFactory.createViewHost(queuedLeft, queuedLeftContext);
-                    currentLeft.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Left, currentLeft.Container, last._animationCallback);
+                    panel.Current.closing();
+                    guiManager.changePanel(panel.PanelSet, panel.PanelName, null, panel.Current._animationCallback);
+                    panel.Current = null;
                 }
+                panel.Queued = null;
+                panel.QueuedContext = null;
             }
-            //There is no other panel queued and the current panel wants to be closed
-            else if (currentLeft != null && currentLeft._RequestClosed)
-            {
-                currentLeft.closing();
-                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Left, null, currentLeft._animationCallback);
-                currentLeft = null;
-            }
-            queuedLeft = null;
-            queuedLeftContext = null;
-
-            //-----------Right Panel-----------------
-            //If we have another panel queued
-            if (queuedRight != null)
-            {
-                //If there is no panel open
-                if (currentRight == null)
-                {
-                    currentRight = viewHostFactory.createViewHost(queuedRight, queuedRightContext);
-                    currentRight.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Right, currentRight.Container);
-                }
-                //If there is a panel open they must be switched
-                else
-                {
-                    ViewHost last = currentRight;
-                    last.closing();
-                    currentRight = viewHostFactory.createViewHost(queuedRight, queuedRightContext);
-                    currentRight.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Right, currentRight.Container, last._animationCallback);
-                }
-            }
-            //There is no other panel queued and the current panel wants to be closed
-            else if (currentRight != null && currentRight._RequestClosed)
-            {
-                currentRight.closing();
-                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Right, null, currentRight._animationCallback);
-                currentRight = null;
-            }
-            queuedRight = null;
-            queuedRightContext = null;
-
-            //-----------Top Panel-----------------
-            //If we have another panel queued
-            if (queuedTop != null)
-            {
-                //If there is no panel open
-                if (currentTop == null)
-                {
-                    currentTop = viewHostFactory.createViewHost(queuedTop, queuedTopContext);
-                    currentTop.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Top, currentTop.Container);
-                }
-                //If there is a panel open they must be switched
-                else
-                {
-                    ViewHost last = currentTop;
-                    last.closing();
-                    currentTop = viewHostFactory.createViewHost(queuedTop, queuedTopContext);
-                    currentTop.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Top, currentTop.Container, last._animationCallback);
-                }
-            }
-            //There is no other panel queued and the current panel wants to be closed
-            else if (currentTop != null && currentTop._RequestClosed)
-            {
-                currentTop.closing();
-                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Top, null, currentTop._animationCallback);
-                currentTop = null;
-            }
-            queuedTop = null;
-            queuedTopContext = null;
-
-            //-----------Bottom Panel-----------------
-            //If we have another panel queued
-            if (queuedBottom != null)
-            {
-                //If there is no panel open
-                if (currentBottom == null)
-                {
-                    currentBottom = viewHostFactory.createViewHost(queuedBottom, queuedBottomContext);
-                    currentBottom.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Bottom, currentBottom.Container);
-                }
-                //If there is a panel open they must be switched
-                else
-                {
-                    ViewHost last = currentBottom;
-                    last.closing();
-                    currentBottom = viewHostFactory.createViewHost(queuedBottom, queuedBottomContext);
-                    currentBottom.opening();
-                    guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Bottom, currentBottom.Container, last._animationCallback);
-                }
-            }
-            //There is no other panel queued and the current panel wants to be closed
-            else if (currentBottom != null && currentBottom._RequestClosed)
-            {
-                currentBottom.closing();
-                guiManager.changePanel(BorderPanelSets.Outer, BorderPanelNames.Bottom, null, currentBottom._animationCallback);
-                currentBottom = null;
-            }
-            queuedBottom = null;
-            queuedBottomContext = null;
 
             //Floating views
             for (int i = 0; i < openFloatingViews.Count; ++i)
@@ -283,14 +185,12 @@ namespace Medical.Controller.AnomalousMvc
 
         public bool isViewOpen(String name)
         {
-            bool isSidePanel = (currentLeft != null && currentLeft.Name == name)
-                || (currentRight != null && currentRight.Name == name)
-                || (currentTop != null && currentTop.Name == name)
-                || (currentBottom != null && currentBottom.Name == name);
-
-            if (isSidePanel)
+            foreach (var panel in panels)
             {
-                return true;
+                if (panel.Current != null && panel.Current.Name == name)
+                {
+                    return true;
+                }
             }
 
             foreach (ViewHost viewHost in openFloatingViews)
@@ -306,21 +206,12 @@ namespace Medical.Controller.AnomalousMvc
 
         public ViewHost findViewHost(String name)
         {
-            if(currentLeft != null && currentLeft.Name == name)
+            foreach (var panel in panels)
             {
-                return currentLeft;
-            }
-            if(currentRight != null && currentRight.Name == name)
-            {
-                return currentRight;
-            }
-            if(currentTop != null && currentTop.Name == name)
-            {
-                return currentTop;
-            }
-            if(currentBottom != null && currentBottom.Name == name)
-            {
-                return currentBottom;
+                if (panel.Current != null && panel.Current.Name == name)
+                {
+                    return panel.Current;
+                }
             }
 
             foreach (ViewHost viewHost in openFloatingViews)
@@ -337,48 +228,23 @@ namespace Medical.Controller.AnomalousMvc
         public StoredViewCollection generateSavedViewLayout()
         {
             StoredViewCollection storedViews = new StoredViewCollection();
-            if (currentLeft != null)
+            foreach (var panel in panels)
             {
-                storedViews.Left = currentLeft.View;
-            }
-            if (currentRight != null)
-            {
-                storedViews.Right = currentRight.View;
-            }
-            if (currentTop != null)
-            {
-                storedViews.Top = currentTop.View;
-            }
-            if (currentBottom != null)
-            {
-                storedViews.Bottom = currentBottom.View;
+                if (panel.Current != null)
+                {
+                    storedViews.addView(panel.Current.View);
+                }
             }
             foreach (ViewHost viewHost in openFloatingViews)
             {
-                storedViews.addFloatingView(viewHost.View);
+                storedViews.addView(viewHost.View);
             }
             return storedViews;
         }
 
         public void restoreSavedViewLayout(StoredViewCollection storedViews, AnomalousMvcContext context)
         {
-            if (storedViews.Left != null)
-            {
-                requestOpen(storedViews.Left, context);
-            }
-            if (storedViews.Right != null)
-            {
-                requestOpen(storedViews.Right, context);
-            }
-            if (storedViews.Top != null)
-            {
-                requestOpen(storedViews.Top, context);
-            }
-            if (storedViews.Bottom != null)
-            {
-                requestOpen(storedViews.Bottom, context);
-            }
-            foreach (View view in storedViews.FloatingViews)
+            foreach (View view in storedViews.Views)
             {
                 requestOpen(view, context);
             }
@@ -388,11 +254,18 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                return currentLeft != null ||
-                    currentRight != null ||
-                    currentTop != null ||
-                    currentBottom != null ||
-                    openFloatingViews.Count > 0;
+                if (openFloatingViews.Count > 0)
+                {
+                    return true;
+                }
+                foreach (var panel in panels)
+                {
+                    if (panel.Current != null)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
     }

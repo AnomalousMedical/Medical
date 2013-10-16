@@ -11,80 +11,28 @@ namespace Medical.Controller.AnomalousMvc
     {
         public const String DefaultName = "DefaultStoredViewModel";
 
-        private View left;
-        private View right;
-        private View top;
-        private View bottom;
-        private List<View> floating = new List<View>();
+        private List<View> views = new List<View>();
 
         public StoredViewCollection()
         {
             
         }
 
-        public View Left
+        public void addView(View view)
+        {
+            views.Add(view);
+        }
+
+        public void removeView(View view)
+        {
+            views.Remove(view);
+        }
+
+        public IEnumerable<View> Views
         {
             get
             {
-                return left;
-            }
-            set
-            {
-                left = value;
-            }
-        }
-
-        public View Right
-        {
-            get
-            {
-                return right;
-            }
-            set
-            {
-                right = value;
-            }
-        }
-
-        public View Top
-        {
-            get
-            {
-                return top;
-            }
-            set
-            {
-                top = value;
-            }
-        }
-
-        public View Bottom
-        {
-            get
-            {
-                return bottom;
-            }
-            set
-            {
-                bottom = value;
-            }
-        }
-
-        public void addFloatingView(View view)
-        {
-            floating.Add(view);
-        }
-
-        public void removeFloatingView(View view)
-        {
-            floating.Remove(view);
-        }
-
-        public IEnumerable<View> FloatingViews
-        {
-            get
-            {
-                return floating;
+                return views;
             }
         }
     }

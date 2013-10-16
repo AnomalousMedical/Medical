@@ -140,6 +140,7 @@
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModel.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModelItem.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Back\BackStackModel.cs" />
+    <Compile Include="Controller\AnomalousMvc\ViewHostPanelInfo.cs" />
     <Compile Include="Controller\AnomalousMvc\QueuedAction.cs" />
     <Compile Include="Controller\AnomalousMvc\View\StoredViewCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\MvcModel.cs" />

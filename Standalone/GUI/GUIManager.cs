@@ -15,10 +15,10 @@ namespace Medical.GUI
 {
     public enum BorderPanelNames
     {
-        Left = 0,
-        Right = 1,
-        Top = 2,
-        Bottom = 3
+        Left = 1,
+        Right = 2,
+        Top = 3,
+        Bottom = 4
     }
 
     public enum BorderPanelSets
@@ -36,12 +36,12 @@ namespace Medical.GUI
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
 
-        private AnimatedLayoutContainer[] borderLayoutContainers = new AnimatedLayoutContainer[4];
+        private AnimatedLayoutContainer[] borderLayoutContainers = new AnimatedLayoutContainer[8];
 
         private Taskbar taskbar;
         private TaskMenu taskMenu;
         private BorderLayoutContainer outerBorderLayout;
-        //private BorderLayoutContainer innerBorderLayout;
+        private BorderLayoutContainer innerBorderLayout;
         private MDILayoutManager mdiManager;
 
         private bool mainGuiShowing = true;
@@ -154,27 +154,27 @@ namespace Medical.GUI
             outerBorderLayout.Right = borderLayoutContainers[panelPosition];
 
             //Inner border layout
-            //innerBorderLayout = new BorderLayoutContainer();
-            //panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Inner);
-            //borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            //innerBorderLayout.Top = borderLayoutContainers[panelPosition];
+            innerBorderLayout = new BorderLayoutContainer();
+            panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Inner);
+            borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            innerBorderLayout.Top = borderLayoutContainers[panelPosition];
 
-            //panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Inner);
-            //borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            //innerBorderLayout.Left = borderLayoutContainers[panelPosition];
+            panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Inner);
+            borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            innerBorderLayout.Left = borderLayoutContainers[panelPosition];
 
-            //panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Inner);
-            //borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            //innerBorderLayout.Bottom = borderLayoutContainers[panelPosition];
+            panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Inner);
+            borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            innerBorderLayout.Bottom = borderLayoutContainers[panelPosition];
 
-            //panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Inner);
-            //borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            //innerBorderLayout.Right = borderLayoutContainers[panelPosition];
+            panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Inner);
+            borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            innerBorderLayout.Right = borderLayoutContainers[panelPosition];
 
-            //mdiManager.changeCenterParent(innerBorderLayout, (center) =>
-            //{
-            //    innerBorderLayout.Center = center;
-            //});
+            mdiManager.changeCenterParent(innerBorderLayout, (center) =>
+            {
+                innerBorderLayout.Center = center;
+            });
 
             screenLayoutManager.Root.SuppressLayout = false;
 
@@ -190,9 +190,9 @@ namespace Medical.GUI
             textDisplayFactory = new MyGUITextDisplayFactory(standaloneController.SceneViewController);
         }
 
-        private int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
+        public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
         {
-            return (int)name * (int)set;
+            return (int)name * (int)set - 1;
         }
 
         public void giveGUIsToTimelineController(TimelineController timelineController)
