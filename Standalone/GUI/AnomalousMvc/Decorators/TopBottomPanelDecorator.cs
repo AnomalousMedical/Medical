@@ -11,7 +11,6 @@ namespace Medical.GUI.AnomalousMvc
     class TopBottomPanelDecorator : Component, ViewHostComponent
     {
         private ViewHostComponent child;
-        private int widgetWidth;
 
         private IntVector2 childPosition;
         private IntSize2 childSizeOffset;
@@ -31,8 +30,6 @@ namespace Medical.GUI.AnomalousMvc
             childSizeOffset = new IntSize2(int.Parse(widget.getUserString("ChildWidthOffset")), int.Parse(widget.getUserString("ChildHeightOffset")));
             widget.setSize(child.Widget.Right + childSizeOffset.Width, child.Widget.Bottom + childSizeOffset.Height);
             child.Widget.Align = Align.HStretch | Align.VStretch;
-
-            widgetWidth = widget.Width;
         }
 
         public override void Dispose()
@@ -43,11 +40,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public void topLevelResized()
         {
-            if (widget.Width != widgetWidth)
-            {
-                child.topLevelResized();
-                widgetWidth = widget.Width;
-            }
+            child.topLevelResized();
         }
 
         public void animatedResizeStarted(IntSize2 finalSize)

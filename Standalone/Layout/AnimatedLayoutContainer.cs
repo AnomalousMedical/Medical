@@ -7,6 +7,11 @@ namespace Medical
 {
     public abstract class AnimatedLayoutContainer : LayoutContainer, IDisposable
     {
+        public AnimatedLayoutContainer()
+        {
+            Rigid = false;
+        }
+
         public abstract void Dispose();
 
         public abstract void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete);

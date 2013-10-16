@@ -113,7 +113,7 @@ namespace Medical.GUI.AnomalousMvc
 
         IntSize2 getDesiredSize()
         {
-            IntSize2 workingSize = layoutContainer.TopmostWorkingSize;
+            IntSize2 workingSize = layoutContainer.RigidParentWorkingSize;
             return new IntSize2(View.computeWidth(component.Widget.Width, workingSize.Width), 
                                 View.computeHeight(component.Widget.Height, workingSize.Height));
         }

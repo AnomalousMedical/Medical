@@ -9,6 +9,7 @@ namespace Medical
     public abstract class LayoutContainer
     {
         private LayoutContainer parent = null;
+        private bool rigid = true;
 
         public LayoutContainer()
         {
@@ -77,7 +78,51 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Find the size of the first parent container that is rigid up the chain.
+        /// 
+        /// If the container has no parent the current working size will be returned.
+        /// </summary>
+        public IntSize2 RigidParentWorkingSize
+        {
+            get
+            {
+                if (parent != null)
+                {
+                    if (parent.Rigid)
+                    {
+                        return parent.WorkingSize;
+                    }
+                    else
+                    {
+                        return parent.RigidParentWorkingSize;
+                    }
+
+                }
+                else
+                {
+                    return WorkingSize;
+                }
+            }
+        }
+
         public bool SuppressLayout { get; set; }
+
+        /// <summary>
+        /// Determine if this container is rigid or animated. Animated means that its size will
+        /// be recalculated over time when the content is changed instead of snapping to position.
+        /// </summary>
+        protected bool Rigid
+        {
+            get
+            {
+                return rigid;
+            }
+            set
+            {
+                rigid = value;
+            }
+        }
 
         /// <summary>
         /// Internal function to set the parent, should only be called by other ScreenLayoutContainers.
