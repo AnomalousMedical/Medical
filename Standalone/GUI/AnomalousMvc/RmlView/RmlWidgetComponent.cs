@@ -16,6 +16,7 @@ namespace Medical.GUI.AnomalousMvc
         private ImageBox rmlImage;
         private int imageHeight;
         private int imageWidth;
+        private String documentName;
 
         private AnomalousMvcContext context;
 
@@ -31,13 +32,17 @@ namespace Medical.GUI.AnomalousMvc
             if (view.RmlFile != null)
             {
                 startRmlUpdate();
-                using (ElementDocument document = rocketWidget.Context.LoadDocument(RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.RmlFile)))
+                if (view.RmlFile != null)
                 {
-                    if (document != null)
+                    documentName = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.RmlFile);
+                    using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
                     {
-                        document.Show();
-                        rocketWidget.removeFocus();
-                        rocketWidget.renderOnNextFrame();
+                        if (document != null)
+                        {
+                            document.Show();
+                            rocketWidget.removeFocus();
+                            rocketWidget.renderOnNextFrame();
+                        }
                     }
                 }
                 endRmlUpdate();
@@ -294,7 +299,7 @@ namespace Medical.GUI.AnomalousMvc
             base.topLevelResized();
         }
 
-        public void reloadDocument(String documentName)
+        public void reloadDocument()
         {
             RocketGuiManager.clearAllCaches();
 

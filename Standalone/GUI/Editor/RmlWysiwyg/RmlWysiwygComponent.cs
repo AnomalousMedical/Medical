@@ -76,8 +76,15 @@ namespace Medical.GUI
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
 
-            documentName = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.RmlFile);
-            this.FakeLoadLocation = documentName;
+            documentName = view.RmlFile;
+            if (documentName != null)
+            {
+                this.FakeLoadLocation = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, documentName);
+            }
+            else
+            {
+                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.BackingLocation);
+            }
             loadDocumentFile(documentName, false);
 
             view._fireComponentCreated(this);

@@ -28,13 +28,11 @@ namespace Medical
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
         private RcssTypeController rcssTypeController;
-        private String rmlPreviewFile;
 
         public RcssEditorContext(String file, String rmlPreviewFile, RcssTypeController rcssTypeController)
         {
             this.rcssTypeController = rcssTypeController;
             this.currentFile = file;
-            this.rmlPreviewFile = rmlPreviewFile;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -168,7 +166,7 @@ namespace Medical
             rcssTypeController.EditorController.saveAllCachedResources();
             if (rmlComponent != null)
             {
-                rmlComponent.reloadDocument(rmlPreviewFile);
+                rmlComponent.reloadDocument();
             }
         }
 
@@ -179,7 +177,7 @@ namespace Medical
                 rcssTypeController.saveFile(textEditorComponent.Text, currentFile);
                 if (rmlComponent != null)
                 {
-                    rmlComponent.reloadDocument(rmlPreviewFile);
+                    rmlComponent.reloadDocument();
                 }
             }
         }
