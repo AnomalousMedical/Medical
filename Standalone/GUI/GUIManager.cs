@@ -23,8 +23,8 @@ namespace Medical.GUI
 
     public enum BorderPanelSets
     {
-        Outer = 1,
-        Inner = 2,
+        Main = 1,
+        EditPreview = 2,
     }
 
     public class GUIManager : IDisposable
@@ -40,8 +40,8 @@ namespace Medical.GUI
 
         private Taskbar taskbar;
         private TaskMenu taskMenu;
-        private BorderLayoutContainer outerBorderLayout;
-        private BorderLayoutContainer innerBorderLayout;
+        private BorderLayoutContainer mainBorderLayout;
+        private BorderLayoutContainer editorPreviewBorderLayout;
         private MDILayoutManager mdiManager;
 
         private bool mainGuiShowing = true;
@@ -114,8 +114,8 @@ namespace Medical.GUI
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
 
-            outerBorderLayout = new BorderLayoutContainer();
-            outerBorderLayout.Center = mdiManager;
+            mainBorderLayout = new BorderLayoutContainer();
+            mainBorderLayout.Center = mdiManager;
 
             //Dialogs
             dialogManager = new DialogManager(mdiManager);
@@ -126,7 +126,7 @@ namespace Medical.GUI
             taskbar.OpenTaskMenu += new GUI.Taskbar.OpenTaskMenuEvent(taskbar_OpenTaskMenu);
             taskbar.AlignmentChanged += new Action<GUI.Taskbar>(taskbar_AlignmentChanged);
 
-            taskbar.Child = outerBorderLayout;
+            taskbar.Child = mainBorderLayout;
             screenLayoutManager.Root = taskbar;
 
             notificationManager = new NotificationGUIManager(taskbar, standaloneController);
@@ -137,43 +137,43 @@ namespace Medical.GUI
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
             //Outer border layout
-            int panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Outer);
+            int panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Main);
             borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            outerBorderLayout.Top = borderLayoutContainers[panelPosition];
+            mainBorderLayout.Top = borderLayoutContainers[panelPosition];
 
-            panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Outer);
+            panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Main);
             borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            outerBorderLayout.Left = borderLayoutContainers[panelPosition];
+            mainBorderLayout.Left = borderLayoutContainers[panelPosition];
 
-            panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Outer);
+            panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Main);
             borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            outerBorderLayout.Bottom = borderLayoutContainers[panelPosition];
+            mainBorderLayout.Bottom = borderLayoutContainers[panelPosition];
 
-            panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Outer);
+            panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Main);
             borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            outerBorderLayout.Right = borderLayoutContainers[panelPosition];
+            mainBorderLayout.Right = borderLayoutContainers[panelPosition];
 
             //Inner border layout
-            innerBorderLayout = new BorderLayoutContainer();
-            panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Inner);
+            editorPreviewBorderLayout = new BorderLayoutContainer();
+            panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.EditPreview);
             borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            innerBorderLayout.Top = borderLayoutContainers[panelPosition];
+            editorPreviewBorderLayout.Top = borderLayoutContainers[panelPosition];
 
-            panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Inner);
+            panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.EditPreview);
             borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            innerBorderLayout.Left = borderLayoutContainers[panelPosition];
+            editorPreviewBorderLayout.Left = borderLayoutContainers[panelPosition];
 
-            panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Inner);
+            panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.EditPreview);
             borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            innerBorderLayout.Bottom = borderLayoutContainers[panelPosition];
+            editorPreviewBorderLayout.Bottom = borderLayoutContainers[panelPosition];
 
-            panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Inner);
+            panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.EditPreview);
             borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            innerBorderLayout.Right = borderLayoutContainers[panelPosition];
+            editorPreviewBorderLayout.Right = borderLayoutContainers[panelPosition];
 
-            mdiManager.changeCenterParent(innerBorderLayout, (center) =>
+            mdiManager.changeCenterParent(editorPreviewBorderLayout, (center) =>
             {
-                innerBorderLayout.Center = center;
+                editorPreviewBorderLayout.Center = center;
             });
 
             screenLayoutManager.Root.SuppressLayout = false;
@@ -273,8 +273,8 @@ namespace Medical.GUI
 
         public void addFullscreenPopup(LayoutContainer popup)
         {
-            popup.Location = new IntVector2((int)outerBorderLayout.Location.x, (int)outerBorderLayout.Location.y);
-            popup.WorkingSize = new IntSize2((int)outerBorderLayout.WorkingSize.Width, (int)outerBorderLayout.WorkingSize.Height);
+            popup.Location = new IntVector2((int)mainBorderLayout.Location.x, (int)mainBorderLayout.Location.y);
+            popup.WorkingSize = new IntSize2((int)mainBorderLayout.WorkingSize.Width, (int)mainBorderLayout.WorkingSize.Height);
             popup.layout();
             fullscreenPopups.Add(popup);
         }
@@ -368,10 +368,10 @@ namespace Medical.GUI
         {
             dialogManager.windowResized();
             continuePrompt.ensureVisible();
-            int xPos = (int)outerBorderLayout.Location.x;
-            int yPos = (int)outerBorderLayout.Location.y;
-            int innerWidth = (int)outerBorderLayout.WorkingSize.Width;
-            int innerHeight = (int)outerBorderLayout.WorkingSize.Height;
+            int xPos = (int)mainBorderLayout.Location.x;
+            int yPos = (int)mainBorderLayout.Location.y;
+            int innerWidth = (int)mainBorderLayout.WorkingSize.Width;
+            int innerHeight = (int)mainBorderLayout.WorkingSize.Height;
             if (taskMenu.Visible)
             {
                 taskMenu.setPosition(xPos, yPos);

@@ -53,21 +53,21 @@ namespace Medical.Controller.AnomalousMvc
             }
             else
             {
-                //Temp
+                BorderPanelSets set = view.EditPreviewContent ? BorderPanelSets.EditPreview : BorderPanelSets.Main;
                 ViewHostPanelInfo panel = null;
                 switch (view.ViewLocation)
                 {
                     case ViewLocations.Left:
-                        panel = findPanel(BorderPanelNames.Left, BorderPanelSets.Outer);
+                        panel = findPanel(BorderPanelNames.Left, set);
                         break;
                     case ViewLocations.Right:
-                        panel = findPanel(BorderPanelNames.Right, BorderPanelSets.Outer);
+                        panel = findPanel(BorderPanelNames.Right, set);
                         break;
                     case ViewLocations.Top:
-                        panel = findPanel(BorderPanelNames.Top, BorderPanelSets.Outer);
+                        panel = findPanel(BorderPanelNames.Top, set);
                         break;
                     case ViewLocations.Bottom:
-                        panel = findPanel(BorderPanelNames.Bottom, BorderPanelSets.Outer);
+                        panel = findPanel(BorderPanelNames.Bottom, set);
                         break;
                     case ViewLocations.Floating:
                         queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));

@@ -14,6 +14,7 @@ using Medical;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Lecture.GUI;
+using Engine;
 
 namespace Lecture
 {
@@ -60,6 +61,9 @@ namespace Lecture
             RawRmlWysiwygView rmlView = new RawRmlWysiwygView("RmlView", uiCallback, uiCallback, undoBuffer);
             rmlView.ViewLocation = ViewLocations.Left;
             rmlView.IsWindow = false;
+            rmlView.EditPreviewContent = true;
+            rmlView.Size = new IntSize2(slide.Size, slide.Size);
+            rmlView.WidthSizeStrategy = slide.SizeStrategy;
             rmlView.Rml = slide.Rml;
             rmlView.FakePath = slide.UniqueName + "/index.rml";
             rmlView.ComponentCreated += (view, component) =>

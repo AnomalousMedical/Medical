@@ -26,6 +26,9 @@ namespace Medical.Controller.AnomalousMvc
 
     public abstract class View : SaveableEditableItem
     {
+        [DoNotSave]
+        private bool editPreviewContent = false;
+
         public View(String name)
             :base(name)
         {
@@ -76,6 +79,18 @@ namespace Medical.Controller.AnomalousMvc
 
         [Editable]
         public IntSize2 SizeLimit { get; set; }
+
+        public bool EditPreviewContent
+        {
+            get
+            {
+                return editPreviewContent;
+            }
+            set
+            {
+                editPreviewContent = value;
+            }
+        }
 
         protected View(LoadInfo info)
             :base (info)
