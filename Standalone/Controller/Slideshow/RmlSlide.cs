@@ -103,7 +103,7 @@ namespace Medical
         {
             if (version == 2)
             {
-                rml = rml.Replace("href=\"/MasterTemplate.trml\"", "href=\"../MasterTemplate.trml\"");
+                rml = rml.Replace("href=\"/MasterTemplate.trml\"", "href=\"~/MasterTemplate.trml\"");
             }
         }
 

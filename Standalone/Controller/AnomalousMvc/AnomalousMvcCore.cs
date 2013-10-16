@@ -234,6 +234,7 @@ namespace Medical.Controller.AnomalousMvc
             }
 
             RocketGuiManager.clearAllCaches();
+            RocketInterface.Instance.SystemInterface.RemoveRootPath(context.ResourceProvider.BackingLocation);
 
             if (resumePreviousContext)
             {
@@ -311,6 +312,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             timelineController.MvcContext = context;
             context.Core = this;
+            RocketInterface.Instance.SystemInterface.AddRootPath(context.ResourceProvider.BackingLocation);
         }
     }
 }
