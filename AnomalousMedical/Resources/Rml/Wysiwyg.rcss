@@ -1,0 +1,40 @@
+x-separator
+{
+	background: black;
+	height: 2sp;
+	align: center;
+	margin-left: 3sp;
+	margin-right: 3sp;
+	display: block;
+}
+
+div.ImageParagraphLeft
+{
+	clear: both;
+}
+
+div.ImageParagraphLeft img
+{
+	float: left;
+}
+
+div.ImageParagraphRight
+{
+	clear: both;
+}
+
+div.ImageParagraphRight img
+{
+	float: right;
+}
+
+div.TwoColumn
+{
+	clear: both;
+}
+
+div.TwoColumn div.Column
+{
+	width: 50%; 
+	float:left;
+}
