@@ -79,7 +79,7 @@ namespace Medical.GUI
             documentName = view.RmlFile;
             if (documentName != null)
             {
-                this.FakeLoadLocation = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, documentName);
+                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(documentName));
             }
             else
             {
@@ -95,7 +95,7 @@ namespace Medical.GUI
         {
             if (view.FakePath != null)
             {
-                this.FakeLoadLocation = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.FakePath);
+                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(view.FakePath));
             }
             else
             {

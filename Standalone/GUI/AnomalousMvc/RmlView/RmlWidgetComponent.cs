@@ -61,7 +61,7 @@ namespace Medical.GUI.AnomalousMvc
             imageHeight = rmlImage.Height;
             if (view.FakePath != null)
             {
-                this.FakeLoadLocation = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.FakePath);
+                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(view.FakePath));
             }
             else
             {
