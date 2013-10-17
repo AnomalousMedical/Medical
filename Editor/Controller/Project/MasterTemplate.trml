@@ -2,7 +2,7 @@
   <head>
     <link type="text/template" href="~/Medical.Resources.Rml.RmlPanelTemplate.trml" />
   </head>
-  <body>
+  <body template="RmlPanelTemplate">
     <div id="MasterContent">
     </div>
   </body>
