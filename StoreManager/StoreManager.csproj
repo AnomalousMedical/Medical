@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -101,13 +101,14 @@
     <EmbeddedResource Include="MvcContexts\UploadPlugin\Index.rml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MvcContexts\UploadPlugin\MasterTemplate.trml" />
+    <EmbeddedResource Include="MvcContexts\UploadPlugin\MasterTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MvcContexts\UploadPlugin\MvcContext.mvc" />
     <EmbeddedResource Include="MvcContexts\UploadPlugin\Plugin.ddp">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MvcContexts\UploadPlugin\UploadPlugin.rcss" />
-    <EmbeddedResource Include="MvcContexts\UploadPlugin\Wysiwyg.rcss" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MvcContexts\UploadPlugin\CreateOrUpdate.rml" />
