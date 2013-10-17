@@ -8,6 +8,7 @@ using Medical.Controller;
 using OgreWrapper;
 using System.Diagnostics;
 using System.Reflection;
+using libRocketPlugin;
 
 namespace Medical.GUI
 {
@@ -61,6 +62,8 @@ namespace Medical.GUI
 
         public void initialize(StandaloneController standaloneController)
         {
+            RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
+
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
             standaloneController.MovementSequenceController.GroupAdded += MovementSequenceController_GroupAdded;

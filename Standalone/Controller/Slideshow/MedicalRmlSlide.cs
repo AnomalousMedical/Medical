@@ -21,7 +21,6 @@ namespace Medical
 
         protected override void customizeController(MvcController controller, RunCommandsAction showCommand)
         {
-            base.customizeController(controller, showCommand);
             populateCommand(showCommand);
         }
 
@@ -42,6 +41,14 @@ namespace Medical
             {
                 MusclePosition = this.MusclePosition
             });
+        }
+
+        public override void updateToVersion(int version)
+        {
+            if (version == 2)
+            {
+                Rml = Rml.Replace(Version1TemplateLink, Version2TemplateLinkReplacement).Replace(Version1TemplateSetting, Version2TemplateReplacement);
+            }
         }
 
         public CameraPosition CameraPosition
@@ -97,5 +104,13 @@ namespace Medical
         {
 
         }
+
+        private const String Version1TemplateLink = @"<link type=""text/template"" href=""/MasterTemplate.trml"" />";
+        private const String Version2TemplateLinkReplacement =
+@"<link type=""text/template"" href=""~/Medical.Resources.Slides.SlideTemplate.trml"" />
+<link type=""text/rcss"" href=""/SlideMasterStyles.rcss""/>";
+
+        private const String Version1TemplateSetting = @"template=""MasterTemplate""";
+        private const String Version2TemplateReplacement = @"template=""MedicalSlideTemplate""";
     }
 }

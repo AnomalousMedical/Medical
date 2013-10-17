@@ -13,7 +13,7 @@ using System.Xml.Linq;
 
 namespace Medical
 {
-    public class RmlSlide : Slide
+    public abstract class RmlSlide : Slide
     {
         private String rml;
         private int size = 50;
@@ -64,10 +64,7 @@ namespace Medical
             return controller;
         }
 
-        protected virtual void customizeController(MvcController controller, RunCommandsAction showCommand)
-        {
-
-        }
+        protected abstract void customizeController(MvcController controller, RunCommandsAction showCommand);
 
         public void generateNewUniqueName()
         {
@@ -99,13 +96,7 @@ namespace Medical
             }
         }
 
-        public void updateToVersion(int version)
-        {
-            if (version == 2)
-            {
-                rml = rml.Replace("href=\"/MasterTemplate.trml\"", "href=\"~/MasterTemplate.trml\"");
-            }
-        }
+        public abstract void updateToVersion(int version);
 
         public String UniqueName
         {
