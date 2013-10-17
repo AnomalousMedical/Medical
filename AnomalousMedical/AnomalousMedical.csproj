@@ -157,6 +157,7 @@
     <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
+    <EmbeddedResource Include="Resources\Rml\RmlPanelTemplate.trml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />

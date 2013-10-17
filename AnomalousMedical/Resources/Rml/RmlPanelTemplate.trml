@@ -1,0 +1,15 @@
+<template name="RmlPanelTemplate" content="Content" appendHead="false">
+  <head>
+    <link type="text/rcss" href="~/libRocketPlugin.Resources.rkt.rcss"/>
+    <link type="text/rcss" href="~/libRocketPlugin.Resources.Anomalous.rcss"/>
+  </head>
+  <body>
+<div class="ScrollArea">
+	<div class="ContentContainer">
+		<div class="BackImage"></div>
+		<div id="Content">
+		</div>
+	</div>
+</div>
+  </body>
+</template>
