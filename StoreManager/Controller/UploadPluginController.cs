@@ -30,32 +30,32 @@ namespace Anomalous.Medical.StoreManager.Controller
         public void showContext(String pluginSourcePath, PluginCreationTool tool)
         {
             EmbeddedResourceProvider embeddedResources = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Anomalous.Medical.StoreManager.MvcContexts.UploadPlugin.");
-            ResourceProvider resourceProvider = new StoreManagerResourceProvider(embeddedResources, new FilesystemResourceProvider(pluginSourcePath));
-            controller.TimelineController.setResourceProvider(embeddedResources);
+            ResourceProvider projectResourceProvider = new FilesystemResourceProvider(pluginSourcePath);
 
             ResourceProviderRocketFSExtension rocketEmbeddedResources = new ResourceProviderRocketFSExtension(embeddedResources);
-            ResourceProviderRocketFSExtension rocketMainResources = new ResourceProviderRocketFSExtension(resourceProvider);
+            ResourceProviderRocketFSExtension rocketProjectResources = new ResourceProviderRocketFSExtension(projectResourceProvider);
 
             //Load and run the mvc context
-            context = controller.MvcCore.loadContext(resourceProvider.openFile("MvcContext.mvc"));
+            context = controller.MvcCore.loadContext(embeddedResources.openFile("MvcContext.mvc"));
             context.RuntimeName = "UploadPlugin";
             context.setResourceProvider(embeddedResources);
+            controller.TimelineController.setResourceProvider(embeddedResources);
 
             context.Started += (ctx) =>
             {
                 RocketInterface.Instance.FileInterface.addExtension(rocketEmbeddedResources);
-                RocketInterface.Instance.FileInterface.addExtension(rocketMainResources);
+                RocketInterface.Instance.FileInterface.addExtension(rocketProjectResources);
             };
 
             context.RemovedFromStack += (ctx) =>
             {
                 RocketInterface.Instance.FileInterface.removeExtension(rocketEmbeddedResources);
-                RocketInterface.Instance.FileInterface.removeExtension(rocketMainResources);
+                RocketInterface.Instance.FileInterface.removeExtension(rocketProjectResources);
             };
 
             indexController = new IndexController(context, controller.App.LicenseManager);
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
-            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool, resourceProvider);
+            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool, projectResourceProvider);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
             transmitFile = new TransmitFileController(context, controller.App.LicenseManager, pluginSourcePath);
             uploadComplete = new UploadCompleteController(context);
