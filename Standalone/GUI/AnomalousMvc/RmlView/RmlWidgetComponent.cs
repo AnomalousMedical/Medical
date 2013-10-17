@@ -34,7 +34,7 @@ namespace Medical.GUI.AnomalousMvc
                 startRmlUpdate();
                 if (view.RmlFile != null)
                 {
-                    documentName = RocketInterface.createValidFileUrlFromPaths(context.ResourceProvider.BackingLocation, view.RmlFile);
+                    documentName = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(view.RmlFile));
                     using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
                     {
                         if (document != null)

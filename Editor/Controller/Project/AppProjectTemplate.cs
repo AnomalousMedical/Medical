@@ -31,7 +31,6 @@ namespace Medical
             Assembly editorAssembly = Assembly.GetExecutingAssembly();
 
             EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider, Assembly.GetExecutingAssembly());
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider, Assembly.GetExecutingAssembly());
 
             using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream("Index.rml")))
             {

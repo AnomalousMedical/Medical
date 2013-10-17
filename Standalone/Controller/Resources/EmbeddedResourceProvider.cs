@@ -118,7 +118,7 @@ namespace Medical
         {
             get
             {
-                return baseResourceString;
+                return baseResourceString.Replace('.', '/');
             }
         }
 

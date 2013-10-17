@@ -9,6 +9,7 @@ using Engine;
 using Logging;
 using MyGUIPlugin;
 using System.Net;
+using libRocketPlugin;
 
 namespace Medical.Controller
 {
@@ -35,8 +36,21 @@ namespace Medical.Controller
             EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Medical.MvcContexts.Login.");
             controller.TimelineController.setResourceProvider(embeddedResourceProvider);
 
+            ResourceProviderRocketFSExtension resourceProviderRocketFSExtension = new ResourceProviderRocketFSExtension(embeddedResourceProvider);
+
             //Load and run the mvc context
             context = controller.MvcCore.loadContext(embeddedResourceProvider.openFile("MvcContext.mvc"));
+
+            context.Started += (ctx) =>
+            {
+                RocketInterface.Instance.FileInterface.addExtension(resourceProviderRocketFSExtension);
+            };
+
+            context.RemovedFromStack += (ctx) =>
+            {
+                RocketInterface.Instance.FileInterface.removeExtension(resourceProviderRocketFSExtension);
+            };
+
             context.RuntimeName = "LogIn";
             context.setResourceProvider(embeddedResourceProvider);
             DataModel credentialsModel = (DataModel)context.Models["Credentials"];

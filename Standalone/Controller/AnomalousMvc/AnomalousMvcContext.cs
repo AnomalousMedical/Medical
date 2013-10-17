@@ -14,6 +14,19 @@ namespace Medical.Controller.AnomalousMvc
 {
     public partial class AnomalousMvcContext : Saveable
     {
+        /// <summary>
+        /// Called when the context starts running for the first time. Fired by the Started function.
+        /// </summary>
+        public event Action<AnomalousMvcContext> Started;
+
+        /// <summary>
+        /// Called at the end of the context's lifecycle when it is removed from
+        /// the context stack. You can reuse it again from there, but it won't
+        /// be a part of the stack anymore. This, unlike shutdown, is called every
+        /// time the context is done being used.
+        /// </summary>
+        public event Action<AnomalousMvcContext> RemovedFromStack;
+
         private ControllerCollection controllers;
         private ViewCollection views;
         private AnomalousMvcCore core;
@@ -49,6 +62,10 @@ namespace Medical.Controller.AnomalousMvc
             {
                 runFinalAction(RemovedFromStackAction);
             }
+            if (RemovedFromStack != null)
+            {
+                RemovedFromStack.Invoke(this);
+            }
         }
 
         /// <summary>
@@ -56,6 +73,10 @@ namespace Medical.Controller.AnomalousMvc
         /// </summary>
         public void startup()
         {
+            if (Started != null)
+            {
+                Started.Invoke(this);
+            }
             foreach (MvcModel model in models)
             {
                 modelMemory.add(model.Name, model);

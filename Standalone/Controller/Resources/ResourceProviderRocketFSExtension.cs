@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Medical
 {
-    class ResourceProviderRocketFSExtension : RocketFileSystemExtension
+    public class ResourceProviderRocketFSExtension : RocketFileSystemExtension
     {
         private ResourceProvider resourceProvider;
         private String fixedBackingLocation;

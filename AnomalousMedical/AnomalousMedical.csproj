@@ -149,7 +149,9 @@
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MvcContexts\Login\Index.rml" />
+    <EmbeddedResource Include="MvcContexts\Login\Index.rml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MvcContexts\Login\LogIn.rcss" />
     <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
     <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
