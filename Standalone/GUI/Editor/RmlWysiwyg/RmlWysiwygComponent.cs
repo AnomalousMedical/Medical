@@ -17,7 +17,7 @@ namespace Medical.GUI
 {
     public class RmlWysiwygComponent : LayoutComponent
     {
-        public const String DefaultImage = "/Medical.Resources.ImagePlaceholder.png";
+        public const String DefaultImage = "~/Medical.Resources.ImagePlaceholder.png";
 
         public event Action<RmlWysiwygComponent> RmlEdited;
 
