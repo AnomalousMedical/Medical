@@ -19,9 +19,11 @@ namespace Medical
         [DoNotSave]
         private List<Slide> slides = new List<Slide>();
 
+        private int version;
+
         public Slideshow()
         {
-
+            version = 2;
         }
 
         public void addSlide(Slide slide)
@@ -116,18 +118,18 @@ namespace Medical
             }
         }
 
+        public int Version
+        {
+            get
+            {
+                return version;
+            }
+        }
+
         protected Slideshow(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
             info.RebuildList("Slides", slides);
-            int version = info.GetInt32("Version", 1);
-            if (version != 2)
-            {
-                foreach (Slide slide in slides)
-                {
-                    slide.updateToVersion(2);
-                }
-            }
         }
 
         public virtual void getInfo(SaveInfo info)

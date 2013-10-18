@@ -96,8 +96,6 @@ namespace Medical
             }
         }
 
-        public abstract void updateToVersion(int version);
-
         public String UniqueName
         {
             get

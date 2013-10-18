@@ -92,7 +92,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Project\MasterTemplate.trml" />
-    <EmbeddedResource Include="Resources\Project\Wysiwyg.rcss" />
+    <EmbeddedResource Include="Resources\Project\SlideMasterStyles.rcss" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

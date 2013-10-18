@@ -9,7 +9,7 @@ namespace Lecture
     static class EmbeddedTemplateNames
     {
         public const String MasterTemplate_trml = "Lecture.Resources.Project.MasterTemplate.trml";
-        public const String Wysiwyg_rcss = "Lecture.Resources.Project.Wysiwyg.rcss";
+        public const String SlideMasterStyles_rcss = "Lecture.Resources.Project.SlideMasterStyles.rcss";
 
         public static Assembly Assembly
         {

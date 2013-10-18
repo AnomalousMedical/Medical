@@ -28,7 +28,7 @@ namespace Lecture.GUI
             Assembly editorAssembly = Assembly.GetExecutingAssembly();
 
             EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", resourceProvider, EmbeddedTemplateNames.Assembly);
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.Wysiwyg_rcss, "Wysiwyg.rcss", resourceProvider, EmbeddedTemplateNames.Assembly);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", resourceProvider, EmbeddedTemplateNames.Assembly);
 
             Slideshow slideshow = new Slideshow();
             saveObject(slideshow, resourceProvider, slideshowName);

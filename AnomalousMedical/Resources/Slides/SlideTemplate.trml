@@ -1,4 +1,4 @@
-<template name="MedicalSlideTemplate" content="Content">
+<template name="MedicalSlideTemplate" content="Content" appendHead="false">
   <head>
     <link type="text/rcss" href="~/libRocketPlugin.Resources.rkt.rcss"/>
     <link type="text/rcss" href="~/libRocketPlugin.Resources.Anomalous.rcss"/>
