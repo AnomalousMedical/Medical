@@ -42,6 +42,8 @@ namespace Lecture
         private MedicalSlideItemTemplate itemTemplate;
         private RunCommandsAction setupScene;
         private SlideTaskbarView taskbar;
+        private RunCommandsAction showCommand;
+        private Action<String, String> wysiwygUndoCallback;
 
         public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
         {
@@ -51,6 +53,7 @@ namespace Lecture
             this.undoBuffer = undoBuffer;
             this.imageRenderer = imageRenderer;
             this.itemTemplate = itemTemplate;
+            this.wysiwygUndoCallback = wysiwygUndoCallback;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -59,46 +62,14 @@ namespace Lecture
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
 
-            RunCommandsAction showCommand = new RunCommandsAction("Show",
+            showCommand = new RunCommandsAction("Show",
                     new ShowViewCommand("InfoBar"),
                     new RunActionCommand("Editor/SetupScene")
                     );
 
             foreach (RmlSlidePanel panel in slide.Panels)
             {
-                String editorViewName = panel.createViewName("RmlView");
-                RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, uiCallback, uiCallback, undoBuffer);
-                rmlView.ViewLocation = panel.ViewLocation;
-                rmlView.IsWindow = false;
-                rmlView.EditPreviewContent = true;
-                rmlView.Size = new IntSize2(panel.Size, panel.Size);
-                rmlView.WidthSizeStrategy = panel.SizeStrategy;
-                rmlView.Rml = panel.Rml;
-                rmlView.FakePath = slide.UniqueName + "/index.rml";
-                rmlView.ComponentCreated += (view, component) =>
-                {
-                    rmlEditors[view.Name].Second = component;
-                    component.RmlEdited += rmlEditor =>
-                    {
-                        panel.Rml = rmlEditor.CurrentRml;
-                    };
-                };
-                rmlView.UndoRedoCallback = (rml) =>
-                    {
-                        wysiwygUndoCallback(editorViewName, rml);
-                    };
-                rmlView.RequestFocus += (view) =>
-                    {
-                        currentRmlEditor = view.Name;
-                    };
-                rmlView.addCustomStrategy(new SlideImageStrategy("img", editorController.ResourceProvider, slide.UniqueName));
-                mvcContext.Views.add(rmlView);
-                rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
-                showCommand.addCommand(new ShowViewCommand(rmlView.Name));
-                if (currentRmlEditor == null)
-                {
-                    currentRmlEditor = rmlView.Name;
-                }
+                addSlidePanelEditor(slide, panel);
             }
 
             DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
@@ -108,11 +79,20 @@ namespace Lecture
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
-                    rmlEditors[currentRmlEditor].Second.setPreviewElement(position, item.Markup, item.PreviewTagType);
+                    foreach (var editor in rmlEditors.Values)
+                    {
+                        editor.Second.setPreviewElement(position, item.Markup, item.PreviewTagType);
+                    }
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
-                    rmlEditors[currentRmlEditor].Second.insertRml(item.Markup, position);
+                    foreach (var editor in rmlEditors.Values)
+                    {
+                        if (editor.Second.insertRml(item.Markup, position))
+                        {
+                            currentRmlEditor = editor.First.Name;
+                        }
+                    }
                 };
             htmlDragDrop.ItemActivated += (item) =>
                 {
@@ -163,6 +143,31 @@ namespace Lecture
             taskbar.addTask(new CallbackTask("PresentFromBeginning", "Present From Beginning", "Lecture.Icon.PresentBeginning", "Edit", 0, true, item =>
             {
                 editorController.runSlideshow(0);
+            }));
+            taskbar.addTask(new CallbackTask("AddRightPanel", "Add Right Panel", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                RmlSlidePanel panel = new RmlSlidePanel()
+                {
+                    ViewLocation = ViewLocations.Right,
+                    SizeStrategy = ViewSizeStrategy.Auto,
+                    Size = 30,
+                    Rml = @"<rml>
+	<head>
+		<link type=""text/template"" href=""/MasterTemplate.trml"" />
+	</head>
+	<body template=""MasterTemplate"">
+        <h1>Click to Change Title</h1>
+        <p>Click to change text.</p>
+    </body>
+</rml>
+"                };
+                slide.addPanel(panel);
+                var view = addSlidePanelEditor(slide, panel);
+                mvcContext.Controllers.add(new MvcController(view.Name + "Controller",
+                    new RunCommandsAction("Show",
+                        new ShowViewCommand(view.Name))
+                        ));
+                mvcContext.runAction(String.Format("{0}Controller/Show", view.Name));
             }));
             mvcContext.Views.add(taskbar);
 
@@ -374,6 +379,45 @@ namespace Lecture
                 
                 slideEditorController.SlideImageManager.thumbnailUpdated(slide);
             }
+        }
+
+        private RawRmlWysiwygView addSlidePanelEditor(MedicalRmlSlide slide, RmlSlidePanel panel)
+        {
+            String editorViewName = panel.createViewName("RmlView");
+            RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
+            rmlView.ViewLocation = panel.ViewLocation;
+            rmlView.IsWindow = false;
+            rmlView.EditPreviewContent = true;
+            rmlView.Size = new IntSize2(panel.Size, panel.Size);
+            rmlView.WidthSizeStrategy = panel.SizeStrategy;
+            rmlView.Rml = panel.Rml;
+            rmlView.FakePath = slide.UniqueName + "/index.rml";
+            rmlView.ComponentCreated += (view, component) =>
+            {
+                rmlEditors[view.Name].Second = component;
+                component.RmlEdited += rmlEditor =>
+                {
+                    panel.Rml = rmlEditor.CurrentRml;
+                };
+            };
+            rmlView.UndoRedoCallback = (rml) =>
+            {
+                this.wysiwygUndoCallback(editorViewName, rml);
+            };
+            rmlView.RequestFocus += (view) =>
+            {
+                currentRmlEditor = view.Name;
+            };
+            rmlView.addCustomStrategy(new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName));
+            mvcContext.Views.add(rmlView);
+            rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
+            showCommand.addCommand(new ShowViewCommand(rmlView.Name));
+            if (currentRmlEditor == null)
+            {
+                currentRmlEditor = rmlView.Name;
+            }
+
+            return rmlView;
         }
     }
 }

@@ -30,6 +30,7 @@ namespace Medical
         {
             MvcController controller = new MvcController(name);
             RunCommandsAction showCommand = new RunCommandsAction("Show");
+            showCommand.addCommand(new CloseAllViewsCommand());
             String timelinePath = Path.Combine(UniqueName, "Timeline.tl");
             if (resourceProvider.exists(timelinePath))
             {
@@ -69,15 +70,8 @@ namespace Medical
             customizeController(controller, showCommand);
         }
 
-        public void addPanel(String rml, ViewLocations location, ViewSizeStrategy sizeStrategy, int size)
+        public void addPanel(RmlSlidePanel panel)
         {
-            RmlSlidePanel panel = new RmlSlidePanel()
-            {
-                Rml = rml,
-                ViewLocation = location,
-                SizeStrategy = sizeStrategy,
-                Size = size,
-            };
             panels.Add(panel);
         }
 

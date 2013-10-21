@@ -15,16 +15,17 @@ namespace Medical.GUI
 {
     public enum BorderPanelNames
     {
-        Left = 1,
-        Right = 2,
-        Top = 3,
-        Bottom = 4
+        Left = 0,
+        Right = 1,
+        Top = 2,
+        Bottom = 3,
+        Size
     }
 
     public enum BorderPanelSets
     {
-        Main = 1,
-        EditPreview = 2,
+        Main = 0,
+        EditPreview = (int)BorderPanelNames.Size,
     }
 
     public class GUIManager : IDisposable
@@ -192,7 +193,7 @@ namespace Medical.GUI
 
         public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
         {
-            return (int)name * (int)set - 1;
+            return (int)name + (int)set;
         }
 
         public void giveGUIsToTimelineController(TimelineController timelineController)

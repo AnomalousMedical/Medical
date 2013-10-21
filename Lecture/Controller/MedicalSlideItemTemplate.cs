@@ -30,7 +30,13 @@ namespace Lecture
         {
             MedicalRmlSlide slide = new MedicalRmlSlide();
             applySceneStateToSlide(slide);
-            slide.addPanel(defaultSlide, ViewLocations.Left, ViewSizeStrategy.Auto, 30);
+            slide.addPanel(new RmlSlidePanel()
+            {
+                Rml = defaultSlide,
+                ViewLocation = ViewLocations.Left,
+                SizeStrategy = ViewSizeStrategy.Auto,
+                Size = 30,
+            });
             if (SlideCreated != null)
             {
                 SlideCreated.Invoke(slide);
