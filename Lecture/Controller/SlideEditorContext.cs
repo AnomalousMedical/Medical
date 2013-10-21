@@ -31,7 +31,7 @@ namespace Lecture
         }
 
         private Dictionary<String, Pair<RawRmlWysiwygView, RmlWysiwygComponent>> rmlEditors = new Dictionary<string, Pair<RawRmlWysiwygView, RmlWysiwygComponent>>();
-        //private RmlWysiwygComponent rmlComponent;
+        private String currentRmlEditor;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
         private MedicalRmlSlide slide;
@@ -87,10 +87,18 @@ namespace Lecture
                     {
                         wysiwygUndoCallback(editorViewName, rml);
                     };
+                rmlView.RequestFocus += (view) =>
+                    {
+                        currentRmlEditor = view.Name;
+                    };
                 rmlView.addCustomStrategy(new SlideImageStrategy("img", editorController.ResourceProvider, slide.UniqueName));
                 mvcContext.Views.add(rmlView);
                 rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
                 showCommand.addCommand(new ShowViewCommand(rmlView.Name));
+                if (currentRmlEditor == null)
+                {
+                    currentRmlEditor = rmlView.Name;
+                }
             }
 
             DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
@@ -98,18 +106,18 @@ namespace Lecture
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" scale=\"true\"></img>", RmlWysiwygComponent.DefaultImage))
                 );
-            //htmlDragDrop.Dragging += (item, position) =>
-            //    {
-            //        rmlComponent.setPreviewElement(position, item.Markup, item.PreviewTagType);
-            //    };
-            //htmlDragDrop.DragEnded += (item, position) =>
-            //    {
-            //        rmlComponent.insertRml(item.Markup, position);
-            //    };
-            //htmlDragDrop.ItemActivated += (item) =>
-            //    {
-            //        rmlComponent.insertRml(item.Markup);
-            //    };
+            htmlDragDrop.Dragging += (item, position) =>
+                {
+                    rmlEditors[currentRmlEditor].Second.setPreviewElement(position, item.Markup, item.PreviewTagType);
+                };
+            htmlDragDrop.DragEnded += (item, position) =>
+                {
+                    rmlEditors[currentRmlEditor].Second.insertRml(item.Markup, position);
+                };
+            htmlDragDrop.ItemActivated += (item) =>
+                {
+                    rmlEditors[currentRmlEditor].Second.insertRml(item.Markup);
+                };
 
             taskbar = new SlideTaskbarView("InfoBar", slideName);
             taskbar.addTask(new CallbackTask("Save", "Save", "CommonToolstrip/Save", "", 0, true, item =>

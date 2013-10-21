@@ -12,9 +12,10 @@ using Engine.Attributes;
 
 namespace Medical.GUI
 {
-    public class RawRmlWysiwygView : MyGUIView
+    public class RawRmlWysiwygView : RmlWysiwygViewBase
     {
         public event Action<RawRmlWysiwygView, RmlWysiwygComponent> ComponentCreated;
+        public event Action<RawRmlWysiwygView> RequestFocus;
 
         [DoNotSave]
         private UndoRedoBuffer undoBuffer;
@@ -51,7 +52,7 @@ namespace Medical.GUI
             }
         }
 
-        public IEnumerable<ElementStrategy> CustomElementStrategies
+        public override IEnumerable<ElementStrategy> CustomElementStrategies
         {
             get
             {
@@ -68,6 +69,14 @@ namespace Medical.GUI
             if (ComponentCreated != null)
             {
                 ComponentCreated.Invoke(this, component);
+            }
+        }
+
+        internal override void _fireRequestFocus()
+        {
+            if (RequestFocus != null)
+            {
+                RequestFocus.Invoke(this);
             }
         }
 

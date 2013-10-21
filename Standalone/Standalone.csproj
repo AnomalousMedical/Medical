@@ -330,6 +330,7 @@
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygView.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygViewInterface.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\SelectedElementManager.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\WysiwygDragDropItem.cs" />
     <Compile Include="GUI\Editor\TimelineEditor\ActionPrototypes\ShowPropActionData.cs" />

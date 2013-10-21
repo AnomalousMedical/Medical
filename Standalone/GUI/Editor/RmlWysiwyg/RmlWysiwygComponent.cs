@@ -41,14 +41,16 @@ namespace Medical.GUI
         private String documentName;
         private Action<String> undoRedoCallback;
         private bool changesMade = false;
+        private RmlWysiwygViewBase rmlWysiwygViewInterface;
 
         private AnomalousMvcContext context;
 
-        private RmlWysiwygComponent(AnomalousMvcContext context, MyGUIViewHost viewHost, IEnumerable<ElementStrategy> elementStrategies)
+        private RmlWysiwygComponent(AnomalousMvcContext context, MyGUIViewHost viewHost, RmlWysiwygViewBase rmlWysiwygViewInterface)
             : base("Medical.GUI.Editor.RmlWysiwyg.RmlWysiwygComponent.layout", viewHost)
         {
             undoRedoCallback = defaultUndoRedoCallback;
             this.context = context;
+            this.rmlWysiwygViewInterface = rmlWysiwygViewInterface;
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
@@ -63,14 +65,14 @@ namespace Medical.GUI
             selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
             draggingElementManager = new DraggingElementManager(this);
 
-            foreach (var elementStrategy in elementStrategies)
+            foreach (var elementStrategy in rmlWysiwygViewInterface.CustomElementStrategies)
             {
                 elementStrategyManager.add(elementStrategy);
             }
         }
 
         public RmlWysiwygComponent(RmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : this(context, viewHost, view.CustomElementStrategies)
+            : this(context, viewHost, view)
         {
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
@@ -91,7 +93,7 @@ namespace Medical.GUI
         }
 
         public RmlWysiwygComponent(RawRmlWysiwygView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : this(context, viewHost, view.CustomElementStrategies)
+            : this(context, viewHost, view)
         {
             if (view.FakePath != null)
             {
@@ -524,6 +526,7 @@ namespace Medical.GUI
 
         void rmlImage_MouseButtonPressed(Widget source, EventArgs e)
         {
+            requestFocus();
             IntVector2 mousePosition = ((MouseEventArgs)e).Position;
             IntVector2 localPosition = localCoord(mousePosition);
             Element element = rocketWidget.Context.FindElementAtPoint(localPosition);
@@ -745,6 +748,11 @@ namespace Medical.GUI
                 }
             }
             return false;
+        }
+
+        private void requestFocus()
+        {
+            rmlWysiwygViewInterface._fireRequestFocus();
         }
     }
 }
