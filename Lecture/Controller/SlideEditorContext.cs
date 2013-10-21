@@ -30,7 +30,8 @@ namespace Lecture
             Redo
         }
 
-        private RmlWysiwygComponent rmlComponent;
+        private Dictionary<String, Pair<RawRmlWysiwygView, RmlWysiwygComponent>> rmlEditors = new Dictionary<string, Pair<RawRmlWysiwygView, RmlWysiwygComponent>>();
+        //private RmlWysiwygComponent rmlComponent;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
         private MedicalRmlSlide slide;
@@ -42,7 +43,7 @@ namespace Lecture
         private RunCommandsAction setupScene;
         private SlideTaskbarView taskbar;
 
-        public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String> wysiwygUndoCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -57,51 +58,58 @@ namespace Lecture
             mvcContext.BlurAction = "Common/Blur";
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
-            
-            RawRmlWysiwygView rmlView = new RawRmlWysiwygView("RmlView", uiCallback, uiCallback, undoBuffer);
-            rmlView.ViewLocation = ViewLocations.Left;
-            rmlView.IsWindow = false;
-            rmlView.EditPreviewContent = true;
-            rmlView.Size = new IntSize2(slide.Size, slide.Size);
-            rmlView.WidthSizeStrategy = slide.SizeStrategy;
-            rmlView.Rml = slide.Rml;
-            rmlView.FakePath = slide.UniqueName + "/index.rml";
-            rmlView.ComponentCreated += (view, component) =>
+
+            RunCommandsAction showCommand = new RunCommandsAction("Show",
+                    new ShowViewCommand("InfoBar"),
+                    new RunActionCommand("Editor/SetupScene")
+                    );
+
+            foreach (RmlSlidePanel panel in slide.Panels)
             {
-                rmlComponent = component;
-                rmlComponent.RmlEdited += rmlEditor =>
+                String editorViewName = panel.createViewName("RmlView");
+                RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, uiCallback, uiCallback, undoBuffer);
+                rmlView.ViewLocation = panel.ViewLocation;
+                rmlView.IsWindow = false;
+                rmlView.EditPreviewContent = true;
+                rmlView.Size = new IntSize2(panel.Size, panel.Size);
+                rmlView.WidthSizeStrategy = panel.SizeStrategy;
+                rmlView.Rml = panel.Rml;
+                rmlView.FakePath = slide.UniqueName + "/index.rml";
+                rmlView.ComponentCreated += (view, component) =>
                 {
-                    slide.Rml = rmlEditor.CurrentRml;
+                    rmlEditors[view.Name].Second = component;
+                    component.RmlEdited += rmlEditor =>
+                    {
+                        panel.Rml = rmlEditor.CurrentRml;
+                    };
                 };
-            };
-            rmlView.UndoRedoCallback = wysiwygUndoCallback;
-            rmlView.addCustomStrategy(new SlideImageStrategy("img", editorController.ResourceProvider, slide.UniqueName));
-            mvcContext.Views.add(rmlView);
+                rmlView.UndoRedoCallback = (rml) =>
+                    {
+                        wysiwygUndoCallback(editorViewName, rml);
+                    };
+                rmlView.addCustomStrategy(new SlideImageStrategy("img", editorController.ResourceProvider, slide.UniqueName));
+                mvcContext.Views.add(rmlView);
+                rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
+                showCommand.addCommand(new ShowViewCommand(rmlView.Name));
+            }
 
             DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" scale=\"true\"></img>", RmlWysiwygComponent.DefaultImage))
-                //new WysiwygDragDropItem("Link", "Editor/LinksIcon", "<a onclick=\"None\">Link</a>"),
-                //new WysiwygDragDropItem("Button", "Editor/AddButtonIcon", "<input type=\"submit\" onclick=\"None\">Button</input>"),
-                //new WysiwygDragDropItem("Separator", CommonResources.NoIcon, "<x-separator/>"),
-                //new WysiwygDragDropItem("Two Columns", CommonResources.NoIcon, "<div class=\"TwoColumn\"><div class=\"Column\"><p>Column 1 text goes here.</p></div><div class=\"Column\"><p>Column 2 text goes here.</p></div></div>"),
-                //new WysiwygDragDropItem("Heading and Paragraph", CommonResources.NoIcon, "<h1>Heading For Paragraph.</h1><p>Paragraph for heading.</p>", "div"),
-                //new WysiwygDragDropItem("Left Image and Paragraph", CommonResources.NoIcon, String.Format("<div class=\"ImageParagraphLeft\"><img src=\"{0}\" /><p>Add paragraph text here.</p></div>", RmlWysiwygComponent.DefaultImage)),
-                //new WysiwygDragDropItem("Right Image and Paragraph", CommonResources.NoIcon, String.Format("<div class=\"ImageParagraphRight\"><img src=\"{0}\" /><p>Add paragraph text here.</p></div>", RmlWysiwygComponent.DefaultImage))
                 );
-            htmlDragDrop.Dragging += (item, position) =>
-                {
-                    rmlComponent.setPreviewElement(position, item.Markup, item.PreviewTagType);
-                };
-            htmlDragDrop.DragEnded += (item, position) =>
-                {
-                    rmlComponent.insertRml(item.Markup, position);
-                };
-            htmlDragDrop.ItemActivated += (item) =>
-                {
-                    rmlComponent.insertRml(item.Markup);
-                };
+            //htmlDragDrop.Dragging += (item, position) =>
+            //    {
+            //        rmlComponent.setPreviewElement(position, item.Markup, item.PreviewTagType);
+            //    };
+            //htmlDragDrop.DragEnded += (item, position) =>
+            //    {
+            //        rmlComponent.insertRml(item.Markup, position);
+            //    };
+            //htmlDragDrop.ItemActivated += (item) =>
+            //    {
+            //        rmlComponent.insertRml(item.Markup);
+            //    };
 
             taskbar = new SlideTaskbarView("InfoBar", slideName);
             taskbar.addTask(new CallbackTask("Save", "Save", "CommonToolstrip/Save", "", 0, true, item =>
@@ -155,11 +163,7 @@ namespace Lecture
 
             mvcContext.Controllers.add(new MvcController("Editor",
                 setupScene,
-                new RunCommandsAction("Show",
-                    new ShowViewCommand("RmlView"),
-                    new ShowViewCommand("InfoBar"),
-                    new RunActionCommand("Editor/SetupScene")
-                    ),
+                showCommand,
                 new RunCommandsAction("Close", new CloseAllViewsCommand())
                 ));
 
@@ -177,7 +181,12 @@ namespace Lecture
                 new CallbackAction("Blur", context =>
                 {
                     commitText();
-                    rmlView.Rml = slide.Rml = CurrentText;
+                    foreach(var panel in slide.Panels)
+                    {
+                        String editorName = panel.createViewName("RmlView");
+                        var editor = rmlEditors[editorName];
+                        editor.First.Rml = panel.Rml = getCurrentText(editor.Second);
+                    }
                     GlobalContextEventHandler.disableEventContext(eventContext);
                     htmlDragDrop.DestroyIconPreview();
                     if (Blur != null)
@@ -227,12 +236,13 @@ namespace Lecture
             taskbar.addTask(task);
         }
 
-        public void setWysiwygRml(String rml, bool keepScrollPosition)
+        public void setWysiwygRml(String panelName, String rml, bool keepScrollPosition)
         {
-            if (rmlComponent != null)
+            Pair<RawRmlWysiwygView, RmlWysiwygComponent> editor;
+            if (rmlEditors.TryGetValue(panelName, out editor) && editor.Second != null)
             {
-                rmlComponent.cancelAndHideEditor();
-                rmlComponent.setRml(rml, keepScrollPosition, true);
+                editor.Second.cancelAndHideEditor();
+                editor.Second.setRml(rml, keepScrollPosition, true);
             }
         }
 
@@ -269,16 +279,13 @@ namespace Lecture
             }
         }
 
-        public string CurrentText
+        private String getCurrentText(RmlWysiwygComponent rmlComponent)
         {
-            get
+            if (rmlComponent != null)
             {
-                if (rmlComponent != null)
-                {
-                    return rmlComponent.CurrentRml;
-                }
-                return null;
+                return rmlComponent.CurrentRml;
             }
+            return null;
         }
 
         private void saveAll()
@@ -289,46 +296,74 @@ namespace Lecture
 
         public void commitText()
         {
-            if (rmlComponent != null)
+            foreach (var editor in rmlEditors.Values)
             {
-                rmlComponent.aboutToSaveRml();
-                if (rmlComponent.ChangesMade)
+                if (editor.Second != null)
                 {
-                    updateThumbnail();
+                    editor.Second.aboutToSaveRml();
+                    if (editor.Second.ChangesMade)
+                    {
+                        updateThumbnail();
+                    }
                 }
             }
         }
 
-        private static readonly int slideWidth = SlideImageManager.ThumbWidth / 3;
-        private static readonly int sceneWidth = SlideImageManager.ThumbWidth - slideWidth;
-
         public void updateThumbnail()
         {
-            if (slideEditorController.ResourceProvider != null && rmlComponent != null)
+            if (slideEditorController.ResourceProvider != null)
             {
-                ImageRendererProperties imageProperties = new ImageRendererProperties();
-                imageProperties.Width = sceneWidth;
-                imageProperties.Height = SlideImageManager.ThumbHeight;
-                imageProperties.AntiAliasingMode = 2;
-                imageProperties.TransparentBackground = false;
-                imageProperties.UseActiveViewportLocation = false;
-                imageProperties.OverrideLayers = true;
-                imageProperties.ShowBackground = true;
-                imageProperties.ShowWatermark = false;
-                imageProperties.ShowUIUpdates = false;
-                imageProperties.LayerState = slide.Layers;
-                imageProperties.CameraPosition = slide.CameraPosition.Translation;
-                imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
-
+                IntSize2 sceneThumbSize = new IntSize2(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
+                IntVector2 sceneThumbPosition = new IntVector2(0, 0);
                 Bitmap thumb = slideEditorController.SlideImageManager.createThumbBitmap(slide);
                 using (Graphics g = Graphics.FromImage(thumb))
                 {
-                    rmlComponent.writeToGraphics(g, new Rectangle(0, 0, slideWidth, SlideImageManager.ThumbHeight));
+                    foreach (var editor in rmlEditors.Values)
+                    {
+                        if (editor.Second != null)
+                        {
+                            IntVector2 location = editor.Second.ViewHost.Container.Location - editor.Second.ViewHost.Container.RigidParent.Location;
+                            IntSize2 size = editor.Second.ViewHost.Container.WorkingSize;
+                            float sizeRatio = (float)SlideImageManager.ThumbWidth / editor.Second.ViewHost.Container.RigidParentWorkingSize.Width;
+                            
+                            Rectangle panelThumbPos = new Rectangle(0, 0, SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
+                            switch (editor.First.ViewLocation)
+                            {
+                                case ViewLocations.Left:
+                                    panelThumbPos.Width = (int)(size.Width * sizeRatio);
+                                    sceneThumbPosition.x = panelThumbPos.Width;
+                                    sceneThumbSize.Width -= panelThumbPos.Width;
+                                    break;
+                                case ViewLocations.Right:
+                                    panelThumbPos.Width = (int)(size.Width * sizeRatio);
+                                    panelThumbPos.X = SlideImageManager.ThumbWidth - panelThumbPos.Width;
+                                    sceneThumbSize.Width -= panelThumbPos.Width;
+                                    break;
+                            }
+                            editor.Second.writeToGraphics(g, panelThumbPos);
+                        }
+                    }
+
+                    ImageRendererProperties imageProperties = new ImageRendererProperties();
+                    imageProperties.Width = sceneThumbSize.Width;
+                    imageProperties.Height = sceneThumbSize.Height;
+                    imageProperties.AntiAliasingMode = 2;
+                    imageProperties.TransparentBackground = false;
+                    imageProperties.UseActiveViewportLocation = false;
+                    imageProperties.OverrideLayers = true;
+                    imageProperties.ShowBackground = true;
+                    imageProperties.ShowWatermark = false;
+                    imageProperties.ShowUIUpdates = false;
+                    imageProperties.LayerState = slide.Layers;
+                    imageProperties.CameraPosition = slide.CameraPosition.Translation;
+                    imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
+
                     using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
                     {
-                        g.DrawImage(sceneThumb, slideWidth, 0);
+                        g.DrawImage(sceneThumb, sceneThumbPosition.x, sceneThumbPosition.y);
                     }
                 }
+                
                 slideEditorController.SlideImageManager.thumbnailUpdated(slide);
             }
         }

@@ -9,9 +9,7 @@ namespace Medical
 {
     public interface Slide : Saveable
     {
-        View createView(String name, bool allowPrevious, bool allowNext);
-
-        MvcController createController(String name, String viewName, ResourceProvider resourceProvider);
+        void setupContext(AnomalousMvcContext context, String name, bool allowPrevious, bool allowNext, ResourceProvider resourceProvider);
 
         /// <summary>
         /// Make a new unique name for the slide, should only need to be done when duplicating a slide for some reason.

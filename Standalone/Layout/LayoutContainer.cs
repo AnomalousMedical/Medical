@@ -106,6 +106,34 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Find the first rigid parent container up the chain.
+        /// 
+        /// If the container has no parent the current container will be returned.
+        /// </summary>
+        public LayoutContainer RigidParent
+        {
+            get
+            {
+                if (parent != null)
+                {
+                    if (parent.Rigid)
+                    {
+                        return parent;
+                    }
+                    else
+                    {
+                        return parent.RigidParent;
+                    }
+
+                }
+                else
+                {
+                    return this;
+                }
+            }
+        }
+
         public bool SuppressLayout { get; set; }
 
         /// <summary>

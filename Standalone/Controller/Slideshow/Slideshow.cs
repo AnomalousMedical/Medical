@@ -75,14 +75,12 @@ namespace Medical
             foreach(Slide slide in slides)
             {
                 String slideName = "Slide" + i;
-                View view = slide.createView(slideName, i != 0, i != lastSlideIndex);
-                mvcContext.Views.add(view);
-                ++i;
+                slide.setupContext(mvcContext, slideName, i != 0, i != lastSlideIndex, resourceProvider);
 
-                MvcController controller = slide.createController(slideName, view.Name, resourceProvider);
-                mvcContext.Controllers.add(controller);
                 NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");
                 navModel.addNavigationLink(link);
+
+                ++i;
             }
 
             RunCommandsAction runCommands = (RunCommandsAction)mvcContext.Controllers["Common"].Actions["Start"];

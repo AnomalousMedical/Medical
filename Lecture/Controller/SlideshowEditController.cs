@@ -151,9 +151,9 @@ namespace Lecture
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (rml) =>
+                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (panelName, rml) =>
                 {
-                    slideEditorContext.setWysiwygRml(rml, true);
+                    slideEditorContext.setWysiwygRml(panelName, rml, true);
                 });
                 if (standaloneController.SharePluginController != null)
                 {

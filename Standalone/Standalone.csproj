@@ -193,6 +193,7 @@
     <Compile Include="Controller\SharePluginController.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
+    <Compile Include="Controller\Slideshow\RmlSlidePanel.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />
