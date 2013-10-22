@@ -11,19 +11,30 @@ namespace Lecture.GUI
     {
         private SlideLayoutPicker slideLayoutPicker;
 
+        private List<Slide> presetSlides = new List<Slide>();
+
+        public event Action<Slide> ChangeSlideLayout;
+
         public SlideLayoutPickerTask()
             :base("SlideLayoutPicker", "Change Slide Layout", CommonResources.NoIcon, "Edit")
         {
 
         }
 
+        public void addPresetSlide(Slide preset)
+        {
+            presetSlides.Add(preset);
+        }
+
         public void createLayoutPicker()
         {
-            slideLayoutPicker = new SlideLayoutPicker();
+            slideLayoutPicker = new SlideLayoutPicker(presetSlides);
+            slideLayoutPicker.SlidePresetChosen += slideLayoutPicker_SlidePresetChosen;
         }
 
         public void destroyLayoutPicker()
         {
+            slideLayoutPicker.SlidePresetChosen -= slideLayoutPicker_SlidePresetChosen;
             slideLayoutPicker.Dispose();
             slideLayoutPicker = null;
         }
@@ -31,7 +42,7 @@ namespace Lecture.GUI
         public override void clicked(TaskPositioner taskPositioner)
         {
             IntVector2 position = taskPositioner.findGoodWindowPosition(slideLayoutPicker.Width, slideLayoutPicker.Height);
-            slideLayoutPicker.setPosition(position.x, position.y);
+            slideLayoutPicker.show(position.x, position.y);
         }
 
         public override bool Active
@@ -39,6 +50,14 @@ namespace Lecture.GUI
             get
             {
                 return false;
+            }
+        }
+
+        void slideLayoutPicker_SlidePresetChosen(Slide obj)
+        {
+            if (ChangeSlideLayout != null)
+            {
+                ChangeSlideLayout.Invoke(obj);
             }
         }
     }

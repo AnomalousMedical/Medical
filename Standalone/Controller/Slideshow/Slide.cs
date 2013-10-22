@@ -88,10 +88,34 @@ namespace Medical
                 }
             }
             info.claimFile(Path.Combine(UniqueName, "Thumb.png"));
-            //Need to save timeline files somehow
             foreach (RmlSlidePanel panel in panels)
             {
                 panel.claimFiles(info, resourceProvider, this);
+            }
+        }
+
+        public abstract Slide clone();
+
+        public virtual void applyToExisting(Slide slide, bool overwriteContent)
+        {
+            List<SlidePanel> removePanels = new List<SlidePanel>(slide.panels);
+            foreach (SlidePanel panel in panels)
+            {
+                SlidePanel existingPanel = slide.findPanel(panel.ViewLocation);
+                if (existingPanel != null)
+                {
+                    removePanels.Remove(existingPanel);
+                    panel.applyToExisting(existingPanel, overwriteContent);
+                }
+                else
+                {
+                    slide.panels.Add(panel.clone());
+                }
+            }
+
+            foreach (SlidePanel remove in removePanels)
+            {
+                slide.panels.Remove(remove);
             }
         }
 
@@ -109,6 +133,18 @@ namespace Medical
             {
                 return id;
             }
+        }
+
+        private SlidePanel findPanel(ViewLocations viewLocation)
+        {
+            foreach (SlidePanel panel in panels)
+            {
+                if (panel.ViewLocation == viewLocation)
+                {
+                    return panel;
+                }
+            }
+            return null;
         }
 
         protected Slide(LoadInfo info)

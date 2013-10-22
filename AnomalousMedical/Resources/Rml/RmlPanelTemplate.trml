@@ -1,4 +1,4 @@
-<template name="RmlPanelTemplate" content="Content" appendHead="false">
+<template name="RmlPanelTemplate" content="MasterSlideContent" appendHead="false">
   <head>
     <link type="text/rcss" href="~/libRocketPlugin.Resources.rkt.rcss"/>
     <link type="text/rcss" href="~/libRocketPlugin.Resources.Anomalous.rcss"/>
@@ -8,7 +8,7 @@
 <div class="ScrollArea">
 	<div class="ContentContainer">
 		<div class="BackImage"></div>
-		<div id="Content">
+		<div id="MasterSlideContent">
 		</div>
 	</div>
 </div>

@@ -116,13 +116,13 @@ namespace Lecture
             mvcContext.Views.add(view);
         }
 
-        private const String defaultSlide = @"<rml>
+        public const String defaultSlide = @"<rml>
 	<head>
 		<link type=""text/template"" href=""/MasterTemplate.trml"" />
 	</head>
 	<body template=""MasterTemplate"">
-        <h1>Click to Change Title</h1>
-        <p>Click to change text.</p>
+        <h1>Add Title Here</h1>
+        <p>Add text here.</p>
     </body>
 </rml>
 ";

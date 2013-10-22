@@ -65,5 +65,25 @@ namespace Medical
             }
             base.claimFiles(info, resourceProvider, slide);
         }
+
+        public override bool applyToExisting(SlidePanel panel, bool overwriteContent)
+        {
+            if (panel is RmlSlidePanel)
+            {
+                if (overwriteContent)
+                {
+                    ((RmlSlidePanel)panel).Rml = this.Rml;
+                }
+                return base.applyToExisting(panel, overwriteContent);
+            }
+            return false;
+        }
+
+        public override SlidePanel clone()
+        {
+            RmlSlidePanel clone = new RmlSlidePanel();
+            applyToExisting(clone, true);
+            return clone;
+        }
     }
 }

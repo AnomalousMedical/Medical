@@ -42,7 +42,8 @@ namespace Lecture
         private MedicalSlideItemTemplate itemTemplate;
         private RunCommandsAction setupScene;
         private SlideTaskbarView taskbar;
-        private RunCommandsAction showCommand;
+        private RunCommandsAction showEditorWindowsCommand;
+        private RunCommandsAction closeEditorWindowsCommand;
         private Action<String, String> wysiwygUndoCallback;
         private SlideLayoutPickerTask slideLayoutPicker;
 
@@ -63,15 +64,16 @@ namespace Lecture
             mvcContext.SuspendAction = "Common/Suspended";
             mvcContext.ResumeAction = "Common/Resumed";
 
-            showCommand = new RunCommandsAction("Show",
+            showEditorWindowsCommand = new RunCommandsAction("ShowEditors");
+            closeEditorWindowsCommand = new RunCommandsAction("CloseEditors");
+
+            RunCommandsAction showCommand = new RunCommandsAction("Show",
                     new ShowViewCommand("InfoBar"),
-                    new RunActionCommand("Editor/SetupScene")
+                    new RunActionCommand("Editor/SetupScene"),
+                    new RunActionCommand("Editor/ShowEditors")
                     );
 
-            foreach (RmlSlidePanel panel in slide.Panels)
-            {
-                addSlidePanelEditor(slide, panel);
-            }
+            refreshPanelEditors(false);
 
             DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
@@ -146,32 +148,36 @@ namespace Lecture
                 editorController.runSlideshow(0);
             }));
             slideLayoutPicker = new SlideLayoutPickerTask();
-            taskbar.addTask(slideLayoutPicker);
-            taskbar.addTask(new CallbackTask("AddRightPanel", "Add Right Panel", CommonResources.NoIcon, "Edit", 0, true, item =>
+
+            //Couple simple presets
+            MedicalRmlSlide presetSlide = new MedicalRmlSlide();
+            presetSlide.addPanel(new RmlSlidePanel(){
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Left,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new MedicalRmlSlide();
+            presetSlide.addPanel(new RmlSlidePanel()
             {
-                RmlSlidePanel panel = new RmlSlidePanel()
-                {
-                    ViewLocation = ViewLocations.Right,
-                    SizeStrategy = ViewSizeStrategy.Auto,
-                    Size = 30,
-                    Rml = @"<rml>
-	<head>
-		<link type=""text/template"" href=""/MasterTemplate.trml"" />
-	</head>
-	<body template=""MasterTemplate"">
-        <h1>Click to Change Title</h1>
-        <p>Click to change text.</p>
-    </body>
-</rml>
-"                };
-                slide.addPanel(panel);
-                var view = addSlidePanelEditor(slide, panel);
-                mvcContext.Controllers.add(new MvcController(view.Name + "Controller",
-                    new RunCommandsAction("Show",
-                        new ShowViewCommand(view.Name))
-                        ));
-                mvcContext.runAction(String.Format("{0}Controller/Show", view.Name));
-            }));
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Left,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Right,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            slideLayoutPicker.ChangeSlideLayout += slideLayoutPicker_ChangeSlideLayout;
+            taskbar.addTask(slideLayoutPicker);
             mvcContext.Views.add(taskbar);
 
             setupScene = new RunCommandsAction("SetupScene");
@@ -180,6 +186,8 @@ namespace Lecture
             mvcContext.Controllers.add(new MvcController("Editor",
                 setupScene,
                 showCommand,
+                showEditorWindowsCommand,
+                closeEditorWindowsCommand,
                 new RunCommandsAction("Close", new CloseAllViewsCommand())
                 ));
 
@@ -198,7 +206,7 @@ namespace Lecture
                 new CallbackAction("Blur", context =>
                 {
                     commitText();
-                    foreach(var panel in slide.Panels)
+                    foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
                     {
                         String editorName = panel.createViewName("RmlView");
                         var editor = rmlEditors[editorName];
@@ -243,6 +251,23 @@ namespace Lecture
                 undoBuffer.execute();
             };
             eventContext.addEvent(redoEvent);
+        }
+
+        void slideLayoutPicker_ChangeSlideLayout(Slide newSlideLayout)
+        {
+            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<Slide, Slide>(
+                (execSlide) =>
+                    {
+                        execSlide.applyToExisting(slide, false);
+                        refreshPanelEditors(true);
+                    },
+                newSlideLayout,
+                (undoSlide) =>
+                    {
+                        undoSlide.applyToExisting(slide, true);
+                        refreshPanelEditors(true);
+                    },
+                slide.clone()));
         }
 
         public void close()
@@ -387,43 +412,62 @@ namespace Lecture
             }
         }
 
-        private RawRmlWysiwygView addSlidePanelEditor(MedicalRmlSlide slide, RmlSlidePanel panel)
+        private void refreshPanelEditors(bool closeExistingEditors)
         {
-            String editorViewName = panel.createViewName("RmlView");
-            RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
-            rmlView.ViewLocation = panel.ViewLocation;
-            rmlView.IsWindow = false;
-            rmlView.EditPreviewContent = true;
-            rmlView.Size = new IntSize2(panel.Size, panel.Size);
-            rmlView.WidthSizeStrategy = panel.SizeStrategy;
-            rmlView.Rml = panel.Rml;
-            rmlView.FakePath = slide.UniqueName + "/index.rml";
-            rmlView.ComponentCreated += (view, component) =>
+            if (closeExistingEditors)
             {
-                rmlEditors[view.Name].Second = component;
-                component.RmlEdited += rmlEditor =>
+                mvcContext.runAction("Editor/CloseEditors");
+            }
+            closeEditorWindowsCommand.clear();
+            showEditorWindowsCommand.clear();
+            foreach (var editor in rmlEditors.Values)
+            {
+                mvcContext.Views.remove(editor.First);
+            }
+            rmlEditors.Clear();
+
+            foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
+            {
+                String editorViewName = panel.createViewName("RmlView");
+                RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
+                rmlView.ViewLocation = panel.ViewLocation;
+                rmlView.IsWindow = false;
+                rmlView.EditPreviewContent = true;
+                rmlView.Size = new IntSize2(panel.Size, panel.Size);
+                rmlView.WidthSizeStrategy = panel.SizeStrategy;
+                rmlView.Rml = panel.Rml;
+                rmlView.FakePath = slide.UniqueName + "/index.rml";
+                rmlView.ComponentCreated += (view, component) =>
                 {
-                    panel.Rml = rmlEditor.CurrentRml;
+                    rmlEditors[view.Name].Second = component;
+                    component.RmlEdited += rmlEditor =>
+                    {
+                        panel.Rml = rmlEditor.CurrentRml;
+                    };
                 };
-            };
-            rmlView.UndoRedoCallback = (rml) =>
-            {
-                this.wysiwygUndoCallback(editorViewName, rml);
-            };
-            rmlView.RequestFocus += (view) =>
-            {
-                currentRmlEditor = view.Name;
-            };
-            rmlView.addCustomStrategy(new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName));
-            mvcContext.Views.add(rmlView);
-            rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
-            showCommand.addCommand(new ShowViewCommand(rmlView.Name));
-            if (currentRmlEditor == null)
-            {
-                currentRmlEditor = rmlView.Name;
+                rmlView.UndoRedoCallback = (rml) =>
+                {
+                    this.wysiwygUndoCallback(editorViewName, rml);
+                };
+                rmlView.RequestFocus += (view) =>
+                {
+                    currentRmlEditor = view.Name;
+                };
+                rmlView.addCustomStrategy(new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName));
+                mvcContext.Views.add(rmlView);
+                rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
+                showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));
+                closeEditorWindowsCommand.addCommand(new CloseViewIfOpen(rmlView.Name));
+                if (currentRmlEditor == null)
+                {
+                    currentRmlEditor = rmlView.Name;
+                }
             }
 
-            return rmlView;
+            if (closeExistingEditors)
+            {
+                mvcContext.runAction("Editor/ShowEditors");
+            }
         }
     }
 }

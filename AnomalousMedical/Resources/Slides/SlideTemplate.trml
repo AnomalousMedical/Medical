@@ -1,11 +1,11 @@
-<template name="MedicalSlideTemplate" content="Content" appendHead="false">
+<template name="MedicalSlideTemplate" content="MasterSlideContent" appendHead="false">
   <head>
     <link type="text/rcss" href="~/libRocketPlugin.Resources.rkt.rcss"/>
     <link type="text/rcss" href="~/libRocketPlugin.Resources.Anomalous.rcss"/>
     <link type="text/rcss" href="~/Medical.Resources.Slides.Wysiwyg.rcss"/>
   </head>
   <body>
-    <div id="Content" class="ScrollArea">
+    <div id="MasterSlideContent" class="ScrollArea">
     </div>
   </body>
 </template>

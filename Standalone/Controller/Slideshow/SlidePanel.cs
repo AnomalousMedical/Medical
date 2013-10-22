@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Medical
 {
-    public class SlidePanel : Saveable
+    public abstract class SlidePanel : Saveable
     {
         private int size = 50;
         private ViewSizeStrategy sizeStrategy = ViewSizeStrategy.Auto;
@@ -28,6 +28,16 @@ namespace Medical
         {
 
         }
+
+        public virtual bool applyToExisting(SlidePanel panel, bool overwriteContent)
+        {
+            panel.Size = this.Size;
+            panel.SizeStrategy = this.SizeStrategy;
+            panel.ViewLocation = this.ViewLocation;
+            return true;
+        }
+
+        public abstract SlidePanel clone();
 
         [Editable]
         public int Size
