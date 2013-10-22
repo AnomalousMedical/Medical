@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Medical
 {
-    public class MedicalRmlSlide : RmlSlide
+    public class MedicalRmlSlide : Slide
     {
         private CameraPosition cameraPosition;
         private LayerState layers;
@@ -94,7 +94,14 @@ namespace Medical
         protected MedicalRmlSlide(LoadInfo info)
             :base(info)
         {
-
+            if (info.hasValue("rml"))
+            {
+                RmlSlidePanel panel = new RmlSlidePanel();
+                panel.Rml = info.GetString("rml");
+                panel.ViewLocation = ViewLocations.Left;
+                panel.SizeStrategy = ViewSizeStrategy.Auto;
+                addPanel(panel);
+            }
         }
     }
 }

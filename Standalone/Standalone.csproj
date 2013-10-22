@@ -194,6 +194,7 @@
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
     <Compile Include="Controller\Slideshow\RmlSlidePanel.cs" />
+    <Compile Include="Controller\Slideshow\SlidePanel.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="Controller\Server\LicenseReadType.cs" />
     <Compile Include="Controller\Server\ServerConnection.cs" />
     <Compile Include="Controller\Slideshow\MedicalRmlSlide.cs" />
-    <Compile Include="Controller\Slideshow\RmlSlide.cs" />
     <Compile Include="Controller\Slideshow\Slide.cs" />
     <Compile Include="Controller\Slideshow\Slideshow.cs" />
     <Compile Include="Controller\TaskController\ArgumentCallbackTask.cs" />

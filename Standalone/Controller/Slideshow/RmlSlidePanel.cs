@@ -1,6 +1,8 @@
-﻿using Engine.Editing;
+﻿using Engine;
+using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,21 +12,25 @@ using System.Xml.Linq;
 
 namespace Medical
 {
-    public class RmlSlidePanel : Saveable
+    public class RmlSlidePanel : SlidePanel
     {
         private String rml;
-        private int size = 50;
-        private ViewSizeStrategy sizeStrategy = ViewSizeStrategy.Auto;
-        private ViewLocations viewLocation = ViewLocations.Left;
 
         public RmlSlidePanel()
         {
 
         }
 
-        public String createViewName(String masterName)
+        public MyGUIView createView(Slide slide, String name)
         {
-            return masterName + ViewLocation.ToString();
+            return new RawRmlView(createViewName(name))
+            {
+                Rml = Rml,
+                FakePath = slide.UniqueName + "/index.rml",
+                WidthSizeStrategy = SizeStrategy,
+                Size = new IntSize2(Size, Size),
+                ViewLocation = ViewLocation
+            };
         }
 
         [Editable]
@@ -40,56 +46,13 @@ namespace Medical
             }
         }
 
-        [Editable]
-        public int Size
-        {
-            get
-            {
-                return size;
-            }
-            set
-            {
-                size = value;
-            }
-        }
-
-        [Editable]
-        public ViewSizeStrategy SizeStrategy
-        {
-            get
-            {
-                return sizeStrategy;
-            }
-            set
-            {
-                sizeStrategy = value;
-            }
-        }
-
-        [Editable]
-        public ViewLocations ViewLocation
-        {
-            get
-            {
-                return viewLocation;
-            }
-            set
-            {
-                viewLocation = value;
-            }
-        }
-
         protected RmlSlidePanel(LoadInfo info)
+            :base(info)
         {
-            ReflectedSaver.RestoreObject(this, info);
+            
         }
 
-        public void getInfo(SaveInfo info)
-        {
-            ReflectedSaver.SaveObject(this, info);
-        }
-
-        internal void claimFiles(CleanupFileInfo info, ResourceProvider resourceProvider, RmlSlide slide)
+        protected internal override void claimFiles(CleanupFileInfo info, ResourceProvider resourceProvider, Slide slide)
         {
             XDocument rmlDoc = XDocument.Parse(rml);
             var images = from query in rmlDoc.Descendants("img")
@@ -100,6 +63,7 @@ namespace Medical
             {
                 info.claimFile(Path.Combine(slide.UniqueName, image));
             }
+            base.claimFiles(info, resourceProvider, slide);
         }
     }
 }
