@@ -11,9 +11,9 @@ namespace Lecture.GUI
     {
         private SlideLayoutPicker slideLayoutPicker;
 
-        private List<Slide> presetSlides = new List<Slide>();
+        private List<TemplateSlide> presetSlides = new List<TemplateSlide>();
 
-        public event Action<Slide> ChangeSlideLayout;
+        public event Action<TemplateSlide> ChangeSlideLayout;
 
         public SlideLayoutPickerTask()
             :base("SlideLayoutPicker", "Change Slide Layout", CommonResources.NoIcon, "Edit")
@@ -21,7 +21,7 @@ namespace Lecture.GUI
 
         }
 
-        public void addPresetSlide(Slide preset)
+        public void addPresetSlide(TemplateSlide preset)
         {
             presetSlides.Add(preset);
         }
@@ -53,7 +53,7 @@ namespace Lecture.GUI
             }
         }
 
-        void slideLayoutPicker_SlidePresetChosen(Slide obj)
+        void slideLayoutPicker_SlidePresetChosen(TemplateSlide obj)
         {
             if (ChangeSlideLayout != null)
             {

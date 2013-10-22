@@ -11,17 +11,16 @@ namespace Lecture.GUI
     {
         private ButtonGrid buttonGrid;
 
-        public event Action<Slide> SlidePresetChosen;
+        public event Action<TemplateSlide> SlidePresetChosen;
 
-        public SlideLayoutPicker(IEnumerable<Slide> presetSlides)
+        public SlideLayoutPicker(IEnumerable<TemplateSlide> presetSlides)
             :base("Lecture.GUI.SlideLayoutPicker.SlideLayoutPicker.layout")
         {
             buttonGrid = new ButtonGrid((ScrollView)widget.findWidget("ButtonGrid"), new SingleSelectionStrategy());
 
-            int i = 0;
-            foreach (Slide slide in presetSlides)
+            foreach (TemplateSlide slide in presetSlides)
             {
-                ButtonGridItem item = buttonGrid.addItem("Main", i++.ToString(), CommonResources.NoIcon);
+                ButtonGridItem item = buttonGrid.addItem("Main", slide.Name, slide.IconName);
                 item.ItemClicked += item_ItemClicked;
                 item.UserObject = slide;
             }
@@ -37,7 +36,7 @@ namespace Lecture.GUI
         {
             if (SlidePresetChosen != null)
             {
-                SlidePresetChosen.Invoke((Slide)((ButtonGridItem)sender).UserObject);
+                SlidePresetChosen.Invoke((TemplateSlide)((ButtonGridItem)sender).UserObject);
             }
         }
     }

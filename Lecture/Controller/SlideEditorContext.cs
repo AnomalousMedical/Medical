@@ -150,7 +150,11 @@ namespace Lecture
             slideLayoutPicker = new SlideLayoutPickerTask();
 
             //Couple simple presets
-            MedicalRmlSlide presetSlide = new MedicalRmlSlide();
+            TemplateSlide presetSlide = new TemplateSlide()
+            {
+                Name = "Left Panel",
+                IconName = CommonResources.NoIcon
+            };
             presetSlide.addPanel(new RmlSlidePanel(){
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 25,
@@ -159,7 +163,11 @@ namespace Lecture
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
-            presetSlide = new MedicalRmlSlide();
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Left and Right Panel",
+                IconName = CommonResources.NoIcon
+            };
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
@@ -258,16 +266,16 @@ namespace Lecture
             undoBuffer.pushAndExecute(new TwoWayDelegateCommand<Slide, Slide>(
                 (execSlide) =>
                     {
-                        execSlide.applyToExisting(slide, false);
+                        execSlide.copyLayoutToSlide(slide, false);
                         refreshPanelEditors(true);
                     },
                 newSlideLayout,
                 (undoSlide) =>
                     {
-                        undoSlide.applyToExisting(slide, true);
+                        undoSlide.copyLayoutToSlide(slide, true);
                         refreshPanelEditors(true);
                     },
-                slide.clone()));
+                slide.createTemplateSlide()));
         }
 
         public void close()
@@ -412,9 +420,9 @@ namespace Lecture
             }
         }
 
-        private void refreshPanelEditors(bool closeExistingEditors)
+        private void refreshPanelEditors(bool replaceExistingEditors)
         {
-            if (closeExistingEditors)
+            if (replaceExistingEditors)
             {
                 mvcContext.runAction("Editor/CloseEditors");
             }
@@ -464,7 +472,7 @@ namespace Lecture
                 }
             }
 
-            if (closeExistingEditors)
+            if (replaceExistingEditors)
             {
                 mvcContext.runAction("Editor/ShowEditors");
             }

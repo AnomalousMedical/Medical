@@ -94,9 +94,14 @@ namespace Medical
             }
         }
 
-        public abstract Slide clone();
+        public TemplateSlide createTemplateSlide()
+        {
+            TemplateSlide slide = new TemplateSlide();
+            this.copyLayoutToSlide(slide, true);
+            return slide;
+        }
 
-        public virtual void applyToExisting(Slide slide, bool overwriteContent)
+        public void copyLayoutToSlide(Slide slide, bool overwriteContent)
         {
             List<SlidePanel> removePanels = new List<SlidePanel>(slide.panels);
             foreach (SlidePanel panel in panels)

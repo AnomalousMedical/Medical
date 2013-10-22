@@ -43,13 +43,6 @@ namespace Medical
             });
         }
 
-        public override Slide clone()
-        {
-            MedicalRmlSlide slide = new MedicalRmlSlide();
-            this.applyToExisting(slide, true);
-            return slide;
-        }
-
         public CameraPosition CameraPosition
         {
             get
