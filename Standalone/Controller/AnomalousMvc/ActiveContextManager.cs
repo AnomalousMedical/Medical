@@ -13,13 +13,22 @@ namespace Medical.Controller.AnomalousMvc
     /// from the stack. This can be taken advantage of to keep several similar
     /// types of contexts from stacking up indefinitely.
     /// </summary>
-    class ActiveContextManager
+    class ActiveContextManager : IDisposable
     {
         private List<AnomalousMvcContext> activeContexts = new List<AnomalousMvcContext>();
 
         public ActiveContextManager()
         {
 
+        }
+
+        public void Dispose()
+        {
+            foreach (var context in activeContexts)
+            {
+                context.removedFromStack();
+            }
+            activeContexts.Clear();
         }
 
         public void pushContext(AnomalousMvcContext context)

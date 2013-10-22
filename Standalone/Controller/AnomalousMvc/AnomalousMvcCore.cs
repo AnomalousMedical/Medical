@@ -49,7 +49,7 @@ namespace Medical.Controller.AnomalousMvc
                 contextManager.CurrentContext.suspend();
                 contextManager.CurrentContext.queueShutdown();
                 this.processViewChanges();
-                shutdownContext(contextManager.CurrentContext, true, false);
+                contextManager.Dispose();
             }
             viewHostManager.Dispose();
         }

@@ -76,8 +76,11 @@
     <Compile Include="Controller\TimelineEditorContext.cs" />
     <Compile Include="Controller\TimelineTypeController.cs" />
     <Compile Include="GUI\SlideImageComponent\SlideImageComponent.cs" />
+    <Compile Include="GUI\SlideLayoutPicker\SlideLayoutPicker.cs" />
+    <Compile Include="GUI\SlideLayoutPicker\SlideLayoutPickerTask.cs" />
     <Compile Include="GUI\SlideTaskbar\SlideTaskbar.cs" />
     <Compile Include="GUI\SlideTaskbar\SlideTaskbarFactory.cs" />
+    <Compile Include="GUI\SlideTaskbar\SlideTaskbarItem.cs" />
     <Compile Include="GUI\SlideTaskbar\SlideTaskbarView.cs" />
     <Compile Include="GUI\SlideshowExplorer\SlideshowExplorer.cs" />
     <Compile Include="GUI\SlideImageStrategy.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Resources\Project\EmbeddedTemplateNames.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="GUI\SlideImageComponent\SlideImageComponent.layout" />
+    <EmbeddedResource Include="GUI\SlideLayoutPicker\SlideLayoutPicker.layout" />
     <EmbeddedResource Include="GUI\SlideTaskbar\SlideTaskbar.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>

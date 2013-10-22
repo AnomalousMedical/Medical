@@ -44,6 +44,7 @@ namespace Lecture
         private SlideTaskbarView taskbar;
         private RunCommandsAction showCommand;
         private Action<String, String> wysiwygUndoCallback;
+        private SlideLayoutPickerTask slideLayoutPicker;
 
         public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
         {
@@ -144,6 +145,8 @@ namespace Lecture
             {
                 editorController.runSlideshow(0);
             }));
+            slideLayoutPicker = new SlideLayoutPickerTask();
+            taskbar.addTask(slideLayoutPicker);
             taskbar.addTask(new CallbackTask("AddRightPanel", "Add Right Panel", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
                 RmlSlidePanel panel = new RmlSlidePanel()
@@ -190,6 +193,7 @@ namespace Lecture
                     {
                         Focus.Invoke(this);
                     }
+                    slideLayoutPicker.createLayoutPicker();
                 }),
                 new CallbackAction("Blur", context =>
                 {
@@ -200,6 +204,8 @@ namespace Lecture
                         var editor = rmlEditors[editorName];
                         editor.First.Rml = panel.Rml = getCurrentText(editor.Second);
                     }
+                    slideLayoutPicker.destroyLayoutPicker();
+                    slideLayoutPicker = null;
                     GlobalContextEventHandler.disableEventContext(eventContext);
                     htmlDragDrop.DestroyIconPreview();
                     if (Blur != null)

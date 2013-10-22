@@ -19,6 +19,7 @@ namespace Lecture.GUI
         private String currentFile;
         private SlideTaskbarView view;
         private TextBox idLabel;
+        private LinkedList<SlideTaskbarItem> taskbarItems = new LinkedList<SlideTaskbarItem>();
 
         public SlideTaskbar(SlideTaskbarView view, MyGUIViewHost viewHost)
             : base("Lecture.GUI.SlideTaskbar.SlideTaskbar.layout", viewHost)
@@ -33,39 +34,19 @@ namespace Lecture.GUI
             int left = 1;
             foreach (Task task in view.Tasks)
             {
-                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, TaskButtonTop, TaskButtonWidth, TaskButtonHeight, Align.Left | Align.Top, task.UniqueName);
-                taskButton.UserObject = task;
-                taskButton.NeedToolTip = true;
-                taskButton.ImageBox.setItemResource(task.IconName);
-                taskButton.MouseButtonClick += new MyGUIEvent(taskButton_MouseButtonClick);
-                taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
-                if (task.Draggable)
-                {
-                    taskButton.MouseDrag += taskButton_MouseDrag;
-                    taskButton.MouseButtonPressed += taskButton_MouseButtonPressed;
-                    taskButton.MouseButtonReleased += taskButton_MouseButtonReleased;
-                }
+                SlideTaskbarItem taskButton = new SlideTaskbarItem(task, widget, new IntRect(left, TaskButtonTop, TaskButtonWidth, TaskButtonHeight));
                 left += taskButton.Width + TaskButtonPadding;
+                taskbarItems.AddLast(taskButton);
             }
-        }
-
-        void taskButton_MouseDrag(Widget source, EventArgs e)
-        {
-            ((Task)source.UserObject).dragged(((MouseEventArgs)e).Position);
-        }
-
-        void taskButton_MouseButtonPressed(Widget source, EventArgs e)
-        {
-            ((Task)source.UserObject).dragStarted(((MouseEventArgs)e).Position);
-        }
-
-        void taskButton_MouseButtonReleased(Widget source, EventArgs e)
-        {
-            ((Task)source.UserObject).dragEnded(((MouseEventArgs)e).Position);
         }
 
         public override void Dispose()
         {
+            foreach (SlideTaskbarItem item in taskbarItems)
+            {
+                item.Dispose();
+            }
+            taskbarItems.Clear();
             view.DisplayNameChanged -= view_NameChanged;
             base.Dispose();
         }
@@ -73,16 +54,6 @@ namespace Lecture.GUI
         public override void closing()
         {
             base.closing();
-        }
-
-        void taskButton_EventToolTip(Widget source, EventArgs e)
-        {
-            TooltipManager.Instance.processTooltip(source, ((Task)source.UserObject).Name, (ToolTipEventArgs)e);
-        }
-
-        void taskButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            ((Task)source.UserObject).clicked(null);
         }
 
         void view_NameChanged(SlideTaskbarView obj)
