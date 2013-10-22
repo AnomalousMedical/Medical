@@ -149,40 +149,7 @@ namespace Lecture
             }));
             slideLayoutPicker = new SlideLayoutPickerTask();
 
-            //Couple simple presets
-            TemplateSlide presetSlide = new TemplateSlide()
-            {
-                Name = "Left Panel",
-                IconName = CommonResources.NoIcon
-            };
-            presetSlide.addPanel(new RmlSlidePanel(){
-                Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
-                ViewLocation = ViewLocations.Left,
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Left and Right Panel",
-                IconName = CommonResources.NoIcon
-            };
-            presetSlide.addPanel(new RmlSlidePanel()
-            {
-                Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
-                ViewLocation = ViewLocations.Left,
-            });
-            presetSlide.addPanel(new RmlSlidePanel()
-            {
-                Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
-                ViewLocation = ViewLocations.Right,
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
+            makeTempPresets();
 
             slideLayoutPicker.ChangeSlideLayout += slideLayoutPicker_ChangeSlideLayout;
             taskbar.addTask(slideLayoutPicker);
@@ -259,6 +226,108 @@ namespace Lecture
                 undoBuffer.execute();
             };
             eventContext.addEvent(redoEvent);
+        }
+
+        private void makeTempPresets()
+        {
+            //Couple simple presets
+            TemplateSlide presetSlide = new TemplateSlide()
+            {
+                Name = "Left Panel",
+                IconName = CommonResources.NoIcon
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Left,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Left and Right Panel",
+                IconName = CommonResources.NoIcon
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Left,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Right,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Three Panel",
+                IconName = CommonResources.NoIcon
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Left,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Right,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 15,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Top,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Four Panel",
+                IconName = CommonResources.NoIcon
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Left,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 25,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Right,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 15,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Top,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 15,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Bottom,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
         }
 
         void slideLayoutPicker_ChangeSlideLayout(Slide newSlideLayout)
@@ -377,19 +446,23 @@ namespace Lecture
                             IntVector2 location = editor.Second.ViewHost.Container.Location - editor.Second.ViewHost.Container.RigidParent.Location;
                             IntSize2 size = editor.Second.ViewHost.Container.WorkingSize;
                             float sizeRatio = (float)SlideImageManager.ThumbWidth / editor.Second.ViewHost.Container.RigidParentWorkingSize.Width;
-                            
-                            Rectangle panelThumbPos = new Rectangle(0, 0, SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
+
+                            Rectangle panelThumbPos = new Rectangle((int)Math.Round(location.x * sizeRatio), (int)Math.Round(location.y * sizeRatio), (int)Math.Round(size.Width * sizeRatio), (int)Math.Round(size.Height * sizeRatio));
                             switch (editor.First.ViewLocation)
                             {
                                 case ViewLocations.Left:
-                                    panelThumbPos.Width = (int)(size.Width * sizeRatio);
                                     sceneThumbPosition.x = panelThumbPos.Width;
                                     sceneThumbSize.Width -= panelThumbPos.Width;
                                     break;
                                 case ViewLocations.Right:
-                                    panelThumbPos.Width = (int)(size.Width * sizeRatio);
-                                    panelThumbPos.X = SlideImageManager.ThumbWidth - panelThumbPos.Width;
                                     sceneThumbSize.Width -= panelThumbPos.Width;
+                                    break;
+                                case ViewLocations.Top:
+                                    sceneThumbPosition.y = panelThumbPos.Height;
+                                    sceneThumbSize.Height -= panelThumbPos.Height;
+                                    break;
+                                case ViewLocations.Bottom:
+                                    sceneThumbSize.Height -= panelThumbPos.Height;
                                     break;
                             }
                             editor.Second.writeToGraphics(g, panelThumbPos);
@@ -443,6 +516,7 @@ namespace Lecture
                 rmlView.EditPreviewContent = true;
                 rmlView.Size = new IntSize2(panel.Size, panel.Size);
                 rmlView.WidthSizeStrategy = panel.SizeStrategy;
+                rmlView.HeightSizeStrategy = panel.SizeStrategy;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
                 rmlView.ComponentCreated += (view, component) =>

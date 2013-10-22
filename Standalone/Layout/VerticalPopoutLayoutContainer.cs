@@ -133,9 +133,23 @@ namespace Medical
 
         public override IntSize2 DesiredSize
         {
-            get 
+            get
             {
-                return currentSize;
+                if (animating)
+                {
+                    return currentSize;
+                }
+                else
+                {
+                    if (childContainer != null)
+                    {
+                        return childContainer.DesiredSize;
+                    }
+                    else
+                    {
+                        return new IntSize2();
+                    }
+                }
             }
         }
 
