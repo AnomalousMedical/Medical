@@ -16,7 +16,7 @@ namespace Lecture.GUI
         public SlideLayoutPicker(IEnumerable<TemplateSlide> presetSlides)
             :base("Lecture.GUI.SlideLayoutPicker.SlideLayoutPicker.layout")
         {
-            buttonGrid = new ButtonGrid((ScrollView)widget.findWidget("ButtonGrid"), new SingleSelectionStrategy());
+            buttonGrid = new NoSelectButtonGrid((ScrollView)widget.findWidget("ButtonGrid"));
 
             foreach (TemplateSlide slide in presetSlides)
             {
