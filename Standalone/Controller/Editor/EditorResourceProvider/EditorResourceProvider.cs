@@ -143,6 +143,10 @@ namespace Medical
 
         public bool exists(string path)
         {
+            if (path == null)
+            {
+                return false;
+            }
             if (!path.StartsWith(parentPath))
             {
                 path = Path.Combine(parentPath, path);
