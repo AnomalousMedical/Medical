@@ -10,7 +10,9 @@ namespace Medical.GUI
 {
     class DraggingElementManager : IDisposable
     {
-        private const String eraseIcon = CommonResources.NoIcon;
+        public event RmlWysiwygComponent.ElementOffDocumentDelegate ElementDraggedOffDocument;
+        public event RmlWysiwygComponent.ElementOffDocumentDelegate ElementDroppedOffDocument;
+        public event RmlWysiwygComponent.ElementOffDocumentDelegate ElementReturnedToDocument;
 
         private Element dragElement;
         private IntVector2 dragMouseStartPosition;
@@ -22,6 +24,7 @@ namespace Medical.GUI
         private String undoRml = null;
         private String iconName;
         private bool allowDragging = false;
+        private bool offDocument = false;
 
         public DraggingElementManager(RmlWysiwygComponent rmlComponent)
         {
@@ -81,15 +84,22 @@ namespace Medical.GUI
                     }
                     else
                     {
-                        rmlComponent.setPreviewElement(position, insertRml, "div");
-                    }
-                    if (rmlComponent.contains(position))
-                    {
-                        dragIconPreview.setItemResource(iconName);
-                    }
-                    else
-                    {
-                        dragIconPreview.setItemResource(eraseIcon);
+                        if (!rmlComponent.setPreviewElement(position, insertRml, "div"))
+                        {
+                            offDocument = true;
+                            if (ElementDraggedOffDocument != null)
+                            {
+                                ElementDraggedOffDocument.Invoke(rmlComponent, position, insertRml, "div");
+                            }
+                        }
+                        else if (offDocument)
+                        {
+                            offDocument = false;
+                            if (ElementReturnedToDocument != null)
+                            {
+                                ElementReturnedToDocument.Invoke(rmlComponent, position, insertRml, "div");
+                            }
+                        }
                     }
                 }
             }
@@ -108,6 +118,10 @@ namespace Medical.GUI
                     }
                     else
                     {
+                        if (ElementDroppedOffDocument != null)
+                        {
+                            ElementDroppedOffDocument.Invoke(rmlComponent, position, insertRml, "div");
+                        }
                         //This is effectively a delete, so save undo status
                         rmlComponent.updateUndoStatus(undoRml);
                         rmlComponent.clearPreviewElement();

@@ -328,6 +328,27 @@ namespace Lecture
                 ViewLocation = ViewLocations.Bottom,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "50/50",
+                IconName = CommonResources.NoIcon
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 50,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Left,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 50,
+                SizeStrategy = ViewSizeStrategy.Percentage,
+                ViewLocation = ViewLocations.Right,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
         }
 
         void slideLayoutPicker_ChangeSlideLayout(Slide newSlideLayout)
@@ -504,6 +525,9 @@ namespace Lecture
             foreach (var editor in rmlEditors.Values)
             {
                 mvcContext.Views.remove(editor.First);
+                editor.Second.ElementDraggedOffDocument -= RmlWysiwyg_ElementDraggedOffDocument;
+                editor.Second.ElementDroppedOffDocument -= RmlWysiwyg_ElementDroppedOffDocument;
+                editor.Second.ElementReturnedToDocument -= RmlWysiwyg_ElementReturnedToDocument;
             }
             rmlEditors.Clear();
 
@@ -526,6 +550,9 @@ namespace Lecture
                     {
                         panel.Rml = rmlEditor.CurrentRml;
                     };
+                    component.ElementDraggedOffDocument += RmlWysiwyg_ElementDraggedOffDocument;
+                    component.ElementDroppedOffDocument += RmlWysiwyg_ElementDroppedOffDocument;
+                    component.ElementReturnedToDocument += RmlWysiwyg_ElementReturnedToDocument;
                 };
                 rmlView.UndoRedoCallback = (rml) =>
                 {
@@ -549,6 +576,39 @@ namespace Lecture
             if (replaceExistingEditors)
             {
                 mvcContext.runAction("Editor/ShowEditors");
+            }
+        }
+
+        void RmlWysiwyg_ElementDraggedOffDocument(RmlWysiwygComponent sender, IntVector2 position, string innerRmlHint, string previewElementTagType)
+        {
+            foreach (var editor in rmlEditors.Values)
+            {
+                if (editor.Second != sender)
+                {
+                    editor.Second.setPreviewElement(position, innerRmlHint, previewElementTagType);
+                }
+            }
+        }
+
+        void RmlWysiwyg_ElementReturnedToDocument(RmlWysiwygComponent sender, IntVector2 position, string innerRmlHint, string previewElementTagType)
+        {
+            foreach (var editor in rmlEditors.Values)
+            {
+                if (editor.Second != sender)
+                {
+                    editor.Second.setPreviewElement(position, innerRmlHint, previewElementTagType);
+                }
+            }
+        }
+
+        void RmlWysiwyg_ElementDroppedOffDocument(RmlWysiwygComponent sender, IntVector2 position, string innerRmlHint, string previewElementTagType)
+        {
+            foreach (var editor in rmlEditors.Values)
+            {
+                if (editor.Second != sender)
+                {
+                    editor.Second.insertRml(innerRmlHint, position);
+                }
             }
         }
     }

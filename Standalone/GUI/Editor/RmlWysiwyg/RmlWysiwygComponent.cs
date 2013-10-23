@@ -19,7 +19,44 @@ namespace Medical.GUI
     {
         public const String DefaultImage = "~/Medical.Resources.ImagePlaceholder.png";
 
+        public delegate void ElementOffDocumentDelegate(RmlWysiwygComponent sender, IntVector2 position, String innerRmlHint, String previewElementTagType);
+
         public event Action<RmlWysiwygComponent> RmlEdited;
+        public event ElementOffDocumentDelegate ElementDraggedOffDocument
+        {
+            add
+            {
+                draggingElementManager.ElementDraggedOffDocument += value;
+            }
+            remove
+            {
+                draggingElementManager.ElementDraggedOffDocument -= value;
+            }
+        }
+
+        public event ElementOffDocumentDelegate ElementDroppedOffDocument
+        {
+            add
+            {
+                draggingElementManager.ElementDroppedOffDocument += value;
+            }
+            remove
+            {
+                draggingElementManager.ElementDroppedOffDocument -= value;
+            }
+        }
+
+        public event ElementOffDocumentDelegate ElementReturnedToDocument
+        {
+            add
+            {
+                draggingElementManager.ElementReturnedToDocument += value;
+            }
+            remove
+            {
+                draggingElementManager.ElementReturnedToDocument -= value;
+            }
+        }
 
         private ElementStrategyManager elementStrategyManager = new ElementStrategyManager();
         private RocketWidget rocketWidget;
