@@ -24,16 +24,7 @@ namespace Lecture.GUI
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            float width = -1;
-            String sizeAttrString = element.GetAttributeString("width");
-            if (sizeAttrString != null && sizeAttrString.Length > 2)
-            {
-                sizeAttrString = sizeAttrString.Substring(0, sizeAttrString.Length - 2);
-                if (!float.TryParse(sizeAttrString, out width))
-                {
-                    width = -1;
-                }
-            }
+            float width = element.ClientWidth;
             slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"), width);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(slideImageEditor);

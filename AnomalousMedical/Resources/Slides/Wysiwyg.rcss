@@ -8,6 +8,11 @@ x-separator
 	display: block;
 }
 
+img
+{
+	display: block;
+}
+
 div.ImageParagraphLeft
 {
 	clear: both;
