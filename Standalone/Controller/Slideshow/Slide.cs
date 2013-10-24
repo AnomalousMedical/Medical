@@ -7,6 +7,7 @@ using Medical.Controller.AnomalousMvc;
 using Engine.Attributes;
 using System.IO;
 using Medical.GUI.AnomalousMvc;
+using Medical.SlideshowActions;
 
 namespace Medical
 {
@@ -136,9 +137,23 @@ namespace Medical
             triggerActions.Add(action.Name, action);
         }
 
+        public void removeAction(SlideAction action)
+        {
+            triggerActions.Remove(action.Name);
+        }
+
         public void removeAction(String name)
         {
             triggerActions.Remove(name);
+        }
+
+        public void replaceAction(SlideAction action)
+        {
+            if (hasAction(action.Name))
+            {
+                removeAction(action);
+            }
+            addAction(action);
         }
 
         public bool hasAction(String name)

@@ -28,6 +28,19 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             base.Dispose();
         }
 
+        public EditInterface EditInterface
+        {
+            get
+            {
+                return propertiesForm.EditInterface;
+            }
+            set
+            {
+                propertiesForm.EditInterface = value;
+                propertiesForm.layout();
+            }
+        }
+
         public override void attachToParent(RmlElementEditor parentEditor, Widget parent)
         {
             base.attachToParent(parentEditor, parent);
