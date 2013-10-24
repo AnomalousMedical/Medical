@@ -36,7 +36,13 @@ namespace Lecture.GUI
                 actionName = Guid.NewGuid().ToString();
                 element.SetAttribute("onclick", actionName);
             }
-            actionEditor = new EditInterfaceEditor(slide.getAction(actionName).getEditInterface(), uiCallback, browserProvider);
+            SlideAction action = slide.getAction(actionName);
+            if (action == null)
+            {
+                action = new SetupSceneAction(actionName);
+                slide.addAction(action);
+            }
+            actionEditor = new EditInterfaceEditor(action.getEditInterface(), uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(actionEditor);

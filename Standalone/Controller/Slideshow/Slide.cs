@@ -19,7 +19,7 @@ namespace Medical
         private List<SlidePanel> panels = new List<SlidePanel>();
 
         [DoNotSave]
-        private Dictionary<String, RunCommandsAction> triggerActions = new Dictionary<string, RunCommandsAction>();
+        private Dictionary<String, SlideAction> triggerActions = new Dictionary<string, SlideAction>();
         
         public Slide()
         {
@@ -38,7 +38,7 @@ namespace Medical
             }
             foreach (var action in triggerActions.Values)
             {
-                controller.Actions.add(action);
+                action.addToController(controller);
             }
             context.Controllers.add(controller);
 
@@ -131,29 +131,26 @@ namespace Medical
             }
         }
 
-        /// <summary>
-        /// Get an action, creates a new one if it doesn't exist.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public RunCommandsAction getAction(String name)
+        public void addAction(SlideAction action)
         {
-            RunCommandsAction ret;
-            if (!triggerActions.TryGetValue(name, out ret))
-            {
-                ret = new RunCommandsAction(name);
-                triggerActions.Add(name, ret);
-            }
-            return ret;
+            triggerActions.Add(action.Name, action);
         }
 
-        /// <summary>
-        /// Remove a named action
-        /// </summary>
-        /// <param name="name"></param>
         public void removeAction(String name)
         {
             triggerActions.Remove(name);
+        }
+
+        public bool hasAction(String name)
+        {
+            return triggerActions.ContainsKey(name);
+        }
+
+        public SlideAction getAction(String name)
+        {
+            SlideAction ret;
+            triggerActions.TryGetValue(name, out ret);
+            return ret;
         }
 
         public IEnumerable<SlidePanel> Panels
