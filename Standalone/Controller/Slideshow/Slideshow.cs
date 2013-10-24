@@ -74,7 +74,7 @@ namespace Medical
             int lastSlideIndex = slides.Count - 1;
             foreach(Slide slide in slides)
             {
-                String slideName = "Slide" + i;
+                String slideName = slide.UniqueName;
                 slide.setupContext(mvcContext, slideName, i != 0, i != lastSlideIndex, resourceProvider);
 
                 NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");

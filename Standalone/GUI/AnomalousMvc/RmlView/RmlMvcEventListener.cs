@@ -26,12 +26,6 @@ namespace Medical.GUI.AnomalousMvc
         {
             try
             {
-                //Logging.Log.Debug("--------- {0} | type {1} ----------", name, evt.Type);
-                //foreach (RktEntry param in evt.Parameters)
-                //{
-                //    Logging.Log.Debug("key {0} | type {1} | value {2}", param.Key, param.Value.VariantType, param.Value.StringValue);
-                //}
-                //Logging.Log.Debug("-----------------------------------");
                 argumentEvent = evt;
                 mvcContext.runAction(name, viewHost, this);
                 argumentEvent = null;

@@ -193,6 +193,8 @@
     <Compile Include="Controller\SharePluginController.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\CleanupFileInfo.cs" />
+    <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventController.cs" />
+    <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventListener.cs" />
     <Compile Include="Controller\Slideshow\RmlSlidePanel.cs" />
     <Compile Include="Controller\Slideshow\SlidePanel.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
@@ -315,6 +317,7 @@
     <Compile Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponent.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\RmlEditableProperty.cs" />
@@ -764,6 +767,7 @@
     <Compile Include="Utility\IEnumerableUtil.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
   </ItemGroup>

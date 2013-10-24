@@ -7,12 +7,18 @@ using Engine.Editing;
 using Engine.Reflection;
 using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
+using Engine.Attributes;
 
 namespace Medical.GUI.AnomalousMvc
 {
+    public delegate RocketEventController CreateCustomEventControllerDelegate(AnomalousMvcContext mvcContext, ViewHost viewHost);
+
     public class RmlView : MyGUIView
     {
         public event Action<RmlView, RmlWidgetComponent> ComponentCreated;
+
+        [DoNotSave]
+        private CreateCustomEventControllerDelegate createCustomEventController;
 
         public RmlView(String name)
             :base(name)
@@ -27,6 +33,18 @@ namespace Medical.GUI.AnomalousMvc
         {
             editInterface.addCommand(new EditInterfaceCommand("Edit", openFileInViewer));
             base.customizeEditInterface(editInterface);
+        }
+
+        public CreateCustomEventControllerDelegate CreateCustomEventController
+        {
+            get
+            {
+                return createCustomEventController;
+            }
+            set
+            {
+                createCustomEventController = value;
+            }
         }
 
         public enum CustomQueries
@@ -45,6 +63,15 @@ namespace Medical.GUI.AnomalousMvc
             {
                 ComponentCreated.Invoke(this, component);
             }
+        }
+
+        internal RocketEventController createRocketEventController(AnomalousMvcContext mvcContext, ViewHost viewHost)
+        {
+            if (createCustomEventController != null)
+            {
+                return createCustomEventController(mvcContext, viewHost);
+            }
+            return new RmlMvcEventController(mvcContext, viewHost);
         }
 
         protected RmlView(LoadInfo info)

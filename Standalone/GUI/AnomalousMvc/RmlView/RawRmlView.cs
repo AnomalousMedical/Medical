@@ -7,12 +7,16 @@ using Engine.Editing;
 using Engine.Reflection;
 using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
+using Engine.Attributes;
 
 namespace Medical.GUI.AnomalousMvc
 {
     public class RawRmlView : MyGUIView
     {
         public event Action<RawRmlView, RmlWidgetComponent> ComponentCreated;
+
+        [DoNotSave]
+        private CreateCustomEventControllerDelegate createCustomEventController;
 
         public RawRmlView(String name)
             : base(name)
@@ -25,6 +29,27 @@ namespace Medical.GUI.AnomalousMvc
 
         [Editable]
         public String FakePath { get; set; }
+
+        public CreateCustomEventControllerDelegate CreateCustomEventController
+        {
+            get
+            {
+                return createCustomEventController;
+            }
+            set
+            {
+                createCustomEventController = value;
+            }
+        }
+
+        internal RocketEventController createRocketEventController(AnomalousMvcContext mvcContext, ViewHost viewHost)
+        {
+            if (createCustomEventController != null)
+            {
+                return createCustomEventController(mvcContext, viewHost);
+            }
+            return new RmlMvcEventController(mvcContext, viewHost);
+        }
 
         internal void _fireComponentCreated(RmlWidgetComponent component)
         {

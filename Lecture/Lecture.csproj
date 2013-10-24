@@ -84,6 +84,7 @@
     <Compile Include="GUI\SlideTaskbar\SlideTaskbarView.cs" />
     <Compile Include="GUI\SlideshowExplorer\SlideshowExplorer.cs" />
     <Compile Include="GUI\SlideImageStrategy.cs" />
+    <Compile Include="GUI\SlideTriggerStrategy.cs" />
     <Compile Include="LecturePlugin.cs" />
     <Compile Include="LecturePluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

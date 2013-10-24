@@ -30,7 +30,11 @@ namespace Medical
                 WidthSizeStrategy = SizeStrategy,
                 HeightSizeStrategy = SizeStrategy,
                 Size = new IntSize2(Size, Size),
-                ViewLocation = ViewLocation
+                ViewLocation = ViewLocation,
+                CreateCustomEventController = (context, viewHost) =>
+                    {
+                        return new SlideshowRmlMvcEventController(context, viewHost, slide);
+                    }
             };
         }
 

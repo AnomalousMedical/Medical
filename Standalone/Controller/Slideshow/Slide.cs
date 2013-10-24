@@ -17,6 +17,9 @@ namespace Medical
 
         [DoNotSave]
         private List<SlidePanel> panels = new List<SlidePanel>();
+
+        [DoNotSave]
+        private Dictionary<String, RunCommandsAction> triggerActions = new Dictionary<string, RunCommandsAction>();
         
         public Slide()
         {
@@ -32,6 +35,10 @@ namespace Medical
             if (resourceProvider.exists(timelinePath))
             {
                 showCommand.addCommand(new PlayTimelineCommand(timelinePath));
+            }
+            foreach (var action in triggerActions.Values)
+            {
+                controller.Actions.add(action);
             }
             context.Controllers.add(controller);
 
@@ -124,6 +131,31 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Get an action, creates a new one if it doesn't exist.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public RunCommandsAction getAction(String name)
+        {
+            RunCommandsAction ret;
+            if (!triggerActions.TryGetValue(name, out ret))
+            {
+                ret = new RunCommandsAction(name);
+                triggerActions.Add(name, ret);
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// Remove a named action
+        /// </summary>
+        /// <param name="name"></param>
+        public void removeAction(String name)
+        {
+            triggerActions.Remove(name);
+        }
+
         public IEnumerable<SlidePanel> Panels
         {
             get
@@ -160,6 +192,7 @@ namespace Medical
                     return Guid.NewGuid().ToString("D");
                 });
             info.RebuildList("Panel", panels);
+            info.RebuildDictionary("TriggerAction", triggerActions);
         }
 
         public virtual void getInfo(SaveInfo info)
@@ -167,6 +200,7 @@ namespace Medical
             ReflectedSaver.SaveObject(this, info, ReflectedSaver.DefaultScanner);
             info.AddValue("Id", id.ToString());
             info.ExtractList("Panel", panels);
+            info.ExtractDictionary("TriggerAction", triggerActions);
         }
     }
 }

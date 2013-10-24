@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+  <Widget type="ScrollView" skin="ScrollView" position="0 0 241 218" layer="Back" align="Stretch" name="PropertiesScroll">
+    <Property key="CanvasAlign" value="Left Top"/>
+  </Widget>
+</MyGUI>

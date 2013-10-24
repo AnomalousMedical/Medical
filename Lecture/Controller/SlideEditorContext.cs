@@ -47,6 +47,9 @@ namespace Lecture
         private Action<String, String> wysiwygUndoCallback;
         private SlideLayoutPickerTask slideLayoutPicker;
 
+        SlideImageStrategy imageStrategy;
+        SlideTriggerStrategy triggerStrategy;
+
         public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
@@ -56,6 +59,9 @@ namespace Lecture
             this.imageRenderer = imageRenderer;
             this.itemTemplate = itemTemplate;
             this.wysiwygUndoCallback = wysiwygUndoCallback;
+
+            imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
+            triggerStrategy = new SlideTriggerStrategy(slide, "a");
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -78,7 +84,8 @@ namespace Lecture
             DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
-                new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" scale=\"true\"></img>", RmlWysiwygComponent.DefaultImage))
+                new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" scale=\"true\"></img>", RmlWysiwygComponent.DefaultImage)),
+                new WysiwygDragDropItem("Trigger", CommonResources.NoIcon, "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>")
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
@@ -562,7 +569,8 @@ namespace Lecture
                 {
                     currentRmlEditor = view.Name;
                 };
-                rmlView.addCustomStrategy(new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName));
+                rmlView.addCustomStrategy(imageStrategy);
+                rmlView.addCustomStrategy(triggerStrategy);
                 mvcContext.Views.add(rmlView);
                 rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));

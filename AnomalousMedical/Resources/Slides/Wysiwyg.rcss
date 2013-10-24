@@ -43,3 +43,14 @@ div.TwoColumn div.Column
 	width: 50%; 
 	float:left;
 }
+
+a.TriggerLink
+{
+	display:block;
+	color: #6699cc;
+}
+
+a.TriggerLink:hover
+{
+	text-decoration: underline;
+}

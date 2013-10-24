@@ -17,6 +17,7 @@ namespace Medical.GUI.AnomalousMvc
         private int imageHeight;
         private int imageWidth;
         private String documentName;
+        private RocketEventController eventController;
 
         private AnomalousMvcContext context;
 
@@ -24,6 +25,7 @@ namespace Medical.GUI.AnomalousMvc
             :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetComponent.layout", viewHost)
         {
             this.context = context;
+            this.eventController = view.createRocketEventController(context, viewHost);
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
@@ -55,6 +57,7 @@ namespace Medical.GUI.AnomalousMvc
             : base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetComponent.layout", viewHost)
         {
             this.context = context;
+            this.eventController = view.createRocketEventController(context, viewHost);
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
@@ -323,7 +326,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public void startRmlUpdate()
         {
-            RocketEventListenerInstancer.setEventController(new RmlMvcEventController(context, ViewHost));
+            RocketEventListenerInstancer.setEventController(eventController);
         }
 
         public void endRmlUpdate()
