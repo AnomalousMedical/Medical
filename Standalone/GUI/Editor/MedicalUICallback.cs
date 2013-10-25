@@ -297,6 +297,11 @@ namespace Medical.GUI
             customQueries.Remove(queryKey);
         }
 
+        public bool hasCustomQuery(Object queryKey)
+        {
+            return customQueries.ContainsKey(queryKey);
+        }
+
         public EditInterface SelectedEditInterface { get; set; }
     }
 }

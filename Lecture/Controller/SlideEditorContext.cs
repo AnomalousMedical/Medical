@@ -57,6 +57,10 @@ namespace Lecture
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
+            if (uiCallback.hasCustomQuery(PlayTimelineAction.CustomActions.EditTimeline))
+            {
+                uiCallback.removeCustomQuery(PlayTimelineAction.CustomActions.EditTimeline);
+            }
             uiCallback.addOneWayCustomQuery(PlayTimelineAction.CustomActions.EditTimeline, new Action<PlayTimelineAction>(action_EditTimeline));
             this.slideEditorController = editorController;
             this.undoBuffer = undoBuffer;
@@ -193,7 +197,6 @@ namespace Lecture
                 new CallbackAction("Blur", context =>
                 {
                     commitText();
-                    uiCallback.removeCustomQuery(PlayTimelineAction.CustomActions.EditTimeline);
                     foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
                     {
                         String editorName = panel.createViewName("RmlView");
