@@ -640,7 +640,7 @@ namespace Lecture
         public void cleanup()
         {
             //Cleanup slide trash
-            CleanupFileInfo cleanupInfo = new CleanupFileInfo();
+            CleanupInfo cleanupInfo = new CleanupInfo();
             slideshow.cleanup(cleanupInfo, ResourceProvider);
             
             undoBuffer.clear(); //Can't really recover from this one, so just erase all undo

@@ -52,7 +52,7 @@ namespace Medical
 
         public abstract void findFileReference(TimelineStaticInfo info);
 
-        public abstract void cleanup(CleanupFileInfo cleanupInfo);
+        public abstract void cleanup(CleanupInfo cleanupInfo);
 
         public virtual void editingCompleted()
         {

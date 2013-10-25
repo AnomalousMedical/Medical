@@ -41,7 +41,7 @@ namespace Medical
             }
         }
 
-        public override void cleanup(CleanupFileInfo cleanupInfo)
+        public override void cleanup(CleanupInfo cleanupInfo)
         {
             cleanupInfo.claimFile(Scene);
         }

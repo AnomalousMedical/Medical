@@ -52,6 +52,12 @@ namespace Medical.SlideshowActions
             }
         }
 
+        public override void cleanup(Slide slide, CleanupInfo info, ResourceProvider resourceProvider)
+        {
+            info.claimFile(Path.Combine(slide.UniqueName, timelineFileName));
+            base.cleanup(slide, info, resourceProvider);
+        }
+
         public override string Name
         {
             get

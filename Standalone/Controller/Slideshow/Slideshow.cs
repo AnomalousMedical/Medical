@@ -92,8 +92,9 @@ namespace Medical
             return mvcContext;
         }
 
-        public void cleanup(CleanupFileInfo cleanupInfo, ResourceProvider resourceProvider)
+        public void cleanup(CleanupInfo cleanupInfo, ResourceProvider resourceProvider)
         {
+            cleanupInfo.defineObjectClass(Slide.SlideActionClass);
             foreach (Slide slide in slides)
             {
                 slide.cleanup(cleanupInfo, resourceProvider);

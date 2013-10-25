@@ -19,6 +19,11 @@ namespace Medical.SlideshowActions
 
         public abstract void addToController(Slide slide, MvcController controller);
 
+        public virtual void cleanup(Slide slide, CleanupInfo info, ResourceProvider resourceProvider)
+        {
+
+        }
+
         public abstract String Name { get; set; }
 
         protected SlideAction(LoadInfo info)

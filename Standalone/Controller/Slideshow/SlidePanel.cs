@@ -1,6 +1,7 @@
 ﻿using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
+using Medical.GUI.AnomalousMvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,9 @@ namespace Medical
             return masterName + ViewLocation.ToString();
         }
 
-        protected internal virtual void claimFiles(CleanupFileInfo info, ResourceProvider resourceProvider, Slide slide)
+        public abstract MyGUIView createView(Slide slide, String name);
+
+        protected internal virtual void claimFiles(CleanupInfo info, ResourceProvider resourceProvider, Slide slide)
         {
 
         }

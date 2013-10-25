@@ -13,6 +13,8 @@ namespace Medical
 {
     public abstract class Slide : Saveable
     {
+        internal const String SlideActionClass = "SlideAction";
+
         [DoNotSave] //Saved manually
         private String id;
 
@@ -44,7 +46,7 @@ namespace Medical
             context.Controllers.add(controller);
 
             bool addedButtons = false;
-            foreach (RmlSlidePanel panel in panels)
+            foreach (SlidePanel panel in panels)
             {
                 MyGUIView view = panel.createView(this, name);
                 if (!addedButtons)
@@ -83,7 +85,7 @@ namespace Medical
             id = Guid.NewGuid().ToString("D");
         }
 
-        public virtual void cleanup(CleanupFileInfo info, ResourceProvider resourceProvider)
+        public virtual void cleanup(CleanupInfo info, ResourceProvider resourceProvider)
         {
             String timelinePath = Path.Combine(UniqueName, "Timeline.tl");
             info.claimFile(timelinePath);
@@ -99,6 +101,23 @@ namespace Medical
             foreach (RmlSlidePanel panel in panels)
             {
                 panel.claimFiles(info, resourceProvider, this);
+            }
+
+            //Clean up actions
+            List<String> removeActions = new List<String>(triggerActions.Keys);
+            foreach (String action in info.getObjects<String>(Slide.SlideActionClass))
+            {
+                removeActions.Remove(action);
+            }
+            foreach (String action in removeActions)
+            {
+                triggerActions.Remove(action);
+            }
+            info.clearObjects(Slide.SlideActionClass);
+
+            foreach (var action in triggerActions.Values)
+            {
+                action.cleanup(this, info, resourceProvider);
             }
         }
 

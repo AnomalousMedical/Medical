@@ -196,7 +196,7 @@ namespace Medical
             }
         }
 
-        public void cleanup(CleanupFileInfo cleanupInfo)
+        public void cleanup(CleanupInfo cleanupInfo)
         {
             foreach (TimelineInstantAction action in PreActions)
             {

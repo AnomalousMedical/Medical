@@ -21,7 +21,7 @@ namespace Medical
 
         }
 
-        public MyGUIView createView(Slide slide, String name)
+        public override MyGUIView createView(Slide slide, String name)
         {
             return new RawRmlView(createViewName(name))
             {
@@ -57,7 +57,7 @@ namespace Medical
             
         }
 
-        protected internal override void claimFiles(CleanupFileInfo info, ResourceProvider resourceProvider, Slide slide)
+        protected internal override void claimFiles(CleanupInfo info, ResourceProvider resourceProvider, Slide slide)
         {
             XDocument rmlDoc = XDocument.Parse(rml);
             var images = from query in rmlDoc.Descendants("img")
@@ -68,6 +68,16 @@ namespace Medical
             {
                 info.claimFile(Path.Combine(slide.UniqueName, image));
             }
+
+            var triggers = from e in rmlDoc.Root.Descendants()
+                           where e.Attribute("onclick") != null
+                           select e;
+
+            foreach (var element in triggers)
+            {
+                info.claimObject(Slide.SlideActionClass, element.Attribute("onclick").Value);
+            }
+
             base.claimFiles(info, resourceProvider, slide);
         }
 
