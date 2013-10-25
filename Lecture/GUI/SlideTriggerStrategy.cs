@@ -52,7 +52,7 @@ namespace Lecture.GUI
             }
 
             EditInterface editInterface = setupEditInterface(action, slide);
-            actionEditor = new EditInterfaceEditor(editInterface, uiCallback, browserProvider);
+            actionEditor = new EditInterfaceEditor("Action", editInterface, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(actionEditor);
