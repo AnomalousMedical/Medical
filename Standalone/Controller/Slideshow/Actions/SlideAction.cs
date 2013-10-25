@@ -17,7 +17,7 @@ namespace Medical.SlideshowActions
 
         public abstract EditInterface getEditInterface();
 
-        public abstract void addToController(MvcController controller);
+        public abstract void addToController(Slide slide, MvcController controller);
 
         public abstract String Name { get; set; }
 

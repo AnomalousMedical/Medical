@@ -4,6 +4,7 @@ using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -11,18 +12,20 @@ namespace Medical.SlideshowActions
 {
     public class PlayTimelineAction : SlideAction
     {
-        private RunCommandsAction action;
+        public enum CustomActions
+        {
+            EditTimeline
+        }
 
         [DoNotSave]
         private EditInterface editInterface;
 
+        private String name;
+        private String timelineFileName;
+
         public PlayTimelineAction(String name)
         {
-            action = new RunCommandsAction(name);
-            action.addCommand(new PlayTimelineCommand()
-            {
-                Timeline = name + ".tl",
-            });
+            this.Name = name;
         }
 
         public override EditInterface getEditInterface()
@@ -30,24 +33,43 @@ namespace Medical.SlideshowActions
             if (editInterface == null)
             {
                 editInterface = new EditInterface("Play Timeline");
+                editInterface.addCommand(new EditInterfaceCommand("Edit Timeline", (callback, caller) =>
+                {
+                    callback.runOneWayCustomQuery(CustomActions.EditTimeline, this);
+                }));
             }
             return editInterface;
         }
 
-        public override void addToController(MvcController controller)
+        public override void addToController(Slide slide, MvcController controller)
         {
-            controller.Actions.add(action);
+            if (timelineFileName != null)
+            {
+                controller.Actions.add(new RunCommandsAction(name, new PlayTimelineCommand()
+                {
+                    Timeline = Path.Combine(slide.UniqueName, timelineFileName),
+                }));
+            }
         }
 
         public override string Name
         {
             get
             {
-                return action.Name;
+                return name;
             }
             set
             {
-                action.Name = value;
+                name = value;
+                timelineFileName = value + ".tl";
+            }
+        }
+
+        public String TimelineFileName 
+        { 
+            get
+            {
+                return timelineFileName;
             }
         }
 

@@ -15,6 +15,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using Lecture.GUI;
 using Engine;
+using Engine.Editing;
+using Medical.SlideshowActions;
 
 namespace Lecture
 {
@@ -46,6 +48,7 @@ namespace Lecture
         private RunCommandsAction closeEditorWindowsCommand;
         private Action<String, String> wysiwygUndoCallback;
         private SlideLayoutPickerTask slideLayoutPicker;
+        private SlideshowEditController editorController;
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
@@ -54,14 +57,16 @@ namespace Lecture
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
+            uiCallback.addOneWayCustomQuery(PlayTimelineAction.CustomActions.EditTimeline, new Action<PlayTimelineAction>(action_EditTimeline));
             this.slideEditorController = editorController;
             this.undoBuffer = undoBuffer;
             this.imageRenderer = imageRenderer;
             this.itemTemplate = itemTemplate;
             this.wysiwygUndoCallback = wysiwygUndoCallback;
+            this.editorController = editorController;
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
-            triggerStrategy = new SlideTriggerStrategy(slide, "a");
+            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), "a");
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -188,6 +193,7 @@ namespace Lecture
                 new CallbackAction("Blur", context =>
                 {
                     commitText();
+                    uiCallback.removeCustomQuery(PlayTimelineAction.CustomActions.EditTimeline);
                     foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
                     {
                         String editorName = panel.createViewName("RmlView");
@@ -618,6 +624,29 @@ namespace Lecture
                     editor.Second.insertRml(innerRmlHint, position);
                 }
             }
+        }
+
+        private Browser createTriggerActionBrowser()
+        {
+            Browser browser = new Browser("Types", "Choose Trigger Type");
+            BrowserNode rootNode = browser.getTopNode();
+            browser.DefaultSelection = new BrowserNode("Setup Scene", new Func<String, SlideAction>((name) =>
+            {
+                return new SetupSceneAction(name);
+            }));
+            rootNode.addChild(browser.DefaultSelection);
+
+            rootNode.addChild(new BrowserNode("Play Timeline", new Func<String, SlideAction>((name) =>
+            {
+                return new PlayTimelineAction(name);
+            })));
+
+            return browser;
+        }
+
+        void action_EditTimeline(PlayTimelineAction action)
+        {
+            editorController.editTimeline(slide, action.TimelineFileName);
         }
     }
 }

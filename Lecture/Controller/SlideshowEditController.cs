@@ -189,12 +189,12 @@ namespace Lecture
             return openedEditContext;
         }
 
-        public void editTimeline(Slide slide)
+        public void editTimeline(Slide slide, String name = "Timeline.tl")
         {
             try
             {
                 Timeline timeline = null;
-                String timelineFilePath = Path.Combine(slide.UniqueName, "Timeline.tl");
+                String timelineFilePath = Path.Combine(slide.UniqueName, name);
                 if (!ResourceProvider.exists(timelineFilePath))
                 {
                     timelineTypeController.createNewTimeline(timelineFilePath);

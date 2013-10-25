@@ -17,11 +17,17 @@ namespace Lecture.GUI
         private ElementTextEditor textEditor;
         private EditInterfaceEditor actionEditor;
         private Slide slide;
+        private Browser actionTypeBrowser;
 
-        public SlideTriggerStrategy(Slide slide, String tag, String previewIconName = CommonResources.NoIcon)
+        /// <summary>
+        /// Create a slide trigger strategy. The ActionTypeBrowser determines the slide action types that can be put on the slide.
+        /// Be sure to set the DefaultSelection on this browser, this is used when the trigger has no action as the default.
+        /// </summary>
+        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, String tag, String previewIconName = CommonResources.NoIcon)
             : base(tag, previewIconName, true)
         {
             this.slide = slide;
+            this.actionTypeBrowser = actionTypeBrowser;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
@@ -41,7 +47,7 @@ namespace Lecture.GUI
             SlideAction action = slide.getAction(actionName);
             if (action == null)
             {
-                action = new SetupSceneAction(actionName);
+                action = ((Func<String, SlideAction>)actionTypeBrowser.DefaultSelection.Value)(actionName);
                 slide.addAction(action);
             }
 
@@ -59,7 +65,7 @@ namespace Lecture.GUI
             EditInterface editInterface = action.getEditInterface();
             editInterface.addCommand(new EditInterfaceCommand("Change Type", (callback, caller) =>
             {
-                callback.showBrowser<Func<String, SlideAction>>(actionTypeBrowser(), delegate(Func<String, SlideAction> result, ref string errorPrompt)
+                callback.showBrowser<Func<String, SlideAction>>(actionTypeBrowser, delegate(Func<String, SlideAction> result, ref string errorPrompt)
                 {
                     SlideAction newAction = result(name);
                     actionEditor.EditInterface = setupEditInterface(newAction, slide);
@@ -87,23 +93,6 @@ namespace Lecture.GUI
                 return true;
             }
             return false;
-        }
-
-        private Browser actionTypeBrowser()
-        {
-            Browser browser = new Browser("Types", "Choose Trigger Type");
-            BrowserNode rootNode = browser.getTopNode();
-            rootNode.addChild(new BrowserNode("Play Timeline", new Func<String, SlideAction>((name) =>
-            {
-                return new PlayTimelineAction(name);
-            })));
-
-            rootNode.addChild(new BrowserNode("Setup Scene", new Func<String, SlideAction>((name) =>
-            {
-                return new SetupSceneAction(name);
-            })));
-
-            return browser;
         }
     }
 }

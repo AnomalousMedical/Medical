@@ -67,7 +67,7 @@ namespace Medical.SlideshowActions
             return editInterface;
         }
 
-        public override void addToController(MvcController controller)
+        public override void addToController(Slide slide, MvcController controller)
         {
             controller.Actions.add(action);
         }
