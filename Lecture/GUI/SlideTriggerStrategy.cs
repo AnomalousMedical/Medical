@@ -1,4 +1,5 @@
 ﻿using Engine.Editing;
+using Engine.Saving;
 using libRocketPlugin;
 using Medical;
 using Medical.Controller.AnomalousMvc;
@@ -18,14 +19,17 @@ namespace Lecture.GUI
         private EditInterfaceEditor actionEditor;
         private Slide slide;
         private Browser actionTypeBrowser;
+        private SlideAction currentAction;
+        private UndoRedoBuffer undoBuffer;
 
         /// <summary>
         /// Create a slide trigger strategy. The ActionTypeBrowser determines the slide action types that can be put on the slide.
         /// Be sure to set the DefaultSelection on this browser, this is used when the trigger has no action as the default.
         /// </summary>
-        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, String tag, String previewIconName = CommonResources.NoIcon)
+        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, UndoRedoBuffer undoBuffer, String tag, String previewIconName = CommonResources.NoIcon)
             : base(tag, previewIconName, true)
         {
+            this.undoBuffer = undoBuffer;
             this.slide = slide;
             this.actionTypeBrowser = actionTypeBrowser;
         }
@@ -51,7 +55,11 @@ namespace Lecture.GUI
                 slide.addAction(action);
             }
 
-            EditInterface editInterface = setupEditInterface(action, slide);
+            //Make copy of action, this is really important, a lot of the function of this editor assumes this
+            //is copied.
+            SlideAction editingAction = CopySaver.Default.copy(action);
+
+            EditInterface editInterface = setupEditInterface(editingAction, slide);
             actionEditor = new EditInterfaceEditor("Action", editInterface, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
             editor.addElementEditor(textEditor);
@@ -59,17 +67,20 @@ namespace Lecture.GUI
             return editor;
         }
 
-        private EditInterface setupEditInterface(SlideAction action, Slide slide)
+        private EditInterface setupEditInterface(SlideAction editingAction, Slide slide)
         {
-            String name = action.Name;
-            EditInterface editInterface = action.getEditInterface();
+            currentAction = editingAction;
+            EditInterface editInterface = editingAction.getEditInterface();
+            editingAction.ChangesMade += editingAction_ChangesMade;
             editInterface.addCommand(new EditInterfaceCommand("Change Type", (callback, caller) =>
             {
                 callback.showBrowser<Func<String, SlideAction>>(actionTypeBrowser, delegate(Func<String, SlideAction> result, ref string errorPrompt)
                 {
-                    SlideAction newAction = result(name);
+                    currentAction.ChangesMade -= editingAction_ChangesMade;
+                    SlideAction newAction = result(currentAction.Name);
+                    newAction.ChangesMade += editingAction_ChangesMade;
                     actionEditor.EditInterface = setupEditInterface(newAction, slide);
-                    slide.replaceAction(newAction);
+                    actionEditor.alertChangesMade();
                     errorPrompt = "";
                     return true;
                 });
@@ -77,10 +88,26 @@ namespace Lecture.GUI
             return editInterface;
         }
 
+        void editingAction_ChangesMade(SlideAction obj)
+        {
+            actionEditor.alertChangesMade();
+        }
+
         private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = textEditor.Text;
             element.InnerRml = text.Replace("\n", "<br />");
+            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<SlideAction, SlideAction>(
+                (exec) =>
+                    {
+                        slide.replaceAction(exec);
+                    },
+                    CopySaver.Default.copy(currentAction),
+                (undo) =>
+                    {
+                        slide.replaceAction(undo);
+                    },
+                    slide.getAction(currentAction.Name)));
             return true;
         }
 

@@ -1,4 +1,5 @@
-﻿using Engine.Editing;
+﻿using Engine.Attributes;
+using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using System;
@@ -10,6 +11,9 @@ namespace Medical.SlideshowActions
 {
     public abstract class SlideAction : Saveable
     {
+        [DoNotSave]
+        public event Action<SlideAction> ChangesMade;
+
         public SlideAction()
         {
 
@@ -22,6 +26,14 @@ namespace Medical.SlideshowActions
         public virtual void cleanup(Slide slide, CleanupInfo info, ResourceProvider resourceProvider)
         {
 
+        }
+
+        protected void fireChangesMade()
+        {
+            if (ChangesMade != null)
+            {
+                ChangesMade.Invoke(this);
+            }
         }
 
         public abstract String Name { get; set; }

@@ -28,6 +28,12 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             base.Dispose();
         }
 
+        public void alertChangesMade()
+        {
+            this.fireChangesMade();
+            this.fireApplyChanges();
+        }
+
         public EditInterface EditInterface
         {
             get

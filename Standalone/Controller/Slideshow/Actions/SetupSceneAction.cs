@@ -32,39 +32,45 @@ namespace Medical.SlideshowActions
                 editInterface = ReflectedEditInterface.createEditInterface(this, "Setup Scene");
                 editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
                     {
-                        action.clear();
-                        if (Layers)
-                        {
-                            ChangeLayersCommand changeLayers = new ChangeLayersCommand();
-                            changeLayers.Layers.captureState();
-                            action.addCommand(changeLayers);
-                        }
-
-                        if (Muscles)
-                        {
-                            SetMusclePositionCommand musclePosition = new SetMusclePositionCommand();
-                            musclePosition.MusclePosition.captureState();
-                            action.addCommand(musclePosition);
-                        }
-
-                        if (Camera)
-                        {
-                            MoveCameraCommand moveCamera = new MoveCameraCommand();
-                            callback.runOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, moveCamera.CameraPosition);
-                            action.addCommand(moveCamera);
-                        }
-
-                        if (MedicalState)
-                        {
-                            ChangeMedicalStateCommand medicalState = new ChangeMedicalStateCommand();
-                            MedicalState medState = new MedicalState("");
-                            medState.update();
-                            medicalState.captureFromMedicalState(medState);
-                            action.addCommand(medicalState);
-                        }
+                        captureSceneState(callback);
+                        fireChangesMade();
                     }));
             }
             return editInterface;
+        }
+
+        public void captureSceneState(EditUICallback callback)
+        {
+            action.clear();
+            if (Layers)
+            {
+                ChangeLayersCommand changeLayers = new ChangeLayersCommand();
+                changeLayers.Layers.captureState();
+                action.addCommand(changeLayers);
+            }
+
+            if (Muscles)
+            {
+                SetMusclePositionCommand musclePosition = new SetMusclePositionCommand();
+                musclePosition.MusclePosition.captureState();
+                action.addCommand(musclePosition);
+            }
+
+            if (Camera)
+            {
+                MoveCameraCommand moveCamera = new MoveCameraCommand();
+                callback.runOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, moveCamera.CameraPosition);
+                action.addCommand(moveCamera);
+            }
+
+            if (MedicalState)
+            {
+                ChangeMedicalStateCommand medicalState = new ChangeMedicalStateCommand();
+                MedicalState medState = new MedicalState("");
+                medState.update();
+                medicalState.captureFromMedicalState(medState);
+                action.addCommand(medicalState);
+            }
         }
 
         public override void addToController(Slide slide, MvcController controller)

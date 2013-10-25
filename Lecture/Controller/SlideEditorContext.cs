@@ -70,7 +70,7 @@ namespace Lecture
             this.editorController = editorController;
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
-            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), "a");
+            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a");
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -635,7 +635,9 @@ namespace Lecture
             BrowserNode rootNode = browser.getTopNode();
             browser.DefaultSelection = new BrowserNode("Setup Scene", new Func<String, SlideAction>((name) =>
             {
-                return new SetupSceneAction(name);
+                SetupSceneAction setupScene = new SetupSceneAction(name);
+                setupScene.captureSceneState(uiCallback);
+                return setupScene;
             }));
             rootNode.addChild(browser.DefaultSelection);
 
