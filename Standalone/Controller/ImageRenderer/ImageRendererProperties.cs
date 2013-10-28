@@ -29,6 +29,8 @@ namespace Medical
             LayerState = null;
             ShowBackground = true;
             ShowUIUpdates = true;
+            UseIncludePoint = false;
+            IncludePoint = Vector3.Zero;
         }
 
         /// <summary>
@@ -143,5 +145,15 @@ namespace Medical
         /// Set this to true to enable the ImageRendererProgress and show updates. Set it to false to keep this UI hidden.
         /// </summary>
         public bool ShowUIUpdates { get; set; }
+
+        /// <summary>
+        /// Set to true to use an include point to calculate the camera position
+        /// </summary>
+        public bool UseIncludePoint { get; set; }
+
+        /// <summary>
+        /// Set the include point you wish to use.
+        /// </summary>
+        public Vector3 IncludePoint { get; set; }
     }
 }

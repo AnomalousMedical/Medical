@@ -519,6 +519,8 @@ namespace Lecture
                     imageProperties.LayerState = slide.Layers;
                     imageProperties.CameraPosition = slide.CameraPosition.Translation;
                     imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
+                    imageProperties.UseIncludePoint = slide.CameraPosition.UseIncludePoint;
+                    imageProperties.IncludePoint = slide.CameraPosition.IncludePoint;
 
                     using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
                     {
