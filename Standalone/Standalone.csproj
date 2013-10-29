@@ -432,8 +432,6 @@
     <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="Controller\Camera\CameraMover.cs" />
     <Compile Include="Controller\Camera\OrbitCameraController.cs" />
-    <Compile Include="Controller\Camera\SavedCameraController.cs" />
-    <Compile Include="Controller\Camera\SavedCameraDefinition.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboardContainer.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboardContainerMemberFilter.cs" />
     <Compile Include="Controller\Config\EngineConfig.cs" />

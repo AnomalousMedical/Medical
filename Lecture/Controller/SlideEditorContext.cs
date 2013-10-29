@@ -204,7 +204,6 @@ namespace Lecture
                         editor.First.Rml = panel.Rml = getCurrentText(editor.Second);
                     }
                     slideLayoutPicker.destroyLayoutPicker();
-                    slideLayoutPicker = null;
                     GlobalContextEventHandler.disableEventContext(eventContext);
                     htmlDragDrop.DestroyIconPreview();
                     if (Blur != null)
