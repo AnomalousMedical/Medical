@@ -40,15 +40,8 @@ namespace Medical
         /// </summary>
         /// <param name="position">The position to set the camera at.</param>
         /// <param name="lookAt">The look at point of the camera.</param>
-        public abstract void setNewPosition(Vector3 position, Vector3 lookAt);
-
-        /// <summary>
-        /// Set the camera to the given position looking at the given point.
-        /// </summary>
-        /// <param name="position">The position to set the camera at.</param>
-        /// <param name="lookAt">The look at point of the camera.</param>
         /// <param name="duration">The amount of time for the transition to take.</param>
-        public abstract void setNewPosition(Vector3 position, Vector3 lookAt, float duration);
+        public abstract void setNewPosition(Vector3 position, Vector3 lookAt, float duration, EasingFunction easingFunction);
 
         /// <summary>
         /// Set the position of the camera immediatly.

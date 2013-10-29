@@ -28,6 +28,7 @@ namespace Medical
             this.Duration = 1.0f;
             IncludePoint = Vector3.Invalid;
             UseSystemCameraTransitionTime = false;
+            Easing = EasingFunction.EaseOutQuad;
         }
 
         public MoveCameraAction(float startTime, String cameraName, Vector3 translation, Vector3 lookAt)
@@ -42,14 +43,14 @@ namespace Medical
             MDISceneViewWindow window = TimelineController.SceneViewController.findWindow(CameraName);
             if (window != null)
             {
-                window.setPosition(computeTranslationWithIncludePoint(window), LookAt, Duration);
+                window.setPosition(computeTranslationWithIncludePoint(window), LookAt, Duration, Easing);
             }
             else
             {
                 SceneViewWindow sceneViewWindow = TimelineController.SceneViewController.ActiveWindow;
                 if (sceneViewWindow != null)
                 {
-                    sceneViewWindow.setPosition(computeTranslationWithIncludePoint(sceneViewWindow), LookAt, Duration);
+                    sceneViewWindow.setPosition(computeTranslationWithIncludePoint(sceneViewWindow), LookAt, Duration, Easing);
                 }
             }
         }
@@ -77,13 +78,13 @@ namespace Medical
                     {
                         time = 0.001f;
                     }
-                    window.setPosition(finalTrans, LookAt, time);
+                    window.setPosition(finalTrans, LookAt, time, Easing);
                 }
                 else
                 {
                     Vector3 finalTrans = computeTranslationWithIncludePoint(window);
                     window.immediatlySetPosition(finalTrans, LookAt);
-                    window.setPosition(finalTrans, LookAt, 0.001f); //Its weird that you have to do this, but the position won't visibly update if you don't.
+                    window.setPosition(finalTrans, LookAt, 0.001f, Easing); //Its weird that you have to do this, but the position won't visibly update if you don't.
                 }
             }
         }
@@ -134,7 +135,7 @@ namespace Medical
                 SceneViewWindow window = TimelineController.SceneViewController.ActiveWindow;
                 if (window != null)
                 {
-                    window.setPosition(computeTranslationWithIncludePoint(window), LookAt);
+                    window.setPosition(computeTranslationWithIncludePoint(window), LookAt, MedicalConfig.CameraTransitionTime, Easing);
                 }
             }
         }
@@ -163,6 +164,9 @@ namespace Medical
 
         [Editable(Advanced = true)]
         public bool UseSystemCameraTransitionTime { get; set; }
+
+        [Editable(Advanced=true)]
+        public EasingFunction Easing { get; set; }
 
         public override float Duration
         {

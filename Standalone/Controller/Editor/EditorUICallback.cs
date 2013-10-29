@@ -46,7 +46,7 @@ namespace Medical
                 SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
                 if (activeWindow != null)
                 {
-                    activeWindow.setPosition(camPos.computeTranslationWithIncludePoint(activeWindow), camPos.LookAt);
+                    activeWindow.setPosition(camPos.computeTranslationWithIncludePoint(activeWindow), camPos.LookAt, MedicalConfig.CameraTransitionTime, camPos.Easing);
                 }
             });
 

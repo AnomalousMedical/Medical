@@ -114,6 +114,7 @@ namespace Medical
 
         private bool allowRotation = true;
         private bool allowZoom = true;
+        private EasingFunction easingFunction = EasingFunction.EaseOutQuad;
 
         public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventManager eventManager)
         {
@@ -168,7 +169,7 @@ namespace Medical
                         rotatedUp = targetRotatedUp;
                         rotatedLeft = targetRotatedLeft;
                     }
-                    float slerpAmount = EasingFunctions.EaseOutQuad(0f, 1f, totalTime, animationDuration);
+                    float slerpAmount = EasingFunctions.Ease(easingFunction, 0f, 1f, totalTime, animationDuration);
                     this.lookAt = startLookAt.lerp(ref targetLookAt, ref slerpAmount);
                     Quaternion rotation = startRotation.slerp(ref targetRotation, slerpAmount);
                     //If the rotation is not a valid number just use the target rotation
@@ -371,18 +372,9 @@ namespace Medical
             this.camera = camera;
         }
 
-        /// <summary>
-        /// Set the camera to the given position looking at the given point.
-        /// </summary>
-        /// <param name="position">The position to set the camera at.</param>
-        /// <param name="lookAt">The look at point of the camera.</param>
-        public override void setNewPosition(Vector3 position, Vector3 lookAt)
+        public override void setNewPosition(Vector3 position, Vector3 lookAt, float duration, EasingFunction easingFunction)
         {
-            setNewPosition(position, lookAt, MedicalConfig.CameraTransitionTime);
-        }
-
-        public override void setNewPosition(Vector3 position, Vector3 lookAt, float duration)
-        {
+            this.easingFunction = easingFunction;
             animationDuration = duration;
             if (camera != null)
             {

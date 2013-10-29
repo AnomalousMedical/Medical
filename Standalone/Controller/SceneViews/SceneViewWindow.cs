@@ -139,14 +139,9 @@ namespace Medical.Controller
 
         public abstract void close();
 
-        public void setPosition(Vector3 translation, Vector3 lookAt)
+        public void setPosition(Vector3 translation, Vector3 lookAt, float duration, EasingFunction easingFunction)
         {
-            cameraMover.setNewPosition(translation, lookAt);
-        }
-
-        public void setPosition(Vector3 translation, Vector3 lookAt, float duration)
-        {
-            cameraMover.setNewPosition(translation, lookAt, duration);
+            cameraMover.setNewPosition(translation, lookAt, duration, easingFunction);
         }
 
         public void immediatlySetPosition(Vector3 translation, Vector3 lookAt)
@@ -248,7 +243,7 @@ namespace Medical.Controller
             return screenPos;
         }
 
-        public void moveCameraToIncludePoint(Vector3 includePoint, float transitionTime)
+        public void moveCameraToIncludePoint(Vector3 includePoint, float transitionTime, EasingFunction easeFunc)
         {
             Matrix4x4 viewMatrix = Camera.getViewMatrix();
             Matrix4x4 projectionMatrix = Camera.getProjectionMatrix();
@@ -257,7 +252,7 @@ namespace Medical.Controller
 
             float distance = computeOffsetToIncludePoint(viewMatrix, projectionMatrix, includePoint, aspect, fovy);
             Vector3 direction = (Translation - LookAt).normalized();
-            setPosition(Translation - (direction * distance), LookAt, transitionTime);
+            setPosition(Translation - (direction * distance), LookAt, transitionTime, easeFunc);
         }
 
         public static float computeOffsetToIncludePoint(Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, Vector3 include, float aspect, float fovy)

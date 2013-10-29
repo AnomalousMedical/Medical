@@ -128,7 +128,7 @@ namespace Medical.GUI
             SceneViewWindow window = sceneViewController.ActiveWindow;
             Vector3 center = boundingBox.Center;
             
-            window.setPosition(window.Translation, center, MedicalConfig.CameraTransitionTime);
+            window.setPosition(window.Translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuad);
         }
 
         internal void highlightAnatomy(AnatomyContextWindow requestingWindow)
@@ -167,7 +167,7 @@ namespace Medical.GUI
                 Vector3 direction = (window.Translation - window.LookAt).normalized();
                 translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
-                window.setPosition(translation, center, MedicalConfig.CameraTransitionTime);
+                window.setPosition(translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuad);
             }
         }
     }

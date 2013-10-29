@@ -22,12 +22,7 @@ namespace Medical.Controller
             this.camera = camera;
         }
 
-        public override void setNewPosition(Vector3 position, Engine.Vector3 lookAt)
-        {
-
-        }
-
-        public override void setNewPosition(Vector3 position, Vector3 lookAt, float duration)
+        public override void setNewPosition(Vector3 position, Vector3 lookAt, float duration, EasingFunction easingFunction)
         {
 
         }

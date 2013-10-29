@@ -33,7 +33,7 @@ namespace Medical
 
         public CameraPosition()
         {
-
+            Easing = EasingFunction.EaseOutQuad;
         }
 
         [Editable]
@@ -47,6 +47,9 @@ namespace Medical
 
         [Editable]
         public bool UseIncludePoint { get; set; }
+
+        [Editable]
+        public EasingFunction Easing { get; set; }
 
         public void calculateIncludePoint(SceneViewWindow sceneWindow)
         {
