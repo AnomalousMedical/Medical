@@ -6,6 +6,7 @@ using Engine.Platform;
 using Engine.Saving;
 using Logging;
 using Engine.Editing;
+using Engine;
 
 namespace Medical
 {
@@ -144,6 +145,19 @@ namespace Medical
 
         [Editable(Advanced = true)]
         public bool UseSystemLayerTransitionTime { get; set; }
+
+        [Editable(Advanced = true)]
+        public EasingFunction Easing
+        {
+            get
+            {
+                return LayerState.Easing;
+            }
+            set
+            {
+                LayerState.Easing = value;
+            }
+        }
 
         public override string TypeName
         {

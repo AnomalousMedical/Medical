@@ -33,7 +33,7 @@ namespace Medical
 
         public CameraPosition()
         {
-            Easing = EasingFunction.EaseOutQuad;
+            Easing = EasingFunction.EaseOutQuadratic;
         }
 
         [Editable]

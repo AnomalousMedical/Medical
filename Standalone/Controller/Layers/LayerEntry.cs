@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Engine;
 
 namespace Medical
 {
@@ -17,12 +18,12 @@ namespace Medical
             alphaValue = trans.CurrentAlpha;
         }
 
-        public void timedApply(float time, List<TransparencyInterface> unvisitedInterfaces)
+        public void timedApply(float time, List<TransparencyInterface> unvisitedInterfaces, EasingFunction easingFunction)
         {
             TransparencyInterface obj = TransparencyController.getTransparencyObject(transparencyObject);
             if (obj != null)
             {
-                obj.timedBlend(alphaValue, time);
+                obj.timedBlend(alphaValue, time, easingFunction);
                 unvisitedInterfaces.Remove(obj);
             }
         }

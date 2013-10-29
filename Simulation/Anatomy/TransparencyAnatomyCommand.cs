@@ -15,7 +15,7 @@ namespace Medical
     {
         internal const String UI_TEXT = "Transparency";
 
-        internal delegate void TransparencyAnatomySmoothBlendDelegate(float alpha, float transparencyChangeMultiplier);
+        internal delegate void TransparencyAnatomySmoothBlendDelegate(float alpha, float transparencyChangeMultiplier, EasingFunction easingFunction);
         internal event TransparencyAnatomySmoothBlendDelegate SmoothBlendApplied;
 
         [Editable]
@@ -41,14 +41,14 @@ namespace Medical
             return true;
         }
 
-        public void smoothBlend(float alpha, float duration)
+        public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
         {
             if (alpha != transparencyInterface.CurrentAlpha)
             {
-                transparencyInterface.timedBlend(alpha, duration);
+                transparencyInterface.timedBlend(alpha, duration, easingFunction);
                 if (SmoothBlendApplied != null)
                 {
-                    SmoothBlendApplied.Invoke(alpha, duration);
+                    SmoothBlendApplied.Invoke(alpha, duration, easingFunction);
                 }
                 fireNumericValueChanged(alpha);
             }

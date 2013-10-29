@@ -28,7 +28,7 @@ namespace Medical
             this.Duration = 1.0f;
             IncludePoint = Vector3.Invalid;
             UseSystemCameraTransitionTime = false;
-            Easing = EasingFunction.EaseOutQuad;
+            Easing = EasingFunction.EaseOutQuadratic;
         }
 
         public MoveCameraAction(float startTime, String cameraName, Vector3 translation, Vector3 lookAt)

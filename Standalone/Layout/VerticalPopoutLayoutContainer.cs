@@ -170,7 +170,7 @@ namespace Medical
                 currentTime += clock.fSeconds;
                 if (currentTime < animationLength)
                 {
-                    alpha = EasingFunctions.EaseOutQuad(0, 1.0f, currentTime, animationLength);
+                    alpha = EasingFunctions.EaseOutQuadratic(0, 1.0f, currentTime, animationLength);
                 }
                 else
                 {

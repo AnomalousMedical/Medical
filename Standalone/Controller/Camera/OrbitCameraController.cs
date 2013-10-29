@@ -114,7 +114,7 @@ namespace Medical
 
         private bool allowRotation = true;
         private bool allowZoom = true;
-        private EasingFunction easingFunction = EasingFunction.EaseOutQuad;
+        private EasingFunction easingFunction = EasingFunction.EaseOutQuadratic;
 
         public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventManager eventManager)
         {

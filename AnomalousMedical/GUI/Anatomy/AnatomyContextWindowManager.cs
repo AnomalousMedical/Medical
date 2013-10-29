@@ -127,8 +127,8 @@ namespace Medical.GUI
             AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
             SceneViewWindow window = sceneViewController.ActiveWindow;
             Vector3 center = boundingBox.Center;
-            
-            window.setPosition(window.Translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuad);
+
+            window.setPosition(window.Translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         internal void highlightAnatomy(AnatomyContextWindow requestingWindow)
@@ -147,8 +147,8 @@ namespace Medical.GUI
                     beforeFocusLayerState.captureState();
                 }
 
-                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.CameraTransitionTime);
-                requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime);
+                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                 lastHighlightRequestWindow = requestingWindow;
 
                 AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
@@ -167,7 +167,7 @@ namespace Medical.GUI
                 Vector3 direction = (window.Translation - window.LookAt).normalized();
                 translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
-                window.setPosition(translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuad);
+                window.setPosition(translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
             }
         }
     }

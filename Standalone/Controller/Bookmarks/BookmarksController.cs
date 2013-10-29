@@ -104,7 +104,7 @@ namespace Medical.Controller
         public void applyBookmark(Bookmark bookmark)
         {
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
-            window.setPosition(bookmark.CameraTranslation, bookmark.CameraLookAt, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuad);
+            window.setPosition(bookmark.CameraTranslation, bookmark.CameraLookAt, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
             bookmark.Layers.timedApply(MedicalConfig.CameraTransitionTime);
         }
 

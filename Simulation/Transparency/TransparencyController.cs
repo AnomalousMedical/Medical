@@ -66,11 +66,11 @@ namespace Medical
             }
         }
 
-        public static void smoothSetAllAlphas(float alpha, float duration)
+        public static void smoothSetAllAlphas(float alpha, float duration, EasingFunction easing)
         {
             foreach (TransparencyInterface transInterface in transparencyInterfaces)
             {
-                transInterface.timedBlend(alpha, duration);
+                transInterface.timedBlend(alpha, duration, easing);
             }
         }
 

@@ -6,11 +6,14 @@ using Engine.Saving;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Engine.Editing;
+using Engine;
 
 namespace Medical
 {
     public class LayerState : Saveable
     {
+        private EasingFunction easing = EasingFunction.EaseOutQuadratic;
         private String name;
         private LinkedList<LayerEntry> entries = new LinkedList<LayerEntry>();
 
@@ -54,11 +57,11 @@ namespace Medical
             List<TransparencyInterface> unvisitedInterfaces = new List<TransparencyInterface>(TransparencyController.TransparencyInterfaces);
             foreach (LayerEntry entry in entries)
             {
-                entry.timedApply(time, unvisitedInterfaces);
+                entry.timedApply(time, unvisitedInterfaces, Easing);
             }
             foreach (TransparencyInterface unvisited in unvisitedInterfaces)
             {
-                unvisited.timedBlend(0.0f, time);
+                unvisited.timedBlend(0.0f, time, Easing);
             }
         }
 
@@ -105,6 +108,19 @@ namespace Medical
             get
             {
                 return entries;
+            }
+        }
+
+        [Editable]
+        public EasingFunction Easing
+        {
+            get
+            {
+                return easing;
+            }
+            set
+            {
+                easing = value;
             }
         }
 

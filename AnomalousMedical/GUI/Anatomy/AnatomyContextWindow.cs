@@ -178,12 +178,12 @@ namespace Medical.GUI
 
         void showButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime);
+            anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         void hideButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            anatomy.TransparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime);
+            anatomy.TransparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         void widget_MouseButtonPressed(Widget source, EventArgs e)

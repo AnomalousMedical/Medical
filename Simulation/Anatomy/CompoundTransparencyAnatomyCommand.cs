@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.ObjectManagement;
 using Engine.Saving;
+using Engine;
 
 namespace Medical
 {
@@ -33,11 +34,11 @@ namespace Medical
             return false;
         }
 
-        public void smoothBlend(float alpha, float duration)
+        public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
         {
             foreach (TransparencyAnatomyCommand command in subCommands)
             {
-                command.smoothBlend(alpha, duration);
+                command.smoothBlend(alpha, duration, easingFunction);
             }
         }
 

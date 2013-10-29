@@ -6,6 +6,7 @@ using Engine.ObjectManagement;
 using Engine.Saving;
 using Engine.Editing;
 using Engine.Attributes;
+using Engine;
 
 namespace Medical
 {
@@ -138,15 +139,15 @@ namespace Medical
             }
         }
 
-        void transparencyAnatomyCommand_SmoothBlendApplied(float alpha, float duration)
+        void transparencyAnatomyCommand_SmoothBlendApplied(float alpha, float duration, EasingFunction easingFunction)
         {
             if (trackingTransparency)
             {
-                transparencyInterface.timedBlend(alpha, duration);
+                transparencyInterface.timedBlend(alpha, duration, easingFunction);
             }
             else
             {
-                transparencyInterface.timedBlend(0.0f, duration);
+                transparencyInterface.timedBlend(0.0f, duration, easingFunction);
             }
         }
 

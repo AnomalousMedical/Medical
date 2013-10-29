@@ -124,7 +124,7 @@ namespace Medical
             RenderGroup = RenderGroup.None;
         }
 
-        public void timedBlend(float targetOpacity, float time, EasingFunction easingFunction = EasingFunction.EaseOutQuad)
+        public void timedBlend(float targetOpacity, float time, EasingFunction easingFunction)
         {
             transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, time, easingFunction);
         }

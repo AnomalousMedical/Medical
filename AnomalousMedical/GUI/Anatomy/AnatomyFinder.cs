@@ -359,7 +359,7 @@ namespace Medical.GUI
 
         void unhideAll_MouseButtonClick(Widget source, EventArgs e)
         {
-            TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.CameraTransitionTime);
+            TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         void anatomyList_SelectedValueChanged(object sender, EventArgs e)
@@ -400,15 +400,15 @@ namespace Medical.GUI
                 TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
                 if (transparencyChanger.CurrentAlpha >= 0.9999f)
                 {
-                    transparencyChanger.smoothBlend(0.7f, MedicalConfig.CameraTransitionTime);
+                    transparencyChanger.smoothBlend(0.7f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                 }
                 else if (transparencyChanger.CurrentAlpha <= 0.00008f)
                 {
-                    transparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime);
+                    transparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                 }
                 else
                 {
-                    transparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime);
+                    transparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                 }
             }
         }
