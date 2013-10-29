@@ -13,13 +13,13 @@ namespace Medical
 {
     public class LayerState : Saveable
     {
-        private EasingFunction easing = EasingFunction.EaseOutQuadratic;
         private String name;
         private LinkedList<LayerEntry> entries = new LinkedList<LayerEntry>();
 
         public LayerState(String name)
         {
             this.name = name;
+            Easing = EasingFunction.EaseOutQuadratic;
         }
 
         /// <summary>
@@ -112,17 +112,7 @@ namespace Medical
         }
 
         [Editable]
-        public EasingFunction Easing
-        {
-            get
-            {
-                return easing;
-            }
-            set
-            {
-                easing = value;
-            }
-        }
+        public EasingFunction Easing { get; set; }
 
         /// <summary>
         /// Remove all zero entries from this layer state. This is done on
@@ -146,17 +136,19 @@ namespace Medical
 
         private const string NAME = "Name";
         private const string ENTRIES = "Entry";
+        private const string EASING = "Easing";
 
         protected LayerState(LoadInfo info)
         {
             name = info.GetString(NAME);
+            Easing = info.GetValue(EASING, EasingFunction.EaseOutQuadratic);
             info.RebuildLinkedList<LayerEntry>(ENTRIES, entries);
         }
 
         public void getInfo(SaveInfo info)
         {
-            //trimLayers();
             info.AddValue(NAME, name);
+            info.AddValue(EASING, EasingFunction.EaseOutQuadratic);
             info.ExtractLinkedList<LayerEntry>(ENTRIES, entries);
         }
 

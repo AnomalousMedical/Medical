@@ -115,6 +115,7 @@ namespace Medical
             LookAt = info.GetVector3("LookAt", LookAt);
             IncludePoint = info.GetVector3("IncludePoint", IncludePoint);
             UseIncludePoint = info.GetBoolean("UseIncludePoint", false);
+            Easing = info.GetValue("Easing", EasingFunction.EaseOutQuadratic);
         }
 
         public void getInfo(SaveInfo info)
@@ -123,6 +124,7 @@ namespace Medical
             info.AddValue("LookAt", LookAt);
             info.AddValue("IncludePoint", IncludePoint);
             info.AddValue("UseIncludePoint", UseIncludePoint);
+            info.AddValue("Easing", Easing);
         }
 
         #endregion

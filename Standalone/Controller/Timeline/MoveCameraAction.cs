@@ -230,6 +230,7 @@ namespace Medical
         private static readonly String CAMERA_NAME = "CameraName";
         private static readonly String INCLUDE_POINT = "IncludePoint";
         private static readonly String USE_SYSTEM_CAMERA_TRANSITION_TIME = "UseSystemCameraTransitionTime";
+        private static readonly String EASING = "Easing";
 
         protected MoveCameraAction(LoadInfo info)
             : base(info)
@@ -239,6 +240,7 @@ namespace Medical
             CameraName = info.GetString(CAMERA_NAME);
             IncludePoint = info.GetVector3(INCLUDE_POINT, Vector3.Invalid);
             UseSystemCameraTransitionTime = info.GetBoolean(USE_SYSTEM_CAMERA_TRANSITION_TIME, false);
+            Easing = info.GetValue(EASING, EasingFunction.EaseOutQuadratic);
         }
 
         public override void getInfo(SaveInfo info)
@@ -248,6 +250,7 @@ namespace Medical
             info.AddValue(CAMERA_NAME, CameraName);
             info.AddValue(INCLUDE_POINT, IncludePoint);
             info.AddValue(USE_SYSTEM_CAMERA_TRANSITION_TIME, UseSystemCameraTransitionTime);
+            info.AddValue(EASING, Easing);
             base.getInfo(info);
         }
 
