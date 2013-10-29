@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.Attributes;
+using Engine;
 
 namespace Medical
 {
@@ -17,37 +18,29 @@ namespace Medical
         private float workingAlpha = 1.0f;
         private float targetOpacity = 1.0f;
         private bool changingOpacity = false;
-        private float opacityChangeMultiplier = 1.0f;
+        private float blendDuration = 0.0f;
+        private float currentTime = 0.0f;
+        private float startOpacity;
 
-        public void smoothBlend(float targetOpacity, float changeMultiplier)
+        public void smoothBlend(float targetOpacity, float blendDuration)
         {
             changingOpacity = true;
             this.targetOpacity = targetOpacity;
-            this.opacityChangeMultiplier = changeMultiplier;
+            this.blendDuration = blendDuration;
+            this.currentTime = 0.0f;
+            startOpacity = workingAlpha;
         }
 
         public void update(Clock clock)
         {
             if (changingOpacity)
             {
-                if (workingAlpha > targetOpacity)
+                currentTime += clock.fSeconds;
+                if (currentTime > blendDuration)
                 {
-                    workingAlpha -= (float)clock.Seconds * opacityChangeMultiplier;
-                    if (workingAlpha < targetOpacity)
-                    {
-                        workingAlpha = targetOpacity;
-                        changingOpacity = false;
-                    }
+                    currentTime = blendDuration;
                 }
-                else
-                {
-                    workingAlpha += (float)clock.Seconds * opacityChangeMultiplier;
-                    if (workingAlpha > targetOpacity)
-                    {
-                        workingAlpha = targetOpacity;
-                        changingOpacity = false;
-                    }
-                }
+                workingAlpha = EasingFunctions.EaseOutQuad(startOpacity, targetOpacity - startOpacity, currentTime, blendDuration);
             }
         }
 

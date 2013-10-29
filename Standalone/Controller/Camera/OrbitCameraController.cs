@@ -168,7 +168,7 @@ namespace Medical
                         rotatedUp = targetRotatedUp;
                         rotatedLeft = targetRotatedLeft;
                     }
-                    float slerpAmount = totalTime / animationDuration;
+                    float slerpAmount = EasingFunctions.EaseOutQuad(0f, 1f, totalTime, animationDuration);
                     this.lookAt = startLookAt.lerp(ref targetLookAt, ref slerpAmount);
                     Quaternion rotation = startRotation.slerp(ref targetRotation, slerpAmount);
                     //If the rotation is not a valid number just use the target rotation

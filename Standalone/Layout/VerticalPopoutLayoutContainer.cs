@@ -168,9 +168,13 @@ namespace Medical
             if (animating)
             {
                 currentTime += clock.fSeconds;
-                alpha = currentTime / animationLength;
-                if (alpha > 1.0f)
+                if (currentTime < animationLength)
                 {
+                    alpha = EasingFunctions.EaseOutQuad(0, 1.0f, currentTime, animationLength);
+                }
+                else
+                {
+                    currentTime = animationLength;
                     alpha = 1.0f;
 
                     finishAnimation();
