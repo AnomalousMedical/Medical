@@ -21,14 +21,16 @@ namespace Medical
         private float blendDuration = 0.0f;
         private float currentTime = 0.0f;
         private float startOpacity;
+        private EasingFunctionDelegate easeFunc;
 
-        public void smoothBlend(float targetOpacity, float blendDuration)
+        public void smoothBlend(float targetOpacity, float blendDuration, EasingFunction easingFunction)
         {
             changingOpacity = true;
             this.targetOpacity = targetOpacity;
             this.blendDuration = blendDuration;
             this.currentTime = 0.0f;
             startOpacity = workingAlpha;
+            easeFunc = EasingFunctions.GetEasingFunction(easingFunction);
         }
 
         public void update(Clock clock)
@@ -39,8 +41,14 @@ namespace Medical
                 if (currentTime > blendDuration)
                 {
                     currentTime = blendDuration;
+                    workingAlpha = targetOpacity;
+                    easeFunc = null;
+                    changingOpacity = false;
                 }
-                workingAlpha = EasingFunctions.EaseOutQuad(startOpacity, targetOpacity - startOpacity, currentTime, blendDuration);
+                else
+                {
+                    workingAlpha = easeFunc(startOpacity, targetOpacity - startOpacity, currentTime, blendDuration);
+                }
             }
         }
 
