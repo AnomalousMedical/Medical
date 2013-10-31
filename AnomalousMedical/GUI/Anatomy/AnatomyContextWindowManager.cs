@@ -127,8 +127,13 @@ namespace Medical.GUI
             AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
             SceneViewWindow window = sceneViewController.ActiveWindow;
             Vector3 center = boundingBox.Center;
+            CameraPosition cameraPosition = new CameraPosition()
+            {
+                Translation = window.Translation,
+                LookAt = center,
+            };
 
-            window.setPosition(window.Translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
         }
 
         internal void highlightAnatomy(AnatomyContextWindow requestingWindow)
@@ -166,8 +171,13 @@ namespace Medical.GUI
                 Vector3 translation = center;
                 Vector3 direction = (window.Translation - window.LookAt).normalized();
                 translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
+                CameraPosition cameraPosition = new CameraPosition()
+                {
+                    Translation = translation,
+                    LookAt = center
+                };
 
-                window.setPosition(translation, center, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
             }
         }
     }

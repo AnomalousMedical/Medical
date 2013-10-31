@@ -139,14 +139,30 @@ namespace Medical.Controller
 
         public abstract void close();
 
-        public void setPosition(Vector3 translation, Vector3 lookAt, float duration, EasingFunction easingFunction)
+        public void setPosition(CameraPosition cameraPosition, float duration)
         {
-            cameraMover.setNewPosition(translation, lookAt, duration, easingFunction);
+            cameraMover.setNewPosition(this.computeAdjustedTranslation(cameraPosition), cameraPosition.LookAt, duration, cameraPosition.Easing);
+            //if (cameraPosition.UseIncludePoint)
+            //{
+            //    cameraMover.maintainIncludePoint(cameraPosition.IncludePoint);
+            //}
+            //else
+            //{
+            //    cameraMover.stopMaintainingIncludePoint();
+            //}
         }
 
-        public void immediatlySetPosition(Vector3 translation, Vector3 lookAt)
+        public void immediatlySetPosition(CameraPosition cameraPosition)
         {
-            cameraMover.immediatlySetPosition(translation, lookAt);
+            cameraMover.immediatlySetPosition(cameraPosition.Translation, cameraPosition.LookAt);
+            //if (cameraPosition.UseIncludePoint)
+            //{
+            //    cameraMover.maintainIncludePoint(cameraPosition.IncludePoint);
+            //}
+            //else
+            //{
+            //    cameraMover.stopMaintainingIncludePoint();
+            //}
         }
 
         public override void setAlpha(float alpha)
@@ -203,6 +219,7 @@ namespace Medical.Controller
             {
                 sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
                 vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
+                cameraMover.processIncludePoint(Camera);
             }
 
             if (Resized != null)
@@ -243,16 +260,50 @@ namespace Medical.Controller
             return screenPos;
         }
 
-        public void moveCameraToIncludePoint(Vector3 includePoint, float transitionTime, EasingFunction easeFunc)
+        /// <summary>
+        /// Setup the include point for the given camera position for this window. Modifies cameraPosition to have the calculated value
+        /// and sets UseIncludePoint to true.
+        /// </summary>
+        /// <param name="cameraPosition"></param>
+        public void calculateIncludePoint(CameraPosition cameraPosition)
         {
-            Matrix4x4 viewMatrix = Camera.getViewMatrix();
-            Matrix4x4 projectionMatrix = Camera.getProjectionMatrix();
-            float aspect = Camera.getAspectRatio();
-            float fovy = Camera.getFOVy() * 0.5f;
+            //Make the include point projected out to the lookat location
+            Ray3 camRay = this.getCameraToViewportRay(1, 0);
+            cameraPosition.IncludePoint = camRay.Origin + camRay.Direction * (cameraPosition.LookAt - cameraPosition.Translation).length();
+            cameraPosition.UseIncludePoint = true;
+        }
 
-            float distance = computeOffsetToIncludePoint(viewMatrix, projectionMatrix, includePoint, aspect, fovy);
-            Vector3 direction = (Translation - LookAt).normalized();
-            setPosition(Translation - (direction * distance), LookAt, transitionTime, easeFunc);
+        /// <summary>
+        /// Compute a new translation for the given camera position and returns it.
+        /// </summary>
+        /// <param name="cameraPosition"></param>
+        /// <returns></returns>
+        public Vector3 computeAdjustedTranslation(CameraPosition cameraPosition)
+        {
+            if (cameraPosition.UseIncludePoint && cameraPosition.IncludePoint.isNumber())
+            {
+                return SceneViewWindow.computeIncludePointAdjustedPosition(Camera.getAspectRatio(), Camera.getFOVy(), Camera.getProjectionMatrix(), cameraPosition.Translation, cameraPosition.LookAt, cameraPosition.IncludePoint);
+            }
+
+            return cameraPosition.Translation;
+        }
+
+        public static Vector3 computeIncludePointAdjustedPosition(float aspect, float fovy, Matrix4x4 projectionMatrix, Vector3 translation, Vector3 lookAt, Vector3 includePoint)
+        {
+            fovy *= 0.5f;
+            Vector3 direction = lookAt - translation;
+
+            //Figure out direction, must use ogre fixed yaw calculation, first adjust direction to face -z
+            Vector3 zAdjustVec = -direction;
+            zAdjustVec.normalize();
+            Quaternion targetWorldOrientation = Quaternion.shortestArcQuatFixedYaw(ref zAdjustVec);
+
+            Matrix4x4 viewMatrix = Matrix4x4.makeViewMatrix(translation, targetWorldOrientation);
+            float offset = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, projectionMatrix, includePoint, aspect, fovy);
+
+            direction.normalize();
+            Vector3 newTrans = translation + offset * direction;
+            return newTrans;
         }
 
         public static float computeOffsetToIncludePoint(Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, Vector3 include, float aspect, float fovy)
@@ -324,6 +375,11 @@ namespace Medical.Controller
         public void zoom(float zoomDelta)
         {
             cameraMover.zoom(zoomDelta);
+        }
+
+        public void stopMaintainingIncludePoint()
+        {
+            cameraMover.stopMaintainingIncludePoint();
         }
 
         public override bool Visible

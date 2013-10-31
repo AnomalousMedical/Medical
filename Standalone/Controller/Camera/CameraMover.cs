@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine;
+using OgreWrapper;
 
 namespace Medical
 {
     public abstract class CameraMover : UpdateListener
     {
+        protected Vector3? currentIncludePoint = null;
+
         /// <summary>
         /// Rotate the camera by a certain amount (if supported).
         /// </summary>
@@ -49,6 +52,18 @@ namespace Medical
         /// <param name="translation"></param>
         /// <param name="lookAt"></param>
         public abstract void immediatlySetPosition(Vector3 translation, Vector3 lookAt);
+
+        public void maintainIncludePoint(Vector3 includePoint)
+        {
+            this.currentIncludePoint = includePoint;
+        }
+
+        public void stopMaintainingIncludePoint()
+        {
+            this.currentIncludePoint = null;
+        }
+
+        public abstract void processIncludePoint(Camera camera);
 
         #region UpdateListener Members
 

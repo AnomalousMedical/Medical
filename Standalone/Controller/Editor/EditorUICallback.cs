@@ -37,7 +37,7 @@ namespace Medical
                 {
                     camPos.Translation = activeWindow.Translation;
                     camPos.LookAt = activeWindow.LookAt;
-                    camPos.calculateIncludePoint(activeWindow);
+                    activeWindow.calculateIncludePoint(camPos);
                 }
             });
 
@@ -46,7 +46,7 @@ namespace Medical
                 SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
                 if (activeWindow != null)
                 {
-                    activeWindow.setPosition(camPos.computeTranslationWithIncludePoint(activeWindow), camPos.LookAt, MedicalConfig.CameraTransitionTime, camPos.Easing);
+                    activeWindow.setPosition(camPos, MedicalConfig.CameraTransitionTime);
                 }
             });
 

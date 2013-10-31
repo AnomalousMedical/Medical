@@ -6,6 +6,8 @@ using Engine.Platform;
 using Engine;
 using Logging;
 using MyGUIPlugin;
+using Medical.Controller;
+using OgreWrapper;
 
 namespace Medical
 {
@@ -98,6 +100,7 @@ namespace Medical
         private float startOrbitDistance;
         private Quaternion startRotation;
         private Vector3 targetLookAt;
+        private Vector3 targetPosition;
         private float targetOrbitDistance;
         private Quaternion targetRotation;
         float targetYaw;
@@ -376,6 +379,10 @@ namespace Medical
         {
             this.easingFunction = easingFunction;
             animationDuration = duration;
+            if (animationDuration < 0.001f) //Be sure the duration is not 0.
+            {
+                animationDuration = 0.001f;
+            }
             if (camera != null)
             {
                 //If the camera is currently moving the final positions are not yet recorded so do that now.
@@ -392,6 +399,7 @@ namespace Medical
                 Vector3 localVec = position - lookAt;
                 computeStartingValues(localVec, out targetOrbitDistance, out targetYaw, out targetPitch, out targetNormal, out targetRotatedUp, out targetRotatedLeft);
                 this.targetLookAt = lookAt;
+                this.targetPosition = position;
 
                 //Rotations
                 Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
@@ -428,6 +436,23 @@ namespace Medical
             this.translation = translation;
             this.lookAt = lookAt;
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
+        }
+
+        public override void processIncludePoint(Camera camera)
+        {
+            if (currentIncludePoint.HasValue)
+            {
+                float duration = MedicalConfig.CameraTransitionTime;
+                Vector3 inclLookAt = LookAt;
+                Vector3 inclTrans = Translation;
+                if (automaticMovement)
+                {
+                    duration = animationDuration - totalTime;
+                    inclLookAt = targetLookAt;
+                    inclTrans = targetPosition;
+                }
+                setNewPosition(SceneViewWindow.computeIncludePointAdjustedPosition(camera.getAspectRatio(), camera.getFOVy(), camera.getProjectionMatrix(), inclTrans, inclLookAt, currentIncludePoint.Value), inclLookAt, duration, easingFunction);
+            }
         }
 
         /// <summary>

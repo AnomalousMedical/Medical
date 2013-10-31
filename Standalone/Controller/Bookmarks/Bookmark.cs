@@ -13,14 +13,15 @@ namespace Medical
         public Bookmark(String name, Vector3 cameraTrans, Vector3 cameraLookAt, LayerState layers)
         {
             this.Name = name;
-            this.CameraTranslation = cameraTrans;
-            this.CameraLookAt = cameraLookAt;
+            CameraPosition = new CameraPosition()
+            {
+                Translation = cameraTrans,
+                LookAt = cameraLookAt,
+            };
             this.Layers = layers;
         }
 
-        public Vector3 CameraTranslation { get; set; }
-
-        public Vector3 CameraLookAt { get; set; }
+        public CameraPosition CameraPosition { get; set; }
 
         public LayerState Layers { get; set; }
 
@@ -32,21 +33,28 @@ namespace Medical
 
         private static String TRANSLATION = "CameraTranslation";
         private static String LOOK_AT = "CameraLookAt";
+        private static String POSITION = "CameraPosition";
         private static String LAYERS = "Layers";
         private static String NAME = "Name";
 
         protected Bookmark(LoadInfo info)
         {
-            CameraTranslation = info.GetVector3(TRANSLATION);
-            CameraLookAt = info.GetVector3(LOOK_AT);
+            CameraPosition = info.GetValue<CameraPosition>(POSITION, null);
+            if (CameraPosition == null)
+            {
+                CameraPosition = new CameraPosition()
+                {
+                    Translation = info.GetVector3(TRANSLATION),
+                    LookAt = info.GetVector3(LOOK_AT)
+                };
+            }
             Layers = info.GetValue<LayerState>(LAYERS);
             Name = info.GetString(NAME);
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.AddValue(TRANSLATION, CameraTranslation);
-            info.AddValue(LOOK_AT, CameraLookAt);
+            info.AddValue(POSITION, CameraPosition);
             info.AddValue(LAYERS, Layers);
             info.AddValue(NAME, Name);
         }

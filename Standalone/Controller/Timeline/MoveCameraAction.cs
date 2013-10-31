@@ -18,7 +18,7 @@ namespace Medical
         public MoveCameraAction()
             : this(0.0f, null)
         {
-
+            CameraPosition = new CameraPosition();
         }
 
         public MoveCameraAction(float startTime, String cameraName)
@@ -26,16 +26,18 @@ namespace Medical
             this.StartTime = startTime;
             this.CameraName = cameraName;
             this.Duration = 1.0f;
-            IncludePoint = Vector3.Invalid;
             UseSystemCameraTransitionTime = false;
-            Easing = EasingFunction.EaseOutQuadratic;
+            CameraPosition = new CameraPosition();
         }
 
         public MoveCameraAction(float startTime, String cameraName, Vector3 translation, Vector3 lookAt)
             : this(startTime, cameraName)
         {
-            this.Translation = translation;
-            this.LookAt = lookAt;
+            CameraPosition = new CameraPosition()
+            {
+                Translation = translation,
+                LookAt = lookAt
+            };
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -43,14 +45,14 @@ namespace Medical
             MDISceneViewWindow window = TimelineController.SceneViewController.findWindow(CameraName);
             if (window != null)
             {
-                window.setPosition(computeTranslationWithIncludePoint(window), LookAt, Duration, Easing);
+                window.setPosition(CameraPosition, Duration);
             }
             else
             {
                 SceneViewWindow sceneViewWindow = TimelineController.SceneViewController.ActiveWindow;
                 if (sceneViewWindow != null)
                 {
-                    sceneViewWindow.setPosition(computeTranslationWithIncludePoint(sceneViewWindow), LookAt, Duration, Easing);
+                    sceneViewWindow.setPosition(CameraPosition, Duration);
                 }
             }
         }
@@ -64,27 +66,47 @@ namespace Medical
                 {
                     Vector3 translation = window.Translation;
                     Vector3 lookAt = window.LookAt;
-                    Vector3 finalTrans = computeTranslationWithIncludePoint(window);
-                    Vector3 finalLookAt = LookAt;
+                    Vector3 finalTrans = window.computeAdjustedTranslation(CameraPosition);
+                    Vector3 finalLookAt = CameraPosition.LookAt;
                     float percent = 1.0f;
                     float currentTime = timelineTime - StartTime;
                     if (Duration != 0.0f)
                     {
                         percent = currentTime / Duration;
                     }
-                    window.immediatlySetPosition(translation.lerp(ref finalTrans, ref percent), lookAt.lerp(ref finalLookAt, ref percent));
+                    CameraPosition immediatePos = new CameraPosition()
+                    {
+                        Translation = translation.lerp(ref finalTrans, ref percent),
+                        LookAt = lookAt.lerp(ref finalLookAt, ref percent)
+                    };
+                    window.immediatlySetPosition(immediatePos);
                     float time = Duration - currentTime;
                     if (time <= 0.001f)
                     {
                         time = 0.001f;
                     }
-                    window.setPosition(finalTrans, LookAt, time, Easing);
+                    CameraPosition cameraPosition = new CameraPosition(CameraPosition)
+                    {
+                        Translation = finalTrans,
+                    };
+                    window.setPosition(cameraPosition, time);
                 }
                 else
                 {
-                    Vector3 finalTrans = computeTranslationWithIncludePoint(window);
-                    window.immediatlySetPosition(finalTrans, LookAt);
-                    window.setPosition(finalTrans, LookAt, 0.001f, Easing); //Its weird that you have to do this, but the position won't visibly update if you don't.
+                    Vector3 finalTrans = window.computeAdjustedTranslation(CameraPosition);
+                    CameraPosition immediatePos = new CameraPosition()
+                    {
+                        Translation = finalTrans,
+                        LookAt = CameraPosition.LookAt
+                    };
+                    window.immediatlySetPosition(immediatePos);
+
+                    //Its weird that you have to do this, but the position won't visibly update if you don't.
+                    CameraPosition cameraPosition = new CameraPosition(CameraPosition)
+                    {
+                        Translation = finalTrans,
+                    };
+                    window.setPosition(cameraPosition, 0.001f);
                 }
             }
         }
@@ -101,9 +123,9 @@ namespace Medical
 
         public override void reverseSides()
         {
-            Translation = new Vector3(-Translation.x, Translation.y, Translation.z);
-            LookAt = new Vector3(-LookAt.x, LookAt.y, LookAt.z);
-            IncludePoint = new Vector3(-IncludePoint.x, IncludePoint.y, IncludePoint.z);
+            CameraPosition.Translation = new Vector3(-CameraPosition.Translation.x, CameraPosition.Translation.y, CameraPosition.Translation.z);
+            CameraPosition.LookAt = new Vector3(-CameraPosition.LookAt.x, CameraPosition.LookAt.y, CameraPosition.LookAt.z);
+            CameraPosition.IncludePoint = new Vector3(-CameraPosition.IncludePoint.x, CameraPosition.IncludePoint.y, CameraPosition.IncludePoint.z);
         }
 
         public override bool Finished
@@ -117,13 +139,12 @@ namespace Medical
         public override void capture()
         {
             SceneViewWindow currentWindow = TimelineController.SceneViewController.ActiveWindow;
-            Translation = currentWindow.Translation;
-            LookAt = currentWindow.LookAt;
+            CameraPosition.Translation = currentWindow.Translation;
+            CameraPosition.LookAt = currentWindow.LookAt;
             CameraName = currentWindow.Name;
 
             //Make the include point projected out to the lookat location
-            Ray3 camRay = currentWindow.getCameraToViewportRay(1, 0);
-            IncludePoint = camRay.Origin + camRay.Direction * (LookAt - Translation).length();
+            currentWindow.calculateIncludePoint(CameraPosition);
 
             fireDataNeedsRefresh();
         }
@@ -135,7 +156,7 @@ namespace Medical
                 SceneViewWindow window = TimelineController.SceneViewController.ActiveWindow;
                 if (window != null)
                 {
-                    window.setPosition(computeTranslationWithIncludePoint(window), LookAt, MedicalConfig.CameraTransitionTime, Easing);
+                    window.setPosition(CameraPosition, MedicalConfig.CameraTransitionTime);
                 }
             }
         }
@@ -151,22 +172,13 @@ namespace Medical
         }
 
         [Editable(Advanced = true)]
-        public Vector3 Translation { get; set; }
-
-        [Editable(Advanced = true)]
-        public Vector3 LookAt { get; set; }
+        public CameraPosition CameraPosition { get; set; }
 
         [Editable(Advanced = true)]
         public String CameraName { get; set; }
 
         [Editable(Advanced = true)]
-        public Vector3 IncludePoint { get; set; }
-
-        [Editable(Advanced = true)]
         public bool UseSystemCameraTransitionTime { get; set; }
-
-        [Editable(Advanced=true)]
-        public EasingFunction Easing { get; set; }
 
         public override float Duration
         {
@@ -178,32 +190,6 @@ namespace Medical
             {
                 base.Duration = value;
             }
-        }
-
-        private Vector3 computeTranslationWithIncludePoint(SceneViewWindow sceneWindow)
-        {
-            if (IncludePoint.isNumber())
-            {
-                float aspect = sceneWindow.Camera.getAspectRatio();
-                float fovy = sceneWindow.Camera.getFOVy() * 0.5f;
-
-                Vector3 direction = LookAt - Translation;
-
-                //Figure out direction, must use ogre fixed yaw calculation, first adjust direction to face -z
-                Vector3 zAdjustVec = -direction;
-                zAdjustVec.normalize();
-                Quaternion targetWorldOrientation = Quaternion.shortestArcQuatFixedYaw(ref zAdjustVec);
-
-                Matrix4x4 viewMatrix = Matrix4x4.makeViewMatrix(Translation, targetWorldOrientation);
-                Matrix4x4 projectionMatrix = sceneWindow.Camera.getProjectionMatrix();
-                float offset = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, projectionMatrix, IncludePoint, aspect, fovy);
-
-                direction.normalize();
-                Vector3 newTrans = Translation + offset * direction;
-                return newTrans;
-            }
-
-            return Translation;
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
@@ -231,26 +217,33 @@ namespace Medical
         private static readonly String INCLUDE_POINT = "IncludePoint";
         private static readonly String USE_SYSTEM_CAMERA_TRANSITION_TIME = "UseSystemCameraTransitionTime";
         private static readonly String EASING = "Easing";
+        private static readonly String CAMERA_POSITION = "Easing";
 
         protected MoveCameraAction(LoadInfo info)
             : base(info)
         {
-            Translation = info.GetVector3(TRANSLATION);
-            LookAt = info.GetVector3(LOOKAT);
+            CameraPosition = info.GetValue<CameraPosition>(CAMERA_POSITION, null);
+            if (CameraPosition == null)
+            {
+                CameraPosition = new CameraPosition()
+                {
+                    Translation = info.GetVector3(TRANSLATION),
+                    LookAt = info.GetVector3(LOOKAT),
+                    IncludePoint = info.GetVector3(INCLUDE_POINT, Vector3.Invalid),
+                    Easing = info.GetValue(EASING, EasingFunction.EaseOutQuadratic),
+                };
+                CameraPosition.UseIncludePoint = CameraPosition.IncludePoint.isNumber();
+            }
+            
             CameraName = info.GetString(CAMERA_NAME);
-            IncludePoint = info.GetVector3(INCLUDE_POINT, Vector3.Invalid);
             UseSystemCameraTransitionTime = info.GetBoolean(USE_SYSTEM_CAMERA_TRANSITION_TIME, false);
-            Easing = info.GetValue(EASING, EasingFunction.EaseOutQuadratic);
         }
 
         public override void getInfo(SaveInfo info)
         {
-            info.AddValue(TRANSLATION, Translation);
-            info.AddValue(LOOKAT, LookAt);
+            info.AddValue(CAMERA_POSITION, CameraPosition);
             info.AddValue(CAMERA_NAME, CameraName);
-            info.AddValue(INCLUDE_POINT, IncludePoint);
             info.AddValue(USE_SYSTEM_CAMERA_TRANSITION_TIME, UseSystemCameraTransitionTime);
-            info.AddValue(EASING, Easing);
             base.getInfo(info);
         }
 

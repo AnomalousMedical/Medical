@@ -51,7 +51,7 @@ namespace Lecture
                 SceneViewWindow window = sceneViewController.ActiveWindow;
                 cameraPos.Translation = window.Translation;
                 cameraPos.LookAt = window.LookAt;
-                cameraPos.calculateIncludePoint(window);
+                window.calculateIncludePoint(cameraPos);
             }
             slide.CameraPosition = cameraPos;
             slide.Layers = new LayerState("");

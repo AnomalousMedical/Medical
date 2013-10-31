@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Engine.Platform;
+using OgreWrapper;
 
 namespace Medical.Controller
 {
@@ -28,6 +29,11 @@ namespace Medical.Controller
         }
 
         public override void immediatlySetPosition(Vector3 translation, Vector3 lookAt)
+        {
+
+        }
+
+        public override void processIncludePoint(Camera camera)
         {
 
         }

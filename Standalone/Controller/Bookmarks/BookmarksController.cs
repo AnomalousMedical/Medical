@@ -104,7 +104,7 @@ namespace Medical.Controller
         public void applyBookmark(Bookmark bookmark)
         {
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
-            window.setPosition(bookmark.CameraTranslation, bookmark.CameraLookAt, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            window.setPosition(bookmark.CameraPosition, MedicalConfig.CameraTransitionTime);
             bookmark.Layers.timedApply(MedicalConfig.CameraTransitionTime);
         }
 
@@ -118,8 +118,8 @@ namespace Medical.Controller
             {
                 ImageRenderer imageRenderer = standaloneController.ImageRenderer;
 
-                imageProperties.CameraLookAt = bookmark.CameraLookAt;
-                imageProperties.CameraPosition = bookmark.CameraTranslation;
+                imageProperties.CameraLookAt = bookmark.CameraPosition.LookAt;
+                imageProperties.CameraPosition = bookmark.CameraPosition.Translation;
                 imageProperties.LayerState = bookmark.Layers;
 
                 using (Bitmap thumb = imageRenderer.renderImage(imageProperties))

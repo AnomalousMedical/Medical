@@ -246,7 +246,7 @@ namespace Medical.Controller
                 if (windowIndex < currentWindowConfig.Count)
                 {
                     Bookmark bmk = currentWindowConfig[windowIndex++];
-                    camera = createWindow(preset.Name, bmk.CameraTranslation, bmk.CameraLookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, zOrder, findWindow(preset.ParentWindow), preset.WindowPosition);
+                    camera = createWindow(preset.Name, bmk.CameraPosition.Translation, bmk.CameraPosition.LookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, zOrder, findWindow(preset.ParentWindow), preset.WindowPosition);
                     TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
                     bmk.Layers.instantlyApply();
                 }
