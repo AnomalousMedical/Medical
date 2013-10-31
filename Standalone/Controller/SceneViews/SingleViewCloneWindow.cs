@@ -25,7 +25,6 @@ namespace Medical.Controller
             osWindow = new NativeOSWindow(MainWindow.Instance, "Clone Window", location, new Size(windowInfo.Width, windowInfo.Height), floatOnParent);
             this.rendererWindow = OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
             this.createBackground(((OgreWindow)rendererWindow).OgreRenderWindow);
-            AllowNavigation = false;
             osWindow.show();
             osWindow.Closed += new EventHandler(osWindow_Closed);
 

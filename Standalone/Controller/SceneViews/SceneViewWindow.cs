@@ -63,7 +63,6 @@ namespace Medical.Controller
             this.startPosition = cameraMover.Translation;
             this.startLookAt = cameraMover.LookAt;
             mainTimer.addFixedUpdateListener(cameraMover);
-            AllowNavigation = true;
             transparencyStateName = name;
             TransparencyController.createTransparencyState(transparencyStateName);
             UseDefaultTransparency = false;
@@ -526,8 +525,6 @@ namespace Medical.Controller
                 }
             }
         }
-
-        public bool AllowNavigation { get; set; }
 
         public int RenderXLoc { get; private set; }
 
