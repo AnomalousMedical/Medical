@@ -179,12 +179,22 @@ namespace Medical
             sceneLoadNormalState.Notes.Notes = "Normal";
             sceneLoadNormalState.Notes.DataSource = "Automatic";
             sceneLoadNormalState.Thumbnail = imageRenderer.renderImage(imageProperties);
+            states.Add(sceneLoadNormalState);
+            if (StateAdded != null)
+            {
+                StateAdded.Invoke(this, sceneLoadNormalState);
+            }
         }
 
         public void sceneUnloading(SimScene scene)
         {
             if (sceneLoadNormalState != null)
             {
+                states.Remove(sceneLoadNormalState);
+                if (StateRemoved != null)
+                {
+                    StateRemoved.Invoke(this, sceneLoadNormalState);
+                }
                 sceneLoadNormalState.Dispose();
                 sceneLoadNormalState = null;
             }
@@ -257,11 +267,11 @@ namespace Medical
             }
         }
 
-        public MedicalState NormalState
+        public IEnumerable<MedicalState> States
         {
             get
             {
-                return sceneLoadNormalState;
+                return states;
             }
         }
 

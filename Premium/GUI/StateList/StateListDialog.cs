@@ -24,6 +24,11 @@ namespace Medical.GUI
             stateListBox = new SingleSelectButtonGrid(window.findWidget("StateList/ScrollView") as ScrollView, new ButtonGridListLayout());
             stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);
 
+            foreach (var state in stateController.States)
+            {
+                addMedicalState(state);
+            }
+
             Button deleteButton = window.findWidget("StateList/DeleteButton") as Button;
             deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
 
@@ -76,15 +81,7 @@ namespace Medical.GUI
             }
         }
 
-        void stateListBox_SelectedValueChanged(object sender, EventArgs e)
-        {
-            if (stateListBox.SelectedItem != null)
-            {
-                stateController.directBlend((MedicalState)stateListBox.SelectedItem.UserObject, 1.0f);
-            }
-        }
-
-        void stateController_StateAdded(MedicalStateController controller, MedicalState state)
+        private void addMedicalState(MedicalState state)
         {
             String imageId = imageAtlas.addImage(state, state.Thumbnail);
             ButtonGridItem entry = stateListBox.addItem("", state.Name, imageId);
@@ -93,12 +90,33 @@ namespace Medical.GUI
             stateListBox.SelectedItem = entries[state];
         }
 
+        private void removeMedicalState(MedicalState state)
+        {
+            ButtonGridItem entry;
+            if (entries.TryGetValue(state, out entry))
+            {
+                stateListBox.removeItem(entry);
+                entries.Remove(state);
+                imageAtlas.removeImage(state);
+            }
+        }
+
+        void stateListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (stateListBox.SelectedItem != null && stateController != null)
+            {
+                stateController.directBlend((MedicalState)stateListBox.SelectedItem.UserObject, 1.0f);
+            }
+        }
+
+        void stateController_StateAdded(MedicalStateController controller, MedicalState state)
+        {
+            addMedicalState(state);
+        }
+
         void stateController_StateRemoved(MedicalStateController controller, MedicalState state)
         {
-            ButtonGridItem entry = entries[state];
-            stateListBox.removeItem(entry);
-            entries.Remove(state);
-            imageAtlas.removeImage(state);
+            removeMedicalState(state);
         }
 
         void stateController_StateUpdated(MedicalState state)
