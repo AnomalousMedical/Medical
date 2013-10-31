@@ -22,7 +22,6 @@ namespace Medical.GUI
             :base("Medical.GUI.StateList.StateListDialog.layout")
         {
             stateListBox = new SingleSelectButtonGrid(window.findWidget("StateList/ScrollView") as ScrollView, new ButtonGridListLayout());
-            stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);
 
             foreach (var state in stateController.States)
             {
@@ -87,6 +86,7 @@ namespace Medical.GUI
             ButtonGridItem entry = stateListBox.addItem("", state.Name, imageId);
             entry.UserObject = state;
             entries.Add(state, entry);
+            entry.ItemClicked += entry_ItemClicked;
             stateListBox.SelectedItem = entries[state];
         }
 
@@ -101,7 +101,12 @@ namespace Medical.GUI
             }
         }
 
-        void stateListBox_SelectedValueChanged(object sender, EventArgs e)
+        void entry_ItemClicked(object sender, EventArgs e)
+        {
+            changeState();
+        }
+
+        private void changeState()
         {
             if (stateListBox.SelectedItem != null && stateController != null)
             {
