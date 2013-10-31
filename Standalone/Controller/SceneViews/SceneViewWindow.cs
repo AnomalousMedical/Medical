@@ -142,27 +142,27 @@ namespace Medical.Controller
         public void setPosition(CameraPosition cameraPosition, float duration)
         {
             cameraMover.setNewPosition(this.computeAdjustedTranslation(cameraPosition), cameraPosition.LookAt, duration, cameraPosition.Easing);
-            //if (cameraPosition.UseIncludePoint)
-            //{
-            //    cameraMover.maintainIncludePoint(cameraPosition.IncludePoint);
-            //}
-            //else
-            //{
-            //    cameraMover.stopMaintainingIncludePoint();
-            //}
+            if (cameraPosition.UseIncludePoint)
+            {
+                cameraMover.maintainIncludePoint(cameraPosition.IncludePoint);
+            }
+            else
+            {
+                cameraMover.stopMaintainingIncludePoint();
+            }
         }
 
         public void immediatlySetPosition(CameraPosition cameraPosition)
         {
             cameraMover.immediatlySetPosition(cameraPosition.Translation, cameraPosition.LookAt);
-            //if (cameraPosition.UseIncludePoint)
-            //{
-            //    cameraMover.maintainIncludePoint(cameraPosition.IncludePoint);
-            //}
-            //else
-            //{
-            //    cameraMover.stopMaintainingIncludePoint();
-            //}
+            if (cameraPosition.UseIncludePoint)
+            {
+                cameraMover.maintainIncludePoint(cameraPosition.IncludePoint);
+            }
+            else
+            {
+                cameraMover.stopMaintainingIncludePoint();
+            }
         }
 
         public override void setAlpha(float alpha)
@@ -377,8 +377,14 @@ namespace Medical.Controller
             cameraMover.zoom(zoomDelta);
         }
 
+        /// <summary>
+        /// Stop the window from auto adjusting to show the include point when the
+        /// scene view is resized. Should call whenever the user updates a position
+        /// manually through a control mechanism (rotating camera with mouse, touching screen etc)
+        /// </summary>
         public void stopMaintainingIncludePoint()
         {
+            //Do not add any custom logic here, only pass to camera mover.
             cameraMover.stopMaintainingIncludePoint();
         }
 

@@ -54,6 +54,7 @@ namespace Medical
             {
                 float sensitivity = 4.0f;
                 sceneView.rotate(-deltaX * sensitivity, deltaY * sensitivity);
+                sceneView.stopMaintainingIncludePoint();
             }
         }
 
@@ -64,6 +65,7 @@ namespace Medical
             {
                 float sensitivity = 15.0f;
                 sceneView.pan(deltaX * sensitivity, deltaY * sensitivity);
+                sceneView.stopMaintainingIncludePoint();
             }
         }
 
@@ -74,6 +76,7 @@ namespace Medical
             {
                 float sensitivity = 80.0f;
                 sceneView.zoom(zoomDelta * sensitivity);
+                sceneView.stopMaintainingIncludePoint();
             }
         }
     }

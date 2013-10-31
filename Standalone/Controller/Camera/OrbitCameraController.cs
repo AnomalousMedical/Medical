@@ -252,11 +252,13 @@ namespace Medical
                         lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
                     }
                     moveLookAt();
+                    stopMaintainingIncludePoint();
                 }
                 else if (allowZoom && events[CameraEvents.ZoomCamera].Down)
                 {
                     orbitDistance += mouseCoords.y;
                     moveZoom();
+                    stopMaintainingIncludePoint();
                 }
                 else if (allowRotation && events[CameraEvents.RotateCamera].Down)
                 {
@@ -269,6 +271,7 @@ namespace Medical
                         pitch += mouseCoords.y / 100.0f;
                     }
                     moveCameraYawPitch();
+                    stopMaintainingIncludePoint();
                 }
             }
             if (activeWindow)
@@ -292,6 +295,7 @@ namespace Medical
                         }
                     }
                     updateTranslation(normalDirection * orbitDistance + lookAt);
+                    stopMaintainingIncludePoint();
                 }
             }
         }

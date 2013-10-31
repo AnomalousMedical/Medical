@@ -102,6 +102,7 @@ namespace LeapMotionPlugin
                     ThreadManager.invoke(new Action(() =>
                     {
                         window.rotate(yawDelta, pitchDelta);
+                        window.stopMaintainingIncludePoint();
                     }));
                 }
                 lastFingerPos = currentFingerPos;
@@ -125,6 +126,7 @@ namespace LeapMotionPlugin
                     {
                         window.pan(xDelta, yDelta);
                         window.zoom(zDelta);
+                        window.stopMaintainingIncludePoint();
                     }));
                 }
                 lastFingerPos = currentFingerPos;

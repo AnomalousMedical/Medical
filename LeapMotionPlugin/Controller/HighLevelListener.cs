@@ -80,6 +80,7 @@ namespace LeapMotionPlugin
                                 if (moving)
                                 {
                                     active.rotate(frameTrans.x / damping.x, frameTrans.y / damping.y);
+                                    active.stopMaintainingIncludePoint();
                                 }
                                 damping.x = calculateDamping(damping.x, moving, XDampingStart, XDampingMax, XDampingAccel, deltaTime);
                                 damping.y = calculateDamping(damping.y, moving, YDampingStart, YDampingMax, YDampingAccel, deltaTime);
@@ -87,6 +88,7 @@ namespace LeapMotionPlugin
                             if (eventManager[Events.Pan].Down)
                             {
                                 active.pan(frameTrans.x / 10, frameTrans.y / -10);
+                                active.stopMaintainingIncludePoint();
                                 //active.zoom(-frameTrans.z);
                             }
                             //if (eventManager[Events.Zoom].Down)
