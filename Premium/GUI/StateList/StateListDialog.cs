@@ -12,7 +12,6 @@ namespace Medical.GUI
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new IntSize2(100, 100));
         private SingleSelectButtonGrid stateListBox;
         private Dictionary<MedicalState, ButtonGridItem> entries = new Dictionary<MedicalState, ButtonGridItem>();
-        private bool ignoreIndexChanges = false;
         private int lastWidth = -1;
         private int lastHeight = -1;
 
@@ -36,8 +35,6 @@ namespace Medical.GUI
             stateController.StateRemoved += stateController_StateRemoved;
             stateController.StatesCleared += stateController_StatesCleared;
             stateController.StateChanged += stateController_StateChanged;
-            stateController.BlendingStarted += stateController_BlendingStarted;
-            stateController.BlendingStopped += stateController_BlendingStopped;
             stateController.StateUpdated += stateController_StateUpdated;
 
             this.Resized += new EventHandler(StateListDialog_Resized);
@@ -51,8 +48,6 @@ namespace Medical.GUI
             stateController.StateRemoved -= stateController_StateRemoved;
             stateController.StatesCleared -= stateController_StatesCleared;
             stateController.StateChanged -= stateController_StateChanged;
-            stateController.BlendingStarted -= stateController_BlendingStarted;
-            stateController.BlendingStopped -= stateController_BlendingStopped;
             stateController.StateUpdated -= stateController_StateUpdated;
 
             base.Dispose();
@@ -139,22 +134,9 @@ namespace Medical.GUI
 
         void stateController_StateChanged(MedicalState state)
         {
-            if (!ignoreIndexChanges)
-            {
-                ButtonGridItem stateItem;
-                entries.TryGetValue(state, out stateItem);
-                stateListBox.SelectedItem = stateItem;
-            }
-        }
-
-        void stateController_BlendingStopped(MedicalStateController controller)
-        {
-            ignoreIndexChanges = false;
-        }
-
-        void stateController_BlendingStarted(MedicalStateController controller)
-        {
-            ignoreIndexChanges = true;
+            ButtonGridItem stateItem;
+            entries.TryGetValue(state, out stateItem);
+            stateListBox.SelectedItem = stateItem;
         }
 
         void deleteButton_MouseButtonClick(Widget source, EventArgs e)
