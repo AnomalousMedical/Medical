@@ -9,6 +9,7 @@ using Engine.Platform;
 using Medical.GUI.AnomalousMvc;
 using Medical;
 using Lecture.GUI;
+using Engine;
 
 namespace Lecture
 {
@@ -36,9 +37,11 @@ namespace Lecture
         private AnomalousMvcContext mvcContext;
         private SlideshowEditController slideshowEditController;
         private PropEditController propEditController;
+        private Slide slide;
 
         public TimelineEditorContext(Timeline timeline, Slide slide, String name, SlideshowEditController slideshowEditController, PropEditController propEditController, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
         {
+            this.slide = slide;
             this.currentTimeline = timeline;
             this.slideshowEditController = slideshowEditController;
             this.propEditController = propEditController;
@@ -93,12 +96,15 @@ namespace Lecture
             }));
             mvcContext.Views.add(taskbar);
 
-            mvcContext.Controllers.add(new MvcController("TimelineEditor",
-                new RunCommandsAction("Show",
+            RunCommandsAction showCommand = new RunCommandsAction("Show",
                     new ShowViewCommand("TimelineEditor"),
                     new ShowViewCommand("TimelinePropertiesEditor"),
-                    new ShowViewCommand("TimelineInfoBar")
-                ),
+                    new ShowViewCommand("TimelineInfoBar"));
+
+            refreshPanelPreviews(showCommand);
+
+            mvcContext.Controllers.add(new MvcController("TimelineEditor",
+                showCommand,
                 new RunCommandsAction("Close",
                     new CloseAllViewsCommand()),
                 new CutAction(),
@@ -246,6 +252,29 @@ namespace Lecture
         private void saveAll()
         {
             slideshowEditController.save();
+        }
+
+        private void refreshPanelPreviews(RunCommandsAction showEditorWindowsCommand)
+        {
+            foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
+            {
+                String editorViewName = panel.createViewName("RmlView");
+                RawRmlView rmlView = new RawRmlView(editorViewName);
+                rmlView.ViewLocation = panel.ViewLocation;
+                rmlView.IsWindow = false;
+                rmlView.EditPreviewContent = true;
+                rmlView.Size = new IntSize2(panel.Size, panel.Size);
+                rmlView.WidthSizeStrategy = panel.SizeStrategy;
+                rmlView.HeightSizeStrategy = panel.SizeStrategy;
+                rmlView.Rml = panel.Rml;
+                rmlView.FakePath = slide.UniqueName + "/index.rml";
+                rmlView.ComponentCreated += (view, component) =>
+                {
+                    
+                };
+                mvcContext.Views.add(rmlView);
+                showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));
+            }
         }
     }
 }
