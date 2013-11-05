@@ -23,6 +23,7 @@ namespace Developer
         private PerformanceGui performanceGui;
         private DisablePhysicsTask disablePhysics;
         private MeasurementGUI measurementGUI;
+        private ShowLibRocketDebugger libRocketDebugger;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -31,6 +32,7 @@ namespace Developer
 
         public void Dispose()
         {
+            libRocketDebugger.Dispose();
             measurementGUI.Dispose();
             advancedMandibleMovement.Dispose();
             examViewer.Dispose();
@@ -77,6 +79,8 @@ namespace Developer
             measurementGUI = new MeasurementGUI(standaloneController);
             guiManager.addManagedDialog(measurementGUI);
 
+            libRocketDebugger = new ShowLibRocketDebugger(guiManager);
+
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
 
             //Task Controller
@@ -92,6 +96,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", "Developer.StatisticsIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
+            taskController.addTask(libRocketDebugger);
 
             disablePhysics = new DisablePhysicsTask(int.MaxValue);
             taskController.addTask(disablePhysics);

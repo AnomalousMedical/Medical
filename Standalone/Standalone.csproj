@@ -351,6 +351,7 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RmlWindow\RmlWindow.cs" />
+    <Compile Include="GUI\RocketGui\RocketDebuggerWindow.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
@@ -769,6 +770,7 @@
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
+    <EmbeddedResource Include="GUI\RocketGui\RocketDebuggerWindow.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
   </ItemGroup>

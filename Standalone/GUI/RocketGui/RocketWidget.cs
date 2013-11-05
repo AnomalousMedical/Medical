@@ -68,7 +68,6 @@ namespace Medical.GUI
 
             //Create context
             context = Core.CreateContext(name, new Vector2i(imageBox.Width, imageBox.Height));
-            //Debugger.Initialise(context);
 
             renderQueueListener = new RocketRenderQueueListener(context, (RenderInterfaceOgre3D)Core.GetRenderInterface());
             renderQueueListener.FrameCompleted += new Action(renderQueueListener_FrameCompleted);

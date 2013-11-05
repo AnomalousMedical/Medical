@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="301 233 332 306" layer="Overlapped">
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 320 273" align="Stretch" name="RocketImage"/>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
