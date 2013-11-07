@@ -8,11 +8,14 @@ using Engine.Reflection;
 using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
 using Engine.Attributes;
+using Engine;
 
 namespace Medical.GUI.AnomalousMvc
 {
     public class RawRmlView : MyGUIView
     {
+        private float scaleFactor = -1.0f;
+
         public event Action<RawRmlView, RmlWidgetComponent> ComponentCreated;
 
         [DoNotSave]
@@ -29,6 +32,32 @@ namespace Medical.GUI.AnomalousMvc
 
         [Editable]
         public String FakePath { get; set; }
+
+        [Editable]
+        public float ScaleFactor
+        {
+            get
+            {
+                return scaleFactor;
+            }
+            set
+            {
+                scaleFactor = value;
+            }
+        }
+
+        public float FinalScaleFactor
+        {
+            get
+            {
+                float scale = ScaleHelper.ScaleFactor;
+                if (scaleFactor > 0)
+                {
+                    scale *= scaleFactor;
+                }
+                return scale;
+            }
+        }
 
         public CreateCustomEventControllerDelegate CreateCustomEventController
         {

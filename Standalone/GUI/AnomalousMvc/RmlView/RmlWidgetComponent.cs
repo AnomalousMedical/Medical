@@ -36,6 +36,7 @@ namespace Medical.GUI.AnomalousMvc
                 startRmlUpdate();
                 if (view.RmlFile != null)
                 {
+                    rocketWidget.Context.PixelScale = view.FinalScaleFactor;
                     documentName = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(view.RmlFile));
                     using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName))
                     {
@@ -74,6 +75,7 @@ namespace Medical.GUI.AnomalousMvc
             if (view.Rml != null)
             {
                 startRmlUpdate();
+                rocketWidget.Context.PixelScale = view.FinalScaleFactor;
                 using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(view.Rml, FakeLoadLocation))
                 {
                     if (document != null)

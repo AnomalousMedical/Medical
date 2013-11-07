@@ -8,6 +8,7 @@ using Engine.Reflection;
 using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
 using Engine.Attributes;
+using Engine;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -15,6 +16,8 @@ namespace Medical.GUI.AnomalousMvc
 
     public class RmlView : MyGUIView
     {
+        private float scaleFactor = -1.0f;
+
         public event Action<RmlView, RmlWidgetComponent> ComponentCreated;
 
         [DoNotSave]
@@ -28,6 +31,32 @@ namespace Medical.GUI.AnomalousMvc
 
         [EditableFile("*.rml", "Rml Files")]
         public String RmlFile { get; set; }
+
+        [Editable]
+        public float ScaleFactor
+        {
+            get
+            {
+                return scaleFactor;
+            }
+            set
+            {
+                scaleFactor = value;
+            }
+        }
+
+        public float FinalScaleFactor
+        {
+            get
+            {
+                float scale = ScaleHelper.ScaleFactor;
+                if (scaleFactor > 0)
+                {
+                    scale *= scaleFactor;
+                }
+                return scale;
+            }
+        }
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
