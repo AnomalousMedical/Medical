@@ -18,8 +18,7 @@ namespace Medical
         [DoNotSave] //Saved manually
         private String id;
 
-        [DoNotSave]
-        private List<SlidePanel> panels = new List<SlidePanel>();
+        private SlideLayoutStrategy layoutStrategy;
 
         [DoNotSave]
         private Dictionary<String, SlideAction> triggerActions = new Dictionary<string, SlideAction>();
@@ -27,6 +26,7 @@ namespace Medical
         public Slide()
         {
             id = Guid.NewGuid().ToString("D");
+            layoutStrategy = new BorderSlideLayoutStrategy();
         }
 
         public void setupContext(AnomalousMvcContext context, String name, bool allowPrevious, bool allowNext, ResourceProvider resourceProvider)
@@ -45,26 +45,7 @@ namespace Medical
             }
             context.Controllers.add(controller);
 
-            bool addedButtons = false;
-            foreach (SlidePanel panel in panels)
-            {
-                MyGUIView view = panel.createView(this, name);
-                if (!addedButtons)
-                {
-                    addedButtons = true;
-                    if (allowPrevious)
-                    {
-                        view.Buttons.add(new ButtonDefinition("Previous", "NavigationBug/Previous"));
-                    }
-                    if (allowNext)
-                    {
-                        view.Buttons.add(new ButtonDefinition("Next", "NavigationBug/Next"));
-                    }
-                    view.Buttons.add(new CloseButtonDefinition("Close", "Common/Close"));
-                }
-                showCommand.addCommand(new ShowViewCommand(view.Name));
-                context.Views.add(view);
-            }
+            layoutStrategy.createViews(name, showCommand, context, this, allowPrevious, allowNext);            
 
             controller.Actions.add(showCommand);
             customizeController(controller, showCommand);
@@ -72,7 +53,7 @@ namespace Medical
 
         public void addPanel(SlidePanel panel)
         {
-            panels.Add(panel);
+            layoutStrategy.addPanel(panel);
         }
 
         protected abstract void customizeController(MvcController controller, RunCommandsAction showCommand);
@@ -98,10 +79,7 @@ namespace Medical
                 }
             }
             info.claimFile(Path.Combine(UniqueName, "Thumb.png"));
-            foreach (RmlSlidePanel panel in panels)
-            {
-                panel.claimFiles(info, resourceProvider, this);
-            }
+            layoutStrategy.claimFiles(info, resourceProvider, this);
 
             //Clean up actions
             List<String> removeActions = new List<String>(triggerActions.Keys);
@@ -130,25 +108,7 @@ namespace Medical
 
         public void copyLayoutToSlide(Slide slide, bool overwriteContent)
         {
-            List<SlidePanel> removePanels = new List<SlidePanel>(slide.panels);
-            foreach (SlidePanel panel in panels)
-            {
-                SlidePanel existingPanel = slide.findPanel(panel.ViewLocation);
-                if (existingPanel != null)
-                {
-                    removePanels.Remove(existingPanel);
-                    panel.applyToExisting(existingPanel, overwriteContent);
-                }
-                else
-                {
-                    slide.panels.Add(panel.clone());
-                }
-            }
-
-            foreach (SlidePanel remove in removePanels)
-            {
-                slide.panels.Remove(remove);
-            }
+            slide.layoutStrategy = layoutStrategy.createDerivedStrategy(slide.layoutStrategy, overwriteContent);
         }
 
         public void addAction(SlideAction action)
@@ -191,7 +151,7 @@ namespace Medical
         {
             get
             {
-                return panels;
+                return layoutStrategy.Panels;
             }
         }
 
@@ -203,18 +163,6 @@ namespace Medical
             }
         }
 
-        private SlidePanel findPanel(ViewLocations viewLocation)
-        {
-            foreach (SlidePanel panel in panels)
-            {
-                if (panel.ViewLocation == viewLocation)
-                {
-                    return panel;
-                }
-            }
-            return null;
-        }
-
         protected Slide(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
@@ -222,7 +170,6 @@ namespace Medical
                 {
                     return Guid.NewGuid().ToString("D");
                 });
-            info.RebuildList("Panel", panels);
             info.RebuildDictionary("TriggerAction", triggerActions);
         }
 
@@ -230,7 +177,6 @@ namespace Medical
         {
             ReflectedSaver.SaveObject(this, info, ReflectedSaver.DefaultScanner);
             info.AddValue("Id", id.ToString());
-            info.ExtractList("Panel", panels);
             info.ExtractDictionary("TriggerAction", triggerActions);
         }
     }
