@@ -12,7 +12,6 @@ namespace Medical
     public abstract class SlidePanel : Saveable
     {
         private int size = 50;
-        private ViewSizeStrategy sizeStrategy = ViewSizeStrategy.Auto;
         private ViewLocations viewLocation = ViewLocations.Left;
 
         public SlidePanel()
@@ -35,7 +34,6 @@ namespace Medical
         public virtual bool applyToExisting(SlidePanel panel, bool overwriteContent)
         {
             panel.Size = this.Size;
-            panel.SizeStrategy = this.SizeStrategy;
             panel.ViewLocation = this.ViewLocation;
             return true;
         }
@@ -52,19 +50,6 @@ namespace Medical
             set
             {
                 size = value;
-            }
-        }
-
-        [Editable]
-        public ViewSizeStrategy SizeStrategy
-        {
-            get
-            {
-                return sizeStrategy;
-            }
-            set
-            {
-                sizeStrategy = value;
             }
         }
 

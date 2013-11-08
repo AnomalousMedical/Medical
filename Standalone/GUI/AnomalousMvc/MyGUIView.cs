@@ -8,6 +8,7 @@ using Engine.Editing;
 using Medical.Editor;
 using Engine;
 using Engine.Attributes;
+using MyGUIPlugin;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -17,7 +18,7 @@ namespace Medical.GUI.AnomalousMvc
         [DoNotSave]
         private GetDesiredSizeDelegate getDesiredSizeOverride;
 
-        public delegate IntSize2 GetDesiredSizeDelegate(LayoutContainer layoutContainer);
+        public delegate IntSize2 GetDesiredSizeDelegate(LayoutContainer layoutContainer, Widget widget, MyGUIView view);
 
         public MyGUIView(String name)
             : base(name)
@@ -33,11 +34,11 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
-        public bool fireGetDesiredSizeOverride(LayoutContainer layoutContainer, out IntSize2 size)
+        public bool fireGetDesiredSizeOverride(LayoutContainer layoutContainer, Widget widget, out IntSize2 size)
         {
             if (getDesiredSizeOverride != null)
             {
-                size = getDesiredSizeOverride(layoutContainer);
+                size = getDesiredSizeOverride(layoutContainer, widget, this);
                 return true;
             }
             size = new IntSize2();

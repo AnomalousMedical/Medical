@@ -99,7 +99,6 @@ namespace Medical
                 RmlSlidePanel panel = new RmlSlidePanel();
                 panel.Rml = info.GetString("rml");
                 panel.ViewLocation = ViewLocations.Left;
-                panel.SizeStrategy = ViewSizeStrategy.Auto;
                 addPanel(panel);
             }
         }

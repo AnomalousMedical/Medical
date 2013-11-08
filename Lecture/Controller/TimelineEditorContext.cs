@@ -263,9 +263,6 @@ namespace Lecture
                 rmlView.ViewLocation = panel.ViewLocation;
                 rmlView.IsWindow = false;
                 rmlView.EditPreviewContent = true;
-                rmlView.Size = new IntSize2(panel.Size, panel.Size);
-                rmlView.WidthSizeStrategy = panel.SizeStrategy;
-                rmlView.HeightSizeStrategy = panel.SizeStrategy;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
                 rmlView.ComponentCreated += (view, component) =>

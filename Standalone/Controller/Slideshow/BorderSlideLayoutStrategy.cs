@@ -3,6 +3,7 @@ using Engine.Attributes;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
+using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Medical
     class BorderSlideLayoutStrategy : SlideLayoutStrategy
     {
         [DoNotSave]
-        private List<SlidePanel> panels = new List<SlidePanel>();
+        private Dictionary<ViewLocations, SlidePanel> panels = new Dictionary<ViewLocations, SlidePanel>();
 
         public BorderSlideLayoutStrategy()
         {
@@ -23,13 +24,10 @@ namespace Medical
         public void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide, bool allowPrevious, bool allowNext)
         {
             bool addedButtons = false;
-            foreach (SlidePanel panel in panels)
+            foreach (SlidePanel panel in panels.Values)
             {
                 MyGUIView view = panel.createView(slide, name);
-                view.GetDesiredSizeOverride = (layoutContainer) =>
-                    {
-                        return new IntSize2(200, 200);
-                    };
+                view.GetDesiredSizeOverride = layoutView;
                 if (!addedButtons)
                 {
                     addedButtons = true;
@@ -50,12 +48,12 @@ namespace Medical
 
         public void addPanel(SlidePanel panel)
         {
-            panels.Add(panel);
+            panels.Add(panel.ViewLocation, panel);
         }
 
         public void claimFiles(CleanupInfo info, ResourceProvider resourceProvider, Slide slide)
         {
-            foreach (RmlSlidePanel panel in panels)
+            foreach (RmlSlidePanel panel in panels.Values)
             {
                 panel.claimFiles(info, resourceProvider, slide);
             }
@@ -64,10 +62,9 @@ namespace Medical
         public SlideLayoutStrategy createDerivedStrategy(SlideLayoutStrategy oldStrategy, bool overwriteContent)
         {
             BorderSlideLayoutStrategy borderSlides = new BorderSlideLayoutStrategy();
-            int index = 0;
-            foreach (SlidePanel panel in panels)
+            foreach (SlidePanel panel in panels.Values)
             {
-                SlidePanel existingPanel = oldStrategy.getPanel(index++);
+                SlidePanel existingPanel = oldStrategy.getPanel((int)panel.ViewLocation);
                 if (existingPanel != null)
                 {
                     existingPanel = existingPanel.clone();
@@ -86,7 +83,7 @@ namespace Medical
         {
             get
             {
-                return panels;
+                return panels.Values;
             }
         }
 
@@ -100,23 +97,42 @@ namespace Medical
 
         public SlidePanel getPanel(int index)
         {
-            if (index < panels.Count)
+            SlidePanel ret = null;
+            if (panels.TryGetValue((ViewLocations)index, out ret))
             {
-                return panels[index];
+                return ret;
             }
             return null;
+        }
+
+        private IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
+        {
+            SlidePanel panel = panels[view.ViewLocation];
+            switch (view.ViewLocation)
+            {
+                case ViewLocations.Left:
+                    return new IntSize2(panel.Size, widget.Height);
+                case ViewLocations.Right:
+                    return new IntSize2(panel.Size, widget.Height);
+                case ViewLocations.Top:
+                    return new IntSize2(widget.Width, panel.Size);
+                case ViewLocations.Bottom:
+                    return new IntSize2(widget.Width, panel.Size);
+                default:
+                    return new IntSize2(panel.Size, panel.Size);
+            }
         }
 
         protected BorderSlideLayoutStrategy(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info);
-            info.RebuildList("Panel", panels);
+            info.RebuildDictionary("Panel", panels);
         }
 
         public void getInfo(SaveInfo info)
         {
             ReflectedSaver.SaveObject(this, info);
-            info.ExtractList("Panel", panels);
+            info.ExtractDictionary("Panel", panels);
         }
     }
 }

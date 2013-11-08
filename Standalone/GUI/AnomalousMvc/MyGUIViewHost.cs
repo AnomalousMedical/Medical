@@ -121,14 +121,12 @@ namespace Medical.GUI.AnomalousMvc
         IntSize2 getDesiredSize()
         {
             IntSize2 workingSize;
-            if (myGUIView.fireGetDesiredSizeOverride(layoutContainer, out workingSize))
+            if (myGUIView.fireGetDesiredSizeOverride(layoutContainer, layoutContainer.Widget, out workingSize))
             {
                 return workingSize;
             }
 
-            workingSize = layoutContainer.RigidParentWorkingSize;
-            return new IntSize2(View.computeWidth(component.Widget.Width, workingSize.Width), 
-                                View.computeHeight(component.Widget.Height, workingSize.Height));
+            return new IntSize2(layoutContainer.Widget.Width, layoutContainer.Widget.Height);
         }
 
         void layoutContainer_LayoutChanged()

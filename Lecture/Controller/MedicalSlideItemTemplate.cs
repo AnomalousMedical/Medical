@@ -34,7 +34,6 @@ namespace Lecture
             {
                 Rml = defaultSlide,
                 ViewLocation = ViewLocations.Left,
-                SizeStrategy = ViewSizeStrategy.Auto,
                 Size = 30,
             });
             if (SlideCreated != null)

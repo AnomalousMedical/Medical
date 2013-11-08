@@ -254,8 +254,7 @@ namespace Lecture
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 480,
                 ViewLocation = ViewLocations.Left,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
@@ -268,15 +267,13 @@ namespace Lecture
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 480,
                 ViewLocation = ViewLocations.Left,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 480,
                 ViewLocation = ViewLocations.Right,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
@@ -289,22 +286,19 @@ namespace Lecture
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 480,
                 ViewLocation = ViewLocations.Left,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 480,
                 ViewLocation = ViewLocations.Right,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 15,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 288,
                 ViewLocation = ViewLocations.Top,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
@@ -317,29 +311,25 @@ namespace Lecture
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 480,
                 ViewLocation = ViewLocations.Left,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 25,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 480,
                 ViewLocation = ViewLocations.Right,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 15,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 288,
                 ViewLocation = ViewLocations.Top,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 15,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 288,
                 ViewLocation = ViewLocations.Bottom,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
@@ -352,15 +342,13 @@ namespace Lecture
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 50,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 960,
                 ViewLocation = ViewLocations.Left,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 50,
-                SizeStrategy = ViewSizeStrategy.Percentage,
+                Size = 960,
                 ViewLocation = ViewLocations.Right,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
@@ -555,9 +543,6 @@ namespace Lecture
                 rmlView.ViewLocation = panel.ViewLocation;
                 rmlView.IsWindow = false;
                 rmlView.EditPreviewContent = true;
-                rmlView.Size = new IntSize2(panel.Size, panel.Size);
-                rmlView.WidthSizeStrategy = panel.SizeStrategy;
-                rmlView.HeightSizeStrategy = panel.SizeStrategy;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
                 rmlView.ComponentCreated += (view, component) =>

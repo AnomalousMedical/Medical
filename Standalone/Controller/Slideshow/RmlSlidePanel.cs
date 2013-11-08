@@ -27,9 +27,6 @@ namespace Medical
             {
                 Rml = Rml,
                 FakePath = slide.UniqueName + "/index.rml",
-                WidthSizeStrategy = SizeStrategy,
-                HeightSizeStrategy = SizeStrategy,
-                Size = new IntSize2(Size, Size),
                 ViewLocation = ViewLocation,
                 CreateCustomEventController = (context, viewHost) =>
                     {
