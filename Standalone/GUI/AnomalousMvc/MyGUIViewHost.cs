@@ -82,6 +82,11 @@ namespace Medical.GUI.AnomalousMvc
             return component.findControl(name);
         }
 
+        public void changeScale(float newScale)
+        {
+            component.changeScale(newScale);
+        }
+
         public LayoutContainer Container
         {
             get

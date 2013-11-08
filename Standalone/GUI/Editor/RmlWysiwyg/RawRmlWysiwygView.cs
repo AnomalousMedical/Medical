@@ -9,11 +9,14 @@ using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
 using Engine.Attributes;
+using Engine;
 
 namespace Medical.GUI
 {
     public class RawRmlWysiwygView : RmlWysiwygViewBase
     {
+        private float scaleFactor = -1.0f;
+
         public event Action<RawRmlWysiwygView, RmlWysiwygComponent> ComponentCreated;
         public event Action<RawRmlWysiwygView> RequestFocus;
 
@@ -41,6 +44,32 @@ namespace Medical.GUI
 
         [Editable]
         public String FakePath { get; set; }
+
+        [Editable]
+        public float ScaleFactor
+        {
+            get
+            {
+                return scaleFactor;
+            }
+            set
+            {
+                scaleFactor = value;
+            }
+        }
+
+        public float FinalScaleFactor
+        {
+            get
+            {
+                float scale = ScaleHelper.ScaleFactor;
+                if (scaleFactor > 0)
+                {
+                    scale *= scaleFactor;
+                }
+                return scale;
+            }
+        }
 
         public Action<String> UndoRedoCallback { get; set; }
 

@@ -29,5 +29,7 @@ namespace Medical.GUI.AnomalousMvc
         Widget Widget { get; }
 
         ViewHostControl findControl(string name);
+
+        void changeScale(float newScale);
     }
 }

@@ -28,6 +28,7 @@ namespace Medical.GUI.AnomalousMvc
             {
                 MyGUIViewHost viewHost = new MyGUIViewHost(context, myGUIView);
                 viewHost.setTopComponent(componentFactory.createViewHostComponent(myGUIView, context, viewHost));
+                myGUIView.fireViewHostCreated(viewHost);
                 return viewHost;
             }
             return null;

@@ -12,7 +12,7 @@ namespace Medical
     {
         void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide, bool allowPrevious, bool allowNext);
 
-        void setupExternallyCreatedView(View view);
+        SlideInstanceLayoutStrategy createLayoutStrategy();
 
         void addPanel(SlidePanel panel);
 

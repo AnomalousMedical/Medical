@@ -114,6 +114,7 @@ namespace Medical.GUI
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
+            rocketWidget.Context.PixelScale = view.ScaleFactor;
 
             documentName = view.RmlFile;
             if (documentName != null)
@@ -144,6 +145,7 @@ namespace Medical.GUI
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
+            rocketWidget.Context.PixelScale = view.ScaleFactor;
 
             if (view.UndoRedoCallback != null)
             {
@@ -162,6 +164,7 @@ namespace Medical.GUI
             previewElement.Dispose();
             disposed = true;
             rocketWidget.Dispose();
+            rocketWidget = null;
             base.Dispose();
         }
 
@@ -174,6 +177,16 @@ namespace Medical.GUI
                 imageWidth = widget.Width;
             }
             base.topLevelResized();
+        }
+
+        public override void changeScale(float newScale)
+        {
+            base.changeScale(newScale);
+            if (rocketWidget != null && rocketWidget.Context.PixelScale != newScale)
+            {
+                rocketWidget.Context.PixelScale = newScale;
+                setRml(UnformattedRml, true, false);
+            }
         }
 
         public void aboutToSaveRml()

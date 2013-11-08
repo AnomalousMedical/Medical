@@ -17,8 +17,10 @@ namespace Medical.GUI.AnomalousMvc
         private ButtonCollection buttons;
         [DoNotSave]
         private GetDesiredSizeDelegate getDesiredSizeOverride;
+        [DoNotSave]
+        public event Action<MyGUIViewHost> ViewHostCreated;
 
-        public delegate IntSize2 GetDesiredSizeDelegate(LayoutContainer layoutContainer, Widget widget, MyGUIView view);
+        public delegate IntSize2 GetDesiredSizeDelegate(LayoutContainer layoutContainer, Widget widget, MyGUIView view);        
 
         public MyGUIView(String name)
             : base(name)
@@ -54,6 +56,14 @@ namespace Medical.GUI.AnomalousMvc
             set
             {
                 getDesiredSizeOverride = value;
+            }
+        }
+
+        internal void fireViewHostCreated(MyGUIViewHost viewHost)
+        {
+            if (ViewHostCreated != null)
+            {
+                ViewHostCreated.Invoke(viewHost);
             }
         }
 

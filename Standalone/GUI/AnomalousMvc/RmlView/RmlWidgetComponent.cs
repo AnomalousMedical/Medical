@@ -17,6 +17,7 @@ namespace Medical.GUI.AnomalousMvc
         private int imageHeight;
         private int imageWidth;
         private String documentName;
+        private String rawRml = null; //If raw rml was used to create this it is stored here.
         private RocketEventController eventController;
 
         private AnomalousMvcContext context;
@@ -65,18 +66,19 @@ namespace Medical.GUI.AnomalousMvc
             imageHeight = rmlImage.Height;
             if (view.FakePath != null)
             {
-                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(view.FakePath));
+                this.documentName = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(view.FakePath));
             }
             else
             {
-                this.FakeLoadLocation = RocketInterface.createValidFileUrl(context.ResourceProvider.BackingLocation);
+                this.documentName = RocketInterface.createValidFileUrl(context.ResourceProvider.BackingLocation);
             }
 
-            if (view.Rml != null)
+            rawRml = view.Rml;
+            if (rawRml != null)
             {
                 startRmlUpdate();
                 rocketWidget.Context.PixelScale = view.FinalScaleFactor;
-                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(view.Rml, FakeLoadLocation))
+                using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(rawRml, documentName))
                 {
                     if (document != null)
                     {
@@ -94,6 +96,7 @@ namespace Medical.GUI.AnomalousMvc
         public override void Dispose()
         {
             rocketWidget.Dispose();
+            rocketWidget = null;
             base.Dispose();
         }
 
@@ -293,6 +296,19 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
+        public override void changeScale(float newScale)
+        {
+            base.changeScale(newScale);
+            if (rocketWidget != null)
+            {
+                if (rocketWidget.Context.PixelScale != newScale)
+                {
+                    rocketWidget.Context.PixelScale = newScale;
+                    reloadDocument();
+                }
+            }
+        }
+
         public override void topLevelResized()
         {
             if (widget.Height != imageHeight || widget.Width != imageWidth)
@@ -306,23 +322,38 @@ namespace Medical.GUI.AnomalousMvc
 
         public void reloadDocument()
         {
-            RocketGuiManager.clearAllCaches();
-
-            rocketWidget.Context.UnloadAllDocuments();
-
-            if (documentName != null)
+            if (rocketWidget != null)
             {
-                startRmlUpdate();
-                using (ElementDocument document = rocketWidget.Context.LoadDocument(documentName.Replace('\\', '/')))
+                RocketGuiManager.clearAllCaches();
+
+                rocketWidget.Context.UnloadAllDocuments();
+
+                if (documentName != null)
                 {
-                    if (document != null)
+                    startRmlUpdate();
+                    using (ElementDocument document = loadDocument())
                     {
-                        document.Show();
-                        rocketWidget.removeFocus();
-                        rocketWidget.renderOnNextFrame();
+                        if (document != null)
+                        {
+                            document.Show();
+                            rocketWidget.removeFocus();
+                            rocketWidget.renderOnNextFrame();
+                        }
                     }
+                    endRmlUpdate();
                 }
-                endRmlUpdate();
+            }
+        }
+
+        private ElementDocument loadDocument()
+        {
+            if (rawRml != null)
+            {
+                return rocketWidget.Context.LoadDocumentFromMemory(rawRml, documentName);
+            }
+            else
+            {
+                return rocketWidget.Context.LoadDocument(documentName.Replace('\\', '/'));
             }
         }
 
@@ -335,7 +366,5 @@ namespace Medical.GUI.AnomalousMvc
         {
             RocketEventListenerInstancer.resetEventController();
         }
-
-        public String FakeLoadLocation { get; set; }
     }
 }

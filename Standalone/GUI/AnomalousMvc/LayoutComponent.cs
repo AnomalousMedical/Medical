@@ -65,6 +65,11 @@ namespace Medical.GUI.AnomalousMvc
             return null;
         }
 
+        public virtual void changeScale(float newScale)
+        {
+            
+        }
+
         public Widget Widget
         {
             get

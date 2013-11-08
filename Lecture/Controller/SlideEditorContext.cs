@@ -538,6 +538,7 @@ namespace Lecture
 
             foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
             {
+                SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy();
                 String editorViewName = panel.createViewName("RmlView");
                 RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
                 rmlView.ViewLocation = panel.ViewLocation;
@@ -545,7 +546,7 @@ namespace Lecture
                 rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
-                slide.LayoutStrategy.setupExternallyCreatedView(rmlView);
+                instanceLayout.addView(rmlView);
                 rmlView.ComponentCreated += (view, component) =>
                 {
                     rmlEditors[view.Name].Second = component;

@@ -111,6 +111,11 @@ namespace Medical.GUI.AnomalousMvc
             return child.findControl(name);
         }
 
+        public void changeScale(float newScale)
+        {
+            child.changeScale(newScale);
+        }
+
         public MyGUIViewHost ViewHost
         {
             get

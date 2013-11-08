@@ -197,6 +197,7 @@
     <Compile Include="Controller\Slideshow\BorderSlideLayoutStrategy.cs" />
     <Compile Include="Controller\Slideshow\CleanupInfo.cs" />
     <Compile Include="Controller\Slideshow\Actions\SlideAction.cs" />
+    <Compile Include="Controller\Slideshow\SlideInstanceLayoutStrategy.cs" />
     <Compile Include="Controller\Slideshow\SlideLayoutStrategy.cs" />
     <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventController.cs" />
     <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventListener.cs" />

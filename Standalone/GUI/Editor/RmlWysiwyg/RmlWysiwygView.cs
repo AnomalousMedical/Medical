@@ -9,11 +9,14 @@ using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
 using Engine.Attributes;
+using Engine;
 
 namespace Medical.GUI
 {
     public class RmlWysiwygView : RmlWysiwygViewBase
     {
+        private float scaleFactor = -1.0f;
+
         public event Action<RmlWysiwygView, RmlWysiwygComponent> ComponentCreated;
         public event Action<RmlWysiwygView> RequestFocus;
 
@@ -35,6 +38,32 @@ namespace Medical.GUI
 
         [EditableFile("*.rml", "Rml Files")]
         public String RmlFile { get; set; }
+
+        [Editable]
+        public float ScaleFactor
+        {
+            get
+            {
+                return scaleFactor;
+            }
+            set
+            {
+                scaleFactor = value;
+            }
+        }
+
+        public float FinalScaleFactor
+        {
+            get
+            {
+                float scale = ScaleHelper.ScaleFactor;
+                if (scaleFactor > 0)
+                {
+                    scale *= scaleFactor;
+                }
+                return scale;
+            }
+        }
 
         public void addCustomStrategy(ElementStrategy strategy)
         {

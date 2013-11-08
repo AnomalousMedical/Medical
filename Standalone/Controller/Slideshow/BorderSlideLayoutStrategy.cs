@@ -23,12 +23,13 @@ namespace Medical
 
         public void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide, bool allowPrevious, bool allowNext)
         {
+            SlideInstanceLayoutStrategy instanceStrategy = createLayoutStrategy();
             bool addButtonsOnLeftOnly = panels.ContainsKey(ViewLocations.Left);
             bool addButtons = !addButtonsOnLeftOnly;
             foreach (SlidePanel panel in panels.Values)
             {
                 MyGUIView view = panel.createView(slide, name);
-                view.GetDesiredSizeOverride = layoutView;
+                instanceStrategy.addView(view);
                 if (addButtons || (addButtonsOnLeftOnly && panel.ViewLocation == ViewLocations.Left))
                 {
                     addButtons = false;
@@ -47,13 +48,9 @@ namespace Medical
             }
         }
 
-        public void setupExternallyCreatedView(View view)
+        public SlideInstanceLayoutStrategy createLayoutStrategy()
         {
-            MyGUIView myGuiView = view as MyGUIView;
-            if (myGuiView != null)
-            {
-                myGuiView.GetDesiredSizeOverride = layoutView;
-            }
+            return new InstanceStrategy(this);
         }
 
         public void addPanel(SlidePanel panel)
@@ -115,24 +112,6 @@ namespace Medical
             return null;
         }
 
-        private IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
-        {
-            SlidePanel panel = panels[view.ViewLocation];
-            switch (view.ViewLocation)
-            {
-                case ViewLocations.Left:
-                    return new IntSize2(panel.Size, widget.Height);
-                case ViewLocations.Right:
-                    return new IntSize2(panel.Size, widget.Height);
-                case ViewLocations.Top:
-                    return new IntSize2(widget.Width, panel.Size);
-                case ViewLocations.Bottom:
-                    return new IntSize2(widget.Width, panel.Size);
-                default:
-                    return new IntSize2(panel.Size, panel.Size);
-            }
-        }
-
         protected BorderSlideLayoutStrategy(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info);
@@ -143,6 +122,53 @@ namespace Medical
         {
             ReflectedSaver.SaveObject(this, info);
             info.ExtractDictionary("Panel", panels);
+        }
+
+        class InstanceStrategy : SlideInstanceLayoutStrategy
+        {
+            private Dictionary<ViewLocations, MyGUIViewHost> viewHosts = new Dictionary<ViewLocations, MyGUIViewHost>();
+            private BorderSlideLayoutStrategy masterStrategy;
+
+            public InstanceStrategy(BorderSlideLayoutStrategy masterStrategy)
+            {
+                this.masterStrategy = masterStrategy;
+            }
+
+            public void addView(MyGUIView view)
+            {
+                view.ViewHostCreated += view_ViewHostCreated;
+                view.GetDesiredSizeOverride = this.layoutView;
+            }
+
+            public IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
+            {
+                float ratio = ScaleHelper.Unscaled(layoutContainer.RigidParentWorkingSize.Height) / (float)ScaleHelper.Scaled(1017);
+                SlidePanel panel = masterStrategy.panels[view.ViewLocation];
+                int size = (int)(panel.Size * ratio);
+                if (viewHosts.ContainsKey(view.ViewLocation))
+                {
+                    viewHosts[view.ViewLocation].changeScale(ratio * ScaleHelper.ScaleFactor);
+                }
+
+                switch (view.ViewLocation)
+                {
+                    case ViewLocations.Left:
+                        return new IntSize2(size, widget.Height);
+                    case ViewLocations.Right:
+                        return new IntSize2(size, widget.Height);
+                    case ViewLocations.Top:
+                        return new IntSize2(widget.Width, size);
+                    case ViewLocations.Bottom:
+                        return new IntSize2(widget.Width, size);
+                    default:
+                        return new IntSize2(size, size);
+                }
+            }
+
+            void view_ViewHostCreated(MyGUIViewHost view)
+            {
+                viewHosts.Add(view.View.ViewLocation, view);
+            }
         }
     }
 }
