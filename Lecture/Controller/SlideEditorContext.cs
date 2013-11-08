@@ -545,6 +545,7 @@ namespace Lecture
                 rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
+                slide.LayoutStrategy.setupExternallyCreatedView(rmlView);
                 rmlView.ComponentCreated += (view, component) =>
                 {
                     rmlEditors[view.Name].Second = component;

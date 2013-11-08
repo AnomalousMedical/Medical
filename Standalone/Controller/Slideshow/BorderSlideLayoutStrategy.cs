@@ -23,14 +23,15 @@ namespace Medical
 
         public void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide, bool allowPrevious, bool allowNext)
         {
-            bool addedButtons = false;
+            bool addButtonsOnLeftOnly = panels.ContainsKey(ViewLocations.Left);
+            bool addButtons = !addButtonsOnLeftOnly;
             foreach (SlidePanel panel in panels.Values)
             {
                 MyGUIView view = panel.createView(slide, name);
                 view.GetDesiredSizeOverride = layoutView;
-                if (!addedButtons)
+                if (addButtons || (addButtonsOnLeftOnly && panel.ViewLocation == ViewLocations.Left))
                 {
-                    addedButtons = true;
+                    addButtons = false;
                     if (allowPrevious)
                     {
                         view.Buttons.add(new ButtonDefinition("Previous", "NavigationBug/Previous"));
@@ -43,6 +44,15 @@ namespace Medical
                 }
                 showCommand.addCommand(new ShowViewCommand(view.Name));
                 context.Views.add(view);
+            }
+        }
+
+        public void setupExternallyCreatedView(View view)
+        {
+            MyGUIView myGuiView = view as MyGUIView;
+            if (myGuiView != null)
+            {
+                myGuiView.GetDesiredSizeOverride = layoutView;
             }
         }
 

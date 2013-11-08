@@ -155,6 +155,14 @@ namespace Medical
             }
         }
 
+        public SlideLayoutStrategy LayoutStrategy
+        {
+            get
+            {
+                return layoutStrategy;
+            }
+        }
+
         public String UniqueName
         {
             get

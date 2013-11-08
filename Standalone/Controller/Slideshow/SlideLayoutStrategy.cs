@@ -8,9 +8,11 @@ using System.Text;
 
 namespace Medical
 {
-    interface SlideLayoutStrategy : Saveable
+    public interface SlideLayoutStrategy : Saveable
     {
         void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide, bool allowPrevious, bool allowNext);
+
+        void setupExternallyCreatedView(View view);
 
         void addPanel(SlidePanel panel);
 
