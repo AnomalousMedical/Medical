@@ -198,7 +198,6 @@
     <Compile Include="Controller\Slideshow\CleanupInfo.cs" />
     <Compile Include="Controller\Slideshow\Actions\SlideAction.cs" />
     <Compile Include="Controller\Slideshow\SlideLayoutStrategy.cs" />
-    <Compile Include="Controller\Slideshow\SlidePanelEditorInfo.cs" />
     <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventController.cs" />
     <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventListener.cs" />
     <Compile Include="Controller\Slideshow\RmlSlidePanel.cs" />
