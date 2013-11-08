@@ -13,15 +13,16 @@ namespace Medical.GUI.AnomalousMvc
         private ViewHostComponent component;
         private VariableSizeMyGUILayoutContainer layoutContainer;
         private AnomalousMvcContext context;
+        private MyGUIView myGUIView;
 
         public event Action<ViewHost> ViewClosing;
         public event Action<ViewHost> ViewOpening;
 
-        public MyGUIViewHost(AnomalousMvcContext context, View view)
+        public MyGUIViewHost(AnomalousMvcContext context, MyGUIView view)
         {
             this.context = context;
             this.Name = view.Name;
-            this.View = view;
+            this.myGUIView = view;
         }
 
         public void setTopComponent(ViewHostComponent component)
@@ -99,7 +100,13 @@ namespace Medical.GUI.AnomalousMvc
 
         public String Name { get; private set; }
 
-        public View View { get; private set; }
+        public View View
+        {
+            get
+            {
+                return myGUIView;
+            }
+        }
 
         public bool _RequestClosed { get; set; }
 
@@ -113,7 +120,13 @@ namespace Medical.GUI.AnomalousMvc
 
         IntSize2 getDesiredSize()
         {
-            IntSize2 workingSize = layoutContainer.RigidParentWorkingSize;
+            IntSize2 workingSize;
+            if (myGUIView.fireGetDesiredSizeOverride(layoutContainer, out workingSize))
+            {
+                return workingSize;
+            }
+
+            workingSize = layoutContainer.RigidParentWorkingSize;
             return new IntSize2(View.computeWidth(component.Widget.Width, workingSize.Width), 
                                 View.computeHeight(component.Widget.Height, workingSize.Height));
         }

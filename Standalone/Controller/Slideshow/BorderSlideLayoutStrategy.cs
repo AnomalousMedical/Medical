@@ -1,4 +1,5 @@
-﻿using Engine.Attributes;
+﻿using Engine;
+using Engine.Attributes;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
@@ -25,6 +26,10 @@ namespace Medical
             foreach (SlidePanel panel in panels)
             {
                 MyGUIView view = panel.createView(slide, name);
+                view.GetDesiredSizeOverride = (layoutContainer) =>
+                    {
+                        return new IntSize2(200, 200);
+                    };
                 if (!addedButtons)
                 {
                     addedButtons = true;
