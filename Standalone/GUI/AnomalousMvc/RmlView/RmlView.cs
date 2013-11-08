@@ -16,8 +16,6 @@ namespace Medical.GUI.AnomalousMvc
 
     public class RmlView : MyGUIView
     {
-        private float scaleFactor = -1.0f;
-
         public event Action<RmlView, RmlWidgetComponent> ComponentCreated;
 
         [DoNotSave]
@@ -32,29 +30,17 @@ namespace Medical.GUI.AnomalousMvc
         [EditableFile("*.rml", "Rml Files")]
         public String RmlFile { get; set; }
 
+        private float zoomLevel = 1.0f;
         [Editable]
-        public float ScaleFactor
+        public float ZoomLevel
         {
             get
             {
-                return scaleFactor;
+                return zoomLevel;
             }
             set
             {
-                scaleFactor = value;
-            }
-        }
-
-        public float FinalScaleFactor
-        {
-            get
-            {
-                float scale = ScaleHelper.ScaleFactor;
-                if (scaleFactor > 0)
-                {
-                    scale *= scaleFactor;
-                }
-                return scale;
+                zoomLevel = value;
             }
         }
 

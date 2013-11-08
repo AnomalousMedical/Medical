@@ -147,7 +147,7 @@ namespace Medical
                 int size = (int)(panel.Size * ratio);
                 if (viewHosts.ContainsKey(view.ViewLocation))
                 {
-                    viewHosts[view.ViewLocation].changeScale(ratio * ScaleHelper.ScaleFactor);
+                    viewHosts[view.ViewLocation].changeScale(ratio);
                 }
 
                 switch (view.ViewLocation)
@@ -168,6 +168,12 @@ namespace Medical
             void view_ViewHostCreated(MyGUIViewHost view)
             {
                 viewHosts.Add(view.View.ViewLocation, view);
+                view.ViewClosing += view_ViewClosing;
+            }
+
+            void view_ViewClosing(ViewHost view)
+            {
+                viewHosts.Remove(view.View.ViewLocation);
             }
         }
     }

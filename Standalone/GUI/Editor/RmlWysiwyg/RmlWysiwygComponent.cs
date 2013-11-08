@@ -114,7 +114,7 @@ namespace Medical.GUI
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
-            rocketWidget.Context.PixelScale = view.ScaleFactor;
+            rocketWidget.Context.ZoomLevel = view.ZoomLevel;
 
             documentName = view.RmlFile;
             if (documentName != null)
@@ -145,7 +145,7 @@ namespace Medical.GUI
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
-            rocketWidget.Context.PixelScale = view.ScaleFactor;
+            rocketWidget.Context.ZoomLevel = view.ZoomLevel;
 
             if (view.UndoRedoCallback != null)
             {
@@ -182,9 +182,9 @@ namespace Medical.GUI
         public override void changeScale(float newScale)
         {
             base.changeScale(newScale);
-            if (rocketWidget != null && rocketWidget.Context.PixelScale != newScale)
+            if (rocketWidget != null && rocketWidget.Context.ZoomLevel != newScale)
             {
-                rocketWidget.Context.PixelScale = newScale;
+                rocketWidget.Context.ZoomLevel = newScale;
                 setRml(UnformattedRml, true, false);
             }
         }
