@@ -469,6 +469,10 @@ namespace Medical.GUI
             {
                 return changesMade;
             }
+            set
+            {
+                changesMade = value;
+            }
         }
 
         public String FakeLoadLocation { get; set; }

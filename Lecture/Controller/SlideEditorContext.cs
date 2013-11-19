@@ -432,16 +432,14 @@ namespace Lecture
 
         public void commitText()
         {
+            bool updateThumb = false;
             foreach (var editor in rmlEditors.Values)
             {
-                if (editor.Component != null)
-                {
-                    editor.Component.aboutToSaveRml();
-                    if (editor.Component.ChangesMade)
-                    {
-                        updateThumbnail();
-                    }
-                }
+                updateThumb |= editor.commitText();
+            }
+            if (updateThumb)
+            {
+                updateThumbnail();
             }
         }
 

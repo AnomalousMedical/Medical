@@ -30,5 +30,17 @@ namespace Lecture
             }
             return null;
         }
+
+        internal bool commitText()
+        {
+            if (Component != null)
+            {
+                Component.aboutToSaveRml();
+                bool changed = Component.ChangesMade;
+                Component.ChangesMade = false;
+                return changed;
+            }
+            return false;
+        }
     }
 }
