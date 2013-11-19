@@ -49,6 +49,7 @@ namespace Lecture
         private Action<String, String> wysiwygUndoCallback;
         private SlideLayoutPickerTask slideLayoutPicker;
         private SlideshowEditController editorController;
+        private PanelResizeWidget panelResizeWidget;
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
@@ -68,6 +69,7 @@ namespace Lecture
             this.itemTemplate = itemTemplate;
             this.wysiwygUndoCallback = wysiwygUndoCallback;
             this.editorController = editorController;
+            panelResizeWidget = new PanelResizeWidget();
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
             triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a");
@@ -206,6 +208,7 @@ namespace Lecture
                     slideLayoutPicker.destroyLayoutPicker();
                     GlobalContextEventHandler.disableEventContext(eventContext);
                     htmlDragDrop.DestroyIconPreview();
+                    panelResizeWidget.Dispose();
                     if (Blur != null)
                     {
                         Blur.Invoke(this);
@@ -553,23 +556,37 @@ namespace Lecture
                 };
                 rmlView.RequestFocus += (view) =>
                 {
-                    currentRmlEditor = view.Name;
+                    setCurrentRmlEditor(view.Name);
                 };
                 rmlView.addCustomStrategy(imageStrategy);
                 rmlView.addCustomStrategy(triggerStrategy);
                 mvcContext.Views.add(rmlView);
-                rmlEditors.Add(rmlView.Name, new RmlEditorViewInfo(rmlView));
+                rmlEditors.Add(rmlView.Name, new RmlEditorViewInfo(rmlView, panel));
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));
                 closeEditorWindowsCommand.addCommand(new CloseViewIfOpen(rmlView.Name));
                 if (currentRmlEditor == null)
                 {
-                    currentRmlEditor = rmlView.Name;
+                    setCurrentRmlEditor(rmlView.Name);
                 }
             }
 
             if (replaceExistingEditors)
             {
                 mvcContext.runAction("Editor/ShowEditors");
+            }
+        }
+
+        void setCurrentRmlEditor(String name)
+        {
+            currentRmlEditor = name;
+            if (currentRmlEditor != null)
+            {
+                var editor = rmlEditors[currentRmlEditor];
+                panelResizeWidget.setCurrentEditor(editor);
+            }
+            else
+            {
+                panelResizeWidget.setCurrentEditor(null);
             }
         }
 

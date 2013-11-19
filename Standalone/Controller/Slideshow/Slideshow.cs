@@ -15,6 +15,7 @@ namespace Medical
     public class Slideshow : Saveable
     {
         public const String SlideThumbName = "Thumb.png";
+        public const int BaseSlideScale = 1017;
 
         [DoNotSave]
         private List<Slide> slides = new List<Slide>();

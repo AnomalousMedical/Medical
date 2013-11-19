@@ -1,4 +1,6 @@
-﻿using Medical.GUI;
+﻿using Engine;
+using Medical;
+using Medical.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +15,17 @@ namespace Lecture
 
         }
 
-        public RmlEditorViewInfo(RawRmlWysiwygView view)
+        public RmlEditorViewInfo(RawRmlWysiwygView view, SlidePanel slidePanel)
         {
             this.View = view;
+            this.Panel = slidePanel;
         }
 
         public RawRmlWysiwygView View { get; set; }
 
         public RmlWysiwygComponent Component { get; set; }
+
+        public SlidePanel Panel { get; set; }
 
         public String getCurrentComponentText()
         {
@@ -41,6 +46,13 @@ namespace Lecture
                 return changed;
             }
             return false;
+        }
+
+        internal void resizePanel(int size)
+        {
+            float ratio = (float)ScaleHelper.Scaled(Slideshow.BaseSlideScale) / Component.ViewHost.Container.RigidParentWorkingSize.Height;
+            Panel.Size = (int)(size * ratio);
+            Component.ViewHost.Container.invalidate();
         }
     }
 }

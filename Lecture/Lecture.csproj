@@ -76,6 +76,7 @@
     <Compile Include="Controller\SlideImageManager.cs" />
     <Compile Include="Controller\TimelineEditorContext.cs" />
     <Compile Include="Controller\TimelineTypeController.cs" />
+    <Compile Include="GUI\PanelResizeWidget.cs" />
     <Compile Include="GUI\SlideImageComponent\SlideImageComponent.cs" />
     <Compile Include="GUI\SlideLayoutPicker\SlideLayoutPicker.cs" />
     <Compile Include="GUI\SlideLayoutPicker\SlideLayoutPickerTask.cs" />
