@@ -54,5 +54,13 @@ namespace Lecture
             Panel.Size = (int)(size * ratio);
             Component.ViewHost.Container.invalidate();
         }
+
+        internal void lostFocus()
+        {
+            if (Component != null)
+            {
+                Component.clearPreviewElement();
+            }
+        }
     }
 }

@@ -579,6 +579,10 @@ namespace Lecture
 
         void setCurrentRmlEditor(String name)
         {
+            if (currentRmlEditor != null)
+            {
+                rmlEditors[currentRmlEditor].lostFocus();
+            }
             currentRmlEditor = name;
             if (currentRmlEditor != null)
             {
