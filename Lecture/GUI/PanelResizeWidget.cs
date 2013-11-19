@@ -14,36 +14,55 @@ namespace Lecture
         Widget resizeWidget;
         RmlEditorViewInfo currentEditor;
         IntVector2 mousePressOffset;
+        int panelStartingSize;
+
+        public delegate void RecordResizeInfoDelegate(RmlEditorViewInfo view, int oldSize, int newSize);
+        public event RecordResizeInfoDelegate RecordResizeUndo;
 
         public PanelResizeWidget()
         {
             resizeWidget = Gui.Instance.createWidgetT("Widget", "Panel", 0, 0, ScaleHelper.Scaled(20), ScaleHelper.Scaled(20), Align.Default, "Overlapped", "Resize");
             resizeWidget.MouseButtonPressed += resizeWidget_MouseButtonPressed;
             resizeWidget.MouseDrag += resizeWidget_MouseDrag;
+            resizeWidget.MouseButtonReleased += resizeWidget_MouseButtonReleased;
             resizeWidget.Visible = false;
+        }
+
+        public void Dispose()
+        {
+            Gui.Instance.destroyWidget(resizeWidget);
         }
 
         void resizeWidget_MouseDrag(Widget source, EventArgs e)
         {
             MouseEventArgs me = (MouseEventArgs)e;
+            Widget editorWidget = currentEditor.Component.Widget;
             switch (currentEditor.View.ViewLocation)
             {
                 case ViewLocations.Left:
                     resizeWidget.setPosition(me.Position.x + mousePressOffset.x, resizeWidget.AbsoluteTop);
-                    currentEditor.resizePanel(resizeWidget.AbsoluteLeft + resizeWidget.Width / 2 - currentEditor.Component.Widget.AbsoluteLeft);
+                    currentEditor.resizePanel(resizeWidget.AbsoluteLeft + resizeWidget.Width / 2 - editorWidget.AbsoluteLeft);
                     break;
                 case ViewLocations.Right:
                     resizeWidget.setPosition(me.Position.x + mousePressOffset.x, resizeWidget.AbsoluteTop);
-                    currentEditor.resizePanel(currentEditor.Component.Widget.AbsoluteLeft + currentEditor.Component.Widget.Width - (resizeWidget.AbsoluteLeft + resizeWidget.Width / 2));
+                    currentEditor.resizePanel(editorWidget.AbsoluteLeft + editorWidget.Width - (resizeWidget.AbsoluteLeft + resizeWidget.Width / 2));
                     break;
                 case ViewLocations.Top:
                     resizeWidget.setPosition(resizeWidget.AbsoluteLeft, me.Position.y + mousePressOffset.y);
-                    currentEditor.resizePanel(resizeWidget.AbsoluteTop + resizeWidget.Height / 2 - currentEditor.Component.Widget.AbsoluteTop);
+                    currentEditor.resizePanel(resizeWidget.AbsoluteTop + resizeWidget.Height / 2 - editorWidget.AbsoluteTop);
                     break;
                 case ViewLocations.Bottom:
                     resizeWidget.setPosition(resizeWidget.AbsoluteLeft, me.Position.y + mousePressOffset.y);
-                    currentEditor.resizePanel(currentEditor.Component.Widget.AbsoluteTop + currentEditor.Component.Widget.Height - (resizeWidget.AbsoluteTop + resizeWidget.Height / 2));
+                    currentEditor.resizePanel(editorWidget.AbsoluteTop + editorWidget.Height - (resizeWidget.AbsoluteTop + resizeWidget.Height / 2));
                     break;
+            }
+        }
+
+        void resizeWidget_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            if (RecordResizeUndo != null)
+            {
+                RecordResizeUndo.Invoke(currentEditor, panelStartingSize, currentEditor.Panel.Size);
             }
         }
 
@@ -53,11 +72,7 @@ namespace Lecture
             mousePressOffset = me.Position;
             mousePressOffset.x = resizeWidget.AbsoluteLeft - mousePressOffset.x;
             mousePressOffset.y = resizeWidget.AbsoluteTop - mousePressOffset.y;
-        }
-
-        public void Dispose()
-        {
-            Gui.Instance.destroyWidget(resizeWidget);
+            panelStartingSize = currentEditor.Panel.Size;
         }
 
         public void setCurrentEditor(RmlEditorViewInfo editor)
@@ -66,7 +81,7 @@ namespace Lecture
             positionResizeWidget();
         }
 
-        private void positionResizeWidget()
+        public void positionResizeWidget()
         {
             if (currentEditor != null && currentEditor.Component != null)
             {
