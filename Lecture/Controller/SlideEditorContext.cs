@@ -32,7 +32,7 @@ namespace Lecture
             Redo
         }
 
-        private Dictionary<String, Pair<RawRmlWysiwygView, RmlWysiwygComponent>> rmlEditors = new Dictionary<string, Pair<RawRmlWysiwygView, RmlWysiwygComponent>>();
+        private Dictionary<String, RmlEditorViewInfo> rmlEditors = new Dictionary<string, RmlEditorViewInfo>();
         private String currentRmlEditor;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
@@ -100,22 +100,22 @@ namespace Lecture
                 {
                     foreach (var editor in rmlEditors.Values)
                     {
-                        editor.Second.setPreviewElement(position, item.Markup, item.PreviewTagType);
+                        editor.Component.setPreviewElement(position, item.Markup, item.PreviewTagType);
                     }
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
                     foreach (var editor in rmlEditors.Values)
                     {
-                        if (editor.Second.insertRml(item.Markup, position))
+                        if (editor.Component.insertRml(item.Markup, position))
                         {
-                            currentRmlEditor = editor.First.Name;
+                            currentRmlEditor = editor.View.Name;
                         }
                     }
                 };
             htmlDragDrop.ItemActivated += (item) =>
                 {
-                    rmlEditors[currentRmlEditor].Second.insertRml(item.Markup);
+                    rmlEditors[currentRmlEditor].Component.insertRml(item.Markup);
                 };
 
             taskbar = new SlideTaskbarView("InfoBar", slideName);
@@ -201,7 +201,7 @@ namespace Lecture
                     {
                         String editorName = panel.createViewName("RmlView");
                         var editor = rmlEditors[editorName];
-                        editor.First.Rml = panel.Rml = getCurrentText(editor.Second);
+                        editor.View.Rml = panel.Rml = editor.getCurrentComponentText();
                     }
                     slideLayoutPicker.destroyLayoutPicker();
                     GlobalContextEventHandler.disableEventContext(eventContext);
@@ -383,11 +383,11 @@ namespace Lecture
 
         public void setWysiwygRml(String panelName, String rml, bool keepScrollPosition)
         {
-            Pair<RawRmlWysiwygView, RmlWysiwygComponent> editor;
-            if (rmlEditors.TryGetValue(panelName, out editor) && editor.Second != null)
+            RmlEditorViewInfo editor;
+            if (rmlEditors.TryGetValue(panelName, out editor) && editor.Component != null)
             {
-                editor.Second.cancelAndHideEditor();
-                editor.Second.setRml(rml, keepScrollPosition, true);
+                editor.Component.cancelAndHideEditor();
+                editor.Component.setRml(rml, keepScrollPosition, true);
             }
         }
 
@@ -424,15 +424,6 @@ namespace Lecture
             }
         }
 
-        private String getCurrentText(RmlWysiwygComponent rmlComponent)
-        {
-            if (rmlComponent != null)
-            {
-                return rmlComponent.CurrentRml;
-            }
-            return null;
-        }
-
         private void saveAll()
         {
             commitText();
@@ -443,10 +434,10 @@ namespace Lecture
         {
             foreach (var editor in rmlEditors.Values)
             {
-                if (editor.Second != null)
+                if (editor.Component != null)
                 {
-                    editor.Second.aboutToSaveRml();
-                    if (editor.Second.ChangesMade)
+                    editor.Component.aboutToSaveRml();
+                    if (editor.Component.ChangesMade)
                     {
                         updateThumbnail();
                     }
@@ -465,14 +456,14 @@ namespace Lecture
                 {
                     foreach (var editor in rmlEditors.Values)
                     {
-                        if (editor.Second != null)
+                        if (editor.Component != null)
                         {
-                            IntVector2 location = editor.Second.ViewHost.Container.Location - editor.Second.ViewHost.Container.RigidParent.Location;
-                            IntSize2 size = editor.Second.ViewHost.Container.WorkingSize;
-                            float sizeRatio = (float)SlideImageManager.ThumbWidth / editor.Second.ViewHost.Container.RigidParentWorkingSize.Width;
+                            IntVector2 location = editor.Component.ViewHost.Container.Location - editor.Component.ViewHost.Container.RigidParent.Location;
+                            IntSize2 size = editor.Component.ViewHost.Container.WorkingSize;
+                            float sizeRatio = (float)SlideImageManager.ThumbWidth / editor.Component.ViewHost.Container.RigidParentWorkingSize.Width;
 
                             Rectangle panelThumbPos = new Rectangle((int)Math.Round(location.x * sizeRatio), (int)Math.Round(location.y * sizeRatio), (int)Math.Round(size.Width * sizeRatio), (int)Math.Round(size.Height * sizeRatio));
-                            switch (editor.First.ViewLocation)
+                            switch (editor.View.ViewLocation)
                             {
                                 case ViewLocations.Left:
                                     sceneThumbPosition.x = panelThumbPos.Width;
@@ -489,7 +480,7 @@ namespace Lecture
                                     sceneThumbSize.Height -= panelThumbPos.Height;
                                     break;
                             }
-                            editor.Second.writeToGraphics(g, panelThumbPos);
+                            editor.Component.writeToGraphics(g, panelThumbPos);
                         }
                     }
 
@@ -529,10 +520,10 @@ namespace Lecture
             showEditorWindowsCommand.clear();
             foreach (var editor in rmlEditors.Values)
             {
-                mvcContext.Views.remove(editor.First);
-                editor.Second.ElementDraggedOffDocument -= RmlWysiwyg_ElementDraggedOffDocument;
-                editor.Second.ElementDroppedOffDocument -= RmlWysiwyg_ElementDroppedOffDocument;
-                editor.Second.ElementReturnedToDocument -= RmlWysiwyg_ElementReturnedToDocument;
+                mvcContext.Views.remove(editor.View);
+                editor.Component.ElementDraggedOffDocument -= RmlWysiwyg_ElementDraggedOffDocument;
+                editor.Component.ElementDroppedOffDocument -= RmlWysiwyg_ElementDroppedOffDocument;
+                editor.Component.ElementReturnedToDocument -= RmlWysiwyg_ElementReturnedToDocument;
             }
             rmlEditors.Clear();
 
@@ -549,7 +540,7 @@ namespace Lecture
                 instanceLayout.addView(rmlView);
                 rmlView.ComponentCreated += (view, component) =>
                 {
-                    rmlEditors[view.Name].Second = component;
+                    rmlEditors[view.Name].Component = component;
                     component.RmlEdited += rmlEditor =>
                     {
                         panel.Rml = rmlEditor.CurrentRml;
@@ -569,7 +560,7 @@ namespace Lecture
                 rmlView.addCustomStrategy(imageStrategy);
                 rmlView.addCustomStrategy(triggerStrategy);
                 mvcContext.Views.add(rmlView);
-                rmlEditors.Add(rmlView.Name, new Pair<RawRmlWysiwygView, RmlWysiwygComponent>(rmlView, null));
+                rmlEditors.Add(rmlView.Name, new RmlEditorViewInfo(rmlView));
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));
                 closeEditorWindowsCommand.addCommand(new CloseViewIfOpen(rmlView.Name));
                 if (currentRmlEditor == null)
@@ -588,9 +579,9 @@ namespace Lecture
         {
             foreach (var editor in rmlEditors.Values)
             {
-                if (editor.Second != sender)
+                if (editor.Component != sender)
                 {
-                    editor.Second.setPreviewElement(position, innerRmlHint, previewElementTagType);
+                    editor.Component.setPreviewElement(position, innerRmlHint, previewElementTagType);
                 }
             }
         }
@@ -599,9 +590,9 @@ namespace Lecture
         {
             foreach (var editor in rmlEditors.Values)
             {
-                if (editor.Second != sender)
+                if (editor.Component != sender)
                 {
-                    editor.Second.setPreviewElement(position, innerRmlHint, previewElementTagType);
+                    editor.Component.setPreviewElement(position, innerRmlHint, previewElementTagType);
                 }
             }
         }
@@ -610,9 +601,9 @@ namespace Lecture
         {
             foreach (var editor in rmlEditors.Values)
             {
-                if (editor.Second != sender)
+                if (editor.Component != sender)
                 {
-                    editor.Second.insertRml(innerRmlHint, position);
+                    editor.Component.insertRml(innerRmlHint, position);
                 }
             }
         }
