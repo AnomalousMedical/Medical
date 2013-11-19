@@ -256,6 +256,7 @@ namespace Lecture
 
         private void refreshPanelPreviews(RunCommandsAction showEditorWindowsCommand)
         {
+            SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy();
             foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
             {
                 String editorViewName = panel.createViewName("RmlView");
@@ -265,10 +266,7 @@ namespace Lecture
                 rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
-                rmlView.ComponentCreated += (view, component) =>
-                {
-                    
-                };
+                instanceLayout.addView(rmlView);
                 mvcContext.Views.add(rmlView);
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));
             }
