@@ -77,11 +77,19 @@ namespace Lecture
 
         public void setCurrentEditor(RmlEditorViewInfo editor)
         {
+            if (currentEditor != null && currentEditor.Component != null)
+            {
+                currentEditor.Component.ViewHost.ViewResized -= ViewHost_ViewResized;
+            }
             currentEditor = editor;
             positionResizeWidget();
+            if (currentEditor != null && currentEditor.Component != null)
+            {
+                currentEditor.Component.ViewHost.ViewResized += ViewHost_ViewResized;
+            }
         }
 
-        public void positionResizeWidget()
+        private void positionResizeWidget()
         {
             if (currentEditor != null && currentEditor.Component != null)
             {
@@ -122,6 +130,11 @@ namespace Lecture
             {
                 resizeWidget.Visible = false;
             }
+        }
+
+        void ViewHost_ViewResized(ViewHost viewHost)
+        {
+            positionResizeWidget();
         }
     }
 }

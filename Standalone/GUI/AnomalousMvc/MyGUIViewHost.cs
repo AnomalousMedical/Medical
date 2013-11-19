@@ -17,6 +17,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public event Action<ViewHost> ViewClosing;
         public event Action<ViewHost> ViewOpening;
+        public event Action<ViewHost> ViewResized;
 
         public MyGUIViewHost(AnomalousMvcContext context, MyGUIView view)
         {
@@ -137,6 +138,10 @@ namespace Medical.GUI.AnomalousMvc
         void layoutContainer_LayoutChanged()
         {
             component.topLevelResized();
+            if (ViewResized != null)
+            {
+                ViewResized.Invoke(this);
+            }
         }
 
         void layoutContainer_AnimatedResizeCompleted()

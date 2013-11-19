@@ -663,7 +663,6 @@ namespace Lecture
                     {
                         editor.Component.ViewHost.Container.invalidate();
                     }
-                    panelResizeWidget.positionResizeWidget();
                 };
 
             undoBuffer.pushAndSkip(new TwoWayDelegateCommand<int, int>(changeSize, newSize, changeSize, oldSize));
