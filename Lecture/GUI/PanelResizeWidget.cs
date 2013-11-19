@@ -21,7 +21,7 @@ namespace Lecture
 
         public PanelResizeWidget()
         {
-            resizeWidget = Gui.Instance.createWidgetT("Widget", "Panel", 0, 0, ScaleHelper.Scaled(20), ScaleHelper.Scaled(20), Align.Default, "Overlapped", "Resize");
+            resizeWidget = Gui.Instance.createWidgetT("Widget", "ResizeHandle", 0, 0, ScaleHelper.Scaled(20), ScaleHelper.Scaled(20), Align.Default, "Overlapped", "Resize");
             resizeWidget.MouseButtonPressed += resizeWidget_MouseButtonPressed;
             resizeWidget.MouseDrag += resizeWidget_MouseDrag;
             resizeWidget.MouseButtonReleased += resizeWidget_MouseButtonReleased;
@@ -30,6 +30,7 @@ namespace Lecture
 
         public void Dispose()
         {
+            setCurrentEditor(null);
             Gui.Instance.destroyWidget(resizeWidget);
         }
 
