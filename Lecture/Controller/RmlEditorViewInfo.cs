@@ -23,7 +23,26 @@ namespace Lecture
 
         public RawRmlWysiwygView View { get; set; }
 
-        public RmlWysiwygComponent Component { get; set; }
+        private RmlWysiwygComponent component;
+        public RmlWysiwygComponent Component
+        {
+            get
+            {
+                return component;
+            }
+            set
+            {
+                if (component != null)
+                {
+                    component.Disposed -= component_Disposed;
+                }
+                component = value;
+                if (component != null)
+                {
+                    component.Disposed += component_Disposed;
+                }
+            }
+        }
 
         public SlidePanel Panel { get; set; }
 
@@ -61,6 +80,12 @@ namespace Lecture
             {
                 Component.clearPreviewElement();
             }
+        }
+
+        void component_Disposed()
+        {
+            component.Disposed -= component_Disposed;
+            component = null;
         }
     }
 }

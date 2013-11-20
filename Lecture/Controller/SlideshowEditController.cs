@@ -180,13 +180,26 @@ namespace Lecture
                 {
                     if (slideEditorContext == obj)
                     {
+                        slideEditorContext.RecordResizeUndo -= slideEditorContext_RecordResizeUndo;
                         slideEditorContext = null;
                     }
                 };
+                slideEditorContext.RecordResizeUndo += slideEditorContext_RecordResizeUndo;
                 editorController.runEditorContext(slideEditorContext.MvcContext);
                 openedEditContext = true;
             }
             return openedEditContext;
+        }
+
+        void slideEditorContext_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)
+        {
+            String panelName = view.View.Name;
+            Action<int> changeSize = (size) =>
+                {
+                    slideEditorContext.resizePanel(panelName, size);
+                };
+
+            undoBuffer.pushAndSkip(new TwoWayDelegateCommand<int, int>(changeSize, newSize, changeSize, oldSize));
         }
 
         public void editTimeline(Slide slide, String name = "Timeline.tl")

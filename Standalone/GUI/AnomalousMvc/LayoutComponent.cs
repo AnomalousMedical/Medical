@@ -13,6 +13,8 @@ namespace Medical.GUI.AnomalousMvc
         private Layout layout;
         protected Widget widget;
 
+        public event Action Disposed;
+
         public LayoutComponent(String layoutFile, MyGUIViewHost viewHost)
         {
             layout = LayoutManager.Instance.loadLayout(layoutFile);
@@ -22,6 +24,10 @@ namespace Medical.GUI.AnomalousMvc
 
         public virtual void Dispose()
         {
+            if (Disposed != null)
+            {
+                Disposed.Invoke();
+            }
             LayoutManager.Instance.unloadLayout(layout);
         }
 

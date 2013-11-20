@@ -70,7 +70,6 @@ namespace Lecture
             this.wysiwygUndoCallback = wysiwygUndoCallback;
             this.editorController = editorController;
             panelResizeWidget = new PanelResizeWidget();
-            panelResizeWidget.RecordResizeUndo += panelResizeWidget_RecordResizeUndo;
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
             triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a");
@@ -669,19 +668,26 @@ namespace Lecture
             editorController.editTimeline(slide, action.TimelineFileName);
         }
 
-        void panelResizeWidget_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)
+        public event PanelResizeWidget.RecordResizeInfoDelegate RecordResizeUndo
         {
-            Action<int> changeSize = (size) =>
-                {
-                    var editor = rmlEditors[view.View.Name];
-                    editor.Panel.Size = size;
-                    if (editor.Component != null)
-                    {
-                        editor.Component.ViewHost.Container.invalidate();
-                    }
-                };
+            add
+            {
+                panelResizeWidget.RecordResizeUndo += value;
+            }
+            remove
+            {
+                panelResizeWidget.RecordResizeUndo -= value;
+            }
+        }
 
-            undoBuffer.pushAndSkip(new TwoWayDelegateCommand<int, int>(changeSize, newSize, changeSize, oldSize));
+        internal void resizePanel(string panelName, int size)
+        {
+            var editor = rmlEditors[panelName];
+            editor.Panel.Size = size;
+            if (editor.Component != null)
+            {
+                editor.Component.ViewHost.Container.invalidate();
+            }
         }
     }
 }
