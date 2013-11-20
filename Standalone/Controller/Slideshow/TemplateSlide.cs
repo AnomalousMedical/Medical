@@ -11,6 +11,17 @@ namespace Medical
     /// </summary>
     public class TemplateSlide : Slide
     {
+        public TemplateSlide()
+        {
+
+        }
+
+        public TemplateSlide(SlideLayoutStrategy layoutStrategy)
+            :base(layoutStrategy)
+        {
+
+        }
+
         protected override void customizeController(MvcController controller, RunCommandsAction showCommand)
         {
             

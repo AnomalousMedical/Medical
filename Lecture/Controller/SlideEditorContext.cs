@@ -338,7 +338,7 @@ namespace Lecture
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
-            presetSlide = new TemplateSlide()
+            presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
             {
                 Name = "50/50",
                 IconName = CommonResources.NoIcon
@@ -346,14 +346,27 @@ namespace Lecture
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 960,
+                Size = 50,
                 ViewLocation = ViewLocations.Left,
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 960,
+                Size = 50,
                 ViewLocation = ViewLocations.Right,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
+            {
+                Name = "Full Screen",
+                IconName = CommonResources.NoIcon,
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 100,
+                ViewLocation = ViewLocations.Left,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
         }
@@ -486,25 +499,28 @@ namespace Lecture
                         }
                     }
 
-                    ImageRendererProperties imageProperties = new ImageRendererProperties();
-                    imageProperties.Width = sceneThumbSize.Width;
-                    imageProperties.Height = sceneThumbSize.Height;
-                    imageProperties.AntiAliasingMode = 2;
-                    imageProperties.TransparentBackground = false;
-                    imageProperties.UseActiveViewportLocation = false;
-                    imageProperties.OverrideLayers = true;
-                    imageProperties.ShowBackground = true;
-                    imageProperties.ShowWatermark = false;
-                    imageProperties.ShowUIUpdates = false;
-                    imageProperties.LayerState = slide.Layers;
-                    imageProperties.CameraPosition = slide.CameraPosition.Translation;
-                    imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
-                    imageProperties.UseIncludePoint = slide.CameraPosition.UseIncludePoint;
-                    imageProperties.IncludePoint = slide.CameraPosition.IncludePoint;
-
-                    using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
+                    if (sceneThumbSize.Width > 0 && sceneThumbSize.Height > 0)
                     {
-                        g.DrawImage(sceneThumb, sceneThumbPosition.x, sceneThumbPosition.y);
+                        ImageRendererProperties imageProperties = new ImageRendererProperties();
+                        imageProperties.Width = sceneThumbSize.Width;
+                        imageProperties.Height = sceneThumbSize.Height;
+                        imageProperties.AntiAliasingMode = 2;
+                        imageProperties.TransparentBackground = false;
+                        imageProperties.UseActiveViewportLocation = false;
+                        imageProperties.OverrideLayers = true;
+                        imageProperties.ShowBackground = true;
+                        imageProperties.ShowWatermark = false;
+                        imageProperties.ShowUIUpdates = false;
+                        imageProperties.LayerState = slide.Layers;
+                        imageProperties.CameraPosition = slide.CameraPosition.Translation;
+                        imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
+                        imageProperties.UseIncludePoint = slide.CameraPosition.UseIncludePoint;
+                        imageProperties.IncludePoint = slide.CameraPosition.IncludePoint;
+
+                        using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
+                        {
+                            g.DrawImage(sceneThumb, sceneThumbPosition.x, sceneThumbPosition.y);
+                        }
                     }
                 }
                 

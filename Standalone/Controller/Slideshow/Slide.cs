@@ -24,9 +24,15 @@ namespace Medical
         private Dictionary<String, SlideAction> triggerActions = new Dictionary<string, SlideAction>();
         
         public Slide()
+            : this(new BorderSlideLayoutStrategy())
+        {
+            
+        }
+
+        public Slide(SlideLayoutStrategy layoutStrategy)
         {
             id = Guid.NewGuid().ToString("D");
-            layoutStrategy = new BorderSlideLayoutStrategy();
+            this.layoutStrategy = layoutStrategy;
         }
 
         public void setupContext(AnomalousMvcContext context, String name, bool allowPrevious, bool allowNext, ResourceProvider resourceProvider)
