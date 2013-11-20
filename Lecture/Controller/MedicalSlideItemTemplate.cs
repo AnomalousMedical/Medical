@@ -34,7 +34,7 @@ namespace Lecture
             {
                 Rml = defaultSlide,
                 ViewLocation = ViewLocations.Left,
-                Size = 30,
+                Size = 480,
             });
             if (SlideCreated != null)
             {
