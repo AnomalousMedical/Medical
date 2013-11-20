@@ -1,4 +1,5 @@
-﻿using libRocketPlugin;
+﻿using Engine;
+using libRocketPlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,13 @@ namespace Medical.GUI
         public bool AllowDragAndDrop { get; set; }
 
         public String PreviewIconName { get; set; }
+
+        public bool Resizable { get; set; }
+
+        public virtual void changeSize(Element element, IntSize2 newSize)
+        {
+
+        }
 
         public virtual RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {

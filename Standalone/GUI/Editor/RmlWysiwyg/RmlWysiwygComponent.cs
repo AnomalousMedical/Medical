@@ -99,7 +99,7 @@ namespace Medical.GUI
             rmlImage.EventScrollGesture += new MyGUIEvent(rmlImage_EventScrollGesture);
             imageHeight = rmlImage.Height;
 
-            selectedElementManager = new SelectedElementManager(rmlImage.findWidget("SelectionWidget"));
+            selectedElementManager = new SelectedElementManager(rmlImage);
             draggingElementManager = new DraggingElementManager(this);
 
             foreach (var elementStrategy in rmlWysiwygViewInterface.CustomElementStrategies)
@@ -235,6 +235,7 @@ namespace Medical.GUI
                 updateUndoStatus(undoRml);
 
                 //Clear selection for drag and drop
+                selectedElementManager.ElementStrategy = null;
                 selectedElementManager.SelectedElement = null;
                 selectedElementManager.HighlightElement = null;
             }
@@ -357,6 +358,7 @@ namespace Medical.GUI
                             previewElement.showPreviewElement(document, innerRmlHint, toSelect, null, previewElementTagType, insertBefore);
                             selectedElementManager.HighlightElement = previewElement.HighlightPreviewElement;
                         }
+                        selectedElementManager.ElementStrategy = null;
                     }
                     else
                     {
@@ -721,6 +723,7 @@ namespace Medical.GUI
             currentEditor = editor;
             selectedElementManager.SelectedElement = element;
             selectedElementManager.HighlightElement = element;
+            selectedElementManager.ElementStrategy = strategy;
         }
 
         private void rmlModified()
