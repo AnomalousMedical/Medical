@@ -28,7 +28,8 @@ namespace Lecture.GUI
         Widget imagePanel;
         Widget loadingLabel;
         Int32NumericEdit sizeEdit;
-        IntSize2 currentImageSize;
+        IntSize2 realImageSize;
+        IntSize2 desiredImageSize;
 
         const bool Key = false;
         private bool NotDisposed = true;
@@ -92,6 +93,18 @@ namespace Lecture.GUI
             keyTimer.Dispose();
             base.Dispose();
             imageAtlas.Dispose();
+        }
+
+        public IntSize2 DesiredImageSize
+        {
+            get
+            {
+                return desiredImageSize;
+            }
+            set
+            {
+                desiredImageSize = value;
+            }
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
@@ -168,7 +181,7 @@ namespace Lecture.GUI
                         width = (int)((float)imagePanel.Height * aspect);
                         left = (imagePanel.Width - width) / 2;
                     }
-                    currentImageSize = new IntSize2(image.Width, image.Height);
+                    desiredImageSize = realImageSize = new IntSize2(image.Width, image.Height);
                     ThreadManager.invoke(() =>
                     {
                         try
@@ -209,9 +222,8 @@ namespace Lecture.GUI
         internal bool applyToElement(Element element)
         {
             element.SetAttribute("src", imageName);
-            float scale = sizeEdit.Value / 100f;
-            element.SetAttribute("width", (currentImageSize.Width * scale).ToString());
-            element.SetAttribute("height", (currentImageSize.Height * scale).ToString());
+            element.SetAttribute("width", desiredImageSize.Width.ToString());
+            element.SetAttribute("height", desiredImageSize.Height.ToString());
             element.SetAttribute("scale", "true");
             return true;
         }
@@ -224,6 +236,17 @@ namespace Lecture.GUI
         }
 
         void keyTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            fireApplyChanges();
+        }
+
+        public void changeSize(IntSize2 newSize)
+        {
+            desiredImageSize = newSize;
+            this.fireChangesMade();
+        }
+
+        public void applyChanges()
         {
             fireApplyChanges();
         }

@@ -27,13 +27,13 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             }
             textEditor = new ElementTextEditor(rml);
             attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
-            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
+            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(attributeEditor);
             return editor;
         }
 
-        private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = textEditor.Text;
             element.InnerRml = text.Replace("\n", "<br />");
@@ -41,7 +41,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             return true;
         }
 
-        private bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = element.InnerRml;
             if (String.IsNullOrEmpty(text))

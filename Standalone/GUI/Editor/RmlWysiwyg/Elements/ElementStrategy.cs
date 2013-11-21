@@ -24,7 +24,12 @@ namespace Medical.GUI
 
         public bool Resizable { get; set; }
 
-        public virtual void changeSize(Element element, IntSize2 newSize)
+        public virtual void changeSizePreview(Element element, IntSize2 newSize)
+        {
+
+        }
+
+        public virtual void applySizeChange(Element element)
         {
 
         }
@@ -32,6 +37,16 @@ namespace Medical.GUI
         public virtual RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
             return null;
+        }
+
+        public virtual bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        {
+            return false;
+        }
+
+        public virtual bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        {
+            return false;
         }
     }
 }

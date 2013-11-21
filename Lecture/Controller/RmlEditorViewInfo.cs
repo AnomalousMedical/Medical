@@ -78,6 +78,7 @@ namespace Lecture
         {
             if (Component != null)
             {
+                component.cancelAndHideEditor();
                 Component.clearPreviewElement();
             }
         }

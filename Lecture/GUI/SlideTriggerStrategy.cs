@@ -61,7 +61,7 @@ namespace Lecture.GUI
 
             EditInterface editInterface = setupEditInterface(editingAction, slide);
             actionEditor = new EditInterfaceEditor("Action", editInterface, uiCallback, browserProvider);
-            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
+            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(actionEditor);
             return editor;
@@ -93,7 +93,7 @@ namespace Lecture.GUI
             actionEditor.alertChangesMade();
         }
 
-        private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = textEditor.Text;
             element.InnerRml = text.Replace("\n", "<br />");
@@ -111,7 +111,7 @@ namespace Lecture.GUI
             return true;
         }
 
-        private bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = element.InnerRml;
             if (String.IsNullOrEmpty(text))

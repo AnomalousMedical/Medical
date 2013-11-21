@@ -1,4 +1,5 @@
-﻿using libRocketPlugin;
+﻿using Engine;
+using libRocketPlugin;
 using Medical;
 using Medical.GUI;
 using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
@@ -20,23 +21,36 @@ namespace Lecture.GUI
         {
             this.editorResourceProvider = editorResourceProvider;
             this.subdirectory = subdirectory;
+            Resizable = true;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
             float width = element.ClientWidth;
             slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"), width);
-            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges, delete);
+            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(slideImageEditor);
             return editor;
         }
 
-        private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             return slideImageEditor.applyToElement(element);
         }
 
-        private bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override void changeSizePreview(Element element, IntSize2 newSize)
+        {
+            slideImageEditor.changeSize(newSize);
+            element.SetAttribute("width", newSize.Width.ToString());
+            element.SetAttribute("height", newSize.Height.ToString());
+        }
+
+        public override void applySizeChange(Element element)
+        {
+            slideImageEditor.applyChanges();
+        }
+
+        public override bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String src = element.GetAttributeString("src");
             if (String.IsNullOrEmpty(src))

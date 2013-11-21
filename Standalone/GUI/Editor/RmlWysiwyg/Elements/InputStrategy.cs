@@ -22,13 +22,13 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         {
             textEditor = new ElementTextEditor(element.InnerRml);
             attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
-            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, applyChanges);
+            RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(attributeEditor);
             return editor;
         }
 
-        private bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = textEditor.Text;
             element.InnerRml = textEditor.Text;

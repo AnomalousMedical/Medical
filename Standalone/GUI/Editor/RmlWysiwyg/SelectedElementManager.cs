@@ -28,12 +28,17 @@ namespace Medical.GUI
             widthAdjust = parentWidget.findWidget("WidthAdjust");
             widthAdjust.MouseDrag += widthAdjust_MouseDrag;
             widthAdjust.MouseButtonPressed += dragHandle_Pressed;
+            widthAdjust.MouseButtonReleased += dragHandle_Released;
+            
             heightAdjust = parentWidget.findWidget("HeightAdjust");
             heightAdjust.MouseDrag += heightAdjust_MouseDrag;
             heightAdjust.MouseButtonPressed += dragHandle_Pressed;
+            heightAdjust.MouseButtonReleased += dragHandle_Released;
+
             bothAdjust = parentWidget.findWidget("BothAdjust");
             bothAdjust.MouseDrag += bothAdjust_MouseDrag;
             bothAdjust.MouseButtonPressed += dragHandle_Pressed;
+            bothAdjust.MouseButtonReleased += dragHandle_Released;
         }
 
         public void clearSelectedAndHighlightedElement()
@@ -132,7 +137,7 @@ namespace Medical.GUI
                 float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
                 newSize = newSize / ratio;
 
-                elementStrategy.changeSize(selectedElement, (IntSize2)newSize);
+                elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
                 updateHighlightPosition();
             }
         }
@@ -147,7 +152,7 @@ namespace Medical.GUI
                 float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
                 newSize = newSize / ratio;
 
-                elementStrategy.changeSize(selectedElement, (IntSize2)newSize);
+                elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
                 updateHighlightPosition();
             }
         }
@@ -162,7 +167,7 @@ namespace Medical.GUI
                 float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
                 newSize = newSize / ratio;
 
-                elementStrategy.changeSize(selectedElement, (IntSize2)newSize);
+                elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
                 updateHighlightPosition();
             }
         }
@@ -174,6 +179,15 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 mouseStartPosition = me.Position;
                 elementStartSize = new Size2(selectedElement.OffsetWidth, selectedElement.OffsetHeight);
+            }
+        }
+
+        void dragHandle_Released(Widget source, EventArgs e)
+        {
+            if (elementStrategy != null && selectedElement != null)
+            {
+                elementStrategy.applySizeChange(selectedElement);
+                updateHighlightPosition();
             }
         }
     }

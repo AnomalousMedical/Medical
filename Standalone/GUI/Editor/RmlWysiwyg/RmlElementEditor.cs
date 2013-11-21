@@ -26,9 +26,9 @@ namespace Medical.GUI
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static RmlElementEditor openEditor(Element element, int left, int top, ModifyDocumentDelegate applyChangesCb, ModifyDocumentDelegate deleteElementCheckCb = null)
+        public static RmlElementEditor openEditor(Element element, int left, int top, ElementStrategy elementStrategy)
         {
-            RmlElementEditor editor = new RmlElementEditor(element, applyChangesCb, deleteElementCheckCb);
+            RmlElementEditor editor = new RmlElementEditor(element, elementStrategy);
             editor.show(left, top);
             editor.Hidden += (source, e) =>
             {
@@ -41,9 +41,8 @@ namespace Medical.GUI
         public event Action<Element> MoveElementDown;
         public event Action<Element> DeleteElement;
         public event Action<Element> ChangesMade;
-        
-        private ModifyDocumentDelegate applyChangesCb;
-        private ModifyDocumentDelegate deleteElementCheckCb;
+
+        private ElementStrategy elementStrategy;
 
         private bool hasChanges;
 
@@ -51,12 +50,11 @@ namespace Medical.GUI
         private TabControl tabs;
         private List<ElementEditorComponent> editorComponents = new List<ElementEditorComponent>();
 
-        protected RmlElementEditor(Element element, ModifyDocumentDelegate applyChangesCb, ModifyDocumentDelegate deleteElementCheckCb)
+        protected RmlElementEditor(Element element, ElementStrategy elementStrategy)
             : base("Medical.GUI.Editor.RmlWysiwyg.RmlElementEditor.layout")
         {
             this.element = element;
-            this.applyChangesCb = applyChangesCb;
-            this.deleteElementCheckCb = deleteElementCheckCb;
+            this.elementStrategy = elementStrategy;
             this.Hiding += RmlElementEditor_Hiding;
 
             tabs = (TabControl)widget.findWidget("Tabs");
@@ -72,6 +70,7 @@ namespace Medical.GUI
 
             hasChanges = false;
             SmoothShow = false;
+            KeepOpen = true;
         }
 
         public override void Dispose()
@@ -94,7 +93,7 @@ namespace Medical.GUI
             if (hasChanges)
             {
                 hasChanges = false;
-                return applyChangesCb.Invoke(element, this, component);
+                return elementStrategy.applyChanges(element, this, component);
             }
             return false;
         }
@@ -106,11 +105,7 @@ namespace Medical.GUI
         /// <returns>True if changes are made.</returns>
         public bool deleteIfNeeded(RmlWysiwygComponent component)
         {
-            if (deleteElementCheckCb != null)
-            {
-                return deleteElementCheckCb.Invoke(element, this, component);
-            }
-            return false;
+            return elementStrategy.delete(element, this, component);
         }
 
         /// <summary>
