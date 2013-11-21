@@ -31,6 +31,7 @@ namespace Lecture.GUI
         Int32NumericEdit widthEdit;
         Int32NumericEdit heightEdit;
         IntSize2 realImageSize;
+        CheckButton keepAspectRatio;
 
         const bool Key = false;
         private bool NotDisposed = true;
@@ -67,6 +68,8 @@ namespace Lecture.GUI
                 Value = 100
             };
             heightEdit.ValueChanged += sizeEdit_ValueChanged;
+
+            keepAspectRatio = new CheckButton((Button)widget.findWidget("KeepAspectRatio"));
 
             keyTimer = new Timer(UPDATE_DELAY);
             keyTimer.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
@@ -251,17 +254,15 @@ namespace Lecture.GUI
 
         public void changeSize(IntSize2 newSize, ResizeType resizeType, IntSize2 bounds)
         {
-            if (true)
+            if (keepAspectRatio.Checked)
             {
                 switch (resizeType)
                 {
                     case ResizeType.Width:
                         computeWidthLimitRatio(ref newSize);
-                        guardWidth(ref newSize, bounds);
                         break;
                     case ResizeType.Height:
                         computeHeightLimitRatio(ref newSize);
-                        guardWidth(ref newSize, bounds);
                         break;
                     case ResizeType.Both:
                         if (newSize.Width < newSize.Height)
@@ -272,9 +273,14 @@ namespace Lecture.GUI
                         {
                             computeHeightLimitRatio(ref newSize);
                         }
-                        guardWidth(ref newSize, bounds);
                         break;
                 }
+                guardWidth(ref newSize, bounds);
+                computeWidthLimitRatio(ref newSize);
+            }
+            else
+            {
+                guardWidth(ref newSize, bounds);
             }
             widthEdit.Value = newSize.Width;
             heightEdit.Value = newSize.Height;
@@ -303,12 +309,10 @@ namespace Lecture.GUI
             if (newSize.Width > bounds.Width)
             {
                 newSize.Width = bounds.Width;
-                computeWidthLimitRatio(ref newSize);
             }
             else if (newSize.Width < minSize)
             {
                 newSize.Width = minSize;
-                computeWidthLimitRatio(ref newSize);
             }
         }
     }

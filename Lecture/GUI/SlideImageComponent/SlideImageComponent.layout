@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="0 0 241 214" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="0 0 364 214" layer="Back">
         <Widget type="Button" skin="Button" position="4 183 88 27" align="Left Bottom" name="Browse">
             <Property key="Caption" value="Browse"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="9 7 225 159" align="Stretch" name="ImagePanel">
+        <Widget type="Widget" skin="PanelEmpty" position="9 7 348 159" align="Stretch" name="ImagePanel">
             <Widget type="ImageBox" skin="ImageBox" position="0 0 100 100" align="Left Top" name="Image"/>
-            <Widget type="TextBox" skin="TextBox" position="49 58 126 42" align="Center" name="LoadLabel">
+            <Widget type="TextBox" skin="TextBox" position="111 58 126 42" align="Center" name="LoadLabel">
                 <Property key="FontName" value="TimelineText.50"/>
                 <Property key="Caption" value="Loading"/>
             </Widget>
@@ -19,6 +19,10 @@
         <Widget type="TextBox" skin="TextBox" position="158 194 12 15" align="Left Bottom">
             <Property key="Caption" value="x"/>
             <Property key="TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="237 188 124 18" align="Left Bottom" name="KeepAspectRatio">
+            <Property key="Caption" value="Keep Aspect Ratio"/>
+            <Property key="StateSelected" value="true"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
