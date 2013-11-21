@@ -27,21 +27,21 @@ namespace Lecture.GUI
         String imageName;
         Widget imagePanel;
         Widget loadingLabel;
-        Int32NumericEdit sizeEdit;
+        Int32NumericEdit widthEdit;
+        Int32NumericEdit heightEdit;
         IntSize2 realImageSize;
-        IntSize2 desiredImageSize;
 
         const bool Key = false;
         private bool NotDisposed = true;
 
-        float currentWidth;
+        IntSize2 currentSize;
 
-        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName, float currentWidth)
+        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName, IntSize2 currentSize)
             : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "SlideImage")
         {
             this.resourceProvider = resourceProvider;
             this.subdirectory = subdirectory;
-            this.currentWidth = currentWidth;
+            this.currentSize = currentSize;
 
             Button browseButton = (Button)widget.findWidget("Browse");
             browseButton.MouseButtonClick += browseButton_MouseButtonClick;
@@ -49,14 +49,23 @@ namespace Lecture.GUI
             imagePreview = (ImageBox)widget.findWidget("Image");
             imagePanel = widget.findWidget("ImagePanel");
             imageAtlas = new ImageAtlas("SlideImageComponentAtlas_" + Guid.NewGuid().ToString("D"), new IntSize2(imagePreview.Width, imagePreview.Height));
-            sizeEdit = new Int32NumericEdit((EditBox)widget.findWidget("Size"))
+            widthEdit = new Int32NumericEdit((EditBox)widget.findWidget("Width"))
             {
                 MaxValue = 10000,
                 MinValue = 0,
                 Increment = 10,
                 Value = 100
             };
-            sizeEdit.ValueChanged += sizeEdit_ValueChanged;
+            widthEdit.ValueChanged += sizeEdit_ValueChanged;
+
+            heightEdit = new Int32NumericEdit((EditBox)widget.findWidget("Height"))
+            {
+                MaxValue = 10000,
+                MinValue = 0,
+                Increment = 10,
+                Value = 100
+            };
+            heightEdit.ValueChanged += sizeEdit_ValueChanged;
 
             keyTimer = new Timer(UPDATE_DELAY);
             keyTimer.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
@@ -93,18 +102,6 @@ namespace Lecture.GUI
             keyTimer.Dispose();
             base.Dispose();
             imageAtlas.Dispose();
-        }
-
-        public IntSize2 DesiredImageSize
-        {
-            get
-            {
-                return desiredImageSize;
-            }
-            set
-            {
-                desiredImageSize = value;
-            }
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
@@ -181,17 +178,15 @@ namespace Lecture.GUI
                         width = (int)((float)imagePanel.Height * aspect);
                         left = (imagePanel.Width - width) / 2;
                     }
-                    desiredImageSize = realImageSize = new IntSize2(image.Width, image.Height);
+                    realImageSize = new IntSize2(image.Width, image.Height);
                     ThreadManager.invoke(() =>
                     {
                         try
                         {
                             if (NotDisposed)
                             {
-                                if (currentWidth != -1)
-                                {
-                                    sizeEdit.Value = (int)((float)currentWidth / image.Width * 100);
-                                }
+                                widthEdit.Value = currentSize.Width > 0 ? currentSize.Width : width;
+                                heightEdit.Value = currentSize.Height > 0 ? currentSize.Height : height;
                                 imagePreview.setPosition(left, top);
                                 imagePreview.setSize(width, height);
                                 imageAtlas.ImageSize = new IntSize2(width, height);
@@ -222,8 +217,8 @@ namespace Lecture.GUI
         internal bool applyToElement(Element element)
         {
             element.SetAttribute("src", imageName);
-            element.SetAttribute("width", desiredImageSize.Width.ToString());
-            element.SetAttribute("height", desiredImageSize.Height.ToString());
+            element.SetAttribute("width", widthEdit.Value.ToString());
+            element.SetAttribute("height", heightEdit.Value.ToString());
             element.SetAttribute("scale", "true");
             return true;
         }
@@ -242,7 +237,8 @@ namespace Lecture.GUI
 
         public void changeSize(IntSize2 newSize)
         {
-            desiredImageSize = newSize;
+            widthEdit.Value = newSize.Width;
+            heightEdit.Value = newSize.Height;
             this.fireChangesMade();
         }
 

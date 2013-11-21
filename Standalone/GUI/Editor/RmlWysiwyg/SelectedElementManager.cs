@@ -10,6 +10,8 @@ namespace Medical.GUI
 {
     class SelectedElementManager
     {
+        private const int minSize = 15; //Note that this is applied after the value is scaled and does not need to be scaled further
+
         private ElementStrategy elementStrategy;
         private Element selectedElement;
         private Element highlightElement;
@@ -134,11 +136,7 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height + mouseOffset.y);
-                float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
-                newSize = newSize / ratio;
-
-                elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
-                updateHighlightPosition();
+                sendSizeChange(newSize);
             }
         }
 
@@ -149,11 +147,7 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width, elementStartSize.Height + mouseOffset.y);
-                float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
-                newSize = newSize / ratio;
-
-                elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
-                updateHighlightPosition();
+                sendSizeChange(newSize);
             }
         }
 
@@ -164,12 +158,25 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height);
-                float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
-                newSize = newSize / ratio;
-
-                elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
-                updateHighlightPosition();
+                sendSizeChange(newSize);
             }
+        }
+
+        private void sendSizeChange(Size2 newSize)
+        {
+            if (newSize.Width < minSize)
+            {
+                newSize.Width = minSize;
+            }
+            if (newSize.Height < minSize)
+            {
+                newSize.Height = minSize;
+            }
+            float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
+            newSize = newSize / ratio;
+
+            elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
+            updateHighlightPosition();
         }
 
         void dragHandle_Pressed(Widget source, EventArgs e)
