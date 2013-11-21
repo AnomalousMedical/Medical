@@ -104,6 +104,14 @@ namespace Lecture.GUI
             imageAtlas.Dispose();
         }
 
+        public IntSize2 ImageSize
+        {
+            get
+            {
+                return new IntSize2(widthEdit.Value, heightEdit.Value);
+            }
+        }
+
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
             FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose an image", wildcard: "Images|*");
@@ -240,8 +248,30 @@ namespace Lecture.GUI
             fireApplyChanges();
         }
 
-        public void changeSize(IntSize2 newSize)
+        public void changeSize(IntSize2 newSize, bool adjustWidth, bool adjustHeight)
         {
+            if (true)
+            {
+                if (adjustWidth && adjustHeight)
+                {
+                    if (newSize.Width > newSize.Height)
+                    {
+                        newSize = computeWidthLimitRatio(newSize);
+                    }
+                    else
+                    {
+                        newSize = computeHeightLimitRatio(newSize);
+                    }
+                }
+                else if (adjustWidth)
+                {
+                    newSize = computeWidthLimitRatio(newSize);
+                }
+                else if (adjustHeight)
+                {
+                    newSize = computeHeightLimitRatio(newSize);
+                }
+            }
             widthEdit.Value = newSize.Width;
             heightEdit.Value = newSize.Height;
             this.fireChangesMade();
@@ -250,6 +280,20 @@ namespace Lecture.GUI
         public void applyChanges()
         {
             fireApplyChanges();
+        }
+
+        private IntSize2 computeHeightLimitRatio(IntSize2 newSize)
+        {
+            float ratio = (float)realImageSize.Width / realImageSize.Height;
+            newSize.Width = (int)(newSize.Height * ratio);
+            return newSize;
+        }
+
+        private IntSize2 computeWidthLimitRatio(IntSize2 newSize)
+        {
+            float ratio = (float)realImageSize.Height / realImageSize.Width;
+            newSize.Height = (int)(newSize.Width * ratio);
+            return newSize;
         }
     }
 }

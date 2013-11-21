@@ -24,7 +24,7 @@ namespace Medical.GUI
 
         public bool Resizable { get; set; }
 
-        public virtual void changeSizePreview(Element element, IntSize2 newSize)
+        public virtual void changeSizePreview(Element element, IntSize2 newSize, bool adjustWidth, bool adjustHeight)
         {
 
         }

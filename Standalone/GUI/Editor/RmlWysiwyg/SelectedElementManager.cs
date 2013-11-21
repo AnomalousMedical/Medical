@@ -136,7 +136,7 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height + mouseOffset.y);
-                sendSizeChange(newSize);
+                sendSizeChange(newSize, true, true);
             }
         }
 
@@ -147,7 +147,7 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width, elementStartSize.Height + mouseOffset.y);
-                sendSizeChange(newSize);
+                sendSizeChange(newSize, false, true);
             }
         }
 
@@ -158,11 +158,11 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height);
-                sendSizeChange(newSize);
+                sendSizeChange(newSize, true, false);
             }
         }
 
-        private void sendSizeChange(Size2 newSize)
+        private void sendSizeChange(Size2 newSize, bool adjustWidth, bool adjustHeight)
         {
             if (newSize.Width < minSize)
             {
@@ -175,7 +175,7 @@ namespace Medical.GUI
             float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
             newSize = newSize / ratio;
 
-            elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize);
+            elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize, adjustWidth, adjustHeight);
             updateHighlightPosition();
         }
 
