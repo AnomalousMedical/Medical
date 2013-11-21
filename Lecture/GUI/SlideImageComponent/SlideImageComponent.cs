@@ -81,7 +81,7 @@ namespace Lecture.GUI
                 {
                     System.Threading.ThreadPool.QueueUserWorkItem(o =>
                     {
-                        openImageBGThread(loadPath);
+                        openImageBGThread(loadPath, false, false);
                     });
                 }
                 else
@@ -134,7 +134,7 @@ namespace Lecture.GUI
                                         readStream.CopyTo(writeStream);
                                     }
                                 }
-                                openImageBGThread(filename, true);
+                                openImageBGThread(filename, true, true);
                             }
                             catch (Exception ex)
                             {
@@ -153,7 +153,7 @@ namespace Lecture.GUI
             });
         }
 
-        private void openImageBGThread(String filename, bool applyUpdate = false)
+        private void openImageBGThread(String filename, bool applyUpdate, bool isNewImage)
         {
             try
             {
@@ -187,6 +187,11 @@ namespace Lecture.GUI
                             {
                                 widthEdit.Value = currentSize.Width > 0 ? currentSize.Width : width;
                                 heightEdit.Value = currentSize.Height > 0 ? currentSize.Height : height;
+                                if (isNewImage)
+                                {
+                                    float ratio = height / (float)width;
+                                    heightEdit.Value = (int)(widthEdit.Value * ratio);
+                                }
                                 imagePreview.setPosition(left, top);
                                 imagePreview.setSize(width, height);
                                 imageAtlas.ImageSize = new IntSize2(width, height);
