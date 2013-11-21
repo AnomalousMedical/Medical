@@ -7,6 +7,13 @@ using System.Text;
 
 namespace Medical.GUI
 {
+    public enum ResizeType
+    {
+        Width,
+        Height,
+        Both
+    }
+
     public class ElementStrategy
     {
         public ElementStrategy(String tagName, String previewIconName = CommonResources.NoIcon, bool allowDragAndDrop = false)
@@ -24,7 +31,7 @@ namespace Medical.GUI
 
         public bool Resizable { get; set; }
 
-        public virtual void changeSizePreview(Element element, IntSize2 newSize, bool adjustWidth, bool adjustHeight)
+        public virtual void changeSizePreview(Element element, IntSize2 newSize, ResizeType resizeType)
         {
 
         }

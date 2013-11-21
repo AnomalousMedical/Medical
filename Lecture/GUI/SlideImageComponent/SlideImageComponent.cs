@@ -248,28 +248,21 @@ namespace Lecture.GUI
             fireApplyChanges();
         }
 
-        public void changeSize(IntSize2 newSize, bool adjustWidth, bool adjustHeight)
+        public void changeSize(IntSize2 newSize, ResizeType resizeType)
         {
             if (true)
             {
-                if (adjustWidth && adjustHeight)
+                switch (resizeType)
                 {
-                    if (newSize.Width > newSize.Height)
-                    {
+                    case ResizeType.Width:
                         newSize = computeWidthLimitRatio(newSize);
-                    }
-                    else
-                    {
+                        break;
+                    case ResizeType.Height:
                         newSize = computeHeightLimitRatio(newSize);
-                    }
-                }
-                else if (adjustWidth)
-                {
-                    newSize = computeWidthLimitRatio(newSize);
-                }
-                else if (adjustHeight)
-                {
-                    newSize = computeHeightLimitRatio(newSize);
+                        break;
+                    case ResizeType.Both:
+                        newSize = newSize.Width < newSize.Height ? computeWidthLimitRatio(newSize) : computeHeightLimitRatio(newSize);
+                        break;
                 }
             }
             widthEdit.Value = newSize.Width;
