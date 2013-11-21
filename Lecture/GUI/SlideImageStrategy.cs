@@ -48,9 +48,9 @@ namespace Lecture.GUI
             return slideImageEditor.applyToElement(element);
         }
 
-        public override void changeSizePreview(Element element, IntSize2 newSize, ResizeType resizeType)
+        public override void changeSizePreview(Element element, IntSize2 newSize, ResizeType resizeType, IntSize2 bounds)
         {
-            slideImageEditor.changeSize(newSize, resizeType);
+            slideImageEditor.changeSize(newSize, resizeType, bounds);
             IntSize2 correctedSize = slideImageEditor.ImageSize;
             element.SetAttribute("width", correctedSize.Width.ToString());
             element.SetAttribute("height", correctedSize.Height.ToString());

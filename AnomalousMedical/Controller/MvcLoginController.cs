@@ -79,7 +79,6 @@ namespace Medical.Controller
                 if (!loggingIn)
                 {
                     loggingIn = true;
-                    Log.Debug("Logging in");
                     DataModel model = context.getModel<DataModel>("Credentials");
                     MedicalConfig.StoreCredentials = model.getValue("Remember") == "True";
                     messageControl.Value = "Connecting to server.";

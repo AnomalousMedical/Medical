@@ -10,8 +10,6 @@ namespace Medical.GUI
 {
     class SelectedElementManager
     {
-        private const int minSize = 15; //Note that this is applied after the value is scaled and does not need to be scaled further
-
         private ElementStrategy elementStrategy;
         private Element selectedElement;
         private Element highlightElement;
@@ -22,9 +20,11 @@ namespace Medical.GUI
 
         private Size2 elementStartSize;
         private IntVector2 mouseStartPosition;
+        private Widget parentWidget;
 
         public SelectedElementManager(Widget parentWidget)
         {
+            this.parentWidget = parentWidget;
             this.selectionWidget = parentWidget.findWidget("SelectionWidget");
 
             widthAdjust = parentWidget.findWidget("WidthAdjust");
@@ -136,7 +136,7 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height + mouseOffset.y);
-                sendSizeChange(newSize, ResizeType.Both);
+                sendSizeChange(newSize, ResizeType.Both, new IntSize2(parentWidget.Width, parentWidget.Height));
             }
         }
 
@@ -147,7 +147,7 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width, elementStartSize.Height + mouseOffset.y);
-                sendSizeChange(newSize, ResizeType.Height);
+                sendSizeChange(newSize, ResizeType.Height, new IntSize2(parentWidget.Width, parentWidget.Height));
             }
         }
 
@@ -158,24 +158,17 @@ namespace Medical.GUI
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
                 Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height);
-                sendSizeChange(newSize, ResizeType.Width);
+                sendSizeChange(newSize, ResizeType.Width, new IntSize2(parentWidget.Width, parentWidget.Height));
             }
         }
 
-        private void sendSizeChange(Size2 newSize, ResizeType resizeType)
+        private void sendSizeChange(Size2 newSize, ResizeType resizeType, IntSize2 boundsRect)
         {
-            if (newSize.Width < minSize)
-            {
-                newSize.Width = minSize;
-            }
-            if (newSize.Height < minSize)
-            {
-                newSize.Height = minSize;
-            }
             float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
             newSize = newSize / ratio;
+            boundsRect = (IntSize2)(boundsRect / ratio);
 
-            elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize, resizeType);
+            elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize, resizeType, boundsRect);
             updateHighlightPosition();
         }
 

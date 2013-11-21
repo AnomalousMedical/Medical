@@ -17,6 +17,7 @@ namespace Lecture.GUI
     class SlideImageComponent : ElementEditorComponent
     {
         private const int UPDATE_DELAY = 250;
+        private const int minSize = 15; //Note that this is applied after the value is scaled and does not need to be scaled further
 
         private Timer keyTimer;
 
@@ -248,20 +249,30 @@ namespace Lecture.GUI
             fireApplyChanges();
         }
 
-        public void changeSize(IntSize2 newSize, ResizeType resizeType)
+        public void changeSize(IntSize2 newSize, ResizeType resizeType, IntSize2 bounds)
         {
             if (true)
             {
                 switch (resizeType)
                 {
                     case ResizeType.Width:
-                        newSize = computeWidthLimitRatio(newSize);
+                        computeWidthLimitRatio(ref newSize);
+                        guardWidth(ref newSize, bounds);
                         break;
                     case ResizeType.Height:
-                        newSize = computeHeightLimitRatio(newSize);
+                        computeHeightLimitRatio(ref newSize);
+                        guardWidth(ref newSize, bounds);
                         break;
                     case ResizeType.Both:
-                        newSize = newSize.Width < newSize.Height ? computeWidthLimitRatio(newSize) : computeHeightLimitRatio(newSize);
+                        if (newSize.Width < newSize.Height)
+                        {
+                            computeWidthLimitRatio(ref newSize);
+                        }
+                        else
+                        {
+                            computeHeightLimitRatio(ref newSize);
+                        }
+                        guardWidth(ref newSize, bounds);
                         break;
                 }
             }
@@ -275,18 +286,30 @@ namespace Lecture.GUI
             fireApplyChanges();
         }
 
-        private IntSize2 computeHeightLimitRatio(IntSize2 newSize)
+        private void computeHeightLimitRatio(ref IntSize2 newSize)
         {
             float ratio = (float)realImageSize.Width / realImageSize.Height;
             newSize.Width = (int)(newSize.Height * ratio);
-            return newSize;
         }
 
-        private IntSize2 computeWidthLimitRatio(IntSize2 newSize)
+        private void computeWidthLimitRatio(ref IntSize2 newSize)
         {
             float ratio = (float)realImageSize.Height / realImageSize.Width;
             newSize.Height = (int)(newSize.Width * ratio);
-            return newSize;
+        }
+
+        private void guardWidth(ref IntSize2 newSize, IntSize2 bounds)
+        {
+            if (newSize.Width > bounds.Width)
+            {
+                newSize.Width = bounds.Width;
+                computeWidthLimitRatio(ref newSize);
+            }
+            else if (newSize.Width < minSize)
+            {
+                newSize.Width = minSize;
+                computeWidthLimitRatio(ref newSize);
+            }
         }
     }
 }
