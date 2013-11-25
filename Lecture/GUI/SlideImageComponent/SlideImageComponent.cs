@@ -39,7 +39,7 @@ namespace Lecture.GUI
         IntSize2 currentSize;
 
         public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName, IntSize2 currentSize)
-            : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "SlideImage")
+            : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "Image")
         {
             this.resourceProvider = resourceProvider;
             this.subdirectory = subdirectory;

@@ -622,6 +622,11 @@ namespace Medical.GUI
                 return; //Return here to prevent more execution
             }
 
+            if (ViewHost.View.ViewLocation == ViewLocations.Right)
+            {
+                editor.setPosition(widget.AbsoluteLeft - editor.Width, editor.AbsoluteTop);
+            }
+
             editor.UndoRml = UnformattedRml;
             //Everything is good so setup.
             editor.Hiding += (src, arg) =>
