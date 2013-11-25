@@ -50,6 +50,7 @@ namespace Lecture
         private SlideLayoutPickerTask slideLayoutPicker;
         private SlideshowEditController editorController;
         private PanelResizeWidget panelResizeWidget;
+        private bool forceUpdateThumbOnBlur = false;
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
@@ -70,6 +71,7 @@ namespace Lecture
             this.wysiwygUndoCallback = wysiwygUndoCallback;
             this.editorController = editorController;
             panelResizeWidget = new PanelResizeWidget();
+            panelResizeWidget.RecordResizeUndo += panelResizeWidget_RecordResizeUndo;
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
             triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a");
@@ -198,7 +200,7 @@ namespace Lecture
                 }),
                 new CallbackAction("Blur", context =>
                 {
-                    commitText();
+                    commitText(forceUpdateThumbOnBlur);
                     foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
                     {
                         String editorName = panel.createViewName("RmlView");
@@ -375,12 +377,14 @@ namespace Lecture
             undoBuffer.pushAndExecute(new TwoWayDelegateCommand<Slide, Slide>(
                 (execSlide) =>
                     {
+                        forceUpdateThumbOnBlur = true;
                         execSlide.copyLayoutToSlide(slide, false);
                         refreshPanelEditors(true);
                     },
                 newSlideLayout,
                 (undoSlide) =>
                     {
+                        forceUpdateThumbOnBlur = true;
                         undoSlide.copyLayoutToSlide(slide, true);
                         refreshPanelEditors(true);
                     },
@@ -446,9 +450,9 @@ namespace Lecture
             slideEditorController.save();
         }
 
-        public void commitText()
+        public void commitText(bool forceUpdateThumb = false)
         {
-            bool updateThumb = false;
+            bool updateThumb = forceUpdateThumb;
             foreach (var editor in rmlEditors.Values)
             {
                 updateThumb |= editor.commitText();
@@ -461,6 +465,7 @@ namespace Lecture
 
         public void updateThumbnail()
         {
+            forceUpdateThumbOnBlur = false;
             if (slideEditorController.ResourceProvider != null)
             {
                 IntSize2 sceneThumbSize = new IntSize2(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
@@ -688,6 +693,11 @@ namespace Lecture
             {
                 editor.Component.ViewHost.Container.invalidate();
             }
+        }
+
+        void panelResizeWidget_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)
+        {
+            forceUpdateThumbOnBlur = true;
         }
     }
 }
