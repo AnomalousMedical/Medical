@@ -370,6 +370,25 @@ namespace Lecture
                 ViewLocation = ViewLocations.Left,
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Left and Top",
+                IconName = CommonResources.NoIcon
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 480,
+                ViewLocation = ViewLocations.Left,
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 288,
+                ViewLocation = ViewLocations.Top,
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
         }
 
         void slideLayoutPicker_ChangeSlideLayout(Slide newSlideLayout)
