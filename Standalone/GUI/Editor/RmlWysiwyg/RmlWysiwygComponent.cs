@@ -796,6 +796,7 @@ namespace Medical.GUI
 
             RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
+            cancelAndHideEditor();
             selectedElementManager.clearSelectedAndHighlightedElement();
 
             if (rml != null)
