@@ -16,7 +16,7 @@ namespace Lecture.GUI
         public event Action<TemplateSlide> ChangeSlideLayout;
 
         public SlideLayoutPickerTask()
-            :base("SlideLayoutPicker", "Change Slide Layout", CommonResources.NoIcon, "Edit")
+            :base("SlideLayoutPicker", "Change Slide Layout", "Lecture.Icon.LayoutIcon", "Edit")
         {
 
         }

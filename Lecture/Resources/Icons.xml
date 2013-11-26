@@ -12,7 +12,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.Capture">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="32 0"/>
+        <Frame point="0 32"/>
       </Index>
     </Group>
   </Resource>
@@ -20,7 +20,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.DuplicateSlide">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="64 0"/>
+        <Frame point="32 0"/>
       </Index>
     </Group>
   </Resource>
@@ -28,7 +28,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.EditSlide">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="96 0"/>
+        <Frame point="32 32"/>
       </Index>
     </Group>
   </Resource>
@@ -36,7 +36,15 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.EditTimeline">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="128 0"/>
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.Icon.LayoutIcon">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 32"/>
       </Index>
     </Group>
   </Resource>
@@ -44,7 +52,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.Present">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="160 0"/>
+        <Frame point="96 0"/>
       </Index>
     </Group>
   </Resource>
@@ -52,7 +60,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.PresentBeginning">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="192 0"/>
+        <Frame point="96 32"/>
       </Index>
     </Group>
   </Resource>
@@ -60,7 +68,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.Redo">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="224 0"/>
+        <Frame point="128 0"/>
       </Index>
     </Group>
   </Resource>
@@ -68,7 +76,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.RemoveSlide">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="256 0"/>
+        <Frame point="128 32"/>
       </Index>
     </Group>
   </Resource>
@@ -76,7 +84,15 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.SmartLectureIcon">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="288 0"/>
+        <Frame point="160 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.Icon.TriggerIcon">
+    <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="192 0"/>
       </Index>
     </Group>
   </Resource>
@@ -84,7 +100,7 @@
   <Resource type="ResourceImageSet" name="Lecture.Icon.Undo">
     <Group name="Icons" texture="Lecture.Resources.Icons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="320 0"/>
+        <Frame point="160 32"/>
       </Index>
     </Group>
   </Resource>

@@ -74,7 +74,7 @@ namespace Lecture
             panelResizeWidget.RecordResizeUndo += panelResizeWidget_RecordResizeUndo;
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
-            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a");
+            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon");
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -98,7 +98,7 @@ namespace Lecture
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" scale=\"true\"></img>", RmlWysiwygComponent.DefaultImage)),
-                new WysiwygDragDropItem("Trigger", CommonResources.NoIcon, "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>")
+                new WysiwygDragDropItem("Trigger", "Lecture.Icon.TriggerIcon", "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>")
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
