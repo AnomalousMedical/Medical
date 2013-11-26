@@ -254,7 +254,7 @@ namespace Lecture
             TemplateSlide presetSlide = new TemplateSlide()
             {
                 Name = "Left Panel",
-                IconName = CommonResources.NoIcon
+                IconName = "Lecture.SlideLayouts.OnePanel"
             };
             presetSlide.addPanel(new RmlSlidePanel()
             {
@@ -267,7 +267,7 @@ namespace Lecture
             presetSlide = new TemplateSlide()
             {
                 Name = "Left and Right Panel",
-                IconName = CommonResources.NoIcon
+                IconName = "Lecture.SlideLayouts.TwoPanel"
             };
             presetSlide.addPanel(new RmlSlidePanel()
             {
@@ -286,7 +286,7 @@ namespace Lecture
             presetSlide = new TemplateSlide()
             {
                 Name = "Three Panel",
-                IconName = CommonResources.NoIcon
+                IconName = "Lecture.SlideLayouts.ThreePanel"
             };
             presetSlide.addPanel(new RmlSlidePanel()
             {
@@ -311,7 +311,7 @@ namespace Lecture
             presetSlide = new TemplateSlide()
             {
                 Name = "Four Panel",
-                IconName = CommonResources.NoIcon
+                IconName = "Lecture.SlideLayouts.FourPanel"
             };
             presetSlide.addPanel(new RmlSlidePanel()
             {
@@ -342,7 +342,7 @@ namespace Lecture
             presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
             {
                 Name = "50/50",
-                IconName = CommonResources.NoIcon
+                IconName = "Lecture.SlideLayouts.TwoColumn"
             };
             presetSlide.addPanel(new RmlSlidePanel()
             {
@@ -361,7 +361,7 @@ namespace Lecture
             presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
             {
                 Name = "Full Screen",
-                IconName = CommonResources.NoIcon,
+                IconName = "Lecture.SlideLayouts.Full",
             };
             presetSlide.addPanel(new RmlSlidePanel()
             {
@@ -374,7 +374,7 @@ namespace Lecture
             presetSlide = new TemplateSlide()
             {
                 Name = "Left and Top",
-                IconName = CommonResources.NoIcon
+                IconName = "Lecture.SlideLayouts.LeftTop"
             };
             presetSlide.addPanel(new RmlSlidePanel()
             {

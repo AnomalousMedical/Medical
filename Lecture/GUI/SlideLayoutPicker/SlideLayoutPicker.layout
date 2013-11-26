@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PopupPanel" position="445 202 245 210" layer="Popup">
-        <Widget type="ScrollView" skin="ScrollView" position="1 1 243 208" align="Stretch" name="ButtonGrid">
+    <Widget type="Widget" skin="PopupPanel" position="445 202 245 297" layer="Popup">
+        <Widget type="ScrollView" skin="ScrollView" position="1 1 243 295" align="Stretch" name="ButtonGrid">
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="CanvasSize" value="235 10"/>
-            <UserString key="ItemHeight" value="32"/>
-            <UserString key="ItemWidth" value="57"/>
+            <UserString key="ItemHeight" value="63"/>
+            <UserString key="ItemWidth" value="87"/>
             <UserString key="ButtonSkin" value="FlexibleGridItem"/>
         </Widget>
     </Widget>

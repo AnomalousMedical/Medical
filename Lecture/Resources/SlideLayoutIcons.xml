@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="Lecture.SlideLayouts.FourPanel">
+    <Group name="Icons" texture="Lecture.Resources.SlideLayoutIcons.png" size="87 48">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.SlideLayouts.Full">
+    <Group name="Icons" texture="Lecture.Resources.SlideLayoutIcons.png" size="87 48">
+      <Index name="Icon">
+        <Frame point="0 48"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.SlideLayouts.LeftTop">
+    <Group name="Icons" texture="Lecture.Resources.SlideLayoutIcons.png" size="87 48">
+      <Index name="Icon">
+        <Frame point="87 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.SlideLayouts.OnePanel">
+    <Group name="Icons" texture="Lecture.Resources.SlideLayoutIcons.png" size="87 48">
+      <Index name="Icon">
+        <Frame point="87 48"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.SlideLayouts.ThreePanel">
+    <Group name="Icons" texture="Lecture.Resources.SlideLayoutIcons.png" size="87 48">
+      <Index name="Icon">
+        <Frame point="174 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.SlideLayouts.TwoColumn">
+    <Group name="Icons" texture="Lecture.Resources.SlideLayoutIcons.png" size="87 48">
+      <Index name="Icon">
+        <Frame point="174 48"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Lecture.SlideLayouts.TwoPanel">
+    <Group name="Icons" texture="Lecture.Resources.SlideLayoutIcons.png" size="87 48">
+      <Index name="Icon">
+        <Frame point="261 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

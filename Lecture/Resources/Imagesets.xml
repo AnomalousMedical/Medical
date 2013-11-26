@@ -3,4 +3,5 @@
 <MyGUI type="List">
   <List file="Lecture.Resources.BrandingIcon.xml"/>
   <List file="Lecture.Resources.Icons.xml"/>
+  <List file="Lecture.Resources.SlideLayoutIcons.xml"/>
 </MyGUI>
