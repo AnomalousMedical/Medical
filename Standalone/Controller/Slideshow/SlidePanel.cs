@@ -38,6 +38,11 @@ namespace Medical
             return true;
         }
 
+        protected internal virtual void updateToVersion(int fromVersion, int toVersion)
+        {
+            
+        }
+
         public abstract SlidePanel clone();
 
         [Editable]

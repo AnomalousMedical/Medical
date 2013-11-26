@@ -16,6 +16,7 @@ namespace Medical
     {
         public const String SlideThumbName = "Thumb.png";
         public const int BaseSlideScale = 1017;
+        private const int CurrentVersion = 2;
 
         [DoNotSave]
         private List<Slide> slides = new List<Slide>();
@@ -24,7 +25,7 @@ namespace Medical
 
         public Slideshow()
         {
-            version = 2;
+            version = CurrentVersion;
         }
 
         public void addSlide(Slide slide)
@@ -130,6 +131,14 @@ namespace Medical
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
             info.RebuildList("Slides", slides);
+            if (version != CurrentVersion)
+            {
+                foreach (Slide slide in slides)
+                {
+                    slide.updateToVersion(version, CurrentVersion);
+                }
+                version = CurrentVersion;
+            }
         }
 
         public virtual void getInfo(SaveInfo info)

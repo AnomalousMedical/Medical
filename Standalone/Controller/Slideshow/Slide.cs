@@ -177,6 +177,14 @@ namespace Medical
             }
         }
 
+        public void updateToVersion(int fromVersion, int toVersion)
+        {
+            foreach (SlidePanel panel in Panels)
+            {
+                panel.updateToVersion(fromVersion, toVersion);
+            }
+        }
+
         protected Slide(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
@@ -185,6 +193,10 @@ namespace Medical
                     return Guid.NewGuid().ToString("D");
                 });
             info.RebuildDictionary("TriggerAction", triggerActions);
+            if (layoutStrategy == null)
+            {
+                layoutStrategy = new BorderSlideLayoutStrategy();
+            }
         }
 
         public virtual void getInfo(SaveInfo info)
