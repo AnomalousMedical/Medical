@@ -30,8 +30,12 @@ namespace Lecture
 
         public void Dispose()
         {
-            setCurrentEditor(null);
-            Gui.Instance.destroyWidget(resizeWidget);
+            if (resizeWidget != null)
+            {
+                setCurrentEditor(null);
+                Gui.Instance.destroyWidget(resizeWidget);
+                resizeWidget = null;
+            }
         }
 
         void resizeWidget_MouseDrag(Widget source, EventArgs e)
