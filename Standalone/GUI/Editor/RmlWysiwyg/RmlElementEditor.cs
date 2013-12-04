@@ -68,6 +68,9 @@ namespace Medical.GUI
             Button delete = (Button)widget.findWidget("Delete");
             delete.MouseButtonClick += new MyGUIEvent(delete_MouseButtonClick);
 
+            Button close = (Button)widget.findWidget("Close");
+            close.MouseButtonClick += close_MouseButtonClick;
+
             hasChanges = false;
             SmoothShow = false;
             KeepOpen = true;
@@ -171,6 +174,11 @@ namespace Medical.GUI
             {
                 _fireApplyChanges();
             }
+        }
+
+        void close_MouseButtonClick(Widget source, EventArgs e)
+        {
+            hide();
         }
     }
 }

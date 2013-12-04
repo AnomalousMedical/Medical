@@ -14,5 +14,7 @@
             <Property key="ImageResource" value="Medical.Icon.RmlWysiwyg.Delete"/>
         </Widget>
         <Widget type="TabControl" skin="TabControl" position="0 27 385 341" align="Stretch" name="Tabs"/>
+        <Widget type="Button" skin="ButtonXBig" position="356 2 27 23" align="Right Top" name="Close"/>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>
