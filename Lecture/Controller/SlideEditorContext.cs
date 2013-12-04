@@ -557,6 +557,7 @@ namespace Lecture
             {
                 mvcContext.runAction("Editor/CloseEditors");
             }
+            currentRmlEditor = null;
             closeEditorWindowsCommand.clear();
             showEditorWindowsCommand.clear();
             foreach (var editor in rmlEditors.Values)
@@ -565,6 +566,10 @@ namespace Lecture
                 editor.Component.ElementDraggedOffDocument -= RmlWysiwyg_ElementDraggedOffDocument;
                 editor.Component.ElementDroppedOffDocument -= RmlWysiwyg_ElementDroppedOffDocument;
                 editor.Component.ElementReturnedToDocument -= RmlWysiwyg_ElementReturnedToDocument;
+                if (editor.Component != null)
+                {
+                    editor.Component.cancelAndHideEditor();
+                }
             }
             rmlEditors.Clear();
 
