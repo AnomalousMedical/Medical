@@ -205,7 +205,9 @@ namespace Lecture
                     {
                         String editorName = panel.createViewName("RmlView");
                         var editor = rmlEditors[editorName];
-                        editor.View.Rml = panel.Rml = editor.getCurrentComponentText();
+                        String rml = editor.getCurrentComponentText();
+                        editor.View.Rml = rml;
+                        panel.Rml = rml;
                     }
                     slideLayoutPicker.destroyLayoutPicker();
                     GlobalContextEventHandler.disableEventContext(eventContext);
