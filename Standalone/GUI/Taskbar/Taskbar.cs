@@ -17,8 +17,6 @@ namespace Medical.GUI
 
     public class Taskbar : SingleChildLayoutContainer, IDisposable
     {
-        public event Action<Taskbar> AlignmentChanged;
-
         private Layout myGUIlayout;
         private int padding = ScaleHelper.Scaled(3);
         private IntSize2 itemSize;
@@ -263,10 +261,6 @@ namespace Medical.GUI
                 {
                     alignment = value;
                     layout();
-                    if (AlignmentChanged != null)
-                    {
-                        AlignmentChanged.Invoke(this);
-                    }
                 }
             }
         }

@@ -107,7 +107,6 @@ namespace Medical.GUI
             //Taskbar
             taskbar = new AppButtonTaskbar();
             taskbar.OpenTaskMenu += taskbar_OpenTaskMenu;
-            taskbar.AlignmentChanged += taskbar_AlignmentChanged;
             taskbar.setAppIcon("AppButton/WideImage", "AppButton/NarrowImage");
             guiManager.pushRootContainer(taskbar);
 
@@ -344,11 +343,6 @@ namespace Medical.GUI
 
             //We only care about the first one of these events that fires.
             standaloneController.MovementSequenceController.GroupAdded -= MovementSequenceController_GroupAdded;
-        }
-
-        void taskbar_AlignmentChanged(Taskbar obj)
-        {
-            standaloneController.NotificationManager.screenSizeChanged();
         }
 
         void taskbar_OpenTaskMenu(int left, int top, int width, int height)

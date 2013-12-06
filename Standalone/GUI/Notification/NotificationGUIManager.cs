@@ -87,17 +87,6 @@ namespace Medical.GUI
             }
         }
 
-        public void screenSizeChanged()
-        {
-            int currentHeight = layoutContainer.Location.y;
-            int right = Right;
-            foreach (NotificationGUI openNotification in openNotifications)
-            {
-                openNotification.setPosition(right - openNotification.Width, currentHeight);
-                currentHeight += openNotification.Height;
-            }
-        }
-
         private void positionNotification(NotificationGUI notification)
         {
             int additionalHeightOffset = layoutContainer.Location.y;
