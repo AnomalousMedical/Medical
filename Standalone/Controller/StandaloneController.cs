@@ -297,6 +297,7 @@ namespace Medical
             guiManager.createGUI(mdiLayout);
             
             notificationManager = new NotificationGUIManager(this);
+            guiManager.pushRootContainer(notificationManager.LayoutContainer);
             guiManager.giveGUIsToTimelineController(timelineController);
         }
 

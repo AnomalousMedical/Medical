@@ -9,14 +9,14 @@ namespace Medical.GUI
 {
     public class NotificationGUIManager : IDisposable
     {
-        //private Taskbar taskbar;
         private List<NotificationGUI> openNotifications = new List<NotificationGUI>();
         private StandaloneController standaloneController;
+        private EventLayoutContainer layoutContainer = new EventLayoutContainer();
 
         public NotificationGUIManager(StandaloneController standaloneController)
         {
-            //this.taskbar = taskbar;
             this.standaloneController = standaloneController;
+            layoutContainer.LayoutChanged += layoutContainer_LayoutChanged;
         }
 
         public void Dispose()
@@ -57,6 +57,14 @@ namespace Medical.GUI
             showNotification(new CallbackNotificationGUI(text, imageKey, clickedCallback));
         }
 
+        public SingleChildLayoutContainer LayoutContainer
+        {
+            get
+            {
+                return layoutContainer;
+            }
+        }
+
         internal void notificationClosed(NotificationGUI notification)
         {
             openNotifications.Remove(notification);
@@ -81,68 +89,39 @@ namespace Medical.GUI
 
         public void screenSizeChanged()
         {
-            //int currentHeight = 0;
-            //switch (taskbar.Alignment)
-            //{
-            //    case TaskbarAlignment.Top:
-            //        currentHeight = taskbar.Height;
-            //        foreach (NotificationGUI openNotification in openNotifications)
-            //        {
-            //            openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
-            //            currentHeight += openNotification.Height;
-            //        }
-            //        break;
-            //    case TaskbarAlignment.Right:
-            //        foreach (NotificationGUI openNotification in openNotifications)
-            //        {
-            //            openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width - taskbar.Width, currentHeight);
-            //            currentHeight += openNotification.Height;
-            //        }
-            //        break;
-            //    default:
-            //        foreach (NotificationGUI openNotification in openNotifications)
-            //        {
-            //            openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
-            //            currentHeight += openNotification.Height;
-            //        }
-            //        break;
-            //}
+            int currentHeight = layoutContainer.Location.y;
+            int right = Right;
+            foreach (NotificationGUI openNotification in openNotifications)
+            {
+                openNotification.setPosition(right - openNotification.Width, currentHeight);
+                currentHeight += openNotification.Height;
+            }
         }
 
         private void positionNotification(NotificationGUI notification)
         {
-            //int additionalHeightOffset = 0;
-            //foreach(NotificationGUI openNotification in openNotifications)
-            //{
-            //    additionalHeightOffset += openNotification.Height;
-            //}
-            //openNotifications.Add(notification);
-            //switch (taskbar.Alignment)
-            //{
-            //    case TaskbarAlignment.Top:
-            //        notification.show(RenderManager.Instance.ViewWidth - notification.Width, taskbar.Height + additionalHeightOffset);
-            //        break;
-            //    case TaskbarAlignment.Right:
-            //        notification.show(RenderManager.Instance.ViewWidth - notification.Width - taskbar.Width, additionalHeightOffset);
-            //        break;
-            //    default:
-            //        notification.show(RenderManager.Instance.ViewWidth - notification.Width, additionalHeightOffset);
-            //        break;
-            //}
+            int additionalHeightOffset = layoutContainer.Location.y;
+            foreach (NotificationGUI openNotification in openNotifications)
+            {
+                additionalHeightOffset += openNotification.Height;
+            }
+            openNotifications.Add(notification);
+            notification.show(Right - notification.Width, additionalHeightOffset);
         }
 
         private void relayoutNotifications()
         {
-            //int currentHeight = 0;
-            //if (taskbar.Alignment == TaskbarAlignment.Top)
-            //{
-            //    currentHeight = taskbar.Height;
-            //}
-            //foreach (NotificationGUI openNotification in openNotifications)
-            //{
-            //    openNotification.setPosition(openNotification.Left, currentHeight);
-            //    currentHeight += openNotification.Height;
-            //}
+            int currentHeight = layoutContainer.Location.y;
+            foreach (NotificationGUI openNotification in openNotifications)
+            {
+                openNotification.setPosition(openNotification.Left, currentHeight);
+                currentHeight += openNotification.Height;
+            }
+        }
+
+        void layoutContainer_LayoutChanged(EventLayoutContainer obj)
+        {
+            relayoutNotifications();
         }
 
         private IEnumerator<YieldAction> timedNotification(NotificationGUI notificationGui, double waitTime)
@@ -150,6 +129,14 @@ namespace Medical.GUI
             yield return Coroutine.Wait(waitTime);
             notificationGui.closeNotification();
             yield break;
+        }
+
+        private int Right
+        {
+            get
+            {
+                return layoutContainer.Location.x + layoutContainer.WorkingSize.Width;
+            }
         }
     }
 }
