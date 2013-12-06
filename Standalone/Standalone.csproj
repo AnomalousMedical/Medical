@@ -222,6 +222,7 @@
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
     <Compile Include="Controller\Update\PluginUpdateInfo.cs" />
     <Compile Include="Controller\Update\ServerUpdateInfo.cs" />
+    <Compile Include="Controller\Update\UpdateException.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.cs" />

@@ -59,7 +59,7 @@ namespace Medical.GUI
             {
                 sequencePlayer.Dispose();
             }
-            guiManager.setRootContainer(new NullLayoutContainer());
+            guiManager.removeRootContainer(taskbar);
             IDisposableUtil.DisposeIfNotNull(taskbar);
             IDisposableUtil.DisposeIfNotNull(taskMenu);
         }
@@ -109,7 +109,7 @@ namespace Medical.GUI
             taskbar.OpenTaskMenu += taskbar_OpenTaskMenu;
             taskbar.AlignmentChanged += taskbar_AlignmentChanged;
             taskbar.setAppIcon("AppButton/WideImage", "AppButton/NarrowImage");
-            guiManager.setRootContainer(taskbar);
+            guiManager.pushRootContainer(taskbar);
 
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager);

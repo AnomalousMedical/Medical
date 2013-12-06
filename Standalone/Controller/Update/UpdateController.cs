@@ -113,6 +113,10 @@ namespace Medical
             {
                 updateInfo = new ServerUpdateInfo(responseStream.ToArray());
             });
+            if (updateInfo == null)
+            {
+                throw new UpdateException("No update info found");
+            }
             return updateInfo;
         }
 

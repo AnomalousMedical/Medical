@@ -103,10 +103,9 @@ namespace Medical.GUI
         
             //Taskbar
             this.rootContainer = new NullLayoutContainer();
-            rootContainer.SuppressLayout = true;
-
-            rootContainer.Child = mainBorderLayout;
             screenLayoutManager.Root = rootContainer;
+            screenLayoutManager.Root.SuppressLayout = true;
+            rootContainer.Child = mainBorderLayout;
 
             //Outer border layout
             int panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Main);
@@ -148,13 +147,11 @@ namespace Medical.GUI
                 editorPreviewBorderLayout.Center = center;
             });
 
-            screenLayoutManager.Root.SuppressLayout = false;
-
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
 
-            rootContainer.SuppressLayout = false;
-            rootContainer.layout();
+            screenLayoutManager.Root.SuppressLayout = false;
+            screenLayoutManager.Root.layout();
 
             continuePrompt = new MyGUIContinuePromptProvider();
 
@@ -162,16 +159,38 @@ namespace Medical.GUI
             textDisplayFactory = new MyGUITextDisplayFactory(standaloneController.SceneViewController);
         }
 
-        public void setRootContainer(SingleChildLayoutContainer root)
+        public void pushRootContainer(SingleChildLayoutContainer root)
         {
+            root.SuppressLayout = true;
+            root.Child = rootContainer;
             rootContainer = root;
-            rootContainer.SuppressLayout = true;
 
-            rootContainer.Child = mainBorderLayout;
             screenLayoutManager.Root = rootContainer;
 
-            rootContainer.SuppressLayout = false;
+            root.SuppressLayout = false;
             rootContainer.invalidate();
+        }
+
+        public void removeRootContainer(SingleChildLayoutContainer root)
+        {
+            screenLayoutManager.Root.SuppressLayout = true;
+            foreach (SingleChildLayoutContainer container in RootContainers)
+            {
+                if (container == root)
+                {
+                    if (container.ParentContainer == null)
+                    {
+                        screenLayoutManager.Root = container.Child;
+                    }
+                    else
+                    {
+                        SingleChildLayoutContainer parentSingleChild = (SingleChildLayoutContainer)container.ParentContainer;
+                        parentSingleChild.Child = container.Child;
+                    }
+                }
+            }
+            screenLayoutManager.Root.SuppressLayout = false;
+            screenLayoutManager.Root.layout();
         }
 
         public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
@@ -209,13 +228,13 @@ namespace Medical.GUI
         {
             if (mainGuiShowing != enabled)
             {
-                rootContainer.SuppressLayout = true;
+                screenLayoutManager.Root.SuppressLayout = true;
                 standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
                 if (enabled)
                 {
-                    if (!rootContainer.Visible)
+                    if (!screenLayoutManager.Root.Visible)
                     {
-                        rootContainer.Visible = true;
+                        screenLayoutManager.Root.Visible = true;
                         dialogManager.reopenMainGUIDialogs();
                         if (MainGUIShown != null)
                         {
@@ -225,7 +244,7 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    rootContainer.Visible = false;
+                    screenLayoutManager.Root.Visible = false;
                     dialogManager.closeMainGUIDialogs();
                     if (MainGUIHidden != null)
                     {
@@ -233,8 +252,8 @@ namespace Medical.GUI
                     }
                 }
                 mainGuiShowing = enabled;
-                rootContainer.SuppressLayout = false;
-                rootContainer.layout();
+                screenLayoutManager.Root.SuppressLayout = false;
+                screenLayoutManager.Root.layout();
             }
         }
 
@@ -366,7 +385,20 @@ namespace Medical.GUI
 
         public void layout()
         {
-            screenLayoutManager.layout();
+            screenLayoutManager.Root.layout();
+        }
+
+        private IEnumerable<SingleChildLayoutContainer> RootContainers
+        {
+            get
+            {
+                SingleChildLayoutContainer container = screenLayoutManager.Root as SingleChildLayoutContainer;
+                while (container != null)
+                {
+                    yield return container;
+                    container = container.Child as SingleChildLayoutContainer;
+                }
+            }
         }
     }
 }

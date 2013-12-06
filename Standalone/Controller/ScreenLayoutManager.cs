@@ -47,11 +47,6 @@ namespace Medical
             }
         }
 
-        public void layout()
-        {
-            rootContainer.layout();
-        }
-
         public void closing(OSWindow window)
         {
             
@@ -65,7 +60,7 @@ namespace Medical
         public void resized(OSWindow window)
         {
             rootContainer.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
-            layout();
+            rootContainer.layout();
             if (ScreenSizeChanged != null)
             {
                 ScreenSizeChanged.Invoke(window.WindowWidth, window.WindowHeight);

@@ -22,7 +22,15 @@ namespace Medical
             }
             set
             {
+                if (child != null)
+                {
+                    child._setParent(null);
+                }
                 child = value;
+                if (child != null)
+                {
+                    child._setParent(this);
+                }
             }
         }
 
@@ -38,6 +46,7 @@ namespace Medical
 
         public override void layout()
         {
+            child.Location = Location;
             child.WorkingSize = WorkingSize;
             child.layout();
         }
