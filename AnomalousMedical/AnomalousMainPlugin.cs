@@ -48,6 +48,11 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            guiManager.SaveUIConfiguration -= guiManager_SaveUIConfiguration;
+            guiManager.LoadUIConfiguration -= guiManager_LoadUIConfiguration;
+            guiManager.MainGUIShown -= guiManager_MainGUIShown;
+            guiManager.MainGUIHidden -= guiManager_MainGUIHidden;
+
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             renderDialog.Dispose();
@@ -81,6 +86,8 @@ namespace Medical.GUI
             standaloneController.AnatomyController.ShowPremiumAnatomy = hasPremium;
             guiManager.SaveUIConfiguration += guiManager_SaveUIConfiguration;
             guiManager.LoadUIConfiguration += guiManager_LoadUIConfiguration;
+            guiManager.MainGUIShown += guiManager_MainGUIShown;
+            guiManager.MainGUIHidden += guiManager_MainGUIHidden;
 
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
@@ -359,6 +366,18 @@ namespace Medical.GUI
         void guiManager_LoadUIConfiguration(ConfigFile configFile)
         {
             guiTaskManager.loadPinnedTasks(configFile);
+        }
+
+        void guiManager_MainGUIHidden()
+        {
+            guiManager.removeRootContainer(taskbar);
+            taskbar.Visible = false;
+        }
+
+        void guiManager_MainGUIShown()
+        {
+            taskbar.Visible = true;
+            guiManager.pushRootContainer(taskbar);
         }
     }
 }

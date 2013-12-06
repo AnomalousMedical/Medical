@@ -132,17 +132,16 @@ namespace Medical
             {
                 DocumentController.saveRecentDocuments();
             }
-			IDisposableUtil.DisposeIfNotNull(touchController);
-			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
-            IDisposableUtil.DisposeIfNotNull(notificationManager);
             if (guiManager != null)
             {
                 ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
                 guiManager.saveUI(configFile);
-                guiManager.Dispose();
-                guiManager = null;
                 configFile.writeConfigFile();
             }
+			IDisposableUtil.DisposeIfNotNull(touchController);
+			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
+            IDisposableUtil.DisposeIfNotNull(notificationManager);
+            IDisposableUtil.DisposeIfNotNull(guiManager);
 			IDisposableUtil.DisposeIfNotNull(watermark);
 			IDisposableUtil.DisposeIfNotNull(measurementGrid);
 			IDisposableUtil.DisposeIfNotNull(anatomyController);

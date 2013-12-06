@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace Medical
     public class NullLayoutContainer : SingleChildLayoutContainer
     {
         private LayoutContainer child;
+        private float alpha = 1.0f;
+        private bool visible = true;
 
         public NullLayoutContainer()
         {
@@ -30,32 +33,48 @@ namespace Medical
                 if (child != null)
                 {
                     child._setParent(this);
+                    child.setAlpha(alpha);
+                    child.Visible = visible;
                 }
             }
         }
 
         public override void bringToFront()
         {
-            child.bringToFront();
+            if (child != null)
+            {
+                child.bringToFront();
+            }
         }
 
         public override void setAlpha(float alpha)
         {
-            child.setAlpha(alpha);
+            this.alpha = alpha;
+            if (child != null)
+            {
+                child.setAlpha(alpha);
+            }
         }
 
         public override void layout()
         {
-            child.Location = Location;
-            child.WorkingSize = WorkingSize;
-            child.layout();
+            if (child != null)
+            {
+                child.Location = Location;
+                child.WorkingSize = WorkingSize;
+                child.layout();
+            }
         }
 
         public override Engine.IntSize2 DesiredSize
         {
             get
             {
-                return child.DesiredSize;
+                if (child != null)
+                {
+                    return child.DesiredSize;
+                }
+                return new IntSize2(0, 0);
             }
         }
 
@@ -63,11 +82,15 @@ namespace Medical
         {
             get
             {
-                return child.Visible;
+                if (child != null)
+                {
+                    return child.Visible;
+                }
+                return visible;
             }
             set
             {
-                child.Visible = value;
+                child.Visible = visible = value;
             }
         }
     }

@@ -48,7 +48,6 @@ namespace Medical.GUI
         private MDILayoutManager mdiManager;
 
         private bool mainGuiShowing = true;
-
         private bool saveWindowsOnExit = true;
 
         //Dialogs
@@ -178,15 +177,29 @@ namespace Medical.GUI
             {
                 if (container == root)
                 {
+                    LayoutContainer child = container.Child;
+                    container.Child = null;
+                    if (screenLayoutManager.Root == container)
+                    {
+                        container.SuppressLayout = false;
+                        child.SuppressLayout = true;
+                    }
                     if (container.ParentContainer == null)
                     {
-                        screenLayoutManager.Root = container.Child;
+                        rootContainer = child as SingleChildLayoutContainer;
+                        if (rootContainer == null)
+                        {
+                            rootContainer = new NullLayoutContainer();
+                            rootContainer.Child = child;
+                        }
+                        screenLayoutManager.Root = rootContainer;
                     }
                     else
                     {
                         SingleChildLayoutContainer parentSingleChild = (SingleChildLayoutContainer)container.ParentContainer;
-                        parentSingleChild.Child = container.Child;
+                        parentSingleChild.Child = child;
                     }
+                    break;
                 }
             }
             screenLayoutManager.Root.SuppressLayout = false;
@@ -232,19 +245,14 @@ namespace Medical.GUI
                 standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
                 if (enabled)
                 {
-                    if (!screenLayoutManager.Root.Visible)
+                    dialogManager.reopenMainGUIDialogs();
+                    if (MainGUIShown != null)
                     {
-                        screenLayoutManager.Root.Visible = true;
-                        dialogManager.reopenMainGUIDialogs();
-                        if (MainGUIShown != null)
-                        {
-                            MainGUIShown.Invoke();
-                        }
+                        MainGUIShown.Invoke();
                     }
                 }
                 else
                 {
-                    screenLayoutManager.Root.Visible = false;
                     dialogManager.closeMainGUIDialogs();
                     if (MainGUIHidden != null)
                     {
