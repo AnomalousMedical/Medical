@@ -43,6 +43,7 @@ namespace Medical
             set
             {
                 rootContainer = value;
+                rootContainer.Location = new IntVector2(0, 0);
                 rootContainer.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
             }
         }

@@ -172,6 +172,7 @@ namespace Medical.GUI
 
         public void removeRootContainer(SingleChildLayoutContainer root)
         {
+            bool wasSupressing = screenLayoutManager.Root.SuppressLayout;
             screenLayoutManager.Root.SuppressLayout = true;
             foreach (SingleChildLayoutContainer container in RootContainers)
             {
@@ -189,7 +190,9 @@ namespace Medical.GUI
                         rootContainer = child as SingleChildLayoutContainer;
                         if (rootContainer == null)
                         {
+                            child.SuppressLayout = false;
                             rootContainer = new NullLayoutContainer();
+                            rootContainer.SuppressLayout = true;
                             rootContainer.Child = child;
                         }
                         screenLayoutManager.Root = rootContainer;
@@ -202,8 +205,11 @@ namespace Medical.GUI
                     break;
                 }
             }
-            screenLayoutManager.Root.SuppressLayout = false;
-            screenLayoutManager.Root.layout();
+            screenLayoutManager.Root.SuppressLayout = wasSupressing;
+            if (wasSupressing)
+            {
+                screenLayoutManager.Root.layout();
+            }
         }
 
         public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
