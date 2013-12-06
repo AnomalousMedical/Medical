@@ -156,6 +156,10 @@ namespace Medical.Controller
             set
             {
                 mainWidget.Visible = value;
+                if (content != null)
+                {
+                    content.Visible = value;
+                }
             }
         }
 
@@ -191,6 +195,7 @@ namespace Medical.Controller
                 content.SuppressLayout = true;
                 content._setParent(this);
                 content.setAlpha(mainWidget.Alpha);
+                content.Visible = mainWidget.Visible;
                 content.SuppressLayout = false;
                 invalidate();
             }

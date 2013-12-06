@@ -325,6 +325,25 @@ namespace Medical.Controller
         }
 
         /// <summary>
+        /// LayoutContainer propery
+        /// </summary>
+        public override bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                visible = value;
+                foreach (MDIContainerBase child in children)
+                {
+                    child.Visible = visible;
+                }
+            }
+        }
+
+        /// <summary>
         /// The amount of pixel spacing between elements in the container.
         /// </summary>
         public int Padding

@@ -263,5 +263,37 @@ namespace Medical
                 bottom.bringToFront();
             }
         }
+
+        public override bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                visible = value;
+                if (center != null)
+                {
+                    center.Visible = value;
+                }
+                if (left != null)
+                {
+                    left.Visible = value;
+                }
+                if (right != null)
+                {
+                    right.Visible = value;
+                }
+                if (top != null)
+                {
+                    top.Visible = value;
+                }
+                if (bottom != null)
+                {
+                    bottom.Visible = value;
+                }
+            }
+        }
     }
 }

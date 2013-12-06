@@ -60,17 +60,5 @@ namespace Medical.Controller
                 }
             }
         }
-
-        public override bool Visible
-        {
-            get
-            {
-                return true;
-            }
-            set
-            {
-
-            }
-        }
     }
 }

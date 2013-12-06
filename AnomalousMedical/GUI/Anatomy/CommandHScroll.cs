@@ -53,6 +53,18 @@ namespace Medical.GUI
             }
         }
 
+        public override bool Visible
+        {
+            get
+            {
+                return slider.Visible;
+            }
+            set
+            {
+                slider.Visible = value;
+            }
+        }
+
         void slider_ScrollChangePosition(Widget source, EventArgs e)
         {
             ScrollBar scroll = (ScrollBar)source;

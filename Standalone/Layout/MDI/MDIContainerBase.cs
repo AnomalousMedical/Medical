@@ -29,8 +29,6 @@ namespace Medical.Controller
 
         public abstract IntSize2 ActualSize { get; set; }
 
-        public abstract bool Visible { get; set; }
-
         /// <summary>
         /// The container this window is currently inside of.
         /// Do not touch unless you are MDILayoutManager or MDILayoutContainer.

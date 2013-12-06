@@ -61,6 +61,8 @@ namespace Medical
 
         public abstract IntSize2 DesiredSize { get; }
 
+        public abstract bool Visible { get; set; }
+
         public IntSize2 TopmostWorkingSize
         {
             get

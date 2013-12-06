@@ -216,7 +216,7 @@ namespace Medical.GUI
             }
         }
 
-        public bool Visible
+        public override bool Visible
         {
             get
             {

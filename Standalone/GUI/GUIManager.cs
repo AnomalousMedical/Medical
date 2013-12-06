@@ -214,6 +214,7 @@ namespace Medical.GUI
         {
             if (container != null)
             {
+                container.Visible = true;
                 container.bringToFront();
             }
             AnimatedLayoutContainer animatedContainer = borderLayoutContainers[getPanelPosition(name, set)];
@@ -223,8 +224,6 @@ namespace Medical.GUI
             }
         }
 
-        private bool mainGuiVisible = true;
-
         public void setMainInterfaceEnabled(bool enabled)
         {
             if (mainGuiShowing != enabled)
@@ -233,9 +232,9 @@ namespace Medical.GUI
                 standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
                 if (enabled)
                 {
-                    if (!mainGuiVisible)
+                    if (!screenLayoutManager.Root.Visible)
                     {
-                        mainGuiVisible = true;
+                        screenLayoutManager.Root.Visible = true;
                         dialogManager.reopenMainGUIDialogs();
                         if (MainGUIShown != null)
                         {
@@ -245,7 +244,7 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    mainGuiVisible = false;
+                    screenLayoutManager.Root.Visible = false;
                     dialogManager.closeMainGUIDialogs();
                     if (MainGUIHidden != null)
                     {

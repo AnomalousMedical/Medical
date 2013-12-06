@@ -34,6 +34,7 @@ namespace Medical
             child.SuppressLayout = true;
             children.Add(child);
             child._setParent(this);
+            child.Visible = visible;
             child.setAlpha(alpha);
             child.SuppressLayout = false;
             invalidate();
@@ -44,6 +45,7 @@ namespace Medical
             child.SuppressLayout = true;
             children.Insert(index, child);
             child._setParent(this);
+            child.Visible = visible;
             child.setAlpha(alpha);
             child.SuppressLayout = false;
             invalidate();
@@ -141,6 +143,22 @@ namespace Medical
                     }
                 }
                 return desiredSize;
+            }
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                visible = value;
+                foreach (LayoutContainer child in children)
+                {
+                    child.Visible = visible;
+                }
             }
         }
 
