@@ -48,17 +48,5 @@ namespace Medical.GUI
         {
             get { return new IntSize2(checkButton.getTextRegion().left + checkButton.getTextSize().Width, checkButton.Height); }
         }
-
-        public override bool Visible
-        {
-            get
-            {
-                return checkButton.Visible;
-            }
-            set
-            {
-                checkButton.Visible = value;
-            }
-        }
     }
 }

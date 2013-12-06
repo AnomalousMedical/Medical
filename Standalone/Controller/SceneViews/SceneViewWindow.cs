@@ -387,18 +387,6 @@ namespace Medical.Controller
             cameraMover.stopMaintainingIncludePoint();
         }
 
-        public override bool Visible
-        {
-            get
-            {
-                return true;
-            }
-            set
-            {
-                
-            }
-        }
-
         public Vector3 Translation
         {
             get

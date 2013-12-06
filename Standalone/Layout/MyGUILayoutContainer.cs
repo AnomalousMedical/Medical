@@ -69,17 +69,5 @@ namespace Medical
         {
             LayerManager.Instance.upLayerItem(widget);
         }
-
-        public override bool Visible
-        {
-            get
-            {
-                return widget.Visible;
-            }
-            set
-            {
-                widget.Visible = value;
-            }
-        }
     }
 }

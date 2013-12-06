@@ -220,25 +220,6 @@ namespace Medical
             }
         }
 
-        public override bool Visible
-        {
-            get
-            {
-                if (childContainer != null)
-                {
-                    return childContainer.Visible;
-                }
-                return false;
-            }
-            set
-            {
-                if (childContainer != null)
-                {
-                    childContainer.Visible = value;
-                }
-            }
-        }
-
         public override LayoutContainer CurrentContainer
         {
             get

@@ -58,17 +58,5 @@ namespace Medical
                 return child.DesiredSize;
             }
         }
-
-        public override bool Visible
-        {
-            get
-            {
-                return child.Visible;
-            }
-            set
-            {
-                child.Visible = value;
-            }
-        }
     }
 }

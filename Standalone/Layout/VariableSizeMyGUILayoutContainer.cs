@@ -79,17 +79,5 @@ namespace Medical
                 AnimatedResizeCompleted.Invoke();
             }
         }
-
-        public override bool Visible
-        {
-            get
-            {
-                return widget.Visible;
-            }
-            set
-            {
-                widget.Visible = value;
-            }
-        }
     }
 }

@@ -209,21 +209,6 @@ namespace Medical.Controller
         }
 
         /// <summary>
-        /// LayoutContainer function
-        /// </summary>
-        public override bool Visible
-        {
-            get
-            {
-                return rootContainer.Visible;
-            }
-            set
-            {
-                rootContainer.Visible = value;
-            }
-        }
-
-        /// <summary>
         /// Get or set the "Active" window in the MDI interface. This is basicly which window is focused.
         /// </summary>
         public MDIWindow ActiveWindow
