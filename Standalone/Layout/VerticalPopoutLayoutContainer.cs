@@ -171,11 +171,13 @@ namespace Medical
                 if (currentTime < animationLength)
                 {
                     alpha = EasingFunctions.EaseOutQuadratic(0, 1.0f, currentTime, animationLength);
+                    currentSize = new IntSize2(WorkingSize.Width, (int)(oldSize.Height + sizeDelta.Height * alpha));
                 }
                 else
                 {
                     currentTime = animationLength;
                     alpha = 1.0f;
+                    currentSize = new IntSize2(WorkingSize.Width, oldSize.Height + sizeDelta.Height);
 
                     finishAnimation();
                     oldChildContainer = null;
@@ -184,7 +186,6 @@ namespace Medical
                 {
                     childContainer.setAlpha(alpha);
                 }
-                currentSize = new IntSize2(WorkingSize.Width, (int)(oldSize.Height + sizeDelta.Height * alpha));
                 invalidate();
             }
         }
