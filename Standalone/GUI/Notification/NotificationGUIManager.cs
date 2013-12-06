@@ -9,13 +9,13 @@ namespace Medical.GUI
 {
     public class NotificationGUIManager : IDisposable
     {
-        private Taskbar taskbar;
+        //private Taskbar taskbar;
         private List<NotificationGUI> openNotifications = new List<NotificationGUI>();
         private StandaloneController standaloneController;
 
-        public NotificationGUIManager(Taskbar taskbar, StandaloneController standaloneController)
+        public NotificationGUIManager(StandaloneController standaloneController)
         {
-            this.taskbar = taskbar;
+            //this.taskbar = taskbar;
             this.standaloneController = standaloneController;
         }
 
@@ -79,70 +79,70 @@ namespace Medical.GUI
             }
         }
 
-        internal void screenSizeChanged()
+        public void screenSizeChanged()
         {
-            int currentHeight = 0;
-            switch (taskbar.Alignment)
-            {
-                case TaskbarAlignment.Top:
-                    currentHeight = taskbar.Height;
-                    foreach (NotificationGUI openNotification in openNotifications)
-                    {
-                        openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
-                        currentHeight += openNotification.Height;
-                    }
-                    break;
-                case TaskbarAlignment.Right:
-                    foreach (NotificationGUI openNotification in openNotifications)
-                    {
-                        openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width - taskbar.Width, currentHeight);
-                        currentHeight += openNotification.Height;
-                    }
-                    break;
-                default:
-                    foreach (NotificationGUI openNotification in openNotifications)
-                    {
-                        openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
-                        currentHeight += openNotification.Height;
-                    }
-                    break;
-            }
+            //int currentHeight = 0;
+            //switch (taskbar.Alignment)
+            //{
+            //    case TaskbarAlignment.Top:
+            //        currentHeight = taskbar.Height;
+            //        foreach (NotificationGUI openNotification in openNotifications)
+            //        {
+            //            openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
+            //            currentHeight += openNotification.Height;
+            //        }
+            //        break;
+            //    case TaskbarAlignment.Right:
+            //        foreach (NotificationGUI openNotification in openNotifications)
+            //        {
+            //            openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width - taskbar.Width, currentHeight);
+            //            currentHeight += openNotification.Height;
+            //        }
+            //        break;
+            //    default:
+            //        foreach (NotificationGUI openNotification in openNotifications)
+            //        {
+            //            openNotification.setPosition(RenderManager.Instance.ViewWidth - openNotification.Width, currentHeight);
+            //            currentHeight += openNotification.Height;
+            //        }
+            //        break;
+            //}
         }
 
         private void positionNotification(NotificationGUI notification)
         {
-            int additionalHeightOffset = 0;
-            foreach(NotificationGUI openNotification in openNotifications)
-            {
-                additionalHeightOffset += openNotification.Height;
-            }
-            openNotifications.Add(notification);
-            switch (taskbar.Alignment)
-            {
-                case TaskbarAlignment.Top:
-                    notification.show(RenderManager.Instance.ViewWidth - notification.Width, taskbar.Height + additionalHeightOffset);
-                    break;
-                case TaskbarAlignment.Right:
-                    notification.show(RenderManager.Instance.ViewWidth - notification.Width - taskbar.Width, additionalHeightOffset);
-                    break;
-                default:
-                    notification.show(RenderManager.Instance.ViewWidth - notification.Width, additionalHeightOffset);
-                    break;
-            }
+            //int additionalHeightOffset = 0;
+            //foreach(NotificationGUI openNotification in openNotifications)
+            //{
+            //    additionalHeightOffset += openNotification.Height;
+            //}
+            //openNotifications.Add(notification);
+            //switch (taskbar.Alignment)
+            //{
+            //    case TaskbarAlignment.Top:
+            //        notification.show(RenderManager.Instance.ViewWidth - notification.Width, taskbar.Height + additionalHeightOffset);
+            //        break;
+            //    case TaskbarAlignment.Right:
+            //        notification.show(RenderManager.Instance.ViewWidth - notification.Width - taskbar.Width, additionalHeightOffset);
+            //        break;
+            //    default:
+            //        notification.show(RenderManager.Instance.ViewWidth - notification.Width, additionalHeightOffset);
+            //        break;
+            //}
         }
 
         private void relayoutNotifications()
         {
-            int currentHeight = 0;
-            if (taskbar.Alignment == TaskbarAlignment.Top)
-            {
-                currentHeight = taskbar.Height;
-            }
-            foreach (NotificationGUI openNotification in openNotifications)
-            {
-                openNotification.setPosition(openNotification.Left, currentHeight);
-                currentHeight += openNotification.Height;
-            }
+            //int currentHeight = 0;
+            //if (taskbar.Alignment == TaskbarAlignment.Top)
+            //{
+            //    currentHeight = taskbar.Height;
+            //}
+            //foreach (NotificationGUI openNotification in openNotifications)
+            //{
+            //    openNotification.setPosition(openNotification.Left, currentHeight);
+            //    currentHeight += openNotification.Height;
+            //}
         }
 
         private IEnumerator<YieldAction> timedNotification(NotificationGUI notificationGui, double waitTime)

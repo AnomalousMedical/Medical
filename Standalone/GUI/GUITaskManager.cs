@@ -7,7 +7,7 @@ using Logging;
 
 namespace Medical.GUI
 {
-    class GUITaskManager
+    public class GUITaskManager
     {
         private const String TASKBAR_ALIGNMENT_SECTION = "__TaskbarAlignment__";
 

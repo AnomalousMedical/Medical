@@ -49,12 +49,12 @@ namespace Developer.GUI
         private NotificationGUIManager notificationManager;
         private GUIManager guiManager;
 
-        public DeveloperRenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, GUIManager guiManager)
+        public DeveloperRenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, GUIManager guiManager, NotificationGUIManager notificationManager)
             : base("Developer.GUI.DeveloperRenderer.DeveloperRenderPropertiesDialog.layout")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
-            this.notificationManager = guiManager.NotificationManager;
+            this.notificationManager = notificationManager;
             this.guiManager = guiManager;
 
             width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as EditBox);

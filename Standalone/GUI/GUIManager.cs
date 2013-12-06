@@ -30,6 +30,9 @@ namespace Medical.GUI
 
     public class GUIManager : IDisposable
     {
+        public event Action<ConfigFile> SaveUIConfiguration;
+        public event Action<ConfigFile> LoadUIConfiguration;
+
         private static String INFO_SECTION = "__Info_Section_Reserved__";
         private static String INFO_VERSION = "Version";
         private static String INFO_UISCALE = "UIScale";
@@ -39,8 +42,7 @@ namespace Medical.GUI
 
         private AnimatedLayoutContainer[] borderLayoutContainers = new AnimatedLayoutContainer[8];
 
-        private Taskbar taskbar;
-        private TaskMenu taskMenu;
+        private SingleChildLayoutContainer rootContainer;
         private BorderLayoutContainer mainBorderLayout;
         private BorderLayoutContainer editorPreviewBorderLayout;
         private MDILayoutManager mdiManager;
@@ -58,10 +60,6 @@ namespace Medical.GUI
         private MyGUITextDisplayFactory textDisplayFactory;
         private List<LayoutContainer> fullscreenPopups = new List<LayoutContainer>();
         private MyGUIImageRendererProgress imageRendererProgress;
-        private NotificationGUIManager notificationManager;
-
-        //Helper classes
-        GUITaskManager guiTaskManager;
 
         //Events
         public event Action MainGUIShown;
@@ -74,22 +72,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            //Dialogs
-            if (saveWindowsOnExit && MedicalConfig.WindowsFile != null)
-            {
-                ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
-                ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
-                infoSection.setValue(INFO_VERSION, this.GetType().Assembly.GetName().Version.ToString());
-                infoSection.setValue(INFO_UISCALE, ScaleHelper.ScaleFactor);
-                dialogManager.saveDialogLayout(configFile);
-                guiTaskManager.savePinnedTasks(configFile);
-                configFile.writeConfigFile();
-            }
-            else
-            {
-                Log.Warning("Could not save window configuration because the WindowsFile is not defined.");
-            }
-			IDisposableUtil.DisposeIfNotNull(dialogManager);
+            IDisposableUtil.DisposeIfNotNull(dialogManager);
 
             //Containers
             foreach (AnimatedLayoutContainer container in borderLayoutContainers)
@@ -100,9 +83,6 @@ namespace Medical.GUI
             //Other
 			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
 			IDisposableUtil.DisposeIfNotNull(continuePrompt);
-			IDisposableUtil.DisposeIfNotNull(taskMenu);
-			IDisposableUtil.DisposeIfNotNull(taskbar);
-			IDisposableUtil.DisposeIfNotNull(notificationManager);
         }
 
         public void createGUI(MDILayoutManager mdiManager)
@@ -120,22 +100,13 @@ namespace Medical.GUI
 
             //Dialogs
             dialogManager = new DialogManager(mdiManager);
-
+        
             //Taskbar
-            taskbar = new Taskbar(standaloneController);
-            taskbar.SuppressLayout = true;
-            taskbar.OpenTaskMenu += new GUI.Taskbar.OpenTaskMenuEvent(taskbar_OpenTaskMenu);
-            taskbar.AlignmentChanged += new Action<GUI.Taskbar>(taskbar_AlignmentChanged);
+            this.rootContainer = new NullLayoutContainer();
+            rootContainer.SuppressLayout = true;
 
-            taskbar.Child = mainBorderLayout;
-            screenLayoutManager.Root = taskbar;
-
-            notificationManager = new NotificationGUIManager(taskbar, standaloneController);
-
-            //Task Menu
-            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController);
-
-            guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
+            rootContainer.Child = mainBorderLayout;
+            screenLayoutManager.Root = rootContainer;
 
             //Outer border layout
             int panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Main);
@@ -182,13 +153,25 @@ namespace Medical.GUI
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
 
-            taskbar.SuppressLayout = false;
-            taskbar.layout();
+            rootContainer.SuppressLayout = false;
+            rootContainer.layout();
 
             continuePrompt = new MyGUIContinuePromptProvider();
 
             imageDisplayFactory = new MyGUIImageDisplayFactory(standaloneController.SceneViewController);
             textDisplayFactory = new MyGUITextDisplayFactory(standaloneController.SceneViewController);
+        }
+
+        public void setRootContainer(SingleChildLayoutContainer root)
+        {
+            rootContainer = root;
+            rootContainer.SuppressLayout = true;
+
+            rootContainer.Child = mainBorderLayout;
+            screenLayoutManager.Root = rootContainer;
+
+            rootContainer.SuppressLayout = false;
+            rootContainer.invalidate();
         }
 
         public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
@@ -226,15 +209,14 @@ namespace Medical.GUI
         {
             if (mainGuiShowing != enabled)
             {
-                taskbar.SuppressLayout = true;
+                rootContainer.SuppressLayout = true;
                 standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
                 if (enabled)
                 {
-                    if (!taskbar.Visible)
+                    if (!rootContainer.Visible)
                     {
-                        taskbar.Visible = true;
+                        rootContainer.Visible = true;
                         dialogManager.reopenMainGUIDialogs();
-                        notificationManager.reshowAllNotifications();
                         if (MainGUIShown != null)
                         {
                             MainGUIShown.Invoke();
@@ -243,17 +225,16 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    taskbar.Visible = false;
+                    rootContainer.Visible = false;
                     dialogManager.closeMainGUIDialogs();
-                    notificationManager.hideAllNotifications();
                     if (MainGUIHidden != null)
                     {
                         MainGUIHidden.Invoke();
                     }
                 }
                 mainGuiShowing = enabled;
-                taskbar.SuppressLayout = false;
-                taskbar.layout();
+                rootContainer.SuppressLayout = false;
+                rootContainer.layout();
             }
         }
 
@@ -312,35 +293,8 @@ namespace Medical.GUI
             return false;
         }
 
-        public Taskbar Taskbar
+        internal void loadSavedUI(ConfigFile configFile)
         {
-            get
-            {
-                return taskbar;
-            }
-        }
-
-        public TaskMenu TaskMenu
-        {
-            get
-            {
-                return taskMenu;
-            }
-        }
-
-        public NotificationGUIManager NotificationManager
-        {
-            get
-            {
-                return notificationManager;
-            }
-        }
-
-        internal void loadSavedUI()
-        {
-            taskbar.SuppressLayout = true;
-            ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
-            configFile.loadConfigFile();
             ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
             String versionString = infoSection.getValue(INFO_VERSION, "0.0.0.0");
             float uiScale = infoSection.getValue(INFO_UISCALE, ScaleHelper.ScaleFactor);
@@ -360,9 +314,26 @@ namespace Medical.GUI
                     dialogManager.loadDialogLayout(configFile);
                 }
             }
-            guiTaskManager.loadPinnedTasks(configFile);
-            taskbar.SuppressLayout = false;
-            taskbar.layout();
+            if (LoadUIConfiguration != null)
+            {
+                LoadUIConfiguration.Invoke(configFile);
+            }
+        }
+
+        public void saveUI(ConfigFile configFile)
+        {
+            //Dialogs
+            if (saveWindowsOnExit)
+            {
+                ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
+                infoSection.setValue(INFO_VERSION, this.GetType().Assembly.GetName().Version.ToString());
+                infoSection.setValue(INFO_UISCALE, ScaleHelper.ScaleFactor);
+                if (SaveUIConfiguration != null)
+                {
+                    SaveUIConfiguration.Invoke(configFile);
+                }
+                dialogManager.saveDialogLayout(configFile);
+            }
         }
 
         private void screenLayoutManager_ScreenSizeChanged(int width, int height)
@@ -373,18 +344,12 @@ namespace Medical.GUI
             int yPos = (int)mainBorderLayout.Location.y;
             int innerWidth = (int)mainBorderLayout.WorkingSize.Width;
             int innerHeight = (int)mainBorderLayout.WorkingSize.Height;
-            if (taskMenu.Visible)
-            {
-                taskMenu.setPosition(xPos, yPos);
-                taskMenu.setSize(innerWidth, innerHeight);
-            }
             foreach (LayoutContainer fullscreenPopup in fullscreenPopups)
             {
                 fullscreenPopup.Location = new IntVector2(xPos, yPos);
                 fullscreenPopup.WorkingSize = new IntSize2(innerWidth, innerHeight);
                 fullscreenPopup.layout();
             }
-            notificationManager.screenSizeChanged();
         }
 
         public event ScreenSizeChanged ScreenSizeChanged
@@ -399,15 +364,9 @@ namespace Medical.GUI
             }
         }
 
-        void taskbar_OpenTaskMenu(int left, int top, int width, int height)
+        public void layout()
         {
-            taskMenu.setSize(width, height);
-            taskMenu.show(left, top);
-        }
-
-        void taskbar_AlignmentChanged(Taskbar obj)
-        {
-            notificationManager.screenSizeChanged();
+            screenLayoutManager.layout();
         }
     }
 }

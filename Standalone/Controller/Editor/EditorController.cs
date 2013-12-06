@@ -231,7 +231,7 @@ namespace Medical
         {
             get
             {
-                return standaloneController.GUIManager.NotificationManager;
+                return standaloneController.NotificationManager;
             }
         }
 

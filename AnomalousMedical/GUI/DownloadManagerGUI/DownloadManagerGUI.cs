@@ -43,7 +43,7 @@ namespace Medical.GUI
             this.downloadServer = downloadServer;
             downloadServer.DownloadFound += new Action<ServerDownloadInfo>(downloadServer_DownloadFound);
             downloadServer.FinishedReadingDownloads += new Action(downloadServer_FinishedReadingDownloads);
-            this.notificationManager = standaloneController.GUIManager.NotificationManager;
+            this.notificationManager = standaloneController.NotificationManager;
 
             pluginGrid = new SingleSelectButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);

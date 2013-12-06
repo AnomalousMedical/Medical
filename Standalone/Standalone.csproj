@@ -357,9 +357,12 @@
     <Compile Include="GUI\RmlWindow\RmlWindow.cs" />
     <Compile Include="GUI\RocketGui\RocketDebuggerWindow.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
+    <Compile Include="GUI\Taskbar\AppButtonTaskbar.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
     <Compile Include="Layout\AnimatedLayoutContainer.cs" />
+    <Compile Include="Layout\NullLayoutContainer.cs" />
+    <Compile Include="Layout\SingleChildLayoutContainer.cs" />
     <Compile Include="Layout\VariableSizeMyGUILayoutContainer.cs" />
     <Compile Include="Layout\MDI\MDILayoutContainerScale.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManagerScale.cs" />
@@ -775,6 +778,7 @@
     <Compile Include="Utility\PathExtensions.cs" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
     <EmbeddedResource Include="GUI\RocketGui\RocketDebuggerWindow.layout" />
+    <EmbeddedResource Include="GUI\Taskbar\AppButtonTaskbar.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
   </ItemGroup>

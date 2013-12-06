@@ -9,6 +9,7 @@ using OgreWrapper;
 using System.Diagnostics;
 using System.Reflection;
 using libRocketPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -29,6 +30,11 @@ namespace Medical.GUI
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
         private SequencePlayer sequencePlayer = null;
+
+        //Taskbar
+        private AppButtonTaskbar taskbar;
+        private TaskMenu taskMenu;
+        private GUITaskManager guiTaskManager;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -53,6 +59,9 @@ namespace Medical.GUI
             {
                 sequencePlayer.Dispose();
             }
+            guiManager.setRootContainer(new NullLayoutContainer());
+            IDisposableUtil.DisposeIfNotNull(taskbar);
+            IDisposableUtil.DisposeIfNotNull(taskMenu);
         }
 
         public void loadGUIResources()
@@ -69,13 +78,9 @@ namespace Medical.GUI
             standaloneController.MovementSequenceController.GroupAdded += MovementSequenceController_GroupAdded;
 
             bool hasPremium = licenseManager.allowFeature(1);
-            if(!hasPremium)
-            {
-                guiManager.TaskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
-            }
             standaloneController.AnatomyController.ShowPremiumAnatomy = hasPremium;
-            guiManager.TaskMenu.ShowAdImage = !hasPremium;
-            guiManager.TaskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
+            guiManager.SaveUIConfiguration += guiManager_SaveUIConfiguration;
+            guiManager.LoadUIConfiguration += guiManager_LoadUIConfiguration;
 
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
@@ -94,14 +99,28 @@ namespace Medical.GUI
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
             options.RequestRestart += new EventHandler(options_RequestRestart);
 
-            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager);
+            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager, standaloneController.NotificationManager);
             guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);
 
             //Taskbar
-            Taskbar taskbar = guiManager.Taskbar;
+            taskbar = new AppButtonTaskbar();
+            taskbar.OpenTaskMenu += taskbar_OpenTaskMenu;
+            taskbar.AlignmentChanged += taskbar_AlignmentChanged;
             taskbar.setAppIcon("AppButton/WideImage", "AppButton/NarrowImage");
+            guiManager.setRootContainer(taskbar);
+
+            //Task Menu
+            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager);
+            if (!hasPremium)
+            {
+                taskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
+            }
+            taskMenu.ShowAdImage = !hasPremium;
+            taskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
+
+            guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
             //Tasks
             selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
@@ -192,7 +211,7 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    standaloneController.GUIManager.NotificationManager.showNotification(String.Format("Cannot load command line supplied task '{0}'\nPlease make sure it is named correctly and that you own this plugin.", MedicalConfig.StartupTask), MessageBoxIcons.Error);
+                    standaloneController.NotificationManager.showNotification(String.Format("Cannot load command line supplied task '{0}'\nPlease make sure it is named correctly and that you own this plugin.", MedicalConfig.StartupTask), MessageBoxIcons.Error);
                 }
             }
             else if (MedicalConfig.FirstRun)
@@ -311,7 +330,7 @@ namespace Medical.GUI
         {
             if (hasUpdate)
             {
-                standaloneController.GUIManager.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
+                standaloneController.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }
         }
 
@@ -325,6 +344,27 @@ namespace Medical.GUI
 
             //We only care about the first one of these events that fires.
             standaloneController.MovementSequenceController.GroupAdded -= MovementSequenceController_GroupAdded;
+        }
+
+        void taskbar_AlignmentChanged(Taskbar obj)
+        {
+            standaloneController.NotificationManager.screenSizeChanged();
+        }
+
+        void taskbar_OpenTaskMenu(int left, int top, int width, int height)
+        {
+            taskMenu.setSize(width, height);
+            taskMenu.show(left, top);
+        }
+
+        void guiManager_SaveUIConfiguration(ConfigFile configFile)
+        {
+            guiTaskManager.savePinnedTasks(configFile);
+        }
+
+        void guiManager_LoadUIConfiguration(ConfigFile configFile)
+        {
+            guiTaskManager.loadPinnedTasks(configFile);
         }
     }
 }

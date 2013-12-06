@@ -64,7 +64,7 @@ namespace Developer
             pluginPublisher = new PluginPublisher(pluginPublishController);
             guiManager.addManagedDialog(pluginPublisher);
 
-            developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, guiManager);
+            developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, guiManager, standaloneController.NotificationManager);
             guiManager.addManagedDialog(developerRenderer);
 
             discControl = new DiscControl();

@@ -47,13 +47,13 @@ namespace Medical.GUI
         private GUIManager guiManager;
         private LicensePopup licensePopup = null;
 
-        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, ImageLicenseServer imageLicenseServer, GUIManager guiManager)
+        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer, ImageLicenseServer imageLicenseServer, GUIManager guiManager, NotificationGUIManager notificationManager)
             : base("Medical.GUI.Render.RenderPropertiesDialog.layout")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
             this.imageLicenseServer = imageLicenseServer;
-            this.notificationManager = guiManager.NotificationManager;
+            this.notificationManager = notificationManager;
             this.guiManager = guiManager;
 
             width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as EditBox);

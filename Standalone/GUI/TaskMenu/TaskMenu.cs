@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     public delegate void TaskDragDropEventDelegate(Task item, IntVector2 position);
 
-    public class TaskMenu : PopupContainer
+    public class TaskMenu : AbstractFullscreenGUIPopup
     {
         private class TaskMenuItemComparer : IComparer<ButtonGridItem>
         {
@@ -53,8 +53,8 @@ namespace Medical.GUI
 
         private TaskMenuPositioner taskMenuPositioner = new TaskMenuPositioner();
 
-        public TaskMenu(DocumentController documentController, TaskController taskController)
-            :base("Medical.GUI.TaskMenu.TaskMenu.layout")
+        public TaskMenu(DocumentController documentController, TaskController taskController, GUIManager guiManager)
+            :base("Medical.GUI.TaskMenu.TaskMenu.layout", guiManager)
         {
             this.taskController = taskController;
             taskController.TaskAdded += new TaskDelegate(taskController_TaskAdded);
@@ -141,6 +141,17 @@ namespace Medical.GUI
                     iconScroller.setSize(widget.Width, iconScroller.Height);
                     iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
                 }
+            }
+        }
+
+        protected override void layoutUpdated()
+        {
+            base.layoutUpdated();
+            if (Visible)
+            {
+                IntCoord viewCoord = iconScroller.ViewCoord;
+                iconGrid.resizeAndLayout(viewCoord.width);
+                recentDocuments.resizeAndLayout(viewCoord.width);
             }
         }
 

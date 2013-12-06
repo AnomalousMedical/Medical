@@ -61,6 +61,7 @@ namespace Medical
         private BackgroundScene background;
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
+        private NotificationGUIManager notificationManager;
 
         //Platform
         private MainWindow mainWindow;
@@ -78,6 +79,8 @@ namespace Medical
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalUserRoot, FolderFinder.AnomalousMedicalAllUserRoot);
             CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
             guiManager = new GUIManager(this);
+            guiManager.MainGUIShown += guiManager_MainGUIShown;
+            guiManager.MainGUIHidden += guiManager_MainGUIHidden;
 
             MyGUIInterface.OSTheme = PlatformConfig.ThemeFile;
 
@@ -131,7 +134,15 @@ namespace Medical
             }
 			IDisposableUtil.DisposeIfNotNull(touchController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
-			IDisposableUtil.DisposeIfNotNull(guiManager);
+            IDisposableUtil.DisposeIfNotNull(notificationManager);
+            if (guiManager != null)
+            {
+                ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+                guiManager.saveUI(configFile);
+                guiManager.Dispose();
+                guiManager = null;
+                configFile.writeConfigFile();
+            }
 			IDisposableUtil.DisposeIfNotNull(watermark);
 			IDisposableUtil.DisposeIfNotNull(measurementGrid);
 			IDisposableUtil.DisposeIfNotNull(anatomyController);
@@ -284,7 +295,19 @@ namespace Medical
         {
             //GUI
             guiManager.createGUI(mdiLayout);
+            
+            notificationManager = new NotificationGUIManager(this);
             guiManager.giveGUIsToTimelineController(timelineController);
+        }
+
+        void guiManager_MainGUIHidden()
+        {
+            notificationManager.hideAllNotifications();
+        }
+
+        void guiManager_MainGUIShown()
+        {
+            notificationManager.reshowAllNotifications();
         }
 
         public void initializePlugins()
@@ -295,18 +318,15 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.StandaloneIcons.xml");
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
 
-            Taskbar taskbar = GUIManager.Taskbar;
-            TaskMenu taskMenu = GUIManager.TaskMenu;
-            taskbar.SuppressLayout = true;
-            taskMenu.SuppressLayout = true;
             atlasPluginManager.initialzePlugins();
-            taskbar.SuppressLayout = false;
-            taskMenu.SuppressLayout = false;
-            taskbar.layout();
-            guiManager.loadSavedUI();
+            ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+            configFile.loadConfigFile();
+            guiManager.loadSavedUI(configFile);
 
             //Load recent documents here, this way the document handlers are all loaded
             DocumentController.loadRecentDocuments(MedicalConfig.RecentDocsFile);
+
+            guiManager.layout();
         }
 
         public void onIdle()
@@ -575,6 +595,14 @@ namespace Medical
             }
         }
 
+        public NotificationGUIManager NotificationManager
+        {
+            get
+            {
+                return notificationManager;
+            }
+        }
+
         /// <summary>
         /// This controller enables sharing of plugins. If it does not exist the program cannot share plugins.
         /// Do not create this anywhere except in StoreManagerPlugin.
@@ -660,7 +688,7 @@ namespace Medical
                 success = true;
                 if (behaviorErrorManager.HasErrors)
                 {
-                    guiManager.NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
+                    NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
                 }
             }
             return success;
@@ -736,7 +764,7 @@ namespace Medical
         {
             //At this point the plugins have not actually been loaded, so we must use a callback and have the downloadController fire its gui open task.
             //At the point where these can be clicked that task will be defined.
-            guiManager.NotificationManager.showCallbackNotification(String.Format("{0}\nClick here to download a working version.", message), "MessageBoxIcon", delegate()
+            NotificationManager.showCallbackNotification(String.Format("{0}\nClick here to download a working version.", message), "MessageBoxIcon", delegate()
             {
                 Task downloadGUITask = downloadController.OpenDownloadGUITask;
                 if (downloadGUITask != null)

@@ -64,7 +64,6 @@ namespace Medical
             standaloneController.PatientDataController.PatientDataChanged += new Action<PatientDataFile>(PatientDataController_PatientDataChanged);
 
             standaloneController.AnatomyController.ShowPremiumAnatomy = true;
-            guiManager.TaskMenu.ShowAdImage = false;
 
             //Dialogs
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
