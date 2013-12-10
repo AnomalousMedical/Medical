@@ -101,6 +101,7 @@ namespace Medical
             ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "PremiumFeatures/FavoritesIcon", TaskMenuCategories.Navigation);
             bookmarkTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(bookmarkTask);
+            Slideshow.AdditionalTasks.addTask(bookmarkTask);
 
             MDIDialogOpenTask statesTask = new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
             statesTask.ShowOnTimelineTaskbar = true;

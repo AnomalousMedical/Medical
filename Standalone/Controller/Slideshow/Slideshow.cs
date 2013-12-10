@@ -19,6 +19,16 @@ namespace Medical
         public const int BaseSlideScale = 1017;
         private const int CurrentVersion = 2;
 
+        private static TaskController additionalTasks = new TaskController();
+
+        public static TaskController AdditionalTasks
+        {
+            get
+            {
+                return additionalTasks;
+            }
+        }
+
         [DoNotSave]
         private List<Slide> slides = new List<Slide>();
 
@@ -105,6 +115,12 @@ namespace Medical
             {
                 mvcContext.runAction("Common/Close");
             })));
+
+            foreach (Task task in additionalTasks.Tasks)
+            {
+                taskbar.addItem(new TaskTaskbarItem(task));
+            }
+            
             mvcContext.Blurred += (ctx) =>
             {
                 guiManager.removeRootContainer(taskbar);

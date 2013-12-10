@@ -128,12 +128,14 @@ namespace Medical.GUI
 
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
+            //Tasks Menu
+            TaskController taskController = standaloneController.TaskController;
+
             //Tasks
             selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
             selectionModeTask.ShowOnTimelineTaskbar = true;
-
-            //Tasks Menu
-            TaskController taskController = standaloneController.TaskController;
+            taskController.addTask(selectionModeTask);
+            Slideshow.AdditionalTasks.addTask(selectionModeTask);
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Patient, 0));
@@ -176,7 +178,7 @@ namespace Medical.GUI
             MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Navigation);
             anatomyFinderTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(anatomyFinderTask);
-            taskController.addTask(selectionModeTask);
+            Slideshow.AdditionalTasks.addTask(anatomyFinderTask);
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)
