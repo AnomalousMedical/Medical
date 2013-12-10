@@ -297,6 +297,18 @@ namespace Medical.GUI
             }
         }
 
+        public int Padding
+        {
+            get
+            {
+                return padding;
+            }
+            set
+            {
+                padding = value;
+            }
+        }
+
         public void clearGapIndex()
         {
             GapIndex = -1;
@@ -318,20 +330,26 @@ namespace Medical.GUI
             }
         }
 
-        protected virtual void layoutCustomElementsVertical(out Vector2 startLocation, out int positionOffset)
+        /// <summary>
+        /// Layout any custom controls on the taskbar. Return where task icons should start going and an offset
+        /// from the total taskbar height to begin wrapping around.
+        /// </summary>
+        /// <param name="startLocation">The start location for tasks.</param>
+        /// <param name="heightOffset">The offset from the total height of the taskbar to begin wrapping.</param>
+        protected virtual void layoutCustomElementsVertical(out Vector2 startLocation, out int heightOffset)
         {
             startLocation = new Vector2(padding, padding);
-            positionOffset = padding;
+            heightOffset = padding;
         }
 
         private void layoutTaskbarVertical()
         {
             Vector2 startLocation;
-            int positionOffset;
+            int heightOffset;
 
-            layoutCustomElementsVertical(out startLocation, out positionOffset);
-            positionOffset += padding;
-            int iconAreaHeight = WorkingSize.Height - positionOffset;
+            layoutCustomElementsVertical(out startLocation, out heightOffset);
+            heightOffset += padding;
+            int iconAreaHeight = WorkingSize.Height - heightOffset;
             Vector2 currentLocation = startLocation;
 
             int counter = 0;
@@ -345,7 +363,7 @@ namespace Medical.GUI
                         currentLocation.y = startLocation.y;
                     }
                     gapCoord.left = (int)(currentLocation.x - padding);
-                    gapCoord.top = (int)(currentLocation.y + positionOffset - padding);
+                    gapCoord.top = (int)(currentLocation.y - padding);
                     gapCoord.width = (int)(itemSize.Width + padding);
                     gapCoord.height = (int)(itemSize.Height + padding);
                     currentLocation.y += itemSize.Height + padding;
@@ -357,7 +375,7 @@ namespace Medical.GUI
                     currentLocation.y = startLocation.y;
                 }
 
-                item.setCoord((int)currentLocation.x, (int)currentLocation.y + positionOffset, (int)itemSize.Width, (int)itemSize.Height);
+                item.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
                 currentLocation.y += itemSize.Height + padding;
             }
 
@@ -386,20 +404,26 @@ namespace Medical.GUI
             }
         }
 
-        protected virtual void layoutCustomElementsHorizontal(out Vector2 startLocation, out int positionOffset)
+        /// <summary>
+        /// Layout any custom controls on the taskbar. Return where task icons should start going and an offset
+        /// from the total taskbar width to begin wrapping around.
+        /// </summary>
+        /// <param name="startLocation">The start location for tasks.</param>
+        /// <param name="widthOffset">The offset from the total width of the taskbar to begin wrapping.</param>
+        protected virtual void layoutCustomElementsHorizontal(out Vector2 startLocation, out int widthOffset)
         {
             startLocation = new Vector2(padding, padding);
-            positionOffset = 0;
+            widthOffset = 0;
         }
 
         private void layoutTaskbarHorizontal()
         {
             Vector2 startLocation;
-            int positionOffset;
+            int widthOffset;
 
-            layoutCustomElementsHorizontal(out startLocation, out positionOffset);
-            positionOffset += padding;
-            int iconAreaWidth = (int)(WorkingSize.Width - positionOffset);
+            layoutCustomElementsHorizontal(out startLocation, out widthOffset);
+            widthOffset += padding;
+            int iconAreaWidth = (int)(WorkingSize.Width - widthOffset);
             Vector2 currentLocation = startLocation;
 
             int counter = 0;
@@ -412,7 +436,7 @@ namespace Medical.GUI
                         currentLocation.y += itemSize.Height + padding;
                         currentLocation.x = startLocation.x;
                     }
-                    gapCoord.left = (int)(currentLocation.x + positionOffset - padding);
+                    gapCoord.left = (int)(currentLocation.x - padding);
                     gapCoord.top = (int)(currentLocation.y - padding);
                     gapCoord.width = (int)(itemSize.Width + padding);
                     gapCoord.height = (int)(itemSize.Height + padding);
@@ -425,7 +449,7 @@ namespace Medical.GUI
                     currentLocation.x = startLocation.x;
                 }
 
-                item.setCoord((int)currentLocation.x + positionOffset, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                item.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
                 currentLocation.x += itemSize.Width + padding;
             }
 

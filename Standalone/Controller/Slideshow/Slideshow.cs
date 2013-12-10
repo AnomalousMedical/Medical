@@ -102,7 +102,8 @@ namespace Medical
                 Index = startIndex
             });
 
-            Taskbar taskbar = new Taskbar();
+            ClosingTaskbar taskbar = new ClosingTaskbar();
+            taskbar.Close += () => mvcContext.runAction("Common/Close");
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Back", "Back", "SlideshowIcons/Back", "None", (arg) =>
             {
                 mvcContext.runAction("NavigationBug/Previous");
@@ -110,10 +111,6 @@ namespace Medical
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Forward", "Forward", "SlideshowIcons/Forward", "None", (arg) =>
             {
                 mvcContext.runAction("NavigationBug/Next");
-            })));
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Close", "Close", "SlideshowIcons/Close", "None", (arg) =>
-            {
-                mvcContext.runAction("Common/Close");
             })));
 
             foreach (Task task in additionalTasks.Tasks)

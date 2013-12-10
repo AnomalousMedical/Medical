@@ -80,31 +80,33 @@ namespace Medical.GUI
             }
         }
 
-        protected override void layoutCustomElementsVertical(out Vector2 startLocation, out int positionOffset)
+        protected override void layoutCustomElementsVertical(out Vector2 startLocation, out int heightOffset)
         {
             appButton.ImageBox.setItemResource(narrowIcon);
             appButton.ImageBox.setSize(ScaleHelper.Scaled(28), ScaleHelper.Scaled(32));
             appButton.setSize(taskbarButtonWidth, appButton.Height);
             startLocation = new Vector2(appButton.Left, 0);
 
-            positionOffset = 0;
+            heightOffset = 0;
             if (appButton.Visible)
             {
-                positionOffset = appButton.Bottom;
+                heightOffset = 0;
+                startLocation.y = appButton.Bottom + Padding;
             }
         }
 
-        protected override void layoutCustomElementsHorizontal(out Vector2 startLocation, out int positionOffset)
+        protected override void layoutCustomElementsHorizontal(out Vector2 startLocation, out int widthOffset)
         {
             appButton.ImageBox.setItemResource(wideIcon);
             appButton.ImageBox.setSize(ScaleHelper.Scaled(114), ScaleHelper.Scaled(32));
             appButton.setSize(appButtonWideWidth, appButton.Height);
             startLocation = new Vector2(0, appButton.Top);
 
-            positionOffset = 0;
+            widthOffset = 0;
             if (appButton.Visible)
             {
-                positionOffset = appButton.Right;
+                widthOffset = 0;
+                startLocation.x = appButton.Right + Padding;
             }
         }
     }
