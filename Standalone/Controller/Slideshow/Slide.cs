@@ -35,7 +35,7 @@ namespace Medical
             this.layoutStrategy = layoutStrategy;
         }
 
-        public void setupContext(AnomalousMvcContext context, String name, bool allowPrevious, bool allowNext, ResourceProvider resourceProvider)
+        public void setupContext(AnomalousMvcContext context, String name, ResourceProvider resourceProvider)
         {
             MvcController controller = new MvcController(name);
             RunCommandsAction showCommand = new RunCommandsAction("Show");
@@ -51,7 +51,7 @@ namespace Medical
             }
             context.Controllers.add(controller);
 
-            layoutStrategy.createViews(name, showCommand, context, this, allowPrevious, allowNext);            
+            layoutStrategy.createViews(name, showCommand, context, this);            
 
             controller.Actions.add(showCommand);
             customizeController(controller, showCommand);

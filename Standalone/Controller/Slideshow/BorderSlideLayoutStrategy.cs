@@ -21,28 +21,13 @@ namespace Medical
 
         }
 
-        public void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide, bool allowPrevious, bool allowNext)
+        public void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide)
         {
             SlideInstanceLayoutStrategy instanceStrategy = createLayoutStrategy();
-            bool addButtonsOnLeftOnly = panels.ContainsKey(ViewLocations.Left);
-            bool addButtons = !addButtonsOnLeftOnly;
             foreach (SlidePanel panel in panels.Values)
             {
                 MyGUIView view = panel.createView(slide, name);
                 instanceStrategy.addView(view);
-                if (addButtons || (addButtonsOnLeftOnly && panel.ViewLocation == ViewLocations.Left))
-                {
-                    addButtons = false;
-                    if (allowPrevious)
-                    {
-                        view.Buttons.add(new ButtonDefinition("Previous", "NavigationBug/Previous"));
-                    }
-                    if (allowNext)
-                    {
-                        view.Buttons.add(new ButtonDefinition("Next", "NavigationBug/Next"));
-                    }
-                    view.Buttons.add(new CloseButtonDefinition("Close", "Common/Close"));
-                }
                 showCommand.addCommand(new ShowViewCommand(view.Name));
                 context.Views.add(view);
             }

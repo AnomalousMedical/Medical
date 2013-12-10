@@ -698,7 +698,7 @@ namespace Lecture
             {
                 startIndex = 0;
             }
-            AnomalousMvcContext context = slideshow.createContext(ResourceProvider, startIndex);
+            AnomalousMvcContext context = slideshow.createContext(ResourceProvider, standaloneController.GUIManager, startIndex);
             context.RuntimeName = editorController.EditorContextRuntimeName;
             context.setResourceProvider(ResourceProvider);
             context.BlurAction = "Common/Blur";

@@ -2,6 +2,7 @@
 using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
+using Medical.GUI;
 using Medical.GUI.AnomalousMvc;
 using System;
 using System.Collections.Generic;
@@ -63,7 +64,7 @@ namespace Medical
             return slides[index];
         }
 
-        public AnomalousMvcContext createContext(ResourceProvider resourceProvider, int startIndex = 0)
+        public AnomalousMvcContext createContext(ResourceProvider resourceProvider, GUIManager guiManager, int startIndex = 0)
         {
             AnomalousMvcContext mvcContext;
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -77,7 +78,7 @@ namespace Medical
             foreach(Slide slide in slides)
             {
                 String slideName = slide.UniqueName;
-                slide.setupContext(mvcContext, slideName, i != 0, i != lastSlideIndex, resourceProvider);
+                slide.setupContext(mvcContext, slideName, resourceProvider);
 
                 NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");
                 navModel.addNavigationLink(link);
@@ -90,6 +91,32 @@ namespace Medical
             {
                 Index = startIndex
             });
+
+            Taskbar taskbar = new Taskbar();
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Back", "Back", "SlideshowIcons/Back", "None", (arg) =>
+            {
+                mvcContext.runAction("NavigationBug/Previous");
+            })));
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Forward", "Forward", "SlideshowIcons/Forward", "None", (arg) =>
+            {
+                mvcContext.runAction("NavigationBug/Next");
+            })));
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Close", "Close", "SlideshowIcons/Close", "None", (arg) =>
+            {
+                mvcContext.runAction("Common/Close");
+            })));
+            mvcContext.Blurred += (ctx) =>
+            {
+                guiManager.removeRootContainer(taskbar);
+            };
+            mvcContext.Focused += (ctx) =>
+            {
+                guiManager.pushRootContainer(taskbar);
+            };
+            mvcContext.RemovedFromStack += (ctx) =>
+            {
+                taskbar.Dispose();
+            };
 
             return mvcContext;
         }

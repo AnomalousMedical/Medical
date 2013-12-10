@@ -40,6 +40,7 @@ namespace Medical
         {
             TimelineController = standaloneController.TimelineController;
             MvcCore = standaloneController.MvcCore;
+            GuiManager = standaloneController.GUIManager;
 
             TaskController taskController = standaloneController.TaskController;
             foreach (DDPluginTask task in tasks)
@@ -146,6 +147,8 @@ namespace Medical
         public TimelineController TimelineController { get; private set; }
 
         public AnomalousMvcCore MvcCore { get; private set; }
+
+        public GUIManager GuiManager { get; private set; }
 
         public String PluginRootFolder { get; set; }
 

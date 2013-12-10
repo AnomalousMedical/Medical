@@ -10,7 +10,7 @@ namespace Medical
 {
     public interface SlideLayoutStrategy : Saveable
     {
-        void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide, bool allowPrevious, bool allowNext);
+        void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide);
 
         SlideInstanceLayoutStrategy createLayoutStrategy();
 

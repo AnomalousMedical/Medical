@@ -30,7 +30,7 @@ namespace Medical
                 {
                     slideshow = SharedXmlSaver.Load<Slideshow>(stream);
                 }
-                AnomalousMvcContext context = slideshow.createContext(resourceProvider);
+                AnomalousMvcContext context = slideshow.createContext(resourceProvider, Plugin.GuiManager);
                 context.RuntimeName = UniqueName;
                 context.setResourceProvider(resourceProvider);
                 Plugin.TimelineController.setResourceProvider(resourceProvider);

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/Back">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/Close">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/Forward">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

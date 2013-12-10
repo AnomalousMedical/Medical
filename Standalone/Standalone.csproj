@@ -920,6 +920,8 @@
     <EmbeddedResource Include="Resources\CommonEditorIcons%402x.xml" />
     <EmbeddedResource Include="Resources\CommonEditorIcons.png" />
     <EmbeddedResource Include="Resources\CommonEditorIcons.xml" />
+    <EmbeddedResource Include="Resources\SlideshowIcons.png" />
+    <EmbeddedResource Include="Resources\SlideshowIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

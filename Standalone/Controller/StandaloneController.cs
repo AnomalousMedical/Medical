@@ -317,6 +317,7 @@ namespace Medical
 
             ResourceManager.Instance.load("Medical.Resources.StandaloneIcons.xml");
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
+            ResourceManager.Instance.load("Medical.Resources.SlideshowIcons.xml");
 
             atlasPluginManager.initialzePlugins();
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);

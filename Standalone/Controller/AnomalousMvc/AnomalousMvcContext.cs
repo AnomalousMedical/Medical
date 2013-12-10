@@ -20,6 +20,20 @@ namespace Medical.Controller.AnomalousMvc
         public event Action<AnomalousMvcContext> Started;
 
         /// <summary>
+        /// Called when the context is shutting down or suspending. It will be
+        /// called before those events and means the context is becoming
+        /// inactive.
+        /// </summary>
+        public event Action<AnomalousMvcContext> Blurred;
+
+        /// <summary>
+        /// Called when the context becomes focused or active. This will be
+        /// called after startup and after resume and means that the context is
+        /// open and ready to recieve input.
+        /// </summary>
+        public event Action<AnomalousMvcContext> Focused;
+
+        /// <summary>
         /// Called at the end of the context's lifecycle when it is removed from
         /// the context stack. You can reuse it again from there, but it won't
         /// be a part of the stack anymore. This, unlike shutdown, is called every
@@ -139,6 +153,10 @@ namespace Medical.Controller.AnomalousMvc
         /// </summary>
         private void focus()
         {
+            if (Focused != null)
+            {
+                Focused.Invoke(this);
+            }
             if (!String.IsNullOrEmpty(FocusAction))
             {
                 runFinalAction(FocusAction);
@@ -152,6 +170,10 @@ namespace Medical.Controller.AnomalousMvc
         /// </summary>
         private void blur()
         {
+            if (Blurred != null)
+            {
+                Blurred.Invoke(this);
+            }
             if (!String.IsNullOrEmpty(BlurAction))
             {
                 runFinalAction(BlurAction);

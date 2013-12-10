@@ -19,20 +19,20 @@ namespace Medical
         public event Action<CallbackTask, IntVector2> DragEnded;
         private bool active = false;
 
-        public CallbackTask(String uniqueName, String name, String iconName, String category)
-            : this(name, uniqueName, iconName, category, DEFAULT_WEIGHT, true)
+        public CallbackTask(String uniqueName, String name, String iconName, String category, ClickedCallback callback = null)
+            : this(uniqueName, name, iconName, category, DEFAULT_WEIGHT, true, callback)
         {
 
         }
 
-        public CallbackTask(String uniqueName, String name, String iconName, String category, int weight)
-            : this(name, uniqueName, iconName, category, weight, true)
+        public CallbackTask(String uniqueName, String name, String iconName, String category, int weight, ClickedCallback callback = null)
+            : this(uniqueName, name, iconName, category, weight, true, callback)
         {
 
         }
 
-        public CallbackTask(String uniqueName, String name, String iconName, String category, bool showOnTaskbar)
-            : this(name, uniqueName, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
+        public CallbackTask(String uniqueName, String name, String iconName, String category, bool showOnTaskbar, ClickedCallback callback = null)
+            : this(uniqueName, name, iconName, category, DEFAULT_WEIGHT, showOnTaskbar, callback)
         {
 
         }
