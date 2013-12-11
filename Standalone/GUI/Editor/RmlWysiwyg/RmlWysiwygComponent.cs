@@ -614,7 +614,7 @@ namespace Medical.GUI
         private void showRmlElementEditor(Element element, ElementStrategy strategy)
         {
             cancelAndHideEditor();
-            RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, widget.AbsoluteLeft + widget.Width, (int)element.AbsoluteTop + rocketWidget.AbsoluteTop);
+            RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, 0, 0);
             if (editor == null)
             {
                 //The editor was null, which means editing is not supported so just clear the selection.
@@ -622,10 +622,27 @@ namespace Medical.GUI
                 return; //Return here to prevent more execution
             }
 
-            if (ViewHost.View.ViewLocation == ViewLocations.Right)
+            int left, top;
+            switch (ViewHost.View.ViewLocation)
             {
-                editor.setPosition(widget.AbsoluteLeft - editor.Width, editor.AbsoluteTop);
+                case ViewLocations.Right:
+                    left = widget.AbsoluteLeft - editor.Width;
+                    top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
+                    break;
+                case ViewLocations.Top:
+                    left = rocketWidget.AbsoluteLeft;
+                    top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop + (int)element.ClientHeight;
+                    break;
+                case ViewLocations.Bottom:
+                    left = rocketWidget.AbsoluteLeft;
+                    top = rocketWidget.AbsoluteTop - editor.Height;
+                    break;
+                default:
+                    left = widget.AbsoluteLeft + widget.Width;
+                    top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
+                    break;
             }
+            editor.setPosition(left, top, true);
 
             editor.UndoRml = UnformattedRml;
             //Everything is good so setup.

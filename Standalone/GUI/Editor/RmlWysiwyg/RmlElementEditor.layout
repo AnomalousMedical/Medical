@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="96 60 385 368" layer="Overlapped">
+    <Widget type="Widget" skin="PopupPanel" position="96 60 385 368" layer="Overlapped">
         <Widget type="Button" skin="ImageButton" position="2 2 27 23" name="Up">
             <Property key="Caption" value="Up"/>
             <Property key="ImageResource" value="Medical.Icon.RmlWysiwyg.MoveUp"/>
@@ -13,7 +13,7 @@
             <Property key="Caption" value="Del"/>
             <Property key="ImageResource" value="Medical.Icon.RmlWysiwyg.Delete"/>
         </Widget>
-        <Widget type="TabControl" skin="TabControl" position="0 27 385 341" align="Stretch" name="Tabs"/>
+        <Widget type="TabControl" skin="TabControl" position="1 27 383 340" align="Stretch" name="Tabs"/>
         <Widget type="Button" skin="ButtonXBig" position="356 2 27 23" align="Right Top" name="Close"/>
     </Widget>
     <CodeGeneratorSettings/>
