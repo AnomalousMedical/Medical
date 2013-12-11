@@ -9,26 +9,37 @@ using System.Text;
 
 namespace Lecture
 {
-    class PanelResizeWidget : IDisposable
+    class PanelResizeWidget
     {
         Widget resizeWidget;
         RmlEditorViewInfo currentEditor;
         IntVector2 mousePressOffset;
         int panelStartingSize;
+        bool visible = false;
+        bool allowResizeEvents = true;
 
         public delegate void RecordResizeInfoDelegate(RmlEditorViewInfo view, int oldSize, int newSize);
         public event RecordResizeInfoDelegate RecordResizeUndo;
 
         public PanelResizeWidget()
         {
-            resizeWidget = Gui.Instance.createWidgetT("Widget", "ResizeHandle", 0, 0, ScaleHelper.Scaled(20), ScaleHelper.Scaled(20), Align.Default, "Overlapped", "Resize");
-            resizeWidget.MouseButtonPressed += resizeWidget_MouseButtonPressed;
-            resizeWidget.MouseDrag += resizeWidget_MouseDrag;
-            resizeWidget.MouseButtonReleased += resizeWidget_MouseButtonReleased;
-            resizeWidget.Visible = false;
+            
         }
 
-        public void Dispose()
+        public void createResizeWidget()
+        {
+            if (resizeWidget == null)
+            {
+                resizeWidget = Gui.Instance.createWidgetT("Widget", "ResizeHandle", 0, 0, ScaleHelper.Scaled(20), ScaleHelper.Scaled(20), Align.Default, "Overlapped", "Resize");
+                resizeWidget.MouseButtonPressed += resizeWidget_MouseButtonPressed;
+                resizeWidget.MouseDrag += resizeWidget_MouseDrag;
+                resizeWidget.MouseButtonReleased += resizeWidget_MouseButtonReleased;
+                resizeWidget.Visible = visible;
+                positionResizeWidget();
+            }
+        }
+
+        public void destroyResizeWidget()
         {
             if (resizeWidget != null)
             {
@@ -82,23 +93,39 @@ namespace Lecture
 
         public void setCurrentEditor(RmlEditorViewInfo editor)
         {
-            if (currentEditor != null && currentEditor.Component != null)
+            if (currentEditor != null)
             {
-                currentEditor.Component.ViewHost.ViewResized -= ViewHost_ViewResized;
+                currentEditor.ViewResized -= ViewHost_ViewResized;
             }
             currentEditor = editor;
             positionResizeWidget();
-            if (currentEditor != null && currentEditor.Component != null)
+            if (currentEditor != null)
             {
-                currentEditor.Component.ViewHost.ViewResized += ViewHost_ViewResized;
+                currentEditor.ViewResized += ViewHost_ViewResized;
+            }
+        }
+
+        private bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                visible = value;
+                if (resizeWidget != null)
+                {
+                    resizeWidget.Visible = value;
+                }
             }
         }
 
         private void positionResizeWidget()
         {
-            if (currentEditor != null && currentEditor.Component != null)
+            Visible = currentEditor != null && resizeWidget != null && currentEditor.Component != null;
+            if(Visible)
             {
-                resizeWidget.Visible = true;
                 Widget editorWidget = currentEditor.Component.Widget;
                 int left, top;
                 switch (currentEditor.View.ViewLocation)
@@ -131,15 +158,16 @@ namespace Lecture
                 resizeWidget.setPosition(left - resizeWidget.Width / 2, top - resizeWidget.Height / 2);
                 LayerManager.Instance.upLayerItem(resizeWidget);
             }
-            else
-            {
-                resizeWidget.Visible = false;
-            }
         }
 
         void ViewHost_ViewResized(ViewHost viewHost)
         {
-            positionResizeWidget();
+            if (allowResizeEvents)
+            {
+                allowResizeEvents = false;
+                positionResizeWidget();
+                allowResizeEvents = true;
+            }
         }
     }
 }

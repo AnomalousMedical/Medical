@@ -197,6 +197,7 @@ namespace Lecture
                         Focus.Invoke(this);
                     }
                     slideLayoutPicker.createLayoutPicker();
+                    panelResizeWidget.createResizeWidget();
                 }),
                 new CallbackAction("Blur", context =>
                 {
@@ -212,7 +213,7 @@ namespace Lecture
                     slideLayoutPicker.destroyLayoutPicker();
                     GlobalContextEventHandler.disableEventContext(eventContext);
                     htmlDragDrop.DestroyIconPreview();
-                    panelResizeWidget.Dispose();
+                    panelResizeWidget.destroyResizeWidget();
                     if (Blur != null)
                     {
                         Blur.Invoke(this);

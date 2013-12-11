@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Medical;
+using Medical.Controller.AnomalousMvc;
 using Medical.GUI;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,13 @@ namespace Lecture
 {
     class RmlEditorViewInfo
     {
+        /// <summary>
+        /// This event will fire when the view for an editor has resized. Subscribing to this instead of
+        /// the wrapped component events will allow the event subscription to work even if the component is
+        /// currently not available.
+        /// </summary>
+        public event Action<ViewHost> ViewResized;
+
         public RmlEditorViewInfo()
         {
 
@@ -35,11 +43,13 @@ namespace Lecture
                 if (component != null)
                 {
                     component.Disposed -= component_Disposed;
+                    component.ViewHost.ViewResized -= ViewHost_ViewResized;
                 }
                 component = value;
                 if (component != null)
                 {
                     component.Disposed += component_Disposed;
+                    component.ViewHost.ViewResized += ViewHost_ViewResized;
                 }
             }
         }
@@ -87,6 +97,14 @@ namespace Lecture
         {
             component.Disposed -= component_Disposed;
             component = null;
+        }
+
+        void ViewHost_ViewResized(ViewHost obj)
+        {
+            if (ViewResized != null)
+            {
+                ViewResized.Invoke(obj);
+            }
         }
     }
 }
