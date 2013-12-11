@@ -17,7 +17,7 @@ namespace Medical
     {
         public const String SlideThumbName = "Thumb.png";
         public const int BaseSlideScale = 1017;
-        private const int CurrentVersion = 2;
+        public const int CurrentVersion = 2;
 
         private static TaskController additionalTasks = new TaskController();
 
@@ -167,18 +167,22 @@ namespace Medical
             }
         }
 
+        public void updateToVersion(int newVersion)
+        {
+            if (newVersion <= CurrentVersion && newVersion > version)
+            {
+                foreach (Slide slide in slides)
+                {
+                    slide.updateToVersion(version, newVersion);
+                }
+                version = newVersion;
+            }
+        }
+
         protected Slideshow(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info, ReflectedSaver.DefaultScanner);
             info.RebuildList("Slides", slides);
-            if (version != CurrentVersion)
-            {
-                foreach (Slide slide in slides)
-                {
-                    slide.updateToVersion(version, CurrentVersion);
-                }
-                version = CurrentVersion;
-            }
         }
 
         public virtual void getInfo(SaveInfo info)

@@ -809,6 +809,7 @@ namespace Lecture
         {
             standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.getFullFilePath(file));
             slideshow = editorController.loadFile<Slideshow>(file);
+            updateSmartLecture();
             if (SlideshowLoaded != null)
             {
                 SlideshowLoaded.Invoke(slideshow);
@@ -860,6 +861,19 @@ namespace Lecture
         internal void openProject(string projectPath, string fullFilePath)
         {
             editorController.openProject(projectPath, fullFilePath);
+        }
+
+        private void updateSmartLecture()
+        {
+            if (slideshow.Version < Slideshow.CurrentVersion)
+            {
+                if (slideshow.Version < 2)
+                {
+                    EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                    EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                }
+                slideshow.updateToVersion(Slideshow.CurrentVersion);
+            }
         }
 
         internal void closeEditors()
