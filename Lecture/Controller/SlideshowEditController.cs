@@ -805,25 +805,17 @@ namespace Lecture
             }
         }
 
+        /// <summary>
+        /// Load a slideshow. The SlideshowLoaded event will fire when it is done.
+        /// </summary>
+        /// <param name="file"></param>
         void loadSlideshow(String file)
         {
             standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.getFullFilePath(file));
             slideshow = editorController.loadFile<Slideshow>(file);
-            updateSmartLecture();
-            if (SlideshowLoaded != null)
+            if (updateSmartLecture())
             {
-                SlideshowLoaded.Invoke(slideshow);
-            }
-            if (slideshow.Count > 0)
-            {
-                if (SlideSelected != null)
-                {
-                    SlideSelected(slideshow.get(0), IEnumerableUtil<Slide>.EmptyIterator);
-                }
-            }
-            else
-            {
-                medicalSlideTemplate.createItem("", editorController);
+                finishLoadingSlideshow();
             }
         }
 
@@ -863,16 +855,64 @@ namespace Lecture
             editorController.openProject(projectPath, fullFilePath);
         }
 
-        private void updateSmartLecture()
+        /// <summary>
+        /// Check a loaded slideshow to see if it needs updates or if the program does.
+        /// Returns true if it is safe to finish loading or false if this function will
+        /// handle that step somehow later.
+        /// </summary>
+        /// <returns></returns>
+        private bool updateSmartLecture()
         {
             if (slideshow.Version < Slideshow.CurrentVersion)
             {
-                if (slideshow.Version < 2)
+                MessageBox.show("This Smart Lecture is out of date, would you like to update it now?\nUpdating this Smart Lecture will allow you to edit it, however, it will be incompatible with older versions of Anomalous Medical.\nIt is reccomended that you do this update.", "Update Required", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, (result) =>
+                    {
+                        if (result == MessageBoxStyle.Yes)
+                        {
+                            if (slideshow.Version < 2)
+                            {
+                                EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                                EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                            }
+                            slideshow.updateToVersion(Slideshow.CurrentVersion);
+                            save();
+                            finishLoadingSlideshow();
+                        }
+                        else
+                        {
+                            closeProject();
+                        }
+                    });
+                return false;
+            }
+            else if (slideshow.Version > Slideshow.CurrentVersion)
+            {
+                MessageBox.show("This Smart Lecture was created in a newer version of Anomalous Medical.\nPlease update Anomalous Medical to be able to edit this file.", "Update Required", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
+                closeProject();
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Complete the sequence of loading a slideshow. Called after the slideshow is loaded, or if it needed upgrading after its upgraded.
+        /// </summary>
+        private void finishLoadingSlideshow()
+        {
+            if (SlideshowLoaded != null)
+            {
+                SlideshowLoaded.Invoke(slideshow);
+            }
+            if (slideshow.Count > 0)
+            {
+                if (SlideSelected != null)
                 {
-                    EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
-                    EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                    SlideSelected(slideshow.get(0), IEnumerableUtil<Slide>.EmptyIterator);
                 }
-                slideshow.updateToVersion(Slideshow.CurrentVersion);
+            }
+            else
+            {
+                medicalSlideTemplate.createItem("", editorController);
             }
         }
 
