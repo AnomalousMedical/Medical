@@ -246,6 +246,7 @@ namespace Medical.GUI
                 {
                     child._setParent(this);
                 }
+                invalidate();
             }
         }
 

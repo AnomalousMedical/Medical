@@ -40,12 +40,9 @@ namespace Medical.GUI
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
 
-        private AnimatedLayoutContainer[] borderLayoutContainers = new AnimatedLayoutContainer[8];
-
-        private SingleChildLayoutContainer rootContainer;
         private BorderLayoutContainer mainBorderLayout;
-        private BorderLayoutContainer editorPreviewBorderLayout;
-        private MDILayoutManager mdiManager;
+        BorderLayoutChainLink mainBorder;
+        BorderLayoutChainLink editPreview;
 
         private bool mainGuiShowing = true;
         private bool saveWindowsOnExit = true;
@@ -57,7 +54,6 @@ namespace Medical.GUI
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIImageDisplayFactory imageDisplayFactory;
         private MyGUITextDisplayFactory textDisplayFactory;
-        private List<LayoutContainer> fullscreenPopups = new List<LayoutContainer>();
         private MyGUIImageRendererProgress imageRendererProgress;
 
         //Events
@@ -73,11 +69,8 @@ namespace Medical.GUI
         {
             IDisposableUtil.DisposeIfNotNull(dialogManager);
 
-            //Containers
-            foreach (AnimatedLayoutContainer container in borderLayoutContainers)
-            {
-                IDisposableUtil.DisposeIfNotNull(container);
-            }
+            mainBorder.Dispose();
+            editPreview.Dispose();
 
             //Other
 			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
@@ -87,7 +80,6 @@ namespace Medical.GUI
         public void createGUI(MDILayoutManager mdiManager)
         {
             Gui gui = Gui.Instance;
-            this.mdiManager = mdiManager;
 
             OgreResourceGroupManager.getInstance().addResourceLocation(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedScalableResource", "MyGUI", true);
 
@@ -101,56 +93,25 @@ namespace Medical.GUI
             dialogManager = new DialogManager(mdiManager);
         
             //Taskbar
-            this.rootContainer = new NullLayoutContainer();
-            screenLayoutManager.Root = rootContainer;
-            screenLayoutManager.Root.SuppressLayout = true;
-            rootContainer.Child = mainBorderLayout;
+            screenLayoutManager.LayoutChain = new LayoutChain();
+            screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink("FullscreenPopup"), true);
+            screenLayoutManager.LayoutChain.SuppressLayout = true;
+            mainBorder = new BorderLayoutChainLink("Main", standaloneController.MedicalController.MainTimer);
+            screenLayoutManager.LayoutChain.addLink(mainBorder, true);
+            editPreview = new BorderLayoutChainLink("EditPreview", standaloneController.MedicalController.MainTimer);
+            screenLayoutManager.LayoutChain.addLink(editPreview, true);
+            screenLayoutManager.LayoutChain.addLink(new MDIChainLink("MDI", mdiManager), true);
 
-            //Outer border layout
-            int panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.Main);
-            borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            mainBorderLayout.Top = borderLayoutContainers[panelPosition];
-
-            panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.Main);
-            borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            mainBorderLayout.Left = borderLayoutContainers[panelPosition];
-
-            panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.Main);
-            borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            mainBorderLayout.Bottom = borderLayoutContainers[panelPosition];
-
-            panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.Main);
-            borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            mainBorderLayout.Right = borderLayoutContainers[panelPosition];
-
-            //Inner border layout
-            editorPreviewBorderLayout = new BorderLayoutContainer();
-            panelPosition = getPanelPosition(BorderPanelNames.Top, BorderPanelSets.EditPreview);
-            borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            editorPreviewBorderLayout.Top = borderLayoutContainers[panelPosition];
-
-            panelPosition = getPanelPosition(BorderPanelNames.Left, BorderPanelSets.EditPreview);
-            borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            editorPreviewBorderLayout.Left = borderLayoutContainers[panelPosition];
-
-            panelPosition = getPanelPosition(BorderPanelNames.Bottom, BorderPanelSets.EditPreview);
-            borderLayoutContainers[panelPosition] = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            editorPreviewBorderLayout.Bottom = borderLayoutContainers[panelPosition];
-
-            panelPosition = getPanelPosition(BorderPanelNames.Right, BorderPanelSets.EditPreview);
-            borderLayoutContainers[panelPosition] = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            editorPreviewBorderLayout.Right = borderLayoutContainers[panelPosition];
-
-            mdiManager.changeCenterParent(editorPreviewBorderLayout, (center) =>
-            {
-                editorPreviewBorderLayout.Center = center;
-            });
+            //mdiManager.changeCenterParent(editorPreviewBorderLayout, (center) =>
+            //{
+            //    editorPreviewBorderLayout.Center = center;
+            //});
 
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
 
-            screenLayoutManager.Root.SuppressLayout = false;
-            screenLayoutManager.Root.layout();
+            screenLayoutManager.LayoutChain.SuppressLayout = false;
+            screenLayoutManager.LayoutChain.layout();
 
             continuePrompt = new MyGUIContinuePromptProvider();
 
@@ -158,58 +119,24 @@ namespace Medical.GUI
             textDisplayFactory = new MyGUITextDisplayFactory(standaloneController.SceneViewController);
         }
 
-        public void pushRootContainer(SingleChildLayoutContainer root)
+        public void addLinkToChain(LayoutChainLink link)
         {
-            root.SuppressLayout = true;
-            root.Child = rootContainer;
-            rootContainer = root;
-
-            screenLayoutManager.Root = rootContainer;
-
-            root.SuppressLayout = false;
-            rootContainer.invalidate();
+            screenLayoutManager.LayoutChain.addLink(link, false);
         }
 
-        public void removeRootContainer(SingleChildLayoutContainer root)
+        public void removeLinkFromChain(LayoutChainLink link)
         {
-            bool wasSupressing = screenLayoutManager.Root.SuppressLayout;
-            screenLayoutManager.Root.SuppressLayout = true;
-            foreach (SingleChildLayoutContainer container in RootContainers)
-            {
-                if (container == root)
-                {
-                    LayoutContainer child = container.Child;
-                    container.Child = null;
-                    if (screenLayoutManager.Root == container)
-                    {
-                        container.SuppressLayout = false;
-                        child.SuppressLayout = true;
-                    }
-                    if (container.ParentContainer == null)
-                    {
-                        rootContainer = child as SingleChildLayoutContainer;
-                        if (rootContainer == null)
-                        {
-                            child.SuppressLayout = false;
-                            rootContainer = new NullLayoutContainer();
-                            rootContainer.SuppressLayout = true;
-                            rootContainer.Child = child;
-                        }
-                        screenLayoutManager.Root = rootContainer;
-                    }
-                    else
-                    {
-                        SingleChildLayoutContainer parentSingleChild = (SingleChildLayoutContainer)container.ParentContainer;
-                        parentSingleChild.Child = child;
-                    }
-                    break;
-                }
-            }
-            screenLayoutManager.Root.SuppressLayout = wasSupressing;
-            if (wasSupressing)
-            {
-                screenLayoutManager.Root.layout();
-            }
+            screenLayoutManager.LayoutChain.removeLink(link);
+        }
+
+        public void pushRootContainer(String name)
+        {
+            screenLayoutManager.LayoutChain.activateLinkAsRoot(name);
+        }
+
+        public void deactivateLink(String name)
+        {
+            screenLayoutManager.LayoutChain.deactivateLink(name);
         }
 
         public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
@@ -236,18 +163,14 @@ namespace Medical.GUI
                 container.Visible = true;
                 container.bringToFront();
             }
-            AnimatedLayoutContainer animatedContainer = borderLayoutContainers[getPanelPosition(name, set)];
-            if (animatedContainer.CurrentContainer != container)
-            {
-                animatedContainer.changePanel(container, 0.25f, animationCompleted);
-            }
+            screenLayoutManager.LayoutChain.addContainer(set.ToString(), name.ToString(), container, animationCompleted);
         }
 
         public void setMainInterfaceEnabled(bool enabled)
         {
             if (mainGuiShowing != enabled)
             {
-                screenLayoutManager.Root.SuppressLayout = true;
+                screenLayoutManager.LayoutChain.SuppressLayout = true;
                 standaloneController.AtlasPluginManager.setMainInterfaceEnabled(enabled);
                 if (enabled)
                 {
@@ -266,8 +189,8 @@ namespace Medical.GUI
                     }
                 }
                 mainGuiShowing = enabled;
-                screenLayoutManager.Root.SuppressLayout = false;
-                screenLayoutManager.Root.layout();
+                screenLayoutManager.LayoutChain.SuppressLayout = false;
+                screenLayoutManager.LayoutChain.layout();
             }
         }
 
@@ -286,17 +209,14 @@ namespace Medical.GUI
             dialogManager.removeManagedDialog(dialog);
         }
 
-        public void addFullscreenPopup(LayoutContainer popup)
+        public void addFullscreenPopup(LayoutContainer popup, String name)
         {
-            popup.Location = new IntVector2((int)mainBorderLayout.Location.x, (int)mainBorderLayout.Location.y);
-            popup.WorkingSize = new IntSize2((int)mainBorderLayout.WorkingSize.Width, (int)mainBorderLayout.WorkingSize.Height);
-            popup.layout();
-            fullscreenPopups.Add(popup);
+            screenLayoutManager.LayoutChain.addContainer("FullscreenPopup", name, popup);
         }
 
-        public void removeFullscreenPopup(LayoutContainer popup)
+        public void removeFullscreenPopup(LayoutContainer popup, String name)
         {
-            fullscreenPopups.Remove(popup);
+            screenLayoutManager.LayoutChain.removeContainer("FullscreenPopup", name);
         }
 
         public void autoDisposeDialog(MDIDialog autoDisposeDialog)
@@ -373,16 +293,6 @@ namespace Medical.GUI
         {
             dialogManager.windowResized();
             continuePrompt.ensureVisible();
-            int xPos = (int)mainBorderLayout.Location.x;
-            int yPos = (int)mainBorderLayout.Location.y;
-            int innerWidth = (int)mainBorderLayout.WorkingSize.Width;
-            int innerHeight = (int)mainBorderLayout.WorkingSize.Height;
-            foreach (LayoutContainer fullscreenPopup in fullscreenPopups)
-            {
-                fullscreenPopup.Location = new IntVector2(xPos, yPos);
-                fullscreenPopup.WorkingSize = new IntSize2(innerWidth, innerHeight);
-                fullscreenPopup.layout();
-            }
         }
 
         public event ScreenSizeChanged ScreenSizeChanged
@@ -399,20 +309,7 @@ namespace Medical.GUI
 
         public void layout()
         {
-            screenLayoutManager.Root.layout();
-        }
-
-        private IEnumerable<SingleChildLayoutContainer> RootContainers
-        {
-            get
-            {
-                SingleChildLayoutContainer container = screenLayoutManager.Root as SingleChildLayoutContainer;
-                while (container != null)
-                {
-                    yield return container;
-                    container = container.Child as SingleChildLayoutContainer;
-                }
-            }
+            screenLayoutManager.LayoutChain.layout();
         }
     }
 }

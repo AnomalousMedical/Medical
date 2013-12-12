@@ -14,7 +14,7 @@ namespace Medical
     {
         public event ScreenSizeChanged ScreenSizeChanged;
 
-        private LayoutContainer rootContainer;
+        private LayoutChain layoutChain;
         private OSWindow window;
 
         public ScreenLayoutManager(OSWindow window)
@@ -34,17 +34,17 @@ namespace Medical
             resized(window);
         }
 
-        public LayoutContainer Root
+        public LayoutChain LayoutChain
         {
             get
             {
-                return rootContainer;
+                return layoutChain;
             }
             set
             {
-                rootContainer = value;
-                rootContainer.Location = new IntVector2(0, 0);
-                rootContainer.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
+                layoutChain = value;
+                layoutChain.Location = new IntVector2(0, 0);
+                layoutChain.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
             }
         }
 
@@ -60,8 +60,8 @@ namespace Medical
 
         public void resized(OSWindow window)
         {
-            rootContainer.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
-            rootContainer.layout();
+            layoutChain.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
+            layoutChain.layout();
             if (ScreenSizeChanged != null)
             {
                 ScreenSizeChanged.Invoke(window.WindowWidth, window.WindowHeight);

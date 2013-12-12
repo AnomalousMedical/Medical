@@ -166,10 +166,10 @@ namespace Medical.Controller.AnomalousMvc
                 openFloatingViews.Add(viewHost);
                 if (viewInfo.Key.FillScreen)
                 {
-                    guiManager.addFullscreenPopup(viewHost.Container);
+                    guiManager.addFullscreenPopup(viewHost.Container, viewHost.Name);
                     viewHost.ViewClosing += (closingView) =>
                     {
-                        guiManager.removeFullscreenPopup(viewHost.Container);
+                        guiManager.removeFullscreenPopup(viewHost.Container, viewHost.Name);
                     };
                 }
             }

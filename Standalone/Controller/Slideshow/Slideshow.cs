@@ -103,6 +103,7 @@ namespace Medical
             });
 
             ClosingTaskbar taskbar = new ClosingTaskbar();
+            SingleChildChainLink taskbarLink = new SingleChildChainLink("SlideTaskbar", taskbar);
             taskbar.Close += () => mvcContext.runAction("Common/Close");
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Back", "Back", "SlideshowIcons/Back", "None", (arg) =>
             {
@@ -120,11 +121,13 @@ namespace Medical
             
             mvcContext.Blurred += (ctx) =>
             {
-                guiManager.removeRootContainer(taskbar);
+                guiManager.deactivateLink("SlideTaskbar");
+                guiManager.removeLinkFromChain(taskbarLink);
             };
             mvcContext.Focused += (ctx) =>
             {
-                guiManager.pushRootContainer(taskbar);
+                guiManager.addLinkToChain(taskbarLink);
+                guiManager.pushRootContainer("SlideTaskbar");
             };
             mvcContext.RemovedFromStack += (ctx) =>
             {

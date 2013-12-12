@@ -35,6 +35,7 @@ namespace Medical.GUI
         private AppButtonTaskbar taskbar;
         private TaskMenu taskMenu;
         private GUITaskManager guiTaskManager;
+        private SingleChildChainLink taskbarLink;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -64,7 +65,7 @@ namespace Medical.GUI
             {
                 sequencePlayer.Dispose();
             }
-            guiManager.removeRootContainer(taskbar);
+            guiManager.removeLinkFromChain(taskbarLink);
             IDisposableUtil.DisposeIfNotNull(taskbar);
             IDisposableUtil.DisposeIfNotNull(taskMenu);
         }
@@ -115,7 +116,9 @@ namespace Medical.GUI
             taskbar = new AppButtonTaskbar();
             taskbar.OpenTaskMenu += taskbar_OpenTaskMenu;
             taskbar.setAppIcon("AppButton/WideImage", "AppButton/NarrowImage");
-            guiManager.pushRootContainer(taskbar);
+            taskbarLink = new SingleChildChainLink("Taskbar", taskbar);
+            guiManager.addLinkToChain(taskbarLink);
+            guiManager.pushRootContainer("Taskbar");
 
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager);
@@ -372,14 +375,14 @@ namespace Medical.GUI
 
         void guiManager_MainGUIHidden()
         {
-            guiManager.removeRootContainer(taskbar);
+            guiManager.deactivateLink(taskbarLink.Name);
             taskbar.Visible = false;
         }
 
         void guiManager_MainGUIShown()
         {
             taskbar.Visible = true;
-            guiManager.pushRootContainer(taskbar);
+            guiManager.pushRootContainer(taskbarLink.Name);
         }
     }
 }
