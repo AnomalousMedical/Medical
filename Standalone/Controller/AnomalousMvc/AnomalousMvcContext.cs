@@ -16,6 +16,7 @@ namespace Medical.Controller.AnomalousMvc
     {
         /// <summary>
         /// Called when the context starts running for the first time. Fired by the Started function.
+        /// This is called before the context runs its startup action.
         /// </summary>
         public event Action<AnomalousMvcContext> Started;
 
@@ -38,6 +39,7 @@ namespace Medical.Controller.AnomalousMvc
         /// the context stack. You can reuse it again from there, but it won't
         /// be a part of the stack anymore. This, unlike shutdown, is called every
         /// time the context is done being used.
+        /// This is called after the context runs its RemovedFromStack function
         /// </summary>
         public event Action<AnomalousMvcContext> RemovedFromStack;
 

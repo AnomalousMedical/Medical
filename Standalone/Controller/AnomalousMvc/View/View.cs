@@ -12,20 +12,36 @@ namespace Medical.Controller.AnomalousMvc
 {
     public abstract class View : SaveableEditableItem
     {
-        [DoNotSave]
-        private bool editPreviewContent = false;
-
         public View(String name)
             :base(name)
         {
             ViewLocation = ViewLocations.Left;
             IsWindow = false;
             Transparent = false;
-            FillScreen = false;
+            LayoutName = GUILocationNames.ContentArea;
+            LayoutHint = "Left";
         }
 
         [Editable]
-        public ViewLocations ViewLocation { get; set; }
+        public String LayoutName { get; set; }
+
+        [Editable]
+        public String LayoutHint { get; set; }
+
+        [Editable]
+        private ViewLocations viewLocation;
+        public ViewLocations ViewLocation
+        {
+            get
+            {
+                return viewLocation;
+            }
+            set
+            {
+                viewLocation = value;
+                LayoutHint = viewLocation.ToString();
+            }
+        }
 
         [Editable]
         public bool IsWindow { get; set; }
@@ -33,31 +49,24 @@ namespace Medical.Controller.AnomalousMvc
         [Editable]
         public bool Transparent { get; set; }
 
-        [Editable]
-        public bool FillScreen { get; set; }
-
         [EditableAction]
         public String OpeningAction { get; set; }
 
         [EditableAction]
         public String ClosingAction { get; set; }
 
-        public bool EditPreviewContent
-        {
-            get
-            {
-                return editPreviewContent;
-            }
-            set
-            {
-                editPreviewContent = value;
-            }
-        }
-
         protected View(LoadInfo info)
             :base (info)
         {
-
+            if (info.hasValue("<FillScreen>k__BackingField"))
+            {
+                LayoutName = GUILocationNames.FullscreenPopup;
+            }
+            else if (info.hasValue("<ViewLocation>k__BackingField"))
+            {
+                LayoutName = GUILocationNames.ContentArea;
+                LayoutHint = info.GetValue<ViewLocations>("<ViewLocation>k__BackingField", ViewLocations.Left).ToString();
+            }
         }
 
         public enum CustomQueries

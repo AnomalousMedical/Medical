@@ -354,6 +354,7 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineComponentFactory.cs" />
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.cs" />
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
+    <Compile Include="GUI\GUILocationNames.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RmlWindow\RmlWindow.cs" />
     <Compile Include="GUI\RocketGui\RocketDebuggerWindow.cs" />

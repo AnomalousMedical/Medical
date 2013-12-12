@@ -24,14 +24,7 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.attachToWidget(widget);
             child.Widget.setPosition(int.Parse(widget.getUserString("ChildX")), int.Parse(widget.getUserString("ChildY")));
             widget.setSize(child.Widget.Right + int.Parse(widget.getUserString("ChildWidthOffset")), child.Widget.Bottom + int.Parse(widget.getUserString("ChildHeightOffset")));
-            if (view.FillScreen)
-            {
-                child.Widget.Align = Align.HStretch | Align.VStretch;
-            }
-            else
-            {
-                child.Widget.Align = Align.Left | Align.VStretch;
-            }
+            child.Widget.Align = Align.HStretch | Align.VStretch;
         }
 
         public override void Dispose()

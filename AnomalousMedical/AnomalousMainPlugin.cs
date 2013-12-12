@@ -116,9 +116,9 @@ namespace Medical.GUI
             taskbar = new AppButtonTaskbar();
             taskbar.OpenTaskMenu += taskbar_OpenTaskMenu;
             taskbar.setAppIcon("AppButton/WideImage", "AppButton/NarrowImage");
-            taskbarLink = new SingleChildChainLink("Taskbar", taskbar);
+            taskbarLink = new SingleChildChainLink(GUILocationNames.Taskbar, taskbar);
             guiManager.addLinkToChain(taskbarLink);
-            guiManager.pushRootContainer("Taskbar");
+            guiManager.pushRootContainer(GUILocationNames.Taskbar);
 
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager);

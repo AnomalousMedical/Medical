@@ -15,6 +15,7 @@ namespace Medical
 {
     public class Slideshow : Saveable
     {
+        public const String SlideTaskbarName = "SlideTaskbar";
         public const String SlideThumbName = "Thumb.png";
         public const int BaseSlideScale = 1017;
         public const int CurrentVersion = 2;
@@ -103,7 +104,7 @@ namespace Medical
             });
 
             ClosingTaskbar taskbar = new ClosingTaskbar();
-            SingleChildChainLink taskbarLink = new SingleChildChainLink("SlideTaskbar", taskbar);
+            SingleChildChainLink taskbarLink = new SingleChildChainLink(SlideTaskbarName, taskbar);
             taskbar.Close += () => mvcContext.runAction("Common/Close");
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Back", "Back", "SlideshowIcons/Back", "None", (arg) =>
             {
@@ -121,13 +122,13 @@ namespace Medical
             
             mvcContext.Blurred += (ctx) =>
             {
-                guiManager.deactivateLink("SlideTaskbar");
+                guiManager.deactivateLink(SlideTaskbarName);
                 guiManager.removeLinkFromChain(taskbarLink);
             };
             mvcContext.Focused += (ctx) =>
             {
                 guiManager.addLinkToChain(taskbarLink);
-                guiManager.pushRootContainer("SlideTaskbar");
+                guiManager.pushRootContainer(SlideTaskbarName);
             };
             mvcContext.RemovedFromStack += (ctx) =>
             {

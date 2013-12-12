@@ -13,21 +13,6 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    public enum BorderPanelNames
-    {
-        Left = 0,
-        Right = 1,
-        Top = 2,
-        Bottom = 3,
-        Size
-    }
-
-    public enum BorderPanelSets
-    {
-        Main = 0,
-        EditPreview = (int)BorderPanelNames.Size,
-    }
-
     public class GUIManager : IDisposable
     {
         public event Action<ConfigFile> SaveUIConfiguration;
@@ -42,7 +27,7 @@ namespace Medical.GUI
 
         private BorderLayoutContainer mainBorderLayout;
         BorderLayoutChainLink mainBorder;
-        BorderLayoutChainLink editPreview;
+        BorderLayoutChainLink contentArea;
 
         private bool mainGuiShowing = true;
         private bool saveWindowsOnExit = true;
@@ -70,7 +55,7 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(dialogManager);
 
             mainBorder.Dispose();
-            editPreview.Dispose();
+            contentArea.Dispose();
 
             //Other
 			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
@@ -94,13 +79,13 @@ namespace Medical.GUI
         
             //Taskbar
             screenLayoutManager.LayoutChain = new LayoutChain();
-            screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink("FullscreenPopup"), true);
+            screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink(GUILocationNames.FullscreenPopup), true);
             screenLayoutManager.LayoutChain.SuppressLayout = true;
-            mainBorder = new BorderLayoutChainLink("Main", standaloneController.MedicalController.MainTimer);
+            mainBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, standaloneController.MedicalController.MainTimer);
             screenLayoutManager.LayoutChain.addLink(mainBorder, true);
-            editPreview = new BorderLayoutChainLink("EditPreview", standaloneController.MedicalController.MainTimer);
-            screenLayoutManager.LayoutChain.addLink(editPreview, true);
-            screenLayoutManager.LayoutChain.addLink(new MDIChainLink("MDI", mdiManager), true);
+            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, standaloneController.MedicalController.MainTimer);
+            screenLayoutManager.LayoutChain.addLink(contentArea, true);
+            screenLayoutManager.LayoutChain.addLink(new MDIChainLink(GUILocationNames.MDI, mdiManager), true);
 
             //mdiManager.changeCenterParent(editorPreviewBorderLayout, (center) =>
             //{
@@ -139,11 +124,6 @@ namespace Medical.GUI
             screenLayoutManager.LayoutChain.deactivateLink(name);
         }
 
-        public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
-        {
-            return (int)name + (int)set;
-        }
-
         public void giveGUIsToTimelineController(TimelineController timelineController)
         {
             timelineController.ContinuePrompt = continuePrompt;
@@ -156,14 +136,14 @@ namespace Medical.GUI
             screenLayoutManager.changeOSWindow(newWindow);
         }
 
-        public void changePanel(BorderPanelSets set, BorderPanelNames name, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public void changePanel(String layoutName, String layoutHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
             if (container != null)
             {
                 container.Visible = true;
                 container.bringToFront();
             }
-            screenLayoutManager.LayoutChain.addContainer(set.ToString(), name.ToString(), container, animationCompleted);
+            screenLayoutManager.LayoutChain.addContainer(layoutName, layoutHint, container, animationCompleted);
         }
 
         public void setMainInterfaceEnabled(bool enabled)
@@ -211,12 +191,12 @@ namespace Medical.GUI
 
         public void addFullscreenPopup(LayoutContainer popup, String name)
         {
-            screenLayoutManager.LayoutChain.addContainer("FullscreenPopup", name, popup);
+            screenLayoutManager.LayoutChain.addContainer(GUILocationNames.FullscreenPopup, name, popup);
         }
 
         public void removeFullscreenPopup(LayoutContainer popup, String name)
         {
-            screenLayoutManager.LayoutChain.removeContainer("FullscreenPopup", name);
+            screenLayoutManager.LayoutChain.removeContainer(GUILocationNames.FullscreenPopup, name);
         }
 
         public void autoDisposeDialog(MDIDialog autoDisposeDialog)

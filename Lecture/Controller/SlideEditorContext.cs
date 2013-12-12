@@ -583,7 +583,7 @@ namespace Lecture
                 RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
                 rmlView.ViewLocation = panel.ViewLocation;
                 rmlView.IsWindow = false;
-                rmlView.EditPreviewContent = true;
+                rmlView.LayoutName = GUILocationNames.ContentArea;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
                 instanceLayout.addView(rmlView);

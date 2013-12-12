@@ -263,7 +263,7 @@ namespace Lecture
                 RawRmlView rmlView = new RawRmlView(editorViewName);
                 rmlView.ViewLocation = panel.ViewLocation;
                 rmlView.IsWindow = false;
-                rmlView.EditPreviewContent = true;
+                rmlView.LayoutName = GUILocationNames.ContentArea;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
                 instanceLayout.addView(rmlView);

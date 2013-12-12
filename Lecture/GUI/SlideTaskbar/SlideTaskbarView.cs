@@ -21,6 +21,7 @@ namespace Lecture.GUI
         {
             this.DisplayName = displayName;
             this.ViewLocation = ViewLocations.Top;
+            this.LayoutName = GUILocationNames.EditorBorderLayout;
         }
 
         public void addTask(Task task)
