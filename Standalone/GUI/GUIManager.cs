@@ -131,7 +131,7 @@ namespace Medical.GUI
             screenLayoutManager.changeOSWindow(newWindow);
         }
 
-        public void changePanel(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public void changeElement(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
             if (container != null)
             {
@@ -139,6 +139,11 @@ namespace Medical.GUI
                 container.bringToFront();
             }
             screenLayoutManager.LayoutChain.addContainer(elementName, container, animationCompleted);
+        }
+
+        public void closeElement(LayoutElementName elementName, LayoutContainer container)
+        {
+            screenLayoutManager.LayoutChain.removeContainer(elementName, container);
         }
 
         public void setMainInterfaceEnabled(bool enabled)
@@ -182,16 +187,6 @@ namespace Medical.GUI
         public void removeManagedDialog(MDIDialog dialog)
         {
             dialogManager.removeManagedDialog(dialog);
-        }
-
-        public void addFullscreenPopup(LayoutContainer popup)
-        {
-            screenLayoutManager.LayoutChain.addContainer(new LayoutElementName(GUILocationNames.FullscreenPopup), popup);
-        }
-
-        public void removeFullscreenPopup(LayoutContainer popup)
-        {
-            screenLayoutManager.LayoutChain.removeContainer(new LayoutElementName(GUILocationNames.FullscreenPopup), popup);
         }
 
         public void autoDisposeDialog(MDIDialog autoDisposeDialog)

@@ -24,7 +24,7 @@ namespace Medical.Controller.AnomalousMvc
         private GUIManager guiManager;
         private ViewHostFactory viewHostFactory;
 
-        private List<KeyValuePair<View, AnomalousMvcContext>> queuedFloatingViews = new List<KeyValuePair<View, AnomalousMvcContext>>();
+        private List<ViewHostPanelInfo> queuedFloatingViews = new List<ViewHostPanelInfo>();
         private List<ViewHost> openFloatingViews = new List<ViewHost>();
         private List<ViewHost> closingFloatingViews = new List<ViewHost>();
         private List<ViewHostPanelInfo> openPanels = new List<ViewHostPanelInfo>();
@@ -49,7 +49,12 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (view.IsWindow)
             {
-                queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
+                queuedFloatingViews.Add(new ViewHostPanelInfo()
+                {
+                    Queued = view,
+                    QueuedContext = context,
+                    ElementName = view.ElementName
+                });
             }
             else
             {
@@ -57,7 +62,12 @@ namespace Medical.Controller.AnomalousMvc
                 switch (view.ElementName.LocationHint)
                 {
                     case ViewLocations.Floating:
-                        queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
+                        queuedFloatingViews.Add(new ViewHostPanelInfo()
+                        {
+                            Queued = view,
+                            QueuedContext = context,
+                            ElementName = view.ElementName
+                        });
                         break;
                     default:
                         panel = findPanel(view.ElementName);
@@ -105,7 +115,7 @@ namespace Medical.Controller.AnomalousMvc
                     {
                         panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
                         panel.Current.opening();
-                        guiManager.changePanel(panel.ElementName, panel.Current.Container);
+                        guiManager.changeElement(panel.ElementName, panel.Current.Container);
                     }
                     //If there is a panel open they must be switched
                     else
@@ -114,14 +124,14 @@ namespace Medical.Controller.AnomalousMvc
                         last.closing();
                         panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
                         panel.Current.opening();
-                        guiManager.changePanel(panel.ElementName, panel.Current.Container, last._animationCallback);
+                        guiManager.changeElement(panel.ElementName, panel.Current.Container, last._animationCallback);
                     }
                 }
                 //There is no other panel queued and the current panel wants to be closed
                 else if (panel.Current != null && panel.Current._RequestClosed)
                 {
                     panel.Current.closing();
-                    guiManager.changePanel(panel.ElementName, null, panel.Current._animationCallback);
+                    guiManager.changeElement(panel.ElementName, null, panel.Current._animationCallback);
                     panel.Current = null;
                 }
                 panel.Queued = null;
@@ -149,19 +159,16 @@ namespace Medical.Controller.AnomalousMvc
                     closingFloatingViews.Add(host);
                 }
             }
-            foreach (KeyValuePair<View, AnomalousMvcContext> viewInfo in queuedFloatingViews)
+            foreach (var viewInfo in queuedFloatingViews)
             {
-                ViewHost viewHost = viewHostFactory.createViewHost(viewInfo.Key, viewInfo.Value);
+                ViewHost viewHost = viewHostFactory.createViewHost(viewInfo.Queued, viewInfo.QueuedContext);
                 viewHost.opening();
                 openFloatingViews.Add(viewHost);
-                if (!viewInfo.Key.IsWindow)
+                guiManager.changeElement(viewInfo.ElementName, viewHost.Container);
+                viewHost.ViewClosing += (closingView) =>
                 {
-                    guiManager.addFullscreenPopup(viewHost.Container);
-                    viewHost.ViewClosing += (closingView) =>
-                    {
-                        guiManager.removeFullscreenPopup(viewHost.Container);
-                    };
-                }
+                    guiManager.closeElement(viewInfo.ElementName, viewHost.Container);
+                };
             }
             queuedFloatingViews.Clear();
         }

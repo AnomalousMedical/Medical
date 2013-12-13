@@ -10,6 +10,7 @@ namespace Medical.GUI
     {
         private GUIManager guiManager;
         private MyGUILayoutContainer layoutContainer;
+        private LayoutElementName elementName = new LayoutElementName(GUILocationNames.FullscreenPopup);
 
         public AbstractFullscreenGUIPopup(String layout, GUIManager guiManager)
             :base(layout)
@@ -29,12 +30,12 @@ namespace Medical.GUI
 
         void ChooseSceneDialog_Hidden(object sender, EventArgs e)
         {
-            guiManager.removeFullscreenPopup(layoutContainer);
+            guiManager.closeElement(elementName, layoutContainer);
         }
 
         void ChooseSceneDialog_Showing(object sender, EventArgs e)
         {
-            guiManager.addFullscreenPopup(layoutContainer);
+            guiManager.changeElement(elementName, layoutContainer);
         }
     }
 }
