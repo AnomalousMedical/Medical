@@ -13,6 +13,21 @@ using System.IO;
 
 namespace Medical.GUI
 {
+    public enum BorderPanelNames
+    {
+        Left = 0,
+        Right = 1,
+        Top = 2,
+        Bottom = 3,
+        Size
+    }
+
+    public enum BorderPanelSets
+    {
+        Main = 0,
+        EditPreview = (int)BorderPanelNames.Size,
+    }
+
     public class GUIManager : IDisposable
     {
         public event Action<ConfigFile> SaveUIConfiguration;
@@ -27,7 +42,7 @@ namespace Medical.GUI
 
         private BorderLayoutContainer mainBorderLayout;
         BorderLayoutChainLink mainBorder;
-        BorderLayoutChainLink contentArea;
+        BorderLayoutChainLink editPreview;
 
         private bool mainGuiShowing = true;
         private bool saveWindowsOnExit = true;
@@ -55,7 +70,7 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(dialogManager);
 
             mainBorder.Dispose();
-            contentArea.Dispose();
+            editPreview.Dispose();
 
             //Other
 			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
@@ -81,10 +96,10 @@ namespace Medical.GUI
             screenLayoutManager.LayoutChain = new LayoutChain();
             screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink(GUILocationNames.FullscreenPopup), true);
             screenLayoutManager.LayoutChain.SuppressLayout = true;
-            mainBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, standaloneController.MedicalController.MainTimer);
+            mainBorder = new BorderLayoutChainLink(BorderPanelSets.Main.ToString(), standaloneController.MedicalController.MainTimer);
             screenLayoutManager.LayoutChain.addLink(mainBorder, true);
-            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, standaloneController.MedicalController.MainTimer);
-            screenLayoutManager.LayoutChain.addLink(contentArea, true);
+            editPreview = new BorderLayoutChainLink(BorderPanelSets.EditPreview.ToString(), standaloneController.MedicalController.MainTimer);
+            screenLayoutManager.LayoutChain.addLink(editPreview, true);
             screenLayoutManager.LayoutChain.addLink(new MDIChainLink(GUILocationNames.MDI, mdiManager), true);
 
             //mdiManager.changeCenterParent(editorPreviewBorderLayout, (center) =>
@@ -124,6 +139,11 @@ namespace Medical.GUI
             screenLayoutManager.LayoutChain.deactivateLink(name);
         }
 
+        public int getPanelPosition(BorderPanelNames name, BorderPanelSets set)
+        {
+            return (int)name + (int)set;
+        }
+
         public void giveGUIsToTimelineController(TimelineController timelineController)
         {
             timelineController.ContinuePrompt = continuePrompt;
@@ -136,24 +156,27 @@ namespace Medical.GUI
             screenLayoutManager.changeOSWindow(newWindow);
         }
 
-        public void changePanel(String layoutName, String layoutHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public void changePanel(BorderPanelSets set, BorderPanelNames name, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
             if (container != null)
             {
                 container.Visible = true;
                 container.bringToFront();
             }
-            LayoutElementName elementName;
-            BorderLayoutLocations location;
-            if (Enum.TryParse<BorderLayoutLocations>(layoutHint, out location))
+            BorderLayoutLocations location = BorderLayoutLocations.Left;
+            switch (name)
             {
-                elementName = new BorderLayoutElementName(layoutName, location);
+                case BorderPanelNames.Right:
+                    location = BorderLayoutLocations.Right;
+                    break;
+                case BorderPanelNames.Top:
+                    location = BorderLayoutLocations.Top;
+                    break;
+                case BorderPanelNames.Bottom:
+                    location = BorderLayoutLocations.Bottom;
+                    break;
             }
-            else
-            {
-                elementName = new LayoutElementName(layoutName);
-            }
-            screenLayoutManager.LayoutChain.addContainer(elementName, container, animationCompleted);
+            screenLayoutManager.LayoutChain.addContainer(new BorderLayoutElementName(set.ToString(), location), container, animationCompleted);
         }
 
         public void setMainInterfaceEnabled(bool enabled)
@@ -199,12 +222,12 @@ namespace Medical.GUI
             dialogManager.removeManagedDialog(dialog);
         }
 
-        public void addFullscreenPopup(LayoutContainer popup, String name)
+        public void addFullscreenPopup(LayoutContainer popup)
         {
             screenLayoutManager.LayoutChain.addContainer(new LayoutElementName(GUILocationNames.FullscreenPopup), popup);
         }
 
-        public void removeFullscreenPopup(LayoutContainer popup, String name)
+        public void removeFullscreenPopup(LayoutContainer popup)
         {
             screenLayoutManager.LayoutChain.removeContainer(new LayoutElementName(GUILocationNames.FullscreenPopup), popup);
         }
