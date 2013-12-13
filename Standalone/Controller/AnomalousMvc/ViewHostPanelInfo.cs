@@ -14,8 +14,6 @@ namespace Medical.Controller.AnomalousMvc
 
         public AnomalousMvcContext QueuedContext { get; set; }
 
-        public BorderPanelNames PanelName { get; set; }
-
-        public BorderPanelSets PanelSet { get; set; }
+        public LayoutElementName ElementName { get; set; }
     }
 }

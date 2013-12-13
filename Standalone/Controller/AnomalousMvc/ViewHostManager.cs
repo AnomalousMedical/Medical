@@ -53,21 +53,21 @@ namespace Medical.Controller.AnomalousMvc
             }
             else
             {
-                BorderPanelSets set = view.EditPreviewContent ? BorderPanelSets.EditPreview : BorderPanelSets.Main;
+                String name = view.EditPreviewContent ? GUILocationNames.ContentArea : GUILocationNames.EditorBorderLayout; //A bit backward, but we are kinda hacking this anyway
                 ViewHostPanelInfo panel = null;
                 switch (view.ViewLocation)
                 {
                     case ViewLocations.Left:
-                        panel = findPanel(BorderPanelNames.Left, set);
+                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Left));
                         break;
                     case ViewLocations.Right:
-                        panel = findPanel(BorderPanelNames.Right, set);
+                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Right));
                         break;
                     case ViewLocations.Top:
-                        panel = findPanel(BorderPanelNames.Top, set);
+                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Top));
                         break;
                     case ViewLocations.Bottom:
-                        panel = findPanel(BorderPanelNames.Bottom, set);
+                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Bottom));
                         break;
                     case ViewLocations.Floating:
                         queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
@@ -115,7 +115,7 @@ namespace Medical.Controller.AnomalousMvc
                     {
                         panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
                         panel.Current.opening();
-                        guiManager.changePanel(panel.PanelSet, panel.PanelName, panel.Current.Container);
+                        guiManager.changePanel(panel.ElementName, panel.Current.Container);
                     }
                     //If there is a panel open they must be switched
                     else
@@ -124,14 +124,14 @@ namespace Medical.Controller.AnomalousMvc
                         last.closing();
                         panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
                         panel.Current.opening();
-                        guiManager.changePanel(panel.PanelSet, panel.PanelName, panel.Current.Container, last._animationCallback);
+                        guiManager.changePanel(panel.ElementName, panel.Current.Container, last._animationCallback);
                     }
                 }
                 //There is no other panel queued and the current panel wants to be closed
                 else if (panel.Current != null && panel.Current._RequestClosed)
                 {
                     panel.Current.closing();
-                    guiManager.changePanel(panel.PanelSet, panel.PanelName, null, panel.Current._animationCallback);
+                    guiManager.changePanel(panel.ElementName, null, panel.Current._animationCallback);
                     panel.Current = null;
                 }
                 panel.Queued = null;
@@ -262,19 +262,18 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        private ViewHostPanelInfo findPanel(BorderPanelNames name, BorderPanelSets set)
+        private ViewHostPanelInfo findPanel(LayoutElementName elementName)
         {
             foreach (var panel in openPanels)
             {
-                if (panel.PanelName == name && panel.PanelSet == set)
+                if (panel.ElementName == elementName)
                 {
                     return panel;
                 }
             }
             ViewHostPanelInfo newPanel = new ViewHostPanelInfo()
             {
-                PanelSet = set,
-                PanelName = name
+                ElementName = elementName
             };
             openPanels.Add(newPanel);
             return newPanel;
