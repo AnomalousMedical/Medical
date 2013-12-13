@@ -33,7 +33,7 @@ namespace Lecture
             slide.addPanel(new RmlSlidePanel()
             {
                 Rml = defaultSlide,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
                 Size = 480,
             });
             if (SlideCreated != null)

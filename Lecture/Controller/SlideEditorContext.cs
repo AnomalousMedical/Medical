@@ -263,7 +263,7 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
@@ -276,13 +276,13 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Right,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
@@ -295,19 +295,19 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Right,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 288,
-                ViewLocation = ViewLocations.Top,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
@@ -320,25 +320,25 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Right,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 288,
-                ViewLocation = ViewLocations.Top,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 288,
-                ViewLocation = ViewLocations.Bottom,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
@@ -351,13 +351,13 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 50,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 50,
-                ViewLocation = ViewLocations.Right,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
@@ -370,7 +370,7 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 100,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
@@ -383,13 +383,13 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 480,
-                ViewLocation = ViewLocations.Left,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
             });
             presetSlide.addPanel(new RmlSlidePanel()
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 288,
-                ViewLocation = ViewLocations.Top,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
         }

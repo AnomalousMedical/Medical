@@ -13,15 +13,16 @@ namespace Medical
     {
         private int size = 50;
         private ViewLocations viewLocation = ViewLocations.Left;
+        private LayoutElementName elementName;
 
         public SlidePanel()
         {
-
+            elementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left);
         }
 
         public String createViewName(String masterName)
         {
-            return masterName + ViewLocation.ToString();
+            return masterName + elementName.Name + elementName.LocationHint;
         }
 
         public abstract MyGUIView createView(Slide slide, String name);
@@ -34,7 +35,7 @@ namespace Medical
         public virtual bool applyToExisting(SlidePanel panel, bool overwriteContent)
         {
             panel.Size = this.Size;
-            panel.ViewLocation = this.ViewLocation;
+            panel.ElementName = this.ElementName;
             return true;
         }
 
@@ -58,51 +59,52 @@ namespace Medical
             }
         }
 
-        [Editable]
-        public ViewLocations ViewLocation
-        {
-            get
-            {
-                return viewLocation;
-            }
-            set
-            {
-                viewLocation = value;
-            }
-        }
-
         public LayoutElementName ElementName
         {
             get
             {
-                BorderLayoutLocations location = BorderLayoutLocations.Left;
-                switch (ViewLocation)
-                {
-                    case ViewLocations.Left:
-                        location = BorderLayoutLocations.Left;
-                        break;
-                    case ViewLocations.Right:
-                        location = BorderLayoutLocations.Right;
-                        break;
-                    case ViewLocations.Top:
-                        location = BorderLayoutLocations.Top;
-                        break;
-                    case ViewLocations.Bottom:
-                        location = BorderLayoutLocations.Bottom;
-                        break;
-                }
-                return new BorderLayoutElementName(GUILocationNames.ContentArea, location);
+                return elementName;
+            }
+            set
+            {
+                elementName = value;
             }
         }
+
+        protected const int CurrentVersion = 1;
 
         protected SlidePanel(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info);
+            if (info.Version < CurrentVersion)
+            {
+                if (info.Version < 1)
+                {
+                    BorderLayoutLocations location = BorderLayoutLocations.Left;
+                    switch (info.GetValue("viewLocation", ViewLocations.Left))
+                    {
+                        case ViewLocations.Left:
+                            location = BorderLayoutLocations.Left;
+                            break;
+                        case ViewLocations.Right:
+                            location = BorderLayoutLocations.Right;
+                            break;
+                        case ViewLocations.Top:
+                            location = BorderLayoutLocations.Top;
+                            break;
+                        case ViewLocations.Bottom:
+                            location = BorderLayoutLocations.Bottom;
+                            break;
+                    }
+                    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, location);
+                }
+            }
         }
 
         public void getInfo(SaveInfo info)
         {
             ReflectedSaver.SaveObject(this, info);
+            info.Version = CurrentVersion;
         }
     }
 }

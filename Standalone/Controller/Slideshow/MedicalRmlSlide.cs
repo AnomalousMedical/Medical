@@ -98,7 +98,7 @@ namespace Medical
             {
                 RmlSlidePanel panel = new RmlSlidePanel();
                 panel.Rml = info.GetString("rml");
-                panel.ViewLocation = ViewLocations.Left;
+                panel.ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left);
                 panel.Size = 480;
                 addPanel(panel);
             }
