@@ -7,12 +7,24 @@ using System.Text;
 
 namespace Medical
 {
-    public class LayoutElementName : SaveableEditableItem
+    /// <summary>
+    /// The name of an element in the layout chain that a layout container should go into.
+    /// This class and any subclasses should be immutable.
+    /// </summary>
+    public class LayoutElementName : Saveable
     {
         public LayoutElementName(String name)
-            :base(name)
         {
-            
+            this.name = name;
+        }
+
+        private String name;
+        public String Name
+        {
+            get
+            {
+                return name;
+            }
         }
 
         protected virtual String UniqueDerivedName
@@ -33,15 +45,42 @@ namespace Medical
             return this.UniqueDerivedName == other.UniqueDerivedName;
         }
 
+        public static bool operator == (LayoutElementName a, LayoutElementName b)
+        {
+            // If both are null, or both are same instance, return true.
+            if (System.Object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
+            // Return true if the fields match:
+            return a.UniqueDerivedName == b.UniqueDerivedName;
+        }
+
+        public static bool operator !=(LayoutElementName a, LayoutElementName b)
+        {
+            return !(a == b);
+        }
+
         public override int GetHashCode()
         {
             return UniqueDerivedName.GetHashCode();
         }
 
         protected LayoutElementName(LoadInfo info)
-            :base(info)
         {
-            
+            ReflectedSaver.RestoreObject(this, info);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            ReflectedSaver.SaveObject(this, info);
         }
     }
 }

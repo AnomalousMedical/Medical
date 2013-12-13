@@ -11,7 +11,7 @@ namespace Medical
         public BorderLayoutElementName(String name, BorderLayoutLocations viewLocation)
             :base(name)
         {
-            this.ViewLocation = viewLocation;
+            this.viewLocation = viewLocation;
         }
 
         private BorderLayoutLocations viewLocation;
@@ -20,10 +20,6 @@ namespace Medical
             get
             {
                 return viewLocation;
-            }
-            set
-            {
-                viewLocation = value;
             }
         }
 
