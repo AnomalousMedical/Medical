@@ -30,5 +30,24 @@ namespace Medical
                 return Name + ViewLocation;
             }
         }
+
+        public override ViewLocations LocationHint
+        {
+            get
+            {
+                switch (viewLocation)
+                {
+                    case BorderLayoutLocations.Left:
+                        return ViewLocations.Left;
+                    case BorderLayoutLocations.Right:
+                        return ViewLocations.Right;
+                    case BorderLayoutLocations.Top:
+                        return ViewLocations.Top;
+                    case BorderLayoutLocations.Bottom:
+                        return ViewLocations.Bottom;
+                }
+                return base.LocationHint;
+            }
+        }
     }
 }

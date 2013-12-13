@@ -504,7 +504,7 @@ namespace Lecture
                             float sizeRatio = (float)SlideImageManager.ThumbWidth / editor.Component.ViewHost.Container.RigidParentWorkingSize.Width;
 
                             Rectangle panelThumbPos = new Rectangle((int)Math.Round(location.x * sizeRatio), (int)Math.Round(location.y * sizeRatio), (int)Math.Round(size.Width * sizeRatio), (int)Math.Round(size.Height * sizeRatio));
-                            switch (editor.View.ViewLocation)
+                            switch (editor.View.ElementName.LocationHint)
                             {
                                 case ViewLocations.Left:
                                     sceneThumbPosition.x = panelThumbPos.Width;
@@ -581,7 +581,7 @@ namespace Lecture
                 SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy();
                 String editorViewName = panel.createViewName("RmlView");
                 RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
-                rmlView.ViewLocation = panel.ViewLocation;
+                rmlView.ElementName = panel.ElementName;
                 rmlView.IsWindow = false;
                 rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;

@@ -623,7 +623,7 @@ namespace Medical.GUI
             }
 
             int left, top;
-            switch (ViewHost.View.ViewLocation)
+            switch (ViewHost.View.ElementName.LocationHint)
             {
                 case ViewLocations.Right:
                     left = widget.AbsoluteLeft - editor.Width;

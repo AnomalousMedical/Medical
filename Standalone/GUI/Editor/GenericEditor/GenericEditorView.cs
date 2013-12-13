@@ -17,7 +17,6 @@ namespace Medical.GUI
             this.EditUICallback = editUICallback;
             this.EditorController = editorController;
             this.HorizontalAlignment = horizontalAlignment;
-            this.ViewLocation = Controller.AnomalousMvc.ViewLocations.Right;
         }
 
         public EditInterface EditInterface { get; set; }

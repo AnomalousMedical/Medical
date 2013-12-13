@@ -20,7 +20,7 @@ namespace Medical
 
         SlideLayoutStrategy createDerivedStrategy(SlideLayoutStrategy oldStrategy, bool overwriteContent);
 
-        SlidePanel getPanel(int index);
+        SlidePanel getPanel(LayoutElementName name);
 
         IEnumerable<SlidePanel> Panels { get; }
     }

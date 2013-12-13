@@ -14,7 +14,7 @@ namespace Medical
     class BorderSlideLayoutStrategy : SlideLayoutStrategy
     {
         [DoNotSave]
-        private Dictionary<ViewLocations, SlidePanel> panels = new Dictionary<ViewLocations, SlidePanel>();
+        private Dictionary<LayoutElementName, SlidePanel> panels = new Dictionary<LayoutElementName, SlidePanel>();
 
         public BorderSlideLayoutStrategy()
         {
@@ -40,7 +40,7 @@ namespace Medical
 
         public void addPanel(SlidePanel panel)
         {
-            panels.Add(panel.ViewLocation, panel);
+            panels.Add(panel.ElementName, panel);
         }
 
         public void claimFiles(CleanupInfo info, ResourceProvider resourceProvider, Slide slide)
@@ -56,7 +56,7 @@ namespace Medical
             BorderSlideLayoutStrategy borderSlides = new BorderSlideLayoutStrategy();
             foreach (SlidePanel panel in panels.Values)
             {
-                SlidePanel existingPanel = oldStrategy.getPanel((int)panel.ViewLocation);
+                SlidePanel existingPanel = oldStrategy.getPanel(panel.ElementName);
                 if (existingPanel != null)
                 {
                     existingPanel = existingPanel.clone();
@@ -87,31 +87,49 @@ namespace Medical
             }
         }
 
-        public SlidePanel getPanel(int index)
+        public SlidePanel getPanel(LayoutElementName name)
         {
             SlidePanel ret = null;
-            if (panels.TryGetValue((ViewLocations)index, out ret))
+            if (panels.TryGetValue(name, out ret))
             {
                 return ret;
             }
             return null;
         }
 
+        private const int CurrentVersion = 1;
+
         protected BorderSlideLayoutStrategy(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info);
-            info.RebuildDictionary("Panel", panels);
+            if (info.Version < CurrentVersion)
+            {
+                if (info.Version < 1)
+                {
+                    Dictionary<ViewLocations, SlidePanel> legacyPanels = new Dictionary<ViewLocations, SlidePanel>();
+                    info.RebuildDictionary("Panel", legacyPanels);
+                    foreach (var panel in legacyPanels.Values)
+                    {
+                        addPanel(panel);
+                    }
+                }
+            }
+            else
+            {
+                info.RebuildDictionary("Panel", panels);
+            }
         }
 
         public void getInfo(SaveInfo info)
         {
             ReflectedSaver.SaveObject(this, info);
             info.ExtractDictionary("Panel", panels);
+            info.Version = CurrentVersion;
         }
 
         class InstanceStrategy : SlideInstanceLayoutStrategy
         {
-            private Dictionary<ViewLocations, MyGUIViewHost> viewHosts = new Dictionary<ViewLocations, MyGUIViewHost>();
+            private Dictionary<LayoutElementName, MyGUIViewHost> viewHosts = new Dictionary<LayoutElementName, MyGUIViewHost>();
             private BorderSlideLayoutStrategy masterStrategy;
 
             public InstanceStrategy(BorderSlideLayoutStrategy masterStrategy)
@@ -128,14 +146,14 @@ namespace Medical
             public IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
             {
                 float ratio = layoutContainer.RigidParentWorkingSize.Height / (float)ScaleHelper.Scaled(Slideshow.BaseSlideScale);
-                SlidePanel panel = masterStrategy.panels[view.ViewLocation];
+                SlidePanel panel = masterStrategy.panels[view.ElementName];
                 int size = (int)(panel.Size * ratio);
-                if (viewHosts.ContainsKey(view.ViewLocation))
+                if (viewHosts.ContainsKey(view.ElementName))
                 {
-                    viewHosts[view.ViewLocation].changeScale(ratio);
+                    viewHosts[view.ElementName].changeScale(ratio);
                 }
 
-                switch (view.ViewLocation)
+                switch (view.ElementName.LocationHint)
                 {
                     case ViewLocations.Left:
                         return new IntSize2(size, widget.Height);
@@ -152,13 +170,13 @@ namespace Medical
 
             void view_ViewHostCreated(MyGUIViewHost view)
             {
-                viewHosts.Add(view.View.ViewLocation, view);
+                viewHosts.Add(view.View.ElementName, view);
                 view.ViewClosing += view_ViewClosing;
             }
 
             void view_ViewClosing(ViewHost view)
             {
-                viewHosts.Remove(view.View.ViewLocation);
+                viewHosts.Remove(view.View.ElementName);
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.GUI.AnomalousMvc;
 using Engine.Saving;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -12,7 +13,7 @@ namespace Medical.GUI
         public TimelineEditorView(String name, Timeline timeline, TimelineController timelineController, EditorController editorController, PropEditController propEditController)
             :base(name)
         {
-            ViewLocation = Controller.AnomalousMvc.ViewLocations.Bottom;
+            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
             IsWindow = true;
             this.Timeline = timeline;
             this.TimelineController = timelineController;

@@ -43,7 +43,7 @@ namespace Medical.GUI.AnomalousMvc
             if (view.IsWindow)
             {
                 MDIDialogDecorator dialogDecorator = new MDIDialogDecorator(mdiManager, component, view.Buttons);
-                switch (view.ViewLocation)
+                switch (view.ElementName.LocationHint)
                 {
                     case ViewLocations.Left:
                         dialogDecorator.CurrentDockLocation = DockLocation.Left;
@@ -65,7 +65,7 @@ namespace Medical.GUI.AnomalousMvc
             }
             else
             {
-                switch (view.ViewLocation)
+                switch (view.ElementName.LocationHint)
                 {
                     case ViewLocations.Left:
                         component = new SidePanelDecorator(component, view.Buttons, view.Transparent);

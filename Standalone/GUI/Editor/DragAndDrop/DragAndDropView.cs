@@ -13,7 +13,7 @@ namespace Medical.GUI
         public DragAndDropViewBase(String name)
             :base(name)
         {
-            this.ViewLocation = Controller.AnomalousMvc.ViewLocations.Floating;
+
         }
 
         public override void getInfo(SaveInfo info)

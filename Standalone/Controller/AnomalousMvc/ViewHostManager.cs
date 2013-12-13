@@ -53,24 +53,14 @@ namespace Medical.Controller.AnomalousMvc
             }
             else
             {
-                String name = view.EditPreviewContent ? GUILocationNames.ContentArea : GUILocationNames.EditorBorderLayout; //A bit backward, but we are kinda hacking this anyway
                 ViewHostPanelInfo panel = null;
-                switch (view.ViewLocation)
+                switch (view.ElementName.LocationHint)
                 {
-                    case ViewLocations.Left:
-                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Left));
-                        break;
-                    case ViewLocations.Right:
-                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Right));
-                        break;
-                    case ViewLocations.Top:
-                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Top));
-                        break;
-                    case ViewLocations.Bottom:
-                        panel = findPanel(new BorderLayoutElementName(name, BorderLayoutLocations.Bottom));
-                        break;
                     case ViewLocations.Floating:
                         queuedFloatingViews.Add(new KeyValuePair<View, AnomalousMvcContext>(view, context));
+                        break;
+                    default:
+                        panel = findPanel(view.ElementName);
                         break;
                 }
                 if (panel != null)
@@ -164,7 +154,7 @@ namespace Medical.Controller.AnomalousMvc
                 ViewHost viewHost = viewHostFactory.createViewHost(viewInfo.Key, viewInfo.Value);
                 viewHost.opening();
                 openFloatingViews.Add(viewHost);
-                if (viewInfo.Key.FillScreen)
+                if (!viewInfo.Key.IsWindow)
                 {
                     guiManager.addFullscreenPopup(viewHost.Container);
                     viewHost.ViewClosing += (closingView) =>

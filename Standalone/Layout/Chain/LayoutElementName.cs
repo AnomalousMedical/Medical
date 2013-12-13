@@ -1,4 +1,5 @@
 ﻿using Engine.Saving;
+using Medical.Controller.AnomalousMvc;
 using Medical.Editor;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,14 @@ namespace Medical
             get
             {
                 return Name;
+            }
+        }
+
+        public virtual ViewLocations LocationHint
+        {
+            get
+            {
+                return ViewLocations.Floating;
             }
         }
 

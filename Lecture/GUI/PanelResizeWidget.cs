@@ -53,7 +53,7 @@ namespace Lecture
         {
             MouseEventArgs me = (MouseEventArgs)e;
             Widget editorWidget = currentEditor.Component.Widget;
-            switch (currentEditor.View.ViewLocation)
+            switch (currentEditor.View.ElementName.LocationHint)
             {
                 case ViewLocations.Left:
                     resizeWidget.setPosition(me.Position.x + mousePressOffset.x, resizeWidget.AbsoluteTop);
@@ -128,7 +128,7 @@ namespace Lecture
             {
                 Widget editorWidget = currentEditor.Component.Widget;
                 int left, top;
-                switch (currentEditor.View.ViewLocation)
+                switch (currentEditor.View.ElementName.LocationHint)
                 {
                     case ViewLocations.Left:
                         left = editorWidget.AbsoluteLeft + editorWidget.Width;

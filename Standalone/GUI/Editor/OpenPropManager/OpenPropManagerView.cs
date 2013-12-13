@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI.AnomalousMvc;
 using Medical.Controller.AnomalousMvc;
 using Engine.Saving;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -14,7 +15,7 @@ namespace Medical.GUI
             : base(name)
         {
             IsWindow = true;
-            ViewLocation = ViewLocations.Floating;
+            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Floating);
             this.PropEditController = propEditController;
         }
 

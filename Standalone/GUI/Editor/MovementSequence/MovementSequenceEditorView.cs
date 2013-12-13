@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI.AnomalousMvc;
 using Engine.Saving;
 using Medical.Muscles;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -13,7 +14,7 @@ namespace Medical.GUI
         public MovementSequenceEditorView(String name, MovementSequence sequence = null, bool listenForSequenceChanges = false)
             : base(name)
         {
-            ViewLocation = Controller.AnomalousMvc.ViewLocations.Bottom;
+            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
             IsWindow = true;
             Sequence = sequence;
             ListenForSequenceChanges = listenForSequenceChanges;

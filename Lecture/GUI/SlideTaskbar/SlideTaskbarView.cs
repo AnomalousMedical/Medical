@@ -20,7 +20,7 @@ namespace Lecture.GUI
             :base(name)
         {
             this.DisplayName = displayName;
-            this.ViewLocation = ViewLocations.Top;
+            this.ElementName = new BorderLayoutElementName(GUILocationNames.EditorBorderLayout, BorderLayoutLocations.Top);
         }
 
         public void addTask(Task task)

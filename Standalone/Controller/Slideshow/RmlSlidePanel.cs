@@ -27,7 +27,7 @@ namespace Medical
             {
                 Rml = Rml,
                 FakePath = slide.UniqueName + "/index.rml",
-                ViewLocation = ViewLocation,
+                ElementName = ElementName,
                 CreateCustomEventController = (context, viewHost) =>
                     {
                         return new SlideshowRmlMvcEventController(context, viewHost, slide);

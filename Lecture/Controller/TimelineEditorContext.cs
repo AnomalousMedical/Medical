@@ -10,6 +10,7 @@ using Medical.GUI.AnomalousMvc;
 using Medical;
 using Lecture.GUI;
 using Engine;
+using Medical.Controller;
 
 namespace Lecture
 {
@@ -60,7 +61,7 @@ namespace Lecture
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
             genericEditor.IsWindow = true;
-            genericEditor.ViewLocation = ViewLocations.Left;
+            genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             mvcContext.Views.add(genericEditor);
             
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController);
@@ -73,7 +74,7 @@ namespace Lecture
 
             MovementSequenceEditorView movementSequenceEditor = new MovementSequenceEditorView("MovementSequenceEditor", listenForSequenceChanges: true);
             movementSequenceEditor.Buttons.add(new CloseButtonDefinition("Close", "MovementSequenceEditor/Close"));
-            movementSequenceEditor.ViewLocation = ViewLocations.Top;
+            movementSequenceEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top);
             mvcContext.Views.add(movementSequenceEditor);
 
             SlideTaskbarView taskbar = new SlideTaskbarView("TimelineInfoBar", name);
@@ -261,7 +262,7 @@ namespace Lecture
             {
                 String editorViewName = panel.createViewName("RmlView");
                 RawRmlView rmlView = new RawRmlView(editorViewName);
-                rmlView.ViewLocation = panel.ViewLocation;
+                rmlView.ElementName = panel.ElementName;
                 rmlView.IsWindow = false;
                 rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;

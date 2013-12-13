@@ -367,6 +367,7 @@
     <Compile Include="Layout\Chain\BorderLayoutChainLink.cs" />
     <Compile Include="Layout\Chain\BorderLayoutElementName.cs" />
     <Compile Include="Layout\Chain\LayoutElementName.cs" />
+    <Compile Include="Layout\Chain\MDILayoutElementName.cs" />
     <Compile Include="Layout\Chain\PopupAreaChainLink.cs" />
     <Compile Include="Layout\Chain\LayoutChain.cs" />
     <Compile Include="Layout\Chain\MDIChainLink.cs" />

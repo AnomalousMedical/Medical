@@ -71,6 +71,30 @@ namespace Medical
             }
         }
 
+        public LayoutElementName ElementName
+        {
+            get
+            {
+                BorderLayoutLocations location = BorderLayoutLocations.Left;
+                switch (ViewLocation)
+                {
+                    case ViewLocations.Left:
+                        location = BorderLayoutLocations.Left;
+                        break;
+                    case ViewLocations.Right:
+                        location = BorderLayoutLocations.Right;
+                        break;
+                    case ViewLocations.Top:
+                        location = BorderLayoutLocations.Top;
+                        break;
+                    case ViewLocations.Bottom:
+                        location = BorderLayoutLocations.Bottom;
+                        break;
+                }
+                return new BorderLayoutElementName(GUILocationNames.ContentArea, location);
+            }
+        }
+
         protected SlidePanel(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info);
