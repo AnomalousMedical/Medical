@@ -15,18 +15,14 @@ namespace Medical
             this.singleChildContainer = layoutContainer;
         }
 
-        public override void setLayoutItem(string positionHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
-            //This only has one child and does not support this, so just fire that we are done with that container.
-            if (animationCompleted != null)
-            {
-                animationCompleted.Invoke(container);
-            }
+            //This will never be called because this class does not expose any names
         }
 
-        public override void removeLayoutItem(string positionHint)
+        public override void removeLayoutItem(LayoutElementName elementName, LayoutContainer container)
         {
-            //Does nothing
+            //This will never be called because this class does not expose any names
         }
 
         protected internal override void _setChildContainer(LayoutContainer layoutContainer)
@@ -39,6 +35,14 @@ namespace Medical
             get
             {
                 return singleChildContainer;
+            }
+        }
+
+        public override IEnumerable<LayoutElementName> ElementNames
+        {
+            get
+            {
+                return IEnumerableUtil<LayoutElementName>.EmptyIterator;
             }
         }
     }

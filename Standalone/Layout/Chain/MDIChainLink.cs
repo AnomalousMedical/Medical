@@ -11,23 +11,19 @@ namespace Medical
         private MDILayoutManager mdiManager;
 
         public MDIChainLink(String name, MDILayoutManager mdiManager)
-            :base(name)
+            : base(name)
         {
             this.mdiManager = mdiManager;
         }
 
-        public override void setLayoutItem(string positionHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
-            //This only has one child and does not support this, so just fire that we are done with that container.
-            if (animationCompleted != null)
-            {
-                animationCompleted.Invoke(container);
-            }
+            //This will never be called because this class does not expose any names
         }
 
-        public override void removeLayoutItem(string positionHint)
+        public override void removeLayoutItem(LayoutElementName elementName, LayoutContainer container)
         {
-            
+            //This will never be called because this class does not expose any names
         }
 
         public override LayoutContainer Container
@@ -44,6 +40,14 @@ namespace Medical
             //{
             //    editorPreviewBorderLayout.Center = center;
             //});
+        }
+
+        public override IEnumerable<LayoutElementName> ElementNames
+        {
+            get
+            {
+                return IEnumerableUtil<LayoutElementName>.EmptyIterator;
+            }
         }
     }
 }

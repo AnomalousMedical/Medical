@@ -365,6 +365,8 @@
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
     <Compile Include="Layout\AnimatedLayoutContainer.cs" />
     <Compile Include="Layout\Chain\BorderLayoutChainLink.cs" />
+    <Compile Include="Layout\Chain\BorderLayoutElementName.cs" />
+    <Compile Include="Layout\Chain\LayoutElementName.cs" />
     <Compile Include="Layout\Chain\PopupAreaChainLink.cs" />
     <Compile Include="Layout\Chain\LayoutChain.cs" />
     <Compile Include="Layout\Chain\MDIChainLink.cs" />

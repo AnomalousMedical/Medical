@@ -9,25 +9,28 @@ namespace Medical
     public class PopupAreaChainLink : LayoutChainLink
     {
         private EventLayoutContainer eventContainer = new EventLayoutContainer();
-        private Dictionary<String, LayoutContainer> fullscreenPopups = new Dictionary<String, LayoutContainer>();
+        private List<LayoutContainer> fullscreenPopups = new List<LayoutContainer>();
 
         public PopupAreaChainLink(String name)
-            :base(name)
+            : base(name)
         {
             eventContainer.LayoutChanged += container_LayoutChanged;
         }
 
-        public override void setLayoutItem(string positionHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
-            container.Location = eventContainer.Location;
-            container.WorkingSize = eventContainer.WorkingSize;
-            container.layout();
-            fullscreenPopups.Add(positionHint, container);
+            if (container != null)
+            {
+                container.Location = eventContainer.Location;
+                container.WorkingSize = eventContainer.WorkingSize;
+                container.layout();
+                fullscreenPopups.Add(container);
+            }
         }
 
-        public override void removeLayoutItem(string positionHint)
+        public override void removeLayoutItem(LayoutElementName elementName, LayoutContainer container)
         {
-            fullscreenPopups.Remove(positionHint);
+            fullscreenPopups.Remove(container);
         }
 
         public override LayoutContainer Container
@@ -49,11 +52,19 @@ namespace Medical
             int yPos = (int)eventContainer.Location.y;
             int innerWidth = (int)eventContainer.WorkingSize.Width;
             int innerHeight = (int)eventContainer.WorkingSize.Height;
-            foreach (LayoutContainer fullscreenPopup in fullscreenPopups.Values)
+            foreach (LayoutContainer fullscreenPopup in fullscreenPopups)
             {
                 fullscreenPopup.Location = new IntVector2(xPos, yPos);
                 fullscreenPopup.WorkingSize = new IntSize2(innerWidth, innerHeight);
                 fullscreenPopup.layout();
+            }
+        }
+
+        public override IEnumerable<LayoutElementName> ElementNames
+        {
+            get
+            {
+                yield return new LayoutElementName(Name);
             }
         }
     }

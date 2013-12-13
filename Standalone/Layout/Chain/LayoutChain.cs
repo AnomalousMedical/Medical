@@ -11,6 +11,7 @@ namespace Medical
     {
         private LinkedList<LayoutChainLink> activeLinks = new LinkedList<LayoutChainLink>(); //The currently active chain
         private Dictionary<String, LayoutChainLink> links = new Dictionary<String, LayoutChainLink>(); //All elements that can be part of the chain
+        private Dictionary<LayoutElementName, LayoutChainLink> namedLinkedElements = new Dictionary<LayoutElementName, LayoutChainLink>();
 
         public LayoutChain()
         {
@@ -20,6 +21,10 @@ namespace Medical
         public void addLink(LayoutChainLink link, bool addToActiveChainEnd = false)
         {
             links.Add(link.Name, link);
+            foreach (var namedElement in link.ElementNames)
+            {
+                namedLinkedElements.Add(namedElement, link);
+            }
             if (addToActiveChainEnd)
             {
                 doActivateLink(link, activeLinks.Last);
@@ -28,8 +33,15 @@ namespace Medical
 
         public void removeLink(LayoutChainLink link)
         {
-            deactivateLink(link.Name);
-            links.Remove(link.Name);
+            if (links.ContainsValue(link))
+            {
+                deactivateLink(link.Name);
+                foreach (var namedElement in link.ElementNames)
+                {
+                    namedLinkedElements.Remove(namedElement);
+                }
+                links.Remove(link.Name);
+            }
         }
 
         public void activateLinkAsRoot(String name)
@@ -79,16 +91,16 @@ namespace Medical
             }
         }
 
-        public void addContainer(String linkName, String positionHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public void addContainer(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
             LayoutChainLink link;
-            if (links.TryGetValue(linkName, out link))
+            if (namedLinkedElements.TryGetValue(elementName, out link))
             {
-                link.setLayoutItem(positionHint, container, animationCompleted);
+                link.setLayoutItem(elementName, container, animationCompleted);
             }
             else
             {
-                Log.Warning("Cannot add container to link '{0}' because it cannot be found. No changes made.", linkName);
+                Log.Warning("Cannot add container to container '{0}' because it cannot be found. No changes made.", elementName.Name);
                 if (animationCompleted != null)
                 {
                     animationCompleted.Invoke(container);
@@ -96,16 +108,16 @@ namespace Medical
             }
         }
 
-        public void removeContainer(String linkName, String positionHint)
+        public void removeContainer(LayoutElementName elementName, LayoutContainer container)
         {
             LayoutChainLink link;
-            if (links.TryGetValue(linkName, out link))
+            if (namedLinkedElements.TryGetValue(elementName, out link))
             {
-                link.removeLayoutItem(positionHint);
+                link.removeLayoutItem(elementName, container);
             }
             else
             {
-                Log.Warning("Cannot remove container from link '{0}' because it cannot be found. No changes made.", linkName);
+                Log.Warning("Cannot remove container from link '{0}' because it cannot be found. No changes made.", elementName.Name);
             }
         }
 

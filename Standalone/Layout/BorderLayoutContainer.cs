@@ -6,6 +6,14 @@ using Engine;
 
 namespace Medical
 {
+    public enum BorderLayoutLocations
+    {
+        Left,
+        Right,
+        Top,
+        Bottom,
+        Center
+    }
 
     /// <summary>
     /// Creates a border layout. The top and bottom will fill the width and

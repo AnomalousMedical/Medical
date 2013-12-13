@@ -10,27 +10,26 @@ namespace Medical
     public class BorderLayoutChainLink : LayoutChainLink, IDisposable
     {
         private BorderLayoutContainer borderLayout = new BorderLayoutContainer();
-        private Dictionary<String, AnimatedLayoutContainer> panels = new Dictionary<string, AnimatedLayoutContainer>();
+        private Dictionary<LayoutElementName, AnimatedLayoutContainer> panels = new Dictionary<LayoutElementName, AnimatedLayoutContainer>();
 
         public BorderLayoutChainLink(String name, Engine.Platform.UpdateTimer tempTimer)
-            :base(name)
+            : base(name)
         {
-            //OMG!!!!! MAKE THE CONTAINERS CREATED BY THE BORDERLAYOUTCHAINLINK GET DISPOSED SOMEHOW
             AnimatedLayoutContainer animatedContainer = new HorizontalPopoutLayoutContainer(tempTimer);
             borderLayout.Left = animatedContainer;
-            panels.Add("Left", animatedContainer);
+            panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Left), animatedContainer);
 
             animatedContainer = new HorizontalPopoutLayoutContainer(tempTimer);
             borderLayout.Right = animatedContainer;
-            panels.Add("Right", animatedContainer);
+            panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Right), animatedContainer);
 
             animatedContainer = new VerticalPopoutLayoutContainer(tempTimer);
             borderLayout.Top = animatedContainer;
-            panels.Add("Top", animatedContainer);
+            panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Top), animatedContainer);
 
             animatedContainer = new VerticalPopoutLayoutContainer(tempTimer);
             borderLayout.Bottom = animatedContainer;
-            panels.Add("Bottom", animatedContainer);
+            panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Bottom), animatedContainer);
         }
 
         public void Dispose()
@@ -42,10 +41,10 @@ namespace Medical
             panels.Clear();
         }
 
-        public override void setLayoutItem(string positionHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
         {
             AnimatedLayoutContainer panel;
-            if (panels.TryGetValue(positionHint, out panel))
+            if (panels.TryGetValue(elementName, out panel))
             {
                 if (panel.CurrentContainer != container)
                 {
@@ -54,7 +53,7 @@ namespace Medical
             }
             else
             {
-                Log.Warning("Cannot add container to border layout position '{0}' because it cannot be found. Container will not be visible on UI.", positionHint);
+                Log.Warning("Cannot add container to border layout position '{0}' because it cannot be found. Container will not be visible on UI.", elementName.Name);
                 if (animationCompleted != null)
                 {
                     animationCompleted.Invoke(container);
@@ -62,10 +61,10 @@ namespace Medical
             }
         }
 
-        public override void removeLayoutItem(string positionHint)
+        public override void removeLayoutItem(LayoutElementName elementName, LayoutContainer container)
         {
             AnimatedLayoutContainer panel;
-            if (panels.TryGetValue(positionHint, out panel))
+            if (panels.TryGetValue(elementName, out panel))
             {
                 if (panel.CurrentContainer != null)
                 {
@@ -74,7 +73,7 @@ namespace Medical
             }
             else
             {
-                Log.Warning("Cannot remove container from border layout position '{0}' because it cannot be found. Container will not be visible on UI.", positionHint);
+                Log.Warning("Cannot remove container from border layout position '{0}' because it cannot be found. Container will not be visible on UI.", elementName.Name);
             }
         }
 
@@ -88,6 +87,14 @@ namespace Medical
             get
             {
                 return borderLayout;
+            }
+        }
+
+        public override IEnumerable<LayoutElementName> ElementNames
+        {
+            get
+            {
+                return panels.Keys;
             }
         }
     }

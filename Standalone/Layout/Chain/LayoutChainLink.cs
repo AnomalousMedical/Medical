@@ -16,13 +16,15 @@ namespace Medical
             this.Name = name;
         }
 
-        public abstract void setLayoutItem(String positionHint, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null);
+        public abstract void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null);
 
-        public abstract void removeLayoutItem(String positionHint);
+        public abstract void removeLayoutItem(LayoutElementName elementName, LayoutContainer container);
 
         public String Name { get; private set; }
 
         public abstract LayoutContainer Container { get; }
+
+        public abstract IEnumerable<LayoutElementName> ElementNames { get; }
 
         protected internal abstract void _setChildContainer(LayoutContainer layoutContainer);
     }

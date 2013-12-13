@@ -143,7 +143,17 @@ namespace Medical.GUI
                 container.Visible = true;
                 container.bringToFront();
             }
-            screenLayoutManager.LayoutChain.addContainer(layoutName, layoutHint, container, animationCompleted);
+            LayoutElementName elementName;
+            BorderLayoutLocations location;
+            if (Enum.TryParse<BorderLayoutLocations>(layoutHint, out location))
+            {
+                elementName = new BorderLayoutElementName(layoutName, location);
+            }
+            else
+            {
+                elementName = new LayoutElementName(layoutName);
+            }
+            screenLayoutManager.LayoutChain.addContainer(elementName, container, animationCompleted);
         }
 
         public void setMainInterfaceEnabled(bool enabled)
@@ -191,12 +201,12 @@ namespace Medical.GUI
 
         public void addFullscreenPopup(LayoutContainer popup, String name)
         {
-            screenLayoutManager.LayoutChain.addContainer(GUILocationNames.FullscreenPopup, name, popup);
+            screenLayoutManager.LayoutChain.addContainer(new LayoutElementName(GUILocationNames.FullscreenPopup), popup);
         }
 
         public void removeFullscreenPopup(LayoutContainer popup, String name)
         {
-            screenLayoutManager.LayoutChain.removeContainer(GUILocationNames.FullscreenPopup, name);
+            screenLayoutManager.LayoutChain.removeContainer(new LayoutElementName(GUILocationNames.FullscreenPopup), popup);
         }
 
         public void autoDisposeDialog(MDIDialog autoDisposeDialog)
