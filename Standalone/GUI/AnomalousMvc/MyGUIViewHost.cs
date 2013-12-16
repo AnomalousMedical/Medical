@@ -118,7 +118,10 @@ namespace Medical.GUI.AnomalousMvc
 
         public bool Open { get; private set; }
 
-        public void _animationCallback(LayoutContainer oldChild)
+        /// <summary>
+        /// A callback to send to the GUI manager that will be called when it is done with this view host.
+        /// </summary>
+        public void _finishedWithView()
         {
             Dispose();
             InputManager.Instance.refreshMouseWidget();

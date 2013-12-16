@@ -91,19 +91,19 @@ namespace Medical
             }
         }
 
-        public void addContainer(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public void addContainer(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
             LayoutChainLink link;
             if (namedLinkedElements.TryGetValue(elementName, out link))
             {
-                link.setLayoutItem(elementName, container, animationCompleted);
+                link.setLayoutItem(elementName, container, removedCallback);
             }
             else
             {
                 Log.Warning("Cannot add container to container '{0}' because it cannot be found. No changes made.", elementName.Name);
-                if (animationCompleted != null)
+                if (removedCallback != null)
                 {
-                    animationCompleted.Invoke(container);
+                    removedCallback.Invoke();
                 }
             }
         }

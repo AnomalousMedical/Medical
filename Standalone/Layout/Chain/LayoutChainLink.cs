@@ -16,7 +16,7 @@ namespace Medical
             this.Name = name;
         }
 
-        public abstract void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null);
+        public abstract void setLayoutItem(LayoutElementName elementName, LayoutContainer container, Action removedCallback);
 
         public abstract void removeLayoutItem(LayoutElementName elementName, LayoutContainer container);
 

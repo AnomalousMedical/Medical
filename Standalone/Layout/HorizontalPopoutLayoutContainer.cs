@@ -16,7 +16,6 @@ namespace Medical
         private LayoutContainer childContainer;
         private LayoutContainer oldChildContainer;
 
-        private event AnimationCompletedDelegate animationComplete;
         private float animationLength;
         private float currentTime;
         private bool animating = false;
@@ -72,7 +71,7 @@ namespace Medical
             }
         }
 
-        public override void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
+        public override void changePanel(LayoutContainer childContainer, float animDuration)
         {
             //If we were animating when a new request comes in clear the old animation first.
             if (animating)
@@ -94,7 +93,6 @@ namespace Medical
 
             currentTime = 0.0f;
             animationLength = animDuration;
-            this.animationComplete += animationComplete;
 
             oldChildContainer = this.childContainer;
             if (oldChildContainer != null)
@@ -193,11 +191,7 @@ namespace Medical
                 oldChildContainer.animatedResizeCompleted();
                 oldChildContainer.layout();
             }
-            if (animationComplete != null)
-            {
-                animationComplete.Invoke(oldChildContainer);
-                animationComplete = null;
-            }
+            fireAnimationComplete(oldChildContainer);
             if (childContainer != null)
             {
                 childContainer.animatedResizeCompleted();

@@ -131,14 +131,14 @@ namespace Medical.GUI
             screenLayoutManager.changeOSWindow(newWindow);
         }
 
-        public void changeElement(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public void changeElement(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
             if (container != null)
             {
                 container.Visible = true;
                 container.bringToFront();
             }
-            screenLayoutManager.LayoutChain.addContainer(elementName, container, animationCompleted);
+            screenLayoutManager.LayoutChain.addContainer(elementName, container, removedCallback);
         }
 
         public void closeElement(LayoutElementName elementName, LayoutContainer container)

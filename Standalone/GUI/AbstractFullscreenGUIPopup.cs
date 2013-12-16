@@ -35,7 +35,7 @@ namespace Medical.GUI
 
         void ChooseSceneDialog_Showing(object sender, EventArgs e)
         {
-            guiManager.changeElement(elementName, layoutContainer);
+            guiManager.changeElement(elementName, layoutContainer, null);
         }
     }
 }

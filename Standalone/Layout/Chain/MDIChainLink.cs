@@ -16,7 +16,7 @@ namespace Medical
             this.mdiManager = mdiManager;
         }
 
-        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
             //This will never be called because this class does not expose any names
         }

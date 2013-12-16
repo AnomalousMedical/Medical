@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Platform;
 using Logging;
 using System;
 using System.Collections.Generic;
@@ -11,25 +12,30 @@ namespace Medical
     {
         private BorderLayoutContainer borderLayout = new BorderLayoutContainer();
         private Dictionary<LayoutElementName, AnimatedLayoutContainer> panels = new Dictionary<LayoutElementName, AnimatedLayoutContainer>();
+        private Dictionary<LayoutContainer, Action> activePanels = new Dictionary<LayoutContainer, Action>();
 
-        public BorderLayoutChainLink(String name, Engine.Platform.UpdateTimer tempTimer)
+        public BorderLayoutChainLink(String name, UpdateTimer tempTimer)
             : base(name)
         {
             AnimatedLayoutContainer animatedContainer = new HorizontalPopoutLayoutContainer(tempTimer);
             borderLayout.Left = animatedContainer;
             panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Left), animatedContainer);
+            animatedContainer.AnimationComplete += animatedContainer_AnimationComplete;
 
             animatedContainer = new HorizontalPopoutLayoutContainer(tempTimer);
             borderLayout.Right = animatedContainer;
             panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Right), animatedContainer);
+            animatedContainer.AnimationComplete += animatedContainer_AnimationComplete;
 
             animatedContainer = new VerticalPopoutLayoutContainer(tempTimer);
             borderLayout.Top = animatedContainer;
             panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Top), animatedContainer);
+            animatedContainer.AnimationComplete += animatedContainer_AnimationComplete;
 
             animatedContainer = new VerticalPopoutLayoutContainer(tempTimer);
             borderLayout.Bottom = animatedContainer;
             panels.Add(new BorderLayoutElementName(name, BorderLayoutLocations.Bottom), animatedContainer);
+            animatedContainer.AnimationComplete += animatedContainer_AnimationComplete;
         }
 
         public void Dispose()
@@ -41,22 +47,26 @@ namespace Medical
             panels.Clear();
         }
 
-        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
             AnimatedLayoutContainer panel;
             if (panels.TryGetValue(elementName, out panel))
             {
                 if (panel.CurrentContainer != container)
                 {
-                    panel.changePanel(container, 0.25f, animationCompleted);
+                    panel.changePanel(container, 0.25f);
+                    if (container != null && removedCallback != null)
+                    {
+                        activePanels.Add(container, removedCallback);
+                    }
                 }
             }
             else
             {
                 Log.Warning("Cannot add container to border layout position '{0}' because it cannot be found. Container will not be visible on UI.", elementName.Name);
-                if (animationCompleted != null)
+                if (removedCallback != null)
                 {
-                    animationCompleted.Invoke(container);
+                    removedCallback.Invoke();
                 }
             }
         }
@@ -68,7 +78,7 @@ namespace Medical
             {
                 if (panel.CurrentContainer != null)
                 {
-                    panel.changePanel(null, 0.25f, null);
+                    panel.changePanel(null, 0.25f);
                 }
             }
             else
@@ -95,6 +105,16 @@ namespace Medical
             get
             {
                 return panels.Keys;
+            }
+        }
+
+        void animatedContainer_AnimationComplete(LayoutContainer oldChild)
+        {
+            Action removedCallback;
+            if (oldChild != null && activePanels.TryGetValue(oldChild, out removedCallback))
+            {
+                removedCallback.Invoke();
+                activePanels.Remove(oldChild);
             }
         }
     }

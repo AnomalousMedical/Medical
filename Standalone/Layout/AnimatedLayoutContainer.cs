@@ -7,6 +7,8 @@ namespace Medical
 {
     public abstract class AnimatedLayoutContainer : LayoutContainer, IDisposable
     {
+        public event AnimationCompletedDelegate AnimationComplete;
+
         public AnimatedLayoutContainer()
         {
             Rigid = false;
@@ -14,8 +16,16 @@ namespace Medical
 
         public abstract void Dispose();
 
-        public abstract void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete);
+        public abstract void changePanel(LayoutContainer childContainer, float animDuration);
 
         public abstract LayoutContainer CurrentContainer { get; }
+
+        protected void fireAnimationComplete(LayoutContainer oldChild)
+        {
+            if (AnimationComplete != null)
+            {
+                AnimationComplete.Invoke(oldChild);
+            }
+        }
     }
 }

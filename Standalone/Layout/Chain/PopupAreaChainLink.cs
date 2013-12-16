@@ -17,7 +17,7 @@ namespace Medical
             eventContainer.LayoutChanged += container_LayoutChanged;
         }
 
-        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, AnimationCompletedDelegate animationCompleted = null)
+        public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
             if (container != null)
             {

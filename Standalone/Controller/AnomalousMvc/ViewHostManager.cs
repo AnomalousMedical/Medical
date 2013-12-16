@@ -41,7 +41,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             foreach (ViewHost viewHost in closingFloatingViews)
             {
-                viewHost._animationCallback(null);
+                viewHost._finishedWithView();
             }
         }
 
@@ -115,7 +115,7 @@ namespace Medical.Controller.AnomalousMvc
                     {
                         panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
                         panel.Current.opening();
-                        guiManager.changeElement(panel.ElementName, panel.Current.Container);
+                        guiManager.changeElement(panel.ElementName, panel.Current.Container, panel.Current._finishedWithView);
                     }
                     //If there is a panel open they must be switched
                     else
@@ -124,14 +124,14 @@ namespace Medical.Controller.AnomalousMvc
                         last.closing();
                         panel.Current = viewHostFactory.createViewHost(panel.Queued, panel.QueuedContext);
                         panel.Current.opening();
-                        guiManager.changeElement(panel.ElementName, panel.Current.Container, last._animationCallback);
+                        guiManager.changeElement(panel.ElementName, panel.Current.Container, panel.Current._finishedWithView);
                     }
                 }
                 //There is no other panel queued and the current panel wants to be closed
                 else if (panel.Current != null && panel.Current._RequestClosed)
                 {
                     panel.Current.closing();
-                    guiManager.changeElement(panel.ElementName, null, panel.Current._animationCallback);
+                    guiManager.changeElement(panel.ElementName, null, null);
                     panel.Current = null;
                 }
                 panel.Queued = null;
@@ -152,7 +152,7 @@ namespace Medical.Controller.AnomalousMvc
                     //We want to delay the animation callback till after the event.
                     ThreadManager.invoke(new Action(() =>
                     {
-                        host._animationCallback(null);
+                        host._finishedWithView();
                         closingFloatingViews.Remove(host);
                     }));
                     openFloatingViews.RemoveAt(i--);
@@ -164,7 +164,7 @@ namespace Medical.Controller.AnomalousMvc
                 ViewHost viewHost = viewHostFactory.createViewHost(viewInfo.Queued, viewInfo.QueuedContext);
                 viewHost.opening();
                 openFloatingViews.Add(viewHost);
-                guiManager.changeElement(viewInfo.ElementName, viewHost.Container);
+                guiManager.changeElement(viewInfo.ElementName, viewHost.Container, null);
                 viewHost.ViewClosing += (closingView) =>
                 {
                     guiManager.closeElement(viewInfo.ElementName, viewHost.Container);
