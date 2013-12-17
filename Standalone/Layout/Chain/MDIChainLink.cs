@@ -9,6 +9,7 @@ namespace Medical
     public class MDIChainLink : LayoutChainLink
     {
         private MDILayoutManager mdiManager;
+        private ActiveContainerTracker activeContainers = new ActiveContainerTracker();
 
         public MDIChainLink(String name, MDILayoutManager mdiManager)
             : base(name)
@@ -18,12 +19,12 @@ namespace Medical
 
         public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
-            //This will never be called because this class does not expose any names
+            activeContainers.add(container, removedCallback);
         }
 
         public override void removeLayoutItem(LayoutElementName elementName, LayoutContainer container)
         {
-            //This will never be called because this class does not expose any names
+            activeContainers.remove(container);
         }
 
         public override LayoutContainer Container
@@ -43,7 +44,7 @@ namespace Medical
         {
             get
             {
-                return IEnumerableUtil<LayoutElementName>.EmptyIterator;
+                yield return new MDILayoutElementName(Name, DockLocation.None);
             }
         }
     }
