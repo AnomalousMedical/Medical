@@ -12,7 +12,7 @@ namespace Medical
     {
         private BorderLayoutContainer borderLayout = new BorderLayoutContainer();
         private Dictionary<LayoutElementName, AnimatedLayoutContainer> panels = new Dictionary<LayoutElementName, AnimatedLayoutContainer>();
-        private Dictionary<LayoutContainer, Action> activePanels = new Dictionary<LayoutContainer, Action>();
+        private ActiveContainerTracker activePanels = new ActiveContainerTracker();
 
         public BorderLayoutChainLink(String name, UpdateTimer tempTimer)
             : base(name)
@@ -55,10 +55,7 @@ namespace Medical
                 if (panel.CurrentContainer != container)
                 {
                     panel.changePanel(container, 0.25f);
-                    if (container != null && removedCallback != null)
-                    {
-                        activePanels.Add(container, removedCallback);
-                    }
+                    activePanels.add(container, removedCallback);
                 }
             }
             else
@@ -110,12 +107,7 @@ namespace Medical
 
         void animatedContainer_AnimationComplete(LayoutContainer oldChild)
         {
-            Action removedCallback;
-            if (oldChild != null && activePanels.TryGetValue(oldChild, out removedCallback))
-            {
-                removedCallback.Invoke();
-                activePanels.Remove(oldChild);
-            }
+            activePanels.remove(oldChild);
         }
     }
 }

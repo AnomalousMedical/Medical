@@ -149,7 +149,7 @@ namespace Medical.Controller.AnomalousMvc
                 if (host._RequestClosed)
                 {
                     host.closing();
-                    //We want to delay the animation callback till after the event.
+                    //We want to delay the finished with view event till after the current mvc action.
                     ThreadManager.invoke(new Action(() =>
                     {
                         host._finishedWithView();
