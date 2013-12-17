@@ -22,12 +22,12 @@ namespace Medical
 
         public override void setLayoutItem(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
-            
+            //This will never be called because this class does not expose any names
         }
 
         public override void removeLayoutItem(LayoutElementName elementName, LayoutContainer container)
         {
-            
+            //This will never be called because this class does not expose any names
         }
 
         public override LayoutContainer Container

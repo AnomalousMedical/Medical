@@ -10,6 +10,7 @@ namespace Medical
     {
         private EventLayoutContainer eventContainer = new EventLayoutContainer();
         private List<LayoutContainer> fullscreenPopups = new List<LayoutContainer>();
+        private ActiveContainerTracker activeContainers = new ActiveContainerTracker();
 
         public PopupAreaChainLink(String name)
             : base(name)
@@ -25,12 +26,14 @@ namespace Medical
                 container.WorkingSize = eventContainer.WorkingSize;
                 container.layout();
                 fullscreenPopups.Add(container);
+                activeContainers.add(container, removedCallback);
             }
         }
 
         public override void removeLayoutItem(LayoutElementName elementName, LayoutContainer container)
         {
             fullscreenPopups.Remove(container);
+            activeContainers.remove(container);
         }
 
         public override LayoutContainer Container
