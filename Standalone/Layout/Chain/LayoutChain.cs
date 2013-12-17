@@ -7,6 +7,10 @@ using System.Text;
 
 namespace Medical
 {
+    /// <summary>
+    /// This class will chain various layout elements together in an abstract way to form a gui.
+    /// It provides a flexible way to add / remove elements from various places on the ui.
+    /// </summary>
     public class LayoutChain
     {
         private LinkedList<LayoutChainLink> activeLinks = new LinkedList<LayoutChainLink>(); //The currently active chain
@@ -91,6 +95,10 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Add a layout container to this chain. When the chain is done with the item it will call the removedCallback
+        /// if one is provided.
+        /// </summary>
         public void addContainer(LayoutElementName elementName, LayoutContainer container, Action removedCallback)
         {
             LayoutChainLink link;
@@ -108,6 +116,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Remove a container from the chain. This will trigger the removed callback for the container if one was provided.
+        /// </summary>
         public void removeContainer(LayoutElementName elementName, LayoutContainer container)
         {
             LayoutChainLink link;

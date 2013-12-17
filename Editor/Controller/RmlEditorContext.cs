@@ -10,6 +10,7 @@ using MyGUIPlugin;
 using Medical.Platform;
 using Engine.Platform;
 using Medical.Editor;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -52,7 +53,7 @@ namespace Medical
             mvcContext.ResumeAction = "Common/Resumed";
 
             TextEditorView textEditorView = new TextEditorView("RmlEditor", () => rmlComponent.CurrentRml, wordWrap: false, textHighlighter: RmlTextHighlighter.Instance);
-            textEditorView.ViewLocation = ViewLocations.Left;
+            textEditorView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             textEditorView.IsWindow = true;
             textEditorView.Buttons.add(new CloseButtonDefinition("Close", "RmlTextEditor/Close"));
             textEditorView.ComponentCreated += (view, component) =>
@@ -62,7 +63,7 @@ namespace Medical
             mvcContext.Views.add(textEditorView);
             
             RmlWysiwygView rmlView = new RmlWysiwygView("RmlView", uiCallback, uiCallback, undoBuffer);
-            rmlView.ViewLocation = ViewLocations.Left;
+            rmlView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             rmlView.IsWindow = true;
             rmlView.RmlFile = file;
             rmlView.ComponentCreated += (view, component) =>
@@ -102,7 +103,7 @@ namespace Medical
                 {
                     rmlComponent.insertRml(item.Markup);
                 };
-            htmlDragDrop.ViewLocation = ViewLocations.Left;
+            htmlDragDrop.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             htmlDragDrop.IsWindow = true;
             mvcContext.Views.add(htmlDragDrop);
 
@@ -243,7 +244,7 @@ namespace Medical
                     MvcController viewController = editingMvcContext.Controllers[controllerName];
 
                     GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", viewController.getEditInterface(), editorController, uiCallback, true);
-                    genericPropertiesView.ViewLocation = ViewLocations.Left;
+                    genericPropertiesView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
                     genericPropertiesView.IsWindow = true;
                     genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcEditor/Close"));
                     mvcContext.Views.add(genericPropertiesView);
@@ -264,7 +265,7 @@ namespace Medical
                     if (view != null && view.RmlFile == file)
                     {
                         GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcView", view.getEditInterface(), editorController, uiCallback, true);
-                        genericPropertiesView.ViewLocation = ViewLocations.Left;
+                        genericPropertiesView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
                         genericPropertiesView.IsWindow = true;
                         genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcViewEditor/Close"));
                         mvcContext.Views.add(genericPropertiesView);

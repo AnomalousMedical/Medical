@@ -1,4 +1,5 @@
-﻿using Medical.Controller.AnomalousMvc;
+﻿using Engine.Saving;
+using Medical.Controller.AnomalousMvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,12 @@ namespace Medical
                 }
                 return base.LocationHint;
             }
+        }
+
+        protected BorderLayoutElementName(LoadInfo info)
+            :base(info)
+        {
+
         }
     }
 }

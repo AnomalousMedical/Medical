@@ -6,6 +6,7 @@ using Medical.GUI;
 using Medical.Platform;
 using Medical.Controller.AnomalousMvc;
 using Engine.Platform;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -43,7 +44,7 @@ namespace Medical
             mvcContext.Models.add(new EditMenuManager());
 
             GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", editingContext.getEditInterface(), editorController, uiCallback, true);
-            genericPropertiesView.ViewLocation = ViewLocations.Left;
+            genericPropertiesView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             genericPropertiesView.IsWindow = true;
             mvcContext.Views.add(genericPropertiesView);
 

@@ -7,6 +7,7 @@ using Medical.GUI;
 using Medical.Controller.AnomalousMvc;
 using Engine.Platform;
 using Medical.GUI.AnomalousMvc;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -57,7 +58,7 @@ namespace Medical
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
             genericEditor.IsWindow = true;
-            genericEditor.ViewLocation = ViewLocations.Left;
+            genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             mvcContext.Views.add(genericEditor);
             
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController);
@@ -70,7 +71,7 @@ namespace Medical
 
             MovementSequenceEditorView movementSequenceEditor = new MovementSequenceEditorView("MovementSequenceEditor", listenForSequenceChanges: true);
             movementSequenceEditor.Buttons.add(new CloseButtonDefinition("Close", "MovementSequenceEditor/Close"));
-            movementSequenceEditor.ViewLocation = ViewLocations.Top;
+            genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top);
             mvcContext.Views.add(movementSequenceEditor);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", currentFile, "TimelineEditor/Close");

@@ -1,4 +1,5 @@
-﻿using Medical.Controller;
+﻿using Engine.Saving;
+using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,12 @@ namespace Medical
                 }
                 return base.LocationHint;
             }
+        }
+
+        protected MDILayoutElementName(LoadInfo info)
+            :base(info)
+        {
+
         }
     }
 }

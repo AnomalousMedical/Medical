@@ -15,7 +15,7 @@ namespace Medical.GUI
             :base(name)
         {
             this.Caption = caption;
-            this.ViewLocation = Controller.AnomalousMvc.ViewLocations.Top;
+            this.ElementName = new BorderLayoutElementName(GUILocationNames.EditorBorderLayout, BorderLayoutLocations.Top);
             this.CloseAction = closeAction;
         }
 

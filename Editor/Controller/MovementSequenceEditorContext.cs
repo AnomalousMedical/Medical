@@ -7,6 +7,7 @@ using Medical.Platform;
 using Medical.Muscles;
 using Medical.GUI;
 using Engine.Platform;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -47,7 +48,7 @@ namespace Medical
             mvcContext.Models.add(new EditMenuManager());
 
             MovementSequenceEditorView movementSequenceView = new MovementSequenceEditorView("MovementSequenceEditor", movementSequence);
-            movementSequenceView.ViewLocation = ViewLocations.Bottom;
+            movementSequenceView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
             mvcContext.Views.add(movementSequenceView);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");

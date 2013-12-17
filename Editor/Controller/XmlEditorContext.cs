@@ -9,6 +9,7 @@ using System.IO;
 using MyGUIPlugin;
 using Medical.Platform;
 using Engine.Platform;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -43,7 +44,7 @@ namespace Medical
             mvcContext.ResumeAction = "Common/Resumed";
 
             TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.typeController.loadText(currentFile), wordWrap: false, textHighlighter:XmlTextHighlighter.Instance);
-            textEditorView.ViewLocation = ViewLocations.Left;
+            textEditorView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             textEditorView.IsWindow = true;
             textEditorView.ComponentCreated += (view, component) =>
             {

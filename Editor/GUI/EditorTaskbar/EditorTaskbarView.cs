@@ -16,7 +16,7 @@ namespace Medical.GUI
             :base(name)
         {
             this.File = file;
-            this.ViewLocation = ViewLocations.Top;
+            this.ElementName = new BorderLayoutElementName(GUILocationNames.EditorBorderLayout, BorderLayoutLocations.Top);
             this.CloseAction = closeAction;
         }
 
