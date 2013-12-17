@@ -36,10 +36,7 @@ namespace Medical
 
         protected internal override void _setChildContainer(LayoutContainer layoutContainer)
         {
-            //mdiManager.changeCenterParent(layoutContainer, (center) =>
-            //{
-            //    editorPreviewBorderLayout.Center = center;
-            //});
+            mdiManager.Center = layoutContainer;
         }
 
         public override IEnumerable<LayoutElementName> ElementNames

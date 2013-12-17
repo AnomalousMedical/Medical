@@ -119,9 +119,24 @@ namespace Medical.Controller
             }
         }
 
-        public void changeCenterParent(LayoutContainer newCenterParent, Action<LayoutContainer> setCenterInNewParent)
+        public LayoutContainer Center
         {
-            rootContainer.changeCenterParent(newCenterParent, setCenterInNewParent);
+            get
+            {
+                return rootContainer.Center;
+            }
+            set
+            {
+                rootContainer.Center = value;
+            }
+        }
+
+        public MDILayoutContainer DocumentArea
+        {
+            get
+            {
+                return rootContainer.DocumentArea;
+            }
         }
 
         /// <summary>

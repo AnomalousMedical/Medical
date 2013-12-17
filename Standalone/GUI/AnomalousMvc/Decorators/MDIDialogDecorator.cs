@@ -123,11 +123,6 @@ namespace Medical.GUI.AnomalousMvc
 
         public bool _RequestClosed { get; set; }
 
-        public void _animationCallback(LayoutContainer oldChild)
-        {
-            Dispose();
-        }
-
         public void addTextButton(ButtonDefinition buttonDefinition, int x, int y, int width, int height)
         {
             ((ButtonDecorator)child).addTextButton(buttonDefinition, x, y, width, height);

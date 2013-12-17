@@ -21,7 +21,8 @@ namespace Medical.Controller
         private MDIBorderContainerDock right;
         private MDIBorderContainerDock top;
         private MDIBorderContainerDock bottom;
-        private MDILayoutContainer center;
+        private LayoutContainer center;
+        private MDILayoutContainer documentArea;
         private FloatingWindowContainer floating;
         private LayoutContainer centerParentContainer = null;
 
@@ -64,9 +65,8 @@ namespace Medical.Controller
             bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, LocationPreviewSize, LocationPreviewSize, Align.Left | Align.Top, "Info", "");
             bottomContainerWidget.Visible = false;
 
-            
-            center = new MDILayoutContainerScale(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
-            center._setParent(this);
+            documentArea = new MDILayoutContainerScale(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
+            Center = documentArea;
 
             floating = new FloatingWindowContainer();
             floating._setParent(this);
@@ -78,7 +78,7 @@ namespace Medical.Controller
             right.Dispose();
             top.Dispose();
             bottom.Dispose();
-            center.Dispose();
+            documentArea.Dispose();
             Gui.Instance.destroyWidget(windowTargetWidget);
             Gui.Instance.destroyWidget(leftContainerWidget);
             Gui.Instance.destroyWidget(rightContainerWidget);
@@ -256,7 +256,7 @@ namespace Medical.Controller
                 dragTargetWindow = null;
                 return false;
             }
-            dragTargetWindow = center.findWindowAtPosition(mouseX, mouseY);
+            dragTargetWindow = documentArea.findWindowAtPosition(mouseX, mouseY);
             findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
             return true;
         }
@@ -345,7 +345,7 @@ namespace Medical.Controller
                     bottom.addChild(child);
                     break;
                 case DockLocation.Center:
-                    center.addChild(child);
+                    documentArea.addChild(child);
                     break;
                 case DockLocation.Floating:
                     floating.addChild(child);
@@ -370,7 +370,7 @@ namespace Medical.Controller
                     bottom.removeChild(child);
                     break;
                 case DockLocation.Center:
-                    center.removeChild(child);
+                    documentArea.removeChild(child);
                     break;
                 case DockLocation.Floating:
                     floating.removeChild(child);
@@ -381,7 +381,7 @@ namespace Medical.Controller
         public override MDIWindow findWindowAtPosition(float mouseX, float mouseY)
         {
             MDIWindow retVal = null;
-            retVal = findWindowPositionImpl(mouseX, mouseY, center);
+            retVal = findWindowPositionImpl(mouseX, mouseY, documentArea);
             if (retVal != null)
             {
                 return retVal;
@@ -560,18 +560,32 @@ namespace Medical.Controller
             }
         }
 
-        public void changeCenterParent(LayoutContainer newCenterParent, Action<LayoutContainer> setCenterInNewParent)
+        public LayoutContainer Center
         {
-            if (newCenterParent != null)
+            get
             {
-                newCenterParent._setParent(this);
-                setCenterInNewParent(center);
+                return center;
             }
-            else
+            set
             {
-                center._setParent(this);
+                if (center != null)
+                {
+                    center._setParent(null);
+                }
+                center = value;
+                if (center != null)
+                {
+                    center._setParent(this);
+                }
             }
-            centerParentContainer = newCenterParent;
+        }
+
+        public MDILayoutContainer DocumentArea
+        {
+            get
+            {
+                return documentArea;
+            }
         }
     }
 }

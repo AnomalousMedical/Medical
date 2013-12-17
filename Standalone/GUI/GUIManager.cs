@@ -26,8 +26,8 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
 
         private BorderLayoutContainer mainBorderLayout;
-        BorderLayoutChainLink mainBorder;
-        BorderLayoutChainLink editPreview;
+        BorderLayoutChainLink editorBorder;
+        BorderLayoutChainLink contentArea;
 
         private bool mainGuiShowing = true;
         private bool saveWindowsOnExit = true;
@@ -54,8 +54,8 @@ namespace Medical.GUI
         {
             IDisposableUtil.DisposeIfNotNull(dialogManager);
 
-            mainBorder.Dispose();
-            editPreview.Dispose();
+            editorBorder.Dispose();
+            contentArea.Dispose();
 
             //Other
 			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
@@ -81,11 +81,12 @@ namespace Medical.GUI
             screenLayoutManager.LayoutChain = new LayoutChain();
             screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink(GUILocationNames.FullscreenPopup), true);
             screenLayoutManager.LayoutChain.SuppressLayout = true;
-            mainBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, standaloneController.MedicalController.MainTimer);
-            screenLayoutManager.LayoutChain.addLink(mainBorder, true);
-            editPreview = new BorderLayoutChainLink(GUILocationNames.ContentArea, standaloneController.MedicalController.MainTimer);
-            screenLayoutManager.LayoutChain.addLink(editPreview, true);
+            editorBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, standaloneController.MedicalController.MainTimer);
+            screenLayoutManager.LayoutChain.addLink(editorBorder, true);
+            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, standaloneController.MedicalController.MainTimer);
             screenLayoutManager.LayoutChain.addLink(new MDIChainLink(GUILocationNames.MDI, mdiManager), true);
+            screenLayoutManager.LayoutChain.addLink(contentArea, true);
+            screenLayoutManager.LayoutChain.addLink(new FinalChainLink("SceneViews", mdiManager.DocumentArea), true);
 
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
