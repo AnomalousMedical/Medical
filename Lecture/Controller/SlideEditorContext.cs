@@ -17,6 +17,7 @@ using Lecture.GUI;
 using Engine;
 using Engine.Editing;
 using Medical.SlideshowActions;
+using Medical.Controller;
 
 namespace Lecture
 {
@@ -29,7 +30,8 @@ namespace Lecture
         {
             Save,
             Undo,
-            Redo
+            Redo,
+            Run
         }
 
         private Dictionary<String, RmlEditorViewInfo> rmlEditors = new Dictionary<string, RmlEditorViewInfo>();
@@ -249,6 +251,17 @@ namespace Lecture
                 undoBuffer.execute();
             };
             eventContext.addEvent(redoEvent);
+
+            MessageEvent runEvent = new MessageEvent(Events.Run);
+            runEvent.addButton(KeyboardButtonCode.KC_F5);
+            runEvent.FirstFrameUpEvent += eventManager =>
+            {
+                ThreadManager.invoke(() =>
+                {
+                    editorController.runSlideshow(0);
+                });
+            };
+            eventContext.addEvent(runEvent);
         }
 
         private void makeTempPresets()

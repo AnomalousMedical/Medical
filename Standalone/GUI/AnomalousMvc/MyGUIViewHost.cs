@@ -30,7 +30,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             this.component = component;
             layoutContainer = new VariableSizeMyGUILayoutContainer(component.Widget, getDesiredSize);
-            layoutContainer.LayoutChanged += new Action(layoutContainer_LayoutChanged);
+            layoutContainer.LayoutChanged += layoutContainer_LayoutChanged;
             layoutContainer.AnimatedResizeStarted += layoutContainer_AnimatedResizeStarted;
             layoutContainer.AnimatedResizeCompleted += layoutContainer_AnimatedResizeCompleted;
         }
