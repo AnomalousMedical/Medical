@@ -204,6 +204,7 @@
     <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventListener.cs" />
     <Compile Include="Controller\Slideshow\RmlSlidePanel.cs" />
     <Compile Include="Controller\Slideshow\SlidePanel.cs" />
+    <Compile Include="Controller\Slideshow\SlideshowRuntime.cs" />
     <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
     <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />

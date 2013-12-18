@@ -15,7 +15,6 @@ namespace Medical
 {
     public class Slideshow : Saveable
     {
-        public const String SlideTaskbarName = "SlideTaskbar";
         public const String SlideThumbName = "Thumb.png";
         public const int BaseSlideScale = 1017;
         public const int CurrentVersion = 2;
@@ -77,65 +76,8 @@ namespace Medical
 
         public AnomalousMvcContext createContext(ResourceProvider resourceProvider, GUIManager guiManager, int startIndex = 0)
         {
-            AnomalousMvcContext mvcContext;
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            using (Stream resourceStream = assembly.GetManifestResourceStream(SlideshowProps.BaseContextProperties.File))
-            {
-                mvcContext = SharedXmlSaver.Load<AnomalousMvcContext>(resourceStream);
-            }
-            NavigationModel navModel = (NavigationModel)mvcContext.Models[SlideshowProps.BaseContextProperties.NavigationModel];
-            int i = 0;
-            int lastSlideIndex = slides.Count - 1;
-            foreach(Slide slide in slides)
-            {
-                String slideName = slide.UniqueName;
-                slide.setupContext(mvcContext, slideName, resourceProvider);
-
-                NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");
-                navModel.addNavigationLink(link);
-
-                ++i;
-            }
-
-            RunCommandsAction runCommands = (RunCommandsAction)mvcContext.Controllers["Common"].Actions["Start"];
-            runCommands.addCommand(new NavigateToIndexCommand()
-            {
-                Index = startIndex
-            });
-
-            ClosingTaskbar taskbar = new ClosingTaskbar();
-            SingleChildChainLink taskbarLink = new SingleChildChainLink(SlideTaskbarName, taskbar);
-            taskbar.Close += () => mvcContext.runAction("Common/Close");
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Back", "Back", "SlideshowIcons/Back", "None", (arg) =>
-            {
-                mvcContext.runAction("NavigationBug/Previous");
-            })));
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Forward", "Forward", "SlideshowIcons/Forward", "None", (arg) =>
-            {
-                mvcContext.runAction("NavigationBug/Next");
-            })));
-
-            foreach (Task task in additionalTasks.Tasks)
-            {
-                taskbar.addItem(new TaskTaskbarItem(task));
-            }
-            
-            mvcContext.Blurred += (ctx) =>
-            {
-                guiManager.deactivateLink(SlideTaskbarName);
-                guiManager.removeLinkFromChain(taskbarLink);
-            };
-            mvcContext.Focused += (ctx) =>
-            {
-                guiManager.addLinkToChain(taskbarLink);
-                guiManager.pushRootContainer(SlideTaskbarName);
-            };
-            mvcContext.RemovedFromStack += (ctx) =>
-            {
-                taskbar.Dispose();
-            };
-
-            return mvcContext;
+            SlideshowRuntime slideshowRuntime = new SlideshowRuntime(slides, resourceProvider, guiManager, startIndex, additionalTasks);
+            return slideshowRuntime.Context;
         }
 
         public void cleanup(CleanupInfo cleanupInfo, ResourceProvider resourceProvider)

@@ -89,5 +89,14 @@ namespace Medical
         {
             active = value;
         }
+
+        public void setIcon(String name)
+        {
+            if (IconName != name)
+            {
+                IconName = name;
+                fireIconChanged();
+            }
+        }
     }
 }
