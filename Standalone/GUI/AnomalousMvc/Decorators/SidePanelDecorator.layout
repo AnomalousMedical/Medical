@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelSkin" position="6 36 352 258" layer="Back">
+    <Widget type="Widget" skin="PanelSkin" position="6 36 352 258" layer="BackOverlapped">
         <UserString key="ChildX" value="0"/>
         <UserString key="ChildY" value="0"/>
         <UserString key="ChildWidthOffset" value="3"/>
