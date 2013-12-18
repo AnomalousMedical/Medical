@@ -18,8 +18,8 @@
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="DeveloperPanel">
             <Property key="Visible" value="true"/>
-            <Widget type="TextBox" skin="TextBox" position="0 4 145 90">
-                <Property key="Caption" value="Developers\n\nDr. Mark Piper DMD MD\nAndrew Piper\nChase Donald\nGreg Chance"/>
+            <Widget type="TextBox" skin="TextBox" position="0 4 145 110">
+                <Property key="Caption" value="Developers\n\nDr. Mark Piper DMD MD\nAndrew Piper\nChase Donald\nGreg Chance\nDavid Donald"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="4 158 336 13" name="VersionText">
                 <Property key="Caption" value="Version "/>
