@@ -80,7 +80,7 @@ namespace Medical
             }
             else
             {
-                Log.Warning("Cannot remove container from border layout position '{0}' because it cannot be found. Container will not be visible on UI.", elementName.Name);
+                Log.Warning("Cannot remove container from border layout position '{0}' because it cannot be found. No changes made.", elementName.Name);
             }
         }
 
