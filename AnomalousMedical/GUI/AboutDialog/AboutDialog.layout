@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCXNoBorder" position="79 59 350 446" layer="Modal">
+    <Widget type="Window" skin="WindowCXNoBorder" position="79 59 350 446" layer="Overlapped">
         <Property key="Caption" value="About"/>
         <Property key="MinSize" value="350 436"/>
         <Property key="MaxSize" value="350 436"/>
