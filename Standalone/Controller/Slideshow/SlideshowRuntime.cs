@@ -12,6 +12,10 @@ namespace Medical
     class SlideshowRuntime
     {
         public const String SlideTaskbarName = "SlideTaskbar";
+        private const String PreviousTaskName = "SlideshowIcons/Back";
+        private const String PreviousTaskDisabledName = CommonResources.NoIcon;
+        private const String NextTaskName = "SlideshowIcons/Forward";
+        private const String NextTaskDisabledName = CommonResources.NoIcon;
 
         private AnomalousMvcContext mvcContext;
         private CallbackTask previousTask;
@@ -46,12 +50,12 @@ namespace Medical
             taskbar = new ClosingTaskbar();
             taskbarLink = new SingleChildChainLink(SlideTaskbarName, taskbar);
             taskbar.Close += () => mvcContext.runAction("Common/Close");
-            previousTask = new CallbackTask("Slideshow.Back", "Back", "SlideshowIcons/Back", "None", arg =>
+            previousTask = new CallbackTask("Slideshow.Back", "Back", PreviousTaskName, "None", arg =>
             {
                 mvcContext.runAction("NavigationBug/Previous");
                 setNavigationIcons();
             });
-            nextTask = new CallbackTask("Slideshow.Forward", "Forward", "SlideshowIcons/Forward", "None", arg =>
+            nextTask = new CallbackTask("Slideshow.Forward", "Forward", NextTaskName, "None", arg =>
             {
                 mvcContext.runAction("NavigationBug/Next");
                 setNavigationIcons();
@@ -91,8 +95,8 @@ namespace Medical
 
         private void setNavigationIcons()
         {
-            previousTask.setIcon(navModel.HasPrevious ? "SlideshowIcons/Back" : CommonResources.NoIcon);
-            nextTask.setIcon(navModel.HasNext ? "SlideshowIcons/Forward" : CommonResources.NoIcon);
+            previousTask.setIcon(navModel.HasPrevious ? PreviousTaskName : PreviousTaskDisabledName);
+            nextTask.setIcon(navModel.HasNext ? NextTaskName : NextTaskDisabledName);
         }
     }
 }
