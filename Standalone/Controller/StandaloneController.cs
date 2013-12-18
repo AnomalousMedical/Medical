@@ -132,7 +132,7 @@ namespace Medical
             {
                 DocumentController.saveRecentDocuments();
             }
-            if (guiManager != null)
+            if (guiManager != null && MedicalConfig.WindowsFile != null)
             {
                 ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
                 guiManager.saveUI(configFile);
