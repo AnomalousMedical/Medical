@@ -145,9 +145,9 @@ namespace Medical.Controller
 
         void licenseCaptured()
         {
-            this.close();
             loginSucessfulCallback();
             messageControl.Value = "Loading user profile.";
+            this.close();
         }
 
         void licenseLoginFail()

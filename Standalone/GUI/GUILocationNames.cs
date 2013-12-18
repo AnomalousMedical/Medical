@@ -9,6 +9,8 @@ namespace Medical
     {
         public const String ContentArea = "ContentArea";
 
+        public const String ContentAreaPopup = "ContentAreaPopup";
+
         public const String EditorBorderLayout = "EditorBorderLayout";
 
         public const String FullscreenPopup = "FullscreenPopup";

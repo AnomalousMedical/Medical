@@ -58,21 +58,7 @@ namespace Medical.Controller.AnomalousMvc
             }
             else
             {
-                ViewHostPanelInfo panel = null;
-                switch (view.ElementName.LocationHint)
-                {
-                    case ViewLocations.Floating:
-                        queuedFloatingViews.Add(new ViewHostPanelInfo()
-                        {
-                            Queued = view,
-                            QueuedContext = context,
-                            ElementName = view.ElementName
-                        });
-                        break;
-                    default:
-                        panel = findPanel(view.ElementName);
-                        break;
-                }
+                ViewHostPanelInfo panel = findPanel(view.ElementName);
                 if (panel != null)
                 {
                     panel.Queued = view;
@@ -131,7 +117,7 @@ namespace Medical.Controller.AnomalousMvc
                 else if (panel.Current != null && panel.Current._RequestClosed)
                 {
                     panel.Current.closing();
-                    guiManager.changeElement(panel.ElementName, null, null);
+                    guiManager.closeElement(panel.ElementName, panel.Current.Container);
                     panel.Current = null;
                 }
                 panel.Queued = null;
@@ -261,6 +247,17 @@ namespace Medical.Controller.AnomalousMvc
 
         private ViewHostPanelInfo findPanel(LayoutElementName elementName)
         {
+            if (elementName.LocationHint == ViewLocations.Floating)
+            {
+                ViewHostPanelInfo panel = new ViewHostPanelInfo()
+                {
+                    ElementName = elementName
+                };
+                openPanels.Add(panel);
+                return panel;
+            }
+
+            //Try to find an existing panel
             foreach (var panel in openPanels)
             {
                 if (panel.ElementName == elementName)

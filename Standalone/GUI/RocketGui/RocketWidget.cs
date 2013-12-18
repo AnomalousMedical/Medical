@@ -76,7 +76,7 @@ namespace Medical.GUI
 
             imageBox.setImageTexture(textureName);
             imageBox.setImageCoord(new IntCoord(0, 0, imageBox.Width, imageBox.Height));
-            
+
             imageBox.NeedKeyFocus = true;
             imageBox.NeedMouseFocus = true;
 
@@ -350,99 +350,155 @@ namespace Medical.GUI
 
         void imageBox_MouseMove(Widget source, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            IntVector2 mousePos = me.Position;
-            mousePos.x -= imageBox.AbsoluteLeft;
-            mousePos.y -= imageBox.AbsoluteTop;
-            context.ProcessMouseMove(mousePos.x, mousePos.y, 0);
+            context.addReference(); //Keep context alive even if this widget is disposed during this event
+            try
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
+                IntVector2 mousePos = me.Position;
+                mousePos.x -= imageBox.AbsoluteLeft;
+                mousePos.y -= imageBox.AbsoluteTop;
+                context.ProcessMouseMove(mousePos.x, mousePos.y, 0);
+            }
+            finally
+            {
+                context.removeReference();
+            }
         }
 
         void imageBox_MouseWheel(Widget source, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-			int wheelDelta = 0;
-			if(me.RelativeWheelPosition > 0.0f)
-			{
-				wheelDelta = -1;
-			}
-			if(me.RelativeWheelPosition < 0.0f)
-			{
-				wheelDelta = 1;
-			}
-            context.ProcessMouseWheel(wheelDelta, 0);
+            context.addReference(); //Keep context alive even if this widget is disposed during this event
+            try
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
+                int wheelDelta = 0;
+                if (me.RelativeWheelPosition > 0.0f)
+                {
+                    wheelDelta = -1;
+                }
+                if (me.RelativeWheelPosition < 0.0f)
+                {
+                    wheelDelta = 1;
+                }
+                context.ProcessMouseWheel(wheelDelta, 0);
+            }
+            finally
+            {
+                context.removeReference();
+            }
         }
 
         void imageBox_MouseButtonReleased(Widget source, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            context.ProcessMouseButtonUp((int)me.Button, 0);
+            context.addReference(); //Keep context alive even if this widget is disposed during this event
+            try
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
+                context.ProcessMouseButtonUp((int)me.Button, 0);
+            }
+            finally
+            {
+                context.removeReference();
+            }
         }
 
         void imageBox_MouseButtonPressed(Widget source, EventArgs e)
         {
-            MouseEventArgs me = (MouseEventArgs)e;
-            context.ProcessMouseButtonDown((int)me.Button, 0);
+            context.addReference(); //Keep context alive even if this widget is disposed during this event
+            try
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
+                context.ProcessMouseButtonDown((int)me.Button, 0);
+            }
+            finally
+            {
+                context.removeReference();
+            }
         }
 
         void imageBox_KeyButtonReleased(Widget source, EventArgs e)
         {
-            KeyEventArgs ke = (KeyEventArgs)e;
-            context.ProcessKeyUp(InputMap.GetKey(ke.Key), buildModifier());
+            context.addReference(); //Keep context alive even if this widget is disposed during this event
+            try
+            {
+                KeyEventArgs ke = (KeyEventArgs)e;
+                context.ProcessKeyUp(InputMap.GetKey(ke.Key), buildModifier());
+            }
+            finally
+            {
+                context.removeReference();
+            }
         }
 
         void imageBox_KeyButtonPressed(Widget source, EventArgs e)
         {
-            KeyEventArgs ke = (KeyEventArgs)e;
-            KeyIdentifier key = InputMap.GetKey(ke.Key);
-            char keyChar = ke.Char;
-
-            context.ProcessKeyDown(key, buildModifier());
-
-            switch (key)
+            context.addReference(); //Keep context alive even if this widget is disposed during this event
+            try
             {
-                case KeyIdentifier.KI_DELETE:
-                    keyChar = (char)0;
-                    break;
-                case KeyIdentifier.KI_RETURN:
-                    keyChar = (char)0;
-                    context.ProcessTextInput('\n');
-                    break;
-				case KeyIdentifier.KI_LEFT:
-					keyChar = (char)0;
-					break;
-				case KeyIdentifier.KI_RIGHT:
-					keyChar = (char)0;
-					break;
-				case KeyIdentifier.KI_UP:
-					keyChar = (char)0;
-					break;
-				case KeyIdentifier.KI_DOWN:
-					keyChar = (char)0;
-					break;
-				case KeyIdentifier.KI_BACK:
-					keyChar = (char)0;
-					break;
+                KeyEventArgs ke = (KeyEventArgs)e;
+                KeyIdentifier key = InputMap.GetKey(ke.Key);
+                char keyChar = ke.Char;
+
+                context.ProcessKeyDown(key, buildModifier());
+
+                switch (key)
+                {
+                    case KeyIdentifier.KI_DELETE:
+                        keyChar = (char)0;
+                        break;
+                    case KeyIdentifier.KI_RETURN:
+                        keyChar = (char)0;
+                        context.ProcessTextInput('\n');
+                        break;
+                    case KeyIdentifier.KI_LEFT:
+                        keyChar = (char)0;
+                        break;
+                    case KeyIdentifier.KI_RIGHT:
+                        keyChar = (char)0;
+                        break;
+                    case KeyIdentifier.KI_UP:
+                        keyChar = (char)0;
+                        break;
+                    case KeyIdentifier.KI_DOWN:
+                        keyChar = (char)0;
+                        break;
+                    case KeyIdentifier.KI_BACK:
+                        keyChar = (char)0;
+                        break;
+                }
+
+                if (keyChar >= 32)
+                {
+                    context.ProcessTextInput(keyChar);
+                }
             }
-
-            if (keyChar >= 32)
+            finally
             {
-                context.ProcessTextInput(keyChar);
+                context.removeReference();
             }
         }
 
         void imageBox_EventScrollGesture(Widget source, EventArgs e)
         {
-            Element element = context.GetFocusElement();
-            //Find the parent element that scrolls
-            while (element != null && element.ScrollHeight <= element.ClientHeight && element.ScrollWidth <= element.ClientWidth)
+            context.addReference(); //Keep context alive even if this widget is disposed during this event
+            try
             {
-                element = element.ParentNode;
+                Element element = context.GetFocusElement();
+                //Find the parent element that scrolls
+                while (element != null && element.ScrollHeight <= element.ClientHeight && element.ScrollWidth <= element.ClientWidth)
+                {
+                    element = element.ParentNode;
+                }
+                if (element != null)
+                {
+                    ScrollGestureEventArgs sgea = (ScrollGestureEventArgs)e;
+                    element.ScrollLeft -= sgea.DeltaX;
+                    element.ScrollTop -= sgea.DeltaY;
+                }
             }
-            if (element != null)
+            finally
             {
-                ScrollGestureEventArgs sgea = (ScrollGestureEventArgs)e;
-                element.ScrollLeft -= sgea.DeltaX;
-                element.ScrollTop -= sgea.DeltaY;
+                context.removeReference();
             }
         }
 

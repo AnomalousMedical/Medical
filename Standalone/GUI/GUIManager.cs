@@ -83,8 +83,9 @@ namespace Medical.GUI
             screenLayoutManager.LayoutChain.SuppressLayout = true;
             editorBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, standaloneController.MedicalController.MainTimer);
             screenLayoutManager.LayoutChain.addLink(editorBorder, true);
-            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, standaloneController.MedicalController.MainTimer);
             screenLayoutManager.LayoutChain.addLink(new MDIChainLink(GUILocationNames.MDI, mdiManager), true);
+            screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink(GUILocationNames.ContentAreaPopup), true);
+            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, standaloneController.MedicalController.MainTimer);
             screenLayoutManager.LayoutChain.addLink(contentArea, true);
             screenLayoutManager.LayoutChain.addLink(new FinalChainLink("SceneViews", mdiManager.DocumentArea), true);
 

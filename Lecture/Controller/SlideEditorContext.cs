@@ -383,7 +383,7 @@ namespace Lecture
             {
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 100,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+                ElementName = new LayoutElementName(GUILocationNames.ContentAreaPopup),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
@@ -579,11 +579,11 @@ namespace Lecture
             foreach (var editor in rmlEditors.Values)
             {
                 mvcContext.Views.remove(editor.View);
-                editor.Component.ElementDraggedOffDocument -= RmlWysiwyg_ElementDraggedOffDocument;
-                editor.Component.ElementDroppedOffDocument -= RmlWysiwyg_ElementDroppedOffDocument;
-                editor.Component.ElementReturnedToDocument -= RmlWysiwyg_ElementReturnedToDocument;
                 if (editor.Component != null)
                 {
+                    editor.Component.ElementDraggedOffDocument -= RmlWysiwyg_ElementDraggedOffDocument;
+                    editor.Component.ElementDroppedOffDocument -= RmlWysiwyg_ElementDroppedOffDocument;
+                    editor.Component.ElementReturnedToDocument -= RmlWysiwyg_ElementReturnedToDocument;
                     editor.Component.cancelAndHideEditor();
                 }
             }
