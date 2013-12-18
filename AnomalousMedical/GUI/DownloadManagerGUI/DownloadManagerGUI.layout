@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="TaskMenuBackground" position="70 96 800 600" layer="Popup">
+    <Widget type="Widget" skin="TaskMenuBackground" position="70 96 800 600" layer="Overlapped">
         <Widget type="ScrollView" skin="ScrollView" position="5 48 446 544" align="Left VStretch" name="PluginScrollList">
             <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="ButtonListIconButton"/>

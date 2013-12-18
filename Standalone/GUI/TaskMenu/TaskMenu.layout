@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="TaskMenuBackground" position="0 40 584 482" layer="Popup">
+    <Widget type="Widget" skin="TaskMenuBackground" position="0 40 584 482" layer="Overlapped">
         <Property key="Alpha" value="1"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 574 432" align="Stretch" name="IconScroller">
             <Property key="CanvasAlign" value="Left Top"/>
