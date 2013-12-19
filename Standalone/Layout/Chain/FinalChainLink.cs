@@ -10,7 +10,7 @@ namespace Medical
     /// valid layout chain, but you can use this for your final element. Attempting to add a link after this
     /// one will cause an exception to be thrown.
     /// </summary>
-    class FinalChainLink : LayoutChainLink
+    public class FinalChainLink : LayoutChainLink
     {
         private LayoutContainer layoutContainer;
 

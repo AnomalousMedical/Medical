@@ -17,6 +17,7 @@ namespace Medical.GUI
     {
         public event Action<ConfigFile> SaveUIConfiguration;
         public event Action<ConfigFile> LoadUIConfiguration;
+        public event Action Disposing;
 
         private static String INFO_SECTION = "__Info_Section_Reserved__";
         private static String INFO_VERSION = "Version";
@@ -24,10 +25,6 @@ namespace Medical.GUI
 
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
-
-        private BorderLayoutContainer mainBorderLayout;
-        BorderLayoutChainLink editorBorder;
-        BorderLayoutChainLink contentArea;
 
         private bool mainGuiShowing = true;
         private bool saveWindowsOnExit = true;
@@ -52,17 +49,19 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            IDisposableUtil.DisposeIfNotNull(dialogManager);
+            if (Disposing != null)
+            {
+                Disposing.Invoke();
+            }
 
-            editorBorder.Dispose();
-            contentArea.Dispose();
+            IDisposableUtil.DisposeIfNotNull(dialogManager);
 
             //Other
 			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
 			IDisposableUtil.DisposeIfNotNull(continuePrompt);
         }
 
-        public void createGUI(MDILayoutManager mdiManager)
+        public void createGUI(MDILayoutManager mdiManager, LayoutChain layoutChain)
         {
             Gui gui = Gui.Instance;
 
@@ -71,29 +70,13 @@ namespace Medical.GUI
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
 
-            mainBorderLayout = new BorderLayoutContainer();
-            mainBorderLayout.Center = mdiManager;
-
             //Dialogs
             dialogManager = new DialogManager(mdiManager);
-        
-            //Taskbar
-            screenLayoutManager.LayoutChain = new LayoutChain();
-            screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink(GUILocationNames.FullscreenPopup), true);
-            screenLayoutManager.LayoutChain.SuppressLayout = true;
-            editorBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, standaloneController.MedicalController.MainTimer);
-            screenLayoutManager.LayoutChain.addLink(editorBorder, true);
-            screenLayoutManager.LayoutChain.addLink(new MDIChainLink(GUILocationNames.MDI, mdiManager), true);
-            screenLayoutManager.LayoutChain.addLink(new PopupAreaChainLink(GUILocationNames.ContentAreaPopup), true);
-            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, standaloneController.MedicalController.MainTimer);
-            screenLayoutManager.LayoutChain.addLink(contentArea, true);
-            screenLayoutManager.LayoutChain.addLink(new FinalChainLink("SceneViews", mdiManager.DocumentArea), true);
+
+            screenLayoutManager.LayoutChain = layoutChain;
 
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
-
-            screenLayoutManager.LayoutChain.SuppressLayout = false;
-            screenLayoutManager.LayoutChain.layout();
 
             continuePrompt = new MyGUIContinuePromptProvider();
 

@@ -90,7 +90,11 @@ namespace Medical
             }
             set
             {
-                child.Visible = visible = value;
+                visible = value;
+                if (child != null)
+                {
+                    child.Visible = visible;
+                }
             }
         }
     }

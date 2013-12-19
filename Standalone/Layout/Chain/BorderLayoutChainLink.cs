@@ -42,6 +42,10 @@ namespace Medical
         {
             foreach (AnimatedLayoutContainer panel in panels.Values)
             {
+                if (panel.CurrentContainer != null)
+                {
+                    activePanels.remove(panel.CurrentContainer);
+                }
                 panel.Dispose();
             }
             panels.Clear();

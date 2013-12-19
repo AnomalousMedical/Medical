@@ -288,16 +288,15 @@ namespace Medical
 
             //Coroutine
             Coroutine.SetTimerFixed(medicalController.MainTimer);
+
+            //Notifications
+            notificationManager = new NotificationGUIManager(this);
         }
 
-        public void createGUI()
+        public void createGUI(LayoutChain layoutChain)
         {
             //GUI
-            guiManager.createGUI(mdiLayout);
-            
-            notificationManager = new NotificationGUIManager(this);
-            guiManager.addLinkToChain(new SingleChildChainLink(GUILocationNames.Notifications, notificationManager.LayoutContainer));
-            guiManager.pushRootContainer(GUILocationNames.Notifications);
+            guiManager.createGUI(mdiLayout, layoutChain);
             guiManager.giveGUIsToTimelineController(timelineController);
         }
 

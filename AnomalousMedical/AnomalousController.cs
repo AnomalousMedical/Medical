@@ -17,8 +17,10 @@ namespace Medical
 {
     class AnomalousController : StandaloneApp
     {
-        StandaloneController controller;
+        private StandaloneController controller;
         private SplashScreen splashScreen;
+        private BorderLayoutChainLink editorBorder;
+        private BorderLayoutChainLink contentArea;
 
         private static String archiveNameFormat = "AnomalousMedical{0}.dat";
 
@@ -119,8 +121,25 @@ namespace Medical
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
             yield return IdleStatus.Ok;
-            controller.createGUI();
+
+            //Layout Chain
+            LayoutChain layoutChain = new LayoutChain();
+            layoutChain.addLink(new SingleChildChainLink(GUILocationNames.Notifications, controller.NotificationManager.LayoutContainer), true);
+            layoutChain.addLink(new PopupAreaChainLink(GUILocationNames.FullscreenPopup), true);
+            layoutChain.SuppressLayout = true;
+            editorBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, controller.MedicalController.MainTimer);
+            layoutChain.addLink(editorBorder, true);
+            layoutChain.addLink(new MDIChainLink(GUILocationNames.MDI, controller.MDILayout), true);
+            layoutChain.addLink(new PopupAreaChainLink(GUILocationNames.ContentAreaPopup), true);
+            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, controller.MedicalController.MainTimer);
+            layoutChain.addLink(contentArea, true);
+            layoutChain.addLink(new FinalChainLink("SceneViews", controller.MDILayout.DocumentArea), true);
+            layoutChain.SuppressLayout = false;
+            layoutChain.layout();
+
+            controller.createGUI(layoutChain);
             controller.GUIManager.setMainInterfaceEnabled(false);
+            controller.GUIManager.Disposing += GUIManager_Disposing;
 
             //Scene Load
             splashScreen.updateStatus(30, "Loading Scene");
@@ -258,6 +277,12 @@ namespace Medical
 
             splashScreen.updateStatus(100, "");
             splashScreen.hide();
+        }
+
+        void GUIManager_Disposing()
+        {
+            IDisposableUtil.DisposeIfNotNull(editorBorder);
+            IDisposableUtil.DisposeIfNotNull(contentArea);
         }
     }
 }
