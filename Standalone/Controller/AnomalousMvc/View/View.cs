@@ -19,14 +19,10 @@ namespace Medical.Controller.AnomalousMvc
             :base(name)
         {
             ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left);
-            IsWindow = false;
             Transparent = false;
         }
 
         public LayoutElementName ElementName { get; set; }
-
-        [Editable]
-        public bool IsWindow { get; set; }
 
         [Editable]
         public bool Transparent { get; set; }

@@ -15,7 +15,6 @@ namespace Medical.GUI
             : base(name)
         {
             ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
-            IsWindow = true;
             Sequence = sequence;
             ListenForSequenceChanges = listenForSequenceChanges;
         }

@@ -46,6 +46,14 @@ namespace Medical
             }
         }
 
+        public override ViewType ViewType
+        {
+            get
+            {
+                return ViewType.Window;
+            }
+        }
+
         protected MDILayoutElementName(LoadInfo info)
             :base(info)
         {

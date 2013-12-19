@@ -595,7 +595,6 @@ namespace Lecture
                 String editorViewName = panel.createViewName("RmlView");
                 RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
                 rmlView.ElementName = panel.ElementName;
-                rmlView.IsWindow = false;
                 rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";

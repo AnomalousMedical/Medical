@@ -25,7 +25,6 @@ namespace Medical
             RmlView view = new RmlView("Index");
             view.RmlFile = "Index.rml";
             view.ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left);
-            view.IsWindow = false;
             view.Buttons.add(new CloseButtonDefinition("Close", "Common/ExitApp"));
             mvcContext.Views.add(view);
 

@@ -54,7 +54,6 @@ namespace Medical
 
             TextEditorView textEditorView = new TextEditorView("RmlEditor", () => rmlComponent.CurrentRml, wordWrap: false, textHighlighter: RmlTextHighlighter.Instance);
             textEditorView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-            textEditorView.IsWindow = true;
             textEditorView.Buttons.add(new CloseButtonDefinition("Close", "RmlTextEditor/Close"));
             textEditorView.ComponentCreated += (view, component) =>
             {
@@ -64,7 +63,6 @@ namespace Medical
             
             RmlWysiwygView rmlView = new RmlWysiwygView("RmlView", uiCallback, uiCallback, undoBuffer);
             rmlView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-            rmlView.IsWindow = true;
             rmlView.RmlFile = file;
             rmlView.ComponentCreated += (view, component) =>
             {
@@ -104,7 +102,6 @@ namespace Medical
                     rmlComponent.insertRml(item.Markup);
                 };
             htmlDragDrop.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-            htmlDragDrop.IsWindow = true;
             mvcContext.Views.add(htmlDragDrop);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");
@@ -245,7 +242,6 @@ namespace Medical
 
                     GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", viewController.getEditInterface(), editorController, uiCallback, true);
                     genericPropertiesView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-                    genericPropertiesView.IsWindow = true;
                     genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcEditor/Close"));
                     mvcContext.Views.add(genericPropertiesView);
 
@@ -266,7 +262,6 @@ namespace Medical
                     {
                         GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcView", view.getEditInterface(), editorController, uiCallback, true);
                         genericPropertiesView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-                        genericPropertiesView.IsWindow = true;
                         genericPropertiesView.Buttons.add(new CloseButtonDefinition("Close", "MvcViewEditor/Close"));
                         mvcContext.Views.add(genericPropertiesView);
 

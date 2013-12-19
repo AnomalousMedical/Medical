@@ -57,7 +57,6 @@ namespace Medical
             mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController));
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
-            genericEditor.IsWindow = true;
             genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             mvcContext.Views.add(genericEditor);
             

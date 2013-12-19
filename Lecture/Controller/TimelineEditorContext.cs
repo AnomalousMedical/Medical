@@ -60,7 +60,6 @@ namespace Lecture
             mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController));
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
-            genericEditor.IsWindow = true;
             genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             mvcContext.Views.add(genericEditor);
             
@@ -263,7 +262,6 @@ namespace Lecture
                 String editorViewName = panel.createViewName("RmlView");
                 RawRmlView rmlView = new RawRmlView(editorViewName);
                 rmlView.ElementName = panel.ElementName;
-                rmlView.IsWindow = false;
                 rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";

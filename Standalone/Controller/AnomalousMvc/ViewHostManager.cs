@@ -41,23 +41,11 @@ namespace Medical.Controller.AnomalousMvc
 
         public void requestOpen(View view, AnomalousMvcContext context)
         {
-            if (view.IsWindow)
+            ViewHostPanelInfo panel = findPanel(view.ElementName);
+            if (panel != null)
             {
-                openPanels.Add(new ViewHostPanelInfo()
-                {
-                    Queued = view,
-                    QueuedContext = context,
-                    ElementName = view.ElementName
-                });
-            }
-            else
-            {
-                ViewHostPanelInfo panel = findPanel(view.ElementName);
-                if (panel != null)
-                {
-                    panel.Queued = view;
-                    panel.QueuedContext = context;
-                }
+                panel.Queued = view;
+                panel.QueuedContext = context;
             }
         }
 
@@ -183,7 +171,7 @@ namespace Medical.Controller.AnomalousMvc
 
         private ViewHostPanelInfo findPanel(LayoutElementName elementName)
         {
-            if (elementName.LocationHint == ViewLocations.Floating)
+            if (elementName.ViewType == ViewType.Window || elementName.LocationHint == ViewLocations.Floating)
             {
                 ViewHostPanelInfo panel = new ViewHostPanelInfo()
                 {

@@ -45,7 +45,6 @@ namespace Medical
 
             GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", editingContext.getEditInterface(), editorController, uiCallback, true);
             genericPropertiesView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-            genericPropertiesView.IsWindow = true;
             mvcContext.Views.add(genericPropertiesView);
 
             taskbar = new EditorTaskbarView("InfoBar", currentFile, "Editor/Close");

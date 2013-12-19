@@ -44,7 +44,6 @@ namespace Medical
 
             TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.rcssTypeController.loadText(currentFile), wordWrap: false, textHighlighter:CssTextHighlighter.Instance);
             textEditorView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-            textEditorView.IsWindow = true;
             textEditorView.ComponentCreated += (view, component) =>
             {
                 textEditorComponent = component;
@@ -53,7 +52,6 @@ namespace Medical
 
             RmlView rmlView = new RmlView("RmlView");
             rmlView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-            rmlView.IsWindow = true;
             rmlView.RmlFile = rmlPreviewFile;
             rmlView.ComponentCreated += (view, component) =>
             {

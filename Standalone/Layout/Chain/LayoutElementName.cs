@@ -8,6 +8,12 @@ using System.Text;
 
 namespace Medical
 {
+    public enum ViewType
+    {
+        Panel,
+        Window
+    }
+
     /// <summary>
     /// The name of an element in the layout chain that a layout container should go into.
     /// This class and any subclasses should be immutable.
@@ -41,6 +47,14 @@ namespace Medical
             get
             {
                 return ViewLocations.Floating;
+            }
+        }
+
+        public virtual ViewType ViewType
+        {
+            get
+            {
+                return ViewType.Panel;
             }
         }
 

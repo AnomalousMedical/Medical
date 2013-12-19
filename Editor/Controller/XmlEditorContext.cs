@@ -45,7 +45,6 @@ namespace Medical
 
             TextEditorView textEditorView = new TextEditorView("RmlEditor", () => this.typeController.loadText(currentFile), wordWrap: false, textHighlighter:XmlTextHighlighter.Instance);
             textEditorView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
-            textEditorView.IsWindow = true;
             textEditorView.ComponentCreated += (view, component) =>
             {
                 textEditorComponent = component;

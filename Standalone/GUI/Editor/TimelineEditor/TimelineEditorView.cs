@@ -14,7 +14,6 @@ namespace Medical.GUI
             :base(name)
         {
             ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
-            IsWindow = true;
             this.Timeline = timeline;
             this.TimelineController = timelineController;
             this.EditorController = editorController;
