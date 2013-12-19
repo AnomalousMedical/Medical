@@ -24,9 +24,6 @@ namespace Medical.Controller.AnomalousMvc
         private GUIManager guiManager;
         private ViewHostFactory viewHostFactory;
 
-        private List<ViewHostPanelInfo> queuedFloatingViews = new List<ViewHostPanelInfo>();
-        private List<ViewHost> openFloatingViews = new List<ViewHost>();
-        private List<ViewHost> closingFloatingViews = new List<ViewHost>();
         private List<ViewHostPanelInfo> openPanels = new List<ViewHostPanelInfo>();
         private RemovableListIterator<ViewHostPanelInfo> openPanelsEnumerator;
 
@@ -39,17 +36,14 @@ namespace Medical.Controller.AnomalousMvc
 
         public void Dispose()
         {
-            foreach (ViewHost viewHost in closingFloatingViews)
-            {
-                viewHost._finishedWithView();
-            }
+            
         }
 
         public void requestOpen(View view, AnomalousMvcContext context)
         {
             if (view.IsWindow)
             {
-                queuedFloatingViews.Add(new ViewHostPanelInfo()
+                openPanels.Add(new ViewHostPanelInfo()
                 {
                     Queued = view,
                     QueuedContext = context,
@@ -83,10 +77,6 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     panel.Current._RequestClosed = true;
                 }
-            }
-            foreach (ViewHost viewHost in openFloatingViews)
-            {
-                viewHost._RequestClosed = true;
             }
         }
 
@@ -127,36 +117,6 @@ namespace Medical.Controller.AnomalousMvc
                     openPanelsEnumerator.RemoveCurrent();
                 }
             }
-
-            //Floating views
-            for (int i = 0; i < openFloatingViews.Count; ++i)
-            {
-                ViewHost host = openFloatingViews[i];
-                if (host._RequestClosed)
-                {
-                    host.closing();
-                    //We want to delay the finished with view event till after the current mvc action.
-                    ThreadManager.invoke(new Action(() =>
-                    {
-                        host._finishedWithView();
-                        closingFloatingViews.Remove(host);
-                    }));
-                    openFloatingViews.RemoveAt(i--);
-                    closingFloatingViews.Add(host);
-                }
-            }
-            foreach (var viewInfo in queuedFloatingViews)
-            {
-                ViewHost viewHost = viewHostFactory.createViewHost(viewInfo.Queued, viewInfo.QueuedContext);
-                viewHost.opening();
-                openFloatingViews.Add(viewHost);
-                guiManager.changeElement(viewInfo.ElementName, viewHost.Container, null);
-                viewHost.ViewClosing += (closingView) =>
-                {
-                    guiManager.closeElement(viewInfo.ElementName, viewHost.Container);
-                };
-            }
-            queuedFloatingViews.Clear();
         }
 
         public bool isViewOpen(String name)
@@ -164,14 +124,6 @@ namespace Medical.Controller.AnomalousMvc
             foreach (var panel in openPanels)
             {
                 if (panel.Current != null && panel.Current.Name == name)
-                {
-                    return true;
-                }
-            }
-
-            foreach (ViewHost viewHost in openFloatingViews)
-            {
-                if (viewHost.Name == name)
                 {
                     return true;
                 }
@@ -190,14 +142,6 @@ namespace Medical.Controller.AnomalousMvc
                 }
             }
 
-            foreach (ViewHost viewHost in openFloatingViews)
-            {
-                if (viewHost.Name == name)
-                {
-                    return viewHost;
-                }
-            }
-
             return null;
         }
 
@@ -210,10 +154,6 @@ namespace Medical.Controller.AnomalousMvc
                 {
                     storedViews.addView(panel.Current.View);
                 }
-            }
-            foreach (ViewHost viewHost in openFloatingViews)
-            {
-                storedViews.addView(viewHost.View);
             }
             return storedViews;
         }
@@ -230,10 +170,6 @@ namespace Medical.Controller.AnomalousMvc
         {
             get
             {
-                if (openFloatingViews.Count > 0)
-                {
-                    return true;
-                }
                 foreach (var panel in openPanels) //Make sure the views are actually open
                 {
                     if (panel.Current != null)
