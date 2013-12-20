@@ -1,4 +1,5 @@
-﻿using Engine.Attributes;
+﻿using Engine;
+using Engine.Attributes;
 using Engine.Editing;
 using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
@@ -16,7 +17,7 @@ namespace Medical
     public class Slideshow : Saveable
     {
         public const String SlideThumbName = "Thumb.png";
-        public const int BaseSlideScale = 1017;
+        public static readonly int BaseSlideScale = ScaleHelper.Scaled(1017);
         public const int CurrentVersion = 2;
 
         private static TaskController additionalTasks = new TaskController();

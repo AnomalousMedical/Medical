@@ -146,10 +146,10 @@ namespace Medical
             public IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
             {
                 IntSize2 rigidParentSize = layoutContainer.RigidParentWorkingSize;
-                float ratio = rigidParentSize.Height / (float)ScaleHelper.Scaled(Slideshow.BaseSlideScale);
+                float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale;
                 SlidePanel panel = masterStrategy.panels[view.ElementName];
                 SlidePanel opposite;
-                int size = (int)(panel.Size * ratio);
+                int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
                 if (viewHosts.ContainsKey(view.ElementName))
                 {
                     viewHosts[view.ElementName].changeScale(ratio);
