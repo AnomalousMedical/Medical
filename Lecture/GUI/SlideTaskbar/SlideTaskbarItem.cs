@@ -35,6 +35,11 @@ namespace Lecture.GUI
             Gui.Instance.destroyWidget(taskButton);
         }
 
+        public void setPosition(int left, int top)
+        {
+            taskButton.setPosition(left, top);
+        }
+
         void taskButton_EventToolTip(Widget source, EventArgs e)
         {
             TooltipManager.Instance.processTooltip(source, task.Name, (ToolTipEventArgs)e);
