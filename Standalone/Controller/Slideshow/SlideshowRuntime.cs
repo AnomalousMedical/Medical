@@ -13,9 +13,9 @@ namespace Medical
     {
         public const String SlideTaskbarName = "SlideTaskbar";
         private const String PreviousTaskName = "SlideshowIcons/Back";
-        private const String PreviousTaskDisabledName = CommonResources.NoIcon;
+        private const String PreviousTaskDisabledName = "SlideshowIcons/BackInactive";
         private const String NextTaskName = "SlideshowIcons/Forward";
-        private const String NextTaskDisabledName = CommonResources.NoIcon;
+        private const String NextTaskDisabledName = "SlideshowIcons/ForwardInactive";
 
         private AnomalousMvcContext mvcContext;
         private CallbackTask previousTask;

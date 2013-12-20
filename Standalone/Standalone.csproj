@@ -937,6 +937,8 @@
     <EmbeddedResource Include="Resources\CommonEditorIcons.xml" />
     <EmbeddedResource Include="Resources\SlideshowIcons.png" />
     <EmbeddedResource Include="Resources\SlideshowIcons.xml" />
+    <EmbeddedResource Include="Resources\SlideshowIcons%402x.png" />
+    <EmbeddedResource Include="Resources\SlideshowIcons%402x.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
