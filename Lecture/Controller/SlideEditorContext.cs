@@ -301,7 +301,7 @@ namespace Lecture
 
             presetSlide = new TemplateSlide()
             {
-                Name = "Three Panel",
+                Name = "Sides and Top",
                 IconName = "Lecture.SlideLayouts.ThreePanel"
             };
             presetSlide.addPanel(new RmlSlidePanel()
@@ -377,25 +377,6 @@ namespace Lecture
                 Rml = MedicalSlideItemTemplate.defaultSlide,
                 Size = 288,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
-            {
-                Name = "50/50",
-                IconName = "Lecture.SlideLayouts.TwoColumn"
-            };
-            presetSlide.addPanel(new RmlSlidePanel()
-            {
-                Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 50,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanel()
-            {
-                Rml = MedicalSlideItemTemplate.defaultSlide,
-                Size = 50,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
