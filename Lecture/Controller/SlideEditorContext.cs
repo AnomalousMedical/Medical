@@ -526,15 +526,19 @@ namespace Lecture
         public void updateThumbnail()
         {
             forceUpdateThumbOnBlur = false;
-            bool renderScene = true;
             Dictionary<RmlEditorViewInfo, LayoutContainer> layoutPositions = new Dictionary<RmlEditorViewInfo, LayoutContainer>();
             if (slideEditorController.ResourceProvider != null)
             {
+                //Setup a LayoutChain to mimic the main one.
+                LayoutChain layoutChain = new LayoutChain();
+                layoutChain.addLink(new PopupAreaChainLink(GUILocationNames.ContentAreaPopup), true);
+                layoutChain.addLink(new BorderLayoutNoAnimationChainLink(GUILocationNames.ContentArea), true);
+
                 IntSize2 thumbTotalSize = new IntSize2(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
                 Bitmap thumb = slideEditorController.SlideImageManager.createThumbBitmap(slide);
-                BorderLayoutContainer borderLayoutContainer = new BorderLayoutContainer();
-                borderLayoutContainer.SuppressLayout = true;
-                borderLayoutContainer.Center = new NullLayoutContainer(thumbTotalSize);
+                layoutChain.SuppressLayout = true;
+                LayoutContainer sceneContainer = new NullLayoutContainer(thumbTotalSize);
+                layoutChain.addContainer(new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Center), sceneContainer, null);
                 foreach (var editor in rmlEditors.Values)
                 {
                     if (editor.Component != null)
@@ -543,49 +547,21 @@ namespace Lecture
                         IntSize2 size = (IntSize2)(editor.Component.ViewHost.Container.WorkingSize * sizeRatio);
                         NullLayoutContainer container = new NullLayoutContainer(size);
                         layoutPositions.Add(editor, container);
-                        switch (editor.View.ElementName.LocationHint)
-                        {
-                            case ViewLocations.Left:
-                                borderLayoutContainer.Left = container;
-                                break;
-                            case ViewLocations.Right:
-                                borderLayoutContainer.Right = container;
-                                break;
-                            case ViewLocations.Top:
-                                borderLayoutContainer.Top = container;
-                                break;
-                            case ViewLocations.Bottom:
-                                borderLayoutContainer.Bottom = container;
-                                break;
-                            default:
-                                container.WorkingSize = size;
-                                container.Location = new IntVector2(0, 0);
-                                renderScene = false;
-                                break;
-                        }
+                        layoutChain.addContainer(editor.View.ElementName, container, null);
                     }
                 }
-                borderLayoutContainer.SuppressLayout = false;
-                borderLayoutContainer.WorkingSize = thumbTotalSize;
-                borderLayoutContainer.Location = new IntVector2(0, 0);
-                borderLayoutContainer.layout();
+                layoutChain.SuppressLayout = false;
+                layoutChain.WorkingSize = thumbTotalSize;
+                layoutChain.Location = new IntVector2(0, 0);
+                layoutChain.layout();
+
+                //Render thumbnail
                 using (Graphics g = Graphics.FromImage(thumb))
                 {
-                    foreach (var editor in rmlEditors.Values)
-                    {
-                        if (editor.Component != null)
-                        {
-                            LayoutContainer container;
-                            if (layoutPositions.TryGetValue(editor, out container))
-                            {
-                                Rectangle panelThumbPos = new Rectangle(container.Location.x, container.Location.y, container.WorkingSize.Width, container.WorkingSize.Height);
-                                editor.Component.writeToGraphics(g, panelThumbPos);
-                            }
-                        }
-                    }
-                    IntVector2 sceneThumbPosition = borderLayoutContainer.Center.Location;
-                    IntSize2 sceneThumbSize = borderLayoutContainer.Center.WorkingSize;
-                    if (renderScene && sceneThumbSize.Width > 0 && sceneThumbSize.Height > 0)
+                    //Start with the scene
+                    IntVector2 sceneThumbPosition = sceneContainer.Location;
+                    IntSize2 sceneThumbSize = sceneContainer.WorkingSize;
+                    if (sceneThumbSize.Width > 0 && sceneThumbSize.Height > 0)
                     {
                         ImageRendererProperties imageProperties = new ImageRendererProperties();
                         imageProperties.Width = sceneThumbSize.Width;
@@ -606,6 +582,20 @@ namespace Lecture
                         using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
                         {
                             g.DrawImage(sceneThumb, sceneThumbPosition.x, sceneThumbPosition.y);
+                        }
+                    }
+
+                    //Render all panels
+                    foreach (var editor in rmlEditors.Values)
+                    {
+                        if (editor.Component != null)
+                        {
+                            LayoutContainer container;
+                            if (layoutPositions.TryGetValue(editor, out container))
+                            {
+                                Rectangle panelThumbPos = new Rectangle(container.Location.x, container.Location.y, container.WorkingSize.Width, container.WorkingSize.Height);
+                                editor.Component.writeToGraphics(g, panelThumbPos);
+                            }
                         }
                     }
                 }

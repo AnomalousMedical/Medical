@@ -369,6 +369,7 @@
     <Compile Include="Layout\Chain\ActiveContainerTracker.cs" />
     <Compile Include="Layout\Chain\BorderLayoutChainLink.cs" />
     <Compile Include="Layout\Chain\BorderLayoutElementName.cs" />
+    <Compile Include="Layout\Chain\BorderLayoutNoAnimationChainLink.cs" />
     <Compile Include="Layout\Chain\FinalChainLink.cs" />
     <Compile Include="Layout\Chain\LayoutElementName.cs" />
     <Compile Include="Layout\Chain\MDILayoutElementName.cs" />
