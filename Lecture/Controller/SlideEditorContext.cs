@@ -355,6 +355,31 @@ namespace Lecture
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Sides and Bottom",
+                IconName = "Lecture.SlideLayouts.FourPanel"
+            };
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            });
+            presetSlide.addPanel(new RmlSlidePanel()
+            {
+                Rml = MedicalSlideItemTemplate.defaultSlide,
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
             presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
             {
                 Name = "50/50",
@@ -501,44 +526,66 @@ namespace Lecture
         public void updateThumbnail()
         {
             forceUpdateThumbOnBlur = false;
+            bool renderScene = true;
+            Dictionary<RmlEditorViewInfo, LayoutContainer> layoutPositions = new Dictionary<RmlEditorViewInfo, LayoutContainer>();
             if (slideEditorController.ResourceProvider != null)
             {
-                IntSize2 sceneThumbSize = new IntSize2(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
-                IntVector2 sceneThumbPosition = new IntVector2(0, 0);
+                IntSize2 thumbTotalSize = new IntSize2(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
                 Bitmap thumb = slideEditorController.SlideImageManager.createThumbBitmap(slide);
+                BorderLayoutContainer borderLayoutContainer = new BorderLayoutContainer();
+                borderLayoutContainer.SuppressLayout = true;
+                borderLayoutContainer.Center = new NullLayoutContainer(thumbTotalSize);
+                foreach (var editor in rmlEditors.Values)
+                {
+                    if (editor.Component != null)
+                    {
+                        float sizeRatio = (float)SlideImageManager.ThumbHeight / editor.Component.ViewHost.Container.RigidParentWorkingSize.Height;
+                        IntSize2 size = (IntSize2)(editor.Component.ViewHost.Container.WorkingSize * sizeRatio);
+                        NullLayoutContainer container = new NullLayoutContainer(size);
+                        layoutPositions.Add(editor, container);
+                        switch (editor.View.ElementName.LocationHint)
+                        {
+                            case ViewLocations.Left:
+                                borderLayoutContainer.Left = container;
+                                break;
+                            case ViewLocations.Right:
+                                borderLayoutContainer.Right = container;
+                                break;
+                            case ViewLocations.Top:
+                                borderLayoutContainer.Top = container;
+                                break;
+                            case ViewLocations.Bottom:
+                                borderLayoutContainer.Bottom = container;
+                                break;
+                            default:
+                                container.WorkingSize = size;
+                                container.Location = new IntVector2(0, 0);
+                                renderScene = false;
+                                break;
+                        }
+                    }
+                }
+                borderLayoutContainer.SuppressLayout = false;
+                borderLayoutContainer.WorkingSize = thumbTotalSize;
+                borderLayoutContainer.Location = new IntVector2(0, 0);
+                borderLayoutContainer.layout();
                 using (Graphics g = Graphics.FromImage(thumb))
                 {
                     foreach (var editor in rmlEditors.Values)
                     {
                         if (editor.Component != null)
                         {
-                            IntVector2 location = editor.Component.ViewHost.Container.Location - editor.Component.ViewHost.Container.RigidParent.Location;
-                            IntSize2 size = editor.Component.ViewHost.Container.WorkingSize;
-                            float sizeRatio = (float)SlideImageManager.ThumbWidth / editor.Component.ViewHost.Container.RigidParentWorkingSize.Width;
-
-                            Rectangle panelThumbPos = new Rectangle((int)Math.Round(location.x * sizeRatio), (int)Math.Round(location.y * sizeRatio), (int)Math.Round(size.Width * sizeRatio), (int)Math.Round(size.Height * sizeRatio));
-                            switch (editor.View.ElementName.LocationHint)
+                            LayoutContainer container;
+                            if (layoutPositions.TryGetValue(editor, out container))
                             {
-                                case ViewLocations.Left:
-                                    sceneThumbPosition.x = panelThumbPos.Width;
-                                    sceneThumbSize.Width -= panelThumbPos.Width;
-                                    break;
-                                case ViewLocations.Right:
-                                    sceneThumbSize.Width -= panelThumbPos.Width;
-                                    break;
-                                case ViewLocations.Top:
-                                    sceneThumbPosition.y = panelThumbPos.Height;
-                                    sceneThumbSize.Height -= panelThumbPos.Height;
-                                    break;
-                                case ViewLocations.Bottom:
-                                    sceneThumbSize.Height -= panelThumbPos.Height;
-                                    break;
+                                Rectangle panelThumbPos = new Rectangle(container.Location.x, container.Location.y, container.WorkingSize.Width, container.WorkingSize.Height);
+                                editor.Component.writeToGraphics(g, panelThumbPos);
                             }
-                            editor.Component.writeToGraphics(g, panelThumbPos);
                         }
                     }
-
-                    if (sceneThumbSize.Width > 0 && sceneThumbSize.Height > 0)
+                    IntVector2 sceneThumbPosition = borderLayoutContainer.Center.Location;
+                    IntSize2 sceneThumbSize = borderLayoutContainer.Center.WorkingSize;
+                    if (renderScene && sceneThumbSize.Width > 0 && sceneThumbSize.Height > 0)
                     {
                         ImageRendererProperties imageProperties = new ImageRendererProperties();
                         imageProperties.Width = sceneThumbSize.Width;

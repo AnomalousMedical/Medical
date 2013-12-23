@@ -379,6 +379,7 @@
     <Compile Include="Layout\EventLayoutContainer.cs" />
     <Compile Include="Layout\Chain\LayoutChainLink.cs" />
     <Compile Include="Layout\NullLayoutContainer.cs" />
+    <Compile Include="Layout\SingleChildConcreteLayoutContainer.cs" />
     <Compile Include="Layout\SingleChildLayoutContainer.cs" />
     <Compile Include="Layout\VariableSizeMyGUILayoutContainer.cs" />
     <Compile Include="Layout\MDI\MDILayoutContainerScale.cs" />

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Medical
 {
-    public class AspectRatioContainer : NullLayoutContainer, IDisposable
+    public class AspectRatioContainer : SingleChildConcreteLayoutContainer, IDisposable
     {
         private float inverseAspectRatio = 1.0f;
 
@@ -29,7 +29,7 @@ namespace Medical
         {
             if (Child != null)
             {
-                IntVector2 sceneViewLocation = Location;
+                IntVector2 loc = Location;
                 IntSize2 size = WorkingSize;
 
                 if (!autoAspectRatio)
@@ -39,21 +39,21 @@ namespace Medical
                     {
                         size.Height = WorkingSize.Height;
                         size.Width = (int)(size.Height * (1 / inverseAspectRatio));
-                        sceneViewLocation.x += (WorkingSize.Width - size.Width) / 2;
+                        loc.x += (WorkingSize.Width - size.Width) / 2;
 
-                        borderPanel0.setCoord(Location.x, Location.y, sceneViewLocation.x - Location.x, WorkingSize.Height);
-                        borderPanel1.setCoord(sceneViewLocation.x + size.Width, Location.y, sceneViewLocation.x - Location.x + 1, WorkingSize.Height);
+                        borderPanel0.setCoord(Location.x, Location.y, loc.x - Location.x, WorkingSize.Height);
+                        borderPanel1.setCoord(loc.x + size.Width, Location.y, loc.x - Location.x + 1, WorkingSize.Height);
                     }
                     else
                     {
-                        sceneViewLocation.y += (WorkingSize.Height - size.Height) / 2;
+                        loc.y += (WorkingSize.Height - size.Height) / 2;
 
-                        borderPanel0.setCoord(Location.x, Location.y, WorkingSize.Width, sceneViewLocation.y - Location.y);
-                        borderPanel1.setCoord(Location.x, sceneViewLocation.y + size.Height, WorkingSize.Width, sceneViewLocation.y - Location.y + 1);
+                        borderPanel0.setCoord(Location.x, Location.y, WorkingSize.Width, loc.y - Location.y);
+                        borderPanel1.setCoord(Location.x, loc.y + size.Height, WorkingSize.Width, loc.y - Location.y + 1);
                     }
                 }
 
-                Child.Location = sceneViewLocation;
+                Child.Location = loc;
                 Child.WorkingSize = size;
                 Child.layout();
             }
