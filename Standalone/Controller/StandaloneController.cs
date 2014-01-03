@@ -169,7 +169,10 @@ namespace Medical
         {
 #if ALLOW_OVERRIDE
             //Add working archive
-            VirtualFileSystem.Instance.addArchive(MedicalConfig.WorkingResourceDirectory);
+            if (!String.IsNullOrEmpty(MedicalConfig.WorkingResourceDirectory))
+            {
+                VirtualFileSystem.Instance.addArchive(MedicalConfig.WorkingResourceDirectory);
+            }
 #endif
         }
 
