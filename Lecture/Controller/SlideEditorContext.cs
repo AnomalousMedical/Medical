@@ -525,7 +525,7 @@ namespace Lecture
                     if (editor.Component != null)
                     {
                         float sizeRatio = (float)SlideImageManager.ThumbHeight / editor.Component.ViewHost.Container.RigidParentWorkingSize.Height;
-                        IntSize2 size = (IntSize2)(editor.Component.ViewHost.Container.WorkingSize * sizeRatio);
+                        IntSize2 size = (IntSize2)(editor.Component.ViewHost.Container.DesiredSize * sizeRatio);
                         NullLayoutContainer container = new NullLayoutContainer(size);
                         layoutPositions.Add(editor, container);
                         layoutChain.addContainer(editor.View.ElementName, container, null);
