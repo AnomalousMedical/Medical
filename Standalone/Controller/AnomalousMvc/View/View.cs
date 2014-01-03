@@ -12,9 +12,6 @@ namespace Medical.Controller.AnomalousMvc
 {
     public abstract class View : SaveableEditableItem
     {
-        [DoNotSave]
-        private bool editPreviewContent = false;
-
         public View(String name)
             :base(name)
         {
@@ -33,18 +30,6 @@ namespace Medical.Controller.AnomalousMvc
 
         [EditableAction]
         public String ClosingAction { get; set; }
-
-        public bool EditPreviewContent
-        {
-            get
-            {
-                return editPreviewContent;
-            }
-            set
-            {
-                editPreviewContent = value;
-            }
-        }
 
         public enum CustomQueries
         {

@@ -262,7 +262,6 @@ namespace Lecture
                 String editorViewName = panel.createViewName("RmlView");
                 RawRmlView rmlView = new RawRmlView(editorViewName);
                 rmlView.ElementName = panel.ElementName;
-                rmlView.EditPreviewContent = true;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
                 instanceLayout.addView(rmlView);
