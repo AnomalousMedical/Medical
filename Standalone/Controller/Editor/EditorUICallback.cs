@@ -172,6 +172,11 @@ namespace Medical
                 return createActionBrowser();
             });
 
+            this.addSyncCustomQuery<Browser>(ElementNameEditableProperty.CustomQueries.BuildBrowser, () =>
+            {
+                return createElementNameBrowser();
+            });
+
             this.addSyncCustomQuery<Browser, Type>(ModelBrowserEditableProperty.CustomQueries.BuildBrowser, (assignableFromType) =>
             {
                 Browser browser = new Browser("Models", "Choose Model");
@@ -228,6 +233,16 @@ namespace Medical
                     }
                     browser.addNode(null, null, controllerNode);
                 }
+            }
+            return browser;
+        }
+
+        private Browser createElementNameBrowser()
+        {
+            Browser browser = new Browser("Screen Location Name", "Choose Screen Location Name");
+            foreach (var elementName in standaloneController.GUIManager.NamedLinks)
+            {
+                browser.addNode(null, null, new BrowserNode(elementName.UniqueDerivedName, elementName));
             }
             return browser;
         }

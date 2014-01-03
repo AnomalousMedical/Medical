@@ -32,8 +32,15 @@ namespace Medical.GUI
             editBox = (EditBox)widget.findWidget("EditBox");
             editBox.OnlyText = property.getValue(1);
             editBox.ForwardMouseWheelToParent = true;
-            editBox.KeyLostFocus += new MyGUIEvent(editBox_KeyLostFocus);
-            editBox.EventEditSelectAccept += new MyGUIEvent(editBox_EventEditSelectAccept);
+            if (property.readOnly(1))
+            {
+                editBox.EditReadOnly = true;
+            }
+            else
+            {
+                editBox.KeyLostFocus += new MyGUIEvent(editBox_KeyLostFocus);
+                editBox.EventEditSelectAccept += new MyGUIEvent(editBox_EventEditSelectAccept);
+            }
 
             Button browseButton = (Button)widget.findWidget("Browse");
             browseButton.ForwardMouseWheelToParent = true;
@@ -54,7 +61,19 @@ namespace Medical.GUI
                 {
                     editBox.OnlyText = result.ToString();
                     errorPrompt = "";
-                    setValue();
+                    if (editBox.EditReadOnly)
+                    {
+                        if (allowValueChanges)
+                        {
+                            allowValueChanges = false;
+                            Property.setValue(1, result);
+                            allowValueChanges = true;
+                        }
+                    }
+                    else
+                    {
+                        setValue();
+                    }
                     return true;
                 });
             }

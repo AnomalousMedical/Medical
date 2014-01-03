@@ -34,7 +34,7 @@ namespace Medical
             }
         }
 
-        protected virtual String UniqueDerivedName
+        public virtual String UniqueDerivedName
         {
             get
             {

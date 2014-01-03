@@ -111,6 +111,19 @@ namespace Medical.Editor
             }
         }
 
+        public bool readOnly(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return true;
+                case 1:
+                    return DataReadOnly;
+                default:
+                    return true;
+            }
+        }
+
         public void setValueStr(int column, string value)
         {
             switch (column)
@@ -128,5 +141,7 @@ namespace Medical.Editor
         /// Set this to true to indicate to the ui that this property is advanced.
         /// </summary>
         public bool Advanced { get; set; }
+
+        public bool DataReadOnly { get; set; }
     }
 }

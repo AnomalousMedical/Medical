@@ -154,6 +154,8 @@
     <Compile Include="Controller\Config\CertificateStoreManager.cs" />
     <Compile Include="Controller\Config\EditorConfig.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditablePropAttribute.cs" />
+    <Compile Include="Controller\Editor\BrowserAttributes\EditableElementNameAttribute.cs" />
+    <Compile Include="Controller\Editor\BrowserAttributes\ElementNameEditableProperty.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\PropBrowserEditableProperty.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableModelAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\ModelBrowserEditableProperty.cs" />

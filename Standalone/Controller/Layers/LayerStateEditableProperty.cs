@@ -102,6 +102,11 @@ namespace Medical
             return null;
         }
 
+        public bool readOnly(int column)
+        {
+            return false;
+        }
+
         /// <summary>
         /// Set this to true to indicate to the ui that this property is advanced.
         /// </summary>

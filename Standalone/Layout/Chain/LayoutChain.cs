@@ -167,6 +167,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<LayoutElementName> NamedLinks
+        {
+            get
+            {
+                return namedLinkedElements.Keys;
+            }
+        }
+
         private void doActivateLink(LayoutChainLink link, LinkedListNode<LayoutChainLink> previousNode)
         {
             if (previousNode != null)

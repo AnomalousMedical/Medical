@@ -262,6 +262,14 @@ namespace Medical.GUI
             }
         }
 
+        public IEnumerable<LayoutElementName> NamedLinks
+        {
+            get
+            {
+                return screenLayoutManager.LayoutChain.NamedLinks;
+            }
+        }
+
         public void layout()
         {
             screenLayoutManager.LayoutChain.layout();

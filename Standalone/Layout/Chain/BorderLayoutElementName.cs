@@ -24,7 +24,7 @@ namespace Medical
             }
         }
 
-        protected override string UniqueDerivedName
+        public override string UniqueDerivedName
         {
             get
             {

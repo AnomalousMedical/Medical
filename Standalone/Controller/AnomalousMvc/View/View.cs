@@ -22,6 +22,7 @@ namespace Medical.Controller.AnomalousMvc
             Transparent = false;
         }
 
+        [EditableElementName(ForceAsProperty=true)]
         public LayoutElementName ElementName { get; set; }
 
         [Editable]
