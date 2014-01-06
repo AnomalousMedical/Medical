@@ -181,8 +181,12 @@
     <Compile Include="Controller\Editor\ProjectItemTemplate.cs" />
     <Compile Include="Controller\Editor\ProjectItemTemplateDelegate.cs" />
     <Compile Include="Controller\Editor\ProjectItemTemplateFixedNameDelegate.cs" />
+    <Compile Include="Controller\Editor\ProjectSupport\FilesystemProjectType.cs" />
+    <Compile Include="Controller\Editor\ProjectSupport\ProjectType.cs" />
+    <Compile Include="Controller\Editor\ProjectSupport\ZipProjectType.cs" />
     <Compile Include="Controller\Editor\ProjectTemplate.cs" />
     <Compile Include="Controller\Editor\PropEditController.cs" />
+    <Compile Include="Controller\Editor\ProjectSupport\ProjectTypeManager.cs" />
     <Compile Include="Controller\Editor\TypeControllers\SaveableTypeController.cs" />
     <Compile Include="Controller\Editor\TypeControllers\SaveableTypeControllerCachedResource.cs" />
     <Compile Include="Controller\Editor\TypeControllers\TextTypeController.cs" />

@@ -41,6 +41,7 @@ namespace Medical
         private TimelineController timelineController;
 
         private List<ProjectItemTemplate> itemTemplates = new List<ProjectItemTemplate>();
+        private ProjectTypeManager projectTypes = new ProjectTypeManager();
 
         public delegate void ProjectChangedEvent(EditorController editorController, String fullFilePath);
 
@@ -84,13 +85,10 @@ namespace Medical
                 {
                     //Make sure the old project is closed first, this prevents problems deleting the currently open project.
                     closeResourceProvider();
-                    Directory.Delete(projectDirectory, true);
+                    projectTypes.deleteProject(projectDirectory);
                 }
-                if (!Directory.Exists(projectDirectory))
-                {
-                    Directory.CreateDirectory(projectDirectory);
-                }
-                String projectName = Path.GetFileName(projectDirectory);
+                projectTypes.ensureProjectExists(projectDirectory);
+                String projectName = Path.GetFileNameWithoutExtension(projectDirectory);
                 closeResourceProvider();
                 openResourceProvider(projectDirectory);
                 String fullProjectName = projectTemplate.createProject(ResourceProvider, projectName);
@@ -261,6 +259,14 @@ namespace Medical
 
         public String EditorContextRuntimeName { get; set; }
 
+        public ProjectTypeManager ProjectTypes
+        {
+            get
+            {
+                return projectTypes;
+            }
+        }
+
         public void runEditorContext(AnomalousMvcContext mvcContext)
         {
             mvcContext.setResourceProvider(resourceProvider);
@@ -294,7 +300,7 @@ namespace Medical
 
         private void openResourceProvider(String projectPath)
         {
-            resourceProvider = new EditorResourceProvider(new FilesystemResourceProvider(projectPath));
+            resourceProvider = new EditorResourceProvider(projectTypes.openProject(projectPath));
             resourceProviderRocketFSExtension = new ResourceProviderRocketFSExtension(resourceProvider);
             RocketInterface.Instance.FileInterface.addExtension(resourceProviderRocketFSExtension);
             timelineController.setResourceProvider(ResourceProvider);

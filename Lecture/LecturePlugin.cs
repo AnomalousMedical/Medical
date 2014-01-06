@@ -1,5 +1,6 @@
 ﻿using Lecture.GUI;
 using Medical;
+using Medical.Editor;
 using Medical.GUI;
 using MyGUIPlugin;
 using System;
@@ -44,6 +45,7 @@ namespace Lecture
             guiManager.giveGUIsToTimelineController(editorTimelineController);
 
             editorController = new EditorController(standaloneController, editorTimelineController);
+            editorController.ProjectTypes.addInfo(new ZipProjectType(".sl"));
             standaloneController.DocumentController.addDocumentHandler(new SlideshowDocumentHandler(editorController));
 
             //Prop Mover

@@ -73,7 +73,7 @@ namespace Medical
             IEnumerable<ZipFileInfo> zipFiles = null;
             try
             {
-                zipFiles = zipFile.listFiles(Path.Combine(resourceLocation, directory), pattern, recursive);
+                zipFiles = zipFile.listFiles(directory, pattern, recursive);
             }
             catch (Exception ex)
             {
@@ -93,7 +93,7 @@ namespace Medical
             IEnumerable<ZipFileInfo> zipDirs = null;
             try
             {
-                zipDirs = zipFile.listDirectories(Path.Combine(resourceLocation, directory), pattern, recursive);
+                zipDirs = zipFile.listDirectories(directory, pattern, recursive);
             }
             catch (Exception ex)
             {

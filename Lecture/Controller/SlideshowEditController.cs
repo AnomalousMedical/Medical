@@ -989,5 +989,10 @@ namespace Lecture
                 slideImageManager.removeImage(slideInfo.Slide);
             }
         }
+
+        internal bool projectExists(string fullProjectName)
+        {
+            return editorController.ProjectTypes.doesProjectExist(fullProjectName);
+        }
     }
 }

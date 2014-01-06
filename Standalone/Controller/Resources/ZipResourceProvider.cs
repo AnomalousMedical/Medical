@@ -27,6 +27,7 @@ namespace Medical
 
             public override void Close()
             {
+                baseStream.Seek(0, SeekOrigin.Begin);
                 resourceProvider.writeStreamClosed(this);
                 baseStream.Close();
             }
@@ -193,7 +194,7 @@ namespace Medical
             IEnumerable<ZipFileInfo> zipFiles = null;
             try
             {
-                zipFiles = zipFile.listFiles(Path.Combine(resourceLocation, directory), pattern, recursive);
+                zipFiles = zipFile.listFiles(directory, pattern, recursive);
             }
             catch (Exception ex)
             {
@@ -213,7 +214,7 @@ namespace Medical
             IEnumerable<ZipFileInfo> zipDirs = null;
             try
             {
-                zipDirs = zipFile.listDirectories(Path.Combine(resourceLocation, directory), pattern, recursive);
+                zipDirs = zipFile.listDirectories(directory, pattern, recursive);
             }
             catch (Exception ex)
             {
@@ -246,6 +247,7 @@ namespace Medical
         public void createDirectory(string path, string directoryName)
         {
             zipFile.Dispose();
+            path = Path.Combine(path, directoryName);
             using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
             {
                 if (!ionicZip.ContainsEntry(Path.GetFileName(path)))

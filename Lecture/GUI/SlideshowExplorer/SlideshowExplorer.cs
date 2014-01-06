@@ -140,7 +140,7 @@ namespace Lecture.GUI
 
             NewProjectDialog.ShowDialog(browse, (template, fullProjectName) =>
             {
-                if (Directory.Exists(fullProjectName))
+                if (slideEditController.projectExists(fullProjectName))
                 {
                     MessageBox.show(String.Format("The project {0} already exists. Would you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
                     {
