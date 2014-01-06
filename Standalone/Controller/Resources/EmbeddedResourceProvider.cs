@@ -114,6 +114,11 @@ namespace Medical
             throw new NotImplementedException("Cannot create directories in the EmbeddedResourceProvider");
         }
 
+        public bool isDirectory(String path)
+        {
+            return false; //Never has directories
+        }
+
         public string BackingLocation
         {
             get
@@ -137,6 +142,16 @@ namespace Medical
         private String convertToNamespacePath(String directory)
         {
             return directory.Replace('\\', '/').Replace('/', '.');
+        }
+
+        public void move(string oldPath, string newPath)
+        {
+            throw new NotImplementedException("Cannot move files in the EmbeddedResourceProvider");
+        }
+
+        public void copy(string from, string to)
+        {
+            throw new NotImplementedException("Cannot copy files in the EmbeddedResourceProvider");
         }
     }
 }

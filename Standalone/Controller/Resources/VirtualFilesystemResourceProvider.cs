@@ -88,12 +88,27 @@ namespace Medical
             throw new NotImplementedException("Cannot create directories in the VirtualFSResourceProvider");
         }
 
+        public bool isDirectory(String path)
+        {
+            return virtualFileSystem.isDirectory(path);
+        }
+
         public string BackingLocation
         {
             get
             {
                 return parentPath;
             }
+        }
+
+        public void move(string oldPath, string newPath)
+        {
+            throw new NotImplementedException("Cannot move files in the VirtualFSResourceProvider");
+        }
+
+        public void copy(string from, string to)
+        {
+            throw new NotImplementedException("Cannot copy files in the VirtualFSResourceProvider");
         }
     }
 }

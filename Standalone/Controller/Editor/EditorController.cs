@@ -294,7 +294,7 @@ namespace Medical
 
         private void openResourceProvider(String projectPath)
         {
-            resourceProvider = new EditorResourceProvider(projectPath);
+            resourceProvider = new EditorResourceProvider(new FilesystemResourceProvider(projectPath));
             resourceProviderRocketFSExtension = new ResourceProviderRocketFSExtension(resourceProvider);
             RocketInterface.Instance.FileInterface.addExtension(resourceProviderRocketFSExtension);
             timelineController.setResourceProvider(ResourceProvider);

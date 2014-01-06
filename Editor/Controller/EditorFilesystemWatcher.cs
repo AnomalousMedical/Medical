@@ -7,6 +7,10 @@ using System.Text;
 
 namespace Medical
 {
+    public delegate void ResourceProviderFileEvent(String path, bool isDirectory);
+    public delegate void ResourceProviderFileRenamedEvent(String path, String oldPath, bool isDirectory);
+    public delegate void ResourceProviderFileDeletedEvent(String path);
+
     public class EditorFilesystemWatcher : IDisposable
     {
         private FileSystemWatcher fileWatcher;

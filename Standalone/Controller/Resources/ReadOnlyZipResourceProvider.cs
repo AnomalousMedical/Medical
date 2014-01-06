@@ -128,12 +128,28 @@ namespace Medical
             throw new NotImplementedException("Cannot create directories in the ReadOnlyZipResourceProvider");
         }
 
+        public bool isDirectory(String path)
+        {
+            var info = zipFile.getFileInfo(path);
+            return info != null && info.IsDirectory;
+        }
+
         public String BackingLocation
         {
             get
             {
                 return resourceLocation;
             }
+        }
+
+        public void move(string oldPath, string newPath)
+        {
+            throw new NotImplementedException("Cannot move files in the ReadOnlyZipResourceProvider");
+        }
+
+        public void copy(string from, string to)
+        {
+            throw new NotImplementedException("Cannot copy files in the ReadOnlyZipResourceProvider");
         }
     }
 }

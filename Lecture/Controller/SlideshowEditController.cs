@@ -682,7 +682,14 @@ namespace Lecture
             }
             foreach (Guid dir in cleanupSlides)
             {
-                editorController.ResourceProvider.delete(dir.ToString("D"));
+                try
+                {
+                    editorController.ResourceProvider.delete(dir.ToString("D"));
+                }
+                catch (Exception ex)
+                {
+                    Logging.Log.Error("Cleanup -- Failed to delete directory '{0}'. Reason: {1}", dir, ex.Message);
+                }
             }
         }
 

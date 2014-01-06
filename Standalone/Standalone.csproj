@@ -48,6 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="libRocketPlugin">
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
     </Reference>
@@ -189,6 +193,7 @@
     <Compile Include="Controller\Plugin\PluginVerifier.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
+    <Compile Include="Controller\Resources\ZipResourceProvider.cs" />
     <Compile Include="Controller\SceneViews\CameraPositioner.cs" />
     <Compile Include="Controller\Server\Mime.cs" />
     <Compile Include="Controller\Server\UploadFileInfo.cs" />
@@ -783,6 +788,7 @@
     <Compile Include="Utility\TwoWayDelegateCommand.cs" />
     <Compile Include="Utility\UndoRedoBuffer.cs" />
     <Compile Include="Utility\WorkQueue.cs" />
+    <Compile Include="Utility\ZipEntryExtensions.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

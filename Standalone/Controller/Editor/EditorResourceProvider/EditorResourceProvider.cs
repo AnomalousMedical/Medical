@@ -12,25 +12,14 @@ using Medical.Controller;
 
 namespace Medical
 {
-    public delegate void ResourceProviderFileEvent(String path, bool isDirectory);
-    public delegate void ResourceProviderFileRenamedEvent(String path, String oldPath, bool isDirectory);
-    public delegate void ResourceProviderFileDeletedEvent(String path);
-
     public class EditorResourceProvider : ResourceProvider
     {
-        private static XmlSaver xmlSaver = new XmlSaver();
-        private String parentPath;
-        private int parentPathLength;
+        private ResourceProvider backingProvider;
 
-        public EditorResourceProvider(String path)
+        public EditorResourceProvider(ResourceProvider backingProvider)
         {
             ResourceCache = new ResourceCache();
-            this.parentPath = path.Replace('\\', '/');
-            parentPathLength = parentPath.Length;
-            if (!parentPath.EndsWith("/"))
-            {
-                ++parentPathLength;
-            }
+            this.backingProvider = backingProvider;
         }
 
         public Stream openFile(string filename)
@@ -42,20 +31,20 @@ namespace Medical
             }
             else
             {
-                return File.OpenRead(Path.Combine(parentPath, filename));
+                return backingProvider.openFile(filename);
             }
         }
 
         public Stream openWriteStream(String filename)
         {
-            return new FileStream(Path.Combine(parentPath, filename), FileMode.Create, FileAccess.Write);
+            return backingProvider.openWriteStream(filename);
         }
 
         public void addFile(string path, string targetDirectory)
         {
             String filename = Path.GetFileName(path);
-            String destinationPath = Path.Combine(parentPath, targetDirectory, filename);
-            File.Copy(path, destinationPath, true);
+            String destinationPath = Path.Combine(targetDirectory, filename);
+            backingProvider.addFile(path, targetDirectory);
             CachedResource cachedResource = ResourceCache[destinationPath];
             if (cachedResource != null)
             {
@@ -66,109 +55,82 @@ namespace Medical
 
         public void delete(String filename)
         {
-            String path = Path.Combine(parentPath, filename);
-            FileAttributes attrs = File.GetAttributes(path);
-            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
+            bool wasDir = backingProvider.isDirectory(filename);
+            backingProvider.delete(filename);
+            if (wasDir)
             {
-                Directory.Delete(path, true);
-                ResourceCache.forceCloseResourcesInDirectroy(path);
+                ResourceCache.forceCloseResourcesInDirectroy(filename);
             }
             else
             {
-                File.Delete(path);
                 ResourceCache.forceCloseResourceFile(filename);
             }
         }
 
         public void move(String oldPath, String newPath)
         {
-            String fullOldPath = Path.Combine(parentPath, oldPath);
-            String fullNewPath = Path.Combine(parentPath, newPath);
-            FileAttributes attrs = File.GetAttributes(fullOldPath);
-            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
+            bool wasDir = backingProvider.isDirectory(oldPath);
+            backingProvider.move(oldPath, newPath);
+            if (wasDir)
             {
-                Directory.Move(fullOldPath, fullNewPath);
                 ResourceCache.forceCloseResourcesInDirectroy(oldPath);
             }
             else
             {
-                File.Move(fullOldPath, fullNewPath);
                 ResourceCache.forceCloseResourceFile(oldPath);
             }
         }
 
         public void copy(string from, string to)
         {
-            String fullFromPath = Path.Combine(parentPath, from);
-            String fullToPath = Path.Combine(parentPath, to);
-            FileAttributes attrs = File.GetAttributes(fullFromPath);
-            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                DirectoryExtensions.Copy(fullFromPath, fullToPath, true);
-            }
-            else
-            {
-                File.Copy(fullFromPath, fullToPath, true);
-            }
+            backingProvider.copy(from, to);
         }
 
         public IEnumerable<String> listFiles(string pattern)
         {
-            foreach(String file in Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly))
-            {
-                yield return file.Remove(0, parentPathLength);
-            }
+            return backingProvider.listFiles(pattern);
         }
 
         public IEnumerable<String> listFiles(String pattern, String directory, bool recursive)
         {
-            foreach(String file in Directory.GetFiles(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
-            {
-                yield return file.Remove(0, parentPathLength);
-            }
+            return backingProvider.listFiles(pattern, directory, recursive);
         }
 
         public IEnumerable<String> listDirectories(String pattern, String directory, bool recursive)
         {
-            foreach(String dir in Directory.GetDirectories(Path.Combine(parentPath, directory), pattern, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly))
-            {
-                yield return dir.Remove(0, parentPathLength);
-            }
+            return backingProvider.listDirectories(pattern, directory, recursive);
         }
 
         public bool directoryHasEntries(String path)
         {
-            return Directory.EnumerateFileSystemEntries(Path.Combine(parentPath, path), "*", SearchOption.AllDirectories).Any();
+            return backingProvider.directoryHasEntries(path);
         }
 
         public bool exists(string path)
         {
-            if (path == null)
-            {
-                return false;
-            }
-            if (!path.StartsWith(parentPath))
-            {
-                path = Path.Combine(parentPath, path);
-            }
-            return File.Exists(path) || Directory.Exists(path);
+            return backingProvider.exists(path);
         }
 
         public String getFullFilePath(String filename)
         {
-            return Path.Combine(parentPath, filename);
+            return backingProvider.getFullFilePath(filename);
         }
 
         public void createDirectory(string path, string directoryName)
         {
-            Directory.CreateDirectory(Path.Combine(parentPath, path, directoryName));
+            backingProvider.createDirectory(path, directoryName);
+        }
+
+        public bool isDirectory(String path)
+        {
+            return backingProvider.isDirectory(path);
         }
 
         public string BackingLocation
         {
             get
             {
-                return parentPath;
+                return backingProvider.BackingLocation;
             }
         }
 

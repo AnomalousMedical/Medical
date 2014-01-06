@@ -30,6 +30,12 @@ namespace Medical
 
         void createDirectory(string path, string directoryName);
 
+        bool isDirectory(String path);
+
         String BackingLocation { get; }
+
+        void move(string oldPath, string newPath);
+
+        void copy(string from, string to);
     }
 }
