@@ -134,6 +134,14 @@ namespace Medical
             }
         }
 
+        public ResourceProvider BackingProvider
+        {
+            get
+            {
+                return backingProvider;
+            }
+        }
+
         public ResourceCache ResourceCache { get; private set; }
     }
 }

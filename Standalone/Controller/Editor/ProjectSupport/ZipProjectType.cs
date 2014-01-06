@@ -40,6 +40,16 @@ namespace Medical.Editor
             return File.Exists(name);
         }
 
+        public string getProjectBasePath(string name)
+        {
+            return name;
+        }
+
+        public void resourceProviderClosed(ResourceProvider resourceProvider)
+        {
+            ((ZipResourceProvider)resourceProvider).Dispose();
+        }
+
         public string Extension { get; set; }
     }
 }

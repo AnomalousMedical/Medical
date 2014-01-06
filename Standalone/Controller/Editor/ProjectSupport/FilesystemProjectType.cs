@@ -31,6 +31,16 @@ namespace Medical.Editor
             return Directory.Exists(name);
         }
 
+        public string getProjectBasePath(string name)
+        {
+            return Path.GetDirectoryName(name);
+        }
+
+        public void resourceProviderClosed(ResourceProvider resourceProvider)
+        {
+            
+        }
+
         public string Extension
         {
             get

@@ -37,6 +37,16 @@ namespace Medical.Editor
             return getInfo(name).doesProjectExist(name);
         }
 
+        public string getProjectBasePath(string name)
+        {
+            return getInfo(name).getProjectBasePath(name);
+        }
+
+        public void resourceProviderClosed(ResourceProvider resourceProvider)
+        {
+            getInfo(resourceProvider.BackingLocation).resourceProviderClosed(resourceProvider);
+        }
+
         private ProjectType getInfo(String name)
         {
             try

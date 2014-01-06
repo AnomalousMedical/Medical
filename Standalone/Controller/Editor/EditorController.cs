@@ -320,6 +320,7 @@ namespace Medical
                 }
                 RocketInterface.Instance.FileInterface.removeExtension(resourceProviderRocketFSExtension);
                 resourceProviderRocketFSExtension = null;
+                projectTypes.resourceProviderClosed(resourceProvider.BackingProvider);
                 resourceProvider = null;
             }
         }

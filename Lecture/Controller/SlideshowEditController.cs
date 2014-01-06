@@ -857,9 +857,9 @@ namespace Lecture
             editorController.closeProject();
         }
 
-        internal void openProject(string projectPath, string fullFilePath)
+        internal void openProject(string fullFilePath)
         {
-            editorController.openProject(projectPath, fullFilePath);
+            editorController.openProject(editorController.ProjectTypes.getProjectBasePath(fullFilePath), fullFilePath);
         }
 
         /// <summary>

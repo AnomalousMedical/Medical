@@ -187,7 +187,7 @@ namespace Lecture.GUI
                     if (result == NativeDialogResult.OK)
                     {
                         String path = paths.First();
-                        slideEditController.openProject(Path.GetDirectoryName(path), path);
+                        slideEditController.openProject(path);
                     }
                 });
             }
