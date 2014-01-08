@@ -782,7 +782,7 @@ namespace Lecture
             }
         }
 
-        void editorController_ProjectChanged(EditorController editorController, string fullFilePath)
+        void editorController_ProjectChanged(EditorController editorController)
         {
             closeEditors();
             lastEditSlide = null;
@@ -798,7 +798,7 @@ namespace Lecture
                 }
                 else
                 {
-                    IEnumerable<String> files = editorController.ResourceProvider.listFiles("*.show", "", true);
+                    IEnumerable<String> files = editorController.ResourceProvider.listFiles("*.show", "", false);
                     String firstFile = files.FirstOrDefault();
                     if (firstFile != null)
                     {
@@ -818,7 +818,7 @@ namespace Lecture
         /// <param name="file"></param>
         void loadSlideshow(String file)
         {
-            standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.getFullFilePath(file));
+            standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.BackingLocation);
             slideshow = editorController.loadFile<Slideshow>(file);
             if (updateSmartLecture())
             {
@@ -859,7 +859,7 @@ namespace Lecture
 
         internal void openProject(string fullFilePath)
         {
-            editorController.openProject(editorController.ProjectTypes.getProjectBasePath(fullFilePath), fullFilePath);
+            editorController.openProject(editorController.ProjectTypes.getProjectBasePath(fullFilePath));
         }
 
         /// <summary>

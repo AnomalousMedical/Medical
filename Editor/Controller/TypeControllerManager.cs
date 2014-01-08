@@ -229,7 +229,7 @@ namespace Medical
             editorController.addItemTemplate(new PluginBrandingResourceItemTemplate());
         }
 
-        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
+        void editorController_ProjectChanged(EditorController editorController)
         {
             if (mvcEditorContext != null)
             {

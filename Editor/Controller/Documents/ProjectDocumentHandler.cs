@@ -17,12 +17,12 @@ namespace Medical
 
         public bool canReadFile(string filename)
         {
-            return Directory.Exists(filename);
+            return Directory.Exists(filename) && Directory.EnumerateFiles(filename, "*.mvc", SearchOption.TopDirectoryOnly).FirstOrDefault() != null;
         }
 
         public bool processFile(string filename)
         {
-            editorController.openProject(filename, filename);
+            editorController.openProject(filename);
             return true;
         }
 

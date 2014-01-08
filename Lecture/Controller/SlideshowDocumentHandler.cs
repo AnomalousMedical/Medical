@@ -18,12 +18,28 @@ namespace Lecture
 
         public bool canReadFile(string filename)
         {
-            return Path.GetExtension(filename).Equals(".show", StringComparison.InvariantCultureIgnoreCase) && File.Exists(filename);
+            try
+            {
+                if (Directory.Exists(filename) && Directory.EnumerateFiles(filename, "*.show", SearchOption.TopDirectoryOnly).FirstOrDefault() != null)
+                {
+                    return true;
+                }
+                String ext = Path.GetExtension(filename);
+                return (ext.Equals(".sl", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".show", StringComparison.InvariantCultureIgnoreCase)) && File.Exists(filename);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool processFile(string filename)
         {
-            editorController.openProject(Path.GetDirectoryName(filename), filename);
+            if (filename.EndsWith(".show", StringComparison.InvariantCultureIgnoreCase)) //Legacy show file loading
+            {
+                filename = Path.GetDirectoryName(filename);
+            }
+            editorController.openProject(filename);
             return true;
         }
 

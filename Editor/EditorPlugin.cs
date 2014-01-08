@@ -127,7 +127,7 @@ namespace Medical
             editorController.ProjectChanged += editorController_ProjectChanged;
         }
 
-        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
+        void editorController_ProjectChanged(EditorController editorController)
         {
             if (editorController.ResourceProvider != null)
             {

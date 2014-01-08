@@ -140,12 +140,12 @@ namespace Medical.GUI
                 if (result == NativeDialogResult.OK)
                 {
                     String path = paths.First();
-                    editorController.openProject(Path.GetDirectoryName(path), path);
+                    editorController.openProject(Path.GetDirectoryName(path));
                 }
             });
         }
 
-        void editorController_ProjectChanged(EditorController editorController, String defaultFile)
+        void editorController_ProjectChanged(EditorController editorController)
         {
             fileBrowser.setResourceProvider(editorController.ResourceProvider);
             if (editorController.ResourceProvider != null)

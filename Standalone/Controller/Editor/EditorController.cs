@@ -43,12 +43,10 @@ namespace Medical
         private List<ProjectItemTemplate> itemTemplates = new List<ProjectItemTemplate>();
         private ProjectTypeManager projectTypes = new ProjectTypeManager();
 
-        public delegate void ProjectChangedEvent(EditorController editorController, String fullFilePath);
-
         /// <summary>
         /// Called when the project changes. Will supply the full file path of the project (if one is loaded) in the second argument.
         /// </summary>
-        public event ProjectChangedEvent ProjectChanged;
+        public event Action<EditorController> ProjectChanged;
 
         public EditorController(StandaloneController standaloneController, TimelineController timelineController)
         {
@@ -91,16 +89,8 @@ namespace Medical
                 String projectName = Path.GetFileNameWithoutExtension(projectDirectory);
                 closeResourceProvider();
                 openResourceProvider(projectDirectory);
-                String fullProjectName = projectTemplate.createProject(ResourceProvider, projectName);
-                if (fullProjectName != null)
-                {
-                    fullProjectName = Path.Combine(projectDirectory, fullProjectName);
-                }
-                else
-                {
-                    fullProjectName = projectDirectory;
-                }
-                projectChanged(fullProjectName);
+                projectTemplate.createProject(ResourceProvider, projectName);
+                projectChanged();
             }
             catch (Exception ex)
             {
@@ -110,11 +100,11 @@ namespace Medical
             }
         }
 
-        public void openProject(String projectPath, String fullFilePath)
+        public void openProject(String projectPath)
         {
             closeResourceProvider();
             openResourceProvider(projectPath);
-            projectChanged(fullFilePath);
+            projectChanged();
         }
 
         public void closeProject()
@@ -124,7 +114,7 @@ namespace Medical
 
             if (ProjectChanged != null)
             {
-                ProjectChanged.Invoke(this, null);
+                ProjectChanged.Invoke(this);
             }
         }
 
@@ -290,11 +280,11 @@ namespace Medical
             }
         }
 
-        private void projectChanged(String fullFilePath)
+        private void projectChanged()
         {
             if (ProjectChanged != null)
             {
-                ProjectChanged.Invoke(this, fullFilePath);
+                ProjectChanged.Invoke(this);
             }
         }
 
