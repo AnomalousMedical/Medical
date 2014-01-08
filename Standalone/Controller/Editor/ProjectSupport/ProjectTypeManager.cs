@@ -52,9 +52,13 @@ namespace Medical.Editor
             try
             {
                 ProjectType ret;
-                if (infos.TryGetValue(Path.GetExtension(name), out ret))
+                String ext = Path.GetExtension(name);
+                if (!String.IsNullOrEmpty(ext))
                 {
-                    return ret;
+                    if (infos.TryGetValue(ext.ToLowerInvariant(), out ret))
+                    {
+                        return ret;
+                    }
                 }
             }
             catch (Exception) { }
