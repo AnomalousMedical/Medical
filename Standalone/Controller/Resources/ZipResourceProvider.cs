@@ -14,98 +14,8 @@ namespace Medical
     /// </summary>
     public class ZipResourceProvider : ResourceProvider, IDisposable
     {
-        class WriteStream : Stream
-        {
-            private Stream baseStream;
-            private ZipResourceProvider resourceProvider;
-
-            public WriteStream(Stream baseStream, ZipResourceProvider resourceProvider)
-            {
-                this.baseStream = baseStream;
-                this.resourceProvider = resourceProvider;
-            }
-
-            public override void Close()
-            {
-                baseStream.Seek(0, SeekOrigin.Begin);
-                resourceProvider.writeStreamClosed(this);
-                baseStream.Close();
-            }
-
-            public override bool CanRead
-            {
-                get
-                {
-                    return baseStream.CanRead;
-                }
-            }
-
-            public override bool CanSeek
-            {
-                get
-                {
-                    return baseStream.CanSeek;
-                }
-            }
-
-            public override bool CanWrite
-            {
-                get
-                {
-                    return baseStream.CanWrite;
-                }
-            }
-
-            public override void Flush()
-            {
-                baseStream.Flush();
-            }
-
-            public override long Length
-            {
-                get
-                {
-                    return baseStream.Length;
-                }
-            }
-
-            public override long Position
-            {
-                get
-                {
-                    return baseStream.Position;
-                }
-                set
-                {
-                    baseStream.Position = value;
-                }
-            }
-
-            public override int Read(byte[] buffer, int offset, int count)
-            {
-                return baseStream.Read(buffer, offset, count);
-            }
-
-            public override long Seek(long offset, SeekOrigin origin)
-            {
-                return baseStream.Seek(offset, origin);
-            }
-
-            public override void SetLength(long value)
-            {
-                baseStream.SetLength(value);
-            }
-
-            public override void Write(byte[] buffer, int offset, int count)
-            {
-                baseStream.Write(buffer, offset, count);
-            }
-        }
-
         private String resourceLocation;
         private ZipFile zipFile;
-        private HashSet<WriteStream> openWriteStreams = new HashSet<WriteStream>();
-        private Ionic.Zip.ZipFile writeStreamFile;
 
         public ZipResourceProvider(String resourceLocation)
         {
@@ -119,10 +29,6 @@ namespace Medical
             {
                 zipFile.Dispose();
             }
-            if (writeStreamFile != null)
-            {
-                writeStreamFile.Dispose();
-            }
         }
 
         public Stream openFile(string filename)
@@ -132,16 +38,10 @@ namespace Medical
 
         public Stream openWriteStream(String filename)
         {
-            if (writeStreamFile == null)
+            return new WriteStream(new MemoryStream(), this)
             {
-                zipFile.Dispose();
-                writeStreamFile = new Ionic.Zip.ZipFile(resourceLocation);
-                zipFile = null;
-            }
-            WriteStream stream = new WriteStream(new MemoryStream(), this);
-            openWriteStreams.Add(stream);
-            writeStreamFile.UpdateEntry(filename, stream);
-            return stream;
+                FileName = filename
+            };
         }
 
         public void addFile(String path, string targetDirectory)
@@ -303,14 +203,13 @@ namespace Medical
 
         private void writeStreamClosed(WriteStream writeStream)
         {
-            openWriteStreams.Remove(writeStream);
-            if (openWriteStreams.Count == 0 && writeStreamFile != null)
+            zipFile.Dispose();
+            using (var ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
             {
-                writeStreamFile.Save();
-                writeStreamFile.Dispose();
-                zipFile = new ZipFile(resourceLocation);
-                writeStreamFile = null;
+                ionicZip.UpdateEntry(writeStream.FileName, writeStream.BaseStream);
+                ionicZip.Save();
             }
+            zipFile = new ZipFile(resourceLocation);
         }
 
         public void move(string oldPath, string newPath)
@@ -362,6 +261,104 @@ namespace Medical
                 }
             }
             zipFile = new ZipFile(resourceLocation);
+        }
+
+        class WriteStream : Stream
+        {
+            private Stream baseStream;
+            private ZipResourceProvider resourceProvider;
+
+            public WriteStream(Stream baseStream, ZipResourceProvider resourceProvider)
+            {
+                this.baseStream = baseStream;
+                this.resourceProvider = resourceProvider;
+            }
+
+            public override void Close()
+            {
+                baseStream.Seek(0, SeekOrigin.Begin);
+                resourceProvider.writeStreamClosed(this);
+                baseStream.Close();
+            }
+
+            public override bool CanRead
+            {
+                get
+                {
+                    return baseStream.CanRead;
+                }
+            }
+
+            public override bool CanSeek
+            {
+                get
+                {
+                    return baseStream.CanSeek;
+                }
+            }
+
+            public override bool CanWrite
+            {
+                get
+                {
+                    return baseStream.CanWrite;
+                }
+            }
+
+            public override void Flush()
+            {
+                baseStream.Flush();
+            }
+
+            public override long Length
+            {
+                get
+                {
+                    return baseStream.Length;
+                }
+            }
+
+            public override long Position
+            {
+                get
+                {
+                    return baseStream.Position;
+                }
+                set
+                {
+                    baseStream.Position = value;
+                }
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                return baseStream.Read(buffer, offset, count);
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return baseStream.Seek(offset, origin);
+            }
+
+            public override void SetLength(long value)
+            {
+                baseStream.SetLength(value);
+            }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                baseStream.Write(buffer, offset, count);
+            }
+
+            public String FileName { get; set; }
+
+            public Stream BaseStream
+            {
+                get
+                {
+                    return baseStream;
+                }
+            }
         }
     }
 }
