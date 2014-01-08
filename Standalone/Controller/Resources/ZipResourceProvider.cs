@@ -15,16 +15,30 @@ namespace Medical
     public class ZipResourceProvider : ResourceProvider, IDisposable
     {
         private String resourceLocation;
+        private String tempFolder;
         private ZipFile zipFile;
+        private int openWriteStreams = 0;
 
         public ZipResourceProvider(String resourceLocation)
         {
             this.resourceLocation = resourceLocation;
+            this.tempFolder = Path.Combine(Path.GetDirectoryName(resourceLocation), Path.GetFileNameWithoutExtension(resourceLocation) + "_Temp");
             zipFile = new ZipFile(resourceLocation);
         }
 
         public void Dispose()
         {
+            try
+            {
+                if (Directory.Exists(tempFolder))
+                {
+                    Directory.Delete(tempFolder, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("{0} deleting temporary folder for '{1}' on close. It will remain on the users drive.", ex.GetType().Name, ex.Message);
+            }
             if (zipFile != null)
             {
                 zipFile.Dispose();
@@ -38,10 +52,41 @@ namespace Medical
 
         public Stream openWriteStream(String filename)
         {
-            return new WriteStream(new MemoryStream(), this)
+            String scratchFileName = Path.Combine(tempFolder, filename);
+            String scratchFolder = Path.GetDirectoryName(scratchFileName);
+            if (!Directory.Exists(scratchFolder))
             {
-                FileName = filename
+                Directory.CreateDirectory(scratchFolder);
+            }
+            ++openWriteStreams;
+            return new WriteStream(File.Open(scratchFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.None), this)
+            {
+                FileName = filename,
+                TempFileName = scratchFileName
             };
+        }
+
+        private void writeStreamClosed(WriteStream writeStream)
+        {
+            zipFile.Dispose();
+            using (var ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            {
+                ionicZip.UpdateEntry(writeStream.FileName, writeStream.BaseStream);
+                ionicZip.Save();
+            }
+            --openWriteStreams;
+            if (openWriteStreams == 0)
+            {
+                if (Directory.Exists(tempFolder))
+                {
+                    Directory.Delete(tempFolder, true);
+                }
+            }
+            else
+            {
+                File.Delete(writeStream.TempFileName);
+            }
+            zipFile = new ZipFile(resourceLocation);
         }
 
         public void addFile(String path, string targetDirectory)
@@ -201,17 +246,6 @@ namespace Medical
             }
         }
 
-        private void writeStreamClosed(WriteStream writeStream)
-        {
-            zipFile.Dispose();
-            using (var ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
-            {
-                ionicZip.UpdateEntry(writeStream.FileName, writeStream.BaseStream);
-                ionicZip.Save();
-            }
-            zipFile = new ZipFile(resourceLocation);
-        }
-
         public void move(string oldPath, string newPath)
         {
             zipFile.Dispose();
@@ -359,6 +393,8 @@ namespace Medical
                     return baseStream;
                 }
             }
+
+            public string TempFileName { get; set; }
         }
     }
 }
