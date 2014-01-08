@@ -157,16 +157,39 @@ namespace Medical
 
         public void delete(String filename)
         {
-            zipFile.Dispose();
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            //Use our zip archive to figure out what to delete. Ours can find directories even if they do not physically exist in the zip file.
+            List<String> removeFiles = new List<string>();
+            //Figure out what we are dealing with
+            var fileInfo = zipFile.getFileInfo(filename);
+            if (fileInfo.IsDirectory)
             {
-                if (ionicZip.ContainsEntry(filename))
+                filename += '/';
+                removeFiles.Add(filename);
+                removeFiles.AddRange(zipFile.listDirectories(filename, "*", true).Select(e => e.FullName));
+                removeFiles.AddRange(zipFile.listFiles(filename, "*", true).Select(e => e.FullName));
+            }
+            else
+            {
+                removeFiles.Add(filename);
+            }
+            if (removeFiles.Count > 0)
+            {
+                zipFile.Dispose();
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
-                    ionicZip.RemoveEntry(filename);
+                    foreach (String file in removeFiles)
+                    {
+                        //Have to check to make sure the file exists or the ionic library throws an exception
+                        var entry = ionicZip[file];
+                        if (entry != null)
+                        {
+                            ionicZip.RemoveEntry(entry);
+                        }
+                    }
                     ionicZip.Save();
                 }
+                zipFile = new ZipFile(resourceLocation);
             }
-            zipFile = new ZipFile(resourceLocation);
         }
 
         public IEnumerable<String> listFiles(String pattern)
@@ -224,7 +247,12 @@ namespace Medical
             {
                 foreach (ZipFileInfo info in zipDirs)
                 {
-                    yield return info.FullName;
+                    String fullName = info.FullName;
+                    int len = fullName.Length;
+                    if (len > 0) //Zip archive directories always end with /
+                    {
+                        yield return fullName.Substring(0, len - 1);
+                    }
                 }
             }
         }

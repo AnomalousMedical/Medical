@@ -599,7 +599,6 @@
     <Compile Include="Controller\Layers\EditableLayerState.cs" />
     <Compile Include="Controller\Resources\EmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Resources\ResourceProvider.cs" />
-    <Compile Include="Controller\Resources\ReadOnlyZipResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineStaticInfo.cs" />
     <Compile Include="Controller\Resources\VirtualFilesystemResourceProvider.cs" />
     <Compile Include="Controller\TouchController.cs" />

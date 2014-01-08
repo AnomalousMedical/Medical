@@ -210,8 +210,15 @@ namespace Lecture.GUI
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
-                        slideEditController.save();
-                        slideEditController.cleanup();
+                        try
+                        {
+                            slideEditController.save();
+                            slideEditController.cleanup();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.show(String.Format("There was an error cleaning your smart lecture.\nException type: {0}\n{0}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                        }
                     }
                 });
             }
