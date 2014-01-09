@@ -110,5 +110,10 @@ namespace Medical
         {
             throw new NotImplementedException("Cannot copy files in the VirtualFSResourceProvider");
         }
+
+        public void cloneProviderTo(String destination)
+        {
+            throw new NotImplementedException("Cannot clone the VirtualFSResourceProvider");
+        }
     }
 }

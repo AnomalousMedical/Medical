@@ -74,6 +74,7 @@ namespace Lecture.GUI
             menuActions.Add(fileMenu.addItem("Open"), openProject);
             menuActions.Add(fileMenu.addItem("Close"), slideEditController.closeProject);
             menuActions.Add(fileMenu.addItem("Save"), slideEditController.save);
+            menuActions.Add(fileMenu.addItem("Save As"), saveAs);
             fileMenu.addItem("Sep", MenuItemType.Separator);
             menuActions.Add(fileMenu.addItem("Present"), play);
             menuActions.Add(fileMenu.addItem("Present from Beginning"), playFromBeginning);
@@ -201,6 +202,29 @@ namespace Lecture.GUI
             catch (Exception ex)
             {
                 MessageBox.show(String.Format("{0} loading the project. Message {1}.", ex.GetType().Name, ex.Message), "Project Load Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
+        }
+
+        private void saveAs()
+        {
+            if (slideEditController.ResourceProvider != null)
+            {
+                try
+                {
+                    slideEditController.stopPlayingTimelines();
+                    FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance);
+                    fileDialog.showModal((result, path) =>
+                    {
+                        if (result == NativeDialogResult.OK)
+                        {
+                            slideEditController.saveAs(path);
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.show(String.Format("{0} saving the project. Message {1}.", ex.GetType().Name, ex.Message), "Project Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
             }
         }
 

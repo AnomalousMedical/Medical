@@ -153,5 +153,10 @@ namespace Medical
         {
             throw new NotImplementedException("Cannot copy files in the EmbeddedResourceProvider");
         }
+
+        public void cloneProviderTo(String destination)
+        {
+            throw new NotImplementedException("Cannot clone the EmbeddedResourceProvider");
+        }
     }
 }

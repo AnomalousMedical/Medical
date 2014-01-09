@@ -122,10 +122,7 @@ namespace Medical
         {
             if (resourceProvider != null)
             {
-                foreach (CachedResource resource in resourceProvider.ResourceCache.Resources)
-                {
-                    resource.save();
-                }
+                resourceProvider.saveAllCachedResources();
                 NotificationManager.showNotification("All files saved", "Editor/SaveAllIcon", 2);
             }
         }
@@ -290,7 +287,7 @@ namespace Medical
 
         private void openResourceProvider(String projectPath)
         {
-            resourceProvider = new EditorResourceProvider(projectTypes.openProject(projectPath));
+            resourceProvider = new EditorResourceProvider(projectTypes.openResourceProvider(projectPath));
             resourceProviderRocketFSExtension = new ResourceProviderRocketFSExtension(resourceProvider);
             RocketInterface.Instance.FileInterface.addExtension(resourceProviderRocketFSExtension);
             timelineController.setResourceProvider(ResourceProvider);

@@ -37,5 +37,13 @@ namespace Medical
         void move(string oldPath, string newPath);
 
         void copy(string from, string to);
+
+        /// <summary>
+        /// Clone the physical backend of this provider to the new given location.
+        /// This should actually copy all the files provided by this resource provider
+        /// to the new location.
+        /// </summary>
+        /// <param name="destination"></param>
+        void cloneProviderTo(String destination);
     }
 }

@@ -21,7 +21,7 @@ namespace Medical.Editor
             }
         }
 
-        public ResourceProvider openProject(string name)
+        public ResourceProvider openResourceProvider(string name)
         {
             return new FilesystemResourceProvider(name);
         }

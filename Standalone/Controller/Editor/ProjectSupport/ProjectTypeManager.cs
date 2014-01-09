@@ -27,9 +27,9 @@ namespace Medical.Editor
             getInfo(name).ensureProjectExists(name);
         }
 
-        public ResourceProvider openProject(String name)
+        public ResourceProvider openResourceProvider(String name)
         {
-            return getInfo(name).openProject(name);
+            return getInfo(name).openResourceProvider(name);
         }
 
         public bool doesProjectExist(string name)

@@ -25,7 +25,7 @@ namespace Medical.Editor
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        ResourceProvider openProject(String name);
+        ResourceProvider openResourceProvider(String name);
 
         /// <summary>
         /// The extension for this project type.

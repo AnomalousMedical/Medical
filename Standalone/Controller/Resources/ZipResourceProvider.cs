@@ -297,6 +297,15 @@ namespace Medical
             zipFile = new ZipFile(resourceLocation);
         }
 
+        public void cloneProviderTo(String destination)
+        {
+            if (File.Exists(destination))
+            {
+                File.Delete(destination);
+            }
+            File.Copy(BackingLocation, destination);
+        }
+
         class WriteStream : Stream
         {
             private Stream baseStream;

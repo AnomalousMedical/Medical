@@ -143,5 +143,14 @@ namespace Medical
                 File.Copy(fullFromPath, fullToPath, true);
             }
         }
+
+        public void cloneProviderTo(String destination)
+        {
+            if (Directory.Exists(destination))
+            {
+                Directory.Delete(destination, true);
+            }
+            DirectoryExtensions.Copy(BackingLocation, destination, true);
+        }
     }
 }

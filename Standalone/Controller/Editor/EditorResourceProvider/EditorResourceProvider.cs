@@ -126,6 +126,19 @@ namespace Medical
             return backingProvider.isDirectory(path);
         }
 
+        public void cloneProviderTo(String destination)
+        {
+            backingProvider.cloneProviderTo(destination);
+        }
+
+        public void saveAllCachedResources()
+        {
+            foreach (CachedResource resource in ResourceCache.Resources)
+            {
+                resource.save();
+            }
+        }
+
         public string BackingLocation
         {
             get
@@ -139,6 +152,10 @@ namespace Medical
             get
             {
                 return backingProvider;
+            }
+            set
+            {
+                backingProvider = value;
             }
         }
 

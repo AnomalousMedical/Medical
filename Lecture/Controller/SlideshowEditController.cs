@@ -699,6 +699,21 @@ namespace Lecture
             slideImageManager.saveThumbnails();
         }
 
+        internal void saveAs(String destination)
+        {
+            editorController.ResourceProvider.cloneProviderTo(destination);
+            ResourceProvider clonedProvider = editorController.ProjectTypes.openResourceProvider(destination);
+            editorController.ProjectTypes.resourceProviderClosed(editorController.ResourceProvider.BackingProvider);
+            editorController.ResourceProvider.BackingProvider = clonedProvider;
+
+            //Do the actual save
+            save();
+
+            //Change resource providers completely
+            closeProject();
+            openProject(destination);
+        }
+
         public void runSlideshow(int startIndex)
         {
             if (startIndex == -1)
