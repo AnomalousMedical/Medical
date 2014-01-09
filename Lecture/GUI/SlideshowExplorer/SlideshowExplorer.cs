@@ -19,7 +19,7 @@ namespace Lecture.GUI
     public class SlideshowExplorer : MDIDialog
     {
         private String windowTitle;
-        private const String windowTitleFormat = "{0} - {1}";
+        private const String windowTitleFormat = "{1} - {0} - {2}";
 
         private Dictionary<MenuItem, Action> menuActions = new Dictionary<MenuItem, Action>();
 
@@ -212,13 +212,13 @@ namespace Lecture.GUI
                 try
                 {
                     slideEditController.stopPlayingTimelines();
-                    FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance);
+                    FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, wildcard: "Smart Lecture (*.sl)|*.sl|Smart Lecture Folder (*.show)|*.show");
                     fileDialog.showModal((result, path) =>
                     {
                         if (result == NativeDialogResult.OK)
                         {
                             slideEditController.saveAs(path);
-                            window.Caption = String.Format(windowTitleFormat, windowTitle, slideEditController.ResourceProvider.BackingLocation);
+                            updateCaption();
                         }
                     });
                 }
@@ -325,7 +325,7 @@ namespace Lecture.GUI
             slideGrid.SuppressLayout = false;
             slideGrid.resizeAndLayout(scroll.ClientCoord.width);
             this.slideshow = show;
-            window.Caption = String.Format(windowTitleFormat, windowTitle, slideEditController.ResourceProvider.BackingLocation);
+            updateCaption();
             if (!Visible)
             {
                 Visible = true;
@@ -583,6 +583,14 @@ namespace Lecture.GUI
         void window_WindowButtonPressed(Widget source, EventArgs e)
         {
             slideEditController.closeEditors();
+        }
+
+        private void updateCaption()
+        {
+            String backingLoc = slideEditController.ResourceProvider.BackingLocation;
+            String file = Path.GetFileName(backingLoc);
+            String dir = Path.GetDirectoryName(backingLoc);
+            window.Caption = String.Format(windowTitleFormat, windowTitle, file, dir);
         }
     }
 }
