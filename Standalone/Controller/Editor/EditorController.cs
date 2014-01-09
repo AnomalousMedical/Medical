@@ -285,6 +285,12 @@ namespace Medical
             }
         }
 
+        public void changeActiveResourceProvider(ResourceProvider resourceProvider)
+        {
+            ResourceProvider.BackingProvider = resourceProvider;
+            resourceProviderRocketFSExtension.refresh();
+        }
+
         private void openResourceProvider(String projectPath)
         {
             resourceProvider = new EditorResourceProvider(projectTypes.openResourceProvider(projectPath));

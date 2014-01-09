@@ -218,6 +218,7 @@ namespace Lecture.GUI
                         if (result == NativeDialogResult.OK)
                         {
                             slideEditController.saveAs(path);
+                            window.Caption = String.Format(windowTitleFormat, windowTitle, slideEditController.ResourceProvider.BackingLocation);
                         }
                     });
                 }

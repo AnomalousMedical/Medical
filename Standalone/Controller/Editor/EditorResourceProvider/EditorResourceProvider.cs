@@ -153,7 +153,7 @@ namespace Medical
             {
                 return backingProvider;
             }
-            set
+            internal set
             {
                 backingProvider = value;
             }

@@ -15,11 +15,7 @@ namespace Medical
         public ResourceProviderRocketFSExtension(ResourceProvider resourceProvider)
         {
             this.resourceProvider = resourceProvider;
-            fixedBackingLocation = resourceProvider.BackingLocation.Replace('\\', '/');
-            if (!fixedBackingLocation.EndsWith("/"))
-            {
-                fixedBackingLocation += "/";
-            }
+            refresh();
         }
 
         public bool canOpenFile(string file)
@@ -38,6 +34,15 @@ namespace Medical
                 return resourceProvider.openFile(file.Substring(fixedBackingLocation.Length));
             }
             return null;
+        }
+
+        internal void refresh()
+        {
+            fixedBackingLocation = resourceProvider.BackingLocation.Replace('\\', '/');
+            if (!fixedBackingLocation.EndsWith("/"))
+            {
+                fixedBackingLocation += "/";
+            }
         }
     }
 }

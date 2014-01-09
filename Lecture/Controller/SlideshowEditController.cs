@@ -699,19 +699,16 @@ namespace Lecture
             slideImageManager.saveThumbnails();
         }
 
-        internal void saveAs(String destination)
+        public void saveAs(String destination)
         {
             editorController.ResourceProvider.cloneProviderTo(destination);
             ResourceProvider clonedProvider = editorController.ProjectTypes.openResourceProvider(destination);
+            libRocketPlugin.RocketInterface.Instance.SystemInterface.RemoveRootPath(editorController.ResourceProvider.BackingLocation); //Have to remove old backing location
             editorController.ProjectTypes.resourceProviderClosed(editorController.ResourceProvider.BackingProvider);
-            editorController.ResourceProvider.BackingProvider = clonedProvider;
+            editorController.changeActiveResourceProvider(clonedProvider);
 
             //Do the actual save
             save();
-
-            //Change resource providers completely
-            closeProject();
-            openProject(destination);
         }
 
         public void runSlideshow(int startIndex)
