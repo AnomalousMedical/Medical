@@ -23,5 +23,10 @@
         <Widget type="TextBox" skin="TextBox" position="0 419 78 15" align="Left Bottom">
             <Property key="Caption" value="Location"/>
         </Widget>
+        <Widget type="Button" skin="CheckBox" position="431 468 124 17" name="SingleFile">
+            <Property key="Caption" value="Create Single File"/>
+            <Property key="StateSelected" value="true"/>
+        </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

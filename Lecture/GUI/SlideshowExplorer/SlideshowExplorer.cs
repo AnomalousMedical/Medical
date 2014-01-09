@@ -138,11 +138,18 @@ namespace Lecture.GUI
             browse.addNode(null, null, defaultNode);
             browse.DefaultSelection = defaultNode;
 
-            NewProjectDialog.ShowDialog(browse, (template, fullProjectName) =>
+            NewProjectDialog.ShowDialog(browse, (projectDialog) =>
             {
+                ProjectTemplate template = projectDialog.SelectedValue;
+                String fullProjectName = projectDialog.FullProjectName;
+
+                if (projectDialog.MakeSingleFile && !fullProjectName.EndsWith(".sl", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    fullProjectName += ".sl";
+                }
                 if (slideEditController.projectExists(fullProjectName))
                 {
-                    MessageBox.show(String.Format("The project {0} already exists. Would you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                    MessageBox.show(String.Format("A Smart Lecture already exists at the location.\n{0}\n\nWould you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
                     {
                         if (result == MessageBoxStyle.Yes)
                         {

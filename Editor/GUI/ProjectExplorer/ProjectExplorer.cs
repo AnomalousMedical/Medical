@@ -93,8 +93,10 @@ namespace Medical.GUI
             browse.addNode(null, null, new BrowserNode("Question App", new QuestionAppProjectTemplate()));
             browse.addNode(null, null, new BrowserNode("Empty", new EmptyProjectTemplate()));
 
-            NewProjectDialog.ShowDialog(browse, (template, fullProjectName) =>
+            NewProjectDialog.ShowDialog(browse, (projectDialog) =>
             {
+                ProjectTemplate template = projectDialog.SelectedValue;
+                String fullProjectName = projectDialog.FullProjectName;
                 if (Directory.Exists(fullProjectName))
                 {
                     MessageBox.show(String.Format("The project {0} already exists. Would you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
