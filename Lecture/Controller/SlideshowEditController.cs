@@ -709,6 +709,10 @@ namespace Lecture
 
             //Do the actual save
             save();
+
+            //Reload the current slide
+            openEditorContextForSlide(lastEditSlide);
+            standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.BackingLocation);
         }
 
         public void runSlideshow(int startIndex)
