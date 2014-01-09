@@ -20,6 +20,8 @@ namespace Lecture.GUI
     {
         private String windowTitle;
         private const String windowTitleFormat = "{1} - {0} - {2}";
+        private const String wildcard = "Smart Lecture (*.sl)|*.sl|Smart Lecture Folder (*.show)|*.show";
+        private const String openWildcard = "Smart Lecture (*.sl;*.show)|*.sl;*.show";
 
         private Dictionary<MenuItem, Action> menuActions = new Dictionary<MenuItem, Action>();
 
@@ -189,7 +191,7 @@ namespace Lecture.GUI
             try
             {
                 slideEditController.stopPlayingTimelines();
-                FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", "", false);
+                FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a project.", "", "", openWildcard, false);
                 fileDialog.showModal((result, paths) =>
                 {
                     if (result == NativeDialogResult.OK)
@@ -212,7 +214,7 @@ namespace Lecture.GUI
                 try
                 {
                     slideEditController.stopPlayingTimelines();
-                    FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, wildcard: "Smart Lecture (*.sl)|*.sl|Smart Lecture Folder (*.show)|*.show");
+                    FileSaveDialog fileDialog = new FileSaveDialog(MainWindow.Instance, wildcard: wildcard);
                     fileDialog.showModal((result, path) =>
                     {
                         if (result == NativeDialogResult.OK)
