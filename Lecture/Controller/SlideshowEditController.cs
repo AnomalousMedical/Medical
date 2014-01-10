@@ -701,6 +701,7 @@ namespace Lecture
 
         public void saveAs(String destination)
         {
+            destination = editorController.ProjectTypes.getProjectBasePath(destination);
             ResourceProvider clonedProvider;
             if (editorController.ProjectTypes.areSameProjectType(editorController.ResourceProvider.BackingProvider.BackingLocation, destination))
             {
@@ -709,6 +710,7 @@ namespace Lecture
             }
             else
             {
+                editorController.ProjectTypes.deleteProject(destination);
                 editorController.ProjectTypes.ensureProjectExists(destination);
                 clonedProvider = editorController.ProjectTypes.openResourceProvider(destination);
                 editorController.ResourceProvider.cloneTo(clonedProvider);

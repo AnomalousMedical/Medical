@@ -219,8 +219,29 @@ namespace Lecture.GUI
                     {
                         if (result == NativeDialogResult.OK)
                         {
-                            slideEditController.saveAs(path);
-                            updateCaption();
+                            bool doSaveAs = true;
+                            if (path.EndsWith(".show", StringComparison.InvariantCultureIgnoreCase)) //Special case for .show (folders) create a folder with the name of the smart lecture for the result to go into
+                            {
+                                String projectDir = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
+                                path = Path.Combine(projectDir, Path.GetFileName(path));
+                                if (Directory.Exists(projectDir))
+                                {
+                                    doSaveAs = false;
+                                    MessageBox.show(String.Format("The folder for this smart lecture already exists at\n{0}\n\nWould you like to delete it and replace it with your Smart Lecture?", projectDir), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, overwriteResult =>
+                                    {
+                                        if (overwriteResult == MessageBoxStyle.Yes)
+                                        {
+                                            slideEditController.saveAs(path);
+                                            updateCaption();
+                                        }
+                                    });
+                                }
+                            }
+                            if (doSaveAs)
+                            {
+                                slideEditController.saveAs(path);
+                                updateCaption();
+                            }
                         }
                     });
                 }

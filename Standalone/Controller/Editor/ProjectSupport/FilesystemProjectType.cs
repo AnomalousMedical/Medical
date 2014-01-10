@@ -10,7 +10,10 @@ namespace Medical.Editor
     {
         public void deleteProject(string name)
         {
-            Directory.Delete(name, true);
+            if (Directory.Exists(name))
+            {
+                Directory.Delete(name, true);
+            }
         }
 
         public void ensureProjectExists(string name)
