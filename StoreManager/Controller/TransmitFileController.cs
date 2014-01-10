@@ -19,16 +19,16 @@ namespace Anomalous.Medical.StoreManager.Controller
     {
         private LicenseManager licenseManager;
         private bool allowSend = true;
-        private String pluginSourcePath;
+        private ResourceProvider resourceProvider;
         private String archiveFile;
         private bool continueUpload = true;
         private bool processedLastProgressUpdate = true;
 
-        public TransmitFileController(AnomalousMvcContext context, LicenseManager licenseManager, String pluginSourcePath)
+        public TransmitFileController(AnomalousMvcContext context, LicenseManager licenseManager, ResourceProvider resourceProvider)
         {
             MvcController controller = context.Controllers["TransmitFile"];
             this.licenseManager = licenseManager;
-            this.pluginSourcePath = pluginSourcePath;
+            this.resourceProvider = resourceProvider;
 
             ((RunCommandsAction)controller.Actions["SendFile"]).addCommand(new CallbackCommand((executingContext) =>
             {
@@ -217,10 +217,28 @@ namespace Anomalous.Medical.StoreManager.Controller
             }
             archiveFile = Path.Combine(zipFolder, Path.ChangeExtension(pluginUniqueName, "zip"));
             cleanupFiles(); //Just make sure the archive doesn't already exist
-            using (ZipFile zipFile = new ZipFile(archiveFile))
+            String inArchivePath = Path.Combine("Plugins", pluginUniqueName);
+            if (File.Exists(resourceProvider.BackingLocation)) //If the file exists for the resource provider backing store, we assume it is a zip for now
             {
-                zipFile.AddDirectory(pluginSourcePath, Path.Combine("Plugins", pluginUniqueName));
-                zipFile.Save();
+                File.Copy(resourceProvider.BackingLocation, archiveFile);
+                using (ZipFile zipFile = new ZipFile(archiveFile))
+                {
+                    int fileCount = zipFile.Count;
+                    for (int i = 0; i < fileCount; ++i)
+                    {
+                        var entry = zipFile[i];
+                        entry.FileName = Path.Combine(inArchivePath, entry.FileName);
+                    }
+                    zipFile.Save();
+                }
+            }
+            else
+            {
+                using (ZipFile zipFile = new ZipFile(archiveFile))
+                {
+                    zipFile.AddDirectory(resourceProvider.BackingLocation, inArchivePath);
+                    zipFile.Save();
+                }
             }
         }
 

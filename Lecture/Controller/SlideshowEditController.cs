@@ -166,7 +166,7 @@ namespace Lecture
                                 slideEditorContext.commitText();
                                 this.save();
                                 this.cleanup();
-                                standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingLocation, PluginCreationTool.SmartLectureTools);
+                                standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingProvider, PluginCreationTool.SmartLectureTools);
                             }
                         });
                     });

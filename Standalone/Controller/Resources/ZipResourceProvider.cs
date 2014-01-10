@@ -69,35 +69,47 @@ namespace Medical
         private void writeStreamClosed(WriteStream writeStream)
         {
             zipFile.Dispose();
-            using (var ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            try
             {
-                ionicZip.UpdateEntry(writeStream.FileName, writeStream.BaseStream);
-                ionicZip.Save();
-            }
-            --openWriteStreams;
-            if (openWriteStreams == 0)
-            {
-                if (Directory.Exists(tempFolder))
+                using (var ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
-                    Directory.Delete(tempFolder, true);
+                    ionicZip.UpdateEntry(writeStream.FileName, writeStream.BaseStream);
+                    ionicZip.Save();
+                }
+                --openWriteStreams;
+                if (openWriteStreams == 0)
+                {
+                    if (Directory.Exists(tempFolder))
+                    {
+                        Directory.Delete(tempFolder, true);
+                    }
+                }
+                else
+                {
+                    File.Delete(writeStream.TempFileName);
                 }
             }
-            else
+            finally
             {
-                File.Delete(writeStream.TempFileName);
+                zipFile = new ZipFile(resourceLocation);
             }
-            zipFile = new ZipFile(resourceLocation);
         }
 
         public void addFile(String path, string targetDirectory)
         {
             zipFile.Dispose();
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            try
             {
-                ionicZip.UpdateFile(path);
-                ionicZip.Save();
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+                {
+                    ionicZip.UpdateFile(path);
+                    ionicZip.Save();
+                }
             }
-            zipFile = new ZipFile(resourceLocation);
+            finally
+            {
+                zipFile = new ZipFile(resourceLocation);
+            }
         }
 
         public void delete(String filename)
@@ -120,20 +132,26 @@ namespace Medical
             if (removeFiles.Count > 0)
             {
                 zipFile.Dispose();
-                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+                try
                 {
-                    foreach (String file in removeFiles)
+                    using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                     {
-                        //Have to check to make sure the file exists or the ionic library throws an exception
-                        var entry = ionicZip[file];
-                        if (entry != null)
+                        foreach (String file in removeFiles)
                         {
-                            ionicZip.RemoveEntry(entry);
+                            //Have to check to make sure the file exists or the ionic library throws an exception
+                            var entry = ionicZip[file];
+                            if (entry != null)
+                            {
+                                ionicZip.RemoveEntry(entry);
+                            }
                         }
+                        ionicZip.Save();
                     }
-                    ionicZip.Save();
                 }
-                zipFile = new ZipFile(resourceLocation);
+                finally
+                {
+                    zipFile = new ZipFile(resourceLocation);
+                }
             }
         }
 
@@ -220,16 +238,26 @@ namespace Medical
         public void createDirectory(string path, string directoryName)
         {
             zipFile.Dispose();
-            path = Path.Combine(path, directoryName);
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            try
             {
-                if (!ionicZip.ContainsEntry(Path.GetFileName(path)))
+                path = Path.Combine(path, directoryName);
+                if (!path.EndsWith("/") && !path.EndsWith("\\"))
                 {
-                    ionicZip.AddDirectoryByName(path);
+                    path += '/';
                 }
-                ionicZip.Save();
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+                {
+                    if (!ionicZip.ContainsEntry(path))
+                    {
+                        ionicZip.AddDirectoryByName(path);
+                    }
+                    ionicZip.Save();
+                }
             }
-            zipFile = new ZipFile(resourceLocation);
+            finally
+            {
+                zipFile = new ZipFile(resourceLocation);
+            }
         }
 
         public bool isDirectory(String path)
@@ -249,52 +277,64 @@ namespace Medical
         public void move(string oldPath, string newPath)
         {
             zipFile.Dispose();
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            try
             {
-                var entry = ionicZip[oldPath];
-                if (entry != null)
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
-                    if (entry.IsDirectory)
+                    var entry = ionicZip[oldPath];
+                    if (entry != null)
                     {
-                        foreach (var subEntry in ionicZip.EntriesStartingWith(oldPath))
+                        if (entry.IsDirectory)
                         {
-                            subEntry.FileName = Path.Combine(newPath, Path.GetFileName(subEntry.FileName));
+                            foreach (var subEntry in ionicZip.EntriesStartingWith(oldPath))
+                            {
+                                subEntry.FileName = Path.Combine(newPath, Path.GetFileName(subEntry.FileName));
+                            }
                         }
+                        else
+                        {
+                            entry.FileName = newPath;
+                        }
+                        ionicZip.Save();
                     }
-                    else
-                    {
-                        entry.FileName = newPath;
-                    }
-                    ionicZip.Save();
                 }
             }
-            zipFile = new ZipFile(resourceLocation);
+            finally
+            {
+                zipFile = new ZipFile(resourceLocation);
+            }
         }
 
         public void copy(string from, string to)
         {
             zipFile.Dispose();
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+            try
             {
-                var entry = ionicZip[from];
-                if (entry != null)
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
-                    if (entry.IsDirectory)
+                    var entry = ionicZip[from];
+                    if (entry != null)
                     {
-                        foreach (var subEntry in ionicZip.EntriesStartingWith(from))
+                        if (entry.IsDirectory)
                         {
-                            String toPath = Path.Combine(to, Path.GetFileName(subEntry.FileName));
-                            ionicZip.UpdateEntry(toPath, (name, stream) => entry.Extract(stream));
+                            foreach (var subEntry in ionicZip.EntriesStartingWith(from))
+                            {
+                                String toPath = Path.Combine(to, Path.GetFileName(subEntry.FileName));
+                                ionicZip.UpdateEntry(toPath, (name, stream) => entry.Extract(stream));
+                            }
                         }
+                        else
+                        {
+                            ionicZip.UpdateEntry(to, (name, stream) => entry.Extract(stream));
+                        }
+                        ionicZip.Save();
                     }
-                    else
-                    {
-                        ionicZip.UpdateEntry(to, (name, stream) => entry.Extract(stream));
-                    }
-                    ionicZip.Save();
                 }
             }
-            zipFile = new ZipFile(resourceLocation);
+            finally
+            {
+                zipFile = new ZipFile(resourceLocation);
+            }
         }
 
         public void cloneProviderTo(String destination)

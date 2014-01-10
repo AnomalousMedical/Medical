@@ -27,10 +27,9 @@ namespace Anomalous.Medical.StoreManager.Controller
             this.controller = standaloneController;
         }
 
-        public void showContext(String pluginSourcePath, PluginCreationTool tool)
+        public void showContext(ResourceProvider projectResourceProvider, PluginCreationTool tool)
         {
             EmbeddedResourceProvider embeddedResources = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Anomalous.Medical.StoreManager.MvcContexts.UploadPlugin.");
-            ResourceProvider projectResourceProvider = new FilesystemResourceProvider(pluginSourcePath);
 
             ResourceProviderRocketFSExtension rocketEmbeddedResources = new ResourceProviderRocketFSExtension(embeddedResources);
             ResourceProviderRocketFSExtension rocketProjectResources = new ResourceProviderRocketFSExtension(projectResourceProvider);
@@ -57,7 +56,7 @@ namespace Anomalous.Medical.StoreManager.Controller
             chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
             editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool, projectResourceProvider);
             choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
-            transmitFile = new TransmitFileController(context, controller.App.LicenseManager, pluginSourcePath);
+            transmitFile = new TransmitFileController(context, controller.App.LicenseManager, projectResourceProvider);
             uploadComplete = new UploadCompleteController(context);
 
             controller.MvcCore.startRunningContext(context);

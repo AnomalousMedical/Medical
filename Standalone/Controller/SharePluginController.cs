@@ -14,14 +14,14 @@ namespace Medical
 
     public class SharePluginController
     {
-        Action<String, PluginCreationTool> shareCallback;
+        Action<ResourceProvider, PluginCreationTool> shareCallback;
 
-        public SharePluginController(Action<String, PluginCreationTool> shareCallback)
+        public SharePluginController(Action<ResourceProvider, PluginCreationTool> shareCallback)
         {
             this.shareCallback = shareCallback;
         }
 
-        public void sharePlugin(String source, PluginCreationTool tool)
+        public void sharePlugin(ResourceProvider source, PluginCreationTool tool)
         {
             shareCallback(source, tool);
         }

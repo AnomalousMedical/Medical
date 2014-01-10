@@ -53,7 +53,7 @@ namespace Medical
                             if (result == MessageBoxStyle.Yes)
                             {
                                 editorController.saveAllCachedResources();
-                                standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingLocation, PluginCreationTool.EditorTools);
+                                standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingProvider, PluginCreationTool.EditorTools);
                             }
                         });
                     });
