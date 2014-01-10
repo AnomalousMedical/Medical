@@ -12,16 +12,15 @@ namespace Lecture.GUI
 {
     class SlideshowProjectTemplate : ProjectTemplate
     {
-        private const String SlideshowExtension = ".show";
+        private const String SlideshowName = "Slides.show";
 
         public String createProject(EditorResourceProvider resourceProvider, string projectName)
         {
-            String slideshowName = Path.ChangeExtension(projectName, SlideshowExtension);
             DDAtlasPlugin ddPlugin = new DDAtlasPlugin();
             ddPlugin.PluginName = projectName;
             ddPlugin.PluginNamespace = projectName;
             StartSlideshowTask mvcTask = new StartSlideshowTask("Task", projectName, "", "Slideshows");
-            mvcTask.SlideshowFile = slideshowName;
+            mvcTask.SlideshowFile = SlideshowName;
             ddPlugin.addTask(mvcTask);
             saveObject(ddPlugin, resourceProvider, "Plugin.ddp");
 
@@ -31,9 +30,9 @@ namespace Lecture.GUI
             EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", resourceProvider, EmbeddedTemplateNames.Assembly);
 
             Slideshow slideshow = new Slideshow();
-            saveObject(slideshow, resourceProvider, slideshowName);
+            saveObject(slideshow, resourceProvider, SlideshowName);
 
-            return slideshowName;
+            return SlideshowName;
         }
 
         private void saveObject(Saveable saveable, EditorResourceProvider resourceProvider, String filename)
