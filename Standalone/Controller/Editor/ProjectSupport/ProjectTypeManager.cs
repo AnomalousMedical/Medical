@@ -64,5 +64,10 @@ namespace Medical.Editor
             catch (Exception) { }
             return defaultProjectType;
         }
+
+        public bool areSameProjectType(String location1, string location2)
+        {
+            return getInfo(location1) == getInfo(location2);
+        }
     }
 }

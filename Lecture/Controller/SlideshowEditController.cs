@@ -701,8 +701,18 @@ namespace Lecture
 
         public void saveAs(String destination)
         {
-            editorController.ResourceProvider.cloneProviderTo(destination);
-            ResourceProvider clonedProvider = editorController.ProjectTypes.openResourceProvider(destination);
+            ResourceProvider clonedProvider;
+            if (editorController.ProjectTypes.areSameProjectType(editorController.ResourceProvider.BackingProvider.BackingLocation, destination))
+            {
+                editorController.ResourceProvider.cloneProviderTo(destination);
+                clonedProvider = editorController.ProjectTypes.openResourceProvider(destination);
+            }
+            else
+            {
+                editorController.ProjectTypes.ensureProjectExists(destination);
+                clonedProvider = editorController.ProjectTypes.openResourceProvider(destination);
+                editorController.ResourceProvider.cloneTo(clonedProvider);
+            }
             libRocketPlugin.RocketInterface.Instance.SystemInterface.RemoveRootPath(editorController.ResourceProvider.BackingLocation); //Have to remove old backing location
             editorController.ProjectTypes.resourceProviderClosed(editorController.ResourceProvider.BackingProvider);
             editorController.changeActiveResourceProvider(clonedProvider);

@@ -46,4 +46,25 @@ namespace Medical
         /// <param name="destination"></param>
         void cloneProviderTo(String destination);
     }
+
+    public static class ResourceProviderExtensions
+    {
+        public static void cloneTo(this ResourceProvider source, ResourceProvider destination)
+        {
+            foreach (String dir in source.listDirectories("*", "", true))
+            {
+                destination.createDirectory("", dir);
+            }
+            foreach (String file in source.listFiles("*", "", true))
+            {
+                using (Stream writeStream = destination.openWriteStream(file))
+                {
+                    using (Stream readStream = source.openFile(file))
+                    {
+                        readStream.CopyTo(writeStream);
+                    }
+                }
+            }
+        }
+    }
 }
