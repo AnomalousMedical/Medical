@@ -904,6 +904,12 @@ namespace Lecture
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
+                            //First do the save as if needed to zip up old project
+                            String backingLoc = editorController.ResourceProvider.BackingProvider.BackingLocation;
+                            if (!backingLoc.EndsWith(".sl"))
+                            {
+                                saveAs(backingLoc + ".sl");
+                            }
                             if (slideshow.Version < 2)
                             {
                                 EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
