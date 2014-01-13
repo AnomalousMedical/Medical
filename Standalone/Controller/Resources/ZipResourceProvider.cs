@@ -286,7 +286,7 @@ namespace Medical
                     {
                         if (entry.IsDirectory)
                         {
-                            foreach (var subEntry in ionicZip.EntriesStartingWith(oldPath))
+							foreach (var subEntry in ZipEntryExtensions.EntriesStartingWith(ionicZip, oldPath))
                             {
                                 subEntry.FileName = Path.Combine(newPath, Path.GetFileName(subEntry.FileName));
                             }
@@ -317,7 +317,7 @@ namespace Medical
                     {
                         if (entry.IsDirectory)
                         {
-                            foreach (var subEntry in ionicZip.EntriesStartingWith(from))
+							foreach (var subEntry in ZipEntryExtensions.EntriesStartingWith(ionicZip, from))
                             {
                                 String toPath = Path.Combine(to, Path.GetFileName(subEntry.FileName));
                                 ionicZip.UpdateEntry(toPath, (name, stream) => entry.Extract(stream));

@@ -713,7 +713,7 @@ namespace Lecture
                 editorController.ProjectTypes.deleteProject(destination);
                 editorController.ProjectTypes.ensureProjectExists(destination);
                 clonedProvider = editorController.ProjectTypes.openResourceProvider(destination);
-                editorController.ResourceProvider.cloneTo(clonedProvider);
+                ResourceProviderExtensions.cloneTo(editorController.ResourceProvider, clonedProvider);
             }
             libRocketPlugin.RocketInterface.Instance.SystemInterface.RemoveRootPath(editorController.ResourceProvider.BackingLocation); //Have to remove old backing location
             editorController.ProjectTypes.resourceProviderClosed(editorController.ResourceProvider.BackingProvider);

@@ -8,7 +8,7 @@ namespace Medical
 {
     static class ZipEntryExtensions
     {
-        public static ZipEntry FindEntry(this ZipFile file, String name)
+        public static ZipEntry FindEntry(ZipFile file, String name)
         {
             foreach (var entry in file.Entries)
             {
@@ -20,7 +20,7 @@ namespace Medical
             return null;
         }
 
-        public static IEnumerable<ZipEntry> EntriesStartingWith(this ZipFile file, String str)
+        public static IEnumerable<ZipEntry> EntriesStartingWith(ZipFile file, String str)
         {
             foreach (var entry in file.Entries)
             {

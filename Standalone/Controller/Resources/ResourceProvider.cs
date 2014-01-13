@@ -49,7 +49,7 @@ namespace Medical
 
     public static class ResourceProviderExtensions
     {
-        public static void cloneTo(this ResourceProvider source, ResourceProvider destination)
+        public static void cloneTo(ResourceProvider source, ResourceProvider destination)
         {
             foreach (String dir in source.listDirectories("*", "", true))
             {
