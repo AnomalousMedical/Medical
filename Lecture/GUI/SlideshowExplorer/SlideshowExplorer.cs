@@ -75,7 +75,7 @@ namespace Lecture.GUI
             menuActions.Add(fileMenu.addItem("New"), createNewProject);
             menuActions.Add(fileMenu.addItem("Open"), openProject);
             menuActions.Add(fileMenu.addItem("Close"), slideEditController.closeProject);
-            menuActions.Add(fileMenu.addItem("Save"), slideEditController.save);
+            menuActions.Add(fileMenu.addItem("Save"), slideEditController.safeSave);
             menuActions.Add(fileMenu.addItem("Save As"), saveAs);
             fileMenu.addItem("Sep", MenuItemType.Separator);
             menuActions.Add(fileMenu.addItem("Present"), play);
@@ -123,11 +123,18 @@ namespace Lecture.GUI
             {
                 MessageBox.show("You have open files, would you like to save them before creating a new project?", "Save", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
                 {
-                    if (result == MessageBoxStyle.Ok)
+                    try
                     {
-                        slideEditController.save();
+                        if (result == MessageBoxStyle.Ok)
+                        {
+                            slideEditController.unsafeSave();
+                        }
+                        showNewProjectDialog();
                     }
-                    showNewProjectDialog();
+                    catch (Exception ex)
+                    {
+                        MessageBox.show(String.Format("There was an error saving your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    }
                 });
             }
         }
@@ -177,11 +184,18 @@ namespace Lecture.GUI
             {
                 MessageBox.show("You have open files, would you like to save them before opening a new project?", "Save", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
                 {
-                    if (result == MessageBoxStyle.Ok)
+                    try
                     {
-                        slideEditController.save();
+                        if (result == MessageBoxStyle.Ok)
+                        {
+                            slideEditController.unsafeSave();
+                        }
+                        showOpenProjectDialog();
                     }
-                    showOpenProjectDialog();
+                    catch (Exception ex)
+                    {
+                        MessageBox.show(String.Format("There was an error saving your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    }
                 });
             }
         }
@@ -267,12 +281,12 @@ namespace Lecture.GUI
                     {
                         try
                         {
-                            slideEditController.save();
+                            slideEditController.unsafeSave();
                             slideEditController.cleanup();
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.show(String.Format("There was an error cleaning your smart lecture.\nException type: {0}\n{0}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                            MessageBox.show(String.Format("There was an error cleaning your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                         }
                     }
                 });

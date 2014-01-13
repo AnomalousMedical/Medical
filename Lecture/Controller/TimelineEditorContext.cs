@@ -251,7 +251,7 @@ namespace Lecture
 
         private void saveAll()
         {
-            slideshowEditController.save();
+            slideshowEditController.safeSave();
         }
 
         private void refreshPanelPreviews(RunCommandsAction showEditorWindowsCommand)

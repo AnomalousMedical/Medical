@@ -159,16 +159,7 @@ namespace Lecture
                 {
                     CallbackTask cleanupBeforeShareTask = new CallbackTask("Lecture.SharePluginTask", standaloneController.SharePluginController.Name, standaloneController.SharePluginController.IconName, standaloneController.SharePluginController.Category, 0, false, (item) =>
                     {
-                        MessageBox.show("Before sharing your Smart Lecture it will be cleaned and saved. Do you wish to continue?", "Share Smart Lecture", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
-                        {
-                            if (result == MessageBoxStyle.Yes)
-                            {
-                                slideEditorContext.commitText();
-                                this.save();
-                                this.cleanup();
-                                standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingProvider, PluginCreationTool.SmartLectureTools);
-                            }
-                        });
+                        shareSlideshow();
                     });
                     slideEditorContext.addTask(cleanupBeforeShareTask);
                 }
@@ -693,7 +684,26 @@ namespace Lecture
             }
         }
 
-        public void save()
+        /// <summary>
+        /// This save function handles any exceptions, use it from keyboard shortcuts or anywhere that you don't care
+        /// about any exceptions that might be thrown, otherwise use unsafeSave.
+        /// </summary>
+        public void safeSave()
+        {
+            try
+            {
+                unsafeSave();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error saving your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            }
+        }
+
+        /// <summary>
+        /// This function saves the slideshow, it will not handle any exceptions related to this.
+        /// </summary>
+        public void unsafeSave()
         {
             editorController.saveAllCachedResources();
             slideImageManager.saveThumbnails();
@@ -720,7 +730,7 @@ namespace Lecture
             editorController.changeActiveResourceProvider(clonedProvider);
 
             //Do the actual save
-            save();
+            unsafeSave();
 
             //Reload the current slide
             openEditorContextForSlide(lastEditSlide);
@@ -904,20 +914,27 @@ namespace Lecture
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
-                            //First do the save as if needed to zip up old project
-                            String backingLoc = editorController.ResourceProvider.BackingProvider.BackingLocation;
-                            if (!backingLoc.EndsWith(".sl"))
+                            try
                             {
-                                saveAs(backingLoc + ".sl");
+                                //First do the save as if needed to zip up old project
+                                String backingLoc = editorController.ResourceProvider.BackingProvider.BackingLocation;
+                                if (!backingLoc.EndsWith(".sl"))
+                                {
+                                    saveAs(backingLoc + ".sl");
+                                }
+                                if (slideshow.Version < 2)
+                                {
+                                    EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                                    EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                                }
+                                slideshow.updateToVersion(Slideshow.CurrentVersion);
+                                unsafeSave();
+                                finishLoadingSlideshow();
                             }
-                            if (slideshow.Version < 2)
+                            catch (Exception ex)
                             {
-                                EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
-                                EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+                                MessageBox.show(String.Format("There was an error updating your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Update Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                             }
-                            slideshow.updateToVersion(Slideshow.CurrentVersion);
-                            save();
-                            finishLoadingSlideshow();
                         }
                         else
                         {
@@ -1027,6 +1044,27 @@ namespace Lecture
         internal bool projectExists(string fullProjectName)
         {
             return editorController.ProjectTypes.doesProjectExist(fullProjectName);
+        }
+
+        private void shareSlideshow()
+        {
+            MessageBox.show("Before sharing your Smart Lecture it will be cleaned and saved. Do you wish to continue?", "Share Smart Lecture", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+            {
+                if (result == MessageBoxStyle.Yes)
+                {
+                    try
+                    {
+                        slideEditorContext.commitText();
+                        this.unsafeSave();
+                        this.cleanup();
+                        standaloneController.SharePluginController.sharePlugin(editorController.ResourceProvider.BackingProvider, PluginCreationTool.SmartLectureTools);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.show(String.Format("There was an error cleaning your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    }
+                }
+            });
         }
     }
 }

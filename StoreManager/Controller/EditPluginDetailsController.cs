@@ -38,39 +38,46 @@ namespace Anomalous.Medical.StoreManager.Controller
                 {
                     if (result == NativeDialogResult.OK)
                     {
-                        String path = paths.First();
-                        String extension = Path.GetExtension(path);
-                        if (extension.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase))
+                        try
                         {
-                            using (Bitmap source = (Bitmap)Bitmap.FromFile(path))
+                            String path = paths.First();
+                            String extension = Path.GetExtension(path);
+                            if (extension.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                //Cap the uploaded image size at 1000
-                                int resizedWidth = source.Width;
-                                int resizedHeight = source.Height;
-                                if (resizedWidth > 1000)
+                                using (Bitmap source = (Bitmap)Bitmap.FromFile(path))
                                 {
-                                    resizedWidth = 1000;
-                                }
-                                if (resizedHeight > 1000)
-                                {
-                                    resizedHeight = 1000;
-                                }
+                                    //Cap the uploaded image size at 1000
+                                    int resizedWidth = source.Width;
+                                    int resizedHeight = source.Height;
+                                    if (resizedWidth > 1000)
+                                    {
+                                        resizedWidth = 1000;
+                                    }
+                                    if (resizedHeight > 1000)
+                                    {
+                                        resizedHeight = 1000;
+                                    }
 
-                                String iconPath = Path.GetDirectoryName(IconSourceFile);
-                                if (!resourceProvider.exists(iconPath))
-                                {
-                                    resourceProvider.createDirectory("", iconPath);
+                                    String iconPath = Path.GetDirectoryName(IconSourceFile);
+                                    if (!resourceProvider.exists(iconPath))
+                                    {
+                                        resourceProvider.createDirectory("", iconPath);
+                                    }
+                                    using (Stream stream = resourceProvider.openWriteStream(IconSourceFile))
+                                    {
+                                        LogoUtil.SaveResizedImage(source, stream, resizedWidth, resizedHeight);
+                                    }
                                 }
-                                using (Stream stream = resourceProvider.openWriteStream(IconSourceFile))
-                                {
-                                    LogoUtil.SaveResizedImage(source, stream, resizedWidth, resizedHeight);
-                                }
+                                setImage(resourceProvider, executingContext);
                             }
-                            setImage(resourceProvider, executingContext);
+                            else
+                            {
+                                MessageBox.show(String.Format("Cannot open a file with extension '{0}'. Please choose a file that is a Png Image (.png) or a Jpeg (.jpg or .jpeg).", extension), "Can't Load Image", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            MessageBox.show(String.Format("Cannot open a file with extension '{0}'. Please choose a file that is a Png Image (.png) or a Jpeg (.jpg or .jpeg).", extension), "Can't Load Image", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
+                            MessageBox.show(String.Format("There was an error saving the image you selected.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                         }
                     }
                 });

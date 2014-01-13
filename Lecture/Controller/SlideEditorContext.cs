@@ -488,7 +488,7 @@ namespace Lecture
         private void saveAll()
         {
             commitText();
-            slideEditorController.save();
+            slideEditorController.safeSave();
         }
 
         public void commitText(bool forceUpdateThumb = false)
