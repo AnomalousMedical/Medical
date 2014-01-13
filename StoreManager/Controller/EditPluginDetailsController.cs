@@ -33,7 +33,7 @@ namespace Anomalous.Medical.StoreManager.Controller
 
             ((RunCommandsAction)context.Controllers["EditPluginDetails"].Actions["BrowseImage"]).addCommand(new CallbackCommand((executingContext) =>
             {
-                FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose Image", wildcard: "Images|*");
+                FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose Image", wildcard: "Images|*.jpg;*.jpeg;*.png");
                 openDialog.showModal((result, paths) =>
                 {
                     if (result == NativeDialogResult.OK)

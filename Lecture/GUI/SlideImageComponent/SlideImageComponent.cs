@@ -118,7 +118,7 @@ namespace Lecture.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose an image", wildcard: "Images|*");
+            FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Choose an image", wildcard: "Images|*.jpg;*.jpeg;*.png");
             openDialog.showModal((result, paths) =>
             {
                 if (result == NativeDialogResult.OK)
