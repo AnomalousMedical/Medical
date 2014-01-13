@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.ObjectManagement;
+using Engine;
 
 namespace Medical
 {
@@ -29,9 +30,8 @@ namespace Medical
         private ImageRendererProperties imageProperties;
         private MedicalController medicalController;
 
-        private float blendLocation = 0.0f;
-        private float blendSpeed = 1.0f;
-        private float blendTarget = 0.0f;
+        private float blendElapsed = 0.0f;
+        private float blendDuration = 1.0f;
         private bool playing = false;
 
         private MedicalState directStartState;
@@ -201,12 +201,9 @@ namespace Medical
         }
 
         /// <summary>
-        /// Blend between two states. The whole number part determines the start
-        /// state, the whole number + 1 is the destination state. The partial
-        /// part is the percentage of blend between the two states. So 2.3 will
-        /// blend states 2 and 3 30% of the way from state 2 to 3.
+        /// Blend a certain percentage to the end state.
         /// </summary>
-        /// <param name="percent">The index and percentage to blend.</param>
+        /// <param name="percent"></param>
         public void blend(float percent)
         {
             if (percent >= 1.0f)
@@ -222,7 +219,6 @@ namespace Medical
                 if (directStartState != null)
                 {
                     directStartState.blend(percent, directEndState);
-                    blendLocation = percent;
                 }
             }
         }
@@ -245,12 +241,16 @@ namespace Medical
             }
         }
 
-        public void directBlend(MedicalState state, float speed)
+        public void blendTo(MedicalState state, float duration)
         {
             this.directStartState = createState("DirectStart");
             this.directEndState = state;
-            blendLocation = 0.0f;
-            blendTarget = 1.0f;
+            blendElapsed = 0.0f;
+            blendDuration = duration;
+            if (blendDuration <= 0.0f)
+            {
+                blendDuration = float.Epsilon;
+            }
             startPlayback();
         }
 
@@ -277,24 +277,15 @@ namespace Medical
 
         void medicalController_FixedLoopUpdate(Clock time)
         {
-            double nextTime = blendLocation + time.Seconds * blendSpeed;
-            if (blendSpeed > 0)
+            blendElapsed += time.fSeconds;
+            float percentage = blendElapsed / blendDuration;
+            if (blendElapsed > blendDuration)
             {
-                if (nextTime > blendTarget)
-                {
-                    nextTime = blendTarget;
-                    stopBlending();
-                }
+                blendElapsed = blendDuration;
+                percentage = 1.0f;
+                stopBlending();
             }
-            else if (blendSpeed < 0)
-            {
-                if (nextTime < blendTarget)
-                {
-                    nextTime = blendTarget;
-                    stopBlending();
-                }
-            }
-            blend((float)nextTime);
+            blend(percentage);
         }
 
         private void startPlayback()

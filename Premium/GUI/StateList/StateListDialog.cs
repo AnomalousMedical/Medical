@@ -105,7 +105,7 @@ namespace Medical.GUI
         {
             if (stateListBox.SelectedItem != null && stateController != null)
             {
-                stateController.directBlend((MedicalState)stateListBox.SelectedItem.UserObject, 1.0f);
+                stateController.blendTo((MedicalState)stateListBox.SelectedItem.UserObject, 1.0f);
             }
         }
 

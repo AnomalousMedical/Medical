@@ -27,7 +27,7 @@ namespace Medical
 
         public override void started(float timelineTime, Clock clock)
         {
-            TimelineController.MedicalStateController.directBlend(State, Duration);
+            TimelineController.MedicalStateController.blendTo(State, Duration);
             finished = false;
         }
 
@@ -35,7 +35,11 @@ namespace Medical
         {
             if (timelineTime <= EndTime)
             {
-                started(timelineTime, null);
+                TimelineController.MedicalStateController.blendTo(State, EndTime - timelineTime);
+            }
+            else
+            {
+                TimelineController.MedicalStateController.blendTo(State, 0.0f);
             }
         }
 
@@ -56,7 +60,7 @@ namespace Medical
 
         public override void editing()
         {
-            TimelineController.MedicalStateController.directBlend(State, 1.0f);
+            TimelineController.MedicalStateController.blendTo(State, 1.0f);
         }
 
         public override void findFileReference(TimelineStaticInfo info)
