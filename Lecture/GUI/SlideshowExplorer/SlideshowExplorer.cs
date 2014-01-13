@@ -125,7 +125,7 @@ namespace Lecture.GUI
                 {
                     try
                     {
-                        if (result == MessageBoxStyle.Ok)
+                        if (result == MessageBoxStyle.Yes)
                         {
                             slideEditController.unsafeSave();
                         }
@@ -186,7 +186,7 @@ namespace Lecture.GUI
                 {
                     try
                     {
-                        if (result == MessageBoxStyle.Ok)
+                        if (result == MessageBoxStyle.Yes)
                         {
                             slideEditController.unsafeSave();
                         }
