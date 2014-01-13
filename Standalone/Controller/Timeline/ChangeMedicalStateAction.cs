@@ -33,13 +33,13 @@ namespace Medical
 
         public override void skipTo(float timelineTime)
         {
-            if (timelineTime <= EndTime)
+            if (timelineTime <= EndTime - 0.5f)
             {
                 TimelineController.MedicalStateController.blendTo(State, EndTime - timelineTime);
             }
             else
             {
-                TimelineController.MedicalStateController.blendTo(State, 0.0f);
+                TimelineController.MedicalStateController.blendTo(State, 0.5f);
             }
         }
 
