@@ -48,12 +48,28 @@ namespace Lecture.GUI
             return slideImageEditor.applyToElement(element);
         }
 
-        public override void changeSizePreview(Element element, IntSize2 newSize, ResizeType resizeType, IntSize2 bounds)
+        public override void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
         {
-            slideImageEditor.changeSize(newSize, resizeType, bounds);
+            slideImageEditor.changeSize(newRect, resizeType, bounds);
             IntSize2 correctedSize = slideImageEditor.ImageSize;
             element.SetAttribute("width", correctedSize.Width.ToString());
             element.SetAttribute("height", correctedSize.Height.ToString());
+            IntVector2 position = slideImageEditor.ImagePosition;
+            element.SetProperty("margin-left", position.x.ToString() + "sp");
+            element.SetProperty("margin-top", position.y.ToString() + "sp");
+        }
+
+        public override Rect getStartingRect(Element selectedElement)
+        {
+            Variant vLeft = selectedElement.GetPropertyVariant("margin-left");
+            Variant vTop = selectedElement.GetPropertyVariant("margin-top");
+            Variant vWidth = selectedElement.GetAttribute("width");
+            Variant vHeight = selectedElement.GetAttribute("height");
+            float left = vLeft != null ? vLeft.FloatValue : 0;
+            float top = vTop != null ? vTop.FloatValue : 0;
+            float width = vWidth != null ? vWidth.FloatValue : 0;
+            float height = vHeight != null ? vHeight.FloatValue : 0;
+            return new Rect(left, top, width, height);
         }
 
         public override void applySizeChange(Element element)

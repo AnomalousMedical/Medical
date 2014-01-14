@@ -37,6 +37,7 @@ namespace Lecture.GUI
         private bool NotDisposed = true;
 
         IntSize2 currentSize;
+        IntVector2 currentPosition;
 
         public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName, IntSize2 currentSize)
             : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "Image")
@@ -113,6 +114,14 @@ namespace Lecture.GUI
             get
             {
                 return new IntSize2(widthEdit.Value, heightEdit.Value);
+            }
+        }
+
+        public IntVector2 ImagePosition
+        {
+            get
+            {
+                return currentPosition;
             }
         }
 
@@ -237,6 +246,7 @@ namespace Lecture.GUI
             element.SetAttribute("width", widthEdit.Value.ToString());
             element.SetAttribute("height", heightEdit.Value.ToString());
             element.SetAttribute("scale", "true");
+            element.SetAttribute("style", String.Format("margin-left:{0}sp;margin-top:{1}sp", ImagePosition.x, ImagePosition.y));
             return true;
         }
 
@@ -252,38 +262,39 @@ namespace Lecture.GUI
             fireApplyChanges();
         }
 
-        public void changeSize(IntSize2 newSize, ResizeType resizeType, IntSize2 bounds)
+        public void changeSize(IntRect newRect, ResizeType resizeType, IntSize2 bounds)
         {
             if (keepAspectRatio.Checked)
             {
                 switch (resizeType)
                 {
                     case ResizeType.Width:
-                        computeWidthLimitRatio(ref newSize);
+                        computeWidthLimitRatio(ref newRect);
                         break;
                     case ResizeType.Height:
-                        computeHeightLimitRatio(ref newSize);
+                        computeHeightLimitRatio(ref newRect);
                         break;
-                    case ResizeType.Both:
-                        if (newSize.Width < newSize.Height)
+                    case ResizeType.WidthHeight:
+                        if (newRect.Width < newRect.Height)
                         {
-                            computeWidthLimitRatio(ref newSize);
+                            computeWidthLimitRatio(ref newRect);
                         }
                         else
                         {
-                            computeHeightLimitRatio(ref newSize);
+                            computeHeightLimitRatio(ref newRect);
                         }
                         break;
                 }
-                guardWidth(ref newSize, bounds);
-                computeWidthLimitRatio(ref newSize);
+                guardWidth(ref newRect, bounds);
+                computeWidthLimitRatio(ref newRect);
             }
             else
             {
-                guardWidth(ref newSize, bounds);
+                guardWidth(ref newRect, bounds);
             }
-            widthEdit.Value = newSize.Width;
-            heightEdit.Value = newSize.Height;
+            currentPosition = new IntVector2(newRect.Left, newRect.Top);
+            widthEdit.Value = newRect.Width;
+            heightEdit.Value = newRect.Height;
             this.fireChangesMade();
         }
 
@@ -292,27 +303,27 @@ namespace Lecture.GUI
             fireApplyChanges();
         }
 
-        private void computeHeightLimitRatio(ref IntSize2 newSize)
+        private void computeHeightLimitRatio(ref IntRect newRect)
         {
             float ratio = (float)realImageSize.Width / realImageSize.Height;
-            newSize.Width = (int)(newSize.Height * ratio);
+            newRect.Width = (int)(newRect.Height * ratio);
         }
 
-        private void computeWidthLimitRatio(ref IntSize2 newSize)
+        private void computeWidthLimitRatio(ref IntRect newRect)
         {
             float ratio = (float)realImageSize.Height / realImageSize.Width;
-            newSize.Height = (int)(newSize.Width * ratio);
+            newRect.Height = (int)(newRect.Width * ratio);
         }
 
-        private void guardWidth(ref IntSize2 newSize, IntSize2 bounds)
+        private void guardWidth(ref IntRect newRect, IntSize2 bounds)
         {
-            if (newSize.Width > bounds.Width)
+            if (newRect.Width > bounds.Width)
             {
-                newSize.Width = bounds.Width;
+                newRect.Width = bounds.Width;
             }
-            else if (newSize.Width < minSize)
+            else if (newRect.Width < minSize)
             {
-                newSize.Width = minSize;
+                newRect.Width = minSize;
             }
         }
     }

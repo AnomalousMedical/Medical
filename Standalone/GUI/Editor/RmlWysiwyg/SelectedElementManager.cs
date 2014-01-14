@@ -17,8 +17,13 @@ namespace Medical.GUI
         private Widget widthAdjust;
         private Widget heightAdjust;
         private Widget bothAdjust;
+        private Widget xAdjust;
+        private Widget yAdjust;
+        private Widget xyAdjust;
+        private Widget yWidthAdjust;
+        private Widget xHeightAdjust;
 
-        private Size2 elementStartSize;
+        private Rect elementStartRect;
         private IntVector2 mouseStartPosition;
         private Widget parentWidget;
 
@@ -41,6 +46,16 @@ namespace Medical.GUI
             bothAdjust.MouseDrag += bothAdjust_MouseDrag;
             bothAdjust.MouseButtonPressed += dragHandle_Pressed;
             bothAdjust.MouseButtonReleased += dragHandle_Released;
+
+            xAdjust = parentWidget.findWidget("XAdjust");
+            xAdjust.MouseDrag += xAdjust_MouseDrag;
+            xAdjust.MouseButtonPressed += dragHandle_Pressed;
+            xAdjust.MouseButtonReleased += dragHandle_Released;
+
+            yAdjust = parentWidget.findWidget("YAdjust");
+            xyAdjust = parentWidget.findWidget("XYAdjust");
+            yWidthAdjust = parentWidget.findWidget("YWidthAdjust");
+            xHeightAdjust = parentWidget.findWidget("XHeightAdjust");
         }
 
         public void clearSelectedAndHighlightedElement()
@@ -63,8 +78,13 @@ namespace Medical.GUI
 
                 selectionWidget.setCoord(selectionLeft, selectionTop, selectionWidth, selectionHeight);
                 widthAdjust.setPosition(selectionRight - widthAdjust.Width / 2, selectionTop + selectionHeight / 2 - widthAdjust.Height / 2);
-                heightAdjust.setPosition(selectionLeft + selectionWidth / 2 - heightAdjust.Width / 2, selectionBottom - heightAdjust.Width / 2);
+                heightAdjust.setPosition(selectionLeft + selectionWidth / 2 - heightAdjust.Width / 2, selectionBottom - heightAdjust.Height / 2);
                 bothAdjust.setPosition(selectionRight - bothAdjust.Width / 2, selectionBottom - bothAdjust.Height / 2);
+                xAdjust.setPosition(selectionLeft - xAdjust.Width / 2, selectionTop + selectionHeight / 2 - xAdjust.Height / 2);
+                yAdjust.setPosition(selectionLeft + selectionWidth / 2 - yAdjust.Width / 2, selectionTop - yAdjust.Height / 2);
+                xyAdjust.setPosition(selectionLeft - xAdjust.Width / 2, selectionTop - yAdjust.Height / 2);
+                yWidthAdjust.setPosition(selectionRight - yWidthAdjust.Width / 2, selectionTop - yWidthAdjust.Height / 2);
+                xHeightAdjust.setPosition(selectionLeft - xHeightAdjust.Width / 2, selectionBottom - xHeightAdjust.Height / 2);
             }
         }
 
@@ -127,48 +147,51 @@ namespace Medical.GUI
             widthAdjust.Visible = show;
             heightAdjust.Visible = show;
             bothAdjust.Visible = show;
+            xAdjust.Visible = show;
+            yAdjust.Visible = show;
+            xyAdjust.Visible = show;
+            yWidthAdjust.Visible = show;
+            xHeightAdjust.Visible = show;
+        }
+
+        void genericAdjust(Widget source, EventArgs e, Func<IntVector2, Rect> computeSizeCallback)
+        {
+            if (elementStrategy != null && selectedElement != null)
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
+                IntVector2 mouseOffset = me.Position - mouseStartPosition;
+                Rect newSize = computeSizeCallback(mouseOffset);
+                sendSizeChange(newSize, ResizeType.WidthHeight, new IntSize2(parentWidget.Width, parentWidget.Height));
+            }
         }
 
         void bothAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            if (elementStrategy != null && selectedElement != null)
-            {
-                MouseEventArgs me = (MouseEventArgs)e;
-                IntVector2 mouseOffset = me.Position - mouseStartPosition;
-                Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height + mouseOffset.y);
-                sendSizeChange(newSize, ResizeType.Both, new IntSize2(parentWidget.Width, parentWidget.Height));
-            }
+            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height + mouseOffset.y));
         }
 
         void heightAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            if (elementStrategy != null && selectedElement != null)
-            {
-                MouseEventArgs me = (MouseEventArgs)e;
-                IntVector2 mouseOffset = me.Position - mouseStartPosition;
-                Size2 newSize = new Size2(elementStartSize.Width, elementStartSize.Height + mouseOffset.y);
-                sendSizeChange(newSize, ResizeType.Height, new IntSize2(parentWidget.Width, parentWidget.Height));
-            }
+            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height + mouseOffset.y));
         }
 
         void widthAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            if (elementStrategy != null && selectedElement != null)
-            {
-                MouseEventArgs me = (MouseEventArgs)e;
-                IntVector2 mouseOffset = me.Position - mouseStartPosition;
-                Size2 newSize = new Size2(elementStartSize.Width + mouseOffset.x, elementStartSize.Height);
-                sendSizeChange(newSize, ResizeType.Width, new IntSize2(parentWidget.Width, parentWidget.Height));
-            }
+            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
         }
 
-        private void sendSizeChange(Size2 newSize, ResizeType resizeType, IntSize2 boundsRect)
+        void xAdjust_MouseDrag(Widget source, EventArgs e)
+        {
+            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height));
+        }
+
+        private void sendSizeChange(Rect newRect, ResizeType resizeType, IntSize2 boundsRect)
         {
             float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
-            newSize = newSize / ratio;
+            newRect = newRect / ratio;
             boundsRect = (IntSize2)(boundsRect / ratio);
 
-            elementStrategy.changeSizePreview(selectedElement, (IntSize2)newSize, resizeType, boundsRect);
+            elementStrategy.changeSizePreview(selectedElement, (IntRect)newRect, resizeType, boundsRect);
             updateHighlightPosition();
         }
 
@@ -176,9 +199,10 @@ namespace Medical.GUI
         {
             if (selectedElement != null)
             {
+                float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
                 MouseEventArgs me = (MouseEventArgs)e;
                 mouseStartPosition = me.Position;
-                elementStartSize = new Size2(selectedElement.OffsetWidth, selectedElement.OffsetHeight);
+                elementStartRect = elementStrategy.getStartingRect(selectedElement) * ratio;
             }
         }
 

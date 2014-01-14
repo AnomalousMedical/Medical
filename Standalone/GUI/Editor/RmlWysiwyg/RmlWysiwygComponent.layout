@@ -7,15 +7,30 @@
             <Property key="NeedKey" value="false"/>
             <Property key="Alpha" value="0.7"/>
         </Widget>
-      <Widget type="Widget" skin="ResizeHandle" position="103 27 15 15" align="Left Top" name="WidthAdjust">
-        <Property key="Pointer" value="size_horz"/>
-      </Widget>
-      <Widget type="Widget" skin="ResizeHandle" position="51 55 15 15" align="Left Top" name="HeightAdjust">
-        <Property key="Pointer" value="size_vert"/>
-      </Widget>
-      <Widget type="Widget" skin="ResizeHandle" position="103 55 15 15" align="Left Top" name="BothAdjust">
-        <Property key="Pointer" value="size_left"/>
-      </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="11 28 15 15" align="Left Top" name="XAdjust">
+            <Property key="Pointer" value="size_horz"/>
+        </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="52 5 15 15" align="Left Top" name="YAdjust">
+            <Property key="Pointer" value="size_vert"/>
+        </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="11 5 15 15" align="Left Top" name="XYAdjust">
+            <Property key="Pointer" value="size_left"/>
+        </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="103 4 15 15" align="Left Top" name="YWidthAdjust">
+            <Property key="Pointer" value="size_right"/>
+        </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="11 55 15 15" align="Left Top" name="XHeightAdjust">
+            <Property key="Pointer" value="size_right"/>
+        </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="103 27 15 15" align="Left Top" name="WidthAdjust">
+            <Property key="Pointer" value="size_horz"/>
+        </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="51 55 15 15" align="Left Top" name="HeightAdjust">
+            <Property key="Pointer" value="size_vert"/>
+        </Widget>
+        <Widget type="Widget" skin="ResizeHandle" position="103 55 15 15" align="Left Top" name="BothAdjust">
+            <Property key="Pointer" value="size_left"/>
+        </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>
