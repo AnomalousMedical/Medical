@@ -208,7 +208,7 @@ namespace Medical.GUI
             {
                 if (propertyType.GetCustomAttributes(typeof(SingleEnumAttribute), true).Length > 0)
                 {
-                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, widget, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => fieldInfo.Name));
+                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, widget, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => new Pair<String, Object>(fieldInfo.Name, fieldInfo.GetRawConstantValue())));
                     return editorCell;
                 }
                 //else if (propertyType.GetCustomAttributes(typeof(MultiEnumAttribute), true).Length > 0)
@@ -324,6 +324,11 @@ namespace Medical.GUI
             FormCreationMethods.Add(typeof(Color), (property, parent) =>
             {
                 return new PropertiesFormColor(property, parent);
+            });
+
+            FormCreationMethods.Add(typeof(ChoiceObject), (property, parent) =>
+            {
+                return new PropertiesFormComboBox(property, parent, ((ChoiceObject)property.getRealValue(1)).Choices);
             });
         }
 

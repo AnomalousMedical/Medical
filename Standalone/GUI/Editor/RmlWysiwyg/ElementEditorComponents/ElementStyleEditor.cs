@@ -23,9 +23,9 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             originalProperties = new List<RmlEditableProperty>(element.NumAttributes);
 
             EditInterface editInterface = new EditInterface(element.TagName);
-            addProperty(new RmlEditableProperty("float", element.GetPropertyString("float")), editInterface);
-            addProperty(new RmlEditableProperty("clear", element.GetPropertyString("clear")), editInterface);
-            addProperty(new RmlEditableProperty("position", element.GetPropertyString("position")), editInterface);
+            addProperty(new RmlChoiceEditableProperty("float", element.GetPropertyString("float"), floatChoices), editInterface);
+            addProperty(new RmlChoiceEditableProperty("clear", element.GetPropertyString("clear"), clearChoices), editInterface);
+            addProperty(new RmlChoiceEditableProperty("position", element.GetPropertyString("position"), positionChoices), editInterface);
             propertiesForm.EditInterface = editInterface;
         }
 
@@ -63,5 +63,19 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
             return HasChanges;
         }
+
+        private static readonly Pair<String, Object>[] floatChoices = { new Pair<String, Object>("none", "none"),
+                                                                        new Pair<String, Object>("left", "left"),
+                                                                        new Pair<String, Object>("right", "right") };
+
+        private static readonly Pair<String, Object>[] clearChoices = { new Pair<String, Object>("none", "none"),
+                                                                        new Pair<String, Object>("left", "left"),
+                                                                        new Pair<String, Object>("right", "right"),
+                                                                        new Pair<String, Object>("both", "both") };
+
+        private static readonly Pair<String, Object>[] positionChoices = { new Pair<String, Object>("static", "static"),
+                                                                           new Pair<String, Object>("relative", "relative"),
+                                                                           new Pair<String, Object>("absolute", "absolute"),
+                                                                           new Pair<String, Object>("fixed", "fixed")};
     }
 }

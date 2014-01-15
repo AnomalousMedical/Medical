@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Editing;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -12,7 +13,7 @@ namespace Medical.GUI
         private ComboBox comboBox;
         private bool allowValueChanges = true;
 
-        public PropertiesFormComboBox(EditableProperty property, Widget parent, IEnumerable<String> options)
+        public PropertiesFormComboBox(EditableProperty property, Widget parent, IEnumerable<Pair<String, Object>> options)
             : base(property, parent, "Medical.GUI.Editor.PropertiesForm.PropertiesFormComboBox.layout")
         {
             widget.ForwardMouseWheelToParent = true;
@@ -26,11 +27,11 @@ namespace Medical.GUI
             }
 
             comboBox = (ComboBox)widget.findWidget("ComboBox");
-            foreach (String option in options)
+            foreach (var option in options)
             {
-                comboBox.addItem(option);
+                comboBox.addItem(option.First, option.Second);
             }
-            comboBox.SelectedIndex = comboBox.findItemIndexWith(property.getValue(1));
+            refreshData();
             //comboBox.ForwardMouseWheelToParent = true;
             comboBox.KeyLostFocus += new MyGUIEvent(editBox_KeyLostFocus);
             comboBox.EventComboChangePosition += new MyGUIEvent(comboBox_EventComboChangePosition);
@@ -39,7 +40,15 @@ namespace Medical.GUI
 
         public override void refreshData()
         {
-            comboBox.SelectedIndex = comboBox.findItemIndexWith(Property.getValue(1));
+            uint index = comboBox.findItemIndexWith(Property.getValue(1));
+            if (index != ComboBox.Invalid)
+            {
+                comboBox.SelectedIndex = index;
+            }
+            else
+            {
+                comboBox.SelectedIndex = 0;
+            }
         }
 
         void editBox_KeyLostFocus(Widget source, EventArgs e)
@@ -62,16 +71,7 @@ namespace Medical.GUI
             if (allowValueChanges)
             {
                 allowValueChanges = false;
-                String value = comboBox.SelectedItemName;
-                String errorMessage = null;
-                if (Property.canParseString(1, value, out errorMessage))
-                {
-                    Property.setValueStr(1, value);
-                }
-                else
-                {
-                    MessageBox.show(errorMessage, "Parse Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                }
+                Property.setValue(1, comboBox.SelectedItemData);
                 allowValueChanges = true;
             }
         }

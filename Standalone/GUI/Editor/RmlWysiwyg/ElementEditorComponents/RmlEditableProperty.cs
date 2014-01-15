@@ -42,12 +42,12 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             return null;
         }
 
-        public Type getPropertyType(int column)
+        public virtual Type getPropertyType(int column)
         {
             return typeof(String);
         }
 
-        public object getRealValue(int column)
+        public virtual object getRealValue(int column)
         {
             switch (column)
             {
@@ -90,13 +90,18 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         public void setValue(int column, object value)
         {
+            String strValue = null;
+            if(value != null)
+            {
+                strValue = value.ToString();
+            }
             switch (column)
             {
                 case 0:
-                    name = value.ToString();
+                    name = strValue;
                     break;
                 case 1:
-                    this.value = value.ToString();
+                    this.value = strValue;
                     break;
             }
             fireValueChanged();
