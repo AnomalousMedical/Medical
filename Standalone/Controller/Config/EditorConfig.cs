@@ -38,7 +38,7 @@ namespace Medical
         {
             Color testColor;
             String readColor = section.getValue(name, defaultColor);
-            if (Color.TryFromHexString(readColor, out testColor))
+            if (Color.TryFromRGBAString(readColor, out testColor))
             {
                 return readColor;
             }

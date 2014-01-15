@@ -23,6 +23,8 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             originalProperties = new List<RmlEditableProperty>(element.NumAttributes);
 
             EditInterface editInterface = new EditInterface(element.TagName);
+            addProperty(new RmlColorEditableProperty("color", element.GetPropertyVariant("color").ColorValue), editInterface);
+            addProperty(new RmlColorEditableProperty("background-color", element.GetPropertyVariant("background-color").ColorValue), editInterface);
             addProperty(new RmlChoiceEditableProperty("float", element.GetPropertyString("float"), floatChoices), editInterface);
             addProperty(new RmlChoiceEditableProperty("clear", element.GetPropertyString("clear"), clearChoices), editInterface);
             addProperty(new RmlChoiceEditableProperty("position", element.GetPropertyString("position"), positionChoices), editInterface);

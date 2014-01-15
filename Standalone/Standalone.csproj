@@ -342,6 +342,7 @@
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\RmlColorEditableProperty.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\RmlEditableProperty.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\Elements\DivStrategy.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\Elements\ElementStrategy.cs" />

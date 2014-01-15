@@ -88,7 +88,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             return column != 0;
         }
 
-        public void setValue(int column, object value)
+        public virtual void setValue(int column, object value)
         {
             String strValue = null;
             if(value != null)
@@ -150,7 +150,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         /// </summary>
         public bool Advanced { get; set; }
 
-        private void fireValueChanged()
+        protected void fireValueChanged()
         {
             if (ValueChanged != null)
             {

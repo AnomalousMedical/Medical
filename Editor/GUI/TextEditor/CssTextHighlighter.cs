@@ -41,7 +41,7 @@ namespace Medical.GUI
 
             ConfigSection cssHighlightSection = EditorConfig.getConfigSection("CssColors");
 
-            Color.TryFromHexString(cssHighlightSection.getValue("BackgroundColor", "#191919"), out backgroundColor, backgroundColor);
+            Color.TryFromRGBAString(cssHighlightSection.getValue("BackgroundColor", "#191919"), out backgroundColor, backgroundColor);
             commentColor = EditorConfig.readConfigHexColor(cssHighlightSection, "CommentColor", commentColor);
             propertyColor = EditorConfig.readConfigHexColor(cssHighlightSection, "PropertyColor", propertyColor);
             valueColor = EditorConfig.readConfigHexColor(cssHighlightSection, "ValueColor", valueColor);

@@ -40,7 +40,7 @@ namespace Medical.GUI
 
             ConfigSection rmlHighlightSection = EditorConfig.getConfigSection("XmlColors");
 
-            Color.TryFromHexString(rmlHighlightSection.getValue("BackgroundColor", "#191919"), out backgroundColor, backgroundColor);
+            Color.TryFromRGBAString(rmlHighlightSection.getValue("BackgroundColor", "#191919"), out backgroundColor, backgroundColor);
             commentColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "CommentColor", commentColor);
             attributeColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "AttributeColor", attributeColor);
             elementColor = EditorConfig.readConfigHexColor(rmlHighlightSection, "ElementColor", elementColor);
