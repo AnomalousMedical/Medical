@@ -337,6 +337,7 @@
     <Compile Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponent.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementStyleEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
@@ -806,6 +807,7 @@
     <Compile Include="Utility\IEnumerableUtil.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementStyleEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
     <EmbeddedResource Include="GUI\RocketGui\RocketDebuggerWindow.layout" />
     <EmbeddedResource Include="GUI\Taskbar\AppButtonTaskbar.layout" />

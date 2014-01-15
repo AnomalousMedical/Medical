@@ -13,6 +13,7 @@ namespace Lecture.GUI
     class SlideImageStrategy : ElementStrategy
     {
         SlideImageComponent slideImageEditor;
+        ElementStyleEditor elementStyleEditor;
         EditorResourceProvider editorResourceProvider;
         String subdirectory;
 
@@ -38,14 +39,24 @@ namespace Lecture.GUI
                 imageSize.Height = heightAttr.IntValue;
             }
             slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"), imageSize);
+            elementStyleEditor = new ElementStyleEditor(element, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(slideImageEditor);
+            editor.addElementEditor(elementStyleEditor);
             return editor;
         }
 
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            return slideImageEditor.applyToElement(element);
+            StringBuilder styleString = new StringBuilder();
+            bool changesMade = elementStyleEditor.buildStyleString(styleString);
+            changesMade = slideImageEditor.buildStyleString(styleString) | changesMade;
+            changesMade = slideImageEditor.applyToElement(element) | changesMade;
+            if (changesMade && styleString.Length > 0)
+            {
+                element.SetAttribute("style", styleString.ToString());
+            }
+            return changesMade;
         }
 
         public override void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
