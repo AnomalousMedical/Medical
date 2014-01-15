@@ -29,7 +29,7 @@ namespace Medical.GUI
             }
 
             Color color = (Color)property.getRealValue(1);
-            String value = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", (int)(color.r * 0xff), (int)(color.g * 0xff), (int)(color.b * 0xff), (int)(color.a * 0xff));
+            String value = color.toRGBA().ToString("X8");
 
             editBox = (EditBox)widget.findWidget("EditBox");
             editBox.OnlyText = value;
@@ -45,7 +45,7 @@ namespace Medical.GUI
         public override void refreshData()
         {
             Color color = (Color)Property.getRealValue(1);
-            String value = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", (int)(color.r * 0xff), (int)(color.g * 0xff), (int)(color.b * 0xff), (int)(color.a * 0xff));
+            String value = color.toRGBA().ToString("X8");
             editBox.OnlyText = value;
         }
 
@@ -53,7 +53,7 @@ namespace Medical.GUI
         {
             ColorMenu.ShowColorMenu(source.AbsoluteLeft, source.AbsoluteTop + source.Height, color =>
             {
-                String value = String.Format("{0:X2}{1:X2}{2:X2}{3:X2}", (int)(color.a * 0xff), (int)(color.r * 0xff), (int)(color.g * 0xff), (int)(color.b * 0xff));
+                String value = color.toRGBA().ToString("X8");
                 editBox.OnlyText = value;
                 setValue();
             });
@@ -75,14 +75,29 @@ namespace Medical.GUI
             {
                 allowValueChanges = false;
                 String value = editBox.OnlyText;
-                int color;
-                if (int.TryParse(value, NumberStyles.HexNumber, null, out color))
+                int rgba;
+                Color color = Color.White;
+                bool failed = true;
+                if (int.TryParse(value, NumberStyles.HexNumber, null, out rgba))
                 {
-                    Property.setValue(1, Color.FromARGB(color));
+                    if (value.Length == 6)
+                    {
+                        color = Color.FromRGB(rgba);
+                        failed = false;
+                    }
+                    else if(value.Length == 8)
+                    {
+                        color = Color.FromRGBA(rgba);
+                        failed = false;
+                    }
+                    if (!failed)
+                    {
+                        Property.setValue(1, color);
+                    }
                 }
-                else
+                if(failed)
                 {
-                    MessageBox.show("Invalid color, format is ARGB in hex, 00000000 through FFFFFFFF", "Color Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    MessageBox.show("Invalid color, format is RGBA in hex, 00000000 through FFFFFFFF", "Color Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                 }
                 allowValueChanges = true;
             }
