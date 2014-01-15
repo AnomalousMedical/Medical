@@ -52,9 +52,16 @@ namespace Lecture.GUI
             bool changesMade = elementStyleEditor.buildStyleString(styleString);
             changesMade = slideImageEditor.buildStyleString(styleString) | changesMade;
             changesMade = slideImageEditor.applyToElement(element) | changesMade;
-            if (changesMade && styleString.Length > 0)
+            if (changesMade)
             {
-                element.SetAttribute("style", styleString.ToString());
+                if (styleString.Length > 0)
+                {
+                    element.SetAttribute("style", styleString.ToString());
+                }
+                else
+                {
+                    element.RemoveAttribute("style");
+                }
             }
             return changesMade;
         }

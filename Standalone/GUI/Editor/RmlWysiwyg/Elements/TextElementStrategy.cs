@@ -10,6 +10,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
     class TextElementStrategy : ElementStrategy
     {
         private ElementTextEditor textEditor;
+        private ElementStyleEditor styleEditor;
         private ElementAttributeEditor attributeEditor;
 
         public TextElementStrategy(String tag, String previewIconName = "Editor/HeaderIcon")
@@ -27,8 +28,10 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             }
             textEditor = new ElementTextEditor(rml);
             attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
+            styleEditor = new ElementStyleEditor(element, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
+            editor.addElementEditor(styleEditor);
             editor.addElementEditor(attributeEditor);
             return editor;
         }
@@ -38,6 +41,16 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             String text = textEditor.Text;
             element.InnerRml = text.Replace("\n", "<br />");
             attributeEditor.applyToElement(element);
+            StringBuilder sb = new StringBuilder();
+            styleEditor.buildStyleString(sb);
+            if (sb.Length > 0)
+            {
+                element.SetAttribute("style", sb.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("style");
+            }
             return true;
         }
 
