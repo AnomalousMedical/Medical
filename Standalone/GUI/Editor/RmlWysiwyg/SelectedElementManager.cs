@@ -53,9 +53,24 @@ namespace Medical.GUI
             xAdjust.MouseButtonReleased += dragHandle_Released;
 
             yAdjust = parentWidget.findWidget("YAdjust");
+            yAdjust.MouseDrag += yAdjust_MouseDrag;
+            yAdjust.MouseButtonPressed += dragHandle_Pressed;
+            yAdjust.MouseButtonReleased += dragHandle_Released;
+
             xyAdjust = parentWidget.findWidget("XYAdjust");
+            xyAdjust.MouseDrag += xyAdjust_MouseDrag;
+            xyAdjust.MouseButtonPressed += dragHandle_Pressed;
+            xyAdjust.MouseButtonReleased += dragHandle_Released;
+
             yWidthAdjust = parentWidget.findWidget("YWidthAdjust");
+            yWidthAdjust.MouseDrag += yWidthAdjust_MouseDrag;
+            yWidthAdjust.MouseButtonPressed += dragHandle_Pressed;
+            yWidthAdjust.MouseButtonReleased += dragHandle_Released;
+
             xHeightAdjust = parentWidget.findWidget("XHeightAdjust");
+            xHeightAdjust.MouseDrag += xHeightAdjust_MouseDrag;
+            xHeightAdjust.MouseButtonPressed += dragHandle_Pressed;
+            xHeightAdjust.MouseButtonReleased += dragHandle_Released;
         }
 
         public void clearSelectedAndHighlightedElement()
@@ -154,45 +169,62 @@ namespace Medical.GUI
             xHeightAdjust.Visible = show;
         }
 
-        void genericAdjust(Widget source, EventArgs e, Func<IntVector2, Rect> computeSizeCallback)
+        void genericAdjust(Widget source, EventArgs e, ResizeType resizeType, Func<IntVector2, Rect> computeSizeCallback)
         {
             if (elementStrategy != null && selectedElement != null)
             {
                 MouseEventArgs me = (MouseEventArgs)e;
                 IntVector2 mouseOffset = me.Position - mouseStartPosition;
-                Rect newSize = computeSizeCallback(mouseOffset);
-                sendSizeChange(newSize, ResizeType.WidthHeight, new IntSize2(parentWidget.Width, parentWidget.Height));
+                Rect newRect = computeSizeCallback(mouseOffset);
+
+                IntSize2 boundsRect = new IntSize2(parentWidget.Width, parentWidget.Height);
+                float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
+                newRect = newRect / ratio;
+                boundsRect = (IntSize2)(boundsRect / ratio);
+
+                elementStrategy.changeSizePreview(selectedElement, (IntRect)newRect, resizeType, boundsRect);
+                updateHighlightPosition();
             }
         }
 
         void bothAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height + mouseOffset.y));
+            genericAdjust(source, e, ResizeType.WidthHeight, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height + mouseOffset.y));
         }
 
         void heightAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height + mouseOffset.y));
+            genericAdjust(source, e, ResizeType.Height, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height + mouseOffset.y));
         }
 
         void widthAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
+            genericAdjust(source, e, ResizeType.Width, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
         }
 
         void xAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height));
+            genericAdjust(source, e, ResizeType.Left, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height));
         }
 
-        private void sendSizeChange(Rect newRect, ResizeType resizeType, IntSize2 boundsRect)
+        void yAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
-            newRect = newRect / ratio;
-            boundsRect = (IntSize2)(boundsRect / ratio);
+            genericAdjust(source, e, ResizeType.Top, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top + mouseOffset.y, elementStartRect.Width, elementStartRect.Height));
+        }
 
-            elementStrategy.changeSizePreview(selectedElement, (IntRect)newRect, resizeType, boundsRect);
-            updateHighlightPosition();
+        void xyAdjust_MouseDrag(Widget source, EventArgs e)
+        {
+            genericAdjust(source, e, ResizeType.LeftTop, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top + mouseOffset.y, elementStartRect.Width, elementStartRect.Height));
+        }
+
+        void yWidthAdjust_MouseDrag(Widget source, EventArgs e)
+        {
+            genericAdjust(source, e, ResizeType.TopWidth, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top + mouseOffset.y, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
+        }
+
+        void xHeightAdjust_MouseDrag(Widget source, EventArgs e)
+        {
+            genericAdjust(source, e, ResizeType.LeftHeight, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height + mouseOffset.y));
         }
 
         void dragHandle_Pressed(Widget source, EventArgs e)
