@@ -246,7 +246,7 @@ namespace Lecture.GUI
             element.SetAttribute("width", widthEdit.Value.ToString());
             element.SetAttribute("height", heightEdit.Value.ToString());
             element.SetAttribute("scale", "true");
-            element.SetAttribute("style", String.Format("margin-left:{0}sp;margin-top:{1}sp", ImagePosition.x, ImagePosition.y));
+            element.SetAttribute("style", String.Format("margin-left:{0}sp;margin-top:{1}sp;", ImagePosition.x, ImagePosition.y));
             return true;
         }
 
