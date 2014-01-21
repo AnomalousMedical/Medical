@@ -73,19 +73,14 @@ namespace Lecture.GUI
 
         public IntSize2 getDesiredSize(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
         {
-            int left = 1;
-            int top = TaskButtonTop;
             int widgetWidth = layoutContainer.RigidParentWorkingSize.Width;
-            foreach (SlideTaskbarItem taskButton in taskbarItems)
+            int itemsWidth = (TaskButtonWidth + TaskButtonPadding) * taskbarItems.Count;
+            int height = TaskButtonHeight + TaskButtonPadding;
+            if (itemsWidth > widgetWidth)
             {
-                left += TaskButtonWidth + TaskButtonPadding;
-                if (left + TaskButtonWidth > widgetWidth)
-                {
-                    left = 1;
-                    top += TaskButtonHeight + TaskButtonPadding;
-                }
+                height *= (int)Math.Ceiling((double)itemsWidth / widgetWidth);
             }
-            return new IntSize2(widgetWidth, top + TaskButtonHeight + TaskButtonPadding);
+            return new IntSize2(widgetWidth, height + TaskButtonTop);
         }
 
         public override void topLevelResized()
