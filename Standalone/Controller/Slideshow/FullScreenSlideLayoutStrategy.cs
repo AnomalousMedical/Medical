@@ -131,6 +131,7 @@ namespace Medical
         {
             private Dictionary<LayoutElementName, MyGUIViewHost> viewHosts = new Dictionary<LayoutElementName, MyGUIViewHost>();
             private FullScreenSlideLayoutStrategy masterStrategy;
+            private int lastWorkingParentHeight = int.MinValue;
 
             public InstanceStrategy(FullScreenSlideLayoutStrategy masterStrategy)
             {
@@ -188,6 +189,23 @@ namespace Medical
             {
                 viewHosts.Add(view.View.ElementName, view);
                 view.ViewClosing += view_ViewClosing;
+                view.ViewResized += view_ViewResized;
+            }
+
+            void view_ViewResized(ViewHost view)
+            {
+                IntSize2 rigidParentSize = view.Container.RigidParentWorkingSize;
+                if (rigidParentSize.Height != lastWorkingParentHeight)
+                {
+                    float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale;
+                    SlidePanel panel = masterStrategy.panels[view.View.ElementName];
+                    int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
+                    if (viewHosts.ContainsKey(view.View.ElementName))
+                    {
+                        viewHosts[view.View.ElementName].changeScale(ratio);
+                    }
+                    lastWorkingParentHeight = rigidParentSize.Height;
+                }
             }
 
             void view_ViewClosing(ViewHost view)
