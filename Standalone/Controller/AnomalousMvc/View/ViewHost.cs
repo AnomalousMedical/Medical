@@ -17,6 +17,8 @@ namespace Medical.Controller.AnomalousMvc
 
         bool _RequestClosed { get; set; }
 
+        bool Animating { get; }
+
         /// <summary>
         /// A callback to send to the GUI manager that will be called when it is done with this view host.
         /// </summary>

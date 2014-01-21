@@ -118,6 +118,8 @@ namespace Medical.GUI.AnomalousMvc
 
         public bool Open { get; private set; }
 
+        public bool Animating { get; private set; }
+
         /// <summary>
         /// A callback to send to the GUI manager that will be called when it is done with this view host.
         /// </summary>
@@ -149,11 +151,13 @@ namespace Medical.GUI.AnomalousMvc
 
         void layoutContainer_AnimatedResizeCompleted()
         {
+            Animating = false;
             component.animatedResizeCompleted();
         }
 
         void layoutContainer_AnimatedResizeStarted(IntSize2 finalSize)
         {
+            Animating = true;
             component.animatedResizeStarted(finalSize);
         }
     }

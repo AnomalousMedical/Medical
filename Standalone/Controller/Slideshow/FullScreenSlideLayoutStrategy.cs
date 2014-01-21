@@ -153,17 +153,20 @@ namespace Medical
 
             void view_ViewResized(ViewHost view)
             {
-                IntSize2 rigidParentSize = view.Container.RigidParentWorkingSize;
-                if (rigidParentSize.Height != lastWorkingParentHeight)
+                if (!view.Animating || lastWorkingParentHeight == int.MinValue)
                 {
-                    float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale;
-                    SlidePanel panel = masterStrategy.panels[view.View.ElementName];
-                    int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
-                    if (viewHosts.ContainsKey(view.View.ElementName))
+                    IntSize2 rigidParentSize = view.Container.RigidParentWorkingSize;
+                    if (rigidParentSize.Height != lastWorkingParentHeight)
                     {
-                        viewHosts[view.View.ElementName].changeScale(ratio);
+                        float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale;
+                        SlidePanel panel = masterStrategy.panels[view.View.ElementName];
+                        int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
+                        if (viewHosts.ContainsKey(view.View.ElementName))
+                        {
+                            viewHosts[view.View.ElementName].changeScale(ratio);
+                        }
+                        lastWorkingParentHeight = rigidParentSize.Height;
                     }
-                    lastWorkingParentHeight = rigidParentSize.Height;
                 }
             }
 
