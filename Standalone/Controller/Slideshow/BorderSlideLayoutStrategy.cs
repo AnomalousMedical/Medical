@@ -170,6 +170,7 @@ namespace Medical
                 viewHosts.Add(view.View.ElementName, view);
                 view.ViewClosing += view_ViewClosing;
                 view.ViewResized += view_ViewResized;
+                lastWorkingParentHeight = int.MinValue;
             }
 
             void view_ViewResized(ViewHost view)
