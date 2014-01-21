@@ -35,7 +35,7 @@ namespace Medical
             this.layoutStrategy = layoutStrategy;
         }
 
-        public void setupContext(AnomalousMvcContext context, String name, ResourceProvider resourceProvider)
+        public void setupContext(AnomalousMvcContext context, String name, ResourceProvider resourceProvider, SlideDisplayManager displayManager)
         {
             MvcController controller = new MvcController(name);
             RunCommandsAction showCommand = new RunCommandsAction("Show");
@@ -51,7 +51,7 @@ namespace Medical
             }
             context.Controllers.add(controller);
 
-            layoutStrategy.createViews(name, showCommand, context, this);            
+            layoutStrategy.createViews(name, showCommand, context, displayManager, this);            
 
             controller.Actions.add(showCommand);
             customizeController(controller, showCommand);

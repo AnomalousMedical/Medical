@@ -607,9 +607,10 @@ namespace Lecture
             }
             rmlEditors.Clear();
 
+            SlideDisplayManager displayManager = new SlideDisplayManager();
             foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
             {
-                SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy();
+                SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy(displayManager);
                 String editorViewName = panel.createViewName("RmlView");
                 RawRmlWysiwygView rmlView = new RawRmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
                 rmlView.ElementName = panel.ElementName;

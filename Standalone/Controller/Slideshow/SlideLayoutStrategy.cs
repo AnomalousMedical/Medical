@@ -10,9 +10,9 @@ namespace Medical
 {
     public interface SlideLayoutStrategy : Saveable
     {
-        void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide);
+        void createViews(String name, RunCommandsAction showCommand, AnomalousMvcContext context, SlideDisplayManager displayManager, Slide slide);
 
-        SlideInstanceLayoutStrategy createLayoutStrategy();
+        SlideInstanceLayoutStrategy createLayoutStrategy(SlideDisplayManager displayManager);
 
         void addPanel(SlidePanel panel);
 

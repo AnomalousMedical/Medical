@@ -21,9 +21,9 @@ namespace Medical
 
         }
 
-        public void createViews(string name, RunCommandsAction showCommand, AnomalousMvcContext context, Slide slide)
+        public void createViews(string name, RunCommandsAction showCommand, AnomalousMvcContext context, SlideDisplayManager displayManager, Slide slide)
         {
-            SlideInstanceLayoutStrategy instanceStrategy = createLayoutStrategy();
+            SlideInstanceLayoutStrategy instanceStrategy = createLayoutStrategy(displayManager);
             foreach (SlidePanel panel in panels.Values)
             {
                 MyGUIView view = panel.createView(slide, name);
@@ -33,9 +33,9 @@ namespace Medical
             }
         }
 
-        public SlideInstanceLayoutStrategy createLayoutStrategy()
+        public SlideInstanceLayoutStrategy createLayoutStrategy(SlideDisplayManager displayManager)
         {
-            return new InstanceStrategy(this);
+            return new InstanceStrategy(this, displayManager);
         }
 
         public void addPanel(SlidePanel panel)
@@ -132,10 +132,13 @@ namespace Medical
             private Dictionary<LayoutElementName, MyGUIViewHost> viewHosts = new Dictionary<LayoutElementName, MyGUIViewHost>();
             private FullScreenSlideLayoutStrategy masterStrategy;
             private int lastWorkingParentHeight = int.MinValue;
+            private SlideDisplayManager displayManager;
 
-            public InstanceStrategy(FullScreenSlideLayoutStrategy masterStrategy)
+            public InstanceStrategy(FullScreenSlideLayoutStrategy masterStrategy, SlideDisplayManager displayManager)
             {
                 this.masterStrategy = masterStrategy;
+                this.displayManager = displayManager;
+                displayManager.DisplayModeChanged += displayManager_DisplayModeChanged;
             }
 
             public void addView(MyGUIView view)
@@ -153,26 +156,38 @@ namespace Medical
 
             void view_ViewResized(ViewHost view)
             {
-                if (!view.Animating || lastWorkingParentHeight == int.MinValue)
+                if (displayManager.VectorMode)
                 {
-                    IntSize2 rigidParentSize = view.Container.RigidParentWorkingSize;
-                    if (rigidParentSize.Height != lastWorkingParentHeight)
+                    if (!view.Animating || lastWorkingParentHeight == int.MinValue)
                     {
-                        float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale;
-                        SlidePanel panel = masterStrategy.panels[view.View.ElementName];
-                        int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
-                        if (viewHosts.ContainsKey(view.View.ElementName))
+                        IntSize2 rigidParentSize = view.Container.RigidParentWorkingSize;
+                        if (rigidParentSize.Height != lastWorkingParentHeight)
                         {
-                            viewHosts[view.View.ElementName].changeScale(ratio);
+                            float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale * displayManager.AdditionalZoomMultiple;
+                            SlidePanel panel = masterStrategy.panels[view.View.ElementName];
+                            int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
+                            if (viewHosts.ContainsKey(view.View.ElementName))
+                            {
+                                viewHosts[view.View.ElementName].changeScale(ratio);
+                            }
+                            lastWorkingParentHeight = rigidParentSize.Height;
                         }
-                        lastWorkingParentHeight = rigidParentSize.Height;
                     }
+                }
+                else if (viewHosts.ContainsKey(view.View.ElementName)) //Try to avoid doing this over and over
+                {
+                    viewHosts[view.View.ElementName].changeScale(ScaleHelper.ScaleFactor * displayManager.AdditionalZoomMultiple);
                 }
             }
 
             void view_ViewClosing(ViewHost view)
             {
                 viewHosts.Remove(view.View.ElementName);
+            }
+
+            void displayManager_DisplayModeChanged(SlideDisplayManager obj)
+            {
+                lastWorkingParentHeight = int.MinValue;
             }
         }
     }

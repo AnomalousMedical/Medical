@@ -256,7 +256,8 @@ namespace Lecture
 
         private void refreshPanelPreviews(RunCommandsAction showEditorWindowsCommand)
         {
-            SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy();
+            SlideDisplayManager displayManager = new SlideDisplayManager();
+            SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy(displayManager);
             foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
             {
                 String editorViewName = panel.createViewName("RmlView");

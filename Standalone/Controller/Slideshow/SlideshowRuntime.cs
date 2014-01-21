@@ -23,6 +23,7 @@ namespace Medical
         private NavigationModel navModel;
         private ClosingTaskbar taskbar;
         private SingleChildChainLink taskbarLink;
+        private SlideDisplayManager displayManager;
 
         public SlideshowRuntime(List<Slide> slides, ResourceProvider resourceProvider, GUIManager guiManager, int startIndex, TaskController additionalTasks)
         {
@@ -32,10 +33,11 @@ namespace Medical
                 mvcContext = SharedXmlSaver.Load<AnomalousMvcContext>(resourceStream);
             }
             navModel = (NavigationModel)mvcContext.Models[SlideshowProps.BaseContextProperties.NavigationModel];
+            displayManager = new SlideDisplayManager();
             foreach (Slide slide in slides)
             {
                 String slideName = slide.UniqueName;
-                slide.setupContext(mvcContext, slideName, resourceProvider);
+                slide.setupContext(mvcContext, slideName, resourceProvider, displayManager);
 
                 NavigationLink link = new NavigationLink(slideName, null, slideName + "/Show");
                 navModel.addNavigationLink(link);
@@ -62,6 +64,59 @@ namespace Medical
             });
             taskbar.addItem(new TaskTaskbarItem(previousTask));
             taskbar.addItem(new TaskTaskbarItem(nextTask));
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ToggleMode", "Toggle Display Mode", CommonResources.NoIcon, "None", arg =>
+            {
+                displayManager.VectorMode = !displayManager.VectorMode;
+                guiManager.layout();
+            })));
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomIn", "Zoom In", CommonResources.NoIcon, "None", arg =>
+            {
+                if (displayManager.AdditionalZoomMultiple < 0.8f)
+                {
+                    displayManager.AdditionalZoomMultiple = 0.8f;
+                }
+                else if (displayManager.AdditionalZoomMultiple < 1.0f)
+                {
+                    displayManager.AdditionalZoomMultiple = 1.0f;
+                }
+                else if (displayManager.AdditionalZoomMultiple < 1.3f)
+                {
+                    displayManager.AdditionalZoomMultiple = 1.3f;
+                }
+                else if (displayManager.AdditionalZoomMultiple < 1.7f)
+                {
+                    displayManager.AdditionalZoomMultiple = 1.7f;
+                }
+                else
+                {
+                    displayManager.AdditionalZoomMultiple = 2.0f;
+                }
+                guiManager.layout();
+            })));
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomOut", "Zoom Out", CommonResources.NoIcon, "None", arg =>
+            {
+                if (displayManager.AdditionalZoomMultiple > 1.7f)
+                {
+                    displayManager.AdditionalZoomMultiple = 1.7f;
+                }
+                else if (displayManager.AdditionalZoomMultiple > 1.3f)
+                {
+                    displayManager.AdditionalZoomMultiple = 1.3f;
+                }
+                else if (displayManager.AdditionalZoomMultiple > 1.0f)
+                {
+                    displayManager.AdditionalZoomMultiple = 1.0f;
+                }
+                else if (displayManager.AdditionalZoomMultiple > 0.8f)
+                {
+                    displayManager.AdditionalZoomMultiple = 0.8f;
+                }
+                else
+                {
+                    displayManager.AdditionalZoomMultiple = 0.5f;
+                }
+                guiManager.layout();
+            })));
 
             foreach (Task task in additionalTasks.Tasks)
             {
