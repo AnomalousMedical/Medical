@@ -141,48 +141,6 @@ namespace Medical
             public void addView(MyGUIView view)
             {
                 view.ViewHostCreated += view_ViewHostCreated;
-                view.GetDesiredSizeOverride = this.layoutView;
-            }
-
-            public IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
-            {
-                IntSize2 rigidParentSize = layoutContainer.RigidParentWorkingSize;
-                float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale;
-                SlidePanel panel = masterStrategy.panels[view.ElementName];
-                SlidePanel opposite;
-                int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
-                if (viewHosts.ContainsKey(view.ElementName))
-                {
-                    viewHosts[view.ElementName].changeScale(ratio);
-                }
-
-                switch (view.ElementName.LocationHint)
-                {
-                    case ViewLocations.Left:
-                        if (masterStrategy.PanelCount > 1 && masterStrategy.panels.TryGetValue(new BorderLayoutElementName(view.ElementName.Name, BorderLayoutLocations.Right), out opposite))
-                        {
-                            return new IntSize2((int)(rigidParentSize.Width * 0.5f), widget.Height);
-                        }
-                        else
-                        {
-                            return new IntSize2(rigidParentSize.Width, widget.Height);
-                        }
-                    case ViewLocations.Right:
-                        if (masterStrategy.PanelCount > 1 && masterStrategy.panels.TryGetValue(new BorderLayoutElementName(view.ElementName.Name, BorderLayoutLocations.Left), out opposite))
-                        {
-                            return new IntSize2(rigidParentSize.Width - (int)(rigidParentSize.Width * 0.5f), widget.Height);
-                        }
-                        else
-                        {
-                            return new IntSize2(rigidParentSize.Width, widget.Height);
-                        }
-                    case ViewLocations.Top:
-                        return new IntSize2(widget.Width, size);
-                    case ViewLocations.Bottom:
-                        return new IntSize2(widget.Width, size);
-                    default:
-                        return new IntSize2(size, size);
-                }
             }
 
             void view_ViewHostCreated(MyGUIViewHost view)

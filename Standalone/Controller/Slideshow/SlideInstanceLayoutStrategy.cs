@@ -11,7 +11,5 @@ namespace Medical
     public interface SlideInstanceLayoutStrategy
     {
         void addView(MyGUIView view);
-
-        IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view);
     }
 }
