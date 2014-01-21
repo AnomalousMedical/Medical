@@ -176,7 +176,7 @@ namespace Medical
                 }
                 else if (viewHosts.ContainsKey(view.View.ElementName)) //Try to avoid doing this over and over
                 {
-                    viewHosts[view.View.ElementName].changeScale(ScaleHelper.ScaleFactor * displayManager.AdditionalZoomMultiple);
+                    viewHosts[view.View.ElementName].changeScale(displayManager.AdditionalZoomMultiple);
                 }
             }
 
