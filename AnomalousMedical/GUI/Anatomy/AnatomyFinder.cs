@@ -212,7 +212,20 @@ namespace Medical.GUI
             ButtonGridItem selectedItem = anatomyList.SelectedItem;
             if (selectedItem != null)
             {
-                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject, left, top, window.Left, window.Right, window.Top, window.Bottom);
+                int deadLeft = int.MinValue;
+                int deadRight = int.MinValue;
+                int deadBottom = int.MinValue;
+                int deadTop = int.MinValue;
+
+                if (window.Visible)
+                {
+                    deadLeft = window.Left;
+                    deadRight = window.Right;
+                    deadBottom = window.Bottom;
+                    deadTop = window.Top;
+                }
+
+                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject, left, top, deadLeft, deadRight, deadTop, deadBottom);
             }
             else
             {
