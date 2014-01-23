@@ -64,6 +64,11 @@ namespace Medical.GUI
                 String value = color.toRGBA().ToString("X8");
                 editBox.OnlyText = value;
                 setValue();
+            },
+            () =>
+            {
+                editBox.OnlyText = null;
+                setValue();
             });
         }
 

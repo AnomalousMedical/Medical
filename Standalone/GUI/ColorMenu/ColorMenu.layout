@@ -16,8 +16,12 @@
             <UserString key="ItemPaddingY" value="2"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 143 88 20" align="Left Bottom" name="MoreColorsButton">
+        <Widget type="Button" skin="Button" position="4 143 84 20" align="Left Bottom" name="MoreColorsButton">
             <Property key="Caption" value="More Colors"/>
+            <Property key="TextAlign" value="HCenter VCenter"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="93 143 84 20" align="Left Bottom" name="ClearColorButton">
+            <Property key="Caption" value="Clear Color"/>
             <Property key="TextAlign" value="HCenter VCenter"/>
         </Widget>
     </Widget>

@@ -13,21 +13,23 @@ namespace Medical.GUI
         private static bool colorsLoaded = false;
         public delegate void ColorChosenDelegate(Color color);
 
-        public static ColorMenu ShowColorMenu(int left, int top, ColorChosenDelegate colorChosenCallback)
+        public static ColorMenu ShowColorMenu(int left, int top, ColorChosenDelegate colorChosenCallback, Action colorClearedCallback = null)
         {
-            ColorMenu colorMenu = new ColorMenu(colorChosenCallback);
+            ColorMenu colorMenu = new ColorMenu(colorChosenCallback, colorClearedCallback);
             colorMenu.show(left, top);
             return colorMenu;
         }
 
         private ColorChosenDelegate colorChosenCallback;
+        private Action colorClearedCallback;
         private SingleSelectButtonGrid colorGrid;
         private Color customColor = Color.Black;
 
-        private ColorMenu(ColorChosenDelegate colorChosenCallback)
+        private ColorMenu(ColorChosenDelegate colorChosenCallback, Action colorClearedCallback)
             :base("Medical.GUI.ColorMenu.ColorMenu.layout")
         {
             this.colorChosenCallback = colorChosenCallback;
+            this.colorClearedCallback = colorClearedCallback;
 
             colorGrid = new SingleSelectButtonGrid(widget.findWidget("ColorGrid") as ScrollView);
             for (int i = 0; i < 77; ++i)
@@ -41,6 +43,10 @@ namespace Medical.GUI
             moreColorsButton.MouseButtonClick += new MyGUIEvent(moreColorsButton_MouseButtonClick);
 
             this.Hidden += new EventHandler(ColorMenu_Hidden);
+
+            Button clearColorButton = (Button)widget.findWidget("ClearColorButton");
+            clearColorButton.Visible = colorClearedCallback != null;
+            clearColorButton.MouseButtonClick += clearColorButton_MouseButtonClick;
         }
 
         protected override void loadResources()
@@ -87,6 +93,15 @@ namespace Medical.GUI
                     colorGrid_SelectedValueChanged(this, EventArgs.Empty);
                 }
             });
+        }
+
+        void clearColorButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (colorClearedCallback != null)
+            {
+                colorClearedCallback.Invoke();
+            }
+            this.hide();
         }
 
         void ColorMenu_Hidden(object sender, EventArgs e)
