@@ -202,12 +202,19 @@ namespace Medical.GUI
             loadDocumentFile(documentName, true);
         }
 
+        /// <summary>
+        /// Set the current rml. If you pass true for considerAsChange the RmlEdited event will fire
+        /// and the editor will be set as having changes.
+        /// </summary>
+        /// <param name="rml">The rml to set</param>
+        /// <param name="keepScrollPosition">True to try to maintain the current scroll position.</param>
+        /// <param name="considerAsChange">True to fire the RmlEdited event with the rml you have supplied.</param>
         public void setRml(String rml, bool keepScrollPosition, bool considerAsChange = false)
         {
             setDocumentRml(rml, keepScrollPosition);
             if (considerAsChange)
             {
-                changesMade = true;
+                rmlModified();
             }
         }
 

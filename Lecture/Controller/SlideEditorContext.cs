@@ -496,7 +496,7 @@ namespace Lecture
             bool updateThumb = forceUpdateThumb;
             foreach (var editor in rmlEditors.Values)
             {
-                updateThumb |= editor.commitText();
+                updateThumb = editor.commitText() | updateThumb;
             }
             if (updateThumb)
             {
