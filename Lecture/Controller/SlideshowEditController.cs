@@ -971,6 +971,10 @@ namespace Lecture
             else
             {
                 medicalSlideTemplate.createItem("", editorController);
+                //If we got here its because there were no slides in the slideshow, adding the slide on the
+                //line above will cause an undo state to be created, since we know we have just loaded a fresh
+                //slideshow with no changes, just clear the undo buffer so the user cannot undo to having no slides
+                undoBuffer.clear();
             }
         }
 
