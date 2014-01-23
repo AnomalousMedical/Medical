@@ -326,6 +326,11 @@ namespace Medical.GUI
                 return new PropertiesFormColor(property, parent);
             });
 
+            FormCreationMethods.Add(typeof(Color?), (property, parent) =>
+            {
+                return new PropertiesFormColorNullable(property, parent);
+            });
+
             FormCreationMethods.Add(typeof(ChoiceObject), (property, parent) =>
             {
                 return new PropertiesFormComboBox(property, parent, ((ChoiceObject)property.getRealValue(1)).Choices);

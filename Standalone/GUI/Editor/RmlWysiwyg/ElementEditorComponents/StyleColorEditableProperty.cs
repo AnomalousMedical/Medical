@@ -19,7 +19,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         {
             if (column == 1)
             {
-                return typeof(Color);
+                return typeof(Color?);
             }
             return base.getPropertyType(column);
         }
@@ -37,7 +37,15 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         {
             if (column == 1)
             {
-                base.setValueStr(column, String.Format("#{0:X6}", ((Color)value).toRGB()));
+                Color? colorValue = (Color?)value;
+                if (colorValue.HasValue)
+                {
+                    base.setValueStr(column, String.Format("#{0:X6}", colorValue.Value.toRGB()));
+                }
+                else
+                {
+                    base.setValueStr(column, null);
+                }
             }
             else
             {
@@ -45,7 +53,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        private Color getColor(Property property)
+        private Color? getColor(Property property)
         {
             if (property != null)
             {
@@ -67,7 +75,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                     }
                 }
             }
-            return new Color(0, 0, 0, 0);
+            return null;
         }
 
     }

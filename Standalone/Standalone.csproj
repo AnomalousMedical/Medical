@@ -298,6 +298,7 @@
     <Compile Include="GUI\Editor\OpenPropManager\OpenPropManagerView.cs" />
     <Compile Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\ConstrainableFormComponent.cs" />
+    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormColorNullable.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormIntSize2.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormButton.cs" />
     <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormColor.cs" />
