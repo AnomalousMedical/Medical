@@ -29,14 +29,14 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             declarations = sheet.Rulesets[0].Declarations;
 
             EditInterface editInterface = new EditInterface(element.TagName);
-            addProperty(new StyleEditableProperty("color", declarations, UnitType.RGB), editInterface);
-            addProperty(new StyleEditableProperty("background-color", declarations, UnitType.RGB), editInterface);
-            addProperty(new StyleEditableProperty("border-color", declarations, UnitType.RGB), editInterface);
+            addProperty(new StyleColorEditableProperty("color", declarations), editInterface);
+            addProperty(new StyleColorEditableProperty("background-color", declarations), editInterface);
+            addProperty(new StyleColorEditableProperty("border-color", declarations), editInterface);
             addProperty(new StyleEditableProperty("border-width", declarations, UnitType.ScaledPixel), editInterface);
             addProperty(new StyleEditableProperty("font-size", declarations, UnitType.ScaledPixel), editInterface);
-            //addProperty(new RmlStyleEditableProperty("float", findProperty(declarations, "float"), floatChoices), editInterface);
-            //addProperty(new RmlStyleEditableProperty("clear", findProperty(declarations, "clear"), clearChoices), editInterface);
-            //addProperty(new RmlStyleEditableProperty("position", findProperty(declarations, "position"), positionChoices), editInterface);
+            addProperty(new StyleChoiceEditableProperty("float", declarations, UnitType.Unknown, floatChoices), editInterface);
+            addProperty(new StyleChoiceEditableProperty("clear", declarations, UnitType.Unknown, clearChoices), editInterface);
+            addProperty(new StyleChoiceEditableProperty("position", declarations, UnitType.Unknown, positionChoices), editInterface);
             propertiesForm.EditInterface = editInterface;
         }
 

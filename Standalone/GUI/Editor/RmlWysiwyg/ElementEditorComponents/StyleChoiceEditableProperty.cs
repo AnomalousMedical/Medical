@@ -5,21 +5,22 @@ using System.Text;
 using Engine.Editing;
 using libRocketPlugin;
 using Engine;
+using ExCSS;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    class RmlChoiceEditableProperty : RmlEditableProperty
+    class StyleChoiceEditableProperty : StyleEditableProperty
     {
         private ChoiceObject choiceObject = new ChoiceObject();
 
-        public RmlChoiceEditableProperty(String name, String value, CreateBrowser browserBuildCallback = null)
-            :base(name, value, browserBuildCallback)
+        public StyleChoiceEditableProperty(String name, StyleDeclaration declaration, UnitType unitType, CreateBrowser browserBuildCallback = null)
+            :base(name, declaration, unitType, browserBuildCallback)
         {
             
         }
 
-        public RmlChoiceEditableProperty(String name, String value, IEnumerable<Pair<String, Object>> choices, CreateBrowser browserBuildCallback = null)
-            : base(name, value, browserBuildCallback)
+        public StyleChoiceEditableProperty(String name, StyleDeclaration declaration, UnitType unitType, IEnumerable<Pair<String, Object>> choices, CreateBrowser browserBuildCallback = null)
+            : base(name, declaration, unitType, browserBuildCallback)
         {
             addChoices(choices);
         }

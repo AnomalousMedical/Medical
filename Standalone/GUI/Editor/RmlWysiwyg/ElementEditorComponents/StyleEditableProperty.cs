@@ -13,7 +13,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         public delegate Browser CreateBrowser(EditUICallback uiCallback);
 
         private String name;
-        //private String value;
         private CreateBrowser browserBuildCallback;
         private StyleDeclaration declaration;
         private Property property;
@@ -155,6 +154,14 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             set
             {
                 name = value;
+            }
+        }
+
+        public Property Property
+        {
+            get
+            {
+                return property;
             }
         }
 
