@@ -48,6 +48,7 @@ namespace Lecture.GUI
 
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
+            element.ClearLocalStyles();
             StringBuilder styleString = new StringBuilder();
             bool changesMade = elementStyleEditor.buildStyleString(styleString);
             changesMade = slideImageEditor.buildStyleString(styleString) | changesMade;

@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Engine.Editing;
+using ExCSS;
 using libRocketPlugin;
 using MyGUIPlugin;
 using System;
@@ -13,25 +14,33 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
     {
         private ScrollView propertiesScroll;
         private ScrollablePropertiesForm propertiesForm;
-        private List<RmlEditableProperty> originalProperties;
+        private StyleSheet sheet;
+        private StyleDeclaration declarations;
 
         public ElementStyleEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider)
             : base("Medical.GUI.Editor.RmlWysiwyg.ElementEditorComponents.ElementStyleEditor.layout", "Style")
         {
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
             propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
-            originalProperties = new List<RmlEditableProperty>(element.NumAttributes);
+
+            String style = element.GetAttributeString("style");
+            Parser parser = new Parser();
+            sheet = parser.Parse(String.Format(".i{{{0}}}", style));
+            declarations = sheet.Rulesets[0].Declarations;
 
             EditInterface editInterface = new EditInterface(element.TagName);
-            addProperty(new RmlColorEditableProperty("color", element.GetPropertyVariant("color").ColorValue), editInterface);
-            addProperty(new RmlColorEditableProperty("background-color", element.GetPropertyVariant("background-color").ColorValue), editInterface);
-            addProperty(new RmlChoiceEditableProperty("float", element.GetPropertyString("float"), floatChoices), editInterface);
-            addProperty(new RmlChoiceEditableProperty("clear", element.GetPropertyString("clear"), clearChoices), editInterface);
-            addProperty(new RmlChoiceEditableProperty("position", element.GetPropertyString("position"), positionChoices), editInterface);
+            addProperty(new StyleEditableProperty("color", declarations, UnitType.RGB), editInterface);
+            addProperty(new StyleEditableProperty("background-color", declarations, UnitType.RGB), editInterface);
+            addProperty(new StyleEditableProperty("border-color", declarations, UnitType.RGB), editInterface);
+            addProperty(new StyleEditableProperty("border-width", declarations, UnitType.ScaledPixel), editInterface);
+            addProperty(new StyleEditableProperty("font-size", declarations, UnitType.ScaledPixel), editInterface);
+            //addProperty(new RmlStyleEditableProperty("float", findProperty(declarations, "float"), floatChoices), editInterface);
+            //addProperty(new RmlStyleEditableProperty("clear", findProperty(declarations, "clear"), clearChoices), editInterface);
+            //addProperty(new RmlStyleEditableProperty("position", findProperty(declarations, "position"), positionChoices), editInterface);
             propertiesForm.EditInterface = editInterface;
         }
 
-        private void addProperty(RmlEditableProperty property, EditInterface editInterface)
+        private void addProperty(StyleEditableProperty property, EditInterface editInterface)
         {
             property.ValueChanged += sender =>
             {
@@ -39,7 +48,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 fireApplyChanges();
             };
             editInterface.addEditableProperty(property);
-            originalProperties.Add(property);
         }
 
         public override void Dispose()
@@ -56,26 +64,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         public bool buildStyleString(StringBuilder styleString)
         {
-            foreach (RmlEditableProperty property in originalProperties)
-            {
-                if (property.Value != null)
-                {
-                    styleString.AppendFormat("{0}:{1};", property.Name, property.Value);
-                }
-            }
+            styleString.Append(declarations.ToString());
             return HasChanges;
         }
 
-        private static readonly Pair<String, Object>[] floatChoices = { new Pair<String, Object>("none", "none"),
+        private static readonly Pair<String, Object>[] floatChoices = { new Pair<String, Object>("inherit", null),
+                                                                        new Pair<String, Object>("none", "none"),
                                                                         new Pair<String, Object>("left", "left"),
                                                                         new Pair<String, Object>("right", "right") };
 
-        private static readonly Pair<String, Object>[] clearChoices = { new Pair<String, Object>("none", "none"),
+        private static readonly Pair<String, Object>[] clearChoices = { new Pair<String, Object>("inherit", null),
+                                                                        new Pair<String, Object>("none", "none"),
                                                                         new Pair<String, Object>("left", "left"),
                                                                         new Pair<String, Object>("right", "right"),
                                                                         new Pair<String, Object>("both", "both") };
 
-        private static readonly Pair<String, Object>[] positionChoices = { new Pair<String, Object>("static", "static"),
+        private static readonly Pair<String, Object>[] positionChoices = { new Pair<String, Object>("inherit", null),
+                                                                           new Pair<String, Object>("static", "static"),
                                                                            new Pair<String, Object>("relative", "relative"),
                                                                            new Pair<String, Object>("absolute", "absolute"),
                                                                            new Pair<String, Object>("fixed", "fixed")};

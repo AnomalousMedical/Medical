@@ -38,6 +38,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
+            element.ClearLocalStyles();
             String text = textEditor.Text;
             element.InnerRml = text.Replace("\n", "<br />");
             attributeEditor.applyToElement(element);

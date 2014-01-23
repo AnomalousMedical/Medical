@@ -40,7 +40,7 @@ namespace Medical.GUI
 
         public override void refreshData()
         {
-            uint index = comboBox.findItemIndexWith(Property.getValue(1));
+            uint index = comboBox.findItemIndexWithData(Property.getValue(1));
             if (index != ComboBox.Invalid)
             {
                 comboBox.SelectedIndex = index;

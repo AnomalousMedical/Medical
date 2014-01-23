@@ -9,7 +9,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
     class RmlColorEditableProperty : RmlEditableProperty
     {
         public RmlColorEditableProperty(String name, Color value, CreateBrowser browserBuildCallback = null)
-            : base(name, String.Format("#{0:X8}", value.toRGBA()), browserBuildCallback)
+            : base(name, String.Format("#{0:X6}", value.toRGB()), browserBuildCallback)
         {
             
         }
@@ -36,7 +36,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         {
             if (column == 1)
             {
-                this.Value = String.Format("#{0:X8}", ((Color)value).toRGBA());
+                this.Value = String.Format("#{0:X6}", ((Color)value).toRGB());
                 fireValueChanged();
             }
             else
