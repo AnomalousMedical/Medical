@@ -12,11 +12,12 @@ namespace Medical.GUI
 {
     class PropertiesFormColorNullable : PropertiesFormLayoutComponent
     {
-        private EditBox editBox;
+        private Color? color;
+        private Widget colorPreview;
         private bool allowValueChanges = true;
 
         public PropertiesFormColorNullable(EditableProperty property, Widget parent)
-            :base(property, parent, "Medical.GUI.Editor.PropertiesForm.PropertiesFormTextBoxBrowser.layout")
+            :base(property, parent, "Medical.GUI.Editor.PropertiesForm.PropertiesFormColorButton.layout")
         {
             widget.ForwardMouseWheelToParent = true;
 
@@ -28,58 +29,36 @@ namespace Medical.GUI
                 textBox.ClientWidget.ForwardMouseWheelToParent = true;
             }
 
-            Color? color = (Color?)property.getRealValue(1);
-            String value = null;
-            if (color.HasValue)
-            {
-                value = color.Value.toRGBA().ToString("X8");
-            }
+            Button colorButton = (Button)widget.findWidget("ColorButton");
+            colorButton.MouseButtonClick += colorButton_MouseButtonClick;
+            colorButton.ForwardMouseWheelToParent = true;
 
-            editBox = (EditBox)widget.findWidget("EditBox");
-            editBox.OnlyText = value;
-            editBox.ForwardMouseWheelToParent = true;
-            editBox.KeyLostFocus += new MyGUIEvent(editBox_KeyLostFocus);
-            editBox.EventEditSelectAccept += new MyGUIEvent(editBox_EventEditSelectAccept);
+            colorPreview = widget.findWidget("ColorPreview");
+            colorPreview.ForwardMouseWheelToParent = true;
 
-            Button browseButton = (Button)widget.findWidget("Browse");
-            browseButton.ForwardMouseWheelToParent = true;
-            browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
+            refreshData();
         }
 
         public override void refreshData()
         {
-            Color? color = (Color?)Property.getRealValue(1);
-            String value = null;
-            if (color.HasValue)
-            {
-                value = color.Value.toRGBA().ToString("X8");
-            }
-            editBox.OnlyText = value;
+            color = (Color?)Property.getRealValue(1);
+            syncColorToButton();
         }
 
-        void browseButton_MouseButtonClick(Widget source, EventArgs e)
+        void colorButton_MouseButtonClick(Widget source, EventArgs e)
         {
             ColorMenu.ShowColorMenu(source.AbsoluteLeft, source.AbsoluteTop + source.Height, color =>
             {
-                String value = color.toRGBA().ToString("X8");
-                editBox.OnlyText = value;
+                this.color = color;
+                syncColorToButton();
                 setValue();
             },
             () =>
             {
-                editBox.OnlyText = null;
+                this.color = null;
+                syncColorToButton();
                 setValue();
             });
-        }
-
-        void editBox_EventEditSelectAccept(Widget source, EventArgs e)
-        {
-            setValue();
-        }
-
-        void editBox_KeyLostFocus(Widget source, EventArgs e)
-        {
-            setValue();
         }
 
         private void setValue()
@@ -87,22 +66,21 @@ namespace Medical.GUI
             if (allowValueChanges)
             {
                 allowValueChanges = false;
-                String value = editBox.OnlyText;
-                int rgba;
-                Color? color = null;
-                if (int.TryParse(value, NumberStyles.HexNumber, null, out rgba))
-                {
-                    if (value.Length == 6)
-                    {
-                        color = Color.FromRGB(rgba);
-                    }
-                    else if(value.Length == 8)
-                    {
-                        color = Color.FromRGBA(rgba);
-                    }
-                }
                 Property.setValue(1, color);
                 allowValueChanges = true;
+            }
+        }
+
+        private void syncColorToButton()
+        {
+            if (color.HasValue)
+            {
+                colorPreview.Visible = true;
+                colorPreview.setColour(color.Value);
+            }
+            else
+            {
+                colorPreview.Visible = false;
             }
         }
     }
