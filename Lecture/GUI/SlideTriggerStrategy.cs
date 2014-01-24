@@ -5,6 +5,7 @@ using Medical;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI;
 using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
+using Medical.GUI.RmlWysiwyg.Elements;
 using Medical.SlideshowActions;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,7 @@ namespace Lecture.GUI
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            String rml = element.InnerRml;
-            if (rml != null)
-            {
-                rml = rml.Replace("<br />", "\n");
-            }
+            String rml = TextElementStrategy.DecodeFromHtml(element.InnerRml);
             textEditor = new ElementTextEditor(rml);
             String actionName = element.GetAttribute("onclick").StringValue;
             if (String.IsNullOrEmpty(actionName))
@@ -96,7 +93,7 @@ namespace Lecture.GUI
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = textEditor.Text;
-            element.InnerRml = text.Replace("\n", "<br />");
+            element.InnerRml = TextElementStrategy.EncodeToHtml(text);
             undoBuffer.pushAndExecute(new TwoWayDelegateCommand<SlideAction, SlideAction>(
                 (exec) =>
                     {

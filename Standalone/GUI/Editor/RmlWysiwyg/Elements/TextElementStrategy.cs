@@ -3,12 +3,31 @@ using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.Elements
 {
-    class TextElementStrategy : ElementStrategy
+    public class TextElementStrategy : ElementStrategy
     {
+        public static String DecodeFromHtml(String rml)
+        {
+            if (rml != null)
+            {
+                return WebUtility.HtmlDecode(rml.Replace("<br />", "\n"));
+            }
+            return null;
+        }
+
+        public static String EncodeToHtml(String rml)
+        {
+            if (rml != null)
+            {
+                return WebUtility.HtmlEncode(rml).Replace("\n", "<br />");
+            }
+            return null;
+        }
+
         private ElementTextEditor textEditor;
         private EditInterfaceEditor appearanceEditor;
         private ElementAttributeEditor attributeEditor;
@@ -24,11 +43,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         {
             elementStyle = new TextElementStyle(element);
             elementStyle.Changed += elementStyle_Changed;
-            String rml = element.InnerRml;
-            if (rml != null)
-            {
-                rml = rml.Replace("<br />", "\n");
-            }
+            String rml = DecodeFromHtml(element.InnerRml);
             textEditor = new ElementTextEditor(rml);
             attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
             appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback, browserProvider);
@@ -43,7 +58,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         {
             element.ClearLocalStyles();
             String text = textEditor.Text;
-            element.InnerRml = text.Replace("\n", "<br />");
+            element.InnerRml = EncodeToHtml(text);
             attributeEditor.applyToElement(element);
 
             StringBuilder style = new StringBuilder();
