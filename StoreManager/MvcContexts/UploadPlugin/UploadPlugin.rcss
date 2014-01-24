@@ -1,7 +1,7 @@
 .ProgressBar
 {
-	border-width:1sp;
-	margin-right:1sp;
+	border-width:1px;
+	margin-right:1px;
 }
 
 .ProgressBarInner
@@ -11,12 +11,12 @@
 
 p
 {
-	margin-bottom:10sp;
+	margin-bottom:10px;
 }
 
 h2
 {
-	margin-bottom:4sp;
+	margin-bottom:4px;
 }
 
 input.LinkButton
@@ -26,7 +26,7 @@ input.LinkButton
 	padding-right: 0px;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	font-size: 13sp;
+	font-size: 13px;
 	text-align: center;
 	tab-index: auto;
 	color: Blue;
@@ -41,7 +41,7 @@ input.LinkButton:focus
 	padding-right: 0px;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	font-size: 13sp;
+	font-size: 13px;
 	text-align: center;
 	tab-index: auto;
 	background-color:#00000000;
@@ -57,9 +57,9 @@ input.LinkButton:hover
 table
 {
 	display:block;
-	border-width: 1sp;
+	border-width: 1px;
 	border-color:rgb(166, 201, 226);
-	margin-right:1sp;
+	margin-right:1px;
 }
 
 thead
@@ -72,8 +72,8 @@ thead tr
 	background-color:rgb(102, 153, 204);
 	color:White;
 	font-weight: bold;
-	font-size: 15sp;
-	line-height:24sp;
+	font-size: 15px;
+	line-height:24px;
 }
 
 tr
@@ -83,8 +83,8 @@ tr
 
 tbody tr
 {
-	margin-top:5sp;
-	margin-bottom:5sp;
+	margin-top:5px;
+	margin-bottom:5px;
 }
 
 tbody tr:hover

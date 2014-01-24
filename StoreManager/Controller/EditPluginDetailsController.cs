@@ -201,7 +201,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                 //Delaying this by a frame forces it to reload
                 ThreadManager.invoke(() =>
                 {
-                    imageDiv.Value = String.Format("<img id={0} src=\"~/{1}\"/>", Guid.NewGuid().ToString(), resourceProvider.getFullFilePath(IconSourceFile));
+                    imageDiv.Value = String.Format("<img id={0} src=\"~/{1}\" style=\"width:100%;\"/>", Guid.NewGuid().ToString(), resourceProvider.getFullFilePath(IconSourceFile));
                 });
             }
         }

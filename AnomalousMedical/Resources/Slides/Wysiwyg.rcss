@@ -1,10 +1,10 @@
 x-separator
 {
 	background: black;
-	height: 2sp;
+	height: 2px;
 	align: center;
-	margin-left: 3sp;
-	margin-right: 3sp;
+	margin-left: 3px;
+	margin-right: 3px;
 	display: block;
 }
 
