@@ -15,6 +15,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private bool center = false;
         private Color? color = null;
         private Color? backgroundColor = null;
+        private int? fontSize = null;
 
         public TextElementStyle(Element element)
         {
@@ -34,6 +35,10 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if (inlineCss.contains("background-color"))
             {
                 backgroundColor = inlineCss.colorValue("background-color");
+            }
+            if (inlineCss.contains("font-size"))
+            {
+                fontSize = inlineCss.intValue("font-size");
             }
         }
 
@@ -63,6 +68,10 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if (backgroundColor != null)
             {
                 styleAttribute.AppendFormat("background-color:#{0:X6};", backgroundColor.Value.toRGB());
+            }
+            if (fontSize != null)
+            {
+                styleAttribute.AppendFormat("font-size:{0}px;", fontSize);
             }
             return true;
         }
@@ -96,6 +105,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (backgroundColor != value)
                 {
                     backgroundColor = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public int? FontSize
+        {
+            get
+            {
+                return fontSize;
+            }
+            set
+            {
+                if (fontSize != value)
+                {
+                    fontSize = value;
                     fireChanged();
                 }
             }
