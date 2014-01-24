@@ -11,19 +11,6 @@
                 <Property key="Caption" value="Loading"/>
             </Widget>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position="94 185 63 25" align="Left Bottom" name="Width"/>
-        <Widget type="TextBox" skin="TextBox" position="94 168 51 15" align="Left Bottom">
-            <Property key="Caption" value="Size"/>
-        </Widget>
-        <Widget type="EditBox" skin="EditBox" position="171 185 63 25" align="Left Bottom" name="Height"/>
-        <Widget type="TextBox" skin="TextBox" position="158 194 12 15" align="Left Bottom">
-            <Property key="Caption" value="x"/>
-            <Property key="TextAlign" value="Center"/>
-        </Widget>
-        <Widget type="Button" skin="CheckBox" position="237 188 124 18" align="Left Bottom" name="KeepAspectRatio">
-            <Property key="Caption" value="Keep Aspect Ratio"/>
-            <Property key="StateSelected" value="true"/>
-        </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>

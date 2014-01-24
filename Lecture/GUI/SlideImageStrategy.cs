@@ -27,18 +27,7 @@ namespace Lecture.GUI
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            IntSize2 imageSize = new IntSize2(-1, -1);
-            Variant widthAttr = element.GetAttribute("width");
-            if (widthAttr != null)
-            {
-                imageSize.Width = widthAttr.IntValue;
-            }
-            Variant heightAttr = element.GetAttribute("height");
-            if (heightAttr != null)
-            {
-                imageSize.Height = heightAttr.IntValue;
-            }
-            slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"), imageSize);
+            slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"));
             elementStyleEditor = new ElementStyleEditor(element, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(slideImageEditor);
@@ -51,7 +40,6 @@ namespace Lecture.GUI
             element.ClearLocalStyles();
             StringBuilder styleString = new StringBuilder();
             bool changesMade = elementStyleEditor.buildStyleString(styleString);
-            changesMade = slideImageEditor.buildStyleString(styleString) | changesMade;
             changesMade = slideImageEditor.applyToElement(element) | changesMade;
             if (changesMade)
             {
@@ -69,13 +57,13 @@ namespace Lecture.GUI
 
         public override void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
         {
-            slideImageEditor.changeSize(newRect, resizeType, bounds);
-            IntSize2 correctedSize = slideImageEditor.ImageSize;
-            element.SetAttribute("width", correctedSize.Width.ToString());
-            element.SetAttribute("height", correctedSize.Height.ToString());
-            IntVector2 position = slideImageEditor.ImagePosition;
-            element.SetProperty("margin-left", position.x.ToString() + "sp");
-            element.SetProperty("margin-top", position.y.ToString() + "sp");
+            //slideImageEditor.changeSize(newRect, resizeType, bounds);
+            //IntSize2 correctedSize = slideImageEditor.ImageSize;
+            //element.SetAttribute("width", correctedSize.Width.ToString());
+            //element.SetAttribute("height", correctedSize.Height.ToString());
+            //IntVector2 position = slideImageEditor.ImagePosition;
+            //element.SetProperty("margin-left", position.x.ToString() + "sp");
+            //element.SetProperty("margin-top", position.y.ToString() + "sp");
         }
 
         public override Rect getStartingRect(Element selectedElement)

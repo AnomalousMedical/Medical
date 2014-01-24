@@ -16,11 +16,6 @@ namespace Lecture.GUI
 {
     class SlideImageComponent : ElementEditorComponent
     {
-        private const int UPDATE_DELAY = 250;
-        private const int minSize = 15; //Note that this is applied after the value is scaled and does not need to be scaled further
-
-        private Timer keyTimer;
-
         ImageBox imagePreview;
         ImageAtlas imageAtlas;
         EditorResourceProvider resourceProvider;
@@ -28,23 +23,15 @@ namespace Lecture.GUI
         String imageName;
         Widget imagePanel;
         Widget loadingLabel;
-        Int32NumericEdit widthEdit;
-        Int32NumericEdit heightEdit;
-        IntSize2 realImageSize;
-        CheckButton keepAspectRatio;
 
         const bool Key = false;
         private bool NotDisposed = true;
 
-        IntSize2 currentSize;
-        IntVector2 currentPosition;
-
-        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName, IntSize2 currentSize)
+        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName)
             : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "Image")
         {
             this.resourceProvider = resourceProvider;
             this.subdirectory = subdirectory;
-            this.currentSize = currentSize;
 
             Button browseButton = (Button)widget.findWidget("Browse");
             browseButton.MouseButtonClick += browseButton_MouseButtonClick;
@@ -52,30 +39,6 @@ namespace Lecture.GUI
             imagePreview = (ImageBox)widget.findWidget("Image");
             imagePanel = widget.findWidget("ImagePanel");
             imageAtlas = new ImageAtlas("SlideImageComponentAtlas_" + Guid.NewGuid().ToString("D"), new IntSize2(imagePreview.Width, imagePreview.Height));
-            widthEdit = new Int32NumericEdit((EditBox)widget.findWidget("Width"))
-            {
-                MaxValue = 10000,
-                MinValue = 0,
-                Increment = 10,
-                Value = 100
-            };
-            widthEdit.ValueChanged += sizeEdit_ValueChanged;
-
-            heightEdit = new Int32NumericEdit((EditBox)widget.findWidget("Height"))
-            {
-                MaxValue = 10000,
-                MinValue = 0,
-                Increment = 10,
-                Value = 100
-            };
-            heightEdit.ValueChanged += sizeEdit_ValueChanged;
-
-            keepAspectRatio = new CheckButton((Button)widget.findWidget("KeepAspectRatio"));
-
-            keyTimer = new Timer(UPDATE_DELAY);
-            keyTimer.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
-            keyTimer.AutoReset = false;
-            keyTimer.Elapsed += keyTimer_Elapsed;
 
             loadingLabel = widget.findWidget("LoadLabel");
 
@@ -86,7 +49,7 @@ namespace Lecture.GUI
                 {
                     System.Threading.ThreadPool.QueueUserWorkItem(o =>
                     {
-                        openImageBGThread(loadPath, false, false);
+                        openImageBGThread(loadPath, false);
                     });
                 }
                 else
@@ -104,25 +67,8 @@ namespace Lecture.GUI
         public override void Dispose()
         {
             NotDisposed = false;
-            keyTimer.Dispose();
             base.Dispose();
             imageAtlas.Dispose();
-        }
-
-        public IntSize2 ImageSize
-        {
-            get
-            {
-                return new IntSize2(widthEdit.Value, heightEdit.Value);
-            }
-        }
-
-        public IntVector2 ImagePosition
-        {
-            get
-            {
-                return currentPosition;
-            }
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
@@ -155,7 +101,7 @@ namespace Lecture.GUI
                                         readStream.CopyTo(writeStream);
                                     }
                                 }
-                                openImageBGThread(filename, true, true);
+                                openImageBGThread(filename, true);
                             }
                             catch (Exception ex)
                             {
@@ -174,7 +120,7 @@ namespace Lecture.GUI
             });
         }
 
-        private void openImageBGThread(String filename, bool applyUpdate, bool isNewImage)
+        private void openImageBGThread(String filename, bool applyUpdate)
         {
             try
             {
@@ -199,20 +145,12 @@ namespace Lecture.GUI
                         width = (int)((float)imagePanel.Height * aspect);
                         left = (imagePanel.Width - width) / 2;
                     }
-                    realImageSize = new IntSize2(image.Width, image.Height);
                     ThreadManager.invoke(() =>
                     {
                         try
                         {
                             if (NotDisposed)
                             {
-                                widthEdit.Value = currentSize.Width > 0 ? currentSize.Width : width;
-                                heightEdit.Value = currentSize.Height > 0 ? currentSize.Height : height;
-                                if (isNewImage)
-                                {
-                                    float ratio = height / (float)width;
-                                    heightEdit.Value = (int)(widthEdit.Value * ratio);
-                                }
                                 imagePreview.setPosition(left, top);
                                 imagePreview.setSize(width, height);
                                 imageAtlas.ImageSize = new IntSize2(width, height);
@@ -243,93 +181,12 @@ namespace Lecture.GUI
         internal bool applyToElement(Element element)
         {
             element.SetAttribute("src", imageName);
-            element.SetAttribute("width", widthEdit.Value.ToString());
-            element.SetAttribute("height", heightEdit.Value.ToString());
-            element.SetAttribute("scale", "true");
             return true;
-        }
-
-        internal bool buildStyleString(StringBuilder styleString)
-        {
-            styleString.AppendFormat("margin-left:{0}sp;margin-top:{1}sp;", ImagePosition.x, ImagePosition.y);
-            return true;
-        }
-
-        void sizeEdit_ValueChanged(Widget source, EventArgs e)
-        {
-            this.fireChangesMade();
-            keyTimer.Stop();
-            keyTimer.Start();
-        }
-
-        void keyTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            fireApplyChanges();
-        }
-
-        public void changeSize(IntRect newRect, ResizeType resizeType, IntSize2 bounds)
-        {
-            if (keepAspectRatio.Checked)
-            {
-                switch (resizeType)
-                {
-                    case ResizeType.Width:
-                        computeWidthLimitRatio(ref newRect);
-                        break;
-                    case ResizeType.Height:
-                        computeHeightLimitRatio(ref newRect);
-                        break;
-                    case ResizeType.WidthHeight:
-                        if (newRect.Width < newRect.Height)
-                        {
-                            computeWidthLimitRatio(ref newRect);
-                        }
-                        else
-                        {
-                            computeHeightLimitRatio(ref newRect);
-                        }
-                        break;
-                }
-                guardWidth(ref newRect, bounds);
-                computeWidthLimitRatio(ref newRect);
-            }
-            else
-            {
-                guardWidth(ref newRect, bounds);
-            }
-            currentPosition = new IntVector2(newRect.Left, newRect.Top);
-            widthEdit.Value = newRect.Width;
-            heightEdit.Value = newRect.Height;
-            this.fireChangesMade();
         }
 
         public void applyChanges()
         {
             fireApplyChanges();
-        }
-
-        private void computeHeightLimitRatio(ref IntRect newRect)
-        {
-            float ratio = (float)realImageSize.Width / realImageSize.Height;
-            newRect.Width = (int)(newRect.Height * ratio);
-        }
-
-        private void computeWidthLimitRatio(ref IntRect newRect)
-        {
-            float ratio = (float)realImageSize.Height / realImageSize.Width;
-            newRect.Height = (int)(newRect.Width * ratio);
-        }
-
-        private void guardWidth(ref IntRect newRect, IntSize2 bounds)
-        {
-            if (newRect.Width > bounds.Width)
-            {
-                newRect.Width = bounds.Width;
-            }
-            else if (newRect.Width < minSize)
-            {
-                newRect.Width = minSize;
-            }
         }
     }
 }

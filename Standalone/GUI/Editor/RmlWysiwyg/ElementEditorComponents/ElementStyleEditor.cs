@@ -32,8 +32,16 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             addProperty(new StyleColorEditableProperty("color", declarations), editInterface);
             addProperty(new StyleColorEditableProperty("background-color", declarations), editInterface);
             addProperty(new StyleColorEditableProperty("border-color", declarations), editInterface);
-            addProperty(new StyleEditableProperty("border-width", declarations, UnitType.ScaledPixel), editInterface);
-            addProperty(new StyleEditableProperty("font-size", declarations, UnitType.ScaledPixel), editInterface);
+            addProperty(new StyleEditableProperty("border-width", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("font-size", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("margin-left", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("margin-right", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("margin-top", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("margin-bottom", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("left", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("top", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("width", declarations, UnitType.Pixel), editInterface);
+            addProperty(new StyleEditableProperty("height", declarations, UnitType.Pixel), editInterface);
             addProperty(new StyleChoiceEditableProperty("float", declarations, UnitType.Unknown, floatChoices), editInterface);
             addProperty(new StyleChoiceEditableProperty("clear", declarations, UnitType.Unknown, clearChoices), editInterface);
             addProperty(new StyleChoiceEditableProperty("position", declarations, UnitType.Unknown, positionChoices), editInterface);
