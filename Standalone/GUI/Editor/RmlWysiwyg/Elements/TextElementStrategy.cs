@@ -10,8 +10,9 @@ namespace Medical.GUI.RmlWysiwyg.Elements
     class TextElementStrategy : ElementStrategy
     {
         private ElementTextEditor textEditor;
-        private ElementStyleEditor styleEditor;
+        private EditInterfaceEditor appearanceEditor;
         private ElementAttributeEditor attributeEditor;
+        private TextElementStyle elementStyle;
 
         public TextElementStrategy(String tag, String previewIconName = "Editor/HeaderIcon")
             : base(tag, previewIconName, true)
@@ -21,6 +22,8 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
+            elementStyle = new TextElementStyle(element);
+            elementStyle.Changed += elementStyle_Changed;
             String rml = element.InnerRml;
             if (rml != null)
             {
@@ -28,10 +31,10 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             }
             textEditor = new ElementTextEditor(rml);
             attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
-            styleEditor = new ElementStyleEditor(element, uiCallback, browserProvider);
+            appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
-            editor.addElementEditor(styleEditor);
+            editor.addElementEditor(appearanceEditor);
             editor.addElementEditor(attributeEditor);
             return editor;
         }
@@ -42,15 +45,27 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             String text = textEditor.Text;
             element.InnerRml = text.Replace("\n", "<br />");
             attributeEditor.applyToElement(element);
-            StringBuilder sb = new StringBuilder();
-            styleEditor.buildStyleString(sb);
-            if (sb.Length > 0)
+
+            StringBuilder style = new StringBuilder();
+            elementStyle.buildStyleAttribute(style);
+            if (style.Length > 0)
             {
-                element.SetAttribute("style", sb.ToString());
+                element.SetAttribute("style", style.ToString());
             }
             else
             {
                 element.RemoveAttribute("style");
+            }
+
+            StringBuilder classes = new StringBuilder();
+            elementStyle.buildClassList(classes);
+            if (classes.Length > 0)
+            {
+                element.SetAttribute("class", classes.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("class");
             }
             return true;
         }
@@ -64,6 +79,11 @@ namespace Medical.GUI.RmlWysiwyg.Elements
                 return true;
             }
             return false;
+        }
+
+        void elementStyle_Changed(ElementStyleDefinition obj)
+        {
+            appearanceEditor.alertChangesMade();
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Lecture
+namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    class ImageElementStyle : ElementStyleDefinition
+    public class ImageElementStyle : ElementStyleDefinition
     {
         private bool center = false;
         private bool fixedSize = true;

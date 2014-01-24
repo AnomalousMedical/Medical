@@ -13,7 +13,6 @@ namespace Lecture.GUI
     class SlideImageStrategy : ElementStrategy
     {
         SlideImageComponent slideImageEditor;
-        ElementStyleEditor elementStyleEditor;
         EditInterfaceEditor appearanceEditor;
         ElementStyleDefinition appearance;
         EditorResourceProvider editorResourceProvider;
@@ -33,11 +32,9 @@ namespace Lecture.GUI
             appearance.Changed += appearance_Changed;
             appearanceEditor = new EditInterfaceEditor("Appearance", appearance.getEditInterface(), uiCallback, browserProvider);
             slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"));
-            elementStyleEditor = new ElementStyleEditor(element, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(slideImageEditor);
             editor.addElementEditor(appearanceEditor);
-            editor.addElementEditor(elementStyleEditor);
             return editor;
         }
 
@@ -46,8 +43,7 @@ namespace Lecture.GUI
             element.ClearLocalStyles();
             StringBuilder styleString = new StringBuilder();
             StringBuilder classString = new StringBuilder();
-            bool changesMade = elementStyleEditor.buildStyleString(styleString);
-            changesMade = slideImageEditor.applyToElement(element) | changesMade;
+            bool changesMade = slideImageEditor.applyToElement(element);
             changesMade = appearance.buildClassList(classString) | changesMade;
             changesMade = appearance.buildStyleAttribute(styleString) | changesMade;
             if (changesMade)

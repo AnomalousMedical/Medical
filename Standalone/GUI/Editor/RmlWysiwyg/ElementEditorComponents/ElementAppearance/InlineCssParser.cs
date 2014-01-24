@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Lecture
+namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    class InlineCssParser
+    public class InlineCssParser
     {
         public const String CSSGroups = @"(?<name>[^}:]+):?(?<value>[^};]+);?";
         private static readonly Regex rStyles = new Regex(CSSGroups, RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -44,6 +45,16 @@ namespace Lecture
             if (int.TryParse(Regex.Match(properties[key], @"\d+").Value, out intVal))
             {
                 return intVal;
+            }
+            return null;
+        }
+
+        public Color? colorValue(String key)
+        {
+            Color colorVal;
+            if (Color.TryFromRGBAString(properties[key], out colorVal))
+            {
+                return colorVal;
             }
             return null;
         }
