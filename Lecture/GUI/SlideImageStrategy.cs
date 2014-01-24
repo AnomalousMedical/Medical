@@ -14,6 +14,8 @@ namespace Lecture.GUI
     {
         SlideImageComponent slideImageEditor;
         ElementStyleEditor elementStyleEditor;
+        EditInterfaceEditor appearanceEditor;
+        ElementStyleDefinition appearance;
         EditorResourceProvider editorResourceProvider;
         String subdirectory;
 
@@ -27,10 +29,14 @@ namespace Lecture.GUI
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
+            appearance = new ImageElementStyle(element);
+            appearance.Changed += appearance_Changed;
+            appearanceEditor = new EditInterfaceEditor("Appearance", appearance.getEditInterface(), uiCallback, browserProvider);
             slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"));
             elementStyleEditor = new ElementStyleEditor(element, uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(slideImageEditor);
+            editor.addElementEditor(appearanceEditor);
             editor.addElementEditor(elementStyleEditor);
             return editor;
         }
@@ -39,10 +45,21 @@ namespace Lecture.GUI
         {
             element.ClearLocalStyles();
             StringBuilder styleString = new StringBuilder();
+            StringBuilder classString = new StringBuilder();
             bool changesMade = elementStyleEditor.buildStyleString(styleString);
             changesMade = slideImageEditor.applyToElement(element) | changesMade;
+            changesMade = appearance.buildClassList(classString) | changesMade;
+            changesMade = appearance.buildStyleAttribute(styleString) | changesMade;
             if (changesMade)
             {
+                if (classString.Length > 0)
+                {
+                    element.SetAttribute("class", classString.ToString());
+                }
+                else
+                {
+                    element.RemoveAttribute("class");
+                }
                 if (styleString.Length > 0)
                 {
                     element.SetAttribute("style", styleString.ToString());
@@ -52,6 +69,7 @@ namespace Lecture.GUI
                     element.RemoveAttribute("style");
                 }
             }
+
             return changesMade;
         }
 
@@ -93,6 +111,11 @@ namespace Lecture.GUI
                 return true;
             }
             return false;
+        }
+
+        void appearance_Changed(ElementStyleDefinition obj)
+        {
+            appearanceEditor.alertChangesMade();
         }
     }
 }

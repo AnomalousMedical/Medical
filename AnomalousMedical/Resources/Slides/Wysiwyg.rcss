@@ -1,47 +1,55 @@
-x-separator
-{
-	background: black;
-	height: 2px;
-	align: center;
-	margin-left: 3px;
-	margin-right: 3px;
-	display: block;
-}
-
 img
 {
 	display: block;
 }
 
-div.ImageParagraphLeft
+img.Center
 {
-	clear: both;
+	margin-left:auto;
+	margin-right:auto;
 }
 
-div.ImageParagraphLeft img
+img.FloatLeft
 {
-	float: left;
-}
-
-div.ImageParagraphRight
-{
-	clear: both;
-}
-
-div.ImageParagraphRight img
-{
-	float: right;
-}
-
-div.TwoColumn
-{
-	clear: both;
-}
-
-div.TwoColumn div.Column
-{
-	width: 50%; 
 	float:left;
+}
+
+img.FloatRight
+{
+	float:right;
+}
+
+h1.Center,
+h2.Center,
+h3.Center,
+h4.Center,
+h5.Center,
+h6.Center,
+p.Center
+{
+	text-align:center;
+}
+
+h1.Bold,
+h2.Bold,
+h3.Bold,
+h4.Bold,
+h5.Bold,
+h6.Bold,
+p.Bold
+{
+	font-weight:bold;
+}
+
+h1.Italic,
+h2.Italic,
+h3.Italic,
+h4.Italic,
+h5.Italic,
+h6.Italic,
+p.Italic
+{
+	font-style:italic;
 }
 
 a.TriggerLink

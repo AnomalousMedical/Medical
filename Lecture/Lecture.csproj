@@ -65,6 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\ElementAppearance\ElementStyleDefinition.cs" />
+    <Compile Include="Controller\ElementAppearance\ImageElementStyle.cs" />
+    <Compile Include="Controller\ElementAppearance\InlineCssParser.cs" />
+    <Compile Include="Controller\ElementAppearance\TextElementStyle.cs" />
     <Compile Include="Controller\LectureUICallback.cs" />
     <Compile Include="Controller\MedicalSlideItemTemplate.cs" />
     <Compile Include="Controller\RmlEditorViewInfo.cs" />
