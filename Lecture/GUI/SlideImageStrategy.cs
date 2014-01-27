@@ -23,7 +23,7 @@ namespace Lecture.GUI
         {
             this.editorResourceProvider = editorResourceProvider;
             this.subdirectory = subdirectory;
-            Resizable = true;
+            Resizable = false;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
