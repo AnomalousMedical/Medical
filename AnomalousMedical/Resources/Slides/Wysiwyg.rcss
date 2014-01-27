@@ -9,12 +9,12 @@ img.Center
 	margin-right:auto;
 }
 
-img.FloatLeft
+img.RightText
 {
 	float:left;
 }
 
-img.FloatRight
+img.LeftText
 {
 	float:right;
 }

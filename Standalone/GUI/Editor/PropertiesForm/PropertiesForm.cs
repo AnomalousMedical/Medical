@@ -208,7 +208,7 @@ namespace Medical.GUI
             {
                 if (propertyType.GetCustomAttributes(typeof(SingleEnumAttribute), true).Length > 0)
                 {
-                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, widget, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => new Pair<String, Object>(fieldInfo.Name, fieldInfo.GetRawConstantValue())));
+                    PropertiesFormComboBox editorCell = new PropertiesFormComboBox(property, widget, propertyType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(fieldInfo => new Pair<String, Object>(fieldInfo.Name, Enum.ToObject(propertyType, fieldInfo.GetRawConstantValue()))));
                     return editorCell;
                 }
                 //else if (propertyType.GetCustomAttributes(typeof(MultiEnumAttribute), true).Length > 0)

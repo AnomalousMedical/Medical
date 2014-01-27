@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Attributes;
 using Engine.Editing;
 using libRocketPlugin;
 using System;
@@ -10,6 +11,15 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
     public class ImageElementStyle : ElementStyleDefinition
     {
+        [SingleEnum]
+        public enum ImageTextAlign
+        {
+            None,
+            Right,
+            Left,
+        }
+
+        private ImageTextAlign textAlign = ImageTextAlign.None;
         private bool center = false;
         private bool fixedSize = true;
         private int width = 200;
@@ -21,6 +31,14 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             {
                 String[] splitClasses = classes.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
                 center = splitClasses.FirstOrDefault(c => "Center".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
+                if (splitClasses.FirstOrDefault(c => "LeftText".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null)
+                {
+                    textAlign = ImageTextAlign.Left;
+                }
+                else if (splitClasses.FirstOrDefault(c => "RightText".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null)
+                {
+                    textAlign = ImageTextAlign.Right;
+                }
             }
             InlineCssParser inlineCss = new InlineCssParser(imageElement.GetAttributeString("style"));
             if (inlineCss.contains("width"))
@@ -39,6 +57,15 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if (center)
             {
                 classes.Append("Center ");
+            }
+            switch (TextAlign)
+            {
+                case ImageTextAlign.Left:
+                    classes.Append("LeftText");
+                    break;
+                case ImageTextAlign.Right:
+                    classes.Append("RightText");
+                    break;
             }
             return true;
         }
@@ -102,6 +129,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (fixedSize != value)
                 {
                     fixedSize = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public ImageTextAlign TextAlign
+        {
+            get
+            {
+                return textAlign;
+            }
+            set
+            {
+                if (textAlign != value)
+                {
+                    textAlign = value;
                     fireChanged();
                 }
             }
