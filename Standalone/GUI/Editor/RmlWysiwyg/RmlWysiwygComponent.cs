@@ -252,6 +252,7 @@ namespace Medical.GUI
         {
             if (allowEdit)
             {
+                cancelAndHideEditor();
                 previewElement.hidePreviewElement();
                 String undoRml = UnformattedRml;
                 insertRmlIntoDocument(rml);
@@ -638,6 +639,11 @@ namespace Medical.GUI
                 if (element != null)
                 {
                     showRmlElementEditor(element, elementStrategy);
+                }
+                else
+                {
+                    cancelAndHideEditor();
+                    selectedElementManager.clearSelectedAndHighlightedElement();
                 }
             }
         }
