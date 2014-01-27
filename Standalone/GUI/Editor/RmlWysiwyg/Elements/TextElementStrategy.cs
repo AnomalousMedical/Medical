@@ -30,7 +30,6 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         private ElementTextEditor textEditor;
         private EditInterfaceEditor appearanceEditor;
-        private ElementAttributeEditor attributeEditor;
         private TextElementStyle elementStyle;
 
         public TextElementStrategy(String tag, String previewIconName = "Editor/HeaderIcon")
@@ -45,12 +44,10 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             elementStyle.Changed += elementStyle_Changed;
             String rml = DecodeFromHtml(element.InnerRml);
             textEditor = new ElementTextEditor(rml);
-            attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
             appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(appearanceEditor);
-            editor.addElementEditor(attributeEditor);
             return editor;
         }
 
@@ -59,7 +56,6 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             element.ClearLocalStyles();
             String text = textEditor.Text;
             element.InnerRml = EncodeToHtml(text);
-            attributeEditor.applyToElement(element);
 
             StringBuilder style = new StringBuilder();
             elementStyle.buildStyleAttribute(style);

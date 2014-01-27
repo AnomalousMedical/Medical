@@ -22,6 +22,8 @@ namespace Lecture.GUI
         private Browser actionTypeBrowser;
         private SlideAction currentAction;
         private UndoRedoBuffer undoBuffer;
+        private EditInterfaceEditor appearanceEditor;
+        private TextElementStyle elementStyle;
 
         /// <summary>
         /// Create a slide trigger strategy. The ActionTypeBrowser determines the slide action types that can be put on the slide.
@@ -37,6 +39,8 @@ namespace Lecture.GUI
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
+            elementStyle = new TextElementStyle(element);
+            elementStyle.Changed += elementStyle_Changed;
             String rml = TextElementStrategy.DecodeFromHtml(element.InnerRml);
             textEditor = new ElementTextEditor(rml);
             String actionName = element.GetAttribute("onclick").StringValue;
@@ -58,9 +62,11 @@ namespace Lecture.GUI
 
             EditInterface editInterface = setupEditInterface(editingAction, slide);
             actionEditor = new EditInterfaceEditor("Action", editInterface, uiCallback, browserProvider);
+            appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback, browserProvider);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(actionEditor);
+            editor.addElementEditor(appearanceEditor);
             return editor;
         }
 
@@ -90,10 +96,39 @@ namespace Lecture.GUI
             actionEditor.alertChangesMade();
         }
 
+        void elementStyle_Changed(ElementStyleDefinition obj)
+        {
+            appearanceEditor.alertChangesMade();
+        }
+
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
             String text = textEditor.Text;
             element.InnerRml = TextElementStrategy.EncodeToHtml(text);
+
+            StringBuilder style = new StringBuilder();
+            elementStyle.buildStyleAttribute(style);
+            if (style.Length > 0)
+            {
+                element.SetAttribute("style", style.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("style");
+            }
+
+            StringBuilder classes = new StringBuilder();
+            classes.Append("TriggerLink ");
+            elementStyle.buildClassList(classes);
+            if (classes.Length > 0)
+            {
+                element.SetAttribute("class", classes.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("class");
+            }
+
             undoBuffer.pushAndExecute(new TwoWayDelegateCommand<SlideAction, SlideAction>(
                 (exec) =>
                     {

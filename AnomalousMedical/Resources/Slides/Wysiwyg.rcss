@@ -25,7 +25,8 @@ h3.Center,
 h4.Center,
 h5.Center,
 h6.Center,
-p.Center
+p.Center,
+a.Center
 {
 	text-align:center;
 }
@@ -36,7 +37,8 @@ h3.Bold,
 h4.Bold,
 h5.Bold,
 h6.Bold,
-p.Bold
+p.Bold,
+a.Bold
 {
 	font-weight:bold;
 }
@@ -47,7 +49,8 @@ h3.Italic,
 h4.Italic,
 h5.Italic,
 h6.Italic,
-p.Italic
+p.Italic,
+a.Italic
 {
 	font-style:italic;
 }
@@ -55,7 +58,7 @@ p.Italic
 a.TriggerLink
 {
 	display:block;
-	color: #6699cc;
+	color: #0070C0;
 }
 
 a.TriggerLink:hover
