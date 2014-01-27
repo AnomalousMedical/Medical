@@ -91,7 +91,6 @@ namespace Medical.GUI
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage);
-            rmlImage.MouseButtonClick += new MyGUIEvent(rmlImage_MouseButtonClick);
             rmlImage.MouseButtonPressed += rmlImage_MouseButtonPressed;
             rmlImage.MouseButtonReleased += rmlImage_MouseButtonReleased;
             rmlImage.MouseDrag += new MyGUIEvent(rmlImage_MouseDrag);
@@ -570,21 +569,6 @@ namespace Medical.GUI
             }
         }
 
-        void rmlImage_MouseButtonClick(Widget source, EventArgs e)
-        {
-            if (!allowEdit)
-            {
-                //Break if they cannot edit
-                return;
-            }
-
-            Element element = rocketWidget.Context.GetFocusElement();
-            if (element != null)
-            {
-                showRmlElementEditor(element, elementStrategyManager[element]);
-            }
-        }
-
         void rmlImage_EventScrollGesture(Widget source, EventArgs e)
         {
             selectedElementManager.updateHighlightPosition();
@@ -597,162 +581,205 @@ namespace Medical.GUI
 
         void rmlImage_MouseDrag(Widget source, EventArgs e)
         {
-            selectedElementManager.updateHighlightPosition();
-            draggingElementManager.dragging(((MouseEventArgs)e).Position);
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (me.Button == Engine.Platform.MouseButtonCode.MB_BUTTON0)
+            {
+                selectedElementManager.updateHighlightPosition();
+                draggingElementManager.dragging(me.Position);
+            }
         }
 
         void rmlImage_MouseButtonPressed(Widget source, EventArgs e)
         {
-            requestFocus();
-            IntVector2 mousePosition = ((MouseEventArgs)e).Position;
-            IntVector2 localPosition = localCoord(mousePosition);
-            Element element = rocketWidget.Context.FindElementAtPoint(localPosition);
-            if (elementStrategyManager[element].AllowDragAndDrop)
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (me.Button == Engine.Platform.MouseButtonCode.MB_BUTTON0)
             {
-                draggingElementManager.dragStart(mousePosition, element, elementStrategyManager[element].PreviewIconName);
+                requestFocus();
+                IntVector2 mousePosition = me.Position;
+                IntVector2 localPosition = localCoord(mousePosition);
+                Element element = selectedElementManager.SelectedElement;
+                if (element == null || !element.IsPointWithinElement(localPosition))
+                {
+                    element = rocketWidget.Context.FindElementAtPoint(localPosition);
+                }
+                if (elementStrategyManager[element].AllowDragAndDrop)
+                {
+                    draggingElementManager.dragStart(mousePosition, element, elementStrategyManager[element].PreviewIconName);
+                }
             }
         }
 
         void rmlImage_MouseButtonReleased(Widget source, EventArgs e)
         {
-            draggingElementManager.dragEnded(((MouseEventArgs)e).Position);
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (me.Button == Engine.Platform.MouseButtonCode.MB_BUTTON0)
+            {
+                Element element = draggingElementManager.DragElement; //This will be the clicked element, or null if the element was moved
+                ElementStrategy elementStrategy = elementStrategyManager[element];
+                IntVector2 mousePosition = me.Position;
+                draggingElementManager.dragEnded(mousePosition);
+
+                if (!allowEdit)
+                {
+                    //Break if they cannot edit
+                    return;
+                }
+
+                Element altElement = rocketWidget.Context.FindElementAtPoint(localCoord(mousePosition), element);
+                if (altElement != null) //Another element was found see if we can use it
+                {
+                    ElementStrategy altStrategy = elementStrategyManager[altElement];
+                    if (altStrategy != elementStrategyManager.DefaultStrategy)
+                    {
+                        element = altElement;
+                        elementStrategy = altStrategy;
+                    }
+                }
+                if (element != null)
+                {
+                    showRmlElementEditor(element, elementStrategy);
+                }
+            }
         }
 
         private void showRmlElementEditor(Element element, ElementStrategy strategy)
         {
-            cancelAndHideEditor();
-            RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, 0, 0);
-            if (editor == null)
+            if (currentEditor == null || selectedElementManager.SelectedElement != element)
             {
-                //The editor was null, which means editing is not supported so just clear the selection.
-                selectedElementManager.clearSelectedAndHighlightedElement();
-                return; //Return here to prevent more execution
-            }
+                cancelAndHideEditor();
+                RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, 0, 0);
+                if (editor == null)
+                {
+                    //The editor was null, which means editing is not supported so just clear the selection.
+                    selectedElementManager.clearSelectedAndHighlightedElement();
+                    return; //Return here to prevent more execution
+                }
 
-            int left, top;
-            switch (ViewHost.View.ElementName.LocationHint)
-            {
-                case ViewLocations.Right:
-                    left = widget.AbsoluteLeft - editor.Width;
-                    top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
-                    break;
-                case ViewLocations.Top:
-                    left = rocketWidget.AbsoluteLeft;
-                    top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop + (int)element.ClientHeight;
-                    break;
-                case ViewLocations.Bottom:
-                    left = rocketWidget.AbsoluteLeft;
-                    top = rocketWidget.AbsoluteTop - editor.Height;
-                    break;
-                default:
-                    left = widget.AbsoluteLeft + widget.Width;
-                    top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
-                    break;
-            }
-            editor.setPosition(left, top, true);
+                int left, top;
+                switch (ViewHost.View.ElementName.LocationHint)
+                {
+                    case ViewLocations.Right:
+                        left = widget.AbsoluteLeft - editor.Width;
+                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
+                        break;
+                    case ViewLocations.Top:
+                        left = rocketWidget.AbsoluteLeft;
+                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop + (int)element.ClientHeight;
+                        break;
+                    case ViewLocations.Bottom:
+                        left = rocketWidget.AbsoluteLeft;
+                        top = rocketWidget.AbsoluteTop - editor.Height;
+                        break;
+                    default:
+                        left = widget.AbsoluteLeft + widget.Width;
+                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
+                        break;
+                }
+                editor.setPosition(left, top, true);
 
-            editor.UndoRml = UnformattedRml;
-            //Everything is good so setup.
-            editor.Hiding += (src, arg) =>
-            {
-                if (!disposed && editor.deleteIfNeeded(this))
+                editor.UndoRml = UnformattedRml;
+                //Everything is good so setup.
+                editor.Hiding += (src, arg) =>
                 {
-                    rmlModified();
-                    updateUndoStatus(editor.UndoRml, true);
-                    editor.UndoRml = UnformattedRml;
-                }
-            };
-            editor.Hidden += (src, arg) =>
-            {
-                if (currentEditor == editor)
+                    if (!disposed && editor.deleteIfNeeded(this))
+                    {
+                        rmlModified();
+                        updateUndoStatus(editor.UndoRml, true);
+                        editor.UndoRml = UnformattedRml;
+                    }
+                };
+                editor.Hidden += (src, arg) =>
                 {
-                    currentEditor = null;
-                }
-            };
-            editor.ChangesMade += (applyElement) =>
-            {
-                if (!disposed && editor.applyChanges(this))
+                    if (currentEditor == editor)
+                    {
+                        currentEditor = null;
+                    }
+                };
+                editor.ChangesMade += (applyElement) =>
                 {
-                    rmlModified();
-                    updateUndoStatus(editor.UndoRml, true);
-                    editor.UndoRml = UnformattedRml;
-                }
-            };
-            editor.MoveElementUp += upElement =>
-            {
-                Element previousSibling = upElement.PreviousSibling;
-                if (previousSibling != null)
+                    if (!disposed && editor.applyChanges(this))
+                    {
+                        rmlModified();
+                        updateUndoStatus(editor.UndoRml, true);
+                        editor.UndoRml = UnformattedRml;
+                    }
+                };
+                editor.MoveElementUp += upElement =>
                 {
-                    Element parent = upElement.ParentNode;
+                    Element previousSibling = upElement.PreviousSibling;
+                    if (previousSibling != null)
+                    {
+                        Element parent = upElement.ParentNode;
+                        if (parent != null)
+                        {
+                            upElement.addReference();
+                            parent.RemoveChild(upElement);
+                            parent.InsertBefore(upElement, previousSibling);
+                            upElement.removeReference();
+                            rmlModified();
+                            updateUndoStatus(editor.UndoRml);
+                            editor.UndoRml = UnformattedRml;
+                        }
+                    }
+                };
+                editor.MoveElementDown += downElement =>
+                {
+                    Element parent = downElement.ParentNode;
                     if (parent != null)
                     {
-                        upElement.addReference();
-                        parent.RemoveChild(upElement);
-                        parent.InsertBefore(upElement, previousSibling);
-                        upElement.removeReference();
+                        Element nextSibling = downElement.NextSibling;
+                        if (nextSibling != null)
+                        {
+                            downElement.addReference();
+                            parent.RemoveChild(downElement);
+                            nextSibling = nextSibling.NextSibling;
+                            if (nextSibling != null)
+                            {
+                                parent.InsertBefore(downElement, nextSibling);
+                            }
+                            else
+                            {
+                                parent.AppendChild(downElement);
+                            }
+                            downElement.removeReference();
+
+                            rmlModified();
+                            updateUndoStatus(editor.UndoRml);
+                            editor.UndoRml = UnformattedRml;
+                        }
+                    }
+                };
+                editor.DeleteElement += deleteElement =>
+                {
+                    Element parent = deleteElement.ParentNode;
+                    if (parent != null)
+                    {
+                        Element nextSelectionElement = deleteElement.NextSibling;
+                        if (nextSelectionElement == null)
+                        {
+                            nextSelectionElement = deleteElement.PreviousSibling;
+                        }
+
+                        parent.RemoveChild(deleteElement);
                         rmlModified();
                         updateUndoStatus(editor.UndoRml);
                         editor.UndoRml = UnformattedRml;
-                    }
-                }
-            };
-            editor.MoveElementDown += downElement =>
-            {
-                Element parent = downElement.ParentNode;
-                if (parent != null)
-                {
-                    Element nextSibling = downElement.NextSibling;
-                    if (nextSibling != null)
-                    {
-                        downElement.addReference();
-                        parent.RemoveChild(downElement);
-                        nextSibling = nextSibling.NextSibling;
-                        if (nextSibling != null)
+
+                        if (nextSelectionElement != null)
                         {
-                            parent.InsertBefore(downElement, nextSibling);
+                            showRmlElementEditor(nextSelectionElement, elementStrategyManager[nextSelectionElement]);
                         }
                         else
                         {
-                            parent.AppendChild(downElement);
+                            selectedElementManager.clearSelectedAndHighlightedElement();
                         }
-                        downElement.removeReference();
-
-                        rmlModified();
-                        updateUndoStatus(editor.UndoRml);
-                        editor.UndoRml = UnformattedRml;
                     }
-                }
-            };
-            editor.DeleteElement += deleteElement =>
-            {
-                Element parent = deleteElement.ParentNode;
-                if (parent != null)
-                {
-                    Element nextSelectionElement = deleteElement.NextSibling;
-                    if (nextSelectionElement == null)
-                    {
-                        nextSelectionElement = deleteElement.PreviousSibling;
-                    }
-
-                    parent.RemoveChild(deleteElement);
-                    rmlModified();
-                    updateUndoStatus(editor.UndoRml);
-                    editor.UndoRml = UnformattedRml;
-
-                    if (nextSelectionElement != null)
-                    {
-                        showRmlElementEditor(nextSelectionElement, elementStrategyManager[nextSelectionElement]);
-                    }
-                    else
-                    {
-                        selectedElementManager.clearSelectedAndHighlightedElement();
-                    }
-                }
-            };
-            currentEditor = editor;
-            selectedElementManager.SelectedElement = element;
-            selectedElementManager.HighlightElement = element;
-            selectedElementManager.ElementStrategy = strategy;
+                };
+                currentEditor = editor;
+                selectedElementManager.SelectedElement = element;
+                selectedElementManager.HighlightElement = element;
+                selectedElementManager.ElementStrategy = strategy;
+            }
         }
 
         private void rmlModified()

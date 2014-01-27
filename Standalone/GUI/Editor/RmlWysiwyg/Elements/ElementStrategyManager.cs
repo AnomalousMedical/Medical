@@ -70,5 +70,17 @@ namespace Medical.GUI
                 return ret;
             }
         }
+
+        public ElementStrategy DefaultStrategy
+        {
+            get
+            {
+                return defaultStrategy;
+            }
+            set
+            {
+                defaultStrategy = value;
+            }
+        }
     }
 }

@@ -656,19 +656,22 @@ namespace Lecture
 
         void setCurrentRmlEditor(String name)
         {
-            if (currentRmlEditor != null)
+            if (currentRmlEditor != name)
             {
-                rmlEditors[currentRmlEditor].lostFocus();
-            }
-            currentRmlEditor = name;
-            if (currentRmlEditor != null)
-            {
-                var editor = rmlEditors[currentRmlEditor];
-                panelResizeWidget.setCurrentEditor(editor);
-            }
-            else
-            {
-                panelResizeWidget.setCurrentEditor(null);
+                if (currentRmlEditor != null)
+                {
+                    rmlEditors[currentRmlEditor].lostFocus();
+                }
+                currentRmlEditor = name;
+                if (currentRmlEditor != null)
+                {
+                    var editor = rmlEditors[currentRmlEditor];
+                    panelResizeWidget.setCurrentEditor(editor);
+                }
+                else
+                {
+                    panelResizeWidget.setCurrentEditor(null);
+                }
             }
         }
 

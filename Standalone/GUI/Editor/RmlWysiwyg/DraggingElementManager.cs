@@ -49,12 +49,17 @@ namespace Medical.GUI
             this.iconName = iconName;
         }
 
+        /// <summary>
+        /// Called when an element is being dragged. This will clear the DragElement
+        /// </summary>
+        /// <param name="position"></param>
         public void dragging(IntVector2 position)
         {
             if (allowDragging)
             {
                 if (firstDrag)
                 {
+                    rmlComponent.cancelAndHideEditor();
                     firstDrag = false;
                 }
                 dragIconPreview.setPosition(position.x - (dragIconPreview.Width / 2), position.y - (int)(dragIconPreview.Height * .75f));
@@ -130,7 +135,10 @@ namespace Medical.GUI
                 else
                 {
                     dragElement = null;
-                    rmlComponent.clearPreviewElement();
+                    if (!firstDrag)
+                    {
+                        rmlComponent.clearPreviewElement();
+                    }
                 }
                 allowDragging = false;
             }
@@ -141,6 +149,19 @@ namespace Medical.GUI
             get
             {
                 return dragIconPreview.Visible;
+            }
+        }
+
+        /// <summary>
+        /// The element that was selected to drag if dragStarted is called and dragging has not been called
+        /// or null if a drag has occured. This is important for the wysiwyg component because it will
+        /// use this to determine if it should look for an alternate element at a given pick location.
+        /// </summary>
+        public Element DragElement
+        {
+            get
+            {
+                return dragElement;
             }
         }
     }
