@@ -34,6 +34,14 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
+        protected void fireRefreshEditInterface()
+        {
+            if (editInterface != null)
+            {
+                editInterface.fireDataNeedsRefresh();
+            }
+        }
+
         public abstract bool buildClassList(StringBuilder classes);
 
         public abstract bool buildStyleAttribute(StringBuilder styleAttribute);

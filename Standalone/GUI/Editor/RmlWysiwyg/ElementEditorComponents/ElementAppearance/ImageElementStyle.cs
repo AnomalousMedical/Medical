@@ -23,6 +23,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private bool center = false;
         private bool fixedSize = true;
         private int width = 200;
+        private Vector2 offset = new Vector2();
 
         public ImageElementStyle(Element imageElement)
         {
@@ -50,6 +51,19 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                     width = widthNull.Value;
                 }
             }
+            int? x = null;
+            int? y = inlineCss.intValue("margin-top");
+            switch (textAlign)
+            {
+                case ImageTextAlign.None:
+                case ImageTextAlign.Right:
+                    x = inlineCss.intValue("margin-left");
+                    break;
+                case ImageTextAlign.Left:
+                    x = inlineCss.intValue("margin-right");
+                    break;
+            }
+            offset = new Vector2(x.GetValueOrDefault(0), y.GetValueOrDefault(0));
         }
 
         public override bool buildClassList(StringBuilder classes)
@@ -80,7 +94,94 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             {
                 styleAttribute.AppendFormat("width:{0}%;", width);
             }
+            if (offset.y != 0.0f)
+            {
+                styleAttribute.AppendFormat("margin-top:{0}px;", offset.y);
+            }
+            if (offset.x != 0.0f)
+            {
+                switch (textAlign)
+                {
+                    case ImageTextAlign.None:
+                    case ImageTextAlign.Right:
+                        styleAttribute.AppendFormat("margin-left:{0}px;", offset.x);
+                        break;
+                    case ImageTextAlign.Left:
+                        styleAttribute.AppendFormat("margin-right:{0}px;", offset.x);
+                        break;
+                }
+            }
             return true;
+        }
+
+        public void changeSize(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
+        {
+            bool changesMade = false;
+            switch(textAlign)
+            {
+                case ImageTextAlign.None:
+                case ImageTextAlign.Right:
+                    if ((resizeType & ResizeType.Width) == ResizeType.Width)
+                    {
+                        int oldWidth = width;
+                        if (fixedSize)
+                        {
+                            width = newRect.Width;
+                        }
+                        else
+                        {
+                            width = (int)(newRect.Width / element.OffsetParent.ClientWidth * 100.0f);
+                        }
+                        changesMade = true;
+                    }
+                    if ((resizeType & ResizeType.Left) == ResizeType.Left)
+                    {
+                        offset.x = newRect.Left;
+                        changesMade = true;
+                    }
+                    break;
+                case ImageTextAlign.Left:
+                    if ((resizeType & ResizeType.Width) == ResizeType.Width)
+                    {
+                        offset.x = -newRect.Left;
+                        changesMade = true;
+                    }
+                    if ((resizeType & ResizeType.Left) == ResizeType.Left)
+                    {
+                        int oldWidth = width;
+                        if (fixedSize)
+                        {
+                            width = newRect.Width;
+                        }
+                        else
+                        {
+                            width = (int)(newRect.Width / element.OffsetParent.ClientWidth * 100.0f);
+                        }
+                        changesMade = true; 
+                    }
+                    break;
+            }
+
+            if ((resizeType & ResizeType.Top) == ResizeType.Top)
+            {
+                offset.y = newRect.Top;
+                changesMade = true;
+            }
+
+            if (changesMade)
+            {
+                fireRefreshEditInterface();
+            }
+        }
+
+        public Rect createCurrentRect(Element element)
+        {
+            float width = Width;
+            if (!fixedSize)
+            {
+                width = element.ClientWidth;
+            }
+            return new Rect(offset.x, offset.y, width, 0);
         }
 
         [Editable]
@@ -146,6 +247,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (textAlign != value)
                 {
                     textAlign = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public Vector2 Offset
+        {
+            get
+            {
+                return offset;
+            }
+            set
+            {
+                if (offset != value)
+                {
+                    offset = value;
                     fireChanged();
                 }
             }

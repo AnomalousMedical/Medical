@@ -120,7 +120,7 @@ namespace Medical.GUI
             set
             {
                 elementStrategy = value;
-                showResizeHandles(elementStrategy != null && elementStrategy.Resizable);
+                showResizeHandles(elementStrategy != null ? elementStrategy.ResizeHandles : ResizeType.None);
             }
         }
 
@@ -157,16 +157,30 @@ namespace Medical.GUI
             }
         }
 
-        private void showResizeHandles(bool show)
+        private void showResizeHandles(ResizeType handles)
         {
-            widthAdjust.Visible = show;
-            heightAdjust.Visible = show;
-            bothAdjust.Visible = show;
-            xAdjust.Visible = show;
-            yAdjust.Visible = show;
-            xyAdjust.Visible = show;
-            yWidthAdjust.Visible = show;
-            xHeightAdjust.Visible = show;
+            if (elementStrategy != null)
+            {
+                widthAdjust.Visible = (handles & ResizeType.Width) == ResizeType.Width;
+                heightAdjust.Visible = (handles & ResizeType.Height) == ResizeType.Height;
+                bothAdjust.Visible = (handles & ResizeType.WidthHeight) == ResizeType.WidthHeight;
+                xAdjust.Visible = (handles & ResizeType.Left) == ResizeType.Left;
+                yAdjust.Visible = (handles & ResizeType.Top) == ResizeType.Top;
+                xyAdjust.Visible = (handles & ResizeType.LeftTop) == ResizeType.LeftTop;
+                yWidthAdjust.Visible = (handles & ResizeType.TopWidth) == ResizeType.TopWidth;
+                xHeightAdjust.Visible = (handles & ResizeType.LeftHeight) == ResizeType.LeftHeight;
+            }
+            else
+            {
+                widthAdjust.Visible = false;
+                heightAdjust.Visible = false;
+                bothAdjust.Visible = false;
+                xAdjust.Visible = false;
+                yAdjust.Visible = false;
+                xyAdjust.Visible = false;
+                yWidthAdjust.Visible = false;
+                xHeightAdjust.Visible = false;
+            }
         }
 
         void genericAdjust(Widget source, EventArgs e, ResizeType resizeType, Func<IntVector2, Rect> computeSizeCallback)

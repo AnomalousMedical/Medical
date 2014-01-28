@@ -9,6 +9,7 @@ namespace Medical.GUI
 {
     public enum ResizeType
     {
+        None = 0,
         Width = 1 << 0,
         Height = 1 << 1,
         Left = 1 << 2,
@@ -16,7 +17,7 @@ namespace Medical.GUI
         WidthHeight = Width | Height,
         LeftTop = Left | Top,
         LeftHeight = Left | Height,
-        TopWidth = Left | Width,
+        TopWidth = Top | Width,
     }
 
     public class ElementStrategy
@@ -34,7 +35,7 @@ namespace Medical.GUI
 
         public String PreviewIconName { get; set; }
 
-        public bool Resizable { get; set; }
+        public ResizeType ResizeHandles { get; set; }
 
         public virtual void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
         {

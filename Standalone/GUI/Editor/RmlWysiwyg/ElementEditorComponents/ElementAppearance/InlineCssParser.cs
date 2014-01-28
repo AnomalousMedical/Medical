@@ -41,27 +41,40 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         public int? intValue(String key)
         {
-            int intVal;
-            if (int.TryParse(Regex.Match(properties[key], @"\d+").Value, out intVal))
+            String value;
+            if (properties.TryGetValue(key, out value))
             {
-                return intVal;
+                int intVal;
+                if (int.TryParse(Regex.Match(value, @"\d+").Value, out intVal))
+                {
+                    return intVal;
+                }
             }
             return null;
         }
 
         public Color? colorValue(String key)
         {
-            Color colorVal;
-            if (Color.TryFromRGBAString(properties[key], out colorVal))
+            String value;
+            if (properties.TryGetValue(key, out value))
             {
-                return colorVal;
+                Color colorVal;
+                if (Color.TryFromRGBAString(properties[key], out colorVal))
+                {
+                    return colorVal;
+                }
             }
             return null;
         }
 
         public bool isValuePercent(String key)
         {
-            return properties[key].EndsWith("%");
+            String value;
+            if (properties.TryGetValue(key, out value))
+            {
+                return value.EndsWith("%");
+            }
+            return false;
         }
 
         public String this[String key]

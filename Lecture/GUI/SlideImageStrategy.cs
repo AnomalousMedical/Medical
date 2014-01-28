@@ -14,7 +14,7 @@ namespace Lecture.GUI
     {
         SlideImageComponent slideImageEditor;
         EditInterfaceEditor appearanceEditor;
-        ElementStyleDefinition appearance;
+        ImageElementStyle appearance;
         EditorResourceProvider editorResourceProvider;
         String subdirectory;
 
@@ -23,7 +23,7 @@ namespace Lecture.GUI
         {
             this.editorResourceProvider = editorResourceProvider;
             this.subdirectory = subdirectory;
-            Resizable = false;
+            ResizeHandles = ResizeType.Width | ResizeType.Left | ResizeType.Top;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
@@ -71,31 +71,38 @@ namespace Lecture.GUI
 
         public override void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
         {
-            //slideImageEditor.changeSize(newRect, resizeType, bounds);
-            //IntSize2 correctedSize = slideImageEditor.ImageSize;
-            //element.SetAttribute("width", correctedSize.Width.ToString());
-            //element.SetAttribute("height", correctedSize.Height.ToString());
-            //IntVector2 position = slideImageEditor.ImagePosition;
-            //element.SetProperty("margin-left", position.x.ToString() + "sp");
-            //element.SetProperty("margin-top", position.y.ToString() + "sp");
+            appearance.changeSize(element, newRect, resizeType, bounds);
+            element.ClearLocalStyles();
+            StringBuilder styleString = new StringBuilder();
+            StringBuilder classString = new StringBuilder();
+            appearance.buildClassList(classString);
+            appearance.buildStyleAttribute(styleString);
+            if (classString.Length > 0)
+            {
+                element.SetAttribute("class", classString.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("class");
+            }
+            if (styleString.Length > 0)
+            {
+                element.SetAttribute("style", styleString.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("style");
+            }
         }
 
         public override Rect getStartingRect(Element selectedElement)
         {
-            Variant vLeft = selectedElement.GetPropertyVariant("margin-left");
-            Variant vTop = selectedElement.GetPropertyVariant("margin-top");
-            Variant vWidth = selectedElement.GetAttribute("width");
-            Variant vHeight = selectedElement.GetAttribute("height");
-            float left = vLeft != null ? vLeft.FloatValue : 0;
-            float top = vTop != null ? vTop.FloatValue : 0;
-            float width = vWidth != null ? vWidth.FloatValue : 0;
-            float height = vHeight != null ? vHeight.FloatValue : 0;
-            return new Rect(left, top, width, height);
+            return appearance.createCurrentRect(selectedElement);
         }
 
         public override void applySizeChange(Element element)
         {
-            slideImageEditor.applyChanges();
+            appearanceEditor.alertChangesMade();
         }
 
         public override bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
