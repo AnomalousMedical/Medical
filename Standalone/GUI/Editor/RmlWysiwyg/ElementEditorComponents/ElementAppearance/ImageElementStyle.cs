@@ -133,11 +133,19 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if ((resizeType & ResizeType.Left) == ResizeType.Left)
             {
                 offset.x = newRect.Left;
+                if (offset.x < 0)
+                {
+                    offset.x = 0;
+                }
                 changesMade = true;
             }
             if ((resizeType & ResizeType.Top) == ResizeType.Top)
             {
                 offset.y = newRect.Top;
+                if (offset.y < 0)
+                {
+                    offset.y = 0;
+                }
                 changesMade = true;
             }
 
@@ -233,7 +241,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, int.MaxValue, 1)]
         public Vector2 Offset
         {
             get
