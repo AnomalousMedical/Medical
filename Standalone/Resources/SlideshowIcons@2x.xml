@@ -33,5 +33,29 @@
     </Group>
   </Resource>
 
+  <Resource type="ResourceImageSet" name="SlideshowIcons/NormalVectorToggle">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="256 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomIn">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="320 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomOut">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="384 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
 </MyGUI>
 

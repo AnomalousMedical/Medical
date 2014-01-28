@@ -64,12 +64,12 @@ namespace Medical
             });
             taskbar.addItem(new TaskTaskbarItem(previousTask));
             taskbar.addItem(new TaskTaskbarItem(nextTask));
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ToggleMode", "Toggle Display Mode", CommonResources.NoIcon, "None", arg =>
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ToggleMode", "Toggle Display Mode", "SlideshowIcons/NormalVectorToggle", "None", arg =>
             {
                 displayManager.VectorMode = !displayManager.VectorMode;
                 guiManager.layout();
             })));
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomIn", "Zoom In", CommonResources.NoIcon, "None", arg =>
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomIn", "Zoom In", "SlideshowIcons/ZoomIn", "None", arg =>
             {
                 if (displayManager.AdditionalZoomMultiple < 0.8f)
                 {
@@ -93,7 +93,7 @@ namespace Medical
                 }
                 guiManager.layout();
             })));
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomOut", "Zoom Out", CommonResources.NoIcon, "None", arg =>
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomOut", "Zoom Out", "SlideshowIcons/ZoomOut", "None", arg =>
             {
                 if (displayManager.AdditionalZoomMultiple > 1.7f)
                 {
