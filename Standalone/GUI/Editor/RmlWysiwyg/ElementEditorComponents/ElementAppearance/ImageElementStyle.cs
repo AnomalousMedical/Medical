@@ -24,6 +24,8 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private bool fixedSize = true;
         private int width = 200;
         private Vector2 offset = new Vector2();
+        private int? textSideMargin = 0;
+        private int? textBottomMargin = 0;
 
         public ImageElementStyle(Element imageElement)
         {
@@ -58,11 +60,14 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 case ImageTextAlign.None:
                 case ImageTextAlign.Right:
                     x = inlineCss.intValue("margin-left");
+                    textSideMargin = inlineCss.intValue("margin-right");
                     break;
                 case ImageTextAlign.Left:
                     x = inlineCss.intValue("margin-right");
+                    textSideMargin = inlineCss.intValue("margin-left");
                     break;
             }
+            textBottomMargin = inlineCss.intValue("margin-bottom");
             offset = new Vector2(x.GetValueOrDefault(0), y.GetValueOrDefault(0));
         }
 
@@ -110,6 +115,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                         styleAttribute.AppendFormat("margin-right:{0}px;", offset.x);
                         break;
                 }
+            }
+            if (textSideMargin.HasValue)
+            {
+                switch (textAlign)
+                {
+                    case ImageTextAlign.None:
+                    case ImageTextAlign.Right:
+                        styleAttribute.AppendFormat("margin-right:{0}px;", textSideMargin.Value);
+                        break;
+                    case ImageTextAlign.Left:
+                        styleAttribute.AppendFormat("margin-left:{0}px;", textSideMargin.Value);
+                        break;
+                }
+            }
+            if (textBottomMargin.HasValue)
+            {
+                styleAttribute.AppendFormat("margin-bottom:{0}px;", textBottomMargin.Value);
             }
             return true;
         }
@@ -253,6 +275,40 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (offset != value)
                 {
                     offset = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [EditableMinMax(0, int.MaxValue, 1)]
+        public int? TextSideMargin
+        {
+            get
+            {
+                return textSideMargin;
+            }
+            set
+            {
+                if (textSideMargin != value)
+                {
+                    textSideMargin = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [EditableMinMax(0, int.MaxValue, 1)]
+        public int? TextBottomMargin
+        {
+            get
+            {
+                return textBottomMargin;
+            }
+            set
+            {
+                if (textBottomMargin != value)
+                {
+                    textBottomMargin = value;
                     fireChanged();
                 }
             }
