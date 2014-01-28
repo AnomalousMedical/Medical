@@ -174,6 +174,8 @@ namespace Medical.GUI
                 rocketWidget.resized();
                 imageHeight = widget.Height;
                 imageWidth = widget.Width;
+                selectedElementManager.updateHighlightPosition();
+                updateEditorPosition();
             }
             base.topLevelResized();
         }
@@ -661,28 +663,6 @@ namespace Medical.GUI
                     return; //Return here to prevent more execution
                 }
 
-                int left, top;
-                switch (ViewHost.View.ElementName.LocationHint)
-                {
-                    case ViewLocations.Right:
-                        left = widget.AbsoluteLeft - editor.Width;
-                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
-                        break;
-                    case ViewLocations.Top:
-                        left = rocketWidget.AbsoluteLeft;
-                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop + (int)element.ClientHeight;
-                        break;
-                    case ViewLocations.Bottom:
-                        left = rocketWidget.AbsoluteLeft;
-                        top = rocketWidget.AbsoluteTop - editor.Height;
-                        break;
-                    default:
-                        left = widget.AbsoluteLeft + widget.Width;
-                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
-                        break;
-                }
-                editor.setPosition(left, top, true);
-
                 editor.UndoRml = UnformattedRml;
                 //Everything is good so setup.
                 editor.Hiding += (src, arg) =>
@@ -785,6 +765,37 @@ namespace Medical.GUI
                 selectedElementManager.SelectedElement = element;
                 selectedElementManager.HighlightElement = element;
                 selectedElementManager.ElementStrategy = strategy;
+                updateEditorPosition();
+            }
+        }
+
+        private void updateEditorPosition()
+        {
+            Element element = selectedElementManager.SelectedElement;
+            var editor = currentEditor;
+            if (element != null && editor != null)
+            {
+                int left, top;
+                switch (ViewHost.View.ElementName.LocationHint)
+                {
+                    case ViewLocations.Right:
+                        left = widget.AbsoluteLeft - editor.Width;
+                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
+                        break;
+                    case ViewLocations.Top:
+                        left = widget.Width / 2 + widget.AbsoluteLeft - editor.Width / 2;
+                        top = widget.AbsoluteTop + widget.Height;
+                        break;
+                    case ViewLocations.Bottom:
+                        left = widget.Width / 2 + widget.AbsoluteLeft - editor.Width / 2;
+                        top = rocketWidget.AbsoluteTop - editor.Height;
+                        break;
+                    default:
+                        left = widget.AbsoluteLeft + widget.Width;
+                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
+                        break;
+                }
+                editor.setPosition(left, top, true);
             }
         }
 
