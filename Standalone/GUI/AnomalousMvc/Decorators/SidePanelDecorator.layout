@@ -3,7 +3,8 @@
     <Widget type="Widget" skin="PanelSkin" position="6 36 352 258" layer="BackOverlapped">
         <UserString key="ChildX" value="0"/>
         <UserString key="ChildY" value="0"/>
-        <UserString key="ChildWidthOffset" value="3"/>
-        <UserString key="ChildHeightOffset" value="3"/>
+        <UserString key="ChildWidthOffset" value="0"/>
+        <UserString key="ChildHeightOffset" value="0"/>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

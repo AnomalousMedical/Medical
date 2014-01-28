@@ -164,19 +164,14 @@ namespace Medical
                         if (rigidParentSize.Height != lastWorkingParentHeight)
                         {
                             float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale * displayManager.AdditionalZoomMultiple;
-                            SlidePanel panel = masterStrategy.panels[view.View.ElementName];
-                            int size = (int)(ScaleHelper.Scaled(panel.Size) * ratio);
-                            if (viewHosts.ContainsKey(view.View.ElementName))
+                            foreach (var host in viewHosts.Values)
                             {
-                                viewHosts[view.View.ElementName].changeScale(ratio);
+                                SlidePanel panel = masterStrategy.panels[host.View.ElementName];
+                                host.changeScale(ratio);
                             }
                             lastWorkingParentHeight = rigidParentSize.Height;
                         }
                     }
-                }
-                else if (viewHosts.ContainsKey(view.View.ElementName)) //Try to avoid doing this over and over
-                {
-                    viewHosts[view.View.ElementName].changeScale(displayManager.AdditionalZoomMultiple);
                 }
             }
 
@@ -188,6 +183,13 @@ namespace Medical
             void displayManager_DisplayModeChanged(SlideDisplayManager obj)
             {
                 lastWorkingParentHeight = int.MinValue;
+                if (!displayManager.VectorMode)
+                {
+                    foreach (var host in viewHosts.Values)
+                    {
+                        host.changeScale(displayManager.AdditionalZoomMultiple);
+                    }
+                }
             }
         }
     }

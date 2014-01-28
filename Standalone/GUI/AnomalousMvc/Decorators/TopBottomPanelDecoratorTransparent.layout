@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout">
-  <Widget type="Widget" skin="PanelEmpty" position="13 27 1634 92" layer="BackOverlapped">
-    <UserString key="ChildX" value="0"/>
-    <UserString key="ChildY" value="0"/>
-    <UserString key="ChildWidthOffset" value="0"/>
-    <UserString key="ChildHeightOffset" value="3"/>
-  </Widget>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position="13 27 1634 92" layer="BackOverlapped">
+        <UserString key="ChildX" value="0"/>
+        <UserString key="ChildY" value="0"/>
+        <UserString key="ChildWidthOffset" value="0"/>
+        <UserString key="ChildHeightOffset" value="0"/>
+    </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>
