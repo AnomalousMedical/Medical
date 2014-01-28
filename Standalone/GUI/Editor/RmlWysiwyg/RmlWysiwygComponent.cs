@@ -795,6 +795,7 @@ namespace Medical.GUI
             {
                 RmlEdited.Invoke(this);
             }
+            rocketWidget.Context.Update();
             selectedElementManager.updateHighlightPosition();
             rocketWidget.renderOnNextFrame();
         }
