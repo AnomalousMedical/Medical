@@ -791,7 +791,7 @@ namespace Medical.GUI
                         top = rocketWidget.AbsoluteTop - editor.Height;
                         break;
                     default:
-                        left = widget.AbsoluteLeft + widget.Width;
+                        left = (int)(widget.AbsoluteLeft + element.AbsoluteLeft + element.ClientWidth);
                         top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
                         break;
                 }
