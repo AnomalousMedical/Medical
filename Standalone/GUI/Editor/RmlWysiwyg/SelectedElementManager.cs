@@ -26,6 +26,7 @@ namespace Medical.GUI
         private Rect elementStartRect;
         private IntVector2 mouseStartPosition;
         private Widget parentWidget;
+        private bool leftAdjustAnchor = true;
 
         public SelectedElementManager(Widget parentWidget)
         {
@@ -213,12 +214,26 @@ namespace Medical.GUI
 
         void widthAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, ResizeType.Width, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
+            if (leftAdjustAnchor)
+            {
+                genericAdjust(source, e, ResizeType.Width, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
+            }
+            else
+            {
+                genericAdjust(source, e, ResizeType.Left, (mouseOffset) => new Rect(elementStartRect.Left - mouseOffset.x, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height));
+            }
         }
 
         void xAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, ResizeType.Left, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height));
+            if (leftAdjustAnchor)
+            {
+                genericAdjust(source, e, ResizeType.Left, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top, elementStartRect.Width, elementStartRect.Height));
+            }
+            else
+            {
+                genericAdjust(source, e, ResizeType.Width, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top, elementStartRect.Width - mouseOffset.x, elementStartRect.Height));
+            }
         }
 
         void yAdjust_MouseDrag(Widget source, EventArgs e)
@@ -228,12 +243,26 @@ namespace Medical.GUI
 
         void xyAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, ResizeType.LeftTop, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top + mouseOffset.y, elementStartRect.Width, elementStartRect.Height));
+            if (leftAdjustAnchor)
+            {
+                genericAdjust(source, e, ResizeType.LeftTop, (mouseOffset) => new Rect(elementStartRect.Left + mouseOffset.x, elementStartRect.Top + mouseOffset.y, elementStartRect.Width, elementStartRect.Height));
+            }
+            else
+            {
+                genericAdjust(source, e, ResizeType.TopWidth, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top + mouseOffset.y, elementStartRect.Width - mouseOffset.x, elementStartRect.Height));
+            }
         }
 
         void yWidthAdjust_MouseDrag(Widget source, EventArgs e)
         {
-            genericAdjust(source, e, ResizeType.TopWidth, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top + mouseOffset.y, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
+            if (leftAdjustAnchor)
+            {
+                genericAdjust(source, e, ResizeType.TopWidth, (mouseOffset) => new Rect(elementStartRect.Left, elementStartRect.Top + mouseOffset.y, elementStartRect.Width + mouseOffset.x, elementStartRect.Height));
+            }
+            else
+            {
+                genericAdjust(source, e, ResizeType.LeftTop, (mouseOffset) => new Rect(elementStartRect.Left - mouseOffset.x, elementStartRect.Top + mouseOffset.y, elementStartRect.Width, elementStartRect.Height));
+            }
         }
 
         void xHeightAdjust_MouseDrag(Widget source, EventArgs e)
@@ -248,7 +277,7 @@ namespace Medical.GUI
                 float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
                 MouseEventArgs me = (MouseEventArgs)e;
                 mouseStartPosition = me.Position;
-                elementStartRect = elementStrategy.getStartingRect(selectedElement) * ratio;
+                elementStartRect = elementStrategy.getStartingRect(selectedElement, out leftAdjustAnchor) * ratio;
             }
         }
 

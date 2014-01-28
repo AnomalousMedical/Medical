@@ -117,51 +117,24 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         public void changeSize(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
         {
             bool changesMade = false;
-            switch(textAlign)
+            if ((resizeType & ResizeType.Width) == ResizeType.Width)
             {
-                case ImageTextAlign.None:
-                case ImageTextAlign.Right:
-                    if ((resizeType & ResizeType.Width) == ResizeType.Width)
-                    {
-                        int oldWidth = width;
-                        if (fixedSize)
-                        {
-                            width = newRect.Width;
-                        }
-                        else
-                        {
-                            width = (int)(newRect.Width / element.OffsetParent.ClientWidth * 100.0f);
-                        }
-                        changesMade = true;
-                    }
-                    if ((resizeType & ResizeType.Left) == ResizeType.Left)
-                    {
-                        offset.x = newRect.Left;
-                        changesMade = true;
-                    }
-                    break;
-                case ImageTextAlign.Left:
-                    if ((resizeType & ResizeType.Width) == ResizeType.Width)
-                    {
-                        offset.x = -newRect.Left;
-                        changesMade = true;
-                    }
-                    if ((resizeType & ResizeType.Left) == ResizeType.Left)
-                    {
-                        int oldWidth = width;
-                        if (fixedSize)
-                        {
-                            width = newRect.Width;
-                        }
-                        else
-                        {
-                            width = (int)(newRect.Width / element.OffsetParent.ClientWidth * 100.0f);
-                        }
-                        changesMade = true; 
-                    }
-                    break;
+                int oldWidth = width;
+                if (fixedSize)
+                {
+                    width = newRect.Width;
+                }
+                else
+                {
+                    width = (int)(newRect.Width / element.OffsetParent.ClientWidth * 100.0f);
+                }
+                changesMade = true;
             }
-
+            if ((resizeType & ResizeType.Left) == ResizeType.Left)
+            {
+                offset.x = newRect.Left;
+                changesMade = true;
+            }
             if ((resizeType & ResizeType.Top) == ResizeType.Top)
             {
                 offset.y = newRect.Top;
@@ -174,14 +147,22 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        public Rect createCurrentRect(Element element)
+        public Rect createCurrentRect(Element element, out bool leftAnchor)
         {
+            leftAnchor = textAlign != ImageTextAlign.Left;
             float width = Width;
             if (!fixedSize)
             {
                 width = element.ClientWidth;
             }
-            return new Rect(offset.x, offset.y, width, 0);
+            if (textAlign == ImageTextAlign.Left)
+            {
+                return new Rect(offset.x, element.ClientLeft, width, 0);
+            }
+            else
+            {
+                return new Rect(offset.x, offset.y, width, 0);
+            }
         }
 
         [Editable]

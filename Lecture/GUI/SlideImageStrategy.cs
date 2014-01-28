@@ -95,9 +95,9 @@ namespace Lecture.GUI
             }
         }
 
-        public override Rect getStartingRect(Element selectedElement)
+        public override Rect getStartingRect(Element selectedElement, out bool leftAnchor)
         {
-            return appearance.createCurrentRect(selectedElement);
+            return appearance.createCurrentRect(selectedElement, out leftAnchor);
         }
 
         public override void applySizeChange(Element element)

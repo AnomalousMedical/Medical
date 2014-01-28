@@ -39,10 +39,7 @@ namespace Medical.GUI
 
         public virtual void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
         {
-            element.SetProperty("width", newRect.Width.ToString() + "sp");
-            element.SetProperty("height", newRect.Height.ToString() + "sp");
-            element.SetProperty("margin-left", newRect.Left.ToString() + "sp");
-            element.SetProperty("margin-top", newRect.Top.ToString() + "sp");
+            
         }
 
         public virtual void applySizeChange(Element element)
@@ -55,17 +52,10 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="selectedElement"></param>
         /// <returns></returns>
-        public virtual Rect getStartingRect(Element selectedElement)
+        public virtual Rect getStartingRect(Element selectedElement, out bool leftAnchor)
         {
-            Variant vLeft = selectedElement.GetPropertyVariant("margin-left");
-            Variant vTop = selectedElement.GetPropertyVariant("margin-top");
-            Variant vWidth = selectedElement.GetPropertyVariant("width");
-            Variant vHeight = selectedElement.GetPropertyVariant("height");
-            float left = vLeft != null ? vLeft.FloatValue : 0;
-            float top = vTop != null ? vTop.FloatValue : 0;
-            float width = vWidth != null ? vWidth.FloatValue : 0;
-            float height = vHeight != null ? vHeight.FloatValue : 0;
-            return new Rect(left, top, width, height);
+            leftAnchor = true;
+            return new Rect();
         }
 
         public virtual RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
