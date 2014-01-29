@@ -462,7 +462,6 @@ namespace Lecture
             if (!editorController.ResourceProvider.exists(slide.UniqueName))
             {
                 editorController.ResourceProvider.createDirectory("", slide.UniqueName);
-                using (editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, "SlideStyle.rcss"))) { }
             }
 
             if (SlideAdded != null)

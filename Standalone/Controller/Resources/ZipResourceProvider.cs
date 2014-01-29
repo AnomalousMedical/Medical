@@ -338,25 +338,19 @@ namespace Medical
 
         public void copyDirectory(string from, string to)
         {
-            if (!from.EndsWith("/") || from.EndsWith("\\"))
-            {
-                from += '/';
-            }
             zipFile.Dispose();
+            List<String> files = listFiles("*", from, true).ToList(); //ToList is important here, we need a copy of the list of files or the fail fast iterator will fail when we update
             try
             {
                 using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
-                    var entry = ionicZip[from];
-                    if (entry != null && entry.IsDirectory)
+                    foreach (String fileName in files) 
                     {
-                        foreach (var subEntry in ZipEntryExtensions.EntriesStartingWith(ionicZip, from).ToList()) //ToList is important here, we need a copy of the list of files or the fail fast iterator will fail when we update
-                        {
-                            String toPath = Path.Combine(to, Path.GetFileName(subEntry.FileName));
-                            ionicZip.UpdateEntry(toPath, (name, stream) => entry.Extract(stream));
-                        }
-                        ionicZip.Save();
+                        var entry = ionicZip[fileName];
+                        String toPath = Path.Combine(to, Path.GetFileName(entry.FileName));
+                        ionicZip.UpdateEntry(toPath, (name, stream) => entry.Extract(stream));
                     }
+                    ionicZip.Save();
                 }
             }
             finally

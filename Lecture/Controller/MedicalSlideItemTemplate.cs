@@ -36,6 +36,7 @@ namespace Lecture
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
                 Size = 480,
             });
+            using (editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, "SlideStyle.rcss"))) { }
             if (SlideCreated != null)
             {
                 SlideCreated.Invoke(slide);
