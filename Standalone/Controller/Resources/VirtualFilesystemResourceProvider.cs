@@ -73,7 +73,17 @@ namespace Medical
             return listFiles("*", path, true).Any() || listDirectories("*", path, true).Any();
         }
 
-        public bool exists(string path)
+        public bool fileExists(string path)
+        {
+            return virtualFileSystem.fileExists(Path.Combine(parentPath, path));
+        }
+
+        public bool directoryExists(string path)
+        {
+            return virtualFileSystem.directoryExists(Path.Combine(parentPath, path));
+        }
+
+        public bool exists(String path)
         {
             return virtualFileSystem.exists(Path.Combine(parentPath, path));
         }
@@ -106,7 +116,12 @@ namespace Medical
             throw new NotImplementedException("Cannot move files in the VirtualFSResourceProvider");
         }
 
-        public void copy(string from, string to)
+        public void copyFile(string from, string to)
+        {
+            throw new NotImplementedException("Cannot copy files in the VirtualFSResourceProvider");
+        }
+
+        public void copyDirectory(string from, string to)
         {
             throw new NotImplementedException("Cannot copy files in the VirtualFSResourceProvider");
         }

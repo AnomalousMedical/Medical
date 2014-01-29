@@ -225,9 +225,19 @@ namespace Medical
             return listFiles("*", path, true).Any() || listDirectories("*", path, true).Any();
         }
 
+        public bool fileExists(String path)
+        {
+            return zipFile.fileExists(path);
+        }
+
+        public bool directoryExists(String path)
+        {
+            return zipFile.directoryExists(path);
+        }
+
         public bool exists(String path)
         {
-            return zipFile.exists(path);
+            return fileExists(path) || directoryExists(path);
         }
 
         public String getFullFilePath(String filename)
@@ -305,7 +315,7 @@ namespace Medical
             }
         }
 
-        public void copy(string from, string to)
+        public void copyFile(string from, string to)
         {
             zipFile.Dispose();
             try
@@ -313,19 +323,37 @@ namespace Medical
                 using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
                     var entry = ionicZip[from];
-                    if (entry != null)
+                    if (entry != null && !entry.IsDirectory)
                     {
-                        if (entry.IsDirectory)
+                        ionicZip.UpdateEntry(to, (name, stream) => entry.Extract(stream));
+                        ionicZip.Save();
+                    }
+                }
+            }
+            finally
+            {
+                zipFile = new ZipFile(resourceLocation);
+            }
+        }
+
+        public void copyDirectory(string from, string to)
+        {
+            if (!from.EndsWith("/") || from.EndsWith("\\"))
+            {
+                from += '/';
+            }
+            zipFile.Dispose();
+            try
+            {
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+                {
+                    var entry = ionicZip[from];
+                    if (entry != null && entry.IsDirectory)
+                    {
+                        foreach (var subEntry in ZipEntryExtensions.EntriesStartingWith(ionicZip, from).ToList()) //ToList is important here, we need a copy of the list of files or the fail fast iterator will fail when we update
                         {
-							foreach (var subEntry in ZipEntryExtensions.EntriesStartingWith(ionicZip, from))
-                            {
-                                String toPath = Path.Combine(to, Path.GetFileName(subEntry.FileName));
-                                ionicZip.UpdateEntry(toPath, (name, stream) => entry.Extract(stream));
-                            }
-                        }
-                        else
-                        {
-                            ionicZip.UpdateEntry(to, (name, stream) => entry.Extract(stream));
+                            String toPath = Path.Combine(to, Path.GetFileName(subEntry.FileName));
+                            ionicZip.UpdateEntry(toPath, (name, stream) => entry.Extract(stream));
                         }
                         ionicZip.Save();
                     }

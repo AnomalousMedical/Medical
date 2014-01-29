@@ -80,13 +80,27 @@ namespace Medical
             return Directory.EnumerateFileSystemEntries(Path.Combine(parentPath, path), "*", SearchOption.AllDirectories).Any();
         }
 
-        public bool exists(string path)
+        public bool fileExists(string path)
         {
             if (!path.StartsWith(parentPath))
             {
                 path = Path.Combine(parentPath, path);
             }
             return File.Exists(path);
+        }
+
+        public bool directoryExists(string path)
+        {
+            if (!path.StartsWith(parentPath))
+            {
+                path = Path.Combine(parentPath, path);
+            }
+            return Directory.Exists(path);
+        }
+
+        public bool exists(String path)
+        {
+            return fileExists(path) || directoryExists(path);
         }
 
         public String getFullFilePath(String filename)
@@ -129,19 +143,18 @@ namespace Medical
             }
         }
 
-        public void copy(string from, string to)
+        public void copyFile(string from, string to)
         {
             String fullFromPath = Path.Combine(parentPath, from);
             String fullToPath = Path.Combine(parentPath, to);
-            FileAttributes attrs = File.GetAttributes(fullFromPath);
-            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
-            {
-                DirectoryExtensions.Copy(fullFromPath, fullToPath, true);
-            }
-            else
-            {
-                File.Copy(fullFromPath, fullToPath, true);
-            }
+            File.Copy(fullFromPath, fullToPath, true);
+        }
+
+        public void copyDirectory(string from, string to)
+        {
+            String fullFromPath = Path.Combine(parentPath, from);
+            String fullToPath = Path.Combine(parentPath, to);
+            DirectoryExtensions.Copy(fullFromPath, fullToPath, true);
         }
 
         public void cloneProviderTo(String destination)

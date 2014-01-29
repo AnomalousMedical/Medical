@@ -99,9 +99,19 @@ namespace Medical
             return listFiles("*", path, true).Any();
         }
 
-        public bool exists(string path)
+        public bool fileExists(string path)
         {
             return fileList.Contains(convertToNamespacePath(path));
+        }
+
+        public bool directoryExists(string path)
+        {
+            return false;
+        }
+
+        public bool exists(String path)
+        {
+            return fileExists(path) || directoryExists(path);
         }
 
         public String getFullFilePath(String filename)
@@ -149,7 +159,12 @@ namespace Medical
             throw new NotImplementedException("Cannot move files in the EmbeddedResourceProvider");
         }
 
-        public void copy(string from, string to)
+        public void copyFile(string from, string to)
+        {
+            throw new NotImplementedException("Cannot copy files in the EmbeddedResourceProvider");
+        }
+
+        public void copyDirectory(string from, string to)
         {
             throw new NotImplementedException("Cannot copy files in the EmbeddedResourceProvider");
         }

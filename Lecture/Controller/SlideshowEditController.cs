@@ -993,16 +993,23 @@ namespace Lecture
 
         public void duplicateSlide(Slide slide)
         {
-            Slide copied = CopySaver.Default.copy(slide);
-            String oldName = copied.UniqueName;
-            copied.generateNewUniqueName();
-            int index = slideshow.indexOf(slide) + 1;
-            if (index >= slideshow.Count)
+            try
             {
-                index = -1;
+                Slide copied = CopySaver.Default.copy(slide);
+                String oldName = copied.UniqueName;
+                copied.generateNewUniqueName();
+                editorController.ResourceProvider.copyDirectory(oldName, copied.UniqueName);
+                int index = slideshow.indexOf(slide) + 1;
+                if (index >= slideshow.Count)
+                {
+                    index = -1;
+                }
+                addSlide(copied, index);
             }
-            editorController.ResourceProvider.copy(oldName, copied.UniqueName);
-            addSlide(copied, index);
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error duplicating your slide.\nReason: {0} occured. {1}", ex.GetType().Name, ex.Message), "Duplicate Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         public void createSlide()

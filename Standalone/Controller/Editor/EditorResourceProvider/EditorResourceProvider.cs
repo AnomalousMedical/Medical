@@ -81,9 +81,14 @@ namespace Medical
             }
         }
 
-        public void copy(string from, string to)
+        public void copyFile(string from, string to)
         {
-            backingProvider.copy(from, to);
+            backingProvider.copyFile(from, to);
+        }
+
+        public void copyDirectory(string from, string to)
+        {
+            backingProvider.copyDirectory(from, to);
         }
 
         public IEnumerable<String> listFiles(string pattern)
@@ -106,7 +111,17 @@ namespace Medical
             return backingProvider.directoryHasEntries(path);
         }
 
-        public bool exists(string path)
+        public bool fileExists(string path)
+        {
+            return backingProvider.fileExists(path);
+        }
+
+        public bool directoryExists(string path)
+        {
+            return backingProvider.directoryExists(path);
+        }
+
+        public bool exists(String path)
         {
             return backingProvider.exists(path);
         }
