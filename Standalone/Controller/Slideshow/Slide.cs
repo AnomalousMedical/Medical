@@ -85,6 +85,7 @@ namespace Medical
                 }
             }
             info.claimFile(Path.Combine(UniqueName, "Thumb.png"));
+            info.claimFile(Path.Combine(UniqueName, "SlideStyle.rcss"));
             layoutStrategy.claimFiles(info, resourceProvider, this);
 
             //Clean up actions
@@ -177,11 +178,11 @@ namespace Medical
             }
         }
 
-        public void updateToVersion(int fromVersion, int toVersion)
+        public void updateToVersion(int fromVersion, int toVersion, ResourceProvider slideshowResources)
         {
             foreach (SlidePanel panel in Panels)
             {
-                panel.updateToVersion(fromVersion, toVersion);
+                panel.updateToVersion(fromVersion, toVersion, this, slideshowResources);
             }
         }
 

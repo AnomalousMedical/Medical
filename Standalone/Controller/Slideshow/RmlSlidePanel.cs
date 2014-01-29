@@ -78,11 +78,12 @@ namespace Medical
             base.claimFiles(info, resourceProvider, slide);
         }
 
-        protected internal override void updateToVersion(int fromVersion, int toVersion)
+        protected internal override void updateToVersion(int fromVersion, int toVersion, Slide slide, ResourceProvider slideshowResources)
         {
             if (toVersion >= 2 && fromVersion < toVersion)
             {
-                Rml = Rml.Replace(Version1TemplateLink, Version2TemplateLinkReplacement).Replace(Version1TemplateSetting, Version2TemplateReplacement);
+                Rml = Rml.Replace(Version1TemplateLink, Version2TemplateLinkReplacement);
+                using (slideshowResources.openWriteStream(Path.Combine(slide.UniqueName, "SlideStyle.rcss"))) { }
             }
         }
 
@@ -107,11 +108,7 @@ namespace Medical
         }
 
         private const String Version1TemplateLink = @"<link type=""text/template"" href=""/MasterTemplate.trml"" />";
-        private const String Version2TemplateLinkReplacement =
-@"<link type=""text/template"" href=""~/Medical.Resources.Slides.SlideTemplate.trml"" />
-<link type=""text/rcss"" href=""/SlideMasterStyles.rcss""/>";
-
-        private const String Version1TemplateSetting = @"template=""MasterTemplate""";
-        private const String Version2TemplateReplacement = @"template=""MedicalSlideTemplate""";
+        private const String Version2TemplateLinkReplacement = Version1TemplateLink + @"
+        <link type=""text/rcss"" href=""SlideStyle.rcss""/>";
     }
 }

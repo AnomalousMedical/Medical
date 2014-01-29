@@ -39,7 +39,7 @@ namespace Medical
             return true;
         }
 
-        protected internal virtual void updateToVersion(int fromVersion, int toVersion)
+        protected internal virtual void updateToVersion(int fromVersion, int toVersion, Slide slide, ResourceProvider slideshowResources)
         {
             
         }

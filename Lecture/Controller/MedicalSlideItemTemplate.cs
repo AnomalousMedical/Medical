@@ -118,6 +118,7 @@ namespace Lecture
         public const String defaultSlide = @"<rml>
 	<head>
 		<link type=""text/template"" href=""/MasterTemplate.trml"" />
+        <link type=""text/rcss"" href=""SlideStyle.rcss"" />
 	</head>
 	<body template=""MasterTemplate"">
         <h1>Add Title Here</h1>

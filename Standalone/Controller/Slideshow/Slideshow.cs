@@ -114,13 +114,13 @@ namespace Medical
             }
         }
 
-        public void updateToVersion(int newVersion)
+        public void updateToVersion(int newVersion, ResourceProvider slideshowResources)
         {
             if (newVersion <= CurrentVersion && newVersion > version)
             {
                 foreach (Slide slide in slides)
                 {
-                    slide.updateToVersion(version, newVersion);
+                    slide.updateToVersion(version, newVersion, slideshowResources);
                 }
                 version = newVersion;
             }

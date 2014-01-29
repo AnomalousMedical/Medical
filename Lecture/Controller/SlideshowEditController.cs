@@ -462,6 +462,7 @@ namespace Lecture
             if (!editorController.ResourceProvider.exists(slide.UniqueName))
             {
                 editorController.ResourceProvider.createDirectory("", slide.UniqueName);
+                using (editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, "SlideStyle.rcss"))) { }
             }
 
             if (SlideAdded != null)
@@ -927,7 +928,7 @@ namespace Lecture
                                     EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.MasterTemplate_trml, "MasterTemplate.trml", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
                                     EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SlideMasterStyles_rcss, "SlideMasterStyles.rcss", editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
                                 }
-                                slideshow.updateToVersion(Slideshow.CurrentVersion);
+                                slideshow.updateToVersion(Slideshow.CurrentVersion, editorController.ResourceProvider);
                                 unsafeSave();
                                 finishLoadingSlideshow();
                             }
