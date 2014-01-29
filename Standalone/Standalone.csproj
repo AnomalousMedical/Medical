@@ -173,6 +173,7 @@
     <Compile Include="Controller\Editor\EditorResourceProvider\CachedResource.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\EditorResourceProvider.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\ResourceCache.cs" />
+    <Compile Include="Controller\Editor\EditorResourceProvider\ResourceProviderTextCachedResource.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\SaveableCachedResource.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\SaveableObjectStream.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\TextCachedResource.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplate.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplateAdapter.cs" />
     <Compile Include="GUI\Editor\CommonEditorResources.cs" />
+    <Compile Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropTaskManager.cs" />
     <Compile Include="GUI\Editor\ImageBrowserWindow.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropComponent.cs" />
@@ -812,6 +814,7 @@
     <Compile Include="Utility\IEnumerableUtil.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
+    <EmbeddedResource Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormColorButton.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
     <EmbeddedResource Include="GUI\RocketGui\RocketDebuggerWindow.layout" />

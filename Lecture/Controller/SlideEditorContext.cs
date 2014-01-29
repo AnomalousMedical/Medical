@@ -169,6 +169,21 @@ namespace Lecture
             {
                 editorController.runSlideshow(0);
             }));
+            taskbar.addTask(new CallbackTask("EditSlideshowTheme", "Edit Slideshow Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(0, 0);
+                SlideshowStyle style = new SlideshowStyle();
+                style.Changed += (arg) =>
+                    {
+                        StringBuilder styleString = new StringBuilder(500);
+                        styleString.Append("body{");
+                        arg.buildStyleAttribute(styleString);
+                        styleString.Append("}");
+                        editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource("SlideMasterStyles.rcss", Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
+                        refreshAllRml();
+                    };
+                PopupGenericEditor.openEditor(style.getEditInterface(), uiCallback, taskPosition.x, taskPosition.y);
+            }));
             slideLayoutPicker = new SlideLayoutPickerTask();
 
             makeTempPresets();
@@ -758,6 +773,18 @@ namespace Lecture
         void panelResizeWidget_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)
         {
             forceUpdateThumbOnBlur = true;
+        }
+
+        void refreshAllRml()
+        {
+            RocketGuiManager.clearAllCaches();
+            foreach (var editor in rmlEditors.Values)
+            {
+                if (editor.Component != null)
+                {
+                    editor.Component.setRml(editor.Component.UnformattedRml, true, false);
+                }
+            }
         }
     }
 }

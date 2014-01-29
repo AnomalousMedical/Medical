@@ -52,7 +52,9 @@ namespace Medical
         {
             if (OnClicked != null)
             {
+                CurrentTaskPositioner = positioner;
                 OnClicked.Invoke(this);
+                CurrentTaskPositioner = null;
             }
         }
 
@@ -98,5 +100,10 @@ namespace Medical
                 fireIconChanged();
             }
         }
+
+        /// <summary>
+        /// The TaskPositioner that was set when this item was clicked, only valid during an OnClicked event.
+        /// </summary>
+        public TaskPositioner CurrentTaskPositioner { get; private set; }
     }
 }
