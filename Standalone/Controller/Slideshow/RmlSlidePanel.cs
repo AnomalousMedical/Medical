@@ -83,7 +83,7 @@ namespace Medical
             if (toVersion >= 2 && fromVersion < toVersion)
             {
                 Rml = Rml.Replace(Version1TemplateLink, Version2TemplateLinkReplacement);
-                using (slideshowResources.openWriteStream(Path.Combine(slide.UniqueName, "SlideStyle.rcss"))) { }
+                using (slideshowResources.openWriteStream(Path.Combine(slide.UniqueName, Slide.StyleSheetName))) { }
             }
         }
 

@@ -40,7 +40,7 @@ namespace Lecture
             {
                 editorController.ResourceProvider.createDirectory("", slide.UniqueName);
             }
-            using (editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, "SlideStyle.rcss"))) { }
+            using (editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slide.StyleSheetName))) { }
             if (SlideCreated != null)
             {
                 SlideCreated.Invoke(slide);

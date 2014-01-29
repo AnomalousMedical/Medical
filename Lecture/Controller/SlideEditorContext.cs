@@ -181,7 +181,24 @@ namespace Lecture
                         styleString.Append("}");
                         editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource("SlideMasterStyles.rcss", Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
                         refreshAllRml();
+                        forceUpdateThumbOnBlur = true;
                     };
+                PopupGenericEditor.openEditor(style.getEditInterface(), uiCallback, taskPosition.x, taskPosition.y);
+            }));
+            taskbar.addTask(new CallbackTask("EditSlidTheme", "Edit Slide Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(0, 0);
+                SlideshowStyle style = new SlideshowStyle();
+                style.Changed += (arg) =>
+                {
+                    StringBuilder styleString = new StringBuilder(500);
+                    styleString.Append("body{");
+                    arg.buildStyleAttribute(styleString);
+                    styleString.Append("}");
+                    editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(Path.Combine(slide.UniqueName, Slide.StyleSheetName), Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
+                    refreshAllRml();
+                    forceUpdateThumbOnBlur = true;
+                };
                 PopupGenericEditor.openEditor(style.getEditInterface(), uiCallback, taskPosition.x, taskPosition.y);
             }));
             slideLayoutPicker = new SlideLayoutPickerTask();

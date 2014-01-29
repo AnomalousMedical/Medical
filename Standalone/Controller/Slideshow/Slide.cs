@@ -14,6 +14,7 @@ namespace Medical
     public abstract class Slide : Saveable
     {
         internal const String SlideActionClass = "SlideAction";
+        public const String StyleSheetName = "SlideStyle.rcss";
 
         [DoNotSave] //Saved manually
         private String id;
@@ -85,7 +86,7 @@ namespace Medical
                 }
             }
             info.claimFile(Path.Combine(UniqueName, "Thumb.png"));
-            info.claimFile(Path.Combine(UniqueName, "SlideStyle.rcss"));
+            info.claimFile(Path.Combine(UniqueName, StyleSheetName));
             layoutStrategy.claimFiles(info, resourceProvider, this);
 
             //Clean up actions
