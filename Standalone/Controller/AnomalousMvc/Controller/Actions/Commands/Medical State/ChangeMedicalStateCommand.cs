@@ -54,6 +54,8 @@ namespace Medical.Controller.AnomalousMvc
             TeethPresetState teethPreset = new TeethPresetState("", "", "");
             teethPreset.captureFromState(medicalState.Teeth);
             compoundPresetState.addSubState(teethPreset);
+
+            presetState = compoundPresetState;
         }
 
         public PresetState PresetState

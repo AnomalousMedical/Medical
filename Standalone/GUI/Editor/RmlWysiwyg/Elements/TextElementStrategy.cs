@@ -92,7 +92,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             return false;
         }
 
-        void elementStyle_Changed(ElementStyleDefinition obj)
+        void elementStyle_Changed(StyleDefinition obj)
         {
             appearanceEditor.alertChangesMade();
         }

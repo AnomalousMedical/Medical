@@ -6,42 +6,8 @@ using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    public abstract class ElementStyleDefinition
+    public abstract class ElementStyleDefinition : StyleDefinition
     {
-        private EditInterface editInterface;
-
-        public event Action<ElementStyleDefinition> Changed;
-
-        public ElementStyleDefinition()
-        {
-
-        }
-
-        public EditInterface getEditInterface()
-        {
-            if (editInterface == null)
-            {
-                editInterface = ReflectedEditInterface.createEditInterface(this, "Appearance");
-            }
-            return editInterface;
-        }
-
-        protected void fireChanged()
-        {
-            if (Changed != null)
-            {
-                Changed.Invoke(this);
-            }
-        }
-
-        protected void fireRefreshEditInterface()
-        {
-            if (editInterface != null)
-            {
-                editInterface.fireDataNeedsRefresh();
-            }
-        }
-
         public abstract bool buildClassList(StringBuilder classes);
 
         public abstract bool buildStyleAttribute(StringBuilder styleAttribute);

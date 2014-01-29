@@ -344,6 +344,7 @@
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\ElementStyleDefinition.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\ImageElementStyle.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\InlineCssParser.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\StyleDefinition.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\TextElementStyle.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />

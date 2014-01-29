@@ -169,6 +169,12 @@ namespace Lecture
             {
                 editorController.runSlideshow(0);
             }));
+
+            slideLayoutPicker = new SlideLayoutPickerTask();
+            makeTempPresets();
+            slideLayoutPicker.ChangeSlideLayout += slideLayoutPicker_ChangeSlideLayout;
+            taskbar.addTask(slideLayoutPicker);
+            
             taskbar.addTask(new CallbackTask("EditSlideshowTheme", "Edit Slideshow Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
                 IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(0, 0);
@@ -176,9 +182,7 @@ namespace Lecture
                 style.Changed += (arg) =>
                     {
                         StringBuilder styleString = new StringBuilder(500);
-                        styleString.Append("body{");
-                        arg.buildStyleAttribute(styleString);
-                        styleString.Append("}");
+                        ((SlideshowStyle)arg).buildStyleSheet(styleString);
                         editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource("SlideMasterStyles.rcss", Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
                         refreshAllRml();
                         forceUpdateThumbOnBlur = true;
@@ -192,21 +196,13 @@ namespace Lecture
                 style.Changed += (arg) =>
                 {
                     StringBuilder styleString = new StringBuilder(500);
-                    styleString.Append("body{");
-                    arg.buildStyleAttribute(styleString);
-                    styleString.Append("}");
+                    ((SlideshowStyle)arg).buildStyleSheet(styleString);
                     editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(Path.Combine(slide.UniqueName, Slide.StyleSheetName), Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
                     refreshAllRml();
                     forceUpdateThumbOnBlur = true;
                 };
                 PopupGenericEditor.openEditor(style.getEditInterface(), uiCallback, taskPosition.x, taskPosition.y);
             }));
-            slideLayoutPicker = new SlideLayoutPickerTask();
-
-            makeTempPresets();
-
-            slideLayoutPicker.ChangeSlideLayout += slideLayoutPicker_ChangeSlideLayout;
-            taskbar.addTask(slideLayoutPicker);
             mvcContext.Views.add(taskbar);
 
             setupScene = new RunCommandsAction("SetupScene");

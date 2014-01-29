@@ -116,7 +116,7 @@ namespace Lecture.GUI
             return false;
         }
 
-        void appearance_Changed(ElementStyleDefinition obj)
+        void appearance_Changed(StyleDefinition obj)
         {
             appearanceEditor.alertChangesMade();
         }

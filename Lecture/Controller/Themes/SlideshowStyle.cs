@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Lecture
 {
-    class SlideshowStyle : ElementStyleDefinition
+    class SlideshowStyle : StyleDefinition
     {
         private Color? color = null;
         private Color? backgroundColor = null;
@@ -19,13 +19,9 @@ namespace Lecture
 
         }
 
-        public override bool buildClassList(StringBuilder classes)
+        public bool buildStyleSheet(StringBuilder styleAttribute)
         {
-            return false;
-        }
-
-        public override bool buildStyleAttribute(StringBuilder styleAttribute)
-        {
+            styleAttribute.Append("body{");
             if (color != null)
             {
                 styleAttribute.AppendFormat("color:#{0:X6};", color.Value.toRGB());
@@ -38,6 +34,7 @@ namespace Lecture
             {
                 styleAttribute.AppendFormat("font-size:{0}px;", fontSize);
             }
+            styleAttribute.Append("}");
             return true;
         }
 
