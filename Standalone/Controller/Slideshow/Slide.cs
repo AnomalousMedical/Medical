@@ -107,16 +107,11 @@ namespace Medical
             }
         }
 
-        public TemplateSlide createTemplateSlide()
+        public TemplateSlide createTemplateSlide(EditorResourceProvider resourceProvider)
         {
             TemplateSlide slide = new TemplateSlide();
-            this.copyLayoutToSlide(slide, true);
+            slide.LayoutStrategy = LayoutStrategy.createDerivedStrategy(slide, this, resourceProvider, false, true);
             return slide;
-        }
-
-        public void copyLayoutToSlide(Slide slide, bool overwriteContent)
-        {
-            slide.layoutStrategy = layoutStrategy.createDerivedStrategy(slide.layoutStrategy, overwriteContent);
         }
 
         public void addAction(SlideAction action)
@@ -168,6 +163,10 @@ namespace Medical
             get
             {
                 return layoutStrategy;
+            }
+            set
+            {
+                layoutStrategy = value;
             }
         }
 

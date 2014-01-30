@@ -32,7 +32,7 @@ namespace Medical
 
         }
 
-        public virtual bool applyToExisting(SlidePanel panel, bool overwriteContent)
+        public virtual bool applyToExisting(Slide slide, SlidePanel panel, bool overwriteContent, EditorResourceProvider resourceProvider)
         {
             panel.Size = this.Size;
             panel.ElementName = this.ElementName;
@@ -44,7 +44,7 @@ namespace Medical
             
         }
 
-        public abstract SlidePanel clone();
+        public abstract SlidePanel clone(Slide cloneOwnerSlide, Slide destinationSlide, bool asTemplate, EditorResourceProvider resourceProvider);
 
         [Editable]
         public int Size

@@ -51,24 +51,25 @@ namespace Medical
             }
         }
 
-        public SlideLayoutStrategy createDerivedStrategy(SlideLayoutStrategy oldStrategy, bool overwriteContent)
+        public SlideLayoutStrategy createDerivedStrategy(Slide destinationSlide, Slide thisPanelSlide, EditorResourceProvider resourceProvider, bool overwriteContent, bool createTemplates)
         {
-            FullScreenSlideLayoutStrategy borderSlides = new FullScreenSlideLayoutStrategy();
+            SlideLayoutStrategy destinationSlideStrategy = destinationSlide.LayoutStrategy;
+            FullScreenSlideLayoutStrategy copiedLayoutStrategy = new FullScreenSlideLayoutStrategy();
             foreach (SlidePanel panel in panels.Values)
             {
-                SlidePanel existingPanel = oldStrategy.getPanel(panel.ElementName);
-                if (existingPanel != null)
+                SlidePanel copiedPanel = destinationSlideStrategy.getPanel(panel.ElementName);
+                if (copiedPanel != null) //Already exists in the destination, so duplicate it instead of creating a new one
                 {
-                    existingPanel = existingPanel.clone();
-                    panel.applyToExisting(existingPanel, overwriteContent);
+                    copiedPanel = copiedPanel.clone(destinationSlide, destinationSlide, createTemplates, resourceProvider);
+                    panel.applyToExisting(destinationSlide, copiedPanel, overwriteContent, resourceProvider);
                 }
                 else
                 {
-                    existingPanel = panel.clone();
+                    copiedPanel = panel.clone(thisPanelSlide, destinationSlide, createTemplates, resourceProvider);
                 }
-                borderSlides.addPanel(existingPanel);
+                copiedLayoutStrategy.addPanel(copiedPanel);
             }
-            return borderSlides;
+            return copiedLayoutStrategy;
         }
 
         public IEnumerable<SlidePanel> Panels

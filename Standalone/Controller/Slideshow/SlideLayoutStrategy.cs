@@ -18,7 +18,7 @@ namespace Medical
 
         void claimFiles(CleanupInfo info, ResourceProvider resourceProvider, Slide slide);
 
-        SlideLayoutStrategy createDerivedStrategy(SlideLayoutStrategy oldStrategy, bool overwriteContent);
+        SlideLayoutStrategy createDerivedStrategy(Slide destinationSlide, Slide thisPanelSlide, EditorResourceProvider resourceProvider, bool overwriteContent, bool createTemplates);
 
         SlidePanel getPanel(LayoutElementName name);
 

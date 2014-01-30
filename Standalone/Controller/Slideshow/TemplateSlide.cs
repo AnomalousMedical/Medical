@@ -13,8 +13,6 @@ namespace Medical
     /// </summary>
     public class TemplateSlide : Slide
     {
-        private List<Pair<RmlSlidePanel, String>> panelDefaultRml = new List<Pair<RmlSlidePanel, string>>();
-
         public TemplateSlide()
         {
 
@@ -31,32 +29,13 @@ namespace Medical
             
         }
 
-        public void addPanelWithRml(RmlSlidePanel panel, String rml)
-        {
-            addPanel(panel);
-            setRmlForPanel(panel, rml);
-        }
-
-        public void setRmlForPanel(RmlSlidePanel panel, String rml)
-        {
-            panelDefaultRml.Add(new Pair<RmlSlidePanel, string>(panel, rml));
-        }
-
-        public void writePanelRml(EditorResourceProvider resourceProvider, Slide slide, bool overwrite)
-        {
-            String rmlDestination;
-            foreach (var rmlPair in panelDefaultRml)
-            {
-                rmlDestination = rmlPair.First.getRmlFilePath(slide);
-                if (overwrite || !resourceProvider.fileExists(rmlDestination))
-                {
-                    resourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(rmlDestination, Encoding.UTF8, rmlPair.Second, resourceProvider));
-                }
-            }
-        }
-
         public String Name { get; set; }
 
         public String IconName { get; set; }
+
+        public void copyLayoutToSlide(Slide slide, EditorResourceProvider resourceProvider, bool overwriteContent)
+        {
+            slide.LayoutStrategy = LayoutStrategy.createDerivedStrategy(slide, this, resourceProvider, overwriteContent, false);
+        }
     }
 }

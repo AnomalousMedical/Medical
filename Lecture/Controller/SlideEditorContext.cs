@@ -325,11 +325,12 @@ namespace Lecture
                 Name = "Left Panel",
                 IconName = "Lecture.SlideLayouts.OnePanel"
             };
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            }, defaultRml);
+            });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
             presetSlide = new TemplateSlide()
@@ -337,16 +338,18 @@ namespace Lecture
                 Name = "Left and Right Panel",
                 IconName = "Lecture.SlideLayouts.TwoPanel"
             };
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            }, defaultRml);
+            });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
             presetSlide = new TemplateSlide()
@@ -354,21 +357,24 @@ namespace Lecture
                 Name = "Sides and Top",
                 IconName = "Lecture.SlideLayouts.ThreePanel"
             };
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 288,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            }, defaultRml);
+            });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
             presetSlide = new TemplateSlide()
@@ -376,26 +382,30 @@ namespace Lecture
                 Name = "Four Panel",
                 IconName = "Lecture.SlideLayouts.FourPanel"
             };
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 288,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 288,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            }, defaultRml);
+            });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
             presetSlide = new TemplateSlide()
@@ -403,21 +413,24 @@ namespace Lecture
                 Name = "Sides and Bottom",
                 IconName = "Lecture.SlideLayouts.FourPanel"
             };
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 288,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            }, defaultRml);
+            });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
             presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
@@ -425,11 +438,12 @@ namespace Lecture
                 Name = "Full Screen",
                 IconName = "Lecture.SlideLayouts.Full",
             };
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 100,
                 ElementName = new LayoutElementName(GUILocationNames.ContentAreaPopup),
-            }, defaultRml);
+            });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
             presetSlide = new TemplateSlide()
@@ -437,37 +451,38 @@ namespace Lecture
                 Name = "Left and Top",
                 IconName = "Lecture.SlideLayouts.LeftTop"
             };
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 480,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            }, defaultRml);
-            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
             {
+                Rml = defaultRml,
                 Size = 288,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            }, defaultRml);
+            });
             slideLayoutPicker.addPresetSlide(presetSlide);
         }
 
         void slideLayoutPicker_ChangeSlideLayout(TemplateSlide newSlideLayout)
         {
-            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<Slide, Slide>(
+            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<TemplateSlide, TemplateSlide>(
                 (execSlide) =>
                     {
                         forceUpdateThumbOnBlur = true;
-                        execSlide.copyLayoutToSlide(slide, false);
-                        newSlideLayout.writePanelRml(slideEditorController.ResourceProvider, slide, false);
+                        execSlide.copyLayoutToSlide(slide, editorController.ResourceProvider, false);
                         refreshPanelEditors(true);
                     },
                 newSlideLayout,
                 (undoSlide) =>
                     {
                         forceUpdateThumbOnBlur = true;
-                        undoSlide.copyLayoutToSlide(slide, true);
+                        undoSlide.copyLayoutToSlide(slide, editorController.ResourceProvider, true);
                         refreshPanelEditors(true);
                     },
-                slide.createTemplateSlide()));
+                slide.createTemplateSlide(editorController.ResourceProvider)));
         }
 
         public void close()

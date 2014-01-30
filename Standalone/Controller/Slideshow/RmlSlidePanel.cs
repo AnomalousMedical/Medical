@@ -98,7 +98,7 @@ namespace Medical
                 String rml;
                 if (InlineRmlUpgradeCache.tryGetValue(this, out rml))
                 {
-                    using (StreamWriter writer = new StreamWriter(slideshowResources.openWriteStream(getRmlFilePath(slide))))
+                    using (StreamWriter writer = new StreamWriter(slideshowResources.openWriteStream(getRmlFilePath(slide)), Encoding.UTF8))
                     {
                         writer.Write(rml);
                     }
@@ -106,7 +106,7 @@ namespace Medical
             }
         }
 
-        public override bool applyToExisting(SlidePanel panel, bool overwriteContent)
+        public override bool applyToExisting(Slide slide, SlidePanel panel, bool overwriteContent, EditorResourceProvider resourceProvider)
         {
             if (panel is RmlSlidePanel)
             {
@@ -114,15 +114,39 @@ namespace Medical
                 {
                     ((RmlSlidePanel)panel).rmlFile = this.rmlFile;
                 }
-                return base.applyToExisting(panel, overwriteContent);
+                return base.applyToExisting(slide, panel, overwriteContent, resourceProvider);
             }
             return false;
         }
 
-        public override SlidePanel clone()
+        public override SlidePanel clone(Slide originalSlide, Slide destinationSlide, bool asTemplate, EditorResourceProvider resourceProvider)
         {
-            RmlSlidePanel clone = new RmlSlidePanel();
-            applyToExisting(clone, true);
+            RmlSlidePanel clone;
+            if (asTemplate)
+            {
+                String rml;
+                try
+                {
+                    using (StreamReader sr = new StreamReader(resourceProvider.openFile(this.getRmlFilePath(originalSlide))))
+                    {
+                        rml = sr.ReadToEnd();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    rml = "An error occured";
+                    Logging.Log.Warning("{0} when trying to load the rml for slide '{1}'. Message: {2}. Rml not templated", ex.GetType().Name, originalSlide.UniqueName, ex.Message);
+                }
+                clone = new RmlSlidePanelTemplate()
+                {
+                    Rml = rml
+                };
+            }
+            else
+            {
+                clone = new RmlSlidePanel();
+            }
+            applyToExisting(destinationSlide, clone, true, resourceProvider);
             return clone;
         }
 
