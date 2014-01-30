@@ -30,16 +30,17 @@ namespace Lecture
         {
             MedicalRmlSlide slide = new MedicalRmlSlide();
             applySceneStateToSlide(slide);
-            slide.addPanel(new RmlSlidePanel()
+            RmlSlidePanel panel = new RmlSlidePanel()
             {
-                Rml = defaultSlide,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
                 Size = 480,
-            });
+            };
+            slide.addPanel(panel);
             if (!editorController.ResourceProvider.directoryExists(slide.UniqueName))
             {
                 editorController.ResourceProvider.createDirectory("", slide.UniqueName);
             }
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleSlide_rml, Path.Combine(slide.UniqueName, panel.RmlFile), editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
             using (editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slide.StyleSheetName))) { }
             if (SlideCreated != null)
             {
@@ -119,17 +120,5 @@ namespace Lecture
             RmlView view = new RmlView(name);
             mvcContext.Views.add(view);
         }
-
-        public const String defaultSlide = @"<rml>
-	<head>
-		<link type=""text/template"" href=""/MasterTemplate.trml"" />
-        <link type=""text/rcss"" href=""SlideStyle.rcss"" />
-	</head>
-	<body template=""MasterTemplate"">
-        <h1>Add Title Here</h1>
-        <p>Add text here.</p>
-    </body>
-</rml>
-";
     }
 }

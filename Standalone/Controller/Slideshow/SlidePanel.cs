@@ -71,7 +71,7 @@ namespace Medical
             }
         }
 
-        protected const int CurrentVersion = 1;
+        protected const int CurrentVersion = 2;
 
         protected SlidePanel(LoadInfo info)
         {

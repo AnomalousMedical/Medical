@@ -11,6 +11,7 @@ using Medical;
 using Lecture.GUI;
 using Engine;
 using Medical.Controller;
+using System.IO;
 
 namespace Lecture
 {
@@ -261,10 +262,9 @@ namespace Lecture
             foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
             {
                 String editorViewName = panel.createViewName("RmlView");
-                RawRmlView rmlView = new RawRmlView(editorViewName);
+                RmlView rmlView = new RmlView(editorViewName);
                 rmlView.ElementName = panel.ElementName;
-                rmlView.Rml = panel.Rml;
-                rmlView.FakePath = slide.UniqueName + "/index.rml";
+                rmlView.RmlFile = Path.Combine(slide.UniqueName, panel.RmlFile);
                 instanceLayout.addView(rmlView);
                 mvcContext.Views.add(rmlView);
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));

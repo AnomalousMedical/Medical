@@ -18,18 +18,16 @@ namespace Lecture
         /// </summary>
         public event Action<ViewHost> ViewResized;
 
-        public RmlEditorViewInfo()
-        {
+        private TextCachedResource cachedResource;
 
-        }
-
-        public RmlEditorViewInfo(RawRmlWysiwygView view, SlidePanel slidePanel)
+        public RmlEditorViewInfo(RmlWysiwygView view, SlidePanel slidePanel, EditorResourceProvider resourceProvider)
         {
             this.View = view;
             this.Panel = slidePanel;
+            cachedResource = new ResourceProviderTextCachedResource(view.RmlFile, Encoding.UTF8, "", resourceProvider);
         }
 
-        public RawRmlWysiwygView View { get; set; }
+        public RmlWysiwygView View { get; set; }
 
         private RmlWysiwygComponent component;
         public RmlWysiwygComponent Component
@@ -55,6 +53,14 @@ namespace Lecture
         }
 
         public SlidePanel Panel { get; set; }
+
+        public TextCachedResource CachedResource
+        {
+            get
+            {
+                return cachedResource;
+            }
+        }
 
         public String getCurrentComponentText()
         {

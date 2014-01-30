@@ -117,6 +117,11 @@ namespace Medical.GUI
             this.contentId = view.ContentId;
             rocketWidget.Context.ZoomLevel = view.ZoomLevel;
 
+            if (view.UndoRedoCallback != null)
+            {
+                undoRedoCallback = view.UndoRedoCallback;
+            }
+
             documentName = view.RmlFile;
             if (documentName != null)
             {

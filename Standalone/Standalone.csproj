@@ -210,6 +210,7 @@
     <Compile Include="Controller\Slideshow\CleanupInfo.cs" />
     <Compile Include="Controller\Slideshow\Actions\SlideAction.cs" />
     <Compile Include="Controller\Slideshow\FullScreenSlideLayoutStrategy.cs" />
+    <Compile Include="Controller\Slideshow\InlineRmlUpgradeCache.cs" />
     <Compile Include="Controller\Slideshow\SlideDisplayManager.cs" />
     <Compile Include="Controller\Slideshow\SlideInstanceLayoutStrategy.cs" />
     <Compile Include="Controller\Slideshow\SlideLayoutStrategy.cs" />

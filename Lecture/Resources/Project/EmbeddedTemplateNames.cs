@@ -8,6 +8,7 @@ namespace Lecture
 {
     static class EmbeddedTemplateNames
     {
+        public const String SimpleSlide_rml = "Lecture.Resources.Project.SimpleSlide.rml";
         public const String MasterTemplate_trml = "Lecture.Resources.Project.MasterTemplate.trml";
         public const String SlideMasterStyles_rcss = "Lecture.Resources.Project.SlideMasterStyles.rcss";
 

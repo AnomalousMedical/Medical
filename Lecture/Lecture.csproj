@@ -101,6 +101,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Project\MasterTemplate.trml" />
     <EmbeddedResource Include="Resources\Project\SlideMasterStyles.rcss" />
+    <EmbeddedResource Include="Resources\Project\SimpleSlide.rml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

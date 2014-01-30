@@ -65,6 +65,8 @@ namespace Medical.GUI
             }
         }
 
+        public Action<String> UndoRedoCallback { get; set; }
+
         public void addCustomStrategy(ElementStrategy strategy)
         {
             customStrategies.AddLast(strategy);

@@ -14,19 +14,18 @@ namespace Medical
 {
     public class RmlSlidePanel : SlidePanel
     {
-        private String rml;
+        private String rmlFile;
 
         public RmlSlidePanel()
         {
-
+            RmlFile = Guid.NewGuid().ToString("D") + ".rml";
         }
 
         public override MyGUIView createView(Slide slide, String name)
         {
-            return new RawRmlView(createViewName(name))
+            return new RmlView(createViewName(name))
             {
-                Rml = Rml,
-                FakePath = slide.UniqueName + "/index.rml",
+                RmlFile = Path.Combine(slide.UniqueName, RmlFile),
                 ElementName = ElementName,
                 CreateCustomEventController = (context, viewHost) =>
                     {
@@ -36,26 +35,38 @@ namespace Medical
         }
 
         [Editable]
-        public String Rml
+        public String RmlFile
         {
             get
             {
-                return rml;
+                return rmlFile;
             }
             set
             {
-                rml = value;
+                rmlFile = value;
             }
-        }
-
-        protected RmlSlidePanel(LoadInfo info)
-            :base(info)
-        {
-            
         }
 
         protected internal override void claimFiles(CleanupInfo info, ResourceProvider resourceProvider, Slide slide)
         {
+            String rml = null;
+            String rmlFullPath = Path.Combine(slide.UniqueName, RmlFile);
+            if (resourceProvider.fileExists(rmlFullPath))
+            {
+                using (StreamReader stringReader = new StreamReader(resourceProvider.openFile(rmlFullPath)))
+                {
+                    rml = stringReader.ReadToEnd();
+                }
+            }
+
+            if (String.IsNullOrEmpty(rml))
+            {
+                Logging.Log.Warning("Could not claim files for slide '{0}', cannot find rml file '{1}' for panel '{2}'", slide.UniqueName, RmlFile, ElementName);
+                return; //Break if we cannot load the rml
+            }
+
+            info.claimFile(rmlFullPath);
+
             XDocument rmlDoc = XDocument.Parse(rml);
             var images = from query in rmlDoc.Descendants("img")
                          where query.Attribute("src") != null
@@ -82,8 +93,24 @@ namespace Medical
         {
             if (toVersion >= 2 && fromVersion < toVersion)
             {
-                Rml = Rml.Replace(Version1TemplateLink, Version2TemplateLinkReplacement);
-                using (slideshowResources.openWriteStream(Path.Combine(slide.UniqueName, Slide.StyleSheetName))) { }
+                String rml;
+                if (InlineRmlUpgradeCache.tryGetValue(this, out rml))
+                {
+                    rml = rml.Replace(Version1TemplateLink, Version2TemplateLinkReplacement);
+                    InlineRmlUpgradeCache.setRml(this, rml);
+                }
+                using (Stream stream = slideshowResources.openWriteStream(Path.Combine(slide.UniqueName, Slide.StyleSheetName))) { }
+            }
+            if (toVersion >= 3 && fromVersion < toVersion)
+            {
+                String rml;
+                if (InlineRmlUpgradeCache.tryGetValue(this, out rml))
+                {
+                    using (StreamWriter writer = new StreamWriter(slideshowResources.openWriteStream(Path.Combine(slide.UniqueName, RmlFile))))
+                    {
+                        writer.Write(rml);
+                    }
+                }
             }
         }
 
@@ -93,7 +120,7 @@ namespace Medical
             {
                 if (overwriteContent)
                 {
-                    ((RmlSlidePanel)panel).Rml = this.Rml;
+                    ((RmlSlidePanel)panel).RmlFile = this.RmlFile;
                 }
                 return base.applyToExisting(panel, overwriteContent);
             }
@@ -105,6 +132,16 @@ namespace Medical
             RmlSlidePanel clone = new RmlSlidePanel();
             applyToExisting(clone, true);
             return clone;
+        }
+
+        protected RmlSlidePanel(LoadInfo info)
+            : base(info)
+        {
+            if (info.Version < 2)
+            {
+                InlineRmlUpgradeCache.setRml(this, info.GetString("rml", null));
+                RmlFile = Guid.NewGuid().ToString("D") + ".rml";
+            }
         }
 
         private const String Version1TemplateLink = @"<link type=""text/template"" href=""/MasterTemplate.trml"" />";

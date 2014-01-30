@@ -18,7 +18,7 @@ namespace Medical
     {
         public const String SlideThumbName = "Thumb.png";
         public static readonly int BaseSlideScale = ScaleHelper.Scaled(1017);
-        public const int CurrentVersion = 2;
+        public const int CurrentVersion = 3;
 
         private static TaskController additionalTasks = new TaskController();
 
