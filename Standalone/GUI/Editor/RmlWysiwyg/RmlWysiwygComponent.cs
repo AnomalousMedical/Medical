@@ -79,6 +79,7 @@ namespace Medical.GUI
         private Action<String> undoRedoCallback;
         private bool changesMade = false;
         private RmlWysiwygViewBase rmlWysiwygViewInterface;
+        String contentId = null;
 
         private AnomalousMvcContext context;
 
@@ -113,6 +114,7 @@ namespace Medical.GUI
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
+            this.contentId = view.ContentId;
             rocketWidget.Context.ZoomLevel = view.ZoomLevel;
 
             documentName = view.RmlFile;
@@ -144,6 +146,7 @@ namespace Medical.GUI
             this.uiCallback = view.UICallback;
             this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
+            this.contentId = view.ContentId;
             rocketWidget.Context.ZoomLevel = view.ZoomLevel;
 
             if (view.UndoRedoCallback != null)
@@ -441,6 +444,15 @@ namespace Medical.GUI
                 Element document = rocketWidget.Context.GetDocument(0);
                 if (document != null)
                 {
+                    if (!String.IsNullOrEmpty(contentId))
+                    {
+                        Element contentElement = document.GetElementById(contentId);
+                        if (contentElement != null)
+                        {
+                            return contentElement;
+                        }
+                    }
+
                     Variant templateName = document.GetAttribute("template");
                     if (templateName == null)
                     {

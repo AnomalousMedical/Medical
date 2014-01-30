@@ -57,6 +57,20 @@ namespace Medical.GUI
             }
         }
 
+        private String contentId = null;
+        [Editable]
+        public String ContentId
+        {
+            get
+            {
+                return contentId;
+            }
+            set
+            {
+                contentId = value;
+            }
+        }
+
         public Action<String> UndoRedoCallback { get; set; }
 
         public UndoRedoBuffer UndoBuffer

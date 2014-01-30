@@ -51,6 +51,20 @@ namespace Medical.GUI
             }
         }
 
+        private String contentId = null;
+        [Editable]
+        public String ContentId
+        {
+            get
+            {
+                return contentId;
+            }
+            set
+            {
+                contentId = value;
+            }
+        }
+
         public void addCustomStrategy(ElementStrategy strategy)
         {
             customStrategies.AddLast(strategy);

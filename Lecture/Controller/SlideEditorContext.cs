@@ -644,6 +644,7 @@ namespace Lecture
                 rmlView.ElementName = panel.ElementName;
                 rmlView.Rml = panel.Rml;
                 rmlView.FakePath = slide.UniqueName + "/index.rml";
+                rmlView.ContentId = "Content";
                 instanceLayout.addView(rmlView);
                 rmlView.ComponentCreated += (view, component) =>
                 {
