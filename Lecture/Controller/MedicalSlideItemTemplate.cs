@@ -40,7 +40,7 @@ namespace Lecture
             {
                 editorController.ResourceProvider.createDirectory("", slide.UniqueName);
             }
-            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleSlide_rml, Path.Combine(slide.UniqueName, panel.RmlFile), editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
+            EmbeddedResourceHelpers.CopyResourceToStream(EmbeddedTemplateNames.SimpleSlide_rml, panel.getRmlFilePath(slide), editorController.ResourceProvider, EmbeddedTemplateNames.Assembly);
             using (editorController.ResourceProvider.openWriteStream(Path.Combine(slide.UniqueName, Slide.StyleSheetName))) { }
             if (SlideCreated != null)
             {

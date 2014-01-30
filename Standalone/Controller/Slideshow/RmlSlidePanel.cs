@@ -18,14 +18,14 @@ namespace Medical
 
         public RmlSlidePanel()
         {
-            RmlFile = Guid.NewGuid().ToString("D") + ".rml";
+            rmlFile = Guid.NewGuid().ToString("D") + ".rml";
         }
 
         public override MyGUIView createView(Slide slide, String name)
         {
             return new RmlView(createViewName(name))
             {
-                RmlFile = Path.Combine(slide.UniqueName, RmlFile),
+                RmlFile = getRmlFilePath(slide),
                 ElementName = ElementName,
                 CreateCustomEventController = (context, viewHost) =>
                     {
@@ -34,23 +34,15 @@ namespace Medical
             };
         }
 
-        [Editable]
-        public String RmlFile
+        public String getRmlFilePath(Slide slide)
         {
-            get
-            {
-                return rmlFile;
-            }
-            set
-            {
-                rmlFile = value;
-            }
+            return Path.Combine(slide.UniqueName, rmlFile);
         }
 
         protected internal override void claimFiles(CleanupInfo info, ResourceProvider resourceProvider, Slide slide)
         {
             String rml = null;
-            String rmlFullPath = Path.Combine(slide.UniqueName, RmlFile);
+            String rmlFullPath = getRmlFilePath(slide);
             if (resourceProvider.fileExists(rmlFullPath))
             {
                 using (StreamReader stringReader = new StreamReader(resourceProvider.openFile(rmlFullPath)))
@@ -61,7 +53,7 @@ namespace Medical
 
             if (String.IsNullOrEmpty(rml))
             {
-                Logging.Log.Warning("Could not claim files for slide '{0}', cannot find rml file '{1}' for panel '{2}'", slide.UniqueName, RmlFile, ElementName);
+                Logging.Log.Warning("Could not claim files for slide '{0}', cannot find rml file '{1}' for panel '{2}'", slide.UniqueName, rmlFullPath, ElementName);
                 return; //Break if we cannot load the rml
             }
 
@@ -106,7 +98,7 @@ namespace Medical
                 String rml;
                 if (InlineRmlUpgradeCache.tryGetValue(this, out rml))
                 {
-                    using (StreamWriter writer = new StreamWriter(slideshowResources.openWriteStream(Path.Combine(slide.UniqueName, RmlFile))))
+                    using (StreamWriter writer = new StreamWriter(slideshowResources.openWriteStream(getRmlFilePath(slide))))
                     {
                         writer.Write(rml);
                     }
@@ -120,7 +112,7 @@ namespace Medical
             {
                 if (overwriteContent)
                 {
-                    ((RmlSlidePanel)panel).RmlFile = this.RmlFile;
+                    ((RmlSlidePanel)panel).rmlFile = this.rmlFile;
                 }
                 return base.applyToExisting(panel, overwriteContent);
             }
@@ -140,7 +132,7 @@ namespace Medical
             if (info.Version < 2)
             {
                 InlineRmlUpgradeCache.setRml(this, info.GetString("rml", null));
-                RmlFile = Guid.NewGuid().ToString("D") + ".rml";
+                rmlFile = Guid.NewGuid().ToString("D") + ".rml";
             }
         }
 

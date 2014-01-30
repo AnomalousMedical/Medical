@@ -666,7 +666,7 @@ namespace Lecture
                 String editorViewName = panel.createViewName("RmlView");
                 RmlWysiwygView rmlView = new RmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
                 rmlView.ElementName = panel.ElementName;
-                rmlView.RmlFile = Path.Combine(slide.UniqueName, panel.RmlFile);
+                rmlView.RmlFile = panel.getRmlFilePath(slide);
                 rmlView.ContentId = "Content";
                 instanceLayout.addView(rmlView);
                 rmlView.ComponentCreated += (view, component) =>

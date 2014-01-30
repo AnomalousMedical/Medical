@@ -264,7 +264,7 @@ namespace Lecture
                 String editorViewName = panel.createViewName("RmlView");
                 RmlView rmlView = new RmlView(editorViewName);
                 rmlView.ElementName = panel.ElementName;
-                rmlView.RmlFile = Path.Combine(slide.UniqueName, panel.RmlFile);
+                rmlView.RmlFile = panel.getRmlFilePath(slide);
                 instanceLayout.addView(rmlView);
                 mvcContext.Views.add(rmlView);
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));
