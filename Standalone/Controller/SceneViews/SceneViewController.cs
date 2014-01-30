@@ -240,7 +240,8 @@ namespace Medical.Controller
             int zOrder = 100;
             int zOrderInc = 10;
             closeAllWindows();
-            SceneViewWindow camera;
+            MDISceneViewWindow camera;
+            MDISceneViewWindow toSelect = null;
             foreach (SceneViewWindowPreset preset in presets.getPresetEnum())
             {
                 if (windowIndex < currentWindowConfig.Count)
@@ -254,7 +255,15 @@ namespace Medical.Controller
                 {
                     camera = createWindow(preset.Name, preset.Position, preset.LookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, zOrder, findWindow(preset.ParentWindow), preset.WindowPosition);
                 }
+                if (toSelect == null)
+                {
+                    toSelect = camera;
+                }
                 zOrder += zOrderInc;
+            }
+            if (toSelect != null)
+            {
+                mdiLayout.ActiveWindow = toSelect._getMDIWindow();
             }
         }
 
