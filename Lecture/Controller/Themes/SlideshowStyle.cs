@@ -14,9 +14,16 @@ namespace Lecture
         private Color? backgroundColor = null;
         private int? fontSize = null;
 
-        public SlideshowStyle()
+        public SlideshowStyle(String css)
         {
-
+            RuleCssParser cssRules = new RuleCssParser(css);
+            CssRule body = cssRules["body"];
+            if (body != null)
+            {
+                Color = body.colorValue("color");
+                Background = body.colorValue("background-color");
+                FontSize = body.intValue("font-size");
+            }
         }
 
         public bool buildStyleSheet(StringBuilder styleAttribute)

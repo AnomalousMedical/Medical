@@ -177,13 +177,22 @@ namespace Lecture
             
             taskbar.addTask(new CallbackTask("EditSlideshowTheme", "Edit Slideshow Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
+                String css = null;
+                String file = "SlideMasterStyles.rcss";
+                if (editorController.ResourceProvider.fileExists(file))
+                {
+                    using (StreamReader stringReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
+                    {
+                        css = stringReader.ReadToEnd();
+                    }
+                }
                 IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(0, 0);
-                SlideshowStyle style = new SlideshowStyle();
+                SlideshowStyle style = new SlideshowStyle(css);
                 style.Changed += (arg) =>
                     {
                         StringBuilder styleString = new StringBuilder(500);
                         ((SlideshowStyle)arg).buildStyleSheet(styleString);
-                        editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource("SlideMasterStyles.rcss", Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
+                        editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(file, Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
                         refreshAllRml();
                         forceUpdateThumbOnBlur = true;
                     };
@@ -191,13 +200,22 @@ namespace Lecture
             }));
             taskbar.addTask(new CallbackTask("EditSlidTheme", "Edit Slide Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
+                String css = null;
+                String file = Path.Combine(slide.UniqueName, Slide.StyleSheetName);
+                if (editorController.ResourceProvider.fileExists(file))
+                {
+                    using (StreamReader stringReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
+                    {
+                        css = stringReader.ReadToEnd();
+                    }
+                }
                 IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(0, 0);
-                SlideshowStyle style = new SlideshowStyle();
+                SlideshowStyle style = new SlideshowStyle(css);
                 style.Changed += (arg) =>
                 {
                     StringBuilder styleString = new StringBuilder(500);
                     ((SlideshowStyle)arg).buildStyleSheet(styleString);
-                    editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(Path.Combine(slide.UniqueName, Slide.StyleSheetName), Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
+                    editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(file, Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
                     refreshAllRml();
                     forceUpdateThumbOnBlur = true;
                 };

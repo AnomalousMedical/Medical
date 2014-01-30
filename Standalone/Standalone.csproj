@@ -341,9 +341,11 @@
     <Compile Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\DraggingElementManager.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponent.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\CssRule.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\ElementStyleDefinition.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\ImageElementStyle.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\InlineCssParser.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\RuleCssParser.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\StyleDefinition.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\TextElementStyle.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.cs" />

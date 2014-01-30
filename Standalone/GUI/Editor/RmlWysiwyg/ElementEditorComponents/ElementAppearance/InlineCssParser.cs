@@ -12,7 +12,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         public const String CSSGroups = @"(?<name>[^}:]+):?(?<value>[^};]+);?";
         private static readonly Regex rStyles = new Regex(CSSGroups, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        private Dictionary<String, String> properties = new Dictionary<string, string>();
+        private CssRule rule = new CssRule();
 
         public InlineCssParser(String inlineCss)
         {
@@ -25,15 +25,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                     var valueGroup = item.Groups["value"];
                     if (nameGroup != null && nameGroup.Value != null && valueGroup != null && valueGroup.Value != null && valueGroup.Value != ":")
                     {
-                        String lowerName = nameGroup.Value.ToLowerInvariant();
-                        if (properties.ContainsKey(lowerName))
-                        {
-                            properties[lowerName] = valueGroup.Value.ToLowerInvariant();
-                        }
-                        else
-                        {
-                            properties.Add(lowerName, valueGroup.Value.ToLowerInvariant());
-                        }
+                        rule[nameGroup.Value] = valueGroup.Value;
                     }
                 }
             }
@@ -41,53 +33,30 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         public int? intValue(String key)
         {
-            String value;
-            if (properties.TryGetValue(key, out value))
-            {
-                int intVal;
-                if (int.TryParse(Regex.Match(value, @"\d+").Value, out intVal))
-                {
-                    return intVal;
-                }
-            }
-            return null;
+            return rule.intValue(key);
         }
 
         public Color? colorValue(String key)
         {
-            String value;
-            if (properties.TryGetValue(key, out value))
-            {
-                Color colorVal;
-                if (Color.TryFromRGBAString(properties[key], out colorVal))
-                {
-                    return colorVal;
-                }
-            }
-            return null;
+            return rule.colorValue(key);
         }
 
         public bool isValuePercent(String key)
         {
-            String value;
-            if (properties.TryGetValue(key, out value))
-            {
-                return value.EndsWith("%");
-            }
-            return false;
+            return rule.isValuePercent(key);
         }
 
         public String this[String key]
         {
             get
             {
-                return properties[key];
+                return rule[key];
             }
         }
 
         public bool contains(String key)
         {
-            return properties.ContainsKey(key.ToLowerInvariant());
+            return rule.contains(key);
         }
     }
 }
