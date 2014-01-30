@@ -15,10 +15,7 @@ namespace Medical
             String rmlPath = this.getRmlFilePath(slide);
             if (overwriteContent || !resourceProvider.exists(rmlPath))
             {
-                using (StreamWriter streamWriter = new StreamWriter(resourceProvider.openWriteStream(rmlPath), Encoding.UTF8))
-                {
-                    streamWriter.Write(Rml);
-                }
+                resourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(rmlPath, Encoding.UTF8, Rml, resourceProvider));
             }
             return base.applyToExisting(slide, panel, overwriteContent, resourceProvider);
         }
