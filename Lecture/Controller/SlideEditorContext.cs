@@ -318,160 +318,146 @@ namespace Lecture
 
         private void makeTempPresets()
         {
-            ////Couple simple presets
-            //TemplateSlide presetSlide = new TemplateSlide()
-            //{
-            //    Name = "Left Panel",
-            //    IconName = "Lecture.SlideLayouts.OnePanel"
-            //};
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            //});
-            //slideLayoutPicker.addPresetSlide(presetSlide);
+            String defaultRml = EmbeddedResourceHelpers.ReadResourceContents(EmbeddedTemplateNames.SimpleSlide_rml, EmbeddedTemplateNames.Assembly);
+            //Couple simple presets
+            TemplateSlide presetSlide = new TemplateSlide()
+            {
+                Name = "Left Panel",
+                IconName = "Lecture.SlideLayouts.OnePanel"
+            };
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            }, defaultRml);
+            slideLayoutPicker.addPresetSlide(presetSlide);
 
-            //presetSlide = new TemplateSlide()
-            //{
-            //    Name = "Left and Right Panel",
-            //    IconName = "Lecture.SlideLayouts.TwoPanel"
-            //};
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            //});
-            //slideLayoutPicker.addPresetSlide(presetSlide);
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Left and Right Panel",
+                IconName = "Lecture.SlideLayouts.TwoPanel"
+            };
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            }, defaultRml);
+            slideLayoutPicker.addPresetSlide(presetSlide);
 
-            //presetSlide = new TemplateSlide()
-            //{
-            //    Name = "Sides and Top",
-            //    IconName = "Lecture.SlideLayouts.ThreePanel"
-            //};
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 288,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            //});
-            //slideLayoutPicker.addPresetSlide(presetSlide);
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Sides and Top",
+                IconName = "Lecture.SlideLayouts.ThreePanel"
+            };
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
+            }, defaultRml);
+            slideLayoutPicker.addPresetSlide(presetSlide);
 
-            //presetSlide = new TemplateSlide()
-            //{
-            //    Name = "Four Panel",
-            //    IconName = "Lecture.SlideLayouts.FourPanel"
-            //};
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 288,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 288,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            //});
-            //slideLayoutPicker.addPresetSlide(presetSlide);
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Four Panel",
+                IconName = "Lecture.SlideLayouts.FourPanel"
+            };
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
+            }, defaultRml);
+            slideLayoutPicker.addPresetSlide(presetSlide);
 
-            //presetSlide = new TemplateSlide()
-            //{
-            //    Name = "Sides and Bottom",
-            //    IconName = "Lecture.SlideLayouts.FourPanel"
-            //};
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 288,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            //});
-            //slideLayoutPicker.addPresetSlide(presetSlide);
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Sides and Bottom",
+                IconName = "Lecture.SlideLayouts.FourPanel"
+            };
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
+            }, defaultRml);
+            slideLayoutPicker.addPresetSlide(presetSlide);
 
-            //presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
-            //{
-            //    Name = "Full Screen",
-            //    IconName = "Lecture.SlideLayouts.Full",
-            //};
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 100,
-            //    ElementName = new LayoutElementName(GUILocationNames.ContentAreaPopup),
-            //});
-            //slideLayoutPicker.addPresetSlide(presetSlide);
+            presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
+            {
+                Name = "Full Screen",
+                IconName = "Lecture.SlideLayouts.Full",
+            };
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 100,
+                ElementName = new LayoutElementName(GUILocationNames.ContentAreaPopup),
+            }, defaultRml);
+            slideLayoutPicker.addPresetSlide(presetSlide);
 
-            //presetSlide = new TemplateSlide()
-            //{
-            //    Name = "Left and Top",
-            //    IconName = "Lecture.SlideLayouts.LeftTop"
-            //};
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 480,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            //});
-            //presetSlide.addPanel(new RmlSlidePanel()
-            //{
-            //    Rml = MedicalSlideItemTemplate.defaultSlide,
-            //    Size = 288,
-            //    ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            //});
-            //slideLayoutPicker.addPresetSlide(presetSlide);
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Left and Top",
+                IconName = "Lecture.SlideLayouts.LeftTop"
+            };
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            }, defaultRml);
+            presetSlide.addPanelWithRml(new RmlSlidePanel()
+            {
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
+            }, defaultRml);
+            slideLayoutPicker.addPresetSlide(presetSlide);
         }
 
-        void slideLayoutPicker_ChangeSlideLayout(Slide newSlideLayout)
+        void slideLayoutPicker_ChangeSlideLayout(TemplateSlide newSlideLayout)
         {
             undoBuffer.pushAndExecute(new TwoWayDelegateCommand<Slide, Slide>(
                 (execSlide) =>
                     {
                         forceUpdateThumbOnBlur = true;
                         execSlide.copyLayoutToSlide(slide, false);
+                        newSlideLayout.writePanelRml(slideEditorController.ResourceProvider, slide, false);
                         refreshPanelEditors(true);
                     },
                 newSlideLayout,

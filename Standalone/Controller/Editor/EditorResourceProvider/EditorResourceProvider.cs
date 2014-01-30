@@ -145,7 +145,7 @@ namespace Medical
 
         public bool fileExists(string path)
         {
-            return backingProvider.fileExists(path);
+            return ResourceCache[path] != null || backingProvider.fileExists(path);
         }
 
         public bool directoryExists(string path)
@@ -155,7 +155,7 @@ namespace Medical
 
         public bool exists(String path)
         {
-            return backingProvider.exists(path);
+            return ResourceCache[path] != null || backingProvider.exists(path);
         }
 
         public String getFullFilePath(String filename)

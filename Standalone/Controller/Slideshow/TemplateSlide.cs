@@ -1,6 +1,8 @@
-﻿using Medical.Controller.AnomalousMvc;
+﻿using Engine;
+using Medical.Controller.AnomalousMvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -11,6 +13,8 @@ namespace Medical
     /// </summary>
     public class TemplateSlide : Slide
     {
+        private List<Pair<RmlSlidePanel, String>> panelDefaultRml = new List<Pair<RmlSlidePanel, string>>();
+
         public TemplateSlide()
         {
 
@@ -25,6 +29,30 @@ namespace Medical
         protected override void customizeController(MvcController controller, RunCommandsAction showCommand)
         {
             
+        }
+
+        public void addPanelWithRml(RmlSlidePanel panel, String rml)
+        {
+            addPanel(panel);
+            setRmlForPanel(panel, rml);
+        }
+
+        public void setRmlForPanel(RmlSlidePanel panel, String rml)
+        {
+            panelDefaultRml.Add(new Pair<RmlSlidePanel, string>(panel, rml));
+        }
+
+        public void writePanelRml(EditorResourceProvider resourceProvider, Slide slide, bool overwrite)
+        {
+            String rmlDestination;
+            foreach (var rmlPair in panelDefaultRml)
+            {
+                rmlDestination = rmlPair.First.getRmlFilePath(slide);
+                if (overwrite || !resourceProvider.fileExists(rmlDestination))
+                {
+                    resourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(rmlDestination, Encoding.UTF8, rmlPair.Second, resourceProvider));
+                }
+            }
         }
 
         public String Name { get; set; }
