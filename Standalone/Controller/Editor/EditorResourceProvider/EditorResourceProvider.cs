@@ -70,25 +70,57 @@ namespace Medical
         public void move(String oldPath, String newPath)
         {
             bool wasDir = backingProvider.isDirectory(oldPath);
+            List<String> files = null;
+            if (wasDir)
+            {
+                listFiles("*", oldPath, true).ToList();
+            }
             backingProvider.move(oldPath, newPath);
             if (wasDir)
             {
+                copyCachedResourcesToBackingProvider(files, oldPath, newPath);
                 ResourceCache.forceCloseResourcesInDirectroy(oldPath);
             }
             else
             {
+                var cachedResource = ResourceCache[oldPath];
+                if (cachedResource != null)
+                {
+                    using (Stream writeStream = backingProvider.openWriteStream(newPath))
+                    {
+                        using (Stream readStream = cachedResource.openStream())
+                        {
+                            readStream.CopyTo(writeStream);
+                        }
+                    }
+                }
                 ResourceCache.forceCloseResourceFile(oldPath);
             }
         }
 
         public void copyFile(string from, string to)
         {
-            backingProvider.copyFile(from, to);
+            var cachedResource = ResourceCache[from];
+            if (cachedResource == null)
+            {
+                backingProvider.copyFile(from, to);
+            }
+            else
+            {
+                using (Stream writeStream = backingProvider.openWriteStream(to))
+                {
+                    using (Stream readStream = cachedResource.openStream())
+                    {
+                        readStream.CopyTo(writeStream);
+                    }
+                }
+            }
         }
 
         public void copyDirectory(string from, string to)
         {
             backingProvider.copyDirectory(from, to);
+            copyCachedResourcesToBackingProvider(listFiles("*", from, true), from, to);
         }
 
         public IEnumerable<String> listFiles(string pattern)
@@ -175,5 +207,34 @@ namespace Medical
         }
 
         public ResourceCache ResourceCache { get; private set; }
+
+        /// <summary>
+        /// Given a list of files copy any files in the cache from that list to the destination directory.
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="destinationDir"></param>
+        private void copyCachedResourcesToBackingProvider(IEnumerable<String> files, String baseFromPath, string destinationDir)
+        {
+            int basePathLength = baseFromPath.Length;
+            if (!(baseFromPath.EndsWith("/") || baseFromPath.EndsWith("\\")))
+            {
+                ++basePathLength;
+            }
+            foreach (String file in files)
+            {
+                var cachedResource = ResourceCache[file];
+                if (cachedResource != null)
+                {
+                    String toFile = Path.Combine(destinationDir, file.Substring(basePathLength));
+                    using (Stream writeStream = backingProvider.openWriteStream(toFile))
+                    {
+                        using (Stream readStream = cachedResource.openStream())
+                        {
+                            readStream.CopyTo(writeStream);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
