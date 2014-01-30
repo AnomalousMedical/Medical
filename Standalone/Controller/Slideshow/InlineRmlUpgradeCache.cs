@@ -13,11 +13,11 @@ namespace Medical
     /// In the future when we are not worried about version 1 and 2 slideshows (they are pretty much together, version 2 was internal only)
     /// we can remove this class.
     /// </summary>
-    static class InlineRmlUpgradeCache
+    public static class InlineRmlUpgradeCache
     {
         private static Dictionary<RmlSlidePanel, String> oldInlineRml = new Dictionary<RmlSlidePanel, string>();
 
-        public static void setRml(RmlSlidePanel panel, String rml)
+        internal static void setRml(RmlSlidePanel panel, String rml)
         {
             if (oldInlineRml.ContainsKey(panel))
             {
@@ -30,12 +30,12 @@ namespace Medical
 
         }
 
-        public static bool tryGetValue(RmlSlidePanel panel, out String value)
+        internal static bool tryGetValue(RmlSlidePanel panel, out String value)
         {
             return oldInlineRml.TryGetValue(panel, out value);
         }
 
-        public static void removePanel(RmlSlidePanel panel)
+        internal static void removePanel(RmlSlidePanel panel)
         {
             if (panel != null)
             {

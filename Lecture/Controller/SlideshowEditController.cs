@@ -940,6 +940,7 @@ namespace Lecture
                         {
                             closeProject();
                         }
+                        InlineRmlUpgradeCache.removeSlideshowPanels(slideshow);
                     });
                 return false;
             }

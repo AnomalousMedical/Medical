@@ -9,6 +9,7 @@ using System.IO;
 using Logging;
 using Medical.Editor;
 using Engine.Saving.XMLSaver;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -30,11 +31,19 @@ namespace Medical
                 {
                     slideshow = SharedXmlSaver.Load<Slideshow>(stream);
                 }
-                AnomalousMvcContext context = slideshow.createContext(resourceProvider, Plugin.GuiManager);
-                context.RuntimeName = UniqueName;
-                context.setResourceProvider(resourceProvider);
-                Plugin.TimelineController.setResourceProvider(resourceProvider);
-                Plugin.MvcCore.startRunningContext(context);
+                if (slideshow.Version == Slideshow.CurrentVersion)
+                {
+                    AnomalousMvcContext context = slideshow.createContext(resourceProvider, Plugin.GuiManager);
+                    context.RuntimeName = UniqueName;
+                    context.setResourceProvider(resourceProvider);
+                    Plugin.TimelineController.setResourceProvider(resourceProvider);
+                    Plugin.MvcCore.startRunningContext(context);
+                }
+                else
+                {
+                    MessageBox.show("Error running slideshow {0}. It was created in a different version of Anomalous Medical.\nPlease make sure everything is up to date on your computer.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    InlineRmlUpgradeCache.removeSlideshowPanels(slideshow);
+                }
             }
             catch (Exception ex)
             {
