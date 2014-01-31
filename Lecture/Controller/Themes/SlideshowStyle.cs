@@ -13,6 +13,10 @@ namespace Lecture
         private Color? color = null;
         private Color? backgroundColor = null;
         private int? fontSize = null;
+        private int? marginLeft = null;
+        private int? marginRight = null;
+        private int? marginTop = null;
+        private int? marginBottom = null;
 
         public SlideshowStyle(String name, String css)
         {
@@ -24,6 +28,14 @@ namespace Lecture
                 Color = body.colorValue("color");
                 Background = body.colorValue("background-color");
                 FontSize = body.intValue("font-size");
+            }
+            CssRule content = cssRules["#Content"];
+            if (content != null)
+            {
+                marginLeft = content.intValue("margin-left");
+                marginRight = content.intValue("margin-right");
+                marginTop = content.intValue("margin-top");
+                marginBottom = content.intValue("margin-bottom");
             }
         }
 
@@ -41,6 +53,25 @@ namespace Lecture
             if (fontSize != null)
             {
                 styleAttribute.AppendFormat("font-size:{0}px;", fontSize);
+            }
+            styleAttribute.Append("}");
+
+            styleAttribute.Append("#Content{");
+            if (marginLeft != null)
+            {
+                styleAttribute.AppendFormat("margin-left:{0}px;", marginLeft);
+            }
+            if (marginRight != null)
+            {
+                styleAttribute.AppendFormat("margin-right:{0}px;", marginRight);
+            }
+            if (marginTop != null)
+            {
+                styleAttribute.AppendFormat("margin-top:{0}px;", marginTop);
+            }
+            if (marginBottom != null)
+            {
+                styleAttribute.AppendFormat("margin-bottom:{0}px;", marginBottom);
             }
             styleAttribute.Append("}");
             return true;
@@ -102,6 +133,74 @@ namespace Lecture
                 if (fontSize != value)
                 {
                     fontSize = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public int? MarginLeft
+        {
+            get
+            {
+                return marginLeft;
+            }
+            set
+            {
+                if (marginLeft != value)
+                {
+                    marginLeft = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public int? MarginRight
+        {
+            get
+            {
+                return marginRight;
+            }
+            set
+            {
+                if (marginRight != value)
+                {
+                    marginRight = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public int? MarginBottom
+        {
+            get
+            {
+                return marginBottom;
+            }
+            set
+            {
+                if (marginBottom != value)
+                {
+                    marginBottom = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public int? MarginTop
+        {
+            get
+            {
+                return marginTop;
+            }
+            set
+            {
+                if (marginTop != value)
+                {
+                    marginTop = value;
                     fireChanged();
                 }
             }
