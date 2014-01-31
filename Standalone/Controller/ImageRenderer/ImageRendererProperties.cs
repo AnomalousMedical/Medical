@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using OgreWrapper;
 
 namespace Medical
 {
@@ -11,6 +12,8 @@ namespace Medical
     /// </summary>
     public class ImageRendererProperties
     {
+        public delegate void CustomizeCameraPositionDelegate(Camera camera); 
+
         public ImageRendererProperties()
         {
             Width = 100;
@@ -31,6 +34,7 @@ namespace Medical
             ShowUIUpdates = true;
             UseIncludePoint = false;
             IncludePoint = Vector3.Zero;
+            CustomizeCameraPosition = null;
         }
 
         /// <summary>
@@ -155,5 +159,11 @@ namespace Medical
         /// Set the include point you wish to use.
         /// </summary>
         public Vector3 IncludePoint { get; set; }
+
+        /// <summary>
+        /// Callback to customize or further manipulate the camera, this is called after
+        /// the include point has been corrected for if one is set.
+        /// </summary>
+        public CustomizeCameraPositionDelegate CustomizeCameraPosition { get; set; }
     }
 }

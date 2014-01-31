@@ -144,14 +144,8 @@ namespace Medical
 
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
-                Vector3? includePoint = null;
-                if (properties.UseIncludePoint)
-                {
-                    includePoint = properties.IncludePoint;
-                }
-
                 //Render
-                IEnumerable<IdleStatus> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt, sceneWindow.NearPlaneWorldPos, sceneWindow.FarPlaneWorldPos, includePoint,
+                IEnumerable<IdleStatus> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt, sceneWindow.NearPlaneWorldPos, sceneWindow.FarPlaneWorldPos, properties,
                     (product) =>
                     {
                         bitmap = product;
@@ -295,7 +289,7 @@ namespace Medical
             }
         }
 
-        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, float nearWorldPos, float farWorldPos, Vector3? includePoint, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, float nearWorldPos, float farWorldPos, ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
         {
             Bitmap bitmap = null;
 	        OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
@@ -334,17 +328,22 @@ namespace Medical
                             node.attachObject(light);
                             Viewport viewport = renderTexture.addViewport(camera, 1, 0.0f, 0.0f, 1.0f, 1.0f);
 
-                            if (includePoint.HasValue)
+                            if (properties.UseIncludePoint)
                             {
                                 Matrix4x4 viewMatrix = camera.getViewMatrix();
                                 Matrix4x4 projectionMatrix = camera.getProjectionMatrix();
                                 float aspect = camera.getAspectRatio();
                                 float fovy = camera.getFOVy() * 0.5f;
 
-                                float distance = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, projectionMatrix, includePoint.Value, aspect, fovy);
+                                float distance = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, projectionMatrix, properties.IncludePoint, aspect, fovy);
                                 Vector3 direction = (position - lookAt).normalized();
                                 node.setPosition(position - (direction * distance));
                                 camera.lookAt(lookAt);
+                            }
+
+                            if (properties.CustomizeCameraPosition != null)
+                            {
+                                properties.CustomizeCameraPosition(camera);
                             }
 
                             float near, far;

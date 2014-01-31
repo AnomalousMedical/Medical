@@ -333,6 +333,23 @@ namespace Medical.Controller
             return yOffset;
         }
 
+        public static Vector3 Unproject(float screenX, float screenY, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix)
+        {
+            Matrix4x4 inverseVP = (projectionMatrix * viewMatrix).inverse();
+
+            float nx = (2.0f * screenX) - 1.0f;
+            float ny = 1.0f - (2.0f * screenY);
+            Vector3 midPoint = new Vector3(nx, ny, 0.0f);
+
+            return inverseVP * midPoint;
+        }
+
+        public static Vector2 Project(Vector3 point, Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, int screenWidth, int screenHeight)
+        {
+            Vector3 pos2d = projectionMatrix * (viewMatrix * point);
+            return new Vector2(((pos2d.x * 0.5f) + 0.5f) * screenWidth, (1.0f - ((pos2d.y * 0.5f) + 0.5f)) * screenHeight);
+        }
+
         public Ray3 getCameraToViewportRay(float x, float y)
         {
             if (sceneView != null)
@@ -344,13 +361,7 @@ namespace Medical.Controller
 
         public Vector3 unproject(float screenX, float screenY)
         {
-            Matrix4x4 inverseVP = (Camera.getProjectionMatrix() * Camera.getViewMatrix()).inverse();
-
-            float nx = (2.0f * screenX) - 1.0f;
-            float ny = 1.0f - (2.0f * screenY);
-            Vector3 midPoint = new Vector3(nx, ny, 0.0f);
-
-            return inverseVP * midPoint;
+            return Unproject(screenX, screenY, Camera.getViewMatrix(), Camera.getProjectionMatrix());
         }
 
         public void showSceneStats(bool show)

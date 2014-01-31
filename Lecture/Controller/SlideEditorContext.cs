@@ -18,6 +18,7 @@ using Engine;
 using Engine.Editing;
 using Medical.SlideshowActions;
 using Medical.Controller;
+using OgreWrapper;
 
 namespace Lecture
 {
@@ -334,7 +335,10 @@ namespace Lecture
             }
         }
 
-        public void updateThumbnail()
+        //temporarily here so the info will persist, we will have to save this somewhere
+        IntVector2 includeLoc = new IntVector2();
+
+        public void updateThumbnail(bool forceUpdateSceneThumb = false)
         {
             forceUpdateThumbOnBlur = false;
             Dictionary<RmlEditorViewInfo, LayoutContainer> layoutPositions = new Dictionary<RmlEditorViewInfo, LayoutContainer>();
@@ -369,19 +373,21 @@ namespace Lecture
                 //Render thumbnail
                 using (Graphics g = Graphics.FromImage(thumb))
                 {
+                    g.Clear(System.Drawing.Color.HotPink);
                     //Start with the scene
                     IntVector2 sceneThumbPosition = sceneContainer.Location;
-                    IntSize2 sceneThumbSize = sceneContainer.WorkingSize;
-                    if (sceneThumbSize.Width > 0 && sceneThumbSize.Height > 0)
+                    String sceneThumbFile = Path.Combine(slide.UniqueName, "SceneThumb.png");
+                    forceUpdateSceneThumb = includeLoc == new Vector2(0, 0); //Temporary, forces the thumb to regen the first time until we can persist this info
+                    if (forceUpdateSceneThumb || !editorController.ResourceProvider.exists(sceneThumbFile))
                     {
                         ImageRendererProperties imageProperties = new ImageRendererProperties();
-                        imageProperties.Width = sceneThumbSize.Width;
-                        imageProperties.Height = sceneThumbSize.Height;
+                        imageProperties.Width = 250;
+                        imageProperties.Height = 250;
                         imageProperties.AntiAliasingMode = 2;
                         imageProperties.TransparentBackground = false;
                         imageProperties.UseActiveViewportLocation = false;
                         imageProperties.OverrideLayers = true;
-                        imageProperties.ShowBackground = true;
+                        imageProperties.ShowBackground = false;
                         imageProperties.ShowWatermark = false;
                         imageProperties.ShowUIUpdates = false;
                         imageProperties.LayerState = slide.Layers;
@@ -389,10 +395,97 @@ namespace Lecture
                         imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
                         imageProperties.UseIncludePoint = slide.CameraPosition.UseIncludePoint;
                         imageProperties.IncludePoint = slide.CameraPosition.IncludePoint;
+                        imageProperties.CustomizeCameraPosition = (camera) =>
+                        {
+                            SceneNode node = camera.getParentSceneNode();
+                            Vector3 position = node.getDerivedPosition();
+                            Vector3 lookAt = imageProperties.CameraLookAt;
+                            Vector3 topLeft = SceneViewWindow.Unproject(0, 0, camera.getViewMatrix(), camera.getProjectionMatrix());
+                            Vector3 bottomRight = SceneViewWindow.Unproject(1, 1, camera.getViewMatrix(), camera.getProjectionMatrix());
+                            Vector3 include = imageProperties.IncludePoint;
+
+                            //Move camera back more
+                            //float distance = -60;
+                            //Vector3 direction = (position - lookAt).normalized();
+                            //node.setPosition(position - (direction * distance));
+                            //camera.lookAt(lookAt);
+
+                            includeLoc = (IntVector2)SceneViewWindow.Project(include, camera.getViewMatrix(), camera.getProjectionMatrix(), imageProperties.Width, imageProperties.Height);
+                        };
 
                         using (Bitmap sceneThumb = imageRenderer.renderImage(imageProperties))
                         {
+                            using (Graphics sceneGraph = Graphics.FromImage(sceneThumb))
+                            {
+                                using (Brush brush = new SolidBrush(System.Drawing.Color.HotPink))
+                                {
+                                    sceneGraph.FillRectangle(brush, includeLoc.x - 5, includeLoc.y - 5, 10, 10);
+                                }
+                                //using (Brush brush = new SolidBrush(System.Drawing.Color.FromArgb(0, 255, 0)))
+                                //{
+                                //    sceneGraph.FillRectangle(brush, topLeftLoc.x - 5, topLeftLoc.y - 5, 10, 10);
+                                //    sceneGraph.FillRectangle(brush, bottomRightLoc.x - 5, bottomRightLoc.y - 5, 10, 10);
+                                //}
+                            }
                             g.DrawImage(sceneThumb, sceneThumbPosition.x, sceneThumbPosition.y);
+                            //Cheat for now and just write the file
+                            using (Stream stream = editorController.ResourceProvider.openWriteStream(sceneThumbFile))
+                            {
+                                sceneThumb.Save(stream, ImageFormat.Png);
+                            }
+                        }
+                    }
+
+                    using (Stream stream = editorController.ResourceProvider.openFile(sceneThumbFile))
+                    {
+                        IntSize2 centerSize = sceneContainer.WorkingSize;
+                        RectangleF destRect = new RectangleF(sceneThumbPosition.x, sceneThumbPosition.y, centerSize.Width, centerSize.Height);
+
+                        using (Bitmap sceneThumb = (Bitmap)Bitmap.FromStream(stream))
+                        {
+                            int requiredWidth = (sceneThumb.Width - ((sceneThumb.Width - includeLoc.x) * 2));
+                            int requiredHeight = (sceneThumb.Height - (includeLoc.y * 2));
+                            int requiredLeft = includeLoc.x - requiredWidth;
+                            int requiredTop = includeLoc.y;
+
+                            int sceneThumbHalfWidth = sceneThumb.Width / 2;
+                            int sceneThumbHalfHeight = sceneThumb.Height / 2;
+                            float heightWidthRatio = (float)requiredHeight / requiredWidth;
+
+                            if (centerSize.Width < centerSize.Height) //Width is the dest rect limit
+                            {
+                                if (requiredWidth < requiredHeight) //Height of required area is greater, limit the height and move the top in the dest rectangle
+                                {
+                                    Logging.Log.Debug("Limit Dest Width && Limit Required Width");
+                                    float limitedWidth = centerSize.Height / heightWidthRatio;
+                                    destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth, destRect.Top, limitedWidth, destRect.Height);
+                                }
+                                else //Width of required area is greater, limit the width and move the left in the dest rectangle
+                                {
+                                    Logging.Log.Debug("Limit Dest Width && Limit Required Height");
+                                    float limitedHeight = centerSize.Width * heightWidthRatio;
+                                    destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight); 
+                                }
+                            }
+                            else //Height is the dest rect limit
+                            {
+                                if (requiredWidth < requiredHeight) //Height of required area is greater, limit the width and move the left in the dest rectangle
+                                {
+                                    Logging.Log.Debug("Limit Dest Height && Limit Required Width");
+                                    float limitedWidth = centerSize.Height / heightWidthRatio;
+                                    destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth, destRect.Top, limitedWidth, destRect.Height);
+                                }
+                                else //Width of required area is greater, limit the height and move the top in the dest rectangle
+                                {
+                                    Logging.Log.Debug("Limit Dest Height && Limit Required Height");
+                                    float limitedHeight = centerSize.Width * heightWidthRatio;
+                                    destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight);
+                                }
+                            }
+
+                            RectangleF srcRect = new RectangleF(sceneThumbHalfWidth - requiredWidth / 2, sceneThumbHalfHeight - requiredHeight / 2, requiredWidth, requiredHeight);
+
+                            g.DrawImage(sceneThumb, destRect, srcRect, GraphicsUnit.Pixel);
                         }
                     }
 
