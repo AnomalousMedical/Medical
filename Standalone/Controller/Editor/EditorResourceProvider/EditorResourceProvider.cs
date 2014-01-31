@@ -35,6 +35,18 @@ namespace Medical
             }
         }
 
+        public String readFileAsString(String filename)
+        {
+            if (fileExists(filename))
+            {
+                using (StreamReader stringReader = new StreamReader(openFile(filename)))
+                {
+                    return stringReader.ReadToEnd();
+                }
+            }
+            return null;
+        }
+
         public Stream openWriteStream(String filename)
         {
             return backingProvider.openWriteStream(filename);

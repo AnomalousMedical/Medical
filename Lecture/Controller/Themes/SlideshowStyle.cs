@@ -14,8 +14,9 @@ namespace Lecture
         private Color? backgroundColor = null;
         private int? fontSize = null;
 
-        public SlideshowStyle(String css)
+        public SlideshowStyle(String name, String css)
         {
+            this.Name = name;
             RuleCssParser cssRules = new RuleCssParser(css);
             CssRule body = cssRules["body"];
             if (body != null)
@@ -43,6 +44,16 @@ namespace Lecture
             }
             styleAttribute.Append("}");
             return true;
+        }
+
+        public String Name { get; private set; }
+
+        protected override string EditInterfaceName
+        {
+            get
+            {
+                return Name;
+            }
         }
 
         [Editable]

@@ -10,15 +10,15 @@ namespace Medical.GUI
     public class PopupGenericEditor : PopupContainer
     {
         private ScrollView propertiesScroll;
-        private ScrollablePropertiesForm propertiesForm;
+        private ScrollingExpandingEditInterfaceViewer propertiesForm;
 
         /// <summary>
         /// Open a text editor that disposes when it is closed.
         /// </summary>
         /// <returns></returns>
-        public static PopupGenericEditor openEditor(EditInterface editInterface, MedicalUICallback uiCallback, int left, int top)
+        public static PopupGenericEditor openEditor(EditInterface editInterface, MedicalUICallback uiCallback, int left, int top, int width, int height)
         {
-            PopupGenericEditor editor = new PopupGenericEditor(editInterface, uiCallback);
+            PopupGenericEditor editor = new PopupGenericEditor(editInterface, uiCallback, width, height);
             editor.show(left, top);
             editor.Hidden += (source, e) =>
             {
@@ -27,12 +27,16 @@ namespace Medical.GUI
             return editor;
         }
 
-        public PopupGenericEditor(EditInterface editInterface, MedicalUICallback uiCallback)
+        public PopupGenericEditor(EditInterface editInterface, MedicalUICallback uiCallback, int width, int height)
             :base("Medical.GUI.Editor.PopupGenericEditor.PopupGenericEditor.layout")
         {
+            widget.setSize(width, height);
+
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
-            propertiesForm = new ScrollablePropertiesForm(propertiesScroll, uiCallback);
+            propertiesForm = new ScrollingExpandingEditInterfaceViewer(propertiesScroll, uiCallback);
             propertiesForm.EditInterface = editInterface;
+            propertiesForm.layout();
+            propertiesForm.RootNode.expandChildren();
 
             Button close = (Button)widget.findWidget("Close");
             close.MouseButtonClick += close_MouseButtonClick;

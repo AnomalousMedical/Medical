@@ -21,9 +21,17 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         {
             if (editInterface == null)
             {
-                editInterface = ReflectedEditInterface.createEditInterface(this, "Appearance");
+                editInterface = ReflectedEditInterface.createEditInterface(this, EditInterfaceName);
             }
             return editInterface;
+        }
+
+        protected virtual String EditInterfaceName
+        {
+            get
+            {
+                return "Appearance";
+            }
         }
 
         protected void fireChanged()

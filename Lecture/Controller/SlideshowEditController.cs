@@ -1086,5 +1086,17 @@ namespace Lecture
                 }
             });
         }
+
+        /// <summary>
+        /// This will refresh the rml and thumbnail for the current slide editor context.
+        /// </summary>
+        public void refreshRmlAndThumbnail()
+        {
+            if (slideEditorContext != null)
+            {
+                slideEditorContext.refreshAllRml();
+                slideEditorContext.updateThumbnail();
+            }
+        }
     }
 }

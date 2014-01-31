@@ -21,6 +21,7 @@ namespace Medical.GUI
         private ExpandingNode parent;
         private Widget childArea;
         private bool respondToPropertiesFormLayout = true;
+        private bool allowLayout = true;
 
         private List<ExpandingNode> children = new List<ExpandingNode>();
 
@@ -63,16 +64,19 @@ namespace Medical.GUI
 
         public void layout()
         {
-            if (parent != null)
+            if (allowLayout)
             {
-                parent.layout();
-            }
-            else
-            {
-                doLayout(0);
-                if (LayoutChanged != null)
+                if (parent != null)
                 {
-                    LayoutChanged.Invoke(this);
+                    parent.layout();
+                }
+                else
+                {
+                    doLayout(0);
+                    if (LayoutChanged != null)
+                    {
+                        LayoutChanged.Invoke(this);
+                    }
                 }
             }
         }
@@ -119,6 +123,17 @@ namespace Medical.GUI
             {
                 child.changeWidth(width - childArea.Left);
             }
+        }
+
+        public void expandChildren()
+        {
+            allowLayout = false;
+            foreach (var child in children)
+            {
+                child.Expanded = true;
+            }
+            allowLayout = true;
+            layout();
         }
 
         public int Height

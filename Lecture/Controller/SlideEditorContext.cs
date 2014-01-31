@@ -54,6 +54,7 @@ namespace Lecture
         private PanelResizeWidget panelResizeWidget;
         private bool forceUpdateThumbOnBlur = false;
         private DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop;
+        private SlideshowStyleManager styleManager;
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
@@ -175,52 +176,14 @@ namespace Lecture
             makeTempPresets();
             slideLayoutPicker.ChangeSlideLayout += slideLayoutPicker_ChangeSlideLayout;
             taskbar.addTask(slideLayoutPicker);
-            
+
+            styleManager = new SlideshowStyleManager(editorController, uiCallback);
+            styleManager.addStyleFile(Path.Combine(slide.UniqueName, Slide.StyleSheetName), "This Slide");
+            styleManager.addStyleFile("SlideMasterStyles.rcss", "All Slides");
             taskbar.addTask(new CallbackTask("EditSlideshowTheme", "Edit Slideshow Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
-                String css = null;
-                String file = "SlideMasterStyles.rcss";
-                if (editorController.ResourceProvider.fileExists(file))
-                {
-                    using (StreamReader stringReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
-                    {
-                        css = stringReader.ReadToEnd();
-                    }
-                }
-                IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(0, 0);
-                SlideshowStyle style = new SlideshowStyle(css);
-                style.Changed += (arg) =>
-                    {
-                        StringBuilder styleString = new StringBuilder(500);
-                        ((SlideshowStyle)arg).buildStyleSheet(styleString);
-                        editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(file, Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
-                        refreshAllRml();
-                        forceUpdateThumbOnBlur = true;
-                    };
-                PopupGenericEditor.openEditor(style.getEditInterface(), uiCallback, taskPosition.x, taskPosition.y);
-            }));
-            taskbar.addTask(new CallbackTask("EditSlidTheme", "Edit Slide Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
-            {
-                String css = null;
-                String file = Path.Combine(slide.UniqueName, Slide.StyleSheetName);
-                if (editorController.ResourceProvider.fileExists(file))
-                {
-                    using (StreamReader stringReader = new StreamReader(editorController.ResourceProvider.openFile(file)))
-                    {
-                        css = stringReader.ReadToEnd();
-                    }
-                }
-                IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(0, 0);
-                SlideshowStyle style = new SlideshowStyle(css);
-                style.Changed += (arg) =>
-                {
-                    StringBuilder styleString = new StringBuilder(500);
-                    ((SlideshowStyle)arg).buildStyleSheet(styleString);
-                    editorController.ResourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(file, Encoding.UTF8, styleString.ToString(), editorController.ResourceProvider));
-                    refreshAllRml();
-                    forceUpdateThumbOnBlur = true;
-                };
-                PopupGenericEditor.openEditor(style.getEditInterface(), uiCallback, taskPosition.x, taskPosition.y);
+                IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(SlideshowStyleManager.Width, SlideshowStyleManager.Height);
+                styleManager.showEditor(taskPosition.x, taskPosition.y);
             }));
             mvcContext.Views.add(taskbar);
 
@@ -452,6 +415,22 @@ namespace Lecture
             }
         }
 
+        /// <summary>
+        /// This function will reload all open editors with their text as well as clearing the css cache.
+        /// This can be used when larger sweeping changes are made and you just need to reload everything.
+        /// </summary>
+        public void refreshAllRml()
+        {
+            RocketGuiManager.clearAllCaches();
+            foreach (var editor in rmlEditors.Values)
+            {
+                if (editor.Component != null)
+                {
+                    editor.Component.setRml(editor.Component.UnformattedRml, true, false);
+                }
+            }
+        }
+
         private void blur(AnomalousMvcContext context)
         {
             commitText(forceUpdateThumbOnBlur);
@@ -656,18 +635,6 @@ namespace Lecture
         void panelResizeWidget_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)
         {
             forceUpdateThumbOnBlur = true;
-        }
-
-        void refreshAllRml()
-        {
-            RocketGuiManager.clearAllCaches();
-            foreach (var editor in rmlEditors.Values)
-            {
-                if (editor.Component != null)
-                {
-                    editor.Component.setRml(editor.Component.UnformattedRml, true, false);
-                }
-            }
         }
 
         void slideLayoutPicker_ChangeSlideLayout(TemplateSlide newSlideLayout)

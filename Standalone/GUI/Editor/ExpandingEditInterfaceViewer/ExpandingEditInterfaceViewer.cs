@@ -52,6 +52,14 @@ namespace Medical.GUI
             }
         }
 
+        public ExpandingNode RootNode
+        {
+            get
+            {
+                return rootNode;
+            }
+        }
+
         public virtual void layout()
         {
             rootNode.layout();

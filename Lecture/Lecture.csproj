@@ -75,6 +75,7 @@
     <Compile Include="Controller\SlideshowProjectTemplate.cs" />
     <Compile Include="Controller\SlideImageManager.cs" />
     <Compile Include="Controller\Themes\SlideshowStyle.cs" />
+    <Compile Include="Controller\Themes\SlideshowStyleManager.cs" />
     <Compile Include="Controller\TimelineEditorContext.cs" />
     <Compile Include="Controller\TimelineTypeController.cs" />
     <Compile Include="GUI\PanelResizeWidget.cs" />
