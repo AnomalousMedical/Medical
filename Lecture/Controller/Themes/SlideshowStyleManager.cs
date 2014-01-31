@@ -32,6 +32,7 @@ namespace Lecture
             {
                 readFile(file.First, file.Second);
             }
+            unprocessedFiles.Clear();
             
             PopupGenericEditor.openEditor(editInterface, uiCallback, left, top, Width, Height);
         }

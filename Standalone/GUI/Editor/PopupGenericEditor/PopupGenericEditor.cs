@@ -42,6 +42,12 @@ namespace Medical.GUI
             close.MouseButtonClick += close_MouseButtonClick;
         }
 
+        public override void Dispose()
+        {
+            propertiesForm.Dispose();
+            base.Dispose();
+        }
+
         void close_MouseButtonClick(Widget source, EventArgs e)
         {
             this.hide();
