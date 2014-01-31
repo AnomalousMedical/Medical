@@ -53,6 +53,7 @@ namespace Lecture
         private SlideshowEditController editorController;
         private PanelResizeWidget panelResizeWidget;
         private bool forceUpdateThumbOnBlur = false;
+        private DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop;
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
@@ -96,7 +97,7 @@ namespace Lecture
 
             refreshPanelEditors(false);
 
-            DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
+            htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" style=\"width:200px;\"></img>", RmlWysiwygComponent.DefaultImage)),
@@ -247,32 +248,7 @@ namespace Lecture
                     slideLayoutPicker.createLayoutPicker();
                     panelResizeWidget.createResizeWidget();
                 }),
-                new CallbackAction("Blur", context =>
-                {
-                    commitText(forceUpdateThumbOnBlur);
-                    if (editorController.ResourceProvider != null) //If this is null the project is closed, no reason to try to save the text
-                    {
-                        foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
-                        {
-                            String editorName = panel.createViewName("RmlView");
-                            var editor = rmlEditors[editorName];
-                            if (editor.Component != null && editor.Component.ChangesMade)
-                            {
-                                String rml = editor.getCurrentComponentText();
-                                editor.CachedResource.CachedString = rml;
-                                editorController.ResourceProvider.ResourceCache.add(editor.CachedResource);
-                            }
-                        }
-                    }
-                    slideLayoutPicker.destroyLayoutPicker();
-                    GlobalContextEventHandler.disableEventContext(eventContext);
-                    htmlDragDrop.DestroyIconPreview();
-                    panelResizeWidget.destroyResizeWidget();
-                    if (Blur != null)
-                    {
-                        Blur.Invoke(this);
-                    }
-                }),
+                new CallbackAction("Blur", blur),
                 new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
@@ -316,175 +292,6 @@ namespace Lecture
             eventContext.addEvent(runEvent);
         }
 
-        private void makeTempPresets()
-        {
-            String defaultRml = EmbeddedResourceHelpers.ReadResourceContents(EmbeddedTemplateNames.SimpleSlide_rml, EmbeddedTemplateNames.Assembly);
-            //Couple simple presets
-            TemplateSlide presetSlide = new TemplateSlide()
-            {
-                Name = "Left Panel",
-                IconName = "Lecture.SlideLayouts.OnePanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Left and Right Panel",
-                IconName = "Lecture.SlideLayouts.TwoPanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Sides and Top",
-                IconName = "Lecture.SlideLayouts.ThreePanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 288,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Four Panel",
-                IconName = "Lecture.SlideLayouts.FourPanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 288,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 288,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Sides and Bottom",
-                IconName = "Lecture.SlideLayouts.FourPanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 288,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
-            {
-                Name = "Full Screen",
-                IconName = "Lecture.SlideLayouts.Full",
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 100,
-                ElementName = new LayoutElementName(GUILocationNames.ContentAreaPopup),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Left and Top",
-                IconName = "Lecture.SlideLayouts.LeftTop"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 480,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = 288,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-        }
-
-        void slideLayoutPicker_ChangeSlideLayout(TemplateSlide newSlideLayout)
-        {
-            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<TemplateSlide, TemplateSlide>(
-                (execSlide) =>
-                    {
-                        forceUpdateThumbOnBlur = true;
-                        execSlide.copyLayoutToSlide(slide, editorController.ResourceProvider, false);
-                        refreshPanelEditors(true);
-                    },
-                newSlideLayout,
-                (undoSlide) =>
-                    {
-                        forceUpdateThumbOnBlur = true;
-                        undoSlide.copyLayoutToSlide(slide, editorController.ResourceProvider, true);
-                        refreshPanelEditors(true);
-                    },
-                slide.createTemplateSlide(editorController.ResourceProvider)));
-        }
-
         public void close()
         {
             mvcContext.runAction("Editor/Close");
@@ -503,6 +310,13 @@ namespace Lecture
                 editor.Component.cancelAndHideEditor();
                 editor.Component.setRml(rml, keepScrollPosition, true);
             }
+        }
+
+        public void applySlideLayout(TemplateSlide template)
+        {
+            forceUpdateThumbOnBlur = true;
+            template.copyLayoutToSlide(slide, editorController.ResourceProvider, false);
+            refreshPanelEditors(true);
         }
 
         public SlideSceneInfo getCurrentSceneInfo()
@@ -638,8 +452,36 @@ namespace Lecture
             }
         }
 
+        private void blur(AnomalousMvcContext context)
+        {
+            commitText(forceUpdateThumbOnBlur);
+            if (editorController.ResourceProvider != null) //If this is null the project is closed, no reason to try to save the text
+            {
+                foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
+                {
+                    String editorName = panel.createViewName("RmlView");
+                    var editor = rmlEditors[editorName];
+                    if (editor.Component != null && editor.Component.ChangesMade)
+                    {
+                        String rml = editor.getCurrentComponentText();
+                        editor.CachedResource.CachedString = rml;
+                        editorController.ResourceProvider.ResourceCache.add(editor.CachedResource);
+                    }
+                }
+            }
+            slideLayoutPicker.destroyLayoutPicker();
+            GlobalContextEventHandler.disableEventContext(eventContext);
+            htmlDragDrop.DestroyIconPreview();
+            panelResizeWidget.destroyResizeWidget();
+            if (Blur != null)
+            {
+                Blur.Invoke(this);
+            }
+        }
+
         private void refreshPanelEditors(bool replaceExistingEditors)
         {
+            int oldEditorCount = rmlEditors.Count;
             if (replaceExistingEditors)
             {
                 mvcContext.runAction("Editor/CloseEditors");
@@ -826,6 +668,163 @@ namespace Lecture
                     editor.Component.setRml(editor.Component.UnformattedRml, true, false);
                 }
             }
+        }
+
+        void slideLayoutPicker_ChangeSlideLayout(TemplateSlide newSlideLayout)
+        {
+            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<TemplateSlide, TemplateSlide>(
+                editorController.applySlideLayout, newSlideLayout,
+                editorController.applySlideLayout, slide.createTemplateSlide(editorController.ResourceProvider)));
+        }
+
+        private void makeTempPresets()
+        {
+            String defaultRml = EmbeddedResourceHelpers.ReadResourceContents(EmbeddedTemplateNames.SimpleSlide_rml, EmbeddedTemplateNames.Assembly);
+            //Couple simple presets
+            TemplateSlide presetSlide = new TemplateSlide()
+            {
+                Name = "Left Panel",
+                IconName = "Lecture.SlideLayouts.OnePanel"
+            };
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Left and Right Panel",
+                IconName = "Lecture.SlideLayouts.TwoPanel"
+            };
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Sides and Top",
+                IconName = "Lecture.SlideLayouts.ThreePanel"
+            };
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Four Panel",
+                IconName = "Lecture.SlideLayouts.FourPanel"
+            };
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Sides and Bottom",
+                IconName = "Lecture.SlideLayouts.FourPanel"
+            };
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide(new FullScreenSlideLayoutStrategy())
+            {
+                Name = "Full Screen",
+                IconName = "Lecture.SlideLayouts.Full",
+            };
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 100,
+                ElementName = new LayoutElementName(GUILocationNames.ContentAreaPopup),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
+
+            presetSlide = new TemplateSlide()
+            {
+                Name = "Left and Top",
+                IconName = "Lecture.SlideLayouts.LeftTop"
+            };
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 480,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
+            });
+            presetSlide.addPanel(new RmlSlidePanelTemplate()
+            {
+                Rml = defaultRml,
+                Size = 288,
+                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
+            });
+            slideLayoutPicker.addPresetSlide(presetSlide);
         }
     }
 }

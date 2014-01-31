@@ -784,6 +784,14 @@ namespace Lecture
             runSlideshow(slideshow.indexOf(slide));
         }
 
+        public void applySlideLayout(TemplateSlide template)
+        {
+            if (slideEditorContext != null)
+            {
+                slideEditorContext.applySlideLayout(template);
+            }
+        }
+
         private IEnumerable<Guid> projectGuidDirectories()
         {
             Guid guid;
