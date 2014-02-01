@@ -87,6 +87,7 @@ namespace Medical
             }
             info.claimFile(Path.Combine(UniqueName, "Thumb.png"));
             info.claimFile(Path.Combine(UniqueName, StyleSheetName));
+            info.claimFile(SceneThumbName);
             layoutStrategy.claimFiles(info, resourceProvider, this);
 
             //Clean up actions
@@ -175,6 +176,14 @@ namespace Medical
             get
             {
                 return id;
+            }
+        }
+
+        public String SceneThumbName
+        {
+            get
+            {
+                return Path.Combine(UniqueName, "SceneThumb.png"); 
             }
         }
 
