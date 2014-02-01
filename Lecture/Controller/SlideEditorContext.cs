@@ -186,6 +186,18 @@ namespace Lecture
                 IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(SlideshowStyleManager.Width, SlideshowStyleManager.Height);
                 styleManager.showEditor(taskPosition.x, taskPosition.y);
             }));
+
+
+            taskbar.addTask(new CallbackTask("ClearThumb", "Clear Thumb", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                includeLoc = new IntVector2(0, 0);
+            }));
+
+            taskbar.addTask(new CallbackTask("ResetSlide", "Reset Slide", CommonResources.NoIcon, "Edit", 0, true, item =>
+            {
+                mvcContext.runAction("Editor/SetupScene");
+            }));
+
             mvcContext.Views.add(taskbar);
 
             setupScene = new RunCommandsAction("SetupScene");
@@ -336,7 +348,7 @@ namespace Lecture
         }
 
         //temporarily here so the info will persist, we will have to save this somewhere
-        IntVector2 includeLoc = new IntVector2();
+        static IntVector2 includeLoc = new IntVector2();
 
         public void updateThumbnail(bool forceUpdateSceneThumb = false)
         {
@@ -456,13 +468,13 @@ namespace Lecture
                             {
                                 if (requiredWidth < requiredHeight) //Height of required area is greater, limit the height and move the top in the dest rectangle
                                 {
-                                    Logging.Log.Debug("Limit Dest Width && Limit Required Width");
+                                    Logging.Log.Debug("1. Limit Dest {0}, {1} Width && Limit Required {2}, {3} Width", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
                                     float limitedWidth = centerSize.Height / heightWidthRatio;
-                                    destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth, destRect.Top, limitedWidth, destRect.Height);
+                                    destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth / 2, destRect.Top, limitedWidth, destRect.Height);
                                 }
                                 else //Width of required area is greater, limit the width and move the left in the dest rectangle
                                 {
-                                    Logging.Log.Debug("Limit Dest Width && Limit Required Height");
+                                    Logging.Log.Debug("2. Limit Dest {0}, {1} Width && Limit Required {2}, {3} Height", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
                                     float limitedHeight = centerSize.Width * heightWidthRatio;
                                     destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight); 
                                 }
@@ -471,13 +483,13 @@ namespace Lecture
                             {
                                 if (requiredWidth < requiredHeight) //Height of required area is greater, limit the width and move the left in the dest rectangle
                                 {
-                                    Logging.Log.Debug("Limit Dest Height && Limit Required Width");
+                                    Logging.Log.Debug("3. Limit Dest {0}, {1} Height && Limit Required {2}, {3} Width", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
                                     float limitedWidth = centerSize.Height / heightWidthRatio;
-                                    destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth, destRect.Top, limitedWidth, destRect.Height);
+                                    destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth / 2, destRect.Top, limitedWidth, destRect.Height);
                                 }
                                 else //Width of required area is greater, limit the height and move the top in the dest rectangle
                                 {
-                                    Logging.Log.Debug("Limit Dest Height && Limit Required Height");
+                                    Logging.Log.Debug("4. Limit Dest {0}, {1} Height && Limit Required {2}, {3} Height", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
                                     float limitedHeight = centerSize.Width * heightWidthRatio;
                                     destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight);
                                 }
@@ -728,6 +740,7 @@ namespace Lecture
         void panelResizeWidget_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)
         {
             forceUpdateThumbOnBlur = true;
+            updateThumbnail();
         }
 
         void slideLayoutPicker_ChangeSlideLayout(TemplateSlide newSlideLayout)
