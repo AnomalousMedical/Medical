@@ -493,28 +493,7 @@ namespace Lecture
                 sceneThumbInfo.Color = viewport.getBackgroundColor();
             };
 
-            Bitmap sceneThumb = null;
-            try
-            {
-                sceneThumb = imageRenderer.renderImage(imageProperties);
-                //Don't need this part this is just the debug square
-                using (Graphics sceneGraph = Graphics.FromImage(sceneThumb))
-                {
-                    using (Brush brush = new SolidBrush(System.Drawing.Color.FromArgb(0, 255, 0)))
-                    {
-                        sceneGraph.FillRectangle(brush, sceneThumbInfo.IncludeX - 5, sceneThumbInfo.IncludeY - 5, 10, 10);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                if (sceneThumb != null)
-                {
-                    sceneThumb.Dispose();
-                }
-                throw ex;
-            }
-            sceneThumbInfo.SceneThumb = sceneThumb;
+            sceneThumbInfo.SceneThumb = imageRenderer.renderImage(imageProperties);
             return sceneThumbInfo;
         }
 
