@@ -393,45 +393,25 @@ namespace Lecture
 
                     int requiredWidth = (sceneThumbInfo.SceneThumb.Width - ((sceneThumbInfo.SceneThumb.Width - sceneThumbInfo.IncludeX) * 2));
                     int requiredHeight = (sceneThumbInfo.SceneThumb.Height - (sceneThumbInfo.IncludeY * 2));
-                    int requiredLeft = sceneThumbInfo.IncludeX - requiredWidth;
-                    int requiredTop = sceneThumbInfo.IncludeY;
 
                     int sceneThumbHalfWidth = sceneThumbInfo.SceneThumb.Width / 2;
                     int sceneThumbHalfHeight = sceneThumbInfo.SceneThumb.Height / 2;
-                    float heightWidthRatio = (float)requiredHeight / requiredWidth;
-
-                    if (centerSize.Width < centerSize.Height) //Width is the dest rect limit
-                    {
-                        if (requiredWidth < requiredHeight) //Height of required area is greater, limit the height and move the top in the dest rectangle
-                        {
-                            Logging.Log.Debug("1. Limit Dest {0}, {1} Width && Limit Required {2}, {3} Width", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
-                            float limitedWidth = centerSize.Height / heightWidthRatio;
-                            destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth / 2, destRect.Top, limitedWidth, destRect.Height);
-                        }
-                        else //Width of required area is greater, limit the width and move the left in the dest rectangle
-                        {
-                            Logging.Log.Debug("2. Limit Dest {0}, {1} Width && Limit Required {2}, {3} Height", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
-                            float limitedHeight = centerSize.Width * heightWidthRatio;
-                            destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight);
-                        }
-                    }
-                    else //Height is the dest rect limit
-                    {
-                        if (requiredWidth < requiredHeight) //Height of required area is greater, limit the width and move the left in the dest rectangle
-                        {
-                            Logging.Log.Debug("3. Limit Dest {0}, {1} Height && Limit Required {2}, {3} Width", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
-                            float limitedWidth = centerSize.Height / heightWidthRatio;
-                            destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth / 2, destRect.Top, limitedWidth, destRect.Height);
-                        }
-                        else //Width of required area is greater, limit the height and move the top in the dest rectangle
-                        {
-                            Logging.Log.Debug("4. Limit Dest {0}, {1} Height && Limit Required {2}, {3} Height", centerSize.Width, centerSize.Height, requiredWidth, requiredHeight);
-                            float limitedHeight = centerSize.Width * heightWidthRatio;
-                            destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight);
-                        }
-                    }
+                    float requiredHeightWidthRatio = (float)requiredHeight / requiredWidth;
+                    float centerHeightWidthRatio = (float)centerSize.Height / centerSize.Width;
 
                     RectangleF srcRect = new RectangleF(sceneThumbHalfWidth - requiredWidth / 2, sceneThumbHalfHeight - requiredHeight / 2, requiredWidth, requiredHeight);
+                    if (requiredHeightWidthRatio < centerHeightWidthRatio) //Compare ratios between our source required area and the destination
+                    {
+                        //Use Height as limit, add width from source
+                        float limitedHeight = centerSize.Width * requiredHeightWidthRatio;
+                        destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight);
+                    }
+                    else
+                    {
+                        //Use width as limit, add height from source
+                        float limitedWidth = centerSize.Height / requiredHeightWidthRatio;
+                        destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth / 2, destRect.Top, limitedWidth, destRect.Height);
+                    }                    
 
                     g.DrawImage(sceneThumbInfo.SceneThumb, destRect, srcRect, GraphicsUnit.Pixel);
 
@@ -482,10 +462,10 @@ namespace Lecture
                 Vector3 include = imageProperties.IncludePoint;
 
                 //Move camera back more
-                //float distance = -60;
-                //Vector3 direction = (position - lookAt).normalized();
-                //node.setPosition(position - (direction * distance));
-                //camera.lookAt(lookAt);
+                float distance = -60;
+                Vector3 direction = (position - lookAt).normalized();
+                node.setPosition(position - (direction * distance));
+                camera.lookAt(lookAt);
 
                 Vector2 includeLoc = SceneViewWindow.Project(include, camera.getViewMatrix(), camera.getProjectionMatrix(), imageProperties.Width, imageProperties.Height);
                 sceneThumbInfo.IncludeX = (int)includeLoc.x;
