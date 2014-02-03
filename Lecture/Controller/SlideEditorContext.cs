@@ -378,7 +378,6 @@ namespace Lecture
                 //Render thumbnail
                 using (Graphics g = Graphics.FromImage(thumb))
                 {
-                    g.Clear(System.Drawing.Color.HotPink);
                     //Start with the scene
                     IntVector2 sceneThumbPosition = sceneContainer.Location;
                     String sceneThumbFile = slide.SceneThumbName;
@@ -390,6 +389,8 @@ namespace Lecture
                     SceneThumbInfo sceneThumbInfo = slideEditorController.SlideImageManager.loadThumbSceneBitmap(slide, renderSceneThumbnail);
                     IntSize2 centerSize = sceneContainer.WorkingSize;
                     RectangleF destRect = new RectangleF(sceneThumbPosition.x, sceneThumbPosition.y, centerSize.Width, centerSize.Height);
+
+                    g.Clear(System.Drawing.Color.FromArgb(sceneThumbInfo.Color.toARGB()));
 
                     int requiredWidth = (sceneThumbInfo.SceneThumb.Width - ((sceneThumbInfo.SceneThumb.Width - sceneThumbInfo.IncludeX) * 2));
                     int requiredHeight = (sceneThumbInfo.SceneThumb.Height - (sceneThumbInfo.IncludeY * 2));
@@ -415,7 +416,7 @@ namespace Lecture
                             srcHeight = sceneThumbHeight;
                         }
                         float destHeight = srcHeight / sizeRatio;
-                        destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - destHeight / 2, destRect.Width, destHeight);
+                        destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - destHeight / 2, destRect.Width, destHeight); //Make a dest rect that takes as much image as it can
                     }
                     else
                     {
@@ -471,7 +472,7 @@ namespace Lecture
             imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
             imageProperties.UseIncludePoint = slide.CameraPosition.UseIncludePoint;
             imageProperties.IncludePoint = slide.CameraPosition.IncludePoint;
-            imageProperties.CustomizeCameraPosition = (camera) =>
+            imageProperties.CustomizeCameraPosition = (camera, viewport) =>
             {
                 SceneNode node = camera.getParentSceneNode();
                 Vector3 position = node.getDerivedPosition();
@@ -489,6 +490,7 @@ namespace Lecture
                 Vector2 includeLoc = SceneViewWindow.Project(include, camera.getViewMatrix(), camera.getProjectionMatrix(), imageProperties.Width, imageProperties.Height);
                 sceneThumbInfo.IncludeX = (int)includeLoc.x;
                 sceneThumbInfo.IncludeY = (int)includeLoc.y;
+                sceneThumbInfo.Color = viewport.getBackgroundColor();
             };
 
             Bitmap sceneThumb = null;

@@ -341,16 +341,6 @@ namespace Medical
                                 camera.lookAt(lookAt);
                             }
 
-                            if (properties.CustomizeCameraPosition != null)
-                            {
-                                properties.CustomizeCameraPosition(camera);
-                            }
-
-                            float near, far;
-                            CameraPositioner.computeClipDistances(camera.getDerivedPosition().length(), nearWorldPos, farWorldPos, out near, out far);
-                            camera.setNearClipDistance(near);
-                            camera.setFarClipDistance(far);
-
                             ViewportBackground bgViewport = null;
                             if (background != null)
                             {
@@ -360,11 +350,18 @@ namespace Medical
                                 bgViewport.Camera.setAutoAspectRatio(false);
                                 bgViewport.Camera.setAspectRatio((float)finalWidth / finalHeight);
                             }
-                            else
-                            {
-                                viewport.setBackgroundColor(backColor);
-                            }
+                            viewport.setBackgroundColor(backColor);
                             viewport.setOverlaysEnabled(false);
+
+                            if (properties.CustomizeCameraPosition != null)
+                            {
+                                properties.CustomizeCameraPosition(camera, viewport);
+                            }
+
+                            float near, far;
+                            CameraPositioner.computeClipDistances(camera.getDerivedPosition().length(), nearWorldPos, farWorldPos, out near, out far);
+                            camera.setNearClipDistance(near);
+                            camera.setFarClipDistance(far);
 
                             if (doGridRender)
                             {

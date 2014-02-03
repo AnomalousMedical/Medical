@@ -1,8 +1,8 @@
-﻿using Engine.Attributes;
+﻿using Engine;
+using Engine.Attributes;
 using Engine.Saving;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -11,10 +11,11 @@ namespace Medical
     public class SceneThumbInfo : Saveable, IDisposable
     {
         [DoNotSave]
-        private Bitmap sceneThumb;
+        private System.Drawing.Bitmap sceneThumb;
 
         private int includeX;
         private int includeY;
+        private Color color;
 
         public SceneThumbInfo()
         {
@@ -41,7 +42,7 @@ namespace Medical
         /// so if you dispose this it will dispose the set scene thumb and if you set this property
         /// to a new value the old thumb will be disposed.
         /// </summary>
-        public Bitmap SceneThumb
+        public System.Drawing.Bitmap SceneThumb
         {
             get
             {
@@ -54,6 +55,18 @@ namespace Medical
                     sceneThumb.Dispose();
                 }
                 sceneThumb = value;
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return color;
+            }
+            set
+            {
+                color = value;
             }
         }
 

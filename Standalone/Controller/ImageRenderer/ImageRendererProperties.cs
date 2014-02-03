@@ -12,7 +12,7 @@ namespace Medical
     /// </summary>
     public class ImageRendererProperties
     {
-        public delegate void CustomizeCameraPositionDelegate(Camera camera); 
+        public delegate void CustomizeCameraPositionDelegate(Camera camera, Viewport viewport); 
 
         public ImageRendererProperties()
         {
