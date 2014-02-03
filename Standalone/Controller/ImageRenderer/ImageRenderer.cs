@@ -347,7 +347,7 @@ namespace Medical
                             }
 
                             float near, far;
-                            CameraPositioner.computeClipDistances(position.length(), nearWorldPos, farWorldPos, out near, out far);
+                            CameraPositioner.computeClipDistances(camera.getDerivedPosition().length(), nearWorldPos, farWorldPos, out near, out far);
                             camera.setNearClipDistance(near);
                             camera.setFarClipDistance(far);
 
