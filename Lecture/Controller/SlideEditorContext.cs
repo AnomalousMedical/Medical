@@ -394,24 +394,43 @@ namespace Lecture
                     int requiredWidth = (sceneThumbInfo.SceneThumb.Width - ((sceneThumbInfo.SceneThumb.Width - sceneThumbInfo.IncludeX) * 2));
                     int requiredHeight = (sceneThumbInfo.SceneThumb.Height - (sceneThumbInfo.IncludeY * 2));
 
-                    int sceneThumbHalfWidth = sceneThumbInfo.SceneThumb.Width / 2;
-                    int sceneThumbHalfHeight = sceneThumbInfo.SceneThumb.Height / 2;
+                    int sceneThumbWidth = sceneThumbInfo.SceneThumb.Width;
+                    int sceneThumbHeight = sceneThumbInfo.SceneThumb.Height;
+                    int sceneThumbHalfWidth = sceneThumbWidth / 2;
+                    int sceneThumbHalfHeight = sceneThumbHeight / 2;
                     float requiredHeightWidthRatio = (float)requiredHeight / requiredWidth;
                     float centerHeightWidthRatio = (float)centerSize.Height / centerSize.Width;
 
-                    RectangleF srcRect = new RectangleF(sceneThumbHalfWidth - requiredWidth / 2, sceneThumbHalfHeight - requiredHeight / 2, requiredWidth, requiredHeight);
+                    float srcWidth = requiredWidth;
+                    float srcHeight = requiredHeight;
+
                     if (requiredHeightWidthRatio < centerHeightWidthRatio) //Compare ratios between our source required area and the destination
                     {
-                        //Use Height as limit, add width from source
-                        float limitedHeight = centerSize.Width * requiredHeightWidthRatio;
-                        destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - limitedHeight / 2, destRect.Width, limitedHeight);
+                        //Use the full required width, add height from source image
+                        //Convert the center size to the same size ratio as the required size
+                        float sizeRatio = (float)requiredWidth / centerSize.Width;
+                        srcHeight = centerSize.Height * sizeRatio;
+                        if (srcHeight > sceneThumbHeight) //Stretch out the image as much as possible, limiting by the size of the scene thumb if needed.
+                        {
+                            srcHeight = sceneThumbHeight;
+                        }
+                        float destHeight = srcHeight / sizeRatio;
+                        destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - destHeight / 2, destRect.Width, destHeight);
                     }
                     else
                     {
-                        //Use width as limit, add height from source
-                        float limitedWidth = centerSize.Height / requiredHeightWidthRatio;
-                        destRect = new RectangleF(destRect.Width / 2 + destRect.Left - limitedWidth / 2, destRect.Top, limitedWidth, destRect.Height);
-                    }                    
+                        //Use the full required height, add width from source image
+                        float sizeRatio = (float)requiredHeight / centerSize.Height;
+                        srcWidth = centerSize.Width * sizeRatio;
+                        if (srcWidth > sceneThumbWidth)
+                        {
+                            srcWidth = sceneThumbWidth;
+                        }
+                        float destWidth = srcWidth / sizeRatio;
+                        destRect = new RectangleF(destRect.Width / 2 + destRect.Left - destWidth / 2, destRect.Top, destWidth, destRect.Height);
+                    }
+
+                    RectangleF srcRect = new RectangleF(sceneThumbHalfWidth - srcWidth / 2, sceneThumbHalfHeight - srcHeight / 2, srcWidth, srcHeight);
 
                     g.DrawImage(sceneThumbInfo.SceneThumb, destRect, srcRect, GraphicsUnit.Pixel);
 
