@@ -372,6 +372,7 @@ namespace Medical
         {
             private Stream baseStream;
             private ZipResourceProvider resourceProvider;
+            private bool isOpen = true;
 
             public WriteStream(Stream baseStream, ZipResourceProvider resourceProvider)
             {
@@ -381,9 +382,13 @@ namespace Medical
 
             public override void Close()
             {
-                baseStream.Seek(0, SeekOrigin.Begin);
-                resourceProvider.writeStreamClosed(this);
-                baseStream.Close();
+                if (isOpen)
+                {
+                    baseStream.Seek(0, SeekOrigin.Begin);
+                    resourceProvider.writeStreamClosed(this);
+                    baseStream.Close();
+                    isOpen = false;
+                }
             }
 
             public override bool CanRead
