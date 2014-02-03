@@ -187,6 +187,14 @@ namespace Medical
             }
         }
 
+        public String SceneThumbInfoName
+        {
+            get
+            {
+                return Path.Combine(UniqueName, "SceneThumb.info");
+            }
+        }
+
         public void updateToVersion(int fromVersion, int toVersion, ResourceProvider slideshowResources)
         {
             foreach (SlidePanel panel in Panels)

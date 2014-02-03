@@ -68,6 +68,7 @@
     <Compile Include="Controller\LectureUICallback.cs" />
     <Compile Include="Controller\MedicalSlideItemTemplate.cs" />
     <Compile Include="Controller\RmlEditorViewInfo.cs" />
+    <Compile Include="Controller\SceneThumbInfo.cs" />
     <Compile Include="Controller\ShowTypeController.cs" />
     <Compile Include="Controller\SlideEditorContext.cs" />
     <Compile Include="Controller\SlideSceneInfo.cs" />

@@ -187,12 +187,6 @@ namespace Lecture
                 styleManager.showEditor(taskPosition.x, taskPosition.y);
             }));
 
-
-            taskbar.addTask(new CallbackTask("ClearThumb", "Clear Thumb", CommonResources.NoIcon, "Edit", 0, true, item =>
-            {
-                includeLoc = new IntVector2(0, 0);
-            }));
-
             taskbar.addTask(new CallbackTask("ResetSlide", "Reset Slide", CommonResources.NoIcon, "Edit", 0, true, item =>
             {
                 mvcContext.runAction("Editor/SetupScene");
@@ -349,9 +343,6 @@ namespace Lecture
             }
         }
 
-        //temporarily here so the info will persist, we will have to save this somewhere
-        static IntVector2 includeLoc = new IntVector2();
-
         public void updateThumbnail(bool forceUpdateSceneThumb = false)
         {
             forceUpdateThumbOnBlur = false;
@@ -391,23 +382,22 @@ namespace Lecture
                     //Start with the scene
                     IntVector2 sceneThumbPosition = sceneContainer.Location;
                     String sceneThumbFile = slide.SceneThumbName;
-                    forceUpdateSceneThumb = forceUpdateSceneThumb || includeLoc == new Vector2(0, 0); //Temporary, forces the thumb to regen the first time until we can persist this info
                     if (forceUpdateSceneThumb)
                     {
                         slideEditorController.SlideImageManager.addUnsavedSceneThumb(slide, renderSceneThumbnail());
                     }
 
-                    Bitmap sceneThumb = slideEditorController.SlideImageManager.loadThumbSceneBitmap(slide, renderSceneThumbnail);
+                    SceneThumbInfo sceneThumbInfo = slideEditorController.SlideImageManager.loadThumbSceneBitmap(slide, renderSceneThumbnail);
                     IntSize2 centerSize = sceneContainer.WorkingSize;
                     RectangleF destRect = new RectangleF(sceneThumbPosition.x, sceneThumbPosition.y, centerSize.Width, centerSize.Height);
 
-                    int requiredWidth = (sceneThumb.Width - ((sceneThumb.Width - includeLoc.x) * 2));
-                    int requiredHeight = (sceneThumb.Height - (includeLoc.y * 2));
-                    int requiredLeft = includeLoc.x - requiredWidth;
-                    int requiredTop = includeLoc.y;
+                    int requiredWidth = (sceneThumbInfo.SceneThumb.Width - ((sceneThumbInfo.SceneThumb.Width - sceneThumbInfo.IncludeX) * 2));
+                    int requiredHeight = (sceneThumbInfo.SceneThumb.Height - (sceneThumbInfo.IncludeY * 2));
+                    int requiredLeft = sceneThumbInfo.IncludeX - requiredWidth;
+                    int requiredTop = sceneThumbInfo.IncludeY;
 
-                    int sceneThumbHalfWidth = sceneThumb.Width / 2;
-                    int sceneThumbHalfHeight = sceneThumb.Height / 2;
+                    int sceneThumbHalfWidth = sceneThumbInfo.SceneThumb.Width / 2;
+                    int sceneThumbHalfHeight = sceneThumbInfo.SceneThumb.Height / 2;
                     float heightWidthRatio = (float)requiredHeight / requiredWidth;
 
                     if (centerSize.Width < centerSize.Height) //Width is the dest rect limit
@@ -443,7 +433,7 @@ namespace Lecture
 
                     RectangleF srcRect = new RectangleF(sceneThumbHalfWidth - requiredWidth / 2, sceneThumbHalfHeight - requiredHeight / 2, requiredWidth, requiredHeight);
 
-                    g.DrawImage(sceneThumb, destRect, srcRect, GraphicsUnit.Pixel);
+                    g.DrawImage(sceneThumbInfo.SceneThumb, destRect, srcRect, GraphicsUnit.Pixel);
 
                     //Render all panels
                     foreach (var editor in rmlEditors.Values)
@@ -464,8 +454,9 @@ namespace Lecture
             }
         }
 
-        private Bitmap renderSceneThumbnail()
+        private SceneThumbInfo renderSceneThumbnail()
         {
+            SceneThumbInfo sceneThumbInfo = new SceneThumbInfo();
             ImageRendererProperties imageProperties = new ImageRendererProperties();
             imageProperties.Width = SlideImageManager.SceneThumbWidth;
             imageProperties.Height = SlideImageManager.SceneThumbHeight;
@@ -496,18 +487,21 @@ namespace Lecture
                 //node.setPosition(position - (direction * distance));
                 //camera.lookAt(lookAt);
 
-                includeLoc = (IntVector2)SceneViewWindow.Project(include, camera.getViewMatrix(), camera.getProjectionMatrix(), imageProperties.Width, imageProperties.Height);
+                Vector2 includeLoc = SceneViewWindow.Project(include, camera.getViewMatrix(), camera.getProjectionMatrix(), imageProperties.Width, imageProperties.Height);
+                sceneThumbInfo.IncludeX = (int)includeLoc.x;
+                sceneThumbInfo.IncludeY = (int)includeLoc.y;
             };
 
             Bitmap sceneThumb = null;
             try
             {
                 sceneThumb = imageRenderer.renderImage(imageProperties);
+                //Don't need this part this is just the debug square
                 using (Graphics sceneGraph = Graphics.FromImage(sceneThumb))
                 {
-                    using (Brush brush = new SolidBrush(System.Drawing.Color.HotPink))
+                    using (Brush brush = new SolidBrush(System.Drawing.Color.FromArgb(0, 255, 0)))
                     {
-                        sceneGraph.FillRectangle(brush, includeLoc.x - 5, includeLoc.y - 5, 10, 10);
+                        sceneGraph.FillRectangle(brush, sceneThumbInfo.IncludeX - 5, sceneThumbInfo.IncludeY - 5, 10, 10);
                     }
                 }
             }
@@ -519,7 +513,8 @@ namespace Lecture
                 }
                 throw ex;
             }
-            return sceneThumb;
+            sceneThumbInfo.SceneThumb = sceneThumb;
+            return sceneThumbInfo;
         }
 
         /// <summary>

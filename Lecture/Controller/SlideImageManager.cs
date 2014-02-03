@@ -36,7 +36,8 @@ namespace Lecture
 
         private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new IntSize2(ThumbWidth, ThumbHeight));
         private Dictionary<Slide, Bitmap> unsavedThumbs = new Dictionary<Slide, Bitmap>();
-        private Dictionary<Slide, Bitmap> unsavedSceneThumbs = new Dictionary<Slide, Bitmap>();
+        private Dictionary<Slide, SceneThumbInfo> unsavedSceneThumbs = new Dictionary<Slide, SceneThumbInfo>();
+        private MemoryCache<Slide, SceneThumbInfo> savedSceneThumbCache = new MemoryCache<Slide, SceneThumbInfo>();
         private SlideshowEditController slideEditController;
         private WorkQueue workQueue = new WorkQueue();
 
@@ -48,13 +49,13 @@ namespace Lecture
         public void Dispose()
         {
             imageAtlas.Dispose();
-            clearUnsavedThumbs();
+            clearAllThumbs();
         }
 
         public void clear()
         {
             imageAtlas.clear();
-            clearUnsavedThumbs();
+            clearAllThumbs();
         }
 
         public void loadThumbnail(Slide slide, Action<Slide, String> loadedCallback)
@@ -133,27 +134,32 @@ namespace Lecture
         /// <param name="slide"></param>
         /// <param name="fileNotFoundCallback">This function is called if the bitmap file is not found. It should return a bitmap that will have control taken by this class, it will be treated as an unsaved scene thumb, and will be disposed by this class.</param>
         /// <returns></returns>
-        public Bitmap loadThumbSceneBitmap(Slide slide, Func<Bitmap> fileNotFoundCallback = null)
+        public SceneThumbInfo loadThumbSceneBitmap(Slide slide, Func<SceneThumbInfo> fileNotFoundCallback = null)
         {
-            Bitmap thumb;
-            if (!unsavedSceneThumbs.TryGetValue(slide, out thumb))
+            SceneThumbInfo thumb;
+            if (!unsavedSceneThumbs.TryGetValue(slide, out thumb) && !savedSceneThumbCache.TryGetValue(slide, out thumb))
             {
                 String sceneThumbFile = slide.SceneThumbName;
-                if (slideEditController.ResourceProvider.fileExists(sceneThumbFile))
+                String sceneThumbInfoFile = slide.SceneThumbInfoName;
+                if (slideEditController.ResourceProvider.fileExists(sceneThumbFile) && slideEditController.ResourceProvider.fileExists(sceneThumbInfoFile))
                 {
+                    using (Stream stream = slideEditController.ResourceProvider.openFile(sceneThumbInfoFile))
+                    {
+                        thumb = SharedXmlSaver.Load<SceneThumbInfo>(stream);
+                    }
+
                     using (Stream stream = slideEditController.ResourceProvider.openFile(sceneThumbFile))
                     {
-                        thumb = (Bitmap)Bitmap.FromStream(stream);
-                        unsavedSceneThumbs.Add(slide, thumb); //THIS IS DUMB, PUT IT IN ANOTHER DICTIONARY, these already exist, need a dictionary for the existing ones so we don't keep loading from file
-                        //limit the size of it to the last 10 loaded, and make sure when adding or replacing an unsaved one that you remove any entries in this dictionary associated with that slide.
+                        thumb.SceneThumb = (Bitmap)Bitmap.FromStream(stream);
                     }
+                    savedSceneThumbCache[slide] = thumb;
                 }
                 else
                 {
                     if (fileNotFoundCallback != null)
                     {
                         thumb = fileNotFoundCallback();
-                        unsavedSceneThumbs.Add(slide, thumb); //Since we had to generate it, consider this an unsaved thumb
+                        unsavedSceneThumbs.Add(slide, thumb); //Since we had to generate it, consider this an unsaved thumb, we also know for sure here that the thumb does not already exist
                     }
                     else
                     {
@@ -170,9 +176,17 @@ namespace Lecture
         /// </summary>
         /// <param name="slide"></param>
         /// <param name="thumb"></param>
-        public void addUnsavedSceneThumb(Slide slide, Bitmap thumb)
+        public void addUnsavedSceneThumb(Slide slide, SceneThumbInfo thumb)
         {
-            Bitmap oldThumb;
+            SceneThumbInfo oldThumb;
+            //Make sure we haven't loaded some other saved version of this thumb
+            if (savedSceneThumbCache.TryGetValue(slide, out oldThumb))
+            {
+                savedSceneThumbCache.Remove(slide);
+                oldThumb.Dispose();
+            }
+
+            //Make sure it wasn't already in unsavedSceneThumbs
             if (unsavedSceneThumbs.TryGetValue(slide, out oldThumb))
             {
                 oldThumb.Dispose();
@@ -211,12 +225,14 @@ namespace Lecture
             {
                 Bitmap thumb = unsavedThumbs[slide];
                 saveThumbnail(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName), thumb);
+                thumb.Dispose();
             }
             unsavedThumbs.Clear();
             foreach (Slide slide in unsavedSceneThumbs.Keys)
             {
-                Bitmap thumb = unsavedSceneThumbs[slide];
-                saveThumbnail(slide.SceneThumbName, thumb);
+                var thumb = unsavedSceneThumbs[slide];
+                saveSceneThumbInfo(slide, thumb);
+                thumb.Dispose();
             }
             unsavedSceneThumbs.Clear();
         }
@@ -234,29 +250,40 @@ namespace Lecture
                 oldThumb.Dispose();
                 unsavedThumbs.Remove(slide);
             }
-            if (unsavedSceneThumbs.TryGetValue(slide, out oldThumb))
+            SceneThumbInfo oldThumbInfo;
+            if (unsavedSceneThumbs.TryGetValue(slide, out oldThumbInfo))
             {
                 oldThumb.Dispose();
                 unsavedSceneThumbs.Remove(slide);
             }
+            if (savedSceneThumbCache.TryGetValue(slide, out oldThumbInfo))
+            {
+                oldThumb.Dispose();
+                savedSceneThumbCache.Remove(slide);
+            }
         }
 
-        private void clearUnsavedThumbs()
+        private void clearAllThumbs()
         {
             foreach (Bitmap thumb in unsavedThumbs.Values)
             {
                 thumb.Dispose();
             }
             unsavedThumbs.Clear();
-            foreach (Bitmap thumb in unsavedSceneThumbs.Values)
+            foreach (SceneThumbInfo thumb in unsavedSceneThumbs.Values)
             {
                 thumb.Dispose();
             }
             unsavedSceneThumbs.Clear();
+            foreach (SceneThumbInfo thumb in savedSceneThumbCache.Values)
+            {
+                thumb.Dispose();
+            }
+            savedSceneThumbCache.Clear();
         }
 
         /// <summary>
-        /// Save a thumbnail, will dispose the bitmap passed in.
+        /// Save a thumbnail file
         /// </summary>
         /// <param name="slide"></param>
         /// <param name="thumb"></param>
@@ -273,7 +300,22 @@ namespace Lecture
             {
                 Logging.Log.Error("{0} exception updating thumbnail. Message: {1}", ex.GetType().Name, ex.Message);
             }
-            thumb.Dispose();
+        }
+
+        private void saveSceneThumbInfo(Slide slide, SceneThumbInfo thumbInfo)
+        {
+            try
+            {
+                using (Stream stream = slideEditController.ResourceProvider.openWriteStream(slide.SceneThumbInfoName))
+                {
+                    SharedXmlSaver.Save(thumbInfo, stream);
+                }
+                saveThumbnail(slide.SceneThumbName, thumbInfo.SceneThumb);
+            }
+            catch (Exception ex)
+            {
+                Logging.Log.Error("{0} exception updating thumbnail info. Message: {1}", ex.GetType().Name, ex.Message);
+            }
         }
     }
 }
