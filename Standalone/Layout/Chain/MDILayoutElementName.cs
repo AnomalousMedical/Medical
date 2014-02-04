@@ -46,6 +46,19 @@ namespace Medical
             }
         }
 
+        private DockLocation allowedDockLocations = DockLocation.All;
+        public DockLocation AllowedDockLocations
+        {
+            get
+            {
+                return allowedDockLocations;
+            }
+            set
+            {
+                allowedDockLocations = value;
+            }
+        }
+
         public override ViewType ViewType
         {
             get

@@ -14,7 +14,10 @@ namespace Medical.GUI
         public PropTimelineView(String name, PropEditController propEditController)
             : base(name)
         {
-            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top);
+            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top)
+            {
+                AllowedDockLocations = DockLocation.Top | DockLocation.Bottom | DockLocation.Floating
+            };
             this.PropEditController = propEditController;
         }
 

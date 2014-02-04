@@ -16,11 +16,18 @@ namespace Medical.GUI.AnomalousMvc
         private String closeAction = null;
         private bool fireCloseEvent;
 
-        public MDIDialogDecorator(MDILayoutManager targetLayoutManager, ViewHostComponent child, ButtonCollection buttons)
-            : base(buttons.hasItem("Close") ? "Medical.GUI.AnomalousMvc.Decorators.MDIDialogDecoratorCSX.layout" : "Medical.GUI.AnomalousMvc.Decorators.MDIDialogDecoratorCS.layout")
+        public MDIDialogDecorator(MDILayoutManager targetLayoutManager, ViewHostComponent child, MyGUIView view)
+            : base(view.Buttons.hasItem("Close") ? "Medical.GUI.AnomalousMvc.Decorators.MDIDialogDecoratorCSX.layout" : "Medical.GUI.AnomalousMvc.Decorators.MDIDialogDecoratorCS.layout")
         {
             this.MDIManager = targetLayoutManager;
 
+            MDILayoutElementName mdiElementName = view.ElementName as MDILayoutElementName;
+            if (mdiElementName != null)
+            {
+                this.AllowedDockLocations = mdiElementName.AllowedDockLocations;
+            }
+
+            ButtonCollection buttons = view.Buttons;
             if (buttons.Count > 0)
             {
                 //Keep button decorator from being made if there is only one button and it is close

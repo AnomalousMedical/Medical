@@ -43,7 +43,7 @@ namespace Medical.GUI.AnomalousMvc
             switch (view.ElementName.ViewType)
             {
                 case ViewType.Window:
-                    MDIDialogDecorator dialogDecorator = new MDIDialogDecorator(mdiManager, component, view.Buttons);
+                    MDIDialogDecorator dialogDecorator = new MDIDialogDecorator(mdiManager, component, view);
                     switch (view.ElementName.LocationHint)
                     {
                         case ViewLocations.Left:

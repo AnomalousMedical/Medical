@@ -61,7 +61,10 @@ namespace Lecture
             mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController));
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
-            genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
+            genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left)
+            {
+                AllowedDockLocations = DockLocation.Left | DockLocation.Right | DockLocation.Floating
+            };
             mvcContext.Views.add(genericEditor);
             
             PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController);
@@ -74,7 +77,10 @@ namespace Lecture
 
             MovementSequenceEditorView movementSequenceEditor = new MovementSequenceEditorView("MovementSequenceEditor", listenForSequenceChanges: true);
             movementSequenceEditor.Buttons.add(new CloseButtonDefinition("Close", "MovementSequenceEditor/Close"));
-            movementSequenceEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top);
+            movementSequenceEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top)
+            {
+                AllowedDockLocations = DockLocation.Top | DockLocation.Bottom | DockLocation.Floating
+            };
             mvcContext.Views.add(movementSequenceEditor);
 
             SlideTaskbarView taskbar = new SlideTaskbarView("TimelineInfoBar", name);

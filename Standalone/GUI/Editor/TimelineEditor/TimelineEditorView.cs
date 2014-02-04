@@ -13,7 +13,10 @@ namespace Medical.GUI
         public TimelineEditorView(String name, Timeline timeline, TimelineController timelineController, EditorController editorController, PropEditController propEditController)
             :base(name)
         {
-            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
+            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom)
+            {
+                AllowedDockLocations = DockLocation.Top | DockLocation.Bottom | DockLocation.Floating
+            };
             this.Timeline = timeline;
             this.TimelineController = timelineController;
             this.EditorController = editorController;

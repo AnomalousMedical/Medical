@@ -14,7 +14,10 @@ namespace Medical.GUI
         public MovementSequenceEditorView(String name, MovementSequence sequence = null, bool listenForSequenceChanges = false)
             : base(name)
         {
-            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
+            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom)
+            {
+                AllowedDockLocations = DockLocation.Top | DockLocation.Bottom | DockLocation.Floating
+            };
             Sequence = sequence;
             ListenForSequenceChanges = listenForSequenceChanges;
         }

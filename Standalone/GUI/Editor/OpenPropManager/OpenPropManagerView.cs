@@ -14,7 +14,10 @@ namespace Medical.GUI
         public OpenPropManagerView(String name, PropEditController propEditController)
             : base(name)
         {
-            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Floating);
+            ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Floating)
+            {
+                AllowedDockLocations = DockLocation.Left | DockLocation.Right | DockLocation.Floating
+            };
             this.PropEditController = propEditController;
         }
 
