@@ -3,7 +3,7 @@
     <Widget type="Widget" skin="PanelEmpty" position="72 170 352 374" layer="Back">
         <Widget type="ScrollView" skin="ScrollView" position="0 0 352 374" align="Stretch" name="PresetPanel/ScrollView">
             <Property key="CanvasAlign" value="Left Top"/>
-            <Property key="CanvasSize" value="344 100"/>
+            <Property key="CanvasSize" value="320 100"/>
         </Widget>
     </Widget>
 </MyGUI>
