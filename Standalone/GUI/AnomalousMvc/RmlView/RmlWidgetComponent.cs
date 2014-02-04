@@ -308,6 +308,7 @@ namespace Medical.GUI.AnomalousMvc
                     {
                         document.MakeDirtyForScaleChange();
                     }
+                    rocketWidget.renderOnNextFrame();
                 }
             }
         }

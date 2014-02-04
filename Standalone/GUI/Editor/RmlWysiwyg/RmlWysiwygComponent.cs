@@ -198,6 +198,7 @@ namespace Medical.GUI
                 {
                     document.MakeDirtyForScaleChange();
                 }
+                rocketWidget.renderOnNextFrame();
             }
         }
 
