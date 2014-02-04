@@ -304,22 +304,9 @@ namespace Medical.GUI.AnomalousMvc
                 if (rocketWidget.Context.ZoomLevel != newScale)
                 {
                     rocketWidget.Context.ZoomLevel = newScale;
-
-                    rocketWidget.Context.UnloadAllDocuments();
-
-                    if (documentName != null)
+                    foreach (ElementDocument document in rocketWidget.Context.Documents)
                     {
-                        startRmlUpdate();
-                        using (ElementDocument document = loadDocument())
-                        {
-                            if (document != null)
-                            {
-                                document.Show();
-                                rocketWidget.removeFocus();
-                                rocketWidget.renderOnNextFrame();
-                            }
-                        }
-                        endRmlUpdate();
+                        document.MakeDirtyForScaleChange();
                     }
                 }
             }

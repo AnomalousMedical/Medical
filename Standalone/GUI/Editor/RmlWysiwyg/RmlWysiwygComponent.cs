@@ -194,7 +194,10 @@ namespace Medical.GUI
             if (rocketWidget != null && rocketWidget.Context.ZoomLevel != newScale)
             {
                 rocketWidget.Context.ZoomLevel = newScale;
-                setRml(UnformattedRml, true, false);
+                foreach (ElementDocument document in rocketWidget.Context.Documents)
+                {
+                    document.MakeDirtyForScaleChange();
+                }
             }
         }
 
