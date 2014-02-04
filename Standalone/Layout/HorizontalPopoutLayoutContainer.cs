@@ -98,7 +98,7 @@ namespace Medical
             if (oldChildContainer != null)
             {
                 oldSize = oldChildContainer.DesiredSize;
-                oldChildContainer.animatedResizeStarted(oldSize);
+                oldChildContainer.animatedResizeStarted(new IntSize2(oldSize.Width, WorkingSize.Height));
             }
             else
             {
@@ -110,7 +110,7 @@ namespace Medical
             {
                 childContainer._setParent(this);
                 newSize = childContainer.DesiredSize;
-                childContainer.animatedResizeStarted(newSize);
+                childContainer.animatedResizeStarted(new IntSize2(newSize.Width, WorkingSize.Height));
             }
             else
             {
@@ -188,13 +188,13 @@ namespace Medical
                 oldChildContainer._setParent(null);
                 oldChildContainer.setAlpha(1.0f);
                 oldChildContainer.WorkingSize = oldSize;
-                oldChildContainer.animatedResizeCompleted();
+                oldChildContainer.animatedResizeCompleted(oldSize);
                 oldChildContainer.layout();
             }
             fireAnimationComplete(oldChildContainer);
             if (childContainer != null)
             {
-                childContainer.animatedResizeCompleted();
+                childContainer.animatedResizeCompleted(currentSize);
             }
             unsubscribeFromUpdates();
         }

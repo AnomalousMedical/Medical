@@ -223,6 +223,10 @@ namespace Medical.GUI
                 resized();
                 renderTexture.update();
             }
+            else if (renderOneFrame)
+            {
+                renderTexture.update();
+            }
 
             unsafe
             {

@@ -287,6 +287,7 @@ namespace Lecture
             forceUpdateThumbOnBlur = true;
             template.copyLayoutToSlide(slide, editorController.ResourceProvider, false);
             refreshPanelEditors(true);
+            updateThumbnail();
         }
 
         public SlideSceneInfo getCurrentSceneInfo()
@@ -712,6 +713,7 @@ namespace Lecture
             {
                 editor.Component.ViewHost.Container.invalidate();
             }
+            updateThumbnail();
         }
 
         void panelResizeWidget_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)

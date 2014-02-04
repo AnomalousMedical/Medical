@@ -41,7 +41,7 @@ namespace Medical.GUI.AnomalousMvc
 
         }
 
-        public virtual void animatedResizeCompleted()
+        public virtual void animatedResizeCompleted(IntSize2 finalSize)
         {
 
         }

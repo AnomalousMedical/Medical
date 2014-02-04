@@ -149,10 +149,10 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
-        void layoutContainer_AnimatedResizeCompleted()
+        void layoutContainer_AnimatedResizeCompleted(IntSize2 finalSize)
         {
             Animating = false;
-            component.animatedResizeCompleted();
+            component.animatedResizeCompleted(finalSize);
         }
 
         void layoutContainer_AnimatedResizeStarted(IntSize2 finalSize)

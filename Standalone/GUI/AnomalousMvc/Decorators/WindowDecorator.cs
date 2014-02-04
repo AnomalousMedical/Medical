@@ -134,9 +134,9 @@ namespace Medical.GUI.AnomalousMvc
             child.animatedResizeStarted(finalSize);
         }
 
-        public void animatedResizeCompleted()
+        public void animatedResizeCompleted(IntSize2 finalSize)
         {
-            child.animatedResizeCompleted();
+            child.animatedResizeCompleted(finalSize);
         }
 
         public void addTextButton(ButtonDefinition buttonDefinition, int x, int y, int width, int height)

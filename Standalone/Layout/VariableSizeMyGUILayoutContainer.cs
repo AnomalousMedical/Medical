@@ -13,7 +13,7 @@ namespace Medical
 
         public event Action LayoutChanged;
         public event Action<IntSize2> AnimatedResizeStarted;
-        public event Action AnimatedResizeCompleted;
+        public event Action<IntSize2> AnimatedResizeCompleted;
         Func<IntSize2> desiredSizeCallback;
 
         public VariableSizeMyGUILayoutContainer(Widget widget, Func<IntSize2> desiredSizeCallback)
@@ -71,12 +71,12 @@ namespace Medical
             }
         }
 
-        public override void animatedResizeCompleted()
+        public override void animatedResizeCompleted(IntSize2 finalSize)
         {
-            base.animatedResizeCompleted();
+            base.animatedResizeCompleted(finalSize);
             if (AnimatedResizeCompleted != null)
             {
-                AnimatedResizeCompleted.Invoke();
+                AnimatedResizeCompleted.Invoke(finalSize);
             }
         }
 

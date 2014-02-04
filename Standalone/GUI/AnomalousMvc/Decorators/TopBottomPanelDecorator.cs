@@ -47,16 +47,19 @@ namespace Medical.GUI.AnomalousMvc
         {
             //This class eats this event, it sets up the child to be a fixed size at the final size
             //This prevents it from laying out the child a million times during animation.
-            child.Widget.Align = Align.Top | Align.HStretch;
+            child.Widget.Align = Align.Top | Align.Left;
             child.Widget.setPosition(childPosition.x, childPosition.y);
             child.Widget.setSize(finalSize.Width - childSizeOffset.Width, finalSize.Height - childSizeOffset.Height);
             child.topLevelResized();
         }
 
-        public void animatedResizeCompleted()
+        public void animatedResizeCompleted(IntSize2 finalSize)
         {
             //This class eats this event, it sets up the child to be stretched again.
             child.Widget.Align = Align.HStretch | Align.VStretch;
+            child.Widget.setPosition(childPosition.x, childPosition.y);
+            child.Widget.setSize(finalSize.Width - childSizeOffset.Width, finalSize.Height - childSizeOffset.Height);
+            child.topLevelResized();
         }
 
         public void opening()

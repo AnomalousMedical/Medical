@@ -101,7 +101,7 @@ namespace Lecture.GUI
                         top += TaskButtonHeight + TaskButtonPadding;
                     }
                 }
-                lastWidth = widget.Width;
+                lastWidth = widgetWidth;
             }
         }
     }
