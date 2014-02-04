@@ -35,7 +35,7 @@ namespace Medical.GUI.AnomalousMvc
 
             widgetHeight = widget.Height;
 
-            int buttonWidth = widget.Width / buttonDefinitions.Count;
+            int buttonWidth = (widget.Width - BUTTON_PADDING) / buttonDefinitions.Count;
             currentX = BUTTON_PADDING;
 
             if (buttonFactory == null)
@@ -60,7 +60,7 @@ namespace Medical.GUI.AnomalousMvc
             int variableButtonCount = variableSizeButtons.Count;
             if (variableButtonCount > 0)
             {
-                int buttonWidth = (widget.Width - fixedSizeArea) / variableSizeButtons.Count;
+                int buttonWidth = (widget.Width - BUTTON_PADDING - fixedSizeArea) / variableButtonCount;
                 foreach (Button button in variableSizeButtons)
                 {
                     button.setSize(buttonWidth - BUTTON_PADDING, button.Height);
