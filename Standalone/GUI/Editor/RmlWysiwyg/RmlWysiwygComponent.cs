@@ -359,13 +359,17 @@ namespace Medical.GUI
 
                     lastInsertBefore = insertBefore;
 
-                    rmlModified();
+                    rocketWidget.Context.Update();
+                    selectedElementManager.updateHighlightPosition();
+                    rocketWidget.renderOnNextFrame();
                 }
                 return true;
             }
             else
             {
-                clearPreviewElement();
+                selectedElementManager.clearSelectedAndHighlightedElement();
+                previewElement.hidePreviewElement();
+                rocketWidget.renderOnNextFrame();
                 return false;
             }
         }

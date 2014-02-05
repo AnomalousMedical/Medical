@@ -604,6 +604,7 @@ namespace Lecture
                         String rml = rmlEditor.CurrentRml;
                         editor.CachedResource.CachedString = rml;
                         editorController.ResourceProvider.ResourceCache.add(editor.CachedResource);
+                        updateThumbnail();
                     };
                     component.ElementDraggedOffDocument += RmlWysiwyg_ElementDraggedOffDocument;
                     component.ElementDroppedOffDocument += RmlWysiwyg_ElementDroppedOffDocument;
