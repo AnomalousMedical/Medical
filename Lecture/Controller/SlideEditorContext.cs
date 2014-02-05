@@ -688,6 +688,7 @@ namespace Lecture
                     if (editor.Component.contains(position))
                     {
                         editor.Component.insertRml(innerRmlHint);
+                        setCurrentRmlEditor(editor.View.Name);
                     }
                     else
                     {
