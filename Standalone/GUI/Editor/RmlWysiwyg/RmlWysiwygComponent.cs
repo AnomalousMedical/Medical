@@ -768,7 +768,7 @@ namespace Medical.GUI
                         }
 
                         parent.RemoveChild(deleteElement);
-                        rmlModified();
+                        rmlModified(false);
                         updateUndoStatus(editor.UndoRml);
                         editor.UndoRml = UnformattedRml;
 
@@ -820,15 +820,18 @@ namespace Medical.GUI
             }
         }
 
-        private void rmlModified()
+        private void rmlModified(bool updateHighlights = true)
         {
             changesMade = true;
             if (RmlEdited != null)
             {
                 RmlEdited.Invoke(this);
             }
-            rocketWidget.Context.Update();
-            selectedElementManager.updateHighlightPosition();
+            if (updateHighlights)
+            {
+                rocketWidget.Context.Update();
+                selectedElementManager.updateHighlightPosition();
+            }
             rocketWidget.renderOnNextFrame();
         }
 
