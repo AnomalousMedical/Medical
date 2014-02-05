@@ -785,6 +785,10 @@ namespace Medical.GUI
                         left = widget.Width / 2 + widget.AbsoluteLeft - editor.Width / 2;
                         top = rocketWidget.AbsoluteTop - editor.Height;
                         break;
+                    case ViewLocations.Left:
+                        left = widget.AbsoluteLeft + widget.Width;
+                        top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
+                        break;
                     default:
                         left = (int)(widget.AbsoluteLeft + element.AbsoluteLeft + element.ClientWidth);
                         top = (int)element.AbsoluteTop + rocketWidget.AbsoluteTop;
