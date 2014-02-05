@@ -91,15 +91,23 @@ namespace Medical
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
-                    rmlComponent.setPreviewElement(position, item.Markup, item.PreviewTagType);
+                    rmlComponent.setPreviewElement(position, item.PreviewMarkup, item.PreviewTagType);
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
-                    rmlComponent.insertRml(item.Markup, position);
+                    if (rmlComponent.contains(position))
+                    {
+                        rmlComponent.insertRml(item.createDocumentMarkup());
+                    }
+                    else
+                    {
+                        rmlComponent.cancelAndHideEditor();
+                        rmlComponent.clearPreviewElement();
+                    }
                 };
             htmlDragDrop.ItemActivated += (item) =>
                 {
-                    rmlComponent.insertRml(item.Markup);
+                    rmlComponent.insertRml(item.createDocumentMarkup());
                 };
             htmlDragDrop.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             mvcContext.Views.add(htmlDragDrop);

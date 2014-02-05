@@ -103,28 +103,44 @@ namespace Lecture
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" style=\"width:200px;\"></img>", RmlWysiwygComponent.DefaultImage)),
-                new WysiwygCallbackDragDropItem(() => String.Format("<a class=\"TriggerLink\" onclick=\"{0}\">Add trigger text here.</a>", Guid.NewGuid().ToString()), "Trigger", "Lecture.Icon.TriggerIcon")
+                new WysiwygCallbackDragDropItem("Trigger", "Lecture.Icon.TriggerIcon", "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>",
+                    () => //Markup Callback
+                    {
+                        String actionName = Guid.NewGuid().ToString();
+                        SetupSceneAction action = new SetupSceneAction(actionName);
+                        action.captureSceneState(uiCallback);
+                        slide.addAction(action);
+                        return String.Format("<a class=\"TriggerLink\" onclick=\"{0}\">Add trigger text here.</a>", actionName);
+                    })
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
                     foreach (var editor in rmlEditors.Values)
                     {
-                        editor.Component.setPreviewElement(position, item.Markup, item.PreviewTagType);
+                        editor.Component.setPreviewElement(position, item.PreviewMarkup, item.PreviewTagType);
                     }
                 };
             htmlDragDrop.DragEnded += (item, position) =>
                 {
+                    bool allowAdd = true;
                     foreach (var editor in rmlEditors.Values)
                     {
-                        if (editor.Component.insertRml(item.Markup, position))
+                        if (allowAdd && editor.Component.contains(position))
                         {
+                            editor.Component.insertRml(item.createDocumentMarkup());
                             currentRmlEditor = editor.View.Name;
+                            allowAdd = false;
+                        }
+                        else
+                        {
+                            editor.Component.cancelAndHideEditor();
+                            editor.Component.clearPreviewElement();
                         }
                     }
                 };
             htmlDragDrop.ItemActivated += (item) =>
                 {
-                    rmlEditors[currentRmlEditor].Component.insertRml(item.Markup);
+                    rmlEditors[currentRmlEditor].Component.insertRml(item.createDocumentMarkup());
                 };
 
             taskbar = new SlideTaskbarView("InfoBar", slideName);
@@ -668,7 +684,15 @@ namespace Lecture
             {
                 if (editor.Component != sender)
                 {
-                    editor.Component.insertRml(innerRmlHint, position);
+                    if (editor.Component.contains(position))
+                    {
+                        editor.Component.insertRml(innerRmlHint);
+                    }
+                    else
+                    {
+                        editor.Component.cancelAndHideEditor();
+                        editor.Component.clearPreviewElement();
+                    }
                 }
             }
         }

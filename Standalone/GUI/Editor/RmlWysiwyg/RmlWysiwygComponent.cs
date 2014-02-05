@@ -231,37 +231,6 @@ namespace Medical.GUI
             }
         }
 
-        /// <summary>
-        /// Insert rml into this component, Will return true if position is inside of this component, changes may or may not be made 
-        /// if edit mode is turned off.
-        /// </summary>
-        /// <param name="rml">The rml to add</param>
-        /// <param name="position">The position on the screen that the rml goes into.</param>
-        /// <returns>True if the position is inside the widget. False otherwise</returns>
-        public bool insertRml(String rml, IntVector2 position)
-        {
-            if (!widget.contains(position.x, position.y))
-            {
-                selectedElementManager.clearSelectedAndHighlightedElement();
-                previewElement.hidePreviewElement();
-                rmlModified();
-                return false;
-            }
-            else if(allowEdit)
-            {
-                previewElement.hidePreviewElement();
-                String undoRml = UnformattedRml;
-                insertRmlIntoDocument(rml);
-                updateUndoStatus(undoRml);
-
-                //Clear selection for drag and drop
-                selectedElementManager.ElementStrategy = null;
-                selectedElementManager.SelectedElement = null;
-                selectedElementManager.HighlightElement = null;
-            }
-            return true;
-        }
-
         public void insertRml(String rml)
         {
             if (allowEdit)
@@ -271,6 +240,7 @@ namespace Medical.GUI
                 String undoRml = UnformattedRml;
                 insertRmlIntoDocument(rml);
                 updateUndoStatus(undoRml);
+                selectedElementManager.clearSelectedAndHighlightedElement();
             }
         }
 
