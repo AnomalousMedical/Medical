@@ -745,9 +745,12 @@ namespace Lecture
 
         void slideLayoutPicker_ChangeSlideLayout(TemplateSlide newSlideLayout)
         {
-            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<TemplateSlide, TemplateSlide>(
-                editorController.applySlideLayout, newSlideLayout,
-                editorController.applySlideLayout, slide.createTemplateSlide(editorController.ResourceProvider)));
+            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<TemplateSlide, TemplateSlide>(newSlideLayout, slide.createTemplateSlide(editorController.ResourceProvider),
+                new TwoWayDelegateCommand<TemplateSlide, TemplateSlide>.Funcs()
+                {
+                    ExecuteFunc = editorController.applySlideLayout,
+                    UndoFunc = editorController.applySlideLayout, 
+                }));
         }
 
         private void makeTempPresets()

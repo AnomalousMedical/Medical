@@ -108,35 +108,35 @@ namespace Lecture
             {
                 if (lastEditSlide != null && allowUndoCreation)
                 {
-                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<Slide, Slide>(
-                        (redoItem) =>
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<Slide, Slide>(slide, lastEditSlide, new TwoWayDelegateCommand<Slide, Slide>.Funcs()
                         {
-                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                            ThreadManager.invoke(new Action(delegate()
+                            ExecuteFunc = (redoItem) =>
                             {
-                                allowUndoCreation = false;
-                                if (SlideSelected != null)
+                                //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                                ThreadManager.invoke(new Action(delegate()
                                 {
-                                    SlideSelected.Invoke(redoItem, IEnumerableUtil<Slide>.EmptyIterator);
-                                }
-                                allowUndoCreation = true;
-                            }));
-                        },
-                        slide,
-                        (undoItem) =>
-                        {
-                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                            ThreadManager.invoke(new Action(delegate()
+                                    allowUndoCreation = false;
+                                    if (SlideSelected != null)
+                                    {
+                                        SlideSelected.Invoke(redoItem, IEnumerableUtil<Slide>.EmptyIterator);
+                                    }
+                                    allowUndoCreation = true;
+                                }));
+                            },
+                            UndoFunc = (undoItem) =>
                             {
-                                allowUndoCreation = false;
-                                if (SlideSelected != null)
+                                //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                                ThreadManager.invoke(new Action(delegate()
                                 {
-                                    SlideSelected.Invoke(undoItem, IEnumerableUtil<Slide>.EmptyIterator);
-                                }
-                                allowUndoCreation = true;
-                            }));
-                        },
-                        lastEditSlide)
+                                    allowUndoCreation = false;
+                                    if (SlideSelected != null)
+                                    {
+                                        SlideSelected.Invoke(undoItem, IEnumerableUtil<Slide>.EmptyIterator);
+                                    }
+                                    allowUndoCreation = true;
+                                }));
+                            },
+                        })
                     );
                 }
                 lastEditSlide = slide;
@@ -190,7 +190,11 @@ namespace Lecture
                     slideEditorContext.resizePanel(panelName, size);
                 };
 
-            undoBuffer.pushAndSkip(new TwoWayDelegateCommand<int, int>(changeSize, newSize, changeSize, oldSize));
+            undoBuffer.pushAndSkip(new TwoWayDelegateCommand<int, int>(newSize, oldSize, new TwoWayDelegateCommand<int, int>.Funcs()
+                {
+                    ExecuteFunc = changeSize,
+                    UndoFunc = changeSize
+                }));
         }
 
         public void editTimeline(Slide slide, String fileName, String text)
@@ -247,7 +251,7 @@ namespace Lecture
         class RemoveSlideInfo : SlideInfo
         {
             public RemoveSlideInfo(Slide slide, int index, Slide changeToSlide)
-                :base(slide, index)
+                : base(slide, index)
             {
                 this.ChangeToSlide = changeToSlide;
             }
@@ -297,44 +301,47 @@ namespace Lecture
                 if (allowUndoCreation)
                 {
                     undoBuffer.pushAndSkip(new TwoWayDelegateCommand(
-                        () => //Execute
+                        new TwoWayDelegateCommand.Funcs()
                         {
-                            ThreadManager.invoke(new Action(() =>
+                            ExecuteFunc = () => //Execute
                             {
-                                allowUndoCreation = false;
-                                doRemoveSlides(removedSlides);
-                                if (changeToSlide != null && SlideSelected != null)
+                                ThreadManager.invoke(new Action(() =>
                                 {
-                                    SlideSelected.Invoke(changeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
-                                }
-                                allowUndoCreation = true;
-                            }));
-                        },
-                        () => //Undo
-                        {
-                            ThreadManager.invoke(new Action(() =>
-                            {
-                                allowUndoCreation = false;
-                                foreach (SlideInfo slide in removedSlides)
-                                {
-                                    slideshow.insertSlide(slide.Index, slide.Slide);
-                                    if (SlideAdded != null)
+                                    allowUndoCreation = false;
+                                    doRemoveSlides(removedSlides);
+                                    if (changeToSlide != null && SlideSelected != null)
                                     {
-                                        SlideAdded.Invoke(slide.Slide, slide.Index);
+                                        SlideSelected.Invoke(changeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
                                     }
-                                }
-                                if (SlideSelected != null)
-                                {
-                                    SlideSelected.Invoke(primarySelection, secondarySlideSelections(removedSlides, primarySelection));
-                                }
-                                allowUndoCreation = true;
-                            }));
-                        },
-                        poppedFrontFunc: () =>
-                        {
-                            foreach (SlideInfo slideInfo in removedSlides)
+                                    allowUndoCreation = true;
+                                }));
+                            },
+                            UndoFunc = () => //Undo
                             {
-                                cleanupThumbnail(slideInfo);
+                                ThreadManager.invoke(new Action(() =>
+                                {
+                                    allowUndoCreation = false;
+                                    foreach (SlideInfo slide in removedSlides)
+                                    {
+                                        slideshow.insertSlide(slide.Index, slide.Slide);
+                                        if (SlideAdded != null)
+                                        {
+                                            SlideAdded.Invoke(slide.Slide, slide.Index);
+                                        }
+                                    }
+                                    if (SlideSelected != null)
+                                    {
+                                        SlideSelected.Invoke(primarySelection, secondarySlideSelections(removedSlides, primarySelection));
+                                    }
+                                    allowUndoCreation = true;
+                                }));
+                            },
+                            PoppedFrontFunc = () =>
+                            {
+                                foreach (SlideInfo slideInfo in removedSlides)
+                                {
+                                    cleanupThumbnail(slideInfo);
+                                }
                             }
                         }));
                 }
@@ -395,54 +402,58 @@ namespace Lecture
                 {
                     if (changeToSlide == null)
                     {
-                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>(
-                        (executeSlide) =>
-                        {
-                            allowUndoCreation = false;
-                            removeSlide(executeSlide.Slide);
-                            allowUndoCreation = true;
-                        },
-                        (undoSlide) =>
-                        {
-                            allowUndoCreation = false;
-                            addSlide(undoSlide.Slide, undoSlide.Index);
-                            allowUndoCreation = true;
-                        },
-                        new SlideInfo(slide, slideIndex)));
+                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>(new SlideInfo(slide, slideIndex),
+                            new TwoWayDelegateCommand<SlideInfo>.Funcs()
+                            {
+                                ExecuteFunc = (executeSlide) =>
+                                {
+                                    allowUndoCreation = false;
+                                    removeSlide(executeSlide.Slide);
+                                    allowUndoCreation = true;
+                                },
+                                UndoFunc = (undoSlide) =>
+                                {
+                                    allowUndoCreation = false;
+                                    addSlide(undoSlide.Slide, undoSlide.Index);
+                                    allowUndoCreation = true;
+                                },
+                            }
+                        ));
                     }
                     else
                     {
-                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<RemoveSlideInfo>((executeSlide) =>
-                        {
-                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                            ThreadManager.invoke(new Action(delegate()
-                            {
-                                allowUndoCreation = false;
-                                removeSlide(executeSlide.Slide);
-                                if (SlideSelected != null)
+                        undoBuffer.pushAndSkip(new TwoWayDelegateCommand<RemoveSlideInfo>(new RemoveSlideInfo(slide, slideIndex, changeToSlide),
+                            new TwoWayDelegateCommand<RemoveSlideInfo>.Funcs(){
+                                ExecuteFunc = (executeSlide) =>
                                 {
-                                    SlideSelected.Invoke(executeSlide.ChangeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
-                                }
-                                allowUndoCreation = true;
-                            }));
-                        },
-                        (undoSlide) =>
-                        {
-                            //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                            ThreadManager.invoke(new Action(delegate()
-                            {
-                                allowUndoCreation = false;
-                                addSlide(undoSlide.Slide, undoSlide.Index);
-                                if (SlideSelected != null)
+                                    //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                                    ThreadManager.invoke(new Action(delegate()
+                                    {
+                                        allowUndoCreation = false;
+                                        removeSlide(executeSlide.Slide);
+                                        if (SlideSelected != null)
+                                        {
+                                            SlideSelected.Invoke(executeSlide.ChangeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
+                                        }
+                                        allowUndoCreation = true;
+                                    }));
+                                },
+                                UndoFunc = (undoSlide) =>
                                 {
-                                    SlideSelected.Invoke(undoSlide.Slide, IEnumerableUtil<Slide>.EmptyIterator);
-                                }
-                                allowUndoCreation = true;
+                                    //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                                    ThreadManager.invoke(new Action(delegate()
+                                    {
+                                        allowUndoCreation = false;
+                                        addSlide(undoSlide.Slide, undoSlide.Index);
+                                        if (SlideSelected != null)
+                                        {
+                                            SlideSelected.Invoke(undoSlide.Slide, IEnumerableUtil<Slide>.EmptyIterator);
+                                        }
+                                        allowUndoCreation = true;
+                                    }));
+                                },
+                                PoppedFrontFunc = cleanupThumbnail
                             }));
-                        },
-                        new RemoveSlideInfo(slide, slideIndex, changeToSlide),
-                        poppedFrontFunc: cleanupThumbnail
-                        ));
                     }
                 }
             }
@@ -482,56 +493,60 @@ namespace Lecture
             {
                 if (lastEditSlide == null)
                 {
-                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>((executeSlide) =>
-                    {
-                        allowUndoCreation = false;
-                        addSlide(executeSlide.Slide, executeSlide.Index);
-                        allowUndoCreation = true;
-                    },
-                    (undoSlide) =>
-                    {
-                        allowUndoCreation = false;
-                        removeSlide(undoSlide.Slide);
-                        allowUndoCreation = true;
-                    },
-                    new SlideInfo(slide, slideshow.indexOf(slide)),
-                    trimmedFunc: cleanupThumbnail
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideInfo>(new SlideInfo(slide, slideshow.indexOf(slide)),
+                        new TwoWayDelegateCommand<SlideInfo>.Funcs()
+                        {
+                            ExecuteFunc = (executeSlide) =>
+                            {
+                                allowUndoCreation = false;
+                                addSlide(executeSlide.Slide, executeSlide.Index);
+                                allowUndoCreation = true;
+                            },
+                            UndoFunc = (undoSlide) =>
+                            {
+                                allowUndoCreation = false;
+                                removeSlide(undoSlide.Slide);
+                                allowUndoCreation = true;
+                            },
+                            TrimmedFunc = cleanupThumbnail,
+                        }
                     ));
                 }
                 else
                 {
-                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<RemoveSlideInfo>(
-                    (executeSlide) =>
-                    {
-                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                        ThreadManager.invoke(new Action(delegate()
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<RemoveSlideInfo>(new RemoveSlideInfo(slide, index, lastEditSlide),
+                        new TwoWayDelegateCommand<RemoveSlideInfo>.Funcs()
                         {
-                            allowUndoCreation = false;
-                            addSlide(executeSlide.Slide, executeSlide.Index);
-                            if (SlideSelected != null)
+                            ExecuteFunc = (executeSlide) =>
                             {
-                                SlideSelected.Invoke(executeSlide.Slide, IEnumerableUtil<Slide>.EmptyIterator);
-                            }
-                            allowUndoCreation = true;
-                        }));
-                    },
-                    (undoSlide) =>
-                    {
-                        //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
-                        ThreadManager.invoke(new Action(delegate()
-                        {
-                            allowUndoCreation = false;
-                            if (SlideSelected != null)
+                                //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                                ThreadManager.invoke(new Action(delegate()
+                                {
+                                    allowUndoCreation = false;
+                                    addSlide(executeSlide.Slide, executeSlide.Index);
+                                    if (SlideSelected != null)
+                                    {
+                                        SlideSelected.Invoke(executeSlide.Slide, IEnumerableUtil<Slide>.EmptyIterator);
+                                    }
+                                    allowUndoCreation = true;
+                                }));
+                            },
+                            UndoFunc = (undoSlide) =>
                             {
-                                SlideSelected.Invoke(undoSlide.ChangeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
-                            }
-                            removeSlide(undoSlide.Slide);
-                            allowUndoCreation = true;
+                                //Hacky, but we cannot modify the active slide without messing up the classes that triggered this.
+                                ThreadManager.invoke(new Action(delegate()
+                                {
+                                    allowUndoCreation = false;
+                                    if (SlideSelected != null)
+                                    {
+                                        SlideSelected.Invoke(undoSlide.ChangeToSlide, IEnumerableUtil<Slide>.EmptyIterator);
+                                    }
+                                    removeSlide(undoSlide.Slide);
+                                    allowUndoCreation = true;
+                                }));
+                            },
+                            TrimmedFunc = cleanupThumbnail
                         }));
-                    },
-                    new RemoveSlideInfo(slide, index, lastEditSlide),
-                    trimmedFunc: cleanupThumbnail
-                    ));
                 }
             }
 
@@ -557,40 +572,43 @@ namespace Lecture
             if (allowUndoCreation)
             {
                 undoBuffer.pushAndSkip(new TwoWayDelegateCommand(
-                    () => //Execute
+                    new TwoWayDelegateCommand.Funcs()
                     {
-                        allowUndoCreation = false;
-                        doMoveSlides(index, sortedSlides);
-                        allowUndoCreation = true;
-                    },
-                    () => //Undo
-                    {
-                        allowUndoCreation = false;
-                        foreach (SlideInfo info in sortedSlides)
+                        ExecuteFunc = () => //Execute
                         {
-                            int formerIndex = slideshow.indexOf(info.Slide);
-                            slideshow.removeAt(formerIndex);
-                            if (SlideRemoved != null)
+                            allowUndoCreation = false;
+                            doMoveSlides(index, sortedSlides);
+                            allowUndoCreation = true;
+                        },
+                        UndoFunc = () => //Undo
+                        {
+                            allowUndoCreation = false;
+                            foreach (SlideInfo info in sortedSlides)
                             {
-                                SlideRemoved.Invoke(info.Slide);
+                                int formerIndex = slideshow.indexOf(info.Slide);
+                                slideshow.removeAt(formerIndex);
+                                if (SlideRemoved != null)
+                                {
+                                    SlideRemoved.Invoke(info.Slide);
+                                }
                             }
-                        }
-                        //Can't think of how to do this without two loops, have to compensate for other things
-                        //that need to be undone or else this won't put things back, two loops makes sure
-                        //all items are removed and we can just insert back to original indices.
-                        foreach (SlideInfo info in sortedSlides)
-                        {
-                            slideshow.insertSlide(info.Index, info.Slide);
-                            if (SlideAdded != null)
+                            //Can't think of how to do this without two loops, have to compensate for other things
+                            //that need to be undone or else this won't put things back, two loops makes sure
+                            //all items are removed and we can just insert back to original indices.
+                            foreach (SlideInfo info in sortedSlides)
                             {
-                                SlideAdded.Invoke(info.Slide, info.Index);
+                                slideshow.insertSlide(info.Index, info.Slide);
+                                if (SlideAdded != null)
+                                {
+                                    SlideAdded.Invoke(info.Slide, info.Index);
+                                }
                             }
+                            if (SlideSelected != null)
+                            {
+                                SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides, lastEditSlide));
+                            }
+                            allowUndoCreation = true;
                         }
-                        if (SlideSelected != null)
-                        {
-                            SlideSelected.Invoke(lastEditSlide, secondarySlideSelections(sortedSlides, lastEditSlide));
-                        }
-                        allowUndoCreation = true;
                     }));
             }
         }
@@ -646,7 +664,7 @@ namespace Lecture
             //Cleanup slide trash
             CleanupInfo cleanupInfo = new CleanupInfo();
             slideshow.cleanup(cleanupInfo, ResourceProvider);
-            
+
             undoBuffer.clear(); //Can't really recover from this one, so just erase all undo
             List<Guid> cleanupSlides = new List<Guid>(projectGuidDirectories());
             foreach (Slide slide in slideshow.Slides)
@@ -879,8 +897,13 @@ namespace Lecture
                 SlideSceneInfo undoInfoStack = slideEditorContext.getCurrentSceneInfo();
                 slideEditorContext.capture();
                 SlideSceneInfo redoInfoStack = slideEditorContext.getCurrentSceneInfo();
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideSceneInfo, SlideSceneInfo>(applySceneInfo, redoInfoStack, applySceneInfo, undoInfoStack,
-                    poppedFrontFunc: IDisposableUtil.DisposeIfNotNull, clearedFunc: IDisposableUtil.DisposeIfNotNull, trimmedFunc: IDisposableUtil.DisposeIfNotNull));
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideSceneInfo, SlideSceneInfo>(redoInfoStack, undoInfoStack,
+                    new TwoWayDelegateCommand<SlideSceneInfo, SlideSceneInfo>.Funcs()
+                    {
+                        ExecuteFunc = applySceneInfo,
+                        UndoFunc = applySceneInfo,
+                        RemovedFunc = IDisposableUtil.DisposeIfNotNull
+                    }));
             }
         }
 

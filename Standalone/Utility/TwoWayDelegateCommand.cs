@@ -9,54 +9,63 @@ namespace Medical
     {
         private ExecuteObject executeObject;
         private UndoObject undoObject;
-        private Action<ExecuteObject> executeFunc;
-        private Action<UndoObject> undoFunc;
-        private Action<ExecuteObject, UndoObject> poppedFrontFunc;
-        private Action<ExecuteObject, UndoObject> clearedFunc;
-        private Action<ExecuteObject, UndoObject> trimmedFunc;
-
-        public TwoWayDelegateCommand(Action<ExecuteObject> executeFunc, ExecuteObject executeObject, Action<UndoObject> undoFunc, UndoObject undoObject, Action<ExecuteObject, UndoObject> poppedFrontFunc = null, Action<ExecuteObject, UndoObject> trimmedFunc = null, Action<ExecuteObject, UndoObject> clearedFunc = null)
+        private Funcs funcs;
+        public class Funcs
         {
-            this.executeFunc = executeFunc;
+            public Action<ExecuteObject> ExecuteFunc { get; set; }
+            public Action<UndoObject> UndoFunc { get; set; }
+            public Action<ExecuteObject, UndoObject> PoppedFrontFunc { get; set; }
+            public Action<ExecuteObject, UndoObject> ClearedFunc { get; set; }
+            public Action<ExecuteObject, UndoObject> TrimmedFunc { get; set; }
+            public Action<ExecuteObject, UndoObject> RemovedFunc { get; set; }
+        }
+
+        public TwoWayDelegateCommand(ExecuteObject executeObject, UndoObject undoObject, Funcs funcs)
+        {
             this.executeObject = executeObject;
-            this.undoFunc = undoFunc;
             this.undoObject = undoObject;
-            this.poppedFrontFunc = poppedFrontFunc;
-            this.trimmedFunc = trimmedFunc;
-            this.clearedFunc = clearedFunc;
+            this.funcs = funcs;
         }
 
         public void execute()
         {
-            executeFunc(executeObject);
+            funcs.ExecuteFunc(executeObject);
         }
 
         public void undo()
         {
-            undoFunc(undoObject);
+            funcs.UndoFunc(undoObject);
         }
 
         public void poppedFront()
         {
-            if (poppedFrontFunc != null)
+            if (funcs.PoppedFrontFunc != null)
             {
-                poppedFrontFunc.Invoke(executeObject, undoObject);
+                funcs.PoppedFrontFunc.Invoke(executeObject, undoObject);
             }
         }
 
         public void cleared()
         {
-            if (clearedFunc != null)
+            if (funcs.ClearedFunc != null)
             {
-                clearedFunc.Invoke(executeObject, undoObject);
+                funcs.ClearedFunc.Invoke(executeObject, undoObject);
             }
         }
 
         public void trimmed()
         {
-            if (trimmedFunc != null)
+            if (funcs.TrimmedFunc != null)
             {
-                trimmedFunc.Invoke(executeObject, undoObject);
+                funcs.TrimmedFunc.Invoke(executeObject, undoObject);
+            }
+        }
+
+        public void removed()
+        {
+            if (funcs.RemovedFunc != null)
+            {
+                funcs.RemovedFunc.Invoke(executeObject, undoObject);
             }
         }
     }
@@ -64,105 +73,123 @@ namespace Medical
     public class TwoWayDelegateCommand<T> : TwoWayCommand
     {
         private T arg;
-        private Action<T> executeFunc;
-        private Action<T> undoFunc;
-        private Action<T> poppedFrontFunc;
-        private Action<T> clearedFunc;
-        private Action<T> trimmedFunc;
-
-        public TwoWayDelegateCommand(Action<T> executeFunc, Action<T> undoFunc, T arg, Action<T> poppedFrontFunc = null, Action<T> trimmedFunc = null, Action<T> clearedFunc = null)
+        private Funcs funcs;
+        public class Funcs
         {
-            this.executeFunc = executeFunc;
-            this.undoFunc = undoFunc;
+            public Action<T> ExecuteFunc { get; set; }
+            public Action<T> UndoFunc { get; set; }
+            public Action<T> PoppedFrontFunc { get; set; }
+            public Action<T> ClearedFunc { get; set; }
+            public Action<T> TrimmedFunc { get; set; }
+            public Action<T> RemovedFunc { get; set; }
+        }
+
+        public TwoWayDelegateCommand(T arg, Funcs funcs)
+        {
             this.arg = arg;
-            this.poppedFrontFunc = poppedFrontFunc;
-            this.trimmedFunc = trimmedFunc;
-            this.clearedFunc = clearedFunc;
+            this.funcs = funcs;
         }
 
         public void execute()
         {
-            executeFunc(arg);
+            funcs.ExecuteFunc(arg);
         }
 
         public void undo()
         {
-            undoFunc(arg);
+            funcs.UndoFunc(arg);
         }
 
         public void poppedFront()
         {
-            if (poppedFrontFunc != null)
+            if (funcs.PoppedFrontFunc != null)
             {
-                poppedFrontFunc.Invoke(arg);
+                funcs.PoppedFrontFunc.Invoke(arg);
             }
         }
 
         public void cleared()
         {
-            if (clearedFunc != null)
+            if (funcs.ClearedFunc != null)
             {
-                clearedFunc.Invoke(arg);
+                funcs.ClearedFunc.Invoke(arg);
             }
         }
 
         public void trimmed()
         {
-            if (trimmedFunc != null)
+            if (funcs.TrimmedFunc != null)
             {
-                trimmedFunc.Invoke(arg);
+                funcs.TrimmedFunc.Invoke(arg);
+            }
+        }
+
+        public void removed()
+        {
+            if (funcs.RemovedFunc != null)
+            {
+                funcs.RemovedFunc.Invoke(arg);
             }
         }
     }
 
     public class TwoWayDelegateCommand : TwoWayCommand
     {
-        private Action executeFunc;
-        private Action undoFunc;
-        private Action poppedFrontFunc;
-        private Action clearedFunc;
-        private Action trimmedFunc;
-
-        public TwoWayDelegateCommand(Action executeFunc, Action undoFunc, Action poppedFrontFunc = null, Action trimmedFunc = null, Action clearedFunc = null)
+        private Funcs funcs;
+        public class Funcs
         {
-            this.executeFunc = executeFunc;
-            this.undoFunc = undoFunc;
-            this.poppedFrontFunc = poppedFrontFunc;
-            this.trimmedFunc = trimmedFunc;
-            this.clearedFunc = clearedFunc;
+            public Action ExecuteFunc { get; set; }
+            public Action UndoFunc { get; set; }
+            public Action PoppedFrontFunc { get; set; }
+            public Action ClearedFunc { get; set; }
+            public Action TrimmedFunc { get; set; }
+            public Action RemovedFunc { get; set; }
+        }
+
+        public TwoWayDelegateCommand(Funcs funcs)
+        {
+            this.funcs = funcs;
         }
 
         public void execute()
         {
-            executeFunc();
+            funcs.ExecuteFunc();
         }
 
         public void undo()
         {
-            undoFunc();
+            funcs.UndoFunc();
         }
 
         public void poppedFront()
         {
-            if (poppedFrontFunc != null)
+            if (funcs.PoppedFrontFunc != null)
             {
-                poppedFrontFunc.Invoke();
+                funcs.PoppedFrontFunc.Invoke();
             }
         }
 
         public void cleared()
         {
-            if (clearedFunc != null)
+            if (funcs.ClearedFunc != null)
             {
-                clearedFunc.Invoke();
+                funcs.ClearedFunc.Invoke();
             }
         }
 
         public void trimmed()
         {
-            if (trimmedFunc != null)
+            if (funcs.TrimmedFunc != null)
             {
-                trimmedFunc.Invoke();
+                funcs.TrimmedFunc.Invoke();
+            }
+        }
+
+        public void removed()
+        {
+            if (funcs.RemovedFunc != null)
+            {
+                funcs.RemovedFunc.Invoke();
             }
         }
     }

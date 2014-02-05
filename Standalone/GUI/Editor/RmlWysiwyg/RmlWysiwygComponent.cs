@@ -847,7 +847,11 @@ namespace Medical.GUI
             String currentMarkup = UnformattedRml;
             if (!check || currentMarkup != oldMarkup)
             {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(undoRedoCallback, currentMarkup, undoRedoCallback, oldMarkup));
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(currentMarkup, oldMarkup, new TwoWayDelegateCommand<string, string>.Funcs()
+                {
+                    ExecuteFunc = undoRedoCallback,
+                    UndoFunc = undoRedoCallback
+                }));
             }
         }
 

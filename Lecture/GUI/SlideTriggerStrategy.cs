@@ -129,17 +129,18 @@ namespace Lecture.GUI
                 element.RemoveAttribute("class");
             }
 
-            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<SlideAction, SlideAction>(
-                (exec) =>
+            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<SlideAction, SlideAction>(CopySaver.Default.copy(currentAction), slide.getAction(currentAction.Name),
+                new TwoWayDelegateCommand<SlideAction, SlideAction>.Funcs()
+                {
+                    ExecuteFunc = (exec) =>
                     {
                         slide.replaceAction(exec);
                     },
-                    CopySaver.Default.copy(currentAction),
-                (undo) =>
+                    UndoFunc = (undo) =>
                     {
                         slide.replaceAction(undo);
                     },
-                    slide.getAction(currentAction.Name)));
+                }));
             return true;
         }
 

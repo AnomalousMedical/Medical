@@ -53,6 +53,7 @@ namespace Medical
                 while (currentTrimCommand != null)
                 {
                     currentTrimCommand.Data.trimmed();
+                    currentTrimCommand.Data.removed();
                     currentTrimCommand = currentTrimCommand.Next;
                 }
                 currentExecuteCommand = null;
@@ -73,6 +74,7 @@ namespace Medical
             if (firstCommand != null)
             {
                 firstCommand.Data.poppedFront();
+                firstCommand.Data.removed();
                 //If there is only one command, clear everything
                 if (firstCommand == lastCommand)
                 {
@@ -106,6 +108,7 @@ namespace Medical
             while (current != null)
             {
                 current.Data.cleared();
+                current.Data.removed();
                 current = current.Next;
             }
             currentUndoCommand = currentExecuteCommand = firstCommand = lastCommand = null;
