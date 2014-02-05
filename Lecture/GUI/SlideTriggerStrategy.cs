@@ -24,17 +24,19 @@ namespace Lecture.GUI
         private UndoRedoBuffer undoBuffer;
         private EditInterfaceEditor appearanceEditor;
         private TextElementStyle elementStyle;
+        private NotificationGUIManager notificationManager;
 
         /// <summary>
         /// Create a slide trigger strategy. The ActionTypeBrowser determines the slide action types that can be put on the slide.
         /// Be sure to set the DefaultSelection on this browser, this is used when the trigger has no action as the default.
         /// </summary>
-        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, UndoRedoBuffer undoBuffer, String tag, String previewIconName = CommonResources.NoIcon)
+        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, UndoRedoBuffer undoBuffer, String tag, String previewIconName, NotificationGUIManager notificationManager)
             : base(tag, previewIconName, true)
         {
             this.undoBuffer = undoBuffer;
             this.slide = slide;
             this.actionTypeBrowser = actionTypeBrowser;
+            this.notificationManager = notificationManager;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
@@ -83,7 +85,7 @@ namespace Lecture.GUI
                     SlideAction newAction = result(currentAction.Name);
                     newAction.ChangesMade += editingAction_ChangesMade;
                     actionEditor.EditInterface = setupEditInterface(newAction, slide);
-                    actionEditor.alertChangesMade();
+                    editingAction_ChangesMade(newAction);
                     errorPrompt = "";
                     return true;
                 });
@@ -93,7 +95,31 @@ namespace Lecture.GUI
 
         void editingAction_ChangesMade(SlideAction obj)
         {
-            actionEditor.alertChangesMade();
+            Logging.Log.Debug("Action Changes Made");
+            String actionText = textEditor.Text;
+            if (actionText == null)
+            {
+                actionText = "";
+            }
+            if (actionText.Length > 33)
+            {
+                actionText = actionText.Substring(0, 30) + "...";
+            }
+
+            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<SlideAction, SlideAction>(CopySaver.Default.copy(currentAction), slide.getAction(currentAction.Name),
+                new TwoWayDelegateCommand<SlideAction, SlideAction>.Funcs()
+                {
+                    ExecuteFunc = (exec) =>
+                    {
+                        notificationManager.showNotification(String.Format("Changed trigger \"{0}\" action.", actionText), PreviewIconName, 3);
+                        slide.replaceAction(exec);
+                    },
+                    UndoFunc = (undo) =>
+                    {
+                        notificationManager.showNotification(String.Format("Undid trigger \"{0}\" action.", actionText), PreviewIconName, 3);
+                        slide.replaceAction(undo);
+                    },
+                }));
         }
 
         void elementStyle_Changed(StyleDefinition obj)
@@ -129,18 +155,10 @@ namespace Lecture.GUI
                 element.RemoveAttribute("class");
             }
 
-            undoBuffer.pushAndExecute(new TwoWayDelegateCommand<SlideAction, SlideAction>(CopySaver.Default.copy(currentAction), slide.getAction(currentAction.Name),
-                new TwoWayDelegateCommand<SlideAction, SlideAction>.Funcs()
-                {
-                    ExecuteFunc = (exec) =>
-                    {
-                        slide.replaceAction(exec);
-                    },
-                    UndoFunc = (undo) =>
-                    {
-                        slide.replaceAction(undo);
-                    },
-                }));
+            if (currentAction != null)
+            {
+                element.SetAttribute("onclick", currentAction.Name);
+            }
             return true;
         }
 

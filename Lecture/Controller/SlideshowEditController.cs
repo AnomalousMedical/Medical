@@ -151,7 +151,7 @@ namespace Lecture
             if (slide is MedicalRmlSlide)
             {
                 MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, (panelName, rml) =>
+                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, standaloneController.NotificationManager, (panelName, rml) =>
                 {
                     slideEditorContext.setWysiwygRml(panelName, rml, true);
                 });

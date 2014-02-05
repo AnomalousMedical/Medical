@@ -60,7 +60,7 @@ namespace Lecture
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
 
-        public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
+        public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -79,7 +79,7 @@ namespace Lecture
             panelResizeWidget.RecordResizeUndo += panelResizeWidget_RecordResizeUndo;
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
-            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon");
+            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", notificationManager);
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -103,7 +103,7 @@ namespace Lecture
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Heading</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" style=\"width:200px;\"></img>", RmlWysiwygComponent.DefaultImage)),
-                new WysiwygDragDropItem("Trigger", "Lecture.Icon.TriggerIcon", "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>")
+                new WysiwygCallbackDragDropItem(() => String.Format("<a class=\"TriggerLink\" onclick=\"{0}\">Add trigger text here.</a>", Guid.NewGuid().ToString()), "Trigger", "Lecture.Icon.TriggerIcon")
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
