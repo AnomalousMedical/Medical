@@ -162,7 +162,7 @@ namespace Lecture
             }));
             taskbar.addTask(new CallbackTask("EditTimeline", "Edit Timeline", "Lecture.Icon.EditTimeline", "Edit", 0, true, item =>
             {
-                editorController.editTimeline(slide);
+                editorController.editTimeline(slide, "Timeline.tl", "Timeline");
             }));
             taskbar.addTask(new CallbackTask("Present", "Present", "Lecture.Icon.Present", "Edit", 0, true, item =>
             {
@@ -690,7 +690,23 @@ namespace Lecture
 
         void action_EditTimeline(PlayTimelineAction action)
         {
-            editorController.editTimeline(slide, action.TimelineFileName);
+            String text = "Trigger Timeline";
+            String actionName = action.Name;
+            if (currentRmlEditor != null)
+            {
+                var editor = rmlEditors[currentRmlEditor];
+                var element = editor.Component.TopContentElement.GetElementsWithAttribute("onclick").FirstOrDefault(e => e.GetAttributeString("onclick").Equals(actionName));
+                if (element != null)
+                {
+                    text = element.InnerRml;
+                    if (text.Length > 33)
+                    {
+                        text = text.Substring(0, 30) + "...";
+                    }
+                    text = String.Format("Trigger Timeline - \"{0}\"", text);
+                }
+            }
+            editorController.editTimeline(slide, action.TimelineFileName, text);
         }
 
         public event PanelResizeWidget.RecordResizeInfoDelegate RecordResizeUndo

@@ -193,12 +193,12 @@ namespace Lecture
             undoBuffer.pushAndSkip(new TwoWayDelegateCommand<int, int>(changeSize, newSize, changeSize, oldSize));
         }
 
-        public void editTimeline(Slide slide, String name = "Timeline.tl")
+        public void editTimeline(Slide slide, String fileName, String text)
         {
             try
             {
                 Timeline timeline = null;
-                String timelineFilePath = Path.Combine(slide.UniqueName, name);
+                String timelineFilePath = Path.Combine(slide.UniqueName, fileName);
                 if (!ResourceProvider.exists(timelineFilePath))
                 {
                     timelineTypeController.createNewTimeline(timelineFilePath);
@@ -206,7 +206,7 @@ namespace Lecture
                 timeline = editorController.loadFile<Timeline>(timelineFilePath); //By loading after creating we ensure this is in the cached resources
 
                 propEditController.removeAllOpenProps();
-                timelineEditorContext = new TimelineEditorContext(timeline, slide, String.Format("Slide {0} - Timeline", slideshow.indexOf(slide) + 1), this, propEditController, editorController, uiCallback, timelineController);
+                timelineEditorContext = new TimelineEditorContext(timeline, slide, String.Format("Slide {0} - {1}", slideshow.indexOf(slide) + 1, text), this, propEditController, editorController, uiCallback, timelineController);
                 timelineEditorContext.Focus += obj =>
                 {
                     timelineEditorContext = obj;
