@@ -128,7 +128,7 @@ namespace Lecture
                         if (allowAdd && editor.Component.contains(position))
                         {
                             editor.Component.insertRml(item.createDocumentMarkup());
-                            currentRmlEditor = editor.View.Name;
+                            setCurrentRmlEditor(editor.View.Name);
                             allowAdd = false;
                         }
                         else
