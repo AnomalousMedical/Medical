@@ -292,7 +292,8 @@ namespace Lecture
 
         public SlideSceneInfo getCurrentSceneInfo()
         {
-            return new SlideSceneInfo(slide);
+            SceneThumbInfo sceneThumbInfo = slideEditorController.SlideImageManager.loadThumbSceneBitmap(slide, renderSceneThumbnail);
+            return new SlideSceneInfo(slide, sceneThumbInfo.copy());
         }
 
         public void slideNameChanged(string slideName)
@@ -302,6 +303,10 @@ namespace Lecture
 
         public void applySceneInfo(SlideSceneInfo info)
         {
+            if (info.SceneThumbInfo != null)
+            {
+                slideEditorController.SlideImageManager.addUnsavedSceneThumb(slide, info.SceneThumbInfo.copy());
+            }
             setupScene.clear();
             info.applyToSlide(slide);
             slide.populateCommand(setupScene);

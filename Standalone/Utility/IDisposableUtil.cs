@@ -19,5 +19,17 @@ namespace Medical
                 disposable.Dispose();
             }
         }
+
+        public static void DisposeIfNotNull(IDisposable first, IDisposable second)
+        {
+            if (first != null)
+            {
+                first.Dispose();
+            }
+            if (second != null)
+            {
+                second.Dispose();
+            }
+        }
     }
 }

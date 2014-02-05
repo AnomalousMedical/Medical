@@ -879,7 +879,8 @@ namespace Lecture
                 SlideSceneInfo undoInfoStack = slideEditorContext.getCurrentSceneInfo();
                 slideEditorContext.capture();
                 SlideSceneInfo redoInfoStack = slideEditorContext.getCurrentSceneInfo();
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideSceneInfo, SlideSceneInfo>(applySceneInfo, redoInfoStack, applySceneInfo, undoInfoStack));
+                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<SlideSceneInfo, SlideSceneInfo>(applySceneInfo, redoInfoStack, applySceneInfo, undoInfoStack,
+                    poppedFrontFunc: IDisposableUtil.DisposeIfNotNull, clearedFunc: IDisposableUtil.DisposeIfNotNull, trimmedFunc: IDisposableUtil.DisposeIfNotNull));
             }
         }
 

@@ -38,6 +38,18 @@ namespace Medical
         }
 
         /// <summary>
+        /// Returns a copy of this object, it will also create a copy of its image
+        /// and the caller is responsible for disposing the created copy.
+        /// </summary>
+        /// <returns></returns>
+        public SceneThumbInfo copy()
+        {
+            SceneThumbInfo copy = CopySaver.Default.copy(this);
+            copy.SceneThumb = (System.Drawing.Bitmap)sceneThumb.Clone();
+            return copy;
+        }
+
+        /// <summary>
         /// Set the scene thumb for this thumb info. This class will take control of the bitmap,
         /// so if you dispose this it will dispose the set scene thumb and if you set this property
         /// to a new value the old thumb will be disposed.
