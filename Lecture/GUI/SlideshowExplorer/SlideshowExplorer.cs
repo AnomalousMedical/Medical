@@ -452,6 +452,7 @@ namespace Lecture.GUI
         void slideEditController_SlideSelected(Slide primary, IEnumerable<Slide> secondary)
         {
             slideGrid.setSelection(slideGrid.findItemByUserObject(primary), secondarySelectedButtonGridItems(secondary));
+            ensureSelectedItemVisible();
         }
 
         private IEnumerable<ButtonGridItem> secondarySelectedButtonGridItems(IEnumerable<Slide> secondary)
@@ -628,6 +629,34 @@ namespace Lecture.GUI
             String file = Path.GetFileName(backingLoc);
             String dir = Path.GetDirectoryName(backingLoc);
             window.Caption = String.Format(windowTitleFormat, windowTitle, file, dir);
+        }
+
+        /// <summary>
+        /// This function will make sure the selected item on the button grid is fully visible.
+        /// </summary>
+        private void ensureSelectedItemVisible()
+        {
+            ButtonGridItem selectedItem = slideGrid.SelectedItem;
+            if (selectedItem != null)
+            {
+                IntRect selectedItemLocation = new IntRect(selectedItem.Left, selectedItem.Top, selectedItem.Width, selectedItem.Height);
+                IntCoord clientCoord = scroll.ClientCoord;
+                IntCoord viewCoord = scroll.ViewCoord;
+                selectedItemLocation.Left += clientCoord.left;
+                selectedItemLocation.Top += clientCoord.top;
+                if (selectedItemLocation.Top < 0)
+                {
+                    Vector2 canvasPos = scroll.CanvasPosition;
+                    canvasPos.y += selectedItemLocation.Top;
+                    scroll.CanvasPosition = canvasPos;
+                }
+                else if (selectedItemLocation.Bottom > viewCoord.height)
+                {
+                    Vector2 canvasPos = scroll.CanvasPosition;
+                    canvasPos.y += (selectedItemLocation.Bottom - viewCoord.height);
+                    scroll.CanvasPosition = canvasPos;
+                }
+            }
         }
     }
 }
