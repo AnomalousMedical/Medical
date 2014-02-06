@@ -4,6 +4,7 @@ using Medical;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
+using Medical.SlideshowActions;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -58,12 +59,12 @@ namespace Lecture
                 cameraPos.LookAt = window.LookAt;
                 window.calculateIncludePoint(cameraPos);
             }
-            slide.CameraPosition = cameraPos;
-            slide.Layers = new LayerState("");
-            slide.Layers.captureState();
-            slide.MedicalState = medicalStateController.createPresetState("");
-            slide.MusclePosition = new MusclePosition();
-            slide.MusclePosition.captureState();
+            LayerState layers = new LayerState("");
+            layers.captureState();
+            PresetState medicalState = medicalStateController.createPresetState("");
+            MusclePosition musclePosition = new MusclePosition();
+            musclePosition.captureState();
+            slide.StartupAction = new SetupSceneAction("Show", cameraPos, layers, musclePosition, medicalState);
         }
 
         public string TypeName

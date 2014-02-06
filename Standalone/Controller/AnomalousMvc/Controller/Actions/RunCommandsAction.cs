@@ -44,6 +44,14 @@ namespace Medical.Controller.AnomalousMvc
             commandsCleared();
         }
 
+        public IEnumerable<ActionCommand> Commands
+        {
+            get
+            {
+                return commands;
+            }
+        }
+
         public override void execute(AnomalousMvcContext context)
         {
             foreach (ActionCommand command in commands)

@@ -45,11 +45,18 @@ namespace Medical.SlideshowActions
         {
             if (timelineFileName != null)
             {
-                controller.Actions.add(new RunCommandsAction(name, new PlayTimelineCommand()
-                {
-                    Timeline = Path.Combine(slide.UniqueName, timelineFileName),
-                }));
+                RunCommandsAction action = new RunCommandsAction(name);
+                setupAction(slide, action);
+                controller.Actions.add(action);
             }
+        }
+
+        public override void setupAction(Slide slide, RunCommandsAction action)
+        {
+            action.addCommand(new PlayTimelineCommand()
+            {
+                Timeline = Path.Combine(slide.UniqueName, timelineFileName),
+            });
         }
 
         public override void cleanup(Slide slide, CleanupInfo info, ResourceProvider resourceProvider)

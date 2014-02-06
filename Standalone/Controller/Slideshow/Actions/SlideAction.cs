@@ -21,7 +21,24 @@ namespace Medical.SlideshowActions
 
         public abstract EditInterface getEditInterface();
 
+        /// <summary>
+        /// Add the slide action to a given mvc controller.
+        /// </summary>
+        /// <param name="slide"></param>
+        /// <param name="controller"></param>
         public abstract void addToController(Slide slide, MvcController controller);
+
+        /// <summary>
+        /// Setup a RunCommandsAction that works for this SlideAction.
+        /// </summary>
+        /// <param name="slide"></param>
+        /// <param name="action"></param>
+        public abstract void setupAction(Slide slide, RunCommandsAction action);
+
+        public virtual void configureThumbnailProperties(ImageRendererProperties imageProperties)
+        {
+            
+        }
 
         public virtual void cleanup(Slide slide, CleanupInfo info, ResourceProvider resourceProvider)
         {

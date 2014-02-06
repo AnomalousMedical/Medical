@@ -20,6 +20,7 @@ namespace Medical
         private String id;
 
         private SlideLayoutStrategy layoutStrategy;
+        private SlideAction startupAction = null;
 
         [DoNotSave]
         private Dictionary<String, SlideAction> triggerActions = new Dictionary<string, SlideAction>();
@@ -63,7 +64,13 @@ namespace Medical
             layoutStrategy.addPanel(panel);
         }
 
-        protected abstract void customizeController(MvcController controller, RunCommandsAction showCommand);
+        protected void customizeController(MvcController controller, RunCommandsAction showCommand)
+        {
+            if (startupAction != null)
+            {
+                startupAction.setupAction(this, showCommand);
+            }
+        }
 
         /// <summary>
         /// Make a new unique name for the slide, should only need to be done when duplicating a slide for some reason.
@@ -152,6 +159,14 @@ namespace Medical
             return ret;
         }
 
+        public void populateCommand(RunCommandsAction action)
+        {
+            if (startupAction != null)
+            {
+                StartupAction.setupAction(this, action);
+            }
+        }
+
         public IEnumerable<SlidePanel> Panels
         {
             get
@@ -193,6 +208,18 @@ namespace Medical
             get
             {
                 return Path.Combine(UniqueName, "SceneThumb.info");
+            }
+        }
+
+        public SlideAction StartupAction
+        {
+            get
+            {
+                return startupAction;
+            }
+            set
+            {
+                startupAction = value;
             }
         }
 

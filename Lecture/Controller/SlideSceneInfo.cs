@@ -1,4 +1,7 @@
-﻿using Medical;
+﻿using Engine.Saving;
+using Medical;
+using Medical.Controller.AnomalousMvc;
+using Medical.SlideshowActions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,10 +13,7 @@ namespace Lecture
 {
     class SlideSceneInfo : IDisposable
     {
-        private CameraPosition cameraPosition;
-        private LayerState layers;
-        private MusclePosition musclePosition;
-        private PresetState medicalState;
+        private SlideAction startupAction;
         private SceneThumbInfo sceneThumbInfo = null;
 
         public SlideSceneInfo()
@@ -23,10 +23,7 @@ namespace Lecture
 
         public SlideSceneInfo(MedicalRmlSlide slide, SceneThumbInfo sceneThumbInfo)
         {
-            this.CameraPosition = slide.CameraPosition;
-            this.Layers = slide.Layers;
-            this.MedicalState = slide.MedicalState;
-            this.MusclePosition = slide.MusclePosition;
+            startupAction = CopySaver.Default.copy(slide.StartupAction);
             this.sceneThumbInfo = sceneThumbInfo;
         }
 
@@ -41,58 +38,7 @@ namespace Lecture
 
         public void applyToSlide(MedicalRmlSlide slide)
         {
-            slide.CameraPosition = this.CameraPosition;
-            slide.Layers = this.Layers;
-            slide.MedicalState = this.MedicalState;
-            slide.MusclePosition = this.MusclePosition;
-        }
-
-        public CameraPosition CameraPosition
-        {
-            get
-            {
-                return cameraPosition;
-            }
-            set
-            {
-                cameraPosition = value;
-            }
-        }
-
-        public LayerState Layers
-        {
-            get
-            {
-                return layers;
-            }
-            set
-            {
-                layers = value;
-            }
-        }
-
-        public MusclePosition MusclePosition
-        {
-            get
-            {
-                return musclePosition;
-            }
-            set
-            {
-                musclePosition = value;
-            }
-        }
-
-        public PresetState MedicalState
-        {
-            get
-            {
-                return medicalState;
-            }
-            set
-            {
-                medicalState = value;
-            }
+            slide.StartupAction = CopySaver.Default.copy(startupAction);
         }
 
         /// <summary>

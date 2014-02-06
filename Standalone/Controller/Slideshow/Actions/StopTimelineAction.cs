@@ -32,7 +32,14 @@ namespace Medical.SlideshowActions
 
         public override void addToController(Slide slide, MvcController controller)
         {
-            controller.Actions.add(new RunCommandsAction(name, new StopTimelineCommand()));
+            RunCommandsAction action = new RunCommandsAction(name);
+            setupAction(slide, action);
+            controller.Actions.add(action);
+        }
+
+        public override void setupAction(Slide slide, RunCommandsAction action)
+        {
+            action.addCommand(new StopTimelineCommand());
         }
 
         public override string Name

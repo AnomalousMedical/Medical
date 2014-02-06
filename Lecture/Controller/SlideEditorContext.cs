@@ -489,11 +489,7 @@ namespace Lecture
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;
             imageProperties.ShowUIUpdates = false;
-            imageProperties.LayerState = slide.Layers;
-            imageProperties.CameraPosition = slide.CameraPosition.Translation;
-            imageProperties.CameraLookAt = slide.CameraPosition.LookAt;
-            imageProperties.UseIncludePoint = slide.CameraPosition.UseIncludePoint;
-            imageProperties.IncludePoint = slide.CameraPosition.IncludePoint;
+            slide.StartupAction.configureThumbnailProperties(imageProperties);
             imageProperties.CustomizeCameraPosition = (camera, viewport) =>
             {
                 SceneNode node = camera.getParentSceneNode();

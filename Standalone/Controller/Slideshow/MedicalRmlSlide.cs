@@ -1,5 +1,6 @@
 ﻿using Engine.Saving;
 using Medical.Controller.AnomalousMvc;
+using Medical.SlideshowActions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,91 +10,15 @@ namespace Medical
 {
     public class MedicalRmlSlide : Slide
     {
-        private CameraPosition cameraPosition;
-        private LayerState layers;
-        private MusclePosition musclePosition;
-        private PresetState medicalState;
-
         public MedicalRmlSlide()
         {
 
         }
 
-        protected override void customizeController(MvcController controller, RunCommandsAction showCommand)
-        {
-            populateCommand(showCommand);
-        }
-
-        public void populateCommand(RunCommandsAction action)
-        {
-            action.addCommand(new MoveCameraCommand()
-            {
-                CameraPosition = this.CameraPosition
-            });
-            ChangeLayersCommand layers = new ChangeLayersCommand();
-            layers.Layers.copyFrom(Layers);
-            action.addCommand(layers);
-            action.addCommand(new ChangeMedicalStateCommand()
-            {
-                PresetState = this.MedicalState
-            });
-            action.addCommand(new SetMusclePositionCommand()
-            {
-                MusclePosition = this.MusclePosition
-            });
-        }
-
-        public CameraPosition CameraPosition
-        {
-            get
-            {
-                return cameraPosition;
-            }
-            set
-            {
-                cameraPosition = value;
-            }
-        }
-
-        public LayerState Layers
-        {
-            get
-            {
-                return layers;
-            }
-            set
-            {
-                layers = value;
-            }
-        }
-
-        public MusclePosition MusclePosition
-        {
-            get
-            {
-                return musclePosition;
-            }
-            set
-            {
-                musclePosition = value;
-            }
-        }
-
-        public PresetState MedicalState
-        {
-            get
-            {
-                return medicalState;
-            }
-            set
-            {
-                medicalState = value;
-            }
-        }
-
         protected MedicalRmlSlide(LoadInfo info)
             :base(info)
         {
+            //Consider a version if statment for this, might not need if you remove the medicalrmlslides somehow
             if (info.hasValue("rml"))
             {
                 RmlSlidePanel panel = new RmlSlidePanel();
@@ -101,6 +26,10 @@ namespace Medical
                 panel.ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left);
                 panel.Size = 480;
                 addPanel(panel);
+            }
+            if (info.hasValue("layers"))
+            {
+                this.StartupAction = new SetupSceneAction("Show", info.GetValue<CameraPosition>("cameraPosition", null), info.GetValue<LayerState>("layers", null), info.GetValue<MusclePosition>("musclePosition", null), info.GetValue<PresetState>("medicalState", null));
             }
         }
     }

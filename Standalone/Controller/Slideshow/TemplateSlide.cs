@@ -24,11 +24,6 @@ namespace Medical
 
         }
 
-        protected override void customizeController(MvcController controller, RunCommandsAction showCommand)
-        {
-            
-        }
-
         public String Name { get; set; }
 
         public String IconName { get; set; }
