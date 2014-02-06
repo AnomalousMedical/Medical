@@ -716,6 +716,11 @@ namespace Lecture
                 return new PlayTimelineAction(name);
             })));
 
+            rootNode.addChild(new BrowserNode("Stop Timeline", new Func<String, SlideAction>((name) =>
+            {
+                return new StopTimelineAction(name);
+            })));
+
             return browser;
         }
 
