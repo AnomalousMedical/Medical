@@ -746,7 +746,10 @@ namespace Lecture
             unsafeSave();
 
             //Reload the current slide
-            openEditorContextForSlide(lastEditSlide);
+            if (lastEditSlide != null)
+            {
+                openEditorContextForSlide(lastEditSlide);
+            }
             standaloneController.DocumentController.addToRecentDocuments(editorController.ResourceProvider.BackingLocation);
         }
 

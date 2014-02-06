@@ -28,6 +28,11 @@ namespace Medical
 
     public class StandaloneController : IDisposable
     {
+        static StandaloneController()
+        {
+            MedicalRmlSlideUpdater.Touch();
+        }
+
         //Events
         public event SceneEvent SceneLoaded;
         public event SceneEvent SceneUnloading;

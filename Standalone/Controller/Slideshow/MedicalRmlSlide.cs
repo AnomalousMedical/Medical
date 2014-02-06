@@ -8,29 +8,45 @@ using System.Text;
 
 namespace Medical
 {
-    internal class MedicalRmlSlide : Slide
+    /// <summary>
+    /// There used to be a class called MedicalRmlSlide that was our base slide saved to a bunch of slideshows.
+    /// This class converts any of those found to be loading to plain slides.
+    /// </summary>
+    class MedicalRmlSlideUpdater : ObjectIdentifier
     {
-        private MedicalRmlSlide()
+        public static void Touch()
+        {
+            ObjectIdentifierFactory.AddCreationMethod("Medical.MedicalRmlSlide, Standalone", CreateObjectIdentifier);
+        }
+
+        static ObjectIdentifier CreateObjectIdentifier(long id, String assemblyQualifiedName, TypeFinder typeFinder)
+        {
+            return new MedicalRmlSlideUpdater(id);
+        }
+
+        public MedicalRmlSlideUpdater(long objectId)
+            :base(objectId, null, typeof(Slide))
         {
 
         }
 
-        protected MedicalRmlSlide(LoadInfo info)
-            :base(info)
+        public override object restoreObject(LoadInfo info)
         {
-            //Consider a version if statment for this, might not need if you remove the medicalrmlslides somehow
+            Slide slide = (Slide)base.restoreObject(info);
+            //Scan the loadInfo and see if there is anything we need to upgrade.
             if (info.hasValue("rml"))
             {
                 RmlSlidePanel panel = new RmlSlidePanel();
                 InlineRmlUpgradeCache.setRml(panel, info.GetString("rml"));
                 panel.ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left);
                 panel.Size = 480;
-                addPanel(panel);
+                slide.addPanel(panel);
             }
             if (info.hasValue("layers"))
             {
-                this.StartupAction = new SetupSceneAction("Show", info.GetValue<CameraPosition>("cameraPosition", null), info.GetValue<LayerState>("layers", null), info.GetValue<MusclePosition>("musclePosition", null), info.GetValue<PresetState>("medicalState", null));
+                slide.StartupAction = new SetupSceneAction("Show", info.GetValue<CameraPosition>("cameraPosition", null), info.GetValue<LayerState>("layers", null), info.GetValue<MusclePosition>("musclePosition", null), info.GetValue<PresetState>("medicalState", null));
             }
+            return slide;
         }
     }
 }
