@@ -42,6 +42,8 @@ namespace Medical.GUI.AnomalousMvc
 
         private TeethAdaptationView wizardView;
         private AnomalousMvcContext context;
+        private String lastCameraButtonAction;
+        private bool disableCamera = false;
 
         public TeethMovementGUI(Widget mainWidget, TeethAdaptationView wizardView, AnomalousMvcContext context)
         {
@@ -67,6 +69,9 @@ namespace Medical.GUI.AnomalousMvc
             leftLateralCameraButton.MouseButtonClick += new MyGUIEvent(leftLateralCameraButton_MouseButtonClick);
             midlineAnteriorCameraButton.MouseButtonClick += new MyGUIEvent(midlineAnteriorCameraButton_MouseButtonClick);
             rightLateralCameraButton.MouseButtonClick += new MyGUIEvent(rightLateralCameraButton_MouseButtonClick);
+
+            lastCameraButtonAction = wizardView.MidlineAnteriorAction;
+            disableCamera = MedicalConfig.CameraMouseButton == Engine.Platform.MouseButtonCode.MB_BUTTON0;
         }
 
         public void disableAllButtons()
@@ -82,8 +87,14 @@ namespace Medical.GUI.AnomalousMvc
             TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
         }
 
+        public void closing()
+        {
+            context.setAllowUnmodifiedCameraMovement(true);
+        }
+
         private void topCameraButton_MouseButtonClick(object sender, EventArgs e)
         {
+            lastCameraButtonAction = wizardView.TopButtonAction;
             TeethController.showTeethTools(true, false);
             context.runAction(wizardView.TopButtonAction);
             TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
@@ -91,6 +102,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private void bottomCameraButton_MouseButtonClick(object sender, EventArgs e)
         {
+            lastCameraButtonAction = wizardView.BottomButtonAction;
             TeethController.showTeethTools(false, true);
             context.runAction(wizardView.BottomButtonAction);
             TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
@@ -98,6 +110,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private void leftLateralCameraButton_MouseButtonClick(object sender, EventArgs e)
         {
+            lastCameraButtonAction = wizardView.LeftLateralAction;
             TeethController.showTeethTools(LEFT_LATERAL_TEETH);
             context.runAction(wizardView.LeftLateralAction);
             TeethController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ); 
@@ -105,6 +118,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private void midlineAnteriorCameraButton_MouseButtonClick(object sender, EventArgs e)
         {
+            lastCameraButtonAction = wizardView.MidlineAnteriorAction;
             TeethController.showTeethTools(MIDLINE_ANTERIOR_TEETH);
             context.runAction(wizardView.MidlineAnteriorAction);
             TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
@@ -112,6 +126,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private void rightLateralCameraButton_MouseButtonClick(object sender, EventArgs e)
         {
+            lastCameraButtonAction = wizardView.RightLateralAction;
             TeethController.showTeethTools(RIGHT_LATERAL_TEETH);
             context.runAction(wizardView.RightLateralAction);
             TeethController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ);
@@ -144,7 +159,12 @@ namespace Medical.GUI.AnomalousMvc
             {
                 moveButton.Checked = false;
                 adaptButton.Checked = false;
+                if (disableCamera)
+                {
+                    context.runAction(lastCameraButtonAction);
+                }
             }
+            setCameraActive();
         }
 
         void moveButton_CheckedChanged(Widget sender, EventArgs e)
@@ -154,6 +174,19 @@ namespace Medical.GUI.AnomalousMvc
             {
                 rotateButton.Checked = false;
                 adaptButton.Checked = false;
+                if (disableCamera)
+                {
+                    context.runAction(lastCameraButtonAction);
+                }
+            }
+            setCameraActive();
+        }
+
+        void setCameraActive()
+        {
+            if (disableCamera)
+            {
+                context.setAllowUnmodifiedCameraMovement(!(moveButton.Checked || rotateButton.Checked));
             }
         }
     }

@@ -73,6 +73,7 @@ namespace Medical.GUI.AnomalousMvc
             context.AnatomyController.PickingMode = startingPickingMode;
             TeethController.showTeethTools(false, false);
             context.MeasurementGrid.Visible = false;
+            teethMovementPanel.closing();
         }
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)
