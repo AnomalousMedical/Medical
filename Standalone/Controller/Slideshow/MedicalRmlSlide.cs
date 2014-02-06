@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Medical
 {
-    public class MedicalRmlSlide : Slide
+    internal class MedicalRmlSlide : Slide
     {
-        public MedicalRmlSlide()
+        private MedicalRmlSlide()
         {
 
         }

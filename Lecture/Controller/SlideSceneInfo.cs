@@ -21,7 +21,7 @@ namespace Lecture
 
         }
 
-        public SlideSceneInfo(MedicalRmlSlide slide, SceneThumbInfo sceneThumbInfo)
+        public SlideSceneInfo(Slide slide, SceneThumbInfo sceneThumbInfo)
         {
             startupAction = CopySaver.Default.copy(slide.StartupAction);
             this.sceneThumbInfo = sceneThumbInfo;
@@ -36,7 +36,7 @@ namespace Lecture
             }
         }
 
-        public void applyToSlide(MedicalRmlSlide slide)
+        public void applyToSlide(Slide slide)
         {
             slide.StartupAction = CopySaver.Default.copy(startupAction);
         }

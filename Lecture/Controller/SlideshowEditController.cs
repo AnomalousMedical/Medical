@@ -147,38 +147,33 @@ namespace Lecture
         private bool openEditorContextForSlide(Slide slide)
         {
             bool openedEditContext = false;
-            //This is done like this so we could have multiple slide types besides MedicalRmlSlide
-            if (slide is MedicalRmlSlide)
+            slideEditorContext = new SlideEditorContext(slide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, standaloneController.NotificationManager, (panelName, rml) =>
             {
-                MedicalRmlSlide medicalSlide = (MedicalRmlSlide)slide;
-                slideEditorContext = new SlideEditorContext(medicalSlide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, standaloneController.NotificationManager, (panelName, rml) =>
+                slideEditorContext.setWysiwygRml(panelName, rml, true);
+            });
+            if (standaloneController.SharePluginController != null)
+            {
+                CallbackTask cleanupBeforeShareTask = new CallbackTask("Lecture.SharePluginTask", standaloneController.SharePluginController.Name, standaloneController.SharePluginController.IconName, standaloneController.SharePluginController.Category, 0, false, (item) =>
                 {
-                    slideEditorContext.setWysiwygRml(panelName, rml, true);
+                    shareSlideshow();
                 });
-                if (standaloneController.SharePluginController != null)
-                {
-                    CallbackTask cleanupBeforeShareTask = new CallbackTask("Lecture.SharePluginTask", standaloneController.SharePluginController.Name, standaloneController.SharePluginController.IconName, standaloneController.SharePluginController.Category, 0, false, (item) =>
-                    {
-                        shareSlideshow();
-                    });
-                    slideEditorContext.addTask(cleanupBeforeShareTask);
-                }
-                slideEditorContext.Focus += (obj) =>
-                {
-                    slideEditorContext = obj;
-                };
-                slideEditorContext.Blur += obj =>
-                {
-                    if (slideEditorContext == obj)
-                    {
-                        slideEditorContext.RecordResizeUndo -= slideEditorContext_RecordResizeUndo;
-                        slideEditorContext = null;
-                    }
-                };
-                slideEditorContext.RecordResizeUndo += slideEditorContext_RecordResizeUndo;
-                editorController.runEditorContext(slideEditorContext.MvcContext);
-                openedEditContext = true;
+                slideEditorContext.addTask(cleanupBeforeShareTask);
             }
+            slideEditorContext.Focus += (obj) =>
+            {
+                slideEditorContext = obj;
+            };
+            slideEditorContext.Blur += obj =>
+            {
+                if (slideEditorContext == obj)
+                {
+                    slideEditorContext.RecordResizeUndo -= slideEditorContext_RecordResizeUndo;
+                    slideEditorContext = null;
+                }
+            };
+            slideEditorContext.RecordResizeUndo += slideEditorContext_RecordResizeUndo;
+            editorController.runEditorContext(slideEditorContext.MvcContext);
+            openedEditContext = true;
             return openedEditContext;
         }
 
@@ -797,7 +792,7 @@ namespace Lecture
             standaloneController.MvcCore.startRunningContext(context);
         }
 
-        public void runSlideshow(MedicalRmlSlide slide)
+        public void runSlideshow(Slide slide)
         {
             runSlideshow(slideshow.indexOf(slide));
         }

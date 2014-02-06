@@ -39,7 +39,7 @@ namespace Lecture
         private String currentRmlEditor;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
-        private MedicalRmlSlide slide;
+        private Slide slide;
         private EditorUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
         private SlideshowEditController slideEditorController;
@@ -60,7 +60,7 @@ namespace Lecture
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
 
-        public SlideEditorContext(MedicalRmlSlide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, Action<String, String> wysiwygUndoCallback)
+        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -233,6 +233,12 @@ namespace Lecture
                     }
                     slideLayoutPicker.createLayoutPicker();
                     panelResizeWidget.createResizeWidget();
+                    if (currentRmlEditor != null) //Make sure we have an active editor
+                    {
+                        String current = currentRmlEditor;
+                        currentRmlEditor = null;
+                        setCurrentRmlEditor(current);
+                    }
                 }),
                 new CallbackAction("Blur", blur),
                 new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),

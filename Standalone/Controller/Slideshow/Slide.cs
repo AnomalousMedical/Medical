@@ -11,7 +11,7 @@ using Medical.SlideshowActions;
 
 namespace Medical
 {
-    public abstract class Slide : Saveable
+    public class Slide : Saveable
     {
         internal const String SlideActionClass = "SlideAction";
         public const String StyleSheetName = "SlideStyle.rcss";

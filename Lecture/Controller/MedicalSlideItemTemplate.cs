@@ -16,7 +16,7 @@ namespace Lecture
 {
     class MedicalSlideItemTemplate : ProjectItemTemplate
     {
-        public event Action<MedicalRmlSlide> SlideCreated;
+        public event Action<Slide> SlideCreated;
 
         private SceneViewController sceneViewController;
         private MedicalStateController medicalStateController;
@@ -29,7 +29,7 @@ namespace Lecture
 
         public void createItem(string path, EditorController editorController)
         {
-            MedicalRmlSlide slide = new MedicalRmlSlide();
+            Slide slide = new Slide();
             applySceneStateToSlide(slide);
             RmlSlidePanel panel = new RmlSlidePanel()
             {
@@ -49,7 +49,7 @@ namespace Lecture
             }
         }
 
-        public void applySceneStateToSlide(MedicalRmlSlide slide)
+        public void applySceneStateToSlide(Slide slide)
         {
             CameraPosition cameraPos = new CameraPosition();
             if (sceneViewController.ActiveWindow != null)
