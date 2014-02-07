@@ -64,7 +64,7 @@ namespace Lecture
             PresetState medicalState = medicalStateController.createPresetState("");
             MusclePosition musclePosition = new MusclePosition();
             musclePosition.captureState();
-            slide.StartupAction = new SetupSceneAction("Show", cameraPos, layers, musclePosition, medicalState, true, false);
+            slide.StartupAction = new SetupSceneAction("Show", cameraPos, layers, musclePosition, medicalState, true, TeethController.HighlightContacts);
         }
 
         public string TypeName
