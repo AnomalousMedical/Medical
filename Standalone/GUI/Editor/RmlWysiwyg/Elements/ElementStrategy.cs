@@ -72,5 +72,18 @@ namespace Medical.GUI
         {
             return false;
         }
+
+        /// <summary>
+        /// Get a highlight provider for the passed element. If you want to customize the highlight
+        /// do it here. It is valid to return null, which means you wish to use whatever default provider
+        /// exists.
+        /// </summary>
+        public virtual HighlightProvider HighlightProvider
+        {
+            get
+            {
+                return null;
+            }
+        }
     }
 }

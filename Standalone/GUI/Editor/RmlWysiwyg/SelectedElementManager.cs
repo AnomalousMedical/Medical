@@ -13,6 +13,7 @@ namespace Medical.GUI
         private ElementStrategy elementStrategy;
         private Element selectedElement;
         private Element highlightElement;
+        private HighlightProvider highlightProvider;
         private Widget selectionWidget;
         private Widget widthAdjust;
         private Widget heightAdjust;
@@ -89,6 +90,17 @@ namespace Medical.GUI
                 int selectionTop = (int)highlightElement.AbsoluteTop;
                 int selectionWidth = (int)highlightElement.OffsetWidth;
                 int selectionHeight = (int)highlightElement.OffsetHeight;
+                if (highlightProvider != null)
+                {
+                    IntRect additionalHighlightRect = highlightProvider.getAdditionalHighlightAreaRect(highlightElement);
+                    float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
+                    additionalHighlightRect = (IntRect)(additionalHighlightRect * ratio);
+
+                    selectionLeft += additionalHighlightRect.Left;
+                    selectionTop += additionalHighlightRect.Top;
+                    selectionWidth += additionalHighlightRect.Width;
+                    selectionHeight += additionalHighlightRect.Height;
+                }
                 int selectionRight = selectionLeft + selectionWidth;
                 int selectionBottom = selectionTop + selectionHeight;
 
@@ -137,6 +149,21 @@ namespace Medical.GUI
             }
         }
 
+        public void setHighlightElement(Element highlightElement, HighlightProvider highlightProvider)
+        {
+            this.highlightElement = highlightElement;
+            this.highlightProvider = highlightProvider;
+            if (this.highlightElement != null)
+            {
+                selectionWidget.Visible = true;
+                updateHighlightPosition();
+            }
+            else
+            {
+                selectionWidget.Visible = false;
+            }
+        }
+
         public Element HighlightElement
         {
             get
@@ -145,16 +172,7 @@ namespace Medical.GUI
             }
             set
             {
-                highlightElement = value;
-                if (highlightElement != null)
-                {
-                    selectionWidget.Visible = true;
-                    updateHighlightPosition();
-                }
-                else
-                {
-                    selectionWidget.Visible = false;
-                }
+                setHighlightElement(value, null);
             }
         }
 

@@ -758,7 +758,7 @@ namespace Medical.GUI
                 };
                 currentEditor = editor;
                 selectedElementManager.SelectedElement = element;
-                selectedElementManager.HighlightElement = element;
+                selectedElementManager.setHighlightElement(element, strategy.HighlightProvider);
                 selectedElementManager.ElementStrategy = strategy;
                 updateEditorPosition();
             }

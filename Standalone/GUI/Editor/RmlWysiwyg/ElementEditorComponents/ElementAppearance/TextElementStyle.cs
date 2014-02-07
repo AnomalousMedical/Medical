@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
-    public class TextElementStyle : ElementStyleDefinition
+    public class TextElementStyle : ElementStyleDefinition, HighlightProvider
     {
         private bool bold = false;
         private bool italic = false;
@@ -16,6 +16,8 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private Color? color = null;
         private Color? backgroundColor = null;
         private int? fontSize = null;
+        private int? marginTop = null;
+        private int? marginBottom = null;
 
         public TextElementStyle(Element element)
         {
@@ -40,6 +42,8 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             {
                 fontSize = inlineCss.intValue("font-size");
             }
+            marginTop = inlineCss.intValue("padding-top");
+            marginBottom = inlineCss.intValue("padding-bottom");
         }
 
         public override bool buildClassList(StringBuilder classes)
@@ -73,7 +77,50 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             {
                 styleAttribute.AppendFormat("font-size:{0}px;", fontSize);
             }
+            if (marginTop != null)
+            {
+                styleAttribute.AppendFormat("padding-top:{0}px;", marginTop);
+            }
+            if (marginBottom != null)
+            {
+                styleAttribute.AppendFormat("padding-bottom:{0}px;", marginBottom);
+            }
             return true;
+        }
+
+        public void changeSize(IntRect newRect, ResizeType resizeType, IntSize2 bounds)
+        {
+            bool changesMade = false;
+            if ((resizeType & ResizeType.Top) == ResizeType.Top)
+            {
+                marginTop = newRect.Top;
+                if (marginTop < 0)
+                {
+                    marginTop = 0;
+                }
+                changesMade = true;
+            }
+
+            if ((resizeType & ResizeType.Height) == ResizeType.Height)
+            {
+                marginBottom = newRect.Height;
+                if (marginBottom < 0)
+                {
+                    marginBottom = 0;
+                }
+                changesMade = true;
+            }
+
+            if (changesMade)
+            {
+                fireRefreshEditInterface();
+            }
+        }
+
+        public Rect createCurrentRect(Element element, out bool leftAnchor)
+        {
+            leftAnchor = true;
+            return new Rect(0, marginTop.GetValueOrDefault(), 0, marginBottom.GetValueOrDefault());
         }
 
         [Editable]
@@ -176,6 +223,45 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                     fireChanged();
                 }
             }
+        }
+
+        [Editable]
+        public int? MarginBottom
+        {
+            get
+            {
+                return marginBottom;
+            }
+            set
+            {
+                if (marginBottom != value)
+                {
+                    marginBottom = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public int? MarginTop
+        {
+            get
+            {
+                return marginTop;
+            }
+            set
+            {
+                if (marginTop != value)
+                {
+                    marginTop = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        public IntRect getAdditionalHighlightAreaRect(Element element)
+        {
+            return new IntRect(0, marginTop.GetValueOrDefault(), 0, -marginTop.GetValueOrDefault());
         }
     }
 }

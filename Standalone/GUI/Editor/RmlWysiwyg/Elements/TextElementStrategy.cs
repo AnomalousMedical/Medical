@@ -1,4 +1,5 @@
-﻿using libRocketPlugin;
+﻿using Engine;
+using libRocketPlugin;
 using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         public TextElementStrategy(String tag, String previewIconName = "Editor/HeaderIcon")
             : base(tag, previewIconName, true)
         {
-
+            ResizeHandles = ResizeType.Top | ResizeType.Height;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
@@ -52,6 +53,47 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         }
 
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        {
+            build(element);
+            return true;
+        }
+
+        public override HighlightProvider HighlightProvider
+        {
+            get
+            {
+                return elementStyle;
+            }
+        }
+
+        public override void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
+        {
+            elementStyle.changeSize(newRect, resizeType, bounds);
+            build(element);
+        }
+
+        public override Rect getStartingRect(Element selectedElement, out bool leftAnchor)
+        {
+            return elementStyle.createCurrentRect(selectedElement, out leftAnchor);
+        }
+
+        public override void applySizeChange(Element element)
+        {
+            appearanceEditor.alertChangesMade();
+        }
+
+        public override bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        {
+            String text = element.InnerRml;
+            if (String.IsNullOrEmpty(text))
+            {
+                component.deleteElement(element);
+                return true;
+            }
+            return false;
+        }
+
+        private void build(Element element)
         {
             element.ClearLocalStyles();
             String text = textEditor.Text;
@@ -78,18 +120,6 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             {
                 element.RemoveAttribute("class");
             }
-            return true;
-        }
-
-        public override bool delete(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
-        {
-            String text = element.InnerRml;
-            if (String.IsNullOrEmpty(text))
-            {
-                component.deleteElement(element);
-                return true;
-            }
-            return false;
         }
 
         void elementStyle_Changed(StyleDefinition obj)
