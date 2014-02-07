@@ -12,12 +12,24 @@ namespace Medical
 
         public override bool applyToExisting(Slide slide, SlidePanel panel, bool overwriteContent, EditorResourceProvider resourceProvider)
         {
-            String rmlPath = this.getRmlFilePath(slide);
-            if (overwriteContent || !resourceProvider.exists(rmlPath))
+            //Do the base version first, this will fix any filenames
+            bool result = base.applyToExisting(slide, panel, overwriteContent, resourceProvider);
+            if (result)
             {
-                resourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(rmlPath, Encoding.UTF8, Rml, resourceProvider));
+                if (panel is RmlSlidePanel)
+                {
+                    String rmlPath = ((RmlSlidePanel)panel).getRmlFilePath(slide);
+                    if (overwriteContent || !resourceProvider.exists(rmlPath))
+                    {
+                        resourceProvider.ResourceCache.add(new ResourceProviderTextCachedResource(rmlPath, Encoding.UTF8, Rml, resourceProvider));
+                    }
+                }
+                else
+                {
+                    result = false;
+                }
             }
-            return base.applyToExisting(slide, panel, overwriteContent, resourceProvider);
+            return result;
         }
     }
 }
