@@ -19,8 +19,16 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private int? marginTop = null;
         private int? marginBottom = null;
 
-        public TextElementStyle(Element element)
+        private String marginSource = "margin";
+        private bool usePadding = false;
+
+        public TextElementStyle(Element element, bool usePadding)
         {
+            this.usePadding = usePadding;
+            if (usePadding)
+            {
+                marginSource = "padding";
+            }
             String classes = element.GetAttributeString("class");
             if (classes != null)
             {
@@ -42,8 +50,8 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             {
                 fontSize = inlineCss.intValue("font-size");
             }
-            marginTop = inlineCss.intValue("padding-top");
-            marginBottom = inlineCss.intValue("padding-bottom");
+            marginTop = inlineCss.intValue(marginSource + "-top");
+            marginBottom = inlineCss.intValue(marginSource + "-bottom");
         }
 
         public override bool buildClassList(StringBuilder classes)
@@ -79,11 +87,11 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
             if (marginTop != null)
             {
-                styleAttribute.AppendFormat("padding-top:{0}px;", marginTop);
+                styleAttribute.AppendFormat(marginSource + "-top:{0}px;", marginTop);
             }
             if (marginBottom != null)
             {
-                styleAttribute.AppendFormat("padding-bottom:{0}px;", marginBottom);
+                styleAttribute.AppendFormat(marginSource + "-bottom:{0}px;", marginBottom);
             }
             return true;
         }
@@ -261,7 +269,14 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         public IntRect getAdditionalHighlightAreaRect(Element element)
         {
-            return new IntRect(0, marginTop.GetValueOrDefault(), 0, -marginTop.GetValueOrDefault());
+            if (usePadding)
+            {
+                return new IntRect(0, marginTop.GetValueOrDefault(), 0, -marginTop.GetValueOrDefault());
+            }
+            else
+            {
+                return new IntRect(0, 0, 0, marginBottom.GetValueOrDefault());
+            }
         }
     }
 }

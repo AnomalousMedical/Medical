@@ -1,4 +1,5 @@
-﻿using Engine.Editing;
+﻿using Engine;
+using Engine.Editing;
 using Engine.Saving;
 using libRocketPlugin;
 using Medical;
@@ -37,11 +38,12 @@ namespace Lecture.GUI
             this.slide = slide;
             this.actionTypeBrowser = actionTypeBrowser;
             this.notificationManager = notificationManager;
+            ResizeHandles = ResizeType.Top | ResizeType.Height;
         }
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            elementStyle = new TextElementStyle(element);
+            elementStyle = new TextElementStyle(element, false);
             elementStyle.Changed += elementStyle_Changed;
             String rml = TextElementStrategy.DecodeFromHtml(element.InnerRml);
             textEditor = new ElementTextEditor(rml);
@@ -95,7 +97,6 @@ namespace Lecture.GUI
 
         void editingAction_ChangesMade(SlideAction obj)
         {
-            Logging.Log.Debug("Action Changes Made");
             String actionText = textEditor.Text;
             if (actionText == null)
             {
@@ -127,7 +128,36 @@ namespace Lecture.GUI
             appearanceEditor.alertChangesMade();
         }
 
+        public override HighlightProvider HighlightProvider
+        {
+            get
+            {
+                return elementStyle;
+            }
+        }
+
+        public override void changeSizePreview(Element element, IntRect newRect, ResizeType resizeType, IntSize2 bounds)
+        {
+            elementStyle.changeSize(newRect, resizeType, bounds);
+            build(element);
+        }
+
+        public override Rect getStartingRect(Element selectedElement, out bool leftAnchor)
+        {
+            return elementStyle.createCurrentRect(selectedElement, out leftAnchor);
+        }
+
+        public override void applySizeChange(Element element)
+        {
+            appearanceEditor.alertChangesMade();
+        }
+
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        {
+            return build(element);
+        }
+
+        private bool build(Element element)
         {
             String text = textEditor.Text;
             element.InnerRml = TextElementStrategy.EncodeToHtml(text);

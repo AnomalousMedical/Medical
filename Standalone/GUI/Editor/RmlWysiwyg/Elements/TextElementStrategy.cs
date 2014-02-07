@@ -41,7 +41,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
         {
-            elementStyle = new TextElementStyle(element);
+            elementStyle = new TextElementStyle(element, true);
             elementStyle.Changed += elementStyle_Changed;
             String rml = DecodeFromHtml(element.InnerRml);
             textEditor = new ElementTextEditor(rml);
