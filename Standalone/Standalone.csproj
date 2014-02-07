@@ -102,6 +102,9 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\PopulateFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\SetData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\ChangeLayersCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\ChangeTeethHighlightsCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\RestoreTeethHighlightsCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\SaveTeethHighlightsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\ChangeMedicalStateCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\RestoreMusclePositionCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SaveMusclePositionCommand.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateLastCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateToCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateToIndexCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\TeethHighlightState.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseAllViewsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseViewIfOpen.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseViewCommand.cs" />

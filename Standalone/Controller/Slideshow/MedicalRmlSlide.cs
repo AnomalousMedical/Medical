@@ -44,7 +44,7 @@ namespace Medical
             }
             if (info.hasValue("layers"))
             {
-                slide.StartupAction = new SetupSceneAction("Show", info.GetValue<CameraPosition>("cameraPosition", null), info.GetValue<LayerState>("layers", null), info.GetValue<MusclePosition>("musclePosition", null), info.GetValue<PresetState>("medicalState", null));
+                slide.StartupAction = new SetupSceneAction("Show", info.GetValue<CameraPosition>("cameraPosition", null), info.GetValue<LayerState>("layers", null), info.GetValue<MusclePosition>("musclePosition", null), info.GetValue<PresetState>("medicalState", null), true, false);
             }
             return slide;
         }

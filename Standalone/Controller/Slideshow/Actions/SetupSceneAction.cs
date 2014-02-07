@@ -23,15 +23,17 @@ namespace Medical.SlideshowActions
             Camera = true;
             Muscles = true;
             MedicalState = true;
+            HighlightTeeth = true;
         }
 
-        public SetupSceneAction(String name, CameraPosition cameraPosition, LayerState layers, MusclePosition musclePosition, PresetState medicalState)
+        public SetupSceneAction(String name, CameraPosition cameraPosition, LayerState layers, MusclePosition musclePosition, PresetState medicalState, bool captureHighlight, bool isHighlighted)
         {
             action = new RunCommandsAction(name);
             Layers = layers != null;
             Camera = cameraPosition != null;
             Muscles = musclePosition != null;
             MedicalState = medicalState != null;
+            HighlightTeeth = captureHighlight;
 
             if (Layers)
             {
@@ -59,6 +61,11 @@ namespace Medical.SlideshowActions
                 ChangeMedicalStateCommand medicalStateCommand = new ChangeMedicalStateCommand();
                 medicalStateCommand.PresetState = medicalState;
                 action.addCommand(medicalStateCommand);
+            }
+
+            if (HighlightTeeth)
+            {
+                action.addCommand(new ChangeTeethHighlightsCommand(isHighlighted));
             }
         }
 
@@ -107,6 +114,11 @@ namespace Medical.SlideshowActions
                 medState.update();
                 medicalState.captureFromMedicalState(medState);
                 action.addCommand(medicalState);
+            }
+
+            if (HighlightTeeth)
+            {
+                action.addCommand(new ChangeTeethHighlightsCommand(TeethController.HighlightContacts));
             }
         }
 
@@ -160,6 +172,9 @@ namespace Medical.SlideshowActions
 
         [Editable]
         public bool MedicalState { get; set; }
+
+        [Editable]
+        public bool HighlightTeeth { get; set; }
 
         public override string Name
         {

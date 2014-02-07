@@ -221,6 +221,13 @@ namespace Medical.Controller.AnomalousMvc
             musclePosition.addChild(new BrowserNode("Restore Muscle Position", typeof(RestoreMusclePositionCommand), iconName: "MvcContextEditor/MusclePositionRestoreIcon"));
             rootNode.addChild(musclePosition);
 
+            //Teeth Highlight
+            BrowserNode teethHighlights = new BrowserNode("Teeth Highlights", null, iconName: CommonResources.NoIcon);
+            teethHighlights.addChild(new BrowserNode("Highlight Teeth", typeof(ChangeTeethHighlightsCommand), iconName: CommonResources.NoIcon));
+            teethHighlights.addChild(new BrowserNode("Save Highlight Teeth", typeof(SaveTeethHighlightsCommand), iconName: CommonResources.NoIcon));
+            teethHighlights.addChild(new BrowserNode("Restore Highlight Teeth", typeof(RestoreTeethHighlightsCommand), iconName: CommonResources.NoIcon));
+            rootNode.addChild(teethHighlights);
+
             return browser;
         }
     }
