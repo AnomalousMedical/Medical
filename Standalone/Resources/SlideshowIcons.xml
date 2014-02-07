@@ -12,7 +12,7 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/BackInactive">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="32 0"/>
+        <Frame point="0 32"/>
       </Index>
     </Group>
   </Resource>
@@ -20,7 +20,7 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/Forward">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="64 0"/>
+        <Frame point="32 0"/>
       </Index>
     </Group>
   </Resource>
@@ -28,7 +28,7 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/ForwardInactive">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="96 0"/>
+        <Frame point="32 32"/>
       </Index>
     </Group>
   </Resource>
@@ -36,7 +36,15 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/NormalVectorToggle">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="128 0"/>
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/NormalVectorVToggle">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 0"/>
       </Index>
     </Group>
   </Resource>
@@ -44,7 +52,7 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomIn">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="160 0"/>
+        <Frame point="64 32"/>
       </Index>
     </Group>
   </Resource>
@@ -52,7 +60,7 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomOut">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="192 0"/>
+        <Frame point="96 32"/>
       </Index>
     </Group>
   </Resource>

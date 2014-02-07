@@ -197,13 +197,13 @@ namespace Lecture
             styleManager = new SlideshowStyleManager(editorController, uiCallback);
             styleManager.addStyleFile(Path.Combine(slide.UniqueName, Slide.StyleSheetName), "This Slide");
             styleManager.addStyleFile("SlideMasterStyles.rcss", "All Slides");
-            taskbar.addTask(new CallbackTask("EditSlideshowTheme", "Edit Slideshow Theme", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("EditSlideshowTheme", "Edit Slideshow Theme", "Lecture.Icon.EditStyle", "Edit", 0, true, item =>
             {
                 IntVector2 taskPosition = item.CurrentTaskPositioner.findGoodWindowPosition(SlideshowStyleManager.Width, SlideshowStyleManager.Height);
                 styleManager.showEditor(taskPosition.x, taskPosition.y);
             }));
 
-            taskbar.addTask(new CallbackTask("ResetSlide", "Reset Slide", CommonResources.NoIcon, "Edit", 0, true, item =>
+            taskbar.addTask(new CallbackTask("ResetSlide", "Reset Slide", "Lecture.Icon.RevertIcon", "Edit", 0, true, item =>
             {
                 mvcContext.runAction("Editor/SetupScene");
             }));
