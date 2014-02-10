@@ -4,7 +4,6 @@ using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 
 namespace Medical.GUI.RmlWysiwyg.Elements
@@ -15,7 +14,14 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         {
             if (rml != null)
             {
-                return WebUtility.HtmlDecode(rml.Replace("<br />", "\n"));
+                //Rml only needs encoding for the following
+                StringBuilder sbRml = new StringBuilder(rml);
+                sbRml.Replace("<br />", "\n");
+                //sbRml.Replace(@"\u00A0", "&nbsp;"); //Don't worry about nbsp
+                sbRml.Replace("&gt;", ">");
+                sbRml.Replace("&lt;", "<");
+                sbRml.Replace("&amp;", "&");
+                return sbRml.ToString();
             }
             return null;
         }
@@ -24,7 +30,14 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         {
             if (rml != null)
             {
-                return WebUtility.HtmlEncode(rml).Replace("\n", "<br />");
+                //Rml only needs encoding for the following
+                StringBuilder sbRml = new StringBuilder(rml);
+                sbRml.Replace("&", "&amp;");
+                sbRml.Replace("<", "&lt;");
+                sbRml.Replace(">", "&gt;");
+                //sbRml.Replace(@"\u00A0", "&nbsp;"); //Don't worry about nbsp
+                sbRml.Replace("\n", "<br />");
+                return sbRml.ToString();
             }
             return null;
         }
