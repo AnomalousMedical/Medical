@@ -19,6 +19,7 @@ namespace Lecture
         public event Action SlideshowClosed;
         public event Action<Slide, int> SlideAdded;
         public event Action<Slide> SlideRemoved;
+        public event Action<SlideshowEditController> VectorModeChanged;
         public event Action RequestRemoveSelected;
         public event Action<AnomalousMvcContext> SlideshowContextStarting;
         public event Action<AnomalousMvcContext> SlideshowContextBlurred;
@@ -841,6 +842,34 @@ namespace Lecture
             get
             {
                 return slideImageManager;
+            }
+        }
+
+        /// <summary>
+        /// Returns or sets the VectorMode of the current slideshow,
+        /// if there is no slideshow this value will be true and your
+        /// changes will not take effect.
+        /// </summary>
+        public bool VectorMode
+        {
+            get
+            {
+                if (slideshow != null)
+                {
+                    return slideshow.VectorMode;
+                }
+                return true;
+            }
+            set
+            {
+                if (slideshow != null && slideshow.VectorMode != value)
+                {
+                    slideshow.VectorMode = value;
+                    if (VectorModeChanged != null)
+                    {
+                        VectorModeChanged.Invoke(this);
+                    }
+                }
             }
         }
 

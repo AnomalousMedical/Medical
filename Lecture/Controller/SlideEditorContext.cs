@@ -57,6 +57,7 @@ namespace Lecture
         private bool forceUpdateThumbOnBlur = false;
         private DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop;
         private SlideshowStyleManager styleManager;
+        private SlideDisplayManager displayManager;
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
@@ -78,6 +79,8 @@ namespace Lecture
             this.editorController = editorController;
             panelResizeWidget = new PanelResizeWidget();
             panelResizeWidget.RecordResizeUndo += panelResizeWidget_RecordResizeUndo;
+
+            displayManager = new SlideDisplayManager(editorController.VectorMode);
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
             triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", notificationManager);
@@ -240,6 +243,7 @@ namespace Lecture
                         currentRmlEditor = null;
                         setCurrentRmlEditor(current);
                     }
+                    this.slideEditorController.VectorModeChanged += slideEditorController_VectorModeChanged;
                 }),
                 new CallbackAction("Blur", blur),
                 new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),
@@ -549,6 +553,7 @@ namespace Lecture
 
         private void blur(AnomalousMvcContext context)
         {
+            this.slideEditorController.VectorModeChanged -= slideEditorController_VectorModeChanged;
             commitText(forceUpdateThumbOnBlur);
             if (editorController.ResourceProvider != null) //If this is null the project is closed, no reason to try to save the text
             {
@@ -597,7 +602,6 @@ namespace Lecture
             }
             rmlEditors.Clear();
 
-            SlideDisplayManager displayManager = new SlideDisplayManager();
             foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
             {
                 SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy(displayManager);
@@ -794,6 +798,15 @@ namespace Lecture
                     ExecuteFunc = editorController.applySlideLayout,
                     UndoFunc = editorController.applySlideLayout, 
                 }));
+        }
+
+        void slideEditorController_VectorModeChanged(SlideshowEditController obj)
+        {
+            displayManager.VectorMode = obj.VectorMode;
+            if (rmlEditors.Count > 0)
+            {
+                rmlEditors.First().Value.Component.ViewHost.Container.invalidate();
+            }
         }
 
         private void makeTempPresets()

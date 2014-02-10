@@ -10,11 +10,11 @@ namespace Medical
         public event Action<SlideDisplayManager> DisplayModeChanged;
 
         private float additionalZoomLevel = 1.0f;
-        private bool vectorMode = true;
+        private bool vectorMode;
 
-        public SlideDisplayManager()
+        public SlideDisplayManager(bool vectorMode)
         {
-            
+            this.vectorMode = vectorMode;
         }
 
         public float AdditionalZoomMultiple

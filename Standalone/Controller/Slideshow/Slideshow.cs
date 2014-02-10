@@ -34,6 +34,7 @@ namespace Medical
         private List<Slide> slides = new List<Slide>();
 
         private int version;
+        private bool vectorMode = true;
 
         public Slideshow()
         {
@@ -77,7 +78,7 @@ namespace Medical
 
         public AnomalousMvcContext createContext(ResourceProvider resourceProvider, GUIManager guiManager, int startIndex = 0)
         {
-            SlideshowRuntime slideshowRuntime = new SlideshowRuntime(slides, resourceProvider, guiManager, startIndex, additionalTasks);
+            SlideshowRuntime slideshowRuntime = new SlideshowRuntime(this, resourceProvider, guiManager, startIndex, additionalTasks);
             return slideshowRuntime.Context;
         }
 
@@ -111,6 +112,18 @@ namespace Medical
             get
             {
                 return version;
+            }
+        }
+
+        public bool VectorMode
+        {
+            get
+            {
+                return vectorMode;
+            }
+            set
+            {
+                vectorMode = value;
             }
         }
 

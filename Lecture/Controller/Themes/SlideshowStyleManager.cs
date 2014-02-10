@@ -24,6 +24,7 @@ namespace Lecture
             this.editorController = editorController;
             this.uiCallback = uiCallback;
             editInterface = new EditInterface("Theme");
+            ReflectedEditInterface.expandEditInterface(this, ReflectedEditInterface.DefaultScanner, editInterface);
         }
 
         public void showEditor(int left, int top)
@@ -54,6 +55,19 @@ namespace Lecture
                 editorController.refreshRmlAndThumbnail();
             };
             editInterface.addSubInterface(style.getEditInterface());
+        }
+
+        [Editable(Advanced=true)]
+        public bool VectorMode
+        {
+            get
+            {
+                return editorController.VectorMode;
+            }
+            set
+            {
+                editorController.VectorMode = value;
+            }
         }
     }
 }

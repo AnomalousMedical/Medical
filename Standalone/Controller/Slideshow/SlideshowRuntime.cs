@@ -39,7 +39,7 @@ namespace Medical
         private EventContext eventContext;
         private GUIManager guiManager;
 
-        public SlideshowRuntime(List<Slide> slides, ResourceProvider resourceProvider, GUIManager guiManager, int startIndex, TaskController additionalTasks)
+        public SlideshowRuntime(Slideshow slideshow, ResourceProvider resourceProvider, GUIManager guiManager, int startIndex, TaskController additionalTasks)
         {
             this.guiManager = guiManager;
 
@@ -49,8 +49,8 @@ namespace Medical
                 mvcContext = SharedXmlSaver.Load<AnomalousMvcContext>(resourceStream);
             }
             navModel = (NavigationModel)mvcContext.Models[SlideshowProps.BaseContextProperties.NavigationModel];
-            displayManager = new SlideDisplayManager();
-            foreach (Slide slide in slides)
+            displayManager = new SlideDisplayManager(slideshow.VectorMode);
+            foreach (Slide slide in slideshow.Slides)
             {
                 String slideName = slide.UniqueName;
                 slide.setupContext(mvcContext, slideName, resourceProvider, displayManager);
