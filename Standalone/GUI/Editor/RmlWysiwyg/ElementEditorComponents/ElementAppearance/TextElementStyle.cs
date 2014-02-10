@@ -19,6 +19,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private int? marginTop = null;
         private int? marginBottom = null;
         private bool _break = false;
+        private bool flow = false;
 
         private String marginSource = "margin";
         private bool usePadding = false;
@@ -54,6 +55,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
             marginTop = inlineCss.intValue(marginSource + "-top");
             marginBottom = inlineCss.intValue(marginSource + "-bottom");
+            flow = inlineCss.contains("display") && "inline".Equals(inlineCss["display"], StringComparison.InvariantCultureIgnoreCase);
         }
 
         public override bool buildClassList(StringBuilder classes)
@@ -98,6 +100,10 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if (marginBottom != null)
             {
                 styleAttribute.AppendFormat(marginSource + "-bottom:{0}px;", marginBottom);
+            }
+            if (flow)
+            {
+                styleAttribute.AppendFormat("display:inline;");
             }
             return true;
         }
@@ -268,6 +274,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (marginTop != value)
                 {
                     marginTop = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public bool Flow
+        {
+            get
+            {
+                return flow;
+            }
+            set
+            {
+                if (flow != value)
+                {
+                    flow = value;
                     fireChanged();
                 }
             }
