@@ -1,5 +1,8 @@
-﻿using Medical.Controller.AnomalousMvc;
+﻿using Engine.Platform;
+using Medical.Controller;
+using Medical.Controller.AnomalousMvc;
 using Medical.GUI;
+using Medical.Platform;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +14,15 @@ namespace Medical
 {
     class SlideshowRuntime
     {
+        enum Events
+        {
+            Next,
+            Back,
+            ZoomIn,
+            ZoomOut,
+            Close
+        }
+
         public const String SlideTaskbarName = "SlideTaskbar";
         private const String PreviousTaskName = "SlideshowIcons/Back";
         private const String PreviousTaskDisabledName = "SlideshowIcons/BackInactive";
@@ -24,9 +36,13 @@ namespace Medical
         private ClosingTaskbar taskbar;
         private SingleChildChainLink taskbarLink;
         private SlideDisplayManager displayManager;
+        private EventContext eventContext;
+        private GUIManager guiManager;
 
         public SlideshowRuntime(List<Slide> slides, ResourceProvider resourceProvider, GUIManager guiManager, int startIndex, TaskController additionalTasks)
         {
+            this.guiManager = guiManager;
+
             Assembly assembly = Assembly.GetExecutingAssembly();
             using (Stream resourceStream = assembly.GetManifestResourceStream(SlideshowProps.BaseContextProperties.File))
             {
@@ -51,16 +67,14 @@ namespace Medical
 
             taskbar = new ClosingTaskbar();
             taskbarLink = new SingleChildChainLink(SlideTaskbarName, taskbar);
-            taskbar.Close += () => mvcContext.runAction("Common/Close");
+            taskbar.Close += close;
             previousTask = new CallbackTask("Slideshow.Back", "Back", PreviousTaskName, "None", arg =>
             {
-                mvcContext.runAction("NavigationBug/Previous");
-                setNavigationIcons();
+                back();
             });
             nextTask = new CallbackTask("Slideshow.Forward", "Forward", NextTaskName, "None", arg =>
             {
-                mvcContext.runAction("NavigationBug/Next");
-                setNavigationIcons();
+                next();
             });
             taskbar.addItem(new TaskTaskbarItem(previousTask));
             taskbar.addItem(new TaskTaskbarItem(nextTask));
@@ -71,52 +85,53 @@ namespace Medical
             })));
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomIn", "Zoom In", "SlideshowIcons/ZoomIn", "None", arg =>
             {
-                if (displayManager.AdditionalZoomMultiple < 0.8f)
-                {
-                    displayManager.AdditionalZoomMultiple = 0.8f;
-                }
-                else if (displayManager.AdditionalZoomMultiple < 1.0f)
-                {
-                    displayManager.AdditionalZoomMultiple = 1.0f;
-                }
-                else if (displayManager.AdditionalZoomMultiple < 1.3f)
-                {
-                    displayManager.AdditionalZoomMultiple = 1.3f;
-                }
-                else if (displayManager.AdditionalZoomMultiple < 1.7f)
-                {
-                    displayManager.AdditionalZoomMultiple = 1.7f;
-                }
-                else
-                {
-                    displayManager.AdditionalZoomMultiple = 2.0f;
-                }
-                guiManager.layout();
+                zoomIn();
             })));
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomOut", "Zoom Out", "SlideshowIcons/ZoomOut", "None", arg =>
             {
-                if (displayManager.AdditionalZoomMultiple > 1.7f)
-                {
-                    displayManager.AdditionalZoomMultiple = 1.7f;
-                }
-                else if (displayManager.AdditionalZoomMultiple > 1.3f)
-                {
-                    displayManager.AdditionalZoomMultiple = 1.3f;
-                }
-                else if (displayManager.AdditionalZoomMultiple > 1.0f)
-                {
-                    displayManager.AdditionalZoomMultiple = 1.0f;
-                }
-                else if (displayManager.AdditionalZoomMultiple > 0.8f)
-                {
-                    displayManager.AdditionalZoomMultiple = 0.8f;
-                }
-                else
-                {
-                    displayManager.AdditionalZoomMultiple = 0.5f;
-                }
-                guiManager.layout();
+                zoomOut();
             })));
+
+            eventContext = new EventContext();
+            MessageEvent nextEvent = new MessageEvent(Events.Next);
+            nextEvent.addButton(KeyboardButtonCode.KC_RIGHT);
+            nextEvent.FirstFrameUpEvent += eventManager =>
+            {
+                next();
+            };
+            eventContext.addEvent(nextEvent);
+
+            MessageEvent backEvent = new MessageEvent(Events.Back);
+            backEvent.addButton(KeyboardButtonCode.KC_LEFT);
+            backEvent.FirstFrameUpEvent += eventManager =>
+            {
+                back();
+            };
+            eventContext.addEvent(backEvent);
+
+            MessageEvent zoomInEvent = new MessageEvent(Events.ZoomIn);
+            zoomInEvent.addButton(KeyboardButtonCode.KC_EQUALS);
+            zoomInEvent.FirstFrameUpEvent += eventManager =>
+            {
+                zoomIn();
+            };
+            eventContext.addEvent(zoomInEvent);
+
+            MessageEvent zoomOutEvent = new MessageEvent(Events.ZoomOut);
+            zoomOutEvent.addButton(KeyboardButtonCode.KC_MINUS);
+            zoomOutEvent.FirstFrameUpEvent += eventManager =>
+            {
+                zoomOut();
+            };
+            eventContext.addEvent(zoomOutEvent);
+
+            MessageEvent closeEvent = new MessageEvent(Events.Close);
+            closeEvent.addButton(KeyboardButtonCode.KC_ESCAPE);
+            closeEvent.FirstFrameUpEvent += eventManager =>
+            {
+                ThreadManager.invoke(close); //Delay so we do not modify the input collection
+            };
+            eventContext.addEvent(closeEvent);
 
             foreach (Task task in additionalTasks.Tasks)
             {
@@ -127,17 +142,24 @@ namespace Medical
             {
                 guiManager.deactivateLink(SlideTaskbarName);
                 guiManager.removeLinkFromChain(taskbarLink);
+                GlobalContextEventHandler.disableEventContext(eventContext);
             };
             mvcContext.Focused += (ctx) =>
             {
                 guiManager.addLinkToChain(taskbarLink);
                 guiManager.pushRootContainer(SlideTaskbarName);
                 setNavigationIcons();
+                GlobalContextEventHandler.setEventContext(eventContext);
             };
             mvcContext.RemovedFromStack += (ctx) =>
             {
                 taskbar.Dispose();
             };
+        }
+
+        private void close()
+        {
+            mvcContext.runAction("Common/Close");
         }
 
         public AnomalousMvcContext Context
@@ -152,6 +174,68 @@ namespace Medical
         {
             previousTask.setIcon(navModel.HasPrevious ? PreviousTaskName : PreviousTaskDisabledName);
             nextTask.setIcon(navModel.HasNext ? NextTaskName : NextTaskDisabledName);
+        }
+
+        private void zoomOut()
+        {
+            if (displayManager.AdditionalZoomMultiple > 1.7f)
+            {
+                displayManager.AdditionalZoomMultiple = 1.7f;
+            }
+            else if (displayManager.AdditionalZoomMultiple > 1.3f)
+            {
+                displayManager.AdditionalZoomMultiple = 1.3f;
+            }
+            else if (displayManager.AdditionalZoomMultiple > 1.0f)
+            {
+                displayManager.AdditionalZoomMultiple = 1.0f;
+            }
+            else if (displayManager.AdditionalZoomMultiple > 0.8f)
+            {
+                displayManager.AdditionalZoomMultiple = 0.8f;
+            }
+            else
+            {
+                displayManager.AdditionalZoomMultiple = 0.5f;
+            }
+            guiManager.layout();
+        }
+
+        private void zoomIn()
+        {
+            if (displayManager.AdditionalZoomMultiple < 0.8f)
+            {
+                displayManager.AdditionalZoomMultiple = 0.8f;
+            }
+            else if (displayManager.AdditionalZoomMultiple < 1.0f)
+            {
+                displayManager.AdditionalZoomMultiple = 1.0f;
+            }
+            else if (displayManager.AdditionalZoomMultiple < 1.3f)
+            {
+                displayManager.AdditionalZoomMultiple = 1.3f;
+            }
+            else if (displayManager.AdditionalZoomMultiple < 1.7f)
+            {
+                displayManager.AdditionalZoomMultiple = 1.7f;
+            }
+            else
+            {
+                displayManager.AdditionalZoomMultiple = 2.0f;
+            }
+            guiManager.layout();
+        }
+
+        private void next()
+        {
+            mvcContext.runAction("NavigationBug/Next");
+            setNavigationIcons();
+        }
+
+        private void back()
+        {
+            mvcContext.runAction("NavigationBug/Previous");
+            setNavigationIcons();
         }
     }
 }
