@@ -78,3 +78,15 @@ a.TriggerLink:hover
 {
 	text-decoration: underline;
 }
+
+h1.Flow,
+h2.Flow,
+h3.Flow,
+h4.Flow,
+h5.Flow,
+h6.Flow,
+p.Flow,
+a.Flow
+{
+	display:inline;
+}

@@ -49,6 +49,7 @@ namespace Medical.GUI
         private Element element;
         private TabControl tabs;
         private List<ElementEditorComponent> editorComponents = new List<ElementEditorComponent>();
+        private bool checkDeleteOnClose = true;
 
         protected RmlElementEditor(Element element, ElementStrategy elementStrategy)
             : base("Medical.GUI.Editor.RmlWysiwyg.RmlElementEditor.layout")
@@ -108,7 +109,11 @@ namespace Medical.GUI
         /// <returns>True if changes are made.</returns>
         public bool deleteIfNeeded(RmlWysiwygComponent component)
         {
-            return elementStrategy.delete(element, this, component);
+            if (checkDeleteOnClose)
+            {
+                return elementStrategy.delete(element, this, component);
+            }
+            return false; //No changes made
         }
 
         /// <summary>
@@ -145,6 +150,7 @@ namespace Medical.GUI
 
         void delete_MouseButtonClick(Widget source, EventArgs e)
         {
+            checkDeleteOnClose = false;
             if (DeleteElement != null)
             {
                 DeleteElement.Invoke(element);

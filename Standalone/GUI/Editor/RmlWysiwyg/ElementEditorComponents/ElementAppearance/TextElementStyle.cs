@@ -39,6 +39,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 italic = splitClasses.FirstOrDefault(c => "Italic".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
                 bold = splitClasses.FirstOrDefault(c => "Bold".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
                 _break = splitClasses.FirstOrDefault(c => "Break".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
+                flow = splitClasses.FirstOrDefault(c => "Flow".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
             }
             InlineCssParser inlineCss = new InlineCssParser(element.GetAttributeString("style"));
             if (inlineCss.contains("color"))
@@ -55,7 +56,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
             marginTop = inlineCss.intValue(marginSource + "-top");
             marginBottom = inlineCss.intValue(marginSource + "-bottom");
-            flow = inlineCss.contains("display") && "inline".Equals(inlineCss["display"], StringComparison.InvariantCultureIgnoreCase);
         }
 
         public override bool buildClassList(StringBuilder classes)
@@ -75,6 +75,10 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if (_break)
             {
                 classes.Append("Break ");
+            }
+            if (flow)
+            {
+                classes.Append("Flow ");
             }
             return true;
         }
@@ -100,10 +104,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if (marginBottom != null)
             {
                 styleAttribute.AppendFormat(marginSource + "-bottom:{0}px;", marginBottom);
-            }
-            if (flow)
-            {
-                styleAttribute.AppendFormat("display:inline;");
             }
             return true;
         }
