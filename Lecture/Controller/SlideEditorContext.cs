@@ -32,7 +32,8 @@ namespace Lecture
             Save,
             Undo,
             Redo,
-            Run
+            Run,
+            Capture
         }
 
         private Dictionary<String, RmlEditorViewInfo> rmlEditors = new Dictionary<string, RmlEditorViewInfo>();
@@ -282,6 +283,15 @@ namespace Lecture
                 });
             };
             eventContext.addEvent(runEvent);
+
+            MessageEvent captureEvent = new MessageEvent(Events.Capture);
+            captureEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
+            captureEvent.addButton(KeyboardButtonCode.KC_SPACE);
+            captureEvent.FirstFrameUpEvent += eventManager =>
+            {
+                editorController.capture();
+            };
+            eventContext.addEvent(captureEvent);
         }
 
         public void close()
