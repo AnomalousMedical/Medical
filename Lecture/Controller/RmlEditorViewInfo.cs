@@ -85,7 +85,15 @@ namespace Lecture
 
         internal void resizePanel(int size)
         {
-            float ratio = (float)Slideshow.BaseSlideScale / Component.ViewHost.Container.RigidParentWorkingSize.Height;
+            float ratio = Component.getScale();
+            if (ratio == 0.0f)
+            {
+                ratio = 1f;
+            }
+            else
+            {
+                ratio = 1f / ratio;
+            }
             Panel.Size = ScaleHelper.Unscaled((int)(size * ratio));
             Component.ViewHost.Container.invalidate();
         }

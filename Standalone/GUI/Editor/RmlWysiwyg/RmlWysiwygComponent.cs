@@ -202,6 +202,11 @@ namespace Medical.GUI
             }
         }
 
+        public float getScale()
+        {
+            return rocketWidget.Context.ZoomLevel;
+        }
+
         public void aboutToSaveRml()
         {
             if (currentEditor != null)
