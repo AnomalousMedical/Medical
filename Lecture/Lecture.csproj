@@ -120,7 +120,9 @@
     <EmbeddedResource Include="Resources\BrandingIcon.png" />
     <EmbeddedResource Include="Resources\BrandingIcon.xml" />
     <EmbeddedResource Include="Resources\Icons.png" />
-    <EmbeddedResource Include="Resources\Icons.xml" />
+    <EmbeddedResource Include="Resources\Icons.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Imagesets.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

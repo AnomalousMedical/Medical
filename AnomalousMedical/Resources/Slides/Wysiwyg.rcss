@@ -55,6 +55,19 @@ a.Italic
 	font-style:italic;
 }
 
+h1.Break,
+h2.Break,
+h3.Break,
+h4.Break,
+h5.Break,
+h6.Break,
+p.Break,
+a.Break,
+img.Break
+{
+	clear:both;
+}
+
 a.TriggerLink
 {
 	display:block;

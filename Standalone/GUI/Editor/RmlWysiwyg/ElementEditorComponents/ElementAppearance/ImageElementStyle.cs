@@ -26,6 +26,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private Vector2 offset = new Vector2();
         private int? textSideMargin = 0;
         private int? textBottomMargin = 0;
+        private bool _break = false;
 
         public ImageElementStyle(Element imageElement)
         {
@@ -42,6 +43,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 {
                     textAlign = ImageTextAlign.Right;
                 }
+                _break = splitClasses.FirstOrDefault(c => "Break".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
             }
             InlineCssParser inlineCss = new InlineCssParser(imageElement.GetAttributeString("style"));
             if (inlineCss.contains("width"))
@@ -85,6 +87,10 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 case ImageTextAlign.Right:
                     classes.Append("RightText");
                     break;
+            }
+            if (_break)
+            {
+                classes.Append("Break ");
             }
             return true;
         }
@@ -309,6 +315,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (textBottomMargin != value)
                 {
                     textBottomMargin = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public bool Break
+        {
+            get
+            {
+                return _break;
+            }
+            set
+            {
+                if (_break != value)
+                {
+                    _break = value;
                     fireChanged();
                 }
             }

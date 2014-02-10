@@ -18,6 +18,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private int? fontSize = null;
         private int? marginTop = null;
         private int? marginBottom = null;
+        private bool _break = false;
 
         private String marginSource = "margin";
         private bool usePadding = false;
@@ -36,6 +37,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 center = splitClasses.FirstOrDefault(c => "Center".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
                 italic = splitClasses.FirstOrDefault(c => "Italic".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
                 bold = splitClasses.FirstOrDefault(c => "Bold".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
+                _break = splitClasses.FirstOrDefault(c => "Break".Equals(c, StringComparison.InvariantCultureIgnoreCase)) != null;
             }
             InlineCssParser inlineCss = new InlineCssParser(element.GetAttributeString("style"));
             if (inlineCss.contains("color"))
@@ -67,6 +69,10 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             if (center)
             {
                 classes.Append("Center ");
+            }
+            if (_break)
+            {
+                classes.Append("Break ");
             }
             return true;
         }
@@ -262,6 +268,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (marginTop != value)
                 {
                     marginTop = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public bool Break
+        {
+            get
+            {
+                return _break;
+            }
+            set
+            {
+                if (_break != value)
+                {
+                    _break = value;
                     fireChanged();
                 }
             }
