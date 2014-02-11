@@ -29,7 +29,7 @@ namespace Medical.GUI.AnomalousMvc
             this.eventController = view.createRocketEventController(context, viewHost);
 
             rmlImage = (ImageBox)widget;
-            rocketWidget = new RocketWidget(rmlImage);
+            rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent);
             imageHeight = rmlImage.Height;
 
             if (view.RmlFile != null)
@@ -62,7 +62,7 @@ namespace Medical.GUI.AnomalousMvc
             this.eventController = view.createRocketEventController(context, viewHost);
 
             rmlImage = (ImageBox)widget;
-            rocketWidget = new RocketWidget(rmlImage);
+            rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent);
             imageHeight = rmlImage.Height;
             if (view.FakePath != null)
             {

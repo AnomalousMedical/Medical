@@ -17,7 +17,7 @@ namespace Medical.GUI
             : base("Medical.GUI.RmlWindow.RmlWindow.layout")
         {
             rmlImage = (ImageBox)window.findWidget("RmlImage");
-            rocketWidget = new RocketWidget(rmlImage);
+            rocketWidget = new RocketWidget(rmlImage, false);
 
             window.WindowChangedCoord += window_WindowChangedCoord;
         }

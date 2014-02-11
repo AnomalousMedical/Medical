@@ -91,7 +91,7 @@ namespace Medical.GUI
             this.rmlWysiwygViewInterface = rmlWysiwygViewInterface;
 
             rmlImage = (ImageBox)widget;
-            rocketWidget = new RocketWidget(rmlImage);
+            rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent);
             rmlImage.MouseButtonPressed += rmlImage_MouseButtonPressed;
             rmlImage.MouseButtonReleased += rmlImage_MouseButtonReleased;
             rmlImage.MouseDrag += new MyGUIEvent(rmlImage_MouseDrag);

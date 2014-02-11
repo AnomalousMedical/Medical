@@ -14,6 +14,9 @@ namespace Medical.GUI
 {
     public class RocketWidget : IDisposable
     {
+        private const System.Drawing.Imaging.PixelFormat BitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+        private static readonly Engine.Color ClearColor = new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f);
+
         private const String RTT_BASE_NAME = "__RocketRTT{0}_{1}";
         private const int MAX_TEXTURE_SIZE_POW2 = 4096;
         private const int MIN_TEXTURE_SIZE_POW2 = 2;
@@ -29,6 +32,7 @@ namespace Medical.GUI
         private String textureName;
         private String name;
         private byte textureRenameIndex = 0;
+        private OgreWrapper.PixelFormat ogreTextureFormat = OgreWrapper.PixelFormat.PF_X8R8G8B8;
 
         private RocketRenderQueueListener renderQueueListener;
         private Context context;
@@ -44,9 +48,13 @@ namespace Medical.GUI
         bool renderOneFrame = true;
         bool alwaysRender = false;
 
-        public RocketWidget(ImageBox imageBox)
+        public RocketWidget(ImageBox imageBox, bool transparent)
         {
             this.imageBox = imageBox;
+            if (transparent)
+            {
+                ogreTextureFormat = OgreWrapper.PixelFormat.PF_A8R8G8B8;
+            }
             this.name = RocketWidgetManager.generateRocketWidgetName(this);
             generateTextureName();
 
@@ -57,12 +65,12 @@ namespace Medical.GUI
             sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "__libRocketScene_" + name);
             camera = sceneManager.createCamera("libRocketCamera");
 
-            texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)currentTextureWidth, (uint)currentTextureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+            texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)currentTextureWidth, (uint)currentTextureHeight, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
             renderTexture = pixelBuffer.Value.getRenderTarget();
             vp = renderTexture.addViewport(camera);
-            vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
+            vp.setBackgroundColor(ClearColor);
             vp.setOverlaysEnabled(false);
             vp.clear();
 
@@ -163,12 +171,12 @@ namespace Medical.GUI
 
                     generateTextureName();
 
-                    texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                    texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
 
                     pixelBuffer = texture.Value.getBuffer();
                     renderTexture = pixelBuffer.Value.getRenderTarget();
                     vp = renderTexture.addViewport(camera);
-                    vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
+                    vp.setBackgroundColor(ClearColor);
                     vp.setOverlaysEnabled(false);
                     vp.clear();
 
@@ -230,14 +238,15 @@ namespace Medical.GUI
 
             unsafe
             {
-                OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
-                System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
-                using (Bitmap fullBitmap = new Bitmap(currentTextureWidth, currentTextureHeight, bitmapFormat))
+                using (Bitmap fullBitmap = new Bitmap(currentTextureWidth, currentTextureHeight, BitmapFormat))
                 {
                     BitmapData bmpData = fullBitmap.LockBits(new Rectangle(new Point(), fullBitmap.Size), ImageLockMode.WriteOnly, fullBitmap.PixelFormat);
-                    using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
+                    using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, ogreTextureFormat, bmpData.Scan0.ToPointer()))
                     {
                         renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
+
+                        //Remove alpha
+                        BitmapDataExtensions.SetAlpha(bmpData, 255);
                     }
                     fullBitmap.UnlockBits(bmpData);
 

@@ -14,7 +14,7 @@ namespace Medical.GUI.RocketGui
         public RocketDebuggerWindow()
             :base("Medical.GUI.RocketGui.RocketDebuggerWindow.layout")
         {
-            rocketWidget = new RocketWidget((ImageBox)window.findWidget("RocketImage"));
+            rocketWidget = new RocketWidget((ImageBox)window.findWidget("RocketImage"), false);
             Debugger.Initialise(rocketWidget.Context);
             Debugger.SetVisible(true);
             this.Resized += RocketDebuggerWindow_Resized;
