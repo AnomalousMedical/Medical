@@ -8,12 +8,12 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PropertiesFormInt32 : ConstrainableFormComponent
+    class PropertiesFormInt32Nullable : ConstrainableFormComponent
     {
-        private Int32NumericEdit num;
+        private Int32NullableNumericEdit num;
         private bool allowValueChanges = true;
 
-        public PropertiesFormInt32(EditableProperty property, Widget parent)
+        public PropertiesFormInt32Nullable(EditableProperty property, Widget parent)
             : base(property, parent, "Medical.GUI.Editor.PropertiesForm.PropertiesFormTextBox.layout")
         {
             widget.ForwardMouseWheelToParent = true;
@@ -22,14 +22,14 @@ namespace Medical.GUI
             textBox.Caption = property.getValue(0);
             textBox.ForwardMouseWheelToParent = true;
 
-            num = new Int32NumericEdit((EditBox)widget.findWidget("EditBox"));
-            num.Value = (Int32)property.getRealValue(1);
+            num = new Int32NullableNumericEdit((EditBox)widget.findWidget("EditBox"));
+            num.Value = (Int32?)property.getRealValue(1);
             num.ValueChanged += new MyGUIEvent(editBox_ValueChanged);
         }
 
         public override void refreshData()
         {
-            num.Value = (Int32)Property.getRealValue(1);
+            num.Value = (Int32?)Property.getRealValue(1);
         }
 
         public override void setConstraints(ReflectedMinMaxEditableProperty minMaxProp)

@@ -34,9 +34,9 @@ namespace Medical.GUI
 
         public override void setConstraints(ReflectedMinMaxEditableProperty minMaxProp)
         {
-            num.MinValue = minMaxProp.MinValue;
-            num.MaxValue = minMaxProp.MaxValue;
-            num.Increment = minMaxProp.Increment;
+            num.MinValue = minMaxProp.MinValue.AsSingle;
+            num.MaxValue = minMaxProp.MaxValue.AsSingle;
+            num.Increment = minMaxProp.Increment.AsSingle;
         }
 
         void editBox_ValueChanged(Widget source, EventArgs e)

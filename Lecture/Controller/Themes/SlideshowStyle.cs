@@ -138,7 +138,7 @@ namespace Lecture
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, int.MaxValue, 1)]
         public int? LeftMargin
         {
             get
@@ -155,7 +155,7 @@ namespace Lecture
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, int.MaxValue, 1)]
         public int? RightMargin
         {
             get
@@ -172,7 +172,7 @@ namespace Lecture
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, int.MaxValue, 1)]
         public int? TopMargin
         {
             get
@@ -189,7 +189,7 @@ namespace Lecture
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, int.MaxValue, 1)]
         public int? BottomMargin
         {
             get
