@@ -121,7 +121,7 @@ namespace Lecture
             }
         }
 
-        [Editable]
+        [EditableMinMax(0, 250, 1)]
         public int? FontSize
         {
             get
