@@ -20,6 +20,7 @@ namespace Medical.GUI
         private MedicalUICallback uiCallback;
         private EditInterface currentEditInterface;
         private EditablePropertyInfo currentPropInfo;
+        private int rightPadding = ScaleHelper.Scaled(2);
 
         //These control the advanced button, it will appear if there are advanced properties in the 
         //edit interface, once the user clicks on it it will disappear and all advanced properties will
@@ -59,7 +60,7 @@ namespace Medical.GUI
         {
             int height = flowLayout.DesiredSize.Height;
             int width = widget.Width;
-            flowLayout.WorkingSize = new IntSize2(width, height);
+            flowLayout.WorkingSize = new IntSize2(width - rightPadding, height);
             flowLayout.layout();
             if (LayoutChanged != null)
             {
@@ -111,6 +112,26 @@ namespace Medical.GUI
             get
             {
                 return flowLayout.WorkingSize.Height;
+            }
+        }
+
+        public int DesiredHeight
+        {
+            get
+            {
+                return flowLayout.DesiredSize.Height;
+            }
+        }
+
+        public int RightPadding
+        {
+            get
+            {
+                return rightPadding;
+            }
+            set
+            {
+                rightPadding = value;
             }
         }
 

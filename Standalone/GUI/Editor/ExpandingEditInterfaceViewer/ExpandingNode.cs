@@ -104,6 +104,21 @@ namespace Medical.GUI
             }
         }
 
+        public int predictTotalHeight()
+        {
+            int height = 0;
+            if (Expanded)
+            {
+                height = propertiesForm.DesiredHeight;
+                foreach (ExpandingNode child in children)
+                {
+                    height += child.predictTotalHeight();
+                }
+                height += defaultHeight;
+            }
+            return height;
+        }
+
         public bool Expanded
         {
             get

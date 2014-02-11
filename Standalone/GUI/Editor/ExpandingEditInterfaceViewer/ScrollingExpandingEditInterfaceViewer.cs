@@ -21,6 +21,10 @@ namespace Medical.GUI
 
         public override void layout()
         {
+            //Set the height first to take care of scrollbars
+            int height = rootNode.predictTotalHeight();
+            scrollView.CanvasSize = new IntSize2(0, scrollView.Height);
+
             int currentWidth = scrollView.ViewCoord.width;
             if (lastWidth != currentWidth && rootNode != null)
             {
