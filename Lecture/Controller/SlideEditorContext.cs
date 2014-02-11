@@ -54,7 +54,6 @@ namespace Lecture
         private SlideLayoutPickerTask slideLayoutPicker;
         private SlideshowEditController editorController;
         private PanelResizeWidget panelResizeWidget;
-        private bool forceUpdateThumbOnBlur = false;
         private DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop;
         private SlideshowStyleManager styleManager;
         private SlideDisplayManager displayManager;
@@ -320,7 +319,6 @@ namespace Lecture
 
         public void applySlideLayout(TemplateSlide template)
         {
-            forceUpdateThumbOnBlur = true;
             template.copyLayoutToSlide(slide, editorController.ResourceProvider, false);
             refreshPanelEditors(true);
             updateThumbnail();
@@ -372,9 +370,9 @@ namespace Lecture
             slideEditorController.safeSave();
         }
 
-        public void commitText(bool forceUpdateThumb = false)
+        public void commitText()
         {
-            bool updateThumb = forceUpdateThumb;
+            bool updateThumb = false;
             foreach (var editor in rmlEditors.Values)
             {
                 updateThumb = editor.commitText() | updateThumb;
@@ -387,7 +385,6 @@ namespace Lecture
 
         public void updateThumbnail(bool forceUpdateSceneThumb = false)
         {
-            forceUpdateThumbOnBlur = false;
             Dictionary<RmlEditorViewInfo, LayoutContainer> layoutPositions = new Dictionary<RmlEditorViewInfo, LayoutContainer>();
             if (slideEditorController.ResourceProvider != null)
             {
@@ -554,7 +551,7 @@ namespace Lecture
         private void blur(AnomalousMvcContext context)
         {
             this.slideEditorController.VectorModeChanged -= slideEditorController_VectorModeChanged;
-            commitText(forceUpdateThumbOnBlur);
+            commitText();
             if (editorController.ResourceProvider != null) //If this is null the project is closed, no reason to try to save the text
             {
                 foreach (RmlSlidePanel panel in slide.Panels.Where(p => p is RmlSlidePanel))
@@ -786,7 +783,6 @@ namespace Lecture
 
         void panelResizeWidget_RecordResizeUndo(RmlEditorViewInfo view, int oldSize, int newSize)
         {
-            forceUpdateThumbOnBlur = true;
             updateThumbnail();
         }
 
