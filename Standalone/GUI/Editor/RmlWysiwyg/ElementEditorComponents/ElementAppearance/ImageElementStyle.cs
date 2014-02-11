@@ -202,23 +202,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         }
 
         [Editable]
-        public bool Center
-        {
-            get
-            {
-                return center;
-            }
-            set
-            {
-                if (center != value)
-                {
-                    center = value;
-                    fireChanged();
-                }
-            }
-        }
-
-        [Editable]
         public int Width
         {
             get
@@ -230,23 +213,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (width != value)
                 {
                     width = value;
-                    fireChanged();
-                }
-            }
-        }
-
-        [Editable]
-        public bool FixedSize
-        {
-            get
-            {
-                return fixedSize;
-            }
-            set
-            {
-                if (fixedSize != value)
-                {
-                    fixedSize = value;
                     fireChanged();
                 }
             }
@@ -269,52 +235,18 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1)]
-        public Vector2 Offset
+        [Editable]
+        public bool Center
         {
             get
             {
-                return offset;
+                return center;
             }
             set
             {
-                if (offset != value)
+                if (center != value)
                 {
-                    offset = value;
-                    fireChanged();
-                }
-            }
-        }
-
-        [EditableMinMax(0, int.MaxValue, 1)]
-        public int? TextSideMargin
-        {
-            get
-            {
-                return textSideMargin;
-            }
-            set
-            {
-                if (textSideMargin != value)
-                {
-                    textSideMargin = value;
-                    fireChanged();
-                }
-            }
-        }
-
-        [EditableMinMax(0, int.MaxValue, 1)]
-        public int? TextBottomMargin
-        {
-            get
-            {
-                return textBottomMargin;
-            }
-            set
-            {
-                if (textBottomMargin != value)
-                {
-                    textBottomMargin = value;
+                    center = value;
                     fireChanged();
                 }
             }
@@ -332,6 +264,74 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                 if (_break != value)
                 {
                     _break = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable(Advanced=true)]
+        public bool FixedSize
+        {
+            get
+            {
+                return fixedSize;
+            }
+            set
+            {
+                if (fixedSize != value)
+                {
+                    fixedSize = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        public Vector2 Offset
+        {
+            get
+            {
+                return offset;
+            }
+            set
+            {
+                if (offset != value)
+                {
+                    offset = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        public int? TextSideMargin
+        {
+            get
+            {
+                return textSideMargin;
+            }
+            set
+            {
+                if (textSideMargin != value)
+                {
+                    textSideMargin = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        public int? TextBottomMargin
+        {
+            get
+            {
+                return textBottomMargin;
+            }
+            set
+            {
+                if (textBottomMargin != value)
+                {
+                    textBottomMargin = value;
                     fireChanged();
                 }
             }

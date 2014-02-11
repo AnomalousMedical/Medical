@@ -55,7 +55,7 @@ namespace Medical.GUI
 
         public void AddItem(ItemType item)
         {
-            CallbackTaskWithObject<ItemType> task = new CallbackTaskWithObject<ItemType>(item.Name, item.Name, item.Icon, Category)
+            CallbackTaskWithObject<ItemType> task = new CallbackTaskWithObject<ItemType>(item.Name, String.Format("Add {0}", item.Name), item.Icon, Category)
             {
                 Draggable = true,
                 UserObject = item

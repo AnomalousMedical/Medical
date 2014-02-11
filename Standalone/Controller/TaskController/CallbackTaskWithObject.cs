@@ -12,7 +12,7 @@ namespace Medical
     public class CallbackTaskWithObject<T> : CallbackTask
     {
         public CallbackTaskWithObject(String uniqueName, String name, String iconName, String category)
-            : base(name, uniqueName, iconName, category, DEFAULT_WEIGHT, true)
+            : base(uniqueName, name, iconName, category, DEFAULT_WEIGHT, true)
         {
 
         }

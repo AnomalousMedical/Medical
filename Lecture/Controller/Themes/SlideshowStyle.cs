@@ -139,7 +139,7 @@ namespace Lecture
         }
 
         [Editable]
-        public int? MarginLeft
+        public int? LeftMargin
         {
             get
             {
@@ -156,7 +156,7 @@ namespace Lecture
         }
 
         [Editable]
-        public int? MarginRight
+        public int? RightMargin
         {
             get
             {
@@ -173,24 +173,7 @@ namespace Lecture
         }
 
         [Editable]
-        public int? MarginBottom
-        {
-            get
-            {
-                return marginBottom;
-            }
-            set
-            {
-                if (marginBottom != value)
-                {
-                    marginBottom = value;
-                    fireChanged();
-                }
-            }
-        }
-
-        [Editable]
-        public int? MarginTop
+        public int? TopMargin
         {
             get
             {
@@ -201,6 +184,23 @@ namespace Lecture
                 if (marginTop != value)
                 {
                     marginTop = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [Editable]
+        public int? BottomMargin
+        {
+            get
+            {
+                return marginBottom;
+            }
+            set
+            {
+                if (marginBottom != value)
+                {
+                    marginBottom = value;
                     fireChanged();
                 }
             }

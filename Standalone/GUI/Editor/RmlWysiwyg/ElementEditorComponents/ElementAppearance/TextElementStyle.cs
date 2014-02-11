@@ -246,40 +246,23 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         }
 
         [Editable]
-        public int? MarginBottom
+        public bool Break
         {
             get
             {
-                return marginBottom;
+                return _break;
             }
             set
             {
-                if (marginBottom != value)
+                if (_break != value)
                 {
-                    marginBottom = value;
+                    _break = value;
                     fireChanged();
                 }
             }
         }
 
-        [Editable]
-        public int? MarginTop
-        {
-            get
-            {
-                return marginTop;
-            }
-            set
-            {
-                if (marginTop != value)
-                {
-                    marginTop = value;
-                    fireChanged();
-                }
-            }
-        }
-
-        [Editable]
+        [Editable(Advanced=true)]
         public bool Flow
         {
             get
@@ -296,18 +279,35 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [Editable]
-        public bool Break
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        public int? TopMargin
         {
             get
             {
-                return _break;
+                return marginTop;
             }
             set
             {
-                if (_break != value)
+                if (marginTop != value)
                 {
-                    _break = value;
+                    marginTop = value;
+                    fireChanged();
+                }
+            }
+        }
+
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        public int? BottomMargin
+        {
+            get
+            {
+                return marginBottom;
+            }
+            set
+            {
+                if (marginBottom != value)
+                {
+                    marginBottom = value;
                     fireChanged();
                 }
             }

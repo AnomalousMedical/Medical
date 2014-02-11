@@ -4,7 +4,7 @@
     <link type="text/rcss" href="SlideStyle.rcss" />
   </head>
   <body template="MasterTemplate">
-    <h1>Add Title Here</h1>
+    <h1>Add Heading Here</h1>
     <p>Add text here.</p>
   </body>
 </rml>
