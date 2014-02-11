@@ -56,19 +56,9 @@ namespace Medical.GUI
             }
         }
 
-        public bool isPreviewOrAncestor(Element element)
+        public bool isPreviewOrDescendent(Element element)
         {
-            bool isNotPreview = true;
-            if (previewElement != null)
-            {
-                Element parentWalker = element;
-                while (parentWalker != null && isNotPreview)
-                {
-                    isNotPreview = parentWalker != previewElement;
-                    parentWalker = parentWalker.ParentNode;
-                }
-            }
-            return !isNotPreview;
+            return element.isDescendentOf(previewElement);
         }
 
         /// <summary>

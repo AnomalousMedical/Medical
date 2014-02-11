@@ -321,13 +321,17 @@ namespace Medical.GUI
                 position.y -= widget.AbsoluteTop;
 
                 Element toSelect = rocketWidget.Context.FindElementAtPoint(position);
+                if (toSelect != null && !toSelect.isDescendentOf(TopContentElement))
+                {
+                    toSelect = null;
+                }
                 Element selectedElement = selectedElementManager.SelectedElement;
 
                 bool insertBefore = lastInsertBefore;
                 bool toSelectIsNotPreview = true;
                 if (toSelect != null)
                 {
-                    toSelectIsNotPreview = !previewElement.isPreviewOrAncestor(toSelect);
+                    toSelectIsNotPreview = !previewElement.isPreviewOrDescendent(toSelect);
                     if (toSelectIsNotPreview)
                     {
                         insertBefore = insertBeforeOrAfter(toSelect, position);
