@@ -866,7 +866,7 @@ namespace Lecture
 
             presetSlide = new TemplateSlide()
             {
-                Name = "Title and Comparison",
+                Name = "Title and\nComparison",
                 IconName = "Lecture.SlideLayouts.ThreePanel"
             };
             presetSlide.addPanel(new RmlSlidePanelTemplate()
@@ -891,7 +891,7 @@ namespace Lecture
 
             presetSlide = new TemplateSlide()
             {
-                Name = "Comparison and Footer",
+                Name = "Comparison\nand Footer",
                 IconName = "Lecture.SlideLayouts.FourPanel"
             };
             presetSlide.addPanel(new RmlSlidePanelTemplate()
