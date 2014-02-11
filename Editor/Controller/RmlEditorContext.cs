@@ -102,7 +102,7 @@ namespace Medical
                     else
                     {
                         rmlComponent.cancelAndHideEditor();
-                        rmlComponent.clearPreviewElement();
+                        rmlComponent.clearPreviewElement(false);
                     }
                 };
             htmlDragDrop.ItemActivated += (item) =>

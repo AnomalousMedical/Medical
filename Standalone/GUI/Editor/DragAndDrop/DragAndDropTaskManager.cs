@@ -80,7 +80,10 @@ namespace Medical.GUI
 
         void task_OnClicked(CallbackTask task)
         {
-            _fireItemActivated(((CallbackTaskWithObject<ItemType>)task).UserObject);
+            if (firstDrag)
+            {
+                _fireItemActivated(((CallbackTaskWithObject<ItemType>)task).UserObject);
+            }
         }
 
         void taskDragStarted(Task task, IntVector2 position)
@@ -92,25 +95,28 @@ namespace Medical.GUI
         void taskDragged(Task task, IntVector2 position)
         {
             ItemType item = ((CallbackTaskWithObject<ItemType>)task).UserObject;
-            if (firstDrag)
-            {
-                _fireDragStarted(item, position);
-                firstDrag = false;
-            }
             dragIconPreview.setPosition(position.x - (dragIconPreview.Width / 2), position.y - (int)(dragIconPreview.Height * .75f));
             if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - position.x) > 5 || Math.Abs(dragMouseStartPosition.y - position.y) > 5))
             {
                 dragIconPreview.Visible = true;
                 dragIconPreview.setItemResource(task.IconName);
                 LayerManager.Instance.upLayerItem(dragIconPreview);
+                if (firstDrag)
+                {
+                    _fireDragStarted(item, position);
+                    firstDrag = false;
+                }
             }
             _fireDragging(item, position);
         }
 
         void taskDragEnded(Task task, IntVector2 position)
         {
-            dragIconPreview.Visible = false;
-            _fireDragEnded(((CallbackTaskWithObject<ItemType>)task).UserObject, position);
+            if (dragIconPreview.Visible)
+            {
+                dragIconPreview.Visible = false;
+                _fireDragEnded(((CallbackTaskWithObject<ItemType>)task).UserObject, position);
+            }
         }
 
         void _fireDragStarted(ItemType item, IntVector2 position)

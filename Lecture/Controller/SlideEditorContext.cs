@@ -138,7 +138,7 @@ namespace Lecture
                         else
                         {
                             editor.Component.cancelAndHideEditor();
-                            editor.Component.clearPreviewElement();
+                            editor.Component.clearPreviewElement(false);
                         }
                     }
                 };
@@ -709,7 +709,7 @@ namespace Lecture
                     else
                     {
                         editor.Component.cancelAndHideEditor();
-                        editor.Component.clearPreviewElement();
+                        editor.Component.clearPreviewElement(false);
                     }
                 }
             }

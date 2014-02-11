@@ -379,11 +379,11 @@ namespace Medical.GUI
             }
         }
 
-        public void clearPreviewElement()
+        public void clearPreviewElement(bool treatAsChanges = true)
         {
             selectedElementManager.clearSelectedAndHighlightedElement();
             previewElement.hidePreviewElement();
-            rmlModified();
+            rmlModified(treatAsChanges: treatAsChanges);
         }
 
         public void cancelAndHideEditor()
@@ -803,12 +803,15 @@ namespace Medical.GUI
             }
         }
 
-        private void rmlModified(bool updateHighlights = true)
+        private void rmlModified(bool updateHighlights = true, bool treatAsChanges = true)
         {
-            changesMade = true;
-            if (RmlEdited != null)
+            if (treatAsChanges)
             {
-                RmlEdited.Invoke(this);
+                changesMade = true;
+                if (RmlEdited != null)
+                {
+                    RmlEdited.Invoke(this);
+                }
             }
             if (updateHighlights)
             {
