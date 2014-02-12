@@ -44,6 +44,7 @@ namespace Medical.GUI
             TreeNode parentNode = addNodes(browser.getTopNode(), browser.DefaultSelection);
             browserTree.Nodes.add(parentNode);
             parentNode.Expanded = true;
+            browserTree.layout();
         }
 
         private TreeNode addNodes(BrowserNode node, BrowserNode defaultNode)
