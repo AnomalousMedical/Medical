@@ -60,7 +60,7 @@ namespace Medical.SlideshowActions
             ReflectedSaver.RestoreObject(this, info);
         }
 
-        public void getInfo(SaveInfo info)
+        public virtual void getInfo(SaveInfo info)
         {
             ReflectedSaver.SaveObject(this, info);
         }

@@ -16,12 +16,18 @@ namespace Medical.SlideshowActions
         [DoNotSave]
         private EditInterface editInterface;
 
+        private bool layers;
+        private bool musclePosition;
+        private bool camera;
+        private bool medicalState;
+        private bool highlightTeeth;
+
         public SetupSceneAction(String name)
         {
             action = new RunCommandsAction(name);
             Layers = true;
             Camera = true;
-            Muscles = true;
+            MusclePosition = true;
             MedicalState = true;
             HighlightTeeth = true;
         }
@@ -31,7 +37,7 @@ namespace Medical.SlideshowActions
             action = new RunCommandsAction(name);
             Layers = layers != null;
             Camera = cameraPosition != null;
-            Muscles = musclePosition != null;
+            MusclePosition = musclePosition != null;
             MedicalState = medicalState != null;
             HighlightTeeth = captureHighlight;
 
@@ -42,7 +48,7 @@ namespace Medical.SlideshowActions
                 action.addCommand(changeLayersCommand);
             }
 
-            if (Muscles)
+            if (MusclePosition)
             {
                 SetMusclePositionCommand musclePositionCommand = new SetMusclePositionCommand();
                 musclePositionCommand.MusclePosition = musclePosition;
@@ -93,7 +99,7 @@ namespace Medical.SlideshowActions
                 action.addCommand(changeLayers);
             }
 
-            if (Muscles)
+            if (MusclePosition)
             {
                 SetMusclePositionCommand musclePosition = new SetMusclePositionCommand();
                 musclePosition.MusclePosition.captureState();
@@ -162,19 +168,69 @@ namespace Medical.SlideshowActions
         }
 
         [Editable]
-        public bool Layers { get; set; }
+        public bool Layers
+        {
+            get
+            {
+                return layers;
+            }
+            set
+            {
+                layers = value;
+            }
+        }
 
         [Editable]
-        public bool Muscles { get; set; }
+        public bool MusclePosition
+        {
+            get
+            {
+                return musclePosition;
+            }
+            set
+            {
+                musclePosition = value;
+            }
+        }
 
         [Editable]
-        public bool Camera { get; set; }
+        public bool Camera
+        {
+            get
+            {
+                return camera;
+            }
+            set
+            {
+                camera = value;
+            }
+        }
 
         [Editable]
-        public bool MedicalState { get; set; }
+        public bool MedicalState
+        {
+            get
+            {
+                return medicalState;
+            }
+            set
+            {
+                medicalState = value;
+            }
+        }
 
         [Editable]
-        public bool HighlightTeeth { get; set; }
+        public bool HighlightTeeth
+        {
+            get
+            {
+                return highlightTeeth;
+            }
+            set
+            {
+                highlightTeeth = value;
+            }
+        }
 
         public override string Name
         {
@@ -188,10 +244,25 @@ namespace Medical.SlideshowActions
             }
         }
 
+        private const int CurrentVersion = 1;
+
         protected SetupSceneAction(LoadInfo info)
             :base(info)
         {
+            if (info.Version == 0) //Backing fields version
+            {
+                layers = info.GetBoolean("<Layers>k__BackingField");
+                musclePosition = info.GetBoolean("<Muscles>k__BackingField");
+                camera = info.GetBoolean("<Camera>k__BackingField");
+                medicalState = info.GetBoolean("<MedicalState>k__BackingField");
+                highlightTeeth = info.GetBoolean("<HighlightTeeth>k__BackingField");
+            }
+        }
 
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.Version = CurrentVersion;
         }
     }
 }
