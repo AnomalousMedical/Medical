@@ -114,6 +114,13 @@ namespace Medical.GUI
             planeData.addTrack(transparencyPrototype);
             planeData.addTrack(new ShowPropSubActionPrototype(typeof(ChangePlaneSettings), "Settings"));
             trackInfo.Add(Plane.DefinitionName, planeData);
+
+            //Line
+            ShowPropTimelineInfo lineData = new ShowPropTimelineInfo();
+            lineData.addTrack(movePropPrototype);
+            lineData.addTrack(transparencyPrototype);
+            lineData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeLinePropSettings), "Settings"));
+            trackInfo.Add(LineProp.DefinitionName, lineData);
         }
 
         public void Dispose()

@@ -253,6 +253,7 @@ namespace Medical
             //Props
             propFactory = new PropFactory(this);
             Arrow.createPropDefinition(propFactory);
+            LineProp.createPropDefinition(propFactory);
             Ruler.createPropDefinition(propFactory);
             PointingHand.createPropDefinition(propFactory);
             Doppler.createPropDefinition(propFactory);
