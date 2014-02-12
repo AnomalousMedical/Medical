@@ -82,15 +82,10 @@ namespace Medical
         public void move(String oldPath, String newPath)
         {
             bool wasDir = backingProvider.isDirectory(oldPath);
-            List<String> files = null;
-            if (wasDir)
-            {
-                listFiles("*", oldPath, true).ToList();
-            }
             backingProvider.move(oldPath, newPath);
             if (wasDir)
             {
-                copyCachedResourcesToBackingProvider(files, oldPath, newPath);
+                copyCachedResourcesToBackingProvider(ResourceCache.getResourcesInDirectory(oldPath), oldPath, newPath);
                 ResourceCache.forceCloseResourcesInDirectroy(oldPath);
             }
             else
@@ -132,7 +127,7 @@ namespace Medical
         public void copyDirectory(string from, string to)
         {
             backingProvider.copyDirectory(from, to);
-            copyCachedResourcesToBackingProvider(listFiles("*", from, true), from, to);
+            copyCachedResourcesToBackingProvider(ResourceCache.getResourcesInDirectory(from), from, to);
         }
 
         public IEnumerable<String> listFiles(string pattern)
@@ -225,19 +220,18 @@ namespace Medical
         /// </summary>
         /// <param name="files"></param>
         /// <param name="destinationDir"></param>
-        private void copyCachedResourcesToBackingProvider(IEnumerable<String> files, String baseFromPath, string destinationDir)
+        private void copyCachedResourcesToBackingProvider(IEnumerable<CachedResource> files, String baseFromPath, string destinationDir)
         {
             int basePathLength = baseFromPath.Length;
             if (!(baseFromPath.EndsWith("/") || baseFromPath.EndsWith("\\")))
             {
                 ++basePathLength;
             }
-            foreach (String file in files)
+            foreach (var cachedResource in files)
             {
-                var cachedResource = ResourceCache[file];
                 if (cachedResource != null)
                 {
-                    String toFile = Path.Combine(destinationDir, file.Substring(basePathLength));
+                    String toFile = Path.Combine(destinationDir, cachedResource.File.Substring(basePathLength));
                     using (Stream writeStream = backingProvider.openWriteStream(toFile))
                     {
                         using (Stream readStream = cachedResource.openStream())
