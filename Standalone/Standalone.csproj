@@ -817,6 +817,7 @@
     <Compile Include="Utility\WorkQueue.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

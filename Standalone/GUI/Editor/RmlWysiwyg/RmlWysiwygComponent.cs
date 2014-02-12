@@ -20,6 +20,7 @@ namespace Medical.GUI
         public const String DefaultImage = "~/Medical.Resources.ImagePlaceholder.png";
 
         public delegate void ElementOffDocumentDelegate(RmlWysiwygComponent sender, IntVector2 position, String innerRmlHint, String previewElementTagType);
+        public delegate String GetMissingRmlDelegate(String file, AnomalousMvcContext context);
 
         public event Action<RmlWysiwygComponent> RmlEdited;
         public event ElementOffDocumentDelegate ElementDraggedOffDocument
@@ -80,6 +81,7 @@ namespace Medical.GUI
         private bool changesMade = false;
         private RmlWysiwygViewBase rmlWysiwygViewInterface;
         String contentId = null;
+        private GetMissingRmlDelegate getMissingRmlCallback;
 
         private AnomalousMvcContext context;
 
@@ -105,6 +107,15 @@ namespace Medical.GUI
             foreach (var elementStrategy in rmlWysiwygViewInterface.CustomElementStrategies)
             {
                 elementStrategyManager.add(elementStrategy);
+            }
+
+            if (rmlWysiwygViewInterface.GetMissingRmlCallback != null)
+            {
+                getMissingRmlCallback = rmlWysiwygViewInterface.GetMissingRmlCallback;
+            }
+            else
+            {
+                getMissingRmlCallback = getDefaultMissingRml;
             }
         }
 
@@ -858,9 +869,16 @@ namespace Medical.GUI
         {
             if (file != null)
             {
-                using (StreamReader sr = new StreamReader(context.ResourceProvider.openFile(file)))
+                if (context.ResourceProvider.fileExists(file))
                 {
-                    setDocumentRml(sr.ReadToEnd(), maintainScrollPosition);
+                    using (StreamReader sr = new StreamReader(context.ResourceProvider.openFile(file)))
+                    {
+                        setDocumentRml(sr.ReadToEnd(), maintainScrollPosition);
+                    }
+                }
+                else
+                {
+                    setDocumentRml(getMissingRmlCallback(file, context), false);
                 }
             }
         }
@@ -917,6 +935,14 @@ namespace Medical.GUI
         private void requestFocus()
         {
             rmlWysiwygViewInterface._fireRequestFocus();
+        }
+
+        private string getDefaultMissingRml(string file, AnomalousMvcContext context)
+        {
+            using (StreamReader stream = new StreamReader(this.GetType().Assembly.GetManifestResourceStream("Medical.GUI.Editor.RmlWysiwyg.MissingFile.rml")))
+            {
+                return String.Format(stream.ReadToEnd(), file, context.ResourceProvider.BackingLocation);
+            }
         }
     }
 }

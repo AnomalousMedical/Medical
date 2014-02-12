@@ -1,0 +1,12 @@
+<rml>
+	<head>
+		<link type="text/template" href="~/Medical.Resources.Rml.RmlPanelTemplate.trml" />
+		<link type="text/rcss" href="/App.rcss" />
+	</head>
+	<body template="RmlPanelTemplate">
+		<h1>Missing Rml File</h1>
+		<p>Cannot find the file for this panel.</p>
+		<p>File: {0}</p>
+		<p>Backing Location: {1}</p>
+	</body>
+</rml>

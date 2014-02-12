@@ -95,6 +95,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\SlideshowEditController.cs" />
     <Compile Include="Resources\Project\EmbeddedTemplateNames.cs" />
+    <EmbeddedResource Include="Controller\MissingFile.rml" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="GUI\SlideImageComponent\SlideImageComponent.layout" />
     <EmbeddedResource Include="GUI\SlideLayoutPicker\SlideLayoutPicker.layout" />

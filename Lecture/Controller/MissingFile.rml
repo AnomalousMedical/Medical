@@ -1,0 +1,10 @@
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+		<link type="text/rcss" href="SlideStyle.rcss" />
+	</head>
+	<body template="MasterTemplate">
+		<h1>Missing File</h1>
+		<p>The file for this panel cannot be found.<br />File: {0}<br />Location: {1}</p>
+	</body>
+</rml>

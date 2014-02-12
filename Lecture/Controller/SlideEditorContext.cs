@@ -631,6 +631,7 @@ namespace Lecture
                 {
                     setCurrentRmlEditor(view.Name);
                 };
+                rmlView.GetMissingRmlCallback = getDefaultMissingRml;
                 rmlView.addCustomStrategy(imageStrategy);
                 rmlView.addCustomStrategy(triggerStrategy);
                 mvcContext.Views.add(rmlView);
@@ -802,6 +803,14 @@ namespace Lecture
             if (rmlEditors.Count > 0)
             {
                 rmlEditors.First().Value.Component.ViewHost.Container.invalidate();
+            }
+        }
+
+        private string getDefaultMissingRml(string file, AnomalousMvcContext context)
+        {
+            using (StreamReader stream = new StreamReader(this.GetType().Assembly.GetManifestResourceStream("Lecture.Controller.MissingFile.rml")))
+            {
+                return String.Format(stream.ReadToEnd(), file, context.ResourceProvider.BackingLocation);
             }
         }
 
