@@ -87,7 +87,7 @@ namespace Lecture
             }
         }
 
-        [Editable]
+        [Editable(PrettyName = "Font Color")]
         public Color? Color
         {
             get
@@ -104,7 +104,7 @@ namespace Lecture
             }
         }
 
-        [Editable]
+        [Editable(PrettyName = "Background Color")]
         public Color? Background
         {
             get
@@ -121,7 +121,7 @@ namespace Lecture
             }
         }
 
-        [EditableMinMax(0, 250, 1)]
+        [EditableMinMax(0, 250, 1, PrettyName = "Font Size")]
         public int? FontSize
         {
             get
@@ -138,7 +138,7 @@ namespace Lecture
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1)]
+        [EditableMinMax(0, int.MaxValue, 1, PrettyName = "Left Margin")]
         public int? LeftMargin
         {
             get
@@ -155,7 +155,7 @@ namespace Lecture
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1)]
+        [EditableMinMax(0, int.MaxValue, 1, PrettyName = "Right Margin")]
         public int? RightMargin
         {
             get
@@ -172,7 +172,7 @@ namespace Lecture
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1)]
+        [EditableMinMax(0, int.MaxValue, 1, PrettyName = "Top Margin")]
         public int? TopMargin
         {
             get
@@ -189,7 +189,7 @@ namespace Lecture
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1)]
+        [EditableMinMax(0, int.MaxValue, 1, PrettyName = "Bottom Margin")]
         public int? BottomMargin
         {
             get

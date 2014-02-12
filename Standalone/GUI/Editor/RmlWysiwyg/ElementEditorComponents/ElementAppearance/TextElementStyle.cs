@@ -143,7 +143,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             return new Rect(0, marginTop.GetValueOrDefault(), 0, marginBottom.GetValueOrDefault());
         }
 
-        [Editable]
+        [Editable(PrettyName = "Font Color")]
         public Color? Color
         {
             get
@@ -160,7 +160,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [Editable]
+        [Editable(PrettyName="Background Color")]
         public Color? Background
         {
             get
@@ -177,7 +177,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [EditableMinMax(0, 250, 1)]
+        [EditableMinMax(0, 250, 1, PrettyName="Font Size")]
         public int? FontSize
         {
             get
@@ -279,7 +279,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true, PrettyName="Top Margin")]
         public int? TopMargin
         {
             get
@@ -296,7 +296,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true, PrettyName = "Bottom Margin")]
         public int? BottomMargin
         {
             get

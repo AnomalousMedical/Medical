@@ -218,7 +218,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [Editable]
+        [Editable(PrettyName = "Text Align")]
         public ImageTextAlign TextAlign
         {
             get
@@ -269,7 +269,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [Editable(Advanced=true)]
+        [Editable(Advanced=true, PrettyName="Fixed Size")]
         public bool FixedSize
         {
             get
@@ -303,7 +303,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true, PrettyName="Text Side Margin")]
         public int? TextSideMargin
         {
             get
@@ -320,7 +320,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             }
         }
 
-        [EditableMinMax(0, int.MaxValue, 1, Advanced = true)]
+        [EditableMinMax(0, int.MaxValue, 1, Advanced = true, PrettyName = "Text Bottom Margin")]
         public int? TextBottomMargin
         {
             get
