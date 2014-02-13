@@ -44,6 +44,14 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/NormalVectorVToggle">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
+        <Frame point="64 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/ResetZoom">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
+      <Index name="Icon">
         <Frame point="96 0"/>
       </Index>
     </Group>
@@ -52,7 +60,7 @@
   <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomIn">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="64 32"/>
+        <Frame point="128 0"/>
       </Index>
     </Group>
   </Resource>

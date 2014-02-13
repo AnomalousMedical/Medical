@@ -87,7 +87,7 @@ namespace Medical
             {
                 zoomIn();
             })));
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ResetZoom", "Reset Zoom", CommonResources.NoIcon, "None", arg =>
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ResetZoom", "Reset Zoom", "SlideshowIcons/ResetZoom", "None", arg =>
             {
                 if (displayManager.AdditionalZoomMultiple != 1.0f)
                 {
