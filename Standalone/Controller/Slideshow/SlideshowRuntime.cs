@@ -78,14 +78,22 @@ namespace Medical
             });
             taskbar.addItem(new TaskTaskbarItem(previousTask));
             taskbar.addItem(new TaskTaskbarItem(nextTask));
-            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ToggleMode", "Toggle Display Mode", "SlideshowIcons/NormalVectorToggle", "None", arg =>
-            {
-                displayManager.VectorMode = !displayManager.VectorMode;
-                guiManager.layout();
-            })));
+            //taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ToggleMode", "Toggle Display Mode", "SlideshowIcons/NormalVectorToggle", "None", arg =>
+            //{
+            //    displayManager.VectorMode = !displayManager.VectorMode;
+            //    guiManager.layout();
+            //})));
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomIn", "Zoom In", "SlideshowIcons/ZoomIn", "None", arg =>
             {
                 zoomIn();
+            })));
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ResetZoom", "Reset Zoom", CommonResources.NoIcon, "None", arg =>
+            {
+                if (displayManager.AdditionalZoomMultiple != 1.0f)
+                {
+                    displayManager.AdditionalZoomMultiple = 1.0f;
+                    guiManager.layout();
+                }
             })));
             taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ZoomOut", "Zoom Out", "SlideshowIcons/ZoomOut", "None", arg =>
             {

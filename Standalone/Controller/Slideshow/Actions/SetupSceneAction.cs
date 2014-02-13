@@ -167,7 +167,7 @@ namespace Medical.SlideshowActions
             }
         }
 
-        [Editable]
+        [Editable(PrettyName = "Capture Layers")]
         public bool Layers
         {
             get
@@ -180,7 +180,7 @@ namespace Medical.SlideshowActions
             }
         }
 
-        [Editable(PrettyName = "Muscle Position")]
+        [Editable(PrettyName = "Capture Muscle Position")]
         public bool MusclePosition
         {
             get
@@ -193,7 +193,7 @@ namespace Medical.SlideshowActions
             }
         }
 
-        [Editable(PrettyName = "Camera Position")]
+        [Editable(PrettyName = "Capture Camera Position")]
         public bool Camera
         {
             get
@@ -206,7 +206,7 @@ namespace Medical.SlideshowActions
             }
         }
 
-        [Editable(PrettyName = "Medical State")]
+        [Editable(PrettyName = "Capture Medical State")]
         public bool MedicalState
         {
             get
@@ -219,7 +219,7 @@ namespace Medical.SlideshowActions
             }
         }
 
-        [Editable(PrettyName = "Highlight Teeth")]
+        [Editable(PrettyName = "Capture Highlight Teeth")]
         public bool HighlightTeeth
         {
             get
