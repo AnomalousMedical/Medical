@@ -101,7 +101,7 @@ namespace Medical.GUI
             rmlImage.EventScrollGesture += new MyGUIEvent(rmlImage_EventScrollGesture);
             imageHeight = rmlImage.Height;
 
-            selectedElementManager = new SelectedElementManager(rmlImage);
+            selectedElementManager = new SelectedElementManager(rmlImage, rocketWidget.Context);
             draggingElementManager = new DraggingElementManager(this);
 
             foreach (var elementStrategy in rmlWysiwygViewInterface.CustomElementStrategies)

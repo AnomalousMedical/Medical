@@ -24,15 +24,17 @@ namespace Medical.GUI
         private Widget yWidthAdjust;
         private Widget xHeightAdjust;
 
+        private Context context;
         private Rect elementStartRect;
         private IntVector2 mouseStartPosition;
         private Widget parentWidget;
         private bool leftAdjustAnchor = true;
 
-        public SelectedElementManager(Widget parentWidget)
+        public SelectedElementManager(Widget parentWidget, Context context)
         {
             this.parentWidget = parentWidget;
             this.selectionWidget = parentWidget.findWidget("SelectionWidget");
+            this.context = context;
 
             widthAdjust = parentWidget.findWidget("WidthAdjust");
             widthAdjust.MouseDrag += widthAdjust_MouseDrag;
@@ -93,7 +95,7 @@ namespace Medical.GUI
                 if (highlightProvider != null)
                 {
                     IntRect additionalHighlightRect = highlightProvider.getAdditionalHighlightAreaRect(highlightElement);
-                    float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
+                    float ratio = context.ZoomLevel * ScaleHelper.ScaleFactor;
                     additionalHighlightRect = (IntRect)(additionalHighlightRect * ratio);
 
                     selectionLeft += additionalHighlightRect.Left;
@@ -211,7 +213,7 @@ namespace Medical.GUI
                 Rect newRect = computeSizeCallback(mouseOffset);
 
                 IntSize2 boundsRect = new IntSize2(parentWidget.Width, parentWidget.Height);
-                float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
+                float ratio = context.ZoomLevel * ScaleHelper.ScaleFactor;
                 newRect = newRect / ratio;
                 boundsRect = (IntSize2)(boundsRect / ratio);
 
@@ -292,7 +294,7 @@ namespace Medical.GUI
         {
             if (selectedElement != null)
             {
-                float ratio = selectedElement.Context.ZoomLevel * ScaleHelper.ScaleFactor;
+                float ratio = context.ZoomLevel * ScaleHelper.ScaleFactor;
                 MouseEventArgs me = (MouseEventArgs)e;
                 mouseStartPosition = me.Position;
                 elementStartRect = elementStrategy.getStartingRect(selectedElement, out leftAdjustAnchor) * ratio;
