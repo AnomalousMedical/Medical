@@ -145,8 +145,8 @@ namespace Medical.Controller
 
         void licenseCaptured()
         {
-            loginSucessfulCallback();
             this.close();
+            loginSucessfulCallback();
         }
 
         void licenseLoginFail()
