@@ -157,21 +157,35 @@ namespace Medical
 
             void view_ViewResized(ViewHost view)
             {
-                if (displayManager.VectorMode)
+                if (!view.Animating || lastWorkingParentHeight == int.MinValue)
                 {
-                    if (!view.Animating || lastWorkingParentHeight == int.MinValue)
+                    bool changeScale = false;
+                    float ratio = 1.0f;
+                    if (displayManager.VectorMode)
                     {
                         IntSize2 rigidParentSize = view.Container.RigidParentWorkingSize;
                         if (rigidParentSize.Height != lastWorkingParentHeight)
                         {
-                            float ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale * displayManager.AdditionalZoomMultiple;
-                            foreach (var host in viewHosts.Values)
-                            {
-                                SlidePanel panel = masterStrategy.panels[host.View.ElementName];
-                                host.changeScale(ratio);
-                            }
+                            ratio = rigidParentSize.Height / (float)Slideshow.BaseSlideScale * displayManager.AdditionalZoomMultiple;
                             lastWorkingParentHeight = rigidParentSize.Height;
+                            changeScale = true;
                         }
+                    }
+                    else if (lastWorkingParentHeight != int.MaxValue)
+                    {
+                        ratio = displayManager.AdditionalZoomMultiple;
+                        changeScale = true;
+                        lastWorkingParentHeight = int.MaxValue;
+                    }
+
+                    if (changeScale)
+                    {
+                        foreach (var host in viewHosts.Values)
+                        {
+                            SlidePanel panel = masterStrategy.panels[host.View.ElementName];
+                            host.changeScale(ratio);
+                        }
+
                     }
                 }
             }
@@ -184,13 +198,6 @@ namespace Medical
             void displayManager_DisplayModeChanged(SlideDisplayManager obj)
             {
                 lastWorkingParentHeight = int.MinValue;
-                if (!displayManager.VectorMode)
-                {
-                    foreach (var host in viewHosts.Values)
-                    {
-                        host.changeScale(displayManager.AdditionalZoomMultiple);
-                    }
-                }
             }
         }
     }
