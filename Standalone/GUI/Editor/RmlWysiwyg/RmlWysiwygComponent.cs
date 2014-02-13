@@ -682,11 +682,15 @@ namespace Medical.GUI
                 //Everything is good so setup.
                 editor.Hiding += (src, arg) =>
                 {
-                    if (!disposed && editor.deleteIfNeeded(this))
+                    if (!disposed)
                     {
-                        rmlModified();
-                        updateUndoStatus(editor.UndoRml, true);
-                        editor.UndoRml = UnformattedRml;
+                        if (editor.deleteIfNeeded(this))
+                        {
+                            rmlModified();
+                            updateUndoStatus(editor.UndoRml, true);
+                            editor.UndoRml = UnformattedRml;
+                        }
+                        selectedElementManager.AllowShowResizeHandles = false;
                     }
                 };
                 editor.Hidden += (src, arg) =>
@@ -780,6 +784,7 @@ namespace Medical.GUI
                 selectedElementManager.SelectedElement = element;
                 selectedElementManager.setHighlightElement(element, strategy.HighlightProvider);
                 selectedElementManager.ElementStrategy = strategy;
+                selectedElementManager.AllowShowResizeHandles = true;
                 updateEditorPosition();
             }
         }

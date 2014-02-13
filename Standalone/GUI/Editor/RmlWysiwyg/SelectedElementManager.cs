@@ -29,6 +29,8 @@ namespace Medical.GUI
         private IntVector2 mouseStartPosition;
         private Widget parentWidget;
         private bool leftAdjustAnchor = true;
+        private ResizeType lastHandles = ResizeType.None;
+        private bool allowShowResizeHandles = false;
 
         public SelectedElementManager(Widget parentWidget, Context context)
         {
@@ -178,9 +180,26 @@ namespace Medical.GUI
             }
         }
 
+        public bool AllowShowResizeHandles
+        {
+            get
+            {
+                return allowShowResizeHandles;
+            }
+            set
+            {
+                if (allowShowResizeHandles != value)
+                {
+                    allowShowResizeHandles = value;
+                    showResizeHandles(lastHandles);
+                }
+            }
+        }
+
         private void showResizeHandles(ResizeType handles)
         {
-            if (elementStrategy != null)
+            lastHandles = handles;
+            if (allowShowResizeHandles && elementStrategy != null)
             {
                 widthAdjust.Visible = (handles & ResizeType.Width) == ResizeType.Width;
                 heightAdjust.Visible = (handles & ResizeType.Height) == ResizeType.Height;
