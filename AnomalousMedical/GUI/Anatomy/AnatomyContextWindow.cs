@@ -12,7 +12,7 @@ namespace Medical.GUI
         private AnatomyContextWindowManager windowManager;
         private Anatomy anatomy;
         private List<CommandUIElement> dynamicWidgets = new List<CommandUIElement>();
-        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5, new IntVector2(CommandUIElement.SIDE_PADDING / 2, 84));
+        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5, new IntVector2(CommandUIElement.SIDE_PADDING / 2, ScaleHelper.Scaled(84)));
 
         private IntSize2 windowStartSize;
 
