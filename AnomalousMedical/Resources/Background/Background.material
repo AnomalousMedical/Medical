@@ -1,16 +1,11 @@
-material BodyAtlasBackground
+import WatermarkBase from "Medical.Resources.Watermark.material"
+
+material BodyAtlasBackground : WatermarkBase
 {
 	technique
 	{
 		pass Draw
 		{
-			iteration once
-			
-			scene_blend alpha_blend
-			cull_hardware none
-			cull_software none
-			depth_write off
-
 			texture_unit Watermark
 			{
 				texture Medical.Resources.Background.AnomalousMedicalWatermark.png

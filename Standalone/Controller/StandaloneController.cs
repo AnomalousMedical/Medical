@@ -127,6 +127,9 @@ namespace Medical
             windowListener = new WindowListener(this);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.DeactivateOnFocusChange = false;
+
+            OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "AnomalousCore", true);
+            OgreResourceGroupManager.getInstance().initializeResourceGroup("AnomalousCore");
         }
 
         public void Dispose()

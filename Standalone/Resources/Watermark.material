@@ -1,0 +1,58 @@
+abstract material WatermarkBase
+{
+	technique
+	{
+		pass Draw
+		{ 
+			vertex_program_ref BasicWorldTexturedNoLightVP
+			{
+				
+			}	
+
+			fragment_program_ref BasicTexturedNoLightPS
+			{
+			
+			}
+
+			iteration once
+			
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+			depth_write off
+
+			texture_unit Watermark
+			{
+				
+			}
+		}
+	}
+}
+
+abstract material LogoBase
+{
+	technique
+	{
+		pass Draw
+		{ 
+			vertex_program_ref BasicWorldTexturedNoLightVP
+			{
+				
+			}	
+
+			fragment_program_ref BasicTexturedNoLightPS
+			{
+			
+			}
+
+			iteration once
+			
+			scene_blend alpha_blend
+
+			texture_unit Watermark
+			{
+				
+			}
+		}
+	}
+}
