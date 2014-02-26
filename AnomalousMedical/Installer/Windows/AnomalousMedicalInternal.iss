@@ -54,6 +54,7 @@ Source: S:\Medical\Release\libRocketPlugin.dll; DestDir: {app}; Flags: ignorever
 Source: S:\Medical\Release\libRocketWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OgreCWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OgreMain.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\OgreOverlay.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OSHelper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Plugin_CgProgramManager.dll; DestDir: {app}; Flags: ignoreversion
