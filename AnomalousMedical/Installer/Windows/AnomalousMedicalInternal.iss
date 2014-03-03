@@ -57,6 +57,7 @@ Source: S:\Medical\Release\OgreOverlay.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OSHelper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\RenderSystem_Direct3D9.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\RenderSystem_Direct3D11.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Simulation.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion
