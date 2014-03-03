@@ -46,10 +46,6 @@
       <Link>BulletWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\cg.dll">
-      <Link>cg.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\Engine\Release\MyGUIWrapper.dll">
       <Link>MyGUIWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -64,10 +60,6 @@
     </Content>
     <Content Include="..\..\Engine\Release\OgreOverlay.dll">
       <Link>OgreOverlay.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Engine\Release\Plugin_CgProgramManager.dll">
-      <Link>Plugin_CgProgramManager.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\RenderSystem_Direct3D11.dll">

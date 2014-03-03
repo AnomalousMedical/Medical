@@ -46,7 +46,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: S:\Medical\PublicRelease\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
 Source: S:\Medical\PublicRelease\BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\BulletWrapper.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\cg.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\Engine.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\MyGUIPlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\MyGUIWrapper.dll; DestDir: {app}; Flags: ignoreversion
@@ -57,7 +56,6 @@ Source: S:\Medical\PublicRelease\OgreMain.dll; DestDir: {app}; Flags: ignorevers
 Source: S:\Medical\PublicRelease\OgreOverlay.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OSHelper.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\Plugin_CgProgramManager.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\RenderSystem_Direct3D9.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\Simulation.dll; DestDir: {app}; Flags: ignoreversion
