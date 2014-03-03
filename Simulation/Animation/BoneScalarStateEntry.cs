@@ -21,7 +21,11 @@ namespace Medical
         public void blend(AnimationManipulatorStateEntry target, float percent)
         {
             BoneScalarStateEntry rotateTarget = target as BoneScalarStateEntry;
-            ((BoneScalar)AnimationManipulatorController.getManipulator(name)).Scale = scale.lerp(ref rotateTarget.scale, ref percent);
+            BoneScalar bone = AnimationManipulatorController.getManipulator(name) as BoneScalar;
+            if(bone != null)
+            {
+                bone.Scale = scale.lerp(ref rotateTarget.scale, ref percent);
+            }
         }
 
         public AnimationManipulatorStateEntry clone()

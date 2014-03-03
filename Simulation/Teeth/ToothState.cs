@@ -45,26 +45,29 @@ namespace Medical
         public void blend(ToothState end, float percent)
         {
             Tooth tooth = TeethController.getTooth(name);
-            tooth.Extracted = this.Extracted;
-            Vector3 offset = this.offset.lerp(ref end.offset, ref percent);
-            if (offset.isNumber())
+            if (tooth != null)
             {
-                tooth.Offset = offset;
-            }
-            else
-            {
-                //Log.Debug("Got a non numerical offset for tooth {0} time {1}", Name, percent);
-                tooth.Offset = end.offset;
-            }
-            Quaternion rotation = this.rotation.slerp(ref end.rotation, percent);
-            if(rotation.isNumber())
-            {
-                tooth.Rotation = rotation;
-            }
-            else
-            {
-                //Log.Debug("Got a non numerical rotation for tooth {0} time {1}", Name, percent);
-                tooth.Rotation = end.rotation;
+                tooth.Extracted = this.Extracted;
+                Vector3 offset = this.offset.lerp(ref end.offset, ref percent);
+                if (offset.isNumber())
+                {
+                    tooth.Offset = offset;
+                }
+                else
+                {
+                    //Log.Debug("Got a non numerical offset for tooth {0} time {1}", Name, percent);
+                    tooth.Offset = end.offset;
+                }
+                Quaternion rotation = this.rotation.slerp(ref end.rotation, percent);
+                if (rotation.isNumber())
+                {
+                    tooth.Rotation = rotation;
+                }
+                else
+                {
+                    //Log.Debug("Got a non numerical rotation for tooth {0} time {1}", Name, percent);
+                    tooth.Rotation = end.rotation;
+                }
             }
         }
 

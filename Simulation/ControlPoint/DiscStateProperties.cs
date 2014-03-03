@@ -38,27 +38,30 @@ namespace Medical
         public void blend(DiscStateProperties target, float percent)
         {
             Disc disc = DiscController.getDisc(discName);
-            disc.DiscOffset = this.discOffset.lerp(ref target.discOffset, ref percent);
-            disc.RDAOffset = this.rdaOffset.lerp(ref target.rdaOffset, ref percent);
-            disc.HorizontalOffset = this.horizontalOffset.lerp(ref target.horizontalOffset, ref percent);
-            disc.ClockFaceOffset = this.clockFaceOffset.lerp(ref target.clockFaceOffset, ref percent);
-            float delta = target.popLocation - this.popLocation;
-            disc.PopLocation = this.popLocation + delta * percent;
-            if (percent < 0.05f)
+            if (disc != null)
             {
-                disc.DisplaceLateralPole = displaceLateralPole;
-            }
-            else
-            {
-                disc.DisplaceLateralPole = target.displaceLateralPole;
-            }
-            if (percent < 1.0f)
-            {
-                disc.Locked = locked;
-            }
-            else
-            {
-                disc.Locked = target.locked;
+                disc.DiscOffset = this.discOffset.lerp(ref target.discOffset, ref percent);
+                disc.RDAOffset = this.rdaOffset.lerp(ref target.rdaOffset, ref percent);
+                disc.HorizontalOffset = this.horizontalOffset.lerp(ref target.horizontalOffset, ref percent);
+                disc.ClockFaceOffset = this.clockFaceOffset.lerp(ref target.clockFaceOffset, ref percent);
+                float delta = target.popLocation - this.popLocation;
+                disc.PopLocation = this.popLocation + delta * percent;
+                if (percent < 0.05f)
+                {
+                    disc.DisplaceLateralPole = displaceLateralPole;
+                }
+                else
+                {
+                    disc.DisplaceLateralPole = target.displaceLateralPole;
+                }
+                if (percent < 1.0f)
+                {
+                    disc.Locked = locked;
+                }
+                else
+                {
+                    disc.Locked = target.locked;
+                }
             }
         }
 

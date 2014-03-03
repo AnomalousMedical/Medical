@@ -38,10 +38,14 @@ namespace Medical
         {
             foreach (String key in positions.Keys)
             {
-                float start = positions[key];
-                float end = target.positions[key];
-                float delta = end - start;
-                FossaController.get(key).setEminanceDistortion(start + delta * percent);
+                Fossa fossa = FossaController.get(key);
+                if (fossa != null)
+                {
+                    float start = positions[key];
+                    float end = target.positions[key];
+                    float delta = end - start;
+                    fossa.setEminanceDistortion(start + delta * percent);
+                }
             }
         }
 

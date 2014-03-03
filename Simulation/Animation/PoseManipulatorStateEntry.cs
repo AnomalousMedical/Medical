@@ -23,7 +23,11 @@ namespace Medical
             float start = position;
             float end = poseTarget.position;
             float delta = end - start;
-            ((PoseManipulator)AnimationManipulatorController.getManipulator(name)).Position = start + delta * percent;
+            PoseManipulator bone = AnimationManipulatorController.getManipulator(name) as PoseManipulator;
+            if (bone != null)
+            {
+                bone.Position = start + delta * percent;
+            }
         }
 
         public AnimationManipulatorStateEntry clone()

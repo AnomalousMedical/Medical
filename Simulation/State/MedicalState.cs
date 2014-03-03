@@ -47,7 +47,7 @@ namespace Medical
 
         public void update()
         {
-            boneState = MandibleController.createMandibleState();// AnimationManipulatorController.createAnimationManipulatorState();
+            boneState = MandibleController.createMandibleState();
             discState = DiscController.createDiscState();
             teethState = TeethController.createTeethState();
             fossaState = FossaController.createState();

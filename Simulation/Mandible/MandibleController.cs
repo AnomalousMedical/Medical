@@ -61,7 +61,7 @@ namespace Medical
             }
             else
             {
-                return null;
+                return new AnimationManipulatorState();
             }
         }
 

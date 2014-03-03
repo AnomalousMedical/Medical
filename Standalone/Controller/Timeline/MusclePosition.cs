@@ -56,16 +56,19 @@ namespace Medical
 
         public void blend(MusclePosition targetState, float blendFactor)
         {
-            MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
-            MuscleController.MovingTarget.Offset = targetState.movingTargetPosition;
+            if (MuscleController.MovingTarget != null) //If this is null then the whole simulation is invalid and its better to do nothing
+            {
+                MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
+                MuscleController.MovingTarget.Offset = targetState.movingTargetPosition;
 
-            ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
-            float delta = targetState.leftCPPosition - leftCPPosition;
-            leftCP.setLocation(leftCPPosition + delta * blendFactor);
+                ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
+                float delta = targetState.leftCPPosition - leftCPPosition;
+                leftCP.setLocation(leftCPPosition + delta * blendFactor);
 
-            ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
-            delta = targetState.rightCPPosition - rightCPPosition;
-            rightCP.setLocation(rightCPPosition + delta * blendFactor);
+                ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
+                delta = targetState.rightCPPosition - rightCPPosition;
+                rightCP.setLocation(rightCPPosition + delta * blendFactor);
+            }
         }
 
         [Editable]

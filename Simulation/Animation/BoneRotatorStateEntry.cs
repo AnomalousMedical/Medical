@@ -22,13 +22,17 @@ namespace Medical
         {
             BoneRotatorStateEntry rotateTarget = target as BoneRotatorStateEntry;
             Quaternion blendRot = rotation.slerp(ref rotateTarget.rotation, percent);
-            if (blendRot.isNumber())
+            BoneRotator bone = AnimationManipulatorController.getManipulator(name) as BoneRotator;
+            if (bone != null)
             {
-                ((BoneRotator)AnimationManipulatorController.getManipulator(name)).Rotation = blendRot;
-            }
-            else
-            {
-                ((BoneRotator)AnimationManipulatorController.getManipulator(name)).Rotation = rotateTarget.rotation;
+                if (blendRot.isNumber())
+                {
+                    bone.Rotation = blendRot;
+                }
+                else
+                {
+                    bone.Rotation = rotateTarget.rotation;
+                }
             }
         }
 
