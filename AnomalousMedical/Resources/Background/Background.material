@@ -2,14 +2,5 @@ import WatermarkBase from "Medical.Resources.Watermark.material"
 
 material BodyAtlasBackground : WatermarkBase
 {
-	technique
-	{
-		pass Draw
-		{
-			texture_unit Watermark
-			{
-				texture Medical.Resources.Background.AnomalousMedicalWatermark.png
-			}
-		}
-	}
+	set_texture_alias Watermark Medical.Resources.Background.AnomalousMedicalWatermark.png
 }
