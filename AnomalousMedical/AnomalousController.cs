@@ -255,7 +255,6 @@ namespace Medical
             MedicalConfig.setUserDirectory(LicenseManager.User);
 
             controller.GUIManager.setMainInterfaceEnabled(true);
-            controller.setWatermarkText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
             licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
             addPlugins();
             controller.initializePlugins();

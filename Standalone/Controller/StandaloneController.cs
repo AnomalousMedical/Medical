@@ -62,7 +62,6 @@ namespace Medical
         //GUI
         private GUIManager guiManager;
         private SceneViewController sceneViewController;
-        private Watermark watermark;
         private BackgroundScene background;
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
@@ -150,7 +149,6 @@ namespace Medical
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
             IDisposableUtil.DisposeIfNotNull(guiManager);
-			IDisposableUtil.DisposeIfNotNull(watermark);
 			IDisposableUtil.DisposeIfNotNull(measurementGrid);
 			IDisposableUtil.DisposeIfNotNull(anatomyController);
 			IDisposableUtil.DisposeIfNotNull(medicalStateController);
@@ -198,23 +196,18 @@ namespace Medical
             //Documents
             DocumentController = new DocumentController();
 
-            //Setup MyGUI listeners
-            MyGUIInterface myGUI = MyGUIInterface.Instance;
-            myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
-            myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
-
             //MDI Layout
             mdiLayout = new MDILayoutManager();
             medicalController.MainTimer.addFixedUpdateListener(new MDIUpdate(medicalController.EventManager, mdiLayout));
 
             //SceneView
+            MyGUIInterface myGUI = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
 
             //Watermark
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-            watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
 
             //Measurement grid
             measurementGrid = new MeasurementGrid("MeasurementGrid", medicalController, sceneViewController);
@@ -223,7 +216,6 @@ namespace Medical
 
             //Image Renderer
             imageRenderer = new ImageRenderer(medicalController, sceneViewController, idleHandler);
-            imageRenderer.Watermark = watermark;
             imageRenderer.Background = background;
             imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
@@ -423,11 +415,6 @@ namespace Medical
         public void sceneRevealed()
         {
             atlasPluginManager.sceneRevealed();
-        }
-
-        public void setWatermarkText(String text)
-        {
-            ((SideLogoWatermark)watermark).addText(text);
         }
 
         public MedicalController MedicalController
@@ -748,24 +735,6 @@ namespace Medical
                 mainWindow.Maximized = true;
                 mainWindow.show();
             }
-        }
-
-        /// <summary>
-        /// Called before MyGUI renders.
-        /// </summary>
-        void myGUI_RenderStarted(object sender, EventArgs e)
-        {
-            watermark.Visible = false;
-            measurementGrid.HideCaption = true;
-        }
-
-        /// <summary>
-        /// Called after MyGUI renders.
-        /// </summary>
-        void myGUI_RenderEnded(object sender, EventArgs e)
-        {
-            watermark.Visible = true;
-            measurementGrid.HideCaption = false;
         }
 
         void medicalController_FullSpeedLoopUpdate(Clock time)

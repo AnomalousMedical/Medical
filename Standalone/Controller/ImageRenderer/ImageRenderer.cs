@@ -38,7 +38,6 @@ namespace Medical
 
         private MedicalController controller;
         private SceneViewController sceneViewController;
-        private Watermark watermark;
         private BackgroundScene background;
         private IdleHandler idleHandler;
 
@@ -422,14 +421,6 @@ namespace Medical
 
         private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
         {
-            //Toggle watermark if required.
-            bool watermarkStatusChanged = false;
-            if (watermark != null && (showWatermark != watermark.Visible))
-            {
-                watermarkStatusChanged = true;
-                watermark.Visible = !watermark.Visible;
-            }
-
             renderTexture.update();
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
             System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
@@ -459,12 +450,6 @@ namespace Medical
                     renderBitmaps(graph, new Rectangle(0, 0, smallWidth, smallHeight), largeImage, largeImage.Width, largeImage.Height, transparentBG, bgColor);
                 }
                 largeImage.Dispose();
-            }
-
-            //Toggle watermark back
-            if (watermarkStatusChanged)
-            {
-                watermark.Visible = !watermark.Visible;
             }
 
             return bitmap;
@@ -626,18 +611,6 @@ namespace Medical
             using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
             {
                 renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
-            }
-        }
-
-        public Watermark Watermark
-        {
-            get
-            {
-                return watermark;
-            }
-            set
-            {
-                watermark = value;
             }
         }
 

@@ -790,9 +790,6 @@
     <Compile Include="Layout\MDI\MDILayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
     <Compile Include="Controller\ThreadManager.cs" />
-    <Compile Include="Controller\Watermark\SideLogoWatermark.cs" />
-    <Compile Include="Controller\Watermark\TextWatermark.cs" />
-    <Compile Include="Controller\Watermark\Watermark.cs" />
     <Compile Include="Layout\FlowLayoutContainer.cs" />
     <Compile Include="Layout\HorizontalPopoutLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />

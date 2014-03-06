@@ -20,7 +20,6 @@ namespace Medical.Controller
         private EventManager events;
         private SceneViewController sceneViewController;
         private bool visible = false;
-        private TextWatermark textWatermark;
         private Color color = Color.FromARGB(System.Drawing.Color.Green.ToArgb());
         private Vector3 origin = Vector3.Zero;
 
@@ -32,13 +31,11 @@ namespace Medical.Controller
             this.sceneViewController = sceneViewController;
             sceneViewController.WindowCreated += new SceneViewWindowEvent(sceneViewController_WindowCreated);
             sceneViewController.WindowDestroyed += new SceneViewWindowEvent(sceneViewController_WindowDestroyed);
-            textWatermark = new TextWatermark("MeasurementAmount", "Grid Spacing: 0 mm", 15.0f, GuiVerticalAlignment.GVA_TOP);
-            textWatermark.Visible = false;
         }
 
         public void Dispose()
         {
-            textWatermark.Dispose();
+            
         }
 
         public void sceneLoaded(SimScene scene)
@@ -55,7 +52,6 @@ namespace Medical.Controller
                 sceneNode.setPosition(origin);
                 sceneManager.SceneManager.getRootSceneNode().addChild(sceneNode);
                 drawGrid(5.0f, 25.0f);
-                textWatermark.Visible = visible;
             }
         }
 
@@ -86,7 +82,6 @@ namespace Medical.Controller
                 if (sceneNode != null)
                 {
                     sceneNode.setVisible(value);
-                    textWatermark.Visible = value;
                 }
             }
         }
@@ -98,7 +93,6 @@ namespace Medical.Controller
         /// <param name="gridMax">The area of the grid in 3d units.</param>
         public void drawGrid(float gridSpacingMM, float gridMax)
         {
-            textWatermark.Text = String.Format("Grid Spacing: {0} mm", gridSpacingMM);
             float gridSpacing = gridSpacingMM * (1.0f / SimulationConfig.UnitsToMM);
             Vector3 startPoint = new Vector3(0.0f, -gridMax, 0.0f);
             Vector3 endPoint = new Vector3(0.0f, gridMax, 0.0f);
@@ -173,21 +167,6 @@ namespace Medical.Controller
             }
         }
 
-        public bool HideCaption
-        {
-            get
-            {
-                return !textWatermark.Visible;
-            }
-            set
-            {
-                if (visible)
-                {
-                    textWatermark.Visible = !value;
-                }
-            }
-        }
-
         void sceneViewController_WindowDestroyed(SceneViewWindow window)
         {
             window.FindVisibleObjects -= window_FindVisibleObjects;
@@ -221,7 +200,6 @@ namespace Medical.Controller
                 if (sceneNode != null)
                 {
                     sceneNode.setVisible(false);
-                    textWatermark.Visible = false;
                 }
             }
         }
@@ -241,7 +219,6 @@ namespace Medical.Controller
                 if (sceneNode != null)
                 {
                     sceneNode.setVisible(true);
-                    textWatermark.Visible = true;
                 }
             }
         }
