@@ -40,11 +40,6 @@ namespace Medical
             return currentConfig.formatTitleImpl(windowText, subText);
         }
 
-        public static System.Drawing.Color getSecondColorKey(System.Drawing.Color firstColor)
-        {
-            return currentConfig.getSecondColorKeyImpl(firstColor);
-        }
-
         public static Gesture createGuiGesture()
         {
             return currentConfig.createGuiGestureImpl();
@@ -178,8 +173,6 @@ namespace Medical
 
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
-
-        protected abstract System.Drawing.Color getSecondColorKeyImpl(System.Drawing.Color firstColor);
 
         protected abstract Gesture createGuiGestureImpl();
 

@@ -32,11 +32,6 @@ namespace Medical
             return String.Format("{0} - {1}", windowText, subText);
         }
 
-        protected override System.Drawing.Color getSecondColorKeyImpl(System.Drawing.Color firstColor)
-        {
-            return firstColor;
-        }
-
         protected override Gesture createGuiGestureImpl()
         {
             return new GuiGestures();

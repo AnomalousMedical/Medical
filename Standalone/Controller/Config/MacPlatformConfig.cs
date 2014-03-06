@@ -34,12 +34,6 @@ namespace Medical
             return subText;
         }
 
-        protected override System.Drawing.Color getSecondColorKeyImpl(System.Drawing.Color firstColor)
-        {
-            //On the Mac likely due to Cairo working a bit different we need to use a color that has been incremented by one. This makes transparency work.
-            return System.Drawing.Color.FromArgb(firstColor.ToArgb() + 0x00010101);
-        }
-
         protected override Gesture createGuiGestureImpl()
         {
             return new GUIGestureBlocker();

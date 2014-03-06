@@ -611,8 +611,8 @@ namespace Medical
         {
             if (transparentBG)
             {
-                System.Drawing.Color colorKey = System.Drawing.Color.FromArgb(bgColor.toARGB());
-                IMAGE_ATTRIBUTES.SetColorKey(colorKey, PlatformConfig.getSecondColorKey(colorKey));
+                int bgColorARGB = bgColor.toARGB();
+                IMAGE_ATTRIBUTES.SetColorKey(System.Drawing.Color.FromArgb(bgColorARGB), System.Drawing.Color.FromArgb(bgColorARGB + 0x00010101)); //A range of the background color and bgcolor + 1 to each values
                 destGraphics.DrawImage(source, destRect, 0, 0, sourceWidth, sourceHeight, GraphicsUnit.Pixel, IMAGE_ATTRIBUTES, null, IntPtr.Zero);
             }
             else
