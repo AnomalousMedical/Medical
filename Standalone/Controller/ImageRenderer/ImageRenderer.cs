@@ -196,25 +196,27 @@ namespace Medical
 
         public void makeSampleImage(Bitmap bitmap)
         {
-            using (Graphics g = Graphics.FromImage(bitmap))
+            if (Logo != null)
             {
-                Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
-                ColorMatrix colorMatrix = new ColorMatrix();
-                colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;
-                colorMatrix.Matrix33 = 0.30f;
-                using (ImageAttributes ia = new ImageAttributes())
+                using (Graphics g = Graphics.FromImage(bitmap))
                 {
-                    ia.SetColorMatrix(colorMatrix);
-
-                    float sizeRatio = (float)bitmap.Width / logo.Width;
-                    int finalLogoWidth = (int)(logo.Width * sizeRatio);
-                    int finalLogoHeight = (int)(logo.Height * sizeRatio);
-                    int currentHeight = 0;
-                    int imageHeight = bitmap.Height;
-                    while (currentHeight < imageHeight)
+                    ColorMatrix colorMatrix = new ColorMatrix();
+                    colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;
+                    colorMatrix.Matrix33 = 0.30f;
+                    using (ImageAttributes ia = new ImageAttributes())
                     {
-                        g.DrawImage(Medical.Properties.Resources.AnomalousMedical, new Rectangle(0, currentHeight, finalLogoWidth, finalLogoHeight), 0, 0, logo.Width, logo.Height, GraphicsUnit.Pixel, ia);
-                        currentHeight += finalLogoHeight;
+                        ia.SetColorMatrix(colorMatrix);
+
+                        float sizeRatio = (float)bitmap.Width / Logo.Width;
+                        int finalLogoWidth = (int)(Logo.Width * sizeRatio);
+                        int finalLogoHeight = (int)(Logo.Height * sizeRatio);
+                        int currentHeight = 0;
+                        int imageHeight = bitmap.Height;
+                        while (currentHeight < imageHeight)
+                        {
+                            g.DrawImage(Logo, new Rectangle(0, currentHeight, finalLogoWidth, finalLogoHeight), 0, 0, Logo.Width, Logo.Height, GraphicsUnit.Pixel, ia);
+                            currentHeight += finalLogoHeight;
+                        }
                     }
                 }
             }
@@ -379,21 +381,20 @@ namespace Medical
                                 bitmap = simpleRender(backBufferWidth, backBufferHeight, aaMode, transparentBG, backColor, renderTexture);
                             }
 
-                            if (showWatermark)
+                            if (showWatermark && Logo != null)
                             {
                                 using (Graphics g = Graphics.FromImage(bitmap))
                                 {
                                     float imageFinalHeight = bitmap.Height * 0.0447f;
-                                    Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
-                                    float scale = imageFinalHeight / logo.Height;
-                                    float imageFinalWidth = logo.Width * scale;
+                                    float scale = imageFinalHeight / Logo.Height;
+                                    float imageFinalWidth = Logo.Width * scale;
                                     if (imageFinalWidth > bitmap.Width)
                                     {
                                         imageFinalWidth = bitmap.Width;
-                                        scale = imageFinalWidth / logo.Width;
-                                        imageFinalHeight = logo.Height * scale;
+                                        scale = imageFinalWidth / Logo.Width;
+                                        imageFinalHeight = Logo.Height * scale;
                                     }
-                                    g.DrawImage(Medical.Properties.Resources.AnomalousMedical, new Rectangle(0, bitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, (int)imageFinalHeight));
+                                    g.DrawImage(Logo, new Rectangle(0, bitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, (int)imageFinalHeight));
                                 }
                             }
 
@@ -629,5 +630,7 @@ namespace Medical
                 this.background = value;
             }
         }
+
+        public Bitmap Logo { get; set; }
     }
 }
