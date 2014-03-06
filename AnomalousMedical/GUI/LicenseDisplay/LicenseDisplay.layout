@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position="87 177 359 72" layer="Back">
+        <Property key="NeedKey" value="false"/>
+        <Property key="NeedMouse" value="false"/>
+        <Widget type="TextBox" skin="TextBox" position="9 4 347 16" align="HStretch Top" name="LicenseText">
+            <Property key="Caption" value="Licensed to: Andrew Piper"/>
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+        <Widget type="ImageBox" skin="ImageBox" position="9 24 150 39" name="LogoWatermark"/>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

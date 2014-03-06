@@ -8,7 +8,7 @@ namespace Medical
     /// <summary>
     /// This class fires an event when a layout is changed.
     /// </summary>
-    class EventLayoutContainer : SingleChildConcreteLayoutContainer
+    public class EventLayoutContainer : SingleChildConcreteLayoutContainer
     {
         public event Action<EventLayoutContainer> LayoutChanged;
 

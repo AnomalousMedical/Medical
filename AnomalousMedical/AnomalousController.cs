@@ -61,6 +61,7 @@ namespace Medical
             UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
 
             splashScreen.updateStatus(5, "Loading Files from Server");
+            ResourceManager.Instance.load("Medical.Resources.AnomalousBootstrapImagesets.xml");
 
             return true;
         }
@@ -117,6 +118,7 @@ namespace Medical
             }
 
             controller.initializeControllers(createBackground());
+            controller.SceneViewController.WindowCreated += SceneViewController_WindowCreated;
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
@@ -283,6 +285,20 @@ namespace Medical
         {
             IDisposableUtil.DisposeIfNotNull(editorBorder);
             IDisposableUtil.DisposeIfNotNull(contentArea);
+        }
+
+        void SceneViewController_WindowCreated(SceneViewWindow window)
+        {
+            MDISceneViewWindow mdiWindow = window as MDISceneViewWindow;
+            if (mdiWindow != null)
+            {
+                LicenseDisplay licenseDisplay = new LicenseDisplay();
+                mdiWindow.addChildContainer(licenseDisplay.LayoutContainer);
+                mdiWindow.Disposed += (win) =>
+                {
+                    licenseDisplay.Dispose();
+                };
+            }
         }
     }
 }

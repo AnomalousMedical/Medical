@@ -41,6 +41,21 @@ namespace Medical.Controller
             mdiWindow.Dispose();
         }
 
+        /// <summary>
+        /// This can add a single child as the parent of the actual scene view and child of the mdi window.
+        /// You can use this to display other info on the SceneViewWindow like a product license or logo.
+        /// 
+        /// Be sure to dispose or otherwise handle anything you attach this way, this only deals with a layout
+        /// container.
+        /// </summary>
+        /// <param name="layoutContainer"></param>
+        public void addChildContainer(SingleChildLayoutContainer layoutContainer)
+        {
+            var oldContent = mdiWindow.Content;
+            mdiWindow.Content = layoutContainer;
+            layoutContainer.Child = oldContent;
+        }
+
         public override void createSceneView(RendererWindow window, SimScene scene)
         {
             base.createSceneView(window, scene);

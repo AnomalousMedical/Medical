@@ -24,6 +24,7 @@ namespace Medical.Controller
         public event SceneViewWindowRenderEvent RenderingStarted;
         public event SceneViewWindowRenderEvent RenderingEnded;
         public event SceneViewWindowResizedEvent Resized;
+        public event SceneViewWindowEvent Disposed;
 
         private SceneView sceneView;
         private CameraMover cameraMover;
@@ -86,6 +87,10 @@ namespace Medical.Controller
             mainTimer.removeFixedUpdateListener(cameraMover);
             TransparencyController.removeTransparencyState(transparencyStateName);
             destroyBorderPanels();
+            if (Disposed != null)
+            {
+                Disposed.Invoke(this);
+            }
         }
 
         public virtual void createSceneView(RendererWindow window, SimScene scene)

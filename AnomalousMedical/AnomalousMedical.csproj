@@ -142,6 +142,7 @@
     <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
     <Compile Include="Controller\ImageLicenseServer.cs" />
+    <Compile Include="GUI\LicenseDisplay\LicenseDisplay.cs" />
     <Compile Include="GUI\Render\LicensePopup.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
     <EmbeddedResource Include="MvcContexts\Login\Index.rml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -210,6 +212,11 @@
     <EmbeddedResource Include="Resources\AnomalousMedicalIcons.xml" />
     <EmbeddedResource Include="Resources\SequenceIcons%402x.png" />
     <EmbeddedResource Include="Resources\SequenceIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo.xml" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo%402x.xml" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo%402x.png" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo.png" />
+    <EmbeddedResource Include="Resources\AnomalousBootstrapImagesets.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

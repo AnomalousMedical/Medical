@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains imagesets that should be loaded immediately after the core is initialized -->
+
+<MyGUI type="List">
+  <List file="Medical.Resources.CornerAnomalousLogo.xml"/>
+</MyGUI>
