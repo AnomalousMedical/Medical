@@ -818,11 +818,6 @@
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
     <None Include="Properties\AssemblyInfoSource.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Utility\CommonResources.cs" />
     <Compile Include="Utility\DocumentBuilder.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
@@ -1001,11 +996,6 @@
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIDocumentWindow.layout" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

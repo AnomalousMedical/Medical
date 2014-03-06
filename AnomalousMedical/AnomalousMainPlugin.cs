@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Reflection;
 using libRocketPlugin;
 using Engine;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -68,6 +69,8 @@ namespace Medical.GUI
             guiManager.removeLinkFromChain(taskbarLink);
             IDisposableUtil.DisposeIfNotNull(taskbar);
             IDisposableUtil.DisposeIfNotNull(taskMenu);
+            IDisposableUtil.DisposeIfNotNull(standaloneController.ImageRenderer.Logo);
+            standaloneController.ImageRenderer.Logo = null;
         }
 
         public void loadGUIResources()
@@ -78,6 +81,11 @@ namespace Medical.GUI
         public void initialize(StandaloneController standaloneController)
         {
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
+
+            if (VirtualFileSystem.Instance.exists("Watermark/AnomalousMedical.png"))
+            {
+                standaloneController.ImageRenderer.Logo = (Bitmap)Bitmap.FromStream(VirtualFileSystem.Instance.openStream("Watermark/AnomalousMedical.png", Engine.Resources.FileMode.Open));
+            }
 
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
