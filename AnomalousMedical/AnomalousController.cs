@@ -21,6 +21,7 @@ namespace Medical
         private SplashScreen splashScreen;
         private BorderLayoutChainLink editorBorder;
         private BorderLayoutChainLink contentArea;
+        private LicenseDisplayManager licenseDisplay = new LicenseDisplayManager();
 
         private static String archiveNameFormat = "AnomalousMedical{0}.dat";
 
@@ -118,7 +119,7 @@ namespace Medical
             }
 
             controller.initializeControllers(createBackground());
-            controller.SceneViewController.WindowCreated += SceneViewController_WindowCreated;
+            licenseDisplay.setSceneViewController(controller.SceneViewController);
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
@@ -255,6 +256,7 @@ namespace Medical
 
             controller.GUIManager.setMainInterfaceEnabled(true);
             controller.setWatermarkText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
+            licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
             addPlugins();
             controller.initializePlugins();
 
@@ -285,20 +287,6 @@ namespace Medical
         {
             IDisposableUtil.DisposeIfNotNull(editorBorder);
             IDisposableUtil.DisposeIfNotNull(contentArea);
-        }
-
-        void SceneViewController_WindowCreated(SceneViewWindow window)
-        {
-            MDISceneViewWindow mdiWindow = window as MDISceneViewWindow;
-            if (mdiWindow != null)
-            {
-                LicenseDisplay licenseDisplay = new LicenseDisplay();
-                mdiWindow.addChildContainer(licenseDisplay.LayoutContainer);
-                mdiWindow.Disposed += (win) =>
-                {
-                    licenseDisplay.Dispose();
-                };
-            }
         }
     }
 }

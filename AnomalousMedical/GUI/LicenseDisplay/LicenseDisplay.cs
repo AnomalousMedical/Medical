@@ -35,5 +35,17 @@ namespace Medical.GUI
                 return layoutContainer;
             }
         }
+
+        public string LicenseText
+        {
+            get
+            {
+                return licenseText.Caption;
+            }
+            set
+            {
+                licenseText.Caption = value;
+            }
+        }
     }
 }
