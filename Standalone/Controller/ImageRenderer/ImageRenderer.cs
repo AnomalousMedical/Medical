@@ -364,7 +364,7 @@ namespace Medical
 
                             if (doGridRender)
                             {
-                                IEnumerable<IdleStatus> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, showWatermark, renderTexture, camera, bgViewport != null ? bgViewport.Camera : null, transparentBG, backColor,
+                                IEnumerable<IdleStatus> process = gridRender(finalWidth * aaMode, finalHeight * aaMode, backBufferWidth, backBufferHeight, aaMode, renderTexture, camera, bgViewport != null ? bgViewport.Camera : null, transparentBG, backColor,
                                     (product) =>
                                     {
                                         bitmap = product;
@@ -376,7 +376,25 @@ namespace Medical
                             }
                             else
                             {
-                                bitmap = simpleRender(backBufferWidth, backBufferHeight, aaMode, showWatermark, transparentBG, backColor, renderTexture);
+                                bitmap = simpleRender(backBufferWidth, backBufferHeight, aaMode, transparentBG, backColor, renderTexture);
+                            }
+
+                            if (showWatermark)
+                            {
+                                using (Graphics g = Graphics.FromImage(bitmap))
+                                {
+                                    float imageFinalHeight = bitmap.Height * 0.0447f;
+                                    Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
+                                    float scale = imageFinalHeight / logo.Height;
+                                    float imageFinalWidth = logo.Width * scale;
+                                    if (imageFinalWidth > bitmap.Width)
+                                    {
+                                        imageFinalWidth = bitmap.Width;
+                                        scale = imageFinalWidth / logo.Width;
+                                        imageFinalHeight = logo.Height * scale;
+                                    }
+                                    g.DrawImage(Medical.Properties.Resources.AnomalousMedical, new Rectangle(0, bitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, (int)imageFinalHeight));
+                                }
                             }
 
                             renderTexture.destroyViewport(viewport);
@@ -419,7 +437,7 @@ namespace Medical
             yield break;
         }
 
-        private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
+        private Bitmap simpleRender(int width, int height, int aaMode, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
         {
             renderTexture.update();
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
@@ -455,7 +473,7 @@ namespace Medical
             return bitmap;
         }
 
-        private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, Camera backgroundCamera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, RenderTexture renderTexture, Camera camera, Camera backgroundCamera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
         {
             float originalLeft, originalRight, originalTop, originalBottom;
             camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
@@ -569,20 +587,6 @@ namespace Medical
                         scalerGraphics.Dispose();
                         scaledPiecewiseBitmap.Dispose();
                     }
-                }
-                if (showWatermark)
-                {
-                    float imageFinalHeight = fullBitmap.Height * 0.0447f;
-                    Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
-                    float scale = imageFinalHeight / logo.Height;
-                    float imageFinalWidth = logo.Width * scale;
-                    if (imageFinalWidth > fullBitmap.Width)
-                    {
-                        imageFinalWidth = fullBitmap.Width;
-                        scale = imageFinalWidth / logo.Width;
-                        imageFinalHeight = logo.Height * scale;
-                    }
-                    g.DrawImage(Medical.Properties.Resources.AnomalousMedical, new Rectangle(0, fullBitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, (int)imageFinalHeight));
                 }
             }
 
