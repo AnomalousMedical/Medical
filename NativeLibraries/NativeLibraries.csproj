@@ -58,10 +58,6 @@
       <Link>OgreMain.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\OgreOverlay.dll">
-      <Link>OgreOverlay.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\..\Engine\Release\RenderSystem_Direct3D11.dll">
       <Link>RenderSystem_Direct3D11.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
