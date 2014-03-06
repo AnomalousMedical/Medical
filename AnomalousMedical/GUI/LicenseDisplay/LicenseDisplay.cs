@@ -25,7 +25,15 @@ namespace Medical.GUI
 
         void layoutContainer_LayoutChanged(EventLayoutContainer obj)
         {
-            widget.setCoord(layoutContainer.Location.x, layoutContainer.WorkingSize.Height - widget.Height + layoutContainer.Location.y, layoutContainer.WorkingSize.Width, widget.Height);
+            if (widget.Height < layoutContainer.WorkingSize.Height)
+            {
+                widget.setCoord(layoutContainer.Location.x, layoutContainer.WorkingSize.Height - widget.Height + layoutContainer.Location.y, layoutContainer.WorkingSize.Width, widget.Height);
+                widget.Visible = true;
+            }
+            else
+            {
+                widget.Visible = false;
+            }
         }
 
         public SingleChildLayoutContainer LayoutContainer

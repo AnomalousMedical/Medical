@@ -106,12 +106,10 @@ namespace Medical.Controller
             sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
-            sceneView.moveSceneStats(new Vector2(0.0f, 0.1f));
             sceneView.ClearEveryFrame = false;
             //camera.setRenderingMode(renderingMode);
             cameraMover.setCamera(new CameraPositioner(sceneView, NearPlaneWorldPos, FarPlaneWorldPos));
             CameraResolver.addMotionValidator(this);
-            sceneView.showSceneStats(MedicalConfig.EngineConfig.ShowStatistics);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
             sceneView.RenderingStarted += sceneView_RenderingStarted;
             sceneView.RenderingEnded += sceneView_RenderingEnded;
@@ -371,10 +369,7 @@ namespace Medical.Controller
 
         public void showSceneStats(bool show)
         {
-            if (sceneView != null)
-            {
-                sceneView.showSceneStats(show);
-            }
+            
         }
 
         public void rotate(float yawDelta, float pitchDelta)
