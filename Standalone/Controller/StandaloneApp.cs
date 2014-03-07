@@ -16,8 +16,6 @@ namespace Medical.Controller
 
         public abstract String PrimaryArchive { get; }
 
-        public abstract String getPatchArchiveName(int index);
-
         public abstract String DefaultScene { get; }
 
         public LicenseManager LicenseManager { get; protected set; }

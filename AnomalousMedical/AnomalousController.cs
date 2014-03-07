@@ -100,16 +100,6 @@ namespace Medical
             //Add primary archive
             archive.addArchive(this.PrimaryArchive);
 
-            //Add any patch archives
-            int i = 0;
-            String patchArchive = this.getPatchArchiveName(i);
-            while (File.Exists(patchArchive))
-            {
-                archive.addArchive(patchArchive);
-                ++i;
-                patchArchive = this.getPatchArchiveName(i);
-            }
-
             controller.addWorkingArchive();
             if (!MedicalConfig.EngineConfig.UseHardwareSkinning)
             {
@@ -183,11 +173,6 @@ namespace Medical
             {
                 return String.Format(archiveNameFormat, "");
             }
-        }
-
-        public override String getPatchArchiveName(int index)
-        {
-            return String.Format(archiveNameFormat, index);
         }
 
         public override String DefaultScene
