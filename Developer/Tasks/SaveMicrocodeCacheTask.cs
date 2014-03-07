@@ -14,7 +14,7 @@ namespace Developer
         public SaveMicrocodeCacheTask()
             :base("SaveMicrocodeCache", "Save Microcode Cache", CommonResources.NoIcon, "Developer")
         {
-
+            this.ShowOnTaskbar = false;
         }
 
         public override void clicked(TaskPositioner taskPositioner)
@@ -29,6 +29,7 @@ namespace Developer
                         GpuProgramManager.Instance.saveMicrocodeCache(stream);
                     }
                 }
+                fireItemClosed();
             });
         }
 

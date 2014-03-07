@@ -51,6 +51,7 @@ namespace Medical.Controller
         private ViewportBackground vpBackground;
         private int zIndexStart;
         private int zOffset = 0;
+        private RenderingMode renderingMode = RenderingMode.Solid;
 
         public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
         {
@@ -107,7 +108,7 @@ namespace Medical.Controller
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
             sceneView.ClearEveryFrame = false;
-            //camera.setRenderingMode(renderingMode);
+            sceneView.setRenderingMode(renderingMode);
             cameraMover.setCamera(new CameraPositioner(sceneView, NearPlaneWorldPos, FarPlaneWorldPos));
             CameraResolver.addMotionValidator(this);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
@@ -637,6 +638,25 @@ namespace Medical.Controller
         public float NearPlaneWorldPos { get; set; }
 
         public float FarPlaneWorldPos { get; set; }
+
+        public RenderingMode RenderingMode
+        {
+            get
+            {
+                return renderingMode;
+            }
+            set
+            {
+                if (renderingMode != value)
+                {
+                    renderingMode = value;
+                    if (sceneView != null)
+                    {
+                        sceneView.setRenderingMode(renderingMode);
+                    }
+                }
+            }
+        }
 
         void sceneView_FindVisibleObjects(SceneView sceneView)
         {

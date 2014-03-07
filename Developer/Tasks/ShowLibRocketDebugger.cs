@@ -37,6 +37,7 @@ namespace Developer
             }
             rocketDebugger.Position = taskPositioner.findGoodWindowPosition(rocketDebugger.Width, rocketDebugger.Height);
             rocketDebugger.Visible = true;
+            rocketDebugger.Closed += rocketDebugger_Closed;
         }
 
         public override bool Active
@@ -45,6 +46,11 @@ namespace Developer
             {
                 return rocketDebugger != null && rocketDebugger.Visible;
             }
+        }
+
+        void rocketDebugger_Closed(object sender, EventArgs e)
+        {
+            fireItemClosed();
         }
     }
 }

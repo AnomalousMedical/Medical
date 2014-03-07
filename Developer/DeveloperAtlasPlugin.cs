@@ -24,6 +24,7 @@ namespace Developer
         private DisablePhysicsTask disablePhysics;
         private MeasurementGUI measurementGUI;
         private ShowLibRocketDebugger libRocketDebugger;
+        private ChangeRenderingMode changeRenderingMode;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -32,6 +33,7 @@ namespace Developer
 
         public void Dispose()
         {
+            changeRenderingMode.Dispose();
             libRocketDebugger.Dispose();
             measurementGUI.Dispose();
             advancedMandibleMovement.Dispose();
@@ -98,6 +100,8 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
             taskController.addTask(libRocketDebugger);
             taskController.addTask(new SaveMicrocodeCacheTask());
+            changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
+            taskController.addTask(changeRenderingMode);
 
             disablePhysics = new DisablePhysicsTask(int.MaxValue);
             taskController.addTask(disablePhysics);
