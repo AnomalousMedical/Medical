@@ -97,6 +97,21 @@ namespace Medical
             //Configure the filesystem
             VirtualFileSystem archive = VirtualFileSystem.Instance;
 
+            //Setup microcode cache load
+            OgreInterface.LoadMicrocodeCacheCallback = (rs, gpuProgMan) =>
+            {
+                String microcodeFile = rs.Name + ".mcc";
+                if (File.Exists(microcodeFile))
+                {
+                    using (Stream stream = File.OpenRead(microcodeFile))
+                    {
+                        gpuProgMan.loadMicrocodeCache(stream);
+                        Log.Info("Using microcode cache {0}", microcodeFile);
+                    }
+                }
+                return true;
+            };
+
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = configureWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);

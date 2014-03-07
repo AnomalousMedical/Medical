@@ -143,6 +143,10 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 
 	//Result buffer
 	wchar_t fileNames[FILE_NAME_BUFFER_SIZE] = L"";
+	if(defaultFile != 0)
+	{
+		wcsncpy(fileNames, defaultFile, FILE_NAME_BUFFER_SIZE);
+	}
 	of.lpstrFile = fileNames;
 	of.nMaxFile = FILE_NAME_BUFFER_SIZE;
 
@@ -155,7 +159,7 @@ extern "C" _AnomalousExport void FileSaveDialog_showModal(NativeOSWindow* parent
 	//Title
 	if(message != 0)
 	{
-		of.lpstrFileTitle = const_cast<wchar_t *>(message);
+		of.lpstrTitle = message;
 	}
 
 	//Default dir

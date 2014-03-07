@@ -43,7 +43,7 @@ namespace Developer
         {
             get
             {
-                return false;
+                return rocketDebugger != null && rocketDebugger.Visible;
             }
         }
     }

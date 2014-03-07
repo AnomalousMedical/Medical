@@ -97,6 +97,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", "Developer.StatisticsIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
             taskController.addTask(libRocketDebugger);
+            taskController.addTask(new SaveMicrocodeCacheTask());
 
             disablePhysics = new DisablePhysicsTask(int.MaxValue);
             taskController.addTask(disablePhysics);
