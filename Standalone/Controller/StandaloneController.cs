@@ -649,6 +649,10 @@ namespace Medical
         /// <param name="filename"></param>
         internal bool changeScene(String file)
         {
+#if ALLOW_OVERRIDE
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+#endif
             bool success = false;
             sceneViewController.resetAllCameraPositions();
             if (movementSequenceController.Playing)
@@ -691,6 +695,10 @@ namespace Medical
                     NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
                 }
             }
+#if ALLOW_OVERRIDE
+            sw.Stop();
+            Logging.Log.Debug("Scene loaded in {0} ms", sw.ElapsedMilliseconds);
+#endif
             return success;
         }
 
