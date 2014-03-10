@@ -699,7 +699,7 @@ namespace Medical
         /// </summary>
         private void unloadScene()
         {
-            if (movementSequenceController.Playing)
+            if (movementSequenceController != null && movementSequenceController.Playing)
             {
                 movementSequenceController.stopPlayback();
             }
@@ -707,8 +707,14 @@ namespace Medical
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
             }
-            anatomyController.sceneUnloading();
-            sceneViewController.destroyCameras();
+            if (anatomyController != null)
+            {
+                anatomyController.sceneUnloading();
+            }
+            if (sceneViewController != null)
+            {
+                sceneViewController.destroyCameras();
+            }
         }
 
         private void showLoadErrorGui()
