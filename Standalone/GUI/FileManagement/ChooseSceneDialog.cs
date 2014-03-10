@@ -77,10 +77,12 @@ namespace Medical.GUI
                 {
                     using (Stream imageStream = archive.openStream(pictureFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                     {
-                        Image image = Image.FromStream(imageStream);
-                        if (image != null)
+                        using (Image image = Image.FromStream(imageStream))
                         {
-                            imageKey = imageAtlas.addImage(pictureFileName, image);
+                            if (image != null)
+                            {
+                                imageKey = imageAtlas.addImage(pictureFileName, image);
+                            }
                         }
                     }
                 }
