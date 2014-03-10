@@ -133,6 +133,7 @@ namespace Medical
 
         public void Dispose()
         {
+            unloadScene();
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
 			IDisposableUtil.DisposeIfNotNull(downloadController);
             if (DocumentController != null)
@@ -655,16 +656,7 @@ namespace Medical
 #endif
             bool success = false;
             sceneViewController.resetAllCameraPositions();
-            if (movementSequenceController.Playing)
-            {
-                movementSequenceController.stopPlayback();
-            }
-            if (SceneUnloading != null && medicalController.CurrentScene != null)
-            {
-                SceneUnloading.Invoke(medicalController.CurrentScene);
-            }
-            anatomyController.sceneUnloading();
-            sceneViewController.destroyCameras();
+            unloadScene();
             behaviorErrorManager.clear();
             if (medicalController.openScene(file))
             {
@@ -700,6 +692,23 @@ namespace Medical
             Logging.Log.Debug("Scene loaded in {0} ms", sw.ElapsedMilliseconds);
 #endif
             return success;
+        }
+
+        /// <summary>
+        /// Called when a scene is unloading, this is called by changeScene and Dispose.
+        /// </summary>
+        private void unloadScene()
+        {
+            if (movementSequenceController.Playing)
+            {
+                movementSequenceController.stopPlayback();
+            }
+            if (SceneUnloading != null && medicalController.CurrentScene != null)
+            {
+                SceneUnloading.Invoke(medicalController.CurrentScene);
+            }
+            anatomyController.sceneUnloading();
+            sceneViewController.destroyCameras();
         }
 
         private void showLoadErrorGui()
