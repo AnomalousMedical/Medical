@@ -15,6 +15,12 @@ namespace Medical.GUI
         {
             gridPropertiesControl = new GridPropertiesControl(measurementGrid, window);
             gridPropertiesControl.GridSpacing = 2;
+            this.Shown += GridPropertiesDialog_Shown;
+        }
+
+        void GridPropertiesDialog_Shown(object sender, EventArgs e)
+        {
+            gridPropertiesControl.updateGrid();
         }
     }
 }
