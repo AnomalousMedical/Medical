@@ -211,7 +211,7 @@ namespace Medical
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
 
             //Measurement grid
-            measurementGrid = new MeasurementGrid("MeasurementGrid", medicalController, sceneViewController);
+            measurementGrid = new MeasurementGrid("MeasurementGrid", sceneViewController);
             SceneUnloading += measurementGrid.sceneUnloading;
             SceneLoaded += measurementGrid.sceneLoaded;
 

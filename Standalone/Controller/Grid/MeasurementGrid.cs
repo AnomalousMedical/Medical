@@ -13,21 +13,17 @@ namespace Medical.Controller
 {
     public class MeasurementGrid : IDisposable
     {
-        private PluginManager pluginManager;
         private String name;
         private ManualObject manualObject;
         private SceneNode sceneNode;
-        private EventManager events;
         private SceneViewController sceneViewController;
         private bool visible = false;
-        private Color color = Color.FromARGB(System.Drawing.Color.Green.ToArgb());
+        private Color color = new Color(0f, 0.5019608f, 0f, 1f);
         private Vector3 origin = Vector3.Zero;
 
-        public MeasurementGrid(String name, MedicalController medicalController, SceneViewController sceneViewController)
+        public MeasurementGrid(String name, SceneViewController sceneViewController)
         {
             this.name = name;
-            this.pluginManager = medicalController.PluginManager;
-            this.events = medicalController.EventManager;
             this.sceneViewController = sceneViewController;
             sceneViewController.WindowCreated += new SceneViewWindowEvent(sceneViewController_WindowCreated);
             sceneViewController.WindowDestroyed += new SceneViewWindowEvent(sceneViewController_WindowDestroyed);
