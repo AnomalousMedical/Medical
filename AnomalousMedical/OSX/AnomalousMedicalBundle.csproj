@@ -89,9 +89,6 @@
 	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libSoundWrapper.dylib" />
 	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libZip.dylib" />
 	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libRocketWrapper.dylib" />
-	
-	<ResourceFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/Release/Plugin_CgProgramManager.dylib" />
-	<ResourceFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/Release/RenderSystem_GL.dylib" />
   </ItemGroup>
   
   <!-- Common frameworks, items and target. -->
@@ -99,18 +96,18 @@
 	<!-- Mono -->
 	<MonoFrameworkFiles Include="/Users/andrewpiper/Development/Dependencies/Mono/OSXBuild/bin/Mono.framework/**/*"/>
 	<!-- Ogre -->
-	<OgreFrameworkFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/Release/Ogre.framework/Ogre"/>
+	<OgreFrameworkFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/Ogre.framework/Ogre"/>
 	<!-- Cg -->
-	<CgFrameworkFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Dependencies/Cg.framework/Cg" />
+	<GlRenderSystemFrameworkFiles Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/RenderSystem_GL.framework/RenderSystem_GL" />
   </ItemGroup>
   
   <Target Name="CopyFrameworks">
 	<!-- Mono -->
 	<Copy SourceFiles="@(MonoFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Mono.framework/%(RecursiveDir)" />
 	<!-- Ogre -->
-	<Copy SourceFiles="@(OgreFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Ogre.framework/Versions/1.8.1" />
+	<Copy SourceFiles="@(OgreFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Ogre.framework/Versions/1.10.0" />
 	<!-- Cg -->
-	<Copy SourceFiles="@(CgFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Cg.framework/%(RecursiveDir)" />
+	<Copy SourceFiles="@(GlRenderSystemFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/RenderSystem_GL.framework/%(RecursiveDir)" />
   </Target>
   
   <!-- App Bundle task -->
