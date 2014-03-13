@@ -150,14 +150,6 @@ namespace Medical
             }
         }
 
-        public static bool PreferHardwareSkinning
-        {
-            get
-            {
-                return currentConfig.PreferHardwareSkinningImpl;
-            }
-        }
-
         public static bool HasCustomSSLValidation
         {
             get
@@ -203,8 +195,6 @@ namespace Medical
         protected abstract ProcessStartInfo RestartProcInfoImpl { get; }
 
         protected abstract bool DefaultEnableMultitouchImpl { get; }
-
-        protected abstract bool PreferHardwareSkinningImpl { get; }
 
         protected abstract bool HasCustomSSLValidationImpl { get; }
 

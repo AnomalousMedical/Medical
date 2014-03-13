@@ -141,14 +141,6 @@ namespace Medical
             }
         }
 
-        protected override bool PreferHardwareSkinningImpl
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         protected override bool HasCustomSSLValidationImpl
         {
             get

@@ -149,16 +149,6 @@ namespace Medical
             }
         }
 
-        protected override bool PreferHardwareSkinningImpl 
-		{
-			get 
-			{
-				int major, minor, bugfix;
-				SystemInfo_GetOSXVersion (out major, out minor, out bugfix);
-				return !(major == 10 && (minor == 6 || (minor == 7 && bugfix < 5)));
-			}
-		}
-
         protected override bool HasCustomSSLValidationImpl
         {
             get
@@ -186,9 +176,6 @@ namespace Medical
         }
 
 		#region PInvoke
-
-		[DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void SystemInfo_GetOSXVersion(out int major, out int minor, out int bugfix);
 
         [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
