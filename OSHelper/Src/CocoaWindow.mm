@@ -32,6 +32,10 @@ CocoaWindow::CocoaWindow(CocoaWindow* parent, String title, int x, int y, int wi
             [window setLevel:NSFloatingWindowLevel];
         }
     }
+    else
+    {
+        [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+    }
     
     view = [[CocoaView alloc] initWithFrame:frame andWindow:this];
     //[view setAutoresizingMask: NSViewWidthSizable | NSViewHeightSizable];
