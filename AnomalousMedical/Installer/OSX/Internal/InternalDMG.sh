@@ -6,7 +6,7 @@
 # Created by Andrew Piper on 1/18/11.
 # Copyright 2011 Anomalous Software. All rights reserved.
 
-codesign -s "Developer ID Application" ../../../../Release/Anomalous\ Medical.app
+codesign -s "Developer ID Application" ../../../../Release/Anomalous\ Medical.app --deep
 
 sh ../MakeDMG.sh "Anomalous Medical" "../../../../Release" "Anomalous Medical" "../Layout" "../../License"
 

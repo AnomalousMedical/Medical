@@ -52,9 +52,6 @@
 	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
 	<ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.exe" />
 
-
-
-
     <!-- These items will go in the Contents/MacOS folder-->
 	<MacOSFiles Include="BundleSource/Contents/MacOS/AnomalousMedical" />
 	<MakeExecutable Include="$(AppBundleOutDir)/$(AppBundleName)/Contents/MacOS/AnomalousMedical" />
@@ -104,7 +101,8 @@
         Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/RenderSystem_GL.framework/Versions/Current/**/*"
         Exclude="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/RenderSystem_GL.framework/Versions/Current/**/*.h"/>
   </ItemGroup>
-  
+
+  <UsingTask TaskName="SetupFramework" AssemblyFile="..\..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
   <Target Name="CopyFrameworks">
 	<!-- Mono -->
 	<Copy SourceFiles="@(MonoFrameworkFiles)"
@@ -112,9 +110,17 @@
 	<!-- Ogre -->
 	<Copy SourceFiles="@(OgreFrameworkFiles)"
         DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Ogre.framework/Versions/1.10.0/%(RecursiveDir)" />
+    <SetupFramework
+        BasePath="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Ogre.framework"
+        CurrentVersion="1.10.0"
+        MainBinaryName="Ogre"/>
 	<!-- Gl Render System -->
 	<Copy SourceFiles="@(GlRenderSystemFrameworkFiles)"
         DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/RenderSystem_GL.framework/Versions/1.10.0/%(RecursiveDir)" />
+    <SetupFramework
+        BasePath="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/RenderSystem_GL.framework"
+        CurrentVersion="1.10.0"
+        MainBinaryName="RenderSystem_GL"/>
   </Target>
   
   <!-- App Bundle task -->
