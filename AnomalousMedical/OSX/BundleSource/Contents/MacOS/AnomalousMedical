@@ -32,11 +32,11 @@ if [ "$COCOASHARP_MODE" -eq "1" ]; then
 fi
 
 #Setup the mono directories
-export MONO_CFG_DIR=../Frameworks/Mono.Framework/cfg
-export MONO_PATH="$APP_PATH/Contents/Frameworks/Mono.framework/lib"
+export MONO_CFG_DIR=../Mono/cfg
+export MONO_PATH="$APP_PATH/Contents/Mono/lib"
 export FONTCONFIG_PATH="../Resources"
 
 #Run the program
 cd "$APP_PATH/Contents/Resources"
 
-"$APP_PATH/Contents/Frameworks/Mono.framework/bin/mono" "./$APP_NAME.exe"
+"$APP_PATH/Contents/Mono/bin/mono" "./$APP_NAME.exe"
