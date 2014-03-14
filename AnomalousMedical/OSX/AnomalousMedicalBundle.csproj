@@ -80,26 +80,26 @@
 	
 	<ResourceFiles Include="..\..\Release\libOSHelper.dylib" />
 	
-	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libBulletWrapper.dylib" />
-	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libMyGUIWrapper.dylib" />
-	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libOgreCWrapper.dylib" />
-	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libSoundWrapper.dylib" />
-	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libZip.dylib" />
-	<ResourceFiles Include="/Users/andrewpiper/Development/Engine/Release/libRocketWrapper.dylib" />
+	<ResourceFiles Include="..\..\../Engine/Release/libBulletWrapper.dylib" />
+	<ResourceFiles Include="..\..\../Engine/Release/libMyGUIWrapper.dylib" />
+	<ResourceFiles Include="..\..\../Engine/Release/libOgreCWrapper.dylib" />
+	<ResourceFiles Include="..\..\../Engine/Release/libSoundWrapper.dylib" />
+	<ResourceFiles Include="..\..\../Engine/Release/libZip.dylib" />
+	<ResourceFiles Include="..\..\../Engine/Release/libRocketWrapper.dylib" />
   </ItemGroup>
   
   <!-- Common frameworks, items and target. -->
   <ItemGroup>
 	<!-- Mono -->
-	<MonoFrameworkFiles Include="/Users/andrewpiper/Development/Dependencies/Mono/OSXBuild/bin/Mono.framework/**/*"/>
+	<MonoFrameworkFiles Include="..\..\../Dependencies/Mono/OSXBuild/bin/Mono.framework/**/*"/>
 	<!-- Ogre -->
 	<OgreFrameworkFiles
-        Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/Ogre.framework/Versions/Current/**/*"
-        Exclude="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/Ogre.framework/Versions/Current/**/*.h;/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/Ogre.framework/Versions/Current/Resources/ogrelogo.png"/>
+        Include="..\..\../Dependencies/Ogre/OSX/Build/lib/macosx/Release/Ogre.framework/Versions/Current/**/*"
+        Exclude="..\..\../Dependencies/Ogre/OSX/Build/lib/macosx/Release/Ogre.framework/Versions/Current/**/*.h;..\..\../Dependencies/Ogre/OSX/Build/lib/macosx/Release/Ogre.framework/Versions/Current/Resources/ogrelogo.png"/>
 	<!-- Gl Render System -->
 	<GlRenderSystemFrameworkFiles
-        Include="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/RenderSystem_GL.framework/Versions/Current/**/*"
-        Exclude="/Users/andrewpiper/Development/Dependencies/Ogre/OSX/Build/lib/macosx/Release/RenderSystem_GL.framework/Versions/Current/**/*.h"/>
+        Include="..\..\../Dependencies/Ogre/OSX/Build/lib/macosx/Release/RenderSystem_GL.framework/Versions/Current/**/*"
+        Exclude="..\..\../Dependencies/Ogre/OSX/Build/lib/macosx/Release/RenderSystem_GL.framework/Versions/Current/**/*.h"/>
   </ItemGroup>
 
   <UsingTask TaskName="SetupFramework" AssemblyFile="..\..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
