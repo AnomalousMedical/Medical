@@ -32,7 +32,7 @@ namespace Medical.Controller
             vp = renderTarget.addViewport(camera, zOrder, 0.0f, 0.0f, 1.0f, 1.0f);
             vp.setBackgroundColor(new Color(0.149f, 0.149f, 0.149f));
             vp.setOverlaysEnabled(false);
-            vp.setClearEveryFrame(true);
+            vp.setClearEveryFrame(false);
             vp.clear();
 
             camera.lookAt(backgroundScene.BackgroundPosition);

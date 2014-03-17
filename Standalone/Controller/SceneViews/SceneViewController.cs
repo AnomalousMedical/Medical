@@ -51,6 +51,13 @@ namespace Medical.Controller
             mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
 
             MedicalConfig.EngineConfig.ShowStatsToggled += new EventHandler(EngineConfig_ShowStatsToggled);
+
+            Root.getSingleton().FrameStarted += SceneViewController_FrameStarted;
+        }
+
+        void SceneViewController_FrameStarted(FrameEvent frameEvent)
+        {
+            Root.getSingleton().getRenderSystem().clearFrameBuffer(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, Engine.Color.Black);
         }
 
         public void Dispose()
