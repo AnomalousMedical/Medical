@@ -342,17 +342,22 @@ namespace Medical
                                 camera.lookAt(lookAt);
                             }
 
+                            if (transparentBG)
+                            {
+                                backColor.a = 0.0f;
+                            }
+
                             ViewportBackground bgViewport = null;
                             if (background != null)
                             {
                                 bgViewport = new ViewportBackground("ImageRenderer", 0, background, renderTexture);
                                 bgViewport.BackgroundColor = backColor;
-                                viewport.setClearEveryFrame(false);
                                 bgViewport.Camera.setAutoAspectRatio(false);
                                 bgViewport.Camera.setAspectRatio((float)finalWidth / finalHeight);
                             }
                             viewport.setBackgroundColor(backColor);
                             viewport.setOverlaysEnabled(false);
+                            viewport.setClearEveryFrame(false);
 
                             if (properties.CustomizeCameraPosition != null)
                             {
@@ -440,9 +445,14 @@ namespace Medical
 
         private Bitmap simpleRender(int width, int height, int aaMode, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
         {
+            renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
             renderTexture.update();
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
             System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+            if (transparentBG)
+            {
+                bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+            }
             Bitmap bitmap = new Bitmap(width, height, bitmapFormat);
             BitmapData bmpData = bitmap.LockBits(new Rectangle(new Point(), bitmap.Size), ImageLockMode.WriteOnly, bitmap.PixelFormat);
             unsafe
@@ -466,7 +476,7 @@ namespace Medical
                     graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
                     graph.CompositingQuality = CompositingQuality.HighQuality;
                     graph.SmoothingMode = SmoothingMode.AntiAlias;
-                    renderBitmaps(graph, new Rectangle(0, 0, smallWidth, smallHeight), largeImage, largeImage.Width, largeImage.Height, transparentBG, bgColor);
+                    graph.DrawImage(largeImage, new Rectangle(0, 0, smallWidth, smallHeight));
                 }
                 largeImage.Dispose();
             }
@@ -553,6 +563,7 @@ namespace Medical
                             backgroundCamera.setFrustumExtents(bgLeft, bgRight, bgTop, bgBottom);
                         }
                         Root.getSingleton().clearEventTimes();
+                        renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
                         renderTexture.update();
 
                         BitmapData bmpData = pieceBitmap.LockBits(new Rectangle(new Point(), pieceBitmap.Size), ImageLockMode.WriteOnly, pieceBitmap.PixelFormat);
@@ -564,12 +575,12 @@ namespace Medical
                         destRect.Height = imageStepVertSmall;
                         if (scalerGraphics != null) //Meaning AA is turned on.
                         {
-                            renderBitmaps(scalerGraphics, scalarRectangle, pieceBitmap, pieceBitmap.Width, pieceBitmap.Height, transparentBG, bgColor);
+                            scalerGraphics.DrawImage(pieceBitmap, scalarRectangle);
                             g.DrawImage(scaledPiecewiseBitmap, destRect);
                         }
                         else
                         {
-                            renderBitmaps(g, destRect, pieceBitmap, imageStepHoriz, imageStepVert, transparentBG, bgColor);
+                            g.DrawImage(pieceBitmap, destRect);
                         }
 
                         if (imageRendererProgress != null)
@@ -595,20 +606,6 @@ namespace Medical
 
             renderingCompletedCallback(fullBitmap);
             yield break;
-        }
-
-        private static void renderBitmaps(Graphics destGraphics, Rectangle destRect, Bitmap source, int sourceWidth, int sourceHeight, bool transparentBG, Engine.Color bgColor)
-        {
-            if (transparentBG)
-            {
-                int bgColorARGB = bgColor.toARGB();
-                IMAGE_ATTRIBUTES.SetColorKey(System.Drawing.Color.FromArgb(bgColorARGB), System.Drawing.Color.FromArgb(bgColorARGB + 0x00010101)); //A range of the background color and bgcolor + 1 to each values
-                destGraphics.DrawImage(source, destRect, 0, 0, sourceWidth, sourceHeight, GraphicsUnit.Pixel, IMAGE_ATTRIBUTES, null, IntPtr.Zero);
-            }
-            else
-            {
-                destGraphics.DrawImage(source, destRect);
-            }
         }
 
         private static unsafe void unsafeAsyncBufferCopy(RenderTexture renderTexture, OgreWrapper.PixelFormat format, BitmapData bmpData)
