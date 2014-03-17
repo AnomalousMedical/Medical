@@ -77,7 +77,7 @@ Source: S:\Medical\Release\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags
 
 ;Open AL
 Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
-;VS 2010 Redistributable
+;VS 2013 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ;DX Required Files
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DXSETUP.exe"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
@@ -88,8 +88,8 @@ Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxupdate.cab"; 
 ;DX June 2010 Files
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Jun2010_d3dx9_43_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Jun2010_D3DCompiler_43_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;.Net 4.0
-Source: S:\dependencies\InstallerDependencies\Windows\dotNetFx40_Client_setup.exe; DestDir: {tmp}; 
+;.Net 4.5.1
+Source: S:\dependencies\InstallerDependencies\Windows\NDP451-KB2859818-Web.exe; DestDir: {tmp}; 
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -97,7 +97,7 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{tmp}\oalinst.exe"; Parameters: "/s"; StatusMsg: "Installing OpenAL";
-Filename: "{tmp}\vcredist_x86.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2012 Redistributable (x86)";
+Filename: "{tmp}\vcredist_x86.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2013 Redistributable (x86)";
 Filename: "{tmp}\DirectX9c\DXSETUP.exe"; Parameters: "/silent"; StatusMsg: "Installing DirectX 9.0";
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, "&", "&&")}}"; Flags: nowait postinstall skipifsilent
 
@@ -105,18 +105,18 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 procedure checkdotnetfx4();
 var
   resultCode: Integer;
-	version: cardinal;
+	release: cardinal;
 begin
-	RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v4\Client', 'Install', version);
-	if version < 1 then 
+	RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v4\Full', 'Release', release);
+	if (release < 378759) and (release <> 378675) and (release <> 378758) then 
 	begin
-    if MsgBox('You need to install the Microsoft .Net Framework 4.0.'#13#10'If you are connected to the internet you can do this now.'#13#10'Would you like to continue?', mbConfirmation, MB_YESNO) = IDYES then
+    if MsgBox('You need to install the Microsoft .Net Framework 4.5.1.'#13#10'If you are connected to the internet you can do this now.'#13#10'Would you like to continue?', mbConfirmation, MB_YESNO) = IDYES then
       begin
-        Exec(ExpandConstant('{tmp}\dotNetFx40_Client_setup.exe'), '/norestart', '', SW_SHOW, ewWaitUntilTerminated, resultCode);
+        Exec(ExpandConstant('{tmp}\NDP451-KB2859818-Web.exe'), '/norestart', '', SW_SHOW, ewWaitUntilTerminated, resultCode);
       end
     else
       begin
-        MsgBox('You must install the Microsoft .Net Framework 4.0 for this program to work.'#13#10'Please visit www.anomalousmedical.com for more info.', mbInformation, MB_OK)
+        MsgBox('You must install the Microsoft .Net Framework 4.5.1 for this program to work.'#13#10'Please visit www.anomalousmedical.com for more info.', mbInformation, MB_OK)
       end;
    end;
 //	   if resultCode=3010 then
