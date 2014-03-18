@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using OgreWrapper;
 using Medical.Controller;
+using OgrePlugin;
 
 namespace Medical.GUI
 {
@@ -41,7 +42,7 @@ namespace Medical.GUI
             {
                 rendererProgress.Position = percentage;
                 statusText.Caption = status;
-                Root.getSingleton()._updateAllRenderTargets();
+                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.update();
             }
         }
 
