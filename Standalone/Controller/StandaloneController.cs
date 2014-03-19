@@ -58,6 +58,7 @@ namespace Medical
         private PatientDataController patientDataController;
         private IdleHandler idleHandler;
         private BehaviorErrorManager behaviorErrorManager;
+        private SceneStatsDisplayManager sceneStatsDisplayManager;
 
         //GUI
         private GUIManager guiManager;
@@ -204,6 +205,7 @@ namespace Medical
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
+            sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow); 
 
             //Watermark
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);

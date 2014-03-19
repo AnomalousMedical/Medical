@@ -368,11 +368,6 @@ namespace Medical.Controller
             return Unproject(screenX, screenY, Camera.getViewMatrix(), Camera.getProjectionMatrix());
         }
 
-        public void showSceneStats(bool show)
-        {
-            
-        }
-
         public void rotate(float yawDelta, float pitchDelta)
         {
             cameraMover.rotate(yawDelta, pitchDelta);

@@ -50,8 +50,6 @@ namespace Medical.Controller
             rm = renderManager;
             mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
 
-            MedicalConfig.EngineConfig.ShowStatsToggled += new EventHandler(EngineConfig_ShowStatsToggled);
-
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.PreRenderTargetUpdate += OgreRenderWindow_PreRenderTargetUpdate;
         }
 
@@ -437,19 +435,6 @@ namespace Medical.Controller
             }
             mdiWindows.Add(window);
             return window;
-        }
-
-        private void EngineConfig_ShowStatsToggled(object sender, EventArgs e)
-        {
-            bool showStats = MedicalConfig.EngineConfig.ShowStatistics;
-            foreach (MDISceneViewWindow mdiWindow in mdiWindows)
-            {
-                mdiWindow.showSceneStats(showStats);
-            }
-            if (cloneWindow != null)
-            {
-                cloneWindow.showSceneStats(showStats);
-            }
         }
     }
 }

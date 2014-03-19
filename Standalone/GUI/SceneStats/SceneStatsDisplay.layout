@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position="87 177 359 59" layer="BackOverlapped">
+        <Property key="NeedKey" value="false"/>
+        <Property key="NeedMouse" value="false"/>
+        <Widget type="TextBox" skin="TextBox" position="89 4 267 16" align="HStretch Top" name="FPSDisplay">
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="24 4 62 16">
+            <Property key="Caption" value="FPS"/>
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="89 21 267 16" align="HStretch Top" name="TrianglesDisplay">
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="24 21 62 16">
+            <Property key="Caption" value="Triangles"/>
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="89 38 267 16" align="HStretch Top" name="BatchesDisplay">
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="24 38 62 16">
+            <Property key="Caption" value="Batches"/>
+            <Property key="TextColour" value="1 1 1"/>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
