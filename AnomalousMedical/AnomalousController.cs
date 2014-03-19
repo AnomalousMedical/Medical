@@ -101,12 +101,6 @@ namespace Medical
             archive.addArchive(this.PrimaryArchive);
 
             controller.addWorkingArchive();
-            if (!MedicalConfig.EngineConfig.UseHardwareSkinning)
-            {
-                Logging.Log.ImportantInfo("Using Software Skinning");
-                VirtualFileSystem.Instance.createVirtualFolderLink("Shaders/SoftwareSkinOverride", "Shaders/Articulometrics/Unified");
-                VirtualFileSystem.Instance.createVirtualFolderLink("Scenes/SoftwareScenes", "Scenes");
-            }
 
             controller.initializeControllers(createBackground());
             licenseDisplay.setSceneViewController(controller.SceneViewController);
