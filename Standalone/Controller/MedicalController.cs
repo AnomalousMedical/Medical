@@ -28,8 +28,6 @@ namespace Medical
 
     public sealed class MedicalController : IDisposable
     {
-        #region Fields
-
         //Engine
         private PluginManager pluginManager;
         private LogFileListener logListener;
@@ -49,6 +47,7 @@ namespace Medical
         //Controller
         private MedicalSceneController medicalScene;
         private RocketGuiManager rocketGuiManager;
+        private FrameClearManager frameClearManager;
 
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
@@ -57,25 +56,13 @@ namespace Medical
         private String currentSceneFile;
         private String currentSceneDirectory;
 
-        #endregion Fields
-
-        #region Events
-
         public event LoopUpdate FullSpeedLoopUpdate;
         public event LoopUpdate FixedLoopUpdate;
-
-        #endregion Events
-
-        #region Constructors
 
         public MedicalController()
         {
 
         }
-
-        #endregion Constructors
-
-        #region Functions
 
         /// <summary>
         /// Initialize the controller.
@@ -152,6 +139,7 @@ namespace Medical
             medicalScene = new MedicalSceneController(pluginManager);
             rocketGuiManager = new RocketGuiManager();
             rocketGuiManager.initialize(pluginManager, eventManager, mainTimer);
+            frameClearManager = new FrameClearManager(OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow);
 
             SoundConfig.initialize(MedicalConfig.ConfigFile);
         }
@@ -163,6 +151,10 @@ namespace Medical
         {
             MedicalConfig.save();
 
+            if (frameClearManager != null)
+            {
+                frameClearManager.Dispose();
+            }
             if (rocketGuiManager != null)
             {
                 rocketGuiManager.Dispose();
@@ -320,10 +312,6 @@ namespace Medical
             }
         }
 
-        #endregion Functions
-
-        #region Properties
-
         public EventManager EventManager
         {
             get
@@ -371,7 +359,5 @@ namespace Medical
                 return pluginManager;
             }
         }
-
-        #endregion Properties
     }
 }

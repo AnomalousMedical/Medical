@@ -49,21 +49,10 @@ namespace Medical.Controller
 
             rm = renderManager;
             mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
-
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.PreRenderTargetUpdate += OgreRenderWindow_PreRenderTargetUpdate;
-        }
-
-        void OgreRenderWindow_PreRenderTargetUpdate()
-        {
-            //We are mostly getting lucky here. If you start having weird rendering artifacts this is likely the reason why,
-            //it is always just clearing the first viewport, which seems to clear everything across all render systems,
-            //so just going to go with it for now. This actually working relies on our mod for the viewport clear function.
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, Engine.Color.Black);
         }
 
         public void Dispose()
         {
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.PreRenderTargetUpdate -= OgreRenderWindow_PreRenderTargetUpdate;
             destroyCameras();
             foreach (SceneViewWindow window in mdiWindows)
             {
