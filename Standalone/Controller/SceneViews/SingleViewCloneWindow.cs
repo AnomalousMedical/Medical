@@ -14,7 +14,7 @@ namespace Medical.Controller
     {
         public event EventHandler Closed;
 
-        private RendererWindow rendererWindow;
+        private OgreWindow rendererWindow;
         private NativeOSWindow osWindow;
 
         public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, bool floatOnParent)
@@ -23,8 +23,8 @@ namespace Medical.Controller
             Point location = SystemInfo.getDisplayLocation(windowInfo.MonitorIndex);
             location.Y = -1;
             osWindow = new NativeOSWindow(MainWindow.Instance, "Clone Window", location, new Size(windowInfo.Width, windowInfo.Height), floatOnParent);
-            this.rendererWindow = OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
-            this.createBackground(((OgreWindow)rendererWindow).OgreRenderWindow);
+            this.rendererWindow = (OgreWindow)OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
+            this.createBackground(rendererWindow.OgreRenderWindow, true);
             osWindow.show();
             osWindow.Closed += new EventHandler(osWindow_Closed);
 

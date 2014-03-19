@@ -19,7 +19,7 @@ namespace Medical.Controller
         public MDISceneViewWindow(OgreRenderManager rm, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
             :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
-            this.createBackground(((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow);
+            this.createBackground(((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow, false);
             this.rm = rm;
             rm.setActiveViewport(rm.getActiveViewport() + 1); //For Background
 

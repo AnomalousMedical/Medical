@@ -76,9 +76,9 @@ namespace Medical.Controller
         /// You must call this function to activate the background with the appropriate render target.
         /// </summary>
         /// <param name="renderTarget"></param>
-        protected void createBackground(RenderTarget renderTarget)
+        protected void createBackground(RenderTarget renderTarget, bool clearEveryFrame)
         {
-            vpBackground = new ViewportBackground(name + "SceneViewBackground", zIndexStart + zOffset++, background, renderTarget);
+            vpBackground = new ViewportBackground(name + "SceneViewBackground", zIndexStart + zOffset++, background, renderTarget, clearEveryFrame);
             vpBackground.BackgroundColor = backColor;
         }
 
