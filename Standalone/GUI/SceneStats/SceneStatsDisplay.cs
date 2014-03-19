@@ -24,6 +24,7 @@ namespace Medical.GUI
         private float lastFps;
         private uint lastTriangles;
         private uint lastBatches;
+        private bool preferVisible = false;
 
         public SceneStatsDisplay(RenderTarget displayStatsTarget)
             : base("Medical.GUI.SceneStats.SceneStatsDisplay.layout")
@@ -47,7 +48,7 @@ namespace Medical.GUI
         {
             get
             {
-                return widget.Visible;
+                return preferVisible;
             }
             set
             {
@@ -60,6 +61,7 @@ namespace Medical.GUI
                     displayStatsTarget.PostRenderTargetUpdate -= displayStatsTarget_PostRenderTargetUpdate;
                 }
                 widget.Visible = value;
+                preferVisible = value;
             }
         }
 
@@ -89,14 +91,14 @@ namespace Medical.GUI
 
         void layoutContainer_LayoutChanged(EventLayoutContainer obj)
         {
-            if (widget.Height < layoutContainer.WorkingSize.Height)
+            if (widget.Height + YOffset < layoutContainer.WorkingSize.Height)
             {
                 widget.setCoord(layoutContainer.Location.x, layoutContainer.Location.y + YOffset, layoutContainer.WorkingSize.Width, widget.Height);
-                //widget.Visible = true;
+                widget.Visible = preferVisible;
             }
             else
             {
-                //widget.Visible = false;
+                widget.Visible = false;
             }
         }
 
