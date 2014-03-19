@@ -117,6 +117,7 @@
     <Compile Include="Animation\PhysicalAnimator.cs" />
     <Compile Include="Animation\PoseManipulator.cs" />
     <Compile Include="Animation\PoseManipulatorStateEntry.cs" />
+    <Compile Include="Animation\PositionBroadcaster.cs" />
     <Compile Include="Animation\Tracer.cs" />
     <Compile Include="Animation\WorldSpaceBoneFollower.cs" />
     <Compile Include="ControlPoint\ControlPointBehavior.cs" />

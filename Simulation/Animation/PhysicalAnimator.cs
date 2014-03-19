@@ -11,7 +11,7 @@ using OgrePlugin;
 
 namespace Medical
 {
-    class PhysicalAnimator : Behavior
+    class PhysicalAnimator : Interface
     {
         [Editable]
         String targetSimObject;
@@ -74,7 +74,7 @@ namespace Medical
             }
         }
 
-        public override void update(Clock clock, EventManager eventManager)
+        protected override void positionUpdated()
         {
             bone.setPosition(Owner.Translation - targetObject.Translation);
             bone.setOrientation(Owner.Rotation);
