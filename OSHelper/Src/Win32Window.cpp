@@ -222,23 +222,35 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 				break;
 
 			//Keyboard
+			case WM_KEYDOWN:
 			case WM_SYSKEYDOWN:
 				if(wParam == VK_MENU)
 				{
 					win->fireKeyDown(KC_LMENU, 0);
 				}
+				else if (wParam == VK_CONTROL)
+				{
+					win->fireKeyDown(KC_LCONTROL, 0);
+				}
+				else
+				{
+					win->fireKeyDown(virtualKeyToKeyboardButtonCode(wParam), getUtf32WithSpecial(wParam, (lParam & 0x01FF0000) >> 16));
+				}
 				break;
+			case WM_KEYUP:
 			case WM_SYSKEYUP:
 				if(wParam == VK_MENU)
 				{
 					win->fireKeyUp(KC_LMENU);
 				}
-				break;
-			case WM_KEYDOWN:
-				win->fireKeyDown(virtualKeyToKeyboardButtonCode(wParam), getUtf32WithSpecial(wParam, (lParam & 0x01FF0000) >> 16));
-				break;
-			case WM_KEYUP:
-				win->fireKeyUp(virtualKeyToKeyboardButtonCode(wParam));
+				else if (wParam == VK_CONTROL)
+				{
+					win->fireKeyUp(KC_LCONTROL);
+				}
+				else
+				{
+					win->fireKeyUp(virtualKeyToKeyboardButtonCode(wParam));
+				}
 				break;
 
 			//Mouse
