@@ -6,8 +6,8 @@
         <Property key="MaxSize" value="350 436"/>
         <Widget type="ImageBox" skin="ImageBox" position="0 0 350 165">
             <Property key="ImageResource" value="AboutImage/Image"/>
-            <Widget type="TextBox" skin="TextBox" position="54 150 250 14">
-                <Property key="Caption" value="Copyright 2009-2012 Anomalous Medical"/>
+            <Widget type="TextBox" skin="TextBox" position="54 150 250 14" name = "CopyrightText">
+                <Property key="Caption" value="Copyright Text"/>
             </Widget>
         </Widget>
         <Widget type="Button" skin="Button" position="4 387 91 28" name="CloseButton">
@@ -64,7 +64,10 @@
                 <Property key="Caption" value="Ogg Vorbis"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="5 164 135 13" name="MonoLink">
-                <Property key="Caption" value="Mono (Some Versions)"/>
+                <Property key="Caption" value="Mono"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="5 180 135 13" name="LibRocketLink">
+              <Property key="Caption" value="libRocket"/>
             </Widget>
         </Widget>
     </Widget>
