@@ -55,7 +55,7 @@ Source: S:\Medical\PublicRelease\OgreCWrapper.dll; DestDir: {app}; Flags: ignore
 Source: S:\Medical\PublicRelease\OgreMain.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OSHelper.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\RenderSystem_Direct3D9.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\PublicRelease\RenderSystem_Direct3D11.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\Simulation.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion
@@ -68,19 +68,13 @@ Source: S:\Medical\PublicRelease\Mono.Anomalous.Security.dll; DestDir: {app}; Fl
 Source: S:\Medical\PublicRelease\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
 
+;Microcode Caches
+Source: S:\Medical\PublicRelease\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
+
 ;Open AL
 Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 ;VS 2013 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
-;DX Required Files
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DXSETUP.exe"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dsetup32.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\DSETUP.dll"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxdllreg_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\dxupdate.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-;DX June 2010 Files
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Jun2010_d3dx9_43_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\DirectX9c\Jun2010_D3DCompiler_43_x86.cab"; DestDir: "{tmp}\DirectX9c"; Flags: ignoreversion deleteafterinstall
 ;.Net 4.5.1
 Source: S:\dependencies\InstallerDependencies\Windows\NDP451-KB2859818-Web.exe; DestDir: {tmp}; 
 
@@ -91,7 +85,6 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 [Run]
 Filename: "{tmp}\oalinst.exe"; Parameters: "/s"; StatusMsg: "Installing OpenAL";
 Filename: "{tmp}\vcredist_x86.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2012 Redistributable (x86)";
-Filename: "{tmp}\DirectX9c\DXSETUP.exe"; Parameters: "/silent"; StatusMsg: "Installing DirectX 9.0";
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, "&", "&&")}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
