@@ -29,16 +29,23 @@ namespace Medical.Controller
         {
             this.renderTarget = renderTarget;
             renderTarget.PreRenderTargetUpdate += OgreRenderWindow_PreRenderTargetUpdate;
+            sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC);
+            camera = sceneManager.createCamera("ClearCamera");
+            viewport = renderTarget.addViewport(camera, 999, 0.0f, 0.0f, 1.0f, 1.0f);
+            viewport.AutoUpdated = false;
         }
 
         public void Dispose()
         {
+            renderTarget.destroyViewport(viewport);
+            sceneManager.destroyCamera(camera);
+            Root.getSingleton().destroySceneManager(sceneManager);
             renderTarget.PreRenderTargetUpdate -= OgreRenderWindow_PreRenderTargetUpdate;
         }
 
         void OgreRenderWindow_PreRenderTargetUpdate()
         {
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, Engine.Color.Black);
+            viewport.clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, Engine.Color.Black);
         }
     }
 }

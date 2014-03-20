@@ -29,7 +29,7 @@ namespace Medical
 
         public void resized(OSWindow window)
         {
-            MyGUIInterface.Instance.OgrePlatform.getRenderManager().windowMovedOrResized();
+            
         }
 
         public void closed(OSWindow window)

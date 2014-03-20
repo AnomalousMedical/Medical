@@ -21,7 +21,6 @@ namespace Medical.Controller
         {
             this.createBackground(((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderWindow, false);
             this.rm = rm;
-            rm.setActiveViewport(rm.getActiveViewport() + 1); //For Background
 
             //MDI Window
             mdiWindow = new MDIDocumentWindow(Name);
@@ -37,7 +36,6 @@ namespace Medical.Controller
         public override void Dispose()
         {
             base.Dispose();
-            rm.setActiveViewport(rm.getActiveViewport() - 1); //For background
             mdiWindow.Dispose();
         }
 
@@ -54,18 +52,6 @@ namespace Medical.Controller
             var oldContent = mdiWindow.Content;
             mdiWindow.Content = layoutContainer;
             layoutContainer.Child = oldContent;
-        }
-
-        public override void createSceneView(RendererWindow window, SimScene scene)
-        {
-            base.createSceneView(window, scene);
-            rm.setActiveViewport(rm.getActiveViewport() + 1);
-        }
-
-        public override void destroySceneView()
-        {
-            base.destroySceneView();
-            rm.setActiveViewport(rm.getActiveViewport() - 1);
         }
 
         public override void close()
