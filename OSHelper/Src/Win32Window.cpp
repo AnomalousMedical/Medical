@@ -224,32 +224,38 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 			//Keyboard
 			case WM_KEYDOWN:
 			case WM_SYSKEYDOWN:
-				if(wParam == VK_MENU)
+				switch (wParam)
 				{
-					win->fireKeyDown(KC_LMENU, 0);
-				}
-				else if (wParam == VK_CONTROL)
-				{
-					win->fireKeyDown(KC_LCONTROL, 0);
-				}
-				else
-				{
-					win->fireKeyDown(virtualKeyToKeyboardButtonCode(wParam), getUtf32WithSpecial(wParam, (lParam & 0x01FF0000) >> 16));
+					case VK_MENU:
+						win->fireKeyDown(KC_LMENU, 0);
+						break;
+					case VK_CONTROL:
+						win->fireKeyDown(KC_LCONTROL, 0);
+						break;
+					case VK_SHIFT:
+						win->fireKeyDown(KC_LSHIFT, 0);
+						break;
+					default:
+						win->fireKeyDown(virtualKeyToKeyboardButtonCode(wParam), getUtf32WithSpecial(wParam, (lParam & 0x01FF0000) >> 16));
+						break;
 				}
 				break;
 			case WM_KEYUP:
 			case WM_SYSKEYUP:
-				if(wParam == VK_MENU)
+				switch (wParam)
 				{
-					win->fireKeyUp(KC_LMENU);
-				}
-				else if (wParam == VK_CONTROL)
-				{
-					win->fireKeyUp(KC_LCONTROL);
-				}
-				else
-				{
-					win->fireKeyUp(virtualKeyToKeyboardButtonCode(wParam));
+					case VK_MENU:
+						win->fireKeyUp(KC_LMENU);
+						break;
+					case VK_CONTROL:
+						win->fireKeyUp(KC_LCONTROL);
+						break;
+					case VK_SHIFT:
+						win->fireKeyUp(KC_LSHIFT);
+						break;
+					default:
+						win->fireKeyUp(virtualKeyToKeyboardButtonCode(wParam));
+						break;
 				}
 				break;
 
