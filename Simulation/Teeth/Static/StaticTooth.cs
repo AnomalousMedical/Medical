@@ -220,7 +220,6 @@ namespace Medical
                     extracted = false;
                     actorElement.clearCollisionFlag(CollisionFlags.NoContactResponse);
                     entity.setVisible(true);
-                    transparency.DisableOnHidden = true;
                 }
                 //Extract the tooth if it is in the scene
                 else if (!this.extracted && value)
@@ -228,7 +227,6 @@ namespace Medical
                     extracted = true;
                     actorElement.raiseCollisionFlag(CollisionFlags.NoContactResponse);
                     entity.setVisible(false);
-                    transparency.DisableOnHidden = false;
                 }
             }
         }
