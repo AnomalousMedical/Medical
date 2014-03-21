@@ -779,7 +779,7 @@ namespace Medical
             });
         }
 
-        void mainWindow_Closed(object sender, EventArgs e)
+        void mainWindow_Closed(OSWindow sender)
         {
             exit();
         }

@@ -26,7 +26,7 @@ namespace Medical.Controller
             this.rendererWindow = (OgreWindow)OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
             this.createBackground(rendererWindow.OgreRenderWindow, true);
             osWindow.show();
-            osWindow.Closed += new EventHandler(osWindow_Closed);
+            osWindow.Closed += osWindow_Closed;
 
             transparencyStateName = controller.ActiveWindow.CurrentTransparencyState;
             controller.ActiveWindowChanged += controller_ActiveWindowChanged;
@@ -58,7 +58,7 @@ namespace Medical.Controller
             }
         }
 
-        void osWindow_Closed(object sender, EventArgs e)
+        void osWindow_Closed(OSWindow sender)
         {
             controller.destroyWindow(this);
             if (Closed != null)

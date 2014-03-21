@@ -31,7 +31,7 @@ namespace Medical
         public NativeKeyboard(NativeOSWindow window)
         {
             this.window = window;
-            window.Deactivated += new EventHandler(window_Deactivated);
+            window.Deactivated += window_Deactivated;
 
             keyDownCB = new KeyDownDelegate(OnKeyDown);
             keyUpCB = new KeyUpDelegate(OnKeyUp);
@@ -127,7 +127,7 @@ namespace Medical
             }
         }
 
-        void window_Deactivated(object sender, EventArgs e)
+        void window_Deactivated(OSWindow window)
         {
             for (int i = 0; i < keysDown.Length; ++i)
             {

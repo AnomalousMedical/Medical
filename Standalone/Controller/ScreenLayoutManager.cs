@@ -10,7 +10,7 @@ namespace Medical
 {
     public delegate void ScreenSizeChanged(int width, int height);
 
-    public class ScreenLayoutManager : OSWindowListener
+    public class ScreenLayoutManager
     {
         public event ScreenSizeChanged ScreenSizeChanged;
 
@@ -20,17 +20,17 @@ namespace Medical
         public ScreenLayoutManager(OSWindow window)
         {
             this.window = window;
-            window.addListener(this);
+            window.Resized += resized;
         }
 
         public void changeOSWindow(OSWindow newWindow)
         {
             if (window != null)
             {
-                window.removeListener(this);
+                window.Resized -= resized;
             }
             this.window = newWindow;
-            window.addListener(this);
+            window.Resized += resized;
             resized(window);
         }
 
@@ -48,17 +48,7 @@ namespace Medical
             }
         }
 
-        public void closing(OSWindow window)
-        {
-            
-        }
-
-        public void moved(OSWindow window)
-        {
-            
-        }
-
-        public void resized(OSWindow window)
+        void resized(OSWindow window)
         {
             layoutChain.WorkingSize = new IntSize2(window.WindowWidth, window.WindowHeight);
             layoutChain.layout();
@@ -66,16 +56,6 @@ namespace Medical
             {
                 ScreenSizeChanged.Invoke(window.WindowWidth, window.WindowHeight);
             }
-        }
-
-        public void closed(OSWindow window)
-        {
-
-        }
-
-        public void focusChanged(OSWindow window)
-        {
-
         }
     }
 }

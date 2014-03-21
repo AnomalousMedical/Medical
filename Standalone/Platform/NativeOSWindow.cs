@@ -29,13 +29,10 @@ namespace Medical
         ActivateDelegate activateCB;
         String title;
 
-        private List<OSWindowListener> listeners = new List<OSWindowListener>();
         IntPtr nativeWindow;
 
-        public event EventHandler Closed;
-        public event EventHandler Activated;
-        public event EventHandler Deactivated;
-        public event EventHandler Resized;
+        public event OSWindowEvent Activated;
+        public event OSWindowEvent Deactivated;
         private bool activated = true;
 
         public NativeOSWindow(String title, Point position, Size size)
@@ -180,15 +177,15 @@ namespace Medical
             get { return NativeOSWindow_getWidth(nativeWindow); }
         }
 
-        public void addListener(OSWindowListener listener)
-        {
-            listeners.Add(listener);
-        }
+        public event OSWindowEvent Moved;
 
-        public void removeListener(OSWindowListener listener)
-        {
-            listeners.Remove(listener);
-        }
+        public event OSWindowEvent Resized;
+
+        public event OSWindowEvent Closing;
+
+        public event OSWindowEvent Closed;
+
+        public event OSWindowEvent FocusChanged;
 
         #endregion
 
@@ -202,34 +199,25 @@ namespace Medical
 
         private void resize()
         {
-            foreach (OSWindowListener listener in listeners)
-            {
-                listener.resized(this);
-            }
             if (Resized != null)
             {
-                Resized.Invoke(this, EventArgs.Empty);
+                Resized.Invoke(this);
             }
         }
 
         private void closing()
         {
-            foreach (OSWindowListener listener in listeners)
+            if(Closing != null)
             {
-                listener.closing(this);
+                Closing.Invoke(this);
             }
         }
 
         private void closed()
         {
-            foreach (OSWindowListener listener in listeners)
-            {
-                listener.closed(this);
-            }
-
             if (Closed != null)
             {
-                Closed.Invoke(this, EventArgs.Empty);
+                Closed.Invoke(this);
             }
         }
 
@@ -242,15 +230,19 @@ namespace Medical
                 {
                     if (Activated != null)
                     {
-                        Activated.Invoke(this, EventArgs.Empty);
+                        Activated.Invoke(this);
                     }
                 }
                 else
                 {
                     if (Deactivated != null)
                     {
-                        Deactivated.Invoke(this, EventArgs.Empty);
+                        Deactivated.Invoke(this);
                     }
+                }
+                if (FocusChanged != null)
+                {
+                    FocusChanged.Invoke(this);
                 }
             }
         }
