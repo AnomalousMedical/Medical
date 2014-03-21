@@ -40,7 +40,6 @@ namespace Medical
 
         //Controller
         private MedicalController medicalController;
-        private WindowListener windowListener;
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
         private MovementSequenceController movementSequenceController;
@@ -90,6 +89,7 @@ namespace Medical
             MyGUIInterface.OSTheme = PlatformConfig.ThemeFile;
 
             mainWindow = new MainWindow(app.WindowTitle);
+            mainWindow.Closed += mainWindow_Closed;
 
             //Setup DPI
             float pixelScale = mainWindow.WindowScaling;
@@ -124,8 +124,6 @@ namespace Medical
 
             behaviorErrorManager = new BehaviorErrorManager();
 
-            windowListener = new WindowListener(this);
-            medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.DeactivateOnFocusChange = false;
 
             OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "AnomalousCore", true);
@@ -779,6 +777,11 @@ namespace Medical
                     downloadGUITask.clicked(null);
                 }
             });
+        }
+
+        void mainWindow_Closed(object sender, EventArgs e)
+        {
+            exit();
         }
     }
 }
