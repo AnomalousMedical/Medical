@@ -12,7 +12,7 @@ public:
     
 	NativeKeyboard(NativeOSWindow* osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
     
-	~NativeKeyboard(void);
+	virtual ~NativeKeyboard(void);
     
 private:
 	KeyDownDelegate keyDownCB;

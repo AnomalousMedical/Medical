@@ -87,12 +87,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			delete [] pInputs;
 		}else{
 			// Handle the error here 
-		}  
-
-
+		}
+		return 0;
 		break;
 	}
-
 	return multiTouch->fireOriginalWindowFunc(hWnd, message, wParam, lParam);
 }
 

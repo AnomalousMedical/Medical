@@ -22,6 +22,7 @@ class NativeOSWindow
 public:
 	typedef void (*DeleteDelegate)();
 	typedef void (*SizedDelegate)();
+	typedef void (*ClosingDelegate)();
 	typedef void (*ClosedDelegate)();
 	typedef void (*ActivateDelegate)(bool active);
     
@@ -33,7 +34,7 @@ public:
 	typedef void (*MouseMoveDelegate)(int absX, int absY);
 	typedef void (*MouseWheelDelegate)(int relZ);
     
-	NativeOSWindow(DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
+	NativeOSWindow(DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
     
 	virtual ~NativeOSWindow(void);
     
@@ -66,6 +67,11 @@ public:
     void fireSized()
 	{
 		sizedCB();
+	}
+
+	void fireClosing()
+	{
+		closingCB();
 	}
     
 	void fireClosed()
@@ -159,6 +165,7 @@ public:
 private:
 	DeleteDelegate deleteCB;
 	SizedDelegate sizedCB;
+	ClosingDelegate closingCB;
 	ClosedDelegate closedCB;
 	ActivateDelegate activateCB;
     

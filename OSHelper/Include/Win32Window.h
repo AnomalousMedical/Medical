@@ -7,7 +7,7 @@
 class Win32Window : public NativeOSWindow
 {
 public:
-	Win32Window(HWND parent, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
+	Win32Window(HWND parent, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
     
     virtual ~Win32Window();
     

@@ -14,28 +14,33 @@ Win32App::~Win32App()
 
 void Win32App::run()
 {
-	running = fireInit();
-	MSG  msg;
-	while(running)
+	if (fireInit())
 	{
-		while( PeekMessage( &msg, NULL, 0U, 0U, PM_REMOVE ) )
+		MSG  msg;
+		while (true)
 		{
-			TranslateMessage( &msg );
-			DispatchMessage( &msg );
-
-			if(msg.message == WM_QUIT)
+			if(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 			{
-				running = false;
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+
+				if (msg.message == WM_QUIT)
+				{
+					break;
+				}
+			}
+			else
+			{
+				fireIdle();
 			}
 		}
-		fireIdle();
 	}
 	fireExit();
 }
 
 void Win32App::exit()
 {
-	running = false;
+	PostQuitMessage(0);
 }
 
 //PInvoke

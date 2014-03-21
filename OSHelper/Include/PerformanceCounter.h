@@ -44,7 +44,7 @@ public:
 	/// <summary>
 	/// Destructor.
 	/// </summary>
-	~PerformanceCounter();
+	virtual ~PerformanceCounter();
 
 	/// <summary>
 	/// Initialize the counter. Will return true if the counter can be used.

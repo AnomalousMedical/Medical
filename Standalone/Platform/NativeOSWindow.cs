@@ -16,12 +16,15 @@ namespace Medical
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	    delegate void SizedDelegate();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        delegate void ClosingDelegate();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	    delegate void ClosedDelegate();
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void ActivateDelegate(bool active);
 
         DeleteDelegate deleteCB;
         SizedDelegate sizedCB;
+        ClosingDelegate closingCB;
         ClosedDelegate closedCB;
         ActivateDelegate activateCB;
         String title;
@@ -53,6 +56,7 @@ namespace Medical
 
             deleteCB = new DeleteDelegate(delete);
             sizedCB = new SizedDelegate(resize);
+            closingCB = new ClosingDelegate(closing);
             closedCB = new ClosedDelegate(closed);
             activateCB = new ActivateDelegate(activate);
 
@@ -62,7 +66,7 @@ namespace Medical
                 parentPtr = parent._NativePtr;
             }
 
-            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, floatOnParent, deleteCB, sizedCB, closedCB, activateCB);
+            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, floatOnParent, deleteCB, sizedCB, closingCB, closedCB, activateCB);
         }
 
         public void Dispose()
@@ -208,13 +212,16 @@ namespace Medical
             }
         }
 
-        private void closed()
+        private void closing()
         {
             foreach (OSWindowListener listener in listeners)
             {
                 listener.closing(this);
             }
+        }
 
+        private void closed()
+        {
             foreach (OSWindowListener listener in listeners)
             {
                 listener.closed(this);
@@ -251,7 +258,7 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern IntPtr NativeOSWindow_create(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activeCB);
+        private static extern IntPtr NativeOSWindow_create(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activeCB);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_destroy(IntPtr nativeWindow);

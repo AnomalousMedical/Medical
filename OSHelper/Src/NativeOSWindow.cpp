@@ -1,9 +1,10 @@
 #include "StdAfx.h"
 #include "NativeOSWindow.h"
 
-NativeOSWindow::NativeOSWindow(DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
+NativeOSWindow::NativeOSWindow(DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 :deleteCB(deleteCB),
 sizedCB(sizedCB),
+closingCB(closingCB),
 closedCB(closedCB),
 activateCB(activateCB),
 keyDownCB(0),
