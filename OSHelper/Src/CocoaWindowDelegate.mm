@@ -31,6 +31,7 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
+    window->fireClosing();
     window->fireClosed();
 }
 

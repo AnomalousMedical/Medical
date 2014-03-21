@@ -18,7 +18,7 @@
 class CocoaWindow : public NativeOSWindow
 {
 public:
-    CocoaWindow(CocoaWindow* parent, String title, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
+    CocoaWindow(CocoaWindow* parent, String title, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
     
     virtual ~CocoaWindow();
     
