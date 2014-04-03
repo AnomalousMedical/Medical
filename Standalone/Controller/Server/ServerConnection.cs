@@ -20,6 +20,7 @@ namespace Medical
 
         static ServerConnection()
         {
+            ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
             DefaultTimeout = 60000;
         }
 
@@ -141,6 +142,46 @@ namespace Medical
         public String Url { get; set; }
 
         public HttpStatusCode ResponseStatusCode { get; set; }
+
+        /// <summary>
+        /// Verify the validation result either using the default based on sslPolicyErrors or a custom function for a given os. This depends on
+        /// the value of PlatformConfig.HasCustomSSLValidation.
+        /// </summary>
+        /// <returns>True if the cert is valid. False otherwise.</returns>
+        private static bool checkValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            if (PlatformConfig.HasCustomSSLValidation)
+            {
+                String host = null;
+                if (sender is HttpWebRequest)
+                {
+                    host = ((HttpWebRequest)sender).Host;
+                }
+                else if (sender is String)
+                {
+                    host = sender.ToString();
+                }
+
+                if (host != null)
+                {
+                    bool trusted = PlatformConfig.TrustSSLCertificate(certificate, host);
+					if (!trusted) 
+					{
+						Logging.Log.Error("Could not trust ssl certificate with subject '{0}' for host '{1}'. Connections to this server will not be possible", certificate.Subject, host);
+					}
+					return trusted;
+                }
+                else
+                {
+					Logging.Log.Error("Host not specified when validating ssl certificate with subject '{0}'. Connections to this server will not be possible", certificate.Subject, host);
+                    return false; //If we cannot check with the hosts, we just want to fail.
+                }
+            }
+            else
+            {
+                return sslPolicyErrors == SslPolicyErrors.None;
+            }
+        }
 
         private HttpWebRequest buildRequestFormUrlEncoded()
         {
