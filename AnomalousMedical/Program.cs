@@ -11,6 +11,7 @@ namespace Medical
         [STAThread]
         static void Main()
         {
+            OsSslValidator.Initialize(); //Really important, sets up ssl checking for non windows oses.
             AnomalousController anomalous = null;
             try
             {
