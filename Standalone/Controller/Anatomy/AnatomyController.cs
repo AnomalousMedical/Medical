@@ -158,22 +158,10 @@ namespace Medical
                     {
                         if(lockImage == null)
                         {
-                            lockImageDest = new Rectangle(0, 0, imageProperties.Width / 3, imageProperties.Height / 3);
-
                             Assembly assembly = this.GetType().Assembly;
                             lockImage = (Bitmap)Bitmap.FromStream(assembly.GetManifestResourceStream("Medical.Resources.LockedFeature.png"));
-                            float aspect = (float)lockImage.Width / lockImage.Height;
-                            if(lockImage.Width > lockImage.Height)
-                            {
-                                int mainDimension = lockImageDest.Width;
-                                lockImageDest = new Rectangle(0, 0, mainDimension, (int)(mainDimension / aspect)); 
-                            }
-                            else
-                            {
-                                int mainDimension = lockImageDest.Height;
-                                lockImageDest = new Rectangle(0, 0, (int)(mainDimension * aspect), mainDimension);
-                            }
 
+                            lockImageDest = new Rectangle(0, 0, imageProperties.Width / 3, imageProperties.Height / 3);
                             lockImageDest.Y = imageProperties.Height - lockImageDest.Height;
                         }
                         using (Graphics g = Graphics.FromImage(thumb))

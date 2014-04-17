@@ -14,6 +14,7 @@ namespace Medical.GUI
         private ButtonGroup pickingModeGroup;
         private Button individualButton;
         private Button noneButton;
+        private ImageBox lockedFeatureImage;
 
         public SelectionModeChooser(AnatomyController anatomyController)
             :base("Medical.GUI.SelectionModeChooser.SelectionModeChooser.layout")
@@ -40,6 +41,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            IDisposableUtil.DisposeIfNotNull(lockedFeatureImage);
             base.Dispose();
         }
 
@@ -47,8 +49,20 @@ namespace Medical.GUI
         {
             if (allowSelectionModeChanges)
             {
-                anatomyController.PickingMode = (AnatomyPickingMode)pickingModeGroup.SelectedButton.UserObject;
-                hide();
+                AnatomyPickingMode newMode = (AnatomyPickingMode)pickingModeGroup.SelectedButton.UserObject;
+                if (!anatomyController.ShowPremiumAnatomy && newMode == AnatomyPickingMode.Individual)
+                {
+                    showNagMessage();
+                    allowSelectionModeChanges = false;
+                    pickingModeGroup.SelectedButton = pickingModeGroup.findButtonWithUserData(AnatomyPickingMode.Group);
+                    anatomyController.PickingMode = AnatomyPickingMode.Group;
+                    allowSelectionModeChanges = true;
+                }
+                else
+                {
+                    anatomyController.PickingMode = newMode;
+                    hide();
+                }
             }
         }
 
@@ -66,18 +80,26 @@ namespace Medical.GUI
 
         private void toggleIndividualSelectionVisible()
         {
-            if (anatomyController.ShowPremiumAnatomy)
+            if(anatomyController.ShowPremiumAnatomy)
             {
-                individualButton.Visible = true;
-                noneButton.setPosition(ScaleHelper.Scaled(8), ScaleHelper.Scaled(137));
-                widget.setSize(widget.Width, ScaleHelper.Scaled(205));
+                IDisposableUtil.DisposeIfNotNull(lockedFeatureImage);
+                lockedFeatureImage = null;
             }
             else
             {
-                individualButton.Visible = false;
-                noneButton.setPosition(individualButton.Left, individualButton.Top);
-                widget.setSize(widget.Width, ScaleHelper.Scaled(137));
+                if(lockedFeatureImage == null)
+                {
+                    int lockSize = individualButton.Height / 3;
+                    lockedFeatureImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", individualButton.Left, individualButton.Top, lockSize, lockSize, Align.Left | Align.Top, "LockedFeatureImage");
+                    lockedFeatureImage.NeedMouseFocus = false;
+                    lockedFeatureImage.setItemResource("LockedFeature");
+                }
             }
+        }
+
+        private static void showNagMessage()
+        {
+            MessageBox.show("Placeholder for nag message", "Placeholder", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
         }
     }
 }

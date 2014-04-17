@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="LockedFeature">
+    <Group name="Icons" texture="Medical.Resources.LockedFeature.png" size="100 100">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+  
+</MyGUI>
+

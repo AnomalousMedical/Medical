@@ -254,11 +254,6 @@ namespace Medical.GUI
             {
                 if (anatomyController.PickingMode != AnatomyPickingMode.None)
                 {
-                    if(!this.Visible)
-                    {
-                        this.Visible = true;
-                    }
-
                     anatomyList.SuppressLayout = true;
                     anatomyList.clear();
 
@@ -293,6 +288,11 @@ namespace Medical.GUI
                     }
                     if (matches.Count > 0)
                     {
+                        if (!this.Visible)
+                        {
+                            this.Visible = true;
+                        }
+
                         bool showPremium = anatomyController.ShowPremiumAnatomy;
                         searchBox.Caption = "Clicked";
                         if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection || !showPremium)

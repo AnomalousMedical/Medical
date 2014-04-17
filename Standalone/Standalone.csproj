@@ -981,6 +981,7 @@
     <EmbeddedResource Include="Resources\SlideshowIcons%402x.png" />
     <EmbeddedResource Include="Resources\SlideshowIcons%402x.xml" />
     <EmbeddedResource Include="Resources\LockedFeature.png" />
+    <EmbeddedResource Include="Resources\LockedFeature.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
