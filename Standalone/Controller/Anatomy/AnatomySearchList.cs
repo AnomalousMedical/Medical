@@ -8,12 +8,17 @@ namespace Medical
     public class AnatomySearchList
     {
         private List<Anatomy> anatomySearchList = new List<Anatomy>();
+        public List<Anatomy> topLevelAnatomy = new List<Anatomy>();
 
-        public void addAnatomy(Anatomy anatomy)
+        public void addAnatomy(Anatomy anatomy, bool allowPremium)
         {
             if (anatomy.ShowInTextSearch)
             {
                 anatomySearchList.Add(anatomy);
+            }
+            if (anatomy.ShowInTree && (allowPremium || anatomy.ShowInBasicVersion))
+            {
+                topLevelAnatomy.Add(anatomy);
             }
         }
 
@@ -25,6 +30,7 @@ namespace Medical
         public void clear()
         {
             anatomySearchList.Clear();
+            topLevelAnatomy.Clear();
         }
 
         public List<Anatomy> findMatchingAnatomy(String text, int searchLimit, bool premiumSearch)
@@ -50,6 +56,14 @@ namespace Medical
                 }
             }
             return results;
+        }
+
+        public IEnumerable<Anatomy> TopLevelAnatomy
+        {
+            get
+            {
+                return topLevelAnatomy;
+            }
         }
     }
 }

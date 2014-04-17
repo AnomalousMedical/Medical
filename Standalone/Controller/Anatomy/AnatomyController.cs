@@ -25,7 +25,6 @@ namespace Medical
 
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
         private AnatomySearchList anatomySearchList = new AnatomySearchList();
-        private AnatomyTree anatomyTree = new AnatomyTree();
 
         private ImageRenderer imageRenderer;
         private ImageAtlas imageAtlas;
@@ -69,14 +68,12 @@ namespace Medical
             }
             foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
             {
-                anatomySearchList.addAnatomy(anatomy);
+                anatomySearchList.addAnatomy(anatomy, showPremiumAnatomy);
                 anatomyTagManager.addAnatomyIdentifier(anatomy);
-                anatomyTree.addAnatomy(anatomy, showPremiumAnatomy);
             }
             foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
             {
-                anatomySearchList.addAnatomy(tagGroup);
-                anatomyTree.addAnatomy(tagGroup, showPremiumAnatomy);
+                anatomySearchList.addAnatomy(tagGroup, showPremiumAnatomy);
             }
             if (AnatomyChanged != null)
             {
@@ -88,7 +85,6 @@ namespace Medical
         {
             anatomyTagManager.clear();
             anatomySearchList.clear();
-            anatomyTree.clear();
             imageAtlas.clear();
         }
 
@@ -105,14 +101,6 @@ namespace Medical
             get
             {
                 return anatomySearchList;
-            }
-        }
-
-        public AnatomyTree AnatomyTree
-        {
-            get
-            {
-                return anatomyTree;
             }
         }
 
@@ -210,15 +198,16 @@ namespace Medical
                     {
                         ShowPremiumAnatomyChanged.Invoke(this, showPremiumAnatomy);
                     }
-                    //Remake the trees
-                    anatomyTree.clear();
+
+                    //Remake the search list
+                    anatomySearchList.clear();
                     foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
                     {
-                        anatomyTree.addAnatomy(anatomy, showPremiumAnatomy);
+                        anatomySearchList.addAnatomy(anatomy, showPremiumAnatomy);
                     }
                     foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
                     {
-                        anatomyTree.addAnatomy(tagGroup, showPremiumAnatomy);
+                        anatomySearchList.addAnatomy(tagGroup, showPremiumAnatomy);
                     }
                 }
             }

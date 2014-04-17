@@ -191,7 +191,7 @@ namespace Medical.GUI
             anatomyList.clear();
             if (searchTerm.Length == 0)
             {
-                foreach (Anatomy anatomy in anatomyController.AnatomyTree.TopLevelAnatomy)
+                foreach (Anatomy anatomy in anatomyController.SearchList.TopLevelAnatomy)
                 {
                     addAnatomyToList(anatomy);
                 }
