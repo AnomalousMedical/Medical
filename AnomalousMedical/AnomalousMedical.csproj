@@ -173,6 +173,12 @@
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
     <EmbeddedResource Include="Resources\Rml\RmlPanelTemplate.trml" />
     <EmbeddedResource Include="Resources\Rml\Wysiwyg.rcss" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark1.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark2.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark3.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark4.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark5.bmk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
@@ -227,6 +233,8 @@
     <EmbeddedResource Include="Resources\CornerAnomalousLogo%402x.png" />
     <EmbeddedResource Include="Resources\CornerAnomalousLogo.png" />
     <EmbeddedResource Include="Resources\AnomalousBootstrapImagesets.xml" />
+    <EmbeddedResource Include="Resources\BookmarksIcons.xml" />
+    <EmbeddedResource Include="Resources\BookmarksIcons.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

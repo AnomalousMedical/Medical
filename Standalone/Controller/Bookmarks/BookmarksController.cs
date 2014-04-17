@@ -20,6 +20,7 @@ namespace Medical.Controller
 
         public event BookmarkDelegate BookmarkAdded;
         public event BookmarkDelegate BookmarkRemoved;
+        public event Action<BookmarksController> PremiumBookmarksChanged;
 
         private ImageRendererProperties imageProperties;
         private ImageAtlas imageAtlas;
@@ -28,11 +29,13 @@ namespace Medical.Controller
         private BookmarkDelegate mainThreadCallback;
 
         private bool cancelBackgroundLoading = false;
+        private bool premiumBookmarks;
 
-        public BookmarksController(StandaloneController standaloneController, int width, int height)
+        public BookmarksController(StandaloneController standaloneController, int width, int height, bool premiumBookmarks)
         {
             this.standaloneController = standaloneController;
             mainThreadCallback = fireBookmarkAdded;
+            this.premiumBookmarks = premiumBookmarks;
 
             imageAtlas = new ImageAtlas("Bookmarks", new IntSize2(width, height));
 
@@ -91,13 +94,16 @@ namespace Medical.Controller
         public void removeBookmark(Bookmark bookmark)
         {
             fireBookmarkRemoved(bookmark);
-            try
+            if (bookmark.BackingFile != null)
             {
-                File.Delete(bookmark.BackingFile);
-            }
-            catch (Exception)
-            {
-                MessageBox.show(String.Format("Could not delete bookmark '{0}'", bookmark.Name), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                try
+                {
+                    File.Delete(bookmark.BackingFile);
+                }
+                catch (Exception)
+                {
+                    MessageBox.show(String.Format("Could not delete bookmark '{0}'", bookmark.Name), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
             }
         }
 
@@ -131,31 +137,41 @@ namespace Medical.Controller
 
         public void loadSavedBookmarks()
         {
-            Thread backgroundLoaderThread = new Thread(delegate()
+            ThreadPool.QueueUserWorkItem(state =>
                 {
                     Thread.Sleep(1000);
-                    ensureBookmarksFolderExists();
-                    String[] bookmarkFiles = Directory.GetFiles(MedicalConfig.BookmarksFolder, "*.bmk");
-                    foreach (String file in bookmarkFiles)
+                    if (premiumBookmarks)
                     {
-                        Bookmark bookmark;
-                        using (XmlTextReader xmlReader = new XmlTextReader(file))
-                        {
-                            bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
-                            bookmark.BackingFile = file;
-                        }
-                        if (bookmark != null)
-                        {
-                            ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
-                            Thread.Sleep(50);
-                        }
-                        if (cancelBackgroundLoading)
-                        {
-                            return;
-                        }
+                        ensureBookmarksFolderExists();
+                        readBookmarkFilesBgThread(new FilesystemResourceProvider(MedicalConfig.BookmarksFolder));
+                    }
+                    else if(NonPremiumBookmarksResourceProvider != null)
+                    {
+                        readBookmarkFilesBgThread(NonPremiumBookmarksResourceProvider);
                     }
                 });
-            backgroundLoaderThread.Start();
+        }
+
+        private void readBookmarkFilesBgThread(ResourceProvider bookmarkResourceProvider)
+        {
+            foreach (String file in bookmarkResourceProvider.listFiles("*.bmk"))
+            {
+                Bookmark bookmark;
+                using (XmlTextReader xmlReader = new XmlTextReader(bookmarkResourceProvider.openFile(file)))
+                {
+                    bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
+                    bookmark.BackingFile = file;
+                }
+                if (bookmark != null)
+                {
+                    ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
+                    Thread.Sleep(50);
+                }
+                if (cancelBackgroundLoading)
+                {
+                    return;
+                }
+            }
         }
 
         public int BookmarkWidth
@@ -173,6 +189,27 @@ namespace Medical.Controller
                 return imageProperties.Height;
             }
         }
+
+        public bool PremiumBookmarks
+        {
+            get
+            {
+                return premiumBookmarks;
+            }
+            set
+            {
+                if(premiumBookmarks != value)
+                {
+                    premiumBookmarks = value;
+                    if(PremiumBookmarksChanged != null)
+                    {
+                        PremiumBookmarksChanged.Invoke(this);
+                    }
+                }
+            }
+        }
+
+        public ResourceProvider NonPremiumBookmarksResourceProvider { get; set; }
 
         private void fireBookmarkAdded(Bookmark bookmark)
         {

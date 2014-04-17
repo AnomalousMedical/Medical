@@ -104,10 +104,6 @@
     <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\BookmarksIcons.xml" />
-    <EmbeddedResource Include="Resources\Trash.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\PremiumBrandingImage.xml" />
     <EmbeddedResource Include="Resources\PremiumFeaturesIcon.png" />
   </ItemGroup>

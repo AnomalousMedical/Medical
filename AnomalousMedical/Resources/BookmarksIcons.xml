@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="Bookmarks/Trash">
-    <Group name="Icons" texture="Medical.Resources.Trash.png" size="100 100">
+    <Group name="Icons" texture="Medical.Resources.BookmarksIcons.png" size="100 100">
       <Index name="Normal">
         <Frame point="0 0"/>
       </Index>

@@ -8,4 +8,5 @@
   <List file="Medical.Resources.CorePluginIcon.xml"/>
   <List file="Medical.Resources.PremiumAd.xml"/>
   <List file="Medical.Resources.SequenceIcons.xml"/>
+  <List file="Medical.Resources.BookmarksIcons.xml"/>
 </MyGUI>

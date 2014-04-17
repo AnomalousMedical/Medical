@@ -19,21 +19,24 @@ namespace Medical.GUI
 
         IntSize2 widgetSmallSize;
         ImageBox trash;
+        Button addButton;
 
         private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
+        private ImageBox lockedFeatureImage;
 
         public BookmarksGUI(BookmarksController bookmarksController, GUIManager guiManager)
             : base("Medical.GUI.Bookmarks.BookmarksGUI.layout", guiManager)
         {
             this.bookmarksController = bookmarksController;
-            bookmarksController.BookmarkAdded += new BookmarkDelegate(bookmarksController_BookmarkAdded);
-            bookmarksController.BookmarkRemoved += new BookmarkDelegate(bookmarksController_BookmarkRemoved);
+            bookmarksController.BookmarkAdded += bookmarksController_BookmarkAdded;
+            bookmarksController.BookmarkRemoved += bookmarksController_BookmarkRemoved;
+            bookmarksController.PremiumBookmarksChanged += bookmarksController_PremiumBookmarksChanged;
 
             ScrollView bookmarksListScroll = (ScrollView)widget.findWidget("BookmarksList");
             bookmarksList = new NoSelectButtonGrid(bookmarksListScroll);
 
-            Button addButton = (Button)widget.findWidget("AddButton");
+            addButton = (Button)widget.findWidget("AddButton");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);
 
             bookmarkName = (EditBox)widget.findWidget("BookmarkName");
@@ -49,10 +52,15 @@ namespace Medical.GUI
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+
+            toggleAddCustomBookmarks();
         }
 
         public override void Dispose()
         {
+            bookmarksController.BookmarkAdded -= bookmarksController_BookmarkAdded;
+            bookmarksController.BookmarkRemoved -= bookmarksController_BookmarkRemoved;
+            bookmarksController.PremiumBookmarksChanged -= bookmarksController_PremiumBookmarksChanged;
             Gui.Instance.destroyWidget(dragIconPreview);
             base.Dispose();
         }
@@ -64,14 +72,21 @@ namespace Medical.GUI
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            try
+            if (bookmarksController.PremiumBookmarks)
             {
-                bookmarksController.createBookmark(bookmarkName.Caption);
+                try
+                {
+                    bookmarksController.createBookmark(bookmarkName.Caption);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.show(String.Format("There was an error creating this bookmark.\nTry using a different name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    Log.Error("Exception saving bookmark. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.show(String.Format("There was an error creating this bookmark.\nTry using a different name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                Log.Error("Exception saving bookmark. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                showNagMessage();
             }
         }
 
@@ -102,32 +117,38 @@ namespace Medical.GUI
 
         void item_MouseButtonReleased(ButtonGridItem source, MouseEventArgs arg)
         {
-            trash.Visible = false;
-            dragIconPreview.Visible = false;
-            IntVector2 mousePos = arg.Position;
-            if (trash.contains(mousePos.x, mousePos.y))
+            if (bookmarksController.PremiumBookmarks)
             {
-                bookmarksController.removeBookmark((Bookmark)source.UserObject);
+                trash.Visible = false;
+                dragIconPreview.Visible = false;
+                IntVector2 mousePos = arg.Position;
+                if (trash.contains(mousePos.x, mousePos.y))
+                {
+                    bookmarksController.removeBookmark((Bookmark)source.UserObject);
+                }
             }
         }
 
         void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
         {
-            dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
-            if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
+            if (bookmarksController.PremiumBookmarks)
             {
-                trash.Visible = true;
-                dragIconPreview.Visible = true;
-                dragIconPreview.setItemResource(bookmarksController.createThumbnail((Bookmark)source.UserObject));
-                LayerManager.Instance.upLayerItem(dragIconPreview);
-            }
-            if (trash.contains(arg.Position.x, arg.Position.y))
-            {
-                trash.setItemName("Highlight");
-            }
-            else
-            {
-                trash.setItemName("Normal");
+                dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
+                if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
+                {
+                    trash.Visible = true;
+                    dragIconPreview.Visible = true;
+                    dragIconPreview.setItemResource(bookmarksController.createThumbnail((Bookmark)source.UserObject));
+                    LayerManager.Instance.upLayerItem(dragIconPreview);
+                }
+                if (trash.contains(arg.Position.x, arg.Position.y))
+                {
+                    trash.setItemName("Highlight");
+                }
+                else
+                {
+                    trash.setItemName("Normal");
+                }
             }
         }
 
@@ -142,6 +163,35 @@ namespace Medical.GUI
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.hide();
+        }
+
+        private void toggleAddCustomBookmarks()
+        {
+            if (bookmarksController.PremiumBookmarks)
+            {
+                IDisposableUtil.DisposeIfNotNull(lockedFeatureImage);
+                lockedFeatureImage = null;
+            }
+            else
+            {
+                if (lockedFeatureImage == null)
+                {
+                    int lockSize = ScaleHelper.Scaled(18);
+                    lockedFeatureImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", addButton.Left, addButton.Top + (addButton.Height - lockSize) / 2, lockSize, lockSize, Align.Left | Align.Top, "LockedFeatureImage");
+                    lockedFeatureImage.NeedMouseFocus = false;
+                    lockedFeatureImage.setItemResource("LockedFeature");
+                }
+            }
+        }
+
+        private static void showNagMessage()
+        {
+            MessageBox.show("Placeholder for nag message", "Placeholder", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+        }
+
+        void bookmarksController_PremiumBookmarksChanged(BookmarksController obj)
+        {
+            toggleAddCustomBookmarks();
         }
     }
 }

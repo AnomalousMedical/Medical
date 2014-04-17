@@ -107,7 +107,11 @@ namespace Medical.GUI
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
             imageLicenseServer = new ImageLicenseServer(licenseManager);
-            bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100));
+            bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100), hasPremium);
+            if (!hasPremium)
+            {
+                bookmarksController.NonPremiumBookmarksResourceProvider = new EmbeddedResourceProvider(this.GetType().Assembly, "Medical.Resources.Bookmarks.");
+            }
 
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
