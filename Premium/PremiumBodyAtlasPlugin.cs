@@ -20,7 +20,6 @@ namespace Medical
         
         //Dialogs
         private NotesDialog notesDialog;
-        private BookmarksGUI bookmarks;
         private StateListDialog stateList;
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
@@ -28,14 +27,10 @@ namespace Medical
 
         //Tasks
         private ChangeWindowLayoutTask windowLayout;
-        
-        //Controllers
-        private BookmarksController bookmarksController;
 
         public PremiumBodyAtlasPlugin(StandaloneController standaloneController)
         {
             this.licenseManager = standaloneController.App.LicenseManager;
-            bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100));
         }
 
         public void Dispose()
@@ -44,8 +39,6 @@ namespace Medical
             stateList.Dispose();
             windowLayout.Dispose();
             notesDialog.Dispose();
-            bookmarks.Dispose();
-            bookmarksController.Dispose();
             savePatientDialog.Dispose();
             openPatientDialog.Dispose();
         }
@@ -68,8 +61,6 @@ namespace Medical
             //Dialogs
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             guiManager.addManagedDialog(notesDialog);
-
-            bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
 
             stateList = new StateListDialog(standaloneController.MedicalStateController);
             guiManager.addManagedDialog(stateList);
@@ -97,11 +88,6 @@ namespace Medical
             CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "CommonToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
             saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
             taskController.addTask(saveAsTaskItem);
-
-            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "PremiumFeatures/FavoritesIcon", TaskMenuCategories.Navigation);
-            bookmarkTask.ShowOnTimelineTaskbar = true;
-            taskController.addTask(bookmarkTask);
-            Slideshow.AdditionalTasks.addTask(bookmarkTask);
 
             MDIDialogOpenTask statesTask = new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
             statesTask.ShowOnTimelineTaskbar = true;
@@ -133,7 +119,7 @@ namespace Medical
 
         public void sceneRevealed()
         {
-            bookmarksController.loadSavedBookmarks();
+            
         }
 
         public long PluginId

@@ -33,7 +33,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="AnomalousMedical/Help">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/FavoritesIcon">
     <Group name="Icons" texture="Medical.Resources.AnomalousMedicalIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 0"/>
@@ -41,7 +41,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="AnomalousMedical/LogOut">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/Help">
     <Group name="Icons" texture="Medical.Resources.AnomalousMedicalIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 64"/>
@@ -49,10 +49,18 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="AnomalousMedical/Options">
+  <Resource type="ResourceImageSet" name="AnomalousMedical/LogOut">
     <Group name="Icons" texture="Medical.Resources.AnomalousMedicalIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="AnomalousMedical/Options">
+    <Group name="Icons" texture="Medical.Resources.AnomalousMedicalIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="192 64"/>
       </Index>
     </Group>
   </Resource>
@@ -68,7 +76,7 @@
   <Resource type="ResourceImageSet" name="AnomalousMedical/SearchIcon">
     <Group name="Icons" texture="Medical.Resources.AnomalousMedicalIcons@2x.png" size="64 64">
       <Index name="Icon">
-        <Frame point="192 64"/>
+        <Frame point="320 0"/>
       </Index>
     </Group>
   </Resource>

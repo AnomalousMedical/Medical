@@ -76,7 +76,6 @@
     <Compile Include="Documents\PatientDocumentHandler.cs" />
     <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
-    <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
     <Compile Include="GUI\Notes\NotesDialog.cs" />
     <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="PremiumBodyAtlasPlugin.cs" />
@@ -101,7 +100,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
     <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
     <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
   </ItemGroup>

@@ -31,6 +31,10 @@ namespace Medical.GUI
         private AnatomyFinder anatomyFinder;
         private DownloadManagerGUI downloadManagerGUI;
         private SequencePlayer sequencePlayer = null;
+        private BookmarksGUI bookmarks;
+        
+        //Controllers
+        private BookmarksController bookmarksController;
 
         //Taskbar
         private AppButtonTaskbar taskbar;
@@ -55,6 +59,8 @@ namespace Medical.GUI
             guiManager.MainGUIShown -= guiManager_MainGUIShown;
             guiManager.MainGUIHidden -= guiManager_MainGUIHidden;
 
+            IDisposableUtil.DisposeIfNotNull(bookmarks);
+            IDisposableUtil.DisposeIfNotNull(bookmarksController);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             renderDialog.Dispose();
@@ -101,6 +107,7 @@ namespace Medical.GUI
             //Controllers
             downloadServer = new DownloadManagerServer(licenseManager);
             imageLicenseServer = new ImageLicenseServer(licenseManager);
+            bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100));
 
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
@@ -119,6 +126,8 @@ namespace Medical.GUI
             guiManager.addManagedDialog(renderDialog);
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);
+
+            bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
 
             //Taskbar
             taskbar = new AppButtonTaskbar();
@@ -190,6 +199,11 @@ namespace Medical.GUI
             anatomyFinderTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(anatomyFinderTask);
             Slideshow.AdditionalTasks.addTask(anatomyFinderTask);
+
+            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "AnomalousMedical/FavoritesIcon", TaskMenuCategories.Navigation);
+            bookmarkTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(bookmarkTask);
+            Slideshow.AdditionalTasks.addTask(bookmarkTask);
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)
@@ -242,6 +256,8 @@ namespace Medical.GUI
                     introTask.clicked(null);
                 }
             }
+
+            bookmarksController.loadSavedBookmarks();
         }
 
         public long PluginId
