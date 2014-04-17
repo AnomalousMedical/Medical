@@ -423,7 +423,7 @@ namespace Medical
                         bitmap = new Bitmap(finalWidth, finalHeight);
                         using (Graphics g = Graphics.FromImage(bitmap))
                         {
-                            using (Brush brush = new SolidBrush(System.Drawing.Color.Black))
+                            using (Brush brush = new SolidBrush(System.Drawing.Color.FromArgb(0)))
                             {
                                 g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
                             }
