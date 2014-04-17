@@ -10,13 +10,13 @@ namespace Medical
         private List<Anatomy> anatomySearchList = new List<Anatomy>();
         public List<Anatomy> topLevelAnatomy = new List<Anatomy>();
 
-        public void addAnatomy(Anatomy anatomy, bool allowPremium)
+        public void addAnatomy(Anatomy anatomy)
         {
             if (anatomy.ShowInTextSearch)
             {
                 anatomySearchList.Add(anatomy);
             }
-            if (anatomy.ShowInTree && (allowPremium || anatomy.ShowInBasicVersion))
+            if (anatomy.ShowInTree)
             {
                 topLevelAnatomy.Add(anatomy);
             }
@@ -33,13 +33,13 @@ namespace Medical
             topLevelAnatomy.Clear();
         }
 
-        public List<Anatomy> findMatchingAnatomy(String text, int searchLimit, bool premiumSearch)
+        public List<Anatomy> findMatchingAnatomy(String text, int searchLimit)
         {
             text = text.ToLowerInvariant();
             List<Anatomy> results = new List<Anatomy>(searchLimit);
             foreach (Anatomy anatomy in anatomySearchList)
             {
-                if ((premiumSearch || anatomy.ShowInBasicVersion) && anatomy.AnatomicalName.ToLowerInvariant().Contains(text))
+                if (anatomy.AnatomicalName.ToLowerInvariant().Contains(text))
                 {
                     if (anatomy.AnatomicalName.Length == text.Length)
                     {

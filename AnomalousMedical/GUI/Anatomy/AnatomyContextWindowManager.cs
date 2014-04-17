@@ -90,14 +90,6 @@ namespace Medical.GUI
             }
         }
 
-        public bool ShowPremiumAnatomy
-        {
-            get
-            {
-                return anatomyController.ShowPremiumAnatomy;
-            }
-        }
-
         internal void showRelatedAnatomy(Anatomy anatomy)
         {
             anatomyFinder.showRelatedAnatomy(anatomy);

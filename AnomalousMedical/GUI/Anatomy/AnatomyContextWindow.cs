@@ -130,10 +130,7 @@ namespace Medical.GUI
                     }
                 }
 
-                if (relatedAnatomyButton.Visible = windowManager.ShowPremiumAnatomy)
-                {
-                    layoutContainer.StartLocation = new IntVector2(layoutContainer.StartLocation.x, ScaleHelper.Scaled(114));
-                }
+                layoutContainer.StartLocation = new IntVector2(layoutContainer.StartLocation.x, ScaleHelper.Scaled(114));
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.layout();
 

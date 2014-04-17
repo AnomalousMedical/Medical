@@ -6,6 +6,7 @@ using Engine;
 using Medical.Controller;
 using MyGUIPlugin;
 using System.Drawing;
+using System.Reflection;
 
 namespace Medical
 {
@@ -28,6 +29,8 @@ namespace Medical
 
         private ImageRenderer imageRenderer;
         private ImageAtlas imageAtlas;
+        private Bitmap lockImage;
+        private Rectangle lockImageDest;
 
         private AnatomyPickingMode pickingMode;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
@@ -57,6 +60,7 @@ namespace Medical
         public void Dispose()
         {
             imageAtlas.Dispose();
+            IDisposableUtil.DisposeIfNotNull(lockImage);
         }
 
         public void sceneLoaded()
@@ -68,12 +72,12 @@ namespace Medical
             }
             foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
             {
-                anatomySearchList.addAnatomy(anatomy, showPremiumAnatomy);
+                anatomySearchList.addAnatomy(anatomy);
                 anatomyTagManager.addAnatomyIdentifier(anatomy);
             }
             foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
             {
-                anatomySearchList.addAnatomy(tagGroup, showPremiumAnatomy);
+                anatomySearchList.addAnatomy(tagGroup);
             }
             if (AnatomyChanged != null)
             {
@@ -150,6 +154,36 @@ namespace Medical
 
                 using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
                 {
+                    if (!ShowPremiumAnatomy && !anatomy.ShowInBasicVersion)
+                    {
+                        if(lockImage == null)
+                        {
+                            lockImageDest = new Rectangle(0, 0, imageProperties.Width / 3, imageProperties.Height / 3);
+
+                            Assembly assembly = this.GetType().Assembly;
+                            lockImage = (Bitmap)Bitmap.FromStream(assembly.GetManifestResourceStream("Medical.Resources.LockedFeature.png"));
+                            float aspect = (float)lockImage.Width / lockImage.Height;
+                            if(lockImage.Width > lockImage.Height)
+                            {
+                                int mainDimension = lockImageDest.Width;
+                                lockImageDest = new Rectangle(0, 0, mainDimension, (int)(mainDimension / aspect)); 
+                            }
+                            else
+                            {
+                                int mainDimension = lockImageDest.Height;
+                                lockImageDest = new Rectangle(0, 0, (int)(mainDimension * aspect), mainDimension);
+                            }
+
+                            lockImageDest.Y = imageProperties.Height - lockImageDest.Height;
+                        }
+                        using (Graphics g = Graphics.FromImage(thumb))
+                        {
+                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                            g.DrawImage(lockImage, lockImageDest);
+                        }
+                    }
                     imageName = imageAtlas.addImage(anatomy.AnatomicalName, thumb);
                 }
 
@@ -197,17 +231,6 @@ namespace Medical
                     if (ShowPremiumAnatomyChanged != null)
                     {
                         ShowPremiumAnatomyChanged.Invoke(this, showPremiumAnatomy);
-                    }
-
-                    //Remake the search list
-                    anatomySearchList.clear();
-                    foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
-                    {
-                        anatomySearchList.addAnatomy(anatomy, showPremiumAnatomy);
-                    }
-                    foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
-                    {
-                        anatomySearchList.addAnatomy(tagGroup, showPremiumAnatomy);
                     }
                 }
             }

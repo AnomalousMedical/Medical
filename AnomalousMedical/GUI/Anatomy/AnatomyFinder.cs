@@ -77,7 +77,6 @@ namespace Medical.GUI
 
             searchBox = (EditBox)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
-            searchBox.KeyButtonReleased += new MyGUIEvent(searchBox_KeyButtonReleased);
 
             //pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
             //pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
@@ -119,16 +118,12 @@ namespace Medical.GUI
             anatomyList.clear();
             searchBox.Caption = String.Format("Related to {0}", anatomy.AnatomicalName);
             ButtonGridItem itemToSelect = null;
-            bool showPremium = anatomyController.ShowPremiumAnatomy;
             foreach (Anatomy relatedAnatomy in anatomy.RelatedAnatomy)
             {
-                if (showPremium || relatedAnatomy.ShowInBasicVersion)
+                ButtonGridItem newItem = addAnatomyToList(relatedAnatomy);
+                if (itemToSelect == null)
                 {
-                    ButtonGridItem newItem = addAnatomyToList(relatedAnatomy);
-                    if (itemToSelect == null)
-                    {
-                        itemToSelect = newItem;
-                    }
+                    itemToSelect = newItem;
                 }
             }
             anatomyList.SuppressLayout = false;
@@ -165,20 +160,6 @@ namespace Medical.GUI
             updateSearch();
         }
 
-        void searchBox_KeyButtonReleased(Widget source, EventArgs e)
-        {
-            KeyEventArgs ke = (KeyEventArgs)e;
-            if (ke.Key == KeyboardButtonCode.KC_RETURN)
-            {
-                ButtonGridItem selectedItem = anatomyList.SelectedItem;
-                if (selectedItem == null && anatomyList.Count > 0)
-                {
-                    anatomyList.SelectedItem = anatomyList.getItem(0);
-                }
-                toggleAnatomyTransparency();
-            }
-        }
-
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
         {
             updateSearch();
@@ -198,7 +179,7 @@ namespace Medical.GUI
             }
             else
             {
-                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35, anatomyController.ShowPremiumAnatomy))
+                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35))
                 {
                     addAnatomyToList(anatomy);
                 }
@@ -207,30 +188,37 @@ namespace Medical.GUI
             anatomyList.layout();
         }
 
-        private AnatomyContextWindow changeSelectedAnatomy(int left, int top)
+        private void changeSelectedAnatomy(int left, int top)
         {
             ButtonGridItem selectedItem = anatomyList.SelectedItem;
             if (selectedItem != null)
             {
-                int deadLeft = int.MinValue;
-                int deadRight = int.MinValue;
-                int deadBottom = int.MinValue;
-                int deadTop = int.MinValue;
-
-                if (window.Visible)
+                Anatomy anatomy = (Anatomy)selectedItem.UserObject;
+                if (anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
                 {
-                    deadLeft = window.Left;
-                    deadRight = window.Right;
-                    deadBottom = window.Bottom;
-                    deadTop = window.Top;
-                }
+                    int deadLeft = int.MinValue;
+                    int deadRight = int.MinValue;
+                    int deadBottom = int.MinValue;
+                    int deadTop = int.MinValue;
 
-                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject, left, top, deadLeft, deadRight, deadTop, deadBottom);
+                    if (window.Visible)
+                    {
+                        deadLeft = window.Left;
+                        deadRight = window.Right;
+                        deadBottom = window.Bottom;
+                        deadTop = window.Top;
+                    }
+
+                    anatomyWindowManager.showWindow(anatomy, left, top, deadLeft, deadRight, deadTop, deadBottom);
+                }
+                else
+                {
+                    showNagMessage();
+                }
             }
             else
             {
                 anatomyWindowManager.closeUnpinnedWindow();
-                return null;
             }
         }
 
@@ -266,6 +254,11 @@ namespace Medical.GUI
             {
                 if (anatomyController.PickingMode != AnatomyPickingMode.None)
                 {
+                    if(!this.Visible)
+                    {
+                        this.Visible = true;
+                    }
+
                     anatomyList.SuppressLayout = true;
                     anatomyList.clear();
 
@@ -279,16 +272,12 @@ namespace Medical.GUI
 
                     HashSet<String> anatomyTags = new HashSet<String>();
                     ButtonGridItem itemToSelect = null;
-                    bool showPremium = anatomyController.ShowPremiumAnatomy;
                     foreach (AnatomyIdentifier anatomy in matches)
                     {
-                        if (showPremium || anatomy.ShowInBasicVersion)
+                        ButtonGridItem newItem = addAnatomyToList(anatomy);
+                        if (itemToSelect == null)
                         {
-                            ButtonGridItem newItem = addAnatomyToList(anatomy);
-                            if (itemToSelect == null)
-                            {
-                                itemToSelect = newItem;
-                            }
+                            itemToSelect = newItem;
                         }
                         foreach (AnatomyTag tag in anatomy.Tags)
                         {
@@ -297,13 +286,14 @@ namespace Medical.GUI
                     }
                     foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
                     {
-                        if (tagGroup.ShowInClickSearch && (showPremium || tagGroup.ShowInBasicVersion) && anatomyTags.Contains(tagGroup.AnatomicalName))
+                        if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
                         {
                             addAnatomyToList(tagGroup);
                         }
                     }
                     if (matches.Count > 0)
                     {
+                        bool showPremium = anatomyController.ShowPremiumAnatomy;
                         searchBox.Caption = "Clicked";
                         if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection || !showPremium)
                         {
@@ -311,9 +301,13 @@ namespace Medical.GUI
                             foreach (AnatomyTag tag in matches[0].Tags)
                             {
                                 itemToSelect = anatomyList.findItemByCaption(tag.Tag);
-                                if (itemToSelect != null)
+                                if (itemToSelect != null && (showPremium || ((Anatomy)itemToSelect.UserObject).ShowInBasicVersion))
                                 {
                                     break;
+                                }
+                                else
+                                {
+                                    itemToSelect = null;
                                 }
                             }
                         }
@@ -324,7 +318,7 @@ namespace Medical.GUI
                         searchBox.Caption = "";
                         updateSearch();
                     }
-                    AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy((int)eventManager.Mouse.getAbsMouse().x, (int)eventManager.Mouse.getAbsMouse().y);
+                    changeSelectedAnatomy((int)eventManager.Mouse.getAbsMouse().x, (int)eventManager.Mouse.getAbsMouse().y);
 
                     anatomyList.SuppressLayout = false;
                     anatomyList.layout();
@@ -384,18 +378,7 @@ namespace Medical.GUI
                 {
                     top = anatomyList.SelectedItem.AbsoluteTop;
                 }
-                AnatomyContextWindow contextWindow = changeSelectedAnatomy(window.Right, top);
-                if (contextWindow != null)
-                {
-                    //float x = window.Right;
-                    //float y = anatomyList.SelectedItem.AbsoluteTop;
-                    //if (x + contextWindow.Width > RenderManager.Instance.ViewWidth)
-                    //{
-                    //    x = window.Left - contextWindow.Width;
-                    //}
-                    //contextWindow.Position = new Vector2(x, y);
-                    //contextWindow.ensureVisible();
-                }
+                changeSelectedAnatomy(window.Right, top);
             }
         }
 
@@ -410,18 +393,25 @@ namespace Medical.GUI
             if (selectedItem != null)
             {
                 Anatomy selectedAnatomy = (Anatomy)selectedItem.UserObject;
-                TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
-                if (transparencyChanger.CurrentAlpha >= 0.9999f)
+                if (anatomyController.ShowPremiumAnatomy || selectedAnatomy.ShowInBasicVersion)
                 {
-                    transparencyChanger.smoothBlend(0.7f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
-                }
-                else if (transparencyChanger.CurrentAlpha <= 0.00008f)
-                {
-                    transparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                    TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
+                    if (transparencyChanger.CurrentAlpha >= 0.9999f)
+                    {
+                        transparencyChanger.smoothBlend(0.7f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                    }
+                    else if (transparencyChanger.CurrentAlpha <= 0.00008f)
+                    {
+                        transparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                    }
+                    else
+                    {
+                        transparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                    }
                 }
                 else
                 {
-                    transparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                    showNagMessage();
                 }
             }
         }
@@ -475,6 +465,11 @@ namespace Medical.GUI
             int itemCount = anatomyList.Count;
             float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
             startThumbnailCoroutine();
+        }
+
+        private static void showNagMessage()
+        {
+            MessageBox.show("Placeholder for nag message", "Placeholder", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
         }
     }
 }
