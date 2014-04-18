@@ -107,15 +107,21 @@ namespace UnitTestPlugin.GUI
             int height = 100;
 
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            TextureSceneView sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, width, height);
-            
+            TextureSceneView sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, width * 2, height * 2);
+
+            LayerState layers = new LayerState("");
+            layers.captureState();
+            String activeTransaparencyState = TransparencyController.ActiveTransparencyState;
+            TransparencyController.ActiveTransparencyState = sceneView.CurrentTransparencyState;
+            layers.instantlyApply();
+            TransparencyController.ActiveTransparencyState = activeTransaparencyState;
 
             sceneView.AlwaysRender = false;
             sceneView.RenderOneFrame = true;
 
             ButtonGridItem item = buttonGrid.addItem("Main", textureName, textureName);
             item.ImageBox.setImageTexture(textureName);
-            item.ImageBox.setImageCoord(new IntCoord(0, 0, width, height));
+            item.ImageBox.setImageCoord(new IntCoord(0, 0, width * 2, height * 2));
 
             activeImages.Add(new ImageInfo()
             {
