@@ -94,10 +94,9 @@ namespace Medical.Controller
             }
         }
 
-        public virtual void createSceneView(RendererWindow window, SimScene scene)
+        public virtual void createSceneView(SimScene scene)
         {
             Log.Info("Creating SceneView for {0}.", name);
-            this.window = window;
             SimSubScene defaultScene = scene.getDefaultSubScene();
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt, zIndexStart + zOffset++);
@@ -650,6 +649,18 @@ namespace Medical.Controller
                         sceneView.setRenderingMode(renderingMode);
                     }
                 }
+            }
+        }
+
+        protected RendererWindow RendererWindow
+        {
+            get
+            {
+                return window;
+            }
+            set
+            {
+                window = value;
             }
         }
 

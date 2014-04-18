@@ -14,13 +14,11 @@ namespace Medical.Controller
     public class MDISceneViewWindow : SceneViewWindow
     {
         private MDIDocumentWindow mdiWindow;
-        private OgreRenderManager rm;
 
-        public MDISceneViewWindow(OgreRenderManager rm, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
+        public MDISceneViewWindow(RendererWindow rendererWindow, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
             :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
             this.createBackground(((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderTarget, false);
-            this.rm = rm;
 
             //MDI Window
             mdiWindow = new MDIDocumentWindow(Name);
@@ -31,6 +29,8 @@ namespace Medical.Controller
             mdiWindow.Caption = Name;
             mdiWindow.Closed += new EventHandler(mdiWindow_Closed);
             mdiWindow.ActiveStatusChanged += new EventHandler(mdiWindow_ActiveStatusChanged);
+
+            this.RendererWindow = rendererWindow;
         }
 
         public override void Dispose()

@@ -25,6 +25,7 @@ namespace Medical.Controller
             osWindow = new NativeOSWindow(MainWindow.Instance, "Clone Window", location, new Size(windowInfo.Width, windowInfo.Height), floatOnParent);
             this.rendererWindow = (OgreWindow)OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
             this.createBackground(rendererWindow.OgreRenderTarget, true);
+            this.RendererWindow = rendererWindow;
             osWindow.show();
             osWindow.Closed += osWindow_Closed;
 
@@ -39,23 +40,9 @@ namespace Medical.Controller
             base.Dispose();
         }
 
-        public override void createSceneView(RendererWindow window, Engine.ObjectManagement.SimScene scene)
-        {
-            //Ignore the window passed in and use the member one instead
-            base.createSceneView(rendererWindow, scene);
-        }
-
         public override void close()
         {
             osWindow.close();
-        }
-
-        public RendererWindow RendererWindow
-        {
-            get
-            {
-                return rendererWindow;
-            }
         }
 
         void osWindow_Closed(OSWindow sender)

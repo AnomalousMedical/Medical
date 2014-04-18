@@ -133,11 +133,11 @@ namespace Medical.Controller
         {
             foreach (SceneViewWindow window in mdiWindows)
             {
-                window.createSceneView(rendererWindow, scene);
+                window.createSceneView(scene);
             }
             if (cloneWindow != null)
             {
-                cloneWindow.createSceneView(rendererWindow, scene);
+                cloneWindow.createSceneView(scene);
             }
             camerasCreated = true;
             currentScene = scene;
@@ -183,7 +183,7 @@ namespace Medical.Controller
                 }
                 if (camerasCreated)
                 {
-                    cloneWindow.createSceneView(null, currentScene);
+                    cloneWindow.createSceneView(currentScene);
                 }
             }
         }
@@ -401,7 +401,7 @@ namespace Medical.Controller
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
-            MDISceneViewWindow window = new MDISceneViewWindow(rm, this, mainTimer, orbitCamera, name, background, zIndexStart);
+            MDISceneViewWindow window = new MDISceneViewWindow(rendererWindow, this, mainTimer, orbitCamera, name, background, zIndexStart);
             window.AutoAspectRatio = autoAspectRatio;
             window.AspectRatio = aspectRatio;
             if (WindowCreated != null)
@@ -410,7 +410,7 @@ namespace Medical.Controller
             }
             if (camerasCreated)
             {
-                window.createSceneView(rendererWindow, currentScene);
+                window.createSceneView(currentScene);
             }
             //Count is 0, disable close button on first window
             if (mdiWindows.Count == 0)
