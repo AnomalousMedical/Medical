@@ -19,6 +19,12 @@ namespace UnitTestPlugin.GUI
         private List<ImageInfo> activeImages = new List<ImageInfo>();
         private ScrollView scrollView;
 
+        private EditBox secondsToSleepEdit;
+        private EditBox numToUpdateEdit;
+
+        private int numImagesToUpdate = 3;
+        private double secondsToSleep = 1;
+
         class ImageInfo
         {
             public String TextureName { get; set; }
@@ -40,7 +46,20 @@ namespace UnitTestPlugin.GUI
 
             window.WindowChangedCoord += window_WindowChangedCoord;
 
+            numToUpdateEdit = (EditBox)window.findWidget("NumToUpdate");
+            numToUpdateEdit.Caption = numImagesToUpdate.ToString();
+            secondsToSleepEdit = (EditBox)window.findWidget("SecondsToSleep");
+            secondsToSleepEdit.Caption = secondsToSleep.ToString();
+            Button applyButton = (Button)window.findWidget("ApplyButton");
+            applyButton.MouseButtonClick += applyButton_MouseButtonClick;
+
             Coroutine.Start(renderForce());
+        }
+
+        void applyButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            int.TryParse(numToUpdateEdit.Caption, out numImagesToUpdate);
+            double.TryParse(secondsToSleepEdit.Caption, out secondsToSleep);
         }
 
         public override void Dispose()
@@ -62,15 +81,22 @@ namespace UnitTestPlugin.GUI
             int count = 0;
             while(render)
             {
-                if (count < activeImages.Count)
+                for (int i = 0; i < numImagesToUpdate; ++i)
                 {
-                    activeImages[count++].SceneView.RenderOneFrame = true;
+                    if (count < activeImages.Count)
+                    {
+                        activeImages[count++].SceneView.RenderOneFrame = true;
+                    }
+                    else
+                    {
+                        count = 0;
+                        if (activeImages.Count > 0)
+                        {
+                            activeImages[count++].SceneView.RenderOneFrame = true;
+                        }
+                    }
                 }
-                else
-                {
-                    count = 0;
-                }
-                yield return Coroutine.Wait(1);
+                yield return Coroutine.Wait(secondsToSleep);
             }
         }
 
@@ -82,6 +108,7 @@ namespace UnitTestPlugin.GUI
 
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
             TextureSceneView sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, width, height);
+            
 
             sceneView.AlwaysRender = false;
             sceneView.RenderOneFrame = true;
