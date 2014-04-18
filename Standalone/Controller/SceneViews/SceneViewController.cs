@@ -91,13 +91,13 @@ namespace Medical.Controller
             return null;
         }
 
-        public TextureSceneView createTextureSceneView(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance)
+        public TextureSceneView createTextureSceneView(String name, Vector3 translation, Vector3 lookAt, int width, int height)
         {
-            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventManager);
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, Vector3.Zero, Vector3.Zero, 0, 1000, null, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
 
-            TextureSceneView window = new TextureSceneView(this, mainTimer, orbitCamera, name, background, 0);
+            TextureSceneView window = new TextureSceneView(this, mainTimer, orbitCamera, name, background, 0, width, height);
 
             if (camerasCreated)
             {

@@ -16,28 +16,44 @@ namespace UnitTestPlugin.GUI
         private TextureSceneView sceneView;
         private ImageBox imageBox;
         String textureName = "TestSceneRTT";
+        private bool render = true;
 
         public TestTextureSceneView(SceneViewController sceneViewController)
             : base("UnitTestPlugin.GUI.TestTextureSceneView.TestTextureSceneView.layout")
         {
             this.sceneViewController = sceneViewController;
+            this.imageBox = (ImageBox)window.findWidget("ImageBox");
+
+            int width = imageBox.Width;
+            int height = imageBox.Height;
 
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, new Vector3(-15, -40, -15), new Vector3(15, 15, 15), 0, 1000);
-
-            imageBox = (ImageBox)window.findWidget("ImageBox");
+            sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, width, height);
 
             imageBox.setImageTexture(textureName);
-            imageBox.setImageCoord(new IntCoord(0, 0, 800, 600));
+            imageBox.setImageCoord(new IntCoord(0, 0, width, height));
 
-            //imageBox.setImageInfo("Test", new IntCoord(0, 0, 800, 600), new IntSize2(800, 600));
+            sceneView.AlwaysRender = false;
+            sceneView.RenderOneFrame = true;
+
+            Coroutine.Start(renderForce());
         }
 
         public override void Dispose()
         {
+            render = false;
             RenderManager.Instance.destroyTexture(textureName);
             sceneViewController.destroyWindow(sceneView);
             base.Dispose();
+        }
+
+        private IEnumerator<YieldAction> renderForce()
+        {
+            while(render)
+            {
+                sceneView.RenderOneFrame = true;
+                yield return Coroutine.Wait(1);
+            }
         }
     }
 }

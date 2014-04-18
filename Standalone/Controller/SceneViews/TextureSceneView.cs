@@ -17,17 +17,20 @@ namespace Medical.Controller
         private RenderTexture renderTexture;
         private RendererWindow rendererWindow;
 
-        private int currentTextureWidth = 800;
-        private int currentTextureHeight = 600;
         private OgreWrapper.PixelFormat ogreTextureFormat = OgreWrapper.PixelFormat.PF_X8R8G8B8;
 
-        public TextureSceneView(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
+        private bool renderOneFrame = false;
+        private bool alwaysRender = true;
+        private bool renderingEnabled = true;
+
+        public TextureSceneView(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, int width, int height)
             :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
-            texture = TextureManager.getInstance().createManual(name, "Rocket", TextureType.TEX_TYPE_2D, (uint)currentTextureWidth, (uint)currentTextureHeight, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
+            texture = TextureManager.getInstance().createManual(name, "Rocket", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
             renderTexture = pixelBuffer.Value.getRenderTarget();
+            this.RenderingEnded += TextureSceneView_RenderingEnded;
 
             rendererWindow = new ManualWindow(renderTexture);
             this.RendererWindow = rendererWindow;
@@ -53,12 +56,62 @@ namespace Medical.Controller
 
         }
 
-        public Texture Texture
+        public bool RenderingEnabled
         {
             get
             {
-                return texture.Value;
+                return renderingEnabled;
             }
+            set
+            {
+                if(renderingEnabled != value)
+                {
+                    renderingEnabled = value;
+                    determineRenderingActive();
+                }
+            }
+        }
+
+        public bool AlwaysRender
+        {
+            get
+            {
+                return alwaysRender;
+            }
+            set
+            {
+                if(alwaysRender != value)
+                {
+                    alwaysRender = value;
+                    determineRenderingActive();
+                }
+            }
+        }
+
+        public bool RenderOneFrame
+        {
+            get
+            {
+                return renderOneFrame;
+            }
+            set
+            {
+                if(renderOneFrame != value)
+                {
+                    renderOneFrame = value;
+                    determineRenderingActive();
+                }
+            }
+        }
+
+        void determineRenderingActive()
+        {
+            renderTexture.setAutoUpdated(renderingEnabled && (alwaysRender || renderOneFrame));
+        }
+
+        void TextureSceneView_RenderingEnded(SceneViewWindow window, bool currentCameraRender)
+        {
+            RenderOneFrame = false;
         }
     }
 }
