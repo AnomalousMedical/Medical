@@ -38,6 +38,7 @@ namespace Medical.Controller
 
         private SingleViewCloneWindow cloneWindow = null;
         private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
+        private List<TextureSceneView> textureWindows = new List<TextureSceneView>();
 
         public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager, BackgroundScene background)
         {
@@ -55,6 +56,10 @@ namespace Medical.Controller
         {
             destroyCameras();
             foreach (SceneViewWindow window in mdiWindows)
+            {
+                window.Dispose();
+            }
+            foreach(TextureSceneView window in textureWindows)
             {
                 window.Dispose();
             }
@@ -86,6 +91,24 @@ namespace Medical.Controller
             return null;
         }
 
+        public TextureSceneView createTextureSceneView(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance)
+        {
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventManager);
+            orbitCamera.AllowRotation = AllowRotation;
+            orbitCamera.AllowZoom = AllowZoom;
+
+            TextureSceneView window = new TextureSceneView(this, mainTimer, orbitCamera, name, background, 0);
+
+            if (camerasCreated)
+            {
+                window.createSceneView(currentScene);
+            }
+
+            textureWindows.Add(window);
+
+            return window;
+        }
+
         public void destroyWindow(SceneViewWindow window)
         {
             if (WindowDestroyed != null)
@@ -100,14 +123,17 @@ namespace Medical.Controller
             {
                 cloneWindow = null;
             }
-            else
+            else if (mdiWindows.Remove(window as MDISceneViewWindow))
             {
-                mdiWindows.Remove((MDISceneViewWindow)window);
                 //On the last window, disable closing it.
                 if (mdiWindows.Count == 1)
                 {
                     mdiWindows[0].AllowClose = false;
                 }
+            }
+            else
+            {
+                textureWindows.Remove(window as TextureSceneView);
             }
 
             if (window == activeWindow)
@@ -135,6 +161,10 @@ namespace Medical.Controller
             {
                 window.createSceneView(scene);
             }
+            foreach(TextureSceneView window in textureWindows)
+            {
+                window.createSceneView(scene);
+            }
             if (cloneWindow != null)
             {
                 cloneWindow.createSceneView(scene);
@@ -146,6 +176,10 @@ namespace Medical.Controller
         public void destroyCameras()
         {
             foreach (SceneViewWindow window in mdiWindows)
+            {
+                window.destroySceneView();
+            }
+            foreach (TextureSceneView window in textureWindows)
             {
                 window.destroySceneView();
             }

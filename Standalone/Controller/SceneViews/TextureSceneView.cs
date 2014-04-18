@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical.Controller.SceneViews
+namespace Medical.Controller
 {
-    class TextureSceneView : SceneViewWindow
+    public class TextureSceneView : SceneViewWindow
     {
         private TexturePtr texture;
         private HardwarePixelBufferSharedPtr pixelBuffer;
@@ -31,6 +31,7 @@ namespace Medical.Controller.SceneViews
 
             rendererWindow = new ManualWindow(renderTexture);
             this.RendererWindow = rendererWindow;
+            this.createBackground(renderTexture, true);
         }
 
         public override void Dispose()
@@ -50,6 +51,14 @@ namespace Medical.Controller.SceneViews
         public override void close()
         {
 
+        }
+
+        public Texture Texture
+        {
+            get
+            {
+                return texture.Value;
+            }
         }
     }
 }

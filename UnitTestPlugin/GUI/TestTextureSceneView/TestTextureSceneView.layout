@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="59 82 317 358" layer="Overlapped">
+        <Property key="Caption" value="Render Scene to Texture"/>
+        <Widget type="ImageBox" skin="ImageBox" position="0 0 305 325" align="Stretch" name="ImageBox"/>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

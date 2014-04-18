@@ -15,6 +15,7 @@ namespace UnitTestPlugin
     {
         TestImageAtlas testImageAtlas;
         TestSoundRecord testSoundRecord;
+        TestTextureSceneView testTextureSceneView;
 
         public UnitTestAtlasPlugin()
         {
@@ -25,6 +26,7 @@ namespace UnitTestPlugin
         {
             testImageAtlas.Dispose();
             testSoundRecord.Dispose();
+            testTextureSceneView.Dispose();
         }
 
         public void loadGUIResources()
@@ -43,6 +45,9 @@ namespace UnitTestPlugin
             testSoundRecord = new TestSoundRecord(standaloneController);
             guiManager.addManagedDialog(testSoundRecord);
 
+            testTextureSceneView = new TestTextureSceneView(standaloneController.SceneViewController);
+            guiManager.addManagedDialog(testTextureSceneView);
+
             standaloneController.TaskController.addTask(new CallbackTask("UnitTest.SaveFileDialog", "Test Save File", CommonResources.NoIcon, "Unit Test", 0, false, (item) =>
                 {
                     FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, wildcard:"All Files|*");
@@ -53,6 +58,7 @@ namespace UnitTestPlugin
                 }));
 
             standaloneController.TaskController.addTask(new MDIDialogOpenTask(testSoundRecord, "UnitTestPlugin.TestSoundRecord", "Sound Record", CommonResources.NoIcon, "Unit Test", true));
+            standaloneController.TaskController.addTask(new MDIDialogOpenTask(testTextureSceneView, "UnitTestPlugin.TestTextureSceneView", "Texture Scene View", CommonResources.NoIcon, "Unit Test", true));
         }
 
         public void sceneLoaded(SimScene scene)
