@@ -20,7 +20,6 @@ namespace Medical.Controller
     {
         public event SceneViewWindowEvent CameraCreated;
         public event SceneViewWindowEvent CameraDestroyed;
-        public event SceneViewWindowRenderEvent FindVisibleObjects;
         public event SceneViewWindowRenderEvent RenderingStarted;
         public event SceneViewWindowRenderEvent RenderingEnded;
         public event SceneViewWindowResizedEvent Resized;
@@ -103,14 +102,13 @@ namespace Medical.Controller
             sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             sceneView.BackgroundColor = backColor;
-            sceneView.addLight();
+            //sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
             sceneView.ClearEveryFrame = false;
             sceneView.setRenderingMode(renderingMode);
             cameraMover.setCamera(new CameraPositioner(sceneView, NearPlaneWorldPos, FarPlaneWorldPos));
             CameraResolver.addMotionValidator(this);
-            sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
             sceneView.RenderingStarted += sceneView_RenderingStarted;
             sceneView.RenderingEnded += sceneView_RenderingEnded;
             if (CameraCreated != null)
@@ -126,7 +124,6 @@ namespace Medical.Controller
                 --zOffset;
                 Log.Info("Destroying SceneView for {0}.", name);
                 CameraResolver.removeMotionValidator(this);
-                sceneView.FindVisibleObjects -= sceneView_FindVisibleObjects;
                 sceneView.RenderingStarted -= sceneView_RenderingStarted;
                 sceneView.RenderingEnded -= sceneView_RenderingEnded;
                 cameraMover.setCamera(null);
@@ -661,14 +658,6 @@ namespace Medical.Controller
             set
             {
                 window = value;
-            }
-        }
-
-        void sceneView_FindVisibleObjects(SceneView sceneView)
-        {
-            if (FindVisibleObjects != null)
-            {
-                FindVisibleObjects.Invoke(this, sceneView.CurrentlyRendering);
             }
         }
 

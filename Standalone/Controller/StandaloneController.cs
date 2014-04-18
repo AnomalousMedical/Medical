@@ -58,6 +58,7 @@ namespace Medical
         private IdleHandler idleHandler;
         private BehaviorErrorManager behaviorErrorManager;
         private SceneStatsDisplayManager sceneStatsDisplayManager;
+        private SceneViewLightManager lightManager;
 
         //GUI
         private GUIManager guiManager;
@@ -133,6 +134,7 @@ namespace Medical
         public void Dispose()
         {
             unloadScene();
+            PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
 			IDisposableUtil.DisposeIfNotNull(downloadController);
             if (DocumentController != null)
@@ -203,7 +205,8 @@ namespace Medical
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
-            sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget); 
+            sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
+            lightManager = PluginManager.Instance.RendererPlugin.createSceneViewLightManager();
 
             //Watermark
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
@@ -674,6 +677,7 @@ namespace Medical
                     sceneViewController.createFromPresets(medicalScene.WindowPresets.Default, false);
 
                     sceneViewController.createCameras(medicalController.CurrentScene);
+                    lightManager.sceneLoaded(medicalController.CurrentScene);
 
                     if (SceneLoaded != null)
                     {
@@ -715,6 +719,10 @@ namespace Medical
             if (sceneViewController != null)
             {
                 sceneViewController.destroyCameras();
+            }
+            if(lightManager != null)
+            {
+                lightManager.sceneUnloading(medicalController.CurrentScene);
             }
         }
 

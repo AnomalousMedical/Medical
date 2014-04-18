@@ -325,8 +325,6 @@ namespace Medical
                             node.setPosition(position);
                             sceneManager.SceneManager.getRootSceneNode().addChild(node);
                             camera.lookAt(lookAt);
-                            Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
-                            node.attachObject(light);
                             Viewport viewport = renderTexture.addViewport(camera, 1, 0.0f, 0.0f, 1.0f, 1.0f);
 
                             if (properties.UseIncludePoint)
@@ -409,7 +407,6 @@ namespace Medical
                                 bgViewport.Dispose();
                             }
                             sceneManager.SceneManager.getRootSceneNode().removeChild(node);
-                            sceneManager.SceneManager.destroyLight(light);
                             sceneManager.SceneManager.destroySceneNode(node);
                             sceneManager.SceneManager.destroyCamera(camera);
 

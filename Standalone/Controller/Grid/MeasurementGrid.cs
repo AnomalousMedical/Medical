@@ -165,15 +165,15 @@ namespace Medical.Controller
 
         void sceneViewController_WindowDestroyed(SceneViewWindow window)
         {
-            window.FindVisibleObjects -= window_FindVisibleObjects;
+            window.RenderingStarted -= window_RenderingStarted;
         }
 
         void sceneViewController_WindowCreated(SceneViewWindow window)
         {
-            window.FindVisibleObjects += window_FindVisibleObjects;
+            window.RenderingStarted += window_RenderingStarted;
         }
 
-        void window_FindVisibleObjects(SceneViewWindow window, bool currentCameraRender)
+        void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
         {
             if (currentCameraRender)
             {
