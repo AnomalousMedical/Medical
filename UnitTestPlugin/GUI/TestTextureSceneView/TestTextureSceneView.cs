@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Medical;
 using Medical.Controller;
 using Medical.GUI;
 using MyGUIPlugin;
@@ -13,28 +14,31 @@ namespace UnitTestPlugin.GUI
     class TestTextureSceneView : MDIDialog
     {
         private SceneViewController sceneViewController;
-        private TextureSceneView sceneView;
-        private ImageBox imageBox;
-        String textureName = "TestSceneRTT";
         private bool render = true;
+        private ButtonGrid buttonGrid;
+        private List<ImageInfo> activeImages = new List<ImageInfo>();
+        private ScrollView scrollView;
+
+        class ImageInfo
+        {
+            public String TextureName { get; set; }
+
+            public TextureSceneView SceneView { get; set; }
+
+            public ButtonGridItem LayoutContainer { get; set; }
+        }
 
         public TestTextureSceneView(SceneViewController sceneViewController)
             : base("UnitTestPlugin.GUI.TestTextureSceneView.TestTextureSceneView.layout")
         {
             this.sceneViewController = sceneViewController;
-            this.imageBox = (ImageBox)window.findWidget("ImageBox");
+            Button addButton = (Button)window.findWidget("AddButton");
+            addButton.MouseButtonClick += addButton_MouseButtonClick;
 
-            int width = imageBox.Width;
-            int height = imageBox.Height;
+            scrollView = (ScrollView)window.findWidget("ScrollView");
+            buttonGrid = new SingleSelectButtonGrid(scrollView);
 
-            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, width, height);
-
-            imageBox.setImageTexture(textureName);
-            imageBox.setImageCoord(new IntCoord(0, 0, width, height));
-
-            sceneView.AlwaysRender = false;
-            sceneView.RenderOneFrame = true;
+            window.WindowChangedCoord += window_WindowChangedCoord;
 
             Coroutine.Start(renderForce());
         }
@@ -42,18 +46,63 @@ namespace UnitTestPlugin.GUI
         public override void Dispose()
         {
             render = false;
-            RenderManager.Instance.destroyTexture(textureName);
-            sceneViewController.destroyWindow(sceneView);
+            buttonGrid.SuppressLayout = true;
+            foreach (var info in activeImages)
+            {
+                RenderManager.Instance.destroyTexture(info.TextureName);
+                buttonGrid.removeItem(info.LayoutContainer);
+                sceneViewController.destroyWindow(info.SceneView);
+            }
+            buttonGrid.SuppressLayout = false;
             base.Dispose();
         }
 
         private IEnumerator<YieldAction> renderForce()
         {
+            int count = 0;
             while(render)
             {
-                sceneView.RenderOneFrame = true;
+                if (count < activeImages.Count)
+                {
+                    activeImages[count++].SceneView.RenderOneFrame = true;
+                }
+                else
+                {
+                    count = 0;
+                }
                 yield return Coroutine.Wait(1);
             }
+        }
+
+        void addButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            String textureName = "TestRTT_" + Guid.NewGuid().ToString();
+            int width = 100;
+            int height = 100;
+
+            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+            TextureSceneView sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, width, height);
+
+            sceneView.AlwaysRender = false;
+            sceneView.RenderOneFrame = true;
+
+            ButtonGridItem item = buttonGrid.addItem("Main", textureName, textureName);
+            item.ImageBox.setImageTexture(textureName);
+            item.ImageBox.setImageCoord(new IntCoord(0, 0, width, height));
+
+            activeImages.Add(new ImageInfo()
+            {
+                LayoutContainer = item,
+                SceneView = sceneView,
+                TextureName = textureName
+            });
+
+            buttonGrid.resizeAndLayout(window.ClientWidget.Width);
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            buttonGrid.resizeAndLayout(window.ClientWidget.Width);
         }
     }
 }
