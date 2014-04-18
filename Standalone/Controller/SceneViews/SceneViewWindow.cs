@@ -102,7 +102,6 @@ namespace Medical.Controller
             sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
             sceneView.BackgroundColor = backColor;
-            //sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
             sceneView.ClearEveryFrame = false;
