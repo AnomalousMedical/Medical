@@ -61,13 +61,13 @@ namespace Medical.GUI
 			IDisposableUtil.DisposeIfNotNull(continuePrompt);
         }
 
-        public void createGUI(MDILayoutManager mdiManager, LayoutChain layoutChain)
+        public void createGUI(MDILayoutManager mdiManager, LayoutChain layoutChain, OSWindow window)
         {
             Gui gui = Gui.Instance;
 
             OgreResourceGroupManager.getInstance().addResourceLocation(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedScalableResource", "MyGUI", true);
 
-            screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
+            screenLayoutManager = new ScreenLayoutManager(window);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
 
             //Dialogs

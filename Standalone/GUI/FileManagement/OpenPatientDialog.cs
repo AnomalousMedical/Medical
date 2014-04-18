@@ -292,7 +292,7 @@ namespace Medical.GUI
             {
                 allowOpen = false;
                 loadingWidget.Visible = true;
-                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.update();
+                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget.update();
                 currentFile = (PatientDataFile)fileDataGrid.getItemDataAt(fileDataGrid.getIndexSelected());
                 if (OpenFile != null)
                 {

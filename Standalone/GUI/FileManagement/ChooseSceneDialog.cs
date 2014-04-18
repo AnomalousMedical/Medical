@@ -111,7 +111,7 @@ namespace Medical.GUI
             if (allowSceneChanges)
             {
                 loadingWidget.Visible = true;
-                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.update();
+                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget.update();
                 if (sceneFileGrid.SelectedItem != null)
                 {
                     if (ChooseScene != null)

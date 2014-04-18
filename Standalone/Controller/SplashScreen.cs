@@ -90,7 +90,7 @@ namespace Medical.Controller
             widgetPanel.setPosition(-imageX, imageY);
             widgetPanel.setSize(viewWidth, viewHeight);
 
-            ogreWindow.OgreRenderWindow.update();
+            ogreWindow.OgreRenderTarget.update();
         }
 
         public void Dispose()
@@ -102,7 +102,7 @@ namespace Medical.Controller
         {
             progressBar.Position = position;
             statusText.Caption = status;
-            ogreWindow.OgreRenderWindow.update();
+            ogreWindow.OgreRenderTarget.update();
         }
 
         public void hide()

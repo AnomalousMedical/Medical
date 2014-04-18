@@ -210,6 +210,7 @@
     <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\Resources\ZipResourceProvider.cs" />
     <Compile Include="Controller\SceneViews\CameraPositioner.cs" />
+    <Compile Include="Controller\SceneViews\TextureSceneView.cs" />
     <Compile Include="Controller\Server\Mime.cs" />
     <Compile Include="Controller\Server\UploadFileInfo.cs" />
     <Compile Include="Controller\SharePluginController.cs" />

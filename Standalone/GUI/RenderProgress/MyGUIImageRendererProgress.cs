@@ -42,7 +42,7 @@ namespace Medical.GUI
             {
                 rendererProgress.Position = percentage;
                 statusText.Caption = status;
-                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.update();
+                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget.update();
             }
         }
 

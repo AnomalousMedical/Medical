@@ -124,7 +124,7 @@ namespace Medical
 
             behaviorErrorManager = new BehaviorErrorManager();
 
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.DeactivateOnFocusChange = false;
+            ((RenderWindow)OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget).DeactivateOnFocusChange = false;
 
             OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "AnomalousCore", true);
             OgreResourceGroupManager.getInstance().initializeResourceGroup("AnomalousCore");
@@ -203,7 +203,7 @@ namespace Medical
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
-            sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow); 
+            sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget); 
 
             //Watermark
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
@@ -301,7 +301,7 @@ namespace Medical
         public void createGUI(LayoutChain layoutChain)
         {
             //GUI
-            guiManager.createGUI(mdiLayout, layoutChain);
+            guiManager.createGUI(mdiLayout, layoutChain, mainWindow);
             guiManager.giveGUIsToTimelineController(timelineController);
         }
 

@@ -108,10 +108,6 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(RocketInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(SoundPluginInterface).Assembly);
             pluginManager.initializePlugins();
-            if(mainForm == null)
-            {
-                mainForm = pluginManager.RendererPlugin.PrimaryWindow.Handle;
-            }
 
             performanceMetricTimer = pluginManager.PlatformPlugin.createTimer();
             PerformanceMonitor.setupEnabledState(performanceMetricTimer);
@@ -139,7 +135,7 @@ namespace Medical
             medicalScene = new MedicalSceneController(pluginManager);
             rocketGuiManager = new RocketGuiManager();
             rocketGuiManager.initialize(pluginManager, eventManager, mainTimer);
-            frameClearManager = new FrameClearManager(OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow);
+            frameClearManager = new FrameClearManager(OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
 
             SoundConfig.initialize(MedicalConfig.ConfigFile);
         }
