@@ -43,6 +43,7 @@ namespace UnitTestPlugin.GUI
 
             scrollView = (ScrollView)window.findWidget("ScrollView");
             buttonGrid = new SingleSelectButtonGrid(scrollView);
+            scrollView.CanvasPositionChanged += scrollView_CanvasPositionChanged;
 
             window.WindowChangedCoord += window_WindowChangedCoord;
 
@@ -53,7 +54,12 @@ namespace UnitTestPlugin.GUI
             Button applyButton = (Button)window.findWidget("ApplyButton");
             applyButton.MouseButtonClick += applyButton_MouseButtonClick;
 
-            Coroutine.Start(renderForce());
+            Coroutine.Start(renderUpdates());
+        }
+
+        void scrollView_CanvasPositionChanged(Widget source, EventArgs e)
+        {
+            determineVisibleItems();
         }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
@@ -76,7 +82,7 @@ namespace UnitTestPlugin.GUI
             base.Dispose();
         }
 
-        private IEnumerator<YieldAction> renderForce()
+        private IEnumerator<YieldAction> renderUpdates()
         {
             int count = 0;
             while(render)
@@ -100,9 +106,11 @@ namespace UnitTestPlugin.GUI
             }
         }
 
+        static int count = 0;
+
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            String textureName = "TestRTT_" + Guid.NewGuid().ToString();
+            String textureName = "TestRTT_" + count++;
             int width = 100;
             int height = 100;
 
@@ -131,11 +139,26 @@ namespace UnitTestPlugin.GUI
             });
 
             buttonGrid.resizeAndLayout(window.ClientWidget.Width);
+            determineVisibleItems();//slow will go over all elements
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
-            buttonGrid.resizeAndLayout(window.ClientWidget.Width);
+            buttonGrid.resizeAndLayout(scrollView.ViewCoord.width);
+            determineVisibleItems();
+        }
+
+        private void determineVisibleItems()
+        {
+            IntCoord viewArea = scrollView.ViewCoord;
+            var canvasPos = scrollView.CanvasPosition;
+            viewArea.left = (int)canvasPos.x;
+            viewArea.top = (int)canvasPos.y;
+            Logging.Log.Debug("Canvas Position Changed {0}", viewArea);
+            foreach (var item in buttonGrid.Items)
+            {
+                Logging.Log.Debug("{0} {1} {2}", item.Caption, item.Coord, viewArea.overlaps(item.Coord) ? "onscreen" : "offscreen");
+            }
         }
     }
 }
