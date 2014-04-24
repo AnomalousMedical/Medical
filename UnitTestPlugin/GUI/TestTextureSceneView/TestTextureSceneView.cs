@@ -16,7 +16,7 @@ namespace UnitTestPlugin.GUI
         private SceneViewController sceneViewController;
         private bool render = true;
         private ButtonGrid buttonGrid;
-        private List<ImageInfo> activeImages = new List<ImageInfo>();
+        private List<TextureSceneView> activeImages = new List<TextureSceneView>();
         private ScrollView scrollView;
 
         private EditBox secondsToSleepEdit;
@@ -25,13 +25,17 @@ namespace UnitTestPlugin.GUI
         private int numImagesToUpdate = 3;
         private double secondsToSleep = 1;
 
-        class ImageInfo
+        private class ButtonGridButtonInfo
         {
-            public String TextureName { get; set; }
+            public LayerState Layers { get; set; }
 
-            public TextureSceneView SceneView { get; set; }
+            public Vector3 Translation { get; set; }
 
-            public ButtonGridItem LayoutContainer { get; set; }
+            public Vector3 LookAt { get; set; }
+
+            public bool Visible { get; set; }
+
+            public TextureSceneView CurrentSceneView { get; set; }
         }
 
         public TestTextureSceneView(SceneViewController sceneViewController)
@@ -74,9 +78,7 @@ namespace UnitTestPlugin.GUI
             buttonGrid.SuppressLayout = true;
             foreach (var info in activeImages)
             {
-                RenderManager.Instance.destroyTexture(info.TextureName);
-                buttonGrid.removeItem(info.LayoutContainer);
-                sceneViewController.destroyWindow(info.SceneView);
+                destroySceneView(info);
             }
             buttonGrid.SuppressLayout = false;
             base.Dispose();
@@ -91,14 +93,14 @@ namespace UnitTestPlugin.GUI
                 {
                     if (count < activeImages.Count)
                     {
-                        activeImages[count++].SceneView.RenderOneFrame = true;
+                        activeImages[count++].RenderOneFrame = true;
                     }
                     else
                     {
                         count = 0;
                         if (activeImages.Count > 0)
                         {
-                            activeImages[count++].SceneView.RenderOneFrame = true;
+                            activeImages[count++].RenderOneFrame = true;
                         }
                     }
                 }
@@ -110,36 +112,21 @@ namespace UnitTestPlugin.GUI
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            String textureName = "TestRTT_" + count++;
-            int width = 100;
-            int height = 100;
-
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            TextureSceneView sceneView = sceneViewController.createTextureSceneView(textureName, activeWindow.Translation, activeWindow.LookAt, width * 2, height * 2);
-
             LayerState layers = new LayerState("");
             layers.captureState();
-            String activeTransaparencyState = TransparencyController.ActiveTransparencyState;
-            TransparencyController.ActiveTransparencyState = sceneView.CurrentTransparencyState;
-            layers.instantlyApply();
-            TransparencyController.ActiveTransparencyState = activeTransaparencyState;
 
-            sceneView.AlwaysRender = false;
-            sceneView.RenderOneFrame = true;
-
-            ButtonGridItem item = buttonGrid.addItem("Main", textureName, textureName);
-            item.ImageBox.setImageTexture(textureName);
-            item.ImageBox.setImageCoord(new IntCoord(0, 0, width * 2, height * 2));
-
-            activeImages.Add(new ImageInfo()
+            ButtonGridItem item = buttonGrid.addItem("Main", count++.ToString());
+            item.UserObject = new ButtonGridButtonInfo()
             {
-                LayoutContainer = item,
-                SceneView = sceneView,
-                TextureName = textureName
-            });
+                Layers = layers,
+                Translation = activeWindow.Translation,
+                LookAt = activeWindow.LookAt,
+                Visible = false
+            };
 
             buttonGrid.resizeAndLayout(window.ClientWidget.Width);
-            determineVisibleItems();//slow will go over all elements
+            determineVisibleItems();
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
@@ -154,11 +141,47 @@ namespace UnitTestPlugin.GUI
             var canvasPos = scrollView.CanvasPosition;
             viewArea.left = (int)canvasPos.x;
             viewArea.top = (int)canvasPos.y;
-            Logging.Log.Debug("Canvas Position Changed {0}", viewArea);
             foreach (var item in buttonGrid.Items)
             {
-                Logging.Log.Debug("{0} {1} {2}", item.Caption, item.Coord, viewArea.overlaps(item.Coord) ? "onscreen" : "offscreen");
+                ButtonGridButtonInfo info = (ButtonGridButtonInfo)item.UserObject;
+                bool overlaps = viewArea.overlaps(item.Coord);
+                if(overlaps != info.Visible)
+                {
+                    info.Visible = overlaps;
+                    if (info.Visible)
+                    {
+                        Logging.Log.Debug("Creating texture for {0}", item.Caption);
+                        String textureName = "TestRTT_" + Guid.NewGuid().ToString();
+                        int width = 100;
+                        int height = 100;
+
+                        TextureSceneView sceneView = sceneViewController.createTextureSceneView(textureName, info.Translation, info.LookAt, width * 2, height * 2);
+                        sceneView.AlwaysRender = false;
+                        sceneView.RenderOneFrame = true;
+
+                        info.Layers.instantlyApplyTo(sceneView.CurrentTransparencyState);
+
+                        item.ImageBox.setImageTexture(textureName);
+                        item.ImageBox.setImageCoord(new IntCoord(0, 0, width * 2, height * 2));
+
+                        activeImages.Add(sceneView);
+                        info.CurrentSceneView = sceneView;
+                    }
+                    else
+                    {
+                        Logging.Log.Debug("Destroying texture for {0}", item.Caption);
+                        destroySceneView(info.CurrentSceneView);
+                        activeImages.Remove(info.CurrentSceneView);
+                        info.CurrentSceneView = null;
+                    }
+                }
             }
+        }
+
+        private void destroySceneView(TextureSceneView info)
+        {
+            RenderManager.Instance.destroyTexture(info.Name);
+            sceneViewController.destroyWindow(info);
         }
     }
 }

@@ -65,6 +65,14 @@ namespace Medical
             }
         }
 
+        public void instantlyApplyTo(String transparencyStateName)
+        {
+            String activeTransaparencyState = TransparencyController.ActiveTransparencyState;
+            TransparencyController.ActiveTransparencyState = transparencyStateName;
+            instantlyApply();
+            TransparencyController.ActiveTransparencyState = activeTransaparencyState;
+        }
+
         public void instantlyApply()
         {
             List<TransparencyInterface> unvisitedInterfaces = new List<TransparencyInterface>(TransparencyController.TransparencyInterfaces);
