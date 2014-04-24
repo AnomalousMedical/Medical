@@ -31,7 +31,6 @@ namespace UnitTestPlugin.GUI
             public ButtonGridButtonInfo()
             {
                 Visible = false;
-                FirstTextureAssignment = true;
             }
 
             public LayerState Layers { get; set; }
@@ -43,8 +42,6 @@ namespace UnitTestPlugin.GUI
             public bool Visible { get; set; }
 
             public PooledSceneView CurrentSceneView { get; set; }
-
-            public bool FirstTextureAssignment { get; set; }
         }
 
         public TestTextureSceneView(SceneViewController sceneViewController)
@@ -168,16 +165,8 @@ namespace UnitTestPlugin.GUI
                         sceneView.SceneView.AlwaysRender = false;
                         sceneView.SceneView.RenderOneFrame = true;
 
-                        if (info.FirstTextureAssignment)
-                        {
-                            item.ImageBox.setImageTexture(sceneView.SceneView.TextureName);
-                            item.ImageBox.setImageCoord(new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
-                            info.FirstTextureAssignment = false;
-                        }
-                        else
-                        {
-                            item.ImageBox.setImageInfo(sceneView.SceneView.TextureName, new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height), new IntSize2((int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
-                        }
+                        item.ImageBox.setImageTexture(sceneView.SceneView.TextureName);
+                        item.ImageBox.setImageCoord(new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
 
                         activeImages.Add(sceneView);
                         info.CurrentSceneView = sceneView;

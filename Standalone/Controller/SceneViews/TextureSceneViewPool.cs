@@ -53,7 +53,12 @@ namespace Medical.Controller
             }
             else
             {
-                pooledView.SceneView.CameraMover.immediatlySetPosition(translation, lookAt);
+                pooledView.SceneView.immediatlySetPosition(new CameraPosition()
+                {
+                    Translation = translation,
+                    LookAt = lookAt,
+                    UseIncludePoint = false
+                });
             }
 
             layers.instantlyApplyTo(pooledView.SceneView.CurrentTransparencyState);
