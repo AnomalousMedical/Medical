@@ -26,8 +26,8 @@ namespace Medical.Controller
         public TextureSceneView(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, int width, int height)
             :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
-            this.Name = name;
-            texture = TextureManager.getInstance().createManual(name, "Rocket", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
+            this.TextureName = name;
+            texture = TextureManager.getInstance().createManual(name, "MyGUI", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
             renderTexture = pixelBuffer.Value.getRenderTarget();
@@ -105,7 +105,23 @@ namespace Medical.Controller
             }
         }
 
-        public String Name { get; private set; }
+        public uint Width
+        {
+            get
+            {
+                return renderTexture.getWidth();
+            }
+        }
+
+        public uint Height
+        {
+            get
+            {
+                return renderTexture.getHeight();
+            }
+        }
+
+        public String TextureName { get; private set; }
 
         void determineRenderingActive()
         {

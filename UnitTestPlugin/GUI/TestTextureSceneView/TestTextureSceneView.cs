@@ -13,10 +13,11 @@ namespace UnitTestPlugin.GUI
 {
     class TestTextureSceneView : MDIDialog
     {
-        private SceneViewController sceneViewController;
         private bool render = true;
         private ButtonGrid buttonGrid;
-        private List<TextureSceneView> activeImages = new List<TextureSceneView>();
+        private List<PooledSceneView> activeImages = new List<PooledSceneView>();
+        private TextureSceneViewPool texturePool;
+        private SceneViewController sceneViewController;
         private ScrollView scrollView;
 
         private EditBox secondsToSleepEdit;
@@ -27,6 +28,12 @@ namespace UnitTestPlugin.GUI
 
         private class ButtonGridButtonInfo
         {
+            public ButtonGridButtonInfo()
+            {
+                Visible = false;
+                FirstTextureAssignment = true;
+            }
+
             public LayerState Layers { get; set; }
 
             public Vector3 Translation { get; set; }
@@ -35,13 +42,18 @@ namespace UnitTestPlugin.GUI
 
             public bool Visible { get; set; }
 
-            public TextureSceneView CurrentSceneView { get; set; }
+            public PooledSceneView CurrentSceneView { get; set; }
+
+            public bool FirstTextureAssignment { get; set; }
         }
 
         public TestTextureSceneView(SceneViewController sceneViewController)
             : base("UnitTestPlugin.GUI.TestTextureSceneView.TestTextureSceneView.layout")
         {
             this.sceneViewController = sceneViewController;
+            this.texturePool = new TextureSceneViewPool(sceneViewController, "TestRTT_", new IntSize2(200, 200));
+            texturePool.SceneViewDestroyed += texturePool_SceneViewDestroyed;
+
             Button addButton = (Button)window.findWidget("AddButton");
             addButton.MouseButtonClick += addButton_MouseButtonClick;
 
@@ -78,9 +90,10 @@ namespace UnitTestPlugin.GUI
             buttonGrid.SuppressLayout = true;
             foreach (var info in activeImages)
             {
-                destroySceneView(info);
+                info.finished();
             }
             buttonGrid.SuppressLayout = false;
+            texturePool.Dispose();
             base.Dispose();
         }
 
@@ -93,14 +106,14 @@ namespace UnitTestPlugin.GUI
                 {
                     if (count < activeImages.Count)
                     {
-                        activeImages[count++].RenderOneFrame = true;
+                        activeImages[count++].SceneView.RenderOneFrame = true;
                     }
                     else
                     {
                         count = 0;
                         if (activeImages.Count > 0)
                         {
-                            activeImages[count++].RenderOneFrame = true;
+                            activeImages[count++].SceneView.RenderOneFrame = true;
                         }
                     }
                 }
@@ -151,18 +164,20 @@ namespace UnitTestPlugin.GUI
                     if (info.Visible)
                     {
                         Logging.Log.Debug("Creating texture for {0}", item.Caption);
-                        String textureName = "TestRTT_" + Guid.NewGuid().ToString();
-                        int width = 100;
-                        int height = 100;
+                        var sceneView = texturePool.getSceneView(info.Translation, info.LookAt, info.Layers);
+                        sceneView.SceneView.AlwaysRender = false;
+                        sceneView.SceneView.RenderOneFrame = true;
 
-                        TextureSceneView sceneView = sceneViewController.createTextureSceneView(textureName, info.Translation, info.LookAt, width * 2, height * 2);
-                        sceneView.AlwaysRender = false;
-                        sceneView.RenderOneFrame = true;
-
-                        info.Layers.instantlyApplyTo(sceneView.CurrentTransparencyState);
-
-                        item.ImageBox.setImageTexture(textureName);
-                        item.ImageBox.setImageCoord(new IntCoord(0, 0, width * 2, height * 2));
+                        if (info.FirstTextureAssignment)
+                        {
+                            item.ImageBox.setImageTexture(sceneView.SceneView.TextureName);
+                            item.ImageBox.setImageCoord(new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
+                            info.FirstTextureAssignment = false;
+                        }
+                        else
+                        {
+                            item.ImageBox.setImageInfo(sceneView.SceneView.TextureName, new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height), new IntSize2((int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
+                        }
 
                         activeImages.Add(sceneView);
                         info.CurrentSceneView = sceneView;
@@ -170,7 +185,7 @@ namespace UnitTestPlugin.GUI
                     else
                     {
                         Logging.Log.Debug("Destroying texture for {0}", item.Caption);
-                        destroySceneView(info.CurrentSceneView);
+                        info.CurrentSceneView.finished();
                         activeImages.Remove(info.CurrentSceneView);
                         info.CurrentSceneView = null;
                     }
@@ -178,10 +193,9 @@ namespace UnitTestPlugin.GUI
             }
         }
 
-        private void destroySceneView(TextureSceneView info)
+        void texturePool_SceneViewDestroyed(PooledSceneView sceneView)
         {
-            RenderManager.Instance.destroyTexture(info.Name);
-            sceneViewController.destroyWindow(info);
+            RenderManager.Instance.destroyTexture(sceneView.SceneView.Name);
         }
     }
 }
