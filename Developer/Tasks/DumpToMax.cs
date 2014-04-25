@@ -2,6 +2,8 @@
 using Engine.ObjectManagement;
 using Medical;
 using Medical.GUI;
+using OgrePlugin;
+using OgreWrapper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +25,8 @@ namespace Developer
 
         public override void clicked(TaskPositioner taskPositioner)
         {
+            HashSet<String> foundMeshes = new HashSet<string>();
+
             FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Dump Positions to 3ds Max", Environment.CurrentDirectory, "AnomalousMedicalSimObjects.ms", "MaxScript (*.ms)|*.ms");
             saveDialog.showModal((result, path) =>
             {
@@ -33,24 +37,76 @@ namespace Developer
                         stream.Write(ScriptBegin);
                         foreach(SimObject simObject in medicalController.SimObjects)
                         {
+                            String meshName = findMeshName(simObject);
+                            if(foundMeshes.Contains(meshName))
+                            {
+                                meshName = null; //Already found
+                            }
+                            else
+                            {
+                                foundMeshes.Add(meshName);
+                            }
 
-                            stream.WriteLine("trans.add \"{0}\" \"point3 {1} {2} {3}\"", simObject.Name, 
-                                simObject.Translation.x, 
-                                simObject.Translation.z * -1.0f, 
+                            String name = simObject.Name;
+
+                            String transStr = String.Format("point3 {0} {1} {2}",
+                                simObject.Translation.x,
+                                simObject.Translation.z * -1.0f,
                                 simObject.Translation.y);
 
-                            Vector3 euler = simObject.Rotation.getEuler();
+                            stream.WriteLine("trans.add \"{0}\" \"{1}\"", name, transStr);
+                            if(meshName != null)
+                            {
+                                stream.WriteLine("meshTrans.add \"{0}\" \"{1}\"", meshName, transStr);
+                            }
 
-                            stream.WriteLine("rots.add \"{0}\" \"eulerAngles {1} {2} {3}\"", simObject.Name,
+                            Vector3 euler = simObject.Rotation.getEuler();
+                            String rotString = String.Format("eulerAngles {0} {1} {2}", 
                                 (Degree)new Radian(euler.z),
                                 (Degree)new Radian(euler.y * -1.0f),
                                 (Degree)new Radian(euler.x));
+
+                            stream.WriteLine("rots.add \"{0}\" \"{1}\"", name, rotString);
+                            if(meshName != null)
+                            {
+                                stream.WriteLine("meshRots.add \"{0}\" \"{1}\"", meshName, rotString);
+                            }
                         }
                         stream.Write(scriptEnd);
                     }
                 }
                 fireItemClosed();
             });
+        }
+
+        private static String findMeshName(SimObject simObject)
+        {
+            String name = null;
+            foreach (var element in simObject.getElementIter())
+            {
+                SceneNodeElement sceneElement = element as SceneNodeElement;
+                if (sceneElement != null)
+                {
+                    foreach (var movable in sceneElement.MovableObjects)
+                    {
+                        Entity entity = movable as Entity;
+                        if (entity != null)
+                        {
+                            using (MeshPtr mesh = entity.getMesh())
+                            {
+                                String meshName = mesh.Value.getName();
+                                if (meshName != null)
+                                {
+                                    name = Path.GetFileNameWithoutExtension(meshName);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+            return name;
         }
 
         public override bool Active
@@ -102,13 +158,25 @@ namespace Developer
 global trans = mxsHashTable()
 global rots = mxsHashTable()
 
+global meshTrans = mxsHashTable()
+global meshRots = mxsHashTable()
+
 function UpdateLocation meshObj = 
 (
-	 if trans.containsKey meshObj.Name then 
+	if trans.containsKey meshObj.Name then 
 	(
 		command = trans.lookup meshObj.Name
-		meshObj.pos = execute command
 	)
+
+	else if meshTrans.containsKey meshObj.Name then 
+	(
+		command = meshTrans.lookup meshObj.Name
+	)
+
+    if command != undefined then
+    (
+        meshObj.pos = execute command
+    )
 )
 
 function UpdateRotation meshObj = 
@@ -116,6 +184,15 @@ function UpdateRotation meshObj =
 	if rots.containsKey meshObj.Name then 
 	(
  		command = rots.lookup meshObj.Name
+    )
+
+	else if meshRots.containsKey meshObj.Name then 
+	(
+ 		command = meshRots.lookup meshObj.Name
+    )
+
+    if command != undefined then
+    (
  		eulerRot = execute command
 
 		local translateMat = transMatrix meshObj.transform.pos
