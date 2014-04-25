@@ -68,13 +68,13 @@ namespace Medical
                 {
                     collidingTeeth.Add(otherTooth);
                 }
-            }
-            else
-            {
-                Splint splint = otherBody.Owner.getElement(Splint.SplintBehaviorName) as Splint;
-                if (splint != null)
+                else
                 {
-                    collidingSplints.Add(splint);
+                    Splint splint = otherBody.Owner.getElement(Splint.SplintBehaviorName) as Splint;
+                    if (splint != null)
+                    {
+                        collidingSplints.Add(splint);
+                    }
                 }
             }
         }
