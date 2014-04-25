@@ -23,6 +23,10 @@ namespace Medical
         private int numImagesToUpdate = 3;
         private double secondsToSleep = 1;
 
+        /// <summary>
+        /// This event is fired when the actual thumbnail render to texture is destroyed. If you need to cleanup something
+        /// on your end, do it here.
+        /// </summary>
         public event Action<LiveThumbnailController, PooledSceneView> ThumbnailDestroyed;
 
         public LiveThumbnailController(String baseName, IntSize2 size, SceneViewController sceneViewController)
@@ -64,6 +68,11 @@ namespace Medical
             });
         }
 
+        public void removeThumbnailHost(LiveThumbnailHost host)
+        {
+            returnThumbToPool(host._HostInfo);
+        }
+
         /// <summary>
         /// Determine what is visible. Call this anytime your visible area displaying thumbnails changes.
         /// </summary>
@@ -78,32 +87,42 @@ namespace Medical
                     info.Visible = overlaps;
                     if (info.Visible)
                     {
-                        var sceneView = texturePool.getSceneView(info.Translation, info.LookAt, info.Layers);
-                        sceneView.SceneView.AlwaysRender = false;
-                        sceneView.SceneView.RenderOneFrame = true;
-
-                        info.Host.setTextureInfo(sceneView.SceneView.TextureName, new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
-
-                        activeImages.Add(sceneView);
-                        info.CurrentSceneView = sceneView;
-
-                        info.WindowCreatedCallback = (window) =>
-                        {
-                            setupWindowLayers(window, info.Layers);
-                        };
-
-                        sceneView.SceneView.CameraCreated += info.WindowCreatedCallback;
+                        createLiveThumb(info);
                     }
                     else
                     {
-                        info.CurrentSceneView.SceneView.CameraCreated -= info.WindowCreatedCallback;
-                        info.WindowCreatedCallback = null;
-                        activeImages.Remove(info.CurrentSceneView);
-                        info.CurrentSceneView.finished();
-                        info.CurrentSceneView = null;
+                        returnThumbToPool(info);
                     }
                 }
             }
+        }
+
+        private void createLiveThumb(LiveThumbnailHostInfo info)
+        {
+            var sceneView = texturePool.getSceneView(info.Translation, info.LookAt, info.Layers);
+            sceneView.SceneView.AlwaysRender = false;
+            sceneView.SceneView.RenderOneFrame = true;
+
+            info.Host.setTextureInfo(sceneView.SceneView.TextureName, new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
+
+            activeImages.Add(sceneView);
+            info.CurrentSceneView = sceneView;
+
+            info.WindowCreatedCallback = (window) =>
+            {
+                setupWindowLayers(window, info.Layers);
+            };
+
+            sceneView.SceneView.CameraCreated += info.WindowCreatedCallback;
+        }
+
+        private void returnThumbToPool(LiveThumbnailHostInfo info)
+        {
+            info.CurrentSceneView.SceneView.CameraCreated -= info.WindowCreatedCallback;
+            info.WindowCreatedCallback = null;
+            activeImages.Remove(info.CurrentSceneView);
+            info.CurrentSceneView.finished();
+            info.CurrentSceneView = null;
         }
 
         /// <summary>
@@ -171,28 +190,6 @@ namespace Medical
             {
                 ThumbnailDestroyed.Invoke(this, sceneView);
             }
-        }
-
-        private class LiveThumbnailHostInfo
-        {
-            public LiveThumbnailHostInfo()
-            {
-                Visible = false;
-            }
-
-            public LayerState Layers { get; set; }
-
-            public Vector3 Translation { get; set; }
-
-            public Vector3 LookAt { get; set; }
-
-            public bool Visible { get; set; }
-
-            public PooledSceneView CurrentSceneView { get; set; }
-
-            public SceneViewWindowEvent WindowCreatedCallback { get; set; }
-
-            public LiveThumbnailHost Host { get; set; }
         }
     }
 }

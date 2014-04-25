@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public interface LiveThumbnailHost
+    public abstract class LiveThumbnailHost
     {
-        IntCoord Coord { get; }
+        public abstract IntCoord Coord { get; }
 
-        void setTextureInfo(String name, IntCoord coord);
+        public abstract void setTextureInfo(String name, IntCoord coord);
+
+        internal LiveThumbnailHostInfo _HostInfo { get; set; }
     }
 }

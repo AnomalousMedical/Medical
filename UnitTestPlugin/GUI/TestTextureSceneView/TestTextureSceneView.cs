@@ -114,7 +114,7 @@ namespace UnitTestPlugin.GUI
                 this.item = item;
             }
 
-            public IntCoord Coord
+            public override IntCoord Coord
             {
                 get
                 {
@@ -122,7 +122,7 @@ namespace UnitTestPlugin.GUI
                 }
             }
 
-            public void setTextureInfo(string name, IntCoord coord)
+            public override void setTextureInfo(string name, IntCoord coord)
             {
                 item.ImageBox.setImageTexture(name);
                 item.ImageBox.setImageCoord(coord);
