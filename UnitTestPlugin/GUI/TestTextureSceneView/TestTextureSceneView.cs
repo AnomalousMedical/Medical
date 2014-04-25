@@ -13,45 +13,20 @@ namespace UnitTestPlugin.GUI
 {
     class TestTextureSceneView : MDIDialog
     {
-        private bool render = true;
         private ButtonGrid buttonGrid;
-        private List<PooledSceneView> activeImages = new List<PooledSceneView>();
-        private TextureSceneViewPool texturePool;
-        private SceneViewController sceneViewController;
         private ScrollView scrollView;
 
         private EditBox secondsToSleepEdit;
         private EditBox numToUpdateEdit;
 
-        private int numImagesToUpdate = 3;
-        private double secondsToSleep = 1;
-
-        private class ButtonGridButtonInfo
-        {
-            public ButtonGridButtonInfo()
-            {
-                Visible = false;
-            }
-
-            public LayerState Layers { get; set; }
-
-            public Vector3 Translation { get; set; }
-
-            public Vector3 LookAt { get; set; }
-
-            public bool Visible { get; set; }
-
-            public PooledSceneView CurrentSceneView { get; set; }
-
-            public SceneViewWindowEvent WindowCreatedCallback { get; set; }
-        }
+        private LiveThumbnailController liveThumbnailController;
+        private int count = 0;
 
         public TestTextureSceneView(SceneViewController sceneViewController)
             : base("UnitTestPlugin.GUI.TestTextureSceneView.TestTextureSceneView.layout")
         {
-            this.sceneViewController = sceneViewController;
-            this.texturePool = new TextureSceneViewPool(sceneViewController, "TestRTT_", new IntSize2(200, 200));
-            texturePool.SceneViewDestroyed += texturePool_SceneViewDestroyed;
+            liveThumbnailController = new LiveThumbnailController("TestRTT_", new IntSize2(200, 200), sceneViewController);
+            liveThumbnailController.ThumbnailDestroyed += liveThumbnailController_ThumbnailDestroyed;
 
             Button addButton = (Button)window.findWidget("AddButton");
             addButton.MouseButtonClick += addButton_MouseButtonClick;
@@ -63,144 +38,95 @@ namespace UnitTestPlugin.GUI
             window.WindowChangedCoord += window_WindowChangedCoord;
 
             numToUpdateEdit = (EditBox)window.findWidget("NumToUpdate");
-            numToUpdateEdit.Caption = numImagesToUpdate.ToString();
+            numToUpdateEdit.Caption = liveThumbnailController.NumImagesToUpdate.ToString();
             secondsToSleepEdit = (EditBox)window.findWidget("SecondsToSleep");
-            secondsToSleepEdit.Caption = secondsToSleep.ToString();
+            secondsToSleepEdit.Caption = liveThumbnailController.SecondsToSleep.ToString();
             Button applyButton = (Button)window.findWidget("ApplyButton");
             applyButton.MouseButtonClick += applyButton_MouseButtonClick;
-
-            Coroutine.Start(renderUpdates());
-        }
-
-        void scrollView_CanvasPositionChanged(Widget source, EventArgs e)
-        {
-            determineVisibleItems();
-        }
-
-        void applyButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            int.TryParse(numToUpdateEdit.Caption, out numImagesToUpdate);
-            double.TryParse(secondsToSleepEdit.Caption, out secondsToSleep);
         }
 
         public override void Dispose()
         {
-            render = false;
-            buttonGrid.SuppressLayout = true;
-            foreach (var info in activeImages)
-            {
-                info.finished();
-            }
-            buttonGrid.SuppressLayout = false;
-            texturePool.Dispose();
+            liveThumbnailController.Dispose();
+            buttonGrid.Dispose();
             base.Dispose();
         }
 
-        private IEnumerator<YieldAction> renderUpdates()
+        void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            int count = 0;
-            while(render)
+            int numImagesToUpdate;
+            if (int.TryParse(numToUpdateEdit.Caption, out numImagesToUpdate))
             {
-                for (int i = 0; i < numImagesToUpdate; ++i)
-                {
-                    if (count < activeImages.Count)
-                    {
-                        activeImages[count++].SceneView.RenderOneFrame = true;
-                    }
-                    else
-                    {
-                        count = 0;
-                        if (activeImages.Count > 0)
-                        {
-                            activeImages[count++].SceneView.RenderOneFrame = true;
-                        }
-                    }
-                }
-                yield return Coroutine.Wait(secondsToSleep);
+                liveThumbnailController.NumImagesToUpdate = numImagesToUpdate;
+            }
+            double secondsToSleep;
+            if (double.TryParse(secondsToSleepEdit.Caption, out secondsToSleep))
+            {
+                liveThumbnailController.SecondsToSleep = secondsToSleep;
             }
         }
 
-        static int count = 0;
-
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            LayerState layers = new LayerState("");
-            layers.captureState();
-
             ButtonGridItem item = buttonGrid.addItem("Main", count++.ToString());
-            item.UserObject = new ButtonGridButtonInfo()
-            {
-                Layers = layers,
-                Translation = activeWindow.Translation,
-                LookAt = activeWindow.LookAt,
-                Visible = false
-            };
-
+            LiveThumbnailHost host = new ButtonGridItemLiveThumbnailHost(item);
+            item.UserObject = host;
+            liveThumbnailController.addThumbnailHost(host);
             buttonGrid.resizeAndLayout(window.ClientWidget.Width);
-            determineVisibleItems();
+            liveThumbnailController.determineVisibleHosts(VisibleArea);
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
             buttonGrid.resizeAndLayout(scrollView.ViewCoord.width);
-            determineVisibleItems();
+            liveThumbnailController.determineVisibleHosts(VisibleArea);
         }
 
-        private void determineVisibleItems()
+        void liveThumbnailController_ThumbnailDestroyed(LiveThumbnailController thumbController, PooledSceneView sceneView)
         {
-            IntCoord viewArea = scrollView.ViewCoord;
-            var canvasPos = scrollView.CanvasPosition;
-            viewArea.left = (int)canvasPos.x;
-            viewArea.top = (int)canvasPos.y;
-            foreach (var item in buttonGrid.Items)
+            RenderManager.Instance.destroyTexture(sceneView.SceneView.Name);
+        }
+
+        void scrollView_CanvasPositionChanged(Widget source, EventArgs e)
+        {
+            liveThumbnailController.determineVisibleHosts(VisibleArea);
+        }
+
+        private IntCoord VisibleArea
+        {
+            get
             {
-                ButtonGridButtonInfo info = (ButtonGridButtonInfo)item.UserObject;
-                bool overlaps = viewArea.overlaps(item.Coord);
-                if(overlaps != info.Visible)
-                {
-                    info.Visible = overlaps;
-                    if (info.Visible)
-                    {
-                        Logging.Log.Debug("Creating texture for {0}", item.Caption);
-                        var sceneView = texturePool.getSceneView(info.Translation, info.LookAt, info.Layers);
-                        sceneView.SceneView.AlwaysRender = false;
-                        sceneView.SceneView.RenderOneFrame = true;
+                IntCoord viewArea = scrollView.ViewCoord;
+                var canvasPos = scrollView.CanvasPosition;
+                viewArea.left = (int)canvasPos.x;
+                viewArea.top = (int)canvasPos.y;
 
-                        item.ImageBox.setImageTexture(sceneView.SceneView.TextureName);
-                        item.ImageBox.setImageCoord(new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
-
-                        activeImages.Add(sceneView);
-                        info.CurrentSceneView = sceneView;
-
-                        info.WindowCreatedCallback = (window) =>
-                        {
-                            setupWindowLayers(window, info.Layers);
-                        };
-
-                        sceneView.SceneView.CameraCreated += info.WindowCreatedCallback;
-                    }
-                    else
-                    {
-                        Logging.Log.Debug("Destroying texture for {0}", item.Caption);
-                        info.CurrentSceneView.SceneView.CameraCreated -= info.WindowCreatedCallback;
-                        info.WindowCreatedCallback = null;
-                        activeImages.Remove(info.CurrentSceneView);
-                        info.CurrentSceneView.finished();
-                        info.CurrentSceneView = null;
-                    }
-                }
+                return viewArea;
             }
         }
 
-        void setupWindowLayers(SceneViewWindow window, LayerState layers)
+        class ButtonGridItemLiveThumbnailHost : LiveThumbnailHost
         {
-            layers.instantlyApplyTo(window.CurrentTransparencyState);
-        }
+            private ButtonGridItem item;
 
-        void texturePool_SceneViewDestroyed(PooledSceneView sceneView)
-        {
-            RenderManager.Instance.destroyTexture(sceneView.SceneView.Name);
+            public ButtonGridItemLiveThumbnailHost(ButtonGridItem item)
+            {
+                this.item = item;
+            }
+
+            public IntCoord Coord
+            {
+                get
+                {
+                    return item.Coord;
+                }
+            }
+
+            public void setTextureInfo(string name, IntCoord coord)
+            {
+                item.ImageBox.setImageTexture(name);
+                item.ImageBox.setImageCoord(coord);
+            }
         }
     }
 }
