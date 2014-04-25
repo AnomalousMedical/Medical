@@ -1,25 +1,28 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="78 101 406 358" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="78 101 620 358" layer="Overlapped">
         <Property key="Caption" value="Render Scene to Texture"/>
         <Widget type="Button" skin="Button" position="0 4 74 26" name="AddButton">
             <Property key="Caption" value="Add"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position_real="0 0.0984615 1 0.895385" align="Stretch" name="ScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position_real="0 0.0953846 1 0.895385" align="Stretch" name="ScrollView">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position="117 4 74 26" name="NumToUpdate"/>
-        <Widget type="EditBox" skin="EditBox" position="240 4 74 26" name="SecondsToSleep"/>
-        <Widget type="Button" skin="Button" position="320 5 74 24" name="ApplyButton">
+        <Widget type="EditBox" skin="EditBox" position="197 4 74 26" name="NumToUpdate"/>
+        <Widget type="EditBox" skin="EditBox" position="360 4 74 26" name="SecondsToSleep"/>
+        <Widget type="Button" skin="Button" position="435 5 74 24" name="ApplyButton">
             <Property key="Caption" value="Apply"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="198 8 38 21">
+        <Widget type="TextBox" skin="TextBox" position="270 8 38 21">
             <Property key="Caption" value="Delay"/>
             <Property key="TextColour" value="0 0 0"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="83 6 28 23">
+        <Widget type="TextBox" skin="TextBox" position="168 6 28 23">
             <Property key="Caption" value="Num"/>
             <Property key="TextColour" value="0 0 0"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="78 4 74 26" name="RemoveButton">
+            <Property key="Caption" value="Remove"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

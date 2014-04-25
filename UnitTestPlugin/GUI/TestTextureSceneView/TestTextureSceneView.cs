@@ -13,7 +13,7 @@ namespace UnitTestPlugin.GUI
 {
     class TestTextureSceneView : MDIDialog
     {
-        private ButtonGrid buttonGrid;
+        private SingleSelectButtonGrid buttonGrid;
         private ScrollView scrollView;
 
         private EditBox secondsToSleepEdit;
@@ -30,6 +30,9 @@ namespace UnitTestPlugin.GUI
 
             Button addButton = (Button)window.findWidget("AddButton");
             addButton.MouseButtonClick += addButton_MouseButtonClick;
+
+            Button removeButton = (Button)window.findWidget("RemoveButton");
+            removeButton.MouseButtonClick +=removeButton_MouseButtonClick;
 
             scrollView = (ScrollView)window.findWidget("ScrollView");
             buttonGrid = new SingleSelectButtonGrid(scrollView);
@@ -74,6 +77,17 @@ namespace UnitTestPlugin.GUI
             liveThumbnailController.addThumbnailHost(host);
             buttonGrid.resizeAndLayout(window.ClientWidget.Width);
             liveThumbnailController.determineVisibleHosts(VisibleArea);
+        }
+
+        void removeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            var selectedItem = buttonGrid.SelectedItem;
+            if (selectedItem != null)
+            {
+                liveThumbnailController.removeThumbnailHost((LiveThumbnailHost)selectedItem.UserObject);
+                buttonGrid.removeItem(selectedItem);
+                liveThumbnailController.determineVisibleHosts(VisibleArea);
+            }
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)

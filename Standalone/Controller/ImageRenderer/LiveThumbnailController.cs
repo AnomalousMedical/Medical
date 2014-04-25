@@ -49,7 +49,8 @@ namespace Medical
         }
 
         /// <summary>
-        /// Add a thumbnail host to be tracked by this controller.
+        /// Add a thumbnail host to be tracked by this controller. Note that you will have to call determineVisibleHosts to get
+        /// it to actually have a thumbnail.
         /// </summary>
         /// <param name="host"></param>
         public void addThumbnailHost(LiveThumbnailHost host)
@@ -58,19 +59,31 @@ namespace Medical
             LayerState layers = new LayerState("");
             layers.captureState();
 
-            thumbnailHosts.Add(new LiveThumbnailHostInfo()
+            host._HostInfo = new LiveThumbnailHostInfo()
             {
                 Host = host,
                 Layers = layers,
                 Translation = activeWindow.Translation,
                 LookAt = activeWindow.LookAt,
                 Visible = false,
-            });
+            };
+
+            thumbnailHosts.Add(host._HostInfo);
         }
 
+        /// <summary>
+        /// Remove a thumbnail host from tracking by this controller.
+        /// </summary>
+        /// <param name="host"></param>
         public void removeThumbnailHost(LiveThumbnailHost host)
         {
-            returnThumbToPool(host._HostInfo);
+            var hostInfo = host._HostInfo;
+            if (hostInfo.Visible)
+            {
+                returnThumbToPool(hostInfo);
+            }
+            thumbnailHosts.Remove(hostInfo);
+            host._HostInfo = null;
         }
 
         /// <summary>
