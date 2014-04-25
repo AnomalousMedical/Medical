@@ -24,7 +24,7 @@ namespace Developer
             {
                 if (result == NativeDialogResult.OK)
                 {
-                    using (Stream stream = File.OpenWrite(path))
+                    using (Stream stream = File.Open(path, FileMode.Create, FileAccess.Write))
                     {
                         GpuProgramManager.Instance.saveMicrocodeCache(stream);
                     }

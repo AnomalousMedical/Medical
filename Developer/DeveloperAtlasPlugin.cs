@@ -100,6 +100,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
             taskController.addTask(libRocketDebugger);
             taskController.addTask(new SaveMicrocodeCacheTask());
+            taskController.addTask(new DumpToMax(standaloneController.MedicalController));
             changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
             taskController.addTask(changeRenderingMode);
 

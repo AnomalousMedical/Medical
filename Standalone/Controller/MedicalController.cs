@@ -332,6 +332,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<SimObjectBase> SimObjects
+        {
+            get
+            {
+                return medicalScene.SimObjects;
+            }
+        }
+
         public String CurrentSceneFile
         {
             get

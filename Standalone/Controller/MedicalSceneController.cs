@@ -119,5 +119,13 @@ namespace Medical
                 return currentScene;
             }
         }
+
+        public IEnumerable<SimObjectBase> SimObjects
+        {
+            get
+            {
+                return currentSimObjects.SimObjects;
+            }
+        }
     }
 }
