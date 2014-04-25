@@ -120,6 +120,10 @@ namespace Medical.Controller
         {
             if (sceneView != null)
             {
+                if (CameraDestroyed != null)
+                {
+                    CameraDestroyed.Invoke(this);
+                }
                 --zOffset;
                 Log.Info("Destroying SceneView for {0}.", name);
                 CameraResolver.removeMotionValidator(this);
@@ -128,10 +132,6 @@ namespace Medical.Controller
                 cameraMover.setCamera(null);
                 window.destroySceneView(sceneView);
                 sceneView = null;
-                if (CameraDestroyed != null)
-                {
-                    CameraDestroyed.Invoke(this);
-                }
             }
         }
 

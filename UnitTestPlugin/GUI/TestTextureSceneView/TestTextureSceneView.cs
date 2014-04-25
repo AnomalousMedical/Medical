@@ -42,6 +42,8 @@ namespace UnitTestPlugin.GUI
             public bool Visible { get; set; }
 
             public PooledSceneView CurrentSceneView { get; set; }
+
+            public SceneViewWindowEvent WindowCreatedCallback { get; set; }
         }
 
         public TestTextureSceneView(SceneViewController sceneViewController)
@@ -170,16 +172,30 @@ namespace UnitTestPlugin.GUI
 
                         activeImages.Add(sceneView);
                         info.CurrentSceneView = sceneView;
+
+                        info.WindowCreatedCallback = (window) =>
+                        {
+                            setupWindowLayers(window, info.Layers);
+                        };
+
+                        sceneView.SceneView.CameraCreated += info.WindowCreatedCallback;
                     }
                     else
                     {
                         Logging.Log.Debug("Destroying texture for {0}", item.Caption);
-                        info.CurrentSceneView.finished();
+                        info.CurrentSceneView.SceneView.CameraCreated -= info.WindowCreatedCallback;
+                        info.WindowCreatedCallback = null;
                         activeImages.Remove(info.CurrentSceneView);
+                        info.CurrentSceneView.finished();
                         info.CurrentSceneView = null;
                     }
                 }
             }
+        }
+
+        void setupWindowLayers(SceneViewWindow window, LayerState layers)
+        {
+            layers.instantlyApplyTo(window.CurrentTransparencyState);
         }
 
         void texturePool_SceneViewDestroyed(PooledSceneView sceneView)
