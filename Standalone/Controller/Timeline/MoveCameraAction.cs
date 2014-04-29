@@ -100,13 +100,6 @@ namespace Medical
                         LookAt = CameraPosition.LookAt
                     };
                     window.immediatlySetPosition(immediatePos);
-
-                    //Its weird that you have to do this, but the position won't visibly update if you don't.
-                    CameraPosition cameraPosition = new CameraPosition(CameraPosition)
-                    {
-                        Translation = finalTrans,
-                    };
-                    window.setPosition(cameraPosition, 0.001f);
                 }
             }
         }

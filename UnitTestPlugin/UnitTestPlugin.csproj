@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GUI\TestSoundRecord\TestSoundRecord.cs" />
+    <Compile Include="GUI\TestTextureSceneView\ButtonGridLiveThumbnailController.cs" />
     <Compile Include="GUI\TestTextureSceneView\TestTextureSceneView.cs" />
     <Compile Include="UnitTestAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\TestImageAtlas\TestImageAtlas.cs" />
