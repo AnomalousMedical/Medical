@@ -58,6 +58,10 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            if(lockedFeatureImage != null)
+            {
+                Gui.Instance.destroyWidget(lockedFeatureImage);
+            }
             bookmarksController.BookmarkAdded -= bookmarksController_BookmarkAdded;
             bookmarksController.BookmarkRemoved -= bookmarksController_BookmarkRemoved;
             bookmarksController.PremiumBookmarksChanged -= bookmarksController_PremiumBookmarksChanged;
@@ -169,8 +173,11 @@ namespace Medical.GUI
         {
             if (bookmarksController.PremiumBookmarks)
             {
-                IDisposableUtil.DisposeIfNotNull(lockedFeatureImage);
-                lockedFeatureImage = null;
+                if (lockedFeatureImage != null)
+                {
+                    Gui.Instance.destroyWidget(lockedFeatureImage);
+                    lockedFeatureImage = null;
+                }
             }
             else
             {

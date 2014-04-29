@@ -119,6 +119,7 @@ namespace Medical.GUI
             chooseSceneDialog = new ChooseSceneDialog(guiManager);
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
 
+            standaloneController.AnatomyController.ShowPremiumAnatomyChanged += AnatomyController_ShowPremiumAnatomyChanged;
             anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController, standaloneController.MedicalController.EventManager);
             guiManager.addManagedDialog(anatomyFinder);
 
@@ -411,6 +412,11 @@ namespace Medical.GUI
         {
             taskbar.Visible = true;
             guiManager.pushRootContainer(taskbarLink.Name);
+        }
+
+        void AnatomyController_ShowPremiumAnatomyChanged(AnatomyController source, bool isPremium)
+        {
+            bookmarksController.PremiumBookmarks = isPremium;
         }
     }
 }

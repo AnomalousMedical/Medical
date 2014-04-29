@@ -41,7 +41,10 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            IDisposableUtil.DisposeIfNotNull(lockedFeatureImage);
+            if(lockedFeatureImage != null)
+            {
+                Gui.Instance.destroyWidget(lockedFeatureImage);
+            }
             base.Dispose();
         }
 
@@ -82,8 +85,11 @@ namespace Medical.GUI
         {
             if(anatomyController.ShowPremiumAnatomy)
             {
-                IDisposableUtil.DisposeIfNotNull(lockedFeatureImage);
-                lockedFeatureImage = null;
+                if (lockedFeatureImage != null)
+                {
+                    Gui.Instance.destroyWidget(lockedFeatureImage);
+                    lockedFeatureImage = null;
+                }
             }
             else
             {
