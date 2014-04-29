@@ -186,6 +186,11 @@ namespace Medical
             }
         }
 
+        public void clearThumbs()
+        {
+            imageAtlas.clear();
+        }
+
         public AnatomyPickingMode PickingMode
         {
             get

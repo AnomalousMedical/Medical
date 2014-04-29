@@ -68,6 +68,7 @@ namespace Medical.GUI
 
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
+            anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
 
@@ -470,6 +471,13 @@ namespace Medical.GUI
         private static void showNagMessage()
         {
             MessageBox.show("Placeholder for nag message", "Placeholder", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+        }
+
+        void anatomyController_ShowPremiumAnatomyChanged(AnatomyController source, bool arg)
+        {
+            //This gets rid of the locks, clear thumbs and update the search.
+            anatomyController.clearThumbs();
+            updateSearch();
         }
     }
 }
