@@ -48,6 +48,8 @@ namespace Medical.GUI
 
             widgetSmallSize = new IntSize2(widget.Width, widget.Height - bookmarksListScroll.Height);
             widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height);
+            this.Showing += BookmarksGUI_Showing;
+            this.Hidden += BookmarksGUI_Hidden;
 
             trash = (ImageBox)widget.findWidget("TrashPanel");
             trash.Visible = false;
@@ -61,6 +63,7 @@ namespace Medical.GUI
             toggleAddCustomBookmarks();
 
             liveThumbController = new ButtonGridLiveThumbnailController<Bookmark>("Bookmarks_", new IntSize2(BookmarkThumbSize, BookmarkThumbSize), sceneViewController, bookmarksList, bookmarksListScroll);
+            liveThumbController.AllowThumbUpdate = false;
         }
 
         public override void Dispose()
@@ -220,6 +223,16 @@ namespace Medical.GUI
         void bookmarksController_PremiumBookmarksChanged(BookmarksController obj)
         {
             toggleAddCustomBookmarks();
+        }
+
+        void BookmarksGUI_Showing(object sender, EventArgs e)
+        {
+            liveThumbController.AllowThumbUpdate = true;
+        }
+
+        void BookmarksGUI_Hidden(object sender, EventArgs e)
+        {
+            liveThumbController.AllowThumbUpdate = false;
         }
     }
 }

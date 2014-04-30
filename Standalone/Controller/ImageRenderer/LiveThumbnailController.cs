@@ -18,6 +18,7 @@ namespace Medical
         private TextureSceneViewPool texturePool;
         private SceneViewController sceneViewController;
         private List<LiveThumbnailHostInfo> thumbnailHosts = new List<LiveThumbnailHostInfo>();
+        private bool allowThumbUpdate = true;
 
         /// <summary>
         /// This event is fired when the actual thumbnail render to texture is destroyed. If you need to cleanup something
@@ -106,7 +107,10 @@ namespace Medical
             info.Host.setTextureInfo(sceneView.SceneView.TextureName, new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
 
             activeImages.Add(sceneView);
-            LiveThumbnailUpdater.addSceneView(sceneView.SceneView);
+            if (allowThumbUpdate)
+            {
+                LiveThumbnailUpdater.addSceneView(sceneView.SceneView);
+            }
             info.CurrentSceneView = sceneView;
 
             info.WindowCreatedCallback = (window) =>
@@ -134,6 +138,35 @@ namespace Medical
                 foreach(var hostInfo in thumbnailHosts)
                 {
                     yield return hostInfo.Host;
+                }
+            }
+        }
+
+        public bool AllowThumbUpdate
+        {
+            get
+            {
+                return allowThumbUpdate;
+            }
+            set
+            {
+                if(allowThumbUpdate != value)
+                {
+                    allowThumbUpdate = value;
+                    if(allowThumbUpdate)
+                    {
+                        foreach (var info in activeImages)
+                        {
+                            LiveThumbnailUpdater.addSceneView(info.SceneView);
+                        }
+                    }
+                    else
+                    {
+                        foreach (var info in activeImages)
+                        {
+                            LiveThumbnailUpdater.removeSceneView(info.SceneView);
+                        }
+                    }
                 }
             }
         }

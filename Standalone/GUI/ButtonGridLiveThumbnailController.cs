@@ -110,6 +110,18 @@ namespace Medical
             liveThumbnailController.determineVisibleHosts(VisibleArea);
         }
 
+        public bool AllowThumbUpdate
+        {
+            get
+            {
+                return liveThumbnailController.AllowThumbUpdate;
+            }
+            set
+            {
+                liveThumbnailController.AllowThumbUpdate = value;
+            }
+        }
+
         private IntCoord VisibleArea
         {
             get

@@ -70,7 +70,8 @@ namespace Medical
             int count = 0;
             while (render)
             {
-                for (int i = 0; i < numImagesToUpdate; ++i)
+                int iterations = numImagesToUpdate < activeImages.Count ? numImagesToUpdate : activeImages.Count;
+                for (int i = 0; i < iterations; ++i)
                 {
                     if (count < activeImages.Count)
                     {
