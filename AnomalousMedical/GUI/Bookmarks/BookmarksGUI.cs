@@ -69,6 +69,15 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        public void clearBookmarks()
+        {
+            while(bookmarksList.Count > 0)
+            {
+                Bookmark bookmark = (Bookmark)bookmarksList.getItem(0).UserObject;
+                bookmarksController.removeBookmark(bookmark);
+            }
+        }
+
         protected override void layoutUpdated()
         {
             bookmarksList.resizeAndLayout(widget.Width);

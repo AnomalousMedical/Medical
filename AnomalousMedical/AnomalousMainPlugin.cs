@@ -11,6 +11,9 @@ using System.Reflection;
 using libRocketPlugin;
 using Engine;
 using System.Drawing;
+using System.Xml;
+using Engine.Saving.XMLSaver;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -417,6 +420,30 @@ namespace Medical.GUI
         void AnatomyController_ShowPremiumAnatomyChanged(AnatomyController source, bool isPremium)
         {
             bookmarksController.PremiumBookmarks = isPremium;
+            if(isPremium)
+            {
+                bookmarks.clearBookmarks();
+                //Save the demo bookmarks so the user does not feel like they "lost" them.
+                //This isn't the most efficient way, but it respects the source and destination data
+                //that is setup somewhere else. Also its only really going to copy 5 or 6 things one
+                //time for most users.
+                if(bookmarksController.NonPremiumBookmarksResourceProvider != null)
+                {
+                    foreach (String file in bookmarksController.NonPremiumBookmarksResourceProvider.listFiles("*.bmk"))
+                    {
+                        Bookmark bookmark;
+                        using (Stream stream = bookmarksController.NonPremiumBookmarksResourceProvider.openFile(file))
+                        {
+                            bookmark = SharedXmlSaver.Load<Bookmark>(stream);
+                        }
+                        if (bookmark != null)
+                        {
+                            bookmarksController.saveBookmark(bookmark);
+                        }
+                    }
+                }
+                bookmarksController.loadSavedBookmarks();
+            }
         }
     }
 }

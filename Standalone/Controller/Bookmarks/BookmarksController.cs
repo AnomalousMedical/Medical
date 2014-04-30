@@ -16,6 +16,8 @@ namespace Medical.Controller
 
     public class BookmarksController : IDisposable
     {
+        private const int MaxFileNameTries = 200;
+
         private static XmlSaver xmlSaver = new XmlSaver();
 
         public event BookmarkDelegate BookmarkAdded;
@@ -67,15 +69,33 @@ namespace Medical.Controller
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
             Bookmark bookmark = new Bookmark(name, window.Translation, window.LookAt, layerState);
 
+            saveBookmark(bookmark);
+
+            fireBookmarkAdded(bookmark);
+
+            return bookmark;
+        }
+
+        /// <summary>
+        /// This function just saves a bookmark to disk, it does not fire the bookmark added event.
+        /// </summary>
+        /// <param name="bookmark"></param>
+        public void saveBookmark(Bookmark bookmark)
+        {
             ensureBookmarksFolderExists();
 
-            String fileFormat = Path.Combine(MedicalConfig.BookmarksFolder, name + "{0}.bmk");
+            String fileFormat = Path.Combine(MedicalConfig.BookmarksFolder, bookmark.Name + "{0}.bmk");
             String filename = String.Format(fileFormat, "");
 
             int index = 0;
-            while (File.Exists(filename))
+            int tries = 0;
+            while (File.Exists(filename) && tries < MaxFileNameTries)
             {
                 filename = String.Format(fileFormat, (++index).ToString());
+            }
+            if(tries == MaxFileNameTries)
+            {
+                filename = Path.Combine(MedicalConfig.BookmarksFolder, Guid.NewGuid().ToString() + ".bmk");
             }
 
             bookmark.BackingFile = filename;
@@ -85,10 +105,6 @@ namespace Medical.Controller
                 xmlWriter.Formatting = Formatting.Indented;
                 xmlSaver.saveObject(bookmark, xmlWriter);
             }
-
-            fireBookmarkAdded(bookmark);
-
-            return bookmark;
         }
 
         public void removeBookmark(Bookmark bookmark)
