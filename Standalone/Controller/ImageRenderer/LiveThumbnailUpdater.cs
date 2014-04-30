@@ -11,7 +11,7 @@ namespace Medical
     public static class LiveThumbnailUpdater
     {
         private static bool render = true;
-        private static int numImagesToUpdate = 3;
+        private static int numImagesToUpdate = 1;
         private static double secondsToSleep = 1;
         private static List<TextureSceneView> activeImages = new List<TextureSceneView>();
 
