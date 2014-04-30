@@ -51,6 +51,7 @@ namespace Medical.Controller
         private int zIndexStart;
         private int zOffset = 0;
         private RenderingMode renderingMode = RenderingMode.Solid;
+        private bool clearEveryFrame = false;
 
         public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
         {
@@ -83,7 +84,7 @@ namespace Medical.Controller
 
         public virtual void Dispose()
         {
-            vpBackground.Dispose();
+            IDisposableUtil.DisposeIfNotNull(vpBackground);
             mainTimer.removeFixedUpdateListener(cameraMover);
             TransparencyController.removeTransparencyState(transparencyStateName);
             destroyBorderPanels();
@@ -100,11 +101,14 @@ namespace Medical.Controller
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt, zIndexStart + zOffset++);
             sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
-            vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
+            if (vpBackground != null)
+            {
+                vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
+            }
             sceneView.BackgroundColor = backColor;
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
-            sceneView.ClearEveryFrame = false;
+            sceneView.ClearEveryFrame = clearEveryFrame;
             sceneView.setRenderingMode(renderingMode);
             cameraMover.setCamera(new CameraPositioner(sceneView, NearPlaneWorldPos, FarPlaneWorldPos));
             CameraResolver.addMotionValidator(this);
@@ -216,7 +220,10 @@ namespace Medical.Controller
             if (sceneView != null)
             {
                 sceneView.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
-                vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
+                if (vpBackground != null)
+                {
+                    vpBackground.setDimensions(sceneViewportLocation.x, sceneViewportLocation.y, sceneViewportSize.Width, sceneViewportSize.Height);
+                }
                 cameraMover.processIncludePoint(Camera);
             }
 
@@ -524,6 +531,25 @@ namespace Medical.Controller
                 if (sceneView != null)
                 {
                     sceneView.BackgroundColor = value;
+                }
+            }
+        }
+
+        public bool ClearEveryFrame
+        {
+            get
+            {
+                return clearEveryFrame;
+            }
+            set
+            {
+                if (clearEveryFrame != value)
+                {
+                    clearEveryFrame = value;
+                    if (sceneView != null)
+                    {
+                        sceneView.ClearEveryFrame = value;
+                    }
                 }
             }
         }

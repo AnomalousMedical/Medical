@@ -17,7 +17,7 @@ namespace Medical.Controller
         private RenderTexture renderTexture;
         private RendererWindow rendererWindow;
 
-        private OgreWrapper.PixelFormat ogreTextureFormat = OgreWrapper.PixelFormat.PF_X8R8G8B8;
+        private OgreWrapper.PixelFormat ogreTextureFormat = OgreWrapper.PixelFormat.PF_A8R8G8B8;
 
         private bool renderOneFrame = false;
         private bool alwaysRender = true;
@@ -35,7 +35,9 @@ namespace Medical.Controller
 
             rendererWindow = new ManualWindow(renderTexture);
             this.RendererWindow = rendererWindow;
-            this.createBackground(renderTexture, true);
+            this.ClearEveryFrame = true;
+
+            this.BackColor = new Engine.Color(0, 0, 0, 0);
         }
 
         public override void Dispose()
