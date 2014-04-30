@@ -69,6 +69,7 @@ namespace Medical.GUI
             {
                 Gui.Instance.destroyWidget(lockedFeatureImage);
             }
+            liveThumbController.Dispose();
             bookmarksController.BookmarkAdded -= bookmarksController_BookmarkAdded;
             bookmarksController.BookmarkRemoved -= bookmarksController_BookmarkRemoved;
             bookmarksController.PremiumBookmarksChanged -= bookmarksController_PremiumBookmarksChanged;

@@ -14,14 +14,10 @@ namespace Medical
     /// </summary>
     public class LiveThumbnailController : IDisposable
     {
-        private bool render = true;
         private List<PooledSceneView> activeImages = new List<PooledSceneView>();
         private TextureSceneViewPool texturePool;
         private SceneViewController sceneViewController;
         private List<LiveThumbnailHostInfo> thumbnailHosts = new List<LiveThumbnailHostInfo>();
-
-        private int numImagesToUpdate = 3;
-        private double secondsToSleep = 1;
 
         /// <summary>
         /// This event is fired when the actual thumbnail render to texture is destroyed. If you need to cleanup something
@@ -34,15 +30,13 @@ namespace Medical
             this.sceneViewController = sceneViewController;
             this.texturePool = new TextureSceneViewPool(sceneViewController, baseName, size);
             texturePool.SceneViewDestroyed += texturePool_SceneViewDestroyed;
-
-            Coroutine.Start(renderUpdates());
         }
 
         public void Dispose()
         {
-            render = false;
             foreach (var info in activeImages)
             {
+                LiveThumbnailUpdater.removeSceneView(info.SceneView);
                 info.finished();
             }
             texturePool.Dispose();
@@ -112,6 +106,7 @@ namespace Medical
             info.Host.setTextureInfo(sceneView.SceneView.TextureName, new IntCoord(0, 0, (int)sceneView.SceneView.Width, (int)sceneView.SceneView.Height));
 
             activeImages.Add(sceneView);
+            LiveThumbnailUpdater.addSceneView(sceneView.SceneView);
             info.CurrentSceneView = sceneView;
 
             info.WindowCreatedCallback = (window) =>
@@ -127,38 +122,9 @@ namespace Medical
             info.CurrentSceneView.SceneView.CameraCreated -= info.WindowCreatedCallback;
             info.WindowCreatedCallback = null;
             activeImages.Remove(info.CurrentSceneView);
+            LiveThumbnailUpdater.removeSceneView(info.CurrentSceneView.SceneView);
             info.CurrentSceneView.finished();
             info.CurrentSceneView = null;
-        }
-
-        /// <summary>
-        /// The number of images to update when a tick happens.
-        /// </summary>
-        public int NumImagesToUpdate
-        {
-            get
-            {
-                return numImagesToUpdate;
-            }
-            set
-            {
-                numImagesToUpdate = value;
-            }
-        }
-
-        /// <summary>
-        /// How often between image updates.
-        /// </summary>
-        public double SecondsToSleep
-        {
-            get
-            {
-                return secondsToSleep;
-            }
-            set
-            {
-                secondsToSleep = value;
-            }
         }
 
         public IEnumerable<LiveThumbnailHost> Hosts
@@ -169,30 +135,6 @@ namespace Medical
                 {
                     yield return hostInfo.Host;
                 }
-            }
-        }
-
-        private IEnumerator<YieldAction> renderUpdates()
-        {
-            int count = 0;
-            while (render)
-            {
-                for (int i = 0; i < numImagesToUpdate; ++i)
-                {
-                    if (count < activeImages.Count)
-                    {
-                        activeImages[count++].SceneView.RenderOneFrame = true;
-                    }
-                    else
-                    {
-                        count = 0;
-                        if (activeImages.Count > 0)
-                        {
-                            activeImages[count++].SceneView.RenderOneFrame = true;
-                        }
-                    }
-                }
-                yield return Coroutine.Wait(secondsToSleep);
             }
         }
 

@@ -205,6 +205,7 @@
     <Compile Include="Controller\ImageRenderer\LiveThumbnailController.cs" />
     <Compile Include="Controller\ImageRenderer\LiveThumbnailHost.cs" />
     <Compile Include="Controller\ImageRenderer\LiveThumbnailHostInfo.cs" />
+    <Compile Include="Controller\ImageRenderer\LiveThumbnailUpdater.cs" />
     <Compile Include="Controller\License\AnomalousLicenseServerException.cs" />
     <Compile Include="Controller\Plugin\PluginVerifier.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />

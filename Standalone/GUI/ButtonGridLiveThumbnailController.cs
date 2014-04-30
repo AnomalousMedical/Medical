@@ -110,30 +110,6 @@ namespace Medical
             liveThumbnailController.determineVisibleHosts(VisibleArea);
         }
 
-        public double SecondsToSleep
-        {
-            get
-            {
-                return liveThumbnailController.SecondsToSleep;
-            }
-            set
-            {
-                liveThumbnailController.SecondsToSleep = value;
-            }
-        }
-
-        public int NumImagesToUpdate
-        {
-            get
-            {
-                return liveThumbnailController.NumImagesToUpdate;
-            }
-            set
-            {
-                liveThumbnailController.NumImagesToUpdate = value;
-            }
-        }
-
         private IntCoord VisibleArea
         {
             get

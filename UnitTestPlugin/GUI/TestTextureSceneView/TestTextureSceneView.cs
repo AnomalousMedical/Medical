@@ -43,9 +43,9 @@ namespace UnitTestPlugin.GUI
             liveThumbHost = new ButtonGridLiveThumbnailController("TestRTT_", new IntSize2(200, 200), sceneViewController, buttonGrid, scrollView);
 
             numToUpdateEdit = (EditBox)window.findWidget("NumToUpdate");
-            numToUpdateEdit.Caption = liveThumbHost.NumImagesToUpdate.ToString();
+            numToUpdateEdit.Caption = LiveThumbnailUpdater.NumImagesToUpdate.ToString();
             secondsToSleepEdit = (EditBox)window.findWidget("SecondsToSleep");
-            secondsToSleepEdit.Caption = liveThumbHost.SecondsToSleep.ToString();
+            secondsToSleepEdit.Caption = LiveThumbnailUpdater.SecondsToSleep.ToString();
             Button applyButton = (Button)window.findWidget("ApplyButton");
             applyButton.MouseButtonClick += applyButton_MouseButtonClick;
         }
@@ -62,12 +62,12 @@ namespace UnitTestPlugin.GUI
             int numImagesToUpdate;
             if (int.TryParse(numToUpdateEdit.Caption, out numImagesToUpdate))
             {
-                liveThumbHost.NumImagesToUpdate = numImagesToUpdate;
+                LiveThumbnailUpdater.NumImagesToUpdate = numImagesToUpdate;
             }
             double secondsToSleep;
             if (double.TryParse(secondsToSleepEdit.Caption, out secondsToSleep))
             {
-                liveThumbHost.SecondsToSleep = secondsToSleep;
+                LiveThumbnailUpdater.SecondsToSleep = secondsToSleep;
             }
         }
 
