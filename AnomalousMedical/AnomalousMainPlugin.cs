@@ -135,7 +135,7 @@ namespace Medical.GUI
 
             downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);
 
-            bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
+            bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager, standaloneController.SceneViewController);
 
             //Taskbar
             taskbar = new AppButtonTaskbar();

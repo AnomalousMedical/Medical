@@ -14,6 +14,12 @@ namespace Medical
 
         public abstract void setTextureInfo(String name, IntCoord coord);
 
+        public LayerState Layers { get; set; }
+
+        public Vector3 Translation { get; set; }
+
+        public Vector3 LookAt { get; set; }
+
         internal LiveThumbnailHostInfo _HostInfo { get; set; }
     }
 }

@@ -15,12 +15,6 @@ namespace Medical
             Visible = false;
         }
 
-        public LayerState Layers { get; set; }
-
-        public Vector3 Translation { get; set; }
-
-        public Vector3 LookAt { get; set; }
-
         public bool Visible { get; set; }
 
         public PooledSceneView CurrentSceneView { get; set; }

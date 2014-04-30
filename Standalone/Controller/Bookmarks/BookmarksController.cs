@@ -24,9 +24,6 @@ namespace Medical.Controller
         public event BookmarkDelegate BookmarkRemoved;
         public event Action<BookmarksController> PremiumBookmarksChanged;
 
-        private ImageRendererProperties imageProperties;
-        private ImageAtlas imageAtlas;
-
         private StandaloneController standaloneController;
         private BookmarkDelegate mainThreadCallback;
 
@@ -38,28 +35,12 @@ namespace Medical.Controller
             this.standaloneController = standaloneController;
             mainThreadCallback = fireBookmarkAdded;
             this.premiumBookmarks = premiumBookmarks;
-
-            imageAtlas = new ImageAtlas("Bookmarks", new IntSize2(width, height));
-
-            imageProperties = new ImageRendererProperties();
-            imageProperties.Width = width;
-            imageProperties.Height = height;
-            imageProperties.UseWindowBackgroundColor = false;
-            imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
-            imageProperties.AntiAliasingMode = 2;
-            imageProperties.TransparentBackground = true;
-            imageProperties.UseActiveViewportLocation = false;
-            imageProperties.OverrideLayers = true;
-            imageProperties.ShowBackground = false;
-            imageProperties.ShowWatermark = false;
-            imageProperties.ShowUIUpdates = false;
         }
 
         public void Dispose()
         {
             //Ensure any background threads are no longer running.
             cancelBackgroundLoading = true;
-            imageAtlas.Dispose();
         }
 
         public Bookmark createBookmark(String name)
@@ -130,27 +111,6 @@ namespace Medical.Controller
             bookmark.Layers.timedApply(MedicalConfig.CameraTransitionTime);
         }
 
-        public String createThumbnail(Bookmark bookmark)
-        {
-            if (imageAtlas.containsImage(bookmark))
-            {
-                return imageAtlas.getImageId(bookmark);
-            }
-            else
-            {
-                ImageRenderer imageRenderer = standaloneController.ImageRenderer;
-
-                imageProperties.CameraLookAt = bookmark.CameraPosition.LookAt;
-                imageProperties.CameraPosition = bookmark.CameraPosition.Translation;
-                imageProperties.LayerState = bookmark.Layers;
-
-                using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
-                {
-                    return imageAtlas.addImage(bookmark, thumb);
-                }
-            }
-        }
-
         public void loadSavedBookmarks()
         {
             ThreadPool.QueueUserWorkItem(state =>
@@ -176,7 +136,7 @@ namespace Medical.Controller
                 using (XmlTextReader xmlReader = new XmlTextReader(bookmarkResourceProvider.openFile(file)))
                 {
                     bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
-                    bookmark.BackingFile = file;
+                    bookmark.BackingFile = bookmarkResourceProvider.getFullFilePath(file);
                 }
                 if (bookmark != null)
                 {
@@ -187,22 +147,6 @@ namespace Medical.Controller
                 {
                     return;
                 }
-            }
-        }
-
-        public int BookmarkWidth
-        {
-            get
-            {
-                return imageProperties.Width;
-            }
-        }
-
-        public int BookmarkHeight
-        {
-            get
-            {
-                return imageProperties.Height;
             }
         }
 

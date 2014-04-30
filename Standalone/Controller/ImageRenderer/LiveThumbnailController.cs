@@ -55,16 +55,9 @@ namespace Medical
         /// <param name="host"></param>
         public void addThumbnailHost(LiveThumbnailHost host)
         {
-            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            LayerState layers = new LayerState("");
-            layers.captureState();
-
             host._HostInfo = new LiveThumbnailHostInfo()
             {
                 Host = host,
-                Layers = layers,
-                Translation = activeWindow.Translation,
-                LookAt = activeWindow.LookAt,
                 Visible = false,
             };
 
@@ -112,7 +105,7 @@ namespace Medical
 
         private void createLiveThumb(LiveThumbnailHostInfo info)
         {
-            var sceneView = texturePool.getSceneView(info.Translation, info.LookAt, info.Layers);
+            var sceneView = texturePool.getSceneView(info.Host.Translation, info.Host.LookAt, info.Host.Layers);
             sceneView.SceneView.AlwaysRender = false;
             sceneView.SceneView.RenderOneFrame = true;
 
@@ -123,7 +116,7 @@ namespace Medical
 
             info.WindowCreatedCallback = (window) =>
             {
-                setupWindowLayers(window, info.Layers);
+                setupWindowLayers(window, info.Host.Layers);
             };
 
             sceneView.SceneView.CameraCreated += info.WindowCreatedCallback;
@@ -165,6 +158,17 @@ namespace Medical
             set
             {
                 secondsToSleep = value;
+            }
+        }
+
+        public IEnumerable<LiveThumbnailHost> Hosts
+        {
+            get
+            {
+                foreach(var hostInfo in thumbnailHosts)
+                {
+                    yield return hostInfo.Host;
+                }
             }
         }
 

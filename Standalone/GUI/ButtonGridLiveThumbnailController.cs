@@ -11,17 +11,17 @@ namespace Medical
 {
     public class ButtonGridLiveThumbnailController<UserObjectType> : IDisposable
     {
-        private SingleSelectButtonGrid buttonGrid;
+        private ButtonGrid buttonGrid;
         private ScrollView scrollView;
 
         private LiveThumbnailController liveThumbnailController;
 
-        public ButtonGridLiveThumbnailController(String baseName, IntSize2 thumbSize, SceneViewController sceneViewController, SingleSelectButtonGrid buttonGrid, ScrollView scrollView)
+        public ButtonGridLiveThumbnailController(String baseName, IntSize2 thumbSize, SceneViewController sceneViewController, ButtonGrid buttonGrid, ScrollView scrollView)
         {
             this.buttonGrid = buttonGrid;
             this.scrollView = scrollView;
             scrollView.CanvasPositionChanged += scrollView_CanvasPositionChanged;
-            liveThumbnailController = new LiveThumbnailController("TestRTT_", new IntSize2(200, 200), sceneViewController);
+            liveThumbnailController = new LiveThumbnailController(baseName, new IntSize2(200, 200), sceneViewController);
             liveThumbnailController.ThumbnailDestroyed += liveThumbnailController_ThumbnailDestroyed;
         }
 
@@ -30,10 +30,15 @@ namespace Medical
             liveThumbnailController.Dispose();
         }
 
-        public void itemAdded(ButtonGridItem item, UserObjectType userObject = default(UserObjectType))
+        public void itemAdded(ButtonGridItem item, LayerState layers, Vector3 translation, Vector3 lookAt, UserObjectType userObject = default(UserObjectType))
         {
-            ButtonGridItemLiveThumbnailHost host = new ButtonGridItemLiveThumbnailHost(item);
-            host.UserObject = userObject;
+            ButtonGridItemLiveThumbnailHost host = new ButtonGridItemLiveThumbnailHost(item)
+            {
+                Layers = layers,
+                Translation = translation,
+                LookAt = lookAt,
+                UserObject = userObject
+            };
             item.UserObject = host;
             liveThumbnailController.addThumbnailHost(host);
             determineVisibleHosts();
@@ -52,6 +57,39 @@ namespace Medical
                 return ((ButtonGridItemLiveThumbnailHost)item.UserObject).UserObject;
             }
             return default(UserObjectType);
+        }
+
+        public String getTextureName(ButtonGridItem item)
+        {
+            if (item != null)
+            {
+                return ((ButtonGridItemLiveThumbnailHost)item.UserObject).TextureName;
+            }
+            return null;
+        }
+
+        public IntCoord getTextureCoord(ButtonGridItem item)
+        {
+            if (item != null)
+            {
+                return ((ButtonGridItemLiveThumbnailHost)item.UserObject).TextureCoord;
+            }
+            return default(IntCoord);
+        }
+
+        public ButtonGridItem findItemByUserObject(UserObjectType userObject)
+        {
+            if (userObject != null)
+            {
+                foreach (ButtonGridItemLiveThumbnailHost host in liveThumbnailController.Hosts)
+                {
+                    if (userObject.Equals(host.UserObject))
+                    {
+                        return host.Item;
+                    }
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -138,10 +176,25 @@ namespace Medical
 
             public UserObjectType UserObject { get; set; }
 
+            public ButtonGridItem Item
+            {
+                get
+                {
+                    return item;
+                }
+            }
+
+            public String TextureName { get; private set; }
+
+            public IntCoord TextureCoord { get; private set; }
+
             public override void setTextureInfo(string name, IntCoord coord)
             {
                 item.ImageBox.setImageTexture(name);
                 item.ImageBox.setImageCoord(coord);
+
+                this.TextureName = name;
+                this.TextureCoord = coord;
             }
         }
     }

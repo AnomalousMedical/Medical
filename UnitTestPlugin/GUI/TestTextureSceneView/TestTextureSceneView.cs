@@ -20,12 +20,15 @@ namespace UnitTestPlugin.GUI
         private EditBox numToUpdateEdit;
 
         private ButtonGridLiveThumbnailController liveThumbHost;
+        private SceneViewController sceneViewController;
 
         private int count = 0;
 
         public TestTextureSceneView(SceneViewController sceneViewController)
             : base("UnitTestPlugin.GUI.TestTextureSceneView.TestTextureSceneView.layout")
         {
+            this.sceneViewController = sceneViewController;
+
             Button addButton = (Button)window.findWidget("AddButton");
             addButton.MouseButtonClick += addButton_MouseButtonClick;
 
@@ -70,9 +73,13 @@ namespace UnitTestPlugin.GUI
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+            LayerState layers = new LayerState("");
+            layers.captureState();
+
             ButtonGridItem item = buttonGrid.addItem("Main", count++.ToString());
             buttonGrid.resizeAndLayout(window.ClientWidget.Width);
-            liveThumbHost.itemAdded(item);
+            liveThumbHost.itemAdded(item, layers, activeWindow.Translation, activeWindow.LookAt);
         }
 
         void removeButton_MouseButtonClick(Widget source, EventArgs e)

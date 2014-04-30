@@ -12,6 +12,9 @@ namespace Medical.GUI
 {
     public class BookmarksGUI : AbstractFullscreenGUIPopup
     {
+        private static readonly int BookmarkSize = ScaleHelper.Scaled(100);
+        private static readonly int BookmarkThumbSize = BookmarkSize * 2;
+
         BookmarksController bookmarksController;
 
         NoSelectButtonGrid bookmarksList;
@@ -25,7 +28,9 @@ namespace Medical.GUI
         private IntVector2 dragMouseStartPosition;
         private ImageBox lockedFeatureImage;
 
-        public BookmarksGUI(BookmarksController bookmarksController, GUIManager guiManager)
+        private ButtonGridLiveThumbnailController<Bookmark> liveThumbController;
+
+        public BookmarksGUI(BookmarksController bookmarksController, GUIManager guiManager, SceneViewController sceneViewController)
             : base("Medical.GUI.Bookmarks.BookmarksGUI.layout", guiManager)
         {
             this.bookmarksController = bookmarksController;
@@ -47,13 +52,15 @@ namespace Medical.GUI
             trash = (ImageBox)widget.findWidget("TrashPanel");
             trash.Visible = false;
 
-            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, bookmarksController.BookmarkWidth, bookmarksController.BookmarkHeight, Align.Default, "Info", "BookmarksDragIconPreview");
+            dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, BookmarkSize, BookmarkSize, Align.Default, "Info", "BookmarksDragIconPreview");
             dragIconPreview.Visible = false;
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             toggleAddCustomBookmarks();
+
+            liveThumbController = new ButtonGridLiveThumbnailController<Bookmark>("Bookmarks_", new IntSize2(BookmarkThumbSize, BookmarkThumbSize), sceneViewController, bookmarksList, bookmarksListScroll);
         }
 
         public override void Dispose()
@@ -81,6 +88,7 @@ namespace Medical.GUI
         protected override void layoutUpdated()
         {
             bookmarksList.resizeAndLayout(widget.Width);
+            liveThumbController.determineVisibleHosts();
         }
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
@@ -105,20 +113,21 @@ namespace Medical.GUI
 
         void bookmarksController_BookmarkAdded(Bookmark bookmark)
         {
-            String imageKey = bookmarksController.createThumbnail(bookmark);
-            ButtonGridItem item = bookmarksList.addItem("User", bookmark.Name, imageKey);
+            ButtonGridItem item = bookmarksList.addItem("User", bookmark.Name);
             item.ItemClicked += new EventHandler(item_ItemClicked);
             item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
             item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
             item.MouseButtonPressed += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonPressed);
             item.UserObject = bookmark;
+            liveThumbController.itemAdded(item, bookmark.Layers, bookmark.CameraPosition.Translation, bookmark.CameraPosition.LookAt, bookmark);
         }
 
         void bookmarksController_BookmarkRemoved(Bookmark bookmark)
         {
-            ButtonGridItem item = bookmarksList.findItemByUserObject(bookmark);
+            ButtonGridItem item = liveThumbController.findItemByUserObject(bookmark);
             if (item != null)
             {
+                liveThumbController.itemRemoved(item);
                 bookmarksList.removeItem(item);
             }
         }
@@ -133,11 +142,12 @@ namespace Medical.GUI
             if (bookmarksController.PremiumBookmarks)
             {
                 trash.Visible = false;
+                dragIconPreview.setItemResource(null);
                 dragIconPreview.Visible = false;
                 IntVector2 mousePos = arg.Position;
                 if (trash.contains(mousePos.x, mousePos.y))
                 {
-                    bookmarksController.removeBookmark((Bookmark)source.UserObject);
+                    bookmarksController.removeBookmark(liveThumbController.getUserObject(source));
                 }
             }
         }
@@ -151,7 +161,8 @@ namespace Medical.GUI
                 {
                     trash.Visible = true;
                     dragIconPreview.Visible = true;
-                    dragIconPreview.setItemResource(bookmarksController.createThumbnail((Bookmark)source.UserObject));
+                    dragIconPreview.setImageTexture(liveThumbController.getTextureName(source));
+                    dragIconPreview.setImageCoord(liveThumbController.getTextureCoord(source));
                     LayerManager.Instance.upLayerItem(dragIconPreview);
                 }
                 if (trash.contains(arg.Position.x, arg.Position.y))
@@ -168,7 +179,7 @@ namespace Medical.GUI
         void item_ItemClicked(object sender, EventArgs e)
         {
             ButtonGridItem listItem = (ButtonGridItem)sender;
-            Bookmark bookmark = (Bookmark)listItem.UserObject;
+            Bookmark bookmark = liveThumbController.getUserObject(listItem);
             bookmarksController.applyBookmark(bookmark);
             this.hide();
         }
