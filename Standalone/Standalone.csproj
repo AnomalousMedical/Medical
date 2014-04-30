@@ -277,6 +277,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="GUI\ButtonGridLiveThumbnailController.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
     <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemDialog.cs" />

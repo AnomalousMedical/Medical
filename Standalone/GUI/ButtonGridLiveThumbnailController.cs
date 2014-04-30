@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class ButtonGridLiveThumbnailController<UserObjectType> : IDisposable
+    public class ButtonGridLiveThumbnailController<UserObjectType> : IDisposable
     {
         private SingleSelectButtonGrid buttonGrid;
         private ScrollView scrollView;
@@ -146,7 +146,7 @@ namespace Medical
         }
     }
 
-    class ButtonGridLiveThumbnailController : ButtonGridLiveThumbnailController<Object>
+    public class ButtonGridLiveThumbnailController : ButtonGridLiveThumbnailController<Object>
     {
         public ButtonGridLiveThumbnailController(String baseName, IntSize2 thumbSize, SceneViewController sceneViewController, SingleSelectButtonGrid buttonGrid, ScrollView scrollView)
             :base(baseName, thumbSize, sceneViewController, buttonGrid, scrollView)
