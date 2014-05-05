@@ -114,6 +114,20 @@ namespace Medical
             get { return "Transparency"; }
         }
 
+        public IEnumerable<TransparencyInterface> TransparencyInterfaces
+        {
+            get
+            {
+                foreach(var command in subCommands)
+                {
+                    foreach(var transInter in command.TransparencyInterfaces)
+                    {
+                        yield return transInter;
+                    }
+                }
+            }
+        }
+
         public override AnatomyCommand createTagGroupCommand()
         {
             throw new NotSupportedException();

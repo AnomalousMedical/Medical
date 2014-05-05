@@ -116,6 +116,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<TransparencyInterface> TransparencyInterfaces
+        {
+            get
+            {
+                yield return transparencyInterface;
+            }
+        }
+
         public override AnatomyCommand createTagGroupCommand()
         {
             CompoundTransparencyAnatomyCommand compoundCommand = new CompoundTransparencyAnatomyCommand();

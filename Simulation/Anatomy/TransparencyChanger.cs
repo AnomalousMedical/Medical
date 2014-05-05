@@ -11,5 +11,7 @@ namespace Medical
         void smoothBlend(float alpha, float duration, EasingFunction easingFunction);
 
         float CurrentAlpha { get; set; }
+
+        IEnumerable<TransparencyInterface> TransparencyInterfaces { get; }
     }
 }

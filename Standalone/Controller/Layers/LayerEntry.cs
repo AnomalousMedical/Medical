@@ -18,6 +18,12 @@ namespace Medical
             alphaValue = trans.CurrentAlpha;
         }
 
+        public LayerEntry(TransparencyInterface trans, float overrideAlpha)
+        {
+            this.transparencyObject = trans.ObjectName;
+            alphaValue = overrideAlpha;
+        }
+
         public void timedApply(float time, List<TransparencyInterface> unvisitedInterfaces, EasingFunction easingFunction)
         {
             TransparencyInterface obj = TransparencyController.getTransparencyObject(transparencyObject);

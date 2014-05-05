@@ -62,7 +62,6 @@ namespace Medical.GUI
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
 
         private EventManager eventManager;
-        private String transparencyState = "AnatomyFinderTransparency_" + Guid.NewGuid().ToString();
 
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, EventManager eventManager)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
@@ -71,7 +70,6 @@ namespace Medical.GUI
             eventManager.Mouse.ButtonDown += mouse_ButtonDown;
             eventManager.Mouse.ButtonUp += mouse_ButtonUp;
 
-            TransparencyController.createTransparencyState(transparencyState);
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
@@ -111,7 +109,6 @@ namespace Medical.GUI
         public override void Dispose()
         {
             buttonGridThumbs.Dispose();
-            TransparencyController.removeTransparencyState(transparencyState);
             eventManager.Mouse.ButtonDown -= mouse_ButtonDown;
             eventManager.Mouse.ButtonUp -= mouse_ButtonUp;
             anatomyWindowManager.Dispose();
@@ -526,15 +523,8 @@ namespace Medical.GUI
             Vector3 direction = anatomy.PreviewCameraDirection;
             translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
-            String currentState = TransparencyController.ActiveTransparencyState;
-            TransparencyController.ActiveTransparencyState = transparencyState;
-
-            TransparencyController.setAllAlphas(0.0f);
-            anatomy.TransparencyChanger.CurrentAlpha = 1.0f;
             LayerState layers = new LayerState("Temp");
-            layers.captureState();
-
-            TransparencyController.ActiveTransparencyState = currentState;
+            layers.buildFrom(anatomy.TransparencyChanger.TransparencyInterfaces, 1.0f);
 
             buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
 

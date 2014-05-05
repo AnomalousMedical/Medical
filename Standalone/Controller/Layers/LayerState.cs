@@ -38,6 +38,16 @@ namespace Medical
             }
         }
 
+        public void buildFrom(IEnumerable<TransparencyInterface> transparencyInterfaces, float overrideAlpha)
+        {
+            entries.Clear();
+            foreach (TransparencyInterface trans in transparencyInterfaces)
+            {
+                LayerEntry entry = new LayerEntry(trans, overrideAlpha);
+                entries.AddLast(entry);
+            }
+        }
+
         public void copyFrom(LayerState source)
         {
             entries.Clear();

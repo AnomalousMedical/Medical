@@ -43,5 +43,13 @@ namespace Medical
                 
             }
         }
+
+        public IEnumerable<TransparencyInterface> TransparencyInterfaces
+        {
+            get
+            {
+                yield break;
+            }
+        }
     }
 }

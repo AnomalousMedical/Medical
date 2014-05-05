@@ -131,6 +131,7 @@
     <Compile Include="Controller\MvcLoginController.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyContextWindowLiveThumbHost.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
     <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
     <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />

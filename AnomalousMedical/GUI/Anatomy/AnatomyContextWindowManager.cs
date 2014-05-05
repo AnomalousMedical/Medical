@@ -21,7 +21,8 @@ namespace Medical.GUI
         private AnatomyContextWindow lastHighlightRequestWindow = null;
         private AnatomyController anatomyController;
         private List<AnatomyContextWindow> pinnedWindows = new List<AnatomyContextWindow>();
-        private LiveThumbnailController contextWindowThumbnails;
+
+        private LiveThumbnailController liveThumbnailController;
 
         public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController, AnatomyFinder anatomyFinder)
         {
@@ -29,18 +30,17 @@ namespace Medical.GUI
             this.anatomyController = anatomyController;
             this.anatomyFinder = anatomyFinder;
 
-            contextWindowThumbnails = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
-            contextWindowThumbnails.AllowThumbUpdate = false;
+            liveThumbnailController = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
         }
 
         public void Dispose()
         {
-            contextWindowThumbnails.Dispose();
             if (currentAnatomyWindow != null)
             {
                 currentAnatomyWindow.Dispose();
                 currentAnatomyWindow = null;
             }
+            liveThumbnailController.Dispose();
         }
 
         public void sceneUnloading()
@@ -114,12 +114,50 @@ namespace Medical.GUI
             pinnedWindows.Remove(window);
         }
 
-        internal String getThumbnail(Anatomy anatomy)
+        internal AnatomyContextWindowLiveThumbHost getThumbnail(AnatomyContextWindow window)
         {
-            Radian fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
-            String thumbnail;
-            anatomyController.getThumbnail(anatomy, fovy, out thumbnail);
-            return thumbnail;
+            //This is hacky
+            if (window.ThumbHost != null)
+            {
+                returnThumbnail(window);
+            }
+
+            Anatomy anatomy = window.Anatomy;
+            Radian theta = sceneViewController.ActiveWindow.Camera.getFOVy();
+
+            //Generate thumbnail
+            AxisAlignedBox boundingBox = anatomy.WorldBoundingBox;
+            Vector3 center = boundingBox.Center;
+
+            //PROBABLY DON'T NEED THIS, ASPECT IS A SQUARE
+            float aspectRatio = (float)ThumbSize / ThumbSize;
+            if (aspectRatio < 1.0f)
+            {
+                theta *= aspectRatio;
+            }
+
+            Vector3 translation = center;
+            Vector3 direction = anatomy.PreviewCameraDirection;
+            translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
+
+            LayerState layers = new LayerState("Temp");
+            layers.buildFrom(anatomy.TransparencyChanger.TransparencyInterfaces, 1.0f);
+
+            AnatomyContextWindowLiveThumbHost host = new AnatomyContextWindowLiveThumbHost(window)
+            {
+                Layers = layers,
+                Translation = translation,
+                LookAt = center
+            };
+            liveThumbnailController.addThumbnailHost(host);
+            liveThumbnailController.determineVisibleHosts(new IntCoord(0, 0, 2, 2));
+            return host;
+        }
+
+        internal void returnThumbnail(AnatomyContextWindow window)
+        {
+            liveThumbnailController.removeThumbnailHost(window.ThumbHost);
+            liveThumbnailController.determineVisibleHosts(new IntCoord(0, 0, 2, 2));
         }
 
         internal void centerAnatomy(AnatomyContextWindow requestingWindow)

@@ -25,6 +25,8 @@ namespace Medical.GUI
         private Button pinButton;
         private Button relatedAnatomyButton;
 
+        private AnatomyContextWindowLiveThumbHost thumbHost;
+
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
         {
@@ -66,6 +68,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            windowManager.returnThumbnail(this);
             foreach (CommandUIElement commandUI in dynamicWidgets)
             {
                 commandUI.Dispose();
@@ -91,7 +94,7 @@ namespace Medical.GUI
                 layoutContainer.clearChildren();
                 this.anatomy = value;
                 anatomyName.Caption = anatomy.AnatomicalName;
-                thumbnailImage.setItemResource(windowManager.getThumbnail(anatomy));
+                thumbHost = windowManager.getThumbnail(this);
                 int width = windowStartSize.Width;
                 int captionWidth = (int)anatomyName.getTextSize().Width;
                 int totalWidth = captionWidth + anatomyName.Left + captionToBorderDelta;
@@ -144,6 +147,20 @@ namespace Medical.GUI
             windowManager.alertWindowPinned(this);
             pinButton.Selected = true;
             this.Hidden += new EventHandler(AnatomyContextWindow_Hidden);
+        }
+
+        internal void setTextureInfo(string name, IntCoord coord)
+        {
+            thumbnailImage.setImageTexture(name);
+            thumbnailImage.setImageCoord(coord);
+        }
+
+        internal AnatomyContextWindowLiveThumbHost ThumbHost
+        {
+            get
+            {
+                return thumbHost;
+            }
         }
 
         void pinButton_MouseButtonClick(Widget source, EventArgs e)
