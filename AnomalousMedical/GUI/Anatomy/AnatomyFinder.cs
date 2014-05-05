@@ -56,8 +56,6 @@ namespace Medical.GUI
         private Vector3 mouseDownMousePos;
         private const int MOUSE_MOVE_GRACE_PIXELS = 3;
 
-        private bool runningThumbnailCoroutine = false;
-        private int currentThumbnailIndex = 0;
         private bool allowAnatomySelectionChanges = true;
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
 
@@ -433,42 +431,7 @@ namespace Medical.GUI
         {
             //Add item
             ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "", anatomy);
-            if (this.Visible)
-            {
-                startThumbnailCoroutine();
-            }
             return anatomyItem;
-        }
-
-        private void startThumbnailCoroutine()
-        {
-            if (!runningThumbnailCoroutine)
-            {
-                runningThumbnailCoroutine = true;
-                Coroutine.Start(cogenerateThumbnails());
-            }
-            currentThumbnailIndex = 0;
-        }
-
-        IEnumerator<YieldAction> cogenerateThumbnails()
-        {
-            //while (currentThumbnailIndex < anatomyList.Count)
-            //{
-            //    ButtonGridItem anatomyItem = anatomyList.getItem(currentThumbnailIndex);
-            //    String imageName;
-            //    bool generatedThumb = anatomyController.getThumbnail((Anatomy)anatomyItem.UserObject, sceneViewController.ActiveWindow.Camera.getFOVy(), out imageName);
-            //    anatomyItem.setImage(imageName);
-                
-            //    ++currentThumbnailIndex;
-
-            //    if (generatedThumb)
-            //    {
-            //        //Only delay if the thumbnail had to be generated. Otherwise using the existing thumbnail is fast.
-            //        yield return Coroutine.Wait(0);
-            //    }
-            //}
-            runningThumbnailCoroutine = false;
-            yield break;
         }
 
         protected override void onShown(EventArgs args)
@@ -476,7 +439,6 @@ namespace Medical.GUI
             base.onShown(args);
             int itemCount = anatomyList.Count;
             float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
-            startThumbnailCoroutine();
             buttonGridThumbs.AllowThumbUpdate = true;
         }
 
@@ -494,7 +456,6 @@ namespace Medical.GUI
         void anatomyController_ShowPremiumAnatomyChanged(AnatomyController source, bool arg)
         {
             //This gets rid of the locks, clear thumbs and update the search.
-            anatomyController.clearThumbs();
             updateSearch();
         }
 
@@ -527,29 +488,6 @@ namespace Medical.GUI
             layers.buildFrom(anatomy.TransparencyChanger.TransparencyInterfaces, 1.0f);
 
             buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
-
-            //using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
-            //{
-            //    if (!ShowPremiumAnatomy && !anatomy.ShowInBasicVersion)
-            //    {
-            //        if (lockImage == null)
-            //        {
-            //            Assembly assembly = this.GetType().Assembly;
-            //            lockImage = (Bitmap)Bitmap.FromStream(assembly.GetManifestResourceStream("Medical.Resources.LockedFeature.png"));
-
-            //            lockImageDest = new Rectangle(0, 0, imageProperties.Width / 3, imageProperties.Height / 3);
-            //            lockImageDest.Y = imageProperties.Height - lockImageDest.Height;
-            //        }
-            //        using (Graphics g = Graphics.FromImage(thumb))
-            //        {
-            //            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-            //            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            //            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            //            g.DrawImage(lockImage, lockImageDest);
-            //        }
-            //    }
-            //    imageName = imageAtlas.addImage(anatomy.AnatomicalName, thumb);
-            //}
         }
     }
 }

@@ -153,7 +153,6 @@ namespace Medical
             IDisposableUtil.DisposeIfNotNull(notificationManager);
             IDisposableUtil.DisposeIfNotNull(guiManager);
 			IDisposableUtil.DisposeIfNotNull(measurementGrid);
-			IDisposableUtil.DisposeIfNotNull(anatomyController);
 			IDisposableUtil.DisposeIfNotNull(medicalStateController);
 			IDisposableUtil.DisposeIfNotNull(sceneViewController);
 			IDisposableUtil.DisposeIfNotNull(background);
@@ -226,7 +225,7 @@ namespace Medical
             imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
 
             //Anatomy Controller
-            anatomyController = new AnatomyController(imageRenderer, ScaleHelper.Scaled(50), ScaleHelper.Scaled(50));
+            anatomyController = new AnatomyController();
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
