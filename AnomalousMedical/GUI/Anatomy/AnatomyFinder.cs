@@ -60,7 +60,6 @@ namespace Medical.GUI
         private int currentThumbnailIndex = 0;
         private bool allowAnatomySelectionChanges = true;
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
-        private LiveThumbnailController contextWindowThumbnails;
 
         private EventManager eventManager;
         private String transparencyState = "AnatomyFinderTransparency_" + Guid.NewGuid().ToString();
@@ -88,8 +87,6 @@ namespace Medical.GUI
 
             buttonGridThumbs = new ButtonGridLiveThumbnailController<Anatomy>("AnatomyFinder_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController, anatomyList, anatomyScroll);
             buttonGridThumbs.AllowThumbUpdate = false;
-            contextWindowThumbnails = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
-            contextWindowThumbnails.AllowThumbUpdate = false;
 
             searchBox = (EditBox)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
@@ -113,7 +110,6 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            contextWindowThumbnails.Dispose();
             buttonGridThumbs.Dispose();
             TransparencyController.removeTransparencyState(transparencyState);
             eventManager.Mouse.ButtonDown -= mouse_ButtonDown;

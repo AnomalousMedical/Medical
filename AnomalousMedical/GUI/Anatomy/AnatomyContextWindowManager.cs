@@ -10,6 +10,9 @@ namespace Medical.GUI
 {
     public class AnatomyContextWindowManager : IDisposable
     {
+        private static readonly int ThumbSize = ScaleHelper.Scaled(50);
+        private static readonly int ThumbRenderSize = ThumbSize * 4;
+
         private AnatomyContextWindow currentAnatomyWindow;
         private SceneViewController sceneViewController;
         private AnatomyFinder anatomyFinder;
@@ -18,16 +21,21 @@ namespace Medical.GUI
         private AnatomyContextWindow lastHighlightRequestWindow = null;
         private AnatomyController anatomyController;
         private List<AnatomyContextWindow> pinnedWindows = new List<AnatomyContextWindow>();
+        private LiveThumbnailController contextWindowThumbnails;
 
         public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController, AnatomyFinder anatomyFinder)
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;
             this.anatomyFinder = anatomyFinder;
+
+            contextWindowThumbnails = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
+            contextWindowThumbnails.AllowThumbUpdate = false;
         }
 
         public void Dispose()
         {
+            contextWindowThumbnails.Dispose();
             if (currentAnatomyWindow != null)
             {
                 currentAnatomyWindow.Dispose();
