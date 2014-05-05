@@ -19,10 +19,13 @@ namespace Medical.GUI
             OpenAnatomyFinder,
         }
 
+        private static readonly int ThumbSize = ScaleHelper.Scaled(50);
+        private static readonly int ThumbRenderSize = ThumbSize * 4;
+
         private static MessageEvent pickAnatomy;
         private static MessageEvent changeSelectionMode;
         private static MessageEvent openAnatomyFinder;
-
+        
         static AnatomyFinder()
         {
             //pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
@@ -56,8 +59,11 @@ namespace Medical.GUI
         private bool runningThumbnailCoroutine = false;
         private int currentThumbnailIndex = 0;
         private bool allowAnatomySelectionChanges = true;
+        private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
+        private LiveThumbnailController contextWindowThumbnails;
 
         private EventManager eventManager;
+        private String transparencyState = "AnatomyFinderTransparency_" + Guid.NewGuid().ToString();
 
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, EventManager eventManager)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
@@ -66,15 +72,24 @@ namespace Medical.GUI
             eventManager.Mouse.ButtonDown += mouse_ButtonDown;
             eventManager.Mouse.ButtonUp += mouse_ButtonUp;
 
+            TransparencyController.createTransparencyState(transparencyState);
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
 
-            anatomyList = new SingleSelectButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
+            ScrollView anatomyScroll = (ScrollView)window.findWidget("AnatomyList");
+            anatomyList = new SingleSelectButtonGrid(anatomyScroll, new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
             anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
+            anatomyList.ItemAdded += anatomyList_ItemAdded;
+            anatomyList.ItemRemoved += anatomyList_ItemRemoved;
+
+            buttonGridThumbs = new ButtonGridLiveThumbnailController<Anatomy>("AnatomyFinder_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController, anatomyList, anatomyScroll);
+            buttonGridThumbs.AllowThumbUpdate = false;
+            contextWindowThumbnails = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
+            contextWindowThumbnails.AllowThumbUpdate = false;
 
             searchBox = (EditBox)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
@@ -98,6 +113,9 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            contextWindowThumbnails.Dispose();
+            buttonGridThumbs.Dispose();
+            TransparencyController.removeTransparencyState(transparencyState);
             eventManager.Mouse.ButtonDown -= mouse_ButtonDown;
             eventManager.Mouse.ButtonUp -= mouse_ButtonUp;
             anatomyWindowManager.Dispose();
@@ -153,6 +171,7 @@ namespace Medical.GUI
                 lastWidth = window.Width;
                 lastHeight = window.Height;
                 anatomyList.layout();
+                buttonGridThumbs.determineVisibleHosts();
             }
         }
 
@@ -194,7 +213,7 @@ namespace Medical.GUI
             ButtonGridItem selectedItem = anatomyList.SelectedItem;
             if (selectedItem != null)
             {
-                Anatomy anatomy = (Anatomy)selectedItem.UserObject;
+                Anatomy anatomy = buttonGridThumbs.getUserObject(selectedItem);
                 if (anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
                 {
                     int deadLeft = int.MinValue;
@@ -302,7 +321,7 @@ namespace Medical.GUI
                             foreach (AnatomyTag tag in matches[0].Tags)
                             {
                                 itemToSelect = anatomyList.findItemByCaption(tag.Tag);
-                                if (itemToSelect != null && (showPremium || ((Anatomy)itemToSelect.UserObject).ShowInBasicVersion))
+                                if (itemToSelect != null && (showPremium || buttonGridThumbs.getUserObject(itemToSelect).ShowInBasicVersion))
                                 {
                                     break;
                                 }
@@ -393,7 +412,7 @@ namespace Medical.GUI
             ButtonGridItem selectedItem = anatomyList.SelectedItem;
             if (selectedItem != null)
             {
-                Anatomy selectedAnatomy = (Anatomy)selectedItem.UserObject;
+                Anatomy selectedAnatomy = buttonGridThumbs.getUserObject(selectedItem);
                 if (anatomyController.ShowPremiumAnatomy || selectedAnatomy.ShowInBasicVersion)
                 {
                     TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
@@ -420,12 +439,11 @@ namespace Medical.GUI
         private ButtonGridItem addAnatomyToList(Anatomy anatomy)
         {
             //Add item
-            ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "");
+            ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "", anatomy);
             if (this.Visible)
             {
                 startThumbnailCoroutine();
             }
-            anatomyItem.UserObject = anatomy;
             return anatomyItem;
         }
 
@@ -441,21 +459,21 @@ namespace Medical.GUI
 
         IEnumerator<YieldAction> cogenerateThumbnails()
         {
-            while (currentThumbnailIndex < anatomyList.Count)
-            {
-                ButtonGridItem anatomyItem = anatomyList.getItem(currentThumbnailIndex);
-                String imageName;
-                bool generatedThumb = anatomyController.getThumbnail((Anatomy)anatomyItem.UserObject, sceneViewController.ActiveWindow.Camera.getFOVy(), out imageName);
-                anatomyItem.setImage(imageName);
+            //while (currentThumbnailIndex < anatomyList.Count)
+            //{
+            //    ButtonGridItem anatomyItem = anatomyList.getItem(currentThumbnailIndex);
+            //    String imageName;
+            //    bool generatedThumb = anatomyController.getThumbnail((Anatomy)anatomyItem.UserObject, sceneViewController.ActiveWindow.Camera.getFOVy(), out imageName);
+            //    anatomyItem.setImage(imageName);
                 
-                ++currentThumbnailIndex;
+            //    ++currentThumbnailIndex;
 
-                if (generatedThumb)
-                {
-                    //Only delay if the thumbnail had to be generated. Otherwise using the existing thumbnail is fast.
-                    yield return Coroutine.Wait(0);
-                }
-            }
+            //    if (generatedThumb)
+            //    {
+            //        //Only delay if the thumbnail had to be generated. Otherwise using the existing thumbnail is fast.
+            //        yield return Coroutine.Wait(0);
+            //    }
+            //}
             runningThumbnailCoroutine = false;
             yield break;
         }
@@ -466,6 +484,13 @@ namespace Medical.GUI
             int itemCount = anatomyList.Count;
             float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
             startThumbnailCoroutine();
+            buttonGridThumbs.AllowThumbUpdate = true;
+        }
+
+        protected override void onClosed(EventArgs args)
+        {
+            buttonGridThumbs.AllowThumbUpdate = false;
+            base.onClosed(args);
         }
 
         private static void showNagMessage()
@@ -478,6 +503,67 @@ namespace Medical.GUI
             //This gets rid of the locks, clear thumbs and update the search.
             anatomyController.clearThumbs();
             updateSearch();
+        }
+
+        void anatomyList_ItemRemoved(ButtonGrid arg1, ButtonGridItem arg2)
+        {
+            buttonGridThumbs.itemRemoved(arg2);
+        }
+
+        void anatomyList_ItemAdded(ButtonGrid arg1, ButtonGridItem arg2)
+        {
+            Anatomy anatomy = (Anatomy)arg2.UserObject; //Ok to access user object here since it is set during the add.
+            Radian theta = sceneViewController.ActiveWindow.Camera.getFOVy();
+
+            //Generate thumbnail
+            AxisAlignedBox boundingBox = anatomy.WorldBoundingBox;
+            Vector3 center = boundingBox.Center;
+
+            //PROBABLY DON'T NEED THIS, ASPECT IS A SQUARE
+            float aspectRatio = (float)ThumbSize / ThumbSize;
+            if (aspectRatio < 1.0f)
+            {
+                theta *= aspectRatio;
+            }
+
+            Vector3 translation = center;
+            Vector3 direction = anatomy.PreviewCameraDirection;
+            translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
+
+            String currentState = TransparencyController.ActiveTransparencyState;
+            TransparencyController.ActiveTransparencyState = transparencyState;
+
+            TransparencyController.setAllAlphas(0.0f);
+            anatomy.TransparencyChanger.CurrentAlpha = 1.0f;
+            LayerState layers = new LayerState("Temp");
+            layers.captureState();
+
+            TransparencyController.ActiveTransparencyState = currentState;
+
+            buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
+
+            //using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
+            //{
+            //    if (!ShowPremiumAnatomy && !anatomy.ShowInBasicVersion)
+            //    {
+            //        if (lockImage == null)
+            //        {
+            //            Assembly assembly = this.GetType().Assembly;
+            //            lockImage = (Bitmap)Bitmap.FromStream(assembly.GetManifestResourceStream("Medical.Resources.LockedFeature.png"));
+
+            //            lockImageDest = new Rectangle(0, 0, imageProperties.Width / 3, imageProperties.Height / 3);
+            //            lockImageDest.Y = imageProperties.Height - lockImageDest.Height;
+            //        }
+            //        using (Graphics g = Graphics.FromImage(thumb))
+            //        {
+            //            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+            //            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            //            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            //            g.DrawImage(lockImage, lockImageDest);
+            //        }
+            //    }
+            //    imageName = imageAtlas.addImage(anatomy.AnatomicalName, thumb);
+            //}
         }
     }
 }
