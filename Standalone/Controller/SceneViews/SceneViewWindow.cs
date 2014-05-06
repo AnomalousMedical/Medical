@@ -64,7 +64,6 @@ namespace Medical.Controller
             this.mainTimer = mainTimer;
             this.startPosition = cameraMover.Translation;
             this.startLookAt = cameraMover.LookAt;
-            mainTimer.addFixedUpdateListener(cameraMover);
             transparencyStateName = name;
             TransparencyController.createTransparencyState(transparencyStateName);
             UseDefaultTransparency = false;
@@ -80,6 +79,18 @@ namespace Medical.Controller
         {
             vpBackground = new ViewportBackground(name + "SceneViewBackground", zIndexStart + zOffset++, background, renderTarget, clearEveryFrame);
             vpBackground.BackgroundColor = backColor;
+        }
+
+        /// <summary>
+        /// You must call this function to listen for updates on the camera mover. A lot of things will not work correctly
+        /// if you do not call this function, however, since we also use this mechanism for the render to texture scene
+        /// views and since they do not really require updates normally and since there are potentially a lot more of
+        /// those types of scene views compared to the ones users actually interact with we want to be able to have scene
+        /// views that do not automatically update.
+        /// </summary>
+        protected void listenForCameraMoverUpdates()
+        {
+            mainTimer.addFixedUpdateListener(cameraMover);
         }
 
         public virtual void Dispose()

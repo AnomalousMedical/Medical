@@ -19,6 +19,7 @@ namespace Medical.Controller
             :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
             this.createBackground(((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderTarget, false);
+            this.listenForCameraMoverUpdates();
 
             //MDI Window
             mdiWindow = new MDIDocumentWindow(Name);

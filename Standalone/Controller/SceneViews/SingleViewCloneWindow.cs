@@ -25,6 +25,7 @@ namespace Medical.Controller
             osWindow = new NativeOSWindow(MainWindow.Instance, "Clone Window", location, new Size(windowInfo.Width, windowInfo.Height), floatOnParent);
             this.rendererWindow = (OgreWindow)OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
             this.createBackground(rendererWindow.OgreRenderTarget, true);
+            this.listenForCameraMoverUpdates();
             this.RendererWindow = rendererWindow;
             osWindow.show();
             osWindow.Closed += osWindow_Closed;
