@@ -16,14 +16,6 @@ namespace Medical.GUI
             this.window = window;
         }
 
-        public override IntCoord Coord
-        {
-            get
-            {
-                return new IntCoord(0, 0, 1, 1);
-            }
-        }
-
         public override void setTextureInfo(string name, IntCoord coord)
         {
             window.setTextureInfo(name, coord);

@@ -75,25 +75,24 @@ namespace Medical
         }
 
         /// <summary>
-        /// Determine what is visible. Call this anytime your visible area displaying thumbnails changes.
+        /// Set the visiblity of a thumb host, if it is set to visible a live thumb will be created
+        /// and if set to false the thumb will be destroyed.
         /// </summary>
-        /// <param name="viewArea">The visible area to test against.</param>
-        public void determineVisibleHosts(IntCoord viewArea)
+        /// <param name="host"></param>
+        /// <param name="visible"></param>
+        public void setVisibility(LiveThumbnailHost host, bool visible)
         {
-            foreach (var info in thumbnailHosts)
+            LiveThumbnailHostInfo info = host._HostInfo;
+            if(visible != info.Visible)
             {
-                bool overlaps = viewArea.overlaps(info.Host.Coord);
-                if (overlaps != info.Visible)
+                info.Visible = visible;
+                if(info.Visible)
                 {
-                    info.Visible = overlaps;
-                    if (info.Visible)
-                    {
-                        createLiveThumb(info);
-                    }
-                    else
-                    {
-                        returnThumbToPool(info);
-                    }
+                    createLiveThumb(info);
+                }
+                else
+                {
+                    returnThumbToPool(info);
                 }
             }
         }

@@ -150,14 +150,13 @@ namespace Medical.GUI
                 LookAt = center
             };
             liveThumbnailController.addThumbnailHost(host);
-            liveThumbnailController.determineVisibleHosts(new IntCoord(0, 0, 2, 2));
+            liveThumbnailController.setVisibility(host, true);
             return host;
         }
 
         internal void returnThumbnail(AnatomyContextWindow window)
         {
             liveThumbnailController.removeThumbnailHost(window.ThumbHost);
-            liveThumbnailController.determineVisibleHosts(new IntCoord(0, 0, 2, 2));
         }
 
         internal void centerAnatomy(AnatomyContextWindow requestingWindow)

@@ -10,8 +10,6 @@ namespace Medical
 {
     public abstract class LiveThumbnailHost
     {
-        public abstract IntCoord Coord { get; }
-
         public abstract void setTextureInfo(String name, IntCoord coord);
 
         public LayerState Layers { get; set; }

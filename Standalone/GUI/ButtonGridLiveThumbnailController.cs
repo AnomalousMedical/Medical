@@ -107,7 +107,11 @@ namespace Medical
         /// </summary>
         public void determineVisibleHosts()
         {
-            liveThumbnailController.determineVisibleHosts(VisibleArea);
+            IntCoord viewArea = VisibleArea;
+            foreach (ButtonGridItemLiveThumbnailHost info in liveThumbnailController.Hosts)
+            {
+                liveThumbnailController.setVisibility(info, viewArea.overlaps(info.Coord));
+            }
         }
 
         public bool AllowThumbUpdate
@@ -154,7 +158,7 @@ namespace Medical
                 this.item = item;
             }
 
-            public override IntCoord Coord
+            public IntCoord Coord
             {
                 get
                 {
