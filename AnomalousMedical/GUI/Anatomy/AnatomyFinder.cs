@@ -21,6 +21,7 @@ namespace Medical.GUI
 
         private static readonly int ThumbSize = ScaleHelper.Scaled(50);
         private static readonly int ThumbRenderSize = ThumbSize * 4;
+        private static readonly int lockSize = ScaleHelper.Scaled(18);
 
         private static MessageEvent pickAnatomy;
         private static MessageEvent changeSelectionMode;
@@ -138,6 +139,7 @@ namespace Medical.GUI
             }
             anatomyList.SuppressLayout = false;
             anatomyList.layout();
+            buttonGridThumbs.determineVisibleHosts();
         }
 
         void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)
@@ -197,6 +199,7 @@ namespace Medical.GUI
             }
             anatomyList.SuppressLayout = false;
             anatomyList.layout();
+            buttonGridThumbs.determineVisibleHosts();
         }
 
         private void changeSelectedAnatomy(int left, int top)
@@ -333,6 +336,7 @@ namespace Medical.GUI
 
                     anatomyList.SuppressLayout = false;
                     anatomyList.layout();
+                    buttonGridThumbs.determineVisibleHosts();
                 }
                 else
                 {
@@ -431,6 +435,13 @@ namespace Medical.GUI
         {
             //Add item
             ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "", anatomy);
+            if(!anatomyController.ShowPremiumAnatomy && !anatomy.ShowInBasicVersion)
+            {
+                IntCoord itemCoord = anatomyItem.Coord;
+                ImageBox lockedFeatureImage = (ImageBox)anatomyItem.createWidgetT("ImageBox", "ImageBox", 0, itemCoord.Bottom - lockSize, lockSize, lockSize, Align.Left | Align.Top, "LockedFeatureImage");
+                lockedFeatureImage.NeedMouseFocus = false;
+                lockedFeatureImage.setItemResource("LockedFeature");
+            }
             return anatomyItem;
         }
 
