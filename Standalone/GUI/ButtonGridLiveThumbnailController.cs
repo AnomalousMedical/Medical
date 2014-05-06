@@ -113,6 +113,14 @@ namespace Medical
                 liveThumbnailController.setVisibility(info, viewArea.overlaps(info.Coord));
             }
         }
+        
+        /// <summary>
+        /// Force all thumbs to update for one frame.
+        /// </summary>
+        public void updateAllThumbs()
+        {
+            liveThumbnailController.updateAllThumbs();
+        }
 
         public bool AllowThumbUpdate
         {

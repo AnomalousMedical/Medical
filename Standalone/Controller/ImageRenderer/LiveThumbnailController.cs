@@ -97,6 +97,17 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Force all thumbs to update for one frame.
+        /// </summary>
+        public void updateAllThumbs()
+        {
+            foreach(var thumb in activeImages)
+            {
+                thumb.SceneView.RenderOneFrame = true;
+            }
+        }
+
         private void createLiveThumb(LiveThumbnailHostInfo info)
         {
             var sceneView = texturePool.getSceneView(info.Host.Translation, info.Host.LookAt, info.Host.Layers);

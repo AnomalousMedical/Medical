@@ -228,6 +228,7 @@ namespace Medical.GUI
         void BookmarksGUI_Showing(object sender, EventArgs e)
         {
             liveThumbController.AllowThumbUpdate = true;
+            liveThumbController.updateAllThumbs();
         }
 
         void BookmarksGUI_Hidden(object sender, EventArgs e)
