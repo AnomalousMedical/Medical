@@ -444,6 +444,7 @@ namespace Medical.GUI
                 }
                 bookmarksController.loadSavedBookmarks();
             }
+            taskMenu.ShowAdImage = !isPremium;
         }
     }
 }

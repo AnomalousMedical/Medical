@@ -104,7 +104,7 @@ namespace Medical.GUI
             widget.setSize(width, height);
             IntCoord viewCoord = iconScroller.ViewCoord;
             iconGrid.resizeAndLayout(viewCoord.width);
-            recentDocuments.resizeAndLayout(viewCoord.width);
+            recentDocuments.resizeAndLayout();
         }
 
         public bool SuppressLayout
@@ -134,12 +134,14 @@ namespace Medical.GUI
                 showAdImage = value;
                 if (!showAdImage && adImage != null)
                 {
+                    IntCoord coord = new IntCoord(2, iconScroller.Top, widget.Width, iconScroller.Height);
                     adImage.MouseButtonClick -= adImage_MouseButtonClick;
                     Gui.Instance.destroyWidget(adImage);
                     adImage = null;
-                    iconScroller.setPosition(2, iconScroller.Top);
-                    iconScroller.setSize(widget.Width, iconScroller.Height);
+                    iconScroller.setPosition(coord.left, coord.top);
+                    iconScroller.setSize(coord.width, coord.height);
                     iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
+                    recentDocuments.moveAndResize(coord);
                 }
             }
         }
@@ -151,7 +153,7 @@ namespace Medical.GUI
             {
                 IntCoord viewCoord = iconScroller.ViewCoord;
                 iconGrid.resizeAndLayout(viewCoord.width);
-                recentDocuments.resizeAndLayout(viewCoord.width);
+                recentDocuments.resizeAndLayout();
             }
         }
 
@@ -161,10 +163,12 @@ namespace Medical.GUI
             {
                 if (ShowAdImage && AdImageKey != null)
                 {
+                    IntCoord coord = new IntCoord(WithAdTaskMenuPosition, iconScroller.Top, widget.Width - WithAdTaskMenuPosition, iconScroller.Height);
                     firstTimeShown = false;
-                    iconScroller.setPosition(WithAdTaskMenuPosition, iconScroller.Top);
-                    iconScroller.setSize(widget.Width - WithAdTaskMenuPosition, iconScroller.Height);
+                    iconScroller.setPosition(coord.left, coord.top);
+                    iconScroller.setSize(coord.width, coord.height);
                     iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
+                    recentDocuments.moveAndResize(coord);
                     adImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", 2, iconScroller.Top, AdWidth, AdHeight, Align.Left | Align.Top, "");
                     adImage.setItemResource(AdImageKey);
                     adImage.MouseButtonClick += adImage_MouseButtonClick;

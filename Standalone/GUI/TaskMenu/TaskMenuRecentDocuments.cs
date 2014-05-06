@@ -22,6 +22,7 @@ namespace Medical.GUI
         private TextBox nameLabel;
         private TextBox locationLabel;
         private bool showDocumentInfo = false;
+        private int documentInfoPanelPadding;
 
         public TaskMenuRecentDocuments(Widget widget, DocumentController documentController)
         {
@@ -35,6 +36,8 @@ namespace Medical.GUI
             documentInfoIcon = (ImageBox)documentInfoPanel.findWidget("DocumentInfoIcon");
             nameLabel = (TextBox)documentInfoPanel.findWidget("NameLabel");
             locationLabel = (TextBox)documentInfoPanel.findWidget("LocationLabel");
+
+            documentInfoPanelPadding = documentInfoPanel.Left - documentScroller.Right;
 
             Button openButton = (Button)documentInfoPanel.findWidget("OpenButton");
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
@@ -52,9 +55,16 @@ namespace Medical.GUI
             }
         }
 
-        public void resizeAndLayout(int newWidth)
+        public void resizeAndLayout()
         {
             documentGrid.resizeAndLayout(documentScroller.Width);
+        }
+
+        public void moveAndResize(IntCoord coord)
+        {
+            documentScroller.setPosition(coord.left, coord.top);
+            documentScroller.setSize(coord.width - documentInfoPanel.Width - documentInfoPanelPadding, coord.height);
+            documentGrid.resizeAndLayout(documentScroller.ViewCoord.width);
         }
 
         public bool Visible
