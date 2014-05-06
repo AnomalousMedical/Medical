@@ -201,6 +201,18 @@ namespace Medical
             }
         }
 
+        public int? MaxPoolSize
+        {
+            get
+            {
+                return texturePool.MaxPoolSize;
+            }
+            set
+            {
+                texturePool.MaxPoolSize = value;
+            }
+        }
+
         void texturePool_SceneViewDestroyed(PooledSceneView sceneView)
         {
             if(ThumbnailDestroyed != null)

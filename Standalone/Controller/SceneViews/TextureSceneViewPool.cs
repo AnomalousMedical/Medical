@@ -66,6 +66,18 @@ namespace Medical.Controller
             return pooledView;
         }
 
+        public int? MaxPoolSize
+        {
+            get
+            {
+                return pool.MaxPoolSize;
+            }
+            set
+            {
+                pool.MaxPoolSize = value;
+            }
+        }
+
         private PooledSceneView createSceneViewWrapper()
         {
             return new PooledSceneView();

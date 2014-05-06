@@ -31,6 +31,7 @@ namespace Medical.GUI
             this.anatomyFinder = anatomyFinder;
 
             liveThumbnailController = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
+            liveThumbnailController.MaxPoolSize = 1;
         }
 
         public void Dispose()
