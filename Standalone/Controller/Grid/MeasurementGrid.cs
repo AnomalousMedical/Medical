@@ -166,18 +166,29 @@ namespace Medical.Controller
         void sceneViewController_WindowDestroyed(SceneViewWindow window)
         {
             window.RenderingStarted -= window_RenderingStarted;
+            window.RenderingEnded -= window_RenderingEnded;
         }
 
         void sceneViewController_WindowCreated(SceneViewWindow window)
         {
             window.RenderingStarted += window_RenderingStarted;
+            window.RenderingEnded += window_RenderingEnded;
         }
 
         void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
         {
-            if (currentCameraRender)
+            if (visible && currentCameraRender)
             {
+                sceneNode.setVisible(true);
                 sceneNode.setOrientation(window.Orientation);
+            }
+        }
+
+        void window_RenderingEnded(SceneViewWindow window, bool currentCameraRender)
+        {
+            if (visible && currentCameraRender)
+            {
+                sceneNode.setVisible(false);
             }
         }
 
