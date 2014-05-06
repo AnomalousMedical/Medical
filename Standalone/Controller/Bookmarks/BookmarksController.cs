@@ -119,16 +119,16 @@ namespace Medical.Controller
                     if (premiumBookmarks)
                     {
                         ensureBookmarksFolderExists();
-                        readBookmarkFilesBgThread(new FilesystemResourceProvider(MedicalConfig.BookmarksFolder));
+                        readBookmarkFilesBgThread(new FilesystemResourceProvider(MedicalConfig.BookmarksFolder), true);
                     }
                     else if(NonPremiumBookmarksResourceProvider != null)
                     {
-                        readBookmarkFilesBgThread(NonPremiumBookmarksResourceProvider);
+                        readBookmarkFilesBgThread(NonPremiumBookmarksResourceProvider, false);
                     }
                 });
         }
 
-        private void readBookmarkFilesBgThread(ResourceProvider bookmarkResourceProvider)
+        private void readBookmarkFilesBgThread(ResourceProvider bookmarkResourceProvider, bool saveFilePath)
         {
             foreach (String file in bookmarkResourceProvider.listFiles("*.bmk"))
             {
@@ -136,7 +136,10 @@ namespace Medical.Controller
                 using (XmlTextReader xmlReader = new XmlTextReader(bookmarkResourceProvider.openFile(file)))
                 {
                     bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
-                    bookmark.BackingFile = bookmarkResourceProvider.getFullFilePath(file);
+                    if (saveFilePath)
+                    {
+                        bookmark.BackingFile = bookmarkResourceProvider.getFullFilePath(file);
+                    }
                 }
                 if (bookmark != null)
                 {

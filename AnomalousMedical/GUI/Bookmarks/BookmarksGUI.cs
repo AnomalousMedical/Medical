@@ -84,7 +84,7 @@ namespace Medical.GUI
         {
             while(bookmarksList.Count > 0)
             {
-                Bookmark bookmark = (Bookmark)bookmarksList.getItem(0).UserObject;
+                Bookmark bookmark = liveThumbController.getUserObject(bookmarksList.getItem(0));
                 bookmarksController.removeBookmark(bookmark);
             }
         }
