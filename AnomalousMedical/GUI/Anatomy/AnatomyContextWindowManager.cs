@@ -116,12 +116,6 @@ namespace Medical.GUI
 
         internal AnatomyContextWindowLiveThumbHost getThumbnail(AnatomyContextWindow window)
         {
-            //This is hacky
-            if (window.ThumbHost != null)
-            {
-                returnThumbnail(window);
-            }
-
             Anatomy anatomy = window.Anatomy;
             Radian theta = sceneViewController.ActiveWindow.Camera.getFOVy();
 
@@ -143,15 +137,27 @@ namespace Medical.GUI
             LayerState layers = new LayerState("Temp");
             layers.buildFrom(anatomy.TransparencyChanger.TransparencyInterfaces, 1.0f);
 
-            AnatomyContextWindowLiveThumbHost host = new AnatomyContextWindowLiveThumbHost(window)
+            //Create a new thumb host or update an existing one
+            if (window.ThumbHost == null)
             {
-                Layers = layers,
-                Translation = translation,
-                LookAt = center
-            };
-            liveThumbnailController.addThumbnailHost(host);
-            liveThumbnailController.setVisibility(host, true);
-            return host;
+                AnatomyContextWindowLiveThumbHost host = new AnatomyContextWindowLiveThumbHost(window)
+                {
+                    Layers = layers,
+                    Translation = translation,
+                    LookAt = center
+                };
+                liveThumbnailController.addThumbnailHost(host);
+                liveThumbnailController.setVisibility(host, true);
+                return host;                
+            }
+            else
+            {
+                window.ThumbHost.Translation = translation;
+                window.ThumbHost.LookAt = center;
+                window.ThumbHost.Layers = layers;
+                liveThumbnailController.updateCameraAndLayers(window.ThumbHost);
+                return window.ThumbHost;
+            }
         }
 
         internal void returnThumbnail(AnatomyContextWindow window)

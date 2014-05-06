@@ -98,6 +98,26 @@ namespace Medical
         }
 
         /// <summary>
+        /// Update the camera and position of a live thumb based off the host.
+        /// Set the properties on the host before calling this function.
+        /// </summary>
+        /// <param name="host"></param>
+        public void updateCameraAndLayers(LiveThumbnailHost host)
+        {
+            LiveThumbnailHostInfo info = host._HostInfo;
+            if(info.CurrentSceneView != null)
+            {
+                info.CurrentSceneView.SceneView.immediatlySetPosition(new CameraPosition()
+                {
+                    Translation = host.Translation,
+                    LookAt = host.LookAt
+                });
+                host.Layers.instantlyApplyTo(info.CurrentSceneView.SceneView.CurrentTransparencyState);
+                info.CurrentSceneView.SceneView.RenderOneFrame = true;
+            }
+        }
+
+        /// <summary>
         /// Force all thumbs to update for one frame.
         /// </summary>
         public void updateAllThumbs()
@@ -125,7 +145,7 @@ namespace Medical
 
             info.WindowCreatedCallback = (window) =>
             {
-                setupWindowLayers(window, info.Host.Layers);
+                info.Host.Layers.instantlyApplyTo(window.CurrentTransparencyState);
             };
 
             sceneView.SceneView.CameraCreated += info.WindowCreatedCallback;
@@ -179,11 +199,6 @@ namespace Medical
                     }
                 }
             }
-        }
-
-        void setupWindowLayers(SceneViewWindow window, LayerState layers)
-        {
-            layers.instantlyApplyTo(window.CurrentTransparencyState);
         }
 
         void texturePool_SceneViewDestroyed(PooledSceneView sceneView)
