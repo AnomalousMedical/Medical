@@ -13,7 +13,7 @@ namespace Medical.GUI
     public class BookmarksGUI : AbstractFullscreenGUIPopup
     {
         private static readonly int BookmarkSize = ScaleHelper.Scaled(100);
-        private static readonly int BookmarkThumbSize = BookmarkSize * 2;
+        private static readonly int BookmarkThumbSize = BookmarkSize;
 
         BookmarksController bookmarksController;
 

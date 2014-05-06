@@ -11,7 +11,7 @@ namespace Medical.GUI
     public class AnatomyContextWindowManager : IDisposable
     {
         private static readonly int ThumbSize = ScaleHelper.Scaled(50);
-        private static readonly int ThumbRenderSize = ThumbSize * 4;
+        private static readonly int ThumbRenderSize = ThumbSize;
 
         private AnatomyContextWindow currentAnatomyWindow;
         private SceneViewController sceneViewController;

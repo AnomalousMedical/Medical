@@ -20,7 +20,7 @@ namespace Medical.GUI
         }
 
         private static readonly int ThumbSize = ScaleHelper.Scaled(50);
-        private static readonly int ThumbRenderSize = ThumbSize * 4;
+        private static readonly int ThumbRenderSize = ThumbSize;
         private static readonly int lockSize = ScaleHelper.Scaled(18);
 
         private static MessageEvent pickAnatomy;
