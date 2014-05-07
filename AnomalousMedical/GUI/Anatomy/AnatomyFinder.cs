@@ -302,7 +302,7 @@ namespace Medical.GUI
                     }
                     if (matches.Count > 0)
                     {
-                        if (!this.Visible)
+                        if (MedicalConfig.AutoOpenAnatomyFinder && !this.Visible)
                         {
                             this.Visible = true;
                         }

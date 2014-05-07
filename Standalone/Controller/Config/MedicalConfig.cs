@@ -35,6 +35,7 @@ namespace Medical
 
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
+        private static bool autoOpenAnatomyFinder;
 
         private static PluginConfig pluginConfig;
 
@@ -131,6 +132,7 @@ namespace Medical
             cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
             transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
             ServerConnection.DefaultTimeout = program.getValue("DefaultTimeout", ServerConnection.DefaultTimeout);
+            autoOpenAnatomyFinder = program.getValue("AutoOpenAnatomyFinder", true);
 
             EngineConfig = new EngineConfig(configFile);
 
@@ -425,6 +427,22 @@ namespace Medical
             set
             {
                 program.setValue("CameraMouseButton", value.ToString());
+            }
+        }
+
+        public static bool AutoOpenAnatomyFinder
+        {
+            get
+            {
+                return autoOpenAnatomyFinder;
+            }
+            set
+            {
+                if (autoOpenAnatomyFinder != value)
+                {
+                    autoOpenAnatomyFinder = value;
+                    program.setValue("AutoOpenAnatomyFinder", autoOpenAnatomyFinder);
+                }
             }
         }
 

@@ -30,6 +30,7 @@ namespace Medical.GUI
         private CheckButton vsyncCheck;
         private CheckButton showStatsCheck;
         private CheckButton enableMultitouchCheck;
+        private CheckButton autoOpenAnatomyFinder;
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
         private NumericEdit maxFPS;
@@ -87,6 +88,7 @@ namespace Medical.GUI
             fullscreenCheck = new CheckButton(widget.findWidget("FullscreenCheck") as Button);
             vsyncCheck = new CheckButton(widget.findWidget("VSyncCheck") as Button);
             showStatsCheck = new CheckButton(widget.findWidget("ShowStatsCheck") as Button);
+            autoOpenAnatomyFinder = new CheckButton((Button)widget.findWidget("AutoOpenAnatomyFinder"));
 
             Button applyButton = widget.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
@@ -163,6 +165,7 @@ namespace Medical.GUI
             fullscreenCheck.Checked = MedicalConfig.EngineConfig.Fullscreen;
             vsyncCheck.Checked = OgreConfig.VSync;
             showStatsCheck.Checked = MedicalConfig.EngineConfig.ShowStatistics;
+            autoOpenAnatomyFinder.Checked = MedicalConfig.AutoOpenAnatomyFinder;
 
             String resString = String.Format("{0} x {1}", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
             uint resIndex = resolutionCombo.findItemIndexWith(resString);
@@ -220,6 +223,7 @@ namespace Medical.GUI
             MedicalConfig.CameraMouseButton = cameraButtonCode;
             OrbitCameraController.changeMouseButton(cameraButtonCode);
             MedicalConfig.DefaultScene = defaultSceneCombo.SelectedItemData.ToString();
+            MedicalConfig.AutoOpenAnatomyFinder = autoOpenAnatomyFinder.Checked;
 
             bool videoOptionsChanged = false;
 
