@@ -8,7 +8,7 @@ namespace Medical
     public class AnatomySearchList
     {
         private List<Anatomy> anatomySearchList = new List<Anatomy>();
-        public List<Anatomy> topLevelAnatomy = new List<Anatomy>();
+        private List<Anatomy> topLevelAnatomy = new List<Anatomy>();
 
         public void addAnatomy(Anatomy anatomy)
         {

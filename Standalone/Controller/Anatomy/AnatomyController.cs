@@ -19,8 +19,6 @@ namespace Medical
 
     public class AnatomyController
     {
-        private ImageRendererProperties imageProperties;
-
         public event EventHandler AnatomyChanged;
 
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
@@ -30,6 +28,31 @@ namespace Medical
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
         public event EventDelegate<AnatomyController, bool> ShowPremiumAnatomyChanged;
         private bool showPremiumAnatomy = true;
+
+        /// <summary>
+        /// Called when a piece of anatomy has been searched for and should be displayed.
+        /// </summary>
+        public event Action<Anatomy> DisplayAnatomy;
+
+        /// <summary>
+        /// Called when the display of anatomy should be cleared.
+        /// </summary>
+        public event Action ClearDisplayedAnatomy;
+
+        /// <summary>
+        /// Called when the selected anatomy changes. Note that the passed anatomy can be null, which means no selection.
+        /// </summary>
+        public event Action<Anatomy> SelectedAnatomyChanged;
+
+        /// <summary>
+        /// Fired when a search is started. This fires for all types of searches.
+        /// </summary>
+        public event Action SearchStarted;
+
+        /// <summary>
+        /// Fired when a search is ended. This fires for all types of searches.
+        /// </summary>
+        public event Action SearchEnded;
 
         public AnatomyController()
         {
@@ -62,6 +85,94 @@ namespace Medical
         {
             anatomyTagManager.clear();
             anatomySearchList.clear();
+        }
+
+        public void findAnatomy(Ray3 ray)
+        {
+            if (PickingMode != AnatomyPickingMode.None)
+            {
+                fireSearchStarted();
+                fireClearDisplayedAnatomy();
+
+                var matches = AnatomyManager.findAnatomy(ray);
+
+                HashSet<String> anatomyTags = new HashSet<String>();
+                Anatomy itemToSelect = null;
+                if (matches.Count > 0)
+                {
+                    AnatomyIdentifier firstMatch = matches[0];
+                    itemToSelect = firstMatch;
+                    foreach (AnatomyIdentifier anatomy in matches)
+                    {
+                        fireDisplayAnatomy(anatomy);
+                        foreach (AnatomyTag tag in anatomy.Tags)
+                        {
+                            anatomyTags.Add(tag.Tag);
+                        }
+                    }
+                    foreach (AnatomyTagGroup tagGroup in TagManager.Groups)
+                    {
+                        if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
+                        {
+                            fireDisplayAnatomy(tagGroup);
+                        }
+                    }
+
+                    if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
+                    {
+                        AnatomyTagGroup tagGroup;
+                        foreach (AnatomyTag tag in firstMatch.Tags)
+                        {
+                            if (anatomyTagManager.tryGetTagGroup(tag.Tag, out tagGroup) && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
+                            {
+                                itemToSelect = tagGroup;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var anatomy in SearchList.TopLevelAnatomy)
+                    {
+                        fireDisplayAnatomy(anatomy);
+                    }
+                }
+                fireSelectedAnatomyChanged(itemToSelect);
+                fireSearchEnded();
+            }
+        }
+
+        public void findAnatomy(String searchTerm)
+        {
+            fireSearchStarted();
+            fireClearDisplayedAnatomy();
+            if (String.IsNullOrEmpty(searchTerm))
+            {
+                foreach (Anatomy anatomy in SearchList.TopLevelAnatomy)
+                {
+                    fireDisplayAnatomy(anatomy);
+                }
+            }
+            else
+            {
+                foreach (Anatomy anatomy in SearchList.findMatchingAnatomy(searchTerm, 35))
+                {
+                    fireDisplayAnatomy(anatomy);
+                }
+            }
+            fireSearchEnded();
+        }
+
+        public void findRelatedAnatomy(Anatomy anatomy)
+        {
+            fireSearchStarted();
+            fireClearDisplayedAnatomy();
+            foreach (Anatomy relatedAnatomy in anatomy.RelatedAnatomy)
+            {
+                fireDisplayAnatomy(relatedAnatomy);
+            }
+            fireSearchEnded();
         }
 
         public AnatomyTagManager TagManager
@@ -115,6 +226,46 @@ namespace Medical
                         ShowPremiumAnatomyChanged.Invoke(this, showPremiumAnatomy);
                     }
                 }
+            }
+        }
+
+        private void fireDisplayAnatomy(Anatomy anatomy)
+        {
+            if (DisplayAnatomy != null)
+            {
+                DisplayAnatomy.Invoke(anatomy);
+            }
+        }
+
+        private void fireClearDisplayedAnatomy()
+        {
+            if (ClearDisplayedAnatomy != null)
+            {
+                ClearDisplayedAnatomy.Invoke();
+            }
+        }
+
+        private void fireSelectedAnatomyChanged(Anatomy anatomy)
+        {
+            if (SelectedAnatomyChanged != null)
+            {
+                SelectedAnatomyChanged.Invoke(anatomy);
+            }
+        }
+
+        private void fireSearchStarted()
+        {
+            if (SearchStarted != null)
+            {
+                SearchStarted.Invoke();
+            }
+        }
+
+        private void fireSearchEnded()
+        {
+            if (SearchEnded != null)
+            {
+                SearchEnded.Invoke();
             }
         }
     }

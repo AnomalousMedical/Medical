@@ -72,6 +72,11 @@ namespace Medical.GUI
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
+            anatomyController.ClearDisplayedAnatomy += anatomyController_ClearDisplayedAnatomy;
+            anatomyController.DisplayAnatomy += anatomyController_DisplayAnatomy;
+            anatomyController.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
+            anatomyController.SearchStarted += anatomyController_SearchStarted;
+            anatomyController.SearchEnded += anatomyController_SearchEnded;
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
 
@@ -125,21 +130,8 @@ namespace Medical.GUI
             {
                 Visible = true;
             }
-            anatomyList.SuppressLayout = true;
-            anatomyList.clear();
             searchBox.Caption = String.Format("Related to {0}", anatomy.AnatomicalName);
-            ButtonGridItem itemToSelect = null;
-            foreach (Anatomy relatedAnatomy in anatomy.RelatedAnatomy)
-            {
-                ButtonGridItem newItem = addAnatomyToList(relatedAnatomy);
-                if (itemToSelect == null)
-                {
-                    itemToSelect = newItem;
-                }
-            }
-            anatomyList.SuppressLayout = false;
-            anatomyList.layout();
-            buttonGridThumbs.determineVisibleHosts();
+            anatomyController.findRelatedAnatomy(anatomy);
         }
 
         void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)
@@ -180,26 +172,7 @@ namespace Medical.GUI
 
         private void updateSearch()
         {
-            String searchTerm = searchBox.Caption;
-            anatomyList.SuppressLayout = true;
-            anatomyList.clear();
-            if (searchTerm.Length == 0)
-            {
-                foreach (Anatomy anatomy in anatomyController.SearchList.TopLevelAnatomy)
-                {
-                    addAnatomyToList(anatomy);
-                }
-            }
-            else
-            {
-                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35))
-                {
-                    addAnatomyToList(anatomy);
-                }
-            }
-            anatomyList.SuppressLayout = false;
-            anatomyList.layout();
-            buttonGridThumbs.determineVisibleHosts();
+            anatomyController.findAnatomy(searchBox.Caption);
         }
 
         private void changeSelectedAnatomy(int left, int top)
@@ -259,91 +232,21 @@ namespace Medical.GUI
 
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
         {
-            allowAnatomySelectionChanges = false;
             Vector3 absMouse = eventManager.Mouse.getAbsMouse();
             Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
             mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
             mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);
             if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
             {
-                if (anatomyController.PickingMode != AnatomyPickingMode.None)
-                {
-                    anatomyList.SuppressLayout = true;
-                    anatomyList.clear();
+                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
+                Size2 windowSize = new Size2(activeWindow.RenderWidth, activeWindow.RenderHeight);
+                absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
+                absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
+                Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
 
-                    SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                    Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
-                    Size2 windowSize = new Size2(activeWindow.RenderWidth, activeWindow.RenderHeight);
-                    absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
-                    absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
-                    Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
-                    List<AnatomyIdentifier> matches = AnatomyManager.findAnatomy(cameraRay);
-
-                    HashSet<String> anatomyTags = new HashSet<String>();
-                    ButtonGridItem itemToSelect = null;
-                    foreach (AnatomyIdentifier anatomy in matches)
-                    {
-                        ButtonGridItem newItem = addAnatomyToList(anatomy);
-                        if (itemToSelect == null)
-                        {
-                            itemToSelect = newItem;
-                        }
-                        foreach (AnatomyTag tag in anatomy.Tags)
-                        {
-                            anatomyTags.Add(tag.Tag);
-                        }
-                    }
-                    foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
-                    {
-                        if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
-                        {
-                            addAnatomyToList(tagGroup);
-                        }
-                    }
-                    if (matches.Count > 0)
-                    {
-                        if (MedicalConfig.AutoOpenAnatomyFinder && !this.Visible)
-                        {
-                            this.Visible = true;
-                        }
-
-                        bool showPremium = anatomyController.ShowPremiumAnatomy;
-                        searchBox.Caption = "Clicked";
-                        if (anatomyController.PickingMode == AnatomyPickingMode.Group && matches[0].AllowGroupSelection || !showPremium)
-                        {
-                            //Search all tags, not just the main one in case the main one doesn't exist.
-                            foreach (AnatomyTag tag in matches[0].Tags)
-                            {
-                                itemToSelect = anatomyList.findItemByCaption(tag.Tag);
-                                if (itemToSelect != null && (showPremium || buttonGridThumbs.getUserObject(itemToSelect).ShowInBasicVersion))
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    itemToSelect = null;
-                                }
-                            }
-                        }
-                        anatomyList.SelectedItem = itemToSelect;
-                    }
-                    else
-                    {
-                        searchBox.Caption = "";
-                        updateSearch();
-                    }
-                    changeSelectedAnatomy((int)eventManager.Mouse.getAbsMouse().x, (int)eventManager.Mouse.getAbsMouse().y);
-
-                    anatomyList.SuppressLayout = false;
-                    anatomyList.layout();
-                    buttonGridThumbs.determineVisibleHosts();
-                }
-                else
-                {
-                    anatomyWindowManager.closeUnpinnedWindow();
-                }
+                anatomyController.findAnatomy(cameraRay);
             }
-            allowAnatomySelectionChanges = true;
         }
 
         void changeSelectionMode_FirstFrameUpEvent(EventManager eventManager)
@@ -470,9 +373,38 @@ namespace Medical.GUI
             updateSearch();
         }
 
+        void anatomyController_SelectedAnatomyChanged(Anatomy obj)
+        {
+            allowAnatomySelectionChanges = false;
+            anatomyList.SelectedItem = buttonGridThumbs.findItemByUserObject(obj);
+            allowAnatomySelectionChanges = true;
+        }
+
+        void anatomyController_DisplayAnatomy(Anatomy obj)
+        {
+            addAnatomyToList(obj);
+        }
+
+        void anatomyController_ClearDisplayedAnatomy()
+        {
+            anatomyList.clear();
+        }
+
         void anatomyList_ItemRemoved(ButtonGrid arg1, ButtonGridItem arg2)
         {
             buttonGridThumbs.itemRemoved(arg2);
+        }
+
+        void anatomyController_SearchStarted()
+        {
+            anatomyList.SuppressLayout = true;
+        }
+
+        void anatomyController_SearchEnded()
+        {
+            anatomyList.SuppressLayout = false;
+            anatomyList.layout();
+            buttonGridThumbs.determineVisibleHosts();
         }
 
         void anatomyList_ItemAdded(ButtonGrid arg1, ButtonGridItem arg2)

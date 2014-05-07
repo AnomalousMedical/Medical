@@ -37,6 +37,11 @@ namespace Medical
             }
         }
 
+        public bool tryGetTagGroup(String key, out AnatomyTagGroup group)
+        {
+            return anatomyTagGroups.TryGetValue(key, out group);
+        }
+
         public void clear()
         {
             foreach (AnatomyTagGroup tagGroup in anatomyTagGroups.Values)
