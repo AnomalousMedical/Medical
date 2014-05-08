@@ -222,7 +222,7 @@ namespace Medical.GUI
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                 Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
                 Size2 windowSize = new Size2(activeWindow.RenderWidth, activeWindow.RenderHeight);
-                DisplayHintLocation = new IntVector2((int)absMouse.x, (int)absMouse.y); //Set the hint location before modifying the display hint
+                DisplayHintLocation = new IntVector2((int)absMouse.x, (int)absMouse.y); //Set the hint location before modifying the abs mouse
                 absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
                 absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
                 Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
@@ -278,8 +278,16 @@ namespace Medical.GUI
 
         void anatomyList_ItemChosen(ButtonGridItem item)
         {
-            DisplayHintLocation = new IntVector2(window.Right, item.AbsoluteTop);
-            processSelection(buttonGridThumbs.getUserObject(item));
+            Anatomy anatomy = buttonGridThumbs.getUserObject(item);
+            if (anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
+            {
+                DisplayHintLocation = new IntVector2(window.Right, item.AbsoluteTop);
+                processSelection(anatomy);
+            }
+            else
+            {
+                showNagMessage();
+            }
         }
 
         private void toggleAnatomyTransparency(ButtonGridItem item)
