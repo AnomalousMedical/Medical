@@ -28,7 +28,7 @@ namespace Medical.GUI
         {
             documentScroller = (ScrollView)widget.findWidget("DocumentScroller");
             documentGrid = new SingleSelectButtonGrid(documentScroller, new ButtonGridTextAdjustedGridLayout());
-            documentGrid.ItemActivated += new EventHandler(documentGrid_ItemActivated);
+            documentGrid.ItemActivated += documentGrid_ItemActivated;
             documentGrid.SelectedValueChanged += new EventHandler(documentGrid_SelectedValueChanged);
 
             documentInfoPanel = widget.findWidget("DocumentInfoPanel");
@@ -110,7 +110,7 @@ namespace Medical.GUI
             addDocument(document);
         }
 
-        void documentGrid_ItemActivated(object sender, EventArgs e)
+        void documentGrid_ItemActivated(ButtonGridItem item)
         {
             openSelectedFile();
         }

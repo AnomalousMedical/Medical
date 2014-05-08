@@ -124,7 +124,7 @@ namespace Medical.GUI
             close();
         }
 
-        void imageGrid_ItemActivated(object sender, EventArgs e)
+        void imageGrid_ItemActivated(ButtonGridItem item)
         {
             if (SelectedValue != null)
             {

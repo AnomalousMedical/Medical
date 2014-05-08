@@ -57,9 +57,7 @@ namespace Medical.GUI
         private Vector3 mouseDownMousePos;
         private const int MOUSE_MOVE_GRACE_PIXELS = 3;
 
-        private bool allowAnatomySelectionChanges = true;
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
-
         private EventManager eventManager;
 
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, EventManager eventManager)
@@ -82,10 +80,10 @@ namespace Medical.GUI
 
             ScrollView anatomyScroll = (ScrollView)window.findWidget("AnatomyList");
             anatomyList = new HashSetMultiSelectButtonGrid(anatomyScroll, new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
-            anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
-            anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
+            anatomyList.ItemActivated += anatomyList_ItemActivated;
             anatomyList.ItemAdded += anatomyList_ItemAdded;
             anatomyList.ItemRemoved += anatomyList_ItemRemoved;
+            anatomyList.ItemChosen += anatomyList_ItemChosen;
 
             buttonGridThumbs = new ButtonGridLiveThumbnailController<Anatomy>("AnatomyFinder_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController, anatomyList, anatomyScroll);
             buttonGridThumbs.AllowThumbUpdate = false;
@@ -231,18 +229,7 @@ namespace Medical.GUI
 
                 Anatomy bestMatch = anatomyController.findAnatomy(cameraRay);
 
-                if (eventManager.Keyboard.isModifierDown(Modifier.Ctrl))
-                {
-                    anatomyController.SelectedAnatomy.addSelection(bestMatch);
-                }
-                else if(eventManager.Keyboard.isModifierDown(Modifier.Alt))
-                {
-                    anatomyController.SelectedAnatomy.removeSelection(bestMatch);
-                }
-                else
-                {
-                    anatomyController.SelectedAnatomy.setSelection(bestMatch);
-                }
+                processSelection(bestMatch);
             }
         }
 
@@ -284,25 +271,21 @@ namespace Medical.GUI
             TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
-        void anatomyList_SelectedValueChanged(object sender, EventArgs e)
+        void anatomyList_ItemActivated(ButtonGridItem item)
         {
-            if (allowAnatomySelectionChanges)
-            {
-                
-            }
+            toggleAnatomyTransparency(item);
         }
 
-        void anatomyList_ItemActivated(object sender, EventArgs e)
+        void anatomyList_ItemChosen(ButtonGridItem item)
         {
-            toggleAnatomyTransparency();
+            processSelection(buttonGridThumbs.getUserObject(item));
         }
 
-        private void toggleAnatomyTransparency()
+        private void toggleAnatomyTransparency(ButtonGridItem item)
         {
-            ButtonGridItem selectedItem = anatomyList.SelectedItem;
-            if (selectedItem != null)
+            if (item != null)
             {
-                Anatomy selectedAnatomy = buttonGridThumbs.getUserObject(selectedItem);
+                Anatomy selectedAnatomy = buttonGridThumbs.getUserObject(item);
                 if (anatomyController.ShowPremiumAnatomy || selectedAnatomy.ShowInBasicVersion)
                 {
                     TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
@@ -339,9 +322,7 @@ namespace Medical.GUI
             }
             if(anatomyController.SelectedAnatomy.isSelected(anatomy))
             {
-                allowAnatomySelectionChanges = false;
                 anatomyList.addSelected(anatomyItem);
-                allowAnatomySelectionChanges = true;
             }
             return anatomyItem;
         }
@@ -373,9 +354,7 @@ namespace Medical.GUI
 
         void anatomyController_SelectedAnatomyChanged(AnatomySelection obj)
         {
-            allowAnatomySelectionChanges = false;
             anatomyList.setSelection(selectedButtons(obj));
-            allowAnatomySelectionChanges = true;
         }
 
         IEnumerable<ButtonGridItem> selectedButtons(AnatomySelection selection)
@@ -441,6 +420,22 @@ namespace Medical.GUI
             layers.buildFrom(anatomy.TransparencyChanger.TransparencyInterfaces, 1.0f);
 
             buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
+        }
+
+        private void processSelection(Anatomy anatomy)
+        {
+            if (eventManager.Keyboard.isModifierDown(Modifier.Ctrl))
+            {
+                anatomyController.SelectedAnatomy.addSelection(anatomy);
+            }
+            else if (eventManager.Keyboard.isModifierDown(Modifier.Alt))
+            {
+                anatomyController.SelectedAnatomy.removeSelection(anatomy);
+            }
+            else
+            {
+                anatomyController.SelectedAnatomy.setSelection(anatomy);
+            }
         }
     }
 }

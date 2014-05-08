@@ -47,7 +47,7 @@ namespace Medical.GUI
 
             pluginGrid = new SingleSelectButtonGrid((ScrollView)widget.findWidget("PluginScrollList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             pluginGrid.SelectedValueChanged += new EventHandler(pluginGrid_SelectedValueChanged);
-            pluginGrid.ItemActivated += new EventHandler(pluginGrid_ItemActivated);
+            pluginGrid.ItemActivated += pluginGrid_ItemActivated;
             pluginGrid.defineGroup("Downloading");
             pluginGrid.defineGroup("Updates");
             pluginGrid.defineGroup("Not Installed");
@@ -232,7 +232,7 @@ namespace Medical.GUI
             }
         }
 
-        void pluginGrid_ItemActivated(object sender, EventArgs e)
+        void pluginGrid_ItemActivated(ButtonGridItem item)
         {
             ButtonGridItem selectedItem = pluginGrid.SelectedItem;
             ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;

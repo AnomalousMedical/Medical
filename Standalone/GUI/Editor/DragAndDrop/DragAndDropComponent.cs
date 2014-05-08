@@ -81,9 +81,8 @@ namespace Medical.GUI
             view._fireDragEnded((DragAndDropItem)source.UserObject, arg.Position);
         }
 
-        void dragItems_ItemActivated(object sender, EventArgs e)
+        void dragItems_ItemActivated(ButtonGridItem item)
         {
-            ButtonGridItem item = sender as ButtonGridItem;
             if(item != null)
             {
                 view._fireItemActivated((DragAndDropItem)item.UserObject);
