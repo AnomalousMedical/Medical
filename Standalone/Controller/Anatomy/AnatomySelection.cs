@@ -72,6 +72,14 @@ namespace Medical
             }
         }
 
+        public int Count
+        {
+            get
+            {
+                return selectedAnatomy.Count;
+            }
+        }
+
         private void fireSelectedAnatomyChanged()
         {
             if (SelectedAnatomyChanged != null)

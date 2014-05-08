@@ -230,6 +230,19 @@ namespace Medical.GUI
                 Anatomy bestMatch = anatomyController.findAnatomy(cameraRay);
 
                 processSelection(bestMatch);
+
+                if (anatomyController.SelectedAnatomy.Count > 0)
+                {
+                    searchBox.Caption = "Clicked";
+                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible)
+                    {
+                        Visible = true;
+                    }
+                }
+                else
+                {
+                    searchBox.Caption = "";
+                }
             }
         }
 
