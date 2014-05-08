@@ -86,7 +86,6 @@ namespace Medical.GUI
             anatomyList.ItemChosen += anatomyList_ItemChosen;
 
             buttonGridThumbs = new ButtonGridLiveThumbnailController<Anatomy>("AnatomyFinder_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController, anatomyList, anatomyScroll);
-            buttonGridThumbs.AllowThumbUpdate = false;
 
             searchBox = (EditBox)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
@@ -354,13 +353,6 @@ namespace Medical.GUI
             base.onShown(args);
             int itemCount = anatomyList.Count;
             float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
-            buttonGridThumbs.AllowThumbUpdate = true;
-        }
-
-        protected override void onClosed(EventArgs args)
-        {
-            buttonGridThumbs.AllowThumbUpdate = false;
-            base.onClosed(args);
         }
 
         private static void showNagMessage()

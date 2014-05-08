@@ -42,12 +42,12 @@ namespace UnitTestPlugin.GUI
 
             liveThumbHost = new ButtonGridLiveThumbnailController("TestRTT_", new IntSize2(200, 200), sceneViewController, buttonGrid, scrollView);
 
-            numToUpdateEdit = (EditBox)window.findWidget("NumToUpdate");
-            numToUpdateEdit.Caption = LiveThumbnailUpdater.NumImagesToUpdate.ToString();
-            secondsToSleepEdit = (EditBox)window.findWidget("SecondsToSleep");
-            secondsToSleepEdit.Caption = LiveThumbnailUpdater.SecondsToSleep.ToString();
-            Button applyButton = (Button)window.findWidget("ApplyButton");
-            applyButton.MouseButtonClick += applyButton_MouseButtonClick;
+            //numToUpdateEdit = (EditBox)window.findWidget("NumToUpdate");
+            //numToUpdateEdit.Caption = LiveThumbnailUpdater.NumImagesToUpdate.ToString();
+            //secondsToSleepEdit = (EditBox)window.findWidget("SecondsToSleep");
+            //secondsToSleepEdit.Caption = LiveThumbnailUpdater.SecondsToSleep.ToString();
+            //Button applyButton = (Button)window.findWidget("ApplyButton");
+            //applyButton.MouseButtonClick += applyButton_MouseButtonClick;
         }
 
         public override void Dispose()
@@ -57,19 +57,19 @@ namespace UnitTestPlugin.GUI
             base.Dispose();
         }
 
-        void applyButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            int numImagesToUpdate;
-            if (int.TryParse(numToUpdateEdit.Caption, out numImagesToUpdate))
-            {
-                LiveThumbnailUpdater.NumImagesToUpdate = numImagesToUpdate;
-            }
-            double secondsToSleep;
-            if (double.TryParse(secondsToSleepEdit.Caption, out secondsToSleep))
-            {
-                LiveThumbnailUpdater.SecondsToSleep = secondsToSleep;
-            }
-        }
+        //void applyButton_MouseButtonClick(Widget source, EventArgs e)
+        //{
+        //    int numImagesToUpdate;
+        //    if (int.TryParse(numToUpdateEdit.Caption, out numImagesToUpdate))
+        //    {
+        //        LiveThumbnailUpdater.NumImagesToUpdate = numImagesToUpdate;
+        //    }
+        //    double secondsToSleep;
+        //    if (double.TryParse(secondsToSleepEdit.Caption, out secondsToSleep))
+        //    {
+        //        LiveThumbnailUpdater.SecondsToSleep = secondsToSleep;
+        //    }
+        //}
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {

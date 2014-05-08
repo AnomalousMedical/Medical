@@ -133,7 +133,6 @@ namespace Medical
 
         public void Dispose()
         {
-            LiveThumbnailUpdater.Shutdown();
             unloadScene();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
