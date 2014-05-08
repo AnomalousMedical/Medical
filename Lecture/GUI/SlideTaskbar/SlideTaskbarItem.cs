@@ -22,7 +22,7 @@ namespace Lecture.GUI
             taskButton.ImageBox.setItemResource(task.IconName);
             taskButton.MouseButtonClick += new MyGUIEvent(taskButton_MouseButtonClick);
             taskButton.EventToolTip += new MyGUIEvent(taskButton_EventToolTip);
-            if (task.Draggable)
+            if (task.Dragable)
             {
                 taskButton.MouseDrag += taskButton_MouseDrag;
                 taskButton.MouseButtonPressed += taskButton_MouseButtonPressed;

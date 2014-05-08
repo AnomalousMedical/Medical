@@ -10,11 +10,11 @@ namespace Medical
 {
     public class ExamSaveMemberScanner : MemberScannerFilter
     {
-        private static MemberScanner scanner;
+        private static FilteredMemberScanner scanner;
 
         static ExamSaveMemberScanner()
         {
-            scanner = new MemberScanner(new ExamSaveMemberScanner());
+            scanner = new FilteredMemberScanner(new ExamSaveMemberScanner());
             scanner.ProcessProperties = false;
         }
 

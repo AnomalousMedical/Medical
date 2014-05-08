@@ -8,11 +8,11 @@ namespace Medical
 {
     class AbstractExamMemberScanner : MemberScannerFilter
     {
-        static MemberScanner memberScanner;
+        static FilteredMemberScanner memberScanner;
 
         static AbstractExamMemberScanner()
         {
-            memberScanner = new MemberScanner(new AbstractExamMemberScanner());
+            memberScanner = new FilteredMemberScanner(new AbstractExamMemberScanner());
             memberScanner.ProcessFields = false;
             memberScanner.ProcessNonPublicFields = false;
             memberScanner.ProcessNonPublicProperties = false;

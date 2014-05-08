@@ -188,14 +188,17 @@ namespace Medical.GUI
 
         void taskController_TaskAdded(Task task)
         {
-            task.IconChanged += task_IconChanged;
-            ButtonGridItem item = iconGrid.addItem(task.Category, task.Name, task.IconName);
-            item.UserObject = task;
-            item.ItemClicked += new EventHandler(item_ItemClicked);
-            task.RequestShowInTaskbar += new TaskDelegate(taskItem_RequestShowInTaskbar);
-            item.MouseButtonPressed += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonPressed);
-            item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
-            item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
+            if (task.ShowOnTaskMenu)
+            {
+                task.IconChanged += task_IconChanged;
+                ButtonGridItem item = iconGrid.addItem(task.Category, task.Name, task.IconName);
+                item.UserObject = task;
+                item.ItemClicked += new EventHandler(item_ItemClicked);
+                task.RequestShowInTaskbar += new TaskDelegate(taskItem_RequestShowInTaskbar);
+                item.MouseButtonPressed += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonPressed);
+                item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
+                item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
+            }
         }
 
         void task_IconChanged(Task task)

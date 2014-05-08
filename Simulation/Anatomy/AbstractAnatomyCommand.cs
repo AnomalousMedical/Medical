@@ -16,7 +16,7 @@ namespace Medical
     /// </summary>
     public abstract class AbstractAnatomyCommand : AnatomyCommand
     {
-        protected static MemberScanner memberScanner = new MemberScanner();
+        protected static FilteredMemberScanner memberScanner = new FilteredMemberScanner();
 
         static AbstractAnatomyCommand()
         {

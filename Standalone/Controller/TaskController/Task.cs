@@ -27,7 +27,8 @@ namespace Medical
             Weight = DEFAULT_WEIGHT;
             ShowOnTaskbar = true;
             ShowOnTimelineTaskbar = false;
-            Draggable = false;
+            Dragable = false;
+            ShowOnTaskMenu = true;
         }
 
         /// <summary>
@@ -69,7 +70,9 @@ namespace Medical
 
         public bool ShowOnTimelineTaskbar { get; set; }
 
-        public bool Draggable { get; set; }
+        public bool ShowOnTaskMenu { get; set; }
+
+        public bool Dragable { get; set; }
 
         protected void fireItemClosed()
         {

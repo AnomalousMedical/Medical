@@ -15,11 +15,11 @@ namespace Medical
     /// </summary>
     public class SaveableClipboardContainer : Saveable
     {
-        private static MemberScanner scanner;
+        private static FilteredMemberScanner scanner;
 
         static SaveableClipboardContainer()
         {
-            scanner = new MemberScanner(new SaveableClipboardContainerMemberFilter());
+            scanner = new FilteredMemberScanner(new SaveableClipboardContainerMemberFilter());
             scanner.ProcessProperties = false;
         }
 

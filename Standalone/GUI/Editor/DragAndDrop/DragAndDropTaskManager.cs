@@ -57,7 +57,7 @@ namespace Medical.GUI
         {
             CallbackTaskWithObject<ItemType> task = new CallbackTaskWithObject<ItemType>(item.Name, String.Format("Add {0}", item.Name), item.Icon, Category)
             {
-                Draggable = true,
+                Dragable = true,
                 UserObject = item
             };
             task.OnClicked += task_OnClicked;

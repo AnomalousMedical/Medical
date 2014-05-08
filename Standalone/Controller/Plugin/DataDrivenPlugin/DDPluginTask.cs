@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine.Editing;
+using Engine.Reflection;
 
 namespace Medical
 {
@@ -86,6 +87,8 @@ namespace Medical
         {
             TaskUniqueName = info.GetString("TaskUniqueName", UniqueName);
             ShowOnTaskbar = info.GetBoolean("ShowOnTaskbar", ShowOnTaskbar);
+            ShowOnTimelineTaskbar = info.GetBoolean("ShowOnTimelineTaskbar", ShowOnTimelineTaskbar);
+            ShowOnTaskMenu = info.GetBoolean("ShowOnTaskMenu", ShowOnTaskMenu);
         }
 
         public virtual void getInfo(SaveInfo info)
@@ -96,11 +99,15 @@ namespace Medical
             info.AddValue("Category", Category);
             info.AddValue("TaskUniqueName", TaskUniqueName);
             info.AddValue("ShowOnTaskbar", ShowOnTaskbar);
+            info.AddValue("ShowOnTimelineTaskbar", ShowOnTimelineTaskbar);
+            info.AddValue("ShowOnTaskMenu", ShowOnTaskMenu);
         }
     }
 
     partial class DDPluginTask
     {
+        private static DDPluginScanner scanner = new DDPluginScanner();
+
         private EditInterface editInterface;
 
         public EditInterface EditInterface
@@ -109,9 +116,29 @@ namespace Medical
             {
                 if (editInterface == null)
                 {
-                    editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, String.Format("{0} - {1}", UniqueName, GetType().Name), null);
+                    editInterface = ReflectedEditInterface.createEditInterface(this, scanner, String.Format("{0} - {1}", UniqueName, GetType().Name), null);
                 }
                 return editInterface;
+            }
+        }
+
+        /// <summary>
+        /// A scanner for DDPluginTasks, needed because the base class isn't marked up as editable, but we want to be able
+        /// to include these anyway.
+        /// </summary>
+        class DDPluginScanner : MemberScanner
+        {
+            public IEnumerable<MemberWrapper> getMatchingMembers(Type type)
+            {
+                foreach(var wrapper in ReflectedEditInterface.DefaultScanner.getMatchingMembers(type))
+                {
+                    yield return wrapper;
+                }
+
+                yield return new PropertyMemberWrapper(type.GetProperty("ShowOnTaskbar"));
+                yield return new PropertyMemberWrapper(type.GetProperty("ShowOnTimelineTaskbar"));
+                yield return new PropertyMemberWrapper(type.GetProperty("ShowOnTaskMenu"));
+                yield return new PropertyMemberWrapper(type.GetProperty("Dragable"));
             }
         }
     }
