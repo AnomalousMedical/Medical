@@ -278,6 +278,7 @@ namespace Medical.GUI
 
         void anatomyList_ItemChosen(ButtonGridItem item)
         {
+            DisplayHintLocation = new IntVector2(window.Right, item.AbsoluteTop);
             processSelection(buttonGridThumbs.getUserObject(item));
         }
 

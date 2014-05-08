@@ -59,7 +59,7 @@ namespace Medical
                     case 1:
                         return selectedAnatomy.First();
                     default:
-                        return new AnatomySelectionGroup(selectedAnatomy);
+                        return new AnatomySelectionGroup(this);
                 }
             }
         }

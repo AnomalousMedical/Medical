@@ -13,56 +13,18 @@ namespace Medical
     /// </summary>
     class AnatomySelectionGroup : Anatomy
     {
+        private AnatomySelection selection;
         private HashSet<Anatomy> groupAnatomy = new HashSet<Anatomy>();
         private List<AnatomyCommand> groupCommands = new List<AnatomyCommand>();
 
-        public AnatomySelectionGroup()
+        public AnatomySelectionGroup(AnatomySelection selection)
         {
-
-        }
-
-        public AnatomySelectionGroup(IEnumerable<Anatomy> items)
-        {
-            foreach(var item in items)
-            {
-                addAnatomy(item);
-            }
-        }
-
-        public void addAnatomy(Anatomy anatomy)
-        {
-            if (anatomy != null)
+            this.selection = selection;
+            foreach(var anatomy in selection.SelectedAnatomy)
             {
                 foreach (var selectable in anatomy.SelectableAnatomy)
                 {
                     addSingleAnatomy(selectable);
-                }
-            }
-        }
-
-        private void addSingleAnatomy(Anatomy anatomy)
-        {
-            //Only add the anatomy if we haven't yet.
-            if (!groupAnatomy.Contains(anatomy))
-            {
-                groupAnatomy.Add(anatomy);
-                foreach (AnatomyCommand command in anatomy.Commands)
-                {
-                    bool foundCommand = false;
-                    foreach (AnatomyCommand groupCommand in groupCommands)
-                    {
-                        if (groupCommand.UIText == command.UIText)
-                        {
-                            command.addToTagGroupCommand(groupCommand);
-                            foundCommand = true;
-                            break;
-                        }
-                    }
-                    if (!foundCommand)
-                    {
-                        AnatomyCommand compoundCommand = command.createTagGroupCommand();
-                        groupCommands.Add(compoundCommand);
-                    }
                 }
             }
         }
@@ -87,7 +49,7 @@ namespace Medical
         {
             get
             {
-                yield break;
+                return selection.SelectedAnatomy;
             }
         }
 
@@ -164,6 +126,33 @@ namespace Medical
             get
             {
                 return true;
+            }
+        }
+
+        private void addSingleAnatomy(Anatomy anatomy)
+        {
+            //Only add the anatomy if we haven't yet.
+            if (!groupAnatomy.Contains(anatomy))
+            {
+                groupAnatomy.Add(anatomy);
+                foreach (AnatomyCommand command in anatomy.Commands)
+                {
+                    bool foundCommand = false;
+                    foreach (AnatomyCommand groupCommand in groupCommands)
+                    {
+                        if (groupCommand.UIText == command.UIText)
+                        {
+                            command.addToTagGroupCommand(groupCommand);
+                            foundCommand = true;
+                            break;
+                        }
+                    }
+                    if (!foundCommand)
+                    {
+                        AnatomyCommand compoundCommand = command.createTagGroupCommand();
+                        groupCommands.Add(compoundCommand);
+                    }
+                }
             }
         }
     }
