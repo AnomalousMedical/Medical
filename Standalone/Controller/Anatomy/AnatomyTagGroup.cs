@@ -82,6 +82,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<Anatomy> SelectableAnatomy
+        {
+            get
+            {
+                return groupAnatomy;
+            }
+        }
+
         public AxisAlignedBox WorldBoundingBox
         {
             get

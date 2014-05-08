@@ -40,11 +40,6 @@ namespace Medical
         public event Action ClearDisplayedAnatomy;
 
         /// <summary>
-        /// Called when the selected anatomy changes. Note that the passed anatomy can be null, which means no selection.
-        /// </summary>
-        public event Action<Anatomy> SelectedAnatomyChanged;
-
-        /// <summary>
         /// Fired when a search is started. This fires for all types of searches.
         /// </summary>
         public event Action SearchStarted;
@@ -87,8 +82,9 @@ namespace Medical
             anatomySearchList.clear();
         }
 
-        public void findAnatomy(Ray3 ray)
+        public Anatomy findAnatomy(Ray3 ray)
         {
+            Anatomy bestMatchAnatomy = null;
             if (PickingMode != AnatomyPickingMode.None)
             {
                 fireSearchStarted();
@@ -97,11 +93,10 @@ namespace Medical
                 var matches = AnatomyManager.findAnatomy(ray);
 
                 HashSet<String> anatomyTags = new HashSet<String>();
-                Anatomy itemToSelect = null;
                 if (matches.Count > 0)
                 {
                     AnatomyIdentifier firstMatch = matches[0];
-                    itemToSelect = firstMatch;
+                    bestMatchAnatomy = firstMatch;
                     foreach (AnatomyIdentifier anatomy in matches)
                     {
                         fireDisplayAnatomy(anatomy);
@@ -125,7 +120,7 @@ namespace Medical
                         {
                             if (anatomyTagManager.tryGetTagGroup(tag.Tag, out tagGroup) && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
                             {
-                                itemToSelect = tagGroup;
+                                bestMatchAnatomy = tagGroup;
                                 break;
                             }
                         }
@@ -138,9 +133,9 @@ namespace Medical
                         fireDisplayAnatomy(anatomy);
                     }
                 }
-                fireSelectedAnatomyChanged(itemToSelect);
                 fireSearchEnded();
             }
+            return bestMatchAnatomy;
         }
 
         public void findAnatomy(String searchTerm)
@@ -229,6 +224,15 @@ namespace Medical
             }
         }
 
+        private AnatomySelection selectedAnatomy = new AnatomySelection();
+        public AnatomySelection SelectedAnatomy
+        {
+            get
+            {
+                return selectedAnatomy;
+            }
+        }
+
         private void fireDisplayAnatomy(Anatomy anatomy)
         {
             if (DisplayAnatomy != null)
@@ -242,14 +246,6 @@ namespace Medical
             if (ClearDisplayedAnatomy != null)
             {
                 ClearDisplayedAnatomy.Invoke();
-            }
-        }
-
-        private void fireSelectedAnatomyChanged(Anatomy anatomy)
-        {
-            if (SelectedAnatomyChanged != null)
-            {
-                SelectedAnatomyChanged.Invoke(anatomy);
             }
         }
 

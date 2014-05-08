@@ -157,6 +157,15 @@ namespace Medical
             }
         }
 
+        [DoNotCopy]
+        public IEnumerable<Anatomy> SelectableAnatomy
+        {
+            get
+            {
+                yield return this;
+            }
+        }
+
         public AxisAlignedBox WorldBoundingBox
         {
             get

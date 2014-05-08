@@ -93,6 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
+    <Compile Include="Controller\Anatomy\AnatomySelection.cs" />
+    <Compile Include="Controller\Anatomy\AnatomySelectionGroup.cs" />
     <Compile Include="Controller\Anatomy\NullTransparencyChanger.cs" />
     <Compile Include="Controller\AnomalousMvc\ActiveContextManager.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcContext.cs" />

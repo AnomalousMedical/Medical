@@ -43,7 +43,7 @@ namespace Medical.GUI
             DefaultEvents.registerDefaultEvent(openAnatomyFinder);
         }
 
-        private SingleSelectButtonGrid anatomyList;
+        private HashSetMultiSelectButtonGrid anatomyList;
         private EditBox searchBox;
 
         private AnatomyContextWindowManager anatomyWindowManager;
@@ -74,14 +74,14 @@ namespace Medical.GUI
             anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
             anatomyController.ClearDisplayedAnatomy += anatomyController_ClearDisplayedAnatomy;
             anatomyController.DisplayAnatomy += anatomyController_DisplayAnatomy;
-            anatomyController.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
+            anatomyController.SelectedAnatomy.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
             anatomyController.SearchStarted += anatomyController_SearchStarted;
             anatomyController.SearchEnded += anatomyController_SearchEnded;
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
 
             ScrollView anatomyScroll = (ScrollView)window.findWidget("AnatomyList");
-            anatomyList = new SingleSelectButtonGrid(anatomyScroll, new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
+            anatomyList = new HashSetMultiSelectButtonGrid(anatomyScroll, new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
             anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
             anatomyList.ItemAdded += anatomyList_ItemAdded;
@@ -134,6 +134,23 @@ namespace Medical.GUI
             anatomyController.findRelatedAnatomy(anatomy);
         }
 
+        public IntCoord DeadZone
+        {
+            get
+            {
+                if (window.Visible)
+                {
+                    return new IntCoord(window.Left, window.Top, window.Width, window.Height);
+                }
+                else
+                {
+                    return new IntCoord(int.MinValue, int.MinValue, int.MinValue, int.MinValue);
+                }
+            }
+        }
+
+        public IntVector2 DisplayHintLocation { get; private set; }
+
         void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)
         {
             if (!Gui.Instance.HandledKeyboardButtons || InputManager.Instance.getKeyFocusWidget().RootWidget == window)
@@ -175,40 +192,6 @@ namespace Medical.GUI
             anatomyController.findAnatomy(searchBox.Caption);
         }
 
-        private void changeSelectedAnatomy(int left, int top)
-        {
-            ButtonGridItem selectedItem = anatomyList.SelectedItem;
-            if (selectedItem != null)
-            {
-                Anatomy anatomy = buttonGridThumbs.getUserObject(selectedItem);
-                if (anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
-                {
-                    int deadLeft = int.MinValue;
-                    int deadRight = int.MinValue;
-                    int deadBottom = int.MinValue;
-                    int deadTop = int.MinValue;
-
-                    if (window.Visible)
-                    {
-                        deadLeft = window.Left;
-                        deadRight = window.Right;
-                        deadBottom = window.Bottom;
-                        deadTop = window.Top;
-                    }
-
-                    anatomyWindowManager.showWindow(anatomy, left, top, deadLeft, deadRight, deadTop, deadBottom);
-                }
-                else
-                {
-                    showNagMessage();
-                }
-            }
-            else
-            {
-                anatomyWindowManager.closeUnpinnedWindow();
-            }
-        }
-
         void mouse_ButtonUp(Mouse mouse, MouseButtonCode buttonCode)
         {
             if (buttonCode == MouseButtonCode.MB_BUTTON0)
@@ -241,11 +224,25 @@ namespace Medical.GUI
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                 Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
                 Size2 windowSize = new Size2(activeWindow.RenderWidth, activeWindow.RenderHeight);
+                DisplayHintLocation = new IntVector2((int)absMouse.x, (int)absMouse.y); //Set the hint location before modifying the display hint
                 absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
                 absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
                 Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
 
-                anatomyController.findAnatomy(cameraRay);
+                Anatomy bestMatch = anatomyController.findAnatomy(cameraRay);
+
+                if (eventManager.Keyboard.isModifierDown(Modifier.Ctrl))
+                {
+                    anatomyController.SelectedAnatomy.addSelection(bestMatch);
+                }
+                else if(eventManager.Keyboard.isModifierDown(Modifier.Alt))
+                {
+                    anatomyController.SelectedAnatomy.removeSelection(bestMatch);
+                }
+                else
+                {
+                    anatomyController.SelectedAnatomy.setSelection(bestMatch);
+                }
             }
         }
 
@@ -291,12 +288,7 @@ namespace Medical.GUI
         {
             if (allowAnatomySelectionChanges)
             {
-                int top = 0;
-                if (anatomyList.SelectedItem != null)
-                {
-                    top = anatomyList.SelectedItem.AbsoluteTop;
-                }
-                changeSelectedAnatomy(window.Right, top);
+                
             }
         }
 
@@ -345,6 +337,12 @@ namespace Medical.GUI
                 lockedFeatureImage.NeedMouseFocus = false;
                 lockedFeatureImage.setItemResource("LockedFeature");
             }
+            if(anatomyController.SelectedAnatomy.isSelected(anatomy))
+            {
+                allowAnatomySelectionChanges = false;
+                anatomyList.addSelected(anatomyItem);
+                allowAnatomySelectionChanges = true;
+            }
             return anatomyItem;
         }
 
@@ -373,11 +371,23 @@ namespace Medical.GUI
             updateSearch();
         }
 
-        void anatomyController_SelectedAnatomyChanged(Anatomy obj)
+        void anatomyController_SelectedAnatomyChanged(AnatomySelection obj)
         {
             allowAnatomySelectionChanges = false;
-            anatomyList.SelectedItem = buttonGridThumbs.findItemByUserObject(obj);
+            anatomyList.setSelection(selectedButtons(obj));
             allowAnatomySelectionChanges = true;
+        }
+
+        IEnumerable<ButtonGridItem> selectedButtons(AnatomySelection selection)
+        {
+            foreach(var selected in selection.SelectedAnatomy)
+            {
+                ButtonGridItem item = buttonGridThumbs.findItemByUserObject(selected);
+                if(item != null)
+                {
+                    yield return item;
+                }
+            }
         }
 
         void anatomyController_DisplayAnatomy(Anatomy obj)

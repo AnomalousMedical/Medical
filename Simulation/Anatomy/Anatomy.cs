@@ -27,6 +27,11 @@ namespace Medical
         IEnumerable<Anatomy> RelatedAnatomy { get; }
 
         /// <summary>
+        /// Get an enumerator over all anatomy that can be added to a selection from this piece of antomy.
+        /// </summary>
+        IEnumerable<Anatomy> SelectableAnatomy { get; }
+
+        /// <summary>
         /// Get an AxisAlignedBox bounding volume.
         /// </summary>
         AxisAlignedBox WorldBoundingBox { get; }

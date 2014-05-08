@@ -28,6 +28,7 @@ namespace Medical.GUI
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;
+            this.anatomyController.SelectedAnatomy.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
             this.anatomyFinder = anatomyFinder;
 
             liveThumbnailController = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
@@ -58,20 +59,26 @@ namespace Medical.GUI
             }
         }
 
-        public AnatomyContextWindow showWindow(Anatomy anatomy, int left, int top, int deadzoneLeft, int deadzoneRight, int deadzoneTop, int deadzoneBottom)
+        public AnatomyContextWindow showWindow(Anatomy anatomy, IntVector2 position, IntCoord deadZone)
         {
             if (currentAnatomyWindow == null)
             {
                 currentAnatomyWindow = new AnatomyContextWindow(this);
                 currentAnatomyWindow.SmoothShow = true;
             }
-            currentAnatomyWindow.show(left, top);
+            currentAnatomyWindow.show(position.x, position.y);
             currentAnatomyWindow.Anatomy = anatomy;
             int windowTop = currentAnatomyWindow.Top;
             int windowBottom = windowTop + currentAnatomyWindow.Height;
             int windowLeft = currentAnatomyWindow.Left;
             int windowWidth = currentAnatomyWindow.Width;
             int windowRight = windowLeft + windowWidth;
+
+            int deadzoneTop = deadZone.top;
+            int deadzoneBottom = deadZone.Bottom;
+            int deadzoneLeft = deadZone.left;
+            int deadzoneRight = deadZone.Right;
+
             //Check to see if the window is in the dead zone.
             if (((windowTop > deadzoneTop && windowTop < deadzoneBottom) ||
                 (windowBottom > deadzoneTop && windowBottom < deadzoneBottom)) &&
@@ -222,6 +229,19 @@ namespace Medical.GUI
                 };
 
                 window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
+            }
+        }
+
+        void anatomyController_SelectedAnatomyChanged(AnatomySelection anatomySelection)
+        {
+            Anatomy anatomy = anatomySelection.Anatomy;
+            if (anatomy != null)
+            {
+                showWindow(anatomy, anatomyFinder.DisplayHintLocation, anatomyFinder.DeadZone);
+            }
+            else
+            {
+                closeUnpinnedWindow();
             }
         }
     }
