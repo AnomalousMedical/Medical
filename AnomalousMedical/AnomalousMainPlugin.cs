@@ -45,6 +45,7 @@ namespace Medical.GUI
         private TaskMenu taskMenu;
         private GUITaskManager guiTaskManager;
         private SingleChildChainLink taskbarLink;
+        private PremiumFeaturesTaskMenuAd taskMenuAd;
 
         //Tasks
         private SelectionModeTask selectionModeTask;
@@ -65,6 +66,7 @@ namespace Medical.GUI
 
             IDisposableUtil.DisposeIfNotNull(bookmarks);
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
+            IDisposableUtil.DisposeIfNotNull(taskMenuAd);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             renderDialog.Dispose();
@@ -210,13 +212,11 @@ namespace Medical.GUI
             {
                 bookmarksController.NonPremiumBookmarksResourceProvider = new EmbeddedResourceProvider(this.GetType().Assembly, "Medical.Resources.Bookmarks.");
                 buyScreens = new BuyScreenController(standaloneController);
-                taskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
+                taskMenuAd = new PremiumFeaturesTaskMenuAd(taskMenu);
                 selectionModeTask.SelectionModeChooser.ShowBuyMessage += SelectionModeChooser_ShowBuyMessage;
                 anatomyFinder.ShowBuyMessage += anatomyFinder_ShowBuyMessage;
                 bookmarks.ShowBuyMessage += bookmarks_ShowBuyMessage;
             }
-            taskMenu.ShowAdImage = !hasPremium;
-            taskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)
@@ -448,8 +448,14 @@ namespace Medical.GUI
                     }
                 }
                 bookmarksController.loadSavedBookmarks();
+
+                //Turn off the ad
+                if(taskMenuAd != null)
+                {
+                    taskMenuAd.Dispose();
+                    taskMenuAd = null;
+                }
             }
-            taskMenu.ShowAdImage = !isPremium;
         }
 
         void bookmarks_ShowBuyMessage()

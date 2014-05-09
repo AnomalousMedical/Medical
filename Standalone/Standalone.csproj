@@ -410,6 +410,7 @@
     <Compile Include="GUI\SceneStats\SceneStatsDisplayManager.cs" />
     <Compile Include="GUI\Taskbar\AppButtonTaskbar.cs" />
     <Compile Include="GUI\Taskbar\ClosingTaskbar.cs" />
+    <Compile Include="GUI\TaskMenu\TaskMenuAdProvider.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
     <Compile Include="Layout\AnimatedLayoutContainer.cs" />

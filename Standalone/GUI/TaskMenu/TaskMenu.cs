@@ -26,9 +26,7 @@ namespace Medical.GUI
         }
 
         private const int UNKNOWN_GROUP_WEIGHT = int.MaxValue / 2;
-        private static readonly int AdWidth = ScaleHelper.Scaled(230);
-        private static readonly int AdHeight = ScaleHelper.Scaled(460);
-        private static readonly int WithAdTaskMenuPosition = ScaleHelper.Scaled(240);
+        private static readonly int AdPadding = ScaleHelper.Scaled(10);
 
         private NoSelectButtonGrid iconGrid;
         private ScrollView iconScroller;
@@ -46,10 +44,7 @@ namespace Medical.GUI
 
         private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
-        private ImageBox adImage = null;
-
-        private bool firstTimeShown = true;
-        private bool showAdImage = true;
+        private TaskMenuAdProvider adProvider;
 
         private TaskMenuPositioner taskMenuPositioner = new TaskMenuPositioner();
 
@@ -89,8 +84,6 @@ namespace Medical.GUI
 
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
-
-            this.Showing += new EventHandler(TaskMenu_Showing);
         }
 
         public override void Dispose()
@@ -119,30 +112,37 @@ namespace Medical.GUI
             }
         }
 
-        public String AdImageKey { get; set; }
-
-        public String AdImageUrl { get; set; }
-
-        public bool ShowAdImage
+        public TaskMenuAdProvider AdProvider
         {
             get
             {
-                return showAdImage;
+                return adProvider;
             }
             set
             {
-                showAdImage = value;
-                if (!showAdImage && adImage != null)
+                if (adProvider != null)
                 {
-                    IntCoord coord = new IntCoord(2, iconScroller.Top, widget.Width, iconScroller.Height);
-                    adImage.MouseButtonClick -= adImage_MouseButtonClick;
-                    Gui.Instance.destroyWidget(adImage);
-                    adImage = null;
-                    iconScroller.setPosition(coord.left, coord.top);
-                    iconScroller.setSize(coord.width, coord.height);
-                    iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
-                    recentDocuments.moveAndResize(coord);
+                    adProvider.AdCreated -= adProvider_AdCreated;
+                    adProvider.AdDestroyed -= adProvider_AdDestroyed;
+                    adProvider.ParentWidget = null;
                 }
+
+                this.adProvider = value;
+
+                if(adProvider != null)
+                {
+                    adProvider.AdCreated += adProvider_AdCreated;
+                    adProvider.AdDestroyed += adProvider_AdDestroyed;
+                    adProvider.ParentWidget = widget;
+                }
+            }
+        }
+
+        public int AdTop
+        {
+            get
+            {
+                return iconScroller.Top;
             }
         }
 
@@ -155,30 +155,6 @@ namespace Medical.GUI
                 iconGrid.resizeAndLayout(viewCoord.width);
                 recentDocuments.resizeAndLayout();
             }
-        }
-
-        void TaskMenu_Showing(object sender, EventArgs e)
-        {
-            if (firstTimeShown)
-            {
-                if (ShowAdImage && AdImageKey != null)
-                {
-                    IntCoord coord = new IntCoord(WithAdTaskMenuPosition, iconScroller.Top, widget.Width - WithAdTaskMenuPosition, iconScroller.Height);
-                    firstTimeShown = false;
-                    iconScroller.setPosition(coord.left, coord.top);
-                    iconScroller.setSize(coord.width, coord.height);
-                    iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
-                    recentDocuments.moveAndResize(coord);
-                    adImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", 2, iconScroller.Top, AdWidth, AdHeight, Align.Left | Align.Top, "");
-                    adImage.setItemResource(AdImageKey);
-                    adImage.MouseButtonClick += adImage_MouseButtonClick;
-                }
-            }
-        }
-
-        void adImage_MouseButtonClick(Widget source, EventArgs e)
-        {
-            OtherProcessManager.openUrlInBrowser(AdImageUrl);
         }
 
         void taskController_TaskRemoved(Task task)
@@ -281,7 +257,7 @@ namespace Medical.GUI
             this.hide();
         }
 
-        public int GroupCompare(Object x, Object y)
+        private int GroupCompare(Object x, Object y)
         {
             int xWeight = UNKNOWN_GROUP_WEIGHT;
             int yWeight = UNKNOWN_GROUP_WEIGHT;
@@ -294,6 +270,25 @@ namespace Medical.GUI
                 yWeight = (int)y;
             }
             return xWeight - yWeight;
+        }
+
+        void adProvider_AdDestroyed(TaskMenuAdProvider adProvider)
+        {
+            IntCoord coord = new IntCoord(2, iconScroller.Top, widget.Width, iconScroller.Height);
+            iconScroller.setPosition(coord.left, coord.top);
+            iconScroller.setSize(coord.width, coord.height);
+            iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
+            recentDocuments.moveAndResize(coord);
+        }
+
+        void adProvider_AdCreated(TaskMenuAdProvider adProvider)
+        {
+            int right = adProvider.Right + AdPadding;
+            IntCoord coord = new IntCoord(right, iconScroller.Top, widget.Width - right, iconScroller.Height);
+            iconScroller.setPosition(coord.left, coord.top);
+            iconScroller.setSize(coord.width, coord.height);
+            iconGrid.resizeAndLayout(iconScroller.ViewCoord.width);
+            recentDocuments.moveAndResize(coord);
         }
     }
 }
