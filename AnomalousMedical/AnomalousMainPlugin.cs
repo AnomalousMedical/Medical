@@ -219,21 +219,6 @@ namespace Medical.GUI
             taskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
         }
 
-        void bookmarks_ShowBuyMessage()
-        {
-            buyScreens.showScreen(BuyScreens.Bookmarks);
-        }
-
-        void anatomyFinder_ShowBuyMessage()
-        {
-            buyScreens.showScreen(BuyScreens.AnatomyFinder);
-        }
-
-        void SelectionModeChooser_ShowBuyMessage()
-        {
-            buyScreens.showScreen(BuyScreens.SelectionMode);
-        }
-
         void blogTaskItem_OnClicked(CallbackTask item)
         {
             OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalBlogURL);
@@ -465,6 +450,21 @@ namespace Medical.GUI
                 bookmarksController.loadSavedBookmarks();
             }
             taskMenu.ShowAdImage = !isPremium;
+        }
+
+        void bookmarks_ShowBuyMessage()
+        {
+            buyScreens.showScreen(BuyScreens.Bookmarks);
+        }
+
+        void anatomyFinder_ShowBuyMessage()
+        {
+            buyScreens.showScreen(BuyScreens.AnatomyFinder);
+        }
+
+        void SelectionModeChooser_ShowBuyMessage()
+        {
+            buyScreens.showScreen(BuyScreens.SelectionMode);
         }
     }
 }

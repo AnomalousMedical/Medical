@@ -8,15 +8,15 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    public class BuyScreen : MDIDialog
+    public class BuyScreen : AbstractFullscreenGUIPopup
     {
         ImageBox rmlImage;
         RocketWidget rocketWidget;
         ResourceProvider resourceProvider;
         ResourceProviderRocketFSExtension resourceProviderRocketFSExtension;
 
-        public BuyScreen(ResourceProvider resourceProvider)
-            : base("Medical.GUI.BuyScreen.BuyScreen.layout")
+        public BuyScreen(ResourceProvider resourceProvider, GUIManager guiManager)
+            : base("Medical.GUI.BuyScreen.BuyScreen.layout", guiManager)
         {
             this.resourceProvider = resourceProvider;
 
@@ -24,10 +24,8 @@ namespace Medical.GUI
             RocketInterface.Instance.SystemInterface.AddRootPath(resourceProvider.BackingLocation);
             RocketInterface.Instance.FileInterface.addExtension(resourceProviderRocketFSExtension);
 
-            rmlImage = (ImageBox)window.findWidget("RmlImage");
+            rmlImage = (ImageBox)widget.findWidget("RmlImage");
             rocketWidget = new RocketWidget(rmlImage, false);
-
-            window.WindowChangedCoord += window_WindowChangedCoord;
         }
 
         public override void Dispose()
@@ -36,6 +34,25 @@ namespace Medical.GUI
             RocketInterface.Instance.SystemInterface.RemoveRootPath(resourceProvider.BackingLocation);
             rocketWidget.Dispose();
             base.Dispose();
+        }
+
+        protected override void layoutUpdated()
+        {
+            rocketWidget.resized();
+
+            float newScale = widget.Height / (float)Slideshow.BaseSlideScale;
+
+            if (rocketWidget.Context.ZoomLevel != newScale)
+            {
+                rocketWidget.Context.ZoomLevel = newScale;
+                foreach (ElementDocument document in rocketWidget.Context.Documents)
+                {
+                    document.MakeDirtyForScaleChange();
+                }
+                rocketWidget.renderOnNextFrame();
+            }
+
+            base.layoutUpdated();
         }
 
         public void setFile(String file)
@@ -51,11 +68,6 @@ namespace Medical.GUI
                     rocketWidget.renderOnNextFrame();
                 }
             }
-        }
-
-        void window_WindowChangedCoord(Widget source, EventArgs e)
-        {
-            rocketWidget.resized();
         }
     }
 }

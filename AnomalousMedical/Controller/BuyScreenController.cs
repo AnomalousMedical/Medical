@@ -36,7 +36,6 @@ namespace Medical.Controller
         {
             foreach(BuyScreen screen in openScreens)
             {
-                controller.GUIManager.removeManagedDialog(screen);
                 screen.Dispose();
             }
             openScreens.Clear();
@@ -46,16 +45,14 @@ namespace Medical.Controller
         {
             EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Medical.MvcContexts.BuyScreens.");
 
-            BuyScreen buyScreen = new BuyScreen(embeddedResourceProvider);
+            BuyScreen buyScreen = new BuyScreen(embeddedResourceProvider, controller.GUIManager);
             buyScreen.setFile(String.Format("{0}/Index.rml", screen));
-            buyScreen.Closed += (sender, e) =>
+            buyScreen.Hidden += (sender, e) =>
                 {
                     openScreens.Remove(buyScreen);
-                    controller.GUIManager.removeManagedDialog(buyScreen);
                     buyScreen.Dispose();
                 };
-            controller.GUIManager.addManagedDialog(buyScreen);
-            buyScreen.Visible = true;
+            buyScreen.show(100, 100);
             openScreens.Add(buyScreen);
         }
     }
