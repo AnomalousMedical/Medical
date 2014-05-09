@@ -30,7 +30,7 @@ namespace Medical.GUI
             RocketInterface.Instance.FileInterface.addExtension(resourceProviderRocketFSExtension);
 
             rmlImage = (ImageBox)widget.findWidget("RmlImage");
-            rocketWidget = new RocketWidget(rmlImage, false);
+            rocketWidget = new RocketWidget(rmlImage, true);
         }
 
         public override void Dispose()
