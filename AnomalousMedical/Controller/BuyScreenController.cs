@@ -43,17 +43,25 @@ namespace Medical.Controller
 
         public void showScreen(BuyScreens screen)
         {
-            VirtualFilesystemResourceProvider embeddedResourceProvider = new VirtualFilesystemResourceProvider("BuyScreens");
+            VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider("BuyScreens");
 
-            BuyScreen buyScreen = new BuyScreen(embeddedResourceProvider, controller.GUIManager);
-            buyScreen.setFile(String.Format("{0}/Index.rml", screen));
-            buyScreen.Hidden += (sender, e) =>
-                {
-                    openScreens.Remove(buyScreen);
-                    buyScreen.Dispose();
-                };
-            buyScreen.show(100, 100);
-            openScreens.Add(buyScreen);
+            String file = String.Format("{0}/Index.rml", screen);
+            if (resourceProvider.exists(file))
+            {
+                BuyScreen buyScreen = new BuyScreen(resourceProvider, controller.GUIManager);
+                buyScreen.setFile(file);
+                buyScreen.Hidden += (sender, e) =>
+                    {
+                        openScreens.Remove(buyScreen);
+                        buyScreen.Dispose();
+                    };
+                buyScreen.show(0, 0);
+                openScreens.Add(buyScreen);
+            }
+            else
+            {
+                MessageBox.show(String.Format("Cannot find buy screen '{0}'", file), "Missing Buy Screen File", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
     }
 }
