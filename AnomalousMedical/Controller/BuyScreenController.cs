@@ -50,7 +50,7 @@ namespace Medical.Controller
             buyScreen.setFile(String.Format("{0}/Index.rml", screen));
             buyScreen.Closed += (sender, e) =>
                 {
-                    openScreens.Add(buyScreen);
+                    openScreens.Remove(buyScreen);
                     controller.GUIManager.removeManagedDialog(buyScreen);
                     buyScreen.Dispose();
                 };

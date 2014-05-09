@@ -212,9 +212,21 @@ namespace Medical.GUI
                 buyScreens = new BuyScreenController(standaloneController);
                 taskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
                 selectionModeTask.SelectionModeChooser.ShowBuyMessage += SelectionModeChooser_ShowBuyMessage;
+                anatomyFinder.ShowBuyMessage += anatomyFinder_ShowBuyMessage;
+                bookmarks.ShowBuyMessage += bookmarks_ShowBuyMessage;
             }
             taskMenu.ShowAdImage = !hasPremium;
             taskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
+        }
+
+        void bookmarks_ShowBuyMessage()
+        {
+            buyScreens.showScreen(BuyScreens.Bookmarks);
+        }
+
+        void anatomyFinder_ShowBuyMessage()
+        {
+            buyScreens.showScreen(BuyScreens.AnatomyFinder);
         }
 
         void SelectionModeChooser_ShowBuyMessage()

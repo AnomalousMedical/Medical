@@ -60,6 +60,8 @@ namespace Medical.GUI
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
         private EventManager eventManager;
 
+        public event Action ShowBuyMessage;
+
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, EventManager eventManager)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
@@ -298,7 +300,7 @@ namespace Medical.GUI
             }
             else
             {
-                showNagMessage();
+                showBuyMessage();
             }
         }
 
@@ -325,7 +327,7 @@ namespace Medical.GUI
                 }
                 else
                 {
-                    showNagMessage();
+                    showBuyMessage();
                 }
             }
         }
@@ -355,9 +357,12 @@ namespace Medical.GUI
             float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
         }
 
-        private static void showNagMessage()
+        private void showBuyMessage()
         {
-            MessageBox.show("Placeholder for nag message", "Placeholder", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            if(ShowBuyMessage != null)
+            {
+                ShowBuyMessage.Invoke();
+            }
         }
 
         void anatomyController_ShowPremiumAnatomyChanged(AnatomyController source, bool arg)

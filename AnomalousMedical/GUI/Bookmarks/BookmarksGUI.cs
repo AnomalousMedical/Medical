@@ -109,7 +109,7 @@ namespace Medical.GUI
             }
             else
             {
-                showNagMessage();
+                showBuyMessage();
             }
         }
 
@@ -213,9 +213,14 @@ namespace Medical.GUI
             }
         }
 
-        private static void showNagMessage()
+        public event Action ShowBuyMessage;
+
+        private void showBuyMessage()
         {
-            MessageBox.show("Placeholder for nag message", "Placeholder", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            if(ShowBuyMessage != null)
+            {
+                ShowBuyMessage.Invoke();
+            }
         }
 
         void bookmarksController_PremiumBookmarksChanged(BookmarksController obj)
