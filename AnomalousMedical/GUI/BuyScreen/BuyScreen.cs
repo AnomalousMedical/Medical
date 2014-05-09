@@ -10,14 +10,16 @@ namespace Medical.GUI
 {
     public class BuyScreen : AbstractFullscreenGUIPopup
     {
-        ImageBox rmlImage;
-        RocketWidget rocketWidget;
-        ResourceProvider resourceProvider;
-        ResourceProviderRocketFSExtension resourceProviderRocketFSExtension;
+        private ImageBox rmlImage;
+        private RocketWidget rocketWidget;
+        private ResourceProvider resourceProvider;
+        private ResourceProviderRocketFSExtension resourceProviderRocketFSExtension;
+        private RocketEventController eventController;
 
         public BuyScreen(ResourceProvider resourceProvider, GUIManager guiManager)
             : base("Medical.GUI.BuyScreen.BuyScreen.layout", guiManager)
         {
+            eventController = new BuyScreenEventController(this);
             this.resourceProvider = resourceProvider;
 
             resourceProviderRocketFSExtension = new ResourceProviderRocketFSExtension(resourceProvider);
@@ -48,6 +50,8 @@ namespace Medical.GUI
 
         public void setFile(String file)
         {
+            RocketEventListenerInstancer.setEventController(eventController);
+            RocketGuiManager.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
 
             using (ElementDocument document = rocketWidget.Context.LoadDocument(resourceProvider.getFullFilePath(file)))
@@ -59,6 +63,7 @@ namespace Medical.GUI
                     rocketWidget.renderOnNextFrame();
                 }
             }
+            RocketEventListenerInstancer.resetEventController();
         }
     }
 }

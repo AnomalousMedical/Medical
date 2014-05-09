@@ -6,7 +6,7 @@ using libRocketPlugin;
 
 namespace Medical.GUI
 {
-    class RocketEventListenerInstancer : EventListenerInstancer
+    public class RocketEventListenerInstancer : EventListenerInstancer
     {
         private static RocketEventController rocketEventController;
 
