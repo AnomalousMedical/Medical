@@ -202,14 +202,9 @@ namespace Medical.GUI
         public override void changeScale(float newScale)
         {
             base.changeScale(newScale);
-            if (rocketWidget != null && rocketWidget.Context.ZoomLevel != newScale)
+            if (rocketWidget != null)
             {
-                rocketWidget.Context.ZoomLevel = newScale;
-                foreach (ElementDocument document in rocketWidget.Context.Documents)
-                {
-                    document.MakeDirtyForScaleChange();
-                }
-                rocketWidget.renderOnNextFrame();
+                rocketWidget.setScale(newScale);
             }
         }
 

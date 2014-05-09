@@ -210,6 +210,19 @@ namespace Medical.GUI
             }
         }
 
+        public void setScale(float newScale)
+        {
+            if (Context.ZoomLevel != newScale)
+            {
+                Context.ZoomLevel = newScale;
+                foreach (ElementDocument document in Context.Documents)
+                {
+                    document.MakeDirtyForScaleChange();
+                }
+                renderOnNextFrame();
+            }
+        }
+
         /// <summary>
         /// Write to the given graphics, if the widget texture is not large enough it will be
         /// resized temporarily and then sized back. So be careful with large destrects.

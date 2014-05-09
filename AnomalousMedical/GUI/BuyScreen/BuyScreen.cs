@@ -41,16 +41,7 @@ namespace Medical.GUI
             rocketWidget.resized();
 
             float newScale = widget.Height / (float)Slideshow.BaseSlideScale;
-
-            if (rocketWidget.Context.ZoomLevel != newScale)
-            {
-                rocketWidget.Context.ZoomLevel = newScale;
-                foreach (ElementDocument document in rocketWidget.Context.Documents)
-                {
-                    document.MakeDirtyForScaleChange();
-                }
-                rocketWidget.renderOnNextFrame();
-            }
+            rocketWidget.setScale(newScale);
 
             base.layoutUpdated();
         }

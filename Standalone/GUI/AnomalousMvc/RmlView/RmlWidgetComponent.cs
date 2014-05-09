@@ -301,15 +301,7 @@ namespace Medical.GUI.AnomalousMvc
             base.changeScale(newScale);
             if (rocketWidget != null)
             {
-                if (rocketWidget.Context.ZoomLevel != newScale)
-                {
-                    rocketWidget.Context.ZoomLevel = newScale;
-                    foreach (ElementDocument document in rocketWidget.Context.Documents)
-                    {
-                        document.MakeDirtyForScaleChange();
-                    }
-                    rocketWidget.renderOnNextFrame();
-                }
+                rocketWidget.setScale(newScale);
             }
         }
 
