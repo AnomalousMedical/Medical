@@ -13,13 +13,19 @@ namespace Medical.GUI
         ImageBox rmlImage;
         RocketWidget rocketWidget;
 
-        public RmlWindow(BehaviorErrorManager behaviorErrorManager)
+        public RmlWindow()
             : base("Medical.GUI.RmlWindow.RmlWindow.layout")
         {
             rmlImage = (ImageBox)window.findWidget("RmlImage");
             rocketWidget = new RocketWidget(rmlImage, false);
 
             window.WindowChangedCoord += window_WindowChangedCoord;
+        }
+
+        public override void Dispose()
+        {
+            rocketWidget.Dispose();
+            base.Dispose();
         }
 
         /// <summary>
@@ -57,10 +63,19 @@ namespace Medical.GUI
             }
         }
 
-        public override void Dispose()
+        public void setFile(String file)
         {
-            rocketWidget.Dispose();
-            base.Dispose();
+            rocketWidget.Context.UnloadAllDocuments();
+
+            using (ElementDocument document = rocketWidget.Context.LoadDocument(file))
+            {
+                if (document != null)
+                {
+                    document.Show();
+                    rocketWidget.removeFocus();
+                    rocketWidget.renderOnNextFrame();
+                }
+            }
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)

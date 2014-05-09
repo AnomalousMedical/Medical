@@ -16,6 +16,8 @@ namespace Medical.GUI
         private Button noneButton;
         private ImageBox lockedFeatureImage;
 
+        public event Action ShowBuyMessage;
+
         public SelectionModeChooser(AnatomyController anatomyController)
             :base("Medical.GUI.SelectionModeChooser.SelectionModeChooser.layout")
         {
@@ -55,7 +57,7 @@ namespace Medical.GUI
                 AnatomyPickingMode newMode = (AnatomyPickingMode)pickingModeGroup.SelectedButton.UserObject;
                 if (!anatomyController.ShowPremiumAnatomy && newMode == AnatomyPickingMode.Individual)
                 {
-                    showNagMessage();
+                    showBuyMessage();
                     allowSelectionModeChanges = false;
                     pickingModeGroup.SelectedButton = pickingModeGroup.findButtonWithUserData(AnatomyPickingMode.Group);
                     anatomyController.PickingMode = AnatomyPickingMode.Group;
@@ -103,9 +105,12 @@ namespace Medical.GUI
             }
         }
 
-        private static void showNagMessage()
+        private void showBuyMessage()
         {
-            MessageBox.show("Placeholder for nag message", "Placeholder", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            if(ShowBuyMessage != null)
+            {
+                ShowBuyMessage.Invoke();
+            }
         }
     }
 }

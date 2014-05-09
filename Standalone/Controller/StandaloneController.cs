@@ -727,7 +727,7 @@ namespace Medical
 
         private void showLoadErrorGui()
         {
-            RmlWindow errorGui = new RmlWindow(behaviorErrorManager);
+            RmlWindow errorGui = new RmlWindow();
             StringBuilder htmlString = new StringBuilder();
             foreach (BehaviorBlacklistEventArgs blacklist in behaviorErrorManager.BlacklistEvents)
             {

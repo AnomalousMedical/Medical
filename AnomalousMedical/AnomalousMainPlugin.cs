@@ -38,6 +38,7 @@ namespace Medical.GUI
         
         //Controllers
         private BookmarksController bookmarksController;
+        private BuyScreenController buyScreens;
 
         //Taskbar
         private AppButtonTaskbar taskbar;
@@ -76,6 +77,7 @@ namespace Medical.GUI
                 sequencePlayer.Dispose();
             }
             guiManager.removeLinkFromChain(taskbarLink);
+            IDisposableUtil.DisposeIfNotNull(buyScreens);
             IDisposableUtil.DisposeIfNotNull(taskbar);
             IDisposableUtil.DisposeIfNotNull(taskMenu);
             IDisposableUtil.DisposeIfNotNull(standaloneController.ImageRenderer.Logo);
@@ -111,10 +113,6 @@ namespace Medical.GUI
             downloadServer = new DownloadManagerServer(licenseManager);
             imageLicenseServer = new ImageLicenseServer(licenseManager);
             bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100), hasPremium);
-            if (!hasPremium)
-            {
-                bookmarksController.NonPremiumBookmarksResourceProvider = new EmbeddedResourceProvider(this.GetType().Assembly, "Medical.Resources.Bookmarks.");
-            }
 
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
@@ -147,12 +145,6 @@ namespace Medical.GUI
 
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager);
-            if (!hasPremium)
-            {
-                taskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
-            }
-            taskMenu.ShowAdImage = !hasPremium;
-            taskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
 
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
@@ -212,6 +204,22 @@ namespace Medical.GUI
             bookmarkTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(bookmarkTask);
             Slideshow.AdditionalTasks.addTask(bookmarkTask);
+
+            //Premium / Non Premium
+            if (!hasPremium)
+            {
+                bookmarksController.NonPremiumBookmarksResourceProvider = new EmbeddedResourceProvider(this.GetType().Assembly, "Medical.Resources.Bookmarks.");
+                buyScreens = new BuyScreenController(standaloneController);
+                taskMenu.AdImageKey = "AnomalousMedical/PremiumAd";
+                selectionModeTask.SelectionModeChooser.ShowBuyMessage += SelectionModeChooser_ShowBuyMessage;
+            }
+            taskMenu.ShowAdImage = !hasPremium;
+            taskMenu.AdImageUrl = MedicalConfig.DefaultAdUrl;
+        }
+
+        void SelectionModeChooser_ShowBuyMessage()
+        {
+            buyScreens.showScreen(BuyScreens.SelectionMode);
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)

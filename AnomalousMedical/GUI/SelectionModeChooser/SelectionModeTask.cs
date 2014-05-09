@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class SelectionModeTask : Task
+    class SelectionModeTask : Task
     {
         private SelectionModeChooser selectionModeChooser;
 
@@ -35,6 +35,14 @@ namespace Medical.GUI
             get
             {
                 return false;
+            }
+        }
+
+        public SelectionModeChooser SelectionModeChooser
+        {
+            get
+            {
+                return selectionModeChooser;
             }
         }
 

@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="AnomalousController.cs" />
     <Compile Include="AnomalousMainPlugin.cs" />
+    <Compile Include="Controller\BuyScreenController.cs" />
     <Compile Include="Controller\MvcLoginController.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
+    <Compile Include="GUI\BuyScreen\BuyScreen.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadGUIInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadingPanel.cs" />
     <Compile Include="GUI\DownloadManagerGUI\InstallPanel.cs" />
@@ -156,12 +158,16 @@
     <Compile Include="GUI\Render\LicensePopup.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
+    <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
+    <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
+    <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
+    <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
     <EmbeddedResource Include="MvcContexts\Login\Index.rml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -169,6 +175,14 @@
     <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
     <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
     <EmbeddedResource Include="MvcContexts\Login\Reel.tl" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\AnatomyFinder\Index.rml" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\AnatomyFinder\MvcContext.mvc" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\Bookmarks\Index.rml" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\Bookmarks\MvcContext.mvc" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\MasterTemplate.trml" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\Plugin.ddp" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\SelectionMode\Index.rml" />
+    <EmbeddedResource Include="MvcContexts\BuyScreens\SelectionMode\MvcContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />

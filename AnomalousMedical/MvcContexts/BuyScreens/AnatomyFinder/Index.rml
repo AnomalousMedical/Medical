@@ -1,0 +1,11 @@
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate" style="background-color:#00000000;">
+		<div style="background-color:red;">
+			<h1>Anatomy Finder Nag Screen</h1>
+			<p>Buy the Premium Features, they are awesome..</p>
+		</div>
+	</body>
+</rml>
