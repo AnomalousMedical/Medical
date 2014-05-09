@@ -118,7 +118,7 @@ namespace Medical
                         AnatomyTagGroup tagGroup;
                         foreach (AnatomyTag tag in firstMatch.Tags)
                         {
-                            if (anatomyTagManager.tryGetTagGroup(tag.Tag, out tagGroup) && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
+                            if (anatomyTagManager.tryGetTagGroup(tag.Tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
                             {
                                 bestMatchAnatomy = tagGroup;
                                 break;
