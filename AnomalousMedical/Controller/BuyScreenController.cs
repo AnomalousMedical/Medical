@@ -43,7 +43,7 @@ namespace Medical.Controller
 
         public void showScreen(BuyScreens screen)
         {
-            EmbeddedResourceProvider embeddedResourceProvider = new EmbeddedResourceProvider(Assembly.GetExecutingAssembly(), "Medical.MvcContexts.BuyScreens.");
+            VirtualFilesystemResourceProvider embeddedResourceProvider = new VirtualFilesystemResourceProvider("BuyScreens");
 
             BuyScreen buyScreen = new BuyScreen(embeddedResourceProvider, controller.GUIManager);
             buyScreen.setFile(String.Format("{0}/Index.rml", screen));

@@ -1,9 +1,0 @@
-<template name="MasterTemplate" content="MasterContent">
-  <head>
-    <link type="text/template" href="~/Medical.Resources.Rml.RmlPanelTemplate.trml" />
-  </head>
-  <body template="RmlPanelTemplate">
-    <div id="MasterContent">
-    </div>
-  </body>
-</template>

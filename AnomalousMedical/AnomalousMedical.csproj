@@ -175,14 +175,6 @@
     <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
     <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
     <EmbeddedResource Include="MvcContexts\Login\Reel.tl" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\AnatomyFinder\Index.rml" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\AnatomyFinder\MvcContext.mvc" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\Bookmarks\Index.rml" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\Bookmarks\MvcContext.mvc" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\MasterTemplate.trml" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\Plugin.ddp" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\SelectionMode\Index.rml" />
-    <EmbeddedResource Include="MvcContexts\BuyScreens\SelectionMode\MvcContext.mvc" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
