@@ -219,8 +219,6 @@
     <EmbeddedResource Include="Resources\SelectionIcons.png" />
     <EmbeddedResource Include="Resources\Background\AnomalousMedicalWatermark.png" />
     <EmbeddedResource Include="Resources\CorePluginIcon.png" />
-    <EmbeddedResource Include="Resources\PremiumAd.png" />
-    <EmbeddedResource Include="Resources\PremiumAd.xml" />
     <EmbeddedResource Include="Resources\SequenceIcons.png" />
     <EmbeddedResource Include="Resources\SequenceIcons.xml" />
     <EmbeddedResource Include="Resources\CorePluginIcon%402x.png" />
