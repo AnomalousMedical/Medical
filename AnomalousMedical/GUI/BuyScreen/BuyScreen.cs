@@ -14,12 +14,15 @@ namespace Medical.GUI
         private RocketWidget rocketWidget;
         private ResourceProvider resourceProvider;
         private ResourceProviderRocketFSExtension resourceProviderRocketFSExtension;
-        private RocketEventController eventController;
+        private DelegateRocketEventController eventController;
 
         public BuyScreen(ResourceProvider resourceProvider, GUIManager guiManager)
             : base("Medical.GUI.BuyScreen.BuyScreen.layout", guiManager)
         {
-            eventController = new BuyScreenEventController(this);
+            eventController = new DelegateRocketEventController();
+            eventController.addHandler("close", evt => this.hide());
+            eventController.addHandler("visitAnomalousPage", visitAnomalousPage);
+
             this.resourceProvider = resourceProvider;
 
             resourceProviderRocketFSExtension = new ResourceProviderRocketFSExtension(resourceProvider);
@@ -64,6 +67,15 @@ namespace Medical.GUI
                 }
             }
             RocketEventListenerInstancer.resetEventController();
+        }
+
+        private static void visitAnomalousPage(Event evt)
+        {
+            Variant url = evt.TargetElement.GetAttribute("url");
+            if (url != null)
+            {
+                OtherProcessManager.openUrlInBrowser(String.Format("{0}/{1}", MedicalConfig.WebsiteHostUrl, url.StringValue));
+            }
         }
     }
 }

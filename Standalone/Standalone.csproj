@@ -404,6 +404,8 @@
     <Compile Include="GUI\GUILocationNames.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\RmlWindow\RmlWindow.cs" />
+    <Compile Include="GUI\RocketGui\DelegateRocketEventController.cs" />
+    <Compile Include="GUI\RocketGui\DelegateRocketEventListener.cs" />
     <Compile Include="GUI\RocketGui\RocketDebuggerWindow.cs" />
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\SceneStats\SceneStatsDisplay.cs" />
