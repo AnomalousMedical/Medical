@@ -25,7 +25,7 @@ namespace Medical.GUI
                     {
                         buyScreen.hide();
                     });
-                case "visitPage":
+                case "visitAnomalousPage":
                     return new BuyScreenEventListener(evt =>
                     {
                         Variant url = evt.TargetElement.GetAttribute("url");
