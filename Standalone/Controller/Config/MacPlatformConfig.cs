@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine;
 using Logging;
 using System.IO;
 using System.Diagnostics;
@@ -86,11 +87,21 @@ namespace Medical
             }
         }
 
+		private String OldUserDocRoot
+		{
+			get
+			{
+				return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support");
+			}
+		}
+
         protected override String LocalUserDocumentsFolderImpl
         {
             get
             {
-                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support");
+				StringRetriever sr = new StringRetriever();
+				MacPlatformConfig_getLocalUserDocumentsFolder(sr.StringCallback);
+				return sr.retrieveString();
             }
         }
 
@@ -98,7 +109,9 @@ namespace Medical
         {
             get
             {
-                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support/Anomalous Medical/Common");
+				StringRetriever sr = new StringRetriever();
+				MacPlatformConfig_getLocalDataFolder(sr.StringCallback);
+				return sr.retrieveString();
             }
         }
 
@@ -106,7 +119,9 @@ namespace Medical
         {
             get
             {
-                return LocalUserDocumentsFolderImpl;
+				StringRetriever sr = new StringRetriever();
+				MacPlatformConfig_getLocalPrivateDataFolder(sr.StringCallback);
+				return sr.retrieveString();
             }
         }
 
@@ -196,6 +211,15 @@ namespace Medical
         [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
 		private static unsafe extern bool CertificateValidator_ValidateSSLCertificate(byte* certBytes, uint certBytesLength, [MarshalAs(UnmanagedType.LPWStr)] String url);
+
+		[DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+		private static unsafe extern void MacPlatformConfig_getLocalUserDocumentsFolder (StringRetriever.Callback retrieve);
+
+		[DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+		private static unsafe extern void MacPlatformConfig_getLocalDataFolder(StringRetriever.Callback retrieve);
+
+		[DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+		private static unsafe extern void MacPlatformConfig_getLocalPrivateDataFolder(StringRetriever.Callback retrieve);
 
 		#endregion
     }
