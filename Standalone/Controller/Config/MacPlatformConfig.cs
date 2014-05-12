@@ -213,6 +213,13 @@ namespace Medical
                 String configFile = Path.Combine(OldUserDocRoot, "config.ini");
                 if (File.Exists(configFile))
                 {
+                    //Ensure the folder exists
+                    if(!Directory.Exists(FolderFinder.LocalUserDocumentsFolder))
+                    {
+                        Directory.CreateDirectory(FolderFinder.LocalUserDocumentsFolder);
+                    }
+
+                    //Move the files
                     File.Move(configFile, Path.Combine(FolderFinder.LocalUserDocumentsFolder, "config.ini"));
                     Directory.Move(Path.Combine(OldUserDocRoot, "Users"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "Users"));
                     Directory.Move(Path.Combine(OldUserDocRoot, "SavedFiles"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "SavedFiles"));
