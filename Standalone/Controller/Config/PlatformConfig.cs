@@ -140,6 +140,14 @@ namespace Medical
             }
         }
 
+        public static ProcessStartInfo RestartAdminProcInfo
+        {
+            get
+            {
+                return currentConfig.RestartAdminProcInfoImpl;
+            }
+        }
+
         public static OperatingSystem OsId { get; private set; }
 
         public static bool DefaultEnableMultitouch
@@ -199,6 +207,8 @@ namespace Medical
         protected abstract bool HasCustomSSLValidationImpl { get; }
 
         protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
+
+        protected abstract ProcessStartInfo RestartAdminProcInfoImpl { get; }
 
         #region PInvoke
 

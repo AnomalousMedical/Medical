@@ -141,6 +141,14 @@ namespace Medical
             }
         }
 
+        protected override ProcessStartInfo RestartAdminProcInfoImpl
+        {
+            get
+            {
+                return RestartProcInfoImpl;
+            }
+        }
+
         protected override bool DefaultEnableMultitouchImpl
         {
             get
