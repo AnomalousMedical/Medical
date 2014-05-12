@@ -119,7 +119,7 @@ namespace Medical.GUI
             fileDataGrid.ListSelectAccept += new MyGUIEvent(fileDataGrid_ListSelectAccept);
             fileDataGrid.SortOnChanges = false;
             
-            String saveDirectory = MedicalConfig.SaveDirectory;
+            String saveDirectory = MedicalConfig.PatientSaveDirectory;
             if (!Directory.Exists(saveDirectory))
             {
                 try

@@ -127,7 +127,7 @@ namespace Medical.GUI
                 lastText.Caption = "";
                 firstText.Caption = "";
                 fileNameTextBox.Caption = "";
-                locationTextBox.Caption = MedicalConfig.SaveDirectory;
+                locationTextBox.Caption = MedicalConfig.PatientSaveDirectory;
             }
             else
             {

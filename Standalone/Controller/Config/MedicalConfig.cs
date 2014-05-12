@@ -261,15 +261,15 @@ namespace Medical
             }
         }
 
-        public static String SaveDirectory
+        public static String PatientSaveDirectory
         {
             get
             {
-                return program.getValue("SaveDirectory", userAnomalousFolder + "/SavedFiles");
+                return program.getValue("PatientSaveDirectory", userAnomalousFolder + "/SavedFiles");
             }
             set
             {
-                program.setValue("SaveDirectory", value);
+                program.setValue("PatientSaveDirectory", value);
             }
         }
 
