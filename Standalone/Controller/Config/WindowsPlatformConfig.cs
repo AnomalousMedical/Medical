@@ -173,5 +173,10 @@ namespace Medical
         {
             throw new NotImplementedException();
         }
+
+        protected override void moveConfigurationIfNeededImpl()
+        {
+            
+        }
     }
 }

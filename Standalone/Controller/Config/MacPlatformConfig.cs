@@ -87,14 +87,6 @@ namespace Medical
             }
         }
 
-		private String OldUserDocRoot
-		{
-			get
-			{
-				return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support");
-			}
-		}
-
         protected override String LocalUserDocumentsFolderImpl
         {
             get
@@ -203,6 +195,32 @@ namespace Medical
                         return CertificateValidator_ValidateSSLCertificate(certBytesPtr, (uint)certBytes.Length, hostName);
                     }
                 }
+            }
+        }
+
+        private String OldUserDocRoot
+        {
+            get
+            {
+                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support/Anomalous Medical");
+            }
+        }
+
+        protected override void moveConfigurationIfNeededImpl()
+        {
+            try
+            {
+                String configFile = Path.Combine(OldUserDocRoot, "config.ini");
+                if (File.Exists(configFile))
+                {
+                    File.Move(configFile, Path.Combine(FolderFinder.LocalUserDocumentsFolder, "config.ini"));
+                    Directory.Move(Path.Combine(OldUserDocRoot, "Users"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "Users"));
+                    Directory.Move(Path.Combine(OldUserDocRoot, "SavedFiles"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "SavedFiles"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Log.Error("{0} copying legacy files from '{1}'. Message: {2}", ex.GetType().ToString(), OldUserDocRoot, ex.Message);
             }
         }
 

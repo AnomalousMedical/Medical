@@ -73,12 +73,15 @@ namespace Medical
         private StandaloneApp app;
         private AtlasPluginManager atlasPluginManager;
 		private bool shuttingDown = false;
+        private MedicalConfig medicalConfig;
 
         //Touch
         private TouchController touchController;
 
         public StandaloneController(StandaloneApp app)
         {
+            PlatformConfig.MoveConfigurationIfNeeded();
+            medicalConfig = new MedicalConfig();
             this.app = app;
 
             CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);

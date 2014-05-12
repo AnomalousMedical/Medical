@@ -24,7 +24,7 @@ namespace Medical
         /// <summary>
         /// A folder that user documents and settings can be put into.
         /// </summary>
-        public static String AnomalousMedicalUserRoot
+        public static String LocalUserDocumentsFolder
         {
             get
             {

@@ -92,6 +92,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// The documents folder to put user settings and documents into.
+        /// </summary>
         public static String LocalUserDocumentsFolder
         {
             get
@@ -100,6 +103,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// A local folder to put data files shared by all users of the program into.
+        /// </summary>
         public static String LocalDataFolder
         {
             get
@@ -108,6 +114,10 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// A folder that will not get shared that specifys where private data (like the license file) goes.
+        /// Can overlap with LocalDataFolder.
+        /// </summary>
         public static String LocalPrivateDataFolder
         {
             get
@@ -179,6 +189,16 @@ namespace Medical
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
         }
 
+        /// <summary>
+        /// This function moves the configuration files for a specific os if they need to move.
+        /// We can remove this at some point in the future when we no longer need to check if files need
+        /// to be moved.
+        /// </summary>
+        public static void MoveConfigurationIfNeeded()
+        {
+            currentConfig.moveConfigurationIfNeededImpl();
+        }
+
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
 
@@ -219,6 +239,8 @@ namespace Medical
         protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
 
         protected abstract ProcessStartInfo RestartAdminProcInfoImpl { get; }
+
+        protected abstract void moveConfigurationIfNeededImpl();
 
         #region PInvoke
 

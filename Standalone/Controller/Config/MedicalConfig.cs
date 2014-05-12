@@ -18,7 +18,7 @@ namespace Medical
         Larger
     }
     
-    public static class MedicalConfig
+    public class MedicalConfig
     {
         private static ConfigFile configFile;
         private static ConfigSection program;
@@ -44,7 +44,7 @@ namespace Medical
         private static ConfigSection resources = null;
 #endif
 
-        static MedicalConfig()
+        public MedicalConfig()
         {
             BuildName = null;
 #if ALLOW_OVERRIDE
@@ -53,7 +53,7 @@ namespace Medical
             WebsiteHostUrl = "https://www.anomalousmedical.com";
 
             //Setup directories
-            MedicalConfig.userAnomalousFolder = FolderFinder.AnomalousMedicalUserRoot;
+            MedicalConfig.userAnomalousFolder = FolderFinder.LocalUserDocumentsFolder;
             if (!Directory.Exists(userAnomalousFolder))
             {
                 Directory.CreateDirectory(userAnomalousFolder);
@@ -126,7 +126,7 @@ namespace Medical
 #endif
 
             //User configuration settings
-            configFile = new ConfigFile(userAnomalousFolder + "/config.ini");
+            configFile = new ConfigFile(ConfigFilePath);
             configFile.loadConfigFile();
 
             program = configFile.createOrRetrieveConfigSection("Program");
@@ -214,6 +214,14 @@ namespace Medical
             get
             {
                 return Path.Combine(userAnomalousFolder, "CrashLogs");
+            }
+        }
+
+        public static string ConfigFilePath
+        {
+            get
+            {
+                return Path.Combine(userAnomalousFolder, "config.ini");
             }
         }
 
