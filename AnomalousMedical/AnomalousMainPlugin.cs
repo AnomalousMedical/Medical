@@ -216,6 +216,13 @@ namespace Medical.GUI
                 selectionModeTask.SelectionModeChooser.ShowBuyMessage += SelectionModeChooser_ShowBuyMessage;
                 anatomyFinder.ShowBuyMessage += anatomyFinder_ShowBuyMessage;
                 bookmarks.ShowBuyMessage += bookmarks_ShowBuyMessage;
+
+                if(MedicalConfig.FirstRun)
+                {
+                    guiTaskManager.addPinnedTask(selectionModeTask);
+                    guiTaskManager.addPinnedTask(anatomyFinderTask);
+                    guiTaskManager.addPinnedTask(bookmarkTask);
+                }
             }
         }
 

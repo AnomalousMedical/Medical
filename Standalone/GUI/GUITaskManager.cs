@@ -64,6 +64,11 @@ namespace Medical.GUI
             }
         }
 
+        public void addPinnedTask(Task task, int index = -1)
+        {
+            addPinnedTaskbarItem(task, index);
+        }
+
         void taskMenu_TaskItemOpened(Task item)
         {
             addTaskbarItem(item);
