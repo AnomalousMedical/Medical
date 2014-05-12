@@ -189,9 +189,14 @@ namespace Medical
                         }
                     });
             }
-            catch (Exception e)
+            catch(UnauthorizedAccessException ex)
             {
-                Log.Error("Error reading plugin data from the server: {0}", e.Message);
+                Log.Error("{0} reading plugin data from the server: {1}", ex.GetType().Name, ex.Message);
+                download.RequestElevatedRestart = true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("{0} reading plugin data from the server: {1}", ex.GetType().Name, ex.Message);
             }
             download.completed(success);
         }

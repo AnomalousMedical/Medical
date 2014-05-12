@@ -98,6 +98,8 @@ namespace Medical
 
         public bool Cancel { get; private set; }
 
+        public bool RequestElevatedRestart { get; internal set; }
+
         public bool DownloadedToSafeLocation { get; internal set; }
 
         public DownloadPostAction CancelPostAction { get; set; }
