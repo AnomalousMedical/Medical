@@ -24,6 +24,7 @@ namespace Medical
         IntPtr appPtr;
 
         protected bool restartOnShutdown = false;
+        protected bool restartAsAdmin = false;
 
         public App()
         {
@@ -51,10 +52,11 @@ namespace Medical
             App_exit(appPtr);
         }
 
-        public void restart()
+        public void restart(bool asAdmin)
         {
             exit();
             restartOnShutdown = true;
+            restartAsAdmin = asAdmin;
         }
 
         public abstract bool OnInit();

@@ -18,7 +18,7 @@ namespace Medical
         Larger
     }
     
-    public class MedicalConfig
+    public static class MedicalConfig
     {
         private static ConfigFile configFile;
         private static ConfigSection program;
@@ -31,7 +31,7 @@ namespace Medical
         private static String sceneDirectory;
 
         private static String userAnomalousFolder;
-        private static String commonAnomalousFolder;
+        private static String localDataFileFolder;
 
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
@@ -50,14 +50,10 @@ namespace Medical
 #if ALLOW_OVERRIDE
             BuildName = "Internal";
 #endif
-        }
-
-        public MedicalConfig(String userAnomalousFolder, String commonAnomalousFolder)
-        {
             WebsiteHostUrl = "https://www.anomalousmedical.com";
 
             //Setup directories
-            MedicalConfig.userAnomalousFolder = userAnomalousFolder;
+            MedicalConfig.userAnomalousFolder = FolderFinder.AnomalousMedicalUserRoot;
             if (!Directory.Exists(userAnomalousFolder))
             {
                 Directory.CreateDirectory(userAnomalousFolder);
@@ -94,26 +90,33 @@ namespace Medical
 #endif
             //Fix up paths based on the build name
             String buildUrlExtraPath = "";
+            String localDataFileFolder = FolderFinder.LocalDataFolder;
             if (!String.IsNullOrEmpty(BuildName))
             {
                 buildUrlExtraPath = "/" + BuildName;
-                commonAnomalousFolder = Path.Combine(commonAnomalousFolder, BuildName);
+                localDataFileFolder = Path.Combine(localDataFileFolder, BuildName);
             }
 
-            //Setup common folder
-            MedicalConfig.commonAnomalousFolder = commonAnomalousFolder;
-            if (!Directory.Exists(commonAnomalousFolder))
+            //Setup local private folder
+            if(!Directory.Exists(FolderFinder.LocalPrivateDataFolder))
             {
-                Directory.CreateDirectory(commonAnomalousFolder);
+                Directory.CreateDirectory(FolderFinder.LocalPrivateDataFolder);
             }
-            TemporaryFilesPath = Path.Combine(commonAnomalousFolder, "Temp");
+
+            //Setup local data folder
+            MedicalConfig.localDataFileFolder = localDataFileFolder;
+            if (!Directory.Exists(localDataFileFolder))
+            {
+                Directory.CreateDirectory(localDataFileFolder);
+            }
+            TemporaryFilesPath = Path.Combine(localDataFileFolder, "Temp");
             if (!Directory.Exists(TemporaryFilesPath))
             {
                 Directory.CreateDirectory(TemporaryFilesPath);
             }
 
             //Configure plugins
-            pluginConfig = new PluginConfig(Path.Combine(commonAnomalousFolder, "Plugins"));
+            pluginConfig = new PluginConfig(Path.Combine(localDataFileFolder, "Plugins"));
 
 #if ALLOW_OVERRIDE
             if (overrideSettings != null)
@@ -136,14 +139,14 @@ namespace Medical
 
             EngineConfig = new EngineConfig(configFile);
 
-            SafeDownloadFolder = Path.Combine(commonAnomalousFolder, "Downloads");
+            SafeDownloadFolder = Path.Combine(localDataFileFolder, "Downloads");
             if (!Directory.Exists(SafeDownloadFolder))
             {
                 Directory.CreateDirectory(SafeDownloadFolder);
             }
 
             //Certificate store
-            MedicalConfig.CertificateStoreFile = Path.Combine(userAnomalousFolder, "CertificateStore.cst");
+            MedicalConfig.CertificateStoreFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, "CertificateStore.cst");
 
             //Configure website urls
             MedicalConfig.HelpURL = String.Format("{0}/Help", WebsiteHostUrl);
@@ -465,7 +468,7 @@ namespace Medical
         {
             get
             {
-                return Path.Combine(userAnomalousFolder, "License.lic");
+                return Path.Combine(FolderFinder.LocalPrivateDataFolder, "License.lic");
             }
         }
 

@@ -47,9 +47,9 @@ namespace Medical.GUI
             showNotification(new StartTaskNotification(text, imageKey, task));
         }
 
-        public void showRestartNotification(String text, String imageKey, bool autoStartPlatformUpdate)
+        public void showRestartNotification(String text, String imageKey, bool autoStartPlatformUpdate, bool asAdmin)
         {
-            showNotification(new RestartNotification(text, imageKey, standaloneController, autoStartPlatformUpdate));
+            showNotification(new RestartNotification(text, imageKey, standaloneController, autoStartPlatformUpdate, asAdmin));
         }
 
         public void showCallbackNotification(String text, String imageKey, Action clickedCallback)

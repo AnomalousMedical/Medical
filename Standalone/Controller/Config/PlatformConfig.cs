@@ -92,19 +92,27 @@ namespace Medical
             }
         }
 
-        public static String DocumentsFolder
+        public static String LocalUserDocumentsFolder
         {
             get
             {
-                return currentConfig.DocumentsFolderImpl;
+                return currentConfig.LocalUserDocumentsFolderImpl;
             }
         }
 
-        public static String AllUserDocumentsFolder
+        public static String LocalDataFolder
         {
             get
             {
-                return currentConfig.AllUserDocumentsFolderImpl;
+                return currentConfig.LocalDataFolderImpl;
+            }
+        }
+
+        public static String LocalPrivateDataFolder
+        {
+            get
+            {
+                return currentConfig.LocalPrivateDataFolderImpl;
             }
         }
 
@@ -190,9 +198,11 @@ namespace Medical
 
         protected abstract bool AllowCloneWindowsImpl { get; }
 
-        protected abstract String DocumentsFolderImpl { get; }
+        protected abstract String LocalUserDocumentsFolderImpl { get; }
 
-        protected abstract String AllUserDocumentsFolderImpl { get; }
+        protected abstract String LocalDataFolderImpl { get; }
+
+        protected abstract String LocalPrivateDataFolderImpl { get; }
 
         protected abstract bool CloseMainWindowOnShutdownImpl { get; }
 

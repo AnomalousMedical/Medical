@@ -36,7 +36,7 @@ namespace Medical
             controller.Dispose();
             if (restartOnShutdown && !applyingUpdate)
             {
-                OtherProcessManager.restart();
+                OtherProcessManager.restart(restartAsAdmin);
             }
             return 0;
         }

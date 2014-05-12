@@ -343,7 +343,7 @@ namespace Medical.GUI
 
         void options_RequestRestart(object sender, EventArgs e)
         {
-            standaloneController.restartWithWarning();
+            standaloneController.restartWithWarning(null, false, false);
         }
 
         private void chooseSceneDialog_ChooseScene(object sender, EventArgs e)

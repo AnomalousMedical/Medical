@@ -84,7 +84,7 @@ namespace Medical
             }
         }
 
-        protected override String DocumentsFolderImpl
+        protected override String LocalUserDocumentsFolderImpl
         {
             get
             {
@@ -92,11 +92,19 @@ namespace Medical
             }
         }
 
-        protected override String AllUserDocumentsFolderImpl
+        protected override String LocalDataFolderImpl
         {
             get
             {
                 return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            }
+        }
+
+        protected override String LocalPrivateDataFolderImpl
+        {
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             }
         }
 

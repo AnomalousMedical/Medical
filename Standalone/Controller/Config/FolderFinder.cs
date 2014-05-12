@@ -11,8 +11,9 @@ namespace Medical
     /// </summary>
     class FolderFinder
     {
-        private static String userRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.DocumentsFolder);
-        private static String allUserRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.AllUserDocumentsFolder);
+        private static String userRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalUserDocumentsFolder);
+        private static String localDataFolder = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalDataFolder);
+        private static String localPrivateDataFolder = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalPrivateDataFolder);
         private static String programFolder = null;
 
         private FolderFinder()
@@ -20,6 +21,9 @@ namespace Medical
 
         }
 
+        /// <summary>
+        /// A folder that user documents and settings can be put into.
+        /// </summary>
         public static String AnomalousMedicalUserRoot
         {
             get
@@ -28,14 +32,31 @@ namespace Medical
             }
         }
 
-        public static String AnomalousMedicalAllUserRoot
+        /// <summary>
+        /// A non roaming folder that larger data files (like plugins and program downloads) can be put into.
+        /// </summary>
+        public static String LocalDataFolder
         {
             get
             {
-                return allUserRoot;
+                return localDataFolder;
             }
         }
 
+        /// <summary>
+        /// A non roaming folder that data that should be kept private (like license files) can be put into.
+        /// </summary>
+        public static String LocalPrivateDataFolder
+        {
+            get
+            {
+                return localPrivateDataFolder;
+            }
+        }
+
+        /// <summary>
+        /// The folder the current executable is running under.
+        /// </summary>
         public static String ExecutableFolder
         {
             get

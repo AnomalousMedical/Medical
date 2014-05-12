@@ -286,7 +286,7 @@ namespace Medical.GUI
 
         void installPanel_Restart(DownloadGUIInfo info)
         {
-            standaloneController.restartWithWarning("Restarting Anomalous Medical will lose all unsaved data. Are you sure you wish to continue?", info.AutoStartUpdate);
+            standaloneController.restartWithWarning("Restarting Anomalous Medical will lose all unsaved data. Are you sure you wish to continue?", info.AutoStartUpdate, false);
         }
 
         protected override void layoutUpdated()
@@ -330,7 +330,7 @@ namespace Medical.GUI
             {
                 if (displayRestartMessage)
                 {
-                    notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate);
+                    notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate, false);
                     displayRestartMessage = false;
                     autoStartUpdate = false;
                 }

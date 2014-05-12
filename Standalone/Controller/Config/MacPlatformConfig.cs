@@ -86,7 +86,7 @@ namespace Medical
             }
         }
 
-        protected override String DocumentsFolderImpl
+        protected override String LocalUserDocumentsFolderImpl
         {
             get
             {
@@ -94,11 +94,19 @@ namespace Medical
             }
         }
 
-        protected override String AllUserDocumentsFolderImpl
+        protected override String LocalDataFolderImpl
         {
             get
             {
                 return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support/Anomalous Medical/Common");
+            }
+        }
+
+        protected override String LocalPrivateDataFolderImpl
+        {
+            get
+            {
+                return LocalUserDocumentsFolderImpl;
             }
         }
 

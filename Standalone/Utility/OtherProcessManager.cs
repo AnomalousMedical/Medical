@@ -45,24 +45,20 @@ namespace Medical
             }
         }
 
-        public static void restart()
+        public static void restart(bool asAdmin)
         {
             try
             {
-                Process.Start(PlatformConfig.RestartProcInfo);
-            }
-            catch (Exception e)
-            {
-                MessageDialog.showErrorDialog(String.Format("Could not restart program automatically. Please restart it manually by clicking its icon.\nReason:\n{0}", e.Message), "Restart Error");
-                Log.Error("Could not restart program because {0}", e.Message);
-            }
-        }
-
-        public static void restartAdmin()
-        {
-            try
-            {
-                Process.Start(PlatformConfig.RestartAdminProcInfo);
+                ProcessStartInfo startInfo;
+                if (asAdmin)
+                {
+                    startInfo = PlatformConfig.RestartAdminProcInfo;
+                }
+                else
+                {
+                    startInfo = PlatformConfig.RestartProcInfo;
+                }
+                Process.Start(startInfo);
             }
             catch (Exception e)
             {

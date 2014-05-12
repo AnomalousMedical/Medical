@@ -81,7 +81,6 @@ namespace Medical
         {
             this.app = app;
 
-            MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalUserRoot, FolderFinder.AnomalousMedicalAllUserRoot);
             CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
             guiManager = new GUIManager(this);
             guiManager.MainGUIShown += guiManager_MainGUIShown;
@@ -361,12 +360,7 @@ namespace Medical
 			}
         }
 
-        public void restartWithWarning()
-        {
-            restartWithWarning(null, false);
-        }
-
-        public void restartWithWarning(String noDownloadsMessage, bool autoStartUpdate)
+        public void restartWithWarning(String noDownloadsMessage, bool autoStartUpdate, bool asAdmin)
         {
             String message = noDownloadsMessage;
             if (downloadController.Downloading)
@@ -375,7 +369,7 @@ namespace Medical
             }
             if (message == null)
             {
-                restart();
+                restart(asAdmin);
             }
             else
             {
@@ -384,13 +378,13 @@ namespace Medical
                     if (result == MessageBoxStyle.Yes)
                     {
                         UpdateController.AutoStartUpdate = autoStartUpdate;
-                        restart();
+                        restart(asAdmin);
                     }
                 });
             }
         }
 
-        public void restart()
+        public void restart(bool asAdmin)
         {
             if (!shuttingDown)
             {
@@ -399,7 +393,7 @@ namespace Medical
                 {
                     mainWindow.close();
                 }
-                app.restart();
+                app.restart(asAdmin);
             }
         }
 
@@ -628,7 +622,14 @@ namespace Medical
             //window.Handle.addListener(windowListener);
             //basicGUI.windowChanged(window.Handle);
 
-            MessageBox.show("You will need to restart the program to apply your settings.\nWould you like to restart now?", "Apply Changes?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, displayParameterChangeCallback);
+            MessageBox.show("You will need to restart the program to apply your settings.\nWould you like to restart now?", "Apply Changes?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No,
+                result =>
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        this.restart(false);
+                    }
+                });
         }
 
         public void saveCrashLog()
@@ -636,14 +637,6 @@ namespace Medical
             if (medicalController != null)
             {
                 medicalController.saveCrashLog();
-            }
-        }
-
-        void displayParameterChangeCallback(MessageBoxStyle result)
-        {
-            if (result == MessageBoxStyle.Yes)
-            {
-                this.restart();
             }
         }
 
