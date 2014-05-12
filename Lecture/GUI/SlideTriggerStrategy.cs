@@ -26,14 +26,18 @@ namespace Lecture.GUI
         private EditInterfaceEditor appearanceEditor;
         private TextElementStyle elementStyle;
         private NotificationGUIManager notificationManager;
+        private RunCommandsAction previewTriggerAction;
+
+        public event Action PreviewTrigger;
 
         /// <summary>
         /// Create a slide trigger strategy. The ActionTypeBrowser determines the slide action types that can be put on the slide.
         /// Be sure to set the DefaultSelection on this browser, this is used when the trigger has no action as the default.
         /// </summary>
-        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, UndoRedoBuffer undoBuffer, String tag, String previewIconName, NotificationGUIManager notificationManager)
+        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, UndoRedoBuffer undoBuffer, String tag, String previewIconName, NotificationGUIManager notificationManager, RunCommandsAction previewTriggerAction)
             : base(tag, previewIconName, true)
         {
+            this.previewTriggerAction = previewTriggerAction;
             this.undoBuffer = undoBuffer;
             this.slide = slide;
             this.actionTypeBrowser = actionTypeBrowser;
@@ -92,6 +96,18 @@ namespace Lecture.GUI
                     return true;
                 });
             }));
+            if (editingAction.AllowPreview)
+            {
+                editInterface.addCommand(new EditInterfaceCommand("Preview", (callback, caller) =>
+                    {
+                        previewTriggerAction.clear();
+                        currentAction.setupAction(slide, previewTriggerAction);
+                        if (PreviewTrigger != null)
+                        {
+                            PreviewTrigger.Invoke();
+                        }
+                    }));
+            }
             return editInterface;
         }
 

@@ -30,6 +30,7 @@ namespace Medical.SlideshowActions
             MusclePosition = true;
             MedicalState = true;
             HighlightTeeth = true;
+            AllowPreview = true;
         }
 
         public SetupSceneAction(String name, CameraPosition cameraPosition, LayerState layers, MusclePosition musclePosition, PresetState medicalState, bool captureHighlight, bool isHighlighted)
@@ -73,6 +74,8 @@ namespace Medical.SlideshowActions
             {
                 action.addCommand(new ChangeTeethHighlightsCommand(isHighlighted));
             }
+
+            AllowPreview = true;
         }
 
         public override EditInterface getEditInterface()
@@ -249,6 +252,7 @@ namespace Medical.SlideshowActions
         protected SetupSceneAction(LoadInfo info)
             :base(info)
         {
+            AllowPreview = true;
             if (info.Version == 0) //Backing fields version
             {
                 layers = info.GetBoolean("<Layers>k__BackingField");

@@ -81,8 +81,11 @@ namespace Lecture
 
             displayManager = new SlideDisplayManager(editorController.VectorMode);
 
+            RunCommandsAction previewTriggerAction = new RunCommandsAction("PreviewTrigger");
+
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
-            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", notificationManager);
+            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", notificationManager, previewTriggerAction);
+            triggerStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -246,7 +249,8 @@ namespace Lecture
                 }),
                 new CallbackAction("Blur", blur),
                 new RunCommandsAction("Suspended", new SaveViewLayoutCommand()),
-                new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
+                new RunCommandsAction("Resumed", new RestoreViewLayoutCommand()),
+                previewTriggerAction));
 
             eventContext = new EventContext();
             MessageEvent saveEvent = new MessageEvent(Events.Save);
@@ -812,6 +816,11 @@ namespace Lecture
             {
                 return String.Format(stream.ReadToEnd(), file, context.ResourceProvider.BackingLocation);
             }
+        }
+
+        void triggerStrategy_PreviewTrigger()
+        {
+            mvcContext.runAction("Common/PreviewTrigger");
         }
 
         private void makeTempPresets()

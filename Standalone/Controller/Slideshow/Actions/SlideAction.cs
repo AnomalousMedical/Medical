@@ -55,6 +55,25 @@ namespace Medical.SlideshowActions
 
         public abstract String Name { get; set; }
 
+        [DoNotSave]
+        private bool allowPreview = false;
+        /// <summary>
+        /// Set this to true to allow a preview of the slide action.
+        /// You must do this in all constructors including the deserializing
+        /// constructor.
+        /// </summary>
+        public bool AllowPreview
+        {
+            get
+            {
+                return allowPreview;
+            }
+            set
+            {
+                allowPreview = value;
+            }
+        }
+
         protected SlideAction(LoadInfo info)
         {
             ReflectedSaver.RestoreObject(this, info);
