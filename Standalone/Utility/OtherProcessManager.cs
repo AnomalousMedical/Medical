@@ -62,7 +62,6 @@ namespace Medical
             }
             catch (Exception e)
             {
-                MessageDialog.showErrorDialog(String.Format("Could not restart program automatically. Please restart it manually by clicking its icon.\nReason:\n{0}", e.Message), "Restart Error");
                 Log.Error("Could not restart program because {0}", e.Message);
             }
         }
