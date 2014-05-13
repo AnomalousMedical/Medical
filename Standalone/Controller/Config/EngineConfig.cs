@@ -8,14 +8,16 @@ namespace Medical
 {
     public class EngineConfig
     {
-        public event EventHandler ShowStatsToggled;
+        public event Action<EngineConfig> ShowStatsToggled;
         public const int MinimumAllowedFramerate = 60;
+        private bool showStats = false;
 
         private ConfigSection section;
 
         public EngineConfig(ConfigFile configFile)
         {
             section = configFile.createOrRetrieveConfigSection("Engine");
+            showStats = section.getValue("ShowStats", false);
         }
 
         public int MaxFPS
@@ -76,14 +78,18 @@ namespace Medical
         {
             get
             {
-                return section.getValue("ShowStats", false);
+                return showStats;
             }
             set
             {
-                section.setValue("ShowStats", value);
-                if (ShowStatsToggled != null)
+                if (showStats != value)
                 {
-                    ShowStatsToggled.Invoke(this, EventArgs.Empty);
+                    showStats = value;
+                    section.setValue("ShowStats", showStats);
+                    if (ShowStatsToggled != null)
+                    {
+                        ShowStatsToggled.Invoke(this);
+                    }
                 }
             }
         }

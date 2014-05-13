@@ -38,7 +38,7 @@ namespace Medical.GUI
             }
         }
 
-        void EngineConfig_ShowStatsToggled(object sender, EventArgs e)
+        void EngineConfig_ShowStatsToggled(EngineConfig config)
         {
             statsVisible = MedicalConfig.EngineConfig.ShowStatistics;
             foreach (var display in activeSceneStats)

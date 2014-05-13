@@ -52,16 +52,19 @@ namespace Medical.GUI
             }
             set
             {
-                if (value)
+                if (preferVisible != value)
                 {
-                    displayStatsTarget.PostRenderTargetUpdate += displayStatsTarget_PostRenderTargetUpdate;
+                    if (value)
+                    {
+                        displayStatsTarget.PostRenderTargetUpdate += displayStatsTarget_PostRenderTargetUpdate;
+                    }
+                    else
+                    {
+                        displayStatsTarget.PostRenderTargetUpdate -= displayStatsTarget_PostRenderTargetUpdate;
+                    }
+                    widget.Visible = value;
+                    preferVisible = value;
                 }
-                else
-                {
-                    displayStatsTarget.PostRenderTargetUpdate -= displayStatsTarget_PostRenderTargetUpdate;
-                }
-                widget.Visible = value;
-                preferVisible = value;
             }
         }
 
