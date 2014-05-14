@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="LockedFeature">
-    <Group name="Icons" texture="Medical.Resources.LockedFeature.png" size="18 18">
+    <Group name="Icons" texture="Medical.Resources.LockedFeature@2x.png" size="36 36">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>

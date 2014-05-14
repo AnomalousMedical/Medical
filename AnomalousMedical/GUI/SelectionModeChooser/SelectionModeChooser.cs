@@ -9,6 +9,8 @@ namespace Medical.GUI
 {
     class SelectionModeChooser : PopupContainer
     {
+        private static readonly int lockSize = ScaleHelper.Scaled(18);
+
         private AnatomyController anatomyController;
         private bool allowSelectionModeChanges = true;
         private ButtonGroup pickingModeGroup;
@@ -97,7 +99,6 @@ namespace Medical.GUI
             {
                 if(lockedFeatureImage == null)
                 {
-                    int lockSize = individualButton.Height / 3;
                     lockedFeatureImage = (ImageBox)widget.createWidgetT("ImageBox", "ImageBox", individualButton.Left, individualButton.Top, lockSize, lockSize, Align.Left | Align.Top, "LockedFeatureImage");
                     lockedFeatureImage.NeedMouseFocus = false;
                     lockedFeatureImage.setItemResource("LockedFeature");
