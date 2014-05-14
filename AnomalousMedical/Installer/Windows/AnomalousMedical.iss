@@ -54,6 +54,7 @@ Source: S:\Medical\PublicRelease\libRocketWrapper.dll; DestDir: {app}; Flags: ig
 Source: S:\Medical\PublicRelease\OgreCWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OgreMain.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\PublicRelease\OpenAL32.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OSHelper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\RenderSystem_Direct3D11.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
@@ -70,9 +71,6 @@ Source: S:\Medical\PublicRelease\IntroductionTutorial.dat; DestDir: {app}; Flags
 
 ;Microcode Caches
 Source: S:\Medical\PublicRelease\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
-
-;Open AL
-Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 
 ;VS 2013 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
@@ -94,7 +92,6 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{tmp}\oalinst.exe"; Parameters: "/s"; StatusMsg: "Installing OpenAL";
 Filename: "{tmp}\vcredist_x86.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2012 Redistributable (x86)";
 Filename: "{tmp}\DirectX9c\DXSETUP.exe"; Parameters: "/silent"; StatusMsg: "Installing DirectX";
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, "&", "&&")}}"; Flags: nowait postinstall skipifsilent
