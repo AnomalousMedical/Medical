@@ -123,14 +123,14 @@ namespace Medical.GUI
             anatomyWindowManager.sceneUnloading();
         }
 
-        public void showRelatedAnatomy(Anatomy anatomy)
+        public void displayAnatomy(String caption, IEnumerable<Anatomy> anatomyToDisplay)
         {
             if (!Visible)
             {
                 Visible = true;
             }
-            searchBox.Caption = String.Format("Related to {0}", anatomy.AnatomicalName);
-            anatomyController.findRelatedAnatomy(anatomy);
+            searchBox.Caption = caption;
+            anatomyController.displayAnatomy(anatomyToDisplay);
         }
 
         public IntCoord DeadZone

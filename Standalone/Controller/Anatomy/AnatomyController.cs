@@ -159,11 +159,11 @@ namespace Medical
             fireSearchEnded();
         }
 
-        public void findRelatedAnatomy(Anatomy anatomy)
+        public void displayAnatomy(IEnumerable<Anatomy> anatomyToDisplay)
         {
             fireSearchStarted();
             fireClearDisplayedAnatomy();
-            foreach (Anatomy relatedAnatomy in anatomy.RelatedAnatomy)
+            foreach (Anatomy relatedAnatomy in anatomyToDisplay)
             {
                 fireDisplayAnatomy(relatedAnatomy);
             }
