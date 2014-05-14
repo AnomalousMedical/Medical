@@ -9,7 +9,7 @@ namespace Medical
     /// <summary>
     /// Provides a common shareable way of finding folders.
     /// </summary>
-    class FolderFinder
+    public class FolderFinder
     {
         private static String userRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalUserDocumentsFolder);
         private static String localDataFolder = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalDataFolder);

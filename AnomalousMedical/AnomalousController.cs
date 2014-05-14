@@ -23,8 +23,6 @@ namespace Medical
         private BorderLayoutChainLink contentArea;
         private LicenseDisplayManager licenseDisplay = new LicenseDisplayManager();
 
-        private static String archiveNameFormat = "AnomalousMedical{0}.dat";
-
         public override bool OnInit()
         {
             return startApplication();
@@ -165,7 +163,7 @@ namespace Medical
         {
             get
             {
-                return String.Format(archiveNameFormat, "");
+                return Path.Combine(FolderFinder.ExecutableFolder, "AnomalousMedical.dat");
             }
         }
 
