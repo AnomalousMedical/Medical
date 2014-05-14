@@ -13,15 +13,15 @@ namespace Medical
     /// </summary>
     class AnatomySelectionGroup : Anatomy
     {
-        private AnatomySelection selection;
         private HashSet<Anatomy> groupAnatomy = new HashSet<Anatomy>();
         private List<AnatomyCommand> groupCommands = new List<AnatomyCommand>();
+        private List<Anatomy> relatedAnatomy = new List<Anatomy>(3);
 
-        public AnatomySelectionGroup(AnatomySelection selection)
+        public AnatomySelectionGroup(IEnumerable<Anatomy> selectedAnatomy)
         {
-            this.selection = selection;
-            foreach(var anatomy in selection.SelectedAnatomy)
+            foreach(var anatomy in selectedAnatomy)
             {
+                relatedAnatomy.Add(anatomy);
                 foreach (var selectable in anatomy.SelectableAnatomy)
                 {
                     addSingleAnatomy(selectable);
@@ -49,7 +49,7 @@ namespace Medical
         {
             get
             {
-                return selection.SelectedAnatomy;
+                return relatedAnatomy;
             }
         }
 
