@@ -241,6 +241,8 @@
     <EmbeddedResource Include="Resources\AnomalousBootstrapImagesets.xml" />
     <EmbeddedResource Include="Resources\BookmarksIcons.xml" />
     <EmbeddedResource Include="Resources\BookmarksIcons.png" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons.png" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

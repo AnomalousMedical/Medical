@@ -21,7 +21,7 @@ namespace Medical
             this.buttonGrid = buttonGrid;
             this.scrollView = scrollView;
             scrollView.CanvasPositionChanged += scrollView_CanvasPositionChanged;
-            liveThumbnailController = new LiveThumbnailController(baseName, new IntSize2(200, 200), sceneViewController);
+            liveThumbnailController = new LiveThumbnailController(baseName, thumbSize, sceneViewController);
             liveThumbnailController.ThumbnailDestroyed += liveThumbnailController_ThumbnailDestroyed;
         }
 

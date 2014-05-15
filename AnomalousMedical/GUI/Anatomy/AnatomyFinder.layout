@@ -16,14 +16,14 @@
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 27 46 30" name="SelectButton">
-            <Property key="Caption" value="Select"/>
+        <Widget type="Button" skin="ButtonImageBackground" position="0 27 30 30" name="SelectButton">
+            <Property key="ImageResource" value="AnatomyFinder.Select"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="49 27 46 30" name="AddButton">
-            <Property key="Caption" value="Add"/>
+        <Widget type="Button" skin="ButtonImageBackground" position="49 27 30 30" name="AddButton">
+            <Property key="ImageResource" value="AnatomyFinder.Add"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="98 27 46 30" name="RemoveButton">
-            <Property key="Caption" value="Remove"/>
+        <Widget type="Button" skin="ButtonImageBackground" position="98 27 30 30" name="RemoveButton">
+            <Property key="ImageResource" value="AnatomyFinder.Remove"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
