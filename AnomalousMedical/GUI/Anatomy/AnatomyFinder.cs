@@ -64,6 +64,7 @@ namespace Medical.GUI
 
         private HashSetMultiSelectButtonGrid anatomyList;
         private EditBox searchBox;
+        private Button clearButton;
 
         private AnatomyContextWindowManager anatomyWindowManager;
 
@@ -112,7 +113,7 @@ namespace Medical.GUI
 
             searchBox = (EditBox)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
-            Button clearButton = (Button)searchBox.findWidgetChildSkin("Clear");
+            clearButton = (Button)searchBox.findWidgetChildSkin("Clear");
             clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
 
             selectionMode = new ButtonGroup<SelectionMode>();
@@ -159,6 +160,7 @@ namespace Medical.GUI
             {
                 Visible = true;
             }
+            clearButton.Visible = true;
             searchBox.Caption = caption;
             anatomyController.displayAnatomy(anatomyToDisplay);
         }
@@ -218,7 +220,9 @@ namespace Medical.GUI
 
         private void updateSearch()
         {
-            anatomyController.findAnatomy(searchBox.Caption);
+            String search = searchBox.Caption;
+            anatomyController.findAnatomy(search);
+            clearButton.Visible = !String.IsNullOrEmpty(search);
         }
 
         void mouse_ButtonUp(Mouse mouse, MouseButtonCode buttonCode)
@@ -265,6 +269,7 @@ namespace Medical.GUI
                 if (anatomyController.SelectedAnatomy.Count > 0)
                 {
                     searchBox.Caption = "Clicked";
+                    clearButton.Visible = true;
                     if (MedicalConfig.AutoOpenAnatomyFinder && !Visible)
                     {
                         Visible = true;
@@ -272,6 +277,7 @@ namespace Medical.GUI
                 }
                 else
                 {
+                    clearButton.Visible = false;
                     searchBox.Caption = "";
                 }
             }
