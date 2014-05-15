@@ -257,7 +257,17 @@ LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 						break;
 				}
 				break;
-
+			case WM_SYSCOMMAND:
+				switch (wParam)
+				{
+					case SC_KEYMENU:
+						if (lParam >> 16 <= 0)
+						{
+							return 0;
+						}
+						break;
+				}
+				break;
 			//Mouse
 			case WM_LBUTTONDOWN:
 				win->manageCapture(MB_BUTTON0);
