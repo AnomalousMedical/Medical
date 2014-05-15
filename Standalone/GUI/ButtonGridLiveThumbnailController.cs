@@ -17,12 +17,18 @@ namespace Medical
         private LiveThumbnailController liveThumbnailController;
 
         public ButtonGridLiveThumbnailController(String baseName, IntSize2 thumbSize, SceneViewController sceneViewController, ButtonGrid buttonGrid, ScrollView scrollView)
+            :this(new LiveThumbnailController(baseName, thumbSize, sceneViewController), buttonGrid, scrollView)
         {
+            
+        }
+
+        public ButtonGridLiveThumbnailController(LiveThumbnailController liveThumbnailController, ButtonGrid buttonGrid, ScrollView scrollView)
+        {
+            this.liveThumbnailController = liveThumbnailController;
+            liveThumbnailController.ThumbnailDestroyed += liveThumbnailController_ThumbnailDestroyed;
             this.buttonGrid = buttonGrid;
             this.scrollView = scrollView;
             scrollView.CanvasPositionChanged += scrollView_CanvasPositionChanged;
-            liveThumbnailController = new LiveThumbnailController(baseName, thumbSize, sceneViewController);
-            liveThumbnailController.ThumbnailDestroyed += liveThumbnailController_ThumbnailDestroyed;
         }
 
         public void Dispose()

@@ -5,7 +5,7 @@
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="EditBox" skin="EditBoxClear" position="0 0 256 26" align="HStretch Top" name="SearchBox"/>
-        <Widget type="Button" skin="Button" position="147 27 46 30" align="Left Top" name="UnhideAll">
+        <Widget type="Button" skin="Button" position="99 27 46 30" align="Left Top" name="UnhideAll">
             <Property key="Caption" value="Unhide"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="0 58 256 290" align="Stretch" name="AnatomyList">
@@ -19,10 +19,10 @@
         <Widget type="Button" skin="ButtonImageBackground" position="0 27 30 30" name="SelectButton">
             <Property key="ImageResource" value="AnatomyFinder.Select"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="49 27 30 30" name="AddButton">
+        <Widget type="Button" skin="ButtonImageBackground" position="33 27 30 30" name="AddButton">
             <Property key="ImageResource" value="AnatomyFinder.Add"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="98 27 30 30" name="RemoveButton">
+        <Widget type="Button" skin="ButtonImageBackground" position="66 27 30 30" name="RemoveButton">
             <Property key="ImageResource" value="AnatomyFinder.Remove"/>
         </Widget>
     </Widget>
