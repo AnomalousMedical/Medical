@@ -440,8 +440,11 @@ namespace Medical
             this.translation = translation;
             this.lookAt = lookAt;
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
-            updateTranslation(translation);
-            camera.LookAt = lookAt;
+            if(camera != null)
+            {
+                updateTranslation(translation);
+                camera.LookAt = lookAt;
+            }
         }
 
         public override void processIncludePoint(Camera camera)
