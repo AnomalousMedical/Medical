@@ -17,6 +17,15 @@ namespace Medical.GUI
             PickAnatomy,
             ChangeSelectionMode,
             OpenAnatomyFinder,
+            ToggleAddMode,
+            ToggleRemoveMode,
+        }
+
+        enum SelectionMode
+        {
+            Select,
+            Add,
+            Remove
         }
 
         private static readonly int ThumbSize = ScaleHelper.Scaled(50);
@@ -26,6 +35,8 @@ namespace Medical.GUI
         private static MessageEvent pickAnatomy;
         private static MessageEvent changeSelectionMode;
         private static MessageEvent openAnatomyFinder;
+        private static MessageEvent toggleAdMode;
+        private static MessageEvent toggleRemoveMode;
         
         static AnatomyFinder()
         {
@@ -41,6 +52,14 @@ namespace Medical.GUI
             openAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
             openAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
             DefaultEvents.registerDefaultEvent(openAnatomyFinder);
+
+            toggleAdMode = new MessageEvent(AnatomyFinderEvents.ToggleAddMode);
+            toggleAdMode.addButton(KeyboardButtonCode.KC_LCONTROL);
+            DefaultEvents.registerDefaultEvent(toggleAdMode);
+
+            toggleRemoveMode = new MessageEvent(AnatomyFinderEvents.ToggleRemoveMode);
+            toggleRemoveMode.addButton(KeyboardButtonCode.KC_LMENU);
+            DefaultEvents.registerDefaultEvent(toggleRemoveMode);
         }
 
         private HashSetMultiSelectButtonGrid anatomyList;
@@ -59,6 +78,8 @@ namespace Medical.GUI
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
         private EventManager eventManager;
+
+        private ButtonGroup<SelectionMode> selectionMode;
 
         public event Action ShowBuyMessage;
 
@@ -91,14 +112,23 @@ namespace Medical.GUI
 
             searchBox = (EditBox)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
+            Button clearButton = (Button)searchBox.findWidgetChildSkin("Clear");
+            clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
+
+            selectionMode = new ButtonGroup<SelectionMode>();
+            selectionMode.addButton(SelectionMode.Select, (Button)window.findWidget("SelectButton"));
+            selectionMode.addButton(SelectionMode.Add, (Button)window.findWidget("AddButton"));
+            selectionMode.addButton(SelectionMode.Remove, (Button)window.findWidget("RemoveButton"));
+            selectionMode.Selection = SelectionMode.Select;
 
             //pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
             //pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
             changeSelectionMode.FirstFrameUpEvent += new MessageEventCallback(changeSelectionMode_FirstFrameUpEvent);
             openAnatomyFinder.FirstFrameUpEvent += new MessageEventCallback(openAnatomyFinder_FirstFrameUpEvent);
-
-            Button clearButton = window.findWidget("ClearButton") as Button;
-            clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
+            toggleAdMode.FirstFrameDownEvent += toggleAdMode_FirstFrameDownEvent;
+            toggleAdMode.FirstFrameUpEvent += toggleAdMode_FirstFrameUpEvent;
+            toggleRemoveMode.FirstFrameDownEvent += toggleRemoveMode_FirstFrameDownEvent;
+            toggleRemoveMode.FirstFrameUpEvent += toggleRemoveMode_FirstFrameUpEvent;
 
             Button unhideAll = window.findWidget("UnhideAll") as Button;
             unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
@@ -443,18 +473,44 @@ namespace Medical.GUI
 
         private void processSelection(Anatomy anatomy)
         {
-            if (eventManager.Keyboard.isModifierDown(Modifier.Ctrl))
+            switch(selectionMode.Selection)
             {
-                anatomyController.SelectedAnatomy.addSelection(anatomy);
+                case SelectionMode.Select:
+                    anatomyController.SelectedAnatomy.setSelection(anatomy);
+                    break;
+                case SelectionMode.Add:
+                    anatomyController.SelectedAnatomy.addSelection(anatomy);
+                    break;
+                case SelectionMode.Remove:
+                    anatomyController.SelectedAnatomy.removeSelection(anatomy);
+                    break;
             }
-            else if (eventManager.Keyboard.isModifierDown(Modifier.Alt))
+        }
+
+        void toggleRemoveMode_FirstFrameUpEvent(EventManager eventManager)
+        {
+            if(selectionMode.Selection == SelectionMode.Remove)
             {
-                anatomyController.SelectedAnatomy.removeSelection(anatomy);
+                selectionMode.Selection = SelectionMode.Select;
             }
-            else
+        }
+
+        void toggleRemoveMode_FirstFrameDownEvent(EventManager eventManager)
+        {
+            selectionMode.Selection = SelectionMode.Remove;
+        }
+
+        void toggleAdMode_FirstFrameUpEvent(EventManager eventManager)
+        {
+            if (selectionMode.Selection == SelectionMode.Add)
             {
-                anatomyController.SelectedAnatomy.setSelection(anatomy);
+                selectionMode.Selection = SelectionMode.Select;
             }
+        }
+
+        void toggleAdMode_FirstFrameDownEvent(EventManager eventManager)
+        {
+            selectionMode.Selection = SelectionMode.Add;
         }
     }
 }

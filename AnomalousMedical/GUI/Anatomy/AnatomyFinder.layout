@@ -4,20 +4,26 @@
         <Property key="Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="EditBox" skin="EditBox" position="0 5 162 23" align="HStretch Top" name="SearchBox"/>
-        <Widget type="Button" skin="Button" position="164 7 44 20" align="Right Top" name="ClearButton">
-            <Property key="Caption" value="Clear"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="210 7 46 20" align="Right Top" name="UnhideAll">
+        <Widget type="EditBox" skin="EditBoxClear" position="0 0 256 26" align="HStretch Top" name="SearchBox"/>
+        <Widget type="Button" skin="Button" position="147 27 46 30" align="Left Top" name="UnhideAll">
             <Property key="Caption" value="Unhide"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="0 32 256 316" align="Stretch" name="AnatomyList">
+        <Widget type="ScrollView" skin="ScrollView" position="0 58 256 290" align="Stretch" name="AnatomyList">
             <Property key="CanvasSize" value="238 10"/>
             <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="AnatomyFinderListItem"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 27 46 30" name="SelectButton">
+            <Property key="Caption" value="Select"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="49 27 46 30" name="AddButton">
+            <Property key="Caption" value="Add"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="98 27 46 30" name="RemoveButton">
+            <Property key="Caption" value="Remove"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
