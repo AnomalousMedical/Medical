@@ -5,9 +5,6 @@
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="EditBox" skin="EditBoxClear" position="0 0 256 26" align="HStretch Top" name="SearchBox"/>
-        <Widget type="Button" skin="Button" position="99 27 46 30" align="Left Top" name="UnhideAll">
-            <Property key="Caption" value="Unhide"/>
-        </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="0 58 256 290" align="Stretch" name="AnatomyList">
             <Property key="CanvasSize" value="238 10"/>
             <Property key="CanvasAlign" value="Left Top"/>
@@ -25,6 +22,9 @@
         <Widget type="Button" skin="ButtonImageBackground" position="66 27 30 30" name="RemoveButton">
             <Property key="ImageResource" value="AnatomyFinder.Remove"/>
         </Widget>
+      <Widget type="Button" skin="ButtonImageBackground" position="99 27 30 30" align="Left Top" name="UnhideAll">
+        <Property key="ImageResource" value="AnatomyFinder.ShowAll"/>
+      </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>

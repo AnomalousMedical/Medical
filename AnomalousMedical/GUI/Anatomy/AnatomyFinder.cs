@@ -35,7 +35,7 @@ namespace Medical.GUI
         private static MessageEvent pickAnatomy;
         private static MessageEvent changeSelectionMode;
         private static MessageEvent openAnatomyFinder;
-        private static MessageEvent toggleAdMode;
+        private static MessageEvent toggleAddMode;
         private static MessageEvent toggleRemoveMode;
         
         static AnatomyFinder()
@@ -53,9 +53,9 @@ namespace Medical.GUI
             openAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
             DefaultEvents.registerDefaultEvent(openAnatomyFinder);
 
-            toggleAdMode = new MessageEvent(AnatomyFinderEvents.ToggleAddMode);
-            toggleAdMode.addButton(KeyboardButtonCode.KC_LCONTROL);
-            DefaultEvents.registerDefaultEvent(toggleAdMode);
+            toggleAddMode = new MessageEvent(AnatomyFinderEvents.ToggleAddMode);
+            toggleAddMode.addButton(KeyboardButtonCode.KC_LCONTROL);
+            DefaultEvents.registerDefaultEvent(toggleAddMode);
 
             toggleRemoveMode = new MessageEvent(AnatomyFinderEvents.ToggleRemoveMode);
             toggleRemoveMode.addButton(KeyboardButtonCode.KC_LMENU);
@@ -115,29 +115,69 @@ namespace Medical.GUI
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
             clearButton = (Button)searchBox.findWidgetChildSkin("Clear");
             clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
+            clearButton.NeedToolTip = true;
+            clearButton.EventToolTip += button_UserObject_EventToolTip;
+            clearButton.UserObject = "Clear Search";
 
             selectionMode = new ButtonGroup<SelectionMode>();
-            selectionMode.addButton(SelectionMode.Select, (Button)window.findWidget("SelectButton"));
-            selectionMode.addButton(SelectionMode.Add, (Button)window.findWidget("AddButton"));
-            selectionMode.addButton(SelectionMode.Remove, (Button)window.findWidget("RemoveButton"));
+            setupSelectionButton(SelectionMode.Select, "SelectButton");
+            setupSelectionButton(SelectionMode.Add, "AddButton");
+            setupSelectionButton(SelectionMode.Remove, "RemoveButton");
             selectionMode.Selection = SelectionMode.Select;
 
             //pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
             //pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
             changeSelectionMode.FirstFrameUpEvent += new MessageEventCallback(changeSelectionMode_FirstFrameUpEvent);
             openAnatomyFinder.FirstFrameUpEvent += new MessageEventCallback(openAnatomyFinder_FirstFrameUpEvent);
-            toggleAdMode.FirstFrameDownEvent += toggleAdMode_FirstFrameDownEvent;
-            toggleAdMode.FirstFrameUpEvent += toggleAdMode_FirstFrameUpEvent;
+            toggleAddMode.FirstFrameDownEvent += toggleAdMode_FirstFrameDownEvent;
+            toggleAddMode.FirstFrameUpEvent += toggleAdMode_FirstFrameUpEvent;
             toggleRemoveMode.FirstFrameDownEvent += toggleRemoveMode_FirstFrameDownEvent;
             toggleRemoveMode.FirstFrameUpEvent += toggleRemoveMode_FirstFrameUpEvent;
 
             Button unhideAll = window.findWidget("UnhideAll") as Button;
             unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
+            unhideAll.NeedToolTip = true;
+            unhideAll.EventToolTip += button_UserObject_EventToolTip;
+            unhideAll.UserObject = "Unhide All";
 
             this.Resized += new EventHandler(AnatomyFinder_Resized);
             fixListItemWidth();
 
             updateSearch();
+        }
+
+        private void setupSelectionButton(SelectionMode mode, String name)
+        {
+            Button selectionButton = (Button)window.findWidget(name);
+            selectionMode.addButton(mode, selectionButton);
+            selectionButton.NeedToolTip = true;
+            selectionButton.EventToolTip += selectionButton_EventToolTip;
+        }
+
+        void selectionButton_EventToolTip(Widget source, EventArgs e)
+        {
+            String text;
+            switch(selectionMode[(Button)source])
+            {
+                case SelectionMode.Add:
+                    text = String.Format("Add to Selection ({0})", toggleAddMode.KeyDescription);
+                    break;
+                case SelectionMode.Remove:
+                    text = String.Format("Remove from Selection ({0})", toggleRemoveMode.KeyDescription);
+                    break;
+                case SelectionMode.Select:
+                    text = "Select";
+                    break;
+                default:
+                    text = "Unknown";
+                    break;
+            }
+            TooltipManager.Instance.processTooltip(source, text, (ToolTipEventArgs)e);
+        }
+
+        void button_UserObject_EventToolTip(Widget source, EventArgs e)
+        {
+            TooltipManager.Instance.processTooltip(source, source.UserObject.ToString(), (ToolTipEventArgs)e);
         }
 
         public override void Dispose()
