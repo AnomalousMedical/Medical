@@ -1,6 +1,7 @@
 #pragma once
 
-#ifdef WINDOWS
+
+#if defined(WINDOWS) || defined(WINRT)
 #define Int64 LONGLONG
 #endif
 
@@ -21,12 +22,15 @@
 class PerformanceCounter
 {
 private:	
-#ifdef WINDOWS
+#if defined(WINDOWS) || defined(WINRT)
 	DWORD startTick;
 	LONGLONG lastTime;
 	LARGE_INTEGER startTime;
 	LARGE_INTEGER frequency;
 
+#endif
+
+#ifdef WINDOWS
 	DWORD timerMask;
 #endif
 
@@ -57,4 +61,9 @@ public:
 	/// </summary>
 	/// <returns>The current time in microseconds.</returns>
 	Int64 getCurrentTime();
+
+private:
+#ifdef WINRT
+	DWORD GetTickCount() { return (DWORD)GetTickCount64(); }
+#endif
 };

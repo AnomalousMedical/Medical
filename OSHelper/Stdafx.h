@@ -10,7 +10,14 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
+#endif
 
+#ifdef WINRT
+#include <collection.h>
+#include <ppltasks.h>
+#endif
+
+#if defined(WINDOWS) || defined(WINRT)
 #define _AnomalousExport __declspec(dllexport)
 typedef const wchar_t* String; //UTF16 Needed, On windows this is ok
 #endif

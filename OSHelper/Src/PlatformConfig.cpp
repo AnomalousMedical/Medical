@@ -1,16 +1,22 @@
 #include "stdafx.h"
 
-enum OperatingSystem
+namespace AnomalousOSHelper
 {
-    Windows,
-    Mac,
-};
+	enum OperatingSystem
+	{
+		Windows,
+		Mac,
+		WinRT,
+	};
+}
 
-extern "C" _AnomalousExport OperatingSystem PlatformConfig_getPlatform()
+extern "C" _AnomalousExport AnomalousOSHelper::OperatingSystem PlatformConfig_getPlatform()
 {
 #if WINDOWS
-	return Windows;
+	return AnomalousOSHelper::Windows;
+#elif WINRT
+	return AnomalousOSHelper::WinRT;
 #elif MAC_OSX
-	return Mac;
+	return AnomalousOSHelper::Mac;
 #endif
 }

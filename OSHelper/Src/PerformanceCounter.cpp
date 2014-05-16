@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "PerformanceCounter.h"
-#ifdef WINDOWS
+#if defined(WINDOWS) || defined(WINRT)
 #include "winbase.h"
 #include "mmsystem.h"
 #include <algorithm>
@@ -21,10 +21,11 @@ PerformanceCounter::~PerformanceCounter()
 
 bool PerformanceCounter::initialize()
 {
-#ifdef WINDOWS
+#if defined(WINDOWS) || defined(WINRT)
 	DWORD procMask;
 	DWORD sysMask;
 
+#ifdef WINDOWS
 	//Find the lowest used core
 	GetProcessAffinityMask(GetCurrentProcess(), &procMask, &sysMask);
 	if(procMask ==0)
@@ -43,13 +44,18 @@ bool PerformanceCounter::initialize()
 	//Change affinity and read counter values
 	HANDLE thread = GetCurrentThread();
 	DWORD oldMask = SetThreadAffinityMask(thread, timerMask);
+#endif
+
 	bool valid = QueryPerformanceFrequency(&frequency);
 	if(valid)
 	{
 		QueryPerformanceCounter(&startTime);
 		startTick = GetTickCount();
 	}
+
+#ifdef WINDOWS
 	SetThreadAffinityMask(thread, oldMask);
+#endif
 
 	//Finish and return
 	lastTime = 0;
@@ -65,13 +71,20 @@ bool PerformanceCounter::initialize()
 Int64 PerformanceCounter::getCurrentTime()
 {
 
-#ifdef WINDOWS
+#if defined(WINDOWS) || defined(WINRT)
 	//Set affinity and read current time
 	LARGE_INTEGER currentTime;
+
+#ifdef WINDOWS
 	HANDLE thread = GetCurrentThread();
 	DWORD oldMask = SetThreadAffinityMask(thread, timerMask);
+#endif
+
 	QueryPerformanceCounter(&currentTime);
+	
+#ifdef WINDOWS
 	SetThreadAffinityMask(thread, oldMask);
+#endif
 
 	//Compute the number of ticks in milliseconds since initialize was called.
 	LONGLONG time = currentTime.QuadPart - startTime.QuadPart;
@@ -91,7 +104,6 @@ Int64 PerformanceCounter::getCurrentTime()
 	lastTime = time;
 
 	return 1000000 * time / frequency.QuadPart;
-
 #endif
 
 #ifdef MAC_OSX
