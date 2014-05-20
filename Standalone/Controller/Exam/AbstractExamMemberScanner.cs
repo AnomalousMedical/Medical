@@ -33,7 +33,7 @@ namespace Medical
 
         public bool allowMember(MemberWrapper wrapper)
         {
-            return wrapper.getCustomAttributes(typeof(HiddenAttribute), true).Length == 0;
+            return !wrapper.getCustomAttributes(typeof(HiddenAttribute), true).Any();
         }
 
         public bool allowType(Type type)

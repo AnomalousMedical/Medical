@@ -28,15 +28,15 @@ namespace Medical
 
         private ExamSaveMemberScanner()
         {
-
+            
         }
 
         public bool allowMember(MemberWrapper wrapper)
         {
-            return wrapper.getCustomAttributes(typeof(DoNotSaveAttribute), true).Length == 0
-                && wrapper.getWrappedType().GetCustomAttributes(typeof(DoNotSaveAttribute), true).Length == 0
-                && wrapper.getWrappedType().GetCustomAttributes(typeof(NativeSubsystemTypeAttribute), true).Length == 0
-                && !wrapper.getWrappedType().IsSubclassOf(typeof(Delegate));
+            return !(wrapper.getCustomAttributes(typeof(DoNotSaveAttribute), true).Any()
+                || wrapper.getWrappedType().GetCustomAttributes(typeof(DoNotSaveAttribute), true).Any()
+                || wrapper.getWrappedType().GetCustomAttributes(typeof(NativeSubsystemTypeAttribute), true).Any()
+                || wrapper.getWrappedType().IsSubclassOf(typeof(Delegate)));
         }
 
         /// <summary>
