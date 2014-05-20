@@ -22,7 +22,7 @@ void WinRTApp::run()
 
 void WinRTApp::exit()
 {
-	
+	AnomalousRTFramework::getSingleton()->stopRunLoop();
 }
 
 //PInvoke
