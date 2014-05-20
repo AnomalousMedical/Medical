@@ -38,6 +38,8 @@ void AnomalousRTFramework::Initialize(CoreApplicationView^ applicationView)
 void AnomalousRTFramework::SetWindow(CoreWindow^ window)
 {
 	mainWindow = window;
+
+	window->VisibilityChanged += ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow ^, Windows::UI::Core::VisibilityChangedEventArgs ^>(this, &AnomalousRTFramework::OnVisibilityChanged);
 }
 
 void AnomalousRTFramework::Load(Platform::String^ entryPoint)
@@ -50,10 +52,18 @@ void AnomalousRTFramework::Run()
 	CoreWindow::GetForCurrentThread()->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
 	if (anomalousApp->fireInit())
 	{
+		CoreWindow::GetForCurrentThread()->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
 		while (runningLoop)
 		{
-			CoreWindow::GetForCurrentThread()->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
-			runningLoop = anomalousApp->fireIdle();
+			if (windowVisible)
+			{
+				CoreWindow::GetForCurrentThread()->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessAllIfPresent);
+				runningLoop = anomalousApp->fireIdle();
+			}
+			else
+			{
+				CoreWindow::GetForCurrentThread()->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessOneAndAllPending);
+			}
 		}
 	}
 	anomalousApp->fireExit();
@@ -96,6 +106,11 @@ void AnomalousRTFramework::OnSuspending(Platform::Object^ sender, SuspendingEven
 
 	//	deferral->Complete();
 	//});
+}
+
+void AnomalousRTFramework::OnVisibilityChanged(Windows::UI::Core::CoreWindow ^sender, Windows::UI::Core::VisibilityChangedEventArgs ^args)
+{
+	windowVisible = args->Visible;
 }
 
 void AnomalousRTFramework::OnResuming(Platform::Object^ sender, Platform::Object^ args)

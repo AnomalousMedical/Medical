@@ -31,6 +31,7 @@ protected:
 	void OnActivated(Windows::ApplicationModel::Core::CoreApplicationView^ applicationView, Windows::ApplicationModel::Activation::IActivatedEventArgs^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
+	void OnVisibilityChanged(Windows::UI::Core::CoreWindow ^sender, Windows::UI::Core::VisibilityChangedEventArgs ^args);
 
 private:
 	WinRTApp* anomalousApp;
