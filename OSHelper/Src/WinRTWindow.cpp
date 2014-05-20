@@ -5,11 +5,11 @@
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Foundation;
 
-WinRTWindow::WinRTWindow(Platform::Agile<WinRTCoreWindowWrapper^> window, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
+WinRTWindow::WinRTWindow(WinRTCoreWindowWrapper^ windowWrapper, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB)
 :NativeOSWindow(deleteCB, sizedCB, closingCB, closedCB, activateCB),
-window(window)
+windowWrapper(windowWrapper)
 {
-	
+	windowWrapper->setNativeWindow(this);
 }
 
 WinRTWindow::~WinRTWindow()
@@ -34,17 +34,17 @@ void WinRTWindow::setSize(int width, int height)
 
 int WinRTWindow::getWidth()
 {
-	return window->getWindow()->Bounds.Width;
+	return windowWrapper->getWindow()->Bounds.Width;
 }
 
 int WinRTWindow::getHeight()
 {
-	return window->getWindow()->Bounds.Height;
+	return windowWrapper->getWindow()->Bounds.Height;
 }
 
 void* WinRTWindow::getHandle()
 {
-	return reinterpret_cast<void*>(window->getWindow());
+	return reinterpret_cast<void*>(windowWrapper->getWindow());
 }
 
 void WinRTWindow::show()
@@ -86,5 +86,5 @@ void WinRTWindow::setupMultitouch(MultiTouch* multiTouch)
 //PInvoke
 extern "C" _AnomalousExport NativeOSWindow* NativeOSWindow_create(NativeOSWindow* parent, String caption, int x, int y, int width, int height, bool floatOnParent, NativeOSWindow::DeleteDelegate deleteCB, NativeOSWindow::SizedDelegate sizedCB, NativeOSWindow::ClosingDelegate closingCB, NativeOSWindow::ClosedDelegate closedCB, NativeOSWindow::ActivateDelegate activateCB)
 {
-	return new WinRTWindow(Platform::Agile<WinRTCoreWindowWrapper^>(ref new WinRTCoreWindowWrapper(AnomalousRTFramework::getSingleton()->getWindow())), caption, x, y, width, height, deleteCB, sizedCB, closingCB, closedCB, activateCB);
+	return new WinRTWindow(ref new WinRTCoreWindowWrapper(AnomalousRTFramework::getSingleton()->getWindow()), caption, x, y, width, height, deleteCB, sizedCB, closingCB, closedCB, activateCB);
 }

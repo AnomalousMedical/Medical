@@ -16,7 +16,7 @@ public:
 	}
 
 internal:
-	WinRTCoreWindowWrapper(Windows::UI::Core::CoreWindow^ window);
+	WinRTCoreWindowWrapper(Windows::UI::Core::CoreWindow^ coreWindow);
 
 	void setNativeWindow(WinRTWindow* window);
 
@@ -25,6 +25,7 @@ protected:
 	void OnWindowSizeChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::WindowSizeChangedEventArgs^ args);
 	void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
 	void OnWindowClosed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CoreWindowEventArgs^ args);
+	void OnActivated(Windows::UI::Core::CoreWindow ^sender, Windows::UI::Core::WindowActivatedEventArgs ^args);
 
 private:
 	Windows::UI::Core::CoreWindow^ coreWindow;

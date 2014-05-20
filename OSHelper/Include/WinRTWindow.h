@@ -7,7 +7,7 @@
 class WinRTWindow : public NativeOSWindow
 {
 public:
-	WinRTWindow(Platform::Agile<WinRTCoreWindowWrapper^> window, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
+	WinRTWindow(WinRTCoreWindowWrapper^ windowWrapper, String title, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activateCB);
     
 	virtual ~WinRTWindow();
 
@@ -38,5 +38,5 @@ public:
 	virtual void setupMultitouch(MultiTouch* multiTouch);
 
 private:
-	Platform::Agile<WinRTCoreWindowWrapper^> window;
+	Platform::Agile<WinRTCoreWindowWrapper^> windowWrapper;
 };
