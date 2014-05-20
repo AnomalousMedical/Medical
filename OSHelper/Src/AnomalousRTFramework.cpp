@@ -28,9 +28,7 @@ void AnomalousRTFramework::Initialize(CoreApplicationView^ applicationView)
 
 void AnomalousRTFramework::SetWindow(CoreWindow^ window)
 {
-	window->SizeChanged += ref new TypedEventHandler<CoreWindow^, WindowSizeChangedEventArgs^>(this, &AnomalousRTFramework::OnWindowSizeChanged);
-	window->VisibilityChanged += ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &AnomalousRTFramework::OnVisibilityChanged);
-	window->Closed += ref new TypedEventHandler<CoreWindow^, CoreWindowEventArgs^>(this, &AnomalousRTFramework::OnWindowClosed);
+	mainWindow = window;
 }
 
 void AnomalousRTFramework::Load(Platform::String^ entryPoint)
@@ -60,19 +58,9 @@ void AnomalousRTFramework::stopRunLoop()
 	runningLoop = false;
 }
 
-void AnomalousRTFramework::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
+CoreWindow^ AnomalousRTFramework::getWindow()
 {
-	
-}
-
-void AnomalousRTFramework::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEventArgs^ args)
-{
-	windowVisible = args->Visible;
-}
-
-void AnomalousRTFramework::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
-{
-	runningLoop = false;
+	return mainWindow;
 }
 
 AnomalousFrameworkSource::AnomalousFrameworkSource(WinRTApp* anomalousApp)
