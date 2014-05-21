@@ -82,59 +82,65 @@ namespace Medical
             anatomySearchList.clear();
         }
 
+        /// <summary>
+        /// Find the anatomy along a given ray. Will fire search events. Returns the best match anatomy based
+        /// on position and selection mode (group or individual). Note that this will still return non null anatomy
+        /// if the picking mode is none, the caller must deal with that case. Returns null if no anatomy was found
+        /// along the ray.
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
         public Anatomy findAnatomy(Ray3 ray)
         {
             Anatomy bestMatchAnatomy = null;
-            if (PickingMode != AnatomyPickingMode.None)
+            fireSearchStarted();
+            fireClearDisplayedAnatomy();
+
+            var matches = AnatomyManager.findAnatomy(ray);
+
+            HashSet<String> anatomyTags = new HashSet<String>();
+            if (matches.Count > 0)
             {
-                fireSearchStarted();
-                fireClearDisplayedAnatomy();
-
-                var matches = AnatomyManager.findAnatomy(ray);
-
-                HashSet<String> anatomyTags = new HashSet<String>();
-                if (matches.Count > 0)
+                AnatomyIdentifier firstMatch = matches[0];
+                bestMatchAnatomy = firstMatch;
+                foreach (AnatomyIdentifier anatomy in matches)
                 {
-                    AnatomyIdentifier firstMatch = matches[0];
-                    bestMatchAnatomy = firstMatch;
-                    foreach (AnatomyIdentifier anatomy in matches)
+                    fireDisplayAnatomy(anatomy);
+                    foreach (AnatomyTag tag in anatomy.Tags)
                     {
-                        fireDisplayAnatomy(anatomy);
-                        foreach (AnatomyTag tag in anatomy.Tags)
-                        {
-                            anatomyTags.Add(tag.Tag);
-                        }
+                        anatomyTags.Add(tag.Tag);
                     }
-                    foreach (AnatomyTagGroup tagGroup in TagManager.Groups)
+                }
+                foreach (AnatomyTagGroup tagGroup in TagManager.Groups)
+                {
+                    if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
                     {
-                        if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
-                        {
-                            fireDisplayAnatomy(tagGroup);
-                        }
+                        fireDisplayAnatomy(tagGroup);
                     }
+                }
 
-                    if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
+                if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
+                {
+                    AnatomyTagGroup tagGroup;
+                    foreach (AnatomyTag tag in firstMatch.Tags)
                     {
-                        AnatomyTagGroup tagGroup;
-                        foreach (AnatomyTag tag in firstMatch.Tags)
+                        if (anatomyTagManager.tryGetTagGroup(tag.Tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
                         {
-                            if (anatomyTagManager.tryGetTagGroup(tag.Tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
-                            {
-                                bestMatchAnatomy = tagGroup;
-                                break;
-                            }
+                            bestMatchAnatomy = tagGroup;
+                            break;
                         }
                     }
                 }
-                else
-                {
-                    foreach (var anatomy in SearchList.TopLevelAnatomy)
-                    {
-                        fireDisplayAnatomy(anatomy);
-                    }
-                }
-                fireSearchEnded();
             }
+            else
+            {
+                foreach (var anatomy in SearchList.TopLevelAnatomy)
+                {
+                    fireDisplayAnatomy(anatomy);
+                }
+            }
+            fireSearchEnded();
+
             return bestMatchAnatomy;
         }
 

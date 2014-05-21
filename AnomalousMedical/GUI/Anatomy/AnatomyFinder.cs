@@ -304,9 +304,12 @@ namespace Medical.GUI
 
                 Anatomy bestMatch = anatomyController.findAnatomy(cameraRay);
 
-                processSelection(bestMatch);
+                if (anatomyController.PickingMode != AnatomyPickingMode.None)
+                {
+                    processSelection(bestMatch);
+                }
 
-                if (anatomyController.SelectedAnatomy.Count > 0)
+                if (bestMatch != null)
                 {
                     searchBox.Caption = "Clicked";
                     clearButton.Visible = true;
