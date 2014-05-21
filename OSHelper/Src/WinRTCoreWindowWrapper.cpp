@@ -33,14 +33,13 @@ void WinRTCoreWindowWrapper::OnWindowSizeChanged(Windows::UI::Core::CoreWindow^ 
 
 void WinRTCoreWindowWrapper::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
 {
-	//windowVisible = args->Visible;
+	
 }
 
 void WinRTCoreWindowWrapper::OnWindowClosed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CoreWindowEventArgs^ args)
 {
 	nativeWindow->fireClosing();
 	nativeWindow->fireClosed();
-	//runningLoop = false;
 }
 
 void WinRTCoreWindowWrapper::OnActivated(Windows::UI::Core::CoreWindow ^sender, Windows::UI::Core::WindowActivatedEventArgs ^args)
