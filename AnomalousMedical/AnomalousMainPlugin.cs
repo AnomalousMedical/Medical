@@ -97,7 +97,10 @@ namespace Medical.GUI
 
             if (VirtualFileSystem.Instance.exists("Watermark/AnomalousMedical.png"))
             {
-                standaloneController.ImageRenderer.Logo = (Bitmap)Bitmap.FromStream(VirtualFileSystem.Instance.openStream("Watermark/AnomalousMedical.png", Engine.Resources.FileMode.Open));
+                using (Stream stream = VirtualFileSystem.Instance.openStream("Watermark/AnomalousMedical.png", Engine.Resources.FileMode.Open))
+                {
+                    standaloneController.ImageRenderer.Logo = (Bitmap)Bitmap.FromStream(stream);
+                }
             }
 
             this.guiManager = standaloneController.GUIManager;
