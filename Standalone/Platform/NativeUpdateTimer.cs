@@ -10,7 +10,8 @@ namespace Medical
     public class NativeUpdateTimer : UpdateTimer
     {
         Int64 deltaTime;
-        Int64 totalTime = 0;
+        Int64 fixedFrameTime = 0;
+        Int64 fullSpeedUpdateAccumulator;
         Int64 frameStartTime;
         Int64 lastTime;
         Int64 totalFrameTime;
@@ -20,6 +21,8 @@ namespace Medical
         {
             
         }
+
+        public bool BatterySaver { get; set; }
 
         public override bool startLoop()
         {
@@ -31,9 +34,10 @@ namespace Medical
             fireLoopStarted();
 
             deltaTime = 0;
-            totalTime = 0;
+            fixedFrameTime = 0;
             frameStartTime = 0;
             lastTime = systemTimer.getCurrentTime();
+            fullSpeedUpdateAccumulator = 0;
             totalFrameTime = 0;
 
             started = true;
@@ -53,33 +57,41 @@ namespace Medical
                     deltaTime = maxDelta;
                     fireExceededMaxDelta();
                 }
-                totalTime += deltaTime;
-                if (totalTime > fixedFrequency * maxFrameSkip)
+                fixedFrameTime += deltaTime;
+                if (fixedFrameTime > fixedFrequency * maxFrameSkip)
                 {
-                    totalTime = fixedFrequency * maxFrameSkip;
+                    fixedFrameTime = fixedFrequency * maxFrameSkip;
                 }
 
                 //Frame skipping
-                while (totalTime >= fixedFrequency)
+                while (fixedFrameTime >= fixedFrequency)
                 {
                     fireFixedUpdate(fixedFrequency);
-                    totalTime -= fixedFrequency;
+                    fixedFrameTime -= fixedFrequency;
                 }
 
-                fireFullSpeedUpdate(deltaTime);
+                fullSpeedUpdateAccumulator += deltaTime;
+
+                if(fullSpeedUpdateAccumulator > framerateCap)
+                {
+                    fireFullSpeedUpdate(fullSpeedUpdateAccumulator);
+                    fullSpeedUpdateAccumulator = 0;
+                }
+                else if(BatterySaver)
+                {
+                    //cap the framerate if required
+                    PerformanceMonitor.start("Battery Saver");
+                    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
+                    while (totalFrameTime < framerateCap)
+                    {
+                        long sleepTime = framerateCap - totalFrameTime;
+                        System.Threading.Thread.Sleep((int)(sleepTime / 1000));
+                        totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
+                    }
+                    PerformanceMonitor.stop("Battery Saver");
+                }
 
                 lastTime = frameStartTime;
-
-                //cap the framerate if required
-                PerformanceMonitor.start("Idle");
-                totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
-                while (totalFrameTime < framerateCap)
-                {
-                    long sleepTime = framerateCap - totalFrameTime;
-                    System.Threading.Thread.Sleep((int)(sleepTime / 1000));
-                    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
-                }
-                PerformanceMonitor.stop("Idle");
             }
             else
             {

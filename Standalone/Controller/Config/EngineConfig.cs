@@ -93,5 +93,17 @@ namespace Medical
                 }
             }
         }
+
+        public bool BatterySaver
+        {
+            get
+            {
+                return section.getValue("BatterySaver", false);
+            }
+            set
+            {
+                section.setValue("BatterySaver", value);
+            }
+        }
     }
 }

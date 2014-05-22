@@ -116,10 +116,10 @@ namespace Medical
             BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
 
-            NativeUpdateTimer win32Timer = new NativeUpdateTimer(systemTimer);
-            mainTimer = win32Timer;
-            
+            mainTimer = new NativeUpdateTimer(systemTimer);
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
+            mainTimer.BatterySaver = MedicalConfig.EngineConfig.BatterySaver;
+
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
             eventManager = new EventManager(inputHandler);
             Medical.Platform.GlobalContextEventHandler.setEventManager(eventManager);
