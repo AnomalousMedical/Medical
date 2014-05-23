@@ -90,10 +90,6 @@ namespace Medical
                     }
                     PerformanceMonitor.stop("Battery Saver");
                 }
-                else
-                {
-                    System.Threading.Thread.Sleep(0);
-                }
 
                 lastTime = frameStartTime;
             }

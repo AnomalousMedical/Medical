@@ -20,7 +20,7 @@
   <Resource type="ResourceImageSet" name="AnatomyFinder.Select">
     <Group name="Icons" texture="Medical.Resources.AnatomyFinderIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="64 0"/>
+        <Frame point="0 32"/>
       </Index>
     </Group>
   </Resource>
@@ -28,7 +28,7 @@
   <Resource type="ResourceImageSet" name="AnatomyFinder.ShowAll">
     <Group name="Icons" texture="Medical.Resources.AnatomyFinderIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="96 0"/>
+        <Frame point="32 32"/>
       </Index>
     </Group>
   </Resource>
