@@ -24,7 +24,7 @@ namespace Medical
         {
             get
             {
-                int maxFps = section.getValue("MaxFPS", 120);
+                int maxFps = section.getValue("MaxFPS", 60);
                 if (maxFps < MinimumAllowedFramerate && maxFps != 0)
                 {
                     maxFps = MinimumAllowedFramerate;
