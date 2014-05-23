@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="AnatomyFinder.Add">
+    <Group name="Icons" texture="Medical.Resources.AnatomyFinderIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="AnatomyFinder.Remove">
+    <Group name="Icons" texture="Medical.Resources.AnatomyFinderIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="AnatomyFinder.Select">
+    <Group name="Icons" texture="Medical.Resources.AnatomyFinderIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="0 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="AnatomyFinder.ShowAll">
+    <Group name="Icons" texture="Medical.Resources.AnatomyFinderIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="64 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

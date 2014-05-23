@@ -243,6 +243,8 @@
     <EmbeddedResource Include="Resources\BookmarksIcons.png" />
     <EmbeddedResource Include="Resources\AnatomyFinderIcons.png" />
     <EmbeddedResource Include="Resources\AnatomyFinderIcons.xml" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons%402x.png" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons%402x.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
