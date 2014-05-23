@@ -45,7 +45,7 @@ namespace Medical.GUI
             if (adImage == null)
             {
                 adImage = (ImageBox)ParentWidget.createWidgetT("ImageBox", "ImageBox", 2, taskMenu.AdTop, AdWidth, AdHeight, Align.Left | Align.Top, "");
-                rocketWidget = new RocketWidget(adImage, true);
+                rocketWidget = new RocketWidget(adImage, false);
                 openRml();
                 Right = adImage.Right;
                 fireAdCreated();
