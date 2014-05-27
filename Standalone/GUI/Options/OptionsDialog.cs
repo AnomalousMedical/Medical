@@ -197,7 +197,7 @@ namespace Medical.GUI
                 aaCombo.SelectedIndex = aaIndex;
             }
 
-            maxFPS.IntValue = MedicalConfig.EngineConfig.MaxFPS;
+            maxFPS.IntValue = MedicalConfig.EngineConfig.FPSCap;
         }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
@@ -262,9 +262,9 @@ namespace Medical.GUI
             {
                 maxFpsValue = EngineConfig.MinimumAllowedFramerate;
             }
-            if (MedicalConfig.EngineConfig.MaxFPS != maxFpsValue)
+            if (MedicalConfig.EngineConfig.FPSCap != maxFpsValue)
             {
-                MedicalConfig.EngineConfig.MaxFPS = maxFpsValue;
+                MedicalConfig.EngineConfig.FPSCap = maxFpsValue;
                 videoOptionsChanged = true;
             }
             if (videoOptionsChanged && VideoOptionsChanged != null)

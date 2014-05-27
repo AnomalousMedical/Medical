@@ -20,21 +20,21 @@ namespace Medical
             showStats = section.getValue("ShowStats", false);
         }
 
-        public int MaxFPS
+        public int FPSCap
         {
             get
             {
-                int maxFps = section.getValue("MaxFPS", 60);
-                if (maxFps < MinimumAllowedFramerate && maxFps != 0)
+                int fpsCap = section.getValue("FPSCap", 60);
+                if (fpsCap < MinimumAllowedFramerate && fpsCap != 0)
                 {
-                    maxFps = MinimumAllowedFramerate;
-                    section.setValue("MaxFPS", MinimumAllowedFramerate);
+                    fpsCap = MinimumAllowedFramerate;
+                    section.setValue("FPSCap", MinimumAllowedFramerate);
                 }
-                return maxFps;
+                return fpsCap;
             }
             set
             {
-                section.setValue("MaxFPS", value);
+                section.setValue("FPSCap", value);
             }
         }
 

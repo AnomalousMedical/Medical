@@ -125,7 +125,7 @@ namespace Medical
             }
             else
             {
-                mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
+                mainTimer.FramerateCap = MedicalConfig.EngineConfig.FPSCap;
             }
 
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
