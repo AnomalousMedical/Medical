@@ -11,7 +11,6 @@ namespace Medical
     {
         Int64 deltaTime;
         Int64 fixedFrameTime = 0;
-        Int64 fullSpeedUpdateAccumulator;
         Int64 frameStartTime;
         Int64 lastTime;
         Int64 totalFrameTime;
@@ -30,6 +29,7 @@ namespace Medical
             {
                 return false;
             }
+            systemTimer.Accurate = BatterySaver && framerateCap > 0;
 
             fireLoopStarted();
 
@@ -37,7 +37,6 @@ namespace Medical
             fixedFrameTime = 0;
             frameStartTime = 0;
             lastTime = systemTimer.getCurrentTime();
-            fullSpeedUpdateAccumulator = 0;
             totalFrameTime = 0;
 
             started = true;
@@ -70,14 +69,9 @@ namespace Medical
                     fixedFrameTime -= fixedFrequency;
                 }
 
-                fullSpeedUpdateAccumulator += deltaTime;
-
-                if(fullSpeedUpdateAccumulator > framerateCap)
-                {
-                    fireFullSpeedUpdate(fullSpeedUpdateAccumulator);
-                    fullSpeedUpdateAccumulator = 0;
-                }
-                else if(BatterySaver)
+                fireFullSpeedUpdate(deltaTime);
+                
+                if(BatterySaver)
                 {
                     //cap the framerate if required
                     PerformanceMonitor.start("Battery Saver");
@@ -85,7 +79,11 @@ namespace Medical
                     while (totalFrameTime < framerateCap)
                     {
                         long sleepTime = framerateCap - totalFrameTime;
-                        System.Threading.Thread.Sleep((int)(sleepTime / 1000));
+                        int sleepMs = (int)(sleepTime / 1000);
+                        if (sleepMs > 0)
+                        {
+                            System.Threading.Thread.Sleep(sleepMs);
+                        }
                         totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
                     }
                     PerformanceMonitor.stop("Battery Saver");

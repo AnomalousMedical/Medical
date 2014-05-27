@@ -8,7 +8,8 @@
 
 PerformanceCounter::PerformanceCounter()
 #ifdef WINDOWS
-:timerMask(0)
+:timerMask(0),
+accurate(false)
 #endif
 {
 	
@@ -16,7 +17,7 @@ PerformanceCounter::PerformanceCounter()
 
 PerformanceCounter::~PerformanceCounter()
 {
-
+	setAccurate(false);
 }
 
 bool PerformanceCounter::initialize()
@@ -114,6 +115,29 @@ Int64 PerformanceCounter::getCurrentTime()
 #endif
 }
 
+void PerformanceCounter::setAccurate(bool accurate)
+{
+#ifdef WINDOWS //Not sure about windows rt and timeBeginPeriod
+	if (this->accurate != accurate)
+	{
+		this->accurate = accurate;
+		if (this->accurate)
+		{
+			timeBeginPeriod(1);
+		}
+		else
+		{
+			timeEndPeriod(1);
+		}
+	}
+#endif
+}
+
+bool PerformanceCounter::isAccurate()
+{
+	return accurate;
+}
+
 extern "C" _AnomalousExport PerformanceCounter* PerformanceCounter_Create()
 {
 	return new PerformanceCounter();
@@ -132,4 +156,14 @@ extern "C" _AnomalousExport bool PerformanceCounter_initialize(PerformanceCounte
 extern "C" _AnomalousExport Int64 PerformanceCounter_getCurrentTime(PerformanceCounter* counter)
 {
 	return counter->getCurrentTime();
+}
+
+extern "C" _AnomalousExport void PerformanceCounter_setAccurate(PerformanceCounter* counter, bool accurate)
+{
+	counter->setAccurate(accurate);
+}
+
+extern "C" _AnomalousExport bool PerformanceCounter_isAccurate(PerformanceCounter* counter)
+{
+	return counter->isAccurate();
 }

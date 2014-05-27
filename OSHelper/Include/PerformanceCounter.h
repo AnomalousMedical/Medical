@@ -27,6 +27,7 @@ private:
 	LONGLONG lastTime;
 	LARGE_INTEGER startTime;
 	LARGE_INTEGER frequency;
+	bool accurate;
 
 #endif
 
@@ -61,6 +62,10 @@ public:
 	/// </summary>
 	/// <returns>The current time in microseconds.</returns>
 	Int64 getCurrentTime();
+
+	void setAccurate(bool accurate);
+
+	bool isAccurate();
 
 private:
 #ifdef WINRT

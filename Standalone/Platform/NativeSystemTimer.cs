@@ -31,6 +31,18 @@ namespace Medical
             return PerformanceCounter_getCurrentTime(performanceCounter);
         }
 
+        public bool Accurate
+        {
+            get
+            {
+                return PerformanceCounter_isAccurate(performanceCounter);
+            }
+            set
+            {
+                PerformanceCounter_setAccurate(performanceCounter, value);
+            }
+        }
+
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr PerformanceCounter_Create();
 
@@ -43,5 +55,12 @@ namespace Medical
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern Int64 PerformanceCounter_getCurrentTime(IntPtr counter);
+
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void PerformanceCounter_setAccurate(IntPtr counter, bool accurate);
+
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool PerformanceCounter_isAccurate(IntPtr counter);
     }
 }

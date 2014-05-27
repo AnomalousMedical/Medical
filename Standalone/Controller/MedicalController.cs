@@ -207,14 +207,6 @@ namespace Medical
         }
 
         /// <summary>
-        /// Show the form to the user and start the loop.
-        /// </summary>
-        public void start()
-        {
-            mainTimer.startLoop();
-        }
-
-        /// <summary>
         /// Stop the loop and begin the process of shutting down the program.
         /// </summary>
         public void shutdown()
