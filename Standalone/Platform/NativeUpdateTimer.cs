@@ -21,15 +21,13 @@ namespace Medical
             
         }
 
-        public bool BatterySaver { get; set; }
-
         public override bool startLoop()
         {
             if (!systemTimer.initialize())
             {
                 return false;
             }
-            systemTimer.Accurate = BatterySaver && framerateCap > 0;
+            systemTimer.Accurate = framerateCap > 0;
 
             fireLoopStarted();
 
@@ -71,23 +69,20 @@ namespace Medical
 
                 fireFullSpeedUpdate(deltaTime);
                 
-                if(BatterySaver)
+                //cap the framerate if required
+                PerformanceMonitor.start("Energy Saver");
+                totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
+                while (totalFrameTime < framerateCap)
                 {
-                    //cap the framerate if required
-                    PerformanceMonitor.start("Battery Saver");
-                    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
-                    while (totalFrameTime < framerateCap)
+                    long sleepTime = framerateCap - totalFrameTime;
+                    int sleepMs = (int)(sleepTime / 1000);
+                    if (sleepMs > 0)
                     {
-                        long sleepTime = framerateCap - totalFrameTime;
-                        int sleepMs = (int)(sleepTime / 1000);
-                        if (sleepMs > 0)
-                        {
-                            System.Threading.Thread.Sleep(sleepMs);
-                        }
-                        totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
+                        System.Threading.Thread.Sleep(sleepMs);
                     }
-                    PerformanceMonitor.stop("Battery Saver");
+                    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
                 }
+                PerformanceMonitor.stop("Energy Saver");
 
                 lastTime = frameStartTime;
             }

@@ -102,10 +102,6 @@
             <Property key="Caption" value="Auto-Open Anatomy Finder"/>
             <Property key="TextColour" value="1 1 1"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="342 161 106 23" name="BatterySaverCheck">
-            <Property key="Caption" value="Battery Saver"/>
-            <Property key="TextColour" value="1 1 1"/>
-        </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>

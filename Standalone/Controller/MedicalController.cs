@@ -120,14 +120,12 @@ namespace Medical
 
             if (OgreConfig.VSync)
             {
-                //With vsync on its best to have no framerate cap and no battery saver, vsync makes things slower for us
+                //With vsync on its best to have no framerate cap, vsync caps for us
                 mainTimer.FramerateCap = 0;
-                mainTimer.BatterySaver = false;
             }
             else
             {
                 mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
-                mainTimer.BatterySaver = MedicalConfig.EngineConfig.BatterySaver;
             }
 
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
