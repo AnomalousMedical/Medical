@@ -77,6 +77,8 @@ namespace Medical.GUI
                         document.Show();
                         rocketWidget.removeFocus();
                         rocketWidget.renderOnNextFrame();
+                        adImage.setSize(adImage.Width, (int)document.OffsetHeight);
+                        rocketWidget.resized();
                     }
                 }
 
