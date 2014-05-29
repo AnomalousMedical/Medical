@@ -69,6 +69,9 @@ namespace Medical.GUI
             TextBox libRocketLink = window.findWidget("LibRocketLink") as TextBox;
             libRocketLink.MouseButtonClick += libRocketLink_MouseButtonClick;
 
+            TextBox openAlSoftLink = window.findWidget("OpenALSoftLink") as TextBox;
+            openAlSoftLink.MouseButtonClick += openAlSoftLink_MouseButtonClick;
+
             TextBox copyrightText = window.findWidget("CopyrightText") as TextBox;
             copyrightText.Caption = String.Format("Copyright 2009-{0} Anomalous Medical, LLC", DateTime.Now.Year);
 
@@ -132,6 +135,11 @@ namespace Medical.GUI
         void libRocketLink_MouseButtonClick(Widget source, EventArgs e)
         {
             OtherProcessManager.openUrlInBrowser("http://librocket.com/");
+        }
+
+        void openAlSoftLink_MouseButtonClick(Widget source, EventArgs e)
+        {
+            OtherProcessManager.openUrlInBrowser("http://kcat.strangesoft.net/openal.html");
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
