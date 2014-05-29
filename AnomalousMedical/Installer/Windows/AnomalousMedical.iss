@@ -57,6 +57,7 @@ Source: S:\Medical\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreve
 Source: S:\Medical\PublicRelease\OpenAL32.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\OSHelper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\RenderSystem_Direct3D11.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\PublicRelease\RenderSystem_GL.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\Simulation.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\PublicRelease\SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion
@@ -71,6 +72,7 @@ Source: S:\Medical\PublicRelease\IntroductionTutorial.dat; DestDir: {app}; Flags
 
 ;Microcode Caches
 Source: S:\Medical\PublicRelease\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\PublicRelease\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
 
 ;VS 2013 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
