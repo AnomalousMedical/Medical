@@ -168,6 +168,14 @@ namespace Medical
 
         public static OperatingSystem OsId { get; private set; }
 
+		public static String InitializingCoreMessage 
+		{ 
+			get 
+			{
+				return currentConfig.InitializingCoreMessageImpl;
+			} 
+		}
+
         public static bool DefaultEnableMultitouch
         {
             get
@@ -241,6 +249,8 @@ namespace Medical
         protected abstract ProcessStartInfo RestartAdminProcInfoImpl { get; }
 
         protected abstract void moveConfigurationIfNeededImpl();
+
+		protected abstract String InitializingCoreMessageImpl { get; }
 
         #region PInvoke
 

@@ -172,6 +172,14 @@ namespace Medical
             }
         }
 
+		protected override string InitializingCoreMessageImpl 
+		{
+			get 
+			{
+				return " (This can take a long time on the first run while the font cache is built, please be patient.)";
+			}
+		}
+
         protected override bool HasCustomSSLValidationImpl
         {
             get
@@ -223,6 +231,9 @@ namespace Medical
                     File.Move(configFile, Path.Combine(FolderFinder.LocalUserDocumentsFolder, "config.ini"));
                     Directory.Move(Path.Combine(OldUserDocRoot, "Users"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "Users"));
                     Directory.Move(Path.Combine(OldUserDocRoot, "SavedFiles"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "SavedFiles"));
+					Directory.Move(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Plugins"), Path.Combine(FolderFinder.LocalDataFolder, "Plugins"));
+					Directory.Move(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Downloads"), Path.Combine(FolderFinder.LocalDataFolder, "Downloads"));
+					Directory.Move(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Temp"), Path.Combine(FolderFinder.LocalDataFolder, "Temp"));
                 }
             }
             catch (Exception ex)

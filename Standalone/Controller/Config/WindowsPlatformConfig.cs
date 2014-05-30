@@ -172,7 +172,15 @@ namespace Medical
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
             throw new NotImplementedException();
-        }
+		}
+
+		protected override string InitializingCoreMessageImpl 
+		{
+			get 
+			{
+				return "";
+			}
+		}
 
         protected override void moveConfigurationIfNeededImpl()
         {
