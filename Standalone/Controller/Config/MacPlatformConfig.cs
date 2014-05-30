@@ -229,11 +229,11 @@ namespace Medical
 
                     //Move the files
                     File.Move(configFile, Path.Combine(FolderFinder.LocalUserDocumentsFolder, "config.ini"));
-                    Directory.Move(Path.Combine(OldUserDocRoot, "Users"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "Users"));
-                    Directory.Move(Path.Combine(OldUserDocRoot, "SavedFiles"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "SavedFiles"));
-					Directory.Move(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Plugins"), Path.Combine(FolderFinder.LocalDataFolder, "Plugins"));
-					Directory.Move(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Downloads"), Path.Combine(FolderFinder.LocalDataFolder, "Downloads"));
-					Directory.Move(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Temp"), Path.Combine(FolderFinder.LocalDataFolder, "Temp"));
+					moveDirectory(Path.Combine(OldUserDocRoot, "Users"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "Users"));
+					moveDirectory(Path.Combine(OldUserDocRoot, "SavedFiles"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "SavedFiles"));
+					moveDirectory(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Plugins"), Path.Combine(FolderFinder.LocalDataFolder, "Plugins"));
+					moveDirectory(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Downloads"), Path.Combine(FolderFinder.LocalDataFolder, "Downloads"));
+					moveDirectory(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Temp"), Path.Combine(FolderFinder.LocalDataFolder, "Temp"));
                 }
             }
             catch (Exception ex)
@@ -241,6 +241,18 @@ namespace Medical
                 Logging.Log.Error("{0} copying legacy files from '{1}'. Message: {2}", ex.GetType().ToString(), OldUserDocRoot, ex.Message);
             }
         }
+
+		private void moveDirectory(String src, String dst)
+		{
+			try
+			{
+				Directory.Move(src, dst);
+			}
+			catch (Exception ex)
+			{
+				Logging.Log.Error("{0} copying legacy files from '{1}'. Message: {2}", ex.GetType().ToString(), OldUserDocRoot, ex.Message);
+			}
+		}
 
 		#region PInvoke
 
