@@ -27,7 +27,6 @@ private:
 	LONGLONG lastTime;
 	LARGE_INTEGER startTime;
 	LARGE_INTEGER frequency;
-	bool accurate;
 
 #endif
 
@@ -39,6 +38,7 @@ private:
 	struct timeval start;
 #endif
 
+    bool accurate;
 
 public:
 	/// <summary>
