@@ -751,7 +751,6 @@ namespace Medical
             defaultWindow = new WindowInfo(mainWindow, "Primary");
             defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
             defaultWindow.MonitorIndex = 0;
-            defaultWindow.ContentScalingFactor = mainWindow.WindowScaling;
 
             if (MedicalConfig.EngineConfig.Fullscreen)
             {
