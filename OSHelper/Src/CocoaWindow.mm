@@ -48,8 +48,6 @@ CocoaWindow::CocoaWindow(CocoaWindow* parent, String title, int x, int y, int wi
     
     setCursor(Arrow);
     
-    hasRetinaFunctions = [window respondsToSelector:@selector(convertRectToBacking:)];
-    
     [pool drain];
 }
 
@@ -93,13 +91,13 @@ void CocoaWindow::setSize(int width, int height)
 
 int CocoaWindow::getWidth()
 {
-    NSSize size = safeConvertRectToBacking([[window contentView] frame]).size;
+    NSSize size = [window convertRectToBacking:[[window contentView] frame]].size;
     return size.width;
 }
 
 int CocoaWindow::getHeight()
 {
-    NSSize size = safeConvertRectToBacking([[window contentView] frame]).size;
+    NSSize size = [window convertRectToBacking:[[window contentView] frame]].size;
     return size.height;
 }
 
@@ -177,25 +175,12 @@ void CocoaWindow::setCursor(CursorType cursor)
 
 float CocoaWindow::getWindowScaling()
 {
-    if(hasRetinaFunctions)
-    {
-        return [window backingScaleFactor];
-    }
-    return 1.0f;
+    return [window backingScaleFactor];
 }
 
 void CocoaWindow::setupMultitouch(MultiTouch *multiTouch)
 {
     [view setupMultitouch:multiTouch];
-}
-
-NSRect CocoaWindow::safeConvertRectToBacking(NSRect rect)
-{
-    if(hasRetinaFunctions)
-    {
-        return [window convertRectToBacking:rect];
-    }
-    return rect;
 }
 
 //PInvoke

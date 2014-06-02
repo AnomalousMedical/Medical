@@ -22,11 +22,6 @@
         multiTouch = 0;
         [self updateTrackingAreas];
         [self buildKeyConverter];
-        hasRetinaFunctions = [self respondsToSelector:@selector(convertRectToBacking:)];
-        if(hasRetinaFunctions)
-        {
-            [self setWantsBestResolutionOpenGLSurface:YES];
-        }
     }
     
     return self;
@@ -110,31 +105,31 @@
         [trackingArea release];
     }
     int opts = (NSTrackingMouseMoved | NSTrackingActiveAlways);
-    trackingArea = [[NSTrackingArea alloc] initWithRect:[self safeConvertRectToBacking:[self bounds]] options: opts owner:self userInfo:nil];
+    trackingArea = [[NSTrackingArea alloc] initWithRect:[self convertRectToBacking:[self bounds]] options: opts owner:self userInfo:nil];
     [self addTrackingArea:trackingArea];
 }
 
 -(void)mouseMoved:(NSEvent *)theEvent
 {
-    NSPoint mouseLoc = [self safeConvertPointToBacking:[theEvent locationInWindow]];
+    NSPoint mouseLoc = [self convertPointToBacking:[theEvent locationInWindow]];
     [self fireMouseMoved:mouseLoc.x y:mouseLoc.y];
 }
 
 -(void)mouseDragged:(NSEvent *)theEvent
 {
-    NSPoint mouseLoc = [self safeConvertPointToBacking:[theEvent locationInWindow]];
+    NSPoint mouseLoc = [self convertPointToBacking:[theEvent locationInWindow]];
     [self fireMouseMoved:mouseLoc.x y:mouseLoc.y];
 }
 
 -(void)rightMouseDragged:(NSEvent *)theEvent
 {
-    NSPoint mouseLoc = [self safeConvertPointToBacking:[theEvent locationInWindow]];
+    NSPoint mouseLoc = [self convertPointToBacking:[theEvent locationInWindow]];
     [self fireMouseMoved:mouseLoc.x y:mouseLoc.y];
 }
 
 -(void)otherMouseDragged:(NSEvent *)theEvent
 {
-    NSPoint mouseLoc = [self safeConvertPointToBacking:[theEvent locationInWindow]];
+    NSPoint mouseLoc = [self convertPointToBacking:[theEvent locationInWindow]];
     [self fireMouseMoved:mouseLoc.x y:mouseLoc.y];
 }
 
@@ -458,24 +453,6 @@
  keyConverter[69] = KC_ADD; //Key +
  keyConverter[76] = KC_NUMPADENTER; //Key Enter on numpad osx sends upside down ?
  keyConverter[65] = KC_DECIMAL; //Key .
-}
-
--(NSRect)safeConvertRectToBacking: (NSRect) rect
-{
-    if(hasRetinaFunctions)
-    {
-        return [self convertRectToBacking:rect];
-    }
-    return rect;
-}
-
--(NSPoint)safeConvertPointToBacking: (NSPoint) point
-{
-    if(hasRetinaFunctions)
-    {
-        return [self convertPointToBacking:point];
-    }
-    return point;
 }
 
 @end
