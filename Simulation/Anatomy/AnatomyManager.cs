@@ -56,7 +56,7 @@ namespace Medical
             {
                 if (anatomy.ShowInClickSearch && anatomy.TransparencyChanger.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distance))
                 {
-                    results.add(anatomy, distance);
+                    results.add(new AnatomyClickResult(anatomy, distance));
                 }
             }
             results.sort();

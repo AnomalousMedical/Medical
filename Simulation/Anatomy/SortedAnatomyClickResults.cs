@@ -8,24 +8,22 @@ namespace Medical
 {
     public class SortedAnatomyClickResults
     {
-        private List<Tuple<AnatomyIdentifier, float>> matchList = new List<Tuple<AnatomyIdentifier, float>>();
+        private List<AnatomyClickResult> matchList = new List<AnatomyClickResult>();
 
-        public void add(AnatomyIdentifier anatomy, float distance)
+        public void add(AnatomyClickResult clickResult)
         {
-            matchList.Add(Tuple.Create(anatomy, distance));
+            matchList.Add(clickResult);
         }
 
         internal void sort()
         {
             matchList.Sort((x, y) =>
             {
-                float xDist = x.Item2;
-                float yDist = y.Item2;
-                if (xDist < yDist)
+                if (x.Distance < y.Distance)
                 {
                     return -1;
                 }
-                else if (xDist > yDist)
+                else if (x.Distance > y.Distance)
                 {
                     return 1;
                 }
@@ -37,11 +35,11 @@ namespace Medical
         {
             get
             {
-                return matchList.Select(m => m.Item1);
+                return matchList.Select(m => m.AnatomyIdentifier);
             }
         }
 
-        public IEnumerable<Tuple<AnatomyIdentifier, float>> AnatomyWithDistances
+        public IEnumerable<AnatomyClickResult> AnatomyWithDistances
         {
             get
             {
@@ -61,15 +59,7 @@ namespace Medical
         {
             get
             {
-                return matchList[0].Item1;
-            }
-        }
-
-        public float ClosestDistance
-        {
-            get
-            {
-                return matchList[0].Item2;
+                return matchList[0].AnatomyIdentifier;
             }
         }
     }

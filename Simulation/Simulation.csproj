@@ -106,6 +106,7 @@
     <Compile Include="Anatomy\AnatomyTagProperties.cs" />
     <Compile Include="Anatomy\AnatomyOrganizer.cs" />
     <Compile Include="Anatomy\AnatomyTreeNode.cs" />
+    <Compile Include="Anatomy\AnatomyClickResult.cs" />
     <Compile Include="Anatomy\CompoundAnatomyCommand.cs" />
     <Compile Include="Anatomy\CompoundTransparencyAnatomyCommand.cs" />
     <Compile Include="Anatomy\SortedAnatomyClickResults.cs" />

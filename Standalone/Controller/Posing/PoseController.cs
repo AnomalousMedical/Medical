@@ -54,11 +54,11 @@ namespace Medical.Controller
                 var matches = AnatomyManager.findAnatomy(cameraRay);
                 foreach (var match in matches.AnatomyWithDistances) //find a way to search without going through everything, make a registry for anatomy that has ik bones
                 {
-                    var bone = match.Item1.Owner.getElement("IKBone") as BEPUikBone;
+                    var bone = match.AnatomyIdentifier.Owner.getElement("IKBone") as BEPUikBone;
                     if (bone != null && !bone.IkBone.Pinned)
                     {
                         dragControl.TargetBone = bone.IkBone;
-                        hitDistance = match.Item2;
+                        hitDistance = match.Distance;
                         Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
                         dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
                         dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
