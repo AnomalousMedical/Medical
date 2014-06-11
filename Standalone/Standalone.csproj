@@ -52,6 +52,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BEPUikPlugin">
+      <HintPath>..\..\Engine\Release\BEPUikPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetZip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>

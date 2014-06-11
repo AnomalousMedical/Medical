@@ -21,6 +21,7 @@ using SoundPlugin;
 using Medical.Controller;
 using System.Globalization;
 using libRocketPlugin;
+using BEPUikPlugin;
 
 namespace Medical
 {
@@ -107,6 +108,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(MyGUIInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(RocketInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(SoundPluginInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(BEPUikInterface).Assembly);
             pluginManager.initializePlugins();
 
             performanceMetricTimer = pluginManager.PlatformPlugin.createTimer();

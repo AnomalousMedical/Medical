@@ -53,6 +53,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BEPUik, Version=1.3.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BEPUik.dll</HintPath>
+    </Reference>
+    <Reference Include="BEPUikPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BEPUikPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="BEPUutilities, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31f6a8732a21de19, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BEPUutilities.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -98,6 +110,7 @@
     <Compile Include="Anatomy\CompoundTransparencyAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencyChanger.cs" />
+    <Compile Include="Anatomy\PinIKAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencySectionAnatomyCommand.cs" />
     <Compile Include="Animation\AnimationManipulator.cs" />
     <Compile Include="Animation\AnimationManipulatorState.cs" />
