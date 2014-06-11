@@ -54,7 +54,11 @@ namespace Medical.Controller
                 var matches = AnatomyManager.findAnatomy(cameraRay);
                 foreach (var match in matches.AnatomyWithDistances) //find a way to search without going through everything, make a registry for anatomy that has ik bones
                 {
-                    var bone = match.AnatomyIdentifier.Owner.getElement("IKBone") as BEPUikBone;
+                    var boneQuery = from e in match.AnatomyIdentifier.Owner.getElementIter()
+                                    where e is BEPUikBone
+                                    select (BEPUikBone)e;
+
+                    var bone = boneQuery.FirstOrDefault();
                     if (bone != null && !bone.IkBone.Pinned)
                     {
                         dragControl.TargetBone = bone.IkBone;
