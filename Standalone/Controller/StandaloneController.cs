@@ -59,6 +59,7 @@ namespace Medical
         private BehaviorErrorManager behaviorErrorManager;
         private SceneStatsDisplayManager sceneStatsDisplayManager;
         private SceneViewLightManager lightManager;
+        private PoseController poseController;
 
         //GUI
         private GUIManager guiManager;
@@ -227,6 +228,7 @@ namespace Medical
 
             //Anatomy Controller
             anatomyController = new AnatomyController();
+            poseController = new PoseController(this);
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);

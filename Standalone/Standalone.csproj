@@ -52,8 +52,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BEPUik, Version=1.3.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BEPUik.dll</HintPath>
+    </Reference>
     <Reference Include="BEPUikPlugin">
       <HintPath>..\..\Engine\Release\BEPUikPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="BEPUutilities, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31f6a8732a21de19, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BEPUutilities.dll</HintPath>
     </Reference>
     <Reference Include="DotNetZip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -206,6 +214,7 @@
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\FrameClearManager.cs" />
     <Compile Include="Controller\IdleHandler.cs" />
+    <Compile Include="Controller\Posing\PoseController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\ImageRenderer\LiveThumbnailController.cs" />
     <Compile Include="Controller\ImageRenderer\LiveThumbnailHost.cs" />

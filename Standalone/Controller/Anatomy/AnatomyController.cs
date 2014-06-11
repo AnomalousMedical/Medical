@@ -101,9 +101,9 @@ namespace Medical
             HashSet<String> anatomyTags = new HashSet<String>();
             if (matches.Count > 0)
             {
-                AnatomyIdentifier firstMatch = matches[0];
+                AnatomyIdentifier firstMatch = matches.Closest;
                 bestMatchAnatomy = firstMatch;
-                foreach (AnatomyIdentifier anatomy in matches)
+                foreach (AnatomyIdentifier anatomy in matches.Anatomy)
                 {
                     fireDisplayAnatomy(anatomy);
                     foreach (AnatomyTag tag in anatomy.Tags)
