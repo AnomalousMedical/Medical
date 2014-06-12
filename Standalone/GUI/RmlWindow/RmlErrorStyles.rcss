@@ -1,0 +1,30 @@
+.Subsystem
+{
+	color: #566d74;
+}
+
+.ElementName
+{
+	color: #cb4b16;
+}
+
+.Type
+{
+	color: #2aa198;
+}
+
+.SimObject
+{
+	color: #b58900;
+}
+
+.Reason
+{
+	color: #7d9295;
+}
+
+body
+{
+	background-color: #002b36;
+	padding-left:10px;
+}

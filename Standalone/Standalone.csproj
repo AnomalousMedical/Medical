@@ -842,6 +842,7 @@
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
+    <EmbeddedResource Include="GUI\RmlWindow\RmlErrorStyles.rcss" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Utility\CommonResources.cs" />
     <Compile Include="Utility\DocumentBuilder.cs" />

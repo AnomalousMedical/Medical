@@ -725,21 +725,20 @@ namespace Medical
 
         private void showLoadErrorGui()
         {
-            RmlWindow errorGui = new RmlWindow();
+            RmlWindow errorGui = new RmlWindow(guiManager);
             StringBuilder htmlString = new StringBuilder();
             foreach (BehaviorBlacklistEventArgs blacklist in behaviorErrorManager.BlacklistEvents)
             {
                 if (blacklist.Behavior != null)
                 {
-                    htmlString.AppendFormat("<p>Behavior {0}, type='{1}', SimObject='{3}' blacklisted.  Reason: {2}</p>", blacklist.Behavior.Name, blacklist.Behavior.GetType().Name, blacklist.Message, blacklist.Behavior.Owner != null ? blacklist.Behavior.Owner.Name : "NullOwner");
+                    htmlString.AppendFormat("<p><span class=\"Subsystem\">Behavior</span>&nbsp;<span class=\"SimObject\">{3}</span>&nbsp;<span class=\"Type\">{1}</span>&nbsp;<span class=\"ElementName\">{0}</span>&nbsp;<span class=\"Reason\">{2}</span><br/></p>", blacklist.Behavior.Name, blacklist.Behavior.GetType().Name, blacklist.Message, blacklist.Behavior.Owner != null ? blacklist.Behavior.Owner.Name : "NullOwner");
                 }
                 else
                 {
-                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}</p>", blacklist.Message);
+                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}<br/></p>", blacklist.Message);
                 }
             }
             errorGui.setBodyMarkup(htmlString.ToString());
-            guiManager.autoDisposeDialog(errorGui);
             errorGui.Visible = true;
         }
 

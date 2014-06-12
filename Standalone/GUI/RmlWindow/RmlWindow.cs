@@ -10,20 +10,33 @@ namespace Medical.GUI
 {
     class RmlWindow : MDIDialog
     {
+        static bool addResourceLocation = true;
+
         ImageBox rmlImage;
         RocketWidget rocketWidget;
+        GUIManager guiManager;
 
-        public RmlWindow()
+        public RmlWindow(GUIManager guiManager)
             : base("Medical.GUI.RmlWindow.RmlWindow.layout")
         {
+            if(addResourceLocation)
+            {
+                
+                addResourceLocation = false;
+            }
+
             rmlImage = (ImageBox)window.findWidget("RmlImage");
             rocketWidget = new RocketWidget(rmlImage, false);
 
             window.WindowChangedCoord += window_WindowChangedCoord;
+            this.guiManager = guiManager;
+            guiManager.addManagedDialog(this);
+            guiManager.autoDisposeDialog(this);
         }
 
         public override void Dispose()
         {
+            guiManager.removeManagedDialog(this);
             rocketWidget.Dispose();
             base.Dispose();
         }
@@ -37,8 +50,9 @@ namespace Medical.GUI
 
             StringBuilder htmlString = new StringBuilder();
             htmlString.Append(@"<rml>  <head>
-    <link type=""text/rcss"" href=""/libRocketPlugin.Resources.rkt.rcss""/>
+    <link type=""text/rcss"" href=""libRocketPlugin.Resources.rkt.rcss""/>
     <link type=""text/rcss"" href=""libRocketPlugin.Resources.Anomalous.rcss""/>
+    <link type=""text/rcss"" href=""Medical.GUI.RmlWindow.RmlErrorStyles.rcss""/>
     </head><body><div id=""Content"" class=""ScrollArea"">");
             htmlString.Append(markup);
             htmlString.Append("</div></body></rml>");
@@ -52,6 +66,8 @@ namespace Medical.GUI
         {
             rocketWidget.Context.UnloadAllDocuments();
 
+            var resourceLoader = new RocketAssemblyResourceLoader(this.GetType().Assembly);
+            RocketInterface.Instance.FileInterface.addExtension(resourceLoader);
             using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(markup))
             {
                 if (document != null)
@@ -61,6 +77,7 @@ namespace Medical.GUI
                     rocketWidget.renderOnNextFrame();
                 }
             }
+            RocketInterface.Instance.FileInterface.removeExtension(resourceLoader);
         }
 
         public void setFile(String file)
