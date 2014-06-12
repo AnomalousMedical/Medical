@@ -6,7 +6,6 @@
   </head>
   <body>
 	<div class="ScrollArea">
-    <p>I'm in the master template.</p>
 		<div id="Content">
 		</div>
 	</div>

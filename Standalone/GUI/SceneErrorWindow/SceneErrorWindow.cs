@@ -25,39 +25,24 @@ namespace Medical.GUI
             guiManager.addManagedDialog(this);
             guiManager.autoDisposeDialog(this);
 
-            StringBuilder htmlString = new StringBuilder();
-            foreach (BehaviorBlacklistEventArgs blacklist in errorManager.BlacklistEvents)
-            {
-                if (blacklist.Behavior != null)
-                {
-                    htmlString.AppendFormat("<p><span class=\"Subsystem\">Behavior</span>&nbsp;<span class=\"SimObject\">{3}</span>&nbsp;<span class=\"Type\">{1}</span>&nbsp;<span class=\"ElementName\">{0}</span>&nbsp;<span class=\"Reason\">{2}</span></p>", blacklist.Behavior.Name, blacklist.Behavior.GetType().Name, blacklist.Message, blacklist.Behavior.Owner != null ? blacklist.Behavior.Owner.Name : "NullOwner");
-                }
-                else
-                {
-                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}<br/></p>", blacklist.Message);
-                }
-            }
-            setBodyMarkup(htmlString.ToString());
-        }
-
-        public override void Dispose()
-        {
-            guiManager.removeManagedDialog(this);
-            rocketWidget.Dispose();
-            base.Dispose();
-        }
-
-        /// <summary>
-        /// You can use this to just do body using a default head.
-        /// </summary>
-        public void setBodyMarkup(String markup)
-        {
             rocketWidget.Context.UnloadAllDocuments();
 
             StringBuilder htmlString = new StringBuilder();
 
             htmlString.Append(DocumentStart);
-            htmlString.Append(markup);
+
+            foreach (BehaviorBlacklistEventArgs error in errorManager.BlacklistEvents)
+            {
+                if (error.Behavior != null)
+                {
+                    addLine(htmlString, error);
+                }
+                else
+                {
+                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}<br/></p>", error.Message);
+                }
+            }
+
             htmlString.Append(DocumentEnd);
 
             var resourceLoader = new RocketAssemblyResourceLoader(this.GetType().Assembly);
@@ -74,9 +59,21 @@ namespace Medical.GUI
             RocketInterface.Instance.FileInterface.removeExtension(resourceLoader);
         }
 
+        public override void Dispose()
+        {
+            guiManager.removeManagedDialog(this);
+            rocketWidget.Dispose();
+            base.Dispose();
+        }
+
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
             rocketWidget.resized();
+        }
+
+        void addLine(StringBuilder sb, BehaviorBlacklistEventArgs error)
+        {
+            sb.AppendFormat(ErrorLine, error.Behavior.Name, error.Behavior.GetType().Name, error.Message, error.Behavior.Owner != null ? error.Behavior.Owner.Name : "NullOwner");
         }
 
         const String DocumentStart = @"<rml>
@@ -86,5 +83,7 @@ namespace Medical.GUI
 	<body template=""ErrorTemplate"">";
 
         const String DocumentEnd = "</body></rml>";
+
+        const String ErrorLine = "<p><span class=\"Subsystem\">Behavior</span>&nbsp;<span class=\"SimObject\">{3}</span>&nbsp;<span class=\"Type\">{1}</span>&nbsp;<span class=\"ElementName\">{0}</span>&nbsp;<span class=\"Reason\">{2}</span></p>";
     }
 }
