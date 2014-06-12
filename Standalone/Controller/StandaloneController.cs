@@ -56,7 +56,6 @@ namespace Medical
         private DownloadController downloadController;
         private PatientDataController patientDataController;
         private IdleHandler idleHandler;
-        private BehaviorErrorManager behaviorErrorManager;
         private SceneStatsDisplayManager sceneStatsDisplayManager;
         private SceneViewLightManager lightManager;
         private PoseController poseController;
@@ -125,8 +124,6 @@ namespace Medical
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
             PointerManager.Instance.Visible = false;
-
-            behaviorErrorManager = new BehaviorErrorManager();
 
             ((RenderWindow)OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget).DeactivateOnFocusChange = false;
 
@@ -658,7 +655,7 @@ namespace Medical
             bool success = false;
             sceneViewController.resetAllCameraPositions();
             unloadScene();
-            behaviorErrorManager.clear();
+            SimObjectErrorManager.Clear();
             if (medicalController.openScene(file))
             {
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
@@ -684,7 +681,7 @@ namespace Medical
                     anatomyController.sceneLoaded();
                 }
                 success = true;
-                if (behaviorErrorManager.HasErrors)
+                if (SimObjectErrorManager.HasErrors)
                 {
                     NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
                 }
@@ -725,7 +722,7 @@ namespace Medical
 
         private void showLoadErrorGui()
         {
-            SceneErrorWindow errorGui = new SceneErrorWindow(guiManager, behaviorErrorManager);
+            SceneErrorWindow errorGui = new SceneErrorWindow(guiManager);
             errorGui.Visible = true;
         }
 

@@ -14,7 +14,7 @@ namespace Medical.GUI
         RocketWidget rocketWidget;
         GUIManager guiManager;
 
-        public SceneErrorWindow(GUIManager guiManager, BehaviorErrorManager errorManager)
+        public SceneErrorWindow(GUIManager guiManager)
             : base("Medical.GUI.SceneErrorWindow.SceneErrorWindow.layout")
         {
             rmlImage = (ImageBox)window.findWidget("RmlImage");
@@ -31,16 +31,9 @@ namespace Medical.GUI
 
             htmlString.Append(DocumentStart);
 
-            foreach (BehaviorBlacklistEventArgs error in errorManager.BlacklistEvents)
+            foreach (var error in SimObjectErrorManager.Errors)
             {
-                if (error.Behavior != null)
-                {
-                    addLine(htmlString, error);
-                }
-                else
-                {
-                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}<br/></p>", error.Message);
-                }
+                htmlString.AppendFormat(ErrorLine, error.Subsystem, error.SimObject, error.Type, error.ElementName, error.Message);
             }
 
             htmlString.Append(DocumentEnd);
@@ -71,11 +64,6 @@ namespace Medical.GUI
             rocketWidget.resized();
         }
 
-        void addLine(StringBuilder sb, BehaviorBlacklistEventArgs error)
-        {
-            sb.AppendFormat(ErrorLine, error.Behavior.Name, error.Behavior.GetType().Name, error.Message, error.Behavior.Owner != null ? error.Behavior.Owner.Name : "NullOwner");
-        }
-
         const String DocumentStart = @"<rml>
 	<head>
 		<link type=""text/template"" href=""Medical.GUI.SceneErrorWindow.ErrorTemplate.trml"" />
@@ -84,6 +72,6 @@ namespace Medical.GUI
 
         const String DocumentEnd = "</body></rml>";
 
-        const String ErrorLine = "<p><span class=\"Subsystem\">Behavior</span>&nbsp;<span class=\"SimObject\">{3}</span>&nbsp;<span class=\"Type\">{1}</span>&nbsp;<span class=\"ElementName\">{0}</span>&nbsp;<span class=\"Reason\">{2}</span></p>";
+        const String ErrorLine = "<p><span class=\"Subsystem\">{0}</span>&nbsp;<span class=\"SimObject\">{1}</span>&nbsp;<span class=\"Type\">{2}</span>&nbsp;<span class=\"ElementName\">{3}</span>&nbsp;<span class=\"Reason\">{4}</span></p>";
     }
 }
