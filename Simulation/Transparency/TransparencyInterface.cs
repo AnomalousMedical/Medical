@@ -195,27 +195,38 @@ namespace Medical
             transparencyStates.Add(new TransparencyState());
 
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
-            if (sceneNode != null)
+            if(sceneNode == null)
             {
-                if (childNodeName != null && childNodeName != String.Empty)
-                {
-                    sceneNode = sceneNode.findChildNode(childNodeName);
-                    if (sceneNode == null)
-                    {
-                        blacklist("Could not find child node {0}.", childNodeName);
-                    }
-                }
-                entity = sceneNode.getNodeObject(entityName) as Entity;
+                blacklist("Cannot find Node '{0}'", nodeName);
             }
+
+            if (childNodeName != null && childNodeName != String.Empty)
+            {
+                sceneNode = sceneNode.findChildNode(childNodeName);
+                if (sceneNode == null)
+                {
+                    blacklist("Could not find child node '{0}' in node '{1}'.", childNodeName, nodeName);
+                }
+            }
+            entity = sceneNode.getNodeObject(entityName) as Entity;
 
             if (entity == null)
             {
-                blacklist("No entity specified or entity is not found.");
+                if(entityName == null)
+                {
+                    blacklist("entityName is Null");
+                }
+                else
+                {
+                    blacklist("Cannot find entity named '{0}' in node '{1}'.", entityName, nodeName);
+                }
             }
+
             if (subEntityIndex >= entity.getNumSubEntities())
             {
-                blacklist("Entity {0} only has {1} SubEntities. Index {3} is invalid.", entity.getName(), entity.getNumSubEntities(), subEntityIndex);
+                blacklist("Entity '{0}' only has '{1}' SubEntities. Index '{2}' is invalid.", entity.getName(), entity.getNumSubEntities(), subEntityIndex);
             }
+
             subEntity = entity.getSubEntity(subEntityIndex);
             baseMaterialName = subEntity.getMaterialName();
             MaterialManager materialManager = MaterialManager.getInstance();
@@ -228,7 +239,7 @@ namespace Medical
                 }
                 else
                 {
-                    blacklist("A custom material {0} is defined that cannot be found.  This object will not be able to be alpha controlled.", this.alphaMaterialName);
+                    blacklist("A custom material '{0}' is defined that cannot be found.  This object will not be able to be alpha controlled.", this.alphaMaterialName);
                 }
             }
             else
@@ -239,7 +250,7 @@ namespace Medical
                 }
                 else
                 {
-                    blacklist("Cannot find automatic alpha material {0}.  Please ensure one exists or define a custom alpha behavior.", baseMaterialName + alphaSuffix);
+                    blacklist("Cannot find automatic alpha material '{0}'.  Please ensure one exists or define a custom alpha behavior.", baseMaterialName + alphaSuffix);
                 }
             }
             TransparencyController.addTransparencyObject(this);
