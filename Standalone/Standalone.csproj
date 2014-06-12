@@ -415,7 +415,7 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\GUILocationNames.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
-    <Compile Include="GUI\RmlWindow\RmlWindow.cs" />
+    <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
     <Compile Include="GUI\RocketGui\DelegateRocketEventController.cs" />
     <Compile Include="GUI\RocketGui\DelegateRocketEventListener.cs" />
     <Compile Include="GUI\RocketGui\RocketDebuggerWindow.cs" />
@@ -842,7 +842,10 @@
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
-    <EmbeddedResource Include="GUI\RmlWindow\RmlErrorStyles.rcss" />
+    <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorStyles.rcss" />
+    <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Utility\CommonResources.cs" />
     <Compile Include="Utility\DocumentBuilder.cs" />
@@ -943,7 +946,7 @@
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
-    <EmbeddedResource Include="GUI\RmlWindow\RmlWindow.layout" />
+    <EmbeddedResource Include="GUI\SceneErrorWindow\SceneErrorWindow.layout" />
     <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -179,7 +179,9 @@
     <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
-    <EmbeddedResource Include="Resources\Rml\RmlPanelTemplate.trml" />
+    <EmbeddedResource Include="Resources\Rml\RmlPanelTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Rml\Wysiwyg.rcss" />
     <EmbeddedResource Include="Resources\Bookmarks\Bookmark.bmk" />
     <EmbeddedResource Include="Resources\Bookmarks\Bookmark1.bmk" />

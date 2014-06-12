@@ -725,20 +725,7 @@ namespace Medical
 
         private void showLoadErrorGui()
         {
-            RmlWindow errorGui = new RmlWindow(guiManager);
-            StringBuilder htmlString = new StringBuilder();
-            foreach (BehaviorBlacklistEventArgs blacklist in behaviorErrorManager.BlacklistEvents)
-            {
-                if (blacklist.Behavior != null)
-                {
-                    htmlString.AppendFormat("<p><span class=\"Subsystem\">Behavior</span>&nbsp;<span class=\"SimObject\">{3}</span>&nbsp;<span class=\"Type\">{1}</span>&nbsp;<span class=\"ElementName\">{0}</span>&nbsp;<span class=\"Reason\">{2}</span></p>", blacklist.Behavior.Name, blacklist.Behavior.GetType().Name, blacklist.Message, blacklist.Behavior.Owner != null ? blacklist.Behavior.Owner.Name : "NullOwner");
-                }
-                else
-                {
-                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}<br/></p>", blacklist.Message);
-                }
-            }
-            errorGui.setBodyMarkup(htmlString.ToString());
+            SceneErrorWindow errorGui = new SceneErrorWindow(guiManager, behaviorErrorManager);
             errorGui.Visible = true;
         }
 

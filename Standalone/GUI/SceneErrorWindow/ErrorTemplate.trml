@@ -1,0 +1,14 @@
+<template name="ErrorTemplate" content="Content" appendHead="false">
+  <head>
+    <link type="text/rcss" href="libRocketPlugin.Resources.rkt.rcss"/>
+    <link type="text/rcss" href="libRocketPlugin.Resources.Anomalous.rcss"/>
+    <link type="text/rcss" href="Medical.GUI.SceneErrorWindow.ErrorStyles.rcss"/>
+  </head>
+  <body>
+	<div class="ScrollArea">
+    <p>I'm in the master template.</p>
+		<div id="Content">
+		</div>
+	</div>
+  </body>
+</template>

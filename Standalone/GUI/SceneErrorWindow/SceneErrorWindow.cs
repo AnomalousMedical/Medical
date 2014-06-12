@@ -8,23 +8,15 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class RmlWindow : MDIDialog
+    class SceneErrorWindow : MDIDialog
     {
-        static bool addResourceLocation = true;
-
         ImageBox rmlImage;
         RocketWidget rocketWidget;
         GUIManager guiManager;
 
-        public RmlWindow(GUIManager guiManager)
-            : base("Medical.GUI.RmlWindow.RmlWindow.layout")
+        public SceneErrorWindow(GUIManager guiManager, BehaviorErrorManager errorManager)
+            : base("Medical.GUI.SceneErrorWindow.SceneErrorWindow.layout")
         {
-            if(addResourceLocation)
-            {
-                
-                addResourceLocation = false;
-            }
-
             rmlImage = (ImageBox)window.findWidget("RmlImage");
             rocketWidget = new RocketWidget(rmlImage, false);
 
@@ -32,6 +24,20 @@ namespace Medical.GUI
             this.guiManager = guiManager;
             guiManager.addManagedDialog(this);
             guiManager.autoDisposeDialog(this);
+
+            StringBuilder htmlString = new StringBuilder();
+            foreach (BehaviorBlacklistEventArgs blacklist in errorManager.BlacklistEvents)
+            {
+                if (blacklist.Behavior != null)
+                {
+                    htmlString.AppendFormat("<p><span class=\"Subsystem\">Behavior</span>&nbsp;<span class=\"SimObject\">{3}</span>&nbsp;<span class=\"Type\">{1}</span>&nbsp;<span class=\"ElementName\">{0}</span>&nbsp;<span class=\"Reason\">{2}</span></p>", blacklist.Behavior.Name, blacklist.Behavior.GetType().Name, blacklist.Message, blacklist.Behavior.Owner != null ? blacklist.Behavior.Owner.Name : "NullOwner");
+                }
+                else
+                {
+                    htmlString.AppendFormat("<p>Null Behavior blacklisted.  Reason: {0}<br/></p>", blacklist.Message);
+                }
+            }
+            setBodyMarkup(htmlString.ToString());
         }
 
         public override void Dispose()
@@ -49,26 +55,14 @@ namespace Medical.GUI
             rocketWidget.Context.UnloadAllDocuments();
 
             StringBuilder htmlString = new StringBuilder();
-            htmlString.Append(@"<rml>  <head>
-    <link type=""text/rcss"" href=""libRocketPlugin.Resources.rkt.rcss""/>
-    <link type=""text/rcss"" href=""libRocketPlugin.Resources.Anomalous.rcss""/>
-    <link type=""text/rcss"" href=""Medical.GUI.RmlWindow.RmlErrorStyles.rcss""/>
-    </head><body><div id=""Content"" class=""ScrollArea"">");
-            htmlString.Append(markup);
-            htmlString.Append("</div></body></rml>");
-            setFullMarkup(htmlString.ToString());
-        }
 
-        /// <summary>
-        /// Use this to control the full markup for the window.
-        /// </summary>
-        public void setFullMarkup(String markup)
-        {
-            rocketWidget.Context.UnloadAllDocuments();
+            htmlString.Append(DocumentStart);
+            htmlString.Append(markup);
+            htmlString.Append(DocumentEnd);
 
             var resourceLoader = new RocketAssemblyResourceLoader(this.GetType().Assembly);
             RocketInterface.Instance.FileInterface.addExtension(resourceLoader);
-            using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(markup))
+            using (ElementDocument document = rocketWidget.Context.LoadDocumentFromMemory(htmlString.ToString()))
             {
                 if (document != null)
                 {
@@ -80,24 +74,17 @@ namespace Medical.GUI
             RocketInterface.Instance.FileInterface.removeExtension(resourceLoader);
         }
 
-        public void setFile(String file)
-        {
-            rocketWidget.Context.UnloadAllDocuments();
-
-            using (ElementDocument document = rocketWidget.Context.LoadDocument(file))
-            {
-                if (document != null)
-                {
-                    document.Show();
-                    rocketWidget.removeFocus();
-                    rocketWidget.renderOnNextFrame();
-                }
-            }
-        }
-
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
             rocketWidget.resized();
         }
+
+        const String DocumentStart = @"<rml>
+	<head>
+		<link type=""text/template"" href=""Medical.GUI.SceneErrorWindow.ErrorTemplate.trml"" />
+	</head>
+	<body template=""ErrorTemplate"">";
+
+        const String DocumentEnd = "</body></rml>";
     }
 }
