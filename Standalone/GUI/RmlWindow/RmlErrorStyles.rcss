@@ -26,5 +26,10 @@
 body
 {
 	background-color: #002b36;
+}
+
+p
+{
 	padding-left:10px;
+	padding-bottom:5px;
 }
