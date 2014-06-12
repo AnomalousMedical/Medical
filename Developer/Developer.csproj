@@ -96,6 +96,7 @@
     <Compile Include="DeveloperAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleControlSlider.cs" />
     <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.cs" />
+    <Compile Include="GUI\DebugVisualizer\DebugVisualizer.cs" />
     <Compile Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.cs" />
     <Compile Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.cs" />
     <Compile Include="GUI\DiscEditor\DiscControl.cs" />
@@ -114,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.layout" />
+    <EmbeddedResource Include="GUI\DebugVisualizer\DebugVisualizer.layout" />
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />
@@ -144,9 +146,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\DeveloperIcons.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GUI\DDAtlasPluginEditor\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\DeveloperIcons%402x.png" />
     <EmbeddedResource Include="Resources\DeveloperIcons%402x.xml" />

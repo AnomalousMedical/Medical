@@ -25,6 +25,7 @@ namespace Developer
         private MeasurementGUI measurementGUI;
         private ShowLibRocketDebugger libRocketDebugger;
         private ChangeRenderingMode changeRenderingMode;
+        private DebugVisualizer debugVisualizer;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -33,6 +34,7 @@ namespace Developer
 
         public void Dispose()
         {
+            debugVisualizer.Dispose();
             changeRenderingMode.Dispose();
             libRocketDebugger.Dispose();
             measurementGUI.Dispose();
@@ -81,6 +83,9 @@ namespace Developer
             measurementGUI = new MeasurementGUI(standaloneController);
             guiManager.addManagedDialog(measurementGUI);
 
+            debugVisualizer = new DebugVisualizer(standaloneController);
+            guiManager.addManagedDialog(debugVisualizer);
+
             libRocketDebugger = new ShowLibRocketDebugger(guiManager);
 
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
@@ -98,6 +103,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", "Developer.StatisticsIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(debugVisualizer, "Developer.DebugVisualizer", "Debug Visualizer", CommonResources.NoIcon, TaskMenuCategories.Developer));
             taskController.addTask(libRocketDebugger);
             taskController.addTask(new SaveMicrocodeCacheTask());
             taskController.addTask(new DumpToMax(standaloneController.MedicalController));
