@@ -527,7 +527,7 @@ namespace Medical
 
             debugDrawing.begin("ToothContacts" + Owner.Name, DrawingType.LineList);
 
-            debugDrawing.setColor(new Color(1.0f, 0.0f, 1.0f));
+            debugDrawing.Color = new Color(1.0f, 0.0f, 1.0f);
 
             Vector3 delta = Vector3.ScaleIdentity * 0.01f;
             foreach (Vector3 pos in debugContactPoints)

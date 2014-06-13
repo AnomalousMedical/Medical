@@ -46,14 +46,14 @@ namespace Medical
             drawingSurface.begin(String.Format("ToothSection{0}", section.Name), Engine.Renderer.DrawingType.LineList);
 
             //Origin
-            drawingSurface.setColor(Color.Red);
+            drawingSurface.Color = Color.Red;
             drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Right * 0.1f);
-            drawingSurface.setColor(Color.Blue);
+            drawingSurface.Color = Color.Blue;
             drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Up * 0.1f);
-            drawingSurface.setColor(Color.Green);
+            drawingSurface.Color = Color.Green;
             drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Backward * 0.1f);
 
-            drawingSurface.setColor(Color.Red);
+            drawingSurface.Color = Color.Red;
 
             Vector3[] vertices = new Vector3[8];
             section._getBoundsVertices(vertices);
@@ -272,23 +272,23 @@ namespace Medical
             Vector3 origin = worldBox.getCenter();
 
             //Origin
-            drawingSurface.setColor(Color.Red);
+            drawingSurface.Color = Color.Red;
             drawingSurface.drawLine(origin, origin + Vector3.Right * 0.1f);
-            drawingSurface.setColor(Color.Blue);
+            drawingSurface.Color = Color.Blue;
             drawingSurface.drawLine(origin, origin + Vector3.Up * 0.1f);
-            drawingSurface.setColor(Color.Green);
+            drawingSurface.Color = Color.Green;
             drawingSurface.drawLine(origin, origin + Vector3.Backward * 0.1f);
 
             //Intersection Point
             Vector3 worldIntersection = Quaternion.quatRotate(worldRot, debugIntersectionPoint) + worldTrans;
-            drawingSurface.setColor(new Color(1, 0, 1));
+            drawingSurface.Color = new Color(1, 0, 1);
             drawingSurface.drawLine(worldIntersection, worldIntersection + Vector3.Right * 0.1f);
-            drawingSurface.setColor(new Color(1, 1, 0));
+            drawingSurface.Color = new Color(1, 1, 0);
             drawingSurface.drawLine(worldIntersection, worldIntersection + Vector3.Up * 0.1f);
-            drawingSurface.setColor(new Color(0, 1, 1));
+            drawingSurface.Color = new Color(0, 1, 1);
             drawingSurface.drawLine(worldIntersection, worldIntersection + Vector3.Backward * 0.1f);
 
-            drawingSurface.setColor(Color.Red);
+            drawingSurface.Color = Color.Red;
 
             Vector3[] vertices = new Vector3[8];
             worldBox.computeVertices(vertices);

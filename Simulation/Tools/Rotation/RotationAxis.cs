@@ -50,12 +50,12 @@ namespace Medical
             float drawRadius = radius;
             if (selected)
             {
-                circleHelper.setColor(HIGHLIGHT);
+                circleHelper.Color = HIGHLIGHT;
                 drawRadius += radius * .25f;
             }
             else
             {
-                circleHelper.setColor(color);
+                circleHelper.Color = color;
             }
             circleHelper.drawCircle(origin, xAxis, yAxis, drawRadius);
         }

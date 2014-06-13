@@ -91,15 +91,15 @@ namespace Medical
             Vector3 halfwayPoint = targetObject.Translation - Owner.Translation;
             halfwayPoint = halfwayPoint.length() / 2 * halfwayPoint.normalize() + Owner.Translation;
             debugDrawing.begin("Muscle" + Owner.Name, DrawingType.LineList);
-            debugDrawing.setColor(Color.Green);
+            debugDrawing.Color = Color.Green;
             debugDrawing.drawLine(Owner.Translation, halfwayPoint);
-            debugDrawing.setColor(Color.Red);
+            debugDrawing.Color = Color.Red;
             debugDrawing.drawLine(halfwayPoint, targetObject.Translation);
 
             Vector3 location = targetObject.Translation - Owner.Translation;
             location.normalize();
             location *= force;
-            debugDrawing.setColor(Color.Blue);
+            debugDrawing.Color = Color.Blue;
             debugDrawing.drawLine(Owner.Translation, Owner.Translation + location);
 
             debugDrawing.end();
