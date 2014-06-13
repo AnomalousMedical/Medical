@@ -1,6 +1,7 @@
 ﻿using Engine;
 using Engine.Editing;
 using Engine.ObjectManagement;
+using Engine.Platform;
 using Medical;
 using Medical.GUI;
 using MyGUIPlugin;
@@ -17,6 +18,7 @@ namespace Developer.GUI
         private PluginManager pluginManager;
         private bool firstShow = true;
         private SimScene currentScene;
+        private MedicalController medicalController;
 
         private MedicalUICallback uiCallback;
         private Tree tree;
@@ -30,7 +32,8 @@ namespace Developer.GUI
         public DebugVisualizer(StandaloneController standaloneController)
             : base("Developer.GUI.DebugVisualizer.DebugVisualizer.layout")
         {
-            this.pluginManager = standaloneController.MedicalController.PluginManager;
+            this.medicalController = standaloneController.MedicalController;
+            this.pluginManager = medicalController.PluginManager;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
 
@@ -45,6 +48,8 @@ namespace Developer.GUI
             objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
 
             this.Resized += DebugVisualizer_Resized;
+
+            currentScene = standaloneController.MedicalController.CurrentScene;
         }
 
         public override void Dispose()
@@ -88,14 +93,22 @@ namespace Developer.GUI
                 }
 
                 objectEditor.EditInterface = editInterface;
+
+                createDebugVisualizers();
             }
         }
 
         void standaloneController_SceneLoaded(SimScene scene)
         {
             currentScene = scene;
+            createDebugVisualizers();
+        }
+
+        private void createDebugVisualizers()
+        {
             if (!firstShow && currentScene != null)
             {
+                medicalController.FullSpeedLoopUpdate += MedicalController_FullSpeedLoopUpdate;
                 foreach (DebugInterface debugInterface in pluginManager.getDebugInterfaces())
                 {
                     debugInterface.createDebugInterface(pluginManager.RendererPlugin, currentScene.getDefaultSubScene());
@@ -105,6 +118,7 @@ namespace Developer.GUI
 
         void standaloneController_SceneUnloading(SimScene scene)
         {
+            medicalController.FullSpeedLoopUpdate -= MedicalController_FullSpeedLoopUpdate;
             currentScene = null;
             if (!firstShow)
             {
@@ -125,6 +139,16 @@ namespace Developer.GUI
         {
             bool bVal;
             return bool.TryParse(str, out bVal);
+        }
+
+        void MedicalController_FullSpeedLoopUpdate(Clock time)
+        {
+            //This is only active if the scene is not null and the debug visualizers are setup
+            SimSubScene subScene = currentScene.getDefaultSubScene();
+            foreach (DebugInterface debugInterface in pluginManager.getDebugInterfaces())
+            {
+                debugInterface.renderDebug(subScene);
+            }
         }
 
         //probably move this out to the engine
