@@ -69,7 +69,7 @@ namespace Developer.GUI
             {
                 firstShow = false;
                 EditInterface editInterface = new EditInterface("Debug Visualizers");
-                foreach(var debugInterface in pluginManager.getDebugInterfaces())
+                foreach(var debugInterface in pluginManager.DebugInterfaces)
                 {
                     EditInterface debugEditInterface = new EditInterface(debugInterface.Name);
                     EditablePropertyInfo propertyInfo = new EditablePropertyInfo();
@@ -83,7 +83,7 @@ namespace Developer.GUI
                     debugEditInterface.addEditableProperty(new CallbackEditableProperty<bool>("Depth Testing",
                         () => debugInterface.DepthTesting, v => debugInterface.DepthTesting = v, canParseBool, bool.Parse));
 
-                    foreach(var entry in debugInterface.getEntries())
+                    foreach(var entry in debugInterface.Entries)
                     {
                         debugEditInterface.addEditableProperty(new CallbackEditableProperty<bool>(entry.Text,
                             () => entry.Enabled, value => entry.Enabled = value, canParseBool, bool.Parse));
@@ -109,7 +109,7 @@ namespace Developer.GUI
             if (!firstShow && currentScene != null)
             {
                 medicalController.FullSpeedLoopUpdate += MedicalController_FullSpeedLoopUpdate;
-                foreach (DebugInterface debugInterface in pluginManager.getDebugInterfaces())
+                foreach (DebugInterface debugInterface in pluginManager.DebugInterfaces)
                 {
                     debugInterface.createDebugInterface(pluginManager.RendererPlugin, currentScene.getDefaultSubScene());
                 }
@@ -122,7 +122,7 @@ namespace Developer.GUI
             currentScene = null;
             if (!firstShow)
             {
-                foreach (DebugInterface debugInterface in pluginManager.getDebugInterfaces())
+                foreach (DebugInterface debugInterface in pluginManager.DebugInterfaces)
                 {
                     debugInterface.destroyDebugInterface(pluginManager.RendererPlugin, scene.getDefaultSubScene());
                 }
@@ -145,7 +145,7 @@ namespace Developer.GUI
         {
             //This is only active if the scene is not null and the debug visualizers are setup
             SimSubScene subScene = currentScene.getDefaultSubScene();
-            foreach (DebugInterface debugInterface in pluginManager.getDebugInterfaces())
+            foreach (DebugInterface debugInterface in pluginManager.DebugInterfaces)
             {
                 debugInterface.renderDebug(subScene);
             }
