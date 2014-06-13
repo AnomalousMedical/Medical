@@ -44,6 +44,9 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: S:\Medical\Release\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
+Source: S:\Medical\Release\BEPUik.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\BEPUikPlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\BEPUutilities.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\BulletWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Engine.dll; DestDir: {app}; Flags: ignoreversion
