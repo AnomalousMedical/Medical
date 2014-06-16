@@ -342,6 +342,11 @@ namespace Medical
             }
         }
 
+        public SimObject getSimObject(String name)
+        {
+            return medicalScene.getSimObject(name);
+        }
+
         public String CurrentSceneFile
         {
             get

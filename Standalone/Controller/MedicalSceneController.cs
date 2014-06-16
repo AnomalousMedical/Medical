@@ -112,6 +112,13 @@ namespace Medical
             currentSimObjects.addSimObject(simObject);
         }
 
+        public SimObject getSimObject(String name)
+        {
+            SimObjectBase simObject;
+            currentSimObjects.tryGetSimObject(name, out simObject);
+            return simObject;
+        }
+
         public SimScene CurrentScene
         {
             get
