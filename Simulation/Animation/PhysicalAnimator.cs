@@ -76,8 +76,12 @@ namespace Medical
 
         protected override void positionUpdated()
         {
-            bone.setPosition(Owner.Translation - targetObject.Translation);
-            bone.setOrientation(Owner.Rotation);
+            Vector3 localTrans = Owner.Translation - targetObject.Translation;
+            Quaternion worldRot = targetObject.Rotation.inverse();
+            Quaternion localRot = worldRot * Owner.Rotation;
+            localTrans = Quaternion.quatRotate(ref worldRot, ref localTrans);
+            bone.setPosition(localTrans);
+            bone.setOrientation(localRot);
             bone.setScale(Owner.Scale);
             bone.needUpdate(true);
         }
