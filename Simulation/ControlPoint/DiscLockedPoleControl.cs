@@ -66,9 +66,10 @@ namespace Medical
 
         public void update()
         {
+            Quaternion inverseOwnerRotation = owner.Rotation.inverse();
             Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + offset) + controlPoint.MandibleTranslation - owner.Translation;
-            bone.setPosition(Quaternion.quatRotate(owner.Rotation.inverse(), translation));
-            bone.setOrientation(controlPoint.MandibleBoneRotation);
+            bone.setPosition(Quaternion.quatRotate(inverseOwnerRotation, translation));
+            bone.setOrientation(controlPoint.MandibleBoneRotation * inverseOwnerRotation);
             bone.needUpdate(true);
         }
     }

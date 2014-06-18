@@ -23,6 +23,9 @@ namespace Medical
         [Editable]
         float boneDelta = 0.013f;
 
+        [Editable]
+        String followSimObjectName = "Skull";
+
         [DoNotCopy]
         [DoNotSave]
         List<DiscBonePair> bones = new List<DiscBonePair>();
@@ -34,6 +37,10 @@ namespace Medical
         [DoNotCopy]
         [DoNotSave]
         Fossa fossa;
+
+        [DoNotCopy]
+        [DoNotSave]
+        SimObject followSimObject;
 
         public DiscTopSurface()
         {
@@ -58,6 +65,7 @@ namespace Medical
                 bones.Add(new DiscBonePair(bone, current));
                 current += boneDelta;
             }
+            followSimObject = owner.getOtherSimObject(followSimObjectName);
 
             //if (boneBaseName == "RightEmenence")
             //{
@@ -80,7 +88,8 @@ namespace Medical
                 {
                     loc = 1.0f;
                 }
-                bone.bone.setPosition(Quaternion.quatRotate(owner.Rotation.inverse(), fossa.getPosition(loc) - owner.Translation));
+
+                bone.bone.setPosition(Quaternion.quatRotate(owner.Rotation.inverse(), Quaternion.quatRotate(followSimObject.Rotation, fossa.getPosition(loc)) + followSimObject.Translation - owner.Translation));
                 bone.bone.needUpdate(true);
             }
         }

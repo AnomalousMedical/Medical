@@ -247,11 +247,14 @@ namespace Medical
                 }
                 LateralPoleRotation = rotatePercentage;
             }
+
+            Quaternion rotation = controlPoint.MandibleRotation;
+
             //Move the disc with the mandible as it is under the pop location.
             if (controlPoint.CurrentLocation >= discPopLocation && !locked)
             {
-                Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
-                updateTranslation(ref translation);
+                Vector3 translation = Quaternion.quatRotate(rotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
+                updatePosition(ref translation, ref rotation);
             }
             //The disc is displaced from the top of the mandible.
             else
@@ -278,8 +281,8 @@ namespace Medical
                         location = discPopLocation;
                     }
                 }
-                Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
-                updateTranslation(ref translation);
+                Vector3 translation = Quaternion.quatRotate(rotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
+                updatePosition(ref translation, ref rotation);
 
                 posteriorPole.update(location);
             }
