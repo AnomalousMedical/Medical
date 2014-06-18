@@ -217,11 +217,6 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            //pole updates
-            medialPole.update();
-            lateralPole.update();
-            ventralPole.update();
-
             float location = controlPoint.CurrentLocation;
 
             //Calculate the lateral pole displacement.
@@ -286,6 +281,11 @@ namespace Medical
 
                 posteriorPole.update(location);
             }
+
+            //pole updates
+            medialPole.update();
+            lateralPole.update();
+            ventralPole.update();
 
             topSurface.update(location);
 
