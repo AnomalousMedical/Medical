@@ -30,7 +30,7 @@ private:
 
 #endif
 
-#ifdef WINDOWS
+#if defined(WINDOWS) && defined(USE_SET_PROCESS_AFFINITY)
 	DWORD timerMask;
 #endif
 

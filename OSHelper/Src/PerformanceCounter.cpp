@@ -7,8 +7,11 @@
 #endif
 
 PerformanceCounter::PerformanceCounter()
-#ifdef WINDOWS
-:timerMask(0),
+#if defined(WINDOWS)
+:
+#if defined(USE_SET_PROCESS_AFFINITY)
+timerMask(0),
+#endif
 accurate(false)
 #endif
 {
@@ -26,7 +29,7 @@ bool PerformanceCounter::initialize()
 	DWORD procMask;
 	DWORD sysMask;
 
-#ifdef WINDOWS
+#if defined(WINDOWS) && defined(USE_SET_PROCESS_AFFINITY)
 	//Find the lowest used core
 	GetProcessAffinityMask(GetCurrentProcess(), &procMask, &sysMask);
 	if(procMask ==0)
@@ -54,7 +57,7 @@ bool PerformanceCounter::initialize()
 		startTick = GetTickCount();
 	}
 
-#ifdef WINDOWS
+#if defined(WINDOWS) && defined(USE_SET_PROCESS_AFFINITY)
 	SetThreadAffinityMask(thread, oldMask);
 #endif
 
@@ -73,17 +76,17 @@ Int64 PerformanceCounter::getCurrentTime()
 {
 
 #if defined(WINDOWS) || defined(WINRT)
-	//Set affinity and read current time
 	LARGE_INTEGER currentTime;
 
-#ifdef WINDOWS
+#if defined(WINDOWS) && defined(USE_SET_PROCESS_AFFINITY)
+	//Set affinity and read current time
 	HANDLE thread = GetCurrentThread();
 	DWORD oldMask = SetThreadAffinityMask(thread, timerMask);
 #endif
 
 	QueryPerformanceCounter(&currentTime);
 	
-#ifdef WINDOWS
+#if defined(WINDOWS) && defined(USE_SET_PROCESS_AFFINITY)
 	SetThreadAffinityMask(thread, oldMask);
 #endif
 
