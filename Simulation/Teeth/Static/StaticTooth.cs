@@ -67,14 +67,12 @@ namespace Medical
             {
                 blacklist("Could not find SceneNodeElement {0}.", sceneNodeName);
             }
-            else
+            entity = sceneNodeElement.getNodeObject(entityName) as Entity;
+            if (entity == null)
             {
-                entity = sceneNodeElement.getNodeObject(entityName) as Entity;
-                if (entity == null)
-                {
-                    blacklist("Could not find Entity {0}.", entityName);
-                }
+                blacklist("Could not find Entity {0}.", entityName);
             }
+
             actorElement = Owner.getElement(actorName) as RigidBody;
             if (actorElement == null)
             {
@@ -82,16 +80,15 @@ namespace Medical
             }
             actorElement.MaxContactDistance = 0.05f;
             actorElement.setActivationState(ActivationState.DisableDeactivation);
+            
             joint = Owner.getElement(jointName) as Generic6DofConstraintElement;
             if (joint == null)
             {
                 blacklist("Could not find Joint {0}.", jointName);
             }
-            else
-            {
-                startingLocation = joint.getFrameOffsetOriginA();
-                startingRotation = joint.getFrameOffsetBasisA();
-            }
+            startingLocation = joint.getFrameOffsetOriginA();
+            startingRotation = joint.getFrameOffsetBasisA();
+
             transparency = Owner.getElement(transparencyInterface) as TransparencyInterface;
             if (transparency == null)
             {
