@@ -49,7 +49,7 @@ namespace Developer.GUI
             StringBuilder sb = new StringBuilder();
             foreach (Timelapse timelapse in PerformanceMonitor.Timelapses)
             {
-                sb.AppendFormat("{0}: {1}ms   |   Min {2}ms   |   Max {3}ms\n", timelapse.Name, timelapse.Duration, timelapse.Min, timelapse.Max);
+                sb.AppendFormat("{0}: {1}ms   |   Min {2}ms   |   Max {3}ms   |   Avg {4}ms\n", timelapse.Name, timelapse.Duration, timelapse.Min, timelapse.Max, timelapse.Average);
             }
             text.Caption = sb.ToString();
         }
@@ -58,7 +58,7 @@ namespace Developer.GUI
         {
             foreach (Timelapse timelapse in PerformanceMonitor.Timelapses)
             {
-                timelapse.resetMinMax();
+                timelapse.resetStats();
             }
         }
     }
