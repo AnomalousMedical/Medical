@@ -42,6 +42,7 @@ namespace Medical
             {
                 Vector3 newPos = startingPosition + value;
                 updateTranslation(ref newPos);
+                SleepyActorRepository.wakeUp();
                 if (OffsetChanged != null)
                 {
                     OffsetChanged.Invoke(this, value);

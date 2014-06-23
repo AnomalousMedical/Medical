@@ -40,6 +40,10 @@ namespace Medical
         [DoNotSave]
         private BulletScene bulletScene;
 
+        [DoNotSave]
+        [DoNotCopy]
+        private bool awake = true;
+
         public MuscleBehavior()
         {
 
@@ -71,12 +75,12 @@ namespace Medical
 
         public override void update(Clock clock, EventManager events)
         {
-            
+            awake = !SleepyActorRepository.IsSleepy;
         }
 
         void bulletScene_Tick(float timeSpan)
         {
-            if (force != 0.0f)
+            if (awake && force != 0.0f)
             {
                 Vector3 location = targetObject.Translation - Owner.Translation;
                 location.normalize();

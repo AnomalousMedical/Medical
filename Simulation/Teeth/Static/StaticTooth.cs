@@ -78,8 +78,7 @@ namespace Medical
             {
                 blacklist("Could not find Actor {0}.", actorName);
             }
-            actorElement.MaxContactDistance = 0.05f;
-            actorElement.setActivationState(ActivationState.DisableDeactivation);
+            SleepyActorRepository.addSleeper(actorElement);
             
             joint = Owner.getElement(jointName) as Generic6DofConstraintElement;
             if (joint == null)
@@ -101,6 +100,7 @@ namespace Medical
         protected override void destroy()
         {
             TeethController.removeTooth(Owner.Name);
+            SleepyActorRepository.removeSleeper(actorElement);
         }
 
         public override void update(Clock clock, EventManager eventManager)
@@ -251,6 +251,7 @@ namespace Medical
             }
             set
             {
+                actorElement.activate(false);
                 offset = value;
                 joint.setFrameOffsetA(startingLocation + offset);
             }
@@ -265,6 +266,7 @@ namespace Medical
             }
             set
             {
+                actorElement.activate(false);
                 rotationOffset = value;
                 joint.setFrameOffsetA(rotationOffset * startingRotation);
             }

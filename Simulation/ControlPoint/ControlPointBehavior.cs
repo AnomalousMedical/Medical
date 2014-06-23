@@ -145,6 +145,7 @@ namespace Medical
                 Vector3 position = Quaternion.quatRotate(boneObject.Rotation, bonePos) + boneObject.Translation;
                 joint.setFrameOffsetB(bone.getDerivedPosition());
                 lastPosition = bonePos;
+                SleepyActorRepository.wakeUp();
             }
             if (translate)
             {
@@ -193,6 +194,7 @@ namespace Medical
         {
             Vector3 newLocation = disc.getPosition(location);
             this.updateTranslation(ref newLocation);
+            SleepyActorRepository.wakeUp();
             if (PositionChanged != null)
             {
                 PositionChanged.Invoke(this, location);

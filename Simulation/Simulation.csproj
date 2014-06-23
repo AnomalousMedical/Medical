@@ -175,6 +175,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Props\Splint.cs" />
+    <Compile Include="SleepyActorRepository.cs" />
     <Compile Include="State\CompoundPresetState.cs" />
     <Compile Include="State\MedicalState.cs" />
     <Compile Include="State\MedicalStateNotes.cs" />
