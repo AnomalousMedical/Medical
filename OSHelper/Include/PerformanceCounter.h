@@ -30,10 +30,6 @@ private:
 
 #endif
 
-#if defined(WINDOWS) && defined(USE_SET_PROCESS_AFFINITY)
-	DWORD timerMask;
-#endif
-
 #ifdef MAC_OSX
 	struct timeval start;
 #endif
