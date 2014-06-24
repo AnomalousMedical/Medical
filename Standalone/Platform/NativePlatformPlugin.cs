@@ -92,5 +92,10 @@ namespace Medical
         {
 
         }
+
+        public void setupRenamedSaveableTypes(RenamedTypeMap renamedTypeMap)
+        {
+
+        }
     }
 }

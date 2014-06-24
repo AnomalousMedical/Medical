@@ -7,6 +7,7 @@ using Engine.Editing;
 using Engine.ObjectManagement;
 using Engine.Platform;
 using Engine.Attributes;
+using Engine.Behaviors.Animation;
 
 namespace Medical
 {

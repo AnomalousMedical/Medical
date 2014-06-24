@@ -109,6 +109,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(RocketInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(SoundPluginInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BEPUikInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(SimulationPlugin).Assembly);
             pluginManager.initializePlugins();
 
             performanceMetricTimer = pluginManager.PlatformPlugin.createTimer();

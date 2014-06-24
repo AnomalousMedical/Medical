@@ -5,6 +5,7 @@ using System.Text;
 using Engine;
 using Engine.Platform;
 using Engine.Command;
+using Engine.Behaviors.Animation;
 
 namespace Medical
 {
@@ -40,6 +41,11 @@ namespace Medical
         public void createDebugCommands(List<CommandManager> commands)
         {
 
+        }
+
+        public void setupRenamedSaveableTypes(RenamedTypeMap renamedTypeMap)
+        {
+            renamedTypeMap.addRenamedType("Medical.PositionBroadcaster", typeof(PositionBroadcaster));
         }
 
         #endregion
