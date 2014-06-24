@@ -144,7 +144,7 @@ namespace Medical.GUI.AnomalousMvc
 
                 leftCP.setLocation(leftCP.NeutralLocation);
                 rightCP.setLocation(rightCP.NeutralLocation);
-                movingMuscle.changeForce(1.0f);
+                movingMuscle.changeForce(3.0f);
                 movingMuscleTarget.Offset = Vector3.Zero;
 
                 moveButton.Checked = false;
