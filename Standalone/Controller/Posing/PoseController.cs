@@ -51,14 +51,10 @@ namespace Medical.Controller
             Ray3 cameraRay;
             if (getCameraRay(eventManager, out cameraRay))
             {
-                var matches = AnatomyManager.findAnatomy(cameraRay);
-                foreach (var match in matches.AnatomyWithDistances) //find a way to search without going through everything, make a registry for anatomy that has ik bones
+                var matches = PoseableObjectsManager.findAnatomy(cameraRay);
+                foreach (var match in matches.Results)
                 {
-                    var boneQuery = from e in match.AnatomyIdentifier.Owner.getElementIter()
-                                    where e is BEPUikBone
-                                    select (BEPUikBone)e;
-
-                    var bone = boneQuery.FirstOrDefault();
+                    var bone = match.PoseableIdentifier.Bone;
                     if (bone != null && !bone.IkBone.Pinned)
                     {
                         dragControl.TargetBone = bone.IkBone;

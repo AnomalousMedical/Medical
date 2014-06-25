@@ -171,6 +171,11 @@
     <Compile Include="Plugin\SimulationScene.cs" />
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
+    <Compile Include="Pose\PoseableByEntity.cs" />
+    <Compile Include="Pose\PoseableRaycastResult.cs" />
+    <Compile Include="Pose\PoseableIdentifier.cs" />
+    <Compile Include="Pose\PoseableObjectsManager.cs" />
+    <Compile Include="Pose\SortedPoseableRaycastResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Props\Splint.cs" />
