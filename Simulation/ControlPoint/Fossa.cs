@@ -75,6 +75,8 @@ namespace Medical
         [DoNotCopy]
         private List<Bone> skullBones = new List<Bone>();
 
+        //The fossa stays in the teeth bullet scene space, therefore the eminanceOffset and skullOffset are calculated on construction only.
+
         [DoNotSave]
         [DoNotCopy]
         private Vector3 eminanceOffset;
