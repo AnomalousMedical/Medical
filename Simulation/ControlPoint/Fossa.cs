@@ -70,14 +70,18 @@ namespace Medical
         private List<Vector3> eminanceDistort = new List<Vector3>();
         
         private float eminanceDistortion;
-        private SimObject skullSimObject;
+        
         [DoNotSave]
         [DoNotCopy]
         private List<Bone> skullBones = new List<Bone>();
 
         [DoNotSave]
         [DoNotCopy]
-        private SimObject eminanceSimObject;
+        private Vector3 eminanceOffset;
+
+        [DoNotSave]
+        [DoNotCopy]
+        private Vector3 skullOffset;
 
         [DoNotSave]
         [DoNotCopy]
@@ -101,9 +105,10 @@ namespace Medical
             }
             else
             {
-                eminanceSimObject = Owner.getOtherSimObject(eminanceName);
+                SimObject eminanceSimObject = Owner.getOtherSimObject(eminanceName);
                 if (eminanceSimObject != null)
                 {
+                    eminanceOffset = eminanceSimObject.Translation;
                     SceneNodeElement eminanceSceneNode = eminanceSimObject.getElement(eminanceNodeName) as SceneNodeElement;
                     if (eminanceSceneNode != null)
                     {
@@ -132,9 +137,10 @@ namespace Medical
                     }
                 }
 
-                skullSimObject = Owner.getOtherSimObject(skullName);
+                SimObject skullSimObject = Owner.getOtherSimObject(skullName);
                 if (skullSimObject != null)
                 {
+                    skullOffset = skullSimObject.Translation;
                     SceneNodeElement skullNode = skullSimObject.getElement(skullNodeName) as SceneNodeElement;
                     if (skullNode != null)
                     {
@@ -210,9 +216,9 @@ namespace Medical
                 float currentOffset = 0.0f;
                 for (int i = 0; i < skullBones.Count; ++i)
                 {
-                    skullBones[i].setPosition(translation.interpolate(currentOffset) + this.Owner.Translation - skullSimObject.Translation);
+                    skullBones[i].setPosition(translation.interpolate(currentOffset) + this.Owner.Translation - skullOffset);
                     skullBones[i].needUpdate(true);
-                    eminanceBones[i].setPosition(translation.interpolate(currentOffset) + this.Owner.Translation - eminanceSimObject.Translation);
+                    eminanceBones[i].setPosition(translation.interpolate(currentOffset) + this.Owner.Translation - eminanceOffset);
                     eminanceBones[i].needUpdate(true);
                     currentOffset += boneOffsetDelta;
                 }
@@ -255,72 +261,5 @@ namespace Medical
         {
             return Owner.Translation + translation.interpolate(position);
         }
-
-#if DEBUG_KEYS
-        public override void update(Clock clock, EventManager eventManager)
-        {
-            if (eventManager[FossaEvents.PrintBoneLocations].FirstFrameDown)
-            {
-                Log.Default.debug("\nFossa position -- {0} {1}", Owner.Name, controlPoint.Owner.Translation);
-                Log.Default.debug("\nBone position -- {0}", Owner.Name);
-                SceneNodeElement node = eminanceSimObject.getElement(eminanceNodeName) as SceneNodeElement;
-                if (node != null)
-                {
-                    Entity entity = node.getNodeObject(eminanceEntityName) as Entity;
-                    if (entity != null)
-                    {
-                        if (entity.hasSkeleton())
-                        {
-                            SkeletonInstance skeleton = entity.getSkeleton();
-                            for (ushort i = 0; i < skeleton.getNumBones(); ++i)
-                            {
-                                Bone bone = skeleton.getBone(i);
-                                Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + eminanceSimObject.Translation;
-                                Vector3 rot = bone.getOrientation().getEuler() * 57.2957795f;
-                                Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, loc.y, loc.z, rot.x, rot.y, rot.z);
-                                //Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, -loc.z, loc.y, rot.x * -1.0f, rot.y, rot.z * -1.0f);
-                            }
-                        }
-                    }
-                }
-                Log.Default.debug("End Bone position -- {0}\n", Owner.Name);
-            }
-        }
-#endif
-
     }
 }
-/**
-if (basePoints.Count == 0)
-                {
-                    basePoints.Add(new Vector3(Owner.Translation.x, -5.227f, 0.839f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.887f, 0.983f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.755f, 1.087f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.635f, 1.239f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.523f, 1.478f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.517f, 1.595f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.61f, 1.764f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.765f, 1.938f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.947f, 2.125f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -5.085f, 2.381f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -5.127f, 2.542f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -5.028f, 2.989f) - Owner.Translation);
-                    basePoints.Add(new Vector3(Owner.Translation.x, -4.817f, 3.341f) - Owner.Translation);
-                }
-                if (eminanceDistort.Count == 0)
-                {
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -5.227f, 0.839f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.887f, 0.983f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.755f, 1.087f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.635f, 1.239f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.523f, 1.478f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.517f, 1.595f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.61f, 1.764f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.765f, 1.938f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.765f, 2.125f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.765f, 2.381f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.765f, 2.542f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.765f, 2.989f) - Owner.Translation);
-                    eminanceDistort.Add(new Vector3(Owner.Translation.x, -4.765f, 3.341f) - Owner.Translation);
-                }
-*/
