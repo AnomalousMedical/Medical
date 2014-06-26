@@ -114,6 +114,7 @@ namespace Medical
             if (this.force != force)
             {
                 this.force = force;
+                SleepyActorRepository.wakeUp();
                 if (ForceChanged != null)
                 {
                     ForceChanged.Invoke(this, force);
