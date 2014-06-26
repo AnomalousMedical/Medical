@@ -75,13 +75,13 @@ namespace Medical
             {
                 MuscleController.setCurrentSequence(this);
                 states[currentState].apply();
-                Owner.setEnabled(true);
+                Owner.Enabled = true;
             }
         }
 
         public void deactivate()
         {
-            Owner.setEnabled(false);
+            Owner.Enabled = false;
         }
 
         protected override void customLoad(LoadInfo info)
