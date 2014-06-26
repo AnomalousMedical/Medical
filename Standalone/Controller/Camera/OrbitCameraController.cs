@@ -256,7 +256,7 @@ namespace Medical
                 }
                 else if (allowZoom && events[CameraEvents.ZoomCamera].Down)
                 {
-                    orbitDistance += mouseCoords.y;
+                    orbitDistance += ZoomMultiple * mouseCoords.y + mouseCoords.y;
                     moveZoom();
                     stopMaintainingIncludePoint();
                 }
@@ -278,25 +278,26 @@ namespace Medical
             {
                 if (allowZoom && mouseCoords.z != 0)
                 {
+                    float zoomAmount = ZoomMultiple * 60f + 3.6f;
                     if (mouseCoords.z < 0)
                     {
-                        orbitDistance += 3.6f;
-                        if (orbitDistance > maxOrbitDistance)
-                        {
-                            orbitDistance = maxOrbitDistance;
-                        }
+                        orbitDistance += zoomAmount;
                     }
                     else if (mouseCoords.z > 0)
                     {
-                        orbitDistance -= 3.6f;
-                        if (orbitDistance < minOrbitDistance)
-                        {
-                            orbitDistance = minOrbitDistance;
-                        }
+                        orbitDistance -= zoomAmount;
                     }
-                    updateTranslation(normalDirection * orbitDistance + lookAt);
+                    moveZoom();
                     stopMaintainingIncludePoint();
                 }
+            }
+        }
+
+        public float ZoomMultiple
+        {
+            get
+            {
+                return (Translation - LookAt).length2() / 10000f * 0.0132529322204644f;
             }
         }
 
