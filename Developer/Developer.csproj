@@ -109,6 +109,7 @@
     <Compile Include="Tasks\ChangeRenderingMode.cs" />
     <Compile Include="Tasks\DisablePhysicsTask.cs" />
     <Compile Include="Tasks\DumpToMax.cs" />
+    <Compile Include="Utility\MaxWriter.cs" />
     <Compile Include="Tasks\SaveMicrocodeCacheTask.cs" />
     <Compile Include="Tasks\ShowLibRocketDebugger.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
