@@ -32,7 +32,7 @@ namespace Developer
                 {
                     using (MaxWriter maxWriter = new MaxWriter(path))
                     {
-                        maxWriter.writeSimObjects(medicalController.SimObjects);
+                        maxWriter.write(medicalController.SimObjects.Select(so => new MaxWriterInfo(so)));
                     }
                 }
                 fireItemClosed();

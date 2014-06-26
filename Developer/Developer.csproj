@@ -108,10 +108,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\ChangeRenderingMode.cs" />
     <Compile Include="Tasks\DisablePhysicsTask.cs" />
+    <Compile Include="Tasks\DumpTeethToMax.cs" />
     <Compile Include="Tasks\DumpToMax.cs" />
     <Compile Include="Utility\MaxWriter.cs" />
     <Compile Include="Tasks\SaveMicrocodeCacheTask.cs" />
     <Compile Include="Tasks\ShowLibRocketDebugger.cs" />
+    <Compile Include="Utility\MaxWriterInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
   </ItemGroup>
   <ItemGroup>

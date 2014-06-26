@@ -107,6 +107,7 @@ namespace Developer
             taskController.addTask(libRocketDebugger);
             taskController.addTask(new SaveMicrocodeCacheTask());
             taskController.addTask(new DumpToMax(standaloneController.MedicalController));
+            taskController.addTask(new DumpTeethToMax(standaloneController.MedicalController));
             changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
             taskController.addTask(changeRenderingMode);
 

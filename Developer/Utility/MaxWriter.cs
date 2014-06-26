@@ -28,17 +28,17 @@ namespace Developer
             stream.Close();
         }
 
-        public void writeSimObjects(IEnumerable<SimObject> simObjects)
+        public void write(IEnumerable<MaxWriterInfo> infos)
         {
-            foreach(var simObj in simObjects)
+            foreach(var simObj in infos)
             {
-                writeSimObject(simObj);
+                write(simObj);
             }
         }
 
-        public void writeSimObject(SimObject simObject)
+        public void write(MaxWriterInfo info)
         {
-            String meshName = findMeshName(simObject);
+            String meshName = info.MeshName;
             if (foundMeshes.Contains(meshName))
             {
                 meshName = null; //Already found
@@ -48,12 +48,9 @@ namespace Developer
                 foundMeshes.Add(meshName);
             }
 
-            String name = simObject.Name;
+            String name = info.Name;
 
-            String transStr = String.Format("point3 {0} {1} {2}",
-                simObject.Translation.x,
-                simObject.Translation.z * -1.0f,
-                simObject.Translation.y);
+            String transStr = String.Format("point3 {0} {1} {2}", info.Translation.x, info.Translation.y, info.Translation.z);
 
             stream.WriteLine("trans.add \"{0}\" \"{1}\"", name, transStr);
             if (meshName != null)
@@ -61,47 +58,14 @@ namespace Developer
                 stream.WriteLine("meshTrans.add \"{0}\" \"{1}\"", meshName, transStr);
             }
 
-            Vector3 euler = simObject.Rotation.getEuler();
-            String rotString = String.Format("eulerAngles {0} {1} {2}",
-                (Degree)new Radian(euler.z),
-                (Degree)new Radian(euler.y * -1.0f),
-                (Degree)new Radian(euler.x));
+            Vector3 euler = info.Rotation;
+            String rotString = String.Format("eulerAngles {0} {1} {2}", info.Rotation.x, info.Rotation.y, info.Rotation.z);
 
             stream.WriteLine("rots.add \"{0}\" \"{1}\"", name, rotString);
             if (meshName != null)
             {
                 stream.WriteLine("meshRots.add \"{0}\" \"{1}\"", meshName, rotString);
             }
-        }
-
-        private static String findMeshName(SimObject simObject)
-        {
-            String name = null;
-            foreach (var element in simObject.getElementIter())
-            {
-                SceneNodeElement sceneElement = element as SceneNodeElement;
-                if (sceneElement != null)
-                {
-                    foreach (var movable in sceneElement.MovableObjects)
-                    {
-                        Entity entity = movable as Entity;
-                        if (entity != null)
-                        {
-                            using (MeshPtr mesh = entity.getMesh())
-                            {
-                                String meshName = mesh.Value.getName();
-                                if (meshName != null)
-                                {
-                                    name = Path.GetFileNameWithoutExtension(meshName);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-            return name;
         }
 
         const string ScriptBegin = @"struct mxsHashTable
