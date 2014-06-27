@@ -31,7 +31,7 @@ namespace Medical.Controller
         private BEPUikScene ikScene;
         private SceneViewController sceneViewController;
         private AnatomyController anatomyController;
-        private DragControl dragControl = new DragControl();
+        private ExternalDragControl dragControl = new ExternalDragControl();
         private float hitDistance;
         private bool allowPosing = false;
 
@@ -75,9 +75,9 @@ namespace Medical.Controller
                 foreach (var match in matches.Results)
                 {
                     var bone = match.PoseableIdentifier.Bone;
-                    if (bone != null && !bone.IkBone.Pinned)
+                    if (bone != null && !bone.Pinned)
                     {
-                        dragControl.TargetBone = bone.IkBone;
+                        dragControl.TargetBone = bone;
                         hitDistance = match.Distance;
                         Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
                         dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();

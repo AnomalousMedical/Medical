@@ -66,13 +66,13 @@ namespace Medical
         {
             get
             {
-                return ikBone.IkBone.Pinned;
+                return ikBone.Pinned;
             }
             set
             {
-                if (ikBone.IkBone.Pinned != value)
+                if (ikBone.Pinned != value)
                 {
-                    ikBone.IkBone.Pinned = value;
+                    ikBone.Pinned = value;
                     fireBooleanValueChanged(value);
                 }
             }
