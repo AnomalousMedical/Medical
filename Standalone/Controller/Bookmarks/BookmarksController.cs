@@ -135,7 +135,7 @@ namespace Medical.Controller
                 Bookmark bookmark;
                 using (XmlTextReader xmlReader = new XmlTextReader(bookmarkResourceProvider.openFile(file)))
                 {
-                    bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
+                    bookmark = xmlSaver.restoreObject(xmlReader) as Bookmark;
                 }
                 if (bookmark != null)
                 {
@@ -143,8 +143,6 @@ namespace Medical.Controller
                     {
                         bookmark.BackingFile = bookmarkResourceProvider.getFullFilePath(file);
                     }
-                    bookmark.CameraPosition.Easing = EasingFunction.EaseInOutQuadratic;
-
                     ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
                     Thread.Sleep(50);
                 }

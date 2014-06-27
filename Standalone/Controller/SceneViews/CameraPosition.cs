@@ -33,7 +33,7 @@ namespace Medical
 
         public CameraPosition()
         {
-            Easing = EasingFunction.EaseInOutQuadratic;
+            Easing = EasingFunction.EaseOutQuadratic;
         }
 
         public CameraPosition(CameraPosition clone)
@@ -90,7 +90,7 @@ namespace Medical
             LookAt = info.GetVector3("LookAt", LookAt);
             IncludePoint = info.GetVector3("IncludePoint", IncludePoint);
             UseIncludePoint = info.GetBoolean("UseIncludePoint", false);
-            Easing = info.GetValue("Easing", EasingFunction.EaseInOutQuadratic);
+            Easing = info.GetValue("Easing", EasingFunction.EaseOutQuadratic);
         }
 
         public void getInfo(SaveInfo info)
