@@ -136,13 +136,15 @@ namespace Medical.Controller
                 using (XmlTextReader xmlReader = new XmlTextReader(bookmarkResourceProvider.openFile(file)))
                 {
                     bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
+                }
+                if (bookmark != null)
+                {
                     if (saveFilePath)
                     {
                         bookmark.BackingFile = bookmarkResourceProvider.getFullFilePath(file);
                     }
-                }
-                if (bookmark != null)
-                {
+                    bookmark.CameraPosition.Easing = EasingFunction.EaseInOutQuadratic;
+
                     ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
                     Thread.Sleep(50);
                 }
