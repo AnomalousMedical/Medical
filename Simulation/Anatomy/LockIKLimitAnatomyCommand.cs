@@ -12,22 +12,23 @@ using BEPUikPlugin;
 namespace Medical
 {
     /// <summary>
-    /// This command will allow a anatomy identifier to pin an ik bone attached to it.
+    /// This class will adjust transparency for an object that is part of
+    /// another object. It will either track the parent object or be disabled
+    /// entirely.
     /// </summary>
-    class PinIKAnatomyCommand : AbstractBooleanAnatomyCommand
+    class LockIKLimitAnatomyCommand : AbstractBooleanAnatomyCommand
     {
         [Editable]
-        private String uiText = "Pin";
+        private String uiText = "Lock";
 
         [Editable]
         private String targetSimObjectName = "this";
 
-        [Editable]
-        private String targetIKBoneName = "IKBone";
+        [DoNotSave]
+        [DoNotCopy]
+        List<BEPUikLimit> ikLimits = new List<BEPUikLimit>();
 
-        BEPUikBone ikBone;
-
-        public PinIKAnatomyCommand()
+        public LockIKLimitAnatomyCommand()
         {
 
         }
@@ -45,11 +46,13 @@ namespace Medical
                 errorMessage = String.Format("Could not find target SimObject {0}", targetSimObjectName);
                 return false;
             }
-            ikBone = targetSimObject.getElement(targetIKBoneName) as BEPUikBone;
-            if(ikBone == null)
+            foreach(var element in targetSimObject.getElementIter())
             {
-                errorMessage = String.Format("Could not find target IKBone {0} in SimObject {1}", targetIKBoneName, targetSimObjectName);
-                return false;
+                BEPUikLimit limit = element as BEPUikLimit;
+                if(limit != null)
+                {
+                    ikLimits.Add(limit);
+                }
             }
             return true;
         }
@@ -64,13 +67,20 @@ namespace Medical
         {
             get
             {
-                return ikBone.Pinned;
+                if(ikLimits.Count > 0)
+                {
+                    return ikLimits[0].Locked;
+                }
+                return false;
             }
             set
             {
-                if (ikBone.Pinned != value)
+                if(ikLimits.Count > 0 && ikLimits[0].Locked != value)
                 {
-                    ikBone.Pinned = value;
+                    foreach (var limit in ikLimits)
+                    {
+                        limit.Locked = value;
+                    }
                     fireBooleanValueChanged(value);
                 }
             }
@@ -102,14 +112,12 @@ namespace Medical
         {
             info.AddValue("uiText", uiText);
             info.AddValue("targetSimObjectName", targetSimObjectName);
-            info.AddValue("targetIKBoneName", targetIKBoneName);
         }
 
-        protected PinIKAnatomyCommand(LoadInfo info)
+        protected LockIKLimitAnatomyCommand(LoadInfo info)
         {
             uiText = info.GetString("uiText");
             targetSimObjectName = info.GetString("targetSimObjectName");
-            targetIKBoneName = info.GetString("targetIKBoneName");
         }
     }
 }
