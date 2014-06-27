@@ -24,6 +24,7 @@ namespace Medical
         private IntSize2 newSize;
         private IntSize2 sizeDelta;
         private IntSize2 currentSize;
+        private EasingFunction currentEasing = EasingFunction.None;
 
         public HorizontalPopoutLayoutContainer(UpdateTimer mainTimer)
         {
@@ -118,6 +119,20 @@ namespace Medical
             }
 
             sizeDelta = newSize - oldSize;
+
+            if(oldSize.Width == 0)
+            {
+                currentEasing = EasingFunction.EaseOutQuadratic;
+            }
+            else if(newSize.Width == 0)
+            {
+                currentEasing = EasingFunction.EaseInQuadratic;
+            }
+            else
+            {
+                currentEasing = EasingFunction.EaseInOutQuadratic;
+            }
+
             subscribeToUpdates();
         }
 
@@ -160,14 +175,7 @@ namespace Medical
                 currentTime += clock.fSeconds;
                 if (currentTime < animationLength)
                 {
-                    if (sizeDelta.Width < 0)
-                    {
-                        alpha = EasingFunctions.EaseInQuadratic(0, 1.0f, currentTime, animationLength);
-                    }
-                    else
-                    {
-                        alpha = EasingFunctions.EaseOutQuadratic(0, 1.0f, currentTime, animationLength);
-                    }
+                    alpha = EasingFunctions.Ease(currentEasing, 0, 1.0f, currentTime, animationLength);
                     currentSize = new IntSize2((int)(oldSize.Width + sizeDelta.Width * alpha), WorkingSize.Height);
                 }
                 else
