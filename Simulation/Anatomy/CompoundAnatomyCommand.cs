@@ -142,6 +142,18 @@ namespace Medical
             }
         }
 
+        public bool allowDisplay(AnatomyCommandPermissions permissions)
+        {
+            if (subCommands.Count > 0)
+            {
+                return subCommands[0].allowDisplay(permissions);
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         void command_BooleanValueChanged(AnatomyCommand command, bool value)
         {
             if (!valueChanging && BooleanValueChanged != null)

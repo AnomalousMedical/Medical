@@ -49,6 +49,12 @@ namespace Medical
         public abstract String UIText { get; }
 
         public abstract void execute();
+
+        public virtual bool allowDisplay(AnatomyCommandPermissions permissions)
+        {
+            //By default always let everything through
+            return true;
+        }
         
         public EditInterface createEditInterface()
         {

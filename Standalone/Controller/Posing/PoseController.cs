@@ -30,14 +30,34 @@ namespace Medical.Controller
 
         private BEPUikScene ikScene;
         private SceneViewController sceneViewController;
+        private AnatomyController anatomyController;
         private DragControl dragControl = new DragControl();
         private float hitDistance;
+        private bool allowPosing = false;
 
         public PoseController(StandaloneController controller)
         {
             controller.SceneLoaded += controller_SceneLoaded;
             controller.SceneUnloading += controller_SceneUnloading;
             sceneViewController = controller.SceneViewController;
+            anatomyController = controller.AnatomyController;
+        }
+
+        public bool AllowPosing
+        {
+            get
+            {
+                return allowPosing;
+            }
+            set
+            {
+                if(allowPosing != value)
+                {
+                    allowPosing = value;
+                    anatomyController.setCommandPermission(AnatomyCommandPermissions.Posing, allowPosing);
+                    togglePicking();
+                }
+            }
         }
 
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
@@ -99,17 +119,27 @@ namespace Medical.Controller
         void controller_SceneLoaded(SimScene scene)
         {
             ikScene = scene.getDefaultSubScene().getSimElementManager<BEPUikScene>();
-            if (ikScene != null)
-            {
-                pickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;
-                pickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
-            }
+            togglePicking();
         }
 
         void controller_SceneUnloading(SimScene scene)
         {
-            pickAnatomy.FirstFrameDownEvent -= pickAnatomy_FirstFrameDownEvent;
-            pickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
+            ikScene = null;
+            togglePicking();
+        }
+
+        void togglePicking()
+        {
+            if (ikScene != null && allowPosing)
+            {
+                pickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;
+                pickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
+            }
+            else
+            {
+                pickAnatomy.FirstFrameDownEvent -= pickAnatomy_FirstFrameDownEvent;
+                pickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
+            }
         }
     }
 }

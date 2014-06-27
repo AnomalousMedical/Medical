@@ -106,6 +106,14 @@ namespace Medical.GUI
             }
         }
 
+        public AnatomyCommandPermissions CommandPermissions
+        {
+            get
+            {
+                return anatomyController.CommandPermissions;
+            }
+        }
+
         internal void showRelatedAnatomy(Anatomy anatomy)
         {
             anatomyFinder.displayAnatomy(String.Format("Related to {0}", anatomy.AnatomicalName), anatomy.RelatedAnatomy);

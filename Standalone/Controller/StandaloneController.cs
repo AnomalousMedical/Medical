@@ -687,8 +687,12 @@ namespace Medical
                 }
             }
 #if ALLOW_OVERRIDE
+            //Temp posing activation, will need to be replaced by a plugin later, for now only on beta scenes.
+            poseController.AllowPosing = file.EndsWith("Beta.sim.xml");
+            //End temp posing activation
+
             sw.Stop();
-            Logging.Log.Debug("Scene loaded in {0} ms", sw.ElapsedMilliseconds);
+            Logging.Log.Debug("Scene '{0}' loaded in {0} ms", file, sw.ElapsedMilliseconds);
 #endif
             return success;
         }

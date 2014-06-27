@@ -83,6 +83,11 @@ namespace Medical
             get { return uiText; }
         }
 
+        public override bool allowDisplay(AnatomyCommandPermissions permissions)
+        {
+            return (permissions & AnatomyCommandPermissions.Posing) != 0;
+        }
+
         public override AnatomyCommand createTagGroupCommand()
         {
             CompoundAnatomyCommand compoundCommand = new CompoundAnatomyCommand(UIType, UIText);

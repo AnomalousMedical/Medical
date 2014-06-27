@@ -27,7 +27,9 @@ namespace Medical
         private AnatomyPickingMode pickingMode;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
         public event EventDelegate<AnatomyController, bool> ShowPremiumAnatomyChanged;
+        public event EventDelegate<AnatomyController, AnatomyCommandPermissions> CommandPermissionsChanged;
         private bool showPremiumAnatomy = true;
+        private AnatomyCommandPermissions commandPermissions = AnatomyCommandPermissions.None;
 
         /// <summary>
         /// Called when a piece of anatomy has been searched for and should be displayed.
@@ -225,6 +227,37 @@ namespace Medical
                     if (ShowPremiumAnatomyChanged != null)
                     {
                         ShowPremiumAnatomyChanged.Invoke(this, showPremiumAnatomy);
+                    }
+                }
+            }
+        }
+
+        public void setCommandPermission(AnatomyCommandPermissions permission, bool enabled)
+        {
+            if (enabled)
+            {
+                CommandPermissions |= permission;
+            }
+            else
+            {
+                CommandPermissions &= (~permission);
+            }
+        }
+
+        public AnatomyCommandPermissions CommandPermissions
+        {
+            get
+            {
+                return commandPermissions;
+            }
+            private set
+            {
+                if (commandPermissions != value)
+                {
+                    commandPermissions = value;
+                    if(CommandPermissionsChanged != null)
+                    {
+                        CommandPermissionsChanged.Invoke(this, commandPermissions);
                     }
                 }
             }

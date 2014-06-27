@@ -105,7 +105,8 @@ namespace Medical.GUI
                 widget.setSize(width, windowStartSize.Height);
                 anatomyName.setSize(captionWidth, anatomyName.Height);
                 transparencySlider.Command = null;
-                foreach (AnatomyCommand command in anatomy.Commands)
+                var commandPermissions = windowManager.CommandPermissions;
+                foreach (AnatomyCommand command in anatomy.Commands.Where(c => c.allowDisplay(commandPermissions)))
                 {
                     if (command is TransparencyChanger)
                     {

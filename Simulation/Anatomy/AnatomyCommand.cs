@@ -15,6 +15,18 @@ namespace Medical
         Boolean, //Will present a UI that turns on and off. Calls the BooleanValue property.
     }
 
+    public enum AnatomyCommandPermissions
+    {
+        /// <summary>
+        /// No special permissions to consider.
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// Speical permission for commands related to posing.
+        /// </summary>
+        Posing = 1 << 0,
+    }
+
     /// <summary>
     /// This delegate is used to alert subscribers that the numeric value has changed for this command.
     /// </summary>
@@ -56,17 +68,17 @@ namespace Medical
         AnatomyCommandUIType UIType { get; }
 
         /// <summary>
-        /// Get/Set the numeric value of this command. Used when the UI type is Sliding.
+        /// Get/Set the numeric value of this command. Used when the UI type is Numeric.
         /// </summary>
         float NumericValue { get; set; }
 
         /// <summary>
-        /// The minimum numeric value for this command. Used when the UI type is Sliding.
+        /// The minimum numeric value for this command. Used when the UI type is Numeric.
         /// </summary>
         float NumericValueMin { get; }
 
         /// <summary>
-        /// The maximum numeric value for this command. Used when the UI type is Sliding.
+        /// The maximum numeric value for this command. Used when the UI type is Numeric.
         /// </summary>
         float NumericValueMax { get; }
 
@@ -84,6 +96,13 @@ namespace Medical
         /// Called to execute something. Used when the UI type is Button.
         /// </summary>
         void execute();
+
+        /// <summary>
+        /// This will return true if this command should be displayed given the permissions set.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <returns></returns>
+        bool allowDisplay(AnatomyCommandPermissions permissions);
 
         /// <summary>
         /// Create a command suitable for a tag group view of this command. This
