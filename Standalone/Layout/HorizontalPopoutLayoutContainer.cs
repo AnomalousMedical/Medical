@@ -160,7 +160,14 @@ namespace Medical
                 currentTime += clock.fSeconds;
                 if (currentTime < animationLength)
                 {
-                    alpha = EasingFunctions.EaseOutQuadratic(0, 1.0f, currentTime, animationLength);
+                    if (sizeDelta.Width < 0)
+                    {
+                        alpha = EasingFunctions.EaseInQuadratic(0, 1.0f, currentTime, animationLength);
+                    }
+                    else
+                    {
+                        alpha = EasingFunctions.EaseOutQuadratic(0, 1.0f, currentTime, animationLength);
+                    }
                     currentSize = new IntSize2((int)(oldSize.Width + sizeDelta.Width * alpha), WorkingSize.Height);
                 }
                 else
