@@ -102,7 +102,6 @@
     <Compile Include="Anatomy\LockIKLimitAnatomyCommand.cs" />
     <Compile Include="Anatomy\SortedAnatomyClickResults.cs" />
     <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />
-    <Compile Include="Anatomy\TransparencyChanger.cs" />
     <Compile Include="Anatomy\PinIKAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencySectionAnatomyCommand.cs" />
     <Compile Include="Animation\AnimationManipulator.cs" />

@@ -52,15 +52,15 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private TransparencyChanger transparencyChanger = null;
-
-        [DoNotCopy]
-        [DoNotSave]
         private Entity entity;
 
         [DoNotCopy]
         [DoNotSave]
         private LinkedList<Anatomy> relatedAnatomy = new LinkedList<Anatomy>();
+
+        [DoNotCopy]
+        [DoNotSave]
+        private TransparencyAnatomyCommand transparencyCommand;
 
         protected override void constructed()
         {
@@ -218,33 +218,23 @@ namespace Medical
             }
         }
 
-        /// <summary>
-        /// This is the TransparencyChanger for this anatomy. It can be null if
-        /// no TransparencyChanger is assigned.
-        /// </summary>
-        [DoNotCopy]
-        internal TransparencyChanger TransparencyChanger
-        {
-            get
-            {
-                return transparencyChanger;
-            }
-            set
-            {
-                this.transparencyChanger = value;
-            }
-        }
-
         public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
         {
-            transparencyChanger.smoothBlend(alpha, duration, easingFunction);
+            if (transparencyCommand != null)
+            {
+                transparencyCommand.smoothBlend(alpha, duration, easingFunction);
+            }
         }
 
         public float CurrentAlpha
         {
             get
             {
-                return transparencyChanger.CurrentAlpha;
+                if(transparencyCommand != null)
+                {
+                    return transparencyCommand.CurrentAlpha;
+                }
+                return 0.0f;
             }
         }
 
@@ -252,7 +242,11 @@ namespace Medical
         {
             get
             {
-                return transparencyChanger.TransparencyInterfaceNames;
+                if(transparencyCommand != null)
+                {
+                    yield return transparencyCommand.TransparencyInterfaceName;
+                }
+                yield break;
             }
         }
 
@@ -290,6 +284,11 @@ namespace Medical
         internal bool checkCollision(Ray3 ray, ref float distanceOnRay)
         {
             return entity.raycastPolygonLevel(ray, ref distanceOnRay);
+        }
+
+        internal void _setTransparencyCommand(TransparencyAnatomyCommand command)
+        {
+            this.transparencyCommand = command;
         }
 
         protected override void customSave(SaveInfo info)

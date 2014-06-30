@@ -11,7 +11,7 @@ using Logging;
 
 namespace Medical
 {
-    public class TransparencyAnatomyCommand : AbstractNumericAnatomyCommand, TransparencyChanger
+    public class TransparencyAnatomyCommand : AbstractNumericAnatomyCommand
     {
         internal const String UI_TEXT = "Transparency";
 
@@ -37,7 +37,7 @@ namespace Medical
                 errorMessage = String.Format("Could not find TransparencyInterface named {0}", transparencyInterfaceName);
                 return false;
             }
-            parentAnatomy.TransparencyChanger = this;
+            parentAnatomy._setTransparencyCommand(this);
             return true;
         }
 
@@ -121,11 +121,11 @@ namespace Medical
             }
         }
 
-        public IEnumerable<String> TransparencyInterfaceNames
+        public String TransparencyInterfaceName
         {
             get
             {
-                yield return transparencyInterface.ObjectName;
+                return transparencyInterface.ObjectName;
             }
         }
 
