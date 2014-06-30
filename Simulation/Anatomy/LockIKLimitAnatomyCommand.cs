@@ -46,6 +46,10 @@ namespace Medical
                 BEPUikLimit limit = element as BEPUikLimit;
                 if(limit != null)
                 {
+                    if(ikLimits.Count == 0)
+                    {
+                        limit.LockedChanged += limit_LockedChanged;
+                    }
                     ikLimits.Add(limit);
                 }
             }
@@ -54,7 +58,10 @@ namespace Medical
 
         public override void destroy()
         {
-            
+            if(ikLimits.Count > 0)
+            {
+                ikLimits[0].LockedChanged -= limit_LockedChanged;
+            }
         }
 
         public override AnatomyCommandUIType UIType
@@ -106,6 +113,11 @@ namespace Medical
         {
             uiText = info.GetString("uiText");
             targetSimObjectName = info.GetString("targetSimObjectName");
+        }
+
+        void limit_LockedChanged(BEPUikLimit obj)
+        {
+            fireBooleanValueChanged(obj.Locked);
         }
     }
 }
