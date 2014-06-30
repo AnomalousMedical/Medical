@@ -88,7 +88,7 @@ namespace Medical
                     {
                         limit.Locked = value;
                     }
-                    fireBooleanValueChanged(value);
+                    //The boolean value changed will be fired by the lockchanged event.
                 }
             }
         }
