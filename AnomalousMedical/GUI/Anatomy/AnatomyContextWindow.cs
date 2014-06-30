@@ -117,27 +117,22 @@ namespace Medical.GUI
                         {
                             case AnatomyCommandUIType.Numeric:
                                 commandUI = new CommandHScroll(widget);
+                                addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Executable:
                                 //Need to implement this
                                 break;
                             case AnatomyCommandUIType.Boolean:
                                 commandUI = new CommandCheckBox(widget);
+                                addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Transparency:
                                 transparencySlider.addCommand(command);
                                 break;
                         }
-
-                        //If we created something above, start tracking it.
-                        if (commandUI != null)
-                        {
-                            layoutContainer.addChild(commandUI);
-                            dynamicWidgets.Add(command.UIText, commandUI);
-                        }
                     }
        
-                    //One last null check and add command if we have something to add it to
+                    //If we found something above add the command to it.
                     if (commandUI != null)
                     {
                         commandUI.addCommand(command);
@@ -232,6 +227,15 @@ namespace Medical.GUI
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.hide();
+        }
+
+        /// <summary>
+        /// Add a command ui to the window.
+        /// </summary>
+        void addCommandUI(String key, CommandUIElement commandUI)
+        {
+            layoutContainer.addChild(commandUI);
+            dynamicWidgets.Add(key, commandUI);
         }
     }
 }
