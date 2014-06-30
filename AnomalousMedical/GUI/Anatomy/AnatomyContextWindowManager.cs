@@ -151,7 +151,7 @@ namespace Medical.GUI
             translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
             LayerState layers = new LayerState("Temp");
-            layers.buildFrom(anatomy.TransparencyChanger.TransparencyInterfaces, 1.0f);
+            layers.buildFrom(anatomy.TransparencyNames, 1.0f);
 
             //Create a new thumb host or update an existing one
             if (window.ThumbHost == null)
@@ -212,7 +212,7 @@ namespace Medical.GUI
                 }
 
                 TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
-                requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                requestingWindow.Anatomy.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                 lastHighlightRequestWindow = requestingWindow;
 
                 AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;

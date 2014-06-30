@@ -11,7 +11,7 @@ namespace Medical.GUI
     {
         private AnatomyContextWindowManager windowManager;
         private Anatomy anatomy;
-        private List<CommandUIElement> dynamicWidgets = new List<CommandUIElement>();
+        private Dictionary<String, CommandUIElement> dynamicWidgets = new Dictionary<String, CommandUIElement>();
         private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5, new IntVector2(CommandUIElement.SIDE_PADDING / 2, ScaleHelper.Scaled(84)));
 
         private IntSize2 windowStartSize;
@@ -69,7 +69,7 @@ namespace Medical.GUI
         public override void Dispose()
         {
             windowManager.returnThumbnail(this);
-            foreach (CommandUIElement commandUI in dynamicWidgets)
+            foreach (CommandUIElement commandUI in dynamicWidgets.Values)
             {
                 commandUI.Dispose();
             }
@@ -86,7 +86,7 @@ namespace Medical.GUI
             set
             {
                 layoutContainer.SuppressLayout = true;
-                foreach (CommandUIElement commandUI in dynamicWidgets)
+                foreach (CommandUIElement commandUI in dynamicWidgets.Values)
                 {
                     commandUI.Dispose();
                 }
@@ -104,33 +104,43 @@ namespace Medical.GUI
                 }
                 widget.setSize(width, windowStartSize.Height);
                 anatomyName.setSize(captionWidth, anatomyName.Height);
-                transparencySlider.Command = null;
+                transparencySlider.clearCommands();
                 var commandPermissions = windowManager.CommandPermissions;
                 foreach (AnatomyCommand command in anatomy.Commands.Where(c => c.allowDisplay(commandPermissions)))
                 {
-                    if (command is TransparencyChanger)
+                    //Find the command
+                    CommandUIElement commandUI = null;
+                    if (!dynamicWidgets.TryGetValue(command.UIText, out commandUI))
                     {
-                        transparencySlider.Command = command;
-                    }
-                    else
-                    {
-                        CommandUIElement commandUI = null;
+                        //The command was not found, create a widget or handle the command otherwise (transparency is just added to the exising slider).
                         switch (command.UIType)
                         {
                             case AnatomyCommandUIType.Numeric:
-                                commandUI = new CommandHScroll(command, widget);
+                                commandUI = new CommandHScroll(widget);
                                 break;
                             case AnatomyCommandUIType.Executable:
+                                //Need to implement this
                                 break;
                             case AnatomyCommandUIType.Boolean:
-                                commandUI = new CommandCheckBox(command, widget);
+                                commandUI = new CommandCheckBox(widget);
+                                break;
+                            case AnatomyCommandUIType.Transparency:
+                                transparencySlider.addCommand(command);
                                 break;
                         }
+
+                        //If we created something above, start tracking it.
                         if (commandUI != null)
                         {
                             layoutContainer.addChild(commandUI);
-                            dynamicWidgets.Add(commandUI);
+                            dynamicWidgets.Add(command.UIText, commandUI);
                         }
+                    }
+       
+                    //One last null check and add command if we have something to add it to
+                    if (commandUI != null)
+                    {
+                        commandUI.addCommand(command);
                     }
                 }
 
@@ -193,12 +203,12 @@ namespace Medical.GUI
 
         void showButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            anatomy.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         void hideButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            anatomy.TransparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            anatomy.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         void widget_MouseButtonPressed(Widget source, EventArgs e)

@@ -19,7 +19,7 @@ namespace Medical
                 Type[] types = assembly.GetTypes();
                 foreach (Type type in types)
                 {
-                    if (typeof(AnatomyCommand).IsAssignableFrom(type) && !type.IsAbstract && type != typeof(CompoundAnatomyCommand))
+                    if (typeof(AnatomyCommand).IsAssignableFrom(type) && !type.IsAbstract)
                     {
                         this.addNode(type.Namespace, delimiter, new BrowserNode(type.Name, type));
                     }

@@ -95,7 +95,7 @@ namespace Medical
             AnatomyManager.removeAnatomy(this);
             foreach (AnatomyCommand command in commands)
             {
-                command.Dispose();
+                command.destroy();
             }
         }
 
@@ -223,15 +223,36 @@ namespace Medical
         /// no TransparencyChanger is assigned.
         /// </summary>
         [DoNotCopy]
-        public TransparencyChanger TransparencyChanger
+        internal TransparencyChanger TransparencyChanger
         {
             get
             {
                 return transparencyChanger;
             }
-            internal set
+            set
             {
                 this.transparencyChanger = value;
+            }
+        }
+
+        public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
+        {
+            transparencyChanger.smoothBlend(alpha, duration, easingFunction);
+        }
+
+        public float CurrentAlpha
+        {
+            get
+            {
+                return transparencyChanger.CurrentAlpha;
+            }
+        }
+
+        public IEnumerable<String> TransparencyNames
+        {
+            get
+            {
+                return transparencyChanger.TransparencyInterfaceNames;
             }
         }
 

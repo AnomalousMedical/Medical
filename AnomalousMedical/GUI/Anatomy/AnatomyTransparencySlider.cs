@@ -12,49 +12,43 @@ namespace Medical.GUI
         private const float SCROLL_MAX_RANGE_MIN = SCROLL_MAX - 50;//The minimum postion of a scroll bar to count as the max value.
 
         private ScrollBar slider;
-        private AnatomyCommand command;
+        private List<AnatomyCommand> transparencyCommands = new List<AnatomyCommand>();
 
         public AnatomyTransparencySlider(ScrollBar slider)
         {
             this.slider = slider;
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
-            slider.UserObject = command;
             slider.ScrollRange = (int)SCROLL_MAX;
             slider.ScrollIncrement = 1000;
         }
 
         public void Dispose()
         {
-            if (command != null)
-            {
-                command.NumericValueChanged -= command_NumericValueChanged;
-            }
+            clearCommands();
         }
 
-        public AnatomyCommand Command
+        public void addCommand(AnatomyCommand command)
         {
-            get
+            if(transparencyCommands.Count == 0)
             {
-                return command;
+                command.NumericValueChanged += command_NumericValueChanged;
+                slider.ScrollPosition = getSliderValueFromCommand(command);
             }
-            set
+            transparencyCommands.Add(command);
+        }
+
+        public void clearCommands()
+        {
+            if(transparencyCommands.Count > 0)
             {
-                if (command != null)
-                {
-                    command.NumericValueChanged -= command_NumericValueChanged;
-                }
-                command = value;
-                if (command != null)
-                {
-                    command.NumericValueChanged += command_NumericValueChanged;
-                    slider.ScrollPosition = getSliderValueFromCommand(command);
-                }
+                transparencyCommands[0].NumericValueChanged -= command_NumericValueChanged;
             }
+            transparencyCommands.Clear();
         }
 
         void slider_ScrollChangePosition(Widget source, EventArgs e)
         {
-            if (command != null)
+            foreach(var command in transparencyCommands)
             {
                 ScrollBar scroll = (ScrollBar)source;
                 float normalizedValue = scroll.ScrollPosition / SCROLL_MAX;

@@ -10,33 +10,37 @@ namespace Medical.GUI
     class CommandCheckBox : CommandUIElement
     {
         private Button checkButton;
-        private AnatomyCommand command;
+        private List<AnatomyCommand> commands = new List<AnatomyCommand>();
 
-        public CommandCheckBox(AnatomyCommand command, Widget parentWidget)
+        public CommandCheckBox(Widget parentWidget)
         {
-            this.command = command;
-            command.BooleanValueChanged += command_BooleanValueChanged;
-
             checkButton = (Button)parentWidget.createWidgetT("Button", "CheckBox", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(20), Align.Default, "");
             checkButton.MouseButtonClick += new MyGUIEvent(checkButton_MouseButtonClick);
-            checkButton.Caption = command.UIText;
-            checkButton.Selected = command.BooleanValue;
-        }
-
-        void checkButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            command.BooleanValue = checkButton.Selected = !checkButton.Selected;
-        }
-
-        void command_BooleanValueChanged(AnatomyCommand command, bool value)
-        {
-            checkButton.Selected = value;
         }
 
         public override void Dispose()
         {
-            command.BooleanValueChanged -= command_BooleanValueChanged;
+            clearCommands();
             Gui.Instance.destroyWidget(checkButton);
+        }
+
+        public override void addCommand(AnatomyCommand command)
+        {
+            if (commands.Count == 0)
+            {
+                checkButton.Caption = command.UIText;
+                checkButton.Selected = command.BooleanValue;
+            }
+            commands.Add(command);
+            command.BooleanValueChanged += command_BooleanValueChanged;
+        }
+
+        public override void clearCommands()
+        {
+            foreach (var command in commands)
+            {
+                command.BooleanValueChanged -= command_BooleanValueChanged;
+            }
         }
 
         public override void layout()
@@ -59,6 +63,21 @@ namespace Medical.GUI
             {
                 checkButton.Visible = value;
             }
+        }
+
+        void checkButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            bool val = !checkButton.Selected;
+            checkButton.Selected = val;
+            foreach (var command in commands)
+            {
+                command.BooleanValue = val;
+            }
+        }
+
+        void command_BooleanValueChanged(AnatomyCommand command, bool value)
+        {
+            checkButton.Selected = value;
         }
     }
 }

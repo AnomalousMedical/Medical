@@ -6,9 +6,8 @@ using Engine;
 
 namespace Medical
 {
-    public class AnatomyTagGroup : Anatomy, IDisposable
+    public class AnatomyTagGroup : Anatomy
     {
-        private List<AnatomyCommand> groupCommands = new List<AnatomyCommand>();
         private List<Anatomy> groupAnatomy = new List<Anatomy>();
         bool showInBasicVersion = true;
         bool showInTextSearch = true;
@@ -29,14 +28,6 @@ namespace Medical
             this.showInTree = showInTree;
         }
 
-        public void Dispose()
-        {
-            foreach (AnatomyCommand command in groupCommands)
-            {
-                command.Dispose();
-            }
-        }
-
         public void addAnatomy(AnatomyIdentifier anatomy)
         {
             if (showInTree)
@@ -44,24 +35,6 @@ namespace Medical
                 anatomy.addRelatedAnatomy(this);
             }
             groupAnatomy.Add(anatomy);
-            foreach (AnatomyCommand command in anatomy.Commands)
-            {
-                bool foundCommand = false;
-                foreach (AnatomyCommand groupCommand in groupCommands)
-                {
-                    if (groupCommand.UIText == command.UIText)
-                    {
-                        command.addToTagGroupCommand(groupCommand);
-                        foundCommand = true;
-                        break;
-                    }
-                }
-                if (!foundCommand)
-                {
-                    AnatomyCommand compoundCommand = command.createTagGroupCommand();
-                    groupCommands.Add(compoundCommand);
-                }
-            }
         }
 
         public String AnatomicalName { get; private set; }
@@ -70,7 +43,13 @@ namespace Medical
         {
             get
             {
-                return groupCommands;
+                foreach(var anatomy in groupAnatomy)
+                {
+                    foreach(var command in anatomy.Commands)
+                    {
+                        yield return command;
+                    }
+                }
             }
         }
 
@@ -103,18 +82,37 @@ namespace Medical
             }
         }
 
-        public TransparencyChanger TransparencyChanger
+        public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
+        {
+            foreach(var anatomy in groupAnatomy)
+            {
+                anatomy.smoothBlend(alpha, duration, easingFunction);
+            }
+        }
+
+        public float CurrentAlpha
         {
             get
             {
-                foreach (AnatomyCommand command in Commands)
+                if(groupAnatomy.Count > 0)
                 {
-                    if (command is TransparencyChanger)
+                    return groupAnatomy[0].CurrentAlpha; ;
+                }
+                return 0.0f;
+            }
+        }
+
+        public IEnumerable<String> TransparencyNames
+        {
+            get
+            {
+                foreach (Anatomy anatomy in groupAnatomy)
+                {
+                    foreach (String name in anatomy.TransparencyNames)
                     {
-                        return (TransparencyChanger)command;
+                        yield return name;
                     }
                 }
-                return NullTransparencyChanger.Instance;
             }
         }
 

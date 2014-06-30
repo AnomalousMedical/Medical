@@ -6,50 +6,50 @@ using System.Text;
 
 namespace Medical
 {
-    class NullTransparencyChanger : TransparencyChanger
-    {
-        private static NullTransparencyChanger instance;
+    //class NullTransparencyChanger : TransparencyChanger
+    //{
+    //    private static NullTransparencyChanger instance;
 
-        public static NullTransparencyChanger Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new NullTransparencyChanger();
-                }
-                return instance;
-            }
-        }
+    //    public static NullTransparencyChanger Instance
+    //    {
+    //        get
+    //        {
+    //            if (instance == null)
+    //            {
+    //                instance = new NullTransparencyChanger();
+    //            }
+    //            return instance;
+    //        }
+    //    }
 
-        private NullTransparencyChanger()
-        {
+    //    private NullTransparencyChanger()
+    //    {
 
-        }
+    //    }
 
-        public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
-        {
+    //    public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
+    //    {
             
-        }
+    //    }
 
-        public float CurrentAlpha
-        {
-            get
-            {
-                return 0.0f;
-            }
-            set
-            {
+    //    public float CurrentAlpha
+    //    {
+    //        get
+    //        {
+    //            return 0.0f;
+    //        }
+    //        set
+    //        {
                 
-            }
-        }
+    //        }
+    //    }
 
-        public IEnumerable<TransparencyInterface> TransparencyInterfaces
-        {
-            get
-            {
-                yield break;
-            }
-        }
-    }
+    //    public IEnumerable<TransparencyInterface> TransparencyInterfaces
+    //    {
+    //        get
+    //        {
+    //            yield break;
+    //        }
+    //    }
+    //}
 }

@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Medical
 {
-    public interface TransparencyChanger
+    interface TransparencyChanger
     {
         void smoothBlend(float alpha, float duration, EasingFunction easingFunction);
 
         float CurrentAlpha { get; set; }
 
-        IEnumerable<TransparencyInterface> TransparencyInterfaces { get; }
+        IEnumerable<String> TransparencyInterfaceNames { get; }
     }
 }

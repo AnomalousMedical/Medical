@@ -14,29 +14,42 @@ namespace Medical.GUI
 
         private ScrollBar slider;
         private TextBox caption;
-        private AnatomyCommand command;
+        private List<AnatomyCommand> commands = new List<AnatomyCommand>();
 
-        public CommandHScroll(AnatomyCommand command, Widget parentWidget)
+        public CommandHScroll(Widget parentWidget)
         {
-            this.command = command;
-            command.NumericValueChanged += command_NumericValueChanged;
-
             caption = (TextBox)parentWidget.createWidgetT("TextBox", "TextBox", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(15), Align.Default, "");
-            caption.Caption = command.UIText;
 
             slider = (ScrollBar)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(20), Align.Default, "");
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
-            slider.UserObject = command;
             slider.ScrollRange = (int)SCROLL_MAX;
-            slider.ScrollPosition = getSliderValueFromCommand(command);
             slider.ScrollIncrement = 1000;
         }
 
         public override void Dispose()
         {
-            command.NumericValueChanged -= command_NumericValueChanged;
+            clearCommands();
             Gui.Instance.destroyWidget(caption);
             Gui.Instance.destroyWidget(slider);
+        }
+
+        public override void addCommand(AnatomyCommand command)
+        {
+            if(commands.Count == 0)
+            {
+                caption.Caption = command.UIText;
+                slider.ScrollPosition = getSliderValueFromCommand(command);
+            }
+            commands.Add(command);
+            command.NumericValueChanged += command_NumericValueChanged;
+        }
+
+        public override void clearCommands()
+        {
+            foreach (var command in commands)
+            {
+                command.NumericValueChanged -= command_NumericValueChanged;
+            }
         }
 
         public override void layout()
@@ -73,9 +86,11 @@ namespace Medical.GUI
             {
                 normalizedValue = 1.0f;
             }
-            AnatomyCommand command = (AnatomyCommand)scroll.UserObject;
-            float range = command.NumericValueMax - command.NumericValueMin;
-            command.NumericValue = range * normalizedValue + command.NumericValueMin;
+            foreach (var command in commands)
+            {
+                float range = command.NumericValueMax - command.NumericValueMin;
+                command.NumericValue = range * normalizedValue + command.NumericValueMin;
+            }
         }
 
         private static uint getSliderValueFromCommand(AnatomyCommand command)

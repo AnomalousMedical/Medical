@@ -390,18 +390,17 @@ namespace Medical.GUI
                 Anatomy selectedAnatomy = buttonGridThumbs.getUserObject(item);
                 if (anatomyController.ShowPremiumAnatomy || selectedAnatomy.ShowInBasicVersion)
                 {
-                    TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
-                    if (transparencyChanger.CurrentAlpha >= 0.9999f)
+                    if (selectedAnatomy.CurrentAlpha >= 0.9999f)
                     {
-                        transparencyChanger.smoothBlend(0.7f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                        selectedAnatomy.smoothBlend(0.7f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                     }
-                    else if (transparencyChanger.CurrentAlpha <= 0.00008f)
+                    else if (selectedAnatomy.CurrentAlpha <= 0.00008f)
                     {
-                        transparencyChanger.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                        selectedAnatomy.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                     }
                     else
                     {
-                        transparencyChanger.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                        selectedAnatomy.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
                     }
                 }
                 else
@@ -515,7 +514,7 @@ namespace Medical.GUI
             translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
             LayerState layers = new LayerState("Temp");
-            layers.buildFrom(anatomy.TransparencyChanger.TransparencyInterfaces, 1.0f);
+            layers.buildFrom(anatomy.TransparencyNames, 1.0f);
 
             buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
         }

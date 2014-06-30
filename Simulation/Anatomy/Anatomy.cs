@@ -37,9 +37,22 @@ namespace Medical
         AxisAlignedBox WorldBoundingBox { get; }
 
         /// <summary>
-        /// The class that changes transparency for this Anatomy.
+        /// Blend the transparency of the anatomy from its current value to a new value using the given blendDuration and easingFunction.
         /// </summary>
-        TransparencyChanger TransparencyChanger { get; }
+        /// <param name="targetOpacity"></param>
+        /// <param name="blendDuration"></param>
+        /// <param name="easingFunction"></param>
+        void smoothBlend(float targetOpacity, float blendDuration, EasingFunction easingFunction);
+
+        /// <summary>
+        /// The current transparency of this anatomy.
+        /// </summary>
+        float CurrentAlpha { get; }
+
+        /// <summary>
+        /// The TransparencyInterfaces linked to this anatomy.
+        /// </summary>
+        IEnumerable<String> TransparencyNames { get; }
 
         /// <summary>
         /// The direction to move the camera when generating a preview for this anatomy.

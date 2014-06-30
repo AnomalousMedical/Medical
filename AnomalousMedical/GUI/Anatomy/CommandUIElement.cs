@@ -22,5 +22,9 @@ namespace Medical.GUI
         {
             
         }
+
+        public abstract void addCommand(AnatomyCommand command);
+
+        public abstract void clearCommands();
     }
 }

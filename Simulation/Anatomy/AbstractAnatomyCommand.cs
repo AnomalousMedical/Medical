@@ -27,12 +27,9 @@ namespace Medical
         public event AnatomyNumericValueChanged NumericValueChanged;
         public event AnatomyBooleanValueChanged BooleanValueChanged;
 
-        public virtual void Dispose()
-        {
-
-        }
-
         public abstract bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage);
+
+        public abstract void destroy();
 
         public abstract AnatomyCommandUIType UIType { get; }
 
@@ -61,10 +58,6 @@ namespace Medical
 		    EditInterface editInterface = ReflectedEditInterface.createEditInterface(this, memberScanner, GetType().Name, null);
 	        return editInterface;
         }
-
-        public abstract AnatomyCommand createTagGroupCommand();
-
-        public abstract void addToTagGroupCommand(AnatomyCommand tagGroupCommand);
 
         public abstract void getInfo(SaveInfo info);
 

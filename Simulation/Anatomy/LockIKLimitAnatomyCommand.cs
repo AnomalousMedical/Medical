@@ -33,11 +33,6 @@ namespace Medical
 
         }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-        }
-
         public override bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
         {
             SimObject targetSimObject = owner.getOtherSimObject(targetSimObjectName);
@@ -55,6 +50,11 @@ namespace Medical
                 }
             }
             return true;
+        }
+
+        public override void destroy()
+        {
+            
         }
 
         public override AnatomyCommandUIType UIType
@@ -94,18 +94,6 @@ namespace Medical
         public override bool allowDisplay(AnatomyCommandPermissions permissions)
         {
             return (permissions & AnatomyCommandPermissions.Posing) != 0;
-        }
-
-        public override AnatomyCommand createTagGroupCommand()
-        {
-            CompoundAnatomyCommand compoundCommand = new CompoundAnatomyCommand(UIType, UIText);
-            compoundCommand.addSubCommand(this);
-            return compoundCommand;
-        }
-
-        public override void addToTagGroupCommand(AnatomyCommand tagGroupCommand)
-        {
-            ((CompoundAnatomyCommand)tagGroupCommand).addSubCommand(this);
         }
 
         public override void getInfo(SaveInfo info)

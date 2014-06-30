@@ -41,13 +41,6 @@ namespace Medical
 
         }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-            transparencyAnatomyCommand.NumericValueChanged -= transparencyAnatomyCommand_NumericValueChanged;
-            transparencyAnatomyCommand.SmoothBlendApplied -= transparencyAnatomyCommand_SmoothBlendApplied;
-        }
-
         public override bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
         {
             SimObject targetSimObject = owner.getOtherSimObject(targetSimObjectName);
@@ -78,6 +71,12 @@ namespace Medical
             transparencyAnatomyCommand.NumericValueChanged += transparencyAnatomyCommand_NumericValueChanged;
             transparencyAnatomyCommand.SmoothBlendApplied += transparencyAnatomyCommand_SmoothBlendApplied;
             return true;
+        }
+
+        public override void destroy()
+        {
+            transparencyAnatomyCommand.NumericValueChanged -= transparencyAnatomyCommand_NumericValueChanged;
+            transparencyAnatomyCommand.SmoothBlendApplied -= transparencyAnatomyCommand_SmoothBlendApplied;
         }
 
         public override AnatomyCommandUIType UIType
@@ -113,18 +112,6 @@ namespace Medical
         public override string UIText
         {
             get { return uiText; }
-        }
-
-        public override AnatomyCommand createTagGroupCommand()
-        {
-            CompoundAnatomyCommand compoundCommand = new CompoundAnatomyCommand(UIType, UIText);
-            compoundCommand.addSubCommand(this);
-            return compoundCommand;
-        }
-
-        public override void addToTagGroupCommand(AnatomyCommand tagGroupCommand)
-        {
-            ((CompoundAnatomyCommand)tagGroupCommand).addSubCommand(this);
         }
 
         void transparencyAnatomyCommand_NumericValueChanged(AnatomyCommand command, float value)

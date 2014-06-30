@@ -41,6 +41,11 @@ namespace Medical
             return true;
         }
 
+        public override void destroy()
+        {
+            
+        }
+
         public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
         {
             if (alpha != transparencyInterface.CurrentAlpha)
@@ -104,7 +109,7 @@ namespace Medical
         {
             get
             {
-                return AnatomyCommandUIType.Numeric;
+                return AnatomyCommandUIType.Transparency;
             }
         }
 
@@ -116,24 +121,12 @@ namespace Medical
             }
         }
 
-        public IEnumerable<TransparencyInterface> TransparencyInterfaces
+        public IEnumerable<String> TransparencyInterfaceNames
         {
             get
             {
-                yield return transparencyInterface;
+                yield return transparencyInterface.ObjectName;
             }
-        }
-
-        public override AnatomyCommand createTagGroupCommand()
-        {
-            CompoundTransparencyAnatomyCommand compoundCommand = new CompoundTransparencyAnatomyCommand();
-            compoundCommand.addSubCommand(this);
-            return compoundCommand;
-        }
-
-        public override void addToTagGroupCommand(AnatomyCommand tagGroupCommand)
-        {
-            ((CompoundTransparencyAnatomyCommand)tagGroupCommand).addSubCommand(this);
         }
 
         #region Saveable

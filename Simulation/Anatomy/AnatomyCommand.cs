@@ -13,6 +13,7 @@ namespace Medical
         Numeric, //Will present a UI where numbers are changed with a slider. Uses the NumericValue property.
         Executable, //Will present a UI with a push button that executes an action. Calls the execute function.
         Boolean, //Will present a UI that turns on and off. Calls the BooleanValue property.
+        Transparency, //Similar to Numeric, but controls the transparency of the object the command is attached to.
     }
 
     public enum AnatomyCommandPermissions
@@ -41,7 +42,7 @@ namespace Medical
     /// to change it in some way. They do this by presenting a UI with one of
     /// the AnatomyCommandUITypes and then respond to the input from these UIs.
     /// </summary>
-    public interface AnatomyCommand : Saveable, IDisposable
+    public interface AnatomyCommand : Saveable
     {
         /// <summary>
         /// Called when the Numeric value changes.
@@ -61,6 +62,12 @@ namespace Medical
         /// object to be blacklisted.
         /// </summary>
         bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage);
+
+        /// <summary>
+        /// This method will be called during the AnatomyIdentifier's destroy
+        /// phase. You should clean up any references here.
+        /// </summary>
+        void destroy();
 
         /// <summary>
         /// Get the type of command UI that should be created for this command.
@@ -103,26 +110,6 @@ namespace Medical
         /// <param name="permissions"></param>
         /// <returns></returns>
         bool allowDisplay(AnatomyCommandPermissions permissions);
-
-        /// <summary>
-        /// Create a command suitable for a tag group view of this command. This
-        /// can return null to not support grouping commands. This method is
-        /// called the first time a new type of command is encountered. If the
-        /// command this function is being called on needs to add itself it
-        /// should do this.
-        /// </summary>
-        /// <returns>An AnatomyCommand that can be used for a tag group.</returns>
-        AnatomyCommand createTagGroupCommand();
-
-        /// <summary>
-        /// Process this command and possibly add it to the given
-        /// tagGroupCommand in the manner that is appropriate. The value passed
-        /// in will be whatever the subclass returns from createTagGroupCommand.
-        /// This method will be called every time except the first time a
-        /// certain command type is encountered.
-        /// </summary>
-        /// <param name="tagGroupCommand">Tha AnatomyCommand created by the subclass's createTagGroupCommand function.</param>
-        void addToTagGroupCommand(AnatomyCommand tagGroupCommand);
 
         /// <summary>
         /// Create an EditInterface for this command.

@@ -14,12 +14,11 @@ namespace Medical
     class AnatomySelectionGroup : Anatomy
     {
         private HashSet<Anatomy> groupAnatomy = new HashSet<Anatomy>();
-        private List<AnatomyCommand> groupCommands = new List<AnatomyCommand>();
         private List<Anatomy> relatedAnatomy = new List<Anatomy>(3);
 
         public AnatomySelectionGroup(IEnumerable<Anatomy> selectedAnatomy)
         {
-            foreach(var anatomy in selectedAnatomy)
+            foreach (var anatomy in selectedAnatomy)
             {
                 relatedAnatomy.Add(anatomy);
                 foreach (var selectable in anatomy.SelectableAnatomy)
@@ -41,7 +40,13 @@ namespace Medical
         {
             get
             {
-                return groupCommands;
+                foreach (var anatomy in groupAnatomy)
+                {
+                    foreach (var command in anatomy.Commands)
+                    {
+                        yield return command;
+                    }
+                }
             }
         }
 
@@ -53,7 +58,7 @@ namespace Medical
             }
         }
 
-        public Engine.AxisAlignedBox WorldBoundingBox
+        public AxisAlignedBox WorldBoundingBox
         {
             get
             {
@@ -66,18 +71,37 @@ namespace Medical
             }
         }
 
-        public TransparencyChanger TransparencyChanger
+        public void smoothBlend(float alpha, float duration, EasingFunction easingFunction)
+        {
+            foreach(var anatomy in groupAnatomy)
+            {
+                anatomy.smoothBlend(alpha, duration, easingFunction);
+            }
+        }
+
+        public float CurrentAlpha
         {
             get
             {
-                foreach (AnatomyCommand command in Commands)
+                if (groupAnatomy.Count > 0)
                 {
-                    if (command is TransparencyChanger)
+                    return groupAnatomy.First().CurrentAlpha;
+                }
+                return 0.0f;
+            }
+        }
+
+        public IEnumerable<String> TransparencyNames
+        {
+            get
+            {
+                foreach (Anatomy anatomy in groupAnatomy)
+                {
+                    foreach (String name in anatomy.TransparencyNames)
                     {
-                        return (TransparencyChanger)command;
+                        yield return name;
                     }
                 }
-                return NullTransparencyChanger.Instance;
             }
         }
 
@@ -135,24 +159,6 @@ namespace Medical
             if (!groupAnatomy.Contains(anatomy))
             {
                 groupAnatomy.Add(anatomy);
-                foreach (AnatomyCommand command in anatomy.Commands)
-                {
-                    bool foundCommand = false;
-                    foreach (AnatomyCommand groupCommand in groupCommands)
-                    {
-                        if (groupCommand.UIText == command.UIText)
-                        {
-                            command.addToTagGroupCommand(groupCommand);
-                            foundCommand = true;
-                            break;
-                        }
-                    }
-                    if (!foundCommand)
-                    {
-                        AnatomyCommand compoundCommand = command.createTagGroupCommand();
-                        groupCommands.Add(compoundCommand);
-                    }
-                }
             }
         }
     }
