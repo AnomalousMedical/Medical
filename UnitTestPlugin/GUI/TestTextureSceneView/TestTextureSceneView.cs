@@ -74,7 +74,7 @@ namespace UnitTestPlugin.GUI
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            LayerState layers = new LayerState("");
+            LayerState layers = new LayerState();
             layers.captureState();
 
             ButtonGridItem item = buttonGrid.addItem("Main", count++.ToString());

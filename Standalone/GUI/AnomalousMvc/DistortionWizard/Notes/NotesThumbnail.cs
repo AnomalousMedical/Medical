@@ -15,7 +15,7 @@ namespace Medical.GUI.AnomalousMvc
         public NotesThumbnail()
         {
             cameraPosition = new CameraPosition();
-            layerState = new EditableLayerState("");
+            layerState = new EditableLayerState();
         }
 
         public LayerState LayerState

@@ -150,8 +150,7 @@ namespace Medical.GUI
             Vector3 direction = anatomy.PreviewCameraDirection;
             translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
-            LayerState layers = new LayerState("Temp");
-            layers.buildFrom(anatomy.TransparencyNames, 1.0f);
+            LayerState layers = new LayerState(anatomy.TransparencyNames, 1.0f);
 
             //Create a new thumb host or update an existing one
             if (window.ThumbHost == null)
@@ -207,7 +206,7 @@ namespace Medical.GUI
             {
                 if (beforeFocusLayerState == null)
                 {
-                    beforeFocusLayerState = new LayerState("");
+                    beforeFocusLayerState = new LayerState();
                     beforeFocusLayerState.captureState();
                 }
 

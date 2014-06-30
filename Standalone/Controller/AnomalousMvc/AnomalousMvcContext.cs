@@ -344,7 +344,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public void saveLayers(String name)
         {
-            LayerState layerState = new LayerState(name);
+            LayerState layerState = new LayerState();
             layerState.captureState();
             modelMemory.add(name, layerState);
         }

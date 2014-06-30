@@ -251,7 +251,7 @@ namespace Medical.Controller
                 if (activeWindow != null)
                 {
                     TransparencyController.ActiveTransparencyState = activeWindow.CurrentTransparencyState;
-                    LayerState layerState = new LayerState("");
+                    LayerState layerState = new LayerState();
                     layerState.captureState();
                     currentWindowConfig.Add(new Bookmark("", activeWindow.Translation, activeWindow.LookAt, layerState));
                 }
@@ -260,7 +260,7 @@ namespace Medical.Controller
                     if (window != activeWindow)
                     {
                         TransparencyController.ActiveTransparencyState = window.CurrentTransparencyState;
-                        LayerState layerState = new LayerState("");
+                        LayerState layerState = new LayerState();
                         layerState.captureState();
                         currentWindowConfig.Add(new Bookmark("", window.Translation, window.LookAt, layerState));
                     }

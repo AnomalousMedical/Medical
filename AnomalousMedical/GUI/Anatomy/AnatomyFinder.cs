@@ -513,8 +513,7 @@ namespace Medical.GUI
             Vector3 direction = anatomy.PreviewCameraDirection;
             translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
-            LayerState layers = new LayerState("Temp");
-            layers.buildFrom(anatomy.TransparencyNames, 1.0f);
+            LayerState layers = new LayerState(anatomy.TransparencyNames, 1.0f);
 
             buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
         }

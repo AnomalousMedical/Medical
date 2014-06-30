@@ -59,7 +59,7 @@ namespace Lecture
                 cameraPos.LookAt = window.LookAt;
                 window.calculateIncludePoint(cameraPos);
             }
-            LayerState layers = new LayerState("");
+            LayerState layers = new LayerState();
             layers.captureState();
             PresetState medicalState = medicalStateController.createPresetState("");
             MusclePosition musclePosition = new MusclePosition();

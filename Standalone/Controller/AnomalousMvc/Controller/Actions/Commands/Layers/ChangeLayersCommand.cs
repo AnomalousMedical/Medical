@@ -13,7 +13,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public ChangeLayersCommand()
         {
-            layers = new EditableLayerState("ChangeLayers");
+            layers = new EditableLayerState();
         }
 
         public override void execute(AnomalousMvcContext context)

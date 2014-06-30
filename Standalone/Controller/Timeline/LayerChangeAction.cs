@@ -15,7 +15,7 @@ namespace Medical
         private bool finished = false;
 
         public LayerChangeAction()
-            : this(null, new LayerState(""))
+            : this(null, new LayerState())
         {
             LayerState.captureState();
         }

@@ -14,8 +14,8 @@ namespace Medical
     /// </summary>
     public class EditableLayerState : LayerState, EditInterfaceOverride
     {
-        public EditableLayerState(String name)
-            :base(name)
+        public EditableLayerState()
+            :base()
         {
 
         }

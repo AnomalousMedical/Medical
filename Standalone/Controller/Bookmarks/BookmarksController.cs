@@ -45,7 +45,7 @@ namespace Medical.Controller
 
         public Bookmark createBookmark(String name)
         {
-            LayerState layerState = new LayerState("");
+            LayerState layerState = new LayerState();
             layerState.captureState();
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
             Bookmark bookmark = new Bookmark(name, window.Translation, window.LookAt, layerState);

@@ -13,13 +13,19 @@ namespace Medical
 {
     public class LayerState : Saveable
     {
-        private String name;
         private LinkedList<LayerEntry> entries = new LinkedList<LayerEntry>();
 
-        public LayerState(String name)
+        public LayerState()
         {
-            this.name = name;
             Easing = EasingFunction.EaseOutQuadratic;
+        }
+
+        public LayerState(IEnumerable<String> transparencyInterfaceNames, float overrideAlpha)
+        {
+            foreach (String name in transparencyInterfaceNames)
+            {
+                entries.AddLast(new LayerEntry(name, overrideAlpha));
+            }
         }
 
         /// <summary>
@@ -35,15 +41,6 @@ namespace Medical
                     LayerEntry entry = new LayerEntry(trans);
                     entries.AddLast(entry);
                 }
-            }
-        }
-
-        public void buildFrom(IEnumerable<String> transparencyInterfaceNames, float overrideAlpha)
-        {
-            entries.Clear();
-            foreach (String name in transparencyInterfaceNames)
-            {
-                entries.AddLast(new LayerEntry(name, overrideAlpha));
             }
         }
 
@@ -108,18 +105,6 @@ namespace Medical
             }
         }
 
-        public String Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
-
         public IEnumerable<LayerEntry> Entries
         {
             get
@@ -151,20 +136,17 @@ namespace Medical
 
         #region Saveable Members
 
-        private const string NAME = "Name";
         private const string ENTRIES = "Entry";
         private const string EASING = "Easing";
 
         protected LayerState(LoadInfo info)
         {
-            name = info.GetString(NAME);
             Easing = info.GetValue(EASING, EasingFunction.EaseOutQuadratic);
             info.RebuildLinkedList<LayerEntry>(ENTRIES, entries);
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.AddValue(NAME, name);
             info.AddValue(EASING, EasingFunction.EaseOutQuadratic);
             info.ExtractLinkedList<LayerEntry>(ENTRIES, entries);
         }
