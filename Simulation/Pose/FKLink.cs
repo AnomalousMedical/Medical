@@ -98,7 +98,7 @@ namespace Medical
             }
         }
 
-        public void applyChainState(FKChainState chain, float blend)
+        public void applyChainState(FKChainState chain)
         {
             Vector3 startTranslation = Vector3.Zero;
             Quaternion startRotation = Quaternion.Identity;
@@ -113,15 +113,11 @@ namespace Medical
             Vector3 newTrans = startTranslation + Quaternion.quatRotate(startRotation, linkState.LocalTranslation);
             Quaternion newRot = startRotation * linkState.LocalRotation;
 
-            //blend
-            //newTrans = Owner.Translation.lerp(ref newTrans, ref blend);
-            //newRot = Owner.Rotation.slerp(ref newRot, blend);
-
             this.updatePosition(ref newTrans, ref newRot);
 
             foreach (var child in children)
             {
-                child.applyChainState(chain, blend);
+                child.applyChainState(chain);
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Medical
         private Vector3 movingTargetPosition;
         private float muscleForce;
         private FKChainState pelvisChainState;
+        private FKChainState interpolatedPelvisChainState = new FKChainState(); //Pooled pelvis chain state used for interpolation, prevents garbage generation. Part of instance state, not saved.
 
         public MusclePosition()
         {
@@ -84,9 +85,10 @@ namespace Medical
             }
 
             FKLink pelvisLink;
-            if (PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
+            if (pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
             {
-                pelvisLink.applyChainState(pelvisChainState, blendFactor);
+                interpolatedPelvisChainState.interpolateFrom(pelvisChainState, targetState.pelvisChainState, blendFactor);
+                pelvisLink.applyChainState(interpolatedPelvisChainState);
             }
         }
 

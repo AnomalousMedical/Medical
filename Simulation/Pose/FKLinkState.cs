@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 namespace Medical
 {
     /// <summary>
-    /// The state of a link in an FK chain, this class is not mutable.
+    /// The state of a link in an FK chain, this class is only to be used by FKChainState and violates
+    /// encapsulation a bit for performance to be able to pass by value for the math classes.
     /// </summary>
-    public class FKLinkState : Saveable
+    class FKLinkState : Saveable
     {
         /// <summary>
         /// This state will not modify the position of objects it is applied to.
@@ -24,9 +25,9 @@ namespace Medical
             this.LocalRotation = localRotation;
         }
 
-        public Vector3 LocalTranslation { get; private set; }
+        public Vector3 LocalTranslation;
 
-        public Quaternion LocalRotation { get; private set; }
+        public Quaternion LocalRotation;
 
         protected FKLinkState(LoadInfo info)
         {

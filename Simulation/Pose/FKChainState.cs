@@ -20,6 +20,15 @@ namespace Medical
 
         }
 
+        public void interpolateFrom(FKChainState startState, FKChainState endState, float blend)
+        {
+            foreach (var link in startState.links)
+            {
+                var targetLink = endState[link.Key];
+                setLinkState(link.Key, link.Value.LocalTranslation.lerp(ref targetLink.LocalTranslation, ref blend), link.Value.LocalRotation.slerp(ref targetLink.LocalRotation, blend, true));
+            }
+        }
+
         /// <summary>
         /// Set the state of a link in this chain, if it already exists it will be replaced.
         /// If it does not exist it will be added.
@@ -27,14 +36,15 @@ namespace Medical
         /// <param name="state">The state to update.</param>
         public void setLinkState(String name, Vector3 localTranslation, Quaternion localRotation)
         {
-            FKLinkState state = new FKLinkState(localTranslation, localRotation);
-            if (links.ContainsKey(name))
+            FKLinkState linkState;
+            if (links.TryGetValue(name, out linkState))
             {
-                links[name] = state;
+                linkState.LocalTranslation = localTranslation;
+                linkState.LocalRotation = localRotation;
             }
             else
             {
-                links.Add(name, state);
+                links.Add(name, new FKLinkState(localTranslation, localRotation));
             }
         }
 
@@ -52,7 +62,7 @@ namespace Medical
         /// </summary>
         /// <param name="name">The name of the state to find.</param>
         /// <returns>The state specified by name or an identity state if that does not exist.</returns>
-        public FKLinkState this[String name]
+        internal FKLinkState this[String name]
         {
             get
             {
