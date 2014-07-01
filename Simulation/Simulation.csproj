@@ -157,8 +157,6 @@
     <Compile Include="Muscles\MovingMuscleTarget.cs" />
     <Compile Include="Muscles\MuscleBehavior.cs" />
     <Compile Include="Muscles\MuscleController.cs" />
-    <Compile Include="Muscles\MuscleSequence.cs" />
-    <Compile Include="Muscles\MuscleSequenceState.cs" />
     <Compile Include="Plugin\PredefinedCamera.cs" />
     <Compile Include="Plugin\Presets\SceneViewWindowPreset.cs" />
     <Compile Include="Plugin\Presets\SceneViewWindowPresetController.cs" />

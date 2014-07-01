@@ -9,8 +9,6 @@ namespace Medical
     public class MuscleController
     {
         static Dictionary<String, MuscleBehavior> muscles = new Dictionary<string,MuscleBehavior>();
-        static LinkedList<MuscleSequence> muscleSequences = new LinkedList<MuscleSequence>();
-        private static MuscleSequence currentSequence = null;
         private static MovingMuscleTarget movingTarget;
 
         internal static void addMuscle(String name, MuscleBehavior muscle)
@@ -63,30 +61,6 @@ namespace Medical
             MuscleBehavior ret;
             muscles.TryGetValue(name, out ret);
             return ret;
-        }
-
-        internal static void addMuscleSequence(MuscleSequence sequence)
-        {
-            muscleSequences.AddLast(sequence);
-        }
-
-        internal static void removeMuscleSequence(MuscleSequence sequence)
-        {
-            muscleSequences.Remove(sequence);
-        }
-
-        internal static void setCurrentSequence(MuscleSequence sequence)
-        {
-            if (currentSequence != null)
-            {
-                currentSequence.deactivate();
-            }
-            currentSequence = sequence;
-        }
-
-        public static IEnumerable<MuscleSequence> getMuscleSequences()
-        {
-            return muscleSequences;
         }
 
         public static MovingMuscleTarget MovingTarget
