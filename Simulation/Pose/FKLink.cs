@@ -45,6 +45,10 @@ namespace Medical
 
                 parentLink.addChild(this);
             }
+            else
+            {
+                PoseableObjectsManager.addFkChainRoot(Owner.Name, this);
+            }
         }
 
         protected override void destroy()
@@ -52,6 +56,10 @@ namespace Medical
             if (parentLink != null)
             {
                 parentLink.removeChild(this);
+            }
+            else
+            {
+                PoseableObjectsManager.removeFkChainRoot(Owner.Name);
             }
             base.destroy();
         }

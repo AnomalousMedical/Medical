@@ -10,6 +10,7 @@ namespace Medical
     public static class PoseableObjectsManager
     {
         private static List<PoseableIdentifier> poseables = new List<PoseableIdentifier>();
+        private static Dictionary<String, FKLink> fkChainRoots = new Dictionary<string, FKLink>();
 
         public static void add(PoseableIdentifier poseable)
         {
@@ -19,6 +20,21 @@ namespace Medical
         public static void remove(PoseableIdentifier poseable)
         {
             poseables.Remove(poseable);
+        }
+
+        public static void addFkChainRoot(String name, FKLink root)
+        {
+            fkChainRoots.Add(name, root);
+        }
+
+        public static void removeFkChainRoot(String name)
+        {
+            fkChainRoots.Remove(name);
+        }
+
+        public static bool tryGetFkChainRoot(String name, out FKLink root)
+        {
+            return fkChainRoots.TryGetValue(name, out root);
         }
 
         public static SortedPoseableRaycastResults findAnatomy(Ray3 ray)

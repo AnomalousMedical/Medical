@@ -14,6 +14,7 @@ namespace Medical
         private float rightCPPosition;
         private Vector3 movingTargetPosition;
         private float muscleForce;
+        private FKChainState pelvisChainState;
 
         public MusclePosition()
         {
@@ -40,6 +41,18 @@ namespace Medical
             {
                 rightCPPosition = rightCP.CurrentLocation;
             }
+
+            //Setup the pelvis fk chain if available
+            FKLink pelvisLink;
+            if (PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
+            {
+                pelvisChainState = new FKChainState();
+                pelvisLink.addToChainState(pelvisChainState);
+            }
+            else
+            {
+                pelvisChainState = null;
+            }
         }
 
         public void reverseSides()
@@ -56,7 +69,7 @@ namespace Medical
 
         public void blend(MusclePosition targetState, float blendFactor)
         {
-            if (MuscleController.MovingTarget != null) //If this is null then the whole simulation is invalid and its better to do nothing
+            if (MuscleController.MovingTarget != null) //If this is null then the whole mandible simulation is invalid and its better to do nothing
             {
                 MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
                 MuscleController.MovingTarget.Offset = targetState.movingTargetPosition;
@@ -68,6 +81,12 @@ namespace Medical
                 ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
                 delta = targetState.rightCPPosition - rightCPPosition;
                 rightCP.setLocation(rightCPPosition + delta * blendFactor);
+            }
+
+            FKLink pelvisLink;
+            if (PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
+            {
+                pelvisLink.applyChainState(pelvisChainState, blendFactor);
             }
         }
 
@@ -129,6 +148,7 @@ namespace Medical
         private const String RIGHT_CP_POSITION = "rightCPPosition";
         private const String MOVING_TARGET_POSITION = "movingTargetPosition";
         private const String MUSCLE_FORCE = "muscleForce";
+        private const String PELIVS_CHAIN_STATE = "pelvisChainState";
 
         protected MusclePosition(LoadInfo info)
         {
@@ -136,6 +156,7 @@ namespace Medical
             rightCPPosition = info.GetFloat(RIGHT_CP_POSITION);
             movingTargetPosition = info.GetVector3(MOVING_TARGET_POSITION);
             muscleForce = info.GetFloat(MUSCLE_FORCE);
+            pelvisChainState = info.GetValue<FKChainState>(PELIVS_CHAIN_STATE, null);
         }
 
         public void getInfo(SaveInfo info)
@@ -144,6 +165,7 @@ namespace Medical
             info.AddValue(RIGHT_CP_POSITION, rightCPPosition);
             info.AddValue(MOVING_TARGET_POSITION, movingTargetPosition);
             info.AddValue(MUSCLE_FORCE, muscleForce);
+            info.AddValue(PELIVS_CHAIN_STATE, pelvisChainState);
         }
 
         #endregion
