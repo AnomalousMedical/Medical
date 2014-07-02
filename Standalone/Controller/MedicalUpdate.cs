@@ -6,11 +6,11 @@ using Engine.Platform;
 
 namespace Medical
 {
-    class FixedMedicalUpdate : UpdateListener
+    class MedicalUpdate : UpdateListener
     {
         private MedicalController controller;
 
-        public FixedMedicalUpdate(MedicalController controller)
+        public MedicalUpdate(MedicalController controller)
         {
             this.controller = controller;
         }
@@ -27,7 +27,7 @@ namespace Medical
 
         public void sendUpdate(Clock clock)
         {
-            controller._sendFixedUpdate(clock);
+            controller._sendUpdate(clock);
         }
     }
 }

@@ -252,13 +252,13 @@ namespace Medical
         private void subscribeToUpdates()
         {
             animating = true;
-            mainTimer.addFixedUpdateListener(this);
+            mainTimer.addUpdateListener(this);
         }
 
         private void unsubscribeFromUpdates()
         {
             animating = false;
-            mainTimer.removeFixedUpdateListener(this);
+            mainTimer.removeUpdateListener(this);
         }
     }
 }

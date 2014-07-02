@@ -119,7 +119,7 @@ namespace Medical
             //Initialize engine
             medicalController = new MedicalController();
             medicalController.initialize(app, mainWindow, createWindow);
-            medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
+            medicalController.OnLoopUpdate += medicalController_OnLoopUpdate;
             mainWindow.setPointerManager(PointerManager.Instance);
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
@@ -199,7 +199,7 @@ namespace Medical
 
             //MDI Layout
             mdiLayout = new MDILayoutManager();
-            medicalController.MainTimer.addFixedUpdateListener(new MDIUpdate(medicalController.EventManager, mdiLayout));
+            medicalController.MainTimer.addUpdateListener(new MDIUpdate(medicalController.EventManager, mdiLayout));
 
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;
@@ -242,7 +242,7 @@ namespace Medical
             this.SceneLoaded += teethMover.sceneLoaded;
             this.SceneUnloading += teethMover.sceneUnloading;
             TeethController.TeethMover = teethMover;
-            medicalController.FixedLoopUpdate += teethMover.update;
+            medicalController.OnLoopUpdate += teethMover.update;
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
@@ -295,7 +295,7 @@ namespace Medical
             }
 
             //Coroutine
-            Coroutine.SetTimerFixed(medicalController.MainTimer);
+            Coroutine.SetTimer(medicalController.MainTimer);
 
             //Notifications
             notificationManager = new NotificationGUIManager(this);
@@ -753,7 +753,7 @@ namespace Medical
             }
         }
 
-        void medicalController_FullSpeedLoopUpdate(Clock time)
+        void medicalController_OnLoopUpdate(Clock time)
         {
             ThreadManager.doInvoke();
         }

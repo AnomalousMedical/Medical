@@ -20,7 +20,7 @@ namespace Medical
         {
             this.mainTimer = mainTimer;
             this.stateController = stateController;
-            mainTimer.addFixedUpdateListener(this);
+            mainTimer.addUpdateListener(this);
         }
 
         public void startTemporaryBlend(MedicalState targetState)

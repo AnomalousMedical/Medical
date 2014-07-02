@@ -24,7 +24,7 @@ namespace Medical
             this.mainTimer = mainTimer;
             multiTouch = new MultiTouch(window);
             gestureEngine = new GestureEngine(multiTouch);
-            mainTimer.addFixedUpdateListener(gestureEngine);
+            mainTimer.addUpdateListener(gestureEngine);
 
             gestureEngine.addGesture(PlatformConfig.createGuiGesture());
 
@@ -43,7 +43,7 @@ namespace Medical
 
         public void Dispose()
         {
-            mainTimer.removeFixedUpdateListener(gestureEngine);
+            mainTimer.removeUpdateListener(gestureEngine);
             multiTouch.Dispose();
         }
 

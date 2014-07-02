@@ -79,12 +79,12 @@ namespace Medical
 
         private void subscribeToUpdates()
         {
-            mainTimer.addFullSpeedUpdateListener(this);
+            mainTimer.addUpdateListener(this);
         }
 
         private void unsubscribeFromUpdates()
         {
-            mainTimer.removeFullSpeedUpdateListener(this);
+            mainTimer.removeUpdateListener(this);
         }
     }
 }

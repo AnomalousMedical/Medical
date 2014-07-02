@@ -79,7 +79,7 @@ namespace Medical.GUI
                     if (recordAudioController.startRecording())
                     {
                         status.Caption = "Recording";
-                        medicalController.FixedLoopUpdate += MedicalController_FixedLoopUpdate;
+                        medicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
                         startTime = medicalController.MainTimer.ElapsedTime;
                     }
                     else
@@ -100,7 +100,7 @@ namespace Medical.GUI
 
         private void stopRecording()
         {
-            medicalController.FixedLoopUpdate -= MedicalController_FixedLoopUpdate;
+            medicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             recordAudioController.stopRecording();
             status.Caption = "Stopped";
         }
@@ -114,7 +114,7 @@ namespace Medical.GUI
             }
         }
 
-        void MedicalController_FixedLoopUpdate(Clock time)
+        void MedicalController_OnLoopUpdate(Clock time)
         {
             Int64 timeDelta = medicalController.MainTimer.ElapsedTime - startTime;
             DateTime dateTime = new DateTime(timeDelta * 10);

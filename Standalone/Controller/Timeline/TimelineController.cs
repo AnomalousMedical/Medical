@@ -112,7 +112,7 @@ namespace Medical
                 {
                     activeTimeline.skipTo(startTime);
                 }
-                mainTimer.addFixedUpdateListener(this);
+                mainTimer.addUpdateListener(this);
                 updating = true;
             }
         }
@@ -128,7 +128,7 @@ namespace Medical
             {
                 activeTimeline.stop(playPostActions);
                 previousTimeline = activeTimeline;
-                mainTimer.removeFixedUpdateListener(this);
+                mainTimer.removeUpdateListener(this);
                 activeTimeline.TimelineController = null;
                 activeTimeline = null;
                 updating = false;
@@ -163,7 +163,7 @@ namespace Medical
                 }
                 activeTimeline.stop(false);
                 previousTimeline = activeTimeline;
-                mainTimer.removeFixedUpdateListener(this);
+                mainTimer.removeUpdateListener(this);
                 activeTimeline.TimelineController = null;
                 activeTimeline = null;
                 updating = false;

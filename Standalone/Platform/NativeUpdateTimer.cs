@@ -10,7 +10,6 @@ namespace Medical
     public class NativeUpdateTimer : UpdateTimer
     {
         Int64 deltaTime;
-        Int64 fixedFrameTime = 0;
         Int64 frameStartTime;
         Int64 lastTime;
         Int64 totalFrameTime;
@@ -32,7 +31,6 @@ namespace Medical
             fireLoopStarted();
 
             deltaTime = 0;
-            fixedFrameTime = 0;
             frameStartTime = 0;
             lastTime = systemTimer.getCurrentTime();
             totalFrameTime = 0;
@@ -54,22 +52,8 @@ namespace Medical
                     deltaTime = maxDelta;
                     fireExceededMaxDelta();
                 }
-                fixedFrameTime += deltaTime;
-                if (fixedFrameTime > fixedFrequency * maxFrameSkip)
-                {
-                    fixedFrameTime = fixedFrequency * maxFrameSkip;
-                }
 
-                //Frame skipping
-                Int64 fixedStartTime = frameStartTime - fixedFrameTime + fixedFrequency;
-                while (fixedFrameTime >= fixedFrequency)
-                {
-                    fireFixedUpdate(fixedStartTime, fixedFrequency);
-                    fixedStartTime += fixedFrequency;
-                    fixedFrameTime -= fixedFrequency;
-                }
-
-                fireFullSpeedUpdate(frameStartTime, deltaTime);
+                fireUpdate(frameStartTime, deltaTime);
                 
                 //cap the framerate if required
                 PerformanceMonitor.start("Energy Saver");

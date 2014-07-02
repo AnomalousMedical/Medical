@@ -108,7 +108,7 @@ namespace Developer.GUI
         {
             if (!firstShow && currentScene != null)
             {
-                medicalController.FullSpeedLoopUpdate += MedicalController_FullSpeedLoopUpdate;
+                medicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
                 foreach (DebugInterface debugInterface in pluginManager.DebugInterfaces)
                 {
                     debugInterface.createDebugInterface(pluginManager.RendererPlugin, currentScene.getDefaultSubScene());
@@ -118,7 +118,7 @@ namespace Developer.GUI
 
         void standaloneController_SceneUnloading(SimScene scene)
         {
-            medicalController.FullSpeedLoopUpdate -= MedicalController_FullSpeedLoopUpdate;
+            medicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             currentScene = null;
             if (!firstShow)
             {
@@ -141,7 +141,7 @@ namespace Developer.GUI
             return bool.TryParse(str, out bVal);
         }
 
-        void MedicalController_FullSpeedLoopUpdate(Clock time)
+        void MedicalController_OnLoopUpdate(Clock time)
         {
             //This is only active if the scene is not null and the debug visualizers are setup
             SimSubScene subScene = currentScene.getDefaultSubScene();

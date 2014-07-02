@@ -570,8 +570,7 @@
     <Compile Include="Controller\Exam\ExamSaveMemberScanner.cs" />
     <Compile Include="Controller\Exam\ExamSection.cs" />
     <Compile Include="Controller\Exam\HiddenAttribute.cs" />
-    <Compile Include="Controller\FixedMedicalUpdate.cs" />
-    <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
+    <Compile Include="Controller\MedicalUpdate.cs" />
     <Compile Include="Controller\GenericEvents.cs" />
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />

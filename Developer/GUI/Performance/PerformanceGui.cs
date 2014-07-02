@@ -36,15 +36,15 @@ namespace Developer.GUI
             PerformanceMonitor.Enabled = enabled.Checked;
             if (enabled.Checked)
             {
-                standaloneController.MedicalController.FixedLoopUpdate += MedicalController_FixedLoopUpdate;
+                standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
             }
             else
             {
-                standaloneController.MedicalController.FixedLoopUpdate -= MedicalController_FixedLoopUpdate;
+                standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             }
         }
 
-        void MedicalController_FixedLoopUpdate(Clock time)
+        void MedicalController_OnLoopUpdate(Clock time)
         {
             StringBuilder sb = new StringBuilder();
             foreach (Timelapse timelapse in PerformanceMonitor.Timelapses)

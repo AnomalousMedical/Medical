@@ -258,7 +258,7 @@ namespace Medical
         {
             if (playing)
             {
-                medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
+                medicalController.OnLoopUpdate -= medicalController_OnLoopUpdate;
                 playing = false;
                 if (BlendingStopped != null)
                 {
@@ -275,7 +275,7 @@ namespace Medical
             }
         }
 
-        void medicalController_FixedLoopUpdate(Clock time)
+        void medicalController_OnLoopUpdate(Clock time)
         {
             blendElapsed += time.DeltaSeconds;
             float percentage = blendElapsed / blendDuration;
@@ -292,7 +292,7 @@ namespace Medical
         {
             if (!playing)
             {
-                medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
+                medicalController.OnLoopUpdate += medicalController_OnLoopUpdate;
                 playing = true;
                 if (BlendingStarted != null)
                 {

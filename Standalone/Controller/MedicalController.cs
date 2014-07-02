@@ -39,8 +39,7 @@ namespace Medical
         private EventManager eventManager;
         private InputHandler inputHandler;
         private EventUpdateListener eventUpdate;
-        private FixedMedicalUpdate fixedUpdate;
-        private FullSpeedMedicalUpdate fullSpeedUpdate;
+        private MedicalUpdate medicalUpdate;
 
         //Performance
         private SystemTimer performanceMetricTimer;
@@ -57,8 +56,7 @@ namespace Medical
         private String currentSceneFile;
         private String currentSceneDirectory;
 
-        public event LoopUpdate FullSpeedLoopUpdate;
-        public event LoopUpdate FixedLoopUpdate;
+        public event LoopUpdate OnLoopUpdate;
 
         public MedicalController()
         {
@@ -135,12 +133,10 @@ namespace Medical
             eventManager = new EventManager(inputHandler);
             Medical.Platform.GlobalContextEventHandler.setEventManager(eventManager);
             eventUpdate = new EventUpdateListener(eventManager);
-            mainTimer.addFixedUpdateListener(eventUpdate);
+            mainTimer.addUpdateListener(eventUpdate);
             pluginManager.setPlatformInfo(mainTimer, eventManager);
-            fixedUpdate = new FixedMedicalUpdate(this);
-            mainTimer.addFixedUpdateListener(fixedUpdate);
-            fullSpeedUpdate = new FullSpeedMedicalUpdate(this);
-            mainTimer.addFullSpeedUpdateListener(fullSpeedUpdate);
+            medicalUpdate = new MedicalUpdate(this);
+            mainTimer.addUpdateListener(medicalUpdate);
 
             //Initialize controllers
             medicalScene = new MedicalSceneController(pluginManager);
@@ -295,19 +291,11 @@ namespace Medical
             medicalScene.addSimObject(simObject);
         }
 
-        internal void _sendFullSpeedUpdate(Clock clock)
+        internal void _sendUpdate(Clock clock)
         {
-            if (FullSpeedLoopUpdate != null)
+            if (OnLoopUpdate != null)
             {
-                FullSpeedLoopUpdate.Invoke(clock);
-            }
-        }
-
-        internal void _sendFixedUpdate(Clock clock)
-        {
-            if (FixedLoopUpdate != null)
-            {
-                FixedLoopUpdate.Invoke(clock);
+                OnLoopUpdate.Invoke(clock);
             }
         }
 

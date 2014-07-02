@@ -90,13 +90,13 @@ namespace Medical.Controller
         /// </summary>
         protected void listenForCameraMoverUpdates()
         {
-            mainTimer.addFixedUpdateListener(cameraMover);
+            mainTimer.addUpdateListener(cameraMover);
         }
 
         public virtual void Dispose()
         {
             IDisposableUtil.DisposeIfNotNull(vpBackground);
-            mainTimer.removeFixedUpdateListener(cameraMover);
+            mainTimer.removeUpdateListener(cameraMover);
             TransparencyController.removeTransparencyState(transparencyStateName);
             destroyBorderPanels();
             if (Disposed != null)

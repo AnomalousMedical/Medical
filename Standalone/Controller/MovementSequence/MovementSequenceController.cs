@@ -90,7 +90,7 @@ namespace Medical.Controller
             {
                 currentTime = 0.0f;
                 playing = true;
-                medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
+                medicalController.OnLoopUpdate += medicalController_OnLoopUpdate;
                 if (PlaybackStarted != null)
                 {
                     PlaybackStarted.Invoke(this);
@@ -105,7 +105,7 @@ namespace Medical.Controller
         {
             if (playing)
             {
-                medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
+                medicalController.OnLoopUpdate -= medicalController_OnLoopUpdate;
                 playing = false;
                 if (currentSequence != null)
                 {
@@ -127,7 +127,7 @@ namespace Medical.Controller
         {
             if (playing)
             {
-                medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
+                medicalController.OnLoopUpdate -= medicalController_OnLoopUpdate;
                 playing = false;
                 if (PlaybackStopped != null)
                 {
@@ -210,7 +210,7 @@ namespace Medical.Controller
         /// Update function during playback.
         /// </summary>
         /// <param name="time">The time delta.</param>
-        void medicalController_FixedLoopUpdate(Clock time)
+        void medicalController_OnLoopUpdate(Clock time)
         {
             CurrentTime += time.DeltaSeconds;
             if (PlaybackUpdate != null)

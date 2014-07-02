@@ -39,18 +39,18 @@ namespace Developer.GUI
             PerformanceMonitor.Enabled = enabled.Checked;
             if (enabled.Checked)
             {
-                standaloneController.MedicalController.FixedLoopUpdate += MedicalController_FixedLoopUpdate;
+                standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
             }
             else
             {
-                standaloneController.MedicalController.FixedLoopUpdate -= MedicalController_FixedLoopUpdate;
+                standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             }
         }
 
         static String[] categoryOrder = new String[] { "FOUNDATIONAL DIMENSION", "OCCLUSAL HORIZONTAL CHANGES", "OCCLUSAL VERTICAL CHANGES" };
         const String spaceString = "                                 ";
 
-        void MedicalController_FixedLoopUpdate(Clock time)
+        void MedicalController_OnLoopUpdate(Clock time)
         {
             Dictionary<String, List<Measurement>> categories = new Dictionary<String, List<Measurement>>();
             StringBuilder sb = new StringBuilder();
