@@ -20,6 +20,10 @@ namespace Medical
         private String parentSimObjectLinkName = "FKLink";
 
         [Editable]
+        private String jointSimObjectName;
+
+        [DoNotCopy]
+        [DoNotSave]
         private Vector3 centerOfRotationOffset = Vector3.Zero;
 
         [DoNotCopy]
@@ -47,6 +51,16 @@ namespace Medical
                     blacklist("Cannot find FKLink '{0}' on Parent SimObject '{1}'", parentSimObjectLinkName, parentSimObjectName);
                 }
 
+                if(!String.IsNullOrEmpty(jointSimObjectName))
+                {
+                    SimObject jointSimObject = Owner.getOtherSimObject(jointSimObjectName);
+                    if(jointSimObject == null)
+                    {
+                        blacklist("Cannot find Joint SimObject named '{0}'", jointSimObjectName);
+                    }
+                    centerOfRotationOffset = jointSimObject.Translation - Owner.Translation;
+                }
+
                 parentLink.addChild(this);
             }
             else
@@ -66,12 +80,6 @@ namespace Medical
                 PoseableObjectsManager.removeFkChainRoot(Owner.Name);
             }
             base.destroy();
-        }
-
-        protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            base.customizeEditInterface(editInterface);
-            editInterface.Renderer = new AxisRenderer(String.Format("FKLinkRenderer_{0}", Name), () => centerOfRotationOffset);
         }
 
         public void addChild(FKLink child)
