@@ -120,6 +120,10 @@ namespace Medical
                 childContainer._setParent(this);
                 newSize = childContainer.DesiredSize;
                 childContainer.animatedResizeStarted(new IntSize2(WorkingSize.Width, newSize.Height));
+                //Force the child container to fit in the current alloted space
+                childContainer.Location = Location;
+                childContainer.WorkingSize = new IntSize2(WorkingSize.Width, oldSize.Height);
+                childContainer.layout();
             }
             else
             {

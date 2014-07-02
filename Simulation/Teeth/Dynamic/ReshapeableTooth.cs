@@ -541,6 +541,8 @@ namespace Medical
             debugDrawing.end();
         }
 
+        [DoNotCopy]
+        [DoNotSave]
         List<Vector3> debugContactPoints = new List<Vector3>();
 
         void actorElement_ContactContinues(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
