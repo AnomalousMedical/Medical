@@ -13,6 +13,8 @@ namespace Medical
     /// </summary>
     public class FKChainState : Saveable
     {
+        private const float FullBlend = 0.99999f;
+
         private Dictionary<String, FKLinkState> links = new Dictionary<string, FKLinkState>();
 
         public FKChainState()
@@ -22,10 +24,21 @@ namespace Medical
 
         public void interpolateFrom(FKChainState startState, FKChainState endState, float blend)
         {
-            foreach (var link in startState.links)
+            //Make sure we blend all the way if needed
+            if (blend < FullBlend)
             {
-                var targetLink = endState[link.Key];
-                setLinkState(link.Key, link.Value.LocalTranslation.lerp(ref targetLink.LocalTranslation, ref blend), link.Value.LocalRotation.slerp(ref targetLink.LocalRotation, blend, true));
+                foreach (var link in startState.links)
+                {
+                    var targetLink = endState[link.Key];
+                    setLinkState(link.Key, link.Value.LocalTranslation.lerp(ref targetLink.LocalTranslation, ref blend), link.Value.LocalRotation.slerp(ref targetLink.LocalRotation, blend, true));
+                }
+            }
+            else
+            {
+                foreach (var link in endState.links)
+                {
+                    setLinkState(link.Key, link.Value.LocalTranslation, link.Value.LocalRotation);
+                }
             }
         }
 

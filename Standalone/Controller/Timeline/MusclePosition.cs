@@ -85,7 +85,7 @@ namespace Medical
             }
 
             FKLink pelvisLink;
-            if (pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
+            if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
             {
                 interpolatedPelvisChainState.interpolateFrom(pelvisChainState, targetState.pelvisChainState, blendFactor);
                 pelvisLink.applyChainState(interpolatedPelvisChainState);
