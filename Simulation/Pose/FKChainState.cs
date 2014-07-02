@@ -30,7 +30,7 @@ namespace Medical
                 foreach (var link in startState.links)
                 {
                     var targetLink = endState[link.Key];
-                    setLinkState(link.Key, link.Value.LocalTranslation.lerp(ref targetLink.LocalTranslation, ref blend), link.Value.LocalRotation.slerp(ref targetLink.LocalRotation, blend, true));
+                    setLinkState(link.Key, link.Value.LocalTranslation.lerp(ref targetLink.LocalTranslation, ref blend), link.Value.LocalRotation.nlerp(ref targetLink.LocalRotation, ref blend));
                 }
             }
             else
