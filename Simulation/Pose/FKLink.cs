@@ -19,6 +19,9 @@ namespace Medical
         [Editable]
         private String parentSimObjectLinkName = "FKLink";
 
+        /// <summary>
+        /// The SimObject to use as the center of rotation, this can be blank to use this object's center of rotation instead.
+        /// </summary>
         [Editable]
         private String jointSimObjectName;
 
@@ -58,6 +61,7 @@ namespace Medical
                     {
                         blacklist("Cannot find Joint SimObject named '{0}'", jointSimObjectName);
                     }
+                    //Find the center of rotation in this object's local space
                     centerOfRotationOffset = jointSimObject.Translation - Owner.Translation;
                 }
 
@@ -101,6 +105,8 @@ namespace Medical
 
                 Quaternion ourRotation = Owner.Rotation;
 
+                //Figure out the translation in parent space, first, however, we must transform the center of rotation offset by the current rotation.
+                //This makes the recorded translation offsets relative to the center of rotation point in world space instead of the center of this SimObject.
                 Vector3 localTranslation = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentTrans;
                 localTranslation = Quaternion.quatRotate(inverseParentRot, localTranslation);
 
@@ -130,9 +136,11 @@ namespace Medical
 
             FKLinkState linkState = chain[Owner.Name];
 
+            //Figure out the new position using the parent's position.
             Vector3 newTrans = startTranslation + Quaternion.quatRotate(startRotation, linkState.LocalTranslation);
             Quaternion newRot = startRotation * linkState.LocalRotation;
 
+            //Transform to the real center point from the center of rotation
             newTrans -= Quaternion.quatRotate(ref newRot, ref centerOfRotationOffset);
 
             this.updatePosition(ref newTrans, ref newRot);
