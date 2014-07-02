@@ -277,7 +277,7 @@ namespace Medical
 
         void medicalController_FixedLoopUpdate(Clock time)
         {
-            blendElapsed += time.fSeconds;
+            blendElapsed += time.DeltaSeconds;
             float percentage = blendElapsed / blendDuration;
             if (blendElapsed > blendDuration)
             {

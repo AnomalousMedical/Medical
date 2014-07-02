@@ -183,7 +183,7 @@ namespace Medical
         /// <param name="clock">A clock with the next time.</param>
         public void update(Clock clock)
         {
-            currentTime += clock.fSeconds;
+            currentTime += clock.DeltaSeconds;
 
             //Find new active actions for this time
             T currentAction;

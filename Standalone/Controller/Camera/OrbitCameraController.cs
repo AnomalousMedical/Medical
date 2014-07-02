@@ -159,7 +159,7 @@ namespace Medical
             {
                 if (automaticMovement)
                 {
-                    totalTime += (float)clock.Seconds;
+                    totalTime += clock.DeltaSeconds;
                     if (totalTime > animationDuration)
                     {
                         totalTime = animationDuration;

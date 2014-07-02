@@ -115,7 +115,7 @@ namespace Medical.GUI
 
         private IEnumerator<YieldAction> timedNotification(NotificationGUI notificationGui, double waitTime)
         {
-            yield return Coroutine.Wait(waitTime);
+            yield return Coroutine.WaitSeconds(waitTime);
             notificationGui.closeNotification();
             yield break;
         }

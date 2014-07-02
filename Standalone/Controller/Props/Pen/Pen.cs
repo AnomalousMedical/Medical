@@ -85,7 +85,7 @@ namespace Medical
         {
             if (currentAnimation != null)
             {
-                currentAnimation.addTime(clock.fSeconds);
+                currentAnimation.addTime(clock.DeltaSeconds);
                 if (currentAnimation.getTimePosition() > currentAnimation.getLength())
                 {
                     currentAnimation = null;

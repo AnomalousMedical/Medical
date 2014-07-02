@@ -152,7 +152,7 @@ namespace Medical
                 float newLocation = location;
                 if (location < targetLocation)
                 {
-                    newLocation += moveSpeed * (float)clock.Seconds;
+                    newLocation += moveSpeed * clock.DeltaSeconds;
                     if (location > targetLocation)
                     {
                         location = targetLocation;
@@ -161,7 +161,7 @@ namespace Medical
                 }
                 else
                 {
-                    newLocation -= moveSpeed * (float)clock.Seconds;
+                    newLocation -= moveSpeed * clock.DeltaSeconds;
                     if (location <= targetLocation)
                     {
                         location = targetLocation;

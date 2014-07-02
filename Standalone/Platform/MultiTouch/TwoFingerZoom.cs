@@ -64,7 +64,7 @@ namespace Medical
             {
                 if (momentum > 0.0f)
                 {
-                    momentum -= deceleration * clock.fSeconds;
+                    momentum -= deceleration * clock.DeltaSeconds;
                     if (momentum < 0.0f)
                     {
                         momentum = 0.0f;

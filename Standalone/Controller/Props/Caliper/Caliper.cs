@@ -131,11 +131,11 @@ namespace Medical
         {
             if (doPlunge)
             {
-                timeCounter += clock.fSeconds;
+                timeCounter += clock.DeltaSeconds;
 
                 if (unlockAnim.getEnabled())
                 {
-                    unlockAnim.addTime(clock.fSeconds);
+                    unlockAnim.addTime(clock.DeltaSeconds);
                     if (unlockAnim.hasEnded())
                     {
                         unlockAnim.setEnabled(false);
@@ -143,7 +143,7 @@ namespace Medical
                 }
                 else if(lockAnim.getEnabled())
                 {
-                    lockAnim.addTime(clock.fSeconds);
+                    lockAnim.addTime(clock.DeltaSeconds);
                     if (lockAnim.hasEnded())
                     {
                         doPlunge = false;

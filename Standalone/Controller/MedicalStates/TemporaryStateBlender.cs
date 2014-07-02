@@ -82,7 +82,7 @@ namespace Medical
                 if (currentBlend < 1.0f)
                 {
                     currentState.blend(currentBlend, targetState);
-                    currentBlend += (float)clock.Seconds;
+                    currentBlend += clock.DeltaSeconds;
                 }
                 else
                 {

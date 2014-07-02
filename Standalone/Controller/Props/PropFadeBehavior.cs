@@ -114,7 +114,7 @@ namespace Medical
             {
                 if (workingAlpha > targetOpacity)
                 {
-                    workingAlpha -= (float)clock.Seconds * opacityChangeMultiplier;
+                    workingAlpha -= clock.DeltaSeconds * opacityChangeMultiplier;
                     if (workingAlpha < targetOpacity)
                     {
                         workingAlpha = targetOpacity;
@@ -123,7 +123,7 @@ namespace Medical
                 }
                 else
                 {
-                    workingAlpha += (float)clock.Seconds * opacityChangeMultiplier;
+                    workingAlpha += clock.DeltaSeconds * opacityChangeMultiplier;
                     if (workingAlpha > targetOpacity)
                     {
                         workingAlpha = targetOpacity;

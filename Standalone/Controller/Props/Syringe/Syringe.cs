@@ -86,7 +86,7 @@ namespace Medical
         {
             if (doPlunge)
             {
-                timeCounter += clock.fSeconds;
+                timeCounter += clock.DeltaSeconds;
                 float boneInterpolate = (timeCounter) / plungeDuration;
                 if (boneInterpolate > plungeRangePercent)
                 {

@@ -61,13 +61,15 @@ namespace Medical
                 }
 
                 //Frame skipping
+                Int64 fixedStartTime = frameStartTime - fixedFrameTime + fixedFrequency;
                 while (fixedFrameTime >= fixedFrequency)
                 {
-                    fireFixedUpdate(fixedFrequency);
+                    fireFixedUpdate(fixedStartTime, fixedFrequency);
+                    fixedStartTime += fixedFrequency;
                     fixedFrameTime -= fixedFrequency;
                 }
 
-                fireFullSpeedUpdate(deltaTime);
+                fireFullSpeedUpdate(frameStartTime, deltaTime);
                 
                 //cap the framerate if required
                 PerformanceMonitor.start("Energy Saver");

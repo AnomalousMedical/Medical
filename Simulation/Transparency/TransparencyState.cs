@@ -37,7 +37,7 @@ namespace Medical
         {
             if (changingOpacity)
             {
-                currentTime += clock.fSeconds;
+                currentTime += clock.DeltaSeconds;
                 if (currentTime > blendDuration)
                 {
                     currentTime = blendDuration;

@@ -212,7 +212,7 @@ namespace Medical.Controller
         /// <param name="time">The time delta.</param>
         void medicalController_FixedLoopUpdate(Clock time)
         {
-            CurrentTime += (float)time.Seconds;
+            CurrentTime += time.DeltaSeconds;
             if (PlaybackUpdate != null)
             {
                 PlaybackUpdate.Invoke(this);

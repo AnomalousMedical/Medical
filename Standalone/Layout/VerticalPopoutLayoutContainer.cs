@@ -180,7 +180,7 @@ namespace Medical
         {
             if (animating)
             {
-                currentTime += clock.fSeconds;
+                currentTime += clock.DeltaSeconds;
                 if (currentTime < animationLength)
                 {
                     alpha = EasingFunctions.Ease(currentEasing, 0, 1.0f, currentTime, animationLength);
