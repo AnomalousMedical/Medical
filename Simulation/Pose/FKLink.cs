@@ -1,6 +1,7 @@
 ﻿using Engine;
 using Engine.Attributes;
 using Engine.Editing;
+using Engine.Editing.Renderers;
 using Engine.ObjectManagement;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace Medical
 
         [Editable]
         private String parentSimObjectLinkName = "FKLink";
+
+        [Editable]
+        private Vector3 centerOfRotationOffset = Vector3.Zero;
 
         [DoNotCopy]
         [DoNotSave]
@@ -64,6 +68,12 @@ namespace Medical
             base.destroy();
         }
 
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.Renderer = new AxisRenderer(String.Format("FKLinkRenderer_{0}", Name), () => centerOfRotationOffset);
+        }
+
         public void addChild(FKLink child)
         {
             children.Add(child);
@@ -81,10 +91,12 @@ namespace Medical
                 Quaternion inverseParentRot = parentLink.Owner.Rotation.inverse();
                 Vector3 parentTrans = parentLink.Owner.Translation;
 
-                Vector3 localTranslation = Owner.Translation - parentTrans;
+                Quaternion ourRotation = Owner.Rotation;
+
+                Vector3 localTranslation = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentTrans;
                 localTranslation = Quaternion.quatRotate(inverseParentRot, localTranslation);
 
-                Quaternion localRotation = inverseParentRot * Owner.Rotation;
+                Quaternion localRotation = inverseParentRot * ourRotation;
                 chain.setLinkState(Owner.Name, localTranslation, localRotation);
             }
             else
@@ -112,6 +124,8 @@ namespace Medical
 
             Vector3 newTrans = startTranslation + Quaternion.quatRotate(startRotation, linkState.LocalTranslation);
             Quaternion newRot = startRotation * linkState.LocalRotation;
+
+            newTrans -= Quaternion.quatRotate(ref newRot, ref centerOfRotationOffset);
 
             this.updatePosition(ref newTrans, ref newRot);
 
