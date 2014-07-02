@@ -145,6 +145,12 @@ namespace Medical
                 currentEasing = EasingFunction.EaseInOutQuadratic;
             }
 
+            //Make sure we start with no alpha if blending
+            if (childContainer != null && oldChildContainer != null)
+            {
+                childContainer.setAlpha(0.0f);
+            }
+
             subscribeToUpdates();
         }
 
