@@ -71,7 +71,7 @@ namespace Medical.Controller
             Ray3 cameraRay;
             if (getCameraRay(eventManager, out cameraRay))
             {
-                var matches = PoseableObjectsManager.findAnatomy(cameraRay);
+                var matches = PoseableObjectsManager.findPoseable(cameraRay);
                 foreach (var match in matches.Results)
                 {
                     var bone = match.PoseableIdentifier.Bone;

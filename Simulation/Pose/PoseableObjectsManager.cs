@@ -10,34 +10,46 @@ namespace Medical
     public static class PoseableObjectsManager
     {
         private static List<PoseableIdentifier> poseables = new List<PoseableIdentifier>();
-        private static Dictionary<String, FKLink> fkChainRoots = new Dictionary<string, FKLink>();
+        private static Dictionary<String, FKRoot> fkChainRoots = new Dictionary<string, FKRoot>();
 
-        public static void add(PoseableIdentifier poseable)
+        internal static void add(PoseableIdentifier poseable)
         {
             poseables.Add(poseable);
         }
 
-        public static void remove(PoseableIdentifier poseable)
+        internal static void remove(PoseableIdentifier poseable)
         {
             poseables.Remove(poseable);
         }
 
-        public static void addFkChainRoot(String name, FKLink root)
+        internal static void addFkChainRoot(FKRoot root)
         {
-            fkChainRoots.Add(name, root);
+            fkChainRoots.Add(root.RootName, root);
         }
 
-        public static void removeFkChainRoot(String name)
+        internal static void removeFkChainRoot(FKRoot root)
         {
-            fkChainRoots.Remove(name);
+            fkChainRoots.Remove(root.RootName);
         }
 
-        public static bool tryGetFkChainRoot(String name, out FKLink root)
+        /// <summary>
+        /// Try to get an FKRoot specified by name. Will return true and fill out root if 
+        /// the root is found. Will return false if the root is not found.
+        /// </summary>
+        /// <param name="name">The name of the root to find.</param>
+        /// <param name="root">The variable to put the value of root into.</param>
+        /// <returns>True if the root is found, false if it is not.</returns>
+        public static bool tryGetFkChainRoot(String name, out FKRoot root)
         {
             return fkChainRoots.TryGetValue(name, out root);
         }
 
-        public static SortedPoseableRaycastResults findAnatomy(Ray3 ray)
+        /// <summary>
+        /// Find the poseables that collide with ray.
+        /// </summary>
+        /// <param name="ray">The ray to search with.</param>
+        /// <returns>A list of poseables that collide with ray sorted by their distance along ray from nearest to farthest.</returns>
+        public static SortedPoseableRaycastResults findPoseable(Ray3 ray)
         {
             float distance = 0.0f;
             SortedPoseableRaycastResults results = new SortedPoseableRaycastResults();

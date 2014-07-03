@@ -167,9 +167,12 @@
     <Compile Include="Plugin\SimulationScene.cs" />
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
+    <Compile Include="Pose\FKBulletRoot.cs" />
     <Compile Include="Pose\FKChainState.cs" />
+    <Compile Include="Pose\FKElement.cs" />
     <Compile Include="Pose\FKLink.cs" />
     <Compile Include="Pose\FKLinkState.cs" />
+    <Compile Include="Pose\FKRoot.cs" />
     <Compile Include="Pose\PoseableByEntity.cs" />
     <Compile Include="Pose\PoseableRaycastResult.cs" />
     <Compile Include="Pose\PoseableIdentifier.cs" />

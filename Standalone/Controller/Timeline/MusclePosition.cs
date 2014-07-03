@@ -44,11 +44,11 @@ namespace Medical
             }
 
             //Setup the pelvis fk chain if available
-            FKLink pelvisLink;
-            if (PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
+            FKRoot pelvis;
+            if (PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
             {
                 pelvisChainState = new FKChainState();
-                pelvisLink.addToChainState(pelvisChainState);
+                pelvis.addToChainState(pelvisChainState);
             }
             else
             {
@@ -84,11 +84,11 @@ namespace Medical
                 rightCP.setLocation(rightCPPosition + delta * blendFactor);
             }
 
-            FKLink pelvisLink;
-            if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvisLink))
+            FKRoot pelvis;
+            if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
             {
                 interpolatedPelvisChainState.interpolateFrom(pelvisChainState, targetState.pelvisChainState, blendFactor);
-                pelvisLink.applyChainState(interpolatedPelvisChainState);
+                pelvis.applyChainState(interpolatedPelvisChainState);
             }
         }
 
