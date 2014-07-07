@@ -65,6 +65,7 @@
   <!-- Common items for Resources folder. -->
   <ItemGroup>
     <ResourceFiles Include="..\..\$(Configuration)\BulletPlugin.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\BEPUikPlugin.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\Engine.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\MyGUIPlugin.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\OgrePlugin.dll" />
