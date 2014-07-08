@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Medical;
+using MyGUIPlugin;
 
 namespace Lecture
 {
@@ -39,7 +40,14 @@ namespace Lecture
             {
                 filename = Path.GetDirectoryName(filename);
             }
-            editorController.openProject(filename);
+            try
+            {
+                editorController.openProject(filename);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("{0} loading the project. Message {1}.", ex.GetType().Name, ex.Message), "Project Load Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
             return true;
         }
 
