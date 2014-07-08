@@ -70,7 +70,7 @@ namespace Medical
 
             MovementSequenceEditorView movementSequenceEditor = new MovementSequenceEditorView("MovementSequenceEditor", listenForSequenceChanges: true);
             movementSequenceEditor.Buttons.add(new CloseButtonDefinition("Close", "MovementSequenceEditor/Close"));
-            genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top);
+            movementSequenceEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top);
             mvcContext.Views.add(movementSequenceEditor);
 
             EditorTaskbarView taskbar = new EditorTaskbarView("TimelineInfoBar", currentFile, "TimelineEditor/Close");
