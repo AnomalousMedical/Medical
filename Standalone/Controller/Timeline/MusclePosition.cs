@@ -15,6 +15,7 @@ namespace Medical
         private Vector3 movingTargetPosition;
         private float muscleForce;
         private FKChainState pelvisChainState;
+        private EasingFunction easingFunction = EasingFunction.EaseInOutQuadratic;
         private FKChainState interpolatedPelvisChainState = new FKChainState(); //Pooled pelvis chain state used for interpolation, prevents garbage generation. Part of instance state, not saved.
 
         public MusclePosition()
@@ -70,6 +71,7 @@ namespace Medical
 
         public void blend(MusclePosition targetState, float blendFactor)
         {
+            float modifiedBlendFactor = EasingFunctions.Ease(targetState.Easing, 0, 1, blendFactor, 1);
             if (MuscleController.MovingTarget != null) //If this is null then the whole mandible simulation is invalid and its better to do nothing
             {
                 MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
@@ -77,17 +79,17 @@ namespace Medical
 
                 ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
                 float delta = targetState.leftCPPosition - leftCPPosition;
-                leftCP.setLocation(leftCPPosition + delta * blendFactor);
+                leftCP.setLocation(leftCPPosition + delta * modifiedBlendFactor);
 
                 ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
                 delta = targetState.rightCPPosition - rightCPPosition;
-                rightCP.setLocation(rightCPPosition + delta * blendFactor);
+                rightCP.setLocation(rightCPPosition + delta * modifiedBlendFactor);
             }
 
             FKRoot pelvis;
             if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
             {
-                interpolatedPelvisChainState.interpolateFrom(pelvisChainState, targetState.pelvisChainState, blendFactor);
+                interpolatedPelvisChainState.interpolateFrom(pelvisChainState, targetState.pelvisChainState, modifiedBlendFactor);
                 pelvis.applyChainState(interpolatedPelvisChainState);
             }
         }
@@ -144,6 +146,19 @@ namespace Medical
             }
         }
 
+        [Editable]
+        public EasingFunction Easing
+        {
+            get
+            {
+                return easingFunction;
+            }
+            set
+            {
+                easingFunction = value;
+            }
+        }
+
         #region Saveable Members
 
         private const String LEFT_CP_POSITION = "leftCPPosition";
@@ -151,6 +166,7 @@ namespace Medical
         private const String MOVING_TARGET_POSITION = "movingTargetPosition";
         private const String MUSCLE_FORCE = "muscleForce";
         private const String PELIVS_CHAIN_STATE = "pelvisChainState";
+        private const String EASING_FUNCTION = "easingFunction";
 
         protected MusclePosition(LoadInfo info)
         {
@@ -159,6 +175,7 @@ namespace Medical
             movingTargetPosition = info.GetVector3(MOVING_TARGET_POSITION);
             muscleForce = info.GetFloat(MUSCLE_FORCE);
             pelvisChainState = info.GetValue<FKChainState>(PELIVS_CHAIN_STATE, null);
+            easingFunction = info.GetValue(EASING_FUNCTION, EasingFunction.None); //We use no easing for older muscle positions because this is how they were originally created, the new default is to use InOutQuadratic, however.
         }
 
         public void getInfo(SaveInfo info)
@@ -168,6 +185,7 @@ namespace Medical
             info.AddValue(MOVING_TARGET_POSITION, movingTargetPosition);
             info.AddValue(MUSCLE_FORCE, muscleForce);
             info.AddValue(PELIVS_CHAIN_STATE, pelvisChainState);
+            info.AddValue(EASING_FUNCTION, easingFunction);
         }
 
         #endregion

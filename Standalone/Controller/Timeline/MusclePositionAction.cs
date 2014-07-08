@@ -106,6 +106,19 @@ namespace Medical
             }));
         }
 
+        [Editable]
+        public EasingFunction Easing
+        {
+            get
+            {
+                return targetState.Easing;
+            }
+            set
+            {
+                targetState.Easing = value;
+            }
+        }
+
         public override string TypeName
         {
             get
