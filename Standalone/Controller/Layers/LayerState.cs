@@ -147,6 +147,10 @@ namespace Medical
 
         public void getInfo(SaveInfo info)
         {
+            //temporarily add the name to retain backward compatability with the older anomalous medical, this will not be reloaded in the
+            //new version and should be erased when we don't need compatability anymore.
+            info.AddValue("Name", "None");
+
             info.AddValue(EASING, EasingFunction.EaseOutQuadratic);
             info.ExtractLinkedList<LayerEntry>(ENTRIES, entries);
         }
