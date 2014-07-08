@@ -135,7 +135,15 @@ namespace Medical.Controller
                 Bookmark bookmark;
                 using (XmlTextReader xmlReader = new XmlTextReader(bookmarkResourceProvider.openFile(file)))
                 {
-                    bookmark = xmlSaver.restoreObject(xmlReader) as Bookmark;
+                    try
+                    {
+                        bookmark = xmlSaver.restoreObject(xmlReader) as Bookmark;
+                    }
+                    catch(Exception ex)
+                    {
+                        bookmark = null;
+                        Logging.Log.Error("{0} loading bookmark '{1}'. Skipping this bookmark. Message: {2}", ex.GetType().Name, file, ex.Message);
+                    }
                 }
                 if (bookmark != null)
                 {
