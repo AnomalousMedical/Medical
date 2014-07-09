@@ -14,7 +14,7 @@ namespace Developer
         private GUIManager guiManager;
 
         public ShowLibRocketDebugger(GUIManager guiManager)
-            :base("ShowLibRocketDebugger", "Show LibRocket Debugger", CommonResources.NoIcon, "Developer")
+            :base("ShowLibRocketDebugger", "Show LibRocket Debugger", "Developer.libRocketDebugger", "Developer")
         {
             this.guiManager = guiManager;
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
-  <Resource type="ResourceImageSet" name="Developer.StatisticsIcon">
+  <Resource type="ResourceImageSet" name="Developer.DebugVisualizer">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 0"/>
@@ -41,7 +41,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.Measurements">
+  <Resource type="ResourceImageSet" name="Developer.libRocketDebugger">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="64 32"/>
@@ -49,7 +49,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
+  <Resource type="ResourceImageSet" name="Developer.MaxDumpIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="96 0"/>
@@ -57,7 +57,15 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
+  <Resource type="ResourceImageSet" name="Developer.Measurements">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
         <Frame point="128 0"/>
@@ -65,10 +73,42 @@
     </Group>
   </Resource>
 
+  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
   <Resource type="ResourceImageSet" name="Developer.RenderIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="96 32"/>
+        <Frame point="160 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.RenderingMode">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.SaveMicrocodeCache">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="160 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.StatisticsIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="192 32"/>
       </Index>
     </Group>
   </Resource>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
-  <Resource type="ResourceImageSet" name="Developer.DisablePhysics">
+  <Resource type="ResourceImageSet" name="Developer.DebugVisualizer">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 0"/>
@@ -9,7 +9,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.DiscEditorIcon">
+  <Resource type="ResourceImageSet" name="Developer.DisablePhysics">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="0 64"/>
@@ -17,7 +17,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.ExamIcon">
+  <Resource type="ResourceImageSet" name="Developer.DiscEditorIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 0"/>
@@ -25,7 +25,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.GridIcon">
+  <Resource type="ResourceImageSet" name="Developer.ExamIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 64"/>
@@ -33,7 +33,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.Measurements">
+  <Resource type="ResourceImageSet" name="Developer.GridIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 0"/>
@@ -41,7 +41,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
+  <Resource type="ResourceImageSet" name="Developer.libRocketDebugger">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="128 64"/>
@@ -49,7 +49,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
+  <Resource type="ResourceImageSet" name="Developer.MaxDumpIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 0"/>
@@ -57,7 +57,15 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.RenderIcon">
+  <Resource type="ResourceImageSet" name="Developer.Measurements">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="192 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.MovementIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 0"/>
@@ -65,10 +73,42 @@
     </Group>
   </Resource>
 
+  <Resource type="ResourceImageSet" name="Developer.PublisherIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="256 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.RenderIcon">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="320 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.RenderingMode">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="384 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Developer.SaveMicrocodeCache">
+    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="320 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
   <Resource type="ResourceImageSet" name="Developer.StatisticsIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
-        <Frame point="192 64"/>
+        <Frame point="384 64"/>
       </Index>
     </Group>
   </Resource>

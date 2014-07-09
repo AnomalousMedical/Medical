@@ -12,7 +12,7 @@ namespace Developer
     class SaveMicrocodeCacheTask : Task
     {
         public SaveMicrocodeCacheTask()
-            :base("SaveMicrocodeCache", "Save Microcode Cache", CommonResources.NoIcon, "Developer")
+            :base("SaveMicrocodeCache", "Save Microcode Cache", "Developer.SaveMicrocodeCache", "Developer")
         {
             this.ShowOnTaskbar = false;
         }

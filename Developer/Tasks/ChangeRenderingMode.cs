@@ -16,7 +16,7 @@ namespace Medical
         private SceneViewController sceneViewController;
 
         public ChangeRenderingMode(SceneViewController sceneViewController)
-            : base("Medical.ChangeRenderingMode", "Rendering Mode", CommonResources.NoIcon, "Developer")
+            : base("Medical.ChangeRenderingMode", "Rendering Mode", "Developer.RenderingMode", "Developer")
         {
             this.sceneViewController = sceneViewController;
         }

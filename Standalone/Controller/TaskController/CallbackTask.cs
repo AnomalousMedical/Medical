@@ -101,6 +101,11 @@ namespace Medical
             }
         }
 
+        public void closeTask()
+        {
+            this.fireItemClosed();
+        }
+
         /// <summary>
         /// The TaskPositioner that was set when this item was clicked, only valid during an OnClicked event.
         /// </summary>

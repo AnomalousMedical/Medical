@@ -192,7 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
     <EmbeddedResource Include="GUI\Render\LicensePopup.layout">

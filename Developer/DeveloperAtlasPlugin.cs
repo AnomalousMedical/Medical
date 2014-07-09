@@ -103,11 +103,25 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", "Developer.StatisticsIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(debugVisualizer, "Developer.DebugVisualizer", "Debug Visualizer", CommonResources.NoIcon, TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(debugVisualizer, "Developer.DebugVisualizer", "Debug Visualizer", "Developer.DebugVisualizer", TaskMenuCategories.Developer));
             taskController.addTask(libRocketDebugger);
             taskController.addTask(new SaveMicrocodeCacheTask());
-            taskController.addTask(new DumpToMax(standaloneController.MedicalController));
-            taskController.addTask(new DumpTeethToMax(standaloneController.MedicalController));
+            taskController.addTask(new CallbackTask("Developer.SaveToMax", "Save to 3ds Max", "Developer.MaxDumpIcon", TaskMenuCategories.Developer, (item) =>
+                {
+                    if (!item.Active)
+                    {
+                        item.setActive(true);
+                        MaxExport maxExport = new MaxExport(standaloneController);
+                        guiManager.addManagedDialog(maxExport);
+                        maxExport.Visible = true;
+                        maxExport.Closed += (evt, args) =>
+                        {
+                            maxExport.Dispose();
+                            item.setActive(false);
+                            item.closeTask();
+                        };
+                    }
+                }));
             changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
             taskController.addTask(changeRenderingMode);
 

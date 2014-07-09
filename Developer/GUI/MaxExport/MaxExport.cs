@@ -1,33 +1,73 @@
 ﻿using Engine;
+using Engine.Editing;
 using Engine.ObjectManagement;
+using Engine.Platform;
 using Medical;
 using Medical.GUI;
-using OgrePlugin;
-using OgreWrapper;
+using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Developer
+namespace Developer.GUI
 {
-    class DumpTeethToMax : Task
+    class MaxExport : MDIDialog
     {
         private MedicalController medicalController;
 
-        private Dictionary<String, MaxWriterInfo> transforms = new Dictionary<String, MaxWriterInfo>();
-
-        public DumpTeethToMax(MedicalController medicalController)
-            : base("Developer.DumpTeethToMax", "Dump Teeth Positions to 3ds Max", CommonResources.NoIcon, "Developer")
+        public MaxExport(StandaloneController standaloneController)
+            : base("Developer.GUI.MaxExport.MaxExport.layout")
         {
-            this.ShowOnTaskbar = false;
-            this.medicalController = medicalController;
+            this.medicalController = standaloneController.MedicalController;
+
+            Button saveAll = (Button)window.findWidget("SaveAll");
+            saveAll.MouseButtonClick += saveAll_MouseButtonClick;
+
+            Button saveLeftTeethAsRight = (Button)window.findWidget("SaveLeftTeethAsRight");
+            saveLeftTeethAsRight.MouseButtonClick += saveLeftTeethAsRight_MouseButtonClick;
+
+            Button saveRightTeethAsLeft = (Button)window.findWidget("SaveRighteethAsLeft");
+            saveRightTeethAsLeft.MouseButtonClick += saveRightTeethAsLeft_MouseButtonClick;
         }
 
-        public override void clicked(TaskPositioner taskPositioner)
+        public override void Dispose()
         {
-            buildLeftToRightTransform();
+            
+        }
+
+        void saveAll_MouseButtonClick(Widget source, EventArgs e)
+        {
+            FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Dump Positions to 3ds Max", Environment.CurrentDirectory, "AnomalousMedicalSimObjects.ms", "MaxScript (*.ms)|*.ms");
+            saveDialog.showModal((result, path) =>
+            {
+                if (result == NativeDialogResult.OK)
+                {
+                    using (MaxWriter maxWriter = new MaxWriter(path))
+                    {
+                        maxWriter.write(medicalController.SimObjects.Select(so => new MaxWriterInfo(so)));
+                    }
+                }
+            });
+        }
+
+        void saveLeftTeethAsRight_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Dictionary<String, MaxWriterInfo> transforms = new Dictionary<String, MaxWriterInfo>();
+            buildLeftToRightTransform(transforms);
+            finishTransformedSave(transforms);
+        }
+
+        void saveRightTeethAsLeft_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Dictionary<String, MaxWriterInfo> transforms = new Dictionary<String, MaxWriterInfo>();
+            buildRightToLeftTransform(transforms);
+            finishTransformedSave(transforms);
+        }
+
+        private void finishTransformedSave(Dictionary<String, MaxWriterInfo> transforms)
+        {
             FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Dump Positions to 3ds Max", Environment.CurrentDirectory, "AnomalousMedicalSimObjects.ms", "MaxScript (*.ms)|*.ms");
             saveDialog.showModal((result, path) =>
             {
@@ -37,14 +77,13 @@ namespace Developer
                     {
                         maxWriter.write(from so in medicalController.SimObjects
                                         where transforms.ContainsKey(so.Name)
-                                        select transformWriter(new MaxWriterInfo(so)));
+                                        select transformWriter(new MaxWriterInfo(so), transforms));
                     }
                 }
-                fireItemClosed();
             });
         }
 
-        private void buildLeftToRightTransform()
+        private void buildLeftToRightTransform(Dictionary<String, MaxWriterInfo> transforms)
         {
             transforms.Clear();
 
@@ -77,7 +116,7 @@ namespace Developer
             }
         }
 
-        private void buildRightToLeftTransform()
+        private void buildRightToLeftTransform(Dictionary<String, MaxWriterInfo> transforms)
         {
             transforms.Clear();
 
@@ -110,10 +149,10 @@ namespace Developer
             }
         }
 
-        private MaxWriterInfo transformWriter(MaxWriterInfo original)
+        private MaxWriterInfo transformWriter(MaxWriterInfo original, Dictionary<String, MaxWriterInfo> transforms)
         {
             MaxWriterInfo transform;
-            if(transforms.TryGetValue(original.Name, out transform))
+            if (transforms.TryGetValue(original.Name, out transform))
             {
                 original.Name = transform.Name;
                 original.MeshName = transform.MeshName;
@@ -121,14 +160,6 @@ namespace Developer
                 original.Rotation *= transform.Rotation;
             }
             return original;
-        }
-
-        public override bool Active
-        {
-            get
-            {
-                return false;
-            }
         }
     }
 }
