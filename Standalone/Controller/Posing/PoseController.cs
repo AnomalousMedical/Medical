@@ -110,7 +110,7 @@ namespace Medical.Controller
         private bool getCameraRay(EventManager eventManager, out Ray3 cameraRay)
         {
             Vector3 absMouse = eventManager.Mouse.getAbsMouse();
-            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny())
+            if (!Gui.Instance.HandledMouse && !InputManager.Instance.isModalAny())
             {
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                 Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
