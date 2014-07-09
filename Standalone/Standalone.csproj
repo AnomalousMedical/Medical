@@ -222,7 +222,6 @@
     <Compile Include="Controller\Server\Mime.cs" />
     <Compile Include="Controller\Server\UploadFileInfo.cs" />
     <Compile Include="Controller\SharePluginController.cs" />
-    <Compile Include="Controller\SimulationVersionManager.cs" />
     <Compile Include="Controller\Slideshow\Actions\PlayTimelineAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\SetupSceneAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\StopTimelineAction.cs" />

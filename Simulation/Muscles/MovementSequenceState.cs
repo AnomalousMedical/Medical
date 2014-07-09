@@ -105,6 +105,13 @@ namespace Medical.Muscles
             movingTargetPosition = info.GetVector3(MOVING_TARGET_POSITION);
             muscleForce = info.GetFloat(MUSCLE_FORCE);
             startTime = info.GetFloat(START_TIME);
+            //Can keep this around, but get rid of the simulation version checks
+            //Be sure to set the version to 1 in the getInfo when you commit to this scene.
+            if(info.Version == 0 && SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
+            {
+                leftCPPosition = UpgradeCpPosition(leftCPPosition);
+                rightCPPosition = UpgradeCpPosition(rightCPPosition);
+            }
         }
 
         public void getInfo(SaveInfo info)
@@ -114,6 +121,25 @@ namespace Medical.Muscles
             info.AddValue(MOVING_TARGET_POSITION, movingTargetPosition);
             info.AddValue(MUSCLE_FORCE, muscleForce);
             info.AddValue(START_TIME, startTime);
+            //When you remove the conversion you need to set the version by uncommenting the line below.
+            //info.Version = 1;
+        }
+
+        /// <summary>
+        /// Conversion function to update old simulation cp positions to the new ones.
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <returns></returns>
+        public static float UpgradeCpPosition(float oldValue)
+        {
+            if(oldValue < 0.515f)
+            {
+                return oldValue - 0.01f;
+            }
+            else
+            {
+                return (oldValue - .515f) * 1.1590909090909090909090909090909f + .505f;
+            }
         }
 
         #endregion

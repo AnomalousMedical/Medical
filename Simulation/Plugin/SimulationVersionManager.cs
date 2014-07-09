@@ -24,7 +24,7 @@ namespace Medical
         /// </summary>
         public static event Action<SimulationScene> OnSceneChanged;
 
-        internal static void sceneChanged(SimulationScene scene)
+        public static void sceneChanged(SimulationScene scene)
         {
             if(loadedVersion != scene.Version)
             {
