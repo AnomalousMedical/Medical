@@ -56,12 +56,15 @@ namespace Medical
         [Editable]
         private int eminanceStart = 12;
 
+        [Editable]
+        private SplineType splineType = SplineType.Natural;
+
         [DoNotSave]
         [DoNotCopy]
         private List<Vector3> basePoints = new List<Vector3>();
         [DoNotSave]
         [DoNotCopy]
-        NaturalSplineSet3d curve = new NaturalSplineSet3d();
+        Spline3d curve;
         [DoNotSave]
         [DoNotCopy]
         private List<Vector3> eminanceDistort = new List<Vector3>();
@@ -94,90 +97,104 @@ namespace Medical
 
         private ControlPointBehavior controlPoint;
 
+        enum SplineType
+        {
+            Natural,
+            CatmullRom
+        }
+
         protected override void constructed()
         {
+            switch(splineType)
+            {
+                case SplineType.CatmullRom:
+                    curve = new CatmullRomSpline3d();
+                    break;
+                case SplineType.Natural:
+                default:
+                    curve = new NaturalSplineSet3d();
+                    break;
+            }
+
             FossaController.add(this);
             SimObject eminanceSimObject = Owner.getOtherSimObject(eminanceName);
-            if (eminanceSimObject != null)
+            if (eminanceSimObject == null)
             {
-                eminanceOffset = eminanceSimObject.Translation;
-                SceneNodeElement eminanceSceneNode = eminanceSimObject.getElement(eminanceNodeName) as SceneNodeElement;
-                if (eminanceSceneNode != null)
-                {
-                    Entity eminanceEntity = eminanceSceneNode.getNodeObject(eminanceEntityName) as Entity;
-                    if (eminanceEntity != null)
-                    {
-                        if (eminanceEntity.hasSkeleton())
-                        {
-                            SkeletonInstance skeleton = eminanceEntity.getSkeleton();
-                            for (int i = 1; skeleton.hasBone(fossaBoneBaseName + i); ++i)
-                            {
-                                Bone bone = skeleton.getBone(fossaBoneBaseName + i);
-                                eminanceBones.Add(bone);
-                                bone.setManuallyControlled(true);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        blacklist("Cannot find the eminance entity {0}", eminanceEntityName);
-                    }
-                }
-                else
-                {
-                    blacklist("Cannot find the eminance scene node {0}", eminanceNodeName);
-                }
+                blacklist("Cannot find the eminance SimObject {0}", eminanceName);
+            }
+
+            eminanceOffset = eminanceSimObject.Translation;
+            SceneNodeElement eminanceSceneNode = eminanceSimObject.getElement(eminanceNodeName) as SceneNodeElement;
+            if (eminanceSceneNode == null)
+            {
+                blacklist("Cannot find the eminance scene node {0}", eminanceNodeName);
+            }
+
+            Entity eminanceEntity = eminanceSceneNode.getNodeObject(eminanceEntityName) as Entity;
+            if (eminanceEntity == null)
+            {
+                blacklist("Cannot find the eminance entity {0}", eminanceEntityName);
+            }
+
+            if (!eminanceEntity.hasSkeleton())
+            {
+                blacklist("Eminance entity {0} does not have a skeleton.", eminanceEntityName);
+            }
+
+            SkeletonInstance skeleton = eminanceEntity.getSkeleton();
+            for (int i = 1; skeleton.hasBone(fossaBoneBaseName + i); ++i)
+            {
+                Bone bone = skeleton.getBone(fossaBoneBaseName + i);
+                eminanceBones.Add(bone);
+                bone.setManuallyControlled(true);
             }
 
             SimObject skullSimObject = Owner.getOtherSimObject(skullName);
-            if (skullSimObject != null)
-            {
-                skullOffset = skullSimObject.Translation;
-                SceneNodeElement skullNode = skullSimObject.getElement(skullNodeName) as SceneNodeElement;
-                if (skullNode != null)
-                {
-                    Entity skullEntity = skullNode.getNodeObject(skullEntityName) as Entity;
-                    if (skullEntity != null)
-                    {
-                        if(skullEntity.hasSkeleton())
-                        {
-                            SkeletonInstance skeleton = skullEntity.getSkeleton();
-                            Vector3 eminanceTrans = Vector3.Zero;
-                            for (int i = 1; skeleton.hasBone(fossaBoneBaseName + i); ++i)
-                            {
-                                Bone bone = skeleton.getBone(fossaBoneBaseName + i);
-                                skullBones.Add(bone);
-                                bone.setManuallyControlled(true);
-                                Vector3 trans = bone.getDerivedPosition() + skullSimObject.Translation - this.Owner.Translation;
-                                trans.x = 0;
-                                basePoints.Add(trans);
-                                if (i < eminanceStart)
-                                {
-                                    eminanceDistort.Add(trans);
-                                    eminanceTrans = trans;
-                                }
-                                else
-                                {
-                                    trans.y = eminanceTrans.y;
-                                    eminanceDistort.Add(trans);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        blacklist("Could not find skull entity {0}.", skullEntityName);
-                    }
-                }
-                else
-                {
-                    blacklist("Could not find skull node {0}.", skullNodeName);
-                }
-            }
-            else
+            if (skullSimObject == null)
             {
                 blacklist("Could not find a skull SimObject named {0}.", skullName);
             }
+
+            skullOffset = skullSimObject.Translation;
+            SceneNodeElement skullNode = skullSimObject.getElement(skullNodeName) as SceneNodeElement;
+            if (skullNode == null)
+            {
+                blacklist("Could not find skull node {0}.", skullNodeName);
+            }
+
+            Entity skullEntity = skullNode.getNodeObject(skullEntityName) as Entity;
+            if (skullEntity == null)
+            {
+                blacklist("Could not find skull entity {0}.", skullEntityName);
+            }
+
+            if(!skullEntity.hasSkeleton())
+            {
+                blacklist("Skull entity {0} does not have a skeleton.", skullEntityName);
+            }
+
+            skeleton = skullEntity.getSkeleton();
+            Vector3 eminanceTrans = Vector3.Zero;
+            for (int i = 1; skeleton.hasBone(fossaBoneBaseName + i); ++i)
+            {
+                Bone bone = skeleton.getBone(fossaBoneBaseName + i);
+                skullBones.Add(bone);
+                bone.setManuallyControlled(true);
+                Vector3 trans = bone.getDerivedPosition() + skullSimObject.Translation - this.Owner.Translation;
+                trans.x = 0;
+                basePoints.Add(trans);
+                if (i < eminanceStart)
+                {
+                    eminanceDistort.Add(trans);
+                    eminanceTrans = trans;
+                }
+                else
+                {
+                    trans.y = eminanceTrans.y;
+                    eminanceDistort.Add(trans);
+                }
+            }
+
             foreach (Vector3 point in basePoints)
             {
                 curve.addControlPoint(point);
@@ -185,17 +202,15 @@ namespace Medical
 
             //Find the control point
             SimObject controlPointObj = Owner.getOtherSimObject(controlPointObject);
-            if (controlPointObj != null)
-            {
-                controlPoint = controlPointObj.getElement(controlPointBehavior) as ControlPointBehavior;
-                if (controlPoint == null)
-                {
-                    blacklist("Could not find controlPointBehavior {0}.", controlPointBehavior);
-                }
-            }
-            else
+            if (controlPointObj == null)
             {
                 blacklist("Could not find controlPointObject {0}.", controlPointObject);
+            }
+
+            controlPoint = controlPointObj.getElement(controlPointBehavior) as ControlPointBehavior;
+            if (controlPoint == null)
+            {
+                blacklist("Could not find controlPointBehavior {0}.", controlPointBehavior);
             }
         }
 
@@ -229,7 +244,7 @@ namespace Medical
                 Vector3 distort = eminanceDistort[i];
                 curve.updateControlPoint(i, basePoints[i].lerp(ref distort, ref percent));
             }
-            curve.computeSplines();
+            curve.recompute();
             updateBones();
             controlPoint.positionModified();
         }
@@ -241,7 +256,7 @@ namespace Medical
 
         protected override void link()
         {
-            curve.computeSplines();
+            curve.recompute();
             updateBones();
         }
 
