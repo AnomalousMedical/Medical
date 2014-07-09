@@ -97,6 +97,7 @@ namespace Medical
 
         private ControlPointBehavior controlPoint;
 
+        [SingleEnum]
         enum SplineType
         {
             Natural,
