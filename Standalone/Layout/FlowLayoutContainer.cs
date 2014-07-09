@@ -129,6 +129,11 @@ namespace Medical
                         }
                         desiredSize.Width += childSize.Width + padding;
                     }
+
+                    if (children.Count > 0)
+                    {
+                        desiredSize.Width -= padding;
+                    }
                 }
                 else
                 {
@@ -140,6 +145,11 @@ namespace Medical
                             desiredSize.Width = childSize.Width;
                         }
                         desiredSize.Height += childSize.Height + padding;
+                    }
+
+                    if (children.Count > 0)
+                    {
+                        desiredSize.Height -= padding;
                     }
                 }
                 return desiredSize;

@@ -9,10 +9,12 @@ namespace Medical.GUI
 {
     public class AnatomyContextWindow : PopupContainer
     {
+        private static readonly int MaxScrollerSize = ScaleHelper.Scaled(300);
+
         private AnatomyContextWindowManager windowManager;
         private Anatomy anatomy;
         private Dictionary<String, CommandUIElement> dynamicWidgets = new Dictionary<String, CommandUIElement>();
-        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5, new IntVector2(CommandUIElement.SIDE_PADDING / 2, ScaleHelper.Scaled(84)));
+        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5, new IntVector2(0, 0));
 
         private IntSize2 windowStartSize;
 
@@ -26,6 +28,7 @@ namespace Medical.GUI
         private Button relatedAnatomyButton;
 
         private AnatomyContextWindowLiveThumbHost thumbHost;
+        private ScrollView commandScroller;
 
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
@@ -64,6 +67,8 @@ namespace Medical.GUI
 
             Button showButton = (Button)widget.findWidget("ShowButton");
             showButton.MouseButtonClick += new MyGUIEvent(showButton_MouseButtonClick);
+
+            commandScroller = (ScrollView)widget.findWidget("CommandScroller");
         }
 
         public override void Dispose()
@@ -116,14 +121,14 @@ namespace Medical.GUI
                         switch (command.UIType)
                         {
                             case AnatomyCommandUIType.Numeric:
-                                commandUI = new CommandHScroll(widget);
+                                commandUI = new CommandHScroll(commandScroller);
                                 addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Executable:
                                 //Need to implement this
                                 break;
                             case AnatomyCommandUIType.Boolean:
-                                commandUI = new CommandCheckBox(widget);
+                                commandUI = new CommandCheckBox(commandScroller);
                                 addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Transparency:
@@ -139,12 +144,20 @@ namespace Medical.GUI
                     }
                 }
 
-                layoutContainer.StartLocation = new IntVector2(layoutContainer.StartLocation.x, ScaleHelper.Scaled(114));
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.layout();
 
-                Size2 desiredSize = layoutContainer.DesiredSize;
-                widget.setSize(width, (int)(desiredSize.Height));
+                IntSize2 desiredSize = layoutContainer.DesiredSize;
+
+                int scrollHeight = desiredSize.Height;
+                if(scrollHeight > MaxScrollerSize)
+                {
+                    scrollHeight = MaxScrollerSize;
+                }
+                commandScroller.setSize(commandScroller.Width, scrollHeight);
+                commandScroller.CanvasSize = new IntSize2(commandScroller.Width, desiredSize.Height);
+
+                widget.setSize(width, commandScroller.Bottom + 3);
             }
         }
 

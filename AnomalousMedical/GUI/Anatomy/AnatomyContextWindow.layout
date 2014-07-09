@@ -32,6 +32,10 @@
         <Widget type="Button" skin="Button" position="180 55 42 26" align="Right Top" name="ShowButton">
             <Property key="Caption" value="Show"/>
         </Widget>
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="5 114 214 0" name="CommandScroller">
+            <Property key="CanvasAlign" value="Left Top"/>
+            <Property key="VisibleHScroll" value="false"/>
+        </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>
