@@ -668,6 +668,7 @@ namespace Medical
                     OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
 
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                    SimulationVersionManager.sceneChanged(medicalScene);
                     sceneViewController.createFromPresets(medicalScene.WindowPresets.Default, false);
 
                     sceneViewController.createCameras(medicalController.CurrentScene);
@@ -686,11 +687,8 @@ namespace Medical
                     NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
                 }
             }
-#if ALLOW_OVERRIDE
-            //Temp posing activation, will need to be replaced by a plugin later, for now only on beta scenes.
-            poseController.AllowPosing = file.EndsWith("Beta.sim.xml");
-            //End temp posing activation
 
+#if ALLOW_OVERRIDE
             sw.Stop();
             Logging.Log.Debug("Scene '{0}' loaded in {0} ms", file, sw.ElapsedMilliseconds);
 #endif

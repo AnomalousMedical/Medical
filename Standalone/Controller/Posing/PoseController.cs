@@ -41,6 +41,14 @@ namespace Medical.Controller
             controller.SceneUnloading += controller_SceneUnloading;
             sceneViewController = controller.SceneViewController;
             anatomyController = controller.AnatomyController;
+
+            //Scene version management
+            SimulationVersionManager.OnVersionChanged += SimulationVersionManager_OnVersionChanged;
+        }
+
+        void SimulationVersionManager_OnVersionChanged()
+        {
+            AllowPosing = SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion;
         }
 
         public bool AllowPosing

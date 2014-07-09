@@ -5,6 +5,7 @@ using System.Text;
 using Engine.ObjectManagement;
 using Engine;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -22,7 +23,10 @@ namespace Medical
             this.name = name;
         }
 
-        #region Functions
+        public void Dispose()
+        {
+
+        }
 
         public SimElementManagerDefinition createDefinition()
         {
@@ -30,6 +34,7 @@ namespace Medical
             definition.PresetDirectory = presetDirectory;
             definition.SequenceDirectory = sequenceDirectory;
             definition.WindowPresets = CopySaver.Default.copy(windowPresets);
+            definition.Version = Version;
             return definition;
         }
 
@@ -47,15 +52,6 @@ namespace Medical
         {
             return typeof(SimulationScene);
         }
-
-        public void Dispose()
-        {
-            
-        }
-
-        #endregion
-
-        #region Properties
 
         public String PresetDirectory
         {
@@ -93,6 +89,6 @@ namespace Medical
             }
         }
 
-        #endregion 
+        public int Version { get; internal set; }
     }
 }
