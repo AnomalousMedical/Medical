@@ -19,8 +19,17 @@ namespace Medical
         [Editable]
         String targetPositionBroadcasterName = "PositionBroadcaster";
 
+        [DoNotCopy]
+        [DoNotSave]
         SimObject targetSimObject;
+
+        [DoNotCopy]
+        [DoNotSave]
         Vector3 translationOffset;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Quaternion rotationOffset;
 
         [DoNotCopy]
         [DoNotSave]
@@ -41,8 +50,12 @@ namespace Medical
             }
             broadcaster.PositionChanged += broadcaster_PositionChanged;
 
+            Quaternion inverseTargetRot = targetSimObject.Rotation.inverse();
+
             translationOffset = Owner.Translation - targetSimObject.Translation;
-            translationOffset = Quaternion.quatRotate(targetSimObject.Rotation.inverse(), translationOffset);
+            translationOffset = Quaternion.quatRotate(inverseTargetRot, translationOffset);
+
+            rotationOffset = inverseTargetRot * Owner.Rotation;
         }
 
         protected override void destroy()
@@ -54,7 +67,7 @@ namespace Medical
         void broadcaster_PositionChanged(SimObject obj)
         {
             Vector3 trans = targetSimObject.Translation + Quaternion.quatRotate(targetSimObject.Rotation, translationOffset);
-            Quaternion rotation = targetSimObject.Rotation;
+            Quaternion rotation = targetSimObject.Rotation * rotationOffset;
             updatePosition(ref trans, ref rotation);
         }
     }
