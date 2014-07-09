@@ -46,11 +46,11 @@ namespace Medical.Controller
                 {
                     if (down)
                     {
-                        mdiManager.injectMouseDown(mousePos, (MouseButtonCode)i, Gui.Instance.HandledMouse);
+                        mdiManager.injectMouseDown(mousePos, (MouseButtonCode)i, Gui.Instance.HandledMouseButtons);
                     }
                     else
                     {
-                        mdiManager.injectMouseUp(mousePos, (MouseButtonCode)i, Gui.Instance.HandledMouse);
+                        mdiManager.injectMouseUp(mousePos, (MouseButtonCode)i, Gui.Instance.HandledMouseButtons);
                     }
                     mouseButtonsDown[i] = down;
                 }

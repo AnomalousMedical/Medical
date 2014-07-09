@@ -19,7 +19,7 @@ namespace Medical
         
         public bool processFingers(List<Finger> fingers)
         {
-            if (Gui.Instance.HandledMouse)
+            if (Gui.Instance.HandledMouseButtons)
             {
                 didGesture = true;
                 if (fingers.Count == 1)

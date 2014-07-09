@@ -10,7 +10,7 @@ namespace Medical
     {
         public bool processFingers(List<Finger> fingers)
         {
-            return Gui.Instance.HandledMouse;
+            return Gui.Instance.HandledMouseButtons;
         }
 
         public void additionalProcessing(Engine.Platform.Clock clock)

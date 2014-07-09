@@ -185,7 +185,7 @@ namespace Medical
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }
-                else if (!velocityMove() && !Gui.Instance.HandledMouse)
+                else if (!velocityMove() && !Gui.Instance.HandledMouseButtons)
                 {
                     mouseMove();
                 }
@@ -276,7 +276,7 @@ namespace Medical
             }
             if (activeWindow)
             {
-                if (allowZoom && mouseCoords.z != 0)
+                if (allowZoom && !Gui.Instance.HandledMouseMove && mouseCoords.z != 0)
                 {
                     float zoomAmount = ZoomMultiple * 60f + 3.6f;
                     if (mouseCoords.z < 0)
