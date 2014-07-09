@@ -49,6 +49,7 @@ namespace Medical
             scene.SequenceDirectory = sequenceDirectory;
             scene.WindowPresets = CopySaver.Default.copy(windowPresets);
             scene.Version = Version;
+            scene.AllowIK = AllowIK;
             return scene;
         }
 
@@ -95,6 +96,9 @@ namespace Medical
         [Editable]
         public int Version { get; set; }
 
+        [Editable]
+        public bool AllowIK { get; set; }
+
         public SceneViewWindowPresetController WindowPresets
         {
             get
@@ -132,6 +136,7 @@ namespace Medical
         private const String SEQUENCE_DIRECTORY = "SequenceDirectory";
         private const String WINDOW_PRESETS = "WindowPresets";
         private const String VERSION = "Version";
+        private const String ALLOW_IK = "AllowIK";
 
         protected SimulationSceneDefinition(LoadInfo info)
         {
@@ -143,6 +148,7 @@ namespace Medical
                 return new SceneViewWindowPresetController();
             });
             Version = info.GetInt32(VERSION, 0);
+            AllowIK = info.GetBoolean(ALLOW_IK, false);
         }
 
         public void getInfo(SaveInfo info)
@@ -152,6 +158,7 @@ namespace Medical
             info.AddValue(SEQUENCE_DIRECTORY, sequenceDirectory);
             info.AddValue(WINDOW_PRESETS, windowPresets);
             info.AddValue(VERSION, Version);
+            info.AddValue(ALLOW_IK, AllowIK);
         }
 
         #endregion

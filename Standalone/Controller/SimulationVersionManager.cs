@@ -19,6 +19,11 @@ namespace Medical
 
         public static event Action OnVersionChanged;
 
+        /// <summary>
+        /// Use this for scene changes that only need to look at version stuff.
+        /// </summary>
+        public static event Action<SimulationScene> OnSceneChanged;
+
         internal static void sceneChanged(SimulationScene scene)
         {
             if(loadedVersion != scene.Version)
@@ -28,6 +33,10 @@ namespace Medical
                 {
                     OnVersionChanged.Invoke();
                 }
+            }
+            if(OnSceneChanged != null)
+            {
+                OnSceneChanged.Invoke(scene);
             }
         }
 

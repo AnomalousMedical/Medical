@@ -43,12 +43,12 @@ namespace Medical.Controller
             anatomyController = controller.AnatomyController;
 
             //Scene version management
-            SimulationVersionManager.OnVersionChanged += SimulationVersionManager_OnVersionChanged;
+            SimulationVersionManager.OnSceneChanged += SimulationVersionManager_OnSceneChanged;
         }
 
-        void SimulationVersionManager_OnVersionChanged()
+        void SimulationVersionManager_OnSceneChanged(SimulationScene obj)
         {
-            AllowPosing = SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion;
+            AllowPosing = obj.AllowIK;
         }
 
         public bool AllowPosing

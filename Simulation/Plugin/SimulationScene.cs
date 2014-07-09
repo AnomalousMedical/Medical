@@ -35,6 +35,7 @@ namespace Medical
             definition.SequenceDirectory = sequenceDirectory;
             definition.WindowPresets = CopySaver.Default.copy(windowPresets);
             definition.Version = Version;
+            definition.AllowIK = AllowIK;
             return definition;
         }
 
@@ -90,5 +91,7 @@ namespace Medical
         }
 
         public int Version { get; internal set; }
+
+        public bool AllowIK { get; internal set; }
     }
 }
