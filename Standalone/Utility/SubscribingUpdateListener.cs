@@ -18,7 +18,6 @@ namespace Medical
         private bool isSubscribed = false;
 
         public delegate void OnUpdateDelegate(Clock clock);
-
         public event OnUpdateDelegate OnUpdate;
 
         public SubscribingUpdateListener(UpdateTimer timer)
@@ -48,6 +47,17 @@ namespace Medical
             {
                 timer.removeUpdateListener(this);
                 isSubscribed = false;
+            }
+        }
+
+        /// <summary>
+        /// This will be true if this class is currently subscribed to the timer.
+        /// </summary>
+        public bool IsSubscribed
+        {
+            get
+            {
+                return isSubscribed;
             }
         }
 
