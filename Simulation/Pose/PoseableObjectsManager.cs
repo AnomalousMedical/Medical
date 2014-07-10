@@ -53,11 +53,11 @@ namespace Medical
         {
             float distance = 0.0f;
             SortedPoseableRaycastResults results = new SortedPoseableRaycastResults();
-            foreach (PoseableIdentifier anatomy in poseables)
+            foreach (PoseableIdentifier poseable in poseables)
             {
-                if (anatomy.checkCollision(ray, ref distance))
+                if (poseable.checkCollision(ray, ref distance))
                 {
-                    results.add(new PoseableRaycastResult(anatomy, distance));
+                    results.add(new PoseableRaycastResult(poseable, distance));
                 }
             }
             results.sort();

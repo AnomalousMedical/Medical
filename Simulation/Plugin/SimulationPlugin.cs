@@ -46,6 +46,7 @@ namespace Medical
         public void setupRenamedSaveableTypes(RenamedTypeMap renamedTypeMap)
         {
             renamedTypeMap.addRenamedType("Medical.PositionBroadcaster", typeof(PositionBroadcaster));
+            renamedTypeMap.addRenamedType("Medical.PoseableByEntity", typeof(PoseableByAnatomyIdentifier));
         }
 
         #endregion

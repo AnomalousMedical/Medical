@@ -173,7 +173,7 @@
     <Compile Include="Pose\FKLink.cs" />
     <Compile Include="Pose\FKLinkState.cs" />
     <Compile Include="Pose\FKRoot.cs" />
-    <Compile Include="Pose\PoseableByEntity.cs" />
+    <Compile Include="Pose\PoseableByAnatomyIdentifier.cs" />
     <Compile Include="Pose\PoseableRaycastResult.cs" />
     <Compile Include="Pose\PoseableIdentifier.cs" />
     <Compile Include="Pose\PoseableObjectsManager.cs" />

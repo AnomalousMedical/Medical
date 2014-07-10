@@ -16,16 +16,13 @@ namespace Medical
     /// <summary>
     /// This class will search for poseables by raycasting onto an entity.
     /// </summary>
-    class PoseableByEntity : Interface, PoseableIdentifier
+    class PoseableByAnatomyIdentifier : Interface, PoseableIdentifier
     {
         [Editable]
-        private String entitySimObjectName = "this";
+        private String anatomySimObjectName = "this";
 
         [Editable]
-        private String nodeName = "Node";
-
-        [Editable]
-        private String entityName = "Entity";
+        private String anatomyName = "Anatomy";
 
         [Editable]
         private String boneSimObjectName = "this";
@@ -35,7 +32,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private Entity entity;
+        private AnatomyIdentifier anatomy;
 
         [DoNotCopy]
         [DoNotSave]
@@ -44,22 +41,16 @@ namespace Medical
         protected override void link()
         {
             base.link();
-            SimObject entitySimObject = Owner.getOtherSimObject(entitySimObjectName);
+            SimObject entitySimObject = Owner.getOtherSimObject(anatomySimObjectName);
             if(entitySimObject == null)
             {
-                blacklist("Cannot find Entity SimObject named '{0}'", entitySimObjectName);
+                blacklist("Cannot find Anatomy SimObject named '{0}'", anatomySimObjectName);
             }
 
-            SceneNodeElement node = entitySimObject.getElement(nodeName) as SceneNodeElement;
-            if(node == null)
+            anatomy = entitySimObject.getElement(anatomyName) as AnatomyIdentifier;
+            if (anatomy == null)
             {
-                blacklist("Cannot find Node '{0}' on Entity SimObject '{1}'", nodeName, entitySimObjectName);
-            }
-
-            entity = node.getNodeObject(entityName) as Entity;
-            if(entity == null)
-            {
-                blacklist("Cannot find Entity '{0}' in node '{1}' on Entity SimObject '{2}'", entityName, nodeName, entitySimObjectName);
+                blacklist("Cannot find AnatomyIdentifier '{0}' on Anatomy SimObject '{1}'", anatomyName, anatomySimObjectName);
             }
 
             SimObject boneSimObject = Owner.getOtherSimObject(boneSimObjectName);
@@ -85,7 +76,7 @@ namespace Medical
 
         public bool checkCollision(Ray3 ray, ref float distanceOnRay)
         {
-            return entity.raycastPolygonLevel(ray, ref distanceOnRay);
+            return anatomy.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distanceOnRay);
         }
 
         public BEPUikBone Bone
