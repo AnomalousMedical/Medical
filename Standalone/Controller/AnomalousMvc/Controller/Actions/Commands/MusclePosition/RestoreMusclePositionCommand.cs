@@ -22,7 +22,7 @@ namespace Medical.Controller.AnomalousMvc
                 MusclePosition musclePosition = context.getModel<MusclePosition>(Name);
                 if (musclePosition != null)
                 {
-                    musclePosition.preview();
+                    context.applyMusclePosition(musclePosition, MedicalConfig.CameraTransitionTime);
                 }
                 else
                 {

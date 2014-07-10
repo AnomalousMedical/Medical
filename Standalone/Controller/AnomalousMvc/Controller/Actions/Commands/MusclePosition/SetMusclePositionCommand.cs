@@ -16,7 +16,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public override void execute(AnomalousMvcContext context)
         {
-            MusclePosition.preview();
+            context.applyMusclePosition(MusclePosition, MedicalConfig.CameraTransitionTime);
         }
 
         protected override void createEditInterface()

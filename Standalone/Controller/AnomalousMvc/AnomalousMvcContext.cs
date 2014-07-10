@@ -386,6 +386,11 @@ namespace Medical.Controller.AnomalousMvc
             core.createMedicalState(stateInfo);
         }
 
+        public void applyMusclePosition(MusclePosition position, float duration)
+        {
+            core.applyMusclePosition(position, duration);
+        }
+
         public void saveViewLayout(String name)
         {
             StoredViewCollection storedViews = core.generateSavedViewLayout();

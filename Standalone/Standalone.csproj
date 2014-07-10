@@ -204,6 +204,7 @@
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\FrameClearManager.cs" />
     <Compile Include="Controller\IdleHandler.cs" />
+    <Compile Include="Controller\MusclePosition\MusclePositionBlender.cs" />
     <Compile Include="Controller\Posing\PoseController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\ImageRenderer\LiveThumbnailController.cs" />
@@ -618,7 +619,7 @@
     <Compile Include="Controller\TaskController\TaskController.cs" />
     <Compile Include="Controller\TaskController\TaskPositioner.cs" />
     <Compile Include="Controller\Resources\FilesystemResourceProvider.cs" />
-    <Compile Include="Controller\Timeline\MusclePosition.cs" />
+    <Compile Include="Controller\MusclePosition\MusclePosition.cs" />
     <Compile Include="Controller\Timeline\MusclePositionAction.cs" />
     <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
     <Compile Include="Controller\Props\Arrow\ChangeArrowColorAction.cs" />
@@ -823,6 +824,7 @@
     <Compile Include="Utility\Node.cs" />
     <Compile Include="Utility\OrderedDictionary.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />
+    <Compile Include="Utility\SubscribingUpdateListener.cs" />
     <Compile Include="Utility\TwoWayCommand.cs" />
     <Compile Include="Utility\TwoWayCommandBuffer.cs" />
     <Compile Include="Utility\TwoWayDelegateCommand.cs" />

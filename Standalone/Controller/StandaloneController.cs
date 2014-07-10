@@ -42,6 +42,7 @@ namespace Medical
         private MedicalController medicalController;
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
+        private MusclePositionBlender musclePositionBlender;
         private MovementSequenceController movementSequenceController;
         private SimObjectMover teethMover;
         private ImageRenderer imageRenderer;
@@ -238,6 +239,7 @@ namespace Medical
             //Movement sequences
             movementSequenceController = new MovementSequenceController(medicalController);
             this.SceneLoaded += movementSequenceController.sceneLoaded;
+            musclePositionBlender = new MusclePositionBlender(medicalController.MainTimer);
 
             //Teeth mover
             teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
@@ -432,6 +434,14 @@ namespace Medical
             get
             {
                 return tempStateBlender;
+            }
+        }
+
+        public MusclePositionBlender MusclePositionBlender
+        {
+            get
+            {
+                return musclePositionBlender;
             }
         }
 

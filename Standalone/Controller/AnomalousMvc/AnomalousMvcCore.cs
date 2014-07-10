@@ -194,6 +194,13 @@ namespace Medical.Controller.AnomalousMvc
             return null;
         }
 
+        public void applyMusclePosition(MusclePosition position, float duration)
+        {
+            MusclePosition currentPosition = new MusclePosition();
+            currentPosition.captureState();
+            standaloneController.MusclePositionBlender.startBlend(currentPosition, position, duration);
+        }
+
         public AnomalousMvcContext loadContext(Stream stream)
         {
             using (XmlReader xmlReader = new XmlTextReader(stream))
