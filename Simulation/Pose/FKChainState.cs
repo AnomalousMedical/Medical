@@ -25,20 +25,16 @@ namespace Medical
         public void interpolateFrom(FKChainState startState, FKChainState endState, float blend)
         {
             //Make sure we blend all the way if needed
-            if (blend < FullBlend)
+            //Used to do this by just forcing the end state, but that would cause the scene to explode after a while,
+            //this method seems to be ok in the mean time.
+            if (blend > FullBlend)
             {
-                foreach (var link in startState.links)
-                {
-                    var targetLink = endState[link.Key];
-                    setLinkState(link.Key, link.Value.LocalTranslation.lerp(ref targetLink.LocalTranslation, ref blend), link.Value.LocalRotation.nlerp(ref targetLink.LocalRotation, ref blend));
-                }
+                blend = 1.0f;
             }
-            else
+            foreach (var link in startState.links)
             {
-                foreach (var link in endState.links)
-                {
-                    setLinkState(link.Key, link.Value.LocalTranslation, link.Value.LocalRotation);
-                }
+                var targetLink = endState[link.Key];
+                setLinkState(link.Key, link.Value.LocalTranslation.lerp(ref targetLink.LocalTranslation, ref blend), link.Value.LocalRotation.nlerp(ref targetLink.LocalRotation, ref blend));
             }
         }
 
