@@ -74,7 +74,7 @@ namespace Developer
             discControl = new DiscControl();
             guiManager.addManagedDialog(discControl);
 
-            advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController);
+            advancedMandibleMovement = new AdvancedMandibleMovementDialog(standaloneController.MovementSequenceController, standaloneController.MusclePositionController);
             guiManager.addManagedDialog(advancedMandibleMovement);
 
             performanceGui = new PerformanceGui(standaloneController);

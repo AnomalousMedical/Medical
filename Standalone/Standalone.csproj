@@ -204,7 +204,7 @@
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\FrameClearManager.cs" />
     <Compile Include="Controller\IdleHandler.cs" />
-    <Compile Include="Controller\MusclePosition\MusclePositionBlender.cs" />
+    <Compile Include="Controller\MusclePosition\MusclePositionController.cs" />
     <Compile Include="Controller\Posing\PoseController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
     <Compile Include="Controller\ImageRenderer\LiveThumbnailController.cs" />

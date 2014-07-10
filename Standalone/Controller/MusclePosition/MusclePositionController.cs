@@ -1,4 +1,5 @@
-﻿using Engine.Platform;
+﻿using Engine.ObjectManagement;
+using Engine.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class MusclePositionBlender
+    public class MusclePositionController
     {
         private SubscribingUpdateListener updateListener;
         private long blendPositionMicro;
@@ -16,10 +17,26 @@ namespace Medical
         private MusclePosition start;
         private MusclePosition end;
 
-        public MusclePositionBlender(UpdateTimer timer)
+        private MusclePosition bindPosition; //The default position of the muscles in the scene.
+
+        public MusclePositionController(UpdateTimer timer, StandaloneController controller)
         {
             updateListener = new SubscribingUpdateListener(timer);
             updateListener.OnUpdate += updateListener_OnUpdate;
+            controller.SceneLoaded += controller_SceneLoaded;
+        }
+
+        /// <summary>
+        /// Blend from the current muscle position to the specified position over duration.
+        /// </summary>
+        /// <param name="endPosition">The position to blend to.</param>
+        /// <param name="duration">The duration to blend over.</param>
+        public void timedBlend(MusclePosition endPosition, float duration)
+        {
+            MusclePosition startPosition = new MusclePosition();
+            startPosition.captureState();
+
+            timedBlend(startPosition, endPosition, duration);
         }
 
         /// <summary>
@@ -28,13 +45,24 @@ namespace Medical
         /// <param name="start">The starting muscle position.</param>
         /// <param name="end">The ending muscle position.</param>
         /// <param name="duration">The duration to blend.</param>
-        public void startBlend(MusclePosition start, MusclePosition end, float duration)
+        public void timedBlend(MusclePosition start, MusclePosition end, float duration)
         {
             this.start = start;
             this.end = end;
             updateListener.subscribeToUpdates();
             blendPositionMicro = 0;
             durationMicro = Clock.SecondsToMicroseconds(duration);
+        }
+
+        /// <summary>
+        /// The default position for the muscles in the scene.
+        /// </summary>
+        public MusclePosition BindPosition
+        {
+            get
+            {
+                return bindPosition;
+            }
         }
 
         void updateListener_OnUpdate(Clock clock)
@@ -47,9 +75,15 @@ namespace Medical
             }
             else
             {
-                end.blend(end, 1.0f);
+                start.blend(end, 1.0f);
                 updateListener.unsubscribeFromUpdates();
             }
+        }
+
+        void controller_SceneLoaded(SimScene scene)
+        {
+            bindPosition = new MusclePosition();
+            bindPosition.captureState();
         }
     }
 }

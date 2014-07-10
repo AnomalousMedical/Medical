@@ -198,7 +198,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             MusclePosition currentPosition = new MusclePosition();
             currentPosition.captureState();
-            standaloneController.MusclePositionBlender.startBlend(currentPosition, position, duration);
+            standaloneController.MusclePositionController.timedBlend(currentPosition, position, duration);
         }
 
         public AnomalousMvcContext loadContext(Stream stream)

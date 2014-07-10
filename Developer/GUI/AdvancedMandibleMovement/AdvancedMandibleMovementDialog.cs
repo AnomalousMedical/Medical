@@ -27,14 +27,14 @@ namespace Medical.GUI
         private Button resetButton;
         private Button restoreButton;
 
-        private Vector3 movingMusclePosition;
-        private float leftCPPosition;
-        private float rightCPPosition;
-        private bool restoreEnabled = false;
+        private MusclePosition restorePosition;
+        private MusclePositionController musclePositionController;
 
-        public AdvancedMandibleMovementDialog(MovementSequenceController movementSequenceController)
+        public AdvancedMandibleMovementDialog(MovementSequenceController movementSequenceController, MusclePositionController musclePositionController)
             : base("Developer.GUI.AdvancedMandibleMovement.AdvancedMandibleMovementDialog.layout")
         {
+            this.musclePositionController = musclePositionController;
+
             openTrackBar = new AdvancedMandibleControlSlider(window.findWidget("Movement/HingeSlider") as ScrollBar, (EditBox)window.findWidget("HingeEdit"));
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
@@ -69,7 +69,7 @@ namespace Medical.GUI
         void movementSequenceController_PlaybackStopped(MovementSequenceController controller)
         {
             resetButton.Enabled = true;
-            restoreButton.Enabled = restoreEnabled;
+            restoreButton.Enabled = restorePosition != null;
         }
 
         void movementSequenceController_PlaybackStarted(MovementSequenceController controller)
@@ -156,25 +156,23 @@ namespace Medical.GUI
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            leftCPPosition = leftCP.CurrentLocation;
-            rightCPPosition = rightCP.CurrentLocation;
-            movingMusclePosition = movingMuscleTarget.Offset;
-            restoreEnabled = true;
+            restorePosition = new MusclePosition();
+            restorePosition.captureState();
 
-            synchronizeLeftCP(resetButton, leftCP.NeutralLocation);
-            synchronizeRightCP(resetButton, rightCP.NeutralLocation);
+            musclePositionController.timedBlend(musclePositionController.BindPosition, MedicalConfig.CameraTransitionTime);
+
             bothForwardBack.Value = rightForwardBack.Value;
-            synchronizeMovingMuscleOffset(resetButton, Vector3.Zero);
             restoreButton.Enabled = true;
         }
 
         void restoreButton_Click(object sender, EventArgs e)
         {
-            synchronizeLeftCP(resetButton, leftCPPosition);
-            synchronizeRightCP(resetButton, rightCPPosition);
-            synchronizeMovingMuscleOffset(resetButton, movingMusclePosition);
+            if (restorePosition != null)
+            {
+                musclePositionController.timedBlend(restorePosition, MedicalConfig.CameraTransitionTime);
+                restorePosition = null;
+            }
             restoreButton.Enabled = false;
-            restoreEnabled = false;
         }
 
         //Synchronize methods

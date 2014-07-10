@@ -72,7 +72,12 @@ namespace Medical
 
         public void blend(MusclePosition targetState, float blendFactor)
         {
-            float modifiedBlendFactor = EasingFunctions.Ease(targetState.Easing, 0, 1, blendFactor, 1);
+            float modifiedBlendFactor = blendFactor;
+            if (blendFactor < 1.0f)
+            {
+                EasingFunctions.Ease(targetState.Easing, 0, 1, blendFactor, 1);
+            }
+
             if (MuscleController.MovingTarget != null) //If this is null then the whole mandible simulation is invalid and its better to do nothing
             {
                 MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
