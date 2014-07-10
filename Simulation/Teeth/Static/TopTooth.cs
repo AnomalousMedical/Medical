@@ -49,9 +49,9 @@ namespace Medical
             }
             else
             {
-                SimObject otherSimObject = joint.RigidBodyA.Owner;
-                Offset = Owner.Translation - otherSimObject.Translation - startingLocation;
-                Rotation = Owner.Rotation * startingRotation.inverse();
+                RigidBody other = joint.RigidBodyA;
+                Offset = actorElement.PhysicsTranslation - other.PhysicsTranslation - startingLocation;
+                Rotation = actorElement.PhysicsRotation * startingRotation.inverse();
                 joint.setLinearLowerLimit(Vector3.Zero);
                 joint.setLinearUpperLimit(Vector3.Zero);
                 joint.setAngularLowerLimit(Vector3.Zero);
