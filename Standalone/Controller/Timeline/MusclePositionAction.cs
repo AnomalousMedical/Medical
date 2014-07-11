@@ -95,6 +95,10 @@ namespace Medical
         {
             startState.captureState();
             lastTime = 0.0f;
+            if(Duration == 0.0f)
+            {
+                Duration = 0.001f;
+            }
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
