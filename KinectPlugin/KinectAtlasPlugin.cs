@@ -23,7 +23,7 @@ namespace KinectPlugin
         private MedicalController medicalController;
         private Dictionary<JointType, SimObjectBase> testSimObjs = new Dictionary<JointType, SimObjectBase>();
 
-        private static Dictionary<JointType, JointType> childJointTypeMap = new Dictionary<JointType, JointType>();
+        private static Dictionary<JointType, JointType> parentJointTypeMap = new Dictionary<JointType, JointType>();
         private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
 
         private MusclePosition bindPosition;
@@ -53,26 +53,26 @@ namespace KinectPlugin
             ikJointMap.Add(JointType.AnkleRight, Tuple.Create("LeftTibia", "LeftTibiaFootBaseJoint"));
             ikJointMap.Add(JointType.FootRight, Tuple.Create("LeftFootBase", "LeftFootBase"));
 
-            childJointTypeMap.Add(JointType.HipCenter, JointType.HipCenter);
-            childJointTypeMap.Add(JointType.Spine, JointType.Spine);
-            childJointTypeMap.Add(JointType.ShoulderCenter, JointType.ShoulderCenter);
-            childJointTypeMap.Add(JointType.Head, JointType.Head);
-            childJointTypeMap.Add(JointType.ShoulderLeft, JointType.ElbowLeft);
-            childJointTypeMap.Add(JointType.ElbowLeft, JointType.WristLeft);
-            childJointTypeMap.Add(JointType.WristLeft, JointType.HandLeft);
-            childJointTypeMap.Add(JointType.HandLeft, JointType.HandLeft);
-            childJointTypeMap.Add(JointType.ShoulderRight, JointType.ElbowRight);
-            childJointTypeMap.Add(JointType.ElbowRight, JointType.WristRight);
-            childJointTypeMap.Add(JointType.WristRight, JointType.HandRight);
-            childJointTypeMap.Add(JointType.HandRight, JointType.HandRight);
-            childJointTypeMap.Add(JointType.HipLeft, JointType.KneeLeft);
-            childJointTypeMap.Add(JointType.KneeLeft, JointType.AnkleLeft);
-            childJointTypeMap.Add(JointType.AnkleLeft, JointType.FootLeft);
-            childJointTypeMap.Add(JointType.FootLeft, JointType.FootLeft);
-            childJointTypeMap.Add(JointType.HipRight, JointType.KneeRight);
-            childJointTypeMap.Add(JointType.KneeRight, JointType.AnkleRight);
-            childJointTypeMap.Add(JointType.AnkleRight, JointType.FootRight);
-            childJointTypeMap.Add(JointType.FootRight, JointType.FootRight);
+            parentJointTypeMap.Add(JointType.HipCenter, JointType.HipCenter);
+            parentJointTypeMap.Add(JointType.Spine, JointType.HipCenter);
+            parentJointTypeMap.Add(JointType.ShoulderCenter, JointType.Spine);
+            parentJointTypeMap.Add(JointType.Head, JointType.ShoulderCenter);
+            parentJointTypeMap.Add(JointType.ShoulderLeft, JointType.ShoulderCenter);
+            parentJointTypeMap.Add(JointType.ElbowLeft, JointType.ShoulderLeft);
+            parentJointTypeMap.Add(JointType.WristLeft, JointType.ElbowLeft);
+            parentJointTypeMap.Add(JointType.HandLeft, JointType.WristLeft);
+            parentJointTypeMap.Add(JointType.ShoulderRight, JointType.ShoulderCenter);
+            parentJointTypeMap.Add(JointType.ElbowRight, JointType.ShoulderRight);
+            parentJointTypeMap.Add(JointType.WristRight, JointType.ElbowRight);
+            parentJointTypeMap.Add(JointType.HandRight, JointType.WristRight);
+            parentJointTypeMap.Add(JointType.HipLeft, JointType.HipCenter);
+            parentJointTypeMap.Add(JointType.KneeLeft, JointType.HipLeft);
+            parentJointTypeMap.Add(JointType.AnkleLeft, JointType.KneeLeft);
+            parentJointTypeMap.Add(JointType.FootLeft, JointType.AnkleLeft);
+            parentJointTypeMap.Add(JointType.HipRight, JointType.HipCenter);
+            parentJointTypeMap.Add(JointType.KneeRight, JointType.HipRight);
+            parentJointTypeMap.Add(JointType.AnkleRight, JointType.KneeRight);
+            parentJointTypeMap.Add(JointType.FootRight, JointType.AnkleRight);
         }
 
         public KinectAtlasPlugin()
@@ -145,7 +145,7 @@ namespace KinectPlugin
             EntityDefinition entityDef = new EntityDefinition("Entity");
             entityDef.MeshName = "Arrow.mesh";
             node.addMovableObjectDefinition(entityDef);
-            kinectJointVisual.addElement(node);
+            //kinectJointVisual.addElement(node);
 
             var subScene = scene.getDefaultSubScene();
 
@@ -161,9 +161,12 @@ namespace KinectPlugin
                 scene.buildScene();
 
                 SceneNodeElement sceneNode = instance.getElement("Node") as SceneNodeElement;
-                var entity = sceneNode.getNodeObject("Entity") as OgreWrapper.Entity;
-                var subEntity = entity.getSubEntity(0);
-                subEntity.setCustomParameter(1, new Quaternion(1, 0, 0, 1));
+                if (sceneNode != null)
+                {
+                    var entity = sceneNode.getNodeObject("Entity") as OgreWrapper.Entity;
+                    var subEntity = entity.getSubEntity(0);
+                    subEntity.setCustomParameter(1, new Quaternion(1, 0, 0, 1));
+                }
 
                 testSimObjs.Add(jointType, instance);
             }
@@ -235,7 +238,7 @@ namespace KinectPlugin
 
         Vector3 convertPoint(Joint joint)
         {
-            return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 85f, joint.Position.Z * 1000f * SimulationConfig.MMToUnits);
+            return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 90f, joint.Position.Z * 1000f * SimulationConfig.MMToUnits);
         }
 
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
@@ -272,20 +275,21 @@ namespace KinectPlugin
                                 {
                                     Vector3 pos = convertPoint(joint);
 
-                                    JointType childJoint = childJointTypeMap[joint.JointType];
+                                    JointType parentJoint = parentJointTypeMap[joint.JointType];
                                     Quaternion orientation;
                                     Vector3 direction;
-                                    if(childJoint == joint.JointType)
+                                    Vector3 parentPos = convertPoint(skel.Joints[parentJoint]);
+                                    float length = 0;
+                                    if(parentJoint == joint.JointType)
                                     {
                                         orientation = Quaternion.Identity;
                                         direction = Vector3.Zero;
                                     }
                                     else
                                     {
-                                        Vector3 childPos = convertPoint(skel.Joints[childJoint]);
-
                                         //Option 1
-                                        direction = childPos - pos;
+                                        direction = pos - parentPos;
+                                        length = direction.length();
                                         direction.normalize();
                                         orientation = Quaternion.shortestArcQuatFixedYaw(ref direction, ref Vector3.Up);
                                     }
@@ -296,11 +300,13 @@ namespace KinectPlugin
                                         {
                                             simObject.updatePosition(ref pos, ref orientation, null);
 
+                                            float halfLength = length / 2;
+
                                             debugDrawer.begin(lineName, DrawingType.LineList);
                                             debugDrawer.Color = Color.White;
-                                            debugDrawer.drawLine(pos, pos + direction * 10);
+                                            debugDrawer.drawLine(parentPos, parentPos + direction * halfLength);
                                             debugDrawer.Color = Color.Green;
-                                            debugDrawer.drawLine(pos + direction * 10, pos + direction * 20);
+                                            debugDrawer.drawLine(parentPos + direction * halfLength, parentPos + direction * length);
                                             debugDrawer.end();
                                         });
 
