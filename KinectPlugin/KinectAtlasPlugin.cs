@@ -260,66 +260,6 @@ namespace KinectPlugin
             return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 90f, (joint.Position.Z - 2) * 1000f * SimulationConfig.MMToUnits);
         }
 
-        /// <summary>
-        /// Helper method to mirror the skeleton before calculating joint angles for the avatar.
-        /// </summary>
-        /// <param name="skeleton">The skeleton to mirror.</param>
-        public static void MirrorSkeleton(Skeleton skeleton)
-        {
-            if (null == skeleton)
-            {
-                return;
-            }
-
-            SwapJoints(skeleton, JointType.ShoulderLeft, JointType.ShoulderRight);
-            SwapJoints(skeleton, JointType.ElbowLeft, JointType.ElbowRight);
-            SwapJoints(skeleton, JointType.WristLeft, JointType.WristRight);
-            SwapJoints(skeleton, JointType.HandLeft, JointType.HandRight);
-
-            SwapJoints(skeleton, JointType.HipLeft, JointType.HipRight);
-            SwapJoints(skeleton, JointType.KneeLeft, JointType.KneeRight);
-            SwapJoints(skeleton, JointType.AnkleLeft, JointType.AnkleRight);
-            SwapJoints(skeleton, JointType.FootLeft, JointType.FootRight);
-
-            Array jointTypeValues = Enum.GetValues(typeof(JointType));
-
-            foreach (JointType j in jointTypeValues)
-            {
-                Joint joint = skeleton.Joints[j];
-                SkeletonPoint mirroredjointPosition = joint.Position;
-
-                // Here we negate the Z or X axis to change the skeleton to mirror the user's movements.
-                // Note that this potentially requires us to re-position our camera
-                mirroredjointPosition.X = -mirroredjointPosition.X;
-
-                joint.Position = mirroredjointPosition;
-                skeleton.Joints[j] = joint;
-            }
-        }
-
-        /// <summary>
-        /// Helper method to swap two joints in the skeleton when mirroring the avatar.
-        /// </summary>
-        /// <param name="skeleton">The skeleton to mirror.</param>
-        /// <param name="left">The left joint type.</param>
-        /// <param name="right">The right joint type.</param>
-        private static void SwapJoints(Skeleton skeleton, JointType left, JointType right)
-        {
-            Joint jL = skeleton.Joints[left];
-            Joint jR = skeleton.Joints[right];
-
-            Microsoft.Kinect.SkeletonPoint tempPos = jL.Position;
-            jL.Position = jR.Position;
-            jR.Position = tempPos;
-
-            JointTrackingState tempTs = jL.TrackingState;
-            jL.TrackingState = jR.TrackingState;
-            jR.TrackingState = tempTs;
-
-            skeleton.Joints[left] = jL;
-            skeleton.Joints[right] = jR;
-        }
-
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             if(testSimObjs.Count == 0)
@@ -343,8 +283,6 @@ namespace KinectPlugin
             {
                 foreach (Skeleton skel in skeletons)
                 {
-                    MirrorSkeleton(skel);
-
                     if (skel.TrackingState != SkeletonTrackingState.NotTracked)
                     {
                         foreach(var entry in ikJointMap)
@@ -372,55 +310,60 @@ namespace KinectPlugin
                             bindPosition.preview();
                         });
 
-                        //Debug drawing
-                        foreach(Joint joint in skel.Joints)
+                        debugSkeleton(skel);
+                    }
+                }
+            }
+        }
+
+        private void debugSkeleton(Skeleton skel)
+        {
+            //Debug drawing
+            foreach (Joint joint in skel.Joints)
+            {
+                if (joint.TrackingState != JointTrackingState.NotTracked)
+                {
+                    SimObjectBase simObject = testSimObjs[joint.JointType];
+                    if (simObject != null)
+                    {
+                        Vector3 pos = convertPoint(joint);
+
+                        JointType parentJoint = parentJointTypeMap[joint.JointType];
+                        Quaternion absOrientation;
+                        Vector3 direction;
+                        Vector3 parentPos = convertPoint(skel.Joints[parentJoint]);
+                        float length = 0;
+                        if (parentJoint == joint.JointType)
                         {
-                            if(joint.TrackingState != JointTrackingState.NotTracked)
-                            {
-                                SimObjectBase simObject = testSimObjs[joint.JointType];
-                                if (simObject != null)
-                                {
-                                    Vector3 pos = convertPoint(joint);
-
-                                    JointType parentJoint = parentJointTypeMap[joint.JointType];
-                                    Quaternion absOrientation;
-                                    Vector3 direction;
-                                    Vector3 parentPos = convertPoint(skel.Joints[parentJoint]);
-                                    float length = 0;
-                                    if(parentJoint == joint.JointType)
-                                    {
-                                        absOrientation = Quaternion.Identity;
-                                        direction = Vector3.Zero;
-                                    }
-                                    else
-                                    {
-                                        //Option 1
-                                        direction = pos - parentPos;
-                                        length = direction.length();
-                                        direction.normalize();
-
-                                        var msQuat = skel.BoneOrientations[joint.JointType].AbsoluteRotation.Quaternion;
-                                        absOrientation = new Quaternion(msQuat.X, msQuat.Y, msQuat.Z, msQuat.W);
-                                    }
-
-                                    String lineName = joint.JointType.ToString();
-
-                                    ThreadManager.invoke(() =>
-                                        {
-                                            simObject.updatePosition(ref pos, ref absOrientation, null);
-
-                                            float halfLength = length / 2;
-
-                                            debugDrawer.begin(lineName, DrawingType.LineList);
-                                            debugDrawer.Color = Color.White;
-                                            debugDrawer.drawLine(parentPos, parentPos + direction * halfLength);
-                                            debugDrawer.Color = Color.Green;
-                                            debugDrawer.drawLine(parentPos + direction * halfLength, parentPos + direction * length);
-                                            debugDrawer.end();
-                                        });
-                                }
-                            }
+                            absOrientation = Quaternion.Identity;
+                            direction = Vector3.Zero;
                         }
+                        else
+                        {
+                            //Option 1
+                            direction = pos - parentPos;
+                            length = direction.length();
+                            direction.normalize();
+
+                            var msQuat = skel.BoneOrientations[joint.JointType].AbsoluteRotation.Quaternion;
+                            absOrientation = new Quaternion(msQuat.X, msQuat.Y, msQuat.Z, msQuat.W);
+                        }
+
+                        String lineName = joint.JointType.ToString();
+
+                        ThreadManager.invoke(() =>
+                        {
+                            simObject.updatePosition(ref pos, ref absOrientation, null);
+
+                            float halfLength = length / 2;
+
+                            debugDrawer.begin(lineName, DrawingType.LineList);
+                            debugDrawer.Color = Color.White;
+                            debugDrawer.drawLine(parentPos, parentPos + direction * halfLength);
+                            debugDrawer.Color = Color.Green;
+                            debugDrawer.drawLine(parentPos + direction * halfLength, parentPos + direction * length);
+                            debugDrawer.end();
+                        });
                     }
                 }
             }
