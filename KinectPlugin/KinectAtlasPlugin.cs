@@ -24,7 +24,7 @@ namespace KinectPlugin
         private Dictionary<JointType, SimObjectBase> testSimObjs = new Dictionary<JointType, SimObjectBase>();
 
         private static Dictionary<JointType, JointType> parentJointTypeMap = new Dictionary<JointType, JointType>();
-        private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
+        private static Dictionary<JointType, String> ikJointMap = new Dictionary<JointType, String>();
 
         private MusclePosition bindPosition;
 
@@ -32,26 +32,47 @@ namespace KinectPlugin
 
         static KinectAtlasPlugin()
         {
-            ikJointMap.Add(JointType.HipCenter, Tuple.Create("Pelvis", "Pelvis"));
-            ikJointMap.Add(JointType.Spine, Tuple.Create("SpineC7", "SpineC7"));
-            ikJointMap.Add(JointType.ShoulderCenter, Tuple.Create("Manubrium", "Manubrium"));
-            ikJointMap.Add(JointType.Head, Tuple.Create("Skull", "Skull"));
-            ikJointMap.Add(JointType.ShoulderLeft, Tuple.Create("RightScapula", "RightScapula"));
-            ikJointMap.Add(JointType.ElbowLeft, Tuple.Create("RightHumerus", "RightHumerusUlnaJoint"));
-            ikJointMap.Add(JointType.WristLeft, Tuple.Create("RightUlna", "RightRadiusHandBaseJoint"));
-            ikJointMap.Add(JointType.HandLeft, Tuple.Create("RightHandBase", "RightHandBase"));
-            ikJointMap.Add(JointType.ShoulderRight, Tuple.Create("LeftScapula", "LeftScapula"));
-            ikJointMap.Add(JointType.ElbowRight, Tuple.Create("LeftHumerus", "LeftHumerusUlnaJoint"));
-            ikJointMap.Add(JointType.WristRight, Tuple.Create("LeftUlna", "LeftRadiusHandBaseJoint"));
-            ikJointMap.Add(JointType.HandRight, Tuple.Create("LeftHandBase", "LeftHandBase"));
-            ikJointMap.Add(JointType.HipLeft, Tuple.Create("Pelvis", "RightFemurPelvisJoint"));
-            ikJointMap.Add(JointType.KneeLeft, Tuple.Create("RightFemur", "RightFemurTibiaJoint"));
-            ikJointMap.Add(JointType.AnkleLeft, Tuple.Create("RightTibia", "RightTibiaFootBaseJoint"));
-            ikJointMap.Add(JointType.FootLeft, Tuple.Create("RightFootBase", "RightFootBase"));
-            ikJointMap.Add(JointType.HipRight, Tuple.Create("Pelvis", "LeftFemurPelvisJoint"));
-            ikJointMap.Add(JointType.KneeRight, Tuple.Create("LeftFemur", "LeftFemurTibiaJoint"));
-            ikJointMap.Add(JointType.AnkleRight, Tuple.Create("LeftTibia", "LeftTibiaFootBaseJoint"));
-            ikJointMap.Add(JointType.FootRight, Tuple.Create("LeftFootBase", "LeftFootBase"));
+            ikJointMap.Add(JointType.HipCenter, null);
+            ikJointMap.Add(JointType.Spine, null);
+            ikJointMap.Add(JointType.ShoulderCenter, null);
+            ikJointMap.Add(JointType.Head, "Skull");
+            ikJointMap.Add(JointType.ShoulderLeft, null);
+            ikJointMap.Add(JointType.ElbowLeft, "RightHumerus");
+            ikJointMap.Add(JointType.WristLeft, "RightUlna");
+            ikJointMap.Add(JointType.HandLeft, "RightHandBase");
+            ikJointMap.Add(JointType.ShoulderRight, null);
+            ikJointMap.Add(JointType.ElbowRight, "LeftHumerus");
+            ikJointMap.Add(JointType.WristRight, "LeftUlna");
+            ikJointMap.Add(JointType.HandRight, "LeftHandBase");
+            ikJointMap.Add(JointType.HipLeft, null);
+            ikJointMap.Add(JointType.KneeLeft, "RightFemur");
+            ikJointMap.Add(JointType.AnkleLeft, "RightTibia");
+            ikJointMap.Add(JointType.FootLeft, "RightFootBase");
+            ikJointMap.Add(JointType.HipRight, null);
+            ikJointMap.Add(JointType.KneeRight, "LeftFemur");
+            ikJointMap.Add(JointType.AnkleRight, "LeftTibia");
+            ikJointMap.Add(JointType.FootRight, "LeftFootBase");
+
+            //ikJointMap.Add(JointType.HipCenter, "Pelvis");
+            //ikJointMap.Add(JointType.Spine, "SpineC7");
+            //ikJointMap.Add(JointType.ShoulderCenter, "Manubrium");
+            //ikJointMap.Add(JointType.Head, "Skull");
+            //ikJointMap.Add(JointType.ShoulderLeft, "RightScapula");
+            //ikJointMap.Add(JointType.ElbowLeft, "RightHumerus");
+            //ikJointMap.Add(JointType.WristLeft, "RightUlna");
+            //ikJointMap.Add(JointType.HandLeft, "RightHandBase");
+            //ikJointMap.Add(JointType.ShoulderRight, "LeftScapula");
+            //ikJointMap.Add(JointType.ElbowRight, "LeftHumerus");
+            //ikJointMap.Add(JointType.WristRight, "LeftUlna");
+            //ikJointMap.Add(JointType.HandRight, "LeftHandBase");
+            //ikJointMap.Add(JointType.HipLeft, "Pelvis");
+            //ikJointMap.Add(JointType.KneeLeft, "RightFemur");
+            //ikJointMap.Add(JointType.AnkleLeft, "RightTibia");
+            //ikJointMap.Add(JointType.FootLeft, "RightFootBase");
+            //ikJointMap.Add(JointType.HipRight, "Pelvis");
+            //ikJointMap.Add(JointType.KneeRight, "LeftFemur");
+            //ikJointMap.Add(JointType.AnkleRight, "LeftTibia");
+            //ikJointMap.Add(JointType.FootRight, "LeftFootBase");
 
             parentJointTypeMap.Add(JointType.HipCenter, JointType.HipCenter);
             parentJointTypeMap.Add(JointType.Spine, JointType.HipCenter);
@@ -145,7 +166,7 @@ namespace KinectPlugin
             EntityDefinition entityDef = new EntityDefinition("Entity");
             entityDef.MeshName = "Arrow.mesh";
             node.addMovableObjectDefinition(entityDef);
-            //kinectJointVisual.addElement(node);
+            kinectJointVisual.addElement(node);
 
             var subScene = scene.getDefaultSubScene();
 
@@ -155,7 +176,6 @@ namespace KinectPlugin
                 var jointInfo = ikJointMap[jointType];
 
                 kinectJointVisual.Name = enumVal;
-                kinectJointVisual.Translation = medicalController.getSimObject(jointInfo.Item2).Translation;
                 SimObjectBase instance = kinectJointVisual.register(subScene);
                 medicalController.addSimObject(instance);
                 scene.buildScene();
@@ -238,7 +258,7 @@ namespace KinectPlugin
 
         Vector3 convertPoint(Joint joint)
         {
-            return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 90f, joint.Position.Z * 1000f * SimulationConfig.MMToUnits);
+            return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 90f, (joint.Position.Z - 2) * 1000f * SimulationConfig.MMToUnits);
         }
 
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
@@ -276,13 +296,14 @@ namespace KinectPlugin
                                     Vector3 pos = convertPoint(joint);
 
                                     JointType parentJoint = parentJointTypeMap[joint.JointType];
-                                    Quaternion orientation;
+                                    Quaternion absOrientation;
+                                    Quaternion relOrientation;
                                     Vector3 direction;
                                     Vector3 parentPos = convertPoint(skel.Joints[parentJoint]);
                                     float length = 0;
                                     if(parentJoint == joint.JointType)
                                     {
-                                        orientation = Quaternion.Identity;
+                                        relOrientation = absOrientation = Quaternion.Identity;
                                         direction = Vector3.Zero;
                                     }
                                     else
@@ -291,14 +312,20 @@ namespace KinectPlugin
                                         direction = pos - parentPos;
                                         length = direction.length();
                                         direction.normalize();
-                                        orientation = Quaternion.shortestArcQuatFixedYaw(ref direction, ref Vector3.Up);
+                                        //orientation = Quaternion.shortestArcQuatFixedYaw(ref direction, ref Vector3.Up);
+
+                                        var msQuat = skel.BoneOrientations[joint.JointType].AbsoluteRotation.Quaternion;
+                                        absOrientation = new Quaternion(msQuat.X, msQuat.Y, msQuat.Z, msQuat.W);
+
+                                        var msRelQuat = skel.BoneOrientations[joint.JointType].HierarchicalRotation.Quaternion;
+                                        relOrientation = new Quaternion(msRelQuat.X, msRelQuat.Y, msRelQuat.Z, msRelQuat.W);
                                     }
 
                                     String lineName = joint.JointType.ToString();
 
                                     ThreadManager.invoke(() =>
                                         {
-                                            simObject.updatePosition(ref pos, ref orientation, null);
+                                            simObject.updatePosition(ref pos, ref absOrientation, null);
 
                                             float halfLength = length / 2;
 
@@ -311,13 +338,22 @@ namespace KinectPlugin
                                         });
 
                                     //Modify bind position
-                                    //var fkLink = bindPosition.PelvisChainState[ikJointMap[joint.JointType].Item1];
-                                    //fkLink.l
+                                    String linkName = ikJointMap[joint.JointType];
+                                    if (linkName != null)
+                                    {
+                                        var fkLink = bindPosition.PelvisChainState[linkName];
+                                        fkLink.LocalRotation = relOrientation;
+                                    }
                                 }
                             }
                         }
                     }
                 }
+
+                ThreadManager.invoke(() =>
+                    {
+                        bindPosition.preview();
+                    });
             }
         }
     }
