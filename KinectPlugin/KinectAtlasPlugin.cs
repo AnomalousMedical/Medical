@@ -1,6 +1,7 @@
 ﻿using BEPUikPlugin;
 using Engine;
 using Engine.ObjectManagement;
+using Engine.Renderer;
 using Engine.Saving;
 using Medical;
 using Medical.Controller;
@@ -22,8 +23,12 @@ namespace KinectPlugin
         private MedicalController medicalController;
         private Dictionary<JointType, SimObjectBase> testSimObjs = new Dictionary<JointType, SimObjectBase>();
 
+        private static Dictionary<JointType, JointType> childJointTypeMap = new Dictionary<JointType, JointType>();
         private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
-        private static HashSet<String> createDragControlsFor = new HashSet<string>();
+
+        private MusclePosition bindPosition;
+
+        private DebugDrawingSurface debugDrawer;
 
         static KinectAtlasPlugin()
         {
@@ -48,9 +53,26 @@ namespace KinectPlugin
             ikJointMap.Add(JointType.AnkleRight, Tuple.Create("LeftTibia", "LeftTibiaFootBaseJoint"));
             ikJointMap.Add(JointType.FootRight, Tuple.Create("LeftFootBase", "LeftFootBase"));
 
-            createDragControlsFor.Add("LeftHandBase");
-            createDragControlsFor.Add("RightHandBase");
-            createDragControlsFor.Add("Skull");
+            childJointTypeMap.Add(JointType.HipCenter, JointType.HipCenter);
+            childJointTypeMap.Add(JointType.Spine, JointType.Spine);
+            childJointTypeMap.Add(JointType.ShoulderCenter, JointType.ShoulderCenter);
+            childJointTypeMap.Add(JointType.Head, JointType.Head);
+            childJointTypeMap.Add(JointType.ShoulderLeft, JointType.ElbowLeft);
+            childJointTypeMap.Add(JointType.ElbowLeft, JointType.WristLeft);
+            childJointTypeMap.Add(JointType.WristLeft, JointType.HandLeft);
+            childJointTypeMap.Add(JointType.HandLeft, JointType.HandLeft);
+            childJointTypeMap.Add(JointType.ShoulderRight, JointType.ElbowRight);
+            childJointTypeMap.Add(JointType.ElbowRight, JointType.WristRight);
+            childJointTypeMap.Add(JointType.WristRight, JointType.HandRight);
+            childJointTypeMap.Add(JointType.HandRight, JointType.HandRight);
+            childJointTypeMap.Add(JointType.HipLeft, JointType.KneeLeft);
+            childJointTypeMap.Add(JointType.KneeLeft, JointType.AnkleLeft);
+            childJointTypeMap.Add(JointType.AnkleLeft, JointType.FootLeft);
+            childJointTypeMap.Add(JointType.FootLeft, JointType.FootLeft);
+            childJointTypeMap.Add(JointType.HipRight, JointType.KneeRight);
+            childJointTypeMap.Add(JointType.KneeRight, JointType.AnkleRight);
+            childJointTypeMap.Add(JointType.AnkleRight, JointType.FootRight);
+            childJointTypeMap.Add(JointType.FootRight, JointType.FootRight);
         }
 
         public KinectAtlasPlugin()
@@ -113,39 +135,28 @@ namespace KinectPlugin
 
         public void sceneLoaded(SimScene scene)
         {
-            GenericSimObjectDefinition arrowOnly = new GenericSimObjectDefinition("TestArrow");
+            debugDrawer = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectDebug", scene.getDefaultSubScene());
+
+            bindPosition = new MusclePosition();
+            bindPosition.captureState();
+
+            GenericSimObjectDefinition kinectJointVisual = new GenericSimObjectDefinition("TestArrow");
             SceneNodeDefinition node = new SceneNodeDefinition("Node");
             EntityDefinition entityDef = new EntityDefinition("Entity");
             entityDef.MeshName = "Arrow.mesh";
             node.addMovableObjectDefinition(entityDef);
-            arrowOnly.addElement(node);
-
-            GenericSimObjectDefinition arrowAndDragControl = CopySaver.Default.copy(arrowOnly);
-            var dragControl = new BEPUikDragControlDefinition("DragControl");
-            arrowAndDragControl.addElement(dragControl);
+            kinectJointVisual.addElement(node);
 
             var subScene = scene.getDefaultSubScene();
-
-            GenericSimObjectDefinition createMe;
 
             foreach (var enumVal in EnumUtil.Elements(typeof(JointType)))
             {
                 JointType jointType = (JointType)Enum.Parse(typeof(JointType), enumVal);
                 var jointInfo = ikJointMap[jointType];
 
-                if(createDragControlsFor.Contains(jointInfo.Item1))
-                {
-                    createMe = arrowAndDragControl;
-                    dragControl.BoneSimObjectName = jointInfo.Item1;
-                }
-                else
-                {
-                    createMe = arrowOnly;
-                }
-
-                createMe.Name = enumVal;
-                createMe.Translation = medicalController.getSimObject(jointInfo.Item2).Translation;
-                SimObjectBase instance = createMe.register(subScene);
+                kinectJointVisual.Name = enumVal;
+                kinectJointVisual.Translation = medicalController.getSimObject(jointInfo.Item2).Translation;
+                SimObjectBase instance = kinectJointVisual.register(subScene);
                 medicalController.addSimObject(instance);
                 scene.buildScene();
 
@@ -160,6 +171,7 @@ namespace KinectPlugin
 
         public void sceneUnloading(SimScene scene)
         {
+            medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(debugDrawer);
             testSimObjs.Clear();
         }
 
@@ -251,7 +263,6 @@ namespace KinectPlugin
                 {
                     if (skel.TrackingState != SkeletonTrackingState.NotTracked)
                     {
-                        //Logging.Log.Debug("Tracking skeleton");
                         foreach(Joint joint in skel.Joints)
                         {
                             if(joint.TrackingState != JointTrackingState.NotTracked)
@@ -260,11 +271,42 @@ namespace KinectPlugin
                                 if (simObject != null)
                                 {
                                     Vector3 pos = convertPoint(joint);
+
+                                    JointType childJoint = childJointTypeMap[joint.JointType];
+                                    Quaternion orientation;
+                                    Vector3 direction;
+                                    if(childJoint == joint.JointType)
+                                    {
+                                        orientation = Quaternion.Identity;
+                                        direction = Vector3.Zero;
+                                    }
+                                    else
+                                    {
+                                        Vector3 childPos = convertPoint(skel.Joints[childJoint]);
+
+                                        //Option 1
+                                        direction = childPos - pos;
+                                        direction.normalize();
+                                        orientation = Quaternion.shortestArcQuatFixedYaw(ref direction, ref Vector3.Up);
+                                    }
+
+                                    String lineName = joint.JointType.ToString();
+
                                     ThreadManager.invoke(() =>
                                         {
-                                            simObject.updateTranslation(ref pos, null);
+                                            simObject.updatePosition(ref pos, ref orientation, null);
+
+                                            debugDrawer.begin(lineName, DrawingType.LineList);
+                                            debugDrawer.Color = Color.White;
+                                            debugDrawer.drawLine(pos, pos + direction * 10);
+                                            debugDrawer.Color = Color.Green;
+                                            debugDrawer.drawLine(pos + direction * 10, pos + direction * 20);
+                                            debugDrawer.end();
                                         });
-                                    //Logging.Log.Debug("{0} {1}", joint.JointType, pos);
+
+                                    //Modify bind position
+                                    //var fkLink = bindPosition.PelvisChainState[ikJointMap[joint.JointType].Item1];
+                                    //fkLink.l
                                 }
                             }
                         }
