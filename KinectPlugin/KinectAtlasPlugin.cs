@@ -156,10 +156,15 @@ namespace KinectPlugin
 
         public void sceneLoaded(SimScene scene)
         {
-            debugDrawer = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectDebug", scene.getDefaultSubScene());
-
             bindPosition = new MusclePosition();
             bindPosition.captureState();
+
+            createSkeletonDebugObjects(scene);
+        }
+
+        private void createSkeletonDebugObjects(SimScene scene)
+        {
+            debugDrawer = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectDebug", scene.getDefaultSubScene());
 
             GenericSimObjectDefinition kinectJointVisual = new GenericSimObjectDefinition("TestArrow");
             SceneNodeDefinition node = new SceneNodeDefinition("Node");
