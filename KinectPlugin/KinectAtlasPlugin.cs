@@ -255,11 +255,6 @@ namespace KinectPlugin
             }
         }
 
-        Vector3 convertPoint(Joint joint)
-        {
-            return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 90f, (joint.Position.Z - 2) * 1000f * SimulationConfig.MMToUnits);
-        }
-
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             if(testSimObjs.Count == 0)
@@ -296,7 +291,7 @@ namespace KinectPlugin
                                 case JointType.ElbowRight:
                                 case JointType.KneeLeft:
                                 case JointType.KneeRight:
-                                    relOrientation = (new Quaternion(0, 0, 1, 0) * skel.BoneOrientations[boneOrientation.StartJoint].HierarchicalRotation.Quaternion.toEngineQuat()) * relOrientation;
+                                    relOrientation = skel.BoneOrientations[boneOrientation.StartJoint].HierarchicalRotation.Quaternion.toEngineQuat() * relOrientation;
                                     break;
                             }
 
@@ -326,12 +321,12 @@ namespace KinectPlugin
                     SimObjectBase simObject = testSimObjs[joint.JointType];
                     if (simObject != null)
                     {
-                        Vector3 pos = convertPoint(joint);
+                        Vector3 pos = joint.Position.toEngineCoords();
 
                         JointType parentJoint = parentJointTypeMap[joint.JointType];
                         Quaternion absOrientation;
                         Vector3 direction;
-                        Vector3 parentPos = convertPoint(skel.Joints[parentJoint]);
+                        Vector3 parentPos = skel.Joints[parentJoint].Position.toEngineCoords();
                         float length = 0;
                         if (parentJoint == joint.JointType)
                         {
@@ -345,8 +340,7 @@ namespace KinectPlugin
                             length = direction.length();
                             direction.normalize();
 
-                            var msQuat = skel.BoneOrientations[joint.JointType].AbsoluteRotation.Quaternion;
-                            absOrientation = new Quaternion(msQuat.X, msQuat.Y, msQuat.Z, msQuat.W);
+                            absOrientation = skel.BoneOrientations[joint.JointType].AbsoluteRotation.Quaternion.toEngineQuat();
                         }
 
                         String lineName = joint.JointType.ToString();
