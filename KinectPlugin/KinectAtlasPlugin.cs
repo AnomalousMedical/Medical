@@ -1,5 +1,7 @@
-﻿using Engine;
+﻿using BEPUikPlugin;
+using Engine;
 using Engine.ObjectManagement;
+using Engine.Saving;
 using Medical;
 using Medical.Controller;
 using Microsoft.Kinect;
@@ -21,52 +23,34 @@ namespace KinectPlugin
         private Dictionary<JointType, SimObjectBase> testSimObjs = new Dictionary<JointType, SimObjectBase>();
 
         private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
-
-        private static Dictionary<JointType, String> simObjectMap = new Dictionary<JointType, String>();
+        private static HashSet<String> createDragControlsFor = new HashSet<string>();
 
         static KinectAtlasPlugin()
         {
-            simObjectMap.Add(JointType.HipCenter, "Pelvis");
-            simObjectMap.Add(JointType.Spine, "SpineC7");
-            simObjectMap.Add(JointType.ShoulderCenter, "Manubrium");
-            simObjectMap.Add(JointType.Head, "Skull");
-            simObjectMap.Add(JointType.ShoulderLeft, "LeftScapula");
-            simObjectMap.Add(JointType.ElbowLeft, "LeftHumerus");
-            simObjectMap.Add(JointType.WristLeft, "LeftUlna");
-            simObjectMap.Add(JointType.HandLeft, "LeftHandBase");
-            simObjectMap.Add(JointType.ShoulderRight, "RightScapula");
-            simObjectMap.Add(JointType.ElbowRight, "RightHumerus");
-            simObjectMap.Add(JointType.WristRight, "RightUlna");
-            simObjectMap.Add(JointType.HandRight, "RightHandBase");
-            simObjectMap.Add(JointType.HipLeft, null);
-            simObjectMap.Add(JointType.KneeLeft, "LeftFemur");
-            simObjectMap.Add(JointType.AnkleLeft, "LeftTibia");
-            simObjectMap.Add(JointType.FootLeft, "LeftFootBase");
-            simObjectMap.Add(JointType.HipRight, null);
-            simObjectMap.Add(JointType.KneeRight, "RightFemur");
-            simObjectMap.Add(JointType.AnkleRight, "RightTibia");
-            simObjectMap.Add(JointType.FootRight, "RightFootBase");
-
             ikJointMap.Add(JointType.HipCenter, Tuple.Create("Pelvis", "Pelvis"));
             ikJointMap.Add(JointType.Spine, Tuple.Create("SpineC7", "SpineC7"));
             ikJointMap.Add(JointType.ShoulderCenter, Tuple.Create("Manubrium", "Manubrium"));
             ikJointMap.Add(JointType.Head, Tuple.Create("Skull", "Skull"));
-            ikJointMap.Add(JointType.ShoulderLeft, Tuple.Create("LeftScapula", "LeftScapula"));
-            ikJointMap.Add(JointType.ElbowLeft, Tuple.Create("LeftHumerus", "LeftHumerusUlnaJoint"));
-            ikJointMap.Add(JointType.WristLeft, Tuple.Create("LeftUlna", "LeftRadiusHandBaseJoint"));
-            ikJointMap.Add(JointType.HandLeft, Tuple.Create("LeftHandBase", "LeftHandBase"));
-            ikJointMap.Add(JointType.ShoulderRight, Tuple.Create("RightScapula", "RightScapula"));
-            ikJointMap.Add(JointType.ElbowRight, Tuple.Create("RightHumerus", "RightHumerusUlnaJoint"));
-            ikJointMap.Add(JointType.WristRight, Tuple.Create("RightUlna", "RightRadiusHandBaseJoint"));
-            ikJointMap.Add(JointType.HandRight, Tuple.Create("RightHandBase", "RightHandBase"));
-            ikJointMap.Add(JointType.HipLeft, Tuple.Create("Pelvis", "LeftFemurPelvisJoint"));
-            ikJointMap.Add(JointType.KneeLeft, Tuple.Create("LeftFemur", "LeftFemurTibiaJoint"));
-            ikJointMap.Add(JointType.AnkleLeft, Tuple.Create("LeftTibia", "LeftTibiaFootBaseJoint"));
-            ikJointMap.Add(JointType.FootLeft, Tuple.Create("LeftFootBase", "LeftFootBase"));
-            ikJointMap.Add(JointType.HipRight, Tuple.Create("Pelvis", "RightFemurPelvisJoint"));
-            ikJointMap.Add(JointType.KneeRight, Tuple.Create("RightFemur", "RightFemurTibiaJoint"));
-            ikJointMap.Add(JointType.AnkleRight, Tuple.Create("RightTibia", "RightTibiaFootBaseJoint"));
-            ikJointMap.Add(JointType.FootRight, Tuple.Create("RightFootBase", "RightFootBase"));
+            ikJointMap.Add(JointType.ShoulderLeft, Tuple.Create("RightScapula", "RightScapula"));
+            ikJointMap.Add(JointType.ElbowLeft, Tuple.Create("RightHumerus", "RightHumerusUlnaJoint"));
+            ikJointMap.Add(JointType.WristLeft, Tuple.Create("RightUlna", "RightRadiusHandBaseJoint"));
+            ikJointMap.Add(JointType.HandLeft, Tuple.Create("RightHandBase", "RightHandBase"));
+            ikJointMap.Add(JointType.ShoulderRight, Tuple.Create("LeftScapula", "LeftScapula"));
+            ikJointMap.Add(JointType.ElbowRight, Tuple.Create("LeftHumerus", "LeftHumerusUlnaJoint"));
+            ikJointMap.Add(JointType.WristRight, Tuple.Create("LeftUlna", "LeftRadiusHandBaseJoint"));
+            ikJointMap.Add(JointType.HandRight, Tuple.Create("LeftHandBase", "LeftHandBase"));
+            ikJointMap.Add(JointType.HipLeft, Tuple.Create("Pelvis", "RightFemurPelvisJoint"));
+            ikJointMap.Add(JointType.KneeLeft, Tuple.Create("RightFemur", "RightFemurTibiaJoint"));
+            ikJointMap.Add(JointType.AnkleLeft, Tuple.Create("RightTibia", "RightTibiaFootBaseJoint"));
+            ikJointMap.Add(JointType.FootLeft, Tuple.Create("RightFootBase", "RightFootBase"));
+            ikJointMap.Add(JointType.HipRight, Tuple.Create("Pelvis", "LeftFemurPelvisJoint"));
+            ikJointMap.Add(JointType.KneeRight, Tuple.Create("LeftFemur", "LeftFemurTibiaJoint"));
+            ikJointMap.Add(JointType.AnkleRight, Tuple.Create("LeftTibia", "LeftTibiaFootBaseJoint"));
+            ikJointMap.Add(JointType.FootRight, Tuple.Create("LeftFootBase", "LeftFootBase"));
+
+            createDragControlsFor.Add("LeftHandBase");
+            createDragControlsFor.Add("RightHandBase");
+            createDragControlsFor.Add("Skull");
         }
 
         public KinectAtlasPlugin()
@@ -129,39 +113,39 @@ namespace KinectPlugin
 
         public void sceneLoaded(SimScene scene)
         {
-            TrackArrows(scene);
-            //TrackSimObjects(scene);
-        }
-
-        private void TrackSimObjects(SimScene scene)
-        {
-            var subScene = scene.getDefaultSubScene();
-
-            foreach (var enumVal in EnumUtil.Elements(typeof(JointType)))
-            {
-                JointType jointType = (JointType)Enum.Parse(typeof(JointType), enumVal);
-                testSimObjs.Add(jointType, (GenericSimObject)medicalController.getSimObject(simObjectMap[jointType]));
-            }
-        }
-
-        private void TrackArrows(SimScene scene)
-        {
-            GenericSimObjectDefinition testArrow = new GenericSimObjectDefinition("TestArrow");
+            GenericSimObjectDefinition arrowOnly = new GenericSimObjectDefinition("TestArrow");
             SceneNodeDefinition node = new SceneNodeDefinition("Node");
             EntityDefinition entityDef = new EntityDefinition("Entity");
             entityDef.MeshName = "Arrow.mesh";
             node.addMovableObjectDefinition(entityDef);
-            testArrow.addElement(node);
+            arrowOnly.addElement(node);
+
+            GenericSimObjectDefinition arrowAndDragControl = CopySaver.Default.copy(arrowOnly);
+            var dragControl = new BEPUikDragControlDefinition("DragControl");
+            arrowAndDragControl.addElement(dragControl);
 
             var subScene = scene.getDefaultSubScene();
+
+            GenericSimObjectDefinition createMe;
 
             foreach (var enumVal in EnumUtil.Elements(typeof(JointType)))
             {
                 JointType jointType = (JointType)Enum.Parse(typeof(JointType), enumVal);
+                var jointInfo = ikJointMap[jointType];
 
-                testArrow.Name = enumVal;
-                testArrow.Translation = medicalController.getSimObject(ikJointMap[jointType].Item2).Translation;
-                SimObjectBase instance = testArrow.register(subScene);
+                if(createDragControlsFor.Contains(jointInfo.Item1))
+                {
+                    createMe = arrowAndDragControl;
+                    dragControl.BoneSimObjectName = jointInfo.Item1;
+                }
+                else
+                {
+                    createMe = arrowOnly;
+                }
+
+                createMe.Name = enumVal;
+                createMe.Translation = medicalController.getSimObject(jointInfo.Item2).Translation;
+                SimObjectBase instance = createMe.register(subScene);
                 medicalController.addSimObject(instance);
                 scene.buildScene();
 
