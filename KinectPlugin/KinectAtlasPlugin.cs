@@ -32,26 +32,26 @@ namespace KinectPlugin
 
         static KinectAtlasPlugin()
         {
-            ikJointMap.Add(JointType.HipCenter, null);
-            ikJointMap.Add(JointType.Spine, null);
-            ikJointMap.Add(JointType.ShoulderCenter, null);
+            //ikJointMap.Add(JointType.HipCenter, null);
+            //ikJointMap.Add(JointType.Spine, null);
+            //ikJointMap.Add(JointType.ShoulderCenter, null);
             ikJointMap.Add(JointType.Head, "Skull");
-            ikJointMap.Add(JointType.ShoulderLeft, null);
-            ikJointMap.Add(JointType.ElbowLeft, "RightHumerus");
-            ikJointMap.Add(JointType.WristLeft, "RightUlna");
-            ikJointMap.Add(JointType.HandLeft, "RightHandBase");
-            ikJointMap.Add(JointType.ShoulderRight, null);
-            ikJointMap.Add(JointType.ElbowRight, "LeftHumerus");
-            ikJointMap.Add(JointType.WristRight, "LeftUlna");
-            ikJointMap.Add(JointType.HandRight, "LeftHandBase");
-            ikJointMap.Add(JointType.HipLeft, null);
-            ikJointMap.Add(JointType.KneeLeft, "RightFemur");
-            ikJointMap.Add(JointType.AnkleLeft, "RightTibia");
-            ikJointMap.Add(JointType.FootLeft, "RightFootBase");
-            ikJointMap.Add(JointType.HipRight, null);
-            ikJointMap.Add(JointType.KneeRight, "LeftFemur");
-            ikJointMap.Add(JointType.AnkleRight, "LeftTibia");
-            ikJointMap.Add(JointType.FootRight, "LeftFootBase");
+            //ikJointMap.Add(JointType.ShoulderLeft, null);
+            ikJointMap.Add(JointType.ElbowLeft, "LeftHumerus");
+            ikJointMap.Add(JointType.WristLeft, "LeftUlna");
+            ikJointMap.Add(JointType.HandLeft,  "LeftHandBase");
+            //ikJointMap.Add(JointType.ShoulderRight, null);
+            ikJointMap.Add(JointType.ElbowRight, "RightHumerus");
+            ikJointMap.Add(JointType.WristRight, "RightUlna");
+            ikJointMap.Add(JointType.HandRight,  "RightHandBase");
+            //ikJointMap.Add(JointType.HipLeft, null);
+            ikJointMap.Add(JointType.KneeLeft,  "LeftFemur");
+            ikJointMap.Add(JointType.AnkleLeft, "LeftTibia");
+            ikJointMap.Add(JointType.FootLeft,  "LeftFootBase");
+            //ikJointMap.Add(JointType.HipRight, null);
+            ikJointMap.Add(JointType.KneeRight,  "RightFemur");
+            ikJointMap.Add(JointType.AnkleRight, "RightTibia");
+            ikJointMap.Add(JointType.FootRight,  "RightFootBase");
 
             //ikJointMap.Add(JointType.HipCenter, "Pelvis");
             //ikJointMap.Add(JointType.Spine, "SpineC7");
@@ -173,7 +173,6 @@ namespace KinectPlugin
             foreach (var enumVal in EnumUtil.Elements(typeof(JointType)))
             {
                 JointType jointType = (JointType)Enum.Parse(typeof(JointType), enumVal);
-                var jointInfo = ikJointMap[jointType];
 
                 kinectJointVisual.Name = enumVal;
                 SimObjectBase instance = kinectJointVisual.register(subScene);
@@ -261,6 +260,66 @@ namespace KinectPlugin
             return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 90f, (joint.Position.Z - 2) * 1000f * SimulationConfig.MMToUnits);
         }
 
+        /// <summary>
+        /// Helper method to mirror the skeleton before calculating joint angles for the avatar.
+        /// </summary>
+        /// <param name="skeleton">The skeleton to mirror.</param>
+        public static void MirrorSkeleton(Skeleton skeleton)
+        {
+            if (null == skeleton)
+            {
+                return;
+            }
+
+            SwapJoints(skeleton, JointType.ShoulderLeft, JointType.ShoulderRight);
+            SwapJoints(skeleton, JointType.ElbowLeft, JointType.ElbowRight);
+            SwapJoints(skeleton, JointType.WristLeft, JointType.WristRight);
+            SwapJoints(skeleton, JointType.HandLeft, JointType.HandRight);
+
+            SwapJoints(skeleton, JointType.HipLeft, JointType.HipRight);
+            SwapJoints(skeleton, JointType.KneeLeft, JointType.KneeRight);
+            SwapJoints(skeleton, JointType.AnkleLeft, JointType.AnkleRight);
+            SwapJoints(skeleton, JointType.FootLeft, JointType.FootRight);
+
+            Array jointTypeValues = Enum.GetValues(typeof(JointType));
+
+            foreach (JointType j in jointTypeValues)
+            {
+                Joint joint = skeleton.Joints[j];
+                SkeletonPoint mirroredjointPosition = joint.Position;
+
+                // Here we negate the Z or X axis to change the skeleton to mirror the user's movements.
+                // Note that this potentially requires us to re-position our camera
+                mirroredjointPosition.X = -mirroredjointPosition.X;
+
+                joint.Position = mirroredjointPosition;
+                skeleton.Joints[j] = joint;
+            }
+        }
+
+        /// <summary>
+        /// Helper method to swap two joints in the skeleton when mirroring the avatar.
+        /// </summary>
+        /// <param name="skeleton">The skeleton to mirror.</param>
+        /// <param name="left">The left joint type.</param>
+        /// <param name="right">The right joint type.</param>
+        private static void SwapJoints(Skeleton skeleton, JointType left, JointType right)
+        {
+            Joint jL = skeleton.Joints[left];
+            Joint jR = skeleton.Joints[right];
+
+            Microsoft.Kinect.SkeletonPoint tempPos = jL.Position;
+            jL.Position = jR.Position;
+            jR.Position = tempPos;
+
+            JointTrackingState tempTs = jL.TrackingState;
+            jL.TrackingState = jR.TrackingState;
+            jR.TrackingState = tempTs;
+
+            skeleton.Joints[left] = jL;
+            skeleton.Joints[right] = jR;
+        }
+
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             if(testSimObjs.Count == 0)
@@ -284,8 +343,36 @@ namespace KinectPlugin
             {
                 foreach (Skeleton skel in skeletons)
                 {
+                    MirrorSkeleton(skel);
+
                     if (skel.TrackingState != SkeletonTrackingState.NotTracked)
                     {
+                        foreach(var entry in ikJointMap)
+                        {
+                            BoneOrientation boneOrientation = skel.BoneOrientations[entry.Key];
+                            var relOrientation = boneOrientation.HierarchicalRotation.Quaternion.toEngineQuat();
+
+                            switch (entry.Key)
+                            {
+                                case JointType.ElbowLeft:
+                                case JointType.ElbowRight:
+                                case JointType.KneeLeft:
+                                case JointType.KneeRight:
+                                    relOrientation = (new Quaternion(0, 0, 1, 0) * skel.BoneOrientations[boneOrientation.StartJoint].HierarchicalRotation.Quaternion.toEngineQuat()) * relOrientation;
+                                    break;
+                            }
+
+                            //Modify bind position
+                            var fkLink = bindPosition.PelvisChainState[entry.Value];
+                            fkLink.LocalRotation = relOrientation;
+                        }
+
+                        ThreadManager.invoke(() =>
+                        {
+                            bindPosition.preview();
+                        });
+
+                        //Debug drawing
                         foreach(Joint joint in skel.Joints)
                         {
                             if(joint.TrackingState != JointTrackingState.NotTracked)
@@ -297,13 +384,12 @@ namespace KinectPlugin
 
                                     JointType parentJoint = parentJointTypeMap[joint.JointType];
                                     Quaternion absOrientation;
-                                    Quaternion relOrientation;
                                     Vector3 direction;
                                     Vector3 parentPos = convertPoint(skel.Joints[parentJoint]);
                                     float length = 0;
                                     if(parentJoint == joint.JointType)
                                     {
-                                        relOrientation = absOrientation = Quaternion.Identity;
+                                        absOrientation = Quaternion.Identity;
                                         direction = Vector3.Zero;
                                     }
                                     else
@@ -312,13 +398,9 @@ namespace KinectPlugin
                                         direction = pos - parentPos;
                                         length = direction.length();
                                         direction.normalize();
-                                        //orientation = Quaternion.shortestArcQuatFixedYaw(ref direction, ref Vector3.Up);
 
                                         var msQuat = skel.BoneOrientations[joint.JointType].AbsoluteRotation.Quaternion;
                                         absOrientation = new Quaternion(msQuat.X, msQuat.Y, msQuat.Z, msQuat.W);
-
-                                        var msRelQuat = skel.BoneOrientations[joint.JointType].HierarchicalRotation.Quaternion;
-                                        relOrientation = new Quaternion(msRelQuat.X, msRelQuat.Y, msRelQuat.Z, msRelQuat.W);
                                     }
 
                                     String lineName = joint.JointType.ToString();
@@ -336,24 +418,11 @@ namespace KinectPlugin
                                             debugDrawer.drawLine(parentPos + direction * halfLength, parentPos + direction * length);
                                             debugDrawer.end();
                                         });
-
-                                    //Modify bind position
-                                    String linkName = ikJointMap[joint.JointType];
-                                    if (linkName != null)
-                                    {
-                                        var fkLink = bindPosition.PelvisChainState[linkName];
-                                        fkLink.LocalRotation = relOrientation;
-                                    }
                                 }
                             }
                         }
                     }
                 }
-
-                ThreadManager.invoke(() =>
-                    {
-                        bindPosition.preview();
-                    });
             }
         }
     }
