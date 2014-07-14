@@ -9,6 +9,8 @@ namespace Medical
     {
         public const float UnitsToMM = 8.467f;
 
+        public const float MMToUnits = 1 / UnitsToMM;
+
         private SimulationConfig()
         {
 
