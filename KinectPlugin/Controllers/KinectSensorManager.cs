@@ -1,4 +1,5 @@
 ﻿using Logging;
+using Medical.Controller;
 using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,10 @@ namespace KinectPlugin
         private KinectSensor sensor;
         private KinectStatus currentStatus;
 
-        public event EventHandler<SkeletonFrameReadyEventArgs> SkeletonFrameReady;
+        /// <summary>
+        /// Called when a skeleton frame is ready, this event will fire on the main application thread.
+        /// </summary>
+        public event Action<Skeleton[]> SkeletonFrameReady;
 
         public KinectSensorManager()
         {
@@ -29,9 +33,26 @@ namespace KinectPlugin
 
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
+            //This happens on its own thread
+
             if(SkeletonFrameReady != null)
             {
-                SkeletonFrameReady.Invoke(sender, e);
+                Skeleton[] skeletons = new Skeleton[0];
+
+                //Get the skeletons
+                using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
+                {
+                    if (skeletonFrame != null)
+                    {
+                        skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
+                        skeletonFrame.CopySkeletonDataTo(skeletons);
+                    }
+                }
+
+                ThreadManager.invoke(() =>
+                {
+                    SkeletonFrameReady.Invoke(skeletons);
+                });
             }
         }
 

@@ -101,20 +101,16 @@ namespace KinectPlugin
                         }
 
                         String lineName = joint.JointType.ToString();
+                        simObject.updatePosition(ref pos, ref absOrientation, null);
 
-                        ThreadManager.invoke(() =>
-                        {
-                            simObject.updatePosition(ref pos, ref absOrientation, null);
+                        float halfLength = length / 2;
 
-                            float halfLength = length / 2;
-
-                            debugDrawer.begin(lineName, DrawingType.LineList);
-                            debugDrawer.Color = Color.White;
-                            debugDrawer.drawLine(parentPos, parentPos + direction * halfLength);
-                            debugDrawer.Color = Color.Green;
-                            debugDrawer.drawLine(parentPos + direction * halfLength, parentPos + direction * length);
-                            debugDrawer.end();
-                        });
+                        debugDrawer.begin(lineName, DrawingType.LineList);
+                        debugDrawer.Color = Color.White;
+                        debugDrawer.drawLine(parentPos, parentPos + direction * halfLength);
+                        debugDrawer.Color = Color.Green;
+                        debugDrawer.drawLine(parentPos + direction * halfLength, parentPos + direction * length);
+                        debugDrawer.end();
                     }
                 }
             }

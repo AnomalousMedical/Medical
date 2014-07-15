@@ -118,22 +118,8 @@ namespace KinectPlugin
             }
         }
 
-        void sensorManager_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
+        void sensorManager_SkeletonFrameReady(Skeleton[] skeletons)
         {
-            //This happens on its own thread
-
-            Skeleton[] skeletons = new Skeleton[0];
-
-            //Get the skeletons
-            using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
-            {
-                if (skeletonFrame != null)
-                {
-                    skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
-                    skeletonFrame.CopySkeletonDataTo(skeletons);
-                }
-            }
-
             if (skeletons.Length != 0)
             {
                 foreach (Skeleton skel in skeletons)

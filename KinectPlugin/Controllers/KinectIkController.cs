@@ -130,10 +130,7 @@ namespace KinectPlugin
                         if (simObject != null)
                         {
                             Vector3 pos = joint.Position.toEngineCoords();
-                            ThreadManager.invoke(() =>
-                            {
-                                simObject.updateTranslation(ref pos, null);
-                            });
+                            simObject.updateTranslation(ref pos, null);
                         }
                     }
                 }
