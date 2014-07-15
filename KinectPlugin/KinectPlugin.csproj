@@ -54,7 +54,8 @@
     <Compile Include="KinectAtlasPlugin.cs" />
     <Compile Include="KinectAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\KinectVector4Extensions.cs" />
+    <Compile Include="Utility\KinectDebugVisualizer.cs" />
+    <Compile Include="Utility\KinectUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

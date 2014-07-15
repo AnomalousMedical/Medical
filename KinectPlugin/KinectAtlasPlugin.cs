@@ -22,12 +22,11 @@ namespace KinectPlugin
 
         private MedicalController medicalController;
         private Dictionary<JointType, SimObjectBase> dragSimObjs = new Dictionary<JointType, SimObjectBase>();
-        private Dictionary<JointType, SimObjectBase> debugSimObjs = new Dictionary<JointType, SimObjectBase>();
-        private DebugDrawingSurface debugDrawer;
 
         private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
         private static HashSet<String> createDragControlsFor = new HashSet<string>();
-        private static Dictionary<JointType, JointType> parentJointTypeMap = new Dictionary<JointType, JointType>();
+
+        private KinectDebugVisualizer kinectDebugger;
 
         static KinectAtlasPlugin()
         {
@@ -62,27 +61,6 @@ namespace KinectPlugin
             createDragControlsFor.Add("LeftHumerus");
             createDragControlsFor.Add("RightHumerus");
             createDragControlsFor.Add("Pelvis");
-
-            parentJointTypeMap.Add(JointType.HipCenter, JointType.HipCenter);
-            parentJointTypeMap.Add(JointType.Spine, JointType.HipCenter);
-            parentJointTypeMap.Add(JointType.ShoulderCenter, JointType.Spine);
-            parentJointTypeMap.Add(JointType.Head, JointType.ShoulderCenter);
-            parentJointTypeMap.Add(JointType.ShoulderLeft, JointType.ShoulderCenter);
-            parentJointTypeMap.Add(JointType.ElbowLeft, JointType.ShoulderLeft);
-            parentJointTypeMap.Add(JointType.WristLeft, JointType.ElbowLeft);
-            parentJointTypeMap.Add(JointType.HandLeft, JointType.WristLeft);
-            parentJointTypeMap.Add(JointType.ShoulderRight, JointType.ShoulderCenter);
-            parentJointTypeMap.Add(JointType.ElbowRight, JointType.ShoulderRight);
-            parentJointTypeMap.Add(JointType.WristRight, JointType.ElbowRight);
-            parentJointTypeMap.Add(JointType.HandRight, JointType.WristRight);
-            parentJointTypeMap.Add(JointType.HipLeft, JointType.HipCenter);
-            parentJointTypeMap.Add(JointType.KneeLeft, JointType.HipLeft);
-            parentJointTypeMap.Add(JointType.AnkleLeft, JointType.KneeLeft);
-            parentJointTypeMap.Add(JointType.FootLeft, JointType.AnkleLeft);
-            parentJointTypeMap.Add(JointType.HipRight, JointType.HipCenter);
-            parentJointTypeMap.Add(JointType.KneeRight, JointType.HipRight);
-            parentJointTypeMap.Add(JointType.AnkleRight, JointType.KneeRight);
-            parentJointTypeMap.Add(JointType.FootRight, JointType.AnkleRight);
         }
 
         public KinectAtlasPlugin()
@@ -141,6 +119,7 @@ namespace KinectPlugin
         public void initialize(StandaloneController standaloneController)
         {
             this.medicalController = standaloneController.MedicalController;
+            kinectDebugger = new KinectDebugVisualizer(standaloneController);
         }
 
         public void sceneLoaded(SimScene scene)
@@ -193,51 +172,13 @@ namespace KinectPlugin
                 dragSimObjs.Add(jointType, instance);
             }
 
-            createSkeletonDebugObjects(scene);
-        }
-
-        private void createSkeletonDebugObjects(SimScene scene)
-        {
-            debugDrawer = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectDebug", scene.getDefaultSubScene());
-
-            GenericSimObjectDefinition kinectJointVisual = new GenericSimObjectDefinition("TestArrow");
-            SceneNodeDefinition node = new SceneNodeDefinition("Node");
-            EntityDefinition entityDef = new EntityDefinition("Entity");
-            entityDef.MeshName = "Arrow.mesh";
-            node.addMovableObjectDefinition(entityDef);
-            kinectJointVisual.addElement(node);
-
-            var subScene = scene.getDefaultSubScene();
-
-            foreach (var enumVal in EnumUtil.Elements(typeof(JointType)))
-            {
-                JointType jointType = (JointType)Enum.Parse(typeof(JointType), enumVal);
-
-                kinectJointVisual.Name = enumVal + "KinectDebugVisual";
-                SimObjectBase instance = kinectJointVisual.register(subScene);
-                medicalController.addSimObject(instance);
-                scene.buildScene();
-
-                SceneNodeElement sceneNode = instance.getElement("Node") as SceneNodeElement;
-                if (sceneNode != null)
-                {
-                    var entity = sceneNode.getNodeObject("Entity") as OgreWrapper.Entity;
-                    var subEntity = entity.getSubEntity(0);
-                    subEntity.setCustomParameter(1, new Quaternion(1, 0, 0, 1));
-                }
-
-                debugSimObjs.Add(jointType, instance);
-            }
+            kinectDebugger.createDebugObjects(scene);
         }
 
         public void sceneUnloading(SimScene scene)
         {
-            if (debugDrawer != null)
-            {
-                medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(debugDrawer);
-            }
             dragSimObjs.Clear();
-            debugSimObjs.Clear();
+            kinectDebugger.destroyDebugObjects(scene);
         }
 
         public void setMainInterfaceEnabled(bool enabled)
@@ -298,11 +239,6 @@ namespace KinectPlugin
             }
         }
 
-        Vector3 convertPoint(Joint joint)
-        {
-            return new Vector3(joint.Position.X * 1000f * SimulationConfig.MMToUnits, joint.Position.Y * 1000f * SimulationConfig.MMToUnits - 85f, -((joint.Position.Z - 1.5f) * 1000f * SimulationConfig.MMToUnits));
-        }
-
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             if (dragSimObjs.Count == 0)
@@ -335,7 +271,7 @@ namespace KinectPlugin
                                 SimObjectBase simObject = dragSimObjs[joint.JointType];
                                 if (simObject != null)
                                 {
-                                    Vector3 pos = convertPoint(joint);
+                                    Vector3 pos = joint.Position.toEngineCoords();
                                     ThreadManager.invoke(() =>
                                     {
                                         simObject.updateTranslation(ref pos, null);
@@ -345,60 +281,7 @@ namespace KinectPlugin
                         }
                     }
 
-                    debugSkeleton(skel);
-                }
-            }
-        }
-
-
-        private void debugSkeleton(Skeleton skel)
-        {
-            //Debug drawing
-            foreach (Joint joint in skel.Joints)
-            {
-                if (joint.TrackingState != JointTrackingState.NotTracked)
-                {
-                    SimObjectBase simObject = debugSimObjs[joint.JointType];
-                    if (simObject != null)
-                    {
-                        Vector3 pos = joint.Position.toEngineCoords();
-
-                        JointType parentJoint = parentJointTypeMap[joint.JointType];
-                        Quaternion absOrientation;
-                        Vector3 direction;
-                        Vector3 parentPos = skel.Joints[parentJoint].Position.toEngineCoords();
-                        float length = 0;
-                        if (parentJoint == joint.JointType)
-                        {
-                            absOrientation = Quaternion.Identity;
-                            direction = Vector3.Zero;
-                        }
-                        else
-                        {
-                            //Option 1
-                            direction = pos - parentPos;
-                            length = direction.length();
-                            direction.normalize();
-
-                            absOrientation = skel.BoneOrientations[joint.JointType].AbsoluteRotation.Quaternion.toEngineQuat();
-                        }
-
-                        String lineName = joint.JointType.ToString();
-
-                        ThreadManager.invoke(() =>
-                        {
-                            simObject.updatePosition(ref pos, ref absOrientation, null);
-
-                            float halfLength = length / 2;
-
-                            debugDrawer.begin(lineName, DrawingType.LineList);
-                            debugDrawer.Color = Color.White;
-                            debugDrawer.drawLine(parentPos, parentPos + direction * halfLength);
-                            debugDrawer.Color = Color.Green;
-                            debugDrawer.drawLine(parentPos + direction * halfLength, parentPos + direction * length);
-                            debugDrawer.end();
-                        });
-                    }
+                    kinectDebugger.debugSkeleton(skel);
                 }
             }
         }
