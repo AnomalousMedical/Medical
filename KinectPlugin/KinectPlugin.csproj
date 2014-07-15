@@ -53,7 +53,6 @@
   <ItemGroup>
     <Compile Include="Controllers\KinectIKBone.cs" />
     <Compile Include="Controllers\KinectIkController.cs" />
-    <Compile Include="Controllers\KinectIkHierarchy.cs" />
     <Compile Include="Controllers\KinectSensorManager.cs" />
     <Compile Include="KinectAtlasPlugin.cs" />
     <Compile Include="KinectAtlasPluginEntryPoint.cs" />

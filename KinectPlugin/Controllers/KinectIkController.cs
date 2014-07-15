@@ -1,6 +1,7 @@
 ﻿using BEPUikPlugin;
 using Engine;
 using Engine.ObjectManagement;
+using Engine.Renderer;
 using Engine.Saving;
 using Medical;
 using Medical.Controller;
@@ -18,6 +19,8 @@ namespace KinectPlugin
     {
         private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
         private static HashSet<String> createDragControlsFor = new HashSet<string>();
+
+        private DebugDrawingSurface ikDebug;
 
         static KinectIkController()
         {
@@ -55,9 +58,9 @@ namespace KinectPlugin
         }
 
         private MedicalController medicalController;
-        private Dictionary<JointType, SimObjectBase> dragSimObjs = new Dictionary<JointType, SimObjectBase>();
         private GenericSimObjectDefinition dragSimObjectDefinition;
         private BEPUikDragControlDefinition dragControl;
+        private KinectIKBone hips;
 
         public KinectIkController(StandaloneController controller)
         {
@@ -76,64 +79,73 @@ namespace KinectPlugin
         public void createIkControls(SimScene scene)
         {
             var subScene = scene.getDefaultSubScene();
+            ikDebug = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectIKDebug", subScene);
 
-            foreach (var enumVal in EnumUtil.Elements(typeof(JointType)))
+            hips = createKinectBone(JointType.HipCenter, "Pelvis", "Pelvis", null, scene, subScene);
+
+            KinectIKBone leftKnee = createKinectBone(JointType.KneeRight, "LeftFemur", "LeftFemurTibiaJoint", hips, scene, subScene);
+            KinectIKBone leftAnkle = createKinectBone(JointType.AnkleRight, "LeftTibia", "LeftTibiaFootBaseJoint", leftKnee, scene, subScene);
+            KinectIKBone leftFoot = createKinectBone(JointType.FootRight, "LeftFootBase", "LeftFootBase", leftAnkle, scene, subScene);
+
+            KinectIKBone rightKnee = createKinectBone( JointType.KneeLeft,   "RightFemur",    "RightFemurTibiaJoint",    hips,       scene, subScene);
+            KinectIKBone rightAnkle = createKinectBone(JointType.AnkleLeft,  "RightTibia",    "RightTibiaFootBaseJoint", rightKnee,  scene, subScene);
+            KinectIKBone rightFoot = createKinectBone( JointType.FootLeft,   "RightFootBase", "RightFootBase",           rightAnkle, scene, subScene);
+
+            KinectIKBone leftElbow = createKinectBone(JointType.ElbowRight, "LeftHumerus", "LeftHumerusUlnaJoint", hips, scene, subScene);
+            KinectIKBone leftWrist = createKinectBone(JointType.WristRight, "LeftUlna", "LeftRadiusHandBaseJoint", leftElbow, scene, subScene);
+            KinectIKBone leftHand = createKinectBone(JointType.HandRight, "LeftHandBase", "LeftHandBase", leftWrist, scene, subScene);
+
+            KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft, "RightHumerus", "RightHumerusUlnaJoint", hips, scene, subScene);
+            KinectIKBone rightWrist = createKinectBone(JointType.WristLeft, "RightUlna", "RightRadiusHandBaseJoint", rightElbow, scene, subScene);
+            KinectIKBone rightHand = createKinectBone(JointType.HandLeft, "RightHandBase", "RightHandBase", rightWrist, scene, subScene);
+
+            KinectIKBone skull = createKinectBone(JointType.Head, "Skull", "Skull", hips, scene, subScene);
+        }
+
+        private KinectIKBone createKinectBone(JointType jointType, String boneSimObjectName, String translationSimObjectName, KinectIKBone parent, SimScene scene, SimSubScene subScene)
+        {
+            dragControl.BoneSimObjectName = boneSimObjectName;
+
+            var targetSimObject = medicalController.getSimObject(dragControl.BoneSimObjectName);
+            var ikBone = targetSimObject.getElement("IKBone") as BEPUikBone;
+            ikBone.Pinned = false;
+
+            dragSimObjectDefinition.Name = jointType + "DragControl";
+            dragSimObjectDefinition.Translation = medicalController.getSimObject(translationSimObjectName).Translation;
+            SimObjectBase instance = dragSimObjectDefinition.register(subScene);
+            medicalController.addSimObject(instance);
+            scene.buildScene();
+
+            float distanceToParent = 0;
+            if (parent != null)
             {
-                JointType jointType = (JointType)Enum.Parse(typeof(JointType), enumVal);
-                var jointInfo = ikJointMap[jointType];
-
-                if (createDragControlsFor.Contains(jointInfo.Item1))
-                {
-                    dragControl.BoneSimObjectName = jointInfo.Item1;
-
-                    var targetSimObject = medicalController.getSimObject(dragControl.BoneSimObjectName);
-                    var ikBone = targetSimObject.getElement("IKBone") as BEPUikBone;
-                    ikBone.Pinned = false;
-
-                    dragSimObjectDefinition.Name = enumVal + "DragControl";
-                    dragSimObjectDefinition.Translation = medicalController.getSimObject(jointInfo.Item2).Translation;
-                    SimObjectBase instance = dragSimObjectDefinition.register(subScene);
-                    medicalController.addSimObject(instance);
-                    scene.buildScene();
-
-                    dragSimObjs.Add(jointType, instance);
-                }
+                distanceToParent = (instance.Translation - parent.Translation).length();
             }
+
+            var bone = new KinectIKBone(jointType, distanceToParent, instance);
+            if(parent != null)
+            {
+                parent.addChild(bone);
+            }
+            return bone;
         }
 
         public void destroyIkControls(SimScene scene)
         {
-            dragSimObjs.Clear();
+            medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(ikDebug);
+
+            //Need to implement this
         }
 
         public void updateControls(Skeleton skel)
         {
             if (skel.TrackingState != SkeletonTrackingState.NotTracked)
             {
-                //Walk the bone tree
-                //walkBones(JointType.HipCenter);
-
-                foreach (Joint joint in skel.Joints)
-                {
-                    SimObjectBase simObject;
-                    if (dragSimObjs.TryGetValue(joint.JointType, out simObject))
-                    {
-                        Vector3 pos = joint.Position.toEngineCoords();
-                        simObject.updateTranslation(ref pos, null);
-                    }
-                }
-            }
-        }
-
-        private void walkBones(JointType jointType, Skeleton skel)
-        {
-            Joint joint = skel.Joints[jointType];
-            var bone = skel.BoneOrientations[jointType];
-            SimObjectBase simObject = dragSimObjs[joint.JointType];
-            if (simObject != null)
-            {
-                Vector3 pos = joint.Position.toEngineCoords();
-                simObject.updateTranslation(ref pos, null);
+                hips.update(skel);
+                ikDebug.begin("Main", DrawingType.LineList);
+                ikDebug.Color = Color.Red;
+                hips.render(ikDebug);
+                ikDebug.end();
             }
         }
     }

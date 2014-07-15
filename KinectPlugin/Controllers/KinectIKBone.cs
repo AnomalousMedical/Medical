@@ -1,4 +1,7 @@
-﻿using Engine.ObjectManagement;
+﻿using BEPUikPlugin;
+using Engine;
+using Engine.ObjectManagement;
+using Engine.Renderer;
 using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
@@ -10,22 +13,83 @@ namespace KinectPlugin
 {
     class KinectIKBone
     {
+        private static GenericSimObjectDefinition dragSimObjectDefinition;
+        private static BEPUikDragControlDefinition dragControl;
+
         private List<KinectIKBone> children = new List<KinectIKBone>();
+        private JointType jointType;
+        private float distanceToParent;
+        private SimObjectBase simObject;
 
-        public KinectIKBone(JointType jointType, float DistanceToParent)
+        public KinectIKBone(JointType jointType, float distanceToParent, SimObjectBase simObject)
         {
-
+            this.jointType = jointType;
+            this.distanceToParent = distanceToParent;
+            this.simObject = simObject;
         }
 
-        public void update()
+        public void update(Skeleton skeleton)
         {
+            Vector3 pos = skeleton.Joints[JointType.HipCenter].Position.toEngineCoords();
 
+            simObject.updateTranslation(ref pos, null);
+
+            foreach (var child in children)
+            {
+                child.update(skeleton, pos);
+            }
         }
 
-        public JointType JointType { get; private set; }
+        private void update(Skeleton skeleton, Vector3 parentPosition)
+        {
+            Vector3 pos = skeleton.Joints[jointType].Position.toEngineCoords();
 
-        public float DistanceToParent { get; private set; }
+            Vector3 direction = pos - parentPosition;
+            direction.normalize();
 
-        public SimObjectBase SimObject { get; private set; }
+            Vector3 newPos = parentPosition + direction * distanceToParent;
+            simObject.updateTranslation(ref newPos, null);
+
+            foreach(var child in children)
+            {
+                child.update(skeleton, pos);
+            }
+        }
+
+        public void render(DebugDrawingSurface debugDraw)
+        {
+            foreach (var child in children)
+            {
+                child.render(debugDraw, Translation);
+            }
+        }
+
+        private void render(DebugDrawingSurface debugDraw, Vector3 parentPosition)
+        {
+            debugDraw.drawLine(parentPosition, Translation);
+
+            foreach (var child in children)
+            {
+                child.render(debugDraw, Translation);
+            }
+        }
+
+        public void addChild(KinectIKBone child)
+        {
+            children.Add(child);
+        }
+
+        public void removeChild(KinectIKBone child)
+        {
+            children.Remove(child);
+        }
+
+        public Vector3 Translation
+        {
+            get
+            {
+                return simObject.Translation;
+            }
+        }
     }
 }

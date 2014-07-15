@@ -92,7 +92,6 @@ namespace KinectPlugin
                         }
                         else
                         {
-                            //Option 1
                             direction = pos - parentPos;
                             length = direction.length();
                             direction.normalize();
