@@ -34,6 +34,7 @@ namespace KinectPlugin
             if (debugDrawer != null)
             {
                 medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(debugDrawer);
+                debugDrawer = null;
             }
         }
 

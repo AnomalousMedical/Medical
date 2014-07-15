@@ -24,7 +24,7 @@ namespace KinectPlugin
         private BEPUikDragControlDefinition dragControl;
         private KinectIKBone hips;
         private bool debugVisible = true;
-        private bool allowMovement = true;
+        private bool allowMovement = false;
         private List<SimObject> ikDragSimObjects = new List<SimObject>();
 
         public KinectIkController(StandaloneController controller)
@@ -43,7 +43,13 @@ namespace KinectPlugin
 
         public void createIkControls(SimScene scene)
         {
+            if(!canConnectToScene())
+            {
+                return;
+            }
+
             var subScene = scene.getDefaultSubScene();
+
             ikDebug = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectIKDebug", subScene);
             ikDebug.setVisible(debugVisible);
 
@@ -72,7 +78,11 @@ namespace KinectPlugin
 
         public void destroyIkControls(SimScene scene)
         {
-            medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(ikDebug);
+            if(ikDebug != null)
+            {
+                medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(ikDebug);
+                ikDebug = null;
+            }
             hips = null;
             ikDragSimObjects.Clear();
         }
@@ -162,6 +172,16 @@ namespace KinectPlugin
                 parent.addChild(bone);
             }
             return bone;
+        }
+
+        /// <summary>
+        /// A quick check to see if the desired sim objects exist, does not check them all, but
+        /// this should be enough with the current scenes.
+        /// </summary>
+        /// <returns></returns>
+        private bool canConnectToScene()
+        {
+            return medicalController.getSimObject("LeftUlna") != null;
         }
     }
 }

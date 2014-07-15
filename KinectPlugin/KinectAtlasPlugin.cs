@@ -49,6 +49,7 @@ namespace KinectPlugin
             kinectDebugger = new KinectDebugVisualizer(standaloneController);
             sensorManager = new KinectSensorManager();
             sensorManager.SkeletonFrameReady += sensorManager_SkeletonFrameReady;
+            ikController.AllowMovement = sensorManager.CurrentStatus == KinectStatus.Connected;
 
             kinectGui = new KinectGui(ikController, sensorManager, kinectDebugger);
             standaloneController.GUIManager.addManagedDialog(kinectGui);
