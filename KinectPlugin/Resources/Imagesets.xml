@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MyGUI type="List">
+  <List file="KinectPlugin.Resources.KinectIcon.xml"/>
+  <List file="KinectPlugin.Resources.KinectIcons.xml"/>
+</MyGUI>

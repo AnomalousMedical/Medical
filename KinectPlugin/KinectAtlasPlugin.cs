@@ -6,6 +6,7 @@ using Engine.Saving;
 using Medical;
 using Medical.Controller;
 using Microsoft.Kinect;
+using MyGUIPlugin;
 using OgrePlugin;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace KinectPlugin
 
         public void loadGUIResources()
         {
-
+            ResourceManager.Instance.load("KinectPlugin.Resources.Imagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -56,7 +57,7 @@ namespace KinectPlugin
 
             var taskController = standaloneController.TaskController;
 
-            taskController.addTask(new MDIDialogOpenTask(kinectGui, "KinectPlugin.KinectGui", "Kinect", CommonResources.NoIcon, "Kinect"));
+            taskController.addTask(new MDIDialogOpenTask(kinectGui, "KinectPlugin.KinectGui", "Kinect", "KinectPlugin.Kinect", "Kinect"));
         }
 
         public void sceneLoaded(SimScene scene)
@@ -101,7 +102,7 @@ namespace KinectPlugin
         {
             get
             {
-                return CommonResources.NoIcon;
+                return "KinectPlugin.BrandingImage";
             }
         }
 

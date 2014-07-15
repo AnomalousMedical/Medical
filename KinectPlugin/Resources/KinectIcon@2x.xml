@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="KinectPlugin.BrandingImage">
+    <Group name="Icons" texture="KinectPlugin.Resources.KinectIcon@2x.png" size="200 200">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>

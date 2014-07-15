@@ -75,9 +75,29 @@
       <Name>Standalone</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\KinectIcon%402x.xml" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\KinectGui.layout" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\KinectIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\KinectIcon.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\KinectIcon%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Imagesets.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\KinectIcons%402x.png" />
+    <EmbeddedResource Include="Resources\KinectIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\KinectIcons.png" />
+    <EmbeddedResource Include="Resources\KinectIcons.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
