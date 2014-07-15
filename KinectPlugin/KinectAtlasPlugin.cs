@@ -18,10 +18,9 @@ namespace KinectPlugin
 {
     class KinectAtlasPlugin : AtlasPlugin
     {
-        private KinectSensor sensor;
-
         private KinectDebugVisualizer kinectDebugger;
         private KinectIkController ikController;
+        private KinectSensorManager sensorManager;
 
         public KinectAtlasPlugin()
         {
@@ -30,9 +29,9 @@ namespace KinectPlugin
 
         public void Dispose()
         {
-            if (sensor != null)
+            if(sensorManager != null)
             {
-                sensor.Stop();
+                sensorManager.Dispose();
             }
         }
 
@@ -45,44 +44,8 @@ namespace KinectPlugin
         {
             ikController = new KinectIkController(standaloneController);
             kinectDebugger = new KinectDebugVisualizer(standaloneController);
-
-            //Setup kinect
-            // Look through all sensors and start the first connected one.
-            // This requires that a Kinect is connected at the time of app startup.
-            // To make your app robust against plug/unplug, 
-            // it is recommended to use KinectSensorChooser provided in Microsoft.Kinect.Toolkit (See components in Toolkit Browser).
-            foreach (var potentialSensor in KinectSensor.KinectSensors)
-            {
-                if (potentialSensor.Status == KinectStatus.Connected)
-                {
-                    this.sensor = potentialSensor;
-                    break;
-                }
-            }
-
-            if (this.sensor != null)
-            {
-                // Turn on the skeleton stream to receive skeleton frames
-                this.sensor.SkeletonStream.Enable();
-
-                // Add an event handler to be called whenever there is new skeleton frame data
-                this.sensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
-
-                // Start the sensor!
-                try
-                {
-                    this.sensor.Start();
-                }
-                catch (IOException)
-                {
-                    this.sensor = null;
-                }
-            }
-
-            if (sensor == null)
-            {
-                Logging.Log.ImportantInfo("No Kinect Sensor found");
-            }
+            sensorManager = new KinectSensorManager();
+            sensorManager.SkeletonFrameReady += sensorManager_SkeletonFrameReady;
         }
 
         public void sceneLoaded(SimScene scene)
@@ -155,8 +118,10 @@ namespace KinectPlugin
             }
         }
 
-        void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
+        void sensorManager_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
+            //This happens on its own thread
+
             Skeleton[] skeletons = new Skeleton[0];
 
             //Get the skeletons
