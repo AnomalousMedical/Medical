@@ -23,6 +23,7 @@ namespace KinectPlugin
         private GenericSimObjectDefinition dragSimObjectDefinition;
         private BEPUikDragControlDefinition dragControl;
         private KinectIKBone hips;
+        private bool debugVisible = true;
 
         public KinectIkController(StandaloneController controller)
         {
@@ -66,6 +67,43 @@ namespace KinectPlugin
             KinectIKBone rightHand = createKinectBone( JointType.HandLeft,     "RightHandBase", "RightHandBase",            rightWrist, new Vector3(0, -5, 2), scene, subScene);
         }
 
+        public void destroyIkControls(SimScene scene)
+        {
+            medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(ikDebug);
+            hips = null;
+        }
+
+        public void updateControls(Skeleton skel)
+        {
+            if (skel.TrackingState != SkeletonTrackingState.NotTracked)
+            {
+                hips.update(skel);
+                if (debugVisible)
+                {
+                    ikDebug.begin("Main", DrawingType.LineList);
+                    ikDebug.Color = Color.Red;
+                    hips.render(ikDebug);
+                    ikDebug.end();
+                }
+            }
+        }
+
+        public bool DebugVisible
+        {
+            get
+            {
+                return debugVisible;
+            }
+            set
+            {
+                debugVisible = value;
+                if(ikDebug != null)
+                {
+                    ikDebug.setVisible(debugVisible);
+                }
+            }
+        }
+
         private KinectIKBone createKinectBone(JointType jointType, String boneSimObjectName, String translationSimObjectName, KinectIKBone parent, SimScene scene, SimSubScene subScene)
         {
             return createKinectBone(jointType, boneSimObjectName, translationSimObjectName, parent, Vector3.Zero, scene, subScene);
@@ -92,30 +130,11 @@ namespace KinectPlugin
             }
 
             var bone = new KinectIKBone(jointType, distanceToParent, instance);
-            if(parent != null)
+            if (parent != null)
             {
                 parent.addChild(bone);
             }
             return bone;
-        }
-
-        public void destroyIkControls(SimScene scene)
-        {
-            medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(ikDebug);
-            hips = null;
-            //Need to implement this
-        }
-
-        public void updateControls(Skeleton skel)
-        {
-            if (skel.TrackingState != SkeletonTrackingState.NotTracked)
-            {
-                hips.update(skel);
-                ikDebug.begin("Main", DrawingType.LineList);
-                ikDebug.Color = Color.Red;
-                hips.render(ikDebug);
-                ikDebug.end();
-            }
         }
     }
 }
