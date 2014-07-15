@@ -16,9 +16,6 @@ namespace KinectPlugin
 {
     class KinectIkController
     {
-        private MedicalController medicalController;
-        private Dictionary<JointType, SimObjectBase> dragSimObjs = new Dictionary<JointType, SimObjectBase>();
-
         private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
         private static HashSet<String> createDragControlsFor = new HashSet<string>();
 
@@ -52,32 +49,33 @@ namespace KinectPlugin
             createDragControlsFor.Add("Skull");
             createDragControlsFor.Add("LeftFootBase");
             createDragControlsFor.Add("RightFootBase");
-            createDragControlsFor.Add("LeftHumerus");
-            createDragControlsFor.Add("RightHumerus");
+            createDragControlsFor.Add("LeftFemur");
+            createDragControlsFor.Add("RightFemur");
             createDragControlsFor.Add("Pelvis");
         }
+
+        private MedicalController medicalController;
+        private Dictionary<JointType, SimObjectBase> dragSimObjs = new Dictionary<JointType, SimObjectBase>();
+        private GenericSimObjectDefinition dragSimObjectDefinition;
+        private BEPUikDragControlDefinition dragControl;
 
         public KinectIkController(StandaloneController controller)
         {
             this.medicalController = controller.MedicalController;
+
+            dragSimObjectDefinition = new GenericSimObjectDefinition("TestArrow");
+            dragControl = new BEPUikDragControlDefinition("DragControl");
+            dragSimObjectDefinition.addElement(dragControl);
+            SceneNodeDefinition node = new SceneNodeDefinition("Node");
+            EntityDefinition entityDef = new EntityDefinition("Entity");
+            entityDef.MeshName = "Syringe.mesh";
+            node.addMovableObjectDefinition(entityDef);
+            dragSimObjectDefinition.addElement(node);
         }
 
         public void createIkControls(SimScene scene)
         {
-            GenericSimObjectDefinition arrowOnly = new GenericSimObjectDefinition("TestArrow");
-            SceneNodeDefinition node = new SceneNodeDefinition("Node");
-            EntityDefinition entityDef = new EntityDefinition("Entity");
-            entityDef.MeshName = "Arrow.mesh";
-            node.addMovableObjectDefinition(entityDef);
-            arrowOnly.addElement(node);
-
-            GenericSimObjectDefinition arrowAndDragControl = CopySaver.Default.copy(arrowOnly);
-            var dragControl = new BEPUikDragControlDefinition("DragControl");
-            arrowAndDragControl.addElement(dragControl);
-
             var subScene = scene.getDefaultSubScene();
-
-            GenericSimObjectDefinition createMe;
 
             foreach (var enumVal in EnumUtil.Elements(typeof(JointType)))
             {
@@ -86,30 +84,20 @@ namespace KinectPlugin
 
                 if (createDragControlsFor.Contains(jointInfo.Item1))
                 {
-                    createMe = arrowAndDragControl;
                     dragControl.BoneSimObjectName = jointInfo.Item1;
 
                     var targetSimObject = medicalController.getSimObject(dragControl.BoneSimObjectName);
                     var ikBone = targetSimObject.getElement("IKBone") as BEPUikBone;
                     ikBone.Pinned = false;
+
+                    dragSimObjectDefinition.Name = enumVal + "DragControl";
+                    dragSimObjectDefinition.Translation = medicalController.getSimObject(jointInfo.Item2).Translation;
+                    SimObjectBase instance = dragSimObjectDefinition.register(subScene);
+                    medicalController.addSimObject(instance);
+                    scene.buildScene();
+
+                    dragSimObjs.Add(jointType, instance);
                 }
-                else
-                {
-                    createMe = arrowOnly;
-                }
-
-                createMe.Name = enumVal + "DragControl";
-                createMe.Translation = medicalController.getSimObject(jointInfo.Item2).Translation;
-                SimObjectBase instance = createMe.register(subScene);
-                medicalController.addSimObject(instance);
-                scene.buildScene();
-
-                SceneNodeElement sceneNode = instance.getElement("Node") as SceneNodeElement;
-                var entity = sceneNode.getNodeObject("Entity") as OgreWrapper.Entity;
-                var subEntity = entity.getSubEntity(0);
-                subEntity.setCustomParameter(1, new Quaternion(1, 0, 0, 1));
-
-                dragSimObjs.Add(jointType, instance);
             }
         }
 
@@ -122,18 +110,30 @@ namespace KinectPlugin
         {
             if (skel.TrackingState != SkeletonTrackingState.NotTracked)
             {
+                //Walk the bone tree
+                //walkBones(JointType.HipCenter);
+
                 foreach (Joint joint in skel.Joints)
                 {
-                    if (joint.TrackingState != JointTrackingState.NotTracked)
+                    SimObjectBase simObject;
+                    if (dragSimObjs.TryGetValue(joint.JointType, out simObject))
                     {
-                        SimObjectBase simObject = dragSimObjs[joint.JointType];
-                        if (simObject != null)
-                        {
-                            Vector3 pos = joint.Position.toEngineCoords();
-                            simObject.updateTranslation(ref pos, null);
-                        }
+                        Vector3 pos = joint.Position.toEngineCoords();
+                        simObject.updateTranslation(ref pos, null);
                     }
                 }
+            }
+        }
+
+        private void walkBones(JointType jointType, Skeleton skel)
+        {
+            Joint joint = skel.Joints[jointType];
+            var bone = skel.BoneOrientations[jointType];
+            SimObjectBase simObject = dragSimObjs[joint.JointType];
+            if (simObject != null)
+            {
+                Vector3 pos = joint.Position.toEngineCoords();
+                simObject.updateTranslation(ref pos, null);
             }
         }
     }
