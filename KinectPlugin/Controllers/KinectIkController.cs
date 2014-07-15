@@ -61,6 +61,8 @@ namespace KinectPlugin
         private GenericSimObjectDefinition dragSimObjectDefinition;
         private BEPUikDragControlDefinition dragControl;
         private KinectIKBone hips;
+        private KinectIKBone leftShoulder;
+        private KinectIKBone rightShoulder;
 
         public KinectIkController(StandaloneController controller)
         {
@@ -91,11 +93,13 @@ namespace KinectPlugin
             KinectIKBone rightAnkle = createKinectBone(JointType.AnkleLeft,  "RightTibia",    "RightTibiaFootBaseJoint", rightKnee,  scene, subScene);
             KinectIKBone rightFoot = createKinectBone( JointType.FootLeft,   "RightFootBase", "RightFootBase",           rightAnkle, scene, subScene);
 
-            KinectIKBone leftElbow = createKinectBone(JointType.ElbowRight, "LeftHumerus", "LeftHumerusUlnaJoint", hips, scene, subScene);
+            leftShoulder = createKinectBone(JointType.ShoulderRight, "LeftScapula", "LeftScapula", null, scene, subScene);
+            KinectIKBone leftElbow = createKinectBone(JointType.ElbowRight, "LeftHumerus", "LeftHumerusUlnaJoint", leftShoulder, scene, subScene);
             KinectIKBone leftWrist = createKinectBone(JointType.WristRight, "LeftUlna", "LeftRadiusHandBaseJoint", leftElbow, scene, subScene);
             KinectIKBone leftHand = createKinectBone(JointType.HandRight, "LeftHandBase", "LeftHandBase", leftWrist, scene, subScene);
 
-            KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft, "RightHumerus", "RightHumerusUlnaJoint", hips, scene, subScene);
+            rightShoulder = createKinectBone(JointType.ShoulderLeft, "RightScapula", "RightScapula", null, scene, subScene);
+            KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft, "RightHumerus", "RightHumerusUlnaJoint", rightShoulder, scene, subScene);
             KinectIKBone rightWrist = createKinectBone(JointType.WristLeft, "RightUlna", "RightRadiusHandBaseJoint", rightElbow, scene, subScene);
             KinectIKBone rightHand = createKinectBone(JointType.HandLeft, "RightHandBase", "RightHandBase", rightWrist, scene, subScene);
 
@@ -142,9 +146,13 @@ namespace KinectPlugin
             if (skel.TrackingState != SkeletonTrackingState.NotTracked)
             {
                 hips.update(skel);
+                leftShoulder.update(skel);
+                rightShoulder.update(skel);
                 ikDebug.begin("Main", DrawingType.LineList);
                 ikDebug.Color = Color.Red;
                 hips.render(ikDebug);
+                leftShoulder.render(ikDebug);
+                rightShoulder.render(ikDebug);
                 ikDebug.end();
             }
         }

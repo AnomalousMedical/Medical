@@ -30,7 +30,7 @@ namespace KinectPlugin
 
         public void update(Skeleton skeleton)
         {
-            Vector3 pos = skeleton.Joints[JointType.HipCenter].Position.toEngineCoords();
+            Vector3 pos = skeleton.Joints[jointType].Position.toEngineCoords();
 
             simObject.updateTranslation(ref pos, null);
 
