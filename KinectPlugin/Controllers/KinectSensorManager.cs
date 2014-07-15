@@ -1,4 +1,5 @@
-﻿using Microsoft.Kinect;
+﻿using Logging;
+using Microsoft.Kinect;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,7 @@ namespace KinectPlugin
     class KinectSensorManager : IDisposable
     {
         private KinectSensor sensor;
+        private KinectStatus currentStatus;
 
         public event EventHandler<SkeletonFrameReadyEventArgs> SkeletonFrameReady;
 
@@ -35,8 +37,9 @@ namespace KinectPlugin
 
         void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
         {
-            Logging.Log.Debug("Kinect sensor {0}", e.Status);
-            switch (e.Status)
+            currentStatus = e.Status;
+            Log.Info("Kinect sensor {0}", currentStatus);
+            switch (currentStatus)
             {
                 case KinectStatus.Disconnected:
                     if (e.Sensor == sensor)
@@ -59,34 +62,35 @@ namespace KinectPlugin
                 {
                     if (potentialSensor.Status == KinectStatus.Connected)
                     {
-                        this.sensor = potentialSensor;
+                        sensor = potentialSensor;
                         break;
                     }
                 }
 
                 //If a sensor was found start it and enable its skeleton listening.
-                if (this.sensor != null)
+                if (sensor != null)
                 {
                     // Turn on the skeleton stream to receive skeleton frames
-                    this.sensor.SkeletonStream.Enable();
+                    sensor.SkeletonStream.Enable();
 
                     // Add an event handler to be called whenever there is new skeleton frame data
-                    this.sensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
+                    sensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
 
                     // Start the sensor!
                     try
                     {
-                        this.sensor.Start();
+                        sensor.Start();
+                        currentStatus = KinectStatus.Connected;
                     }
                     catch (IOException)
                     {
-                        this.sensor = null;
+                        sensor = null;
                     }
                 }
 
                 if (sensor == null)
                 {
-                    Logging.Log.ImportantInfo("No Kinect Sensor found");
+                    Log.ImportantInfo("No Kinect Sensor found");
                 }
             }
         }
@@ -95,9 +99,10 @@ namespace KinectPlugin
         {
             if (sensor != null)
             {
-                this.sensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
+                sensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
                 sensor.Stop();
                 sensor = null;
+                currentStatus = KinectStatus.Disconnected;
             }
         }
     }
