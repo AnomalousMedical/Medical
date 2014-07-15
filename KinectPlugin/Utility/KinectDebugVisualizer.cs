@@ -30,11 +30,11 @@ namespace KinectPlugin
             debugDrawer = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectDebug", scene.getDefaultSubScene());
 
             GenericSimObjectDefinition kinectJointVisual = new GenericSimObjectDefinition("TestArrow");
-            SceneNodeDefinition node = new SceneNodeDefinition("Node");
-            EntityDefinition entityDef = new EntityDefinition("Entity");
-            entityDef.MeshName = "Arrow.mesh";
-            node.addMovableObjectDefinition(entityDef);
-            kinectJointVisual.addElement(node);
+            //SceneNodeDefinition node = new SceneNodeDefinition("Node");
+            //EntityDefinition entityDef = new EntityDefinition("Entity");
+            //entityDef.MeshName = "Arrow.mesh";
+            //node.addMovableObjectDefinition(entityDef);
+            //kinectJointVisual.addElement(node);
 
             var subScene = scene.getDefaultSubScene();
 

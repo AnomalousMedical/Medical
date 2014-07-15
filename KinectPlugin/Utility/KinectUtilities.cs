@@ -44,7 +44,7 @@ namespace KinectPlugin
 
         public static Vector3 toEngineCoords(this SkeletonPoint position)
         {
-            return new Vector3(position.X * 1000f * SimulationConfig.MMToUnits, position.Y * 1000f * SimulationConfig.MMToUnits - 85f, -((position.Z - 1.5f) * 1000f * SimulationConfig.MMToUnits));
+            return new Vector3(position.X * 1000f * SimulationConfig.MMToUnits, (position.Y - 0.2f) * 1000f * SimulationConfig.MMToUnits - 85f, -((position.Z - 1.5f) * 1000f * SimulationConfig.MMToUnits));
             //return new Vector3(position.X * 1000f * SimulationConfig.MMToUnits, position.Y * 1000f * SimulationConfig.MMToUnits - 90f, (position.Z - 2) * 1000f * SimulationConfig.MMToUnits);
         }
 

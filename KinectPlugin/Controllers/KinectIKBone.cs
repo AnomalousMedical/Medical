@@ -36,23 +36,23 @@ namespace KinectPlugin
 
             foreach (var child in children)
             {
-                child.update(skeleton, pos);
+                child.update(skeleton, pos, Translation);
             }
         }
 
-        private void update(Skeleton skeleton, Vector3 parentPosition)
+        private void update(Skeleton skeleton, Vector3 parentJointPosition, Vector3 parentSimObjectPosition)
         {
             Vector3 pos = skeleton.Joints[jointType].Position.toEngineCoords();
 
-            Vector3 direction = pos - parentPosition;
+            Vector3 direction = pos - parentJointPosition;
             direction.normalize();
 
-            Vector3 newPos = parentPosition + direction * distanceToParent;
+            Vector3 newPos = parentSimObjectPosition + direction * distanceToParent;
             simObject.updateTranslation(ref newPos, null);
 
             foreach(var child in children)
             {
-                child.update(skeleton, pos);
+                child.update(skeleton, pos, Translation);
             }
         }
 

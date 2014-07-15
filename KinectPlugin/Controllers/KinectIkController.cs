@@ -17,52 +17,12 @@ namespace KinectPlugin
 {
     class KinectIkController
     {
-        private static Dictionary<JointType, Tuple<String, String>> ikJointMap = new Dictionary<JointType, Tuple<String, String>>();
-        private static HashSet<String> createDragControlsFor = new HashSet<string>();
-
         private DebugDrawingSurface ikDebug;
-
-        static KinectIkController()
-        {
-            ikJointMap.Add(JointType.HipCenter, Tuple.Create("Pelvis", "Pelvis"));
-            ikJointMap.Add(JointType.Spine, Tuple.Create("SpineC7", "SpineC7"));
-            ikJointMap.Add(JointType.ShoulderCenter, Tuple.Create("Manubrium", "Manubrium"));
-            ikJointMap.Add(JointType.Head, Tuple.Create("Skull", "Skull"));
-            ikJointMap.Add(JointType.ShoulderLeft, Tuple.Create("RightScapula", "RightScapula"));
-            ikJointMap.Add(JointType.ElbowLeft, Tuple.Create("RightHumerus", "RightHumerusUlnaJoint"));
-            ikJointMap.Add(JointType.WristLeft, Tuple.Create("RightUlna", "RightRadiusHandBaseJoint"));
-            ikJointMap.Add(JointType.HandLeft, Tuple.Create("RightHandBase", "RightHandBase"));
-            ikJointMap.Add(JointType.ShoulderRight, Tuple.Create("LeftScapula", "LeftScapula"));
-            ikJointMap.Add(JointType.ElbowRight, Tuple.Create("LeftHumerus", "LeftHumerusUlnaJoint"));
-            ikJointMap.Add(JointType.WristRight, Tuple.Create("LeftUlna", "LeftRadiusHandBaseJoint"));
-            ikJointMap.Add(JointType.HandRight, Tuple.Create("LeftHandBase", "LeftHandBase"));
-            ikJointMap.Add(JointType.HipLeft, Tuple.Create("Pelvis", "RightFemurPelvisJoint"));
-            ikJointMap.Add(JointType.KneeLeft, Tuple.Create("RightFemur", "RightFemurTibiaJoint"));
-            ikJointMap.Add(JointType.AnkleLeft, Tuple.Create("RightTibia", "RightTibiaFootBaseJoint"));
-            ikJointMap.Add(JointType.FootLeft, Tuple.Create("RightFootBase", "RightFootBase"));
-            ikJointMap.Add(JointType.HipRight, Tuple.Create("Pelvis", "LeftFemurPelvisJoint"));
-            ikJointMap.Add(JointType.KneeRight, Tuple.Create("LeftFemur", "LeftFemurTibiaJoint"));
-            ikJointMap.Add(JointType.AnkleRight, Tuple.Create("LeftTibia", "LeftTibiaFootBaseJoint"));
-            ikJointMap.Add(JointType.FootRight, Tuple.Create("LeftFootBase", "LeftFootBase"));
-
-            createDragControlsFor.Add("LeftHandBase");
-            createDragControlsFor.Add("RightHandBase");
-            createDragControlsFor.Add("LeftUlna");
-            createDragControlsFor.Add("RightUlna");
-            createDragControlsFor.Add("Skull");
-            createDragControlsFor.Add("LeftFootBase");
-            createDragControlsFor.Add("RightFootBase");
-            createDragControlsFor.Add("LeftFemur");
-            createDragControlsFor.Add("RightFemur");
-            createDragControlsFor.Add("Pelvis");
-        }
 
         private MedicalController medicalController;
         private GenericSimObjectDefinition dragSimObjectDefinition;
         private BEPUikDragControlDefinition dragControl;
         private KinectIKBone hips;
-        private KinectIKBone leftShoulder;
-        private KinectIKBone rightShoulder;
 
         public KinectIkController(StandaloneController controller)
         {
@@ -71,11 +31,11 @@ namespace KinectPlugin
             dragSimObjectDefinition = new GenericSimObjectDefinition("TestArrow");
             dragControl = new BEPUikDragControlDefinition("DragControl");
             dragSimObjectDefinition.addElement(dragControl);
-            SceneNodeDefinition node = new SceneNodeDefinition("Node");
-            EntityDefinition entityDef = new EntityDefinition("Entity");
-            entityDef.MeshName = "Syringe.mesh";
-            node.addMovableObjectDefinition(entityDef);
-            dragSimObjectDefinition.addElement(node);
+            //SceneNodeDefinition node = new SceneNodeDefinition("Node");
+            //EntityDefinition entityDef = new EntityDefinition("Entity");
+            //entityDef.MeshName = "Syringe.mesh";
+            //node.addMovableObjectDefinition(entityDef);
+            //dragSimObjectDefinition.addElement(node);
         }
 
         public void createIkControls(SimScene scene)
@@ -85,6 +45,8 @@ namespace KinectPlugin
 
             hips = createKinectBone(JointType.HipCenter, "Pelvis", "Pelvis", null, scene, subScene);
 
+            KinectIKBone skull = createKinectBone(JointType.Head, "Skull", "Skull", hips, scene, subScene);
+
             KinectIKBone leftKnee = createKinectBone( JointType.KneeRight,  "LeftFemur",    "LeftFemurTibiaJoint",    hips,                             scene, subScene);
             KinectIKBone leftAnkle = createKinectBone(JointType.AnkleRight, "LeftTibia",    "LeftTibiaFootBaseJoint", leftKnee,                         scene, subScene);
             KinectIKBone leftFoot = createKinectBone( JointType.FootRight,  "LeftFootBase", "LeftFootBase",           leftAnkle, new Vector3(0, -2, 5), scene, subScene);
@@ -93,17 +55,15 @@ namespace KinectPlugin
             KinectIKBone rightAnkle = createKinectBone(JointType.AnkleLeft,  "RightTibia",    "RightTibiaFootBaseJoint", rightKnee,                         scene, subScene);
             KinectIKBone rightFoot = createKinectBone( JointType.FootLeft,   "RightFootBase", "RightFootBase",           rightAnkle, new Vector3(0, -2, 5), scene, subScene);
 
-            leftShoulder = createKinectBone(          JointType.ShoulderRight, "LeftScapula",  "LeftScapula",             null,                             scene, subScene);
+            KinectIKBone leftShoulder = createKinectBone(JointType.ShoulderRight, "LeftScapula", "LeftScapula", skull, scene, subScene);
             KinectIKBone leftElbow = createKinectBone(JointType.ElbowRight,    "LeftHumerus",  "LeftHumerusUlnaJoint",    leftShoulder,                     scene, subScene);
             KinectIKBone leftWrist = createKinectBone(JointType.WristRight,    "LeftUlna",     "LeftRadiusHandBaseJoint", leftElbow,                        scene, subScene);
             KinectIKBone leftHand = createKinectBone( JointType.HandRight,     "LeftHandBase", "LeftHandBase",            leftWrist, new Vector3(0, -5, 2), scene, subScene);
 
-            rightShoulder = createKinectBone(          JointType.ShoulderLeft, "RightScapula",  "RightScapula",             null,                              scene, subScene);
+            KinectIKBone rightShoulder = createKinectBone(JointType.ShoulderLeft, "RightScapula", "RightScapula", skull, scene, subScene);
             KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft,    "RightHumerus",  "RightHumerusUlnaJoint",    rightShoulder,                     scene, subScene);
             KinectIKBone rightWrist = createKinectBone(JointType.WristLeft,    "RightUlna",     "RightRadiusHandBaseJoint", rightElbow,                        scene, subScene);
             KinectIKBone rightHand = createKinectBone( JointType.HandLeft,     "RightHandBase", "RightHandBase",            rightWrist, new Vector3(0, -5, 2), scene, subScene);
-
-            KinectIKBone skull = createKinectBone(JointType.Head, "Skull", "Skull", hips, scene, subScene);
         }
 
         private KinectIKBone createKinectBone(JointType jointType, String boneSimObjectName, String translationSimObjectName, KinectIKBone parent, SimScene scene, SimSubScene subScene)
@@ -142,7 +102,7 @@ namespace KinectPlugin
         public void destroyIkControls(SimScene scene)
         {
             medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(ikDebug);
-
+            hips = null;
             //Need to implement this
         }
 
@@ -151,13 +111,9 @@ namespace KinectPlugin
             if (skel.TrackingState != SkeletonTrackingState.NotTracked)
             {
                 hips.update(skel);
-                leftShoulder.update(skel);
-                rightShoulder.update(skel);
                 ikDebug.begin("Main", DrawingType.LineList);
                 ikDebug.Color = Color.Red;
                 hips.render(ikDebug);
-                leftShoulder.render(ikDebug);
-                rightShoulder.render(ikDebug);
                 ikDebug.end();
             }
         }
