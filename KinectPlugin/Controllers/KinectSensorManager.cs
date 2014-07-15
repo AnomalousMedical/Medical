@@ -20,6 +20,8 @@ namespace KinectPlugin
         /// </summary>
         public event Action<Skeleton[]> SkeletonFrameReady;
 
+        public event Action<KinectSensorManager> StatusChanged;
+
         public KinectSensorManager()
         {
             KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
@@ -29,6 +31,31 @@ namespace KinectPlugin
         public void Dispose()
         {
             disconnectSensor();
+        }
+
+        public KinectStatus CurrentStatus
+        {
+            get
+            {
+                return currentStatus;
+            }
+            private set
+            {
+                if (currentStatus != value)
+                {
+                    currentStatus = value;
+                    if(StatusChanged != null)
+                    {
+                        ThreadManager.invoke(() =>
+                        {
+                            if (StatusChanged != null)
+                            {
+                                StatusChanged.Invoke(this);
+                            }
+                        });
+                    }
+                }
+            }
         }
 
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
@@ -51,14 +78,17 @@ namespace KinectPlugin
 
                 ThreadManager.invoke(() =>
                 {
-                    SkeletonFrameReady.Invoke(skeletons);
+                    if (SkeletonFrameReady != null)
+                    {
+                        SkeletonFrameReady.Invoke(skeletons);
+                    }
                 });
             }
         }
 
         void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
         {
-            currentStatus = e.Status;
+            CurrentStatus = e.Status;
             Log.Info("Kinect sensor {0}", currentStatus);
             switch (currentStatus)
             {
@@ -101,7 +131,7 @@ namespace KinectPlugin
                     try
                     {
                         sensor.Start();
-                        currentStatus = KinectStatus.Connected;
+                        CurrentStatus = KinectStatus.Connected;
                     }
                     catch (IOException)
                     {
@@ -123,7 +153,7 @@ namespace KinectPlugin
                 sensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
                 sensor.Stop();
                 sensor = null;
-                currentStatus = KinectStatus.Disconnected;
+                CurrentStatus = KinectStatus.Disconnected;
             }
         }
     }

@@ -38,6 +38,10 @@
       <HintPath>S:\Engine\Release\Engine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="OgrePlugin, Version=1.0.0.1935, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>S:\Engine\Release\OgrePlugin.dll</HintPath>
@@ -54,6 +58,7 @@
     <Compile Include="Controllers\KinectIKBone.cs" />
     <Compile Include="Controllers\KinectIkController.cs" />
     <Compile Include="Controllers\KinectSensorManager.cs" />
+    <Compile Include="GUI\KinectGui.cs" />
     <Compile Include="KinectAtlasPlugin.cs" />
     <Compile Include="KinectAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +74,10 @@
       <Project>{e217c194-a14f-41de-a838-c401e60adf15}</Project>
       <Name>Standalone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\KinectGui.layout" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

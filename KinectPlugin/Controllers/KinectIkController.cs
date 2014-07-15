@@ -24,6 +24,8 @@ namespace KinectPlugin
         private BEPUikDragControlDefinition dragControl;
         private KinectIKBone hips;
         private bool debugVisible = true;
+        private bool allowMovement = true;
+        private List<SimObject> ikDragSimObjects = new List<SimObject>();
 
         public KinectIkController(StandaloneController controller)
         {
@@ -43,6 +45,7 @@ namespace KinectPlugin
         {
             var subScene = scene.getDefaultSubScene();
             ikDebug = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectIKDebug", subScene);
+            ikDebug.setVisible(debugVisible);
 
             hips = createKinectBone(JointType.HipCenter, "Pelvis", "Pelvis", null, scene, subScene);
 
@@ -71,11 +74,12 @@ namespace KinectPlugin
         {
             medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(ikDebug);
             hips = null;
+            ikDragSimObjects.Clear();
         }
 
         public void updateControls(Skeleton skel)
         {
-            if (skel.TrackingState != SkeletonTrackingState.NotTracked)
+            if (hips != null && skel.TrackingState != SkeletonTrackingState.NotTracked)
             {
                 hips.update(skel);
                 if (debugVisible)
@@ -104,6 +108,25 @@ namespace KinectPlugin
             }
         }
 
+        public bool AllowMovement
+        {
+            get
+            {
+                return allowMovement;
+            }
+            set
+            {
+                if (allowMovement != value)
+                {
+                    allowMovement = value;
+                    foreach(var simObj in ikDragSimObjects)
+                    {
+                        simObj.Enabled = allowMovement;
+                    }
+                }
+            }
+        }
+
         private KinectIKBone createKinectBone(JointType jointType, String boneSimObjectName, String translationSimObjectName, KinectIKBone parent, SimScene scene, SimSubScene subScene)
         {
             return createKinectBone(jointType, boneSimObjectName, translationSimObjectName, parent, Vector3.Zero, scene, subScene);
@@ -118,10 +141,13 @@ namespace KinectPlugin
             ikBone.Pinned = false;
 
             dragSimObjectDefinition.Name = jointType + "DragControl";
+            dragSimObjectDefinition.Enabled = allowMovement;
             dragSimObjectDefinition.Translation = medicalController.getSimObject(translationSimObjectName).Translation + additionalOffset;
             SimObjectBase instance = dragSimObjectDefinition.register(subScene);
             medicalController.addSimObject(instance);
             scene.buildScene();
+
+            ikDragSimObjects.Add(instance);
 
             float distanceToParent = 0;
             if (parent != null)
@@ -130,6 +156,7 @@ namespace KinectPlugin
             }
 
             var bone = new KinectIKBone(jointType, distanceToParent, instance);
+
             if (parent != null)
             {
                 parent.addChild(bone);

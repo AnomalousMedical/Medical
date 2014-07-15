@@ -22,6 +22,8 @@ namespace KinectPlugin
         private KinectIkController ikController;
         private KinectSensorManager sensorManager;
 
+        private KinectGui kinectGui;
+
         public KinectAtlasPlugin()
         {
             
@@ -29,6 +31,7 @@ namespace KinectPlugin
 
         public void Dispose()
         {
+            kinectGui.Dispose();
             if(sensorManager != null)
             {
                 sensorManager.Dispose();
@@ -46,6 +49,13 @@ namespace KinectPlugin
             kinectDebugger = new KinectDebugVisualizer(standaloneController);
             sensorManager = new KinectSensorManager();
             sensorManager.SkeletonFrameReady += sensorManager_SkeletonFrameReady;
+
+            kinectGui = new KinectGui(ikController, sensorManager, kinectDebugger);
+            standaloneController.GUIManager.addManagedDialog(kinectGui);
+
+            var taskController = standaloneController.TaskController;
+
+            taskController.addTask(new MDIDialogOpenTask(kinectGui, "KinectPlugin.KinectGui", "Kinect", CommonResources.NoIcon, "Kinect"));
         }
 
         public void sceneLoaded(SimScene scene)
