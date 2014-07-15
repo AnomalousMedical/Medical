@@ -85,28 +85,33 @@ namespace KinectPlugin
 
             hips = createKinectBone(JointType.HipCenter, "Pelvis", "Pelvis", null, scene, subScene);
 
-            KinectIKBone leftKnee = createKinectBone(JointType.KneeRight, "LeftFemur", "LeftFemurTibiaJoint", hips, scene, subScene);
-            KinectIKBone leftAnkle = createKinectBone(JointType.AnkleRight, "LeftTibia", "LeftTibiaFootBaseJoint", leftKnee, scene, subScene);
-            KinectIKBone leftFoot = createKinectBone(JointType.FootRight, "LeftFootBase", "LeftFootBase", leftAnkle, scene, subScene);
+            KinectIKBone leftKnee = createKinectBone( JointType.KneeRight,  "LeftFemur",    "LeftFemurTibiaJoint",    hips,                             scene, subScene);
+            KinectIKBone leftAnkle = createKinectBone(JointType.AnkleRight, "LeftTibia",    "LeftTibiaFootBaseJoint", leftKnee,                         scene, subScene);
+            KinectIKBone leftFoot = createKinectBone( JointType.FootRight,  "LeftFootBase", "LeftFootBase",           leftAnkle, new Vector3(0, -2, 5), scene, subScene);
 
-            KinectIKBone rightKnee = createKinectBone( JointType.KneeLeft,   "RightFemur",    "RightFemurTibiaJoint",    hips,       scene, subScene);
-            KinectIKBone rightAnkle = createKinectBone(JointType.AnkleLeft,  "RightTibia",    "RightTibiaFootBaseJoint", rightKnee,  scene, subScene);
-            KinectIKBone rightFoot = createKinectBone( JointType.FootLeft,   "RightFootBase", "RightFootBase",           rightAnkle, scene, subScene);
+            KinectIKBone rightKnee = createKinectBone( JointType.KneeLeft,   "RightFemur",    "RightFemurTibiaJoint",    hips,                              scene, subScene);
+            KinectIKBone rightAnkle = createKinectBone(JointType.AnkleLeft,  "RightTibia",    "RightTibiaFootBaseJoint", rightKnee,                         scene, subScene);
+            KinectIKBone rightFoot = createKinectBone( JointType.FootLeft,   "RightFootBase", "RightFootBase",           rightAnkle, new Vector3(0, -2, 5), scene, subScene);
 
-            leftShoulder = createKinectBone(JointType.ShoulderRight, "LeftScapula", "LeftScapula", null, scene, subScene);
-            KinectIKBone leftElbow = createKinectBone(JointType.ElbowRight, "LeftHumerus", "LeftHumerusUlnaJoint", leftShoulder, scene, subScene);
-            KinectIKBone leftWrist = createKinectBone(JointType.WristRight, "LeftUlna", "LeftRadiusHandBaseJoint", leftElbow, scene, subScene);
-            KinectIKBone leftHand = createKinectBone(JointType.HandRight, "LeftHandBase", "LeftHandBase", leftWrist, scene, subScene);
+            leftShoulder = createKinectBone(          JointType.ShoulderRight, "LeftScapula",  "LeftScapula",             null,                             scene, subScene);
+            KinectIKBone leftElbow = createKinectBone(JointType.ElbowRight,    "LeftHumerus",  "LeftHumerusUlnaJoint",    leftShoulder,                     scene, subScene);
+            KinectIKBone leftWrist = createKinectBone(JointType.WristRight,    "LeftUlna",     "LeftRadiusHandBaseJoint", leftElbow,                        scene, subScene);
+            KinectIKBone leftHand = createKinectBone( JointType.HandRight,     "LeftHandBase", "LeftHandBase",            leftWrist, new Vector3(0, -5, 2), scene, subScene);
 
-            rightShoulder = createKinectBone(JointType.ShoulderLeft, "RightScapula", "RightScapula", null, scene, subScene);
-            KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft, "RightHumerus", "RightHumerusUlnaJoint", rightShoulder, scene, subScene);
-            KinectIKBone rightWrist = createKinectBone(JointType.WristLeft, "RightUlna", "RightRadiusHandBaseJoint", rightElbow, scene, subScene);
-            KinectIKBone rightHand = createKinectBone(JointType.HandLeft, "RightHandBase", "RightHandBase", rightWrist, scene, subScene);
+            rightShoulder = createKinectBone(          JointType.ShoulderLeft, "RightScapula",  "RightScapula",             null,                              scene, subScene);
+            KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft,    "RightHumerus",  "RightHumerusUlnaJoint",    rightShoulder,                     scene, subScene);
+            KinectIKBone rightWrist = createKinectBone(JointType.WristLeft,    "RightUlna",     "RightRadiusHandBaseJoint", rightElbow,                        scene, subScene);
+            KinectIKBone rightHand = createKinectBone( JointType.HandLeft,     "RightHandBase", "RightHandBase",            rightWrist, new Vector3(0, -5, 2), scene, subScene);
 
             KinectIKBone skull = createKinectBone(JointType.Head, "Skull", "Skull", hips, scene, subScene);
         }
 
         private KinectIKBone createKinectBone(JointType jointType, String boneSimObjectName, String translationSimObjectName, KinectIKBone parent, SimScene scene, SimSubScene subScene)
+        {
+            return createKinectBone(jointType, boneSimObjectName, translationSimObjectName, parent, Vector3.Zero, scene, subScene);
+        }
+
+        private KinectIKBone createKinectBone(JointType jointType, String boneSimObjectName, String translationSimObjectName, KinectIKBone parent, Vector3 additionalOffset, SimScene scene, SimSubScene subScene)
         {
             dragControl.BoneSimObjectName = boneSimObjectName;
 
@@ -115,7 +120,7 @@ namespace KinectPlugin
             ikBone.Pinned = false;
 
             dragSimObjectDefinition.Name = jointType + "DragControl";
-            dragSimObjectDefinition.Translation = medicalController.getSimObject(translationSimObjectName).Translation;
+            dragSimObjectDefinition.Translation = medicalController.getSimObject(translationSimObjectName).Translation + additionalOffset;
             SimObjectBase instance = dragSimObjectDefinition.register(subScene);
             medicalController.addSimObject(instance);
             scene.buildScene();
