@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KinectPlugin
@@ -20,12 +21,20 @@ namespace KinectPlugin
         /// </summary>
         public event Action<Skeleton[]> SkeletonFrameReady;
 
+        /// <summary>
+        /// Called when a color frame is ready, this event will fire on the main application thread.
+        /// </summary>
+        public event Action<byte[]> SensorColorFrameReady;
+
         public event Action<KinectSensorManager> StatusChanged;
 
         public KinectSensorManager()
         {
             KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
-            findSensor();
+            ThreadPool.QueueUserWorkItem((state) =>
+                {
+                    findSensor();
+                });
         }
 
         public void Dispose()
@@ -127,6 +136,9 @@ namespace KinectPlugin
                     // Add an event handler to be called whenever there is new skeleton frame data
                     sensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
 
+                    sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                    sensor.ColorFrameReady += sensor_ColorFrameReady;
+
                     // Start the sensor!
                     try
                     {
@@ -146,12 +158,40 @@ namespace KinectPlugin
             }
         }
 
+        void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
+        {
+            //This happens on its own thread
+            if (SensorColorFrameReady != null)
+            {
+                byte[] colorPixels = new byte[sensor.ColorStream.FramePixelDataLength]; //Yea this is a lot of allocation, just being lazy with the stack for now, should make a pool of these, or invoke and wait
+
+                using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
+                {
+                    if (colorFrame != null)
+                    {
+                        // Copy the pixel data from the image to a temporary array
+                        colorFrame.CopyPixelDataTo(colorPixels);
+                    }
+                }
+
+                ThreadManager.invoke(() =>
+                {
+                    if (SensorColorFrameReady != null)
+                    {
+                        SensorColorFrameReady.Invoke(colorPixels);
+                    }
+                });
+            }
+        }
+
         private void disconnectSensor()
         {
             if (sensor != null)
             {
                 sensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
+                sensor.ColorFrameReady -= sensor_ColorFrameReady;
                 sensor.Stop();
+                sensor.Dispose();
                 sensor = null;
                 CurrentStatus = KinectStatus.Disconnected;
             }

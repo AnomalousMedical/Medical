@@ -50,14 +50,24 @@ namespace KinectPlugin
             kinectDebugger = new KinectDebugVisualizer(standaloneController);
             sensorManager = new KinectSensorManager();
             sensorManager.SkeletonFrameReady += sensorManager_SkeletonFrameReady;
-            ikController.AllowMovement = sensorManager.CurrentStatus == KinectStatus.Connected;
+            sensorManager.StatusChanged += sensorManager_StatusChanged;
 
             kinectGui = new KinectGui(ikController, sensorManager, kinectDebugger);
             standaloneController.GUIManager.addManagedDialog(kinectGui);
-
+            
             var taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(kinectGui, "KinectPlugin.KinectGui", "Kinect", "KinectPlugin.Kinect", "Kinect"));
+        }
+
+        void sensorManager_StatusChanged(KinectSensorManager obj)
+        {
+            //This function checks the status the first time the sensor is connected.
+            if (sensorManager.CurrentStatus == KinectStatus.Connected)
+            {
+                ikController.AllowMovement = true;
+                sensorManager.StatusChanged -= sensorManager_StatusChanged; //Remove the event, we only care the first time
+            }
         }
 
         public void sceneLoaded(SimScene scene)

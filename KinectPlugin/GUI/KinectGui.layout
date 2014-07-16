@@ -1,22 +1,23 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="19 33 275 313" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="19 33 333 461" layer="Overlapped">
         <Property key="Caption" value="Kinect"/>
-        <Widget type="Button" skin="Button" position="2 5 130 38" name="EnableMotion">
+        <Widget type="Button" skin="Button" position="0 5 130 38" name="EnableMotion">
             <Property key="Caption" value="Enable Motion"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="2 50 130 38" name="ShowIkSkeleton">
+        <Widget type="Button" skin="Button" position="0 50 130 38" name="ShowIkSkeleton">
             <Property key="Caption" value="Show IK Skeleton"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="2 95 130 38" name="ShowSensorSkeleton">
+        <Widget type="Button" skin="Button" position="0 95 130 38" name="ShowSensorSkeleton">
             <Property key="Caption" value="Show Sensor Skeleton"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="4 140 122 19">
+        <Widget type="TextBox" skin="TextBox" position="0 140 122 19">
             <Property key="Caption" value="Status"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="5 163 121 20" name="StatusLabel">
+        <Widget type="TextBox" skin="TextBox" position="0 163 121 20" name="StatusLabel">
             <Property key="Caption" value="Unknown"/>
         </Widget>
+        <Widget type="ImageBox" skin="ImageBox" position="0 188 320 240" name="ColorSensorImageBox"/>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>

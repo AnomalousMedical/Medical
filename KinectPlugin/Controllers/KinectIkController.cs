@@ -27,6 +27,8 @@ namespace KinectPlugin
         private bool allowMovement = false;
         private List<SimObject> ikDragSimObjects = new List<SimObject>();
 
+        public event Action<KinectIkController> AllowMovementChanged;
+
         public KinectIkController(StandaloneController controller)
         {
             this.medicalController = controller.MedicalController;
@@ -132,6 +134,10 @@ namespace KinectPlugin
                     foreach(var simObj in ikDragSimObjects)
                     {
                         simObj.Enabled = allowMovement;
+                    }
+                    if(AllowMovementChanged != null)
+                    {
+                        AllowMovementChanged.Invoke(this);
                     }
                 }
             }
